@@ -26,7 +26,7 @@ RUN curl -sL https://github.com/lsd-rs/lsd/releases/download/v1.1.1/lsd-v1.1.1-x
 
 # ── Python dependencies ────────────────────────────────────────────────────────
 COPY requirements.txt /app/requirements.txt
-RUN pip3 install --break-system-packages -r /app/requirements.txt
+RUN pip3 install -r /app/requirements.txt
 
 # ── App code ──────────────────────────────────────────────────────────────────
 COPY app/ /app/

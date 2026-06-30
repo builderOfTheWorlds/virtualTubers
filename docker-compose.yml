@@ -2,6 +2,7 @@ services:
 
   worker-coder:
     image: vtube-worker:latest
+    pull_policy: never
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
@@ -9,12 +10,10 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 99
     volumes:
-      - ./config/workers/coder.yaml:/config/worker.yaml:ro
+      - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo:/data/repo
-    devices:
-      - /dev/dri:/dev/dri     # GPU access for ffmpeg encode (optional)
-    ipc: host                  # needed for PulseAudio
+    ipc: host
     shm_size: 256mb
     restart: unless-stopped
     depends_on:
@@ -22,6 +21,7 @@ services:
 
   worker-manager:
     image: vtube-worker:latest
+    pull_policy: never
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
@@ -29,7 +29,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 100
     volumes:
-      - ./config/workers/manager.yaml:/config/worker.yaml:ro
+      - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
     ipc: host
     shm_size: 256mb
@@ -39,6 +39,7 @@ services:
 
   worker-tester:
     image: vtube-worker:latest
+    pull_policy: never
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
@@ -46,7 +47,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 101
     volumes:
-      - ./config/workers/tester.yaml:/config/worker.yaml:ro
+      - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo:/data/repo:ro
     ipc: host
@@ -55,19 +56,19 @@ services:
     depends_on:
       - rtmp-preview
 
-  # Shared in-memory world state (tickets, messages, agent state)
+  # Shared world state
   redis:
     image: redis:7-alpine
     restart: unless-stopped
     volumes:
       - redis-data:/data
 
-  # Local RTMP server — workers stream here, you preview in VLC
+  # Local RTMP server — workers stream here, preview in VLC
   rtmp-preview:
     image: tiangolo/nginx-rtmp
     ports:
-      - "1935:1935"   # RTMP ingest
-      - "8080:80"     # HTTP stats page
+      - "1935:1935"
+      - "8088:80"
     restart: unless-stopped
 
 volumes:
