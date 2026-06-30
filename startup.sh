@@ -29,9 +29,11 @@ pactl load-module module-null-sink sink_name=vout sink_properties=device.descrip
 
 # ── 4. Tmux session + pane layout ─────────────────────────────────────────────
 SESSION="worker"
-log "Creating tmux session: ${SESSION}"
+COLS=240
+ROWS=67
+log "Creating tmux session: ${SESSION} (${COLS}x${ROWS})"
 
-tmux new-session -d -s "${SESSION}" -x 220 -y 55
+tmux new-session -d -s "${SESSION}" -x "${COLS}" -y "${ROWS}"
 
 # Left column (25%) | right column (75%)
 tmux split-window -h -t "${SESSION}" -p 75
@@ -60,6 +62,10 @@ tmux send-keys -t "${SESSION}:0.3" \
 tmux send-keys -t "${SESSION}:0.4" 'htop' Enter
 
 # ── 6. Open xterm on the virtual display ──────────────────────────────────────
+log "Starting window manager"
+DISPLAY="${DISPLAY}" openbox &
+sleep 1
+
 log "Opening xterm"
 DISPLAY="${DISPLAY}" xterm \
     -fa 'Monospace' -fs 12 \
@@ -67,6 +73,9 @@ DISPLAY="${DISPLAY}" xterm \
     -e "tmux attach -t ${SESSION}" &
 XTERM_PID=$!
 sleep 2
+
+log "Maximizing xterm"
+DISPLAY="${DISPLAY}" xdotool search --sync --class xterm windowmove 0 0 windowsize "$(xdpyinfo -display "${DISPLAY}" | awk '/dimensions/{print $2}' | tr 'x' ' ')"
 
 # ── 7. Agent loop ─────────────────────────────────────────────────────────────
 log "Starting agent loop"

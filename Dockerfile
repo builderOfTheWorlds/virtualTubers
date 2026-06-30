@@ -8,6 +8,8 @@ ENV PULSE_SINK=vout
 RUN apt-get update && apt-get install -y \
     # Virtual display + terminal
     xvfb xterm \
+    # Window manager + resize tool
+    openbox xdotool \
     # Terminal multiplexer + tools
     tmux neovim htop tree curl git \
     # Python runtime
