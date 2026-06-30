@@ -75,7 +75,12 @@ XTERM_PID=$!
 sleep 2
 
 log "Maximizing xterm"
-DISPLAY="${DISPLAY}" xdotool search --sync --class xterm windowmove 0 0 windowsize "$(xdpyinfo -display "${DISPLAY}" | awk '/dimensions/{print $2}' | tr 'x' ' ')"
+RES=$(DISPLAY="${DISPLAY}" xdpyinfo | awk '/dimensions/{print $2}')
+VW=${RES%x*}
+VH=${RES#*x}
+WID=$(DISPLAY="${DISPLAY}" xdotool search --sync --class xterm | head -1)
+DISPLAY="${DISPLAY}" xdotool windowmove "$WID" 0 0
+DISPLAY="${DISPLAY}" xdotool windowsize "$WID" "$VW" "$VH"
 
 # ── 7. Agent loop ─────────────────────────────────────────────────────────────
 log "Starting agent loop"
