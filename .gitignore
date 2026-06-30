@@ -1,0 +1,37 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Testing / coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# ── Tooling / IDE ─────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+
+# ── Claude Code (machine-specific, keep local) ────────────────────────────────
+.claude/settings.local.json
+
+# ── Runtime / world-state (generated at runtime, not source) ──────────────────
+data/
+world-state/
+
+# ── OS cruft ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git config --global --add safe.directory C:/Users/matt/PycharmProjects/virtualTubers)",
+      "PowerShell(git ls-remote https://github.com/builderOfTheWorlds/virtualTubers 2>&1)",
+      "PowerShell(git remote add origin https://github.com/builderOfTheWorlds/virtualTubers 2>&1)",
+      "PowerShell(git fetch origin 2>&1)",
+      "PowerShell(git ls-tree -r --name-only origin/main 2>&1)",
+      "PowerShell(git branch -m main)",
+      "PowerShell(git add -A)",
+      "PowerShell(git rebase origin/main 2>&1)"
+    ]
+  }
+}

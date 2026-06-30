@@ -1,0 +1,11 @@
+# Core agent dependencies
+pyyaml>=6.0
+httpx>=0.27          # LLM + TTS HTTP clients
+asyncio-mqtt>=0.16   # message bus (optional, file-based by default)
+
+# World state
+redis>=5.0
+
+# Terminal / display utilities
+blessed>=1.20        # terminal formatting for avatar.py
+wcwidth>=0.2         # correct character width in terminals

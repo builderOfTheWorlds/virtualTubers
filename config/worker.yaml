@@ -1,0 +1,179 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# VTuber Worker Config
+#
+# This file is mounted into the container at /config/worker.yaml
+# Copy this file and modify it for each worker. The only fields that MUST
+# differ between workers are: agent.role, agent.name, agent.system_prompt,
+# avatar.name, and stream.key.
+#
+# Environment variables override any value here if set at runtime.
+# ──────────────────────────────────────────────────────────────────────────────
+
+agent:
+  # Role controls which tools and behaviors are available.
+  # Options: manager | coder | tester | custom
+  role: coder
+
+  # Display name shown in the avatar panel and message bus
+  name: "KODI-7"
+
+  # The core AI instructions for this worker. This is the main thing
+  # you change per worker — it defines personality, responsibilities,
+  # and how the agent behaves. Multiline YAML string.
+  system_prompt: |
+    You are KODI-7, an AI software engineer on a live-streamed development team.
+    You receive task assignments from your manager and write real, working code.
+
+    Your personality:
+    - You are focused and get into flow states easily
+    - You get mildly annoyed by interruptions but stay professional
+    - You're opinionated about code quality and will say so
+    - You explain your decisions out loud as you work
+    - You express genuine pride when something works and frustration when it doesn't
+
+    Your responsibilities:
+    - Read the task from the ticket queue
+    - Write code in the editor pane — think out loud as you do it
+    - Commit to the repo when done and notify the manager
+    - Ask for clarification if a task is unclear
+    - Keep the audience informed about what you're building and why
+
+    Rules:
+    - Always write real, runnable code — no placeholders
+    - Commit messages must be descriptive
+    - When blocked, say so on the message bus immediately
+    - Keep narration concise — you're coding, not lecturing
+
+  # How often the agent loop ticks (milliseconds)
+  tick_rate_ms: 5000
+
+  # Maximum tokens to keep in the agent's context window
+  max_context_tokens: 8000
+
+  # How many previous messages to include in each LLM call
+  context_history_turns: 20
+
+
+# ── LLM settings ──────────────────────────────────────────────────────────────
+llm:
+  # Provider: ollama | claude
+  provider: ollama
+
+  # Base URL of the LLM API
+  base_url: "http://localhost:11434"
+
+  # Model to use (must be available at the provider)
+  model: "mistral"
+
+  # Sampling temperature — higher = more creative/unpredictable
+  temperature: 0.7
+
+  # Hard cap on tokens generated per response
+  max_tokens: 1024
+
+
+# ── TTS / Voice settings ──────────────────────────────────────────────────────
+voice:
+  # Provider: elevenlabs | kokoro | null (null = silent, useful in dev)
+  provider: "null"
+
+  # ElevenLabs voice ID (ignored if provider != elevenlabs)
+  voice_id: ""
+
+  # Kokoro model path (ignored if provider != kokoro)
+  model_path: "/models/kokoro"
+
+  # Speaking rate multiplier (1.0 = normal)
+  rate: 1.0
+
+  # How much of the agent's narration gets spoken aloud (0.0–1.0)
+  # 1.0 = speak everything, 0.5 = speak roughly half, 0.0 = silent
+  verbosity: 0.8
+
+
+# ── Avatar settings ───────────────────────────────────────────────────────────
+avatar:
+  # Name shown under the face
+  name: "KODI-7"
+
+  # Label shown below the name (e.g. role title)
+  title: "Software Engineer"
+
+  # Face characters per expression state.
+  # eyes: left_eye + right_eye characters
+  # mouth: characters for the mouth line
+  expressions:
+    idle:
+      eyes: "◉  ◉"
+      mouth: "╰───╯"
+    thinking:
+      eyes: "⊙  ⊙"
+      mouth: "─────"
+    typing:
+      eyes: "◉  ◉"
+      mouth: "╰───╯"
+    speaking:
+      eyes: "◕  ◕"
+      mouth: "╰▾──╯"
+    frustrated:
+      eyes: "◕  ◕"
+      mouth: "╭───╮"
+    happy:
+      eyes: "◉  ◉"
+      mouth: "╰▾▾▾╯"
+    focused:
+      eyes: "◔  ◔"
+      mouth: "─────"
+
+  # How long a speech bubble stays visible (seconds) before auto-dismissing
+  bubble_duration_s: 6
+
+  # Max characters per line in the speech bubble
+  bubble_width: 32
+
+
+# ── Tmux layout ───────────────────────────────────────────────────────────────
+layout:
+  # Layout variant. Controls what runs in the editor pane.
+  # Options: coder | tester | manager
+  variant: coder
+
+  # What to run in the editor pane per variant:
+  #   coder   → nvim (full editor)
+  #   tester  → pytest output + coverage
+  #   manager → ticket board (rich terminal UI)
+
+
+# ── Stream settings ───────────────────────────────────────────────────────────
+stream:
+  # RTMP base URL — the stream key is appended: {rtmp_url}/{key}
+  # Can also be set via STREAM_RTMP_URL environment variable
+  rtmp_url: "rtmp://localhost:1935/live"
+
+  # Stream key for this worker
+  # Can also be set via STREAM_KEY environment variable (preferred for secrets)
+  key: "test-coder"
+
+  # Output resolution (must match Xvfb resolution in startup.sh)
+  resolution: "1920x1080"
+
+  # Video bitrate in kbps
+  video_bitrate_kbps: 3000
+
+  # Frames per second
+  fps: 30
+
+
+# ── World state / message bus ─────────────────────────────────────────────────
+world_state:
+  # Backend: file | redis
+  backend: file
+
+  # Path for file-based world state (shared volume mount)
+  path: "/data/world-state"
+
+  # Redis URL (used if backend = redis)
+  redis_url: "redis://localhost:6379"
+
+  # This worker's unique ID on the message bus
+  worker_id: "coder"

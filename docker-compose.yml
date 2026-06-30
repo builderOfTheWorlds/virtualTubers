@@ -1,0 +1,76 @@
+services:
+
+  worker-coder:
+    image: vtube-worker:latest
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${CODER_STREAM_KEY:-coder}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      DISPLAY_NUM: 99
+    volumes:
+      - ./config/workers/coder.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+      - repo:/data/repo
+    devices:
+      - /dev/dri:/dev/dri     # GPU access for ffmpeg encode (optional)
+    ipc: host                  # needed for PulseAudio
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
+  worker-manager:
+    image: vtube-worker:latest
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      DISPLAY_NUM: 100
+    volumes:
+      - ./config/workers/manager.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
+  worker-tester:
+    image: vtube-worker:latest
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      DISPLAY_NUM: 101
+    volumes:
+      - ./config/workers/tester.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+      - repo:/data/repo:ro
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
+  # Shared in-memory world state (tickets, messages, agent state)
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+
+  # Local RTMP server — workers stream here, you preview in VLC
+  rtmp-preview:
+    image: tiangolo/nginx-rtmp
+    ports:
+      - "1935:1935"   # RTMP ingest
+      - "8080:80"     # HTTP stats page
+    restart: unless-stopped
+
+volumes:
+  world-state:
+  repo:
+  redis-data:
