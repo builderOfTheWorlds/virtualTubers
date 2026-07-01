@@ -36,7 +36,16 @@ class OllamaClient:
             },
             timeout=120,
         )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            # httpx's own message drops the response body, e.g. Ollama's
+            # "model 'x' not found, try pulling it first" — surface it so
+            # the caller's error (and the avatar's "frustrated" bubble) is
+            # actually diagnosable instead of a bare "500 Internal Server Error".
+            raise LLMError(
+                f"Ollama request failed: {exc.response.status_code} {exc.response.text}"
+            ) from exc
         return response.json()["message"]["content"]
 
 

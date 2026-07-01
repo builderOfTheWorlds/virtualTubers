@@ -66,4 +66,8 @@ psql -h 192.168.1.120 -U mafober -d mafober \
 
 ## Changelog
 
-- v1.0.0 (2026-07-01) — Initial version.
+- v1.0.0 (2026-07-01) — Initial version. Test coverage added the same day
+  in `tests/test_message_logger.py` (`connect_db` env-var resolution/
+  failure, `main`'s create-table-then-insert order, per-message insert
+  params, fail-fast on missing Kafka env vars) — `psycopg2.connect` and
+  `MessageConsumer` mocked, matching `message-api`'s test pattern.

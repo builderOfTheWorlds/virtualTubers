@@ -1,3 +1,4 @@
+import httpx
 import pytest
 
 from llm_client import LLMError, OllamaClient, ClaudeClient, build_llm_client
@@ -63,3 +64,19 @@ def test_ollama_client_complete_parses_response(monkeypatch):
     assert result == "hello from ollama"
     assert captured["url"] == "http://localhost:11434/api/chat"
     assert captured["json"]["messages"][0] == {"role": "system", "content": "system prompt"}
+
+
+def test_ollama_client_complete_includes_response_body_on_http_error(monkeypatch):
+    class FakeResponse:
+        status_code = 500
+        text = "model 'qwen2.5:14b' not found, try pulling it first"
+
+        def raise_for_status(self):
+            raise httpx.HTTPStatusError("Server error", request=None, response=self)
+
+    monkeypatch.setattr("llm_client.httpx.post", lambda url, json, timeout: FakeResponse())
+
+    client = OllamaClient("http://localhost:11434", "qwen2.5:14b", 0.7, 1024)
+
+    with pytest.raises(LLMError, match="not found, try pulling it first"):
+        client.complete("system prompt", [{"role": "user", "content": "hi"}])
