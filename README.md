@@ -8,6 +8,20 @@ The project is early-stage: the agent brain (`app/agent.py`) and terminal avatar
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
+## Recent Changes
+
+**Kafka message bus + Postgres logging + HTTP test-injection API** — the inter-agent message bus moved from a plain file (`/data/world-state/messages/bus.log`) to Kafka:
+
+- `app/message_bus.py` (new) — shared envelope/producer/consumer helper used by agents and the new services
+- `app/agent.py` — now actually parses its mounted config (previously ignored it — every worker silently ran as `worker_id: "worker"`), publishes heartbeats as real Kafka messages, and has a minimal `perceive()` that prints messages addressed to it
+- `app/tail_bus.py` (new) — replaces the `tail -f bus.log` tmux pane with a live Kafka consumer
+- `services/message-logger/` (new) — durably logs every bus message to Postgres
+- `services/message-api/` (new) — `POST /messages` on port `8090` for injecting test messages onto the bus, see [docs/message_api.md](docs/message_api.md)
+- `config/*.yaml` gained a `message_bus` section (bootstrap servers, topic, worker ID); `docker-compose.yml` gained the two new services plus `WORKER_ID`/`KAFKA_*` env vars per worker
+- Fixed a pre-existing YAML syntax bug (`frustrated:{` missing a space) in all three role configs that would have broken the new config-parsing on startup
+
+See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/message_logger.md), and [docs/message_api.md](docs/message_api.md) for details.
+
 ## Prerequisites
 
 - Docker and Docker Compose

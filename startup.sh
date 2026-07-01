@@ -5,8 +5,13 @@ CONFIG_PATH="${CONFIG_PATH:-/config/worker.yaml}"
 DISPLAY_NUM="${DISPLAY_NUM:-99}"
 DISPLAY=":${DISPLAY_NUM}"
 RESOLUTION="${RESOLUTION:-1920x1080}"
+FONT_SIZE="${FONT_SIZE:-14}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
+
+# Pixel dimensions of the capture, derived from RESOLUTION (e.g. 1920x1080)
+VW="${RESOLUTION%x*}"
+VH="${RESOLUTION#*x}"
 
 log() { echo "[startup] $*"; }
 
@@ -61,26 +66,29 @@ tmux send-keys -t "${SESSION}:0.3" \
     "python3 /app/tail_bus.py --config ${CONFIG_PATH}" Enter
 tmux send-keys -t "${SESSION}:0.4" 'htop' Enter
 
-# ── 6. Open xterm on the virtual display ──────────────────────────────────────
-log "Starting window manager"
-DISPLAY="${DISPLAY}" openbox &
-sleep 1
-
-log "Opening xterm"
+# ── 6. Open a borderless, full-screen xterm on the virtual display ────────────
+# No window manager: a decorated window (title bar + borders) would inset the
+# terminal and leave black margins in the capture. Running xterm undecorated and
+# sizing it to the exact display dimensions makes it fill the whole 1920x1080 frame.
+log "Opening xterm (${VW}x${VH}, font ${FONT_SIZE})"
 DISPLAY="${DISPLAY}" xterm \
-    -fa 'Monospace' -fs 12 \
+    -fa 'Monospace' -fs "${FONT_SIZE}" \
+    -b 0 -bw 0 \
+    -geometry "+0+0" \
     -bg '#0d1117' -fg '#e6edf3' \
     -e "tmux attach -t ${SESSION}" &
 XTERM_PID=$!
 sleep 2
 
-log "Maximizing xterm"
-RES=$(DISPLAY="${DISPLAY}" xdpyinfo | awk '/dimensions/{print $2}')
-VW=${RES%x*}
-VH=${RES#*x}
+log "Sizing xterm to fill ${VW}x${VH}"
 WID=$(DISPLAY="${DISPLAY}" xdotool search --sync --class xterm | head -1)
 DISPLAY="${DISPLAY}" xdotool windowmove "$WID" 0 0
 DISPLAY="${DISPLAY}" xdotool windowsize "$WID" "$VW" "$VH"
+sleep 1
+
+# xterm recomputes its cell grid to fill the window; make tmux follow the new
+# client size and redraw so its panes expand to the full frame (no fixed 240x67 box).
+DISPLAY="${DISPLAY}" tmux set -g window-size latest \; refresh-client -t "${SESSION}" 2>/dev/null || true
 
 # ── 7. Agent loop ─────────────────────────────────────────────────────────────
 log "Starting agent loop"
