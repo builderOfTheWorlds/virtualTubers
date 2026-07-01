@@ -1,44 +1,42 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Layout preset: coder
 #
-# Composition preset placing & sizing panels for the CODER role: a 25% left
-# column (filetree / htop / avatar, spaced into roughly even thirds) and a 75%
-# right column (editor 70% / message-bus feed 30%).
+# Composition preset placing & sizing panels for the CODER role: three roughly
+# even columns — editor / (avatar top, filetree bottom) / (htop top, kafka_feed
+# bottom). Reverse-engineered from a live-tuned tmux session's `window_layout`.
 #
 # Geometry model (see docs/build_layout.md):
 #   - The FIRST pane is the base pane (whole screen); its `size` is informational.
 #   - Every later pane is created by splitting its `target` pane (named by `use`).
 #     `size` is the percentage handed to `tmux split-window -p`, i.e. the size of
 #     the NEWLY-created pane. `target` defaults to the base pane when omitted.
-#   - Panes are laid out in list order; `feed` targets `editor`, so `editor` is
-#     listed before it.
+#   - Panes are laid out in list order; each `target` must already be listed.
 #
 # Per-pane universal knobs: use, id, split, size, target, title, border_color,
 # command, enabled, with.
 # ──────────────────────────────────────────────────────────────────────────────
 preset: coder
 panes:
-  - use: filetree                       # base pane, 25% left column
-    size: 25
-
-  - use: editor                         # right column, top
-    target: filetree
-    split: h
-    size: 75
+  - use: editor                         # base pane, left column (~33% wide)
     with: { variant: nvim }
     command: "nvim"
 
-  - use: avatar                         # left column, bottom third
-    target: filetree
-    split: v
-    size: 33
-
-  - use: kafka_feed                     # right column, bottom 30%
+  - use: kafka_feed                     # carves out columns 2+3 combined
     target: editor
-    split: v
-    size: 30
+    split: h
+    size: 66
 
-  - use: htop                           # left column, middle third
-    target: filetree
+  - use: filetree                       # carves col2 (avatar+filetree) off the block
+    target: kafka_feed
+    split: h
+    size: 49
+
+  - use: htop                           # top of col3; remainder stays kafka_feed
+    target: kafka_feed
     split: v
     size: 50
+
+  - use: avatar                         # top of col2; remainder stays filetree
+    target: filetree
+    split: v
+    size: 19

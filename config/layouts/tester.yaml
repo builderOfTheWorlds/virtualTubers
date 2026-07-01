@@ -1,10 +1,11 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Layout preset: tester
 #
-# Composition preset for the TESTER role. Same five-pane geometry as `coder`,
-# but the editor/output pane runs the test suite with coverage on a loop instead
-# of an interactive editor (per the plan's note: coder->nvim, tester->pytest +
-# coverage output, manager->ticket board).
+# Composition preset for the TESTER role. Same three-column geometry as `coder`
+# (per a live-tuned tmux session's `window_layout`), but the editor/output pane
+# runs the test suite with coverage on a loop instead of an interactive editor
+# (per the plan's note: coder->nvim, tester->pytest + coverage output,
+# manager->ticket board).
 #
 # ASSUMPTION: the exact test command is a reasonable default; adjust to the
 # project's real test entrypoint. It re-runs every 5s so the stream shows live
@@ -12,28 +13,27 @@
 # ──────────────────────────────────────────────────────────────────────────────
 preset: tester
 panes:
-  - use: filetree
-    size: 25
-
-  - use: editor
-    target: filetree
-    split: h
-    size: 75
+  - use: editor                         # base pane, left column (~33% wide)
     title: "Test Output"
     with: { variant: pytest }
     command: 'watch -n5 "cd /data/repo 2>/dev/null && pytest --cov -q 2>&1 | tail -40 || echo (no tests yet)"'
 
-  - use: avatar
-    target: filetree
-    split: v
-    size: 33
-
-  - use: kafka_feed
+  - use: kafka_feed                     # carves out columns 2+3 combined
     target: editor
-    split: v
-    size: 30
+    split: h
+    size: 66
 
-  - use: htop
-    target: filetree
+  - use: filetree                       # carves col2 (avatar+filetree) off the block
+    target: kafka_feed
+    split: h
+    size: 49
+
+  - use: htop                           # top of col3; remainder stays kafka_feed
+    target: kafka_feed
     split: v
     size: 50
+
+  - use: avatar                         # top of col2; remainder stays filetree
+    target: filetree
+    split: v
+    size: 19

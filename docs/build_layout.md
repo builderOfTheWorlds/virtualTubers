@@ -98,20 +98,19 @@ command: "nvim"
 - tmux numbers panes `0..N` in creation order, which equals the list order, so
   `id → pane index` is deterministic and stable for `send-keys` targeting.
 
-Worked example — the `coder` preset, with the left column spaced into roughly
-even thirds:
+Worked example — the `coder` preset, a three-column layout reverse-engineered
+from a live-tuned tmux session's `window_layout` string:
 
 | order | pane | split | target | `-p` | result |
 |---|---|---|---|---|---|
-| 0 | filetree | (base) | — | — | left column, 25% wide |
-| 1 | editor | h | filetree | 75 | right column, 75% wide |
-| 2 | avatar | v | filetree | 33 | bottom-left third, 33% tall |
-| 3 | kafka_feed | v | editor | 30 | bottom-right, 30% tall |
-| 4 | htop | v | filetree | 50 | middle-left third, ~33% tall |
+| 0 | editor | (base) | — | — | column 1, ~33% wide |
+| 1 | kafka_feed | h | editor | 66 | columns 2+3 combined, ~66% wide |
+| 2 | filetree | h | kafka_feed | 49 | column 2 (whole), carved off the block |
+| 3 | htop | v | kafka_feed | 50 | column 3 top; remainder stays kafka_feed |
+| 4 | avatar | v | filetree | 19 | column 2 top; remainder stays filetree |
 
-> The original `startup.sh` used `split-window -h -p 75` to make the *left* pane
-> 25%; that is exactly `size: 75` on the editor pane (the new right pane), so the
-> mapping is uniform: **`size` is always the `-p` value, i.e. the new pane's %**.
+> **`size` is always the `-p` value, i.e. the new pane's %** — the target pane
+> keeps whatever percentage remains, never the pane being carved out.
 
 ## Resolution / merge order (later wins)
 

@@ -1,9 +1,10 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Layout preset: manager
 #
-# Composition preset for the MANAGER role. Same five-pane geometry as `coder`,
-# but the editor/output pane shows a ticket-board style view instead of an editor
-# (per the plan's note: coder->nvim, tester->pytest, manager->ticket board).
+# Composition preset for the MANAGER role. Same three-column geometry as `coder`
+# (per a live-tuned tmux session's `window_layout`), but the editor/output pane
+# shows a ticket-board style view instead of an editor (per the plan's note:
+# coder->nvim, tester->pytest, manager->ticket board).
 #
 # ASSUMPTION: without a dedicated ticket-board tool wired in yet, this defaults
 # to a simple watched view of the shared world-state tickets directory. Swap in a
@@ -11,28 +12,27 @@
 # ──────────────────────────────────────────────────────────────────────────────
 preset: manager
 panes:
-  - use: filetree
-    size: 25
-
-  - use: editor
-    target: filetree
-    split: h
-    size: 75
+  - use: editor                         # base pane, left column (~33% wide)
     title: "Ticket Board"
     with: { variant: tickets }
     command: 'watch -n5 "cat /data/world-state/tickets/*.md 2>/dev/null || echo (no tickets yet)"'
 
-  - use: avatar
-    target: filetree
-    split: v
-    size: 33
-
-  - use: kafka_feed
+  - use: kafka_feed                     # carves out columns 2+3 combined
     target: editor
-    split: v
-    size: 30
+    split: h
+    size: 66
 
-  - use: htop
-    target: filetree
+  - use: filetree                       # carves col2 (avatar+filetree) off the block
+    target: kafka_feed
+    split: h
+    size: 49
+
+  - use: htop                           # top of col3; remainder stays kafka_feed
+    target: kafka_feed
     split: v
     size: 50
+
+  - use: avatar                         # top of col2; remainder stays filetree
+    target: filetree
+    split: v
+    size: 19
