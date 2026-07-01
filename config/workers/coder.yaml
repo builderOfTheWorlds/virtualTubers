@@ -48,7 +48,7 @@ avatar:
     thinking:  { eyes: "⊙  ⊙", mouth: "─────" }
     typing:    { eyes: "◉  ◉", mouth: "╰───╯" }
     speaking:  { eyes: "◕  ◕", mouth: "╰▾──╯" }
-    frustrated:{ eyes: "◕  ◕", mouth: "╭───╮" }
+    frustrated: { eyes: "◕  ◕", mouth: "╭───╮" }
     happy:     { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
     focused:   { eyes: "◔  ◔", mouth: "─────" }
   bubble_duration_s: 6
@@ -67,4 +67,10 @@ stream:
 world_state:
   backend: file
   path: "/data/world-state"
+  worker_id: "coder"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: "192.168.1.120:9092"
+  topic: "vtuber.messages"
   worker_id: "coder"

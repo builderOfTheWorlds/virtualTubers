@@ -177,3 +177,21 @@ world_state:
 
   # This worker's unique ID on the message bus
   worker_id: "coder"
+
+
+# ── Message bus (Kafka) ────────────────────────────────────────────────────────
+message_bus:
+  # Backend: kafka (the old file-based bus is retired)
+  backend: kafka
+
+  # Kafka bootstrap servers — can also be set via KAFKA_BOOTSTRAP_SERVERS env var
+  bootstrap_servers: "192.168.1.120:9092"
+
+  # Topic all agents/services publish to and consume from
+  # Can also be set via KAFKA_TOPIC env var
+  topic: "vtuber.messages"
+
+  # This worker's unique ID — used as `from` on outgoing messages and to filter
+  # incoming ones (to == worker_id or to == "broadcast").
+  # Can also be set via WORKER_ID env var (preferred, matches per-container role)
+  worker_id: "coder"

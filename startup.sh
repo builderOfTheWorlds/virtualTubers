@@ -58,7 +58,7 @@ tmux send-keys -t "${SESSION}:0.1" \
     "python3 /app/avatar.py --config ${CONFIG_PATH}" Enter
 tmux send-keys -t "${SESSION}:0.2" 'nvim' Enter
 tmux send-keys -t "${SESSION}:0.3" \
-    'tail -n 20 -f /data/world-state/messages/bus.log 2>/dev/null || echo "Waiting for message bus..."' Enter
+    "python3 /app/tail_bus.py --config ${CONFIG_PATH}" Enter
 tmux send-keys -t "${SESSION}:0.4" 'htop' Enter
 
 # ── 6. Open xterm on the virtual display ──────────────────────────────────────

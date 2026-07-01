@@ -9,6 +9,9 @@ services:
       STREAM_KEY: ${CODER_STREAM_KEY:-coder}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 99
+      WORKER_ID: coder
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
     volumes:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -28,6 +31,9 @@ services:
       STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 100
+      WORKER_ID: manager
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -46,6 +52,9 @@ services:
       STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       DISPLAY_NUM: 101
+      WORKER_ID: tester
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -55,6 +64,32 @@ services:
     restart: unless-stopped
     depends_on:
       - rtmp-preview
+
+  message-logger:
+    build:
+      context: .
+      dockerfile: services/message-logger/Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      KAFKA_GROUP_ID: vtuber-logger
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-mafober}
+      POSTGRES_USER: ${POSTGRES_USER:-mafober}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+    restart: unless-stopped
+
+  message-api:
+    build:
+      context: .
+      dockerfile: services/message-api/Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+    ports:
+      - "8090:8000"
+    restart: unless-stopped
 
   # Shared world state
   redis:

@@ -13,6 +13,7 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 - Docker and Docker Compose
 - An RTMP destination — a Twitch stream key for live streaming, or a local RTMP preview server (bundled via `rtmp-preview` in `docker-compose.yml`) for local testing
 - (Optional) A running [Ollama](https://ollama.ai) instance for local LLM inference — the default worker config points at `http://localhost:11434`
+- A reachable Kafka broker (agents/services publish and consume inter-agent messages there) and a Postgres instance (every message is durably logged there) — neither is bundled in `docker-compose.yml`; point at existing instances via `.env`
 
 ## Installation
 
@@ -25,31 +26,58 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
    ```bash
    docker build -t vtube-worker:latest .
    ```
-3. Set your stream keys as environment variables (or in a `.env` file next to `docker-compose.yml`):
+3. Copy `.env.example` to `.env` and fill in your stream keys, Kafka bootstrap servers, and Postgres credentials:
    ```bash
-   export CODER_STREAM_KEY=your_twitch_stream_key
-   export MANAGER_STREAM_KEY=your_twitch_stream_key
-   export TESTER_STREAM_KEY=your_twitch_stream_key
-   export STREAM_RTMP_URL=rtmp://live.twitch.tv/app   # omit to use the local rtmp-preview server
+   cp .env.example .env
    ```
+   ```bash
+   CODER_STREAM_KEY=your_twitch_stream_key
+   MANAGER_STREAM_KEY=your_twitch_stream_key
+   TESTER_STREAM_KEY=your_twitch_stream_key
+   STREAM_RTMP_URL=rtmp://live.twitch.tv/app   # omit to use the local rtmp-preview server
+
+   KAFKA_BOOTSTRAP_SERVERS=your_kafka_host:9092
+   KAFKA_TOPIC=vtuber.messages
+
+   POSTGRES_HOST=your_postgres_host
+   POSTGRES_PORT=5432
+   POSTGRES_DB=your_db
+   POSTGRES_USER=your_user
+   POSTGRES_PASSWORD=your_password
+   ```
+   `.env` is gitignored — never commit real credentials.
 
 ## Usage
 
-Start the full stack (three workers + Redis + local RTMP preview):
+Start the full stack (three workers + message-logger + message-api + Redis + local RTMP preview):
 
 ```bash
 docker compose up
 ```
 
-This launches three containers — `worker-coder`, `worker-manager`, `worker-tester` — plus a shared `redis` instance and an `rtmp-preview` server for local testing. Each worker:
+This launches three worker containers — `worker-coder`, `worker-manager`, `worker-tester` — plus `message-logger`, `message-api`, a shared `redis` instance, and an `rtmp-preview` server for local testing. Each worker:
 
 1. Boots a virtual display (Xvfb) and PulseAudio sink
 2. Lays out a tmux session (file tree, ASCII avatar, editor/output pane, agent chat log, htop)
 3. Opens that session in xterm on the virtual display
-4. Starts the agent loop (`app/agent.py`)
+4. Starts the agent loop (`app/agent.py`), which publishes heartbeats and consumes messages addressed to it over the Kafka bus
 5. Captures the display with ffmpeg and pushes it out over RTMP to the configured stream key
 
 To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it defaults to `rtmp://rtmp-preview:1935/live`) and view the stream with a player like VLC pointed at `rtmp://localhost:1935/live/<stream_key>`.
+
+### Inter-agent messaging (Kafka)
+
+Agents talk to each other over a Kafka topic (`vtuber.messages` by default) instead of a file — see `docs/message_bus.md`. Every message is durably logged to Postgres by the `message-logger` service (`docs/message_logger.md`).
+
+To inject a test message for an agent to pick up, use the `message-api` HTTP service (`docs/message_api.md`), exposed on port `8090`:
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "task_assignment", "payload": {"task": "say hello"}}'
+```
+
+The `coder` worker's agent loop and its tmux "agent chat" pane will pick up the message; `manager`/`tester` won't, since it wasn't addressed to them or broadcast.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
@@ -62,9 +90,9 @@ python3 app/avatar.py --config config/workers/coder.yaml
 
 All runtime behavior is config-driven — no code changes needed to retune an agent.
 
-- `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state settings)
+- `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state/message-bus settings)
 - `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml` — per-role configs mounted into each container at `/config/worker.yaml`
-- Environment variables (set via `docker-compose.yml` or shell) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`
+- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
 
 Key sections inside a worker config:
 
@@ -77,6 +105,7 @@ Key sections inside a worker config:
 | `layout` | Which tmux layout variant to use (`coder` \| `tester` \| `manager`) |
 | `stream` | RTMP URL/key, resolution, bitrate, fps |
 | `world_state` | Shared state backend (`file` \| `redis`) and connection info |
+| `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
 
 ## Project Structure
 
@@ -84,16 +113,24 @@ Key sections inside a worker config:
 virtualTubers/
 ├── app/
 │   ├── agent.py          # Agent loop (perceive/think/act loop) — currently a stub
-│   └── avatar.py         # Terminal ASCII avatar renderer — currently a stub
+│   ├── avatar.py         # Terminal ASCII avatar renderer — currently a stub
+│   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper
+│   └── tail_bus.py       # Live message-bus display, used by the tmux "agent chat" pane
+├── services/
+│   ├── message-logger/    # Consumes every bus message, logs it to Postgres
+│   └── message-api/       # FastAPI service for injecting test messages onto the bus
 ├── config/
 │   ├── worker.yaml        # Annotated default/template worker config
 │   └── workers/           # Per-role configs (coder.yaml, manager.yaml, tester.yaml)
 ├── docs/
-│   └── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
+│   ├── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
+│   ├── message_bus.md, message_logger.md, message_api.md   # Per-module docs
+├── tests/                  # pytest suite (message_bus, message-api)
 ├── Dockerfile              # Worker container image (Xvfb, tmux, ffmpeg, Python, etc.)
-├── docker-compose.yml      # Local dev stack: 3 workers + Redis + RTMP preview
+├── docker-compose.yml      # Local dev stack: 3 workers + message-logger + message-api + Redis + RTMP preview
 ├── startup.sh              # Container entrypoint: sets up display, tmux layout, avatar, agent loop, and ffmpeg broadcaster
-└── requirements.txt        # Python dependencies
+├── requirements.txt        # Python dependencies (worker image)
+└── .env.example            # Template for stream keys, Kafka, and Postgres config
 ```
 
 ## License
