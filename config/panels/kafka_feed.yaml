@@ -1,0 +1,53 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: kafka_feed
+#
+# Reusable panel-type definition for the rich Kafka "Message Bus" feed pane.
+# The layout engine resolves this (panel default -> layout override -> worker
+# override), writes the resolved copy to a runtime dir, and launches the pane
+# with the resolved file passed as --feed-config to app/tail_bus.py.
+#
+# Only the `content:` block is consumed by tail_bus.py. Feed colors live HERE,
+# never coupled to any avatar block (senders include `broadcast`, which has no
+# avatar).
+# ──────────────────────────────────────────────────────────────────────────────
+type: kafka_feed
+title: "Message Bus"
+border_color: cyan
+command: "python3 /app/tail_bus.py --bus-config {config_path} --feed-config {resolved_path}"
+
+content:
+  # Sender color, keyed by the message `from` value. broadcast is a valid key.
+  colors:
+    coder: green
+    manager: yellow
+    tester: magenta
+    broadcast: cyan
+
+  filters:
+    # NOTE: agent.py currently emits its per-tick heartbeat flood as type
+    # "status_update" (not "heartbeat"), so both are hidden by default to stop
+    # the flood. Fully configurable — edit this list to change what is hidden.
+    hide_types: [heartbeat, status_update]
+    # Empty = show everything except hidden. Non-empty = whitelist (only these).
+    show_types: []
+    # all | broadcast | to:<id> | from:<id>
+    direction: all
+
+  # Colors the TYPE column when the message type matches a category below.
+  highlight:
+    task_complete: green
+    clarification_request: yellow
+    error: red
+
+  # Payload rendering. mode: pretty | raw | hidden. Truncated to max_chars.
+  payload:
+    mode: pretty
+    max_chars: 80
+
+  # Timestamp formatting. local: true converts the UTC ISO stamp to local time.
+  timestamp:
+    format: "%H:%M:%S"
+    local: true
+
+  # Print a one-time column header at startup.
+  header: true
