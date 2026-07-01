@@ -57,19 +57,27 @@ agent:
 # ── LLM settings ──────────────────────────────────────────────────────────────
 llm:
   # Provider: ollama | claude
+  # Env var LLM_PROVIDER overrides this at runtime.
   provider: ollama
 
-  # Base URL of the LLM API
+  # Base URL of the Ollama API (ignored when provider: claude)
+  # Env var LLM_BASE_URL overrides this at runtime.
   base_url: "http://localhost:11434"
 
-  # Model to use (must be available at the provider)
+  # Model to use. Ollama: any model pulled locally (e.g. "mistral").
+  # Claude: a model ID (e.g. "claude-opus-4-8"); defaults to "claude-opus-4-8"
+  # if left as a non-claude value like "mistral".
   model: "mistral"
 
-  # Sampling temperature — higher = more creative/unpredictable
+  # Sampling temperature — higher = more creative/unpredictable.
+  # Ollama only; ignored when provider: claude.
   temperature: 0.7
 
   # Hard cap on tokens generated per response
   max_tokens: 1024
+
+  # provider: claude requires ANTHROPIC_API_KEY to be set in the environment
+  # (see .env.example) — the Claude client never reads a key from this file.
 
 
 # ── TTS / Voice settings ──────────────────────────────────────────────────────

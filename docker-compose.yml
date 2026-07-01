@@ -8,6 +8,7 @@ services:
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${CODER_STREAM_KEY:-coder}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
       WORKER_ID: coder
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
@@ -30,6 +31,7 @@ services:
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 100
       WORKER_ID: manager
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
@@ -51,6 +53,7 @@ services:
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 101
       WORKER_ID: tester
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}

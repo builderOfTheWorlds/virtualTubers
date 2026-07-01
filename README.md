@@ -4,11 +4,32 @@
 
 virtualTubers is an autonomous AI-powered VTuber streaming system where a team of AI agents (Manager, Coder, Tester) act as a live software development team. Each agent runs in its own Docker container, has its own personality and ASCII-art avatar, works inside a live terminal session (tmux + neovim/htop/etc.), and streams that session to Twitch over RTMP via ffmpeg. It's for anyone who wants to run an always-on, config-driven "AI dev team" stream without hand-building the streaming pipeline from scratch.
 
-The project is early-stage: the agent brain (`app/agent.py`) and terminal avatar (`app/avatar.py`) are currently stub implementations that keep the container alive, write heartbeat messages, and cycle through avatar expressions — enough to validate the end-to-end pipeline (container → virtual display → tmux layout → RTMP → Twitch) before real LLM-driven behavior is wired in.
+The project is early-stage: the terminal avatar (`app/avatar.py`) is still a stub that keeps the container alive and cycles through expressions on a timer. The agent brain (`app/agent.py`) now has a real perceive/think/act slice — it publishes heartbeats every tick and, when it receives a `task_assignment` message, calls a provider-switchable LLM (Ollama or Claude) with the worker's persona/system prompt and replies on the bus with an in-character narration. Writing real code, running commands, and updating the avatar/editor panes from agent state are still ahead — see the Phase 1 roadmap in the architecture doc.
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
 ## Recent Changes
+
+**Workers can now act as agents — LLM-driven task narration** — `app/agent.py` is no
+longer a heartbeat-only stub:
+
+- `app/llm_client.py` (new) — provider-switchable LLM client (`llm.provider: ollama | claude`
+  in a worker's config, or `LLM_PROVIDER` env override). Ollama goes through a plain
+  `httpx` call to `/api/chat`; Claude goes through the official `anthropic` SDK,
+  which reads credentials from `ANTHROPIC_API_KEY` — never from the config file.
+- `app/agent.py` — on receiving a `task_assignment` message, calls the LLM with
+  the worker's `agent.system_prompt` and the task, then replies on the bus with
+  `task_complete` (or `clarification_request` if the LLM call fails) — the
+  narration shows up in the worker's console output and the Kafka feed pane.
+- To send a worker an instruction, POST a `task_assignment` to `message-api`
+  (see [Inter-agent messaging](#inter-agent-messaging-kafka) below) — no new
+  endpoint needed, this is the same `message-api` used for test injection.
+- `requirements.txt` gained `anthropic`; `.env.example` gained `ANTHROPIC_API_KEY`
+  (only required when a worker's config sets `llm.provider: claude`).
+- This does not yet write files, run commands, or touch the shared repo — see
+  [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) Phase 1
+  for what's next. See [docs/agent.md](docs/agent.md) and
+  [docs/llm_client.md](docs/llm_client.md) for details.
 
 **Config-driven modular tmux panels + rich Kafka message feed** — the worker's
 tmux layout is no longer hardcoded in `startup.sh`; it is now declarative,
@@ -49,6 +70,7 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
 - Docker and Docker Compose
 - An RTMP destination — a Twitch stream key for live streaming, or a local RTMP preview server (bundled via `rtmp-preview` in `docker-compose.yml`) for local testing
 - (Optional) A running [Ollama](https://ollama.ai) instance for local LLM inference — the default worker config points at `http://localhost:11434`
+- (Optional) An [Anthropic API key](https://console.anthropic.com/) if any worker's config sets `llm.provider: claude` instead of `ollama`
 - A reachable Kafka broker (agents/services publish and consume inter-agent messages there) and a Postgres instance (every message is durably logged there) — neither is bundled in `docker-compose.yml`; point at existing instances via `.env`
 
 ## Installation
@@ -96,7 +118,7 @@ This launches three worker containers — `worker-coder`, `worker-manager`, `wor
 1. Boots a virtual display (Xvfb) and PulseAudio sink
 2. Lays out a tmux session (file tree, ASCII avatar, editor/output pane, agent chat log, htop)
 3. Opens that session in xterm on the virtual display
-4. Starts the agent loop (`app/agent.py`), which publishes heartbeats and consumes messages addressed to it over the Kafka bus
+4. Starts the agent loop (`app/agent.py`), which publishes heartbeats, consumes messages addressed to it over the Kafka bus, and calls its configured LLM to narrate a reply to any `task_assignment` it receives
 5. Captures the display with ffmpeg and pushes it out over RTMP to the configured stream key
 
 To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it defaults to `rtmp://rtmp-preview:1935/live`) and view the stream with a player like VLC pointed at `rtmp://localhost:1935/live/<stream_key>`.
@@ -105,7 +127,7 @@ To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it 
 
 Agents talk to each other over a Kafka topic (`vtuber.messages` by default) instead of a file — see `docs/message_bus.md`. Every message is durably logged to Postgres by the `message-logger` service (`docs/message_logger.md`).
 
-To inject a test message for an agent to pick up, use the `message-api` HTTP service (`docs/message_api.md`), exposed on port `8090`:
+To send a worker an instruction (or inject a test message), use the `message-api` HTTP service (`docs/message_api.md`), exposed on port `8090`:
 
 ```bash
 curl -X POST http://localhost:8090/messages \
@@ -113,7 +135,7 @@ curl -X POST http://localhost:8090/messages \
   -d '{"to": "coder", "type": "task_assignment", "payload": {"task": "say hello"}}'
 ```
 
-The `coder` worker's agent loop and its tmux "agent chat" pane will pick up the message; `manager`/`tester` won't, since it wasn't addressed to them or broadcast.
+The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — visible in its console output and the tmux "agent chat"/Kafka feed pane. `manager`/`tester` won't react, since the message wasn't addressed to them or broadcast. To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
@@ -153,6 +175,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `MANAGER_STREAM_KEY` | `live_yyyyyyyy` | Manager channel's key |
 | `TESTER_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
 | `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
+| `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.1.120:9092` | Message-bus broker |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
@@ -239,7 +262,8 @@ pod. Details in [docs/layout_system.md](docs/layout_system.md#kubernetes-configm
 ```
 virtualTubers/
 ├── app/
-│   ├── agent.py          # Agent loop (perceive/think/act loop) — currently a stub
+│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats + LLM-driven task narration
+│   ├── llm_client.py     # Provider-switchable LLM client (Ollama | Claude)
 │   ├── avatar.py         # Terminal ASCII avatar renderer — currently a stub
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper
@@ -254,9 +278,10 @@ virtualTubers/
 │   └── layouts/           # Composition presets that place & size panels (coder, tester, manager)
 ├── docs/
 │   ├── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
+│   ├── agent.md, llm_client.md         # Agent loop and LLM client docs
 │   ├── layout_system.md, panels.md, build_layout.md   # Config-driven panel system
 │   ├── message_bus.md, message_bus_feed.md, message_logger.md, message_api.md   # Per-module docs
-├── tests/                  # pytest suite (message_bus, message-api, build_layout, tail_bus)
+├── tests/                  # pytest suite (agent, llm_client, message_bus, message-api, build_layout, tail_bus)
 ├── Dockerfile              # Worker container image (Xvfb, tmux, ffmpeg, Python, etc.)
 ├── docker-compose.yml      # Local dev stack: 3 workers + message-logger + message-api + Redis + RTMP preview
 ├── startup.sh              # Container entrypoint: sets up display, tmux layout, avatar, agent loop, and ffmpeg broadcaster
