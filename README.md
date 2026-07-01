@@ -264,8 +264,10 @@ virtualTubers/
 ├── app/
 │   ├── agent.py          # Agent loop (perceive/think/act): heartbeats + LLM-driven task narration
 │   ├── llm_client.py     # Provider-switchable LLM client (Ollama | Claude)
-│   ├── avatar.py         # Terminal ASCII avatar renderer — currently a stub
+│   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
+│   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
+│   ├── tmux_control.py   # Agent's "hands": select a pane by name, type text/commands into it
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper
 │   └── tail_bus.py       # Rich configurable Kafka feed for the tmux "Message Bus" pane
 ├── services/
