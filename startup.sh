@@ -67,9 +67,17 @@ XTERM_PID=$!
 sleep 2
 
 log "Sizing xterm to fill ${VW}x${VH}"
-WID=$(DISPLAY="${DISPLAY}" xdotool search --sync --class xterm | head -1)
-DISPLAY="${DISPLAY}" xdotool windowmove "$WID" 0 0
-DISPLAY="${DISPLAY}" xdotool windowsize "$WID" "$VW" "$VH"
+# Match by PID, not `--class xterm`: xterm's WM_CLASS class field is "XTerm"
+# (capitalized), so a case-sensitive --class match against lowercase "xterm"
+# silently finds nothing, leaves $WID empty, and the window is never resized
+# off its small default — it just sits in the corner of the captured frame.
+WID=$(DISPLAY="${DISPLAY}" xdotool search --sync --pid "${XTERM_PID}" | head -1)
+if [ -n "${WID}" ]; then
+    DISPLAY="${DISPLAY}" xdotool windowmove "$WID" 0 0
+    DISPLAY="${DISPLAY}" xdotool windowsize "$WID" "$VW" "$VH"
+else
+    log "WARNING: could not find xterm window (pid ${XTERM_PID}) to resize; capture may not fill ${VW}x${VH}"
+fi
 sleep 1
 
 # xterm recomputes its cell grid to fill the window; make tmux follow the new
