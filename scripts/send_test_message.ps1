@@ -14,7 +14,7 @@ param(
     [string]$Url = "http://192.168.1.120:8090/messages",
     [string]$To = "coder",
     [string]$Type = "task_assignment",
-    [string]$Payload = '{"task": "Say hello to the stream and introduce yourself."}'
+    [string]$Payload = '{"task": "Say hello to the stream and introduce yourself. Then list the files in the current directory.*"}'
 )
 
 try {

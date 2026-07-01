@@ -13,7 +13,7 @@ import argparse
 from message_bus import load_worker_config, build_message, MessageProducer, MessageConsumer
 from llm_client import build_llm_client
 from agent_state import resolve_state_path, write_state
-from tmux_control import select_pane, send_keys, send_raw, TmuxError
+from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
 
 
 def resolve(env_name, config_value, default=None):
@@ -42,6 +42,24 @@ def demo_editor_note(worker_id, task):
         print(f"[agent:{worker_id}] tmux editor demo skipped: {exc}")
 
 
+def demo_filetree_ls(worker_id):
+    """Scripted (non-LLM) demo of the agent using the filetree pane: focus
+    it, run `ls` now that it's an interactive shell (see
+    config/panels/filetree.yaml — no longer a `watch` loop, which can't
+    accept keystrokes as commands), then refocus the editor pane so the
+    coder visibly returns to work.
+
+    Best-effort like demo_editor_note: no tmux session must not take the
+    tick loop down.
+    """
+    try:
+        select_pane("filetree")
+        send_command("filetree", "ls")
+        select_pane("editor")
+    except (TmuxError, OSError) as exc:
+        print(f"[agent:{worker_id}] tmux filetree demo skipped: {exc}")
+
+
 def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg, state_path=None):
     task = msg.get("payload", {}).get("task", "(no task description provided)")
     reply_to = msg.get("from") or "broadcast"
@@ -53,6 +71,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg, s
     if state_path:
         write_state(state_path, "thinking", action=f"working on: {task}")
     demo_editor_note(worker_id, task)
+    demo_filetree_ls(worker_id)
 
     try:
         narration = llm_client.complete(

@@ -4,8 +4,15 @@
 # Reusable panel-type definition for the workspace file-tree pane. The layout
 # engine (app/build_layout.py) merges this default with the layout placement
 # and any worker-config override, then emits the tmux command for the pane.
+#
+# An interactive shell, not a `watch` loop: it prints the tree once on start,
+# then `exec bash` replaces the process so the pane keeps a live prompt the
+# agent can drive via tmux_control.py (see agent.py's demo_filetree_ls) —
+# e.g. `ls` after a task lands. Trade-off vs. the old `watch -n2 tree`: the
+# view no longer auto-refreshes on a timer, only when something runs a
+# command in it.
 # ──────────────────────────────────────────────────────────────────────────────
 type: filetree
 title: "Files"
 border_color: blue
-command: 'watch -n2 "tree /data/repo 2>/dev/null || echo (no workspace yet)"'
+command: 'bash -c "tree /data/repo 2>/dev/null || echo (no workspace yet); exec bash"'

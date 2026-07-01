@@ -15,11 +15,16 @@ writes to the small local state file `agent_state.py` owns — this is what
 lets the avatar pane (`avatar.py`) show the right expression and speech
 bubble instead of auto-cycling on a blind timer. See `docs/agent_state.md`.
 
-On `task_assignment`, `act()` also calls `demo_editor_note`, a scripted
-(non-LLM) action that focuses the editor pane and types a fixed
-`# TODO: <task>` comment via `tmux_control.py` — a first, deliberately
-simple exercise of "the agent acting on its own tmux UI" ahead of any real
-LLM-driven tool use. See `docs/tmux_control.md`.
+On `task_assignment`, `act()` also calls two scripted (non-LLM)
+`tmux_control.py`-driven demo actions — a first, deliberately simple
+exercise of "the agent acting on its own tmux UI" ahead of any real
+LLM-driven tool use (see `docs/tmux_control.md`):
+- `demo_editor_note` focuses the editor pane and types a fixed
+  `# TODO: <task>` comment.
+- `demo_filetree_ls` focuses the filetree pane (an interactive shell as of
+  `config/panels/filetree.yaml`'s `bash -c "tree ...; exec bash"` — no
+  longer a `watch` loop, which can't accept keystrokes as commands) and runs
+  `ls`, then refocuses the editor pane.
 
 This is the "think + narrate" slice of the agent brain — it proves the
 instruction round trip (operator/manager → worker → LLM → reply on stream)
@@ -35,6 +40,8 @@ Phase 1 roadmap for what's next.
 def resolve(env_name: str, config_value, default=None)
 
 def demo_editor_note(worker_id: str, task: str) -> None
+
+def demo_filetree_ls(worker_id: str) -> None
 
 def handle_task_assignment(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
 
@@ -62,8 +69,9 @@ def main() -> None
 
 ## Return Value
 
-- `handle_task_assignment` / `demo_editor_note` — `None`; side effects only
-  (Kafka publish + console `print`; tmux pane focus/keystrokes).
+- `handle_task_assignment` / `demo_editor_note` / `demo_filetree_ls` —
+  `None`; side effects only (Kafka publish + console `print`; tmux pane
+  focus/keystrokes).
 - `main` — never returns; runs the tick loop until the process is killed.
 
 ## Dependencies
@@ -71,7 +79,7 @@ def main() -> None
 - `message_bus` (`load_worker_config`, `build_message`, `MessageProducer`, `MessageConsumer`)
 - `llm_client` (`build_llm_client`)
 - `agent_state` (`resolve_state_path`, `write_state`)
-- `tmux_control` (`select_pane`, `send_keys`, `send_raw`, `TmuxError`)
+- `tmux_control` (`select_pane`, `send_keys`, `send_raw`, `send_command`, `TmuxError`)
 - Python standard library: `os`, `time`, `argparse`
 
 ## Usage Examples
@@ -104,14 +112,19 @@ task (`from` field on the original message, `"operator"` when sent via
   `llm.provider` (`build_llm_client`) are all fatal at startup and left
   uncaught, matching `message_bus.py`'s fail-fast convention — Docker's
   `restart: unless-stopped` handles the retry.
-- `demo_editor_note` catches `TmuxError`/`OSError` around every tmux call
-  (pane not found, no tmux session yet, or the `tmux` binary missing
-  entirely — e.g. running `agent.py` outside the container) and just logs
-  it — this is a cosmetic demo action, so it must never take the tick loop
-  down.
+- `demo_editor_note` and `demo_filetree_ls` each catch `TmuxError`/`OSError`
+  around every tmux call (pane not found, no tmux session yet, or the
+  `tmux` binary missing entirely — e.g. running `agent.py` outside the
+  container) and just log it — these are cosmetic demo actions, so neither
+  may ever take the tick loop down.
 
 ## Changelog
 
+- v1.4.0 (2026-07-01) — Added `demo_filetree_ls`, called alongside
+  `demo_editor_note` on every `task_assignment`: focuses the filetree pane
+  and runs `ls`, then refocuses the editor. Required changing
+  `config/panels/filetree.yaml` from a `watch -n2 tree` loop (which can't
+  accept keystrokes as commands) to an interactive shell.
 - v1.3.0 (2026-07-01) — Added `demo_editor_note`, called from
   `handle_task_assignment` on every `task_assignment`: a scripted
   `tmux_control.py`-driven action that focuses the editor pane and types a

@@ -19,7 +19,7 @@ pane is also available as a token.
 
 | Panel (`use`) | Default title | Border color | Default command |
 |---|---|---|---|
-| `filetree` | `Files` | blue | `watch -n2 "tree /data/repo …"` |
+| `filetree` | `Files` | blue | `bash -c "tree /data/repo …; exec bash"` |
 | `avatar` | `Avatar` | magenta | `python3 /app/avatar.py --config {config_path}` |
 | `editor` | `Editor` | green | `nvim` |
 | `kafka_feed` | `Message Bus` | cyan | `python3 /app/tail_bus.py --bus-config {config_path} --feed-config {resolved_path}` |
@@ -29,9 +29,14 @@ pane is also available as a token.
 
 ### `filetree`
 
-- **Purpose:** live view of the worker's workspace repo (`/data/repo`).
-- **Default command:** `watch -n2 "tree /data/repo 2>/dev/null || echo (no workspace yet)"`
-  — refreshes every 2s; prints a placeholder until a workspace exists.
+- **Purpose:** view of the worker's workspace repo (`/data/repo`), and an
+  interactive shell the agent can drive via `tmux_control.py` (see
+  `agent.py`'s `demo_filetree_ls`).
+- **Default command:** `bash -c "tree /data/repo 2>/dev/null || echo (no workspace yet); exec bash"`
+  — prints the tree once (or a placeholder until a workspace exists), then
+  `exec bash` hands the pane a live prompt. Not a `watch` loop: the view only
+  updates when a command runs in it (agent-driven or manual), it does not
+  auto-refresh on a timer.
 - **Notable fields:** universal knobs only (`title`, `border_color`, `command`,
   plus placement `split`/`size`/`target` in the layout preset). In the `coder`
   preset it is the **base pane** (a 25% left column).

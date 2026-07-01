@@ -1,5 +1,5 @@
 import agent
-from agent import demo_editor_note, handle_task_assignment
+from agent import demo_editor_note, demo_filetree_ls, handle_task_assignment
 from agent_state import read_state
 from tmux_control import TmuxError
 
@@ -145,3 +145,37 @@ def test_handle_task_assignment_invokes_demo_editor_note(monkeypatch):
     handle_task_assignment("coder", {"system_prompt": ""}, llm, producer, msg)
 
     assert calls == [("coder", "fix the login bug")]
+
+
+def test_demo_filetree_ls_selects_pane_runs_ls_and_returns_to_editor(monkeypatch):
+    calls = []
+    monkeypatch.setattr(agent, "select_pane", lambda name: calls.append(("select_pane", name)))
+    monkeypatch.setattr(agent, "send_command", lambda name, cmd: calls.append(("send_command", name, cmd)))
+
+    demo_filetree_ls("coder")
+
+    assert calls == [
+        ("select_pane", "filetree"),
+        ("send_command", "filetree", "ls"),
+        ("select_pane", "editor"),
+    ]
+
+
+def test_demo_filetree_ls_swallows_tmux_errors(monkeypatch, capsys):
+    monkeypatch.setattr(agent, "select_pane", lambda name: (_ for _ in ()).throw(TmuxError("no session")))
+
+    demo_filetree_ls("coder")  # must not raise
+
+    assert "tmux filetree demo skipped" in capsys.readouterr().out
+
+
+def test_handle_task_assignment_invokes_demo_filetree_ls(monkeypatch):
+    calls = []
+    monkeypatch.setattr(agent, "demo_filetree_ls", lambda worker_id: calls.append(worker_id))
+    producer = FakeProducer()
+    llm = FakeLLM(response="On it.")
+    msg = {"from": "manager", "type": "task_assignment", "payload": {"task": "fix the login bug"}}
+
+    handle_task_assignment("coder", {"system_prompt": ""}, llm, producer, msg)
+
+    assert calls == ["coder"]
