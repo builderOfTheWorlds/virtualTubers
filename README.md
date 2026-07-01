@@ -122,6 +122,82 @@ pip install -r requirements.txt
 python3 app/avatar.py --config config/workers/coder.yaml
 ```
 
+## Deployment (Portainer)
+
+In production the stack is managed by **Portainer** (the repo is checked out on the
+host, e.g. `/opt/virtualTubers`). Two things differ from a plain `docker compose`
+workflow and cause most "it won't pick up my change" confusion:
+
+**1. Portainer stack env vars are NOT the CLI `.env` file.**
+Values set in the stack's **Environment variables** panel are injected by Portainer
+(as a `stack.env`) **only when you deploy/redeploy through the Portainer UI**. A
+manual `docker compose up -d` run from the host reads the local `.env` file instead
+and ignores the Portainer values. **Pick one mechanism and stick with it** — if the
+stack lives in Portainer, set env vars there and redeploy there; don't recreate
+containers from the CLI.
+
+**2. The worker image is never built by the stack.**
+The three workers use `image: vtube-worker:latest` with `pull_policy: never`, so
+Portainer will **not** build or pull it. You must build it on the host after any
+code change, then redeploy the stack so the containers pick up the new image.
+
+### Required stack environment variables
+
+Set these in the Portainer stack's **Environment variables** panel. Each worker
+streams to its **own** Twitch channel, so each needs that channel's key:
+
+| Variable | Example | Notes |
+|---|---|---|
+| `STREAM_RTMP_URL` | `rtmp://live.twitch.tv/app` | Omit/empty → falls back to the bundled local `rtmp-preview` |
+| `CODER_STREAM_KEY` | `live_xxxxxxxx` | Coder channel's Twitch stream key |
+| `MANAGER_STREAM_KEY` | `live_yyyyyyyy` | Manager channel's key |
+| `TESTER_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
+| `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
+| `KAFKA_BOOTSTRAP_SERVERS` | `192.168.1.120:9092` | Message-bus broker |
+| `KAFKA_TOPIC` | `vtuber.messages` | |
+| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
+
+> Set each variable as its own `name` → `value` pair. Don't put a URL (or any value)
+> in the `name` field — that just creates a junk variable nothing reads.
+
+### Deploy / redeploy after a code change
+
+On the host (the repo checkout, e.g. `/opt/virtualTubers`):
+
+```bash
+git pull                                 # get the latest code
+docker build -t vtube-worker:latest .    # rebuild the worker image (NOT `docker compose build`)
+```
+
+Then in the **Portainer UI** → **Stacks** → this stack → **Update the stack**,
+enabling **Re-pull image and redeploy** / force recreate. Portainer recreates the
+workers on the freshly built image using the current stack env vars.
+
+> Env-only change (e.g. a new stream key)? Skip `docker build` — just **Update the
+> stack** in Portainer to re-inject the env and recreate the containers.
+
+### Verify a worker is streaming to the right place
+
+Compose prefixes container names with the project, so they are
+`virtualtubers-worker-coder-1`, `-manager-1`, and `-tester-1`:
+
+```bash
+# What env did the container actually receive?
+docker exec virtualtubers-worker-coder-1 env | grep -E 'STREAM_RTMP_URL|STREAM_KEY'
+
+# Where is ffmpeg pushing? (should be your Twitch ingest, not rtmp-preview)
+docker logs virtualtubers-worker-coder-1 2>&1 | grep -a 'ffmpeg broadcaster'
+
+# Full startup, minus the agent heartbeat spam:
+docker logs virtualtubers-worker-coder-1 2>&1 | grep -avE '\[agent' | tail -40
+```
+
+A healthy worker logs
+`[startup] Starting ffmpeg broadcaster → rtmp://live.twitch.tv/app/<key>` followed
+by ffmpeg `frame= … speed=~1x` progress lines. If it shows
+`rtmp://rtmp-preview:1935/live/...`, `STREAM_RTMP_URL` didn't reach the container
+(see gotcha #1 above).
+
 ## Configuration
 
 All runtime behavior is config-driven — no code changes needed to retune an agent.
