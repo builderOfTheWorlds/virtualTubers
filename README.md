@@ -10,6 +10,28 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Config-driven modular tmux panels + rich Kafka message feed** — the worker's
+tmux layout is no longer hardcoded in `startup.sh`; it is now declarative,
+ConfigMap-friendly config:
+
+- `app/build_layout.py` (new) — layout engine. Resolves a worker's chosen preset
+  (`config/layouts/<preset>.yaml`) against reusable panel-type defaults
+  (`config/panels/*.yaml`), writes each pane's resolved config to `/tmp/panes/<id>.yaml`,
+  and emits the tmux command sequence; `startup.sh` now just runs
+  `eval "$(python3 /app/build_layout.py --config "$CONFIG_PATH")"`
+- `config/panels/{kafka_feed,avatar,filetree,editor,htop}.yaml` (new) — panel-type
+  defaults; `config/layouts/{coder,tester,manager}.yaml` (new) — per-role composition presets
+- `config/worker.yaml` + `config/workers/*.yaml` now select a preset via
+  `layout.preset` (the dead `layout.variant` block was removed); `LAYOUT_PRESET` env overrides
+- `app/tail_bus.py` — rewritten into a rich, filterable feed: colorized sender,
+  aligned columns, TYPE highlighting, truncated payloads, and heartbeat filtering
+  (the per-tick flood arrives as type `status_update`, hidden by default)
+- Reorder/resize/disable any pane with a **config-only** change — no `startup.sh`
+  or image rebuild
+
+See [docs/layout_system.md](docs/layout_system.md), [docs/panels.md](docs/panels.md),
+[docs/build_layout.md](docs/build_layout.md), and [docs/message_bus_feed.md](docs/message_bus_feed.md).
+
 **Kafka message bus + Postgres logging + HTTP test-injection API** — the inter-agent message bus moved from a plain file (`/data/world-state/messages/bus.log`) to Kafka:
 
 - `app/message_bus.py` (new) — shared envelope/producer/consumer helper used by agents and the new services
@@ -116,10 +138,25 @@ Key sections inside a worker config:
 | `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
 | `voice` | TTS provider (`elevenlabs` \| `kokoro` \| `null`), voice ID, verbosity |
 | `avatar` | Name, title, ASCII expression states, speech bubble sizing |
-| `layout` | Which tmux layout variant to use (`coder` \| `tester` \| `manager`) |
+| `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager`; `LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. |
 | `stream` | RTMP URL/key, resolution, bitrate, fps |
 | `world_state` | Shared state backend (`file` \| `redis`) and connection info |
 | `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
+
+### Tmux layout (config-driven)
+
+The worker's tmux panes are declarative config, not baked into `startup.sh`. A
+worker config picks a preset (`layout.preset`) from `config/layouts/*.yaml`, which
+places and sizes reusable panel types from `config/panels/*.yaml`. **Reorder,
+resize, retitle, or disable a pane by editing config only** — no `startup.sh` edit
+or image rebuild. The rich Kafka "Message Bus" feed pane (`config/panels/kafka_feed.yaml`)
+is configured the same way (colors, type filters, payload controls). See
+[docs/layout_system.md](docs/layout_system.md) and [docs/panels.md](docs/panels.md).
+
+The layered config maps directly onto **Kubernetes ConfigMaps** — `config/panels/`
+becomes one shared ConfigMap, each `config/layouts/*.yaml` a small per-role
+ConfigMap; reconfigure a role by editing its layout ConfigMap and restarting the
+pod. Details in [docs/layout_system.md](docs/layout_system.md#kubernetes-configmap-mapping).
 
 ## Project Structure
 
@@ -128,18 +165,22 @@ virtualTubers/
 ├── app/
 │   ├── agent.py          # Agent loop (perceive/think/act loop) — currently a stub
 │   ├── avatar.py         # Terminal ASCII avatar renderer — currently a stub
+│   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper
-│   └── tail_bus.py       # Live message-bus display, used by the tmux "agent chat" pane
+│   └── tail_bus.py       # Rich configurable Kafka feed for the tmux "Message Bus" pane
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
 │   └── message-api/       # FastAPI service for injecting test messages onto the bus
 ├── config/
-│   ├── worker.yaml        # Annotated default/template worker config
-│   └── workers/           # Per-role configs (coder.yaml, manager.yaml, tester.yaml)
+│   ├── worker.yaml        # Annotated default/template worker config (selects a layout preset)
+│   ├── workers/           # Per-role configs (coder.yaml, manager.yaml, tester.yaml)
+│   ├── panels/            # Reusable panel-TYPE defaults (kafka_feed, avatar, filetree, editor, htop)
+│   └── layouts/           # Composition presets that place & size panels (coder, tester, manager)
 ├── docs/
 │   ├── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
-│   ├── message_bus.md, message_logger.md, message_api.md   # Per-module docs
-├── tests/                  # pytest suite (message_bus, message-api)
+│   ├── layout_system.md, panels.md, build_layout.md   # Config-driven panel system
+│   ├── message_bus.md, message_bus_feed.md, message_logger.md, message_api.md   # Per-module docs
+├── tests/                  # pytest suite (message_bus, message-api, build_layout, tail_bus)
 ├── Dockerfile              # Worker container image (Xvfb, tmux, ffmpeg, Python, etc.)
 ├── docker-compose.yml      # Local dev stack: 3 workers + message-logger + message-api + Redis + RTMP preview
 ├── startup.sh              # Container entrypoint: sets up display, tmux layout, avatar, agent loop, and ffmpeg broadcaster

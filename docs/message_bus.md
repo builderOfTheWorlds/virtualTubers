@@ -7,6 +7,13 @@ the `message-logger`/`message-api` services. Centralizes the JSON message
 envelope shape and thin producer/consumer wrappers so each of those processes
 doesn't reimplement Kafka client setup and (de)serialization.
 
+> **Viewing the bus on stream.** The tmux "agent chat" pane is now the rich,
+> configurable **`kafka_feed`** panel: it consumes every message on the topic and
+> renders a colorized, filterable feed (`HH:MM:SS from ──▶ to  type  payload`),
+> hiding the per-tick heartbeat flood by default. See
+> [docs/message_bus_feed.md](message_bus_feed.md) for how it renders and
+> [docs/panels.md](panels.md) for its `content:` config schema.
+
 ## Signature
 
 ```python
