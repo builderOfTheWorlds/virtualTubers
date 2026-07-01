@@ -1,0 +1,11 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: avatar
+#
+# Reusable panel-type definition for the ASCII-art avatar pane. {config_path} is
+# substituted by the layout engine with the worker config path passed to
+# build_layout.py (env-overridable CONFIG_PATH in startup.sh).
+# ──────────────────────────────────────────────────────────────────────────────
+type: avatar
+title: "Avatar"
+border_color: magenta
+command: "python3 /app/avatar.py --config {config_path}"

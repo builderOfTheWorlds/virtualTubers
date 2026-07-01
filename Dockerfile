@@ -36,6 +36,11 @@ COPY app/ /app/
 # ── Default config (overridden by mount at runtime) ───────────────────────────
 COPY config/worker.yaml /config/worker.yaml
 
+# Panel-type + layout-preset config read by the layout engine (build_layout.py).
+# In k8s these become a shared panels ConfigMap + per-role layout ConfigMaps.
+COPY config/panels/ /config/panels/
+COPY config/layouts/ /config/layouts/
+
 # ── Startup ───────────────────────────────────────────────────────────────────
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh

@@ -32,39 +32,16 @@ pulseaudio --system --disallow-exit --disallow-module-loading --daemonize=true |
 sleep 1
 pactl load-module module-null-sink sink_name=vout sink_properties=device.description=VirtualOut 2>/dev/null || true
 
-# ── 4. Tmux session + pane layout ─────────────────────────────────────────────
+# ── 4+5. Tmux session + panes (config-driven) ─────────────────────────────────
+# The layout engine resolves config/layouts/<preset>.yaml + config/panels/*.yaml,
+# writes each pane's resolved config to /tmp/panes/<id>.yaml, and emits the tmux
+# command sequence (new-session named "worker" + splits + titles + send-keys).
+# Reorder/resize/disable a pane by editing config only — no change here.
+# SESSION must match the session name the engine creates (hardcoded "worker");
+# it is reused below for the xterm attach and the window-size refresh.
 SESSION="worker"
-COLS=240
-ROWS=67
-log "Creating tmux session: ${SESSION} (${COLS}x${ROWS})"
-
-tmux new-session -d -s "${SESSION}" -x "${COLS}" -y "${ROWS}"
-
-# Left column (25%) | right column (75%)
-tmux split-window -h -t "${SESSION}" -p 75
-
-# Left: file list (top 40%) / avatar (bottom 60%)
-tmux select-pane -t "${SESSION}:0.0"
-tmux split-window -v -p 60
-
-# Right: editor (top 70%) / agent chat (bottom 30%)
-tmux select-pane -t "${SESSION}:0.2"
-tmux split-window -v -p 30
-
-# Bottom strip: htop
-tmux select-pane -t "${SESSION}:0.0"
-tmux split-window -v -p 15
-
-# ── 5. Start processes in panes ───────────────────────────────────────────────
-log "Starting pane processes"
-tmux send-keys -t "${SESSION}:0.0" \
-    'watch -n2 "tree /data/repo 2>/dev/null || echo (no workspace yet)"' Enter
-tmux send-keys -t "${SESSION}:0.1" \
-    "python3 /app/avatar.py --config ${CONFIG_PATH}" Enter
-tmux send-keys -t "${SESSION}:0.2" 'nvim' Enter
-tmux send-keys -t "${SESSION}:0.3" \
-    "python3 /app/tail_bus.py --config ${CONFIG_PATH}" Enter
-tmux send-keys -t "${SESSION}:0.4" 'htop' Enter
+log "Building tmux layout from ${CONFIG_PATH}"
+eval "$(python3 /app/build_layout.py --config "${CONFIG_PATH}")"
 
 # ── 6. Open a borderless, full-screen xterm on the virtual display ────────────
 # No window manager: a decorated window (title bar + borders) would inset the

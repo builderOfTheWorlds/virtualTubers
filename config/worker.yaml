@@ -133,15 +133,27 @@ avatar:
 
 
 # ── Tmux layout ───────────────────────────────────────────────────────────────
+# The layout engine (app/build_layout.py) reads this to pick a composition
+# preset from config/layouts/<preset>.yaml. Each preset places & sizes reusable
+# panel types from config/panels/*.yaml. Reorder/resize/disable a pane by editing
+# config only — no startup.sh or image change needed.
+#
+# Resolution order (later wins):
+#   panel-type default (config/panels/<use>.yaml)
+#     -> layout placement + overrides (config/layouts/<preset>.yaml, incl. `with:`)
+#     -> worker-config per-pane override (layout.panes below)
+#     -> env vars (LAYOUT_PRESET selects the preset)
 layout:
-  # Layout variant. Controls what runs in the editor pane.
-  # Options: coder | tester | manager
-  variant: coder
+  # Which composition preset to use. Options: coder | tester | manager.
+  # Env var LAYOUT_PRESET overrides this at runtime.
+  preset: coder
 
-  # What to run in the editor pane per variant:
-  #   coder   → nvim (full editor)
-  #   tester  → pytest output + coverage
-  #   manager → ticket board (rich terminal UI)
+  # Optional per-pane overrides, keyed by pane id (defaults to the panel `use`).
+  # Example — force a different editor command just for this worker:
+  #   panes:
+  #     editor:
+  #       command: "vim"
+  # panes: {}
 
 
 # ── Stream settings ───────────────────────────────────────────────────────────

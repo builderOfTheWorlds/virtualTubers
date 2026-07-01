@@ -57,7 +57,7 @@ avatar:
   bubble_width: 36
 
 layout:
-  variant: manager
+  preset: manager
 
 stream:
   rtmp_url: "rtmp://localhost:1935/live"

@@ -57,7 +57,7 @@ avatar:
   bubble_width: 32
 
 layout:
-  variant: tester
+  preset: tester
 
 stream:
   rtmp_url: "rtmp://localhost:1935/live"

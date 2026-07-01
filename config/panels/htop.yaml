@@ -1,0 +1,9 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: htop
+#
+# Reusable panel-type definition for the system-monitor pane.
+# ──────────────────────────────────────────────────────────────────────────────
+type: htop
+title: "System"
+border_color: yellow
+command: "htop"

@@ -1,0 +1,12 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: editor
+#
+# Reusable panel-type definition for the editor/output pane. The default is a
+# full nvim editor. Layout presets override `command` per role (tester runs the
+# test suite, manager shows a ticket board) or pass a `with: { variant: ... }`
+# per-instance override.
+# ──────────────────────────────────────────────────────────────────────────────
+type: editor
+title: "Editor"
+border_color: green
+command: "nvim"

@@ -1,0 +1,45 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Layout preset: coder
+#
+# Composition preset placing & sizing panels for the CODER role. This preset
+# reproduces the original hardcoded five-pane layout exactly (see the pre-engine
+# startup.sh): a 25% left column (filetree / htop strip / avatar) and a 75% right
+# column (editor 70% / message-bus feed 30%).
+#
+# Geometry model (see docs/build_layout.md):
+#   - The FIRST pane is the base pane (whole screen); its `size` is informational.
+#   - Every later pane is created by splitting its `target` pane (named by `use`).
+#     `size` is the percentage handed to `tmux split-window -p`, i.e. the size of
+#     the NEWLY-created pane. `target` defaults to the base pane when omitted.
+#   - Panes are laid out in list order; `feed` targets `editor`, so `editor` is
+#     listed before it.
+#
+# Per-pane universal knobs: use, id, split, size, target, title, border_color,
+# command, enabled, with.
+# ──────────────────────────────────────────────────────────────────────────────
+preset: coder
+panes:
+  - use: filetree                       # base pane, 25% left column
+    size: 25
+
+  - use: editor                         # right column, top
+    target: filetree
+    split: h
+    size: 75
+    with: { variant: nvim }
+    command: "nvim"
+
+  - use: avatar                         # left column, bottom 60%
+    target: filetree
+    split: v
+    size: 60
+
+  - use: kafka_feed                     # right column, bottom 30%
+    target: editor
+    split: v
+    size: 30
+
+  - use: htop                           # thin 15% strip under filetree
+    target: filetree
+    split: v
+    size: 15

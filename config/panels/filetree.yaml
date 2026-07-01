@@ -1,0 +1,11 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: filetree
+#
+# Reusable panel-type definition for the workspace file-tree pane. The layout
+# engine (app/build_layout.py) merges this default with the layout placement
+# and any worker-config override, then emits the tmux command for the pane.
+# ──────────────────────────────────────────────────────────────────────────────
+type: filetree
+title: "Files"
+border_color: blue
+command: 'watch -n2 "tree /data/repo 2>/dev/null || echo (no workspace yet)"'
