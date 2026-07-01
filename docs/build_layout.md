@@ -95,19 +95,31 @@ command: "nvim"
   pane's `size` is passed verbatim as `tmux split-window -p <size>`. **tmux `-p`
   sizes the newly-created pane**, so `size` is the new pane's percentage of the
   target.
-- tmux numbers panes `0..N` in creation order, which equals the list order, so
-  `id → pane index` is deterministic and stable for `send-keys` targeting.
+- tmux does **not** simply number panes in list/creation order: splitting a
+  pane inserts the new pane immediately after its target and shifts every
+  already-placed pane whose index is `>=` that position up by one. `id → pane
+  index` is only stable for a linear chain of splits off the same target; a
+  branching tree (a pane split, and one of its two children split again while
+  the other child still exists) causes later indices to drift. `emit_tmux()`
+  tracks this explicitly — every pane's recorded index is updated on every
+  split, not just incremented for the newly-created one — so `target` always
+  resolves to the pane's real, current tmux index.
 
 Worked example — the `coder` preset, a three-column layout reverse-engineered
 from a live-tuned tmux session's `window_layout` string:
 
-| order | pane | split | target | `-p` | result |
-|---|---|---|---|---|---|
-| 0 | editor | (base) | — | — | column 1, ~33% wide |
-| 1 | kafka_feed | h | editor | 66 | columns 2+3 combined, ~66% wide |
-| 2 | filetree | h | kafka_feed | 49 | column 2 (whole), carved off the block |
-| 3 | htop | v | kafka_feed | 50 | column 3 top; remainder stays kafka_feed |
-| 4 | avatar | v | filetree | 19 | column 2 top; remainder stays filetree |
+| order | pane | split | target | `-p` | result | final index |
+|---|---|---|---|---|---|---|
+| 0 | editor | (base) | — | — | column 1, ~33% wide | 0 |
+| 1 | avatar | h | editor | 66 | columns 2+3 combined, ~66% wide | 1 |
+| 2 | htop | h | avatar | 50 | column 3 (whole), carved off the block | 3 |
+| 3 | kafka_feed | v | htop | 49 | column 3 bottom; remainder stays htop | 4 |
+| 4 | filetree | v | avatar | 81 | column 2 bottom; remainder stays avatar | 2 |
+
+Note how `htop` and `kafka_feed` end up at final indices 3 and 4 even though
+they were created 2nd and 3rd — `filetree`'s split (step 4) targets `avatar`
+(index 1) and inserts right after it, pushing both of them up by one. This is
+exactly the branching case described above.
 
 > **`size` is always the `-p` value, i.e. the new pane's %** — the target pane
 > keeps whatever percentage remains, never the pane being carved out.

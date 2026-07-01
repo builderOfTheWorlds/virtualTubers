@@ -17,26 +17,26 @@
 # ──────────────────────────────────────────────────────────────────────────────
 preset: coder
 panes:
-  - use: editor                         # base pane, left column (~33% wide)
+  - use: editor                         # base pane, col1 (~33% wide)
     with: { variant: nvim }
     command: "nvim"
 
-  - use: kafka_feed                     # carves out columns 2+3 combined
+  - use: avatar                         # carves out columns 2+3 combined
     target: editor
     split: h
     size: 66
 
-  - use: filetree                       # carves col2 (avatar+filetree) off the block
-    target: kafka_feed
+  - use: htop                           # carves col3 (htop+kafka_feed) off the block
+    target: avatar
     split: h
-    size: 49
-
-  - use: htop                           # top of col3; remainder stays kafka_feed
-    target: kafka_feed
-    split: v
     size: 50
 
-  - use: avatar                         # top of col2; remainder stays filetree
-    target: filetree
+  - use: kafka_feed                     # bottom of col3; remainder stays htop
+    target: htop
     split: v
-    size: 19
+    size: 49
+
+  - use: filetree                       # bottom of col2; remainder stays avatar
+    target: avatar
+    split: v
+    size: 81

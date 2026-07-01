@@ -256,20 +256,19 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     lines.append(f"tmux new-session -d -s {session} -x {cols} -y {rows}")
 
     # id -> tmux pane index, assigned as panes are created (base=0, then 1,2,...).
+    # tmux inserts each new pane immediately after its split target and shifts
+    # every already-placed pane with a >= index up by one, so `index_of` must
+    # be updated for ALL panes on every split, not just incremented for the new
+    # one — otherwise later splits can target a stale index once a pane is used
+    # as a split target more than once with a sibling created in between.
     index_of = {}
     if panes:
         index_of[panes[0]["id"]] = 0
 
-    next_index = 1
     for pane in panes[1:]:
         target_use = pane.get("target")
         # Resolve target to a pane index: match by id/use of an already-placed pane.
-        target_idx = 0
-        if target_use is not None:
-            target_idx = index_of.get(target_use, 0)
-        else:
-            # Default: split the base pane.
-            target_idx = 0
+        target_idx = index_of.get(target_use, 0) if target_use is not None else 0
 
         split_flag = "-h" if str(pane.get("split", "v")).lower() == "h" else "-v"
         size = pane.get("size")
@@ -280,8 +279,11 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
         else:
             lines.append(f"tmux split-window {split_flag} -t {session}:0.{target_idx}")
 
-        index_of[pane["id"]] = next_index
-        next_index += 1
+        new_idx = target_idx + 1
+        for pid, idx in index_of.items():
+            if idx >= new_idx:
+                index_of[pid] = idx + 1
+        index_of[pane["id"]] = new_idx
 
     # Titles (pane-border-format), border colors, and commands.
     lines.append(f"tmux set -t {session} pane-border-status top")

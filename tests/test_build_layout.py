@@ -89,9 +89,13 @@ def test_emitted_tmux_sequence_matches_geometry(dirs, worker_config, monkeypatch
     joined = "\n".join(lines)
 
     # The four splits reproduce the original geometry (targets + -p percentages).
+    # Target indices reflect tmux's real behavior: splitting a pane inserts the
+    # new pane right after it and shifts every higher-indexed pane up by one,
+    # so editor's real index becomes 2 (shifted by avatar's insertion) by the
+    # time kafka_feed splits off it.
     assert "tmux split-window -h -t worker:0.0 -p 75" in joined   # editor off filetree
     assert "tmux split-window -v -t worker:0.0 -p 60" in joined    # avatar off filetree
-    assert "tmux split-window -v -t worker:0.1 -p 30" in joined    # feed off editor (idx 1)
+    assert "tmux split-window -v -t worker:0.2 -p 30" in joined    # feed off editor (shifted to idx 2)
     assert "tmux split-window -v -t worker:0.0 -p 15" in joined    # htop off filetree
 
     # Exactly one new-session and four splits (five panes => four splits).
@@ -102,10 +106,12 @@ def test_emitted_tmux_sequence_matches_geometry(dirs, worker_config, monkeypatch
 def test_send_keys_use_resolved_pane_indices(dirs, worker_config):
     lines, _ = build_layout.build(worker_config, dirs["panels"], dirs["layouts"], dirs["runtime"])
     joined = "\n".join(lines)
-    # Creation order: filetree=0, editor=1, avatar=2, feed=3, htop=4.
+    # Final indices after tmux's shift-on-split: filetree=0, htop=1, avatar=2,
+    # editor=3, kafka_feed=4 (editor and htop both get pushed by later splits
+    # targeting the still-index-0 filetree base pane).
     assert "tmux send-keys -t worker:0.0 'tree /data/repo' Enter" in joined
-    assert "tmux send-keys -t worker:0.1 'nvim' Enter" in joined
-    assert "tmux send-keys -t worker:0.4 'htop' Enter" in joined
+    assert "tmux send-keys -t worker:0.3 'nvim' Enter" in joined
+    assert "tmux send-keys -t worker:0.1 'htop' Enter" in joined
 
 
 # ── (b) resolved files written with merged values ─────────────────────────────
