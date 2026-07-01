@@ -41,7 +41,16 @@ pactl load-module module-null-sink sink_name=vout sink_properties=device.descrip
 # it is reused below for the xterm attach and the window-size refresh.
 SESSION="worker"
 log "Building tmux layout from ${CONFIG_PATH}"
-eval "$(python3 /app/build_layout.py --config "${CONFIG_PATH}")"
+# Build the tmux layout with errexit DISABLED: the emitted script is a sequence
+# of tmux commands, and a single one returning non-zero (e.g. an option the
+# container's tmux version rejects) must NOT abort startup before the ffmpeg
+# broadcaster below. new-session/splits/send-keys run first regardless.
+set +e
+LAYOUT_SCRIPT="$(python3 /app/build_layout.py --config "${CONFIG_PATH}")"
+BUILD_RC=$?
+eval "${LAYOUT_SCRIPT}"
+set -e
+[ "${BUILD_RC}" -eq 0 ] || log "build_layout.py exited ${BUILD_RC} — continuing to broadcaster"
 
 # ── 6. Open a borderless, full-screen xterm on the virtual display ────────────
 # No window manager: a decorated window (title bar + borders) would inset the
