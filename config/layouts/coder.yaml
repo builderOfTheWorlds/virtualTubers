@@ -1,10 +1,9 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Layout preset: coder
 #
-# Composition preset placing & sizing panels for the CODER role. This preset
-# reproduces the original hardcoded five-pane layout exactly (see the pre-engine
-# startup.sh): a 25% left column (filetree / htop strip / avatar) and a 75% right
-# column (editor 70% / message-bus feed 30%).
+# Composition preset placing & sizing panels for the CODER role: a 25% left
+# column (filetree / htop / avatar, spaced into roughly even thirds) and a 75%
+# right column (editor 70% / message-bus feed 30%).
 #
 # Geometry model (see docs/build_layout.md):
 #   - The FIRST pane is the base pane (whole screen); its `size` is informational.
@@ -29,17 +28,17 @@ panes:
     with: { variant: nvim }
     command: "nvim"
 
-  - use: avatar                         # left column, bottom 60%
+  - use: avatar                         # left column, bottom third
     target: filetree
     split: v
-    size: 60
+    size: 33
 
   - use: kafka_feed                     # right column, bottom 30%
     target: editor
     split: v
     size: 30
 
-  - use: htop                           # thin 15% strip under filetree
+  - use: htop                           # left column, middle third
     target: filetree
     split: v
-    size: 15
+    size: 50

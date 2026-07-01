@@ -26,7 +26,7 @@ panes:
   - use: avatar
     target: filetree
     split: v
-    size: 60
+    size: 33
 
   - use: kafka_feed
     target: editor
@@ -36,4 +36,4 @@ panes:
   - use: htop
     target: filetree
     split: v
-    size: 15
+    size: 50

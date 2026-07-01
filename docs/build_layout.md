@@ -98,15 +98,16 @@ command: "nvim"
 - tmux numbers panes `0..N` in creation order, which equals the list order, so
   `id → pane index` is deterministic and stable for `send-keys` targeting.
 
-Worked example — the `coder` preset reproduces the original layout exactly:
+Worked example — the `coder` preset, with the left column spaced into roughly
+even thirds:
 
 | order | pane | split | target | `-p` | result |
 |---|---|---|---|---|---|
 | 0 | filetree | (base) | — | — | left column, 25% wide |
 | 1 | editor | h | filetree | 75 | right column, 75% wide |
-| 2 | avatar | v | filetree | 60 | bottom-left, 60% tall |
+| 2 | avatar | v | filetree | 33 | bottom-left third, 33% tall |
 | 3 | kafka_feed | v | editor | 30 | bottom-right, 30% tall |
-| 4 | htop | v | filetree | 15 | thin strip under filetree, 15% |
+| 4 | htop | v | filetree | 50 | middle-left third, ~33% tall |
 
 > The original `startup.sh` used `split-window -h -p 75` to make the *left* pane
 > 25%; that is exactly `size: 75` on the editor pane (the new right pane), so the
