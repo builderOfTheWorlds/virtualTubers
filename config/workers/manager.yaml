@@ -32,8 +32,8 @@ agent:
 
 llm:
   provider: ollama
-  base_url: "http://localhost:11434"
-  model: "mistral"
+  base_url: "http://100.37.208.112:11434"
+  model: "qwen2.5:14b"
   temperature: 0.6
   max_tokens: 1024
 
