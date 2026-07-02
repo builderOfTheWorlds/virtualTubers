@@ -16,7 +16,7 @@ panes:
   - use: editor                         # base pane, col1 (~33% wide)
     title: "Test Output"
     with: { variant: pytest }
-    command: 'watch -n5 "cd /data/repo 2>/dev/null && pytest --cov -q 2>&1 | tail -40 || echo (no tests yet)"'
+    command: 'watch -n5 "cd /data/repo 2>/dev/null && pytest --cov -q 2>&1 | tail -40 || echo \"(no tests yet)\""'
 
   - use: avatar                         # carves out columns 2+3 combined
     target: editor

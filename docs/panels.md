@@ -32,7 +32,7 @@ pane is also available as a token.
 - **Purpose:** view of the worker's workspace repo (`/data/repo`), and an
   interactive shell the agent can drive via `tmux_control.py` (see
   `agent.py`'s `demo_filetree_ls`).
-- **Default command:** `bash -c "tree /data/repo 2>/dev/null || echo (no workspace yet); exec bash"`
+- **Default command:** `bash -c "tree /data/repo 2>/dev/null || echo \"(no workspace yet)\"; exec bash"`
   — prints the tree once (or a placeholder until a workspace exists), then
   `exec bash` hands the pane a live prompt. Not a `watch` loop: the view only
   updates when a command runs in it (agent-driven or manual), it does not

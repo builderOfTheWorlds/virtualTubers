@@ -15,4 +15,4 @@
 type: filetree
 title: "Files"
 border_color: blue
-command: 'bash -c "tree /data/repo 2>/dev/null || echo (no workspace yet); exec bash"'
+command: 'bash -c "tree /data/repo 2>/dev/null || echo \"(no workspace yet)\"; exec bash"'

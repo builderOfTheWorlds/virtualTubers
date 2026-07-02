@@ -15,7 +15,7 @@ panes:
   - use: editor                         # base pane, col1 (~33% wide)
     title: "Ticket Board"
     with: { variant: tickets }
-    command: 'watch -n5 "cat /data/world-state/tickets/*.md 2>/dev/null || echo (no tickets yet)"'
+    command: 'watch -n5 "cat /data/world-state/tickets/*.md 2>/dev/null || echo \"(no tickets yet)\""'
 
   - use: avatar                         # carves out columns 2+3 combined
     target: editor

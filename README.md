@@ -31,6 +31,10 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
   arriving at the wrong role logs and no-ops. The Kafka feed pane highlights the
   new traffic (`bug_report` red, `test_passed` green, `manager_report` cyan,
   `operator_reply` blue). See [docs/agent.md](docs/agent.md) for details.
+- Full reference of what the operator can send (`task_assignment`,
+  `operator_message`, plus manual/debug injections for every stage of the
+  pipeline) is now written up in
+  [docs/operator_commands.md](docs/operator_commands.md).
 
 **Workers can now act as agents — LLM-driven task narration** — `app/agent.py` is no
 longer a heartbeat-only stub:
@@ -158,6 +162,8 @@ curl -X POST http://localhost:8090/messages \
 ```
 
 The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — then hands the commit to the tester (`commit_notification`), whose `test_passed`/`bug_report` verdict flows on to the manager and, as a `manager_report`, back to the operator. The whole exchange is visible in each worker's console output and the tmux "agent chat"/Kafka feed pane — see [docs/agent.md](docs/agent.md). To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
+
+For the full list of commands an operator can send (task assignment, direct chat, and manual/debug injections for every pipeline stage), see [docs/operator_commands.md](docs/operator_commands.md).
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
