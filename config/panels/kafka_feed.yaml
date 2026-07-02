@@ -22,6 +22,7 @@ content:
     manager: yellow
     tester: magenta
     broadcast: cyan
+    operator: blue
 
   filters:
     # NOTE: agent.py currently emits its per-tick heartbeat flood as type
@@ -38,6 +39,10 @@ content:
     task_complete: green
     clarification_request: yellow
     error: red
+    bug_report: red
+    test_passed: green
+    manager_report: cyan
+    operator_reply: blue
 
   # Payload rendering. mode: pretty | raw | hidden. Truncated to max_chars.
   payload:

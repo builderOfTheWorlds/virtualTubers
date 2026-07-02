@@ -71,6 +71,7 @@ DEFAULT_FEED_CONFIG = {
         "manager": "yellow",
         "tester": "magenta",
         "broadcast": "cyan",
+        "operator": "blue",
     },
     "filters": {
         # NOTE: agent.py publishes its per-tick heartbeat flood as type
@@ -85,6 +86,10 @@ DEFAULT_FEED_CONFIG = {
         "task_complete": "green",
         "clarification_request": "yellow",
         "error": "red",
+        "bug_report": "red",
+        "test_passed": "green",
+        "manager_report": "cyan",
+        "operator_reply": "blue",
     },
     "payload": {"mode": "pretty", "max_chars": 80},   # pretty | raw | hidden
     "timestamp": {"format": "%H:%M:%S", "local": True},
