@@ -4,11 +4,33 @@
 
 virtualTubers is an autonomous AI-powered VTuber streaming system where a team of AI agents (Manager, Coder, Tester) act as a live software development team. Each agent runs in its own Docker container, has its own personality and ASCII-art avatar, works inside a live terminal session (tmux + neovim/htop/etc.), and streams that session to Twitch over RTMP via ffmpeg. It's for anyone who wants to run an always-on, config-driven "AI dev team" stream without hand-building the streaming pipeline from scratch.
 
-The project is early-stage: the terminal avatar (`app/avatar.py`) is still a stub that keeps the container alive and cycles through expressions on a timer. The agent brain (`app/agent.py`) now has a real perceive/think/act slice — it publishes heartbeats every tick and, when it receives a `task_assignment` message, calls a provider-switchable LLM (Ollama or Claude) with the worker's persona/system prompt and replies on the bus with an in-character narration. Writing real code, running commands, and updating the avatar/editor panes from agent state are still ahead — see the Phase 1 roadmap in the architecture doc.
+The project is early-stage: the terminal avatar (`app/avatar.py`) is still a stub that keeps the container alive and cycles through expressions on a timer. The agent brain (`app/agent.py`) now has a real perceive/think/act slice — it publishes heartbeats every tick and dispatches every incoming message type through role-gated handlers backed by a provider-switchable LLM (Ollama or Claude): the coder narrates a task and hands the commit to the tester, the tester reports `test_passed`/`bug_report` to the manager, and the manager re-delegates fixes (bounded at 3 retries) or reports back to the operator. Writing real code and running real tests are still ahead — see the Phase 1 roadmap in the architecture doc.
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
 ## Recent Changes
+
+**Workers now collaborate as a team — coder → tester → manager → operator** —
+`app/agent.py` dispatches all 8 message types from the concept doc (§3.4) via a
+`MESSAGE_HANDLERS` table, not just `task_assignment`:
+
+- The coder still replies `task_complete`, but now also hands its commit to the
+  tester (`commit_notification`); the tester "runs the suite" (a weighted-random
+  stub for now — no real test execution yet) and reports `test_passed` or
+  `bug_report` to the manager.
+- The manager reports back to the operator with a new `manager_report` message
+  type (payload `report_type: milestone | blocker | escalation`) — celebrating
+  passing suites, escalating blockers and stuck bugs.
+- The bug ↔ fix loop is bounded: a `retry_count` travels in the message payloads
+  around the whole loop, and after 3 retries (`MAX_BUG_RETRIES`) the manager
+  escalates to the operator instead of re-delegating another fix.
+- Any worker answers a direct `operator_message` (message-api's default type)
+  with a new `operator_reply` type addressed to `operator`; `retest_request` is
+  an operator lever via `message-api` (nothing sends it automatically yet).
+- Handlers are role-gated on the worker config's `agent.role` — a message type
+  arriving at the wrong role logs and no-ops. The Kafka feed pane highlights the
+  new traffic (`bug_report` red, `test_passed` green, `manager_report` cyan,
+  `operator_reply` blue). See [docs/agent.md](docs/agent.md) for details.
 
 **Workers can now act as agents — LLM-driven task narration** — `app/agent.py` is no
 longer a heartbeat-only stub:
@@ -118,7 +140,7 @@ This launches three worker containers — `worker-coder`, `worker-manager`, `wor
 1. Boots a virtual display (Xvfb) and PulseAudio sink
 2. Lays out a tmux session (file tree, ASCII avatar, editor/output pane, agent chat log, htop)
 3. Opens that session in xterm on the virtual display
-4. Starts the agent loop (`app/agent.py`), which publishes heartbeats, consumes messages addressed to it over the Kafka bus, and calls its configured LLM to narrate a reply to any `task_assignment` it receives
+4. Starts the agent loop (`app/agent.py`), which publishes heartbeats, consumes messages addressed to it over the Kafka bus, and dispatches each one to its role's handler — narrating every step via its configured LLM as work flows coder → tester → manager → operator (see [docs/agent.md](docs/agent.md))
 5. Captures the display with ffmpeg and pushes it out over RTMP to the configured stream key
 
 To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it defaults to `rtmp://rtmp-preview:1935/live`) and view the stream with a player like VLC pointed at `rtmp://localhost:1935/live/<stream_key>`.
@@ -135,7 +157,7 @@ curl -X POST http://localhost:8090/messages \
   -d '{"to": "coder", "type": "task_assignment", "payload": {"task": "say hello"}}'
 ```
 
-The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — visible in its console output and the tmux "agent chat"/Kafka feed pane. `manager`/`tester` won't react, since the message wasn't addressed to them or broadcast. To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
+The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — then hands the commit to the tester (`commit_notification`), whose `test_passed`/`bug_report` verdict flows on to the manager and, as a `manager_report`, back to the operator. The whole exchange is visible in each worker's console output and the tmux "agent chat"/Kafka feed pane — see [docs/agent.md](docs/agent.md). To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 

@@ -51,11 +51,11 @@ def main(argv: list[str] | None = None) -> None
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
-| `colors` | map | `{coder: green, manager: yellow, tester: magenta, broadcast: cyan}` | Sender color keyed by the message `from` value. |
+| `colors` | map | `{coder: green, manager: yellow, tester: magenta, broadcast: cyan, operator: blue}` | Sender color keyed by the message `from` value. |
 | `filters.hide_types` | list | `[heartbeat, status_update]` | Types to drop. **status_update is the current heartbeat carrier** (see Notes). |
 | `filters.show_types` | list | `[]` | Empty = show all except hidden; non-empty = whitelist. |
 | `filters.direction` | str | `all` | `all` \| `broadcast` \| `to:<id>` \| `from:<id>`. |
-| `highlight` | map | `{task_complete: green, clarification_request: yellow, error: red}` | Colors the TYPE column by category. |
+| `highlight` | map | `{task_complete: green, clarification_request: yellow, error: red, bug_report: red, test_passed: green, manager_report: cyan, operator_reply: blue}` | Colors the TYPE column by category. |
 | `payload.mode` | str | `pretty` | `pretty` \| `raw` \| `hidden`. |
 | `payload.max_chars` | int | `80` | Truncation length (ellipsis appended). |
 | `timestamp.format` | str | `%H:%M:%S` | `strftime` format. |

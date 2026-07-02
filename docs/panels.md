@@ -93,11 +93,11 @@ Only the `content:` block is consumed by `tail_bus.py`. Its schema:
 
 | Key | Type | Default | Description |
 |---|---|---|---|
-| `colors` | map | `{coder: green, manager: yellow, tester: magenta, broadcast: cyan}` | Sender color keyed by the message `from` value. **Feed colors live here, never coupled to the `avatar:` block** — senders include `broadcast`, which has no avatar. |
+| `colors` | map | `{coder: green, manager: yellow, tester: magenta, broadcast: cyan, operator: blue}` | Sender color keyed by the message `from` value. **Feed colors live here, never coupled to the `avatar:` block** — senders include `broadcast`, which has no avatar. |
 | `filters.hide_types` | list | `[heartbeat, status_update]` | Message types to drop. See the status_update note below. |
 | `filters.show_types` | list | `[]` | Empty = show all except hidden; non-empty = whitelist (only these types). |
 | `filters.direction` | str | `all` | `all` \| `broadcast` \| `to:<id>` \| `from:<id>`. Filter by message routing. |
-| `highlight` | map | `{task_complete: green, clarification_request: yellow, error: red}` | Colors the TYPE column when the message type matches a category. |
+| `highlight` | map | `{task_complete: green, clarification_request: yellow, error: red, bug_report: red, test_passed: green, manager_report: cyan, operator_reply: blue}` | Colors the TYPE column when the message type matches a category. |
 | `payload.mode` | str | `pretty` | `pretty` (key=value) \| `raw` (`repr`) \| `hidden` (omit payload). |
 | `payload.max_chars` | int | `80` | Truncate the rendered payload to this length (ellipsis appended). |
 | `timestamp.format` | str | `%H:%M:%S` | `strftime` format for the leading time column. |
