@@ -1,6 +1,9 @@
 # Implementation Plan — Worker Interaction over Kafka
 
-> Status: **planned, not yet implemented**. Branch: `claude/virtualtubers-repo-access-8wx0n2`.
+> Status: **implemented — landed on `main` 2026-07-02** (`feat(agent)` + `docs` commits).
+> One amendment vs this plan: `retry_count` is threaded through
+> `task_assignment → commit_notification → bug_report` (the cap in §4.4 was
+> unreachable as originally written because the count never returned to the manager).
 > This plan wires up the missing inter-agent message types so Manager/Coder/Tester
 > hand work off to each other and report back to the operator (the boss), per
 > `docs/VTuber_AI_Dev_Team_Concept.md` §3.4.
