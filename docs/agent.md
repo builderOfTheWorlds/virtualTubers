@@ -250,6 +250,33 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.0.0 (2026-07-03) — Coders write REAL code and testers run REAL tests.
+  All handlers gained a trailing `coding_backend=None` kwarg (uniform
+  dispatch; existing positional call sites unaffected).
+  `handle_task_assignment` on a backend-equipped coder runs
+  `coding_backend.run_task()` BEFORE narrating (so narration describes what
+  actually happened), publishes a broadcast `coding_run_report` for every
+  run (unpacked into Postgres `coding_backend_runs` by message-logger),
+  replays the commit via `git show --stat` in the filetree pane
+  (`show_commit_in_filetree`), sends failures to the manager as
+  `clarification_request` blockers, and threads
+  `coder_id`/`commit`/`backend` through `commit_notification`.
+  `_run_tests_and_report` resolves the coder's read-only workspace mount
+  (`_resolve_workspace`: config `agent.workspaces` map, else
+  `/data/repos/<coder_id>`) and really runs pytest via `test_runner.py` —
+  severity now comes from failure count (`_severity_from_failures`), repro
+  carries failing test IDs, payloads carry `coder_id` + `real_run`; the
+  weighted-random stub survives only for untestable workspaces (legacy
+  narration-only coder). `handle_bug_report` re-delegates to the
+  ORIGINATING coder via payload `coder_id` (falls back to `"coder"`).
+  A narration-LLM failure after a successful coding run or real test
+  verdict no longer discards the work — it proceeds with a
+  `(narration unavailable)` fallback. Startup builds the backend via
+  `build_coding_backend(config, llm_client)` inside a catch-all: a broken
+  backend degrades the worker to narration-only rather than crashing it
+  (deliberate exception to the fail-fast convention: the stream staying
+  live matters more than the backend).
+
 - v1.5.0 (2026-07-02) — Replaced the single `task_assignment` branch with
   the `MESSAGE_HANDLERS` dispatch table covering all 8 message types from
   the concept doc §3.4. Workers now collaborate by role: the coder also

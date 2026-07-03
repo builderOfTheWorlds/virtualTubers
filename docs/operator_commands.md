@@ -15,8 +15,17 @@ Message shape is always the same three fields:
 {"to": "<worker or broadcast>", "type": "<message type>", "payload": {...}}
 ```
 
-`to` is one of `coder`, `manager`, `tester`, or `broadcast` (fans out to all
-three). `type` defaults to `operator_message` if omitted.
+`to` is one of `coder`, `coder-native`, `coder-opencode`, `coder-aider`,
+`manager`, `tester`, or `broadcast` (fans out to all workers). `type`
+defaults to `operator_message` if omitted.
+
+The three `coder-*` workers carry a real coding backend
+(`docs/coding_backend.md`): a `task_assignment` sent to them edits actual
+files in their workspace volume, commits, and gets REALLY tested by the
+tester (`docs/test_runner.md`). The legacy `coder` remains narration-only.
+To A/B test the backends, send the same task to each — see
+`sandbox/README.md` for canonical tasks, and query `coding_backend_runs`
+in Postgres for the results.
 
 ## Primary operator commands
 

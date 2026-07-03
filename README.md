@@ -10,6 +10,38 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Coders now write REAL code — swappable coding backends, A/B-tested live** —
+the biggest Phase-1 gap is closed: a coder worker can actually edit files, commit,
+and have its work really tested, via a config-selected backend
+(`coding_backend.provider` in the worker config — same provider-switch pattern
+as `llm.provider`):
+
+- Three new coder workers run the SAME task through different tools, each in
+  its own workspace volume seeded from a tiny `sandbox/` project (one seeded
+  bug, suite goes green when fixed): **NYX-1** (`coder-native`, our own
+  minimal LLM loop), **OKO-2** (`coder-opencode`, OpenCode CLI), **ADA-3**
+  (`coder-aider`, aider). Send the same `task_assignment` to each via
+  `message-api` and compare.
+- The tester now **really runs pytest** against read-only mounts of each
+  coder's workspace — real `test_passed`/`bug_report` verdicts with failing
+  test IDs in the repro; the weighted-random stub survives only for
+  workspaces it can't reach. The manager re-delegates fixes to the
+  *originating* coder (`coder_id` travels the whole loop).
+- Every run is published as a `coding_run_report` bus message and unpacked
+  by `message-logger` into a new `coding_backend_runs` Postgres table:
+  `SELECT backend, success, duration_s FROM coding_backend_runs;`
+- Commits are local-only for now (per-persona authorship via
+  `app/git_client.py`); push/PR no-op gracefully until `GIT_SERVER_URL`
+  points at the (separately planned) local git server.
+- Worker image grew Node 18 + OpenCode + aider (isolated venv) — rebuild
+  required: `docker build -t vtube-worker:latest .`
+
+See [docs/coding_backend.md](docs/coding_backend.md),
+[docs/git_client.md](docs/git_client.md),
+[docs/test_runner.md](docs/test_runner.md),
+[docs/workspace_setup.md](docs/workspace_setup.md), and
+[sandbox/README.md](sandbox/README.md) for task ideas.
+
 **Container logs now ship to Postgres too** — `services/log-shipper/` (new)
 follows the stdout/stderr of every container in this project's docker-compose
 stack (discovered via a read-only Docker socket mount) and inserts each line
@@ -237,6 +269,8 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.1.120:9092` | Message-bus broker |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
+| `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
+| `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 
 > Set each variable as its own `name` → `value` pair. Don't put a URL (or any value)
 > in the `name` field — that just creates a junk variable nothing reads.
@@ -299,6 +333,7 @@ Key sections inside a worker config:
 | `stream` | RTMP URL/key, resolution, bitrate, fps |
 | `world_state` | Shared state backend (`file` \| `redis`) and connection info |
 | `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
+| `coding_backend` | Which tool writes real code (`provider`: `native` \| `opencode` \| `aider` \| `none`; `workspace`, `timeout_s`, optional `model` override). See [docs/coding_backend.md](docs/coding_backend.md). |
 
 ### Tmux layout (config-driven)
 
@@ -320,8 +355,13 @@ pod. Details in [docs/layout_system.md](docs/layout_system.md#kubernetes-configm
 ```
 virtualTubers/
 ├── app/
-│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats + LLM-driven task narration
+│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats, task narration, real coding + testing flows
 │   ├── llm_client.py     # Provider-switchable LLM client (Ollama | Claude)
+│   ├── coding_backend.py # Swappable coding backend layer (native | opencode | aider) + TaskResult
+│   ├── coding_backends/  # One adapter per backend provider
+│   ├── git_client.py     # Local git ops per persona; push/PR no-op until GIT_SERVER_URL
+│   ├── workspace_setup.py# Seeds coder workspace volumes from the sandbox template
+│   ├── test_runner.py    # Tester's real pytest execution (copy-to-tmpdir, ro mounts)
 │   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
@@ -331,9 +371,10 @@ virtualTubers/
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
 │   └── message-api/       # FastAPI service for injecting test messages onto the bus
+├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
 ├── config/
 │   ├── worker.yaml        # Annotated default/template worker config (selects a layout preset)
-│   ├── workers/           # Per-role configs (coder.yaml, manager.yaml, tester.yaml)
+│   ├── workers/           # Per-role configs (coder, manager, tester + coder-native/-opencode/-aider)
 │   ├── panels/            # Reusable panel-TYPE defaults (kafka_feed, avatar, filetree, editor, htop)
 │   └── layouts/           # Composition presets that place & size panels (coder, tester, manager)
 ├── docs/
