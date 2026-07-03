@@ -94,6 +94,22 @@ services:
       - "8090:8000"
     restart: unless-stopped
 
+  log-shipper:
+    build:
+      context: .
+      dockerfile: services/log-shipper/Dockerfile
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-mafober}
+      POSTGRES_USER: ${POSTGRES_USER:-mafober}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+    volumes:
+      # Read-only Docker socket access is required to discover and follow
+      # sibling containers' logs; there's no finer-grained way to scope this.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
   # Shared world state
   redis:
     image: redis:7-alpine

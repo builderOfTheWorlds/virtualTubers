@@ -10,6 +10,16 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Container logs now ship to Postgres too** — `services/log-shipper/` (new)
+follows the stdout/stderr of every container in this project's docker-compose
+stack (discovered via a read-only Docker socket mount) and inserts each line
+into a `container_logs` table, alongside the existing `messages` table from
+`message-logger`. This means all of this project's container logs — workers,
+`message-logger`, `message-api`, etc. — can be reviewed with a single SQL
+query instead of `docker logs` per container. Ships new lines only; no
+historical backfill. See [docs/log_shipper.md](docs/log_shipper.md) for
+details, including a security note on the Docker socket mount.
+
 **Workers now collaborate as a team — coder → tester → manager → operator** —
 `app/agent.py` dispatches all 8 message types from the concept doc (§3.4) via a
 `MESSAGE_HANDLERS` table, not just `task_assignment`:
@@ -149,6 +159,16 @@ This launches three worker containers — `worker-coder`, `worker-manager`, `wor
 
 To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it defaults to `rtmp://rtmp-preview:1935/live`) and view the stream with a player like VLC pointed at `rtmp://localhost:1935/live/<stream_key>`.
 
+### Shelling into a running container
+
+To poke around inside a running worker (check logs, inspect config, debug tmux panes), exec into it directly — no need to stop/restart anything. Since no `container_name` is pinned in `docker-compose.yml`, Compose auto-names containers `<project>-<service>-<n>`; under Portainer that's typically the `virtualtubers-` project prefix:
+
+```bash
+docker exec -it virtualtubers-worker-coder-1 bash
+```
+
+Swap `worker-coder` for `worker-manager`, `worker-tester`, `message-logger`, `message-api`, or `log-shipper` as needed. Run `docker ps` first if you're unsure of the exact name/suffix on your host.
+
 ### Inter-agent messaging (Kafka)
 
 Agents talk to each other over a Kafka topic (`vtuber.messages` by default) instead of a file — see `docs/message_bus.md`. Every message is durably logged to Postgres by the `message-logger` service (`docs/message_logger.md`).
@@ -167,7 +187,11 @@ For the full list of commands an operator can send (task assignment, direct chat
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
+> **Always use the project's `.venv` for local development — never install packages into or run scripts against the global/system Python on this machine.** Create it once with `python -m venv .venv`, then activate it before installing dependencies or running anything.
+
 ```bash
+python -m venv .venv          # first time only
+.venv\Scripts\activate         # Windows (use `source .venv/bin/activate` on macOS/Linux)
 pip install -r requirements.txt
 python3 app/avatar.py --config config/workers/coder.yaml
 ```
