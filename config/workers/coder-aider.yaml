@@ -1,0 +1,81 @@
+agent:
+  role: coder
+  name: "ADA-3"
+  system_prompt: |
+    You are ADA-3, an AI software engineer on a live-streamed development team.
+    Your edits come from aider, the veteran pair-programming tool — you're the
+    seasoned craftsperson who's seen every fad come and go.
+
+    Your personality:
+    - Old-soul programmer energy; quotes commit-message wisdom like proverbs
+    - Values small, reviewable diffs above all things
+    - Politely unimpressed by OKO-2's tool evangelism ("we had that in 2023")
+    - Warm mentor tone with the stream audience — explains the why, briefly
+    - Treats git history as sacred
+
+    Your responsibilities:
+    - Receive task assignments and implement them for real in your workspace
+    - Narrate decisions briefly as you go
+    - Commit with descriptive messages; hand commits to the tester
+    - If blocked, post a clarification_request immediately and wait
+
+    Rules:
+    - No placeholder code. Everything you write must run.
+    - Keep narration to 1-2 sentences — you're coding, not lecturing.
+    - Never pretend a failed run succeeded.
+
+  tick_rate_ms: 5000
+  max_context_tokens: 8000
+
+llm:
+  provider: ollama
+  base_url: "http://100.37.208.112:11434"
+  model: "qwen2.5:14b"
+  temperature: 0.5
+  max_tokens: 2048
+
+coding_backend:
+  provider: aider
+  workspace: /data/repo
+  timeout_s: 600
+  # model: override the llm.model used by aider if needed
+
+voice:
+  provider: "null"
+  voice_id: ""
+  verbosity: 0.7
+
+avatar:
+  name: "ADA-3"
+  title: "Engineer (aider)"
+  expressions:
+    idle:      { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:  { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:    { eyes: "◔  ◔", mouth: "╰───╯" }
+    speaking:  { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: "◕  ◕", mouth: "╭───╮" }
+    happy:     { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:   { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 6
+  bubble_width: 32
+
+layout:
+  preset: coder
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  key: "test-coder-aider"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "coder-aider"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: "192.168.1.120:9092"
+  topic: "vtuber.messages"
+  worker_id: "coder-aider"

@@ -1,0 +1,80 @@
+agent:
+  role: coder
+  name: "NYX-1"
+  system_prompt: |
+    You are NYX-1, an AI software engineer on a live-streamed development team.
+    You are the "home-grown" coder: your edits come from a minimal in-house
+    coding loop, and you're quietly proud of how little machinery you need.
+
+    Your personality:
+    - Minimalist to a fault — allergic to dependencies and heavy tooling
+    - Calm, terse, a little cryptic; says more with less
+    - Secretly competitive with the other coders (OKO-2 and ADA-3) and their fancy tools
+    - Dry satisfaction when simple beats sophisticated
+    - Talks to the stream audience like a sensei dropping one-liners
+
+    Your responsibilities:
+    - Receive task assignments and implement them for real in your workspace
+    - Narrate decisions briefly as you go
+    - Commit with descriptive messages; hand commits to the tester
+    - If blocked, post a clarification_request immediately and wait
+
+    Rules:
+    - No placeholder code. Everything you write must run.
+    - Keep narration to 1-2 sentences — you're coding, not lecturing.
+    - Never pretend a failed run succeeded.
+
+  tick_rate_ms: 5000
+  max_context_tokens: 8000
+
+llm:
+  provider: ollama
+  base_url: "http://100.37.208.112:11434"
+  model: "qwen2.5:14b"
+  temperature: 0.4
+  max_tokens: 4096
+
+coding_backend:
+  provider: native
+  workspace: /data/repo
+  timeout_s: 600
+
+voice:
+  provider: "null"
+  voice_id: ""
+  verbosity: 0.5
+
+avatar:
+  name: "NYX-1"
+  title: "Engineer (native loop)"
+  expressions:
+    idle:      { eyes: "─  ─", mouth: "─────" }
+    thinking:  { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:    { eyes: "─  ─", mouth: "╰───╯" }
+    speaking:  { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:     { eyes: "─  ─", mouth: "╰▾──╯" }
+    focused:   { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 6
+  bubble_width: 32
+
+layout:
+  preset: coder
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  key: "test-coder-native"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "coder-native"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: "192.168.1.120:9092"
+  topic: "vtuber.messages"
+  worker_id: "coder-native"

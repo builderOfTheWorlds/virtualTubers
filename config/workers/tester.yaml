@@ -30,6 +30,16 @@ agent:
   tick_rate_ms: 6000
   max_context_tokens: 8000
 
+  # Where each coder's workspace volume is mounted (read-only) inside THIS
+  # container — agent.py falls back to /data/repos/<coder_id> when a coder
+  # isn't listed here. Workspaces that don't exist (e.g. the legacy
+  # narration-only coder) fall back to the stub verdict.
+  workspaces:
+    coder: /data/repos/coder
+    coder-native: /data/repos/coder-native
+    coder-opencode: /data/repos/coder-opencode
+    coder-aider: /data/repos/coder-aider
+
 llm:
   provider: ollama
   base_url: "http://100.37.208.112:11434"

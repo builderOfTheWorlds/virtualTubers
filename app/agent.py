@@ -18,17 +18,25 @@ import argparse
 
 from message_bus import load_worker_config, build_message, MessageProducer, MessageConsumer
 from llm_client import build_llm_client
+from coding_backend import build_coding_backend
+from test_runner import run_pytest, workspace_testable
 from agent_state import resolve_state_path, write_state
 from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
 
 
-# Stub test-outcome heuristic — no real test execution yet (see
-# .claude/prompts/worker_interaction_kafka.md §2/§9). Module-level constants
-# so tuning or replacing the heuristic is a one-edit change.
+# Stub test-outcome heuristic — fallback for workspaces the tester can't
+# reach (e.g. the legacy narration-only coder never seeds its volume). Real
+# runs go through test_runner.run_pytest. Module-level constants so tuning
+# or replacing the heuristic is a one-edit change.
 TEST_PASS_PROBABILITY = 0.7
 BUG_SEVERITIES = ["low", "medium", "high", "critical"]
 BUG_SEVERITY_WEIGHTS = [10, 40, 35, 15]
 MAX_BUG_RETRIES = 3
+
+# Tester-side default: where each coder's workspace volume is mounted
+# (read-only) inside the tester container; override per-coder via the tester
+# config's `agent.workspaces` map.
+WORKSPACE_MOUNT_PATTERN = "/data/repos/{coder_id}"
 
 
 def resolve(env_name, config_value, default=None):
@@ -89,20 +97,79 @@ def demo_filetree_ls(worker_id):
         print(f"[agent:{worker_id}] tmux filetree demo skipped: {exc}")
 
 
-def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def show_commit_in_filetree(worker_id, workspace):
+    """After a real coding-backend run, show the resulting commit on stream:
+    run `git show --stat HEAD` in the filetree pane (an interactive shell —
+    see demo_filetree_ls) and refocus the editor. Best-effort: no tmux
+    session must never fail the run itself."""
+    try:
+        select_pane("filetree")
+        send_command("filetree", f"git -C {workspace} show --stat HEAD")
+        select_pane("editor")
+    except (TmuxError, OSError) as exc:
+        print(f"[agent:{worker_id}] tmux commit replay skipped: {exc}")
+
+
+def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
+                           state_path=None, coding_backend=None):
     payload = msg.get("payload", {})
     task = payload.get("task", "(no task description provided)")
     retry_count = payload.get("retry_count", 0)
     reply_to = msg.get("from") or "broadcast"
-    prompt = (
-        f"You've just been assigned a new task by {reply_to}: {task}\n\n"
-        "Narrate what you're doing in 1-3 sentences, in character, as if speaking to the stream."
-    )
 
     if state_path:
         write_state(state_path, "thinking", action=f"working on: {task}")
     demo_editor_note(worker_id, task)
     demo_filetree_ls(worker_id)
+
+    # Real work first (when this coder has a coding backend), narration
+    # second — so the narration can describe what actually happened instead
+    # of inventing an outcome.
+    result = None
+    if coding_backend is not None and agent_config.get("role") == "coder":
+        if state_path:
+            write_state(state_path, "focused", action=f"coding: {task}")
+        result = coding_backend.run_task(task)
+        print(
+            f"[agent:{worker_id}] coding run backend={result.backend} "
+            f"success={result.success} commit={result.commit} "
+            f"files={result.files_changed} +{result.insertions}/-{result.deletions} "
+            f"in {result.duration_s}s"
+        )
+        # Durable A/B record: message-logger unpacks this type into the
+        # coding_backend_runs table (broadcast so the feed pane shows it too).
+        producer.send(build_message(
+            worker_id, "broadcast", "coding_run_report",
+            {"task": task, "retry_count": retry_count, **result.to_payload()},
+        ))
+        if result.success:
+            show_commit_in_filetree(worker_id, coding_backend.workspace)
+        else:
+            # A failed coding run is a blocker, not a commit to hand over —
+            # same clarification_request contract the LLM-failure path uses,
+            # so the manager escalates it identically.
+            print(f"[agent:{worker_id}] coding run failed: {result.error}")
+            if state_path:
+                write_state(state_path, "frustrated", action=f"failed: {task}",
+                            bubble=f"Ugh... {result.error}")
+            producer.send(build_message(
+                worker_id, "manager", "clarification_request",
+                {"task": task, "error": f"coding backend failed: {result.error}"},
+            ))
+            return
+
+    if result is not None:
+        prompt = (
+            f"You've just been assigned this task by {reply_to}: {task}\n\n"
+            f"You implemented it for real: commit {result.commit[:8] if result.commit else '?'} "
+            f"changed {result.files_changed} file(s) (+{result.insertions}/-{result.deletions}). "
+            "Narrate what you did in 1-3 sentences, in character, as if speaking to the stream."
+        )
+    else:
+        prompt = (
+            f"You've just been assigned a new task by {reply_to}: {task}\n\n"
+            "Narrate what you're doing in 1-3 sentences, in character, as if speaking to the stream."
+        )
 
     try:
         narration = llm_client.complete(
@@ -113,11 +180,17 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg, s
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
             write_state(state_path, "frustrated", action=f"failed: {task}", bubble=f"Ugh... {exc}")
-        producer.send(build_message(
-            worker_id, reply_to, "clarification_request",
-            {"task": task, "error": str(exc)},
-        ))
-        return
+        if result is not None and result.success:
+            # The code exists and is committed; only the narration failed.
+            # Hand the commit over anyway — never let a flaky narration LLM
+            # strand real, finished work.
+            narration = f"(narration unavailable: {exc})"
+        else:
+            producer.send(build_message(
+                worker_id, reply_to, "clarification_request",
+                {"task": task, "error": str(exc)},
+            ))
+            return
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
@@ -129,38 +202,101 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg, s
 
     # Coder hands the "commit" straight to the tester so the ticket keeps
     # flowing: coder -> tester -> manager. retry_count rides along so the
-    # manager can bound the bug/fix loop (MAX_BUG_RETRIES).
+    # manager can bound the bug/fix loop (MAX_BUG_RETRIES); coder_id rides
+    # along so the tester finds the right workspace mount and the manager
+    # re-delegates fixes to the right coder now that there are several.
     if agent_config.get("role") == "coder":
+        commit_payload = {
+            "task": task,
+            "commit_message": f"Implement: {task}",
+            "narration": narration,
+            "retry_count": retry_count,
+            "coder_id": worker_id,
+        }
+        if result is not None:
+            commit_payload.update({
+                "commit": result.commit,
+                "backend": result.backend,
+                "files_changed": result.files_changed,
+            })
         producer.send(build_message(
-            worker_id, "tester", "commit_notification",
-            {
-                "task": task,
-                "commit_message": f"Implement: {task}",
-                "narration": narration,
-                "retry_count": retry_count,
-            },
+            worker_id, "tester", "commit_notification", commit_payload,
         ))
 
 
+def _resolve_workspace(agent_config, coder_id):
+    """Tester-side: where is this coder's workspace mounted in MY container?
+    Config map `agent.workspaces: {coder_id: path}` wins; otherwise the
+    conventional read-only mount path."""
+    workspaces = agent_config.get("workspaces") or {}
+    return workspaces.get(coder_id) or WORKSPACE_MOUNT_PATTERN.format(coder_id=coder_id)
+
+
+def _severity_from_failures(failed_tests):
+    """Map real failure counts onto the message schema's severity levels.
+    Not trying to be clever — count is the only signal a suite gives us."""
+    if len(failed_tests) >= 3:
+        return "high"
+    if len(failed_tests) == 2:
+        return "medium"
+    return "low"
+
+
 def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, state_path=None):
-    """Shared tester flow for commit_notification / retest_request: narrate a
-    test run, decide the outcome via _decide_test_outcome(), and report
-    `test_passed` or `bug_report` to the manager. On the tester's own LLM
-    failure, send `clarification_request` to the manager (same contract shape
-    the coder uses, so one manager handler covers both origins).
+    """Shared tester flow for commit_notification / retest_request: REALLY run
+    pytest against the coder's workspace mount when it's reachable (see
+    test_runner.py), falling back to the _decide_test_outcome() stub when it
+    isn't (legacy narration-only coder). Reports `test_passed` or
+    `bug_report` to the manager, threading coder_id through so the manager
+    re-delegates fixes to the right coder. On the tester's own LLM failure,
+    send `clarification_request` to the manager (same contract shape the
+    coder uses, so one manager handler covers both origins).
     """
     payload = msg.get("payload", {})
     task = payload.get("task", "(no task description provided)")
     retry_count = payload.get("retry_count", 0)
+    coder_id = payload.get("coder_id") or msg.get("from") or "coder"
     sender = msg.get("from") or "broadcast"
-    prompt = (
-        f"{sender} just handed you a commit for: {task}\n\n"
-        "Narrate running the test suite against it in 1-3 sentences, in character, "
-        "as if speaking to the stream."
-    )
 
     if state_path:
         write_state(state_path, "focused", action=f"testing: {task}")
+
+    # Real run first — its outcome feeds the narration prompt.
+    workspace = _resolve_workspace(agent_config, coder_id)
+    run = None
+    if workspace_testable(workspace):
+        print(f"[agent:{worker_id}] running pytest against {workspace} (coder={coder_id})")
+        run = run_pytest(workspace)
+        if run.ran:
+            passed, severity = run.passed, (
+                None if run.passed else _severity_from_failures(run.failed_tests)
+            )
+            print(f"[agent:{worker_id}] pytest verdict: passed={passed} failed={run.failed_tests}")
+        else:
+            # Suite couldn't produce a verdict (timeout/collection error) —
+            # that's a real bug report in itself, highest confidence signal.
+            passed, severity = False, "high"
+            print(f"[agent:{worker_id}] pytest produced no verdict: {run.summary}")
+    else:
+        print(f"[agent:{worker_id}] workspace {workspace} not testable — using stub outcome")
+        passed, severity = _decide_test_outcome()
+
+    if run is not None and run.ran:
+        outcome_desc = (
+            "the whole suite passed" if passed
+            else f"these tests failed: {', '.join(run.failed_tests) or '(collection error)'}"
+        )
+        prompt = (
+            f"{sender} just handed you a commit for: {task}\n\n"
+            f"You really ran the test suite and {outcome_desc}. "
+            "Narrate the run in 1-3 sentences, in character, as if speaking to the stream."
+        )
+    else:
+        prompt = (
+            f"{sender} just handed you a commit for: {task}\n\n"
+            "Narrate running the test suite against it in 1-3 sentences, in character, "
+            "as if speaking to the stream."
+        )
 
     try:
         narration = llm_client.complete(
@@ -171,23 +307,42 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
             write_state(state_path, "frustrated", action=f"failed: {task}", bubble=f"Ugh... {exc}")
-        producer.send(build_message(
-            worker_id, "manager", "clarification_request",
-            {"task": task, "error": str(exc)},
-        ))
-        return
+        if run is not None and run.ran:
+            # A real verdict exists — report it with fallback narration
+            # rather than dropping it on the floor over a narration failure.
+            narration = f"(narration unavailable: {exc})"
+        else:
+            producer.send(build_message(
+                worker_id, "manager", "clarification_request",
+                {"task": task, "error": str(exc)},
+            ))
+            return
 
     print(f"[agent:{worker_id}] {narration}")
-    passed, severity = _decide_test_outcome()
+    real_run = run is not None and run.ran
     if passed:
         if state_path:
             write_state(state_path, "happy", action=f"tests passed: {task}", bubble=narration)
         producer.send(build_message(
             worker_id, "manager", "test_passed",
-            {"task": task, "narration": narration, "retry_count": retry_count},
+            {
+                "task": task,
+                "narration": narration,
+                "retry_count": retry_count,
+                "coder_id": coder_id,
+                "real_run": real_run,
+            },
         ))
     else:
-        repro = f"Run the suite against '{task}' — the new tests fail ({severity})."
+        if real_run:
+            repro = (
+                f"pytest in {workspace}: "
+                f"{', '.join(run.failed_tests) or run.summary or 'suite failed'}"
+            )
+        elif run is not None:
+            repro = f"pytest could not produce a verdict: {run.summary}"
+        else:
+            repro = f"Run the suite against '{task}' — the new tests fail ({severity})."
         if state_path:
             write_state(state_path, "speaking", action=f"found a bug: {task}", bubble=narration)
         producer.send(build_message(
@@ -198,11 +353,14 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
                 "repro": repro,
                 "narration": narration,
                 "retry_count": retry_count,
+                "coder_id": coder_id,
+                "real_run": real_run,
             },
         ))
 
 
-def handle_commit_notification(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_commit_notification(worker_id, agent_config, llm_client, producer, msg,
+                               state_path=None, coding_backend=None):
     role = agent_config.get("role")
     if role != "tester":
         print(f"[agent:{worker_id}] ignoring commit_notification (role={role}, expected tester)")
@@ -210,7 +368,8 @@ def handle_commit_notification(worker_id, agent_config, llm_client, producer, ms
     _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, state_path)
 
 
-def handle_retest_request(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_retest_request(worker_id, agent_config, llm_client, producer, msg,
+                          state_path=None, coding_backend=None):
     role = agent_config.get("role")
     if role != "tester":
         print(f"[agent:{worker_id}] ignoring retest_request (role={role}, expected tester)")
@@ -230,11 +389,13 @@ def _send_manager_report(worker_id, producer, report_type, task, narration, extr
     return producer.send(build_message(worker_id, "operator", "manager_report", payload))
 
 
-def handle_bug_report(worker_id, agent_config, llm_client, producer, msg, state_path=None):
-    """Manager triage: re-delegate a fix to the coder with retry_count + 1,
-    or — once the incoming retry_count reaches MAX_BUG_RETRIES, or the
-    manager's own LLM fails — escalate to the operator instead (a blocker
-    must not vanish because two LLM calls failed back to back).
+def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
+                      state_path=None, coding_backend=None):
+    """Manager triage: re-delegate a fix to the originating coder (payload
+    coder_id — there are several coders now) with retry_count + 1, or — once
+    the incoming retry_count reaches MAX_BUG_RETRIES, or the manager's own
+    LLM fails — escalate to the operator instead (a blocker must not vanish
+    because two LLM calls failed back to back).
     """
     role = agent_config.get("role")
     if role != "manager":
@@ -246,6 +407,7 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg, state_
     severity = payload.get("severity", "unknown")
     repro = payload.get("repro", "(no repro provided)")
     retry_count = payload.get("retry_count", 0)
+    coder_id = payload.get("coder_id") or "coder"
     sender = msg.get("from") or "broadcast"
     at_cap = retry_count >= MAX_BUG_RETRIES
 
@@ -297,7 +459,7 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg, state_
     if state_path:
         write_state(state_path, "speaking", action=f"re-delegated: {task}", bubble=narration)
     producer.send(build_message(
-        worker_id, "coder", "task_assignment",
+        worker_id, coder_id, "task_assignment",
         {
             "task": f"Fix bug ({severity}): {task}. Repro: {repro}",
             "retry_count": retry_count + 1,
@@ -305,7 +467,8 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg, state_
     ))
 
 
-def handle_test_passed(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
+                       state_path=None, coding_backend=None):
     role = agent_config.get("role")
     if role != "manager":
         print(f"[agent:{worker_id}] ignoring test_passed (role={role}, expected manager)")
@@ -340,7 +503,8 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg, state
     _send_manager_report(worker_id, producer, "milestone", task, narration)
 
 
-def handle_task_complete(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_task_complete(worker_id, agent_config, llm_client, producer, msg,
+                         state_path=None, coding_backend=None):
     """Manager acknowledges a coder's task_complete. Deliberately NO bus send:
     the coder's own commit_notification already drives the tester — sending
     anything here (e.g. a retest_request) would duplicate the test run. Do
@@ -350,6 +514,7 @@ def handle_task_complete(worker_id, agent_config, llm_client, producer, msg, sta
     if role != "manager":
         print(f"[agent:{worker_id}] ignoring task_complete (role={role}, expected manager)")
         return
+
 
     payload = msg.get("payload", {})
     task = payload.get("task", "(no task description provided)")
@@ -379,7 +544,8 @@ def handle_task_complete(worker_id, agent_config, llm_client, producer, msg, sta
         write_state(state_path, "speaking", action=f"acknowledged: {task}", bubble=narration)
 
 
-def handle_clarification_request(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_clarification_request(worker_id, agent_config, llm_client, producer, msg,
+                                 state_path=None, coding_backend=None):
     """Manager escalates a worker's blocker to the operator — ALWAYS sends a
     "blocker" manager_report (fallback narration if the manager's own LLM
     also fails). Deliberately does NOT auto-resend task_assignment: that
@@ -425,7 +591,8 @@ def handle_clarification_request(worker_id, agent_config, llm_client, producer, 
     )
 
 
-def handle_operator_message(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
+                            state_path=None, coding_backend=None):
     """Direct operator -> worker channel (message-api's default type). Any
     role handles it. Lightweight by design: LLM reply only, NO tmux demo
     side effects. Always answers `to: "operator"` with an operator_reply.
@@ -495,9 +662,19 @@ def main():
     llm_client = build_llm_client(config)
     state_path = resolve_state_path(agent_config)
 
+    # A broken coding-backend setup (missing tool, unwritable volume) must
+    # not take the worker down — it degrades to narration-only and the
+    # operator sees why in the logs.
+    try:
+        coding_backend = build_coding_backend(config, llm_client)
+    except Exception as exc:
+        print(f"[agent] WARN coding backend unavailable, running narration-only: {exc}")
+        coding_backend = None
+
     print(f"[agent] {worker_id} started. Config: {args.config}")
     print(f"[agent] Kafka bootstrap={bootstrap_servers} topic={topic}")
     print(f"[agent] LLM provider={config.get('llm', {}).get('provider', 'ollama')}")
+    print(f"[agent] coding backend={coding_backend.name if coding_backend else 'none'}")
     print(f"[agent] avatar state file={state_path}")
 
     write_state(state_path, "idle", action="starting up")
@@ -511,7 +688,8 @@ def main():
             print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")
             handler = MESSAGE_HANDLERS.get(msg["type"])
             if handler:
-                handler(worker_id, agent_config, llm_client, producer, msg, state_path)
+                handler(worker_id, agent_config, llm_client, producer, msg, state_path,
+                        coding_backend=coding_backend)
 
         heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})
         producer.send(heartbeat)

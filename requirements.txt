@@ -10,3 +10,8 @@ redis>=5.0
 # Terminal / display utilities
 blessed>=1.20        # terminal formatting for avatar.py
 wcwidth>=0.2         # correct character width in terminals
+
+# Testing — needed at RUNTIME by the tester worker (test_runner.py runs
+# pytest against coder workspaces), not just for the dev suite
+pytest>=8.0
+

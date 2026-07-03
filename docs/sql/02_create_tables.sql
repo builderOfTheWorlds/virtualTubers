@@ -22,6 +22,29 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE INDEX IF NOT EXISTS idx_messages_to ON messages ("to");
 CREATE INDEX IF NOT EXISTS idx_messages_type ON messages (type);
 
+-- One row per coding-backend run (typed unpacking of coding_run_report bus
+-- messages by message-logger) — the A/B comparison table for the
+-- native | opencode | aider coder workers. See docs/coding_backend.md.
+CREATE TABLE IF NOT EXISTS coding_backend_runs (
+    message_id    UUID PRIMARY KEY,
+    worker_id     TEXT NOT NULL,
+    backend       TEXT NOT NULL,
+    task          TEXT NOT NULL,
+    retry_count   INTEGER NOT NULL DEFAULT 0,
+    success       BOOLEAN NOT NULL,
+    commit_sha    TEXT,
+    files_changed INTEGER NOT NULL DEFAULT 0,
+    insertions    INTEGER NOT NULL DEFAULT 0,
+    deletions     INTEGER NOT NULL DEFAULT 0,
+    duration_s    DOUBLE PRECISION NOT NULL DEFAULT 0,
+    output        TEXT,
+    error         TEXT,
+    reported_at   TIMESTAMPTZ NOT NULL,
+    ingested_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_runs_backend ON coding_backend_runs (backend);
+CREATE INDEX IF NOT EXISTS idx_runs_worker ON coding_backend_runs (worker_id);
+
 CREATE TABLE IF NOT EXISTS container_logs (
     id             BIGSERIAL PRIMARY KEY,
     container_name TEXT NOT NULL,

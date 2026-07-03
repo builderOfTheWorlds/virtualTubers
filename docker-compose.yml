@@ -23,6 +23,80 @@ services:
     depends_on:
       - rtmp-preview
 
+  # ── A/B coding-backend coders — same task, three different tools writing
+  # real code into their own workspace volumes (docs/coding_backend.md).
+  worker-coder-native:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${CODER_NATIVE_STREAM_KEY:-coder-native}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DISPLAY_NUM: 102
+      WORKER_ID: coder-native
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
+    volumes:
+      - /opt/virtualTubers/config/workers/coder-native.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+      - repo-native:/data/repo
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
+  worker-coder-opencode:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${CODER_OPENCODE_STREAM_KEY:-coder-opencode}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DISPLAY_NUM: 103
+      WORKER_ID: coder-opencode
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
+    volumes:
+      - /opt/virtualTubers/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+      - repo-opencode:/data/repo
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
+  worker-coder-aider:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${CODER_AIDER_STREAM_KEY:-coder-aider}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DISPLAY_NUM: 104
+      WORKER_ID: coder-aider
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
+    volumes:
+      - /opt/virtualTubers/config/workers/coder-aider.yaml:/config/worker.yaml:ro
+      - world-state:/data/world-state
+      - repo-aider:/data/repo
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+
   worker-manager:
     image: vtube-worker:latest
     pull_policy: never
@@ -61,7 +135,13 @@ services:
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
-      - repo:/data/repo:ro
+      # Read-only view of every coder's workspace, at the conventional
+      # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
+      # to a tmpdir before running pytest — these must stay :ro).
+      - repo:/data/repos/coder:ro
+      - repo-native:/data/repos/coder-native:ro
+      - repo-opencode:/data/repos/coder-opencode:ro
+      - repo-aider:/data/repos/coder-aider:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -128,4 +208,7 @@ services:
 volumes:
   world-state:
   repo:
+  repo-native:
+  repo-opencode:
+  repo-aider:
   redis-data:

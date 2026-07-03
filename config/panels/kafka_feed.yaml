@@ -19,6 +19,9 @@ content:
   # Sender color, keyed by the message `from` value. broadcast is a valid key.
   colors:
     coder: green
+    coder-native: green
+    coder-opencode: green
+    coder-aider: green
     manager: yellow
     tester: magenta
     broadcast: cyan
@@ -43,6 +46,7 @@ content:
     test_passed: green
     manager_report: cyan
     operator_reply: blue
+    coding_run_report: magenta
 
   # Payload rendering. mode: pretty | raw | hidden. Truncated to max_chars.
   payload:
