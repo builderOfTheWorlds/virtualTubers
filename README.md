@@ -20,6 +20,12 @@ query instead of `docker logs` per container. Ships new lines only; no
 historical backfill. See [docs/log_shipper.md](docs/log_shipper.md) for
 details, including a security note on the Docker socket mount.
 
+Postgres access also moved off the shared `mafober` role/database onto a
+project-dedicated `virtualtubers` role/database — see
+[docs/sql/](docs/sql/) for the one-time `CREATE ROLE`/`CREATE DATABASE`/
+`CREATE TABLE` setup scripts and how to run them. `.env.example` and
+`docker-compose.yml`'s Postgres defaults were updated to match.
+
 **Workers now collaborate as a team — coder → tester → manager → operator** —
 `app/agent.py` dispatches all 8 message types from the concept doc (§3.4) via a
 `MESSAGE_HANDLERS` table, not just `task_assignment`:

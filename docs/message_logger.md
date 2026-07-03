@@ -55,7 +55,7 @@ docker compose up message-logger
 
 Query logged history directly:
 ```bash
-psql -h 192.168.1.120 -U mafober -d mafober \
+psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
   -c "SELECT id, \"from\", \"to\", type, payload, timestamp FROM messages ORDER BY ingested_at DESC LIMIT 20;"
 ```
 

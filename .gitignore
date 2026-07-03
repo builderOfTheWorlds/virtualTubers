@@ -32,6 +32,7 @@ htmlcov/
 # ── Runtime / world-state (generated at runtime, not source) ──────────────────
 data/
 world-state/
+.logs/
 
 # ── Secrets ───────────────────────────────────────────────────────────────────
 .env

@@ -62,13 +62,13 @@ docker compose up log-shipper
 
 Query recent logs across every container:
 ```bash
-psql -h 192.168.1.120 -U mafober -d mafober \
+psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
   -c "SELECT container_name, stream, message, log_timestamp FROM container_logs ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 
 Query just one container's errors:
 ```bash
-psql -h 192.168.1.120 -U mafober -d mafober \
+psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
   -c "SELECT message, log_timestamp FROM container_logs WHERE container_name = 'worker-coder' AND stream = 'stderr' ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 

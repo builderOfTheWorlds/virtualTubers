@@ -78,8 +78,8 @@ services:
       KAFKA_GROUP_ID: vtuber-logger
       POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-mafober}
-      POSTGRES_USER: ${POSTGRES_USER:-mafober}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     restart: unless-stopped
 
@@ -101,8 +101,8 @@ services:
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-mafober}
-      POSTGRES_USER: ${POSTGRES_USER:-mafober}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     volumes:
       # Read-only Docker socket access is required to discover and follow
