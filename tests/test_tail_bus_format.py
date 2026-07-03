@@ -192,3 +192,47 @@ def test_format_line_contains_arrow_and_fields():
     assert "manager" in plain
     assert "task_complete" in plain
     assert "ticket=42" in plain
+
+
+# ── connect_with_retry: bootstrap failures must not crash the pane ────────────
+def test_connect_with_retry_succeeds_after_transient_failures():
+    attempts = {"n": 0}
+    sentinel = mock.MagicMock()
+
+    def flaky_consumer(*args, **kwargs):
+        attempts["n"] += 1
+        if attempts["n"] < 3:
+            raise Exception("Unable to bootstrap from 192.168.1.120:9092")
+        return sentinel
+
+    sleeps = []
+    with mock.patch.object(tail_bus, "MessageConsumer", side_effect=flaky_consumer):
+        result = tail_bus.connect_with_retry(
+            "192.168.1.120:9092", "vtuber.messages", "vtuber-display-coder",
+            sleep=sleeps.append,
+        )
+
+    assert result is sentinel
+    assert attempts["n"] == 3
+    # backoff: retried twice before success, with increasing delay
+    assert sleeps == [
+        tail_bus.CONNECT_RETRY_BASE_SECONDS,
+        tail_bus.CONNECT_RETRY_BASE_SECONDS * 2,
+    ]
+
+
+def test_connect_with_retry_never_raises():
+    with mock.patch.object(tail_bus, "MessageConsumer", side_effect=Exception("boom")):
+        sleeps = []
+
+        def fake_sleep(seconds):
+            sleeps.append(seconds)
+            if len(sleeps) >= 2:
+                raise StopIteration  # bail out of the infinite retry loop for the test
+
+        with pytest.raises(StopIteration):
+            tail_bus.connect_with_retry(
+                "broker:9092", "topic", "group", sleep=fake_sleep
+            )
+    # delay caps at CONNECT_RETRY_MAX_SECONDS rather than growing unbounded
+    assert sleeps[0] == tail_bus.CONNECT_RETRY_BASE_SECONDS

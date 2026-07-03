@@ -34,6 +34,7 @@ def format_timestamp(iso_ts: str, ts_config: dict) -> str
 def format_payload(payload, payload_config: dict) -> str
 def format_line(msg: dict, feed_config: dict) -> str
 def format_header() -> str
+def connect_with_retry(bootstrap_servers: str, topic: str, group_id: str, sleep=time.sleep) -> MessageConsumer
 def run(bus_config_path: str, feed_config_path: str | None) -> None
 def main(argv: list[str] | None = None) -> None
 ```
@@ -91,7 +92,7 @@ is a real tty, so codes render; elsewhere they degrade to inert sequences.
 
 ## Dependencies
 
-- Standard library: `os`, `sys`, `argparse`, `logging`, `datetime`.
+- Standard library: `os`, `sys`, `time`, `argparse`, `logging`, `datetime`.
 - Third party: `PyYAML` (`yaml`).
 - Internal: `message_bus` (`load_worker_config`, `MessageConsumer`, `BROADCAST`).
 
@@ -125,8 +126,17 @@ Structured logging goes to **stderr only** so the stdout feed stays clean:
 - Missing/malformed `--feed-config` or `--bus-config` files are logged at ERROR
   and fall back to defaults / empty config rather than crashing.
 - Bad timestamps return the raw string instead of raising.
-- Kafka connect failure logs ERROR and re-raises (pane restart handled by tmux).
-- Poll/format exceptions are caught per-iteration and logged; the feed continues.
+- Kafka connect failure (e.g. `KafkaTimeoutError` during broker bootstrap) is
+  retried by `connect_with_retry()` with exponential backoff
+  (`CONNECT_RETRY_BASE_SECONDS` doubling up to `CONNECT_RETRY_MAX_SECONDS`),
+  printed to the pane so it's visible on stream, instead of raising. This
+  process is **not** restarted by Docker on crash — only the whole container
+  is (`restart: unless-stopped`) — so a transient bootstrap timeout must not
+  kill it, or the tmux pane drops to a bare shell until someone manually
+  reruns the command.
+- Poll/format exceptions (e.g. the broker dropping mid-stream) are caught
+  per-iteration, logged, and followed by a 1s sleep so the loop can't busy-spin
+  while the broker is down; the feed continues.
 
 ## Notes
 
@@ -137,6 +147,11 @@ Structured logging goes to **stderr only** so the stdout feed stays clean:
 
 ## Changelog
 
+- **v1.1.0** (2026-07-02) — Kafka bootstrap failures on the initial connect no
+  longer crash the pane process (which used to drop the tmux pane to a bare
+  shell); `connect_with_retry()` retries with backoff instead. Poll-loop
+  errors now sleep 1s before retrying to avoid a busy-spin during a broker
+  outage.
 - **v1.0.0** (2026-07-01) — Rewrote the simple one-line consumer into a rich,
   configurable, filterable stdout feed with pure testable formatting/filtering
   helpers and a `--bus-config` / `--feed-config` CLI contract.

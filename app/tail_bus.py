@@ -20,6 +20,7 @@ dependency so they can be unit-tested directly.
 """
 import os
 import sys
+import time
 import argparse
 import logging
 from datetime import datetime, timezone
@@ -258,6 +259,28 @@ def format_header():
     return colorize(header, "gray")
 
 
+CONNECT_RETRY_BASE_SECONDS = 3
+CONNECT_RETRY_MAX_SECONDS = 30
+
+
+def connect_with_retry(bootstrap_servers, topic, group_id, sleep=time.sleep):
+    """Build a MessageConsumer, retrying with backoff instead of raising.
+
+    The pane process (unlike agent.py) isn't restarted by Docker on crash — only
+    the whole container is — so a transient bootstrap timeout must not kill this
+    process and drop the tmux pane to a bare shell. Retries forever.
+    """
+    delay = CONNECT_RETRY_BASE_SECONDS
+    while True:
+        try:
+            return MessageConsumer(bootstrap_servers, topic, group_id=group_id)
+        except Exception as exc:  # noqa: BLE001 — must not crash the pane on connect
+            log.error("failed to connect Kafka consumer: %s; retrying in %ss", exc, delay)
+            print(f"Message bus unreachable ({exc}); retrying in {delay}s...", flush=True)
+            sleep(delay)
+            delay = min(delay * 2, CONNECT_RETRY_MAX_SECONDS)
+
+
 # ── Run loop (Kafka; guarded so the module imports cleanly for tests) ──────────
 def run(bus_config_path, feed_config_path):
     log.debug("run bus_config=%s feed_config=%s", bus_config_path, feed_config_path)
@@ -281,13 +304,9 @@ def run(bus_config_path, feed_config_path):
 
     print("Waiting for message bus...", flush=True)
 
-    try:
-        consumer = MessageConsumer(
-            bootstrap_servers, topic, group_id=f"vtuber-display-{worker_id}"
-        )
-    except Exception as exc:  # noqa: BLE001 — must not crash the pane on connect
-        log.error("failed to connect Kafka consumer: %s", exc)
-        raise
+    consumer = connect_with_retry(
+        bootstrap_servers, topic, group_id=f"vtuber-display-{worker_id}"
+    )
 
     filters = feed_config.get("filters", {})
     while True:
@@ -299,6 +318,7 @@ def run(bus_config_path, feed_config_path):
                 print(format_line(msg, feed_config), flush=True)
         except Exception as exc:  # noqa: BLE001 — keep the feed alive on transient errors
             log.error("error while polling/formatting: %s", exc)
+            time.sleep(1)  # avoid a tight retry loop if the broker is down
 
 
 def main(argv=None):
