@@ -1,6 +1,14 @@
 # Implementation Plan — Worker Interaction over Kafka
 
 > Status: **implemented — landed on `main` 2026-07-02** (`feat(agent)` + `docs` commits).
+> **§10 live verification completed 2026-07-05** against the mafober stack: full
+> team loop observed on the bus (task_assignment → task_complete +
+> commit_notification → bug_report → re-delegated task_assignment with
+> `retry_count: 1` → test_passed → manager_report `milestone`), plus
+> operator_message → single operator_reply. Reply-to-sender routing confirmed on
+> both paths (coder answered operator on cycle 1, manager on cycle 2). Note: run
+> the §10 curls against `http://192.168.1.120:8090` (message-api on the Portainer
+> LXC), not `localhost`.
 > One amendment vs this plan: `retry_count` is threaded through
 > `task_assignment → commit_notification → bug_report` (the cap in §4.4 was
 > unreachable as originally written because the count never returned to the manager).

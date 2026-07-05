@@ -12,13 +12,6 @@
 
 - At the start of every new conversation, read the project's `README.md` to understand the project's purpose, structure, and how it operates before taking any action.
 
-## Plans & Prompts
-
-- Save implementation plans and reusable prompt context to `.claude/prompts/` within the project directory.
-- This is the default location for all plans, prompt templates, and task context files.
-- File naming: use descriptive snake_case names (e.g., `financial_dashboard_db.md`, `auth_refactor.md`).
-- Plans saved here persist across conversations and serve as the starting context for resumed work.
-
 ## Task Execution Strategy
 
 - For complex or multi-step tasks, delegate work to sub-agents (using the Task tool) rather than doing everything in the main context window.
@@ -118,6 +111,29 @@
 - Update the README as part of any change that alters installation steps, CLI commands, configuration, or project structure.
 - Do not duplicate detailed API documentation in the README — link to the `docs/` directory instead.
 
+## Python Virtual Environment
+
+<!-- When setting up a new project or starting work on an existing one, always use a project-local .venv -->
+
+- At the start of every conversation involving a Python project, check whether a `.venv` directory exists at the project root.
+- If `.venv` does **not** exist, create one: `python -m venv .venv`
+- Always use the project's `.venv` for all Python operations — installing dependencies, running scripts, and executing tests.
+- Activate with: `.venv/Scripts/activate` (Windows) or `source .venv/bin/activate` (Linux/macOS).
+- Install project dependencies into the `.venv` after creation (e.g., `pip install -r requirements.txt` if available).
+- Never install packages into the global/system Python when working on a project.
+
+## Shared Utilities and Imported Packages
+
+When a project imports or depends on a shared local utility (e.g. `utilities-web`, `projectManager` libs, or any other sibling repository installed via `pip install -e`), **never modify those shared packages to accommodate a single project's needs**. Changes to shared utilities affect every project that depends on them and can introduce regressions elsewhere.
+
+Instead, keep all project-specific customisations local:
+
+- **Templates**: Override shared templates by placing a local copy in the project's own `templates/` directory and configuring the app to load it first (e.g. Jinja2 `ChoiceLoader`).
+- **Behaviour**: Subclass or wrap shared classes/functions locally rather than modifying the originals.
+- **Configuration**: Use project-level config files or environment variables to vary behaviour without touching shared code.
+
+If a change genuinely belongs in the shared utility (i.e. it is useful to all consumers and introduces no breaking changes), discuss it explicitly before touching the shared package — do not make the change as a side-effect of project work.
+
 ## Dependencies
 
 - Pin dependency versions for reproducible builds.
@@ -213,6 +229,74 @@ Open Grafana at `http://localhost:3002` → Explore → select the **Loki** data
 - Types: feat, fix, docs, style, refactor, test, chore
 - Keep subject line under 72 characters
 
+
+---
+
+## Deployment Scripts (install.sh)
+
+When a user asks you to create or set up a deployment script (`install.sh`) for a project, read the full guide before proceeding:
+
+- **Guide**: [`projectManager/docs/install_sh_guide.md`](../../projectManager/docs/install_sh_guide.md)
+
+The guide covers the standard structure, a copy-pasteable boilerplate template, a customization checklist, required project files, and conventions to follow. The reference implementation is `AdvancedProfileMigrationUtility/install.sh`.
+
+---
+
+## Git Repository Setup
+
+When setting up a new GitHub repository:
+
+- Create an empty `master` branch as the default branch (no code, just an initial empty commit).
+- Create a `workingBranch` branch that contains all the project code.
+- Set `master` as the default branch in GitHub Settings → General → Default branch.
+- This keeps `master` clean and prevents branch protection rules from blocking direct pushes to `workingBranch`.
+
+To create the empty master branch locally:
+```bash
+git checkout --orphan master
+git rm -rf .
+git commit --allow-empty -m "chore: initial empty master branch"
+git push origin master
+git checkout -b workingBranch
+git push origin workingBranch
+```
+
+---
+
+## Mafober Deployment Environment
+
+Projects created or cloned into the managed projects root (`projects_root` in `config.yaml`) deploy to **mafober**, a Proxmox VE homelab host that also runs the shared Docker/Portainer stack for this machine.
+
+### Connection
+
+| Item | Value |
+|------|-------|
+| Hostname | `mafober` |
+| IP Address | `192.168.1.117` |
+| Proxmox Web UI | `https://192.168.1.117:8006` |
+| Portainer (Docker mgmt) | `https://192.168.1.120:9443` |
+| SSH / SFTP | port `22` on `192.168.1.117` |
+
+### Deploying a new project
+
+1. Create a ZFS dataset under `tank_0` for the project's persistent storage (`zfs create tank_0/utilities/<project>`) rather than relying on ephemeral CT storage or named Docker volumes.
+2. `chown` the new dataset to the UID/GID the container image expects (e.g. `1000:1000` for linuxserver images, `472:472` for Grafana-style images).
+3. Add an explicit bind mount for the dataset into CT 101 (the Portainer LXC): `pct set 101 -mp<N> /tank_0/utilities/<project>,mp=/tank_0/utilities/<project>`, then `pct restart 101`. Each ZFS dataset needs its own `mp` entry — mounting a parent dataset does not expose its children.
+4. Define the stack/container in Portainer (`https://192.168.1.120:9443`) pointing at the bind-mounted path.
+5. If the project should be scraped by Prometheus or shipped logs to Grafana, register it alongside the existing dashboards/exporters on the host.
+
+### Currently deployed on mafober
+
+- **Portainer** — Docker/stack management (CT 101)
+- **Plex** — media server
+- **qBittorrent** — torrent client
+- **Grafana** — dashboards
+- **Prometheus** — metrics
+- **node_exporter** / **zfs_exporter** — host-level metrics, run directly on the Proxmox host (not containerized)
+
+### More info
+
+Full hardware specs, ZFS layout, container configs, and troubleshooting lessons learned live in `mafober/mafober_summary.md` (a sibling project directory under the managed projects root). Check there first if these details aren't enough.
 
 ---
 

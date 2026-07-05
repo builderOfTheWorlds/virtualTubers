@@ -277,9 +277,21 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 
 ### Deploy / redeploy after a code change
 
-On the host (the repo checkout, e.g. `/opt/virtualTubers`):
+The `git` and `docker` commands must run **where the Docker daemon lives**: inside
+CT 101 (the Portainer LXC, `192.168.1.120`) on the `mafober` Proxmox host — *not*
+on the Proxmox host itself, and not on your local machine.
+
+SSH into the Proxmox host:
 
 ```bash
+ssh root@192.168.1.117
+```
+
+Then, from the Proxmox shell:
+
+```bash
+pct enter 101                            # enter the Portainer LXC (CT 101)
+cd /opt/virtualTubers                    # the repo checkout
 git pull                                 # get the latest code
 docker build -t vtube-worker:latest .    # rebuild the worker image (NOT `docker compose build`)
 ```
