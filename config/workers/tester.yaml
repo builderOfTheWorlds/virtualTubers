@@ -43,7 +43,7 @@ agent:
 llm:
   provider: ollama
   base_url: "http://100.37.208.112:11434"
-  model: "qwen2.5:14b"
+  model: "qwen2.5:7b-instruct-q4_K_M"
   temperature: 0.5
   max_tokens: 1024
 

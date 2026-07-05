@@ -26,7 +26,7 @@ class AiderBackend(CodingBackend):
             os.environ.get("LLM_BASE_URL")
             or self.llm_config.get("base_url", "http://localhost:11434")
         ).rstrip("/")
-        model = self.backend_config.get("model") or self.llm_config.get("model", "qwen2.5:14b")
+        model = self.backend_config.get("model") or self.llm_config.get("model", "qwen2.5:7b-instruct-q4_K_M")
         return base_url, model
 
     def run_task(self, task):
