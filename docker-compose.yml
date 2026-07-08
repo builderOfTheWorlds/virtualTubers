@@ -161,9 +161,8 @@ services:
       - redis
 
   message-logger:
-    build:
-      context: .
-      dockerfile: services/message-logger/Dockerfile
+    image: virtualtubers-message-logger:latest
+    pull_policy: never
     environment:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -176,9 +175,8 @@ services:
     restart: unless-stopped
 
   message-api:
-    build:
-      context: .
-      dockerfile: services/message-api/Dockerfile
+    image: virtualtubers-message-api:latest
+    pull_policy: never
     environment:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -190,9 +188,8 @@ services:
       - redis
 
   log-shipper:
-    build:
-      context: .
-      dockerfile: services/log-shipper/Dockerfile
+    image: virtualtubers-log-shipper:latest
+    pull_policy: never
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}

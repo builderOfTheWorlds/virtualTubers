@@ -6,10 +6,14 @@ set -e
 #
 #   git pull && ./install.sh
 #
-# The worker image is NOT built by `docker compose build` — the compose file
-# uses `pull_policy: never` on purpose, so Portainer/compose never touches it.
-# It must be rebuilt manually on the host, then the stack redeployed
-# (Portainer UI → Update the stack → Re-pull image and redeploy) to pick it up.
+# None of these images are built by Portainer — every service in
+# docker-compose.yml uses `image:` + `pull_policy: never`, never `build:`.
+# Portainer's stack working directory (/data/compose/<id>/) only holds the
+# compose YAML, not the rest of the repo, so a `build:` block pointing at
+# `services/<name>/Dockerfile` fails with "no such file or directory" on
+# every deploy. Images must be built here, on the host, then the stack
+# redeployed (Portainer UI → Update the stack → Re-pull image and redeploy)
+# to pick them up.
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -18,7 +22,13 @@ log() { echo "[install] $*"; }
 log "Building vtube-worker:latest"
 docker build -t vtube-worker:latest .
 
-log "Building message-logger, message-api, and log-shipper"
-docker compose build message-logger message-api log-shipper
+log "Building virtualtubers-message-logger:latest"
+docker build -t virtualtubers-message-logger:latest -f services/message-logger/Dockerfile .
+
+log "Building virtualtubers-message-api:latest"
+docker build -t virtualtubers-message-api:latest -f services/message-api/Dockerfile .
+
+log "Building virtualtubers-log-shipper:latest"
+docker build -t virtualtubers-log-shipper:latest -f services/log-shipper/Dockerfile .
 
 log "Done. Redeploy the stack (Portainer: Update the stack → Re-pull image and redeploy)."

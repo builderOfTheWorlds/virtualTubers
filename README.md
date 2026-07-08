@@ -373,15 +373,19 @@ workers on the freshly built images using the current stack env vars.
 > Env-only change (e.g. a new stream key)? Skip `install.sh` — just **Update the
 > stack** in Portainer to re-inject the env and recreate the containers.
 
-`install.sh` builds `vtube-worker:latest` (the six worker containers) plus
-`message-logger`, `message-api`, and `log-shipper` via `docker compose build`.
-**Whenever a new service or worker image is added to the stack, add its build
-step to `install.sh` in the same change** — a service missing from the script
-has no image on the host, and Portainer's own `build:` step can fail (surfacing
-as an opaque 500 on deploy) since the stack's build context doesn't necessarily
-have the full repo tree available the way a host-side `docker compose build`
-does. `install.sh`'s header comment is the single source of truth for what it
-currently builds — keep it and this paragraph in sync with the file.
+`install.sh` builds every image the stack needs directly (`docker build -f
+services/<name>/Dockerfile -t virtualtubers-<name>:latest .`), the same way it
+builds `vtube-worker:latest`. **No service in `docker-compose.yml` may use a
+`build:` block** — Portainer's stack working directory (`/data/compose/<id>/`)
+only contains the compose YAML, not the rest of the repo, so any `build:`
+pointing at `services/<name>/Dockerfile` fails on every deploy with `lstat
+.../services: no such file or directory`. Every service must be `image:` +
+`pull_policy: never`, built here first. **Whenever a new service is added to
+the stack, add its `docker build` line to `install.sh` in the same change** —
+a service missing from the script has no image on the host, so Portainer
+recreates its container from a stale or nonexistent image. `install.sh`'s
+header comment is the single source of truth for what it currently builds —
+keep it and this paragraph in sync with the file.
 
 ### Verify a worker is streaming to the right place
 
