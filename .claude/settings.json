@@ -1,16 +1,30 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(git config --global --add safe.directory C:/Users/matt/PycharmProjects/virtualTubers)",
-      "PowerShell(git ls-remote https://github.com/builderOfTheWorlds/virtualTubers 2>&1)",
-      "PowerShell(git remote add origin https://github.com/builderOfTheWorlds/virtualTubers 2>&1)",
-      "PowerShell(git fetch origin 2>&1)",
-      "PowerShell(git ls-tree -r --name-only origin/main 2>&1)",
-      "PowerShell(git branch -m main)",
-      "PowerShell(git add -A)",
-      "PowerShell(git rebase origin/main 2>&1)",
-      "PowerShell(git push -u origin main 2>&1)",
-      "PowerShell(try { $r = Invoke-RestMethod -Uri \"http://100.37.208.112:11434/api/tags\" -TimeoutSec 15; \"Ollama up. Models: \" + \\(\\($r.models | ForEach-Object { $_.name }\\) -join \", \"\\) } catch { \"Ollama check failed: $\\($_.Exception.Message\\)\" })"
-    ]
-  }
+﻿{
+    "permissions":  {
+                        "allow":  [
+                                      "PowerShell(git config --global --add safe.directory C:/Users/matt/PycharmProjects/virtualTubers)",
+                                      "PowerShell(git ls-remote https://github.com/builderOfTheWorlds/virtualTubers 2\u003e\u00261)",
+                                      "PowerShell(git remote add origin https://github.com/builderOfTheWorlds/virtualTubers 2\u003e\u00261)",
+                                      "PowerShell(git fetch origin 2\u003e\u00261)",
+                                      "PowerShell(git ls-tree -r --name-only origin/main 2\u003e\u00261)",
+                                      "PowerShell(git branch -m main)",
+                                      "PowerShell(git add -A)",
+                                      "PowerShell(git rebase origin/main 2\u003e\u00261)",
+                                      "PowerShell(git push -u origin main 2\u003e\u00261)",
+                                      "PowerShell(try { $r = Invoke-RestMethod -Uri \"http://100.37.208.112:11434/api/tags\" -TimeoutSec 15; \"Ollama up. Models: \" + ($r.models | ForEach-Object { $_.name }  -join \", \") } catch { \"Ollama check failed: $($_.Exception.Message)\" })"
+                                  ]
+                    },
+    "hooks":  {
+                  "PreToolUse":  [
+                                     {
+                                         "matcher":  "Bash|PowerShell",
+                                         "hooks":  [
+                                                       {
+                                                           "type":  "command",
+                                                           "command":  "$json = [Console]::In.ReadToEnd() | ConvertFrom-Json; $c = $json.tool_input.command; $root = if ($env:CLAUDE_PROJECT_DIR) { $env:CLAUDE_PROJECT_DIR } else { (Get-Location).Path }; if (-not (Test-Path (Join-Path $root \u0027.venv\u0027))) { exit 0 }; if ($c -match \u0027\\.venv[\\\\/](Scripts|bin)[\\\\/](python|pip)3?(\\.exe)?\\b\u0027) { exit 0 }; if ($c -match \u0027\\.venv[\\\\/](Scripts|bin)[\\\\/][Aa]ctivate\u0027) { exit 0 }; if ($c -match \u0027(?\u003c![\\w./\\\\-])(python3?|pip3?)(\\.exe)?\\b\u0027) { $out = @{ hookSpecificOutput = @{ hookEventName = \u0027PreToolUse\u0027; permissionDecision = \u0027deny\u0027; permissionDecisionReason = \u0027Use the .venv interpreter for this project, not the global Python: .venv\\Scripts\\python / .venv\\Scripts\\pip (README.md / CLAUDE.md require .venv for all local Python work here).\u0027 } }; $out | ConvertTo-Json -Depth 5 }; exit 0",
+                                                           "shell":  "powershell"
+                                                       }
+                                                   ]
+                                     }
+                                 ]
+              }
 }

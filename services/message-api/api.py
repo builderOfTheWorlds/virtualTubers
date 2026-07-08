@@ -10,7 +10,7 @@ service handles durable logging independently.
 import os
 
 import redis
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel
 
 from message_bus import build_message, MessageProducer
@@ -22,6 +22,18 @@ producer = MessageProducer(
     topic=os.environ["KAFKA_TOPIC"],
 )
 control = WorkerControl.from_config()
+
+# WORKER_ID values assigned to each service in docker-compose.yml. Shown as a
+# dropdown of examples in /docs — worker_id still accepts any string, since
+# this list can drift from the compose file.
+WORKER_ID_EXAMPLES = {
+    "coder": {"value": "coder"},
+    "coder-native": {"value": "coder-native"},
+    "coder-opencode": {"value": "coder-opencode"},
+    "coder-aider": {"value": "coder-aider"},
+    "manager": {"value": "manager"},
+    "tester": {"value": "tester"},
+}
 
 
 class InjectMessage(BaseModel):
@@ -43,17 +55,19 @@ def post_message(body: InjectMessage):
 
 
 @app.get("/workers/{worker_id}")
-def get_worker_status(worker_id: str):
+def get_worker_status(
+    worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES),
+):
     return {"worker_id": worker_id, "enabled": control.is_enabled(worker_id)}
 
 
 @app.post("/workers/{worker_id}/enable")
-def enable_worker(worker_id: str):
+def enable_worker(worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES)):
     return _set_worker_enabled(worker_id, True)
 
 
 @app.post("/workers/{worker_id}/disable")
-def disable_worker(worker_id: str):
+def disable_worker(worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES)):
     return _set_worker_enabled(worker_id, False)
 
 
