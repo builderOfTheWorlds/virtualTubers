@@ -10,6 +10,32 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Workers can now be turned on/off via an API — no stack redeploy needed** —
+each worker (agent + Twitch stream) can be paused and resumed in place, in
+the same container:
+
+- `app/worker_control.py` (new) — a Redis-backed `worker:{id}:enabled` flag,
+  checked by `app/agent.py`'s tick loop (pauses task/message processing when
+  disabled) and by the new `app/stream_supervisor.py` (stops/starts the
+  ffmpeg broadcaster when disabled — the Twitch channel actually goes
+  offline). Reads fail open (Redis down or key unset → enabled), so a
+  control-plane hiccup never silently kills a live stream; writes do not
+  fail open, so the operator finds out if a toggle didn't take effect.
+- `services/message-api` gained `GET /workers/{id}`, `POST /workers/{id}/enable`,
+  and `POST /workers/{id}/disable` — the intended integration point for a
+  planned web GUI worker manager. See
+  [Turning a worker on/off](#turning-a-worker-onoff-no-redeploy) below.
+- `startup.sh` no longer runs `ffmpeg` as its final foreground command —
+  ffmpeg used to *be* the container's long-lived process, so killing it to
+  honor a "disable" would have killed the whole container. It now runs
+  `stream_supervisor.py`, which starts/stops ffmpeg as a child process
+  instead (and, as a side effect, auto-restarts it if it ever crashes on its
+  own).
+- Landing this needs one worker-image rebuild + Portainer redeploy (like any
+  code change); every toggle after that is just an HTTP call — see
+  [docs/worker_control.md](docs/worker_control.md) and
+  [docs/stream_supervisor.md](docs/stream_supervisor.md).
+
 **Coders now write REAL code — swappable coding backends, A/B-tested live** —
 the biggest Phase-1 gap is closed: a coder worker can actually edit files, commit,
 and have its work really tested, via a config-selected backend
@@ -179,6 +205,29 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
    ```
    `.env` is gitignored — never commit real credentials.
 
+## Git Remotes & GitHub Mirror
+
+This repo lives on the homelab **Gitea** instance, which auto-mirrors every push to
+GitHub — set up 2026-07-05, so pushing to GitHub by hand is never needed:
+
+| Remote | URL | Role |
+|---|---|---|
+| `origin` | `ssh://git@192.168.1.120:2222/gitea_admin/virtualTubers.git` | **Source of truth — push here** |
+| `github` | `https://github.com/builderOfTheWorlds/virtualTubers` | Read-only mirror target (don't push) |
+
+- A normal `git push` (to `origin`) lands on GitHub within seconds via Gitea's native
+  push-mirror (`sync_on_commit: true`), with an 8-hour interval sync as fallback.
+- The mirror credential is a fine-grained GitHub PAT stored inside Gitea, scoped to the
+  mirrored repos only (Contents: read/write). **It expires 2026-10-03** — after that,
+  mirroring silently fails with 403s until the token is regenerated and updated in
+  Gitea (repo → Settings → Repository → Mirror Settings).
+- Check mirror health: Gitea (`http://192.168.1.120:3300`) → repo → Settings →
+  Repository → Mirror Settings (shows last-sync time and last error), or compare
+  `git ls-remote origin main` vs `git ls-remote github main` — the hashes should match.
+- To enable the same mirroring for another project, run `add_push_mirror.ps1` from
+  `mafober/portainer/configs/gitea/` — full walkthrough (including the one-time GitHub
+  PAT steps) in that folder's `github_push_mirror.md`.
+
 ## Usage
 
 Start the full stack (three workers + message-logger + message-api + Redis + local RTMP preview):
@@ -222,6 +271,26 @@ curl -X POST http://localhost:8090/messages \
 The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — then hands the commit to the tester (`commit_notification`), whose `test_passed`/`bug_report` verdict flows on to the manager and, as a `manager_report`, back to the operator. The whole exchange is visible in each worker's console output and the tmux "agent chat"/Kafka feed pane — see [docs/agent.md](docs/agent.md). To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
 
 For the full list of commands an operator can send (task assignment, direct chat, and manual/debug injections for every pipeline stage), see [docs/operator_commands.md](docs/operator_commands.md).
+
+### Turning a worker on/off (no redeploy)
+
+Any worker can be paused and resumed without touching `docker-compose.yml`,
+Portainer, or rebuilding the image — via `message-api`'s `/workers` endpoints
+(see [docs/worker_control.md](docs/worker_control.md) and
+[docs/message_api.md](docs/message_api.md)). "Off" stops both the agent
+(no more task/message processing) and the Twitch stream (ffmpeg stops
+pushing frames); the container itself stays up the whole time, ready to
+resume instantly:
+
+```bash
+curl -X POST http://localhost:8090/workers/coder/disable   # agent pauses, stream goes offline
+curl http://localhost:8090/workers/coder                   # {"worker_id": "coder", "enabled": false}
+curl -X POST http://localhost:8090/workers/coder/enable    # resumes both, in place
+```
+
+The flag lives in the shared `redis` service and defaults to enabled — a
+worker nobody has ever toggled, or a temporarily-unreachable Redis, both
+behave as "on" rather than silently going dark.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
@@ -268,6 +337,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.1.120:9092` | Message-bus broker |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
+| `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
@@ -374,6 +444,8 @@ virtualTubers/
 │   ├── git_client.py     # Local git ops per persona; push/PR no-op until GIT_SERVER_URL
 │   ├── workspace_setup.py# Seeds coder workspace volumes from the sandbox template
 │   ├── test_runner.py    # Tester's real pytest execution (copy-to-tmpdir, ro mounts)
+│   ├── worker_control.py # Redis-backed per-worker on/off flag (agent + stream pause/resume)
+│   ├── stream_supervisor.py # Starts/stops ffmpeg based on the on/off flag (replaces startup.sh's raw ffmpeg call)
 │   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)

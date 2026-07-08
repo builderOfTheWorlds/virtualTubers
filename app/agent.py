@@ -17,6 +17,7 @@ import time
 import argparse
 
 from message_bus import load_worker_config, build_message, MessageProducer, MessageConsumer
+from worker_control import WorkerControl
 from llm_client import build_llm_client
 from coding_backend import build_coding_backend
 from test_runner import run_pytest, workspace_testable
@@ -681,9 +682,15 @@ def main():
 
     producer = MessageProducer(bootstrap_servers, topic)
     consumer = MessageConsumer(bootstrap_servers, topic, group_id=f"vtuber-agent-{worker_id}", worker_id=worker_id)
+    control = WorkerControl.from_config(config)
 
     i = 0
     while True:
+        if not control.is_enabled(worker_id):
+            write_state(state_path, "idle", action="disabled by operator")
+            time.sleep(tick_rate_s)
+            continue
+
         for msg in consumer.poll_new():
             print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")
             handler = MESSAGE_HANDLERS.get(msg["type"])

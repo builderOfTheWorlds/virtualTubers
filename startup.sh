@@ -89,31 +89,20 @@ log "Starting agent loop"
 python3 /app/agent.py --config "${CONFIG_PATH}" &
 AGENT_PID=$!
 
-# ── 8. Broadcaster ────────────────────────────────────────────────────────────
-log "Starting ffmpeg broadcaster → ${STREAM_RTMP_URL}/${STREAM_KEY}"
-ffmpeg \
-    -f x11grab \
-        -video_size "${RESOLUTION}" \
-        -framerate 30 \
-        -i "${DISPLAY}" \
-    -f lavfi \
-        -i anullsrc=channel_layout=stereo:sample_rate=44100 \
-    -c:v libx264 \
-        -preset veryfast \
-        -tune zerolatency \
-        -b:v 3000k \
-        -maxrate 3000k \
-        -bufsize 6000k \
-        -pix_fmt yuv420p \
-        -g 60 \
-    -c:a aac \
-        -b:a 128k \
-        -ar 44100 \
-    -reconnect 1 \
-    -reconnect_streamed 1 \
-    -reconnect_delay_max 5 \
-    -f flv \
-    "${STREAM_RTMP_URL}/${STREAM_KEY}"
+# ── 8. Stream supervisor ───────────────────────────────────────────────────────
+# Runs ffmpeg as a child process it starts/stops based on this worker's on/off
+# flag (app/worker_control.py, toggled via message-api's /workers/{id}/enable|
+# disable — no stack redeploy needed). Replaces a raw foreground `ffmpeg`
+# call: killing that directly would have exited the whole container (see the
+# cleanup line below), so a "disable" needs a supervisor that can stop/restart
+# ffmpeg in place instead.
+log "Starting stream supervisor (toggle via worker control API — no redeploy needed) → ${STREAM_RTMP_URL}/${STREAM_KEY}"
+python3 /app/stream_supervisor.py \
+    --config "${CONFIG_PATH}" \
+    --rtmp-url "${STREAM_RTMP_URL}" \
+    --stream-key "${STREAM_KEY}" \
+    --resolution "${RESOLUTION}" \
+    --display "${DISPLAY}"
 
-log "Broadcaster exited. Cleaning up."
+log "Stream supervisor exited. Cleaning up."
 kill $AGENT_PID $XTERM_PID $XVFB_PID 2>/dev/null
