@@ -363,15 +363,25 @@ Then, from the Proxmox shell:
 pct enter 101                            # enter the Portainer LXC (CT 101)
 cd /opt/virtualTubers                    # the repo checkout
 git pull                                 # get the latest code
-docker build -t vtube-worker:latest .    # rebuild the worker image (NOT `docker compose build`)
+./install.sh                             # rebuild every image the stack needs (see below)
 ```
 
 Then in the **Portainer UI** → **Stacks** → this stack → **Update the stack**,
 enabling **Re-pull image and redeploy** / force recreate. Portainer recreates the
-workers on the freshly built image using the current stack env vars.
+workers on the freshly built images using the current stack env vars.
 
-> Env-only change (e.g. a new stream key)? Skip `docker build` — just **Update the
+> Env-only change (e.g. a new stream key)? Skip `install.sh` — just **Update the
 > stack** in Portainer to re-inject the env and recreate the containers.
+
+`install.sh` builds `vtube-worker:latest` (the six worker containers) plus
+`message-logger`, `message-api`, and `log-shipper` via `docker compose build`.
+**Whenever a new service or worker image is added to the stack, add its build
+step to `install.sh` in the same change** — a service missing from the script
+has no image on the host, and Portainer's own `build:` step can fail (surfacing
+as an opaque 500 on deploy) since the stack's build context doesn't necessarily
+have the full repo tree available the way a host-side `docker compose build`
+does. `install.sh`'s header comment is the single source of truth for what it
+currently builds — keep it and this paragraph in sync with the file.
 
 ### Verify a worker is streaming to the right place
 
@@ -401,7 +411,7 @@ All runtime behavior is config-driven — no code changes needed to retune an ag
 
 - `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state/message-bus settings)
 - `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml` — per-role configs mounted into each container at `/config/worker.yaml`
-- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
+- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
 
 Key sections inside a worker config:
 
@@ -416,6 +426,29 @@ Key sections inside a worker config:
 | `world_state` | Shared state backend (`file` \| `redis`) and connection info |
 | `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
 | `coding_backend` | Which tool writes real code (`provider`: `native` \| `opencode` \| `aider` \| `none`; `workspace`, `timeout_s`, optional `model` override). See [docs/coding_backend.md](docs/coding_backend.md). |
+
+### Worker on/off control (what's set up)
+
+Every worker's enabled/disabled state lives outside `worker.yaml` entirely —
+in the shared `redis` service (`docker-compose.yml`), one key per worker
+(`worker:{id}:enabled`), so it can be flipped at runtime without touching
+config files or the stack:
+
+- **Who reads it**: `app/agent.py`'s tick loop (gates task/message
+  processing) and `app/stream_supervisor.py` (gates the ffmpeg broadcaster —
+  this is what makes "disable" actually take the Twitch channel offline,
+  not just idle the avatar).
+- **Who writes it**: `services/message-api`'s `GET/POST /workers/{id}...`
+  endpoints (port `8090`) — see
+  [Turning a worker on/off](#turning-a-worker-onoff-no-redeploy) above for
+  `curl` examples. This is the integration point for a planned web GUI
+  worker manager.
+- **Failure behavior**: reads fail open — a worker with no key yet, or a
+  temporarily unreachable Redis, is treated as *enabled*. A control-plane
+  hiccup can never silently take a live stream down. Writes do not fail
+  open — the API returns HTTP 503 if a toggle couldn't be persisted.
+- **Full design**: [docs/worker_control.md](docs/worker_control.md) and
+  [docs/stream_supervisor.md](docs/stream_supervisor.md).
 
 ### Tmux layout (config-driven)
 

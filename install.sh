@@ -18,7 +18,7 @@ log() { echo "[install] $*"; }
 log "Building vtube-worker:latest"
 docker build -t vtube-worker:latest .
 
-log "Building message-logger and message-api"
-docker compose build message-logger message-api
+log "Building message-logger, message-api, and log-shipper"
+docker compose build message-logger message-api log-shipper
 
 log "Done. Redeploy the stack (Portainer: Update the stack → Re-pull image and redeploy)."
