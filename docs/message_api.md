@@ -13,6 +13,11 @@ Also exposes the `/workers` control endpoints — the HTTP surface for turning
 a worker on/off without redeploying the stack (docs/worker_control.md). This
 is the intended integration point for a future web GUI that toggles workers.
 
+Also exposes the `/log-filter` control endpoints — the HTTP surface for
+excluding a noisy message type (e.g. the heartbeat `status_update` flood)
+from message-logger's Postgres writes without a stack redeploy
+(docs/log_filter_control.md).
+
 ## Signature
 
 ```python
@@ -27,6 +32,10 @@ class InjectMessage(BaseModel):
 @app.get("/workers/{worker_id}") -> dict
 @app.post("/workers/{worker_id}/enable") -> dict
 @app.post("/workers/{worker_id}/disable") -> dict
+
+@app.get("/log-filter/{message_type}") -> dict
+@app.post("/log-filter/{message_type}/exclude") -> dict
+@app.post("/log-filter/{message_type}/include") -> dict
 ```
 
 ## Parameters
@@ -35,8 +44,9 @@ class InjectMessage(BaseModel):
 - `type` (str, optional, default `"operator_message"`) — message type; can be overridden to inject any other documented type (e.g. `task_assignment`) for testing.
 - `payload` (dict, optional, default `{}`) — free-form message body.
 - `worker_id` (str, path param) — worker ID matching `WORKER_ID`/`message_bus.worker_id` (e.g. `coder`, `coder-native`, `manager`, `tester`).
+- `message_type` (str, path param) — the message `type` field to filter (e.g. `status_update`, `task_complete`); accepts any string.
 
-Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` endpoints).
+Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints).
 
 ## Return Value
 
@@ -44,12 +54,15 @@ Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_T
 - `POST /messages` — the full message envelope that was published (`id`, `from` (always `"operator"`), `to`, `type`, `payload`, `timestamp`), HTTP 200.
 - `GET /workers/{worker_id}` — `{"worker_id": ..., "enabled": bool}`, HTTP 200. Defaults to `enabled: true` if the worker has never been toggled.
 - `POST /workers/{worker_id}/enable` / `/disable` — same shape as the GET, reflecting the new state, HTTP 200.
+- `GET /log-filter/{message_type}` — `{"type": ..., "excluded": bool}`, HTTP 200. Defaults to `excluded: true` for `status_update` and `false` for any other type that's never been toggled.
+- `POST /log-filter/{message_type}/exclude` / `/include` — same shape as the GET, reflecting the new state, HTTP 200.
 - Malformed/missing required fields — HTTP 422 (FastAPI/Pydantic validation).
 
 ## Dependencies
 
 - `message_bus.build_message`, `message_bus.MessageProducer` (`app/message_bus.py`, copied into this service's image)
 - `worker_control.WorkerControl` (`app/worker_control.py`, copied into this service's image; docs/worker_control.md)
+- `log_filter_control.LogFilterControl` (`app/log_filter_control.py`, copied into this service's image; docs/log_filter_control.md)
 - `fastapi`, `uvicorn`, `pydantic`, `redis`
 
 ## Usage Examples
@@ -75,14 +88,25 @@ curl http://localhost:8090/workers/coder
 curl -X POST http://localhost:8090/workers/coder/enable
 ```
 
+```bash
+# Heartbeat (status_update) messages are excluded from Postgres by default.
+# Turn logging back on for them, check status, then re-exclude them:
+curl -X POST http://localhost:8090/log-filter/status_update/include
+curl http://localhost:8090/log-filter/status_update
+curl -X POST http://localhost:8090/log-filter/status_update/exclude
+```
+
 ## Error Handling
 
 - Missing `to` field — HTTP 422 with a Pydantic validation error body.
 - Kafka unreachable at startup — the process fails to construct `MessageProducer` and exits; `restart: unless-stopped` retries.
 - Redis unreachable when reading status — `is_enabled` fails open, so `GET /workers/{id}` reports `enabled: true` rather than erroring.
 - Redis unreachable when writing status — `enable`/`disable` return HTTP 503; the toggle did not take effect.
+- Redis unreachable when reading a log filter — `is_excluded` falls back to `DEFAULT_EXCLUDED_TYPES`, so `GET /log-filter/{type}` keeps reporting `status_update` as excluded rather than erroring.
+- Redis unreachable when writing a log filter — `exclude`/`include` return HTTP 503; the toggle did not take effect.
 
 ## Changelog
 
 - v1.0.0 (2026-07-01) — Initial version.
 - v1.1.0 (2026-07-07) — Added `/workers/{worker_id}` status and `/workers/{worker_id}/enable`/`disable` control endpoints, backed by `worker_control.WorkerControl`.
+- v1.2.0 (2026-07-09) — Added `/log-filter/{message_type}` status and `/log-filter/{message_type}/exclude`/`include` control endpoints, backed by `log_filter_control.LogFilterControl`.

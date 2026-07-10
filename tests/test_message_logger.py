@@ -12,9 +12,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "app"))
 sys.path.insert(0, str(ROOT / "services" / "message-logger"))
 
-with patch("psycopg2.connect"):
+with patch("psycopg2.connect"), patch("log_filter_control.redis.Redis.from_url"):
     import logger
 
 
@@ -25,6 +26,16 @@ def env(monkeypatch):
     monkeypatch.setenv("POSTGRES_PASSWORD", "secret")
     monkeypatch.delenv("POSTGRES_HOST", raising=False)
     monkeypatch.delenv("POSTGRES_PORT", raising=False)
+
+
+@pytest.fixture(autouse=True)
+def fake_log_filter_client():
+    fake_client = MagicMock()
+    fake_client.get.return_value = None  # fall back to LogFilterControl defaults
+    with patch("logger.LogFilterControl.from_config") as fake_from_config:
+        fake_from_config.return_value = logger.LogFilterControl.__new__(logger.LogFilterControl)
+        fake_from_config.return_value._client = fake_client
+        yield fake_client
 
 
 def test_connect_db_reads_required_env_vars(monkeypatch):
@@ -91,6 +102,26 @@ def test_main_inserts_each_consumed_message(monkeypatch):
     assert params["to"] == "manager"
     assert params["type"] == "task_complete"
     assert params["payload"] == '{"task": "fix the login bug"}'
+
+
+def test_main_skips_insert_for_excluded_type(monkeypatch):
+    monkeypatch.setenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    monkeypatch.setenv("KAFKA_TOPIC", "vtuber.messages")
+
+    fake_cursor = MagicMock()
+    fake_cursor.__enter__ = MagicMock(return_value=fake_cursor)
+    fake_cursor.__exit__ = MagicMock(return_value=False)
+    fake_conn = MagicMock()
+    fake_conn.cursor.return_value = fake_cursor
+
+    messages = [_fake_message(type_="status_update", payload={"text": "heartbeat #1"})]
+
+    with patch("logger.connect_db", return_value=fake_conn), \
+         patch("logger.MessageConsumer", return_value=iter(messages)):
+        logger.main()
+
+    insert_calls = [c for c in fake_cursor.execute.call_args_list if c.args[0] == logger.INSERT_SQL]
+    assert len(insert_calls) == 0
 
 
 def test_main_creates_table_before_consuming(monkeypatch):

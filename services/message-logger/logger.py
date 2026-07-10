@@ -4,12 +4,16 @@ logger.py
 Consumes every message on the Kafka bus and durably logs it to Postgres.
 Runs as its own consumer group, fully decoupled from agents and the
 message-api injection service.
+Messages whose type is excluded via LogFilterControl (e.g. the per-tick
+heartbeat status_update flood) are dropped before the INSERT — see
+docs/log_filter_control.md.
 """
 import json
 import os
 
 import psycopg2
 
+from log_filter_control import LogFilterControl
 from message_bus import MessageConsumer
 
 CREATE_TABLE_SQL = """
@@ -116,8 +120,11 @@ def main():
 
     print(f"[logger] consuming topic={topic} group={group_id} bootstrap={bootstrap_servers}")
     consumer = MessageConsumer(bootstrap_servers, topic, group_id=group_id)
+    log_filter = LogFilterControl.from_config()
 
     for msg in consumer:
+        if log_filter.is_excluded(msg["type"]):
+            continue
         with conn.cursor() as cur:
             cur.execute(INSERT_SQL, {
                 "id": msg["id"],
