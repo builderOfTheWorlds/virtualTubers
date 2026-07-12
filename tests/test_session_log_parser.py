@@ -22,18 +22,47 @@ from session_log_parser import (  # noqa: E402
 
 # ── redact ───────────────────────────────────────────────────────────────────
 @pytest.mark.parametrize("raw,expected_absent,expected_marker", [
-    ("connect to 192.168.1.120:9092 now", "192.168", "[ip]"),
+    ("push to 8.45.212.7:9092 now", "8.45.212", "[ip]"),
     ("ollama at 100.37.208.112 is down", "100.37", "[ip]"),
-    ("partial LAN ref 192.168.1:8090 too", "192.168", "[ip]"),
+    ("partial tailnet ref 100.37.208:8090 too", "100.37", "[ip]"),
     ("key sk-ant-api03-AbCdEfGh123456 leaked", "sk-ant-api03", "[api-key]"),
     ("token ghp_abcdefghijklmnopqrst123 here", "ghp_a", "[github-token]"),
     ("stream key live_abcdefghijklmnop_x", "live_a", "[stream-key]"),
     ("mail frogger5687@gmail.com please", "@gmail", "[email]"),
+    ("POSTGRES_PASSWORD=hunter2 in the env", "hunter2", "[password]"),
+    ("export PGPASSWORD='tr0ub4dor'", "tr0ub4dor", "[password]"),
+    ('config had "password": "s3cr3t!x" set', "s3cr3t", "[password]"),
+    ("yaml style password: hunter2 here", "hunter2", "[password]"),
+    ("client_secret = abc123xyz in settings", "abc123xyz", "[password]"),
+    ("psql --password hunter2 -h db", "hunter2", "[password]"),
+    ("dsn postgres://admin:hunter2@10.0.0.5/db", "hunter2", "[password]"),
+    # double-nested quoting, as in psql -v var="'value'"
+    ("-v pg_password=\"'hunter2'\" -f setup.sql", "hunter2", "[password]"),
 ])
 def test_redact_scrubs_sensitive_patterns(raw, expected_absent, expected_marker):
     result = redact(raw)
     assert expected_absent not in result
     assert expected_marker in result
+
+
+@pytest.mark.parametrize("raw", [
+    "connect to 192.168.1.120:9092 now",
+    "partial LAN ref 192.168.1:8090 too",
+    "hosts 10.0.5.3 and 172.16.0.9 and 127.0.0.1 up",
+])
+def test_redact_preserves_private_ips(raw):
+    assert redact(raw) == raw
+
+
+def test_redact_url_credentials_keep_user_and_private_host():
+    result = redact("dsn postgres://admin:hunter2@192.168.1.5/db")
+    assert result == "dsn postgres://admin:[password]@192.168.1.5/db"
+
+
+def test_redact_leaves_empty_password_assignment_alone():
+    # .env templates legitimately show "POSTGRES_PASSWORD=" with no value
+    text = "POSTGRES_PASSWORD=\nPOSTGRES_USER=vtubers"
+    assert redact(text) == text
 
 
 @pytest.mark.parametrize("raw", [

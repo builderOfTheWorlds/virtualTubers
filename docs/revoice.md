@@ -1,0 +1,124 @@
+# revoice
+
+## Overview
+
+The per-airing narration pass for Rerun Theater — the "persona re-voicing"
+layer the replay pipeline was designed around. It takes a parsed episode
+script ([session_log_parser.md](session_log_parser.md)) and produces a
+**voiced show**: the script's events grouped into scenes, each with a
+spoken line (boss voice or coder voice) and its synthesized audio.
+
+It runs at showtime, per airing — never baked into the episode library —
+so every re-run of the same episode gets fresh dialogue from the local LLM.
+`tool_call` events are never altered: narration is *additive*; the
+on-screen commands, edits, and outputs stay exactly what the parser
+recorded.
+
+### Timing model (why this makes audio and visuals line up)
+
+1. **Estimate** each scene's on-screen render time at base pacing
+   (`replay.estimate_event_seconds`).
+2. **Size the line to the screen time**: ask the LLM for roughly
+   `seconds × 2.5` words (~150 wpm) — a scene with minutes of scrolling
+   output gets enough narration to talk over the whole thing; a two-second
+   beat gets one short sentence.
+3. **Synthesize and measure**: the real audio duration comes back from
+   `tts_client`. The performer then scales that scene's visual pacing so
+   text and speech finish together — *audio anchors, visuals adapt*
+   ([replay.md](replay.md)).
+
+### Scene grammar
+
+| Kind | Speaker | Source events |
+|---|---|---|
+| `boss` | boss | one `user_message` |
+| `coder_talk` | coder | one `assistant_text` |
+| `coder_work` | coder | a run of consecutive `tool_call`s (≤ 8 per scene) |
+
+## Signature
+
+```python
+def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
+                 boss_name="the boss", speed=1.0, max_output_lines=24,
+                 progress=None) -> list[dict]
+
+def plan_scenes(events: list[dict]) -> list[dict]
+def scene_visual_seconds(scene, max_output_lines, speed=1.0) -> float
+def target_words(seconds: float) -> int
+def narrate_scene(scene, llm, words, worker_name, boss_name) -> str
+def fallback_narration(scene, max_words) -> str
+```
+
+## Parameters
+
+- `script` (dict, required): a parsed episode script (`events` list).
+- `llm` (object or None): anything with `complete(system_prompt, messages)`
+  — `llm_client.build_llm_client(config)` in practice. `None` skips the LLM
+  and uses template narration.
+- `tts` (`TTSClient` or None): from `tts_client.build_tts_client`. `None`
+  produces a narrated-but-silent show (text lines, no audio).
+- `workdir` (path, required): where scene WAVs are written (a per-show
+  temp dir; the caller owns cleanup).
+- `speed` / `max_output_lines`: must match the Performer's settings so the
+  word-count sizing reflects real screen time.
+- `progress` (callable, optional): called with one message per scene —
+  the theater pane prints these as a "preparing tonight's episode" screen.
+
+## Return Value
+
+`plan_scenes`' scene list, each annotated with:
+
+- `narration` (str, always present) — the spoken line
+- `audio` (`tts_client.Narration` or None) — path + measured duration;
+  None means the scene performs silently
+
+Pass the list straight to `Performer.perform(script, show=...)`.
+
+## Dependencies
+
+`replay.py` (the pacing estimator — kept in lockstep with the Performer's
+handlers), and duck-typed `llm_client` / `tts_client` instances supplied by
+the caller. Standard library otherwise.
+
+## Usage Examples
+
+The glue most callers want (builds LLM + TTS from a worker config):
+
+```python
+from replay import Performer, prepare_voiced_show
+import tempfile
+
+with tempfile.TemporaryDirectory() as workdir:
+    show = prepare_voiced_show(script, worker_config, workdir,
+                               worker_name="KODI-7", progress=print)
+    Performer(worker_name="KODI-7").perform(script, show=show)
+```
+
+Direct use with explicit clients:
+
+```python
+from llm_client import build_llm_client
+from tts_client import build_tts_client
+from revoice import prepare_show
+
+show = prepare_show(script, build_llm_client(config),
+                    build_tts_client(config), "/tmp/show")
+voiced = sum(1 for scene in show if scene["audio"])
+```
+
+## Error Handling
+
+The show must always air, so every step degrades instead of raising:
+
+- LLM unreachable / empty reply → `fallback_narration` builds the line
+  from the (already-redacted) script text.
+- TTS failure on a scene → that scene's `audio` is None (plays silent at
+  normal pacing); reported via `progress`.
+- Narration only ever sees parser-redacted material, so nothing new can
+  leak to a broadcast pane.
+
+## Changelog
+
+- **v1.0.0** (2026-07-12): Initial version — scene planning, word budgets
+  sized to screen time, LLM re-voicing with template fallback, per-scene
+  TTS with silent-scene degradation. 15 tests.

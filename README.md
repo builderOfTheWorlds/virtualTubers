@@ -10,11 +10,43 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Rerun Theater episodes are now SPOKEN — two-voice narration, synced to the
+screen** — the planned persona re-voicing layer landed, with TTS on top:
+
+- `app/revoice.py` (new) — per-airing narration pass: groups an episode's
+  events into scenes (boss message / coder talk / coder work), asks the
+  local LLM for a fresh spoken line per scene — sized to the scene's
+  estimated screen time (~2.5 words/sec), so a long console scroll gets
+  enough narration to talk over all of it — then synthesizes each line.
+  Every airing of the same episode gets new dialogue. LLM down → template
+  lines from the redacted script; the show always airs.
+- `app/tts_client.py` (new) — provider-switchable TTS (same pattern as
+  `llm_client.py`): local **Piper** (default, free), OpenAI, or ElevenLabs;
+  adapted from the autoVideo project. Returns each WAV's *measured*
+  duration. Two voices via `voice.speakers` config — the boss and the coder
+  speak with different models. `app/audio_player.py` (new) plays into the
+  container's PulseAudio sink, which ffmpeg already captures onto the
+  stream.
+- `app/replay.py` — audio-anchored pacing: each voiced scene's typing/
+  scrolling speed is scaled so the visuals and the spoken line finish
+  together (clamped 0.4–3.0×; visuals done early → the scene holds for the
+  voice). Spoken lines also render as dim `♪` text for muted viewers, and
+  drive the avatar's speech bubble. `replay_pane.py` reads the worker
+  config and runs the pass before each show; `"voice": false` in a
+  `replay_request` forces a silent airing.
+- Setup: `python scripts/download_voices.py --out voices`, sync `voices/`
+  to `/opt/virtualTubers/voices` on the host (compose mounts it `:ro` at
+  `/data/voices`), set the worker's `voice.provider: piper`. Worker image
+  rebuild required (`piper-tts` added to requirements). See
+  [docs/revoice.md](docs/revoice.md), [docs/tts_client.md](docs/tts_client.md),
+  and [docs/audio_player.md](docs/audio_player.md).
+
 **Rerun Theater — workers can re-perform past real dev sessions as shows** —
 saved Claude Code session logs become replayable stream content:
 
 - `app/session_log_parser.py` (new) — parses a `claudeBackupUtility` session
-  log into a canonical, **redacted** episode script (usernames, IPs,
+  log into a canonical, **redacted** episode script (passwords/credential
+  values, public+tailnet IPs — private LAN IPs stay readable — usernames,
   key-shaped tokens, emails scrubbed before anything can reach a broadcast
   pane). `scripts/build_replay_library.py` batch-builds the episode library;
   it refuses to write any episode that fails the leak audit.
@@ -452,7 +484,7 @@ Key sections inside a worker config:
 |---|---|
 | `agent` | Role, display name, system prompt, tick rate, context window |
 | `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
-| `voice` | TTS provider (`elevenlabs` \| `kokoro` \| `null`), voice ID, verbosity |
+| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. See [docs/tts_client.md](docs/tts_client.md) |
 | `avatar` | Name, title, ASCII expression states, speech bubble sizing |
 | `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager`; `LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. |
 | `stream` | RTMP URL/key, resolution, bitrate, fps |
@@ -515,8 +547,11 @@ virtualTubers/
 │   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── session_log_parser.py # Saved Claude session logs -> redacted replay scripts
-│   ├── replay.py         # Performs a replay script as a paced show (display-only)
+│   ├── replay.py         # Performs a replay script as a paced show (display-only, audio-synced)
 │   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes
+│   ├── revoice.py        # Per-airing narration pass: scenes + LLM-written spoken lines
+│   ├── tts_client.py     # Provider-switchable TTS (Piper | OpenAI | ElevenLabs), measured durations
+│   ├── audio_player.py   # Best-effort WAV playback into the streamed PulseAudio sink
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
 │   ├── tmux_control.py   # Agent's "hands": select a pane by name, type text/commands into it
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper

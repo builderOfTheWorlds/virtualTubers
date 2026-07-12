@@ -13,7 +13,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
-from replay import Pacer, Palette, Performer, load_script, _truncate_lines  # noqa: E402
+import replay  # noqa: E402
+from replay import (  # noqa: E402
+    MAX_SCENE_SCALE, MIN_SCENE_SCALE, Pacer, Palette, Performer,
+    estimate_event_seconds, load_script, _truncate_lines,
+)
 from agent_state import read_state  # noqa: E402
 
 
@@ -129,6 +133,131 @@ def test_pacer_disabled_types_full_text_instantly():
     chunks = []
     Pacer(enabled=False).type_out(chunks.append, "hello world", cps=1)
     assert "".join(chunks) == "hello world"
+
+
+# ── audio-anchored scenes (voiced shows from revoice.prepare_show) ──────────
+
+class FakeNarrationAudio:
+    def __init__(self, duration):
+        self.audio_path = Path("scene.wav")
+        self.duration = duration
+
+
+class FakePlayback:
+    def __init__(self):
+        self.stopped = False
+        self.waits = []
+
+    @property
+    def running(self):
+        return not self.stopped
+
+    def wait(self, timeout=None):
+        self.waits.append(timeout)
+
+    def stop(self):
+        self.stopped = True
+
+
+def test_estimate_event_seconds_grows_with_content():
+    small = estimate_event_seconds({"type": "assistant_text", "text": "hi"})
+    large = estimate_event_seconds({"type": "assistant_text", "text": "hi" * 500})
+    assert 0 < small < large
+
+
+def test_estimate_event_seconds_caps_output_at_max_lines():
+    def shell_event(lines):
+        return {"type": "tool_call", "tool": "Bash",
+                "detail": {"command": "ls", "output": "\n".join("x" * lines for _ in range(lines))}}
+    capped = estimate_event_seconds(shell_event(500), max_output_lines=10)
+    assert capped < estimate_event_seconds(shell_event(500), max_output_lines=100)
+
+
+def test_estimate_event_seconds_unknown_type_is_zero():
+    assert estimate_event_seconds({"type": "mystery"}) == 0.0
+
+
+def test_pacer_scale_layers_on_speed():
+    pacer = Pacer(speed=2.0, enabled=False)
+    assert pacer.effective_speed == 2.0
+    pacer.scale = 0.5
+    assert pacer.effective_speed == 1.0
+
+
+def test_perform_voiced_show_syncs_to_audio(monkeypatch):
+    played, scales = [], []
+    playback = FakePlayback()
+
+    def fake_play_wav(path, out=None):
+        played.append(path)
+        return playback
+
+    waited = []
+    monkeypatch.setattr(replay, "play_wav", fake_play_wav)
+    monkeypatch.setattr(replay, "wait_extra",
+                        lambda pb, started, min_seconds: waited.append(min_seconds))
+
+    out = io.StringIO()
+    performer = make_performer(out)
+    original = performer._perform_events
+
+    def spy_perform_events(events):
+        scales.append(performer.pacer.scale)
+        original(events)
+
+    performer._perform_events = spy_perform_events
+
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "The boss wants a heartbeat.",
+         "audio": FakeNarrationAudio(duration=4.0)},
+        {"kind": "coder_talk", "speaker": "coder", "events": [SCRIPT["events"][1]],
+         "narration": "Time to get to work.", "audio": None},  # silent scene
+    ]
+    performer.perform(SCRIPT, show=show)
+    text = out.getvalue()
+
+    # narration lines are shown for muted viewers, both scenes perform
+    assert "♪ The boss wants a heartbeat." in text
+    assert "♪ Time to get to work." in text
+    assert "Please add a heartbeat" in text and "On it, boss." in text
+    # only the voiced scene played audio, with a clamped sync scale applied
+    assert len(played) == 1
+    assert MIN_SCENE_SCALE <= scales[0] <= MAX_SCENE_SCALE
+    assert scales[1] == 1.0  # silent scene runs at normal pacing
+    assert performer.pacer.scale == 1.0  # reset after the show
+    # disabled pacer (tests) stops audio instead of waiting on it
+    assert playback.stopped and waited == []
+
+
+def test_perform_voiced_show_waits_for_audio_when_paced(monkeypatch):
+    playback = FakePlayback()
+    waited = []
+    monkeypatch.setattr(replay, "play_wav", lambda path, out=None: playback)
+    monkeypatch.setattr(replay, "wait_extra",
+                        lambda pb, started, min_seconds: waited.append(min_seconds))
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(speed=10_000.0),
+                          palette=Palette(enabled=False))
+    show = [{"kind": "coder_talk", "speaker": "coder",
+             "events": [SCRIPT["events"][1]],
+             "narration": "hi", "audio": FakeNarrationAudio(duration=0.5)}]
+    performer.perform(SCRIPT, show=show)
+    assert waited == [0.5]  # held the scene for the spoken line
+
+
+def test_perform_voiced_show_respects_start_and_limit(monkeypatch):
+    out = io.StringIO()
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "one", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "two", "audio": None},
+        {"events": [SCRIPT["events"][3]], "narration": "three", "audio": None},
+    ]
+    make_performer(out).perform(SCRIPT, show=show, start=1, limit=1)
+    text = out.getvalue()
+    assert "♪ two" in text
+    assert "♪ one" not in text and "♪ three" not in text
 
 
 def test_load_script_from_json_and_directory(tmp_path):

@@ -80,22 +80,44 @@ llm:
   # (see .env.example) — the Claude client never reads a key from this file.
 
 
-# ── TTS / Voice settings ──────────────────────────────────────────────────────
+# ── TTS / Voice settings (app/tts_client.py, docs/tts_client.md) ─────────────
+# Used by Rerun Theater's spoken narration (docs/revoice.md): each replay
+# scene gets a per-airing LLM-written line, synthesized and played into the
+# container's PulseAudio sink so it goes out on the stream.
 voice:
-  # Provider: elevenlabs | kokoro | null (null = silent, useful in dev)
+  # Provider: piper | kokoro (alias of piper) | openai | elevenlabs
+  #           | null (silent — replays perform without narration)
+  # piper is local + free: `pip install piper-tts` (in the worker image) and
+  # a downloaded .onnx voice model (scripts/download_voices.py).
+  # Env var TTS_PROVIDER overrides this at runtime.
   provider: "null"
 
-  # ElevenLabs voice ID (ignored if provider != elevenlabs)
+  # piper/kokoro: path to the .onnx voice model (docker-compose mounts the
+  # host's /opt/virtualTubers/voices at /data/voices, read-only)
+  model_path: "/data/voices/en_US-lessac-medium.onnx"
+
+  # openai / elevenlabs: which cloud voice to use (OpenAI voice name, or the
+  # ElevenLabs dashboard voice ID). API keys come from the environment only
+  # (OPENAI_API_KEY / ELEVEN_API_KEY) — never from this file.
   voice_id: ""
 
-  # Kokoro model path (ignored if provider != kokoro)
-  model_path: "/models/kokoro"
+  # Replay dialogue is two-voiced: per-speaker overrides merged over the
+  # base settings above. Give the boss a different model/voice than the
+  # coder so the back-and-forth reads as two characters.
+  speakers:
+    coder: {}
+    boss:
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+
+  # What the coder calls the boss in spoken narration
+  boss_name: "the boss"
 
   # Speaking rate multiplier (1.0 = normal)
   rate: 1.0
 
   # How much of the agent's narration gets spoken aloud (0.0–1.0)
   # 1.0 = speak everything, 0.5 = speak roughly half, 0.0 = silent
+  # (live-agent speech — not used by replays, which voice every scene)
   verbosity: 0.8
 
 

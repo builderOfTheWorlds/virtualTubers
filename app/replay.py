@@ -9,9 +9,12 @@ Display-only by design: recorded commands and edits are RENDERED, never
 executed. The only side effect is the avatar state file (agent_state.py),
 which the avatar pane already knows how to read.
 
-Persona re-voicing (a later pass) rewrites narration text in the script
-before it reaches this module; the replayer performs whatever text it's
-given and never calls an LLM itself.
+Persona re-voicing / narration is a separate per-airing pass (revoice.py):
+it hands this module a "voiced show" — the script's events grouped into
+scenes, each with a spoken line and its synthesized audio (tts_client.py).
+The replayer performs whatever text it's given and never calls an LLM
+itself. Audio anchors the timing: each scene's visual pacing is scaled so
+the on-screen rendering and the spoken line finish together.
 """
 import argparse
 import json
@@ -20,6 +23,7 @@ import time
 from pathlib import Path
 
 from agent_state import write_state
+from audio_player import play_wav, wait_extra
 
 
 # ── Pacing defaults (chars/sec and pauses; --speed scales everything) ────────
@@ -30,28 +34,86 @@ EVENT_PAUSE_S = 0.8     # beat between events
 MAX_OUTPUT_LINES = 24   # cap displayed command output / file content
 BUBBLE_CHARS = 120      # avatar speech-bubble excerpt length
 
+# Audio-anchored scenes scale visual pacing to the spoken line's measured
+# duration, clamped so a scene never crawls or blurs; outside the clamp the
+# slack is absorbed by waiting (visuals done first) or by the audio simply
+# ending early (visuals still going).
+MIN_SCENE_SCALE = 0.4
+MAX_SCENE_SCALE = 3.0
+TOOL_BEAT_S = 0.5       # pause for Read/generic tool events
+
 
 class Pacer:
     """All sleeps/typing rhythm go through here so tests (and --no-delay)
-    can run instantly with enabled=False."""
+    can run instantly with enabled=False. `scale` is the per-scene
+    audio-sync factor layered on top of the show-wide `speed`."""
 
     def __init__(self, speed=1.0, enabled=True):
         self.speed = max(speed, 0.01)
         self.enabled = enabled
+        self.scale = 1.0
+
+    @property
+    def effective_speed(self):
+        return max(self.speed * self.scale, 0.01)
 
     def sleep(self, seconds):
         if self.enabled and seconds > 0:
-            time.sleep(seconds / self.speed)
+            time.sleep(seconds / self.effective_speed)
 
     def type_out(self, write, text, cps):
         """Emit text through `write` at roughly cps characters/second."""
         if not self.enabled:
             write(text)
             return
-        delay = 1.0 / (cps * self.speed)
+        delay = 1.0 / (cps * self.effective_speed)
         for ch in text:
             write(ch)
             time.sleep(delay)
+
+
+def estimate_event_seconds(event, max_output_lines=MAX_OUTPUT_LINES):
+    """Seconds one event takes to render at speed 1.0 / scale 1.0.
+
+    Mirrors the Performer handlers' pacing math — revoice.py sizes each
+    scene's narration from this, and _perform_scene derives the audio-sync
+    scale from it, so keep the two in lockstep when touching pacing.
+    """
+
+    def displayed(text):
+        lines = text.splitlines()
+        return lines[:max_output_lines]
+
+    kind = event.get("type")
+    if kind == "user_message":
+        return len(event.get("text", "")) / (DIALOGUE_CPS * 2) + EVENT_PAUSE_S
+    if kind == "assistant_text":
+        return len(event.get("text", "")) / DIALOGUE_CPS + EVENT_PAUSE_S
+    if kind != "tool_call":
+        return 0.0
+
+    tool = event.get("tool")
+    detail = event.get("detail") or {}
+    seconds = EVENT_PAUSE_S
+    if tool in ("Bash", "PowerShell"):
+        command = detail.get("command") or event.get("input_summary") or ""
+        seconds += len(command) / CODE_CPS
+        output = detail.get("output")
+        if output:
+            seconds += len(displayed(output)) / OUTPUT_LINES_PER_S
+    elif tool == "Edit":
+        old, new = detail.get("old"), detail.get("new")
+        if old:
+            seconds += len(displayed(old)) / OUTPUT_LINES_PER_S
+        if new:
+            seconds += sum(len(line) for line in displayed(new)) / CODE_CPS
+    elif tool == "Write":
+        content = detail.get("content")
+        if content:
+            seconds += sum(len(line) for line in displayed(content)) / (CODE_CPS * 2)
+    else:
+        seconds += TOOL_BEAT_S
+    return seconds
 
 
 # ── ANSI helpers ─────────────────────────────────────────────────────────────
@@ -227,17 +289,8 @@ class Performer:
         self._avatar("focused", action=f"using {event['tool']}")
         self.pacer.sleep(0.5)
 
-    # ── top level ────────────────────────────────────────────────────────────
-    def perform(self, script, start=0, limit=None):
-        c = self.c
-        events = script.get("events", [])[start:]
-        if limit is not None:
-            events = events[:limit]
-        title = script.get("source", "episode")
-        self._line(f"{c.bold}{c.magenta}══ REPLAY: {title} "
-                   f"({len(events)} scenes) ══{c.reset}")
-        self._avatar("idle", action="getting ready for a rerun")
-
+    # ── scene performance (a scene = events + optional spoken narration) ────
+    def _perform_events(self, events):
         dispatch = {
             "user_message": self._on_user_message,
             "assistant_text": self._on_assistant_text,
@@ -249,6 +302,63 @@ class Performer:
                 continue
             handler(event)
             self.pacer.sleep(EVENT_PAUSE_S)
+
+    def _perform_scene(self, scene):
+        """Perform one scene; when it carries synthesized narration, anchor
+        the visual pacing to the audio's measured duration so both finish
+        together (revoice.py's timing model)."""
+        narration = scene.get("narration")
+        audio = scene.get("audio")
+        if narration:
+            self._line()
+            self._line(f"{self.c.dim}♪ {narration}{self.c.reset}")
+            self._avatar("speaking", action="narrating the rerun", bubble=narration)
+
+        playback, started = None, None
+        if audio and audio.duration > 0:
+            natural = sum(
+                estimate_event_seconds(e, self.max_output_lines)
+                for e in scene["events"]
+            ) / self.pacer.speed
+            self.pacer.scale = min(MAX_SCENE_SCALE,
+                                   max(MIN_SCENE_SCALE, natural / audio.duration))
+            playback = play_wav(audio.audio_path)
+            started = time.monotonic()
+        try:
+            self._perform_events(scene["events"])
+        finally:
+            self.pacer.scale = 1.0
+        if playback is not None:
+            # Visuals done first (scale clamped, or estimate ran short):
+            # hold the scene until the spoken line lands.
+            if self.pacer.enabled:
+                wait_extra(playback, started, audio.duration)
+            else:
+                playback.stop()
+
+    # ── top level ────────────────────────────────────────────────────────────
+    def perform(self, script, show=None, start=0, limit=None):
+        """Perform an episode. `show` is an optional voiced show from
+        revoice.prepare_show() — scenes with narration + audio; without it,
+        the script's events play silently exactly as before. start/limit
+        slice events when unvoiced, scenes when voiced."""
+        c = self.c
+        if show is None:
+            events = script.get("events", [])[start:]
+            if limit is not None:
+                events = events[:limit]
+            scenes = [{"events": [event]} for event in events]
+        else:
+            scenes = show[start:]
+            if limit is not None:
+                scenes = scenes[:limit]
+        title = script.get("source", "episode")
+        self._line(f"{c.bold}{c.magenta}══ REPLAY: {title} "
+                   f"({len(scenes)} scenes) ══{c.reset}")
+        self._avatar("idle", action="getting ready for a rerun")
+
+        for scene in scenes:
+            self._perform_scene(scene)
 
         self._line()
         self._line(f"{c.bold}{c.magenta}══ fin ══{c.reset}")
@@ -266,6 +376,29 @@ def load_script(source):
     return json.loads(source.read_text(encoding="utf-8"))
 
 
+def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
+                        speed=1.0, max_output_lines=MAX_OUTPUT_LINES,
+                        progress=None):
+    """Glue for callers holding a worker config: build the LLM + TTS clients
+    from its `llm`/`voice` sections and run revoice.prepare_show(). Returns
+    None when voice is disabled (voice.provider null/missing) — meaning
+    "perform silently". Imported lazily: revoice imports this module's
+    estimator, and llm_client drags in the anthropic/httpx deps."""
+    from llm_client import build_llm_client
+    from revoice import prepare_show
+    from tts_client import build_tts_client
+
+    tts = build_tts_client(config)
+    if tts is None:
+        return None
+    return prepare_show(
+        script, build_llm_client(config), tts, workdir,
+        worker_name=worker_name,
+        boss_name=(config.get("voice") or {}).get("boss_name", "the boss"),
+        speed=speed, max_output_lines=max_output_lines, progress=progress,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Perform a parsed session script as a stream show")
     parser.add_argument("source", help="Script .json (from session_log_parser) or a session log directory")
@@ -278,6 +411,9 @@ def main():
     parser.add_argument("--start", type=int, default=0, help="First event index to perform")
     parser.add_argument("--limit", type=int, default=None, help="Max events to perform")
     parser.add_argument("--max-output-lines", type=int, default=MAX_OUTPUT_LINES)
+    parser.add_argument("--voice-config", default=None,
+                        help="Worker config YAML whose voice+llm sections drive spoken "
+                             "narration (docs/revoice.md); omit for a silent show")
     args = parser.parse_args()
 
     # Legacy Windows consoles default to cp1252, which can't encode the
@@ -293,8 +429,29 @@ def main():
         state_path=args.state_file,
         max_output_lines=args.max_output_lines,
     )
+
+    show = None
+    if args.voice_config:
+        import tempfile
+
+        import yaml
+        config = yaml.safe_load(Path(args.voice_config).read_text(encoding="utf-8")) or {}
+        with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
+            show = prepare_voiced_show(
+                script, config, workdir, worker_name=args.worker_name,
+                speed=args.speed, max_output_lines=args.max_output_lines,
+                progress=lambda message: print(f"[replay] {message}"),
+            )
+            if show is None:
+                print("[replay] voice disabled in config — performing silently")
+            try:
+                performer.perform(script, show=show, start=args.start, limit=args.limit)
+            except KeyboardInterrupt:
+                print("\n[replay] interrupted")
+        return
+
     try:
-        performer.perform(script, start=args.start, limit=args.limit)
+        performer.perform(script, show=show, start=args.start, limit=args.limit)
     except KeyboardInterrupt:
         print("\n[replay] interrupted")
 

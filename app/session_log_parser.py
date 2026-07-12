@@ -12,9 +12,11 @@ Persona re-voicing happens in a separate pass and must never alter
 tool-call events — only narration text is fair game there.
 
 Redaction is part of parsing, not an afterthought: every text field is
-scrubbed (IPs, key-shaped tokens, emails, user home paths) before an
-event leaves this module, because downstream consumers feed panes that
-ffmpeg broadcasts to a public stream.
+scrubbed (passwords and credential values, public/tailnet IPs, key-shaped
+tokens, emails, user home paths) before an event leaves this module,
+because downstream consumers feed panes that ffmpeg broadcasts to a
+public stream. Private LAN IPs (RFC1918, loopback, link-local) are left
+readable — they're harmless and keep the shows legible.
 """
 import argparse
 import json
@@ -28,6 +30,32 @@ from pathlib import Path
 # are added.
 USERNAMES = ["frogg"]
 
+def _is_private_ip(ip):
+    """RFC1918 + loopback + link-local. NOT private here: CGNAT/Tailscale
+    100.64/10 — those map the tailnet overlay and must stay scrubbed."""
+    first, second = (int(octet) for octet in ip.split(".")[:2])
+    if first in (0, 10, 127):
+        return True
+    if first == 192 and second == 168:
+        return True
+    if first == 172 and 16 <= second <= 31:
+        return True
+    if first == 169 and second == 254:
+        return True
+    return False
+
+
+def _redact_ip(match):
+    """re.sub callable: private LAN IPs pass through readable; public and
+    tailnet addresses become the dummy marker."""
+    ip = match.group(0)
+    try:
+        private = _is_private_ip(ip)
+    except ValueError:
+        private = False
+    return ip if private else "[ip]"
+
+
 # Order matters: specific token shapes first, generic patterns last.
 REDACTION_RULES = [
     # API / access tokens by known prefix
@@ -36,21 +64,40 @@ REDACTION_RULES = [
     (re.compile(r"whsec_[A-Za-z0-9]{16,}"), "[webhook-secret]"),
     (re.compile(r"\blive_[A-Za-z0-9_]{16,}"), "[stream-key]"),
     (re.compile(r"\bAKIA[A-Z0-9]{16}\b"), "[aws-key]"),
+    # Passwords / generic secrets: the value side of KEY=value / KEY: value
+    # where the key names a credential (POSTGRES_PASSWORD=..., PGPASSWORD=...,
+    # "password": "...", client_secret: ...). \w* allows prefixed key names.
+    # Over-redacting prose that happens to say `secret:` is fine; a missed
+    # password on a live stream is not.
+    # Whitespace around the separator is [ \t] only — \s would cross a
+    # newline and eat the NEXT line's key as the "value" of an empty
+    # assignment (.env templates: "POSTGRES_PASSWORD=\nPOSTGRES_USER=x").
+    (re.compile(
+        r"(?i)([\"']?\w*(?:password|passwd|passphrase|pwd|secret)[\"']?[ \t]*[:=]>?[ \t]*[\"']*)"
+        r"(?!\[password\])[^\s\"',;&|=]+"
+    ), r"\1[password]"),
+    # CLI flag form: --password hunter2
+    (re.compile(r"(?i)(--?(?:password|passwd|pwd)[ \t]+)(?!\[)[^\s\"']+"), r"\1[password]"),
+    # URL credentials: scheme://user:pass@host — mask only the password.
+    # Must run before the email rule, which would otherwise eat user:pass@host.
+    (re.compile(r"(://[^\s/:@\"']+:)[^\s/@\"']+(?=@)"), r"\1[password]"),
     # Long hex blobs (potential secrets/hashes of credentials)
     (re.compile(r"\b[0-9a-fA-F]{40,}\b"), "[hex-token]"),
     # Emails
     (re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.]+\b"), "[email]"),
-    # IPv4 addresses (LAN topology, Tailscale/public endpoints)
-    (re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"), "[ip]"),
+    # IPv4 addresses: private LAN topology stays readable, public/tailnet
+    # endpoints get the dummy marker (see _redact_ip)
+    (re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"), _redact_ip),
     # Home directories -> generic user, all path styles seen in the logs
     (re.compile(r"(?i)([A-Za-z]:\\+Users\\+)[^\\/\s]+"), r"\1dev"),
     (re.compile(r"(?i)(/c/Users/)[^/\s]+"), r"\1dev"),
     (re.compile(r"(?i)(/home/)[^/\s]+"), r"\1dev"),
     # Slugified project-dir form used by ~/.claude/projects (c--Users-frogg-...)
     (re.compile(r"(?i)(users-)[a-z0-9]+(?=-)"), r"\1dev"),
-    # Partial private/tailnet IP fragments (e.g. "192.168.1:8090", "10.0.x.x")
-    # that the full-IPv4 rule above leaves behind
-    (re.compile(r"\b(?:192\.168|10\.\d{1,3}|100\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01]))\.[0-9xX.]*"), "[ip]"),
+    # Partial tailnet IP fragments (e.g. "100.37.208:8090") that the
+    # full-IPv4 rule above leaves behind. Private-range fragments
+    # ("192.168.1:8090") are fine to show.
+    (re.compile(r"\b100\.\d{1,3}\.[0-9xX.]*"), "[ip]"),
 ] + [
     # Username catch-all — must run last so path rules got first shot
     (re.compile(r"(?i)\b" + re.escape(name) + r"\b"), "dev")

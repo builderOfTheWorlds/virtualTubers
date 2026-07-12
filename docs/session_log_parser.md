@@ -15,11 +15,27 @@ it must never alter `tool_call` events, or the on-screen actions stop
 matching the story.
 
 **Redaction is built into parsing.** Every text field is scrubbed before it
-leaves this module (usernames in any form, full and partial private IPs,
-API-key/token shapes, emails, home paths including the slugified
-`c--Users-<name>-...` form), because script consumers drive panes that
-ffmpeg broadcasts publicly. The strict-audit regex used to validate the
-corpus lives in `tests/test_session_log_parser.py`.
+leaves this module, because script consumers drive panes that ffmpeg
+broadcasts publicly. What gets replaced with a dummy marker:
+
+- **Passwords / credential values** → `[password]`: the value side of any
+  `KEY=value` / `KEY: value` / `"key": "value"` assignment whose key names a
+  credential (`password`, `passwd`, `passphrase`, `pwd`, `secret`, with
+  prefixes — `POSTGRES_PASSWORD`, `PGPASSWORD`, `client_secret`), CLI
+  `--password <value>` flags, and the password in
+  `scheme://user:pass@host` URLs (user and host survive).
+- **Public and tailnet IPv4 addresses** → `[ip]`. **Private LAN IPs stay
+  readable** (RFC1918 `10.x`/`172.16-31.x`/`192.168.x`, loopback,
+  link-local) — they're harmless on stream and keep shows legible.
+  CGNAT/Tailscale `100.x` is scrubbed (maps the tailnet overlay).
+- API-key/token shapes (`sk-ant-`, `ghp_`, `whsec_`, `live_`, AWS `AKIA`),
+  long hex blobs, emails.
+- Usernames in any form, home paths including the slugified
+  `c--Users-<name>-...` form.
+
+The strict last-line-of-defense audit regex lives in
+`scripts/build_replay_library.py` (`LEAK_AUDIT`) — the build refuses to
+write any episode that fails it.
 
 ## Signature
 
@@ -103,6 +119,13 @@ for d in sorted(Path(LOGS).iterdir()):
 
 ## Changelog
 
+- **v1.1.0** (2026-07-12): Password/credential-value redaction added
+  (`KEY=value` assignments, CLI flags, URL credentials → `[password]`)
+  after a password reached a live stream. IP policy changed: private LAN
+  IPs are now left readable; only public and tailnet (CGNAT `100.x`)
+  addresses are scrubbed. `LEAK_AUDIT` updated to match (allows
+  `192.168.x`, flags un-redacted credential assignments). Episode library
+  must be rebuilt and re-synced after this change.
 - **v1.0.0** (2026-07-12): Initial version. Validated against the full
   42-session corpus (2,168 events, 0 parse failures, 0 leaks under strict
   audit).

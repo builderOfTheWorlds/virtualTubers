@@ -14,8 +14,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 import agent  # noqa: E402
 from agent import MESSAGE_HANDLERS, handle_replay_request  # noqa: E402
+import replay_pane  # noqa: E402
 from replay_pane import (  # noqa: E402
     list_episodes,
+    load_worker_config,
     perform_request,
     read_request,
     resolve_episode,
@@ -93,6 +95,54 @@ def test_perform_request_unknown_episode_reports_false(library, capsys):
     ok = perform_request({"episode": "missing"}, library, "KODI-7", None)
     assert ok is False
     assert "not found" in capsys.readouterr().err
+
+
+def test_perform_request_voiced_show_prepared_from_config(library, capsys, monkeypatch):
+    prepared = {}
+
+    def fake_prepare(script, config, workdir, **kwargs):
+        prepared["config"] = config
+        return [{"events": script["events"], "narration": "tonight's line", "audio": None}]
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
+    config = {"voice": {"provider": "piper"}}
+    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None,
+                         config=config)
+    out = capsys.readouterr().out
+    assert ok is True
+    assert prepared["config"] is config
+    assert "tonight's line" in out and "hello stream" in out
+
+
+def test_perform_request_voice_false_skips_preparation(library, capsys, monkeypatch):
+    def explode(*args, **kwargs):
+        raise AssertionError("voice preparation should not run")
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode)
+    ok = perform_request({"episode": "ep1", "speed": 0, "voice": False},
+                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+    assert ok is True
+    assert "hello stream" in capsys.readouterr().out
+
+
+def test_perform_request_voice_failure_still_airs_silent(library, capsys, monkeypatch):
+    def broken_prepare(*args, **kwargs):
+        raise RuntimeError("ollama exploded")
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", broken_prepare)
+    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None,
+                         config={"voice": {"provider": "piper"}})
+    captured = capsys.readouterr()
+    assert ok is True
+    assert "hello stream" in captured.out  # the show aired anyway
+    assert "silent show" in captured.err
+
+
+def test_load_worker_config_missing_or_bad_returns_none(tmp_path, capsys):
+    assert load_worker_config(tmp_path / "nope.yaml") is None
+    bad = tmp_path / "bad.yaml"
+    bad.write_text("{{not yaml", encoding="utf-8")
+    assert load_worker_config(bad) is None
 
 
 def test_list_episodes_sorted_and_empty_for_missing_dir(library, tmp_path):

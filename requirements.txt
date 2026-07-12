@@ -7,6 +7,11 @@ kafka-python>=2.0.2  # message bus (Kafka)
 # World state
 redis>=5.0
 
+# Text-to-speech — local Piper engine for spoken replay narration
+# (app/tts_client.py). Cloud engines (openai / elevenlabs) are optional,
+# import-guarded, and NOT installed by default.
+piper-tts>=1.2.0
+
 # Terminal / display utilities
 blessed>=1.20        # terminal formatting for avatar.py
 wcwidth>=0.2         # correct character width in terminals

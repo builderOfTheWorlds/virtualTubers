@@ -26,10 +26,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 from session_log_parser import parse_session  # noqa: E402
 
-# Mirror of the strict audit in tests/test_session_log_parser.py — a leaked
-# episode must never reach a broadcastable library.
+# Strict last-line-of-defense audit — a leaked episode must never reach a
+# broadcastable library. Private LAN IPs (192.168.x etc.) are allowed by
+# policy; tailnet (100.x) and credential-looking assignments are not.
+# The password arm tolerates JSON escaping (password\": \"...) and only
+# fires when the value is NOT the parser's [password] dummy marker.
 LEAK_AUDIT = re.compile(
-    r"frogg|sk-ant-[A-Za-z0-9_-]{8}|ghp_[A-Za-z0-9]{8}|(?:192\.168|100\.\d{1,3})\.\d"
+    r"frogg|sk-ant-[A-Za-z0-9_-]{8}|ghp_[A-Za-z0-9]{8}|100\.\d{1,3}\.\d"
+    r"|(?i:\w*(?:password|passwd|passphrase|pwd|secret)(?:\\?[\"'])*\s*[:=]>?\s*(?:\\?[\"'])*"
+    r"(?!\[password\])[^\s\\\"',;&|=\[])"
 )
 
 

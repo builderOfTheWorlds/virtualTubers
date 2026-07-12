@@ -20,14 +20,16 @@ import argparse
 import json
 import os
 import sys
+import tempfile
 import time
 from pathlib import Path
 
 from agent_state import resolve_state_path
-from replay import Pacer, Palette, Performer, load_script
+from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
 
 DEFAULT_LIBRARY = "/data/replays"
 DEFAULT_REQUEST_FILE = "/tmp/replay_request.json"
+DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
 IDLE_REDRAW_S = 300  # re-list the library occasionally (new episodes synced in)
 
@@ -96,7 +98,29 @@ def draw_idle_screen(library, worker_name):
     print(' waiting for a replay_request ("perform episode X")…')
 
 
-def perform_request(request, library, worker_name, state_path, default_speed=1.0):
+def prepare_voice(script, config, workdir, worker_name, speed):
+    """Best-effort per-airing narration pass (docs/revoice.md). Returns a
+    voiced show, or None for a silent performance — voice being disabled,
+    unconfigured, or broken must never stop an episode from airing."""
+    if not config:
+        return None
+    try:
+        show = prepare_voiced_show(
+            script, config, workdir, worker_name=worker_name, speed=speed,
+            progress=lambda message: print(f"[replay_pane] preparing: {message}"),
+        )
+    except Exception as exc:
+        print(f"[replay_pane] voice preparation failed ({exc}) — silent show",
+              file=sys.stderr)
+        return None
+    if show is not None:
+        voiced = sum(1 for scene in show if scene.get("audio"))
+        print(f"[replay_pane] tonight's episode: {len(show)} scenes, {voiced} voiced")
+    return show
+
+
+def perform_request(request, library, worker_name, state_path, default_speed=1.0,
+                    config=None):
     """Resolve and perform one request. Returns True if an episode played."""
     episode = request.get("episode")
     source = resolve_episode(library, episode)
@@ -108,14 +132,34 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
     except (TypeError, ValueError):
         speed = default_speed
     script = load_script(source)
+    name = str(request.get("worker_name") or worker_name)
     performer = Performer(
         pacer=Pacer(speed=speed),
         palette=Palette(enabled=True),
-        worker_name=str(request.get("worker_name") or worker_name),
+        worker_name=name,
         state_path=state_path,
     )
-    performer.perform(script)
+    with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
+        show = None
+        if request.get("voice") is not False:  # request can force a silent airing
+            show = prepare_voice(script, config, workdir, name, speed)
+        performer.perform(script, show=show)
     return True
+
+
+def load_worker_config(path):
+    """Worker config for the voice/llm sections; None (silent shows) when
+    missing or unparseable."""
+    path = Path(path)
+    if not path.is_file():
+        return None
+    try:
+        import yaml
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or None
+    except Exception as exc:
+        print(f"[replay_pane] could not read worker config {path}: {exc}",
+              file=sys.stderr)
+        return None
 
 
 def main():
@@ -123,6 +167,9 @@ def main():
     parser.add_argument("--library", default=os.environ.get("REPLAY_LIBRARY", DEFAULT_LIBRARY))
     parser.add_argument("--request-file", default=os.environ.get("REPLAY_REQUEST_FILE", DEFAULT_REQUEST_FILE))
     parser.add_argument("--worker-name", default=os.environ.get("WORKER_ID", "worker"))
+    parser.add_argument("--config", default=os.environ.get("CONFIG_PATH", DEFAULT_WORKER_CONFIG),
+                        help="Worker config YAML — its voice+llm sections drive spoken "
+                             "narration (voice.provider: null keeps shows silent)")
     parser.add_argument("--once", action="store_true",
                         help="Handle at most one pending request, then exit (testing)")
     args = parser.parse_args()
@@ -131,12 +178,16 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
     state_path = resolve_state_path()
-    print(f"[replay_pane] library={args.library} request_file={args.request_file}")
+    config = load_worker_config(args.config)
+    provider = ((config or {}).get("voice") or {}).get("provider")
+    print(f"[replay_pane] library={args.library} request_file={args.request_file} "
+          f"voice={'on' if provider not in (None, 'null') else 'off'}")
 
     if args.once:
         request = read_request(args.request_file)
         if request:
-            perform_request(request, args.library, args.worker_name, state_path)
+            perform_request(request, args.library, args.worker_name, state_path,
+                            config=config)
         return
 
     last_drawn = 0.0
@@ -144,7 +195,8 @@ def main():
         request = read_request(args.request_file)
         if request:
             try:
-                perform_request(request, args.library, args.worker_name, state_path)
+                perform_request(request, args.library, args.worker_name, state_path,
+                                config=config)
             except Exception as exc:  # one bad episode must not kill the pane
                 print(f"[replay_pane] episode failed: {exc}", file=sys.stderr)
             time.sleep(5)  # hold the final frame briefly

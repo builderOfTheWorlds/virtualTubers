@@ -25,13 +25,24 @@ thing a bus message can influence is **which pre-built, pre-redacted
 episode in the library plays** — episode names are resolved basename-only
 inside `REPLAY_LIBRARY`, so a hostile payload cannot reach other files.
 
+**Spoken narration.** When the worker config's `voice.provider` isn't
+`null`, each airing runs the per-airing narration pass first
+([revoice.md](revoice.md)): the pane prints "preparing" progress while the
+LLM writes boss/coder lines and TTS synthesizes them, then performs the
+episode with audio-anchored pacing ([replay.md](replay.md)). Voice being
+unconfigured, or broken at showtime, degrades to the silent performance —
+an episode always airs. A request can force a silent airing with
+`"voice": false` in the payload.
+
 ## Signature
 
 ```python
 def resolve_episode(library, episode) -> Path | None
 def read_request(request_file) -> dict | None      # consume-once
 def perform_request(request, library, worker_name, state_path,
-                    default_speed=1.0) -> bool
+                    default_speed=1.0, config=None) -> bool
+def prepare_voice(script, config, workdir, worker_name, speed) -> list | None
+def load_worker_config(path) -> dict | None
 def list_episodes(library) -> list[str]
 ```
 
@@ -45,6 +56,9 @@ def list_episodes(library) -> list[str]
   must be visible to `agent.py` (same container, both default it).
 - `--worker-name` / `WORKER_ID` (default `worker`): persona name on
   dialogue lines when the request doesn't override it.
+- `--config` / `CONFIG_PATH` (default `/config/worker.yaml`): worker config
+  whose `voice` + `llm` sections drive spoken narration; missing/unreadable
+  file, or `voice.provider: "null"`, means silent shows.
 - `--once`: handle at most one pending request then exit (testing).
 
 ## Return Value
@@ -54,8 +68,9 @@ never a crash loop. A failed episode logs to stderr and returns to idle.
 
 ## Dependencies
 
-`app/replay.py` (Performer), `app/agent_state.py` (avatar state path),
-standard library.
+`app/replay.py` (Performer + `prepare_voiced_show`), `app/agent_state.py`
+(avatar state path), standard library; `yaml` and (transitively, only when
+voice is on) `app/revoice.py` / `app/tts_client.py` / `app/llm_client.py`.
 
 ## Usage Examples
 
@@ -89,6 +104,10 @@ Build and ship the episode library (from the machine with the logs):
 
 ## Changelog
 
+- **v1.1.0** (2026-07-12): Spoken narration — reads the worker config
+  (`--config`/`CONFIG_PATH`), runs the per-airing revoice pass before each
+  show, `"voice": false` request override, silent-show degradation on any
+  voice failure. +4 tests.
 - **v1.0.0** (2026-07-12): Initial version — idle screen with episode
   listing, request-file polling, traversal-safe episode resolution,
   `--once` test mode. Wired to `agent.py` `replay_request` +

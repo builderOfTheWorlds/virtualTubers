@@ -79,6 +79,9 @@ demo side effects, no pipeline handoff.
 - `payload.speed` (number, optional) — playback speed multiplier.
 - `payload.worker_name` (str, optional) — persona name override for the
   dialogue lines.
+- `payload.voice` (bool, optional) — set `false` to force a silent airing
+  even when the worker's `voice.provider` enables spoken narration
+  (docs/revoice.md).
 
 Any worker (no role gate) queues the episode for its "Rerun Theater" pane
 and confirms with an `operator_reply`. The show only actually appears if
