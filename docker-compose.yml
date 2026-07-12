@@ -18,6 +18,12 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py)
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     volumes:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -131,6 +137,12 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py)
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -158,6 +170,12 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py)
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state

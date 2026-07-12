@@ -81,7 +81,15 @@ demo side effects, no pipeline handoff.
   dialogue lines.
 - `payload.voice` (bool, optional) — set `false` to force a silent airing
   even when the worker's `voice.provider` enables spoken narration
-  (docs/revoice.md).
+  (docs/revoice.md). Also skips narration reuse below.
+- `payload.narration` (str, optional) — set to `"reuse"` to replay the
+  most recent cached narration + audio for the episode (scenes rebuilt
+  deterministically, cached text and WAVs reattached — no LLM, no TTS)
+  instead of generating a fresh airing. Falls back silently to a fresh
+  airing when there's nothing usable to reuse: the narration store is
+  unavailable (no `POSTGRES_*` env / `psycopg2` / DB down), the episode
+  has never been cached, or the cached scene structure no longer matches
+  the script (docs/narration_store.md, docs/replay_pane.md).
 
 Any worker (no role gate) queues the episode for its "Rerun Theater" pane
 and confirms with an `operator_reply`. The show only actually appears if

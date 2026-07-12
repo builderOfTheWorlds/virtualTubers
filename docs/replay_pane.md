@@ -38,12 +38,27 @@ an episode always airs. A request can force a silent airing with
 voiced show is prepared, `publish_narration` sends one `replay_narration`
 message (episode, aired-at timestamp, and every scene's speaker + spoken
 text) which `message-logger` persists to Postgres's `voiced_narration`
-table (docs/message_logger.md). This is the only durable record of what
-was said — the synthesized WAVs themselves live in a `TemporaryDirectory`
-that's deleted the moment the show ends, and get regenerated fresh (with
-new dialogue) on the next airing. Publishing is fire-and-forget: no
+table (docs/message_logger.md). Publishing is fire-and-forget: no
 `message_bus` config, or Kafka being unreachable, just skips it silently —
 never delays or blocks the show.
+
+**Narration + audio cache, and reuse.** Right after publishing, the pane
+also calls `persist_narration`, which upserts the **full** airing — text
+plus the synthesized WAV bytes and measured duration — directly into the
+same `voiced_narration` table via `app/narration_store.py`
+(docs/narration_store.md), reusing the same `message_id` `publish_narration`
+minted so the two writes converge on one row set regardless of which lands
+first. A `replay_request` with `payload.narration: "reuse"`
+(docs/operator_commands.md) then has `load_reused_show` rebuild a voiced
+show from the latest cached airing of that episode — scenes replanned
+deterministically with `revoice.plan_scenes`, cached text and WAVs
+reattached from the workdir — instead of calling the LLM + TTS again. Both
+the save and the reuse are best-effort against the show-must-air rule
+(docs/revoice.md): no `POSTGRES_*` env, no `psycopg2`, a down database, an
+episode that's never been cached, or a cached scene structure that no
+longer matches the current script all just fall back to (or skip) a fresh
+generation, logged to stderr, never a crash or a stalled show. `"voice":
+false` skips reuse too, same as it skips fresh narration.
 
 ## Signature
 
@@ -53,7 +68,9 @@ def read_request(request_file) -> dict | None      # consume-once
 def perform_request(request, library, worker_name, state_path,
                     default_speed=1.0, config=None) -> bool
 def prepare_voice(script, config, workdir, worker_name, speed) -> list | None
-def publish_narration(show, config, episode, worker_name) -> None
+def publish_narration(show, config, episode, worker_name) -> str | None
+def persist_narration(message_id, show, config, episode, worker_name) -> None
+def load_reused_show(script, episode, workdir) -> list | None
 def load_worker_config(path) -> dict | None
 def list_episodes(library) -> list[str]
 ```
@@ -72,18 +89,37 @@ def list_episodes(library) -> list[str]
   whose `voice` + `llm` sections drive spoken narration; missing/unreadable
   file, or `voice.provider: "null"`, means silent shows.
 - `--once`: handle at most one pending request then exit (testing).
+- `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD` (env, required for
+  narration caching), `POSTGRES_HOST` / `POSTGRES_PORT` (env, optional —
+  default `localhost:5432`): read by `app/narration_store.py`
+  (`available()`/`_connect()`), not by this file directly. Granted to
+  `worker-coder`/`worker-manager`/`worker-tester` in `docker-compose.yml`.
+  Missing/wrong values just disable narration caching and reuse — the show
+  still airs (docs/narration_store.md).
 
 ## Return Value
 
-Runs forever (pane lifetime). Malformed requests are consumed and logged —
-never a crash loop. A failed episode logs to stderr and returns to idle.
+`main()` runs forever (pane lifetime). Malformed requests are consumed and
+logged — never a crash loop. A failed episode logs to stderr and returns
+to idle.
+
+`publish_narration` returns the published bus message's `id` (str) on
+success, or `None` when the airing was skipped (no show) or the publish
+failed/was unconfigured. `persist_narration` reuses that id — or mints its
+own `uuid.uuid4()` when it's `None` — so the narration cache still works
+even without a Kafka config; the cache save itself is void (best-effort,
+logged to stderr on failure).
 
 ## Dependencies
 
 `app/replay.py` (Performer + `prepare_voiced_show`), `app/agent_state.py`
 (avatar state path), `app/message_bus.py` (`MessageProducer`/`build_message`,
-for `publish_narration`), standard library; `yaml` and (transitively, only
-when voice is on) `app/revoice.py` / `app/tts_client.py` / `app/llm_client.py`.
+for `publish_narration`), `app/narration_store.py` (`available`/
+`save_airing`/`load_latest_airing`, for `persist_narration`/
+`load_reused_show` — docs/narration_store.md), standard library; `yaml`
+and (transitively, only when voice is on) `app/revoice.py` (`plan_scenes`
+also used directly by `load_reused_show`) / `app/tts_client.py`
+(`Narration`/`wav_duration`) / `app/llm_client.py`.
 
 ## Usage Examples
 
@@ -96,6 +132,16 @@ curl -X POST http://localhost:8090/messages \
   -H "Content-Type: application/json" \
   -d '{"to": "coder", "type": "replay_request",
        "payload": {"episode": "2026-07-02_04-27-00_6ecdde82", "speed": 1.5}}'
+```
+
+Operator: replay the same episode's most recent cached narration (no LLM,
+no TTS) instead of generating fresh dialogue (docs/operator_commands.md):
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "replay_request",
+       "payload": {"episode": "2026-07-02_04-27-00_6ecdde82", "narration": "reuse"}}'
 ```
 
 Build and ship the episode library (from the machine with the logs):
@@ -118,9 +164,32 @@ Build and ship the episode library (from the machine with the logs):
   `bootstrap_servers`/`topic`, or a Kafka connection failure all just skip
   the publish (logged to stderr on the last one) — a transcript that
   didn't save must never cancel or delay the show itself.
+- `persist_narration` never raises: `narration_store.available()` being
+  `False` (no `POSTGRES_*` env, no `psycopg2`) skips the save with a
+  stderr note; a save that raises inside `narration_store.save_airing`
+  (DB down, query error) is caught and logged — the airing already played,
+  so a caching failure must never look like a failed show.
+- `load_reused_show` never raises: an unavailable store, an episode never
+  cached, a load failure, or a cached scene structure that no longer
+  matches the current script's `plan_scenes` output (scene count or
+  `scene_kind` mismatch — e.g. the episode script was rebuilt) all log to
+  stderr and return `None`, which `perform_request` treats exactly like a
+  request without `narration: "reuse"`: it falls through to
+  `prepare_voice` for a fresh airing.
 
 ## Changelog
 
+- **v1.3.0** (2026-07-12): Narration + audio caching and reuse —
+  `persist_narration` upserts the full airing (text, WAV bytes, measured
+  duration) into `voiced_narration` via the new `app/narration_store.py`,
+  reusing `publish_narration`'s `message_id`. A `replay_request` with
+  `payload.narration: "reuse"` has `load_reused_show` rebuild the show
+  from the latest cached airing (scenes replanned with
+  `revoice.plan_scenes`, cached text/WAVs reattached) instead of a fresh
+  LLM + TTS pass, falling back to fresh generation whenever nothing usable
+  is cached. Needs `POSTGRES_*` env (added to `worker-coder`/
+  `worker-manager`/`worker-tester` in `docker-compose.yml`) and
+  `psycopg2-binary` in the worker image. See docs/narration_store.md.
 - **v1.2.0** (2026-07-12): Narration transcript persistence —
   `publish_narration` sends the airing's spoken lines (text only, no
   audio) as a `replay_narration` bus message after each voiced show, for

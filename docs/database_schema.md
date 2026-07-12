@@ -70,6 +70,34 @@ Defined in: `docs/sql/02_create_tables.sql:28-46`, `services/message-logger/logg
 
 ---
 
+## `voiced_narration`
+
+**Owner:** shared between two writers that converge on the same rows:
+- `message-logger` — `insert_voiced_narration()` (`services/message-logger/logger.py`), triggered by `replay_narration` bus messages; inserts the text-only columns with `ON CONFLICT (message_id, scene_index) DO NOTHING`.
+- `app/replay_pane.py` via `app/narration_store.py` — after a voiced Rerun Theater airing, the pane upserts the full rows directly (including WAV bytes), reusing the same `message_id` it published on the bus, with `ON CONFLICT ... DO UPDATE` on the audio columns. Whichever writer lands second completes the row.
+
+**Why it exists:** one row per spoken scene of a Rerun Theater airing (`docs/revoice.md`). Originally a write-only transcript log; since the narration-reuse feature it doubles as the reuse cache — a `replay_request` with `payload.narration: "reuse"` reads the latest airing with audio back instead of calling the LLM + TTS again (`docs/narration_store.md`).
+
+| Column | Type | Constraints | Meaning |
+|---|---|---|---|
+| `message_id` | UUID | PK (with `scene_index`) | The airing's `replay_narration` message ID (pane-minted UUID if Kafka was down) |
+| `worker_id` | TEXT | NOT NULL | Which worker aired the episode |
+| `episode` | TEXT | NOT NULL | Episode name (canonical script stem) |
+| `aired_at` | TIMESTAMPTZ | NOT NULL | When the airing happened |
+| `scene_index` | INTEGER | PK (with `message_id`) | Scene position within the show |
+| `scene_kind` | TEXT | NOT NULL | `boss` \| `coder_talk` \| `coder_work` |
+| `speaker` | TEXT | NOT NULL | `boss` or `coder` |
+| `text` | TEXT | NOT NULL | The spoken narration line |
+| `audio` | BYTEA | nullable | Synthesized WAV bytes (NULL for silent scenes / logger-only rows) |
+| `audio_duration_s` | DOUBLE PRECISION | nullable | Measured WAV duration — the audio-anchored pacing value |
+| `ingested_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When the row was written |
+
+Indexes: `idx_voiced_narration_episode (episode)`.
+
+Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py` (`CREATE_TABLE_SQL`). Prose: `docs/revoice.md`, `docs/narration_store.md`, `docs/replay_pane.md`.
+
+---
+
 ## `container_logs`
 
 **Owner:** `log-shipper` service (`services/log-shipper/shipper.py`) — tails stdout/stderr of every container in this project's docker-compose stack (discovered via a read-only-mounted Docker socket) and inserts each line.
@@ -100,4 +128,4 @@ When adding or changing a table:
 2. Update `docs/sql/02_create_tables.sql` to match.
 3. Update this file.
 
-There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`, and there are no `ALTER TABLE` migrations tracked anywhere. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the three schema copies above.
+There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the three schema copies above — with one exception: `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.

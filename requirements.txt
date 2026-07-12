@@ -20,3 +20,7 @@ wcwidth>=0.2         # correct character width in terminals
 # pytest against coder workspaces), not just for the dev suite
 pytest>=8.0
 
+# Needed by app/narration_store.py — replay_pane's direct Postgres cache of
+# voiced narrations (text + WAV) for reuse.
+psycopg2-binary>=2.9
+

@@ -9,10 +9,22 @@ script ([session_log_parser.md](session_log_parser.md)) and produces a
 spoken line (boss voice or coder voice) and its synthesized audio.
 
 It runs at showtime, per airing — never baked into the episode library —
-so every re-run of the same episode gets fresh dialogue from the local LLM.
-`tool_call` events are never altered: narration is *additive*; the
-on-screen commands, edits, and outputs stay exactly what the parser
-recorded.
+so by default every re-run of the same episode gets fresh dialogue from
+the local LLM. `tool_call` events are never altered: narration is
+*additive*; the on-screen commands, edits, and outputs stay exactly what
+the parser recorded.
+
+Fresh-per-airing is still the default, but a voiced airing is no longer
+throwaway: `app/replay_pane.py` caches the full show — spoken text **and**
+synthesized WAV bytes — to Postgres via `app/narration_store.py`
+(docs/narration_store.md). A `replay_request` with
+`payload.narration: "reuse"` (docs/operator_commands.md) skips this
+module's LLM + TTS entirely and rebuilds the show from that cache: scenes
+are replanned deterministically with `plan_scenes` (so the structure still
+matches the current script), then each scene's cached `narration` text and
+WAV are reattached in place of a fresh `narrate_scene`/TTS call. It falls
+back to a fresh call through this module whenever nothing usable is
+cached.
 
 ### Timing model (why this makes audio and visuals line up)
 
@@ -119,6 +131,12 @@ The show must always air, so every step degrades instead of raising:
 
 ## Changelog
 
+- **v1.1.0** (2026-07-12): No code changes to this module, but `plan_scenes`
+  gained a second caller: `replay_pane.load_reused_show` (see
+  docs/narration_store.md, docs/replay_pane.md) uses it to replan a
+  cached episode's scene structure — for a `narration: "reuse"` request,
+  the resulting scenes get cached `narration` text and WAV audio
+  reattached instead of a fresh `narrate_scene`/TTS pass.
 - **v1.0.0** (2026-07-12): Initial version — scene planning, word budgets
   sized to screen time, LLM re-voicing with template fallback, per-scene
   TTS with silent-scene degradation. 15 tests.

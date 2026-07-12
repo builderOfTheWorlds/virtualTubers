@@ -18,9 +18,13 @@ a hostile payload can't traverse to arbitrary files.
 
 The pane produces to Kafka (never consumes): after a voiced airing it
 publishes the spoken transcript as a replay_narration message so
-message-logger persists it to Postgres's voiced_narration table — the
-synthesized audio itself is regenerated fresh every airing and never
-saved, so this is the only durable record of what was said (see
+message-logger persists it to Postgres's voiced_narration table. The pane
+also upserts the full airing — text plus the synthesized WAV bytes and
+measured duration — straight into voiced_narration itself via
+app/narration_store.py, reusing the same message_id, so a later
+replay_request with payload.narration: "reuse" can replay that exact
+airing instead of calling the LLM + TTS again. Postgres being unreachable
+just degrades this to an uncached fresh airing every time (see
 docs/revoice.md).
 """
 import argparse
@@ -29,9 +33,11 @@ import os
 import sys
 import tempfile
 import time
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+import narration_store
 from agent_state import resolve_state_path
 from message_bus import MessageProducer, build_message
 from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
@@ -131,18 +137,21 @@ def prepare_voice(script, config, workdir, worker_name, speed):
 def publish_narration(show, config, episode, worker_name):
     """Best-effort: publish this airing's spoken transcript (text only, no
     audio) onto the bus so message-logger persists it to Postgres's
-    voiced_narration table. The synthesized WAVs never leave the temp
-    workdir cleaned up around prepare_voice/perform — this is the only
-    durable record of what got said. Kafka being down/unconfigured must
-    never stop or delay a show, so this always runs after the show is
-    already fully prepared and never raises."""
+    voiced_narration table. No longer the only durable record of what got
+    said — persist_narration() below saves the full airing (including WAV
+    bytes) directly to the same table, reusing the id this returns. Kafka
+    being down/unconfigured must never stop or delay a show, so this always
+    runs after the show is already fully prepared and never raises.
+
+    Returns the published message's id on success, or None when the airing
+    was skipped or the publish failed/was unconfigured."""
     if not show:
-        return
+        return None
     bus_config = (config or {}).get("message_bus") or {}
     bootstrap_servers = bus_config.get("bootstrap_servers")
     topic = bus_config.get("topic")
     if not bootstrap_servers or not topic:
-        return
+        return None
     payload = {
         "episode": episode,
         "aired_at": datetime.now(timezone.utc).isoformat(),
@@ -157,12 +166,85 @@ def publish_narration(show, config, episode, worker_name):
         ],
     }
     worker_id = bus_config.get("worker_id", worker_name)
+    msg = build_message(worker_id, "broadcast", "replay_narration", payload)
     try:
-        MessageProducer(bootstrap_servers, topic).send(
-            build_message(worker_id, "broadcast", "replay_narration", payload)
-        )
+        MessageProducer(bootstrap_servers, topic).send(msg)
     except Exception as exc:
         print(f"[replay_pane] narration transcript publish failed: {exc}", file=sys.stderr)
+        return None
+    return msg["id"]
+
+
+def persist_narration(message_id, show, config, episode, worker_name):
+    """Best-effort: upsert the full airing (text + WAV bytes + measured
+    duration) directly into Postgres's voiced_narration table via
+    app/narration_store.py, so a later replay_request with
+    payload.narration: "reuse" can replay this exact airing. Reuses
+    publish_narration()'s message_id so the two converge on one row set;
+    Kafka being down just means we mint our own id — the cache must still
+    work even without a bus. Never raises: a store outage must never stop
+    or delay a show."""
+    if not show:
+        return
+    if message_id is None:
+        message_id = str(uuid.uuid4())
+    if not narration_store.available():
+        print("[replay_pane] narration store unavailable — airing not cached for reuse")
+        return
+    bus_config = (config or {}).get("message_bus") or {}
+    worker_id = bus_config.get("worker_id", worker_name)
+    try:
+        n = narration_store.save_airing(
+            message_id, worker_id, episode,
+            aired_at=datetime.now(timezone.utc).isoformat(),
+            show=show,
+        )
+    except Exception as exc:
+        print(f"[replay_pane] narration cache save failed: {exc}", file=sys.stderr)
+        return
+    print(f"[replay_pane] cached narration ({n} scenes) for reuse")
+
+
+def load_reused_show(script, episode, workdir):
+    """Rebuild a voiced show from the latest cached airing of `episode`
+    instead of calling the LLM + TTS again. Returns the show, or None when
+    there's nothing usable to reuse — the caller falls back to a fresh
+    generation (show-must-air rule, docs/revoice.md). Never raises."""
+    if not narration_store.available():
+        print("[replay_pane] narration store unavailable — generating fresh narration")
+        return None
+    try:
+        cached = narration_store.load_latest_airing(episode)
+    except Exception as exc:
+        print(f"[replay_pane] narration cache load failed: {exc}", file=sys.stderr)
+        return None
+    if not cached:
+        print(f"[replay_pane] no cached narration for {episode!r} — generating fresh")
+        return None
+    try:
+        from revoice import plan_scenes
+        from tts_client import Narration, wav_duration
+
+        scenes = plan_scenes(script.get("events", []))
+        if len(scenes) != len(cached) or any(
+            scene["kind"] != row["scene_kind"] for scene, row in zip(scenes, cached)
+        ):
+            print(f"[replay_pane] cached narration no longer matches episode script "
+                  f"— generating fresh")
+            return None
+        for scene, row in zip(scenes, cached):
+            scene["narration"] = row["text"]
+            scene["audio"] = None
+            if row["audio"]:
+                path = Path(workdir) / f"scene_{row['scene_index']:03d}.wav"
+                path.write_bytes(row["audio"])
+                duration = row["audio_duration_s"] or wav_duration(path)
+                scene["audio"] = Narration(audio_path=path, duration=duration)
+        print(f"[replay_pane] reusing cached narration for {episode!r} ({len(scenes)} scenes)")
+        return scenes
+    except Exception as exc:
+        print(f"[replay_pane] narration reuse failed: {exc}", file=sys.stderr)
+        return None
 
 
 def perform_request(request, library, worker_name, state_path, default_speed=1.0,
@@ -188,8 +270,12 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show = None
         if request.get("voice") is not False:  # request can force a silent airing
-            show = prepare_voice(script, config, workdir, name, speed)
-            publish_narration(show, config, episode, name)
+            if request.get("narration") == "reuse":
+                show = load_reused_show(script, source.stem, workdir)
+            if show is None:
+                show = prepare_voice(script, config, workdir, name, speed)
+                message_id = publish_narration(show, config, source.stem, name)
+                persist_narration(message_id, show, config, source.stem, name)
         performer.perform(script, show=show)
     return True
 

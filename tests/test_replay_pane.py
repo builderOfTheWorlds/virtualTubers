@@ -6,6 +6,7 @@ pre-built episode INSIDE the library — never a path outside it.
 """
 import json
 import sys
+import uuid
 from pathlib import Path
 
 import pytest
@@ -17,8 +18,10 @@ from agent import MESSAGE_HANDLERS, handle_replay_request  # noqa: E402
 import replay_pane  # noqa: E402
 from replay_pane import (  # noqa: E402
     list_episodes,
+    load_reused_show,
     load_worker_config,
     perform_request,
+    persist_narration,
     publish_narration,
     read_request,
     resolve_episode,
@@ -203,6 +206,210 @@ def test_publish_narration_failure_is_swallowed(monkeypatch, capsys):
     assert "publish failed" in capsys.readouterr().err
 
 
+def test_publish_narration_returns_sent_message_id(monkeypatch):
+    FakeBusProducer.sent = []
+    monkeypatch.setattr(replay_pane, "MessageProducer", FakeBusProducer)
+    config = {"message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages"}}
+
+    result = publish_narration(_voiced_show(), config, "ep1", "KODI-7")
+
+    assert result == FakeBusProducer.sent[0]["id"]
+
+
+def test_publish_narration_returns_none_when_skipped(monkeypatch):
+    def explode(*a, **kw):
+        raise AssertionError("must not construct a producer without message_bus config")
+
+    monkeypatch.setattr(replay_pane, "MessageProducer", explode)
+    result = publish_narration(_voiced_show(), {"voice": {"provider": "piper"}}, "ep1", "KODI-7")
+
+    assert result is None
+
+
+def test_publish_narration_returns_none_on_producer_failure(monkeypatch, capsys):
+    class ExplodingProducer:
+        def __init__(self, *a, **kw):
+            raise RuntimeError("kafka down")
+
+    monkeypatch.setattr(replay_pane, "MessageProducer", ExplodingProducer)
+    config = {"message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages"}}
+
+    result = publish_narration(_voiced_show(), config, "ep1", "KODI-7")
+
+    assert result is None
+
+
+# ── persist_narration: the durable cache for reuse (docs/narration_store.md) ─
+def test_persist_narration_skips_silently_when_show_falsy(monkeypatch):
+    def explode(*a, **kw):
+        raise AssertionError("must not touch the store for an empty show")
+
+    monkeypatch.setattr(replay_pane.narration_store, "available", explode)
+    persist_narration("mid", None, {}, "ep1", "KODI-7")  # must not raise
+
+
+def test_persist_narration_prints_notice_when_store_unavailable(monkeypatch, capsys):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: False)
+
+    def explode(*a, **kw):
+        raise AssertionError("must not save when store is unavailable")
+
+    monkeypatch.setattr(replay_pane.narration_store, "save_airing", explode)
+
+    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7")
+
+    assert "not cached for reuse" in capsys.readouterr().out
+
+
+def test_persist_narration_calls_save_airing_with_given_message_id(monkeypatch):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    calls = {}
+
+    def fake_save(message_id, worker_id, episode, aired_at, show):
+        calls["message_id"] = message_id
+        calls["worker_id"] = worker_id
+        calls["episode"] = episode
+        calls["show"] = show
+        return len(show)
+
+    monkeypatch.setattr(replay_pane.narration_store, "save_airing", fake_save)
+
+    persist_narration("mid-123", _voiced_show(), {"message_bus": {"worker_id": "coder"}},
+                      "ep1", "KODI-7")
+
+    assert calls["message_id"] == "mid-123"
+    assert calls["worker_id"] == "coder"
+    assert calls["episode"] == "ep1"
+    assert calls["show"] == _voiced_show()
+
+
+def test_persist_narration_generates_uuid_when_message_id_none(monkeypatch):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    calls = {}
+
+    def fake_save(message_id, worker_id, episode, aired_at, show):
+        calls["message_id"] = message_id
+        return len(show)
+
+    monkeypatch.setattr(replay_pane.narration_store, "save_airing", fake_save)
+
+    persist_narration(None, _voiced_show(), {}, "ep1", "KODI-7")
+
+    assert uuid.UUID(calls["message_id"])  # raises ValueError if not a valid uuid
+
+
+def test_persist_narration_save_failure_is_swallowed(monkeypatch, capsys):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+
+    def explode(*a, **kw):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(replay_pane.narration_store, "save_airing", explode)
+
+    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7")  # must not raise
+
+    assert "narration cache save failed" in capsys.readouterr().err
+
+
+# ── load_reused_show: rebuild a voiced show from the cache ───────────────────
+def _reuse_script():
+    return {"source": "ep1", "events": [{"type": "assistant_text", "text": "hello stream"}]}
+
+
+def test_load_reused_show_none_when_store_unavailable(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: False)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is None
+    assert "generating fresh narration" in capsys.readouterr().out
+
+
+def test_load_reused_show_none_when_nothing_cached(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: None)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is None
+    assert "generating fresh" in capsys.readouterr().out
+
+
+def test_load_reused_show_returns_scenes_with_cached_text_and_no_audio(monkeypatch, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
+             "text": "cached line", "audio": None, "audio_duration_s": None}]
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is not None
+    assert len(result) == 1
+    assert result[0]["kind"] == "coder_talk"
+    assert result[0]["narration"] == "cached line"
+    assert result[0]["audio"] is None
+
+
+def test_load_reused_show_writes_audio_file_and_sets_duration(monkeypatch, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    audio_bytes = b"fake-wav-bytes-for-scene-zero"
+    rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
+             "text": "cached line", "audio": audio_bytes, "audio_duration_s": 3.25}]
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    workdir = tmp_path / "work"
+    workdir.mkdir()
+
+    result = load_reused_show(_reuse_script(), "ep1", workdir)
+
+    assert result is not None
+    scene = result[0]
+    assert scene["audio"].duration == 3.25
+    assert scene["audio"].audio_path.parent == workdir
+    assert scene["audio"].audio_path.read_bytes() == audio_bytes
+
+
+def test_load_reused_show_none_when_scene_count_mismatch(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    rows = [
+        {"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
+         "text": "a", "audio": None, "audio_duration_s": None},
+        {"scene_index": 1, "scene_kind": "boss", "speaker": "boss",
+         "text": "b", "audio": None, "audio_duration_s": None},
+    ]
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is None
+    assert "no longer matches" in capsys.readouterr().out
+
+
+def test_load_reused_show_none_when_scene_kind_mismatch(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    rows = [{"scene_index": 0, "scene_kind": "boss", "speaker": "coder",
+             "text": "a", "audio": None, "audio_duration_s": None}]
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is None
+    assert "no longer matches" in capsys.readouterr().out
+
+
+def test_load_reused_show_none_when_load_raises(monkeypatch, capsys, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+
+    def explode(episode):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", explode)
+
+    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+
+    assert result is None
+    assert "narration cache load failed" in capsys.readouterr().err
+
+
 def test_perform_request_publishes_narration_after_voiced_show(library, monkeypatch):
     def fake_prepare(script, config, workdir, **kwargs):
         return [dict(scene, events=[]) for scene in _voiced_show()]
@@ -218,6 +425,81 @@ def test_perform_request_publishes_narration_after_voiced_show(library, monkeypa
     assert ok is True
     assert len(FakeBusProducer.sent) == 1
     assert FakeBusProducer.sent[0]["payload"]["episode"] == "ep1"
+
+
+# ── perform_request: narration "reuse" wiring ────────────────────────────────
+def test_perform_request_reuse_hit_skips_fresh_generation_and_publish(library, capsys, monkeypatch):
+    def fake_reused(script, episode, workdir):
+        return [{"kind": "coder_talk", "speaker": "coder", "narration": "cached line",
+                 "audio": None, "events": []}]
+
+    monkeypatch.setattr(replay_pane, "load_reused_show", fake_reused)
+
+    def explode_prepare(*a, **kw):
+        raise AssertionError("must not prepare a fresh voiced show on a reuse hit")
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode_prepare)
+
+    def explode_publish(*a, **kw):
+        raise AssertionError("must not publish on a reuse hit")
+
+    monkeypatch.setattr(replay_pane, "publish_narration", explode_publish)
+
+    def explode_persist(*a, **kw):
+        raise AssertionError("must not persist on a reuse hit")
+
+    monkeypatch.setattr(replay_pane, "persist_narration", explode_persist)
+
+    ok = perform_request({"episode": "ep1", "speed": 0, "narration": "reuse"},
+                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+
+    out = capsys.readouterr().out
+    assert ok is True
+    assert "cached line" in out
+
+
+def test_perform_request_reuse_miss_falls_back_to_fresh_generation(library, monkeypatch):
+    monkeypatch.setattr(replay_pane, "load_reused_show", lambda *a, **kw: None)
+
+    def fake_prepare(script, config, workdir, **kwargs):
+        return [dict(scene, events=[]) for scene in _voiced_show()]
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
+    calls = {}
+
+    def fake_publish(show, config, episode, worker_name):
+        calls["publish_show"] = show
+        return "msg-id-123"
+
+    def fake_persist(message_id, show, config, episode, worker_name):
+        calls["persist_message_id"] = message_id
+        calls["persist_show"] = show
+
+    monkeypatch.setattr(replay_pane, "publish_narration", fake_publish)
+    monkeypatch.setattr(replay_pane, "persist_narration", fake_persist)
+
+    ok = perform_request({"episode": "ep1", "speed": 0, "narration": "reuse"},
+                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+
+    assert ok is True
+    assert calls["persist_message_id"] == "msg-id-123"
+    assert calls["persist_show"] == calls["publish_show"]
+
+
+def test_perform_request_voice_false_blocks_reuse_too(library, monkeypatch):
+    def explode_reuse(*a, **kw):
+        raise AssertionError("must not attempt reuse when voice is False")
+
+    def explode_prepare(*a, **kw):
+        raise AssertionError("must not prepare voice when voice is False")
+
+    monkeypatch.setattr(replay_pane, "load_reused_show", explode_reuse)
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode_prepare)
+
+    ok = perform_request({"episode": "ep1", "speed": 0, "voice": False, "narration": "reuse"},
+                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+
+    assert ok is True
 
 
 def test_load_worker_config_missing_or_bad_returns_none(tmp_path, capsys):
@@ -279,3 +561,57 @@ def test_handle_replay_request_unwritable_path_replies_error(tmp_path, monkeypat
     handle_replay_request("coder", {}, None, producer, msg)
 
     assert "could not queue replay" in producer.sent[0]["payload"]["error"]
+
+
+@pytest.mark.parametrize("voice_value", [True, False])
+def test_handle_replay_request_forwards_bool_voice(request_file, voice_value):
+    producer = FakeProducer()
+    msg = {"from": "operator", "type": "replay_request",
+           "payload": {"episode": "ep1", "voice": voice_value}}
+
+    handle_replay_request("coder", {}, None, producer, msg)
+
+    request = json.loads(request_file.read_text(encoding="utf-8"))
+    assert request["voice"] is voice_value
+
+
+def test_handle_replay_request_omits_voice_when_absent(request_file):
+    producer = FakeProducer()
+    msg = {"from": "operator", "type": "replay_request", "payload": {"episode": "ep1"}}
+
+    handle_replay_request("coder", {}, None, producer, msg)
+
+    request = json.loads(request_file.read_text(encoding="utf-8"))
+    assert "voice" not in request
+
+
+def test_handle_replay_request_omits_voice_when_not_bool(request_file):
+    producer = FakeProducer()
+    msg = {"from": "operator", "type": "replay_request",
+           "payload": {"episode": "ep1", "voice": "yes"}}
+
+    handle_replay_request("coder", {}, None, producer, msg)
+
+    request = json.loads(request_file.read_text(encoding="utf-8"))
+    assert "voice" not in request
+
+
+def test_handle_replay_request_forwards_narration_reuse(request_file):
+    producer = FakeProducer()
+    msg = {"from": "operator", "type": "replay_request",
+           "payload": {"episode": "ep1", "narration": "reuse"}}
+
+    handle_replay_request("coder", {}, None, producer, msg)
+
+    request = json.loads(request_file.read_text(encoding="utf-8"))
+    assert request["narration"] == "reuse"
+
+
+def test_handle_replay_request_omits_narration_when_absent(request_file):
+    producer = FakeProducer()
+    msg = {"from": "operator", "type": "replay_request", "payload": {"episode": "ep1"}}
+
+    handle_replay_request("coder", {}, None, producer, msg)
+
+    request = json.loads(request_file.read_text(encoding="utf-8"))
+    assert "narration" not in request

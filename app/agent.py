@@ -661,6 +661,12 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
         request["speed"] = payload["speed"]
     if payload.get("worker_name"):
         request["worker_name"] = str(payload["worker_name"])
+    # voice/narration are interpreted entirely by replay_pane.py (see
+    # docs/operator_commands.md) — the agent just forwards them verbatim.
+    if isinstance(payload.get("voice"), bool):
+        request["voice"] = payload["voice"]
+    if payload.get("narration"):
+        request["narration"] = str(payload["narration"])
 
     request_file = os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
     # Atomic write (same temp+replace pattern as agent_state.py) so the

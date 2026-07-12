@@ -53,21 +53,30 @@ CREATE INDEX IF NOT EXISTS idx_runs_backend ON coding_backend_runs (backend);
 CREATE INDEX IF NOT EXISTS idx_runs_worker ON coding_backend_runs (worker_id);
 
 -- Typed unpacking of replay_narration messages: one row per spoken scene
--- from a Rerun Theater airing (see docs/revoice.md). Text only — the
--- synthesized audio itself is never persisted, only regenerated per airing.
+-- from a Rerun Theater airing (see docs/revoice.md). The bus message itself
+-- is text-only, but app/narration_store.py has replay_pane.py upsert the
+-- WAV bytes + measured duration for the same (message_id, scene_index)
+-- directly from the pane after every fresh airing, so a later replay_request
+-- with payload.narration: "reuse" can replay it without calling the LLM/TTS
+-- again. This insert and that upsert converge on one row set regardless of
+-- which lands first.
 CREATE TABLE IF NOT EXISTS voiced_narration (
-    message_id  UUID NOT NULL,
-    worker_id   TEXT NOT NULL,
-    episode     TEXT NOT NULL,
-    aired_at    TIMESTAMPTZ NOT NULL,
-    scene_index INTEGER NOT NULL,
-    scene_kind  TEXT NOT NULL,
-    speaker     TEXT NOT NULL,
-    text        TEXT NOT NULL,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    message_id       UUID NOT NULL,
+    worker_id        TEXT NOT NULL,
+    episode          TEXT NOT NULL,
+    aired_at         TIMESTAMPTZ NOT NULL,
+    scene_index      INTEGER NOT NULL,
+    scene_kind       TEXT NOT NULL,
+    speaker          TEXT NOT NULL,
+    text             TEXT NOT NULL,
+    audio            BYTEA,
+    audio_duration_s DOUBLE PRECISION,
+    ingested_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (message_id, scene_index)
 );
 CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (episode);
+ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio BYTEA;
+ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio_duration_s DOUBLE PRECISION;
 """
 
 INSERT_SQL = """
