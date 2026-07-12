@@ -368,6 +368,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
+| `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 
 > Set each variable as its own `name` → `value` pair. Don't put a URL (or any value)

@@ -22,9 +22,9 @@ param(
 # =====================================================================
 
 # --- Coder task assignment: clamp() + pytest tests -------------------
-$To      = "coder"
-$Type    = "task_assignment"
-$Payload = '{"task": "Create a small test program: a clamp(value, low, high) function that limits a value to the [low, high] range, plus pytest tests covering in-range, below-range, and above-range inputs."}'
+# $To      = "coder"
+# $Type    = "task_assignment"
+# $Payload = '{"task": "Create a small test program: a clamp(value, low, high) function that limits a value to the [low, high] range, plus pytest tests covering in-range, below-range, and above-range inputs."}'
 
 # --- Broadcast operator message: chat shoutout -----------------------
 # $To      = "broadcast"
@@ -35,6 +35,11 @@ $Payload = '{"task": "Create a small test program: a clamp(value, low, high) fun
 # $To      = "broadcast"
 # $Type    = "operator_message"
 # $Payload = '{"text": "stream starting in 5"}'
+
+# --- Coder replay request: reenact a saved episode --------------------
+$To      = "coder"
+$Type    = "replay_request"
+$Payload = '{"episode": "2026-07-05_18-09-43_e2d3d72b"}'
 
 # =====================================================================
 

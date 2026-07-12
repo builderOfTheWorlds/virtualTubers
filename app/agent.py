@@ -684,7 +684,7 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
                     bubble=f"Time for a rerun: {request['episode']}")
     producer.send(build_message(
         worker_id, "operator", "operator_reply",
-        {"narration": f"Queued rerun episode {request['episode']!r} — rolling it in the theater pane."},
+        {"narration": f"Queued rerun episode {request['episode']!r} - rolling it in the theater pane."},
     ))
 
 
