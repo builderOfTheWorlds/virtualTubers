@@ -30,7 +30,7 @@ VOICES = {
 
 
 def download(url, dest):
-    print(f"  {dest.name} ← {url}")
+    print(f"  {dest.name} <- {url}")
     with urllib.request.urlopen(url) as response, open(dest, "wb") as fh:
         while True:
             chunk = response.read(1 << 20)
@@ -68,7 +68,7 @@ def main():
                 dest.unlink(missing_ok=True)
                 failed += 1
 
-    print(f"[download_voices] done → {out} "
+    print(f"[download_voices] done -> {out} "
           f"(sync to /opt/virtualTubers/voices on the deploy host)")
     return 1 if failed else 0
 

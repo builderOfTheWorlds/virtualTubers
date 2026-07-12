@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-# Rebuilds the images this stack needs after a `git pull`.
+# Rebuilds the images this stack needs after a `git pull`, and fetches the
+# Piper voice models for Rerun Theater's spoken narration.
 # Run from the repo root (e.g. /opt/virtualTubers on the Portainer host).
 #
 #   git pull && ./install.sh
@@ -18,6 +19,14 @@ set -e
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 log() { echo "[install] $*"; }
+
+log "Fetching Piper voice models (voices/)"
+if command -v python3 >/dev/null 2>&1; then
+    python3 scripts/download_voices.py --out voices \
+        || log "WARN: voice download failed — replays will play silent until voices/ is populated (rerun ./install.sh once network/host issue is resolved)"
+else
+    log "WARN: python3 not found — skipping voice download (see scripts/download_voices.py)"
+fi
 
 log "Building vtube-worker:latest"
 docker build -t vtube-worker:latest .

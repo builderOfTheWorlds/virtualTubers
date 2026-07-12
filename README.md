@@ -34,10 +34,11 @@ screen** — the planned persona re-voicing layer landed, with TTS on top:
   drive the avatar's speech bubble. `replay_pane.py` reads the worker
   config and runs the pass before each show; `"voice": false` in a
   `replay_request` forces a silent airing.
-- Setup: `python scripts/download_voices.py --out voices`, sync `voices/`
-  to `/opt/virtualTubers/voices` on the host (compose mounts it `:ro` at
-  `/data/voices`), set the worker's `voice.provider: piper`. Worker image
-  rebuild required (`piper-tts` added to requirements). See
+- Setup: `./install.sh` now fetches the Piper voice models straight into
+  `voices/` on the deployment host (compose mounts it `:ro` at
+  `/data/voices`) — no manual download/sync step needed there anymore; set
+  the worker's `voice.provider: piper`. Worker image rebuild required
+  (`piper-tts` added to requirements). See
   [docs/revoice.md](docs/revoice.md), [docs/tts_client.md](docs/tts_client.md),
   and [docs/audio_player.md](docs/audio_player.md).
 
@@ -370,13 +371,15 @@ One-time setup:
 .venv/Scripts/python.exe scripts/build_replay_library.py \
   --logs "path/to/logs/claude/virtualTubers" --out replays
 
-# 2. Download the Piper voice models (coder + boss)
-.venv/Scripts/python.exe scripts/download_voices.py --out voices
-
-# 3. Sync both onto the deployment host
+# 2. Sync the episode library onto the deployment host
 #    replays/ -> /opt/virtualTubers/replays   (mounted :ro at /data/replays)
-#    voices/  -> /opt/virtualTubers/voices    (mounted :ro at /data/voices)
 ```
+
+The Piper voice models (coder + boss) don't need a manual download/sync —
+`./install.sh` fetches them straight into `voices/` on the deployment host
+(see [Deploy / redeploy](#deploy--redeploy-after-a-code-change) below), which
+is already the bind-mount source for `/data/voices`. Only needed manually for
+local preview off the host: `.venv/Scripts/python.exe scripts/download_voices.py --out voices`.
 
 Then enable it per worker (config-only, plus one image rebuild for the
 `piper-tts` dependency):
@@ -484,7 +487,7 @@ Then, from the Proxmox shell:
 pct enter 101                            # enter the Portainer LXC (CT 101)
 cd /opt/virtualTubers                    # the repo checkout
 git pull                                 # get the latest code
-./install.sh                             # rebuild every image the stack needs (see below)
+./install.sh                             # fetches Piper voices + rebuilds every image the stack needs (see below)
 ```
 
 Then in the **Portainer UI** → **Stacks** → this stack → **Update the stack**,
