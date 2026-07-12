@@ -91,6 +91,19 @@ Keep more than the default 7 days of history (set before `docker compose up`):
 echo "LOG_RETENTION_DAYS=30" >> .env
 ```
 
+Manually prune a specific time range on demand (e.g. a known noisy debugging
+window), without waiting for the hourly retention-based prune — via
+message-api's `POST /logs/prune` (see `app/log_prune.py`,
+`docs/message_api.md` if present):
+```bash
+curl -X POST http://192.168.1.120:8090/logs/prune \
+  -H "Content-Type: application/json" \
+  -d '{"after": "2026-07-01T00:00:00Z", "before": "2026-07-02T00:00:00Z"}'
+```
+At least one of `after`/`before` is required (both together delete an
+inclusive-start/exclusive-end range; either alone deletes everything on that
+side of the bound).
+
 ## Error Handling
 
 - Fails fast (uncaught) if `POSTGRES_DB`/`POSTGRES_USER`/`POSTGRES_PASSWORD`

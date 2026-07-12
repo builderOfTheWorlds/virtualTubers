@@ -12,12 +12,16 @@ from message-logger's Postgres writes without a stack redeploy (see
 worker_control.py and log_filter_control.py).
 """
 import os
+from datetime import datetime
+from typing import Optional
 
+import psycopg2
 import redis
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel
 
 from log_filter_control import LogFilterControl
+from log_prune import prune_logs
 from message_bus import build_message, MessageProducer
 from worker_control import WorkerControl
 
@@ -53,6 +57,11 @@ class InjectMessage(BaseModel):
     to: str
     type: str = "operator_message"
     payload: dict = {}
+
+
+class PruneLogsRequest(BaseModel):
+    after: Optional[datetime] = None
+    before: Optional[datetime] = None
 
 
 @app.get("/healthz")
@@ -113,3 +122,14 @@ def _set_log_filter(message_type: str, excluded: bool):
     except redis.RedisError as exc:
         raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
     return {"type": message_type, "excluded": excluded}
+
+
+@app.post("/logs/prune")
+def prune_logs_endpoint(body: PruneLogsRequest):
+    if body.after is None and body.before is None:
+        raise HTTPException(status_code=400, detail="at least one of after/before is required")
+    try:
+        deleted = prune_logs(after=body.after, before=body.before)
+    except psycopg2.OperationalError as exc:
+        raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
+    return {"deleted": deleted, "after": body.after, "before": body.before}

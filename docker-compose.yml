@@ -201,6 +201,13 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # Backs POST /logs/prune (docs/log_shipper.md) — deletes container_logs
+      # rows in a caller-specified time range.
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
     ports:
       - "8090:8000"
     restart: unless-stopped

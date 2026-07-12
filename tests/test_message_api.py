@@ -10,6 +10,7 @@ import pathlib
 import sys
 from unittest.mock import MagicMock, patch
 
+import psycopg2
 import pytest
 import redis
 from fastapi.testclient import TestClient
@@ -19,6 +20,10 @@ sys.path.insert(0, str(ROOT / "services" / "message-api"))
 
 os.environ.setdefault("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 os.environ.setdefault("KAFKA_TOPIC", "test-topic")
+
+os.environ.setdefault("POSTGRES_DB", "virtualtubers")
+os.environ.setdefault("POSTGRES_USER", "virtualtubers")
+os.environ.setdefault("POSTGRES_PASSWORD", "secret")
 
 with patch("message_bus.KafkaProducer"), \
      patch("worker_control.redis.Redis.from_url"), \
@@ -110,4 +115,29 @@ def test_include_then_exclude_log_type_round_trip(client):
 def test_exclude_log_type_returns_503_when_redis_unavailable(client):
     api.log_filter._client.set.side_effect = redis.RedisError("connection refused")
     resp = client.post("/log-filter/status_update/exclude")
+    assert resp.status_code == 503
+
+
+def test_prune_logs_requires_at_least_one_bound(client):
+    resp = client.post("/logs/prune", json={})
+    assert resp.status_code == 400
+
+
+def test_prune_logs_deletes_range(client):
+    with patch("api.prune_logs", return_value=5) as fake_prune:
+        resp = client.post("/logs/prune", json={
+            "after": "2026-07-01T00:00:00Z", "before": "2026-07-02T00:00:00Z",
+        })
+
+    assert resp.status_code == 200
+    assert resp.json()["deleted"] == 5
+    fake_prune.assert_called_once()
+    _, kwargs = fake_prune.call_args
+    assert kwargs["after"].isoformat() == "2026-07-01T00:00:00+00:00"
+    assert kwargs["before"].isoformat() == "2026-07-02T00:00:00+00:00"
+
+
+def test_prune_logs_returns_503_when_postgres_unavailable(client):
+    with patch("api.prune_logs", side_effect=psycopg2.OperationalError("connection refused")):
+        resp = client.post("/logs/prune", json={"after": "2026-07-01T00:00:00Z"})
     assert resp.status_code == 503
