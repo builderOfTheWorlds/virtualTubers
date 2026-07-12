@@ -30,7 +30,17 @@ sleep 2
 log "Starting PulseAudio"
 pulseaudio --system --disallow-exit --disallow-module-loading --daemonize=true || true
 sleep 1
-pactl load-module module-null-sink sink_name=vout sink_properties=device.description=VirtualOut 2>/dev/null || true
+# Not `2>/dev/null || true` (the previous version): a failure here — e.g. the
+# image's root user missing from the "pulse-access" group PulseAudio's
+# system-mode gates connections on — used to be completely invisible, and
+# silently meant narration audio could never reach the stream (paplay and
+# ffmpeg's `-f pulse` input hit the same access check). Non-fatal either way
+# (`if`, not `set -e`), but now it says which one happened.
+if SINK_OUTPUT=$(pactl load-module module-null-sink sink_name=vout sink_properties=device.description=VirtualOut 2>&1); then
+    log "PulseAudio null sink 'vout' ready (module id ${SINK_OUTPUT})"
+else
+    log "WARNING: could not create PulseAudio null sink 'vout': ${SINK_OUTPUT} — narration audio will stream silent (docs/stream_supervisor.md)"
+fi
 
 # ── 4+5. Tmux session + panes (config-driven) ─────────────────────────────────
 # The layout engine resolves config/layouts/<preset>.yaml + config/panels/*.yaml,

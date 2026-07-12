@@ -20,8 +20,17 @@ would still be silent. `build_ffmpeg_cmd` now captures `vout.monitor`
 (`-f pulse -i vout.monitor`) whenever `pulse_monitor_available()` confirms
 Pulse is actually up, falling back to the old silent track only if it
 isn't — same soft-degradation contract as the rest of the feature: an
-audio problem mutes the show, never cancels it. See
-[docs/stream_supervisor.md](docs/stream_supervisor.md).
+audio problem mutes the show, never cancels it.
+
+That fix then surfaced a second, deeper bug it had been quietly hiding:
+PulseAudio's `--system` mode gates every client (`pactl`, `paplay`,
+ffmpeg's `-f pulse` input) on membership in the `pulse-access` group,
+which the container's `root` user was never added to — every Pulse call
+was silently failing with "Access denied" the whole time (masked by a
+`2>/dev/null || true` in `startup.sh` and `DEVNULL` in
+`audio_player.py`). Fixed with `RUN usermod -aG pulse-access root` in the
+Dockerfile; `startup.sh`'s sink creation now logs success/failure instead
+of hiding it. See [docs/stream_supervisor.md](docs/stream_supervisor.md).
 
 **Rerun Theater episodes are now SPOKEN — two-voice narration, synced to the
 screen** — the planned persona re-voicing layer landed, with TTS on top:

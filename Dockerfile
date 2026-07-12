@@ -22,6 +22,17 @@ RUN apt-get update && apt-get install -y \
     inotify-tools procps wget \
     && rm -rf /var/lib/apt/lists/*
 
+# PulseAudio's system-wide mode (startup.sh: `pulseaudio --system`) gates
+# every client connection — pactl, paplay, ffmpeg's `-f pulse` input — on
+# membership in the "pulse-access" group (the default system.pa's
+# `auth-group=pulse-access` on module-native-protocol-unix). Everything in
+# this container runs as root with no other user ever created, so without
+# this, every Pulse client gets "Access denied": stream_supervisor.py's
+# ffmpeg falls back to silent audio, and audio_player.py's paplay fails
+# silently (its output is discarded), so narration never reaches the
+# stream even though every step upstream of playback works correctly.
+RUN usermod -aG pulse-access root
+
 # lsd (prettier ls with icons)
 RUN curl -sL https://github.com/lsd-rs/lsd/releases/download/v1.1.1/lsd-v1.1.1-x86_64-unknown-linux-gnu.tar.gz \
     | tar -xz -C /usr/local/bin --strip-components=1 lsd-v1.1.1-x86_64-unknown-linux-gnu/lsd

@@ -87,6 +87,19 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Changelog
 
+- v1.1.1 (2026-07-12) — Fixed the actual reason `pulse_monitor_available`
+  (added in v1.1.0, same day) kept returning false even after that fix
+  deployed: PulseAudio's `--system` mode (`startup.sh`) gates every client
+  connection — `pactl`, `paplay`, ffmpeg's `-f pulse` input — on membership
+  in the `pulse-access` group, and nothing in the image ever added the
+  container's `root` user to it. Every Pulse client got a silent "Access
+  denied": `startup.sh`'s null-sink creation (masked by `2>/dev/null ||
+  true`), `audio_player.py`'s `paplay` (masked by `DEVNULL`), and this
+  module's own probe all failed quietly. Fixed with `RUN usermod -aG
+  pulse-access root` in the Dockerfile; `startup.sh`'s sink creation now
+  also logs success/failure instead of swallowing it, so this class of
+  problem is visible in `docker logs` next time instead of requiring a
+  multi-step trace from "no audio" down to a group membership.
 - v1.1.0 (2026-07-12) — Fixed a real bug: `build_ffmpeg_cmd`'s audio input
   was hardcoded to `anullsrc` (synthesized silence) regardless of whether
   Rerun Theater's spoken narration was configured — `audio_player.py`
