@@ -19,6 +19,7 @@ from replay_pane import (  # noqa: E402
     list_episodes,
     load_worker_config,
     perform_request,
+    publish_narration,
     read_request,
     resolve_episode,
 )
@@ -136,6 +137,87 @@ def test_perform_request_voice_failure_still_airs_silent(library, capsys, monkey
     assert ok is True
     assert "hello stream" in captured.out  # the show aired anyway
     assert "silent show" in captured.err
+
+
+# ── publish_narration: the durable transcript (docs/revoice.md) ─────────────
+class FakeBusProducer:
+    def __init__(self, bootstrap_servers, topic):
+        self.bootstrap_servers = bootstrap_servers
+        self.topic = topic
+
+    def send(self, message):
+        FakeBusProducer.sent.append(message)
+        return message
+
+
+def _voiced_show():
+    return [
+        {"kind": "boss", "speaker": "boss", "narration": "ship the login fix"},
+        {"kind": "coder_talk", "speaker": "coder", "narration": "on it"},
+    ]
+
+
+def test_publish_narration_sends_one_message_with_all_scenes(monkeypatch):
+    FakeBusProducer.sent = []
+    monkeypatch.setattr(replay_pane, "MessageProducer", FakeBusProducer)
+    config = {"message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages",
+                              "worker_id": "coder"}}
+
+    publish_narration(_voiced_show(), config, "ep1", "KODI-7")
+
+    assert len(FakeBusProducer.sent) == 1
+    msg = FakeBusProducer.sent[0]
+    assert msg["type"] == "replay_narration"
+    assert msg["from"] == "coder"
+    assert msg["payload"]["episode"] == "ep1"
+    assert [s["text"] for s in msg["payload"]["scenes"]] == ["ship the login fix", "on it"]
+    assert [s["speaker"] for s in msg["payload"]["scenes"]] == ["boss", "coder"]
+
+
+def test_publish_narration_skips_when_show_is_none(monkeypatch):
+    def explode(*a, **kw):
+        raise AssertionError("must not construct a producer for a silent show")
+
+    monkeypatch.setattr(replay_pane, "MessageProducer", explode)
+    publish_narration(None, {"message_bus": {"bootstrap_servers": "k", "topic": "t"}}, "ep1", "KODI-7")
+
+
+def test_publish_narration_skips_without_message_bus_config(monkeypatch):
+    def explode(*a, **kw):
+        raise AssertionError("must not construct a producer without message_bus config")
+
+    monkeypatch.setattr(replay_pane, "MessageProducer", explode)
+    publish_narration(_voiced_show(), {"voice": {"provider": "piper"}}, "ep1", "KODI-7")
+
+
+def test_publish_narration_failure_is_swallowed(monkeypatch, capsys):
+    class ExplodingProducer:
+        def __init__(self, *a, **kw):
+            raise RuntimeError("kafka down")
+
+    monkeypatch.setattr(replay_pane, "MessageProducer", ExplodingProducer)
+    config = {"message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages"}}
+
+    publish_narration(_voiced_show(), config, "ep1", "KODI-7")  # must not raise
+
+    assert "publish failed" in capsys.readouterr().err
+
+
+def test_perform_request_publishes_narration_after_voiced_show(library, monkeypatch):
+    def fake_prepare(script, config, workdir, **kwargs):
+        return [dict(scene, events=[]) for scene in _voiced_show()]
+
+    FakeBusProducer.sent = []
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
+    monkeypatch.setattr(replay_pane, "MessageProducer", FakeBusProducer)
+    config = {"voice": {"provider": "piper"},
+              "message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages"}}
+
+    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None, config=config)
+
+    assert ok is True
+    assert len(FakeBusProducer.sent) == 1
+    assert FakeBusProducer.sent[0]["payload"]["episode"] == "ep1"
 
 
 def test_load_worker_config_missing_or_bad_returns_none(tmp_path, capsys):

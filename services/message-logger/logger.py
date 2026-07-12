@@ -51,6 +51,23 @@ CREATE TABLE IF NOT EXISTS coding_backend_runs (
 );
 CREATE INDEX IF NOT EXISTS idx_runs_backend ON coding_backend_runs (backend);
 CREATE INDEX IF NOT EXISTS idx_runs_worker ON coding_backend_runs (worker_id);
+
+-- Typed unpacking of replay_narration messages: one row per spoken scene
+-- from a Rerun Theater airing (see docs/revoice.md). Text only — the
+-- synthesized audio itself is never persisted, only regenerated per airing.
+CREATE TABLE IF NOT EXISTS voiced_narration (
+    message_id  UUID NOT NULL,
+    worker_id   TEXT NOT NULL,
+    episode     TEXT NOT NULL,
+    aired_at    TIMESTAMPTZ NOT NULL,
+    scene_index INTEGER NOT NULL,
+    scene_kind  TEXT NOT NULL,
+    speaker     TEXT NOT NULL,
+    text        TEXT NOT NULL,
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (message_id, scene_index)
+);
+CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (episode);
 """
 
 INSERT_SQL = """
@@ -69,6 +86,16 @@ INSERT INTO coding_backend_runs (
     %(deletions)s, %(duration_s)s, %(output)s, %(error)s, %(reported_at)s
 )
 ON CONFLICT (message_id) DO NOTHING;
+"""
+
+INSERT_NARRATION_SQL = """
+INSERT INTO voiced_narration (
+    message_id, worker_id, episode, aired_at, scene_index, scene_kind, speaker, text
+) VALUES (
+    %(message_id)s, %(worker_id)s, %(episode)s, %(aired_at)s, %(scene_index)s,
+    %(scene_kind)s, %(speaker)s, %(text)s
+)
+ON CONFLICT (message_id, scene_index) DO NOTHING;
 """
 
 
@@ -93,6 +120,27 @@ def insert_coding_run(cur, msg):
         "error": p.get("error"),
         "reported_at": msg["timestamp"],
     })
+
+
+def insert_voiced_narration(cur, msg):
+    """Unpack a replay_narration payload into voiced_narration: one row per
+    spoken scene. Defensive .get()s throughout: a malformed report still
+    lands in messages; this typed row is best-effort and must never crash
+    the logger loop."""
+    p = msg.get("payload", {}) or {}
+    episode = p.get("episode", "")
+    aired_at = p.get("aired_at") or msg["timestamp"]
+    for scene in p.get("scenes", []) or []:
+        cur.execute(INSERT_NARRATION_SQL, {
+            "message_id": msg["id"],
+            "worker_id": msg.get("from", "unknown"),
+            "episode": episode,
+            "aired_at": aired_at,
+            "scene_index": scene.get("index", 0),
+            "scene_kind": scene.get("kind", ""),
+            "speaker": scene.get("speaker", ""),
+            "text": scene.get("text", ""),
+        })
 
 
 def connect_db():
@@ -141,6 +189,11 @@ def main():
                     # Raw message is already in `messages`; a bad typed
                     # unpack must not stop the logging loop.
                     print(f"[logger] WARN coding_backend_runs insert failed: {exc}")
+            if msg["type"] == "replay_narration":
+                try:
+                    insert_voiced_narration(cur, msg)
+                except Exception as exc:
+                    print(f"[logger] WARN voiced_narration insert failed: {exc}")
         print(f"[logger] logged {msg['type']} {msg['from']} -> {msg['to']}")
 
 

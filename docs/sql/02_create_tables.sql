@@ -45,6 +45,23 @@ CREATE TABLE IF NOT EXISTS coding_backend_runs (
 CREATE INDEX IF NOT EXISTS idx_runs_backend ON coding_backend_runs (backend);
 CREATE INDEX IF NOT EXISTS idx_runs_worker ON coding_backend_runs (worker_id);
 
+-- Typed unpacking of replay_narration messages: one row per spoken scene
+-- from a Rerun Theater airing (see docs/revoice.md). Text only — the
+-- synthesized audio itself is never persisted, only regenerated per airing.
+CREATE TABLE IF NOT EXISTS voiced_narration (
+    message_id  UUID NOT NULL,
+    worker_id   TEXT NOT NULL,
+    episode     TEXT NOT NULL,
+    aired_at    TIMESTAMPTZ NOT NULL,
+    scene_index INTEGER NOT NULL,
+    scene_kind  TEXT NOT NULL,
+    speaker     TEXT NOT NULL,
+    text        TEXT NOT NULL,
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (message_id, scene_index)
+);
+CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (episode);
+
 CREATE TABLE IF NOT EXISTS container_logs (
     id             BIGSERIAL PRIMARY KEY,
     container_name TEXT NOT NULL,

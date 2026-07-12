@@ -41,6 +41,14 @@ screen** — the planned persona re-voicing layer landed, with TTS on top:
   (`piper-tts` added to requirements). See
   [docs/revoice.md](docs/revoice.md), [docs/tts_client.md](docs/tts_client.md),
   and [docs/audio_player.md](docs/audio_player.md).
+- **Narration is now durably saved** — the synthesized audio itself is
+  never kept (regenerated fresh every airing, then deleted with the temp
+  workdir), but `replay_pane.py` publishes each airing's spoken transcript
+  (episode, timestamp, every scene's speaker + text) as a `replay_narration`
+  bus message; `message-logger` unpacks it into a new Postgres
+  `voiced_narration` table, one row per scene. Fire-and-forget — a down or
+  unconfigured message bus just skips saving, never blocks the show. See
+  [docs/message_logger.md](docs/message_logger.md).
 
 **Rerun Theater — workers can re-perform past real dev sessions as shows** —
 saved Claude Code session logs become replayable stream content:

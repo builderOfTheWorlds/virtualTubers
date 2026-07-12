@@ -148,3 +148,78 @@ def test_main_fails_fast_when_kafka_env_vars_missing(monkeypatch):
 
     with pytest.raises(KeyError):
         logger.main()
+
+
+def _fake_narration_message(scenes=None):
+    return _fake_message(
+        msg_id="narr-1", from_="coder", to="broadcast", type_="replay_narration",
+        payload={
+            "episode": "ep1",
+            "aired_at": "2026-07-12T00:00:00+00:00",
+            "scenes": scenes if scenes is not None else [
+                {"index": 0, "kind": "boss", "speaker": "boss", "text": "ship it"},
+                {"index": 1, "kind": "coder_talk", "speaker": "coder", "text": "on it"},
+            ],
+        },
+    )
+
+
+def test_insert_voiced_narration_inserts_one_row_per_scene():
+    fake_cursor = MagicMock()
+    logger.insert_voiced_narration(fake_cursor, _fake_narration_message())
+
+    assert fake_cursor.execute.call_count == 2
+    first_params = fake_cursor.execute.call_args_list[0].args[1]
+    assert first_params["message_id"] == "narr-1"
+    assert first_params["worker_id"] == "coder"
+    assert first_params["episode"] == "ep1"
+    assert first_params["scene_index"] == 0
+    assert first_params["speaker"] == "boss"
+    assert first_params["text"] == "ship it"
+
+
+def test_insert_voiced_narration_handles_empty_scenes_without_error():
+    fake_cursor = MagicMock()
+    logger.insert_voiced_narration(fake_cursor, _fake_narration_message(scenes=[]))
+    fake_cursor.execute.assert_not_called()
+
+
+def test_main_inserts_voiced_narration_for_replay_narration_type(monkeypatch):
+    monkeypatch.setenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    monkeypatch.setenv("KAFKA_TOPIC", "vtuber.messages")
+
+    fake_cursor = MagicMock()
+    fake_cursor.__enter__ = MagicMock(return_value=fake_cursor)
+    fake_cursor.__exit__ = MagicMock(return_value=False)
+    fake_conn = MagicMock()
+    fake_conn.cursor.return_value = fake_cursor
+
+    messages = [_fake_narration_message()]
+
+    with patch("logger.connect_db", return_value=fake_conn), \
+         patch("logger.MessageConsumer", return_value=iter(messages)):
+        logger.main()
+
+    narration_calls = [c for c in fake_cursor.execute.call_args_list
+                       if c.args[0] == logger.INSERT_NARRATION_SQL]
+    assert len(narration_calls) == 2  # one per scene
+
+
+def test_main_bad_narration_payload_does_not_crash_loop(monkeypatch, capsys):
+    monkeypatch.setenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    monkeypatch.setenv("KAFKA_TOPIC", "vtuber.messages")
+
+    fake_cursor = MagicMock()
+    fake_cursor.__enter__ = MagicMock(return_value=fake_cursor)
+    fake_cursor.__exit__ = MagicMock(return_value=False)
+    fake_conn = MagicMock()
+    fake_conn.cursor.return_value = fake_cursor
+
+    # scenes is a string, not a list -> insert_voiced_narration must not raise
+    messages = [_fake_narration_message(scenes="not-a-list")]
+
+    with patch("logger.connect_db", return_value=fake_conn), \
+         patch("logger.MessageConsumer", return_value=iter(messages)):
+        logger.main()  # must not raise
+
+    assert "voiced_narration insert failed" in capsys.readouterr().out

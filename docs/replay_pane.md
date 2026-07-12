@@ -20,7 +20,7 @@ operator ──POST /messages──▶ Kafka ──▶ agent.py handle_replay_re
 ```
 
 File-based handoff on purpose (same pattern as `agent_state.py`): the pane
-never consumes Kafka and never executes anything from the bus. The only
+never **consumes** Kafka and never executes anything from the bus. The only
 thing a bus message can influence is **which pre-built, pre-redacted
 episode in the library plays** — episode names are resolved basename-only
 inside `REPLAY_LIBRARY`, so a hostile payload cannot reach other files.
@@ -34,6 +34,17 @@ unconfigured, or broken at showtime, degrades to the silent performance —
 an episode always airs. A request can force a silent airing with
 `"voice": false` in the payload.
 
+**Narration transcript.** The pane does **produce** to Kafka: right after a
+voiced show is prepared, `publish_narration` sends one `replay_narration`
+message (episode, aired-at timestamp, and every scene's speaker + spoken
+text) which `message-logger` persists to Postgres's `voiced_narration`
+table (docs/message_logger.md). This is the only durable record of what
+was said — the synthesized WAVs themselves live in a `TemporaryDirectory`
+that's deleted the moment the show ends, and get regenerated fresh (with
+new dialogue) on the next airing. Publishing is fire-and-forget: no
+`message_bus` config, or Kafka being unreachable, just skips it silently —
+never delays or blocks the show.
+
 ## Signature
 
 ```python
@@ -42,6 +53,7 @@ def read_request(request_file) -> dict | None      # consume-once
 def perform_request(request, library, worker_name, state_path,
                     default_speed=1.0, config=None) -> bool
 def prepare_voice(script, config, workdir, worker_name, speed) -> list | None
+def publish_narration(show, config, episode, worker_name) -> None
 def load_worker_config(path) -> dict | None
 def list_episodes(library) -> list[str]
 ```
@@ -69,8 +81,9 @@ never a crash loop. A failed episode logs to stderr and returns to idle.
 ## Dependencies
 
 `app/replay.py` (Performer + `prepare_voiced_show`), `app/agent_state.py`
-(avatar state path), standard library; `yaml` and (transitively, only when
-voice is on) `app/revoice.py` / `app/tts_client.py` / `app/llm_client.py`.
+(avatar state path), `app/message_bus.py` (`MessageProducer`/`build_message`,
+for `publish_narration`), standard library; `yaml` and (transitively, only
+when voice is on) `app/revoice.py` / `app/tts_client.py` / `app/llm_client.py`.
 
 ## Usage Examples
 
@@ -101,9 +114,19 @@ Build and ship the episode library (from the machine with the logs):
 - Malformed request file → consumed and discarded (logged).
 - Missing library dir → idle screen says so; nothing crashes.
 - Avatar state write failures are non-fatal (see replay.md).
+- `publish_narration` never raises: no `message_bus` config, a missing
+  `bootstrap_servers`/`topic`, or a Kafka connection failure all just skip
+  the publish (logged to stderr on the last one) — a transcript that
+  didn't save must never cancel or delay the show itself.
 
 ## Changelog
 
+- **v1.2.0** (2026-07-12): Narration transcript persistence —
+  `publish_narration` sends the airing's spoken lines (text only, no
+  audio) as a `replay_narration` bus message after each voiced show, for
+  `message-logger` to durably unpack into Postgres's `voiced_narration`
+  table (see docs/message_logger.md). Fire-and-forget: a down/unconfigured
+  bus never blocks or fails the airing. +6 tests.
 - **v1.1.0** (2026-07-12): Spoken narration — reads the worker config
   (`--config`/`CONFIG_PATH`), runs the per-airing revoice pass before each
   show, `"voice": false` request override, silent-show degradation on any

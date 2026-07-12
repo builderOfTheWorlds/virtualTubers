@@ -46,6 +46,15 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 ```
 
+- Beyond the raw `messages` row every message gets, two message types are
+  also typed-unpacked into their own table for structured querying (see
+  `docs/sql/02_create_tables.sql` for the full schema): `coding_run_report`
+  → `coding_backend_runs` (docs/coding_backend.md), and `replay_narration`
+  → `voiced_narration` — one row per spoken scene from a Rerun Theater
+  airing (`insert_voiced_narration`, docs/revoice.md). Both typed inserts
+  are best-effort: a malformed payload logs a warning and is skipped, it
+  never stops the consume loop or the raw `messages` insert.
+
 ## Usage Examples
 
 Run via docker-compose (part of the main stack):
@@ -71,3 +80,9 @@ psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
   failure, `main`'s create-table-then-insert order, per-message insert
   params, fail-fast on missing Kafka env vars) — `psycopg2.connect` and
   `MessageConsumer` mocked, matching `message-api`'s test pattern.
+- v1.1.0 (2026-07-12) — Added `voiced_narration` typed unpacking for
+  `replay_narration` messages (`insert_voiced_narration`, one row per
+  scene) — the durable transcript for Rerun Theater's spoken narration,
+  published by `app/replay_pane.py` after each voiced airing. Covered by
+  new tests: multi-scene insert, empty-scenes no-op, dispatch-by-type in
+  `main`, and malformed-payload resilience.

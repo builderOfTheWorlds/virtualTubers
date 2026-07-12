@@ -15,6 +15,13 @@ pre-redacted episode in the library gets played.
 
 Episode names are resolved strictly to basenames inside REPLAY_LIBRARY, so
 a hostile payload can't traverse to arbitrary files.
+
+The pane produces to Kafka (never consumes): after a voiced airing it
+publishes the spoken transcript as a replay_narration message so
+message-logger persists it to Postgres's voiced_narration table — the
+synthesized audio itself is regenerated fresh every airing and never
+saved, so this is the only durable record of what was said (see
+docs/revoice.md).
 """
 import argparse
 import json
@@ -22,9 +29,11 @@ import os
 import sys
 import tempfile
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 from agent_state import resolve_state_path
+from message_bus import MessageProducer, build_message
 from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
 
 DEFAULT_LIBRARY = "/data/replays"
@@ -119,6 +128,43 @@ def prepare_voice(script, config, workdir, worker_name, speed):
     return show
 
 
+def publish_narration(show, config, episode, worker_name):
+    """Best-effort: publish this airing's spoken transcript (text only, no
+    audio) onto the bus so message-logger persists it to Postgres's
+    voiced_narration table. The synthesized WAVs never leave the temp
+    workdir cleaned up around prepare_voice/perform — this is the only
+    durable record of what got said. Kafka being down/unconfigured must
+    never stop or delay a show, so this always runs after the show is
+    already fully prepared and never raises."""
+    if not show:
+        return
+    bus_config = (config or {}).get("message_bus") or {}
+    bootstrap_servers = bus_config.get("bootstrap_servers")
+    topic = bus_config.get("topic")
+    if not bootstrap_servers or not topic:
+        return
+    payload = {
+        "episode": episode,
+        "aired_at": datetime.now(timezone.utc).isoformat(),
+        "scenes": [
+            {
+                "index": index,
+                "kind": scene.get("kind"),
+                "speaker": scene.get("speaker"),
+                "text": scene.get("narration"),
+            }
+            for index, scene in enumerate(show)
+        ],
+    }
+    worker_id = bus_config.get("worker_id", worker_name)
+    try:
+        MessageProducer(bootstrap_servers, topic).send(
+            build_message(worker_id, "broadcast", "replay_narration", payload)
+        )
+    except Exception as exc:
+        print(f"[replay_pane] narration transcript publish failed: {exc}", file=sys.stderr)
+
+
 def perform_request(request, library, worker_name, state_path, default_speed=1.0,
                     config=None):
     """Resolve and perform one request. Returns True if an episode played."""
@@ -143,6 +189,7 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         show = None
         if request.get("voice") is not False:  # request can force a silent airing
             show = prepare_voice(script, config, workdir, name, speed)
+            publish_narration(show, config, episode, name)
         performer.perform(script, show=show)
     return True
 
