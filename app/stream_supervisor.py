@@ -31,15 +31,40 @@ def log(msg):
     print(f"[stream_supervisor] {msg}", flush=True)
 
 
+def pulse_monitor_available(sink="vout"):
+    """Whether PulseAudio is up and has the null sink's monitor source —
+    i.e. whether audio_player.py's paplay (docs/audio_player.md) actually
+    has somewhere to go that ffmpeg can hear. False on any error (Pulse
+    down, pactl missing, timeout): the caller falls back to a silent audio
+    track rather than failing the whole broadcaster over an audio-only
+    problem."""
+    try:
+        result = subprocess.run(
+            ["pactl", "list", "short", "sources"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return result.returncode == 0 and f"{sink}.monitor" in result.stdout
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display):
+    # Real audio (the PulseAudio null sink narration/audio_player.py plays
+    # into) when Pulse is actually up; otherwise a synthesized silent track
+    # so the flv/aac muxer still gets an audio stream and the broadcast
+    # itself never fails over what should only ever mute the narration.
+    if pulse_monitor_available():
+        audio_input = ["-f", "pulse", "-i", "vout.monitor"]
+    else:
+        log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
+        audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
     return [
         "ffmpeg",
         "-f", "x11grab",
         "-video_size", resolution,
         "-framerate", "30",
         "-i", display,
-        "-f", "lavfi",
-        "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+        *audio_input,
         "-c:v", "libx264",
         "-preset", "veryfast",
         "-tune", "zerolatency",

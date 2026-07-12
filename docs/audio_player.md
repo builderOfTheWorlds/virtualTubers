@@ -4,9 +4,10 @@
 
 Best-effort, non-blocking WAV playback for replay narration. Inside a
 worker container, `paplay` plays into the PulseAudio sink (`PULSE_SINK=vout`
-in the Dockerfile) that ffmpeg captures — so anything played here is what
-the Twitch stream hears. On a dev box it falls back to `ffplay`, then
-`aplay`, then to silence.
+in the Dockerfile) that `stream_supervisor.py`'s ffmpeg command captures
+via `-f pulse -i vout.monitor` (docs/stream_supervisor.md) when Pulse is
+up — so anything played here is what the Twitch stream hears. On a dev box
+it falls back to `ffplay`, then `aplay`, then to silence.
 
 The contract is the same as avatar-state writes in `replay.py`: **audio
 must never take the show down.** No player installed, a spawn failure, a

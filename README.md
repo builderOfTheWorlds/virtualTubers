@@ -10,6 +10,19 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Fixed: narration audio never actually reached the stream** —
+`app/stream_supervisor.py`'s ffmpeg command captured a synthesized silent
+audio track (`anullsrc`) unconditionally, never the PulseAudio `vout` sink
+that `audio_player.py`'s `paplay` plays Rerun Theater's narration into.
+Every other part of the voice pipeline (LLM lines, Piper synthesis, the
+`voiced_narration` transcript table) could work perfectly and the stream
+would still be silent. `build_ffmpeg_cmd` now captures `vout.monitor`
+(`-f pulse -i vout.monitor`) whenever `pulse_monitor_available()` confirms
+Pulse is actually up, falling back to the old silent track only if it
+isn't — same soft-degradation contract as the rest of the feature: an
+audio problem mutes the show, never cancels it. See
+[docs/stream_supervisor.md](docs/stream_supervisor.md).
+
 **Rerun Theater episodes are now SPOKEN — two-voice narration, synced to the
 screen** — the planned persona re-voicing layer landed, with TTS on top:
 

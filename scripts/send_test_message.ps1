@@ -39,7 +39,15 @@ param(
 # --- Coder replay request: reenact a saved episode --------------------
 $To      = "coder"
 $Type    = "replay_request"
-$Payload = '{"episode": "2026-06-26_05-00-31_ea5049d8"}'
+
+# Large episode for testing, 2026-06-26_05-00-31_ea5049d8, 1.5MB
+# $Payload = '{"episode": "2026-06-26_05-00-31_ea5049d8"}' 
+
+# Smaller episode for testing, 2026-07-05_18-09-43_e2d3d72b, 0.5MB
+$Payload = '{"episode": "2026-07-05_18-09-43_e2d3d72b"}'
+
+
+
 
 # =====================================================================
 
