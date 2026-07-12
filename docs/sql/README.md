@@ -51,3 +51,14 @@ POSTGRES_PASSWORD=<the password you passed to 01_create_role_and_database.sql>
 `services/message-logger/logger.py` and `services/log-shipper/shipper.py`.
 There's no single source of truth between the SQL file and the Python
 constants — if you change one, update the other.
+
+## Common gotcha: wrong database in a manual client
+
+This project's tables live in the dedicated `virtualtubers` database, not
+the older shared `mafober` database that other tools/projects on the same
+Postgres instance may default to. A GUI client (DBeaver, pgAdmin, etc.)
+left connected to `mafober` from a previous session will show none of this
+project's tables and look exactly like they were never created — always
+confirm the active connection's database name before concluding a table is
+missing. `docker exec <container> env | grep POSTGRES` on any of this
+project's running containers shows the database it's actually using.

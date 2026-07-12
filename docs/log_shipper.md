@@ -55,6 +55,14 @@ CREATE TABLE IF NOT EXISTS container_logs (
 
 ## Usage Examples
 
+> **Gotcha:** this project logs into its own dedicated `virtualtubers`
+> database (see docs/sql/README.md), separate from the older shared
+> `mafober` database other tools on the host may default to. If a table
+> you expect looks missing in a GUI client like DBeaver, check which
+> database the connection is pointed at before assuming the table wasn't
+> created — `psql`/`docker exec ... env | grep POSTGRES` on the running
+> container shows the database it's actually writing to.
+
 Run via docker-compose (part of the main stack):
 ```bash
 docker compose up log-shipper
