@@ -41,8 +41,15 @@ coding_backend:
   # model: override the llm.model used by aider if needed
 
 voice:
-  provider: "null"
+  provider: piper
+  model_path: "/data/voices/en_US-lessac-medium.onnx"
   voice_id: ""
+  speakers:
+    coder: {}
+    boss:
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+  boss_name: "the boss"
+  rate: 1.0
   verbosity: 0.7
 
 avatar:

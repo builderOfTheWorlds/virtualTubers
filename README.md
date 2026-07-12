@@ -4,7 +4,7 @@
 
 virtualTubers is an autonomous AI-powered VTuber streaming system where a team of AI agents (Manager, Coder, Tester) act as a live software development team. Each agent runs in its own Docker container, has its own personality and ASCII-art avatar, works inside a live terminal session (tmux + neovim/htop/etc.), and streams that session to Twitch over RTMP via ffmpeg. It's for anyone who wants to run an always-on, config-driven "AI dev team" stream without hand-building the streaming pipeline from scratch.
 
-The project is early-stage: the terminal avatar (`app/avatar.py`) is still a stub that keeps the container alive and cycles through expressions on a timer. The agent brain (`app/agent.py`) now has a real perceive/think/act slice — it publishes heartbeats every tick and dispatches every incoming message type through role-gated handlers backed by a provider-switchable LLM (Ollama or Claude): the coder narrates a task and hands the commit to the tester, the tester reports `test_passed`/`bug_report` to the manager, and the manager re-delegates fixes (bounded at 3 retries) or reports back to the operator. Writing real code and running real tests are still ahead — see the Phase 1 roadmap in the architecture doc.
+The project is early-stage but the core loops are real: the agent brain (`app/agent.py`) has a perceive/think/act slice — it publishes heartbeats every tick and dispatches every incoming message type through role-gated handlers backed by a provider-switchable LLM (Ollama or Claude): the coder narrates a task and hands the commit to the tester, the tester reports `test_passed`/`bug_report` to the manager, and the manager re-delegates fixes (bounded at 3 retries) or reports back to the operator. Coders write real code through swappable backends (native / OpenCode / aider) and the tester really runs pytest against their workspaces. On top of that sits **Rerun Theater**: past real Claude Code dev sessions replay as paced, redacted shows — now with per-airing, two-voice **spoken narration** (boss + coder via local TTS) synchronized to the on-screen action. The terminal avatar (`app/avatar.py`) is still a simple expression-cycling stub. See the Phase 1 roadmap in the architecture doc for what's next.
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
@@ -231,6 +231,7 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
 - An RTMP destination — a Twitch stream key for live streaming, or a local RTMP preview server (bundled via `rtmp-preview` in `docker-compose.yml`) for local testing
 - (Optional) A running [Ollama](https://ollama.ai) instance for local LLM inference — the default worker config points at `http://localhost:11434`
 - (Optional) An [Anthropic API key](https://console.anthropic.com/) if any worker's config sets `llm.provider: claude` instead of `ollama`
+- (Optional) Piper voice models for spoken replay narration — fetched with `scripts/download_voices.py`, see [Rerun Theater](#rerun-theater--replaying-past-sessions-with-voices)
 - A reachable Kafka broker (agents/services publish and consume inter-agent messages there) and a Postgres instance (every message is durably logged there) — neither is bundled in `docker-compose.yml`; point at existing instances via `.env`
 
 ## Installation
@@ -351,6 +352,65 @@ curl -X POST http://localhost:8090/workers/coder/enable    # resumes both, in pl
 The flag lives in the shared `redis` service and defaults to enabled — a
 worker nobody has ever toggled, or a temporarily-unreachable Redis, both
 behave as "on" rather than silently going dark.
+
+### Rerun Theater — replaying past sessions, with voices
+
+Rerun Theater re-performs saved (parsed, redacted) Claude Code dev sessions
+as stream shows, and can narrate them out loud with two TTS voices — the
+boss and the coder — whose spoken lines are written fresh by the local LLM
+on every airing and timed so speech and on-screen text finish together.
+Full pipeline docs: [docs/session_log_parser.md](docs/session_log_parser.md)
+→ [docs/revoice.md](docs/revoice.md) → [docs/replay.md](docs/replay.md) →
+[docs/replay_pane.md](docs/replay_pane.md).
+
+One-time setup:
+
+```bash
+# 1. Build the episode library from your session logs (on the machine that has them)
+.venv/Scripts/python.exe scripts/build_replay_library.py \
+  --logs "path/to/logs/claude/virtualTubers" --out replays
+
+# 2. Download the Piper voice models (coder + boss)
+.venv/Scripts/python.exe scripts/download_voices.py --out voices
+
+# 3. Sync both onto the deployment host
+#    replays/ -> /opt/virtualTubers/replays   (mounted :ro at /data/replays)
+#    voices/  -> /opt/virtualTubers/voices    (mounted :ro at /data/voices)
+```
+
+Then enable it per worker (config-only, plus one image rebuild for the
+`piper-tts` dependency):
+
+```yaml
+# config/workers/<role>.yaml
+voice:
+  provider: piper          # "null" keeps replays silent
+```
+
+Set `LAYOUT_PRESET=replay` on that worker (e.g. `CODER_LAYOUT_PRESET=replay`
+in the Portainer stack env) so its editor pane becomes the theater, and
+request a show:
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "replay_request",
+       "payload": {"episode": "2026-07-02_04-27-00_6ecdde82"}}'
+```
+
+The pane prints "preparing tonight's episode…" while the LLM writes the
+dialogue and TTS renders it, then performs the show — boss messages in the
+boss's voice, narration and work commentary in the coder's, audio going out
+on the stream via the same PulseAudio sink ffmpeg already captures. Long
+command outputs get proportionally longer narration, so the avatar always
+has something to say over the scroll. Add `"voice": false` to the payload
+for a silent airing; voice failures (LLM/TTS/player down) automatically
+degrade to a silent show rather than cancelling it. Local preview without
+the stack:
+
+```bash
+python app/replay.py replays/<episode>.json --voice-config config/workers/coder.yaml
+```
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
