@@ -511,6 +511,25 @@ virtualTubers/
 └── .env.example            # Template for stream keys, Kafka, and Postgres config
 ```
 
+<!-- SHARED:START -->
+## Claude Code Hook: .venv Enforcement
+
+This project's `.claude/settings.json` includes a `PreToolUse` hook (matcher
+`Bash|PowerShell`) that blocks Claude Code from invoking the global/system
+Python directly — bare `python`, `python3`, `pip`, `pip3` — whenever a
+`.venv` directory exists at the project root. It's a no-op in projects
+without a `.venv`. Commands that go through `.venv\Scripts\...` /
+`.venv/bin/...` directly, or that activate the venv within the same command,
+are unaffected.
+
+This exists because the "always use `.venv`, never global Python" rule was
+already documented (see above and in CLAUDE.md) but was still being followed
+inconsistently when left to memory/instructions alone — a hook enforces it
+at the tool-call level instead of relying on the model to remember. Any
+project with a `.venv` can adopt the same hook; see this project's
+`.claude/settings.json` for the exact hook definition to copy.
+<!-- SHARED:END -->
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 — see [LICENSE](LICENSE) for details.
