@@ -1,0 +1,16 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: replay
+#
+# "Rerun Theater" — performs pre-parsed, pre-redacted episode scripts of past
+# dev sessions (docs/replay_pane.md). Idles with the episode library listing;
+# plays an episode when the agent handles an operator `replay_request`
+# (docs/operator_commands.md) and drops the request file.
+#
+# Display-only: recorded commands/edits are rendered, never executed. Episode
+# scripts live in REPLAY_LIBRARY (default /data/replays, mounted read-only in
+# docker-compose.yml).
+# ──────────────────────────────────────────────────────────────────────────────
+type: replay
+title: "Rerun Theater"
+border_color: magenta
+command: "python3 /app/replay_pane.py"

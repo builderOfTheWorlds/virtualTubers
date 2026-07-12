@@ -528,4 +528,5 @@ def test_message_handlers_covers_all_documented_types():
         "task_complete",
         "clarification_request",
         "operator_message",
+        "replay_request",
     }

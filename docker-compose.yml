@@ -18,6 +18,10 @@ services:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo:/data/repo
+      # "Rerun Theater" episode library (docs/replay_pane.md) — parsed,
+      # redacted session scripts synced onto the host; :ro because replays
+      # only ever read them.
+      - /opt/virtualTubers/replays:/data/replays:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -122,6 +126,7 @@ services:
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
+      - /opt/virtualTubers/replays:/data/replays:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -146,6 +151,7 @@ services:
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
+      - /opt/virtualTubers/replays:/data/replays:ro
       # Read-only view of every coder's workspace, at the conventional
       # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
       # to a tmpdir before running pytest — these must stay :ro).

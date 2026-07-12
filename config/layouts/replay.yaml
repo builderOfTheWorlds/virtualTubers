@@ -1,0 +1,35 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Layout preset: replay
+#
+# The coder preset with the editor column swapped for the "Rerun Theater"
+# pane (config/panels/replay.yaml) — a worker in this layout performs
+# episode scripts of past dev sessions instead of live-editing.
+#
+# Switch any worker into rerun mode with a config-only change: set
+# `layout.preset: replay` in its worker config, or LAYOUT_PRESET=replay in
+# its environment (docs/layout_system.md). Same geometry as the coder
+# preset, so the stream framing doesn't jump between modes.
+# ──────────────────────────────────────────────────────────────────────────────
+preset: replay
+panes:
+  - use: replay                         # base pane, col1 (~33% wide)
+
+  - use: avatar                         # carves out columns 2+3 combined
+    target: replay
+    split: h
+    size: 66
+
+  - use: htop                           # carves col3 (htop+kafka_feed) off the block
+    target: avatar
+    split: h
+    size: 50
+
+  - use: kafka_feed                     # bottom of col3; remainder stays htop
+    target: htop
+    split: v
+    size: 49
+
+  - use: filetree                       # bottom of col2; remainder stays avatar
+    target: avatar
+    split: v
+    size: 81

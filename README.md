@@ -10,6 +10,34 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Rerun Theater — workers can re-perform past real dev sessions as shows** —
+saved Claude Code session logs become replayable stream content:
+
+- `app/session_log_parser.py` (new) — parses a `claudeBackupUtility` session
+  log into a canonical, **redacted** episode script (usernames, IPs,
+  key-shaped tokens, emails scrubbed before anything can reach a broadcast
+  pane). `scripts/build_replay_library.py` batch-builds the episode library;
+  it refuses to write any episode that fails the leak audit.
+- `app/replay.py` (new) — performs a script as a paced, colorized show:
+  boss messages, typed narration, `$ command` + recorded output, edits as
+  red/green diffs. **Display-only** — recorded commands are rendered, never
+  executed. Drives the existing avatar via `agent_state.py`.
+- `app/replay_pane.py` (new) — "Rerun Theater" pane: idles with the episode
+  listing, performs an episode when the agent drops the request file.
+- Operator wiring: send `{"type": "replay_request", "payload": {"episode":
+  "<name>"}}` via message-api (docs/operator_commands.md); `agent.py`
+  queues it (any role). Episode names resolve basename-only inside the
+  library — bus payloads can't reach other files.
+- Config-only mode switch: `layout.preset: replay` (or
+  `LAYOUT_PRESET=replay`) swaps the editor pane for the theater
+  (`config/panels/replay.yaml`, `config/layouts/replay.yaml`).
+- Episode library: build locally, sync to `/opt/virtualTubers/replays` on
+  the host — mounted `:ro` into coder/manager/tester at `/data/replays`.
+  Persona re-voicing (unique shows per airing via the local LLM) is the
+  planned next layer. See [docs/replay_pane.md](docs/replay_pane.md),
+  [docs/replay.md](docs/replay.md), and
+  [docs/session_log_parser.md](docs/session_log_parser.md).
+
 **Workers can now be turned on/off via an API — no stack redeploy needed** —
 each worker (agent + Twitch stream) can be paused and resumed in place, in
 the same container:
@@ -485,6 +513,9 @@ virtualTubers/
 │   ├── stream_supervisor.py # Starts/stops ffmpeg based on the on/off flag (replaces startup.sh's raw ffmpeg call)
 │   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
+│   ├── session_log_parser.py # Saved Claude session logs -> redacted replay scripts
+│   ├── replay.py         # Performs a replay script as a paced show (display-only)
+│   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
 │   ├── tmux_control.py   # Agent's "hands": select a pane by name, type text/commands into it
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper

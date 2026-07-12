@@ -11,6 +11,7 @@ by MAX_BUG_RETRIES via `retry_count` traveling in message payloads) or
 reports back to the operator (`manager_report`). Any role answers an
 `operator_message` with an `operator_reply`.
 """
+import json
 import os
 import random
 import time
@@ -38,6 +39,10 @@ MAX_BUG_RETRIES = 3
 # (read-only) inside the tester container; override per-coder via the tester
 # config's `agent.workspaces` map.
 WORKSPACE_MOUNT_PATTERN = "/data/repos/{coder_id}"
+
+# Agent -> replay pane handoff file (see app/replay_pane.py, which polls it).
+REPLAY_REQUEST_FILE_ENV = "REPLAY_REQUEST_FILE"
+DEFAULT_REPLAY_REQUEST_FILE = "/tmp/replay_request.json"
 
 
 def resolve(env_name, config_value, default=None):
@@ -631,6 +636,58 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
     ))
 
 
+def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
+                          state_path=None, coding_backend=None):
+    """Operator lever: queue a "Rerun Theater" episode for this worker's
+    replay pane (docs/replay_pane.md). Any role handles it.
+
+    Deliberately NO LLM call and NO episode-name validation here beyond
+    non-empty: the agent only writes the request file; replay_pane.py owns
+    resolution (basename-only, inside REPLAY_LIBRARY) so a hostile payload
+    can never reach files outside the episode library. Always answers the
+    operator so a bad episode name doesn't just vanish.
+    """
+    payload = msg.get("payload", {})
+    episode = payload.get("episode")
+    if not episode or not str(episode).strip():
+        producer.send(build_message(
+            worker_id, "operator", "operator_reply",
+            {"error": "replay_request needs payload.episode (episode script name)"},
+        ))
+        return
+
+    request = {"episode": str(episode).strip()}
+    if payload.get("speed") is not None:
+        request["speed"] = payload["speed"]
+    if payload.get("worker_name"):
+        request["worker_name"] = str(payload["worker_name"])
+
+    request_file = os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
+    # Atomic write (same temp+replace pattern as agent_state.py) so the
+    # polling pane never reads a half-written request.
+    tmp_path = f"{request_file}.tmp"
+    try:
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(request, f)
+        os.replace(tmp_path, request_file)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to queue replay request: {exc}")
+        producer.send(build_message(
+            worker_id, "operator", "operator_reply",
+            {"error": f"could not queue replay: {exc}"},
+        ))
+        return
+
+    print(f"[agent:{worker_id}] queued replay episode {request['episode']!r}")
+    if state_path:
+        write_state(state_path, "happy", action="rerun time!",
+                    bubble=f"Time for a rerun: {request['episode']}")
+    producer.send(build_message(
+        worker_id, "operator", "operator_reply",
+        {"narration": f"Queued rerun episode {request['episode']!r} — rolling it in the theater pane."},
+    ))
+
+
 # Dispatch table — the 8 message types from docs/VTuber_AI_Dev_Team_Concept.md
 # §3.4 (status_update is send-only heartbeat traffic; operator_message is
 # message-api's default type standing in for direct operator chat).
@@ -643,6 +700,7 @@ MESSAGE_HANDLERS = {
     "task_complete": handle_task_complete,
     "clarification_request": handle_clarification_request,
     "operator_message": handle_operator_message,
+    "replay_request": handle_replay_request,
 }
 
 

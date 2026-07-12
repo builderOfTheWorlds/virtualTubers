@@ -65,6 +65,29 @@ Any worker (no role gate) answers in-character with an `operator_reply`
 addressed back to `operator`. This is a lightweight chat channel — no tmux
 demo side effects, no pipeline handoff.
 
+### `replay_request` — perform a Rerun Theater episode
+
+```json
+{"to": "coder", "type": "replay_request",
+ "payload": {"episode": "2026-07-02_04-27-00_6ecdde82", "speed": 1.5}}
+```
+
+- `payload.episode` (str, required) — episode script name in the worker's
+  library (`/data/replays`, mounted from `/opt/virtualTubers/replays`;
+  `.json` suffix optional). Resolved basename-only — path components are
+  stripped, so only library episodes are reachable.
+- `payload.speed` (number, optional) — playback speed multiplier.
+- `payload.worker_name` (str, optional) — persona name override for the
+  dialogue lines.
+
+Any worker (no role gate) queues the episode for its "Rerun Theater" pane
+and confirms with an `operator_reply`. The show only actually appears if
+the worker's layout includes the replay pane (`layout.preset: replay` or
+`LAYOUT_PRESET=replay` — see `docs/replay_pane.md`); an unknown episode is
+reported in the worker's container logs. Episodes are pre-parsed, redacted
+scripts of past dev sessions built by `scripts/build_replay_library.py` —
+display-only, nothing is re-executed.
+
 ## Manual/debug commands
 
 `message-api`'s `type` field can be overridden to inject any of the other
