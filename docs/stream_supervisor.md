@@ -87,6 +87,13 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Changelog
 
+- v1.1.2 (2026-07-12) — Fixed the third layer of the same bug: even after
+  the `pulse-access` group fix (v1.1.1) let `pactl` connect, the null-sink
+  load still failed ("Module initialization failed") because
+  `startup.sh` started PulseAudio with `--disallow-module-loading` — a
+  flag that rejects exactly the kind of runtime `pactl load-module` call
+  needed to create the `vout` sink, made one line later in the same
+  script. Removed the flag; `--disallow-exit` is kept.
 - v1.1.1 (2026-07-12) — Fixed the actual reason `pulse_monitor_available`
   (added in v1.1.0, same day) kept returning false even after that fix
   deployed: PulseAudio's `--system` mode (`startup.sh`) gates every client

@@ -27,8 +27,13 @@ export DISPLAY
 sleep 2
 
 # ── 3. PulseAudio (system mode for root) ──────────────────────────────────────
+# No --disallow-module-loading: that flag rejects exactly the kind of
+# runtime `pactl load-module` call made right below to create the "vout"
+# null sink — with it set, that load always failed ("Module initialization
+# failed"), which is why narration audio never made it to the stream even
+# after fixing the pulse-access group membership.
 log "Starting PulseAudio"
-pulseaudio --system --disallow-exit --disallow-module-loading --daemonize=true || true
+pulseaudio --system --disallow-exit --daemonize=true || true
 sleep 1
 # Not `2>/dev/null || true` (the previous version): a failure here — e.g. the
 # image's root user missing from the "pulse-access" group PulseAudio's
