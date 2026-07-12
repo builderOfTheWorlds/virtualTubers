@@ -32,7 +32,13 @@ INSERT INTO container_logs (container_name, stream, message, log_timestamp)
 VALUES (%(container_name)s, %(stream)s, %(message)s, %(log_timestamp)s);
 """
 
+DELETE_OLD_LOGS_SQL = """
+DELETE FROM container_logs WHERE log_timestamp < now() - %(retention_days)s * interval '1 day';
+"""
+
 POLL_INTERVAL_SECONDS = 5
+PRUNE_INTERVAL_SECONDS = 3600
+RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "7"))
 
 
 def connect_db():
@@ -85,6 +91,13 @@ def follow_stream(container, stream_name):
         conn.close()
 
 
+def prune_old_logs(conn, retention_days):
+    """Deletes container_logs rows older than retention_days; returns rows deleted."""
+    with conn.cursor() as cur:
+        cur.execute(DELETE_OLD_LOGS_SQL, {"retention_days": retention_days})
+        return cur.rowcount
+
+
 def discover_and_follow(client, project_label, followed):
     """Starts a stdout/stderr follower thread pair for any not-yet-followed container in the project."""
     containers = client.containers.list(filters={"label": f"com.docker.compose.project={project_label}"})
@@ -102,16 +115,23 @@ def main():
     conn = connect_db()
     with conn.cursor() as cur:
         cur.execute(CREATE_TABLE_SQL)
-    conn.close()
     print("[log-shipper] container_logs table ready")
+    print(f"[log-shipper] pruning rows older than {RETENTION_DAYS} day(s) every {PRUNE_INTERVAL_SECONDS}s")
 
     client = docker.from_env()
     project_label = get_project_label(client)
     print(f"[log-shipper] watching compose project '{project_label}'")
 
     followed = set()
+    last_prune = time.monotonic()
+    deleted = prune_old_logs(conn, RETENTION_DAYS)
+    print(f"[log-shipper] pruned {deleted} row(s) older than {RETENTION_DAYS} day(s)")
     while True:
         discover_and_follow(client, project_label, followed)
+        if time.monotonic() - last_prune >= PRUNE_INTERVAL_SECONDS:
+            deleted = prune_old_logs(conn, RETENTION_DAYS)
+            print(f"[log-shipper] pruned {deleted} row(s) older than {RETENTION_DAYS} day(s)")
+            last_prune = time.monotonic()
         time.sleep(POLL_INTERVAL_SECONDS)
 
 

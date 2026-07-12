@@ -145,5 +145,24 @@ def test_main_creates_table_then_watches_project(monkeypatch):
         with pytest.raises(StopLoop):
             shipper.main()
 
-    fake_cursor.execute.assert_called_once_with(shipper.CREATE_TABLE_SQL)
+    fake_cursor.execute.assert_any_call(shipper.CREATE_TABLE_SQL)
+    fake_cursor.execute.assert_any_call(
+        shipper.DELETE_OLD_LOGS_SQL, {"retention_days": shipper.RETENTION_DAYS}
+    )
     fake_discover.assert_called_once_with(fake_client, "virtualtubers", set())
+
+
+def test_prune_old_logs_deletes_rows_older_than_retention_and_returns_count():
+    fake_cursor = MagicMock()
+    fake_cursor.__enter__ = MagicMock(return_value=fake_cursor)
+    fake_cursor.__exit__ = MagicMock(return_value=False)
+    fake_cursor.rowcount = 42
+    fake_conn = MagicMock()
+    fake_conn.cursor.return_value = fake_cursor
+
+    deleted = shipper.prune_old_logs(fake_conn, 7)
+
+    fake_cursor.execute.assert_called_once_with(
+        shipper.DELETE_OLD_LOGS_SQL, {"retention_days": 7}
+    )
+    assert deleted == 42

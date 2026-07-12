@@ -15,6 +15,7 @@ def connect_db() -> psycopg2.extensions.connection
 def get_project_label(client: docker.DockerClient) -> str
 def parse_log_line(raw_line: bytes) -> tuple[str, str]
 def follow_stream(container: docker.models.containers.Container, stream_name: str) -> None
+def prune_old_logs(conn: psycopg2.extensions.connection, retention_days: int) -> int
 def discover_and_follow(client: docker.DockerClient, project_label: str, followed: set[str]) -> None
 def main() -> None
 ```
@@ -26,15 +27,20 @@ the mounted Docker socket (see docker-compose.yml):
 
 - `POSTGRES_HOST` (optional, default `localhost`), `POSTGRES_PORT` (optional, default `5432`)
 - `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` (required)
+- `RETENTION_DAYS` (optional, default `7`) — `container_logs` rows with
+  `log_timestamp` older than this many days are deleted. Set via
+  `LOG_RETENTION_DAYS` in `.env` (docker-compose maps it to `RETENTION_DAYS`).
 - `/var/run/docker.sock` must be bind-mounted read-only into the container so
   it can discover and follow sibling containers.
 
 ## Return Value
 
 `main()` runs forever (no return) — creates the `container_logs` table if
-missing, then polls every 5 seconds for containers sharing this service's own
-`com.docker.compose.project` label and spawns a stdout + stderr follower
-thread pair for each newly-seen container ID.
+missing, prunes rows older than `RETENTION_DAYS` immediately and then once an
+hour (`PRUNE_INTERVAL_SECONDS = 3600`), and polls every 5 seconds for
+containers sharing this service's own `com.docker.compose.project` label,
+spawning a stdout + stderr follower thread pair for each newly-seen container
+ID.
 
 ## Dependencies
 
@@ -80,6 +86,11 @@ psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
   -c "SELECT message, log_timestamp FROM container_logs WHERE container_name = 'worker-coder' AND stream = 'stderr' ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 
+Keep more than the default 7 days of history (set before `docker compose up`):
+```bash
+echo "LOG_RETENTION_DAYS=30" >> .env
+```
+
 ## Error Handling
 
 - Fails fast (uncaught) if `POSTGRES_DB`/`POSTGRES_USER`/`POSTGRES_PASSWORD`
@@ -100,6 +111,11 @@ finer-grained way to scope it without a proxy like
 
 ## Changelog
 
+- v1.1.0 (2026-07-12) — Added `prune_old_logs`: `container_logs` rows older
+  than `RETENTION_DAYS` (default 7) are now deleted on startup and hourly
+  thereafter, so the table no longer grows unbounded. Test coverage added
+  in `tests/test_log_shipper.py` for `prune_old_logs` and the new prune call
+  in `main`'s loop.
 - v1.0.0 (2026-07-02) — Initial version, scoped to this project's own
   docker-compose containers only (not every container on the host), no
   historical backfill. Test coverage in `tests/test_log_shipper.py`
