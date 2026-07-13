@@ -123,13 +123,23 @@ voice:
 
 # ── Avatar settings ───────────────────────────────────────────────────────────
 avatar:
+  # Which rendering backend draws the avatar pane (app/avatar_providers/).
+  # Options: builtin | ascii_avatar
+  #   builtin      — the static box face below (always available, no extra deps)
+  #   ascii_avatar — animated ASCII face driven by the vendored
+  #                  repos/ascii-avatar renderer (needs blessed + a real
+  #                  terminal; falls back to builtin automatically on any
+  #                  setup failure — see avatar_providers/__init__.py)
+  # Env var AVATAR_PROVIDER overrides this at runtime.
+  provider: builtin
+
   # Name shown under the face
   name: "KODI-7"
 
   # Label shown below the name (e.g. role title)
   title: "Software Engineer"
 
-  # Face characters per expression state.
+  # Face characters per expression state. Used by the `builtin` provider.
   # eyes: left_eye + right_eye characters
   # mouth: characters for the mouth line
   expressions:
@@ -154,6 +164,28 @@ avatar:
     focused:
       eyes: "◔  ◔"
       mouth: "─────"
+
+  # Optional override of how our 7 expressions map onto the `ascii_avatar`
+  # provider's 5 states (idle | thinking | speaking | listening | error).
+  # Default mapping (avatar_providers/ascii_avatar.py):
+  #   idle->idle, thinking->thinking, typing->thinking, focused->thinking,
+  #   speaking->speaking, happy->speaking, frustrated->error
+  # expression_map:
+  #   happy: speaking
+
+  # Settings specific to the `ascii_avatar` provider.
+  ascii_avatar:
+    # Persona preset from the vendored repo (ghost | oracle | spectre) —
+    # only its frame_rate_modifier is used; the animated frame set is
+    # always "cyberpunk" regardless of persona (the other frame sets pull
+    # in Pillow/numpy, which are intentionally not installed — see
+    # avatar_providers/ascii_avatar.py).
+    persona: ghost
+
+    # Path to the vendored repo's `src/` dir. Leave unset to auto-detect:
+    # env ASCII_AVATAR_REPO > /repos/ascii-avatar/src (container) >
+    # <project_root>/repos/ascii-avatar/src (local dev).
+    # repo_path: "/repos/ascii-avatar/src"
 
   # How long a speech bubble stays visible (seconds) before auto-dismissing
   bubble_duration_s: 6

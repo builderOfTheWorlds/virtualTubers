@@ -53,6 +53,7 @@ voice:
   verbosity: 0.7
 
 avatar:
+  provider: builtin
   name: "ADA-3"
   title: "Engineer (aider)"
   expressions:

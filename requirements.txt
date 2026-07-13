@@ -13,7 +13,9 @@ redis>=5.0
 piper-tts>=1.2.0
 
 # Terminal / display utilities
-blessed>=1.20        # terminal formatting for avatar.py
+blessed>=1.20        # terminal formatting for avatar.py, and the
+                      # ascii_avatar avatar_providers backend
+                      # (repos/ascii-avatar) — see avatar_providers/ascii_avatar.py
 wcwidth>=0.2         # correct character width in terminals
 
 # Testing — needed at RUNTIME by the tester worker (test_runner.py runs

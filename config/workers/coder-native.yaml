@@ -52,6 +52,7 @@ voice:
   verbosity: 0.5
 
 avatar:
+  provider: builtin
   name: "NYX-1"
   title: "Engineer (native loop)"
   expressions:

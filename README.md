@@ -10,6 +10,41 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Avatar rendering is now a pluggable provider layer** — `app/avatar.py`
+is a thin dispatcher now, not a renderer:
+
+- `app/avatar_providers/` (new) — `AvatarProvider` contract
+  (`render_tick(expression, bubble_lines)` + `tick_interval_s`), a registry
+  (`builtin` | `ascii_avatar`), and `load_provider()`, which picks a
+  provider via `AVATAR_PROVIDER` env > worker config `avatar.provider` >
+  `builtin` default. The original static ASCII box face moved verbatim
+  into `avatar_providers/builtin.py` — still the default and the
+  always-available fallback.
+- `repos/ascii-avatar/` (new) — a vendored MIT snapshot
+  (`repos/README.md` has the pinned commit) driving a new `ascii_avatar`
+  provider: an animated face via the vendored renderer/animation stack
+  (forced to its dependency-light "cyberpunk" frame set), with our 7
+  expressions mapped onto its 5 states (`avatar.expression_map` to
+  override). Only its rendering code is used — its event bus, MCP bridge,
+  and TTS/voice modules are never imported.
+- **Safe by construction**: an unknown provider name or ANY exception
+  while constructing the configured provider (bad config, missing
+  vendored repo, terminal init failure) is logged and falls back to
+  `builtin` — the avatar pane's only job is to stay up.
+- Switching providers is config-only (`avatar.provider` in a worker's
+  config, or `AVATAR_PROVIDER` env for a no-config-edit override) — no
+  code change needed. `docker-compose.yml` gives every worker its own
+  stack env var (`CODER_AVATAR_PROVIDER`, `MANAGER_AVATAR_PROVIDER`,
+  `TESTER_AVATAR_PROVIDER`, etc. — see `.env.example`), so a Portainer
+  redeploy can flip a single worker's avatar without editing any config
+  file. The `Dockerfile` gained `COPY repos/ /repos/`, so the **first**
+  switch to `ascii_avatar` needs a worker image rebuild + Portainer
+  redeploy to get the vendored repo into the image; after that, flipping
+  between providers needs no rebuild. Full write-up of what changed and
+  why: [docs/avatar_provider_integration.md](docs/avatar_provider_integration.md)
+  (see also [docs/avatar_providers.md](docs/avatar_providers.md) and
+  [docs/avatar.md](docs/avatar.md) for API-level reference).
+
 **Workers now greet viewers who start watching on Twitch** — a new
 `services/twitch-presence/` service watches each worker's Twitch chat
 (anonymous IRC read — no OAuth token or Twitch app needed) and, when a
@@ -512,6 +547,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
+| `CODER_AVATAR_PROVIDER` / `CODER_NATIVE_AVATAR_PROVIDER` / `CODER_OPENCODE_AVATAR_PROVIDER` / `CODER_AIDER_AVATAR_PROVIDER` / `MANAGER_AVATAR_PROVIDER` / `TESTER_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 | `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
 | `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
@@ -658,7 +694,9 @@ virtualTubers/
 │   ├── test_runner.py    # Tester's real pytest execution (copy-to-tmpdir, ro mounts)
 │   ├── worker_control.py # Redis-backed per-worker on/off flag (agent + stream pause/resume)
 │   ├── stream_supervisor.py # Starts/stops ffmpeg based on the on/off flag (replaces startup.sh's raw ffmpeg call)
-│   ├── avatar.py         # Terminal ASCII avatar renderer — expression + speech bubble driven by agent_state.py
+│   ├── avatar.py         # Terminal ASCII avatar dispatcher — polls agent_state.py, hands frames to an avatar_providers/ backend
+│   ├── avatar_providers/ # Pluggable avatar rendering backends (builtin static face | ascii_avatar animated adapter)
+│   ├── avatar_display.py # display_width()/build_bubble_box() shared by avatar.py and every avatar provider
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── session_log_parser.py # Saved Claude session logs -> redacted replay scripts
 │   ├── replay.py         # Performs a replay script as a paced show (display-only, audio-synced)
@@ -675,6 +713,7 @@ virtualTubers/
 │   ├── message-api/       # FastAPI service for injecting test messages onto the bus
 │   └── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
 ├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
+├── repos/                 # Vendored third-party avatar repos (see repos/README.md) — e.g. ascii-avatar, used by avatar_providers/ascii_avatar.py
 ├── config/
 │   ├── worker.yaml        # Annotated default/template worker config (selects a layout preset)
 │   ├── workers/           # Per-role configs (coder, manager, tester + coder-native/-opencode/-aider)

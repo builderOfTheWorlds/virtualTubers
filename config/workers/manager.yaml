@@ -50,6 +50,7 @@ voice:
   verbosity: 0.9
 
 avatar:
+  provider: builtin
   name: "MAX-1"
   title: "Project Manager"
   expressions:

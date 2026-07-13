@@ -60,6 +60,7 @@ voice:
   verbosity: 0.7
 
 avatar:
+  provider: builtin
   name: "TESS-3"
   title: "QA Engineer"
   expressions:

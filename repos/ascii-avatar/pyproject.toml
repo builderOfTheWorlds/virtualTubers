@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ascii-avatar"
+version = "0.1.0"
+description = "Terminal ASCII avatar companion for Claude Code"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "blessed",
+    "pyzmq",
+    "sounddevice",
+    "numpy",
+    "mcp",
+    "anthropic",
+    "Pillow",
+]
+
+[project.optional-dependencies]
+kokoro = ["kokoro-onnx"]
+elevenlabs = ["elevenlabs"]
+piper = ["piper-tts"]
+all = ["kokoro-onnx", "elevenlabs"]
+dev = ["pytest", "pytest-timeout"]
+
+[project.scripts]
+avatar = "avatar.main:main"
+avatar-bridge = "avatar.bridge.cli:main"
+avatar-mcp = "avatar.bridge.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/avatar"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = [
+    "integration: marks tests as integration tests (may require subprocess/sockets)",
+]

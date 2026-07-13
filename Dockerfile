@@ -68,6 +68,11 @@ COPY app/ /app/
 # Sandbox template — seeds coder workspaces on first startup (workspace_setup.py)
 COPY sandbox/ /app/sandbox/
 
+# Vendored repos — currently just ascii-avatar (avatar_providers/ascii_avatar.py
+# adds /repos/ascii-avatar/src to sys.path at runtime; ONLY its animation/
+# rendering modules are used, see that file for details).
+COPY repos/ /repos/
+
 # ── Default config (overridden by mount at runtime) ───────────────────────────
 COPY config/worker.yaml /config/worker.yaml
 

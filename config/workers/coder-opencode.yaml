@@ -53,6 +53,7 @@ voice:
   verbosity: 0.9
 
 avatar:
+  provider: builtin
   name: "OKO-2"
   title: "Engineer (OpenCode)"
   expressions:
