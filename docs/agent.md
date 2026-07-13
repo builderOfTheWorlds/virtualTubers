@@ -141,11 +141,17 @@ def main() -> None
   re-delegates a fix), `severity`/`repro` (`bug_report`), `error`
   (`clarification_request`), `message` (`operator_message`), `username` /
   `channel` (`viewer_joined` — sent by the twitch-presence service,
-  docs/twitch_presence.md). Like `operator_message`, `viewer_joined` has no
-  role gate; unlike every other handler it publishes NOTHING back onto the
-  bus — the greeting is narration-only (console + avatar bubble), so a burst
-  of viewer arrivals can never fan out into bus traffic, and a failed LLM
-  call just logs (a missed hello isn't an error worth reporting).
+  docs/twitch_presence.md; optional `episode`/`voice`/`narration` override
+  the rerun described below, for manual/test injections). Like
+  `operator_message`, `viewer_joined` has no role gate. It does two things:
+  **queues a Rerun Theater episode** for the replay pane (random pick from
+  the `REPLAY_LIBRARY`, default `/data/replays` — queued *before* the LLM
+  call so a dead LLM can't stop the show; an already-pending request file is
+  never stomped), then **greets the viewer**, introducing the rerun when one
+  was queued. Unlike every other handler it publishes NOTHING back onto the
+  bus — greeting and rerun are narration-only (console + avatar bubble +
+  replay pane), so a burst of viewer arrivals can never fan out into bus
+  traffic, and failures (no episodes, LLM down) just log.
 - `report_type` / `task` / `narration` / `extra` (`_send_manager_report`) —
   the payload discriminator (`"milestone" | "blocker" | "escalation"`),
   the task description, the (possibly fallback) narration, and an optional
@@ -258,6 +264,11 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.2.0 (2026-07-13) — `handle_viewer_joined` now starts a rerun: queues a
+  Rerun Theater episode (random library pick, `payload.episode` override)
+  via the shared `_write_replay_request` helper before greeting, and the
+  greeting introduces the show. A pending request file is left alone; no
+  episodes available degrades to greeting-only.
 - v2.1.0 (2026-07-12) — Added `handle_viewer_joined` (`viewer_joined` in
   `MESSAGE_HANDLERS`): greets a viewer arriving in the worker's Twitch chat
   (announced by the new twitch-presence service, docs/twitch_presence.md).

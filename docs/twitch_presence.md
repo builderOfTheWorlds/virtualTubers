@@ -11,8 +11,13 @@ channel on one connection, and — whenever a viewer JOINs a channel's chat —
 POSTs a `viewer_joined` message to `message-api` (`POST /messages`,
 docs/message_api.md) addressed to the worker that streams on that channel.
 The worker's agent handles it with `handle_viewer_joined` (docs/agent.md):
-an LLM-written in-character welcome on the console and avatar speech
-bubble, with **no** bus reply.
+it **starts a rerun** — a Rerun Theater episode picked at random from the
+worker's library, queued for the replay pane exactly like a
+`replay_request` — and greets the viewer with an LLM-written in-character
+welcome (console + avatar speech bubble) introducing the show. No bus
+reply either way. The rerun only actually plays on workers whose layout
+includes the replay pane (`LAYOUT_PRESET=replay`, docs/replay_pane.md);
+elsewhere the queued request file is simply never picked up.
 
 **What "a viewer starts watching" actually means here** — Twitch has no
 per-viewer "started watching" event. The closest real, per-user signal is

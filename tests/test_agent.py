@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 import agent
@@ -488,7 +490,19 @@ def test_handle_operator_message_llm_failure_replies_with_error():
 
 # ── viewer_joined (twitch-presence → any role) ────────────────────────────────
 
-def test_handle_viewer_joined_greets_without_sending_bus_messages(tmp_path):
+@pytest.fixture
+def replay_env(tmp_path, monkeypatch):
+    """Point the episode library and request file at tmp dirs; returns
+    (library_path, request_file_path). Library starts empty."""
+    library = tmp_path / "replays"
+    library.mkdir()
+    request_file = tmp_path / "replay_request.json"
+    monkeypatch.setenv("REPLAY_LIBRARY", str(library))
+    monkeypatch.setenv("REPLAY_REQUEST_FILE", str(request_file))
+    return library, request_file
+
+
+def test_handle_viewer_joined_greets_without_sending_bus_messages(tmp_path, replay_env):
     state_path = str(tmp_path / "state.json")
     producer = FakeProducer()
     llm = FakeLLM(response="Welcome in, phil!")
@@ -504,7 +518,7 @@ def test_handle_viewer_joined_greets_without_sending_bus_messages(tmp_path):
     assert state["bubble"] == "Welcome in, phil!"
 
 
-def test_handle_viewer_joined_llm_failure_logs_only_no_bus_error():
+def test_handle_viewer_joined_llm_failure_logs_only_no_bus_error(replay_env):
     producer = FakeProducer()
     llm = FakeLLM(error=RuntimeError("connection refused"))
     msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
@@ -514,7 +528,7 @@ def test_handle_viewer_joined_llm_failure_logs_only_no_bus_error():
     assert producer.sent == []  # a missed hello never becomes bus traffic
 
 
-def test_handle_viewer_joined_defaults_username_when_missing():
+def test_handle_viewer_joined_defaults_username_when_missing(replay_env):
     producer = FakeProducer()
     llm = FakeLLM(response="Hey there!")
     msg = {"from": "operator", "type": "viewer_joined", "payload": {}}
@@ -522,6 +536,73 @@ def test_handle_viewer_joined_defaults_username_when_missing():
     handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
 
     assert "someone" in llm.calls[0][1][0]["content"]
+
+
+def test_handle_viewer_joined_queues_a_rerun_from_the_library(replay_env):
+    library, request_file = replay_env
+    (library / "ep-one.json").write_text("{}")
+    producer = FakeProducer()
+    llm = FakeLLM(response="Welcome! Rolling a rerun for you.")
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request == {"episode": "ep-one"}
+    assert producer.sent == []  # still nothing on the bus
+    assert "rerun" in llm.calls[0][1][0]["content"]  # greeting introduces the show
+
+
+def test_handle_viewer_joined_payload_episode_overrides_random_pick(replay_env):
+    library, request_file = replay_env
+    (library / "ep-one.json").write_text("{}")
+    producer = FakeProducer()
+    llm = FakeLLM(response="Welcome!")
+    msg = {"from": "operator", "type": "viewer_joined",
+           "payload": {"username": "phil", "episode": "chosen-ep", "narration": "reuse"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request == {"episode": "chosen-ep", "narration": "reuse"}
+
+
+def test_handle_viewer_joined_empty_library_still_greets(replay_env):
+    library, request_file = replay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="Welcome in!")
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    assert not request_file.exists()
+    assert "rerun" not in llm.calls[0][1][0]["content"]  # plain welcome, no show promised
+
+
+def test_handle_viewer_joined_does_not_stomp_pending_replay_request(replay_env):
+    library, request_file = replay_env
+    (library / "ep-one.json").write_text("{}")
+    request_file.write_text('{"episode": "operator-queued"}')
+    producer = FakeProducer()
+    llm = FakeLLM(response="Welcome!")
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    assert json.loads(request_file.read_text()) == {"episode": "operator-queued"}
+
+
+def test_handle_viewer_joined_llm_failure_still_queues_the_rerun(replay_env):
+    library, request_file = replay_env
+    (library / "ep-one.json").write_text("{}")
+    producer = FakeProducer()
+    llm = FakeLLM(error=RuntimeError("connection refused"))
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    # The show must start even when the greeting LLM is down.
+    assert json.loads(request_file.read_text()) == {"episode": "ep-one"}
 
 
 # ── Retry-count round trip (coder → tester → manager) ─────────────────────────

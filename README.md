@@ -45,14 +45,19 @@ is a thin dispatcher now, not a renderer:
   (see also [docs/avatar_providers.md](docs/avatar_providers.md) and
   [docs/avatar.md](docs/avatar.md) for API-level reference).
 
-**Workers now greet viewers who start watching on Twitch** — a new
+**A viewer starting to watch on Twitch now starts a rerun** — a new
 `services/twitch-presence/` service watches each worker's Twitch chat
 (anonymous IRC read — no OAuth token or Twitch app needed) and, when a
 viewer joins a channel, POSTs a `viewer_joined` message to `message-api`
-addressed to that channel's worker; the agent's new `handle_viewer_joined`
-(any role) answers with an LLM-written in-character welcome on the console
-and avatar speech bubble — narration-only, deliberately nothing back on the
-bus, so a burst of arrivals never becomes bus traffic. Per-viewer greeting
+addressed to that channel's worker. The agent's new `handle_viewer_joined`
+(any role) queues a Rerun Theater episode — picked at random from the
+worker's library — for its replay pane (needs `LAYOUT_PRESET=replay`,
+docs/replay_pane.md), then greets the viewer with an LLM-written
+in-character welcome introducing the show (console + avatar speech
+bubble) — narration-only, deliberately nothing back on the bus, so a burst
+of arrivals never becomes bus traffic. The rerun is queued before the LLM
+call (a dead LLM can't stop the show), and a pending operator-queued
+replay request is never overwritten. Per-viewer greeting
 cooldown (`PRESENCE_COOLDOWN_S`, default 1h) and a built-in bot ignore list
 stop rejoin/bot spam. Configure with one stack env var —
 `TWITCH_CHANNEL_MAP=mycoderchannel:coder,mymanagerchannel:manager` — the

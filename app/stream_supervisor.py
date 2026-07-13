@@ -31,6 +31,13 @@ def log(msg):
     print(f"[stream_supervisor] {msg}", flush=True)
 
 
+def redact_stream_key(text):
+    """Mask Twitch stream keys (live_XXX) in log messages to prevent
+    credentials from being stored in Postgres via log-shipper."""
+    import re
+    return re.sub(r"\blive_[A-Za-z0-9_]{16,}\b", "[stream-key]", text)
+
+
 def pulse_monitor_available(sink="vout"):
     """Whether PulseAudio is up and has the null sink's monitor source —
     i.e. whether audio_player.py's paplay (docs/audio_player.md) actually
@@ -118,7 +125,7 @@ def main():
     control = WorkerControl.from_config(config)
     ffmpeg_cmd = build_ffmpeg_cmd(args.rtmp_url, args.stream_key, args.resolution, args.display)
 
-    log(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}")
+    log(redact_stream_key(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}"))
 
     proc = None
     running = True
@@ -140,7 +147,7 @@ def main():
 
         if action == "start":
             log("starting ffmpeg broadcaster")
-            proc = subprocess.Popen(ffmpeg_cmd)
+            proc = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         elif action == "stop":
             log("worker disabled: stopping ffmpeg broadcaster")
             stop_process(proc)

@@ -44,6 +44,11 @@ WORKSPACE_MOUNT_PATTERN = "/data/repos/{coder_id}"
 REPLAY_REQUEST_FILE_ENV = "REPLAY_REQUEST_FILE"
 DEFAULT_REPLAY_REQUEST_FILE = "/tmp/replay_request.json"
 
+# Episode library for viewer-join reruns — same path convention as
+# replay_pane.py, which owns the actual resolution/performance.
+REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
+DEFAULT_REPLAY_LIBRARY = "/data/replays"
+
 
 def resolve(env_name, config_value, default=None):
     return os.environ.get(env_name) or config_value or default
@@ -636,24 +641,99 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
     ))
 
 
+def _resolve_replay_request_file():
+    return os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
+
+
+def _write_replay_request(request):
+    """Atomic write of the agent -> replay pane request file (same
+    temp+replace pattern as agent_state.py) so the polling pane never reads
+    a half-written request. Raises OSError — callers decide how loudly to
+    report a failure."""
+    request_file = _resolve_replay_request_file()
+    tmp_path = f"{request_file}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(request, f)
+    os.replace(tmp_path, request_file)
+    return request_file
+
+
+def _pick_rerun_episode(payload):
+    """Which episode should a viewer-join rerun play? payload.episode wins
+    (manual/test injections); otherwise a random pick from the episode
+    library — every arrival gets "a rerun", not one hardcoded show. Returns
+    None when no episode is available (no library mount, empty library)."""
+    requested = payload.get("episode")
+    if requested and str(requested).strip():
+        return str(requested).strip()
+    library = os.environ.get(REPLAY_LIBRARY_ENV) or DEFAULT_REPLAY_LIBRARY
+    try:
+        episodes = sorted(f[:-5] for f in os.listdir(library) if f.endswith(".json"))
+    except OSError:
+        return None
+    if not episodes:
+        return None
+    return random.choice(episodes)
+
+
 def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
                          state_path=None, coding_backend=None):
     """A viewer just showed up in this worker's Twitch chat — sent by the
     twitch-presence service via message-api (docs/twitch_presence.md). Any
-    role handles it. Greeting is narration-only BY DESIGN: the welcome shows
-    on stream via the console output and avatar speech bubble, and NOTHING is
-    sent back onto the bus — viewer arrivals are outside-world events, not
-    pipeline traffic, and a burst of joins must never fan out into a burst of
-    bus messages. A failed LLM call likewise just logs: a missed hello is not
-    worth an error message anywhere.
+    role handles it, in two steps:
+
+    1. Start a rerun for them: queue a Rerun Theater episode for the replay
+       pane (payload.episode override, else a random library pick) — the
+       rerun is queued FIRST, before the LLM call, so a slow/dead LLM can
+       never keep the show from starting. If a request is already pending
+       (file exists), it is left alone: a viewer join must not stomp an
+       operator's queued episode, and the pane only holds one request anyway.
+    2. Greet them: an LLM-written welcome on the console output and avatar
+       speech bubble, mentioning the rerun when one was queued.
+
+    Everything is narration-only BY DESIGN: NOTHING is sent back onto the
+    bus — viewer arrivals are outside-world events, not pipeline traffic,
+    and a burst of joins must never fan out into a burst of bus messages.
+    Failures (no episodes, unwritable request file, LLM down) likewise just
+    log: a missed hello or rerun is not worth an error message anywhere.
     """
     payload = msg.get("payload", {})
     username = payload.get("username", "someone")
-    prompt = (
-        f"A viewer named '{username}' just started watching your stream. "
-        "Give them a short, warm welcome in 1-2 sentences, in character, "
-        "as if speaking to the stream."
-    )
+
+    episode = _pick_rerun_episode(payload)
+    queued = False
+    if episode is None:
+        print(f"[agent:{worker_id}] no replay episodes available — greeting {username!r} only")
+    elif os.path.exists(_resolve_replay_request_file()):
+        print(f"[agent:{worker_id}] a replay request is already pending — greeting {username!r} only")
+    else:
+        request = {"episode": episode}
+        # voice/narration ride along verbatim, same as handle_replay_request
+        # (useful for manual/test injections; twitch-presence never sets them).
+        if isinstance(payload.get("voice"), bool):
+            request["voice"] = payload["voice"]
+        if payload.get("narration"):
+            request["narration"] = str(payload["narration"])
+        try:
+            _write_replay_request(request)
+            queued = True
+            print(f"[agent:{worker_id}] viewer {username!r} arrived — queued rerun {episode!r}")
+        except OSError as exc:
+            print(f"[agent:{worker_id}] failed to queue viewer-join rerun: {exc}")
+
+    if queued:
+        prompt = (
+            f"A viewer named '{username}' just started watching your stream, and "
+            "you're firing up a rerun of one of your past coding sessions for them. "
+            "Welcome them and introduce the rerun in 1-2 sentences, in character, "
+            "as if speaking to the stream."
+        )
+    else:
+        prompt = (
+            f"A viewer named '{username}' just started watching your stream. "
+            "Give them a short, warm welcome in 1-2 sentences, in character, "
+            "as if speaking to the stream."
+        )
 
     if state_path:
         write_state(state_path, "thinking", action=f"greeting {username}")
@@ -706,14 +786,8 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     if payload.get("narration"):
         request["narration"] = str(payload["narration"])
 
-    request_file = os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
-    # Atomic write (same temp+replace pattern as agent_state.py) so the
-    # polling pane never reads a half-written request.
-    tmp_path = f"{request_file}.tmp"
     try:
-        with open(tmp_path, "w", encoding="utf-8") as f:
-            json.dump(request, f)
-        os.replace(tmp_path, request_file)
+        _write_replay_request(request)
     except OSError as exc:
         print(f"[agent:{worker_id}] failed to queue replay request: {exc}")
         producer.send(build_message(
