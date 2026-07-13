@@ -114,10 +114,12 @@ one worker to the next; the operator sending them manually skips ahead.
 | `test_passed` | `manager` | `task` | Triggers the manager's celebration narration + a `manager_report` (`report_type: "milestone"`) to the operator. |
 | `task_complete` | `manager` | `task` | Manager acknowledges only — sends nothing back onto the bus by design (avoids duplicating the tester run the coder's own `commit_notification` already triggered). |
 | `clarification_request` | `manager` | `task`, `error` | Forces an immediate `manager_report` (`report_type: "blocker"`) escalation to the operator. |
+| `viewer_joined` | any worker | `username`, `channel` | The worker greets the viewer in character (console + avatar bubble; no bus reply). Normally sent automatically by the `twitch-presence` service when a viewer enters that worker's Twitch chat (docs/twitch_presence.md) — inject it manually to test the greeting without Twitch. |
 
-All of these are role-gated: sending one to a worker whose configured
-`agent.role` doesn't match (e.g. `bug_report` to the tester) is a no-op — the
-worker logs `ignoring <type> (role=..., expected ...)` and does nothing.
+All of these except `viewer_joined` are role-gated: sending one to a worker
+whose configured `agent.role` doesn't match (e.g. `bug_report` to the
+tester) is a no-op — the worker logs `ignoring <type> (role=..., expected
+...)` and does nothing.
 
 ## Feed-only types (not operator-sendable)
 

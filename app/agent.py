@@ -636,6 +636,44 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
     ))
 
 
+def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
+                         state_path=None, coding_backend=None):
+    """A viewer just showed up in this worker's Twitch chat — sent by the
+    twitch-presence service via message-api (docs/twitch_presence.md). Any
+    role handles it. Greeting is narration-only BY DESIGN: the welcome shows
+    on stream via the console output and avatar speech bubble, and NOTHING is
+    sent back onto the bus — viewer arrivals are outside-world events, not
+    pipeline traffic, and a burst of joins must never fan out into a burst of
+    bus messages. A failed LLM call likewise just logs: a missed hello is not
+    worth an error message anywhere.
+    """
+    payload = msg.get("payload", {})
+    username = payload.get("username", "someone")
+    prompt = (
+        f"A viewer named '{username}' just started watching your stream. "
+        "Give them a short, warm welcome in 1-2 sentences, in character, "
+        "as if speaking to the stream."
+    )
+
+    if state_path:
+        write_state(state_path, "thinking", action=f"greeting {username}")
+
+    try:
+        narration = llm_client.complete(
+            agent_config.get("system_prompt", ""),
+            [{"role": "user", "content": prompt}],
+        )
+    except Exception as exc:
+        print(f"[agent:{worker_id}] LLM call failed greeting {username!r}: {exc}")
+        if state_path:
+            write_state(state_path, "idle", action=f"missed greeting {username}")
+        return
+
+    print(f"[agent:{worker_id}] {narration}")
+    if state_path:
+        write_state(state_path, "happy", action=f"welcomed {username}", bubble=narration)
+
+
 def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
                           state_path=None, coding_backend=None):
     """Operator lever: queue a "Rerun Theater" episode for this worker's
@@ -707,6 +745,7 @@ MESSAGE_HANDLERS = {
     "clarification_request": handle_clarification_request,
     "operator_message": handle_operator_message,
     "replay_request": handle_replay_request,
+    "viewer_joined": handle_viewer_joined,
 }
 
 

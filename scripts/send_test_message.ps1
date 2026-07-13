@@ -37,17 +37,25 @@ param(
 # $Type    = "operator_message"
 # $Payload = '{"text": "stream starting in 5"}'
 
+# --- Viewer joined: fake a Twitch viewer arriving (docs/twitch_presence.md)
+#     Normally sent automatically by the twitch-presence service; inject
+#     manually to test the on-stream greeting without Twitch.
+# $To      = "coder"
+# $Type    = "viewer_joined"
+# $Payload = '{"username": "phil", "channel": "mycoderchannel"}'
+
 # --- Coder replay request: reenact a saved episode --------------------
 $To      = "coder"
 $Type    = "replay_request"
 
-# Large episode for testing, 2026-06-26_05-00-31_ea5049d8, 1.5MB
-# $Payload = '{"episode": "2026-06-26_05-00-31_ea5049d8"}' 
+# Test small size
+# $Payload = '{"episode": "2026-07-12_07-44-15_b62c580c", "narration": "reuse"}'
 
-# Smaller episode for testing, 2026-07-05_18-09-43_e2d3d72b, 0.5MB
-$Payload = '{"episode": "2026-07-05_18-09-43_e2d3d72b"}'
+# Test medium sized
+# $Payload = '{"episode": "2026-07-01_04-40-28_b569358b", "narration": "reuse"}'
 
-
+# Long test
+$Payload = '{"episode": "2026-07-12_21-42-20_462f5abc", "narration": "reuse"}'
 
 
 # =====================================================================

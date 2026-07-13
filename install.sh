@@ -40,4 +40,7 @@ docker build -t virtualtubers-message-api:latest -f services/message-api/Dockerf
 log "Building virtualtubers-log-shipper:latest"
 docker build -t virtualtubers-log-shipper:latest -f services/log-shipper/Dockerfile .
 
+log "Building virtualtubers-twitch-presence:latest"
+docker build -t virtualtubers-twitch-presence:latest -f services/twitch-presence/Dockerfile .
+
 log "Done. Redeploy the stack (Portainer: Update the stack → Re-pull image and redeploy)."

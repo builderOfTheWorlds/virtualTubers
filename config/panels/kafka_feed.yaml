@@ -47,6 +47,7 @@ content:
     manager_report: cyan
     operator_reply: blue
     coding_run_report: magenta
+    viewer_joined: cyan
 
   # Payload rendering. mode: pretty | raw | hidden. Truncated to max_chars.
   payload:

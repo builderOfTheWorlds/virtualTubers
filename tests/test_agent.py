@@ -10,6 +10,7 @@ from agent import (
     handle_commit_notification,
     handle_operator_message,
     handle_retest_request,
+    handle_viewer_joined,
     handle_task_assignment,
     handle_task_complete,
     handle_test_passed,
@@ -485,6 +486,44 @@ def test_handle_operator_message_llm_failure_replies_with_error():
     assert "connection refused" in sent["payload"]["error"]
 
 
+# ── viewer_joined (twitch-presence → any role) ────────────────────────────────
+
+def test_handle_viewer_joined_greets_without_sending_bus_messages(tmp_path):
+    state_path = str(tmp_path / "state.json")
+    producer = FakeProducer()
+    llm = FakeLLM(response="Welcome in, phil!")
+    msg = {"from": "operator", "type": "viewer_joined",
+           "payload": {"username": "phil", "channel": "mychan"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg, state_path)
+
+    assert producer.sent == []  # narration-only by design — nothing on the bus
+    assert "phil" in llm.calls[0][1][0]["content"]
+    state = read_state(state_path)
+    assert state["expression"] == "happy"
+    assert state["bubble"] == "Welcome in, phil!"
+
+
+def test_handle_viewer_joined_llm_failure_logs_only_no_bus_error():
+    producer = FakeProducer()
+    llm = FakeLLM(error=RuntimeError("connection refused"))
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    assert producer.sent == []  # a missed hello never becomes bus traffic
+
+
+def test_handle_viewer_joined_defaults_username_when_missing():
+    producer = FakeProducer()
+    llm = FakeLLM(response="Hey there!")
+    msg = {"from": "operator", "type": "viewer_joined", "payload": {}}
+
+    handle_viewer_joined("coder", {"role": "coder", "system_prompt": ""}, llm, producer, msg)
+
+    assert "someone" in llm.calls[0][1][0]["content"]
+
+
 # ── Retry-count round trip (coder → tester → manager) ─────────────────────────
 
 def test_retry_count_survives_coder_tester_manager_round_trip(monkeypatch):
@@ -529,4 +568,5 @@ def test_message_handlers_covers_all_documented_types():
         "clarification_request",
         "operator_message",
         "replay_request",
+        "viewer_joined",
     }

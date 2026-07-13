@@ -232,6 +232,25 @@ services:
     depends_on:
       - redis
 
+  # Watches each worker's Twitch chat (anonymous IRC — no Twitch credentials
+  # needed) and announces arriving viewers as `viewer_joined` messages via
+  # message-api, so workers greet them on stream (docs/twitch_presence.md).
+  # Idles with a periodic log line until TWITCH_CHANNEL_MAP is set.
+  twitch-presence:
+    image: virtualtubers-twitch-presence:latest
+    pull_policy: never
+    environment:
+      # channel:worker_id pairs, e.g. "mycoderchannel:coder,mymgrchannel:manager"
+      TWITCH_CHANNEL_MAP: ${TWITCH_CHANNEL_MAP:-}
+      MESSAGE_API_URL: http://message-api:8000/messages
+      # Seconds before the same viewer in the same channel is greeted again
+      PRESENCE_COOLDOWN_S: ${PRESENCE_COOLDOWN_S:-3600}
+      # Extra chat bots to ignore (extends the built-in list)
+      PRESENCE_IGNORE_USERS: ${PRESENCE_IGNORE_USERS:-}
+    restart: unless-stopped
+    depends_on:
+      - message-api
+
   log-shipper:
     image: virtualtubers-log-shipper:latest
     pull_policy: never

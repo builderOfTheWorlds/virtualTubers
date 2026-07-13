@@ -113,6 +113,8 @@ def handle_clarification_request(worker_id: str, agent_config: dict, llm_client,
 
 def handle_operator_message(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
 
+def handle_viewer_joined(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
+
 def main() -> None
 ```
 
@@ -137,7 +139,13 @@ def main() -> None
   handlers), `retry_count` (defaults to 0; threaded through the coder →
   tester → manager loop unmodified and incremented only when the manager
   re-delegates a fix), `severity`/`repro` (`bug_report`), `error`
-  (`clarification_request`), `message` (`operator_message`).
+  (`clarification_request`), `message` (`operator_message`), `username` /
+  `channel` (`viewer_joined` — sent by the twitch-presence service,
+  docs/twitch_presence.md). Like `operator_message`, `viewer_joined` has no
+  role gate; unlike every other handler it publishes NOTHING back onto the
+  bus — the greeting is narration-only (console + avatar bubble), so a burst
+  of viewer arrivals can never fan out into bus traffic, and a failed LLM
+  call just logs (a missed hello isn't an error worth reporting).
 - `report_type` / `task` / `narration` / `extra` (`_send_manager_report`) —
   the payload discriminator (`"milestone" | "blocker" | "escalation"`),
   the task description, the (possibly fallback) narration, and an optional
@@ -250,6 +258,10 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.1.0 (2026-07-12) — Added `handle_viewer_joined` (`viewer_joined` in
+  `MESSAGE_HANDLERS`): greets a viewer arriving in the worker's Twitch chat
+  (announced by the new twitch-presence service, docs/twitch_presence.md).
+  Any role; narration-only — no bus reply by design.
 - v2.0.0 (2026-07-03) — Coders write REAL code and testers run REAL tests.
   All handlers gained a trailing `coding_backend=None` kwarg (uniform
   dispatch; existing positional call sites unaffected).

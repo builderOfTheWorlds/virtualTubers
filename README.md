@@ -10,6 +10,24 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Workers now greet viewers who start watching on Twitch** — a new
+`services/twitch-presence/` service watches each worker's Twitch chat
+(anonymous IRC read — no OAuth token or Twitch app needed) and, when a
+viewer joins a channel, POSTs a `viewer_joined` message to `message-api`
+addressed to that channel's worker; the agent's new `handle_viewer_joined`
+(any role) answers with an LLM-written in-character welcome on the console
+and avatar speech bubble — narration-only, deliberately nothing back on the
+bus, so a burst of arrivals never becomes bus traffic. Per-viewer greeting
+cooldown (`PRESENCE_COOLDOWN_S`, default 1h) and a built-in bot ignore list
+stop rejoin/bot spam. Configure with one stack env var —
+`TWITCH_CHANNEL_MAP=mycoderchannel:coder,mymanagerchannel:manager` — the
+service idles harmlessly until it's set. Caveat: Twitch has no true
+"started watching" event; the chat JOIN (fired automatically by the web
+player for logged-in viewers, but batched by Twitch and absent for
+logged-out viewers) is the closest per-user signal. `install.sh` builds the
+new `virtualtubers-twitch-presence:latest` image. See
+[docs/twitch_presence.md](docs/twitch_presence.md).
+
 **Fixed: narration audio never actually reached the stream** —
 `app/stream_supervisor.py`'s ffmpeg command captured a synthesized silent
 audio track (`anullsrc`) unconditionally, never the PulseAudio `vout` sink
@@ -495,6 +513,9 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
+| `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
+| `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
+| `PRESENCE_IGNORE_USERS` | `somebot,otherbot` | Optional — extra chat bots to never greet (extends the built-in list) |
 
 > Set each variable as its own `name` → `value` pair. Don't put a URL (or any value)
 > in the `name` field — that just creates a junk variable nothing reads.
@@ -651,7 +672,8 @@ virtualTubers/
 │   └── tail_bus.py       # Rich configurable Kafka feed for the tmux "Message Bus" pane
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
-│   └── message-api/       # FastAPI service for injecting test messages onto the bus
+│   ├── message-api/       # FastAPI service for injecting test messages onto the bus
+│   └── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
 ├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
 ├── config/
 │   ├── worker.yaml        # Annotated default/template worker config (selects a layout preset)
