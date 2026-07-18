@@ -147,7 +147,7 @@ one worker to the next; the operator sending them manually skips ahead.
 | `test_passed` | `manager` | `task` | Triggers the manager's celebration narration + a `manager_report` (`report_type: "milestone"`) to the operator. |
 | `task_complete` | `manager` | `task` | Manager acknowledges only — sends nothing back onto the bus by design (avoids duplicating the tester run the coder's own `commit_notification` already triggered). |
 | `clarification_request` | `manager` | `task`, `error` | Forces an immediate `manager_report` (`report_type: "blocker"`) escalation to the operator. |
-| `viewer_joined` | any worker | `username`, `channel`; optional `episode`, `voice`, `narration` | The worker queues a Rerun Theater episode for its replay pane (random library pick unless `episode` is given; `voice`/`narration` forwarded as in `replay_request`) and greets the viewer in character, introducing the show (console + avatar bubble; no bus reply). Normally sent automatically by the `twitch-presence` service when a viewer enters that worker's Twitch chat (docs/twitch_presence.md) — inject it manually to test without Twitch. |
+| `viewer_joined` | any worker | `username`, `channel`; optional `episode`, `voice`, `narration` | The worker queues a Rerun Theater episode for its replay pane (random library pick unless `episode` is given; `voice`/`narration` forwarded as in `replay_request`) and greets the viewer in character, introducing the show (console + avatar bubble; no bus reply). **`cast` is NOT forwarded** — a `viewer_joined` payload can never start a duet, even if `cast` is included; it always queues solo. Use `replay_request` directly for duets. Normally sent automatically by the `twitch-presence` service when a viewer enters that worker's Twitch chat (docs/twitch_presence.md) — inject it manually to test without Twitch. |
 
 All of these except `viewer_joined` are role-gated: sending one to a worker
 whose configured `agent.role` doesn't match (e.g. `bug_report` to the
@@ -184,12 +184,33 @@ terminates within 3 retries with an `escalation` report to the operator.
 
 ## Using the PowerShell helper
 
-`scripts/send_test_message.ps1` wraps the same endpoint:
+`scripts/send_test_message.ps1` wraps the same endpoint, but does **not**
+take `-To`/`-Type`/`-Payload` parameters — it only takes an optional
+`-Url`. Instead it's a library of preset `$To`/`$Type`/`$Payload` blocks in
+the script body; uncomment exactly one block (including its `$To`/`$Type`
+lines, not just `$Payload`) and run it:
 
 ```powershell
-.\scripts\send_test_message.ps1 -To coder -Type task_assignment -Payload '{"task": "add a healthcheck endpoint"}'
-.\scripts\send_test_message.ps1 -To broadcast -Type operator_message -Payload '{"message": "stream starting in 5"}'
+.\scripts\send_test_message.ps1
+.\scripts\send_test_message.ps1 -Url http://localhost:8090/messages
 ```
+
+The script resets `$To`/`$Type`/`$Payload` to `$null` at the top and
+errors out if any of the three is still unset after the preset section —
+without that guard, a stale value from an earlier run **carries over**
+when the script is dot-sourced (VSCode's F5 does this), so a previous
+run's `$Type` can silently apply to this run's `$Payload`. Confirmed
+2026-07-18: a `replay_request` duet payload was sent as `viewer_joined`
+this way, which drops `cast` (see the table above) and aired solo with no
+error.
+
+The file is UTF-8 **without a BOM**, which PowerShell 5.1 reads as the
+system ANSI codepage — a non-ASCII character (e.g. an em dash `—`) inside
+a **double-quoted string** can decode to a smart quote and prematurely
+terminate the string, breaking the parser several lines later with a
+confusing error. Keep string literals in this file ASCII-only, or use `-`
+instead of `—`; non-ASCII text is fine in `#` comments and `<# #>` blocks,
+which aren't string-parsed the same way.
 
 ## See also
 

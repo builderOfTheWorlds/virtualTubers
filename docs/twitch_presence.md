@@ -19,6 +19,12 @@ reply either way. The rerun only actually plays on workers whose layout
 includes the replay pane (`LAYOUT_PRESET=replay`, docs/replay_pane.md);
 elsewhere the queued request file is simply never picked up.
 
+`viewer_joined` does **not** support duets: `handle_viewer_joined` forwards
+`episode`/`voice`/`narration` but drops `payload.cast` on the floor with no
+log — a viewer join always queues a solo airing, even if a `cast` field is
+present. Only a `replay_request` sent directly (docs/operator_commands.md)
+can start a duet (docs/duet_replay.md).
+
 **What "a viewer starts watching" actually means here** — Twitch has no
 per-viewer "started watching" event. The closest real, per-user signal is
 the chat JOIN, which the normal Twitch web player fires automatically when

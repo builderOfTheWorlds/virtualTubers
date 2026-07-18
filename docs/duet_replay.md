@@ -364,6 +364,31 @@ then a `replay_cue` per scene to `manager`, and finally `replay_end`
   not a dict) is rejected by `perform_follower_request` with a stderr log
   and no show — never a crash.
 
+## Debugging: "only the director performs, nobody else joins"
+
+Before suspecting the duet protocol itself, check what actually landed on
+the bus — query the Postgres `messages` table (or the Kafka feed pane) for
+the request's `type`. Two known causes that look identical from the
+outside (director airs fine, no other stream reacts) but aren't duet bugs
+at all:
+
+- **The request was sent as `viewer_joined`, not `replay_request`.**
+  `handle_viewer_joined` (docs/agent.md, docs/twitch_presence.md) forwards
+  `episode`/`voice`/`narration` but silently drops `payload.cast` — no
+  error, no log line. The episode airs solo on whichever worker received
+  it. Only a `replay_request` sent directly starts a duet.
+- **`scripts/send_test_message.ps1` sent a stale preset.** The script is a
+  library of commented-out `$To`/`$Type`/`$Payload` blocks; if a preset's
+  `$Payload` was edited but its `$To`/`$Type` lines were left commented,
+  a leftover value from an earlier dot-sourced run (e.g. VSCode F5) is
+  used instead. See docs/operator_commands.md.
+
+If the bus genuinely shows `replay_invite` going out with no matching
+`replay_ready` coming back, then it's a real refusal — check the
+director's container logs for `duet refused: ready_timeout` and confirm
+the follower has `LAYOUT_PRESET=replay` + reachable Postgres (see
+Deployment requirements above).
+
 ## See also
 
 - `docs/replay.md` — the `Performer` class, `on_scene_start`/

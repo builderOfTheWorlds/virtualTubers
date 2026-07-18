@@ -172,6 +172,15 @@ def main() -> None
   bus — greeting and rerun are narration-only (console + avatar bubble +
   replay pane), so a burst of viewer arrivals can never fan out into bus
   traffic, and failures (no episodes, LLM down) just log.
+
+  **`payload.cast` is silently ignored here** — `handle_viewer_joined` only
+  forwards `episode`/`voice`/`narration` into the request file, unlike
+  `handle_replay_request` which also forwards a validated `cast` (see
+  below). A `viewer_joined` payload carrying `cast` therefore still queues
+  a **solo** airing with no error or log line calling out the drop; only a
+  direct `replay_request` can start a duet (docs/duet_replay.md). Confirmed
+  2026-07-18: a duet test sent as `viewer_joined` aired solo on the coder
+  with no `replay_invite` ever published.
 - `payload.cast` (`handle_replay_request`, optional) — a duet replay
   `{speaker: worker_id}` map (docs/duet_replay.md). Validated by
   `_is_valid_cast` (must be a non-empty dict of non-empty string keys and

@@ -7,6 +7,12 @@
     Pick a message by uncommenting exactly one preset section below
     (and commenting out the others).
 
+    NOTE: this file is UTF-8 without a BOM, which PowerShell 5.1 reads as
+    the system ANSI codepage. A non-ASCII character (em dash, curly quote,
+    etc.) inside a double-quoted string can decode to a different
+    character and break the string, cascading into confusing parse errors
+    several lines later. Keep double-quoted string literals ASCII-only.
+
 .EXAMPLE
     .\scripts\send_test_message.ps1
 
@@ -17,6 +23,12 @@ param(
     [string]$Url = "http://192.168.1.120:8090/messages"
 )
 
+# Reset preset variables so stale values can't leak in from the console
+# session (VSCode's F5 dot-sources this script - a leftover $Type from an
+# earlier run once sent a replay_request out as viewer_joined).
+$To      = $null
+$Type    = $null
+$Payload = $null
 
 # =====================================================================
 # PRESET MESSAGES — uncomment exactly ONE section
@@ -40,16 +52,16 @@ param(
 # --- Viewer joined: fake a Twitch viewer arriving (docs/twitch_presence.md)
 #     Normally sent automatically by the twitch-presence service; inject
 #     manually to test the on-stream greeting without Twitch.
-$To      = "coder"
-$Type    = "viewer_joined"
-$Payload = '{"username": "deezzzz", "channel": "mycoderchannel"}'
+# $To      = "coder"
+# $Type    = "viewer_joined"
+# $Payload = '{"username": "deezzzz", "channel": "mycoderchannel"}'
 
 # --- Coder replay request: reenact a saved episode --------------------
-# $To      = "coder"
-# $Type    = "replay_request"
+$To      = "coder"
+$Type    = "replay_request"
 
 # Test small size
-# $Payload = '{"episode": "2026-07-12_07-44-15_b62c580c", "narration": "reuse"}'
+# $Payload = '{"episode": "2026-07-01_17-25-00_f4268f99", "narration": "reuse"}'
 
 # Test medium sized
 # $Payload = '{"episode": "2026-07-01_04-40-28_b569358b", "narration": "reuse"}'
@@ -59,9 +71,16 @@ $Payload = '{"username": "deezzzz", "channel": "mycoderchannel"}'
 
 
 
+$Payload = '{"episode": "2026-07-02_04-27-00_6ecdde82", "cast": {"boss": "manager", "coder": "coder"},  "narration": "reuse"}'
+
 
 
 # =====================================================================
+
+if (-not $To -or -not $Type -or -not $Payload) {
+    Write-Error "No preset selected: uncomment exactly one preset section, including its `$To/`$Type lines."
+    exit 1
+}
 
 try {
     $payloadObj = $Payload | ConvertFrom-Json
