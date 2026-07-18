@@ -28,6 +28,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      # duet replay (docs/duet_replay.md) — how long a duet director waits
+      # for its cast to ready-up before refusing the airing. Unset/empty
+      # keeps the code default (60s).
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -151,6 +155,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -185,6 +190,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state

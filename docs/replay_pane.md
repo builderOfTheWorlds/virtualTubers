@@ -60,6 +60,22 @@ longer matches the current script all just fall back to (or skip) a fresh
 generation, logged to stderr, never a crash or a stalled show. `"voice":
 false` skips reuse too, same as it skips fresh narration.
 
+**Duet replay (multi-worker airings).** A `replay_request` whose
+`payload.cast` maps at least one speaker to a worker other than the
+receiving one turns this pane into a **director**: it prepares and
+persists the airing exactly as above, invites the other cast workers over
+the bus, waits for all of them to confirm ready, then paces every scene
+with a `replay_cue` published immediately before performing it — refusing
+the whole airing outright (never falling back to solo) if the narration
+store, Kafka, or a follower isn't available in time. A request whose
+payload instead carries `"mode": "follow"` (written by this worker's own
+`app/agent.py` on receiving a `replay_invite`, never by an operator
+directly) makes this pane a **follower**: it loads the SAME persisted
+airing, keeps audio only for its own cast scenes, and performs
+scene-by-scene as `replay_cue` messages authorize each one. Full protocol
+reference, message schemas, timeouts, and deployment requirements:
+[docs/duet_replay.md](duet_replay.md).
+
 ## Signature
 
 ```python
@@ -73,6 +89,13 @@ def persist_narration(message_id, show, config, episode, worker_name) -> None
 def load_reused_show(script, episode, workdir) -> list | None
 def load_worker_config(path) -> dict | None
 def list_episodes(library) -> list[str]
+
+# Duet replay (docs/duet_replay.md)
+def resolve_self_id(config, worker_name) -> str
+def perform_director_request(request, library, worker_name, state_path, self_id,
+                             default_speed=1.0, config=None) -> bool
+def perform_follower_request(request, library, worker_name, state_path, self_id,
+                             default_speed=1.0, config=None) -> bool
 ```
 
 ## Parameters (CLI / environment)
@@ -95,7 +118,19 @@ def list_episodes(library) -> list[str]
   (`available()`/`_connect()`), not by this file directly. Granted to
   `worker-coder`/`worker-manager`/`worker-tester` in `docker-compose.yml`.
   Missing/wrong values just disable narration caching and reuse — the show
-  still airs (docs/narration_store.md).
+  still airs (docs/narration_store.md). **Duet replay also requires this on
+  every cast worker**, director and followers alike (docs/duet_replay.md) —
+  without it a duet refuses outright rather than degrading.
+- `REPLAY_CUE_FILE` (env, default `/tmp/replay_cue.json`) /
+  `REPLAY_READY_FILE` (env, default `/tmp/replay_ready.json`): duet relay
+  files written by `app/agent.py`'s `handle_replay_cue`/`handle_replay_end`
+  and `handle_replay_ready`; this pane only ever polls them
+  (`_resolve_replay_cue_file`/`_resolve_replay_ready_file`). Same
+  env-override + atomic-write convention as `REPLAY_REQUEST_FILE`. See
+  docs/duet_replay.md.
+- `REPLAY_READY_TIMEOUT_S` (env, default `60.0`): how long a duet
+  **director** waits for every invited follower's `replay_ready` before
+  refusing the airing (`reason: "ready_timeout"`). Not read by followers.
 
 ## Return Value
 
@@ -144,6 +179,18 @@ curl -X POST http://localhost:8090/messages \
        "payload": {"episode": "2026-07-02_04-27-00_6ecdde82", "narration": "reuse"}}'
 ```
 
+Operator: duet airing — the receiving worker directs, another worker
+follows and voices a different speaker (full protocol + deployment
+requirements: docs/duet_replay.md):
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "replay_request",
+       "payload": {"episode": "2026-07-02_04-27-00_6ecdde82",
+                    "cast": {"boss": "manager", "coder": "coder"}}}'
+```
+
 Build and ship the episode library (from the machine with the logs):
 
 ```bash
@@ -176,9 +223,35 @@ Build and ship the episode library (from the machine with the logs):
   stderr and return `None`, which `perform_request` treats exactly like a
   request without `narration: "reuse"`: it falls through to
   `prepare_voice` for a fresh airing.
+- **Duet replay never degrades** (docs/duet_replay.md refusal rule):
+  `perform_director_request` returns `False` — never a partial/solo
+  airing — if there's no Kafka producer, `narration_store.available()` is
+  `False`, voice preparation fails, persisting a fresh airing fails, or
+  not every invited follower publishes `replay_ready` within
+  `REPLAY_READY_TIMEOUT_S`. Every case logs `duet refused: <reason>` to
+  stderr; all but the no-producer case also publish `replay_end` to
+  whichever followers were already invited and an `operator_reply` with
+  the error. `perform_follower_request` returns `False` (never generates
+  fresh narration) on a malformed invite payload, an unreachable/missing
+  narration store, an airing that no longer matches the episode script, or
+  a failed `replay_ready` publish.
 
 ## Changelog
 
+- **v1.4.0** (2026-07-13): Duet replay — `perform_director_request` and
+  `perform_follower_request` (docs/duet_replay.md): a `replay_request`
+  `payload.cast` mapping any speaker to another worker turns this pane
+  into a director (prepares + persists the airing exactly like solo,
+  invites the other cast workers, waits for `replay_ready` from all of
+  them via the new `REPLAY_READY_FILE`, paces scenes with `replay_cue`
+  published from `Performer.on_scene_start`) or, on a `"mode": "follow"`
+  request written by `handle_replay_invite`, a follower (loads the same
+  persisted airing via `narration_store.load_airing`, keeps audio only for
+  its own cast scenes, performs via `Performer.wait_for_scene` polling the
+  new `REPLAY_CUE_FILE`). Duets refuse rather than degrade on any failure.
+  `resolve_self_id` resolves this worker's bus identity for ownership
+  matching. `_rebuild_scenes_from_rows` factored out of
+  `load_reused_show`/`_load_cached_show` to also serve the follower path.
 - **v1.3.0** (2026-07-12): Narration + audio caching and reuse —
   `persist_narration` upserts the full airing (text, WAV bytes, measured
   duration) into `voiced_narration` via the new `app/narration_store.py`,

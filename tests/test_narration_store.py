@@ -192,10 +192,10 @@ def test_save_airing_closes_connection_even_when_execute_raises(monkeypatch, tmp
 
 # ── load_latest_airing ────────────────────────────────────────────────────────
 
-def test_load_latest_airing_returns_dicts_with_bytes_audio(monkeypatch):
+def test_load_latest_airing_returns_dicts_with_message_id_and_bytes_audio(monkeypatch):
     rows = [
-        (0, "coder_talk", "coder", "line one", memoryview(b"wav-bytes-one"), 1.5),
-        (1, "boss", "boss", "line two", None, None),
+        ("msg-9", 0, "coder_talk", "coder", "line one", memoryview(b"wav-bytes-one"), 1.5),
+        ("msg-9", 1, "boss", "boss", "line two", None, None),
     ]
     fake_conn = FakeConn(fetch_rows=rows)
     monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
@@ -204,10 +204,12 @@ def test_load_latest_airing_returns_dicts_with_bytes_audio(monkeypatch):
 
     assert fake_conn.closed is True
     assert result == [
-        {"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
-         "text": "line one", "audio": b"wav-bytes-one", "audio_duration_s": 1.5},
-        {"scene_index": 1, "scene_kind": "boss", "speaker": "boss",
-         "text": "line two", "audio": None, "audio_duration_s": None},
+        {"message_id": "msg-9", "scene_index": 0, "scene_kind": "coder_talk",
+         "speaker": "coder", "text": "line one", "audio": b"wav-bytes-one",
+         "audio_duration_s": 1.5},
+        {"message_id": "msg-9", "scene_index": 1, "scene_kind": "boss",
+         "speaker": "boss", "text": "line two", "audio": None,
+         "audio_duration_s": None},
     ]
     assert isinstance(result[0]["audio"], bytes)
 
@@ -219,4 +221,57 @@ def test_load_latest_airing_returns_none_when_nothing_cached(monkeypatch):
     result = narration_store.load_latest_airing("ep1")
 
     assert result is None
+    assert fake_conn.closed is True
+
+
+# ── load_airing ──────────────────────────────────────────────────────────────
+
+def test_load_airing_returns_dicts_for_exact_message_id(monkeypatch):
+    rows = [
+        ("msg-1", 0, "coder_talk", "coder", "line one", memoryview(b"wav-bytes"), 1.5),
+        ("msg-1", 1, "boss", "boss", "line two", None, None),
+    ]
+    fake_conn = FakeConn(fetch_rows=rows)
+    monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
+
+    result = narration_store.load_airing("msg-1")
+
+    assert fake_conn.closed is True
+    assert result == [
+        {"message_id": "msg-1", "scene_index": 0, "scene_kind": "coder_talk",
+         "speaker": "coder", "text": "line one", "audio": b"wav-bytes",
+         "audio_duration_s": 1.5},
+        {"message_id": "msg-1", "scene_index": 1, "scene_kind": "boss",
+         "speaker": "boss", "text": "line two", "audio": None,
+         "audio_duration_s": None},
+    ]
+    assert isinstance(result[0]["audio"], bytes)
+
+    sql, params = fake_conn.cur.calls[0]
+    assert "WHERE message_id = %(message_id)s" in sql
+    assert params == {"message_id": "msg-1"}
+
+
+def test_load_airing_returns_none_when_message_id_unknown(monkeypatch):
+    fake_conn = FakeConn(fetch_rows=[])
+    monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
+
+    result = narration_store.load_airing("nope")
+
+    assert result is None
+    assert fake_conn.closed is True
+
+
+def test_load_airing_raises_on_db_failure(monkeypatch):
+    fake_conn = FakeConn()
+
+    def explode(sql, params=None):
+        raise RuntimeError("db exploded")
+
+    fake_conn.cur.execute = explode
+    monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
+
+    with pytest.raises(RuntimeError):
+        narration_store.load_airing("msg-1")
+
     assert fake_conn.closed is True

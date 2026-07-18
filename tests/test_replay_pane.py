@@ -20,11 +20,14 @@ from replay_pane import (  # noqa: E402
     list_episodes,
     load_reused_show,
     load_worker_config,
+    perform_director_request,
+    perform_follower_request,
     perform_request,
     persist_narration,
     publish_narration,
     read_request,
     resolve_episode,
+    resolve_self_id,
 )
 
 
@@ -615,3 +618,506 @@ def test_handle_replay_request_omits_narration_when_absent(request_file):
 
     request = json.loads(request_file.read_text(encoding="utf-8"))
     assert "narration" not in request
+
+
+# ── Duet replay (docs/duet_replay.md) — mode detection, director, follower ──
+class RecordingProducer:
+    """Fake MessageProducer that records everything sent through ONE
+    instance — unlike FakeBusProducer above (class-level .sent), the duet
+    director/follower paths build exactly one producer via
+    replay_pane._build_bus_producer and reuse it for every invite/ready/cue/
+    end publish, so tests inspect that single instance's history."""
+
+    def __init__(self, bootstrap_servers, topic):
+        self.bootstrap_servers = bootstrap_servers
+        self.topic = topic
+        self.sent = []
+
+    def send(self, message):
+        self.sent.append(message)
+        return message
+
+
+def _duet_config(self_id):
+    return {"message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages",
+                            "worker_id": self_id}}
+
+
+def _recording_producer_ctor(holder):
+    """MessageProducer stand-in that stashes the single instance it builds
+    into `holder["producer"]` so the test can inspect it after the call."""
+    def ctor(bootstrap_servers, topic):
+        producer = RecordingProducer(bootstrap_servers, topic)
+        holder["producer"] = producer
+        return producer
+    return ctor
+
+
+class FakeAudio:
+    """Minimal duck-typed stand-in for tts_client.Narration — only
+    `.duration` is read by the director's ownership-annotation loop."""
+
+    def __init__(self, duration):
+        self.duration = duration
+        self.audio_path = Path("fake.wav")
+
+
+def _fake_voiced_show_factory(with_audio=False):
+    """A prepare_voiced_show() stand-in returning a 2-scene show matching
+    duet_library's script (one "boss" scene, one "coder" scene)."""
+    def fake(script, config, workdir, **kwargs):
+        scenes = []
+        for kind, speaker, text, duration in (
+            ("boss", "boss", "boss line", 0.02),
+            ("coder_talk", "coder", "coder line", 0.03),
+        ):
+            scenes.append({
+                "kind": kind, "speaker": speaker, "narration": text,
+                "events": [{"type": "assistant_text", "text": text}],
+                "audio": FakeAudio(duration) if with_audio else None,
+            })
+        return scenes
+    return fake
+
+
+class FakePerformer:
+    """Records constructor kwargs and, on .perform(), walks `show` calling
+    on_scene_start(i) / wait_for_scene(i) for each scene index — enough to
+    exercise the duet cue-publish and ratchet wiring without any real
+    timing, pacing, or audio playback (which the real Performer/Pacer would
+    otherwise pull in via replay.play_wav)."""
+    instances = []
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.performed_show = None
+        self.performed_script = None
+        self.aborted = None
+        FakePerformer.instances.append(self)
+
+    def perform(self, script, show=None, start=0, limit=None):
+        self.performed_script = script
+        self.performed_show = show
+        on_scene_start = self.kwargs.get("on_scene_start")
+        wait_for_scene = self.kwargs.get("wait_for_scene")
+        scenes = show or []
+        for i in range(len(scenes)):
+            if on_scene_start is not None:
+                on_scene_start(i)
+            if wait_for_scene is not None:
+                if wait_for_scene(i) == -1:
+                    self.aborted = True
+                    return
+        self.aborted = False
+
+
+class CapturingPerformer:
+    """Records constructor kwargs WITHOUT executing perform() at all — used
+    when a test wants to drive wait_for_scene itself under tight control
+    (the cue-ratchet edge cases)."""
+    instances = []
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.performed_show = None
+        CapturingPerformer.instances.append(self)
+
+    def perform(self, script, show=None, start=0, limit=None):
+        self.performed_show = show
+
+
+@pytest.fixture
+def duet_library(tmp_path):
+    lib = tmp_path / "replays"
+    lib.mkdir()
+    script = {
+        "source": "duet_ep",
+        "events": [
+            {"type": "user_message", "text": "ship the login fix"},
+            {"type": "assistant_text", "text": "on it boss"},
+        ],
+    }
+    (lib / "duet_ep.json").write_text(json.dumps(script), encoding="utf-8")
+    return lib
+
+
+def _duet_rows(boss_audio=None, coder_audio=None, boss_duration=None, coder_duration=None):
+    """Rows shaped like narration_store.load_airing(), matching duet_library's
+    plan_scenes() output (scene 0 = boss, scene 1 = coder_talk)."""
+    return [
+        {"scene_index": 0, "scene_kind": "boss", "speaker": "boss", "text": "boss line",
+         "audio": boss_audio, "audio_duration_s": boss_duration},
+        {"scene_index": 1, "scene_kind": "coder_talk", "speaker": "coder", "text": "coder line",
+         "audio": coder_audio, "audio_duration_s": coder_duration},
+    ]
+
+
+@pytest.fixture
+def fake_performer(monkeypatch):
+    FakePerformer.instances = []
+    monkeypatch.setattr(replay_pane, "Performer", FakePerformer)
+    return FakePerformer
+
+
+@pytest.fixture
+def capturing_performer(monkeypatch):
+    CapturingPerformer.instances = []
+    monkeypatch.setattr(replay_pane, "Performer", CapturingPerformer)
+    return CapturingPerformer
+
+
+@pytest.fixture
+def duet_timeouts(monkeypatch):
+    """Tiny timeouts/poll intervals (docs/duet_replay.md constants) so the
+    director's ready-wait and the follower's cue-ratchet watchdog resolve
+    near-instantly in tests instead of sleeping for real seconds."""
+    monkeypatch.setattr(replay_pane, "REPLAY_READY_POLL_INTERVAL_S", 0.01)
+    monkeypatch.setattr(replay_pane, "REPLAY_READY_TIMEOUT_DEFAULT_S", 0.15)
+    monkeypatch.setattr(replay_pane, "REPLAY_CUE_POLL_INTERVAL_S", 0.01)
+    monkeypatch.setattr(replay_pane, "REPLAY_FIRST_CUE_TIMEOUT_S", 0.15)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_MIN_S", 0.1)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_GRACE_S", 0.05)
+
+
+@pytest.fixture
+def relay_files(tmp_path, monkeypatch):
+    cue_file = tmp_path / "duet_cue.json"
+    ready_file = tmp_path / "duet_ready.json"
+    monkeypatch.setenv("REPLAY_CUE_FILE", str(cue_file))
+    monkeypatch.setenv("REPLAY_READY_FILE", str(ready_file))
+    return {"cue_file": cue_file, "ready_file": ready_file}
+
+
+# ── resolve_self_id ───────────────────────────────────────────────────────────
+def test_resolve_self_id_prefers_config_worker_id(monkeypatch):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+    config = {"message_bus": {"worker_id": "from-config"}}
+    assert resolve_self_id(config, "from-arg") == "from-config"
+
+
+def test_resolve_self_id_falls_back_to_env_when_no_config(monkeypatch):
+    monkeypatch.setenv("WORKER_ID", "from-env")
+    assert resolve_self_id(None, "from-arg") == "from-env"
+    assert resolve_self_id({}, "from-arg") == "from-env"
+
+
+def test_resolve_self_id_falls_back_to_worker_name(monkeypatch):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+    assert resolve_self_id(None, "from-arg") == "from-arg"
+    assert resolve_self_id({"message_bus": {}}, "from-arg") == "from-arg"
+
+
+# ── mode detection (perform_request dispatch) ────────────────────────────────
+def test_perform_request_mode_follow_dispatches_to_follower(monkeypatch):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+    calls = {}
+
+    def fake_follower(request, library, worker_name, state_path, self_id,
+                      default_speed=1.0, config=None):
+        calls["args"] = (request, worker_name, self_id)
+        return True
+
+    def explode_director(*a, **kw):
+        raise AssertionError("mode=follow must not dispatch to the director path")
+
+    monkeypatch.setattr(replay_pane, "perform_follower_request", fake_follower)
+    monkeypatch.setattr(replay_pane, "perform_director_request", explode_director)
+
+    request = {"mode": "follow", "airing_id": "a1", "episode": "duet_ep", "cast": {}}
+    ok = perform_request(request, "lib", "KODI-7", None)
+
+    assert ok is True
+    assert calls["args"] == (request, "KODI-7", "KODI-7")
+
+
+def test_perform_request_cast_with_other_worker_dispatches_to_director(monkeypatch):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+    calls = {}
+
+    def fake_director(request, library, worker_name, state_path, self_id,
+                      default_speed=1.0, config=None):
+        calls["self_id"] = self_id
+        return True
+
+    def explode_follower(*a, **kw):
+        raise AssertionError("a director cast must not dispatch to the follower path")
+
+    monkeypatch.setattr(replay_pane, "perform_director_request", fake_director)
+    monkeypatch.setattr(replay_pane, "perform_follower_request", explode_follower)
+
+    request = {"episode": "ep1", "cast": {"coder": "worker-B"}}
+    ok = perform_request(request, "lib", "KODI-7", None)
+
+    assert ok is True
+    assert calls["self_id"] == "KODI-7"
+
+
+def test_perform_request_cast_all_self_is_solo(library, monkeypatch, capsys):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+
+    def explode_director(*a, **kw):
+        raise AssertionError("a cast whose values are all this worker's own id is solo")
+
+    def explode_follower(*a, **kw):
+        raise AssertionError("no mode=follow ⇒ must not dispatch to the follower path")
+
+    monkeypatch.setattr(replay_pane, "perform_director_request", explode_director)
+    monkeypatch.setattr(replay_pane, "perform_follower_request", explode_follower)
+
+    request = {"episode": "ep1", "speed": 0, "cast": {"coder": "KODI-7", "boss": "KODI-7"}}
+    ok = perform_request(request, library, "KODI-7", None)
+
+    assert ok is True
+    assert "hello stream" in capsys.readouterr().out
+
+
+def test_perform_request_empty_cast_is_solo(library, monkeypatch, capsys):
+    monkeypatch.delenv("WORKER_ID", raising=False)
+
+    def explode_director(*a, **kw):
+        raise AssertionError("an empty cast is solo")
+
+    monkeypatch.setattr(replay_pane, "perform_director_request", explode_director)
+
+    ok = perform_request({"episode": "ep1", "speed": 0, "cast": {}}, library, "KODI-7", None)
+
+    assert ok is True
+    assert "hello stream" in capsys.readouterr().out
+
+
+# ── director path ─────────────────────────────────────────────────────────────
+def test_director_invites_distinct_followers_deduped_and_cues_in_order(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-123")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    # Both speakers cast to the SAME follower — invites must dedupe to one.
+    cast = {"boss": "workerB", "coder": "workerB"}
+    request = {"episode": "duet_ep", "cast": cast, "speed": 1000}
+    relay_files["ready_file"].write_text(
+        json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True
+    producer = holder["producer"]
+    invites = [m for m in producer.sent if m["type"] == "replay_invite"]
+    assert len(invites) == 1
+    assert invites[0]["to"] == "workerB"
+    assert invites[0]["payload"] == {
+        "airing_id": "airing-123", "episode": "duet_ep", "cast": cast,
+        "speed": 1000.0, "worker_name": "director-1", "director": "director-1",
+    }
+    cues = [m for m in producer.sent if m["type"] == "replay_cue"]
+    assert [c["payload"]["scene_index"] for c in cues] == [0, 1]
+    assert all(c["to"] == "workerB" and c["payload"]["airing_id"] == "airing-123" for c in cues)
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert len(ends) == 1
+    assert ends[0]["to"] == "workerB"
+    assert ends[0]["payload"] == {"airing_id": "airing-123", "reason": "finished"}
+
+
+def test_director_ready_timeout_refuses_without_performing(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-999")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+    # ready file is left empty — nobody ever becomes ready.
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is False
+    assert FakePerformer.instances == []  # never performed
+    producer = holder["producer"]
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert len(ends) == 1
+    assert ends[0]["to"] == "workerB"
+    assert ends[0]["payload"]["reason"] == "ready_timeout"
+    assert ends[0]["payload"]["airing_id"] == "airing-999"
+    errors = [m for m in producer.sent if m["type"] == "operator_reply"]
+    assert len(errors) == 1
+    assert errors[0]["to"] == "operator"
+    assert "error" in errors[0]["payload"]
+
+
+def test_director_refuses_when_store_unavailable(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: False)
+
+    def explode_prepare(*a, **kw):
+        raise AssertionError("must not prepare voice when the narration store is unavailable")
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode_prepare)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is False
+    assert FakePerformer.instances == []
+    producer = holder["producer"]
+    assert [m for m in producer.sent if m["type"] == "replay_invite"] == []
+    assert [m for m in producer.sent if m["type"] == "replay_end"] == []  # nobody invited yet
+    errors = [m for m in producer.sent if m["type"] == "operator_reply"]
+    assert len(errors) == 1
+    assert "narration store" in errors[0]["payload"]["error"]
+
+
+def test_director_refuses_when_producer_unavailable(duet_library, monkeypatch, fake_performer,
+                                                     duet_timeouts, relay_files, capsys):
+    def explode_prepare(*a, **kw):
+        raise AssertionError("must not prepare voice when no bus producer can be built")
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode_prepare)
+    # No message_bus config at all ⇒ _build_bus_producer returns None.
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config={})
+
+    assert ok is False
+    assert FakePerformer.instances == []
+    assert "duet refused" in capsys.readouterr().err
+
+
+def test_director_annotates_ownership_and_strips_unowned_audio(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory(with_audio=True))
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-42")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    # Director voices "boss" itself; "coder" belongs to workerB.
+    cast = {"boss": "director-1", "coder": "workerB"}
+    request = {"episode": "duet_ep", "cast": cast, "speed": 1000}
+    relay_files["ready_file"].write_text(
+        json.dumps({"airing_id": "airing-42", "workers": ["workerB"]}), encoding="utf-8")
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    boss_scene = next(s for s in show if s["speaker"] == "boss")
+    coder_scene = next(s for s in show if s["speaker"] == "coder")
+    assert boss_scene["owned"] is True
+    assert boss_scene["audio"] is not None
+    assert boss_scene["target_duration"] == pytest.approx(0.02)
+    assert coder_scene["owned"] is False
+    assert coder_scene["audio"] is None  # stripped: not this director's speaker
+    assert coder_scene["target_duration"] == pytest.approx(0.03)  # kept for pacing
+
+
+# ── follower path ─────────────────────────────────────────────────────────────
+def test_follower_happy_path_loads_owned_audio_and_notifies_director(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
+                      boss_duration=1.5, coder_duration=2.5)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "follower-1"}
+    request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
+              "speed": 1000, "worker_name": "KODI-Follower", "director": "director-1"}
+
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    boss_scene = next(s for s in show if s["speaker"] == "boss")
+    coder_scene = next(s for s in show if s["speaker"] == "coder")
+    assert boss_scene["owned"] is False
+    assert boss_scene["audio"] is None  # not this follower's scene — never written to disk
+    assert boss_scene["target_duration"] == 1.5
+    assert coder_scene["owned"] is True
+    assert coder_scene["audio"] is not None
+    assert coder_scene["audio"].duration == 2.5
+    assert coder_scene["target_duration"] == 2.5
+
+    producer = holder["producer"]
+    ready_msgs = [m for m in producer.sent if m["type"] == "replay_ready"]
+    assert len(ready_msgs) == 1
+    assert ready_msgs[0]["to"] == "director-1"
+    assert ready_msgs[0]["payload"] == {"airing_id": "airing-77"}
+
+
+def test_follower_missing_airing_returns_to_idle_without_performing(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: None)
+
+    request = {"mode": "follow", "airing_id": "missing-id", "episode": "duet_ep",
+              "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1")
+
+    assert ok is False
+    assert FakePerformer.instances == []
+    assert "no cached airing" in capsys.readouterr().err
+
+
+def test_follower_scene_mismatch_returns_to_idle_without_performing(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
+    rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder", "text": "x",
+             "audio": None, "audio_duration_s": None}]  # duet_ep's script has TWO scenes
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+
+    request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
+              "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1")
+
+    assert ok is False
+    assert FakePerformer.instances == []
+    assert "no longer matches" in capsys.readouterr().err
+
+
+def test_follower_wait_for_scene_ratchet(duet_library, monkeypatch, capturing_performer,
+                                         duet_timeouts, relay_files):
+    rows = _duet_rows(boss_duration=1.0, coder_duration=1.0)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane, "MessageProducer", RecordingProducer)
+
+    request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
+              "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+    assert ok is True
+    wait_for_scene = CapturingPerformer.instances[0].kwargs["wait_for_scene"]
+    cue_file = relay_files["cue_file"]
+
+    # A cue ahead of the scene we're waiting for authorizes proceeding to it.
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "cue", "scene_index": 3}),
+                        encoding="utf-8")
+    assert wait_for_scene(1) == 3
+
+    # An "end" for the right airing stops the show.
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "end", "reason": "finished"}),
+                        encoding="utf-8")
+    assert wait_for_scene(0) == -1
+
+    # A cue for a DIFFERENT airing is ignored — the watchdog eventually fires.
+    cue_file.write_text(json.dumps({"airing_id": "some-other-airing", "type": "cue",
+                                    "scene_index": 5}), encoding="utf-8")
+    assert wait_for_scene(0) == -1
+
+    # No cue file at all — same watchdog timeout applies.
+    cue_file.unlink()
+    assert wait_for_scene(0) == -1

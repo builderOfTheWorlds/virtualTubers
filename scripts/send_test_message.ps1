@@ -42,7 +42,7 @@ param(
 #     manually to test the on-stream greeting without Twitch.
 $To      = "coder"
 $Type    = "viewer_joined"
-$Payload = '{"username": "phil", "channel": "mycoderchannel"}'
+$Payload = '{"username": "deezzzz", "channel": "mycoderchannel"}'
 
 # --- Coder replay request: reenact a saved episode --------------------
 # $To      = "coder"

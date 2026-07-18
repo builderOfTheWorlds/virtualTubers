@@ -26,6 +26,12 @@ WAV are reattached in place of a fresh `narrate_scene`/TTS call. It falls
 back to a fresh call through this module whenever nothing usable is
 cached.
 
+This module is unchanged by **duet replay** (multi-worker airings,
+docs/duet_replay.md) — a duet director runs this exact same narration pass
+(or the same cache-reuse rebuild described above) once for the whole cast;
+followers never call it at all, loading the director's already-persisted
+scenes straight from `narration_store.load_airing` instead.
+
 ### Timing model (why this makes audio and visuals line up)
 
 1. **Estimate** each scene's on-screen render time at base pacing

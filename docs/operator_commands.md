@@ -90,6 +90,15 @@ demo side effects, no pipeline handoff.
   unavailable (no `POSTGRES_*` env / `psycopg2` / DB down), the episode
   has never been cached, or the cached scene structure no longer matches
   the script (docs/narration_store.md, docs/replay_pane.md).
+- `payload.cast` (object, optional) — turns a solo airing into a **duet**:
+  a `{speaker: worker_id}` map assigning who voices which speaker
+  (v1 scripts only ever produce `"boss"` and `"coder"`). The worker `to`
+  is addressed becomes the **director** — it performs on every stream
+  involved, but only plays audio for the speaker(s) cast to itself; every
+  other cast worker (a **follower**) is invited over the bus and performs
+  the same episode on its own stream, voicing only its own speaker(s). A
+  speaker not present in `cast` defaults to the director. Full protocol,
+  timeouts, and deployment requirements: docs/duet_replay.md.
 
 Any worker (no role gate) queues the episode for its "Rerun Theater" pane
 and confirms with an `operator_reply`. The show only actually appears if
@@ -98,6 +107,30 @@ the worker's layout includes the replay pane (`layout.preset: replay` or
 reported in the worker's container logs. Episodes are pre-parsed, redacted
 scripts of past dev sessions built by `scripts/build_replay_library.py` —
 display-only, nothing is re-executed.
+
+**Duet example** — the coder directs and voices the `coder` speaker; the
+manager follows and voices the `boss` speaker; both streams show the
+whole episode:
+
+```json
+{"to": "coder", "type": "replay_request",
+ "payload": {"episode": "2026-07-02_04-27-00_6ecdde82",
+             "cast": {"boss": "manager", "coder": "coder"}}}
+```
+
+**Duets never degrade to solo.** An invalid `cast` (not a dict, empty, or
+non-string keys/values) is rejected immediately with an `operator_reply`
+error and nothing is queued. A valid cast that later fails to come
+together — the director can't reach Kafka or the narration store, voice
+prep fails, or a follower never publishes ready within
+`REPLAY_READY_TIMEOUT_S` (default 60s) — refuses the whole airing outright
+instead of falling back to a solo show. Most refusals send a **second**
+`operator_reply` with `{"error": "..."}` once the director gives up
+(distinct from the initial "queued" reply); the one exception is a
+director with no Kafka producer at all, which can't send anything further
+back — check that worker's container logs (`duet refused: ...`) if a
+duet airing seems to have silently gone nowhere. See docs/duet_replay.md
+for the full refusal rule and timeout table.
 
 ## Manual/debug commands
 
@@ -163,4 +196,7 @@ terminates within 3 retries with an `escalation` report to the operator.
 - `docs/message_api.md` — the HTTP endpoint itself.
 - `docs/agent.md` — how each message type is handled worker-side.
 - `docs/message_bus_feed.md` — reading the Kafka feed pane (highlight colors, filters).
+- `docs/duet_replay.md` — full multi-worker duet replay protocol reference
+  (`cast`, `replay_invite`/`replay_ready`/`replay_cue`/`replay_end`,
+  timeouts, deployment requirements).
 - `.claude/prompts/worker_interaction_kafka.md` — the implementation plan that landed this collaboration flow.

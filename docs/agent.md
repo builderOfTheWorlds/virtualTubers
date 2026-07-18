@@ -60,6 +60,16 @@ LLM-driven tool use (see `docs/tmux_control.md`):
 (`handle_operator_message` is deliberately lightweight and skips both
 demos — LLM reply only.)
 
+Four more handlers (`replay_invite`/`replay_ready`/`replay_cue`/
+`replay_end`) exist purely to relay **duet replay** traffic (multi-worker
+Rerun Theater airings, `docs/duet_replay.md`) from the bus into small local
+JSON files `app/replay_pane.py` polls — any role, no LLM call, nothing
+sent back onto the bus. `handle_replay_request` additionally validates an
+optional `payload.cast` (a `{speaker: worker_id}` map) before forwarding
+it into the request file: an invalid cast is rejected with an
+`operator_reply` error and nothing is written, so a half-formed duet can
+never reach the pane. See "Duet replay relay handlers" below.
+
 This is the "think + narrate" slice of the agent brain — it proves the
 full team round trip (operator → coder → tester → manager → back to the
 operator on stream) end to end, now visibly landing on the avatar and
@@ -115,6 +125,16 @@ def handle_operator_message(worker_id: str, agent_config: dict, llm_client, prod
 
 def handle_viewer_joined(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
 
+def _is_valid_cast(cast) -> bool
+
+def handle_replay_invite(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
+
+def handle_replay_ready(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
+
+def handle_replay_cue(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
+
+def handle_replay_end(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
+
 def main() -> None
 ```
 
@@ -152,6 +172,24 @@ def main() -> None
   bus — greeting and rerun are narration-only (console + avatar bubble +
   replay pane), so a burst of viewer arrivals can never fan out into bus
   traffic, and failures (no episodes, LLM down) just log.
+- `payload.cast` (`handle_replay_request`, optional) — a duet replay
+  `{speaker: worker_id}` map (docs/duet_replay.md). Validated by
+  `_is_valid_cast` (must be a non-empty dict of non-empty string keys and
+  values); a present-but-invalid cast is rejected with an `operator_reply`
+  error and the request file is never written. A valid cast is forwarded
+  into the request file verbatim, unchanged from what the operator sent.
+  Absent `cast` leaves solo-request behavior byte-for-byte unchanged.
+- `airing_id` / `scene_index` / `reason` (the four duet relay handlers,
+  `handle_replay_invite`/`handle_replay_ready`/`handle_replay_cue`/
+  `handle_replay_end`) — any role, no gate. Each does nothing but relay its
+  payload into a small local JSON file `app/replay_pane.py` polls
+  (`REPLAY_REQUEST_FILE` for an invite — written with `"mode": "follow"`
+  added, unless a request is already pending, in which case the invite is
+  dropped; `REPLAY_READY_FILE` for a ready, union/replace-by-`airing_id`
+  keyed on the sender in the message envelope `from`; `REPLAY_CUE_FILE` for
+  a cue or an end, overwrite-latest). No LLM call, nothing sent back onto
+  the bus, and a file-write failure logs and returns rather than raising.
+  Full schemas: docs/duet_replay.md.
 - `report_type` / `task` / `narration` / `extra` (`_send_manager_report`) —
   the payload discriminator (`"milestone" | "blocker" | "escalation"`),
   the task description, the (possibly fallback) narration, and an optional
@@ -171,7 +209,10 @@ def main() -> None
 
 - All `handle_*` functions, `_run_tests_and_report`, `demo_editor_note`,
   `demo_filetree_ls` — `None`; side effects only (Kafka publish + console
-  `print`; avatar state writes; tmux pane focus/keystrokes).
+  `print`; avatar state writes; tmux pane focus/keystrokes; for the four
+  duet relay handlers, a relay-file write instead of a Kafka publish).
+- `_is_valid_cast` — `bool`: `True` only for a non-empty dict whose keys
+  and values are all non-empty strings.
 - `_decide_test_outcome` — `(passed, severity)`: `(True, None)` on pass,
   otherwise `(False, severity)` with severity drawn from `BUG_SEVERITIES`
   weighted by `BUG_SEVERITY_WEIGHTS`. Factored out (not inlined in the
@@ -261,9 +302,25 @@ curl -X POST http://localhost:8090/messages \
   `tmux` binary missing entirely — e.g. running `agent.py` outside the
   container) and just log it — these are cosmetic demo actions, so neither
   may ever take the tick loop down.
+- The four duet relay handlers (`handle_replay_invite`/`_ready`/`_cue`/
+  `_end`) never raise out of the tick loop: a relay-file write failure
+  (`OSError`) is caught, logged, and the handler returns — it never sends
+  anything on the bus either way, so there's no error reply to send. A
+  dropped invite (pending request file already present) is likewise just
+  logged; the director's own `replay_ready` wait is what turns that into a
+  visible refusal (docs/duet_replay.md).
 
 ## Changelog
 
+- v2.3.0 (2026-07-13) — Duet replay relay: four new any-role handlers
+  (`handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`,
+  `handle_replay_end`, added to `MESSAGE_HANDLERS`) relay director/follower
+  coordination messages into the new `REPLAY_CUE_FILE`/`REPLAY_READY_FILE`
+  local files for `app/replay_pane.py` to poll — panes still never consume
+  Kafka. `handle_replay_request` gained optional `payload.cast` handling
+  (`_is_valid_cast`): a valid `{speaker: worker_id}` map forwards verbatim
+  into the request file; an invalid one is rejected with an `operator_reply`
+  error and nothing is written. See docs/duet_replay.md.
 - v2.2.0 (2026-07-13) — `handle_viewer_joined` now starts a rerun: queues a
   Rerun Theater episode (random library pick, `payload.episode` override)
   via the shared `_write_replay_request` helper before greeting, and the

@@ -48,6 +48,104 @@ DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
 IDLE_REDRAW_S = 300  # re-list the library occasionally (new episodes synced in)
 
+# ── Duet replay (docs/duet_replay.md) ────────────────────────────────────────
+# Relay files the agent (app/agent.py) writes and this pane polls — same
+# atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
+DEFAULT_REPLAY_CUE_FILE = "/tmp/replay_cue.json"
+DEFAULT_REPLAY_READY_FILE = "/tmp/replay_ready.json"
+
+# Director: how long to wait for every invited follower to publish
+# replay_ready before refusing the airing outright (duets never degrade to
+# solo — see perform_director_request).
+REPLAY_READY_TIMEOUT_ENV = "REPLAY_READY_TIMEOUT_S"
+REPLAY_READY_TIMEOUT_DEFAULT_S = 60.0
+REPLAY_READY_POLL_INTERVAL_S = 0.25
+
+# Follower: cue-file poll interval and the cue ratchet's watchdog timeouts —
+# the first cue gets a generous flat allowance (the director is still
+# preparing/inviting/annotating before it ever starts scene 0); every cue
+# after that is bounded by the PREVIOUS scene's own target_duration (roughly
+# how long the director should still be busy performing it) plus a grace
+# window, floored so a near-zero-duration scene doesn't produce a hair-
+# trigger watchdog.
+REPLAY_CUE_POLL_INTERVAL_S = 0.25
+REPLAY_FIRST_CUE_TIMEOUT_S = 120.0
+REPLAY_WATCHDOG_GRACE_S = 30.0
+REPLAY_WATCHDOG_MIN_S = 45.0
+
+
+def resolve_self_id(config, worker_name):
+    """This worker's bus identity, for duet ownership matching (docs/
+    duet_replay.md "self id"): config.message_bus.worker_id wins, then the
+    WORKER_ID env var, falling back to the pane's --worker-name so a
+    config-less/local run still resolves to a stable identity."""
+    bus_config = (config or {}).get("message_bus") or {}
+    return bus_config.get("worker_id") or os.environ.get("WORKER_ID") or worker_name
+
+
+def _read_json_file(path):
+    """Best-effort read of a small relay file this pane only ever polls
+    (never writes) — missing or corrupt content is "nothing new yet", not an
+    error worth raising."""
+    p = Path(path)
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def _delete_stale_file(path):
+    """Best-effort cleanup of a leftover relay file from a previous show —
+    a duet role starting up must never trip over stale state (docs/
+    duet_replay.md "stale-state hygiene")."""
+    try:
+        Path(path).unlink()
+    except OSError:
+        pass
+
+
+def _resolve_replay_cue_file():
+    return os.environ.get("REPLAY_CUE_FILE") or DEFAULT_REPLAY_CUE_FILE
+
+
+def _resolve_replay_ready_file():
+    return os.environ.get("REPLAY_READY_FILE") or DEFAULT_REPLAY_READY_FILE
+
+
+def _build_bus_producer(config):
+    """Best-effort Kafka producer from a worker config's message_bus
+    section — None when unconfigured or construction fails (e.g. Kafka
+    unreachable). Duet director/follower paths treat a None producer as a
+    hard refusal (docs/duet_replay.md refusal rule); solo shows never call
+    this at all."""
+    bus_config = (config or {}).get("message_bus") or {}
+    bootstrap_servers = bus_config.get("bootstrap_servers")
+    topic = bus_config.get("topic")
+    if not bootstrap_servers or not topic:
+        return None
+    try:
+        return MessageProducer(bootstrap_servers, topic)
+    except Exception as exc:
+        print(f"[replay_pane] duet bus producer unavailable: {exc}", file=sys.stderr)
+        return None
+
+
+def _safe_send(producer, message):
+    """Best-effort publish — a single duet relay message failing (director
+    cue, follower ready, ...) must not take the show down; the receiving
+    side's own watchdog/timeout is what recovers from a dropped message."""
+    if producer is None:
+        return False
+    try:
+        producer.send(message)
+        return True
+    except Exception as exc:
+        print(f"[replay_pane] duet message publish failed ({message.get('type')}): {exc}",
+              file=sys.stderr)
+        return False
+
 
 def resolve_episode(library, episode):
     """Map a requested episode name to a file inside the library.
@@ -183,14 +281,20 @@ def persist_narration(message_id, show, config, episode, worker_name):
     publish_narration()'s message_id so the two converge on one row set;
     Kafka being down just means we mint our own id — the cache must still
     work even without a bus. Never raises: a store outage must never stop
-    or delay a show."""
+    or delay a show.
+
+    Returns the message_id the airing was actually saved under (the one
+    passed in, or the freshly-minted uuid when it was None) on success, or
+    None when nothing was saved. The duet director path uses this as a
+    fresh airing's airing_id and treats None as a hard refusal (docs/
+    duet_replay.md refusal rule); solo callers ignore the return value."""
     if not show:
-        return
+        return None
     if message_id is None:
         message_id = str(uuid.uuid4())
     if not narration_store.available():
         print("[replay_pane] narration store unavailable — airing not cached for reuse")
-        return
+        return None
     bus_config = (config or {}).get("message_bus") or {}
     worker_id = bus_config.get("worker_id", worker_name)
     try:
@@ -201,8 +305,76 @@ def persist_narration(message_id, show, config, episode, worker_name):
         )
     except Exception as exc:
         print(f"[replay_pane] narration cache save failed: {exc}", file=sys.stderr)
-        return
+        return None
     print(f"[replay_pane] cached narration ({n} scenes) for reuse")
+    return message_id
+
+
+def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
+    """Shared by load_reused_show (solo/director reuse) and the duet
+    follower path (perform_follower_request): rebuild plan_scenes(script)
+    and splice each row's cached narration text — and optionally its
+    synthesized audio — back in. Returns None when the scene count or kind
+    sequence no longer lines up with `rows` — a stale/incompatible cache the
+    caller must refuse rather than perform partially.
+
+    `owns(scene, row)` gates whether that scene's audio bytes get written to
+    `workdir` at all (default: every scene, i.e. no gating — the solo/
+    director-reuse case, which wants every speaker's real audio locally). A
+    duet follower passes a predicate that's only true for scenes cast to
+    itself, so it never writes another performer's audio to its own temp
+    dir. `target_duration` is always set from audio_duration_s regardless of
+    `owns`, so pacing stays correct on scenes this worker doesn't voice too.
+    May raise (I/O, tts_client import) — callers wrap in their own try/except
+    per their existing error-reporting conventions."""
+    from revoice import plan_scenes
+    from tts_client import Narration, wav_duration
+
+    scenes = plan_scenes(script.get("events", []))
+    if len(scenes) != len(rows) or any(
+        scene["kind"] != row["scene_kind"] for scene, row in zip(scenes, rows)
+    ):
+        return None
+    for scene, row in zip(scenes, rows):
+        scene["narration"] = row["text"]
+        scene["audio"] = None
+        scene["target_duration"] = row.get("audio_duration_s")
+        if row["audio"] and (owns is None or owns(scene, row)):
+            path = Path(workdir) / f"scene_{row['scene_index']:03d}.wav"
+            path.write_bytes(row["audio"])
+            duration = row["audio_duration_s"] or wav_duration(path)
+            scene["audio"] = Narration(audio_path=path, duration=duration)
+    return scenes
+
+
+def _load_cached_show(script, episode, workdir):
+    """Core of load_reused_show, also used by the duet director's
+    narration:"reuse" path (perform_director_request), which additionally
+    needs the raw rows to recover the reused airing's message_id/airing_id
+    (docs/duet_replay.md). Returns (scenes, rows) on success, or (None,
+    None) when there's nothing usable to reuse. Never raises."""
+    if not narration_store.available():
+        print("[replay_pane] narration store unavailable — generating fresh narration")
+        return None, None
+    try:
+        cached = narration_store.load_latest_airing(episode)
+    except Exception as exc:
+        print(f"[replay_pane] narration cache load failed: {exc}", file=sys.stderr)
+        return None, None
+    if not cached:
+        print(f"[replay_pane] no cached narration for {episode!r} — generating fresh")
+        return None, None
+    try:
+        scenes = _rebuild_scenes_from_rows(script, cached, workdir)
+        if scenes is None:
+            print(f"[replay_pane] cached narration no longer matches episode script "
+                  f"— generating fresh")
+            return None, None
+        print(f"[replay_pane] reusing cached narration for {episode!r} ({len(scenes)} scenes)")
+        return scenes, cached
+    except Exception as exc:
+        print(f"[replay_pane] narration reuse failed: {exc}", file=sys.stderr)
+        return None, None
 
 
 def load_reused_show(script, episode, workdir):
@@ -210,46 +382,272 @@ def load_reused_show(script, episode, workdir):
     instead of calling the LLM + TTS again. Returns the show, or None when
     there's nothing usable to reuse — the caller falls back to a fresh
     generation (show-must-air rule, docs/revoice.md). Never raises."""
-    if not narration_store.available():
-        print("[replay_pane] narration store unavailable — generating fresh narration")
-        return None
-    try:
-        cached = narration_store.load_latest_airing(episode)
-    except Exception as exc:
-        print(f"[replay_pane] narration cache load failed: {exc}", file=sys.stderr)
-        return None
-    if not cached:
-        print(f"[replay_pane] no cached narration for {episode!r} — generating fresh")
-        return None
-    try:
-        from revoice import plan_scenes
-        from tts_client import Narration, wav_duration
+    scenes, _rows = _load_cached_show(script, episode, workdir)
+    return scenes
 
-        scenes = plan_scenes(script.get("events", []))
-        if len(scenes) != len(cached) or any(
-            scene["kind"] != row["scene_kind"] for scene, row in zip(scenes, cached)
-        ):
-            print(f"[replay_pane] cached narration no longer matches episode script "
-                  f"— generating fresh")
-            return None
-        for scene, row in zip(scenes, cached):
-            scene["narration"] = row["text"]
-            scene["audio"] = None
-            if row["audio"]:
-                path = Path(workdir) / f"scene_{row['scene_index']:03d}.wav"
-                path.write_bytes(row["audio"])
-                duration = row["audio_duration_s"] or wav_duration(path)
-                scene["audio"] = Narration(audio_path=path, duration=duration)
-        print(f"[replay_pane] reusing cached narration for {episode!r} ({len(scenes)} scenes)")
-        return scenes
+
+def _send_replay_end(producer, self_id, followers, airing_id, reason):
+    """Director → each follower: replay_end (docs/duet_replay.md #4). Used
+    both for a normal finish (reason "finished") and for every refusal path
+    (reason "ready_timeout" / "aborted") — best-effort, one publish failure
+    must not stop the rest from going out."""
+    for follower in followers:
+        _safe_send(producer, build_message(self_id, follower, "replay_end",
+                                           {"airing_id": airing_id, "reason": reason}))
+
+
+def _send_operator_error(producer, self_id, error):
+    """Director → operator: operator_reply carrying a duet refusal reason
+    (docs/duet_replay.md refusal rule). Best-effort — panes may produce but
+    a failed publish must not raise out of the refusal path."""
+    _safe_send(producer, build_message(self_id, "operator", "operator_reply", {"error": error}))
+
+
+def perform_director_request(request, library, worker_name, state_path, self_id,
+                             default_speed=1.0, config=None):
+    """Duet director path (docs/duet_replay.md): prepare + persist the full
+    airing exactly like a solo show, invite the other cast workers, and only
+    perform once every one of them is ready. Refuses outright — never
+    degrading to a solo performance — when narration_store, the Kafka
+    producer, voice preparation, or persistence isn't available, or when a
+    follower never shows up in time. Returns True only when the show
+    actually aired."""
+    episode = request.get("episode")
+    source = resolve_episode(library, episode)
+    if source is None:
+        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+        return False
+    try:
+        speed = float(request.get("speed") or default_speed)
+    except (TypeError, ValueError):
+        speed = default_speed
+    script = load_script(source)
+    name = str(request.get("worker_name") or worker_name)
+    cast = request.get("cast") or {}
+    followers = sorted({worker_id for worker_id in cast.values()
+                        if worker_id and worker_id != self_id})
+
+    producer = _build_bus_producer(config)
+    invited = []  # only populated once invites actually go out — a refusal
+                  # before that point has nobody to send replay_end to yet
+
+    def refuse(log_message, operator_error=None, reason="aborted", airing_id=None):
+        print(f"[replay_pane] duet refused: {log_message}", file=sys.stderr)
+        if producer is not None:
+            _send_replay_end(producer, self_id, invited, airing_id, reason)
+            _send_operator_error(producer, self_id, operator_error or log_message)
+        return False
+
+    if producer is None:
+        return refuse("no Kafka producer available for duet replay")
+    if not narration_store.available():
+        return refuse("narration store unavailable for duet replay")
+
+    with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
+        show, airing_id = None, None
+        if request.get("narration") == "reuse":
+            reused, rows = _load_cached_show(script, source.stem, workdir)
+            if reused is not None:
+                show, airing_id = reused, rows[0]["message_id"]
+        if show is None:
+            show = prepare_voice(script, config, workdir, name, speed)
+            if show is None:
+                return refuse("voice preparation failed or is disabled for this worker")
+            message_id = publish_narration(show, config, source.stem, name)
+            airing_id = persist_narration(message_id, show, config, source.stem, name)
+            if airing_id is None:
+                return refuse("failed to persist duet airing for followers to load")
+
+        # Annotate every scene for the duet: "owned" gates whether THIS
+        # worker plays its audio/speaks (Performer._perform_scene); a scene
+        # this worker doesn't own has its audio stripped so it never gets
+        # played here, but keeps target_duration so visual pacing still
+        # tracks the owner's timing.
+        for scene in show:
+            speaker = scene.get("speaker")
+            owned = cast.get(speaker, self_id) == self_id
+            audio = scene.get("audio")
+            scene["owned"] = owned
+            if audio is not None:
+                scene["target_duration"] = getattr(audio, "duration", None)
+            if not owned:
+                scene["audio"] = None
+
+        for follower in followers:
+            payload = {"airing_id": airing_id, "episode": source.stem, "cast": cast,
+                      "speed": speed, "worker_name": name, "director": self_id}
+            _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
+        invited = followers
+
+        cue_file = _resolve_replay_cue_file()
+        _delete_stale_file(cue_file)
+
+        ready_file = _resolve_replay_ready_file()
+        try:
+            timeout_s = float(os.environ.get(REPLAY_READY_TIMEOUT_ENV) or REPLAY_READY_TIMEOUT_DEFAULT_S)
+        except (TypeError, ValueError):
+            timeout_s = REPLAY_READY_TIMEOUT_DEFAULT_S
+        deadline = time.monotonic() + timeout_s
+        followers_needed = set(followers)
+        ready = False
+        while True:
+            state = _read_json_file(ready_file)
+            if isinstance(state, dict) and state.get("airing_id") == airing_id:
+                if followers_needed <= set(state.get("workers") or []):
+                    ready = True
+                    break
+            if time.monotonic() >= deadline:
+                break
+            time.sleep(REPLAY_READY_POLL_INTERVAL_S)
+        if not ready:
+            return refuse("timed out waiting for duet followers to become ready",
+                          reason="ready_timeout", airing_id=airing_id)
+
+        def on_scene_start(index):
+            for follower in followers:
+                _safe_send(producer, build_message(self_id, follower, "replay_cue",
+                                                    {"airing_id": airing_id, "scene_index": index}))
+
+        performer = Performer(
+            pacer=Pacer(speed=speed),
+            palette=Palette(enabled=True),
+            worker_name=name,
+            state_path=state_path,
+            on_scene_start=on_scene_start,
+        )
+        performer.perform(script, show=show)
+
+        _send_replay_end(producer, self_id, followers, airing_id, "finished")
+    return True
+
+
+def perform_follower_request(request, library, worker_name, state_path, self_id,
+                             default_speed=1.0, config=None):
+    """Duet follower path (docs/duet_replay.md): load the SAME airing the
+    director already persisted — NEVER generate fresh narration here — keep
+    audio only for the scenes cast to this worker, tell the director it's
+    ready, then perform scene-by-scene as replay_cue messages authorize each
+    one (the cue ratchet, see wait_for_scene below). Returns True only when
+    the show actually aired."""
+    airing_id = request.get("airing_id")
+    episode = request.get("episode")
+    cast = request.get("cast")
+    director = request.get("director")
+    if not airing_id or not episode or not isinstance(cast, dict):
+        print(f"[replay_pane] malformed follower request (airing_id={airing_id!r} "
+              f"episode={episode!r} cast={cast!r}) — ignoring", file=sys.stderr)
+        return False
+
+    source = resolve_episode(library, episode)
+    if source is None:
+        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+        return False
+    try:
+        speed = float(request.get("speed") or default_speed)
+    except (TypeError, ValueError):
+        speed = default_speed
+    script = load_script(source)
+    name = str(request.get("worker_name") or worker_name)
+
+    if not narration_store.available():
+        print("[replay_pane] narration store unavailable — cannot follow duet airing",
+              file=sys.stderr)
+        return False
+    try:
+        rows = narration_store.load_airing(airing_id)
     except Exception as exc:
-        print(f"[replay_pane] narration reuse failed: {exc}", file=sys.stderr)
-        return None
+        print(f"[replay_pane] follower airing load failed: {exc}", file=sys.stderr)
+        return False
+    if not rows:
+        print(f"[replay_pane] no cached airing {airing_id!r} to follow — cannot perform",
+              file=sys.stderr)
+        return False
+
+    cue_file = _resolve_replay_cue_file()
+    with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
+        try:
+            show = _rebuild_scenes_from_rows(
+                script, rows, workdir,
+                owns=lambda scene, row: cast.get(scene.get("speaker")) == self_id,
+            )
+        except Exception as exc:
+            print(f"[replay_pane] follower scene rebuild failed: {exc}", file=sys.stderr)
+            return False
+        if show is None:
+            print(f"[replay_pane] cached airing {airing_id!r} no longer matches episode "
+                  f"script — cannot follow", file=sys.stderr)
+            return False
+
+        for scene in show:
+            scene["owned"] = cast.get(scene.get("speaker")) == self_id
+
+        # Stale-state hygiene: clear any leftover cue from a previous show
+        # BEFORE announcing readiness, so this follower can never consume a
+        # cue/end meant for a different airing (docs/duet_replay.md).
+        _delete_stale_file(cue_file)
+
+        producer = _build_bus_producer(config)
+        target = director or "operator"
+        if not _safe_send(producer, build_message(self_id, target, "replay_ready",
+                                                   {"airing_id": airing_id})):
+            print("[replay_pane] could not notify director of readiness — cannot follow",
+                  file=sys.stderr)
+            return False
+
+        def wait_for_scene(index):
+            if index == 0:
+                timeout_s = REPLAY_FIRST_CUE_TIMEOUT_S
+            else:
+                prev_duration = show[index - 1].get("target_duration") or 0
+                timeout_s = max(REPLAY_WATCHDOG_MIN_S, prev_duration + REPLAY_WATCHDOG_GRACE_S)
+            deadline = time.monotonic() + timeout_s
+            while True:
+                cue = _read_json_file(cue_file)
+                if isinstance(cue, dict) and cue.get("airing_id") == airing_id:
+                    if cue.get("type") == "end":
+                        return -1
+                    if cue.get("type") == "cue":
+                        scene_index = cue.get("scene_index")
+                        if isinstance(scene_index, int) and scene_index >= index:
+                            return scene_index
+                if time.monotonic() >= deadline:
+                    print(f"[replay_pane] duet follower watchdog timed out waiting for "
+                          f"scene {index}", file=sys.stderr)
+                    return -1
+                time.sleep(REPLAY_CUE_POLL_INTERVAL_S)
+
+        performer = Performer(
+            pacer=Pacer(speed=speed),
+            palette=Palette(enabled=True),
+            worker_name=name,
+            state_path=state_path,
+            wait_for_scene=wait_for_scene,
+        )
+        performer.perform(script, show=show)
+    return True
 
 
 def perform_request(request, library, worker_name, state_path, default_speed=1.0,
                     config=None):
-    """Resolve and perform one request. Returns True if an episode played."""
+    """Resolve and perform one request. Returns True if an episode played.
+
+    Duet dispatch (docs/duet_replay.md): payload "mode": "follow" ⇒ this
+    worker is a follower in someone else's duet airing (perform_follower_
+    request); else a "cast" dict mapping any speaker to a worker other than
+    this one ⇒ this worker directs a new duet airing (perform_director_
+    request). Neither ⇒ solo, exactly as before this feature landed — a
+    cast whose values are ALL this worker's own id is solo too, since there
+    is nobody else to duet with.
+    """
+    self_id = resolve_self_id(config, worker_name)
+    if request.get("mode") == "follow":
+        return perform_follower_request(request, library, worker_name, state_path, self_id,
+                                        default_speed=default_speed, config=config)
+    cast = request.get("cast")
+    if isinstance(cast, dict) and any(worker_id != self_id for worker_id in cast.values()):
+        return perform_director_request(request, library, worker_name, state_path, self_id,
+                                        default_speed=default_speed, config=config)
+
     episode = request.get("episode")
     source = resolve_episode(library, episode)
     if source is None:

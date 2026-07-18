@@ -141,13 +141,22 @@ class Performer:
     """Renders script events in order. One instance per episode."""
 
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
-                 state_path=None, max_output_lines=MAX_OUTPUT_LINES):
+                 state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
+                 on_scene_start=None, wait_for_scene=None):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
         self.worker_name = worker_name
         self.state_path = state_path
         self.max_output_lines = max_output_lines
+        # Duet hooks (both default None => today's straight-through solo
+        # performance, unchanged). A director sets on_scene_start to publish
+        # a per-scene cue immediately before that scene performs; a follower
+        # sets wait_for_scene to block until its own cue file authorizes the
+        # scene (see perform()). Exceptions from on_scene_start are caught
+        # there — a bus hiccup must not take the show down.
+        self.on_scene_start = on_scene_start
+        self.wait_for_scene = wait_for_scene
 
     # ── low-level emit helpers ───────────────────────────────────────────────
     def _write(self, text):
@@ -306,16 +315,33 @@ class Performer:
     def _perform_scene(self, scene):
         """Perform one scene; when it carries synthesized narration, anchor
         the visual pacing to the audio's measured duration so both finish
-        together (revoice.py's timing model)."""
+        together (revoice.py's timing model).
+
+        Duet followers (docs/duet_replay.md) pass scenes for speakers they
+        don't voice: "owned" (default True) gates whether THIS worker plays
+        that scene's audio and shows the speaking bubble at all — every
+        stream still renders the full visuals and prints the narration line,
+        so viewers on any cast member's channel see the whole show. A scene
+        that isn't owned (or is owned but has no audio, e.g. reuse dropped
+        the WAV) carries "target_duration" instead: visual pacing scales to
+        that instead of audio.duration, using the same clamp, and the scene
+        holds on the wall clock until target_duration has elapsed — keeping
+        this worker's stream in lockstep with the owner's, even with no
+        sound to anchor to."""
+        owned = scene.get("owned", True)
         narration = scene.get("narration")
         audio = scene.get("audio")
+        target_duration = scene.get("target_duration")
         if narration:
             self._line()
             self._line(f"{self.c.dim}♪ {narration}{self.c.reset}")
-            self._avatar("speaking", action="narrating the rerun", bubble=narration)
+            if owned:
+                self._avatar("speaking", action="narrating the rerun", bubble=narration)
+            else:
+                self._avatar("idle", action="listening to the show")
 
-        playback, started = None, None
-        if audio and audio.duration > 0:
+        playback, started, hold_seconds = None, None, None
+        if owned and audio is not None and audio.duration > 0:
             natural = sum(
                 estimate_event_seconds(e, self.max_output_lines)
                 for e in scene["events"]
@@ -324,6 +350,15 @@ class Performer:
                                    max(MIN_SCENE_SCALE, natural / audio.duration))
             playback = play_wav(audio.audio_path)
             started = time.monotonic()
+        elif not (owned and audio is not None) and target_duration is not None and target_duration > 0:
+            natural = sum(
+                estimate_event_seconds(e, self.max_output_lines)
+                for e in scene["events"]
+            ) / self.pacer.speed
+            self.pacer.scale = min(MAX_SCENE_SCALE,
+                                   max(MIN_SCENE_SCALE, natural / target_duration))
+            started = time.monotonic()
+            hold_seconds = target_duration
         try:
             self._perform_events(scene["events"])
         finally:
@@ -335,13 +370,24 @@ class Performer:
                 wait_extra(playback, started, audio.duration)
             else:
                 playback.stop()
+        elif hold_seconds is not None and self.pacer.enabled:
+            remaining = hold_seconds - (time.monotonic() - started)
+            if remaining > 0:
+                time.sleep(remaining)
 
     # ── top level ────────────────────────────────────────────────────────────
     def perform(self, script, show=None, start=0, limit=None):
         """Perform an episode. `show` is an optional voiced show from
         revoice.prepare_show() — scenes with narration + audio; without it,
         the script's events play silently exactly as before. start/limit
-        slice events when unvoiced, scenes when voiced."""
+        slice events when unvoiced, scenes when voiced.
+
+        Index-based (rather than a plain for-loop) so a duet follower's
+        wait_for_scene hook can jump the index forward or abort mid-show
+        (docs/duet_replay.md, "cue ratchet + fast-forward rule"). With
+        neither on_scene_start nor wait_for_scene set this is exactly
+        today's straight-through loop.
+        """
         c = self.c
         if show is None:
             events = script.get("events", [])[start:]
@@ -357,8 +403,43 @@ class Performer:
                    f"({len(scenes)} scenes) ══{c.reset}")
         self._avatar("idle", action="getting ready for a rerun")
 
-        for scene in scenes:
-            self._perform_scene(scene)
+        n = len(scenes)
+        i = 0
+        while i < n:
+            if self.on_scene_start is not None:
+                try:
+                    self.on_scene_start(i)
+                except Exception as exc:
+                    # A cue-publish failure must not take the show down —
+                    # the follower's watchdog will time out and recover.
+                    print(f"[replay] on_scene_start hook failed for scene {i}: {exc}",
+                          file=sys.stderr)
+
+            catch_up_to = None
+            if self.wait_for_scene is not None:
+                authorized = self.wait_for_scene(i)
+                if authorized == -1:
+                    self._line()
+                    self._line(f"{c.bold}{c.magenta}══ interrupted ══{c.reset}")
+                    self._avatar("idle", action="show interrupted")
+                    return
+                if authorized - i >= 2:
+                    catch_up_to = min(authorized, n - 1)
+
+            self._perform_scene(scenes[i])
+            i += 1
+
+            if catch_up_to is not None:
+                # ≥2 scenes behind the cue: race through the backlog with
+                # pacing off so this stream catches back up to the director.
+                was_enabled = self.pacer.enabled
+                self.pacer.enabled = False
+                try:
+                    while i <= catch_up_to:
+                        self._perform_scene(scenes[i])
+                        i += 1
+                finally:
+                    self.pacer.enabled = was_enabled
 
         self._line()
         self._line(f"{c.bold}{c.magenta}══ fin ══{c.reset}")

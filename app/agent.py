@@ -44,6 +44,16 @@ WORKSPACE_MOUNT_PATTERN = "/data/repos/{coder_id}"
 REPLAY_REQUEST_FILE_ENV = "REPLAY_REQUEST_FILE"
 DEFAULT_REPLAY_REQUEST_FILE = "/tmp/replay_request.json"
 
+# Duet replay relay files (agent -> pane): the cue file carries the latest
+# scene cue/end for the ratchet loop in replay_pane.py; the ready file
+# accumulates which followers have loaded a duet airing. Same env-override +
+# atomic-write convention as REPLAY_REQUEST_FILE_ENV above.
+REPLAY_CUE_FILE_ENV = "REPLAY_CUE_FILE"
+DEFAULT_REPLAY_CUE_FILE = "/tmp/replay_cue.json"
+
+REPLAY_READY_FILE_ENV = "REPLAY_READY_FILE"
+DEFAULT_REPLAY_READY_FILE = "/tmp/replay_ready.json"
+
 # Episode library for viewer-join reruns — same path convention as
 # replay_pane.py, which owns the actual resolution/performance.
 REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
@@ -645,16 +655,41 @@ def _resolve_replay_request_file():
     return os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
 
 
-def _write_replay_request(request):
-    """Atomic write of the agent -> replay pane request file (same
-    temp+replace pattern as agent_state.py) so the polling pane never reads
-    a half-written request. Raises OSError — callers decide how loudly to
-    report a failure."""
-    request_file = _resolve_replay_request_file()
-    tmp_path = f"{request_file}.tmp"
+def _resolve_replay_cue_file():
+    return os.environ.get(REPLAY_CUE_FILE_ENV) or DEFAULT_REPLAY_CUE_FILE
+
+
+def _resolve_replay_ready_file():
+    return os.environ.get(REPLAY_READY_FILE_ENV) or DEFAULT_REPLAY_READY_FILE
+
+
+def _atomic_write_json(path, data):
+    """Atomic write of a small agent -> replay-pane relay file (same
+    temp+replace pattern as agent_state.py) so a polling pane never reads a
+    half-written file. Raises OSError — callers decide how loudly to report
+    a failure."""
+    tmp_path = f"{path}.tmp"
     with open(tmp_path, "w", encoding="utf-8") as f:
-        json.dump(request, f)
-    os.replace(tmp_path, request_file)
+        json.dump(data, f)
+    os.replace(tmp_path, path)
+
+
+def _read_json_file(path):
+    """Best-effort read of a relay file this module owns. Missing or
+    corrupt content returns None — callers treat that as "start fresh"
+    rather than crashing the handler."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+
+
+def _write_replay_request(request):
+    """Atomic write of the agent -> replay pane request file. Raises
+    OSError — callers decide how loudly to report a failure."""
+    request_file = _resolve_replay_request_file()
+    _atomic_write_json(request_file, request)
     return request_file
 
 
@@ -754,6 +789,22 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
         write_state(state_path, "happy", action=f"welcomed {username}", bubble=narration)
 
 
+def _is_valid_cast(cast):
+    """True when `cast` is a non-empty dict mapping non-empty string speaker
+    names to non-empty string worker ids (duet replay contract). Anything
+    else — not a dict, empty dict, non-string/blank keys or values — is
+    invalid and must be rejected by handle_replay_request rather than
+    forwarded to the replay pane."""
+    if not isinstance(cast, dict) or not cast:
+        return False
+    for key, value in cast.items():
+        if not isinstance(key, str) or not key.strip():
+            return False
+        if not isinstance(value, str) or not value.strip():
+            return False
+    return True
+
+
 def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
                           state_path=None, coding_backend=None):
     """Operator lever: queue a "Rerun Theater" episode for this worker's
@@ -764,6 +815,13 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     resolution (basename-only, inside REPLAY_LIBRARY) so a hostile payload
     can never reach files outside the episode library. Always answers the
     operator so a bad episode name doesn't just vanish.
+
+    Optional payload.cast (duet replay contract): a speaker -> worker_id
+    map. When present it must be a non-empty dict of non-empty strings
+    (see _is_valid_cast) — valid casts are forwarded verbatim into the
+    request file; an invalid cast is rejected with an operator_reply error
+    and NOTHING is written (a half-formed duet must never reach the pane).
+    Absent cast leaves solo-request behavior byte-for-byte unchanged.
     """
     payload = msg.get("payload", {})
     episode = payload.get("episode")
@@ -771,6 +829,16 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
         producer.send(build_message(
             worker_id, "operator", "operator_reply",
             {"error": "replay_request needs payload.episode (episode script name)"},
+        ))
+        return
+
+    cast = payload.get("cast")
+    if cast is not None and not _is_valid_cast(cast):
+        print(f"[agent:{worker_id}] rejected replay_request: invalid cast {cast!r}")
+        producer.send(build_message(
+            worker_id, "operator", "operator_reply",
+            {"error": "replay_request payload.cast must be a non-empty dict mapping "
+                       "non-empty speaker names to non-empty worker ids"},
         ))
         return
 
@@ -785,6 +853,9 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
         request["voice"] = payload["voice"]
     if payload.get("narration"):
         request["narration"] = str(payload["narration"])
+    if cast is not None:
+        # Already validated above — forwarded verbatim, per contract.
+        request["cast"] = cast
 
     try:
         _write_replay_request(request)
@@ -806,9 +877,132 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     ))
 
 
+# ── Duet replay: director/follower relay handlers ──────────────────────────
+# These four handle the bus side of the "duet replay" feature (multi-worker
+# Rerun Theater airings). Every one of them is any-role, makes NO LLM call,
+# sends NOTHING back onto the bus, and only ever relays the inbound payload
+# into a small local JSON file for replay_pane.py to poll — so a bad/partial
+# write must log and return, never raise out of the tick loop.
+
+def handle_replay_invite(worker_id, agent_config, llm_client, producer, msg,
+                         state_path=None, coding_backend=None):
+    """Director -> follower: queue this worker's replay pane into "follow"
+    mode for a duet airing. Any role handles it.
+
+    Mirrors handle_viewer_joined's "don't clobber a pending request" rule:
+    if a request file is already sitting there (an operator queue, another
+    pending invite, ...) the invite is dropped — log and move on. The
+    director's own replay_ready timeout is what surfaces this as a refusal;
+    this handler does not report anything back itself.
+    """
+    payload = msg.get("payload", {})
+    request_file = _resolve_replay_request_file()
+    if os.path.exists(request_file):
+        print(f"[agent:{worker_id}] dropped replay_invite — a replay request is already pending")
+        return
+
+    # Fields copied verbatim from the invite payload, plus the follower-mode
+    # marker replay_pane.py switches on.
+    request = dict(payload)
+    request["mode"] = "follow"
+
+    try:
+        _write_replay_request(request)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to write follower request for replay_invite: {exc}")
+        return
+
+    print(
+        f"[agent:{worker_id}] queued as follower for airing {request.get('airing_id')!r} "
+        f"episode={request.get('episode')!r}"
+    )
+
+
+def handle_replay_ready(worker_id, agent_config, llm_client, producer, msg,
+                        state_path=None, coding_backend=None):
+    """Follower -> director: mark a worker ready for a duet airing. Any role
+    handles it (the director simply is the worker addressed).
+
+    Union/replace rule: a ready file already holding the SAME airing_id
+    gets the sender unioned into its worker list; a different, missing, or
+    corrupt file is replaced with a fresh single-sender entry for this
+    airing. Sender identity always comes from the message envelope `from`,
+    never the payload.
+    """
+    payload = msg.get("payload", {})
+    airing_id = payload.get("airing_id")
+    sender = msg.get("from")
+
+    ready_file = _resolve_replay_ready_file()
+    existing = _read_json_file(ready_file)
+    if isinstance(existing, dict) and existing.get("airing_id") == airing_id:
+        workers = list(existing.get("workers") or [])
+        if sender is not None and sender not in workers:
+            workers.append(sender)
+    else:
+        workers = [sender] if sender is not None else []
+
+    ready = {"airing_id": airing_id, "workers": workers}
+    try:
+        _atomic_write_json(ready_file, ready)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to write replay_ready state: {exc}")
+        return
+
+    print(f"[agent:{worker_id}] replay_ready from {sender!r} for airing {airing_id!r} (workers={workers})")
+
+
+def handle_replay_cue(worker_id, agent_config, llm_client, producer, msg,
+                      state_path=None, coding_backend=None):
+    """Director -> follower: authorize performing scenes up to scene_index
+    for a duet airing (cue ratchet — followers may perform any scene at or
+    below the latest cue). Any role handles it.
+
+    Overwrite-latest semantics: no history is kept, and the file is written
+    even when this worker doesn't currently know about a local show (a
+    follower whose pane hasn't started polling yet still needs the freshest
+    cue waiting for it).
+    """
+    payload = msg.get("payload", {})
+    cue = {
+        "airing_id": payload.get("airing_id"),
+        "type": "cue",
+        "scene_index": payload.get("scene_index"),
+    }
+    try:
+        _atomic_write_json(_resolve_replay_cue_file(), cue)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to write replay_cue: {exc}")
+        return
+
+    print(f"[agent:{worker_id}] cue: airing {cue['airing_id']!r} scene_index={cue['scene_index']}")
+
+
+def handle_replay_end(worker_id, agent_config, llm_client, producer, msg,
+                      state_path=None, coding_backend=None):
+    """Director -> follower: end a duet airing (finished / ready_timeout /
+    aborted), via the same cue file the ratchet loop polls. Any role
+    handles it. Overwrite-latest semantics, same as handle_replay_cue.
+    """
+    payload = msg.get("payload", {})
+    end = {
+        "airing_id": payload.get("airing_id"),
+        "type": "end",
+        "reason": payload.get("reason"),
+    }
+    try:
+        _atomic_write_json(_resolve_replay_cue_file(), end)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to write replay_end: {exc}")
+        return
+
+    print(f"[agent:{worker_id}] end: airing {end['airing_id']!r} reason={end['reason']!r}")
+
+
 # Dispatch table — the 8 message types from docs/VTuber_AI_Dev_Team_Concept.md
 # §3.4 (status_update is send-only heartbeat traffic; operator_message is
-# message-api's default type standing in for direct operator chat).
+# message-api's default type standing in for direct operator chat), plus the
+# viewer-join rerun trigger and the 5 duet replay relay types.
 MESSAGE_HANDLERS = {
     "task_assignment": handle_task_assignment,
     "commit_notification": handle_commit_notification,
@@ -820,6 +1014,10 @@ MESSAGE_HANDLERS = {
     "operator_message": handle_operator_message,
     "replay_request": handle_replay_request,
     "viewer_joined": handle_viewer_joined,
+    "replay_invite": handle_replay_invite,
+    "replay_ready": handle_replay_ready,
+    "replay_cue": handle_replay_cue,
+    "replay_end": handle_replay_end,
 }
 
 

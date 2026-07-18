@@ -23,10 +23,20 @@ lands first.
 
 Everything here is best-effort, matching the show-must-air rule
 (docs/revoice.md): missing `psycopg2`, missing `POSTGRES_*` env, or a down
-database disable the store — `save_airing`/`load_latest_airing` are only
-ever called after `available()` says yes, and callers in `replay_pane.py`
-still wrap them to degrade a save/load failure into "not cached" rather
-than a crashed show.
+database disable the store — `save_airing`/`load_latest_airing`/
+`load_airing` are only ever called after `available()` says yes, and
+callers in `replay_pane.py` still wrap them to degrade a save/load failure
+into "not cached" (solo) or a hard refusal (duet — see below) rather than
+a crashed show.
+
+**Duet replay** (docs/duet_replay.md) reads this module too, on both
+sides: the director persists (fresh) or reuses (`load_latest_airing`) the
+airing exactly like a solo show, then tells its followers the resulting
+`airing_id`; each follower calls `load_airing(airing_id)` to fetch that
+*exact* airing — never `load_latest_airing`, since "latest" could drift to
+a different airing by the time a follower gets around to loading it (e.g.
+another worker airs something else on the same episode while this duet is
+still being invited/readied).
 
 ## Signature
 
@@ -38,6 +48,8 @@ def available() -> bool
 def save_airing(message_id, worker_id, episode, aired_at, show) -> int
 
 def load_latest_airing(episode) -> list[dict] | None
+
+def load_airing(message_id) -> list[dict] | None
 ```
 
 ## Parameters
@@ -67,17 +79,31 @@ def load_latest_airing(episode) -> list[dict] | None
 - `save_airing()` — the number of scenes saved (`len(show)`). Raises on DB
   failure; callers (`replay_pane.persist_narration`) wrap this best-effort.
 - `load_latest_airing()` — a list of dicts, one per scene, ordered by
-  `scene_index`: `scene_index`, `scene_kind`, `speaker`, `text`, `audio`
-  (`bytes` or `None` — psycopg2 hands `bytea` back as a `memoryview`, so
-  this converts it), `audio_duration_s`. Returns `None` when the episode
-  has never been cached with audio. Raises on DB failure; callers
-  (`replay_pane.load_reused_show`) wrap this best-effort.
+  `scene_index`: `message_id`, `scene_index`, `scene_kind`, `speaker`,
+  `text`, `audio` (`bytes` or `None` — psycopg2 hands `bytea` back as a
+  `memoryview`, so this converts it), `audio_duration_s`. Returns `None`
+  when the episode has never been cached with audio. Raises on DB failure;
+  callers (`replay_pane.load_reused_show`/`_load_cached_show`) wrap this
+  best-effort. `message_id` (added for duet replay) lets a duet director
+  reusing a cached airing (`narration: "reuse"`) tell its followers exactly
+  which airing to load via `load_airing` — "latest" can otherwise drift
+  out from under a show that takes a while to invite/ready its cast.
+- `load_airing(message_id)` — same row-dict shape as `load_latest_airing`
+  (including `message_id`), but selects the exact airing by `message_id`
+  instead of "most recent with audio" — this is the duet **follower**'s
+  read path (docs/duet_replay.md), so it loads the SAME airing the
+  director persisted rather than whatever's newest for that episode.
+  Returns `None` when the id is unknown. Raises on DB failure; callers
+  (`replay_pane.perform_follower_request`) wrap this best-effort.
 
 The "latest" row set is selected by `LOAD_SQL`: the most recent
 `message_id` for that `episode` that has **at least one** scene with
 `audio IS NOT NULL`, ordered `aired_at DESC, ingested_at DESC` — a silent
 airing (voice off, or every scene's TTS failed) is never returned as a
-reuse candidate, since there'd be nothing to play back.
+reuse candidate, since there'd be nothing to play back. `load_airing`
+(`LOAD_BY_ID_SQL`) has no such filter — it returns every row for that exact
+`message_id`, silent scenes included, since a duet follower needs the
+whole airing's structure regardless of which scenes it personally owns.
 
 ## Dependencies
 
@@ -126,6 +152,19 @@ if cached:
             narration = Narration(audio_path=path, duration=duration)
 ```
 
+How a duet follower loads the exact airing its director just invited it
+to (`replay_pane.perform_follower_request`):
+
+```python
+import narration_store
+
+rows = narration_store.load_airing(airing_id)  # airing_id from the invite
+if rows:
+    # rebuild scenes against the episode script, keep audio only for
+    # scenes cast to this worker — see docs/duet_replay.md
+    ...
+```
+
 ## Error Handling
 
 - `available()` never raises — a missing env var or missing `psycopg2`
@@ -145,6 +184,12 @@ if cached:
 
 ## Changelog
 
+- **v1.1.0** (2026-07-13): Duet replay support — `load_latest_airing()`
+  rows gained a `message_id` field so a duet director reusing a cached
+  airing can hand its followers a stable `airing_id`. New
+  `load_airing(message_id)` — same row shape, but selects the exact airing
+  by id (no audio filter) instead of "most recent with audio" — is the
+  duet follower's read path. See docs/duet_replay.md.
 - **v1.0.0** (2026-07-12): Initial version — `available()`,
   `save_airing()` (upsert on `(message_id, scene_index)`, audio columns
   only), `load_latest_airing()` (latest airing-with-audio per episode).

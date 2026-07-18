@@ -10,6 +10,41 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Rerun Theater can now perform as a duet — multiple workers airing the
+SAME episode together, each voicing a different speaker** — a
+`replay_request` may now carry `payload.cast`, a `{speaker: worker_id}`
+map:
+
+- The worker that receives the request becomes the **director**: it
+  prepares the airing exactly like a solo show (LLM + TTS for every
+  speaker), persists it to Postgres via `app/narration_store.py`, invites
+  every other cast worker over the bus (`replay_invite`), waits for all of
+  them to confirm ready (`replay_ready`), then paces the whole cast
+  scene-by-scene with a `replay_cue` published immediately before
+  performing each scene.
+- Each invited **follower** loads the SAME persisted airing (never
+  generates its own narration), keeps audio only for the scene(s) cast to
+  it, and performs the full episode on its own stream — visuals for
+  every scene, speaking only its own lines, the avatar "listening" on
+  everyone else's.
+- **Duets never degrade to solo**: an unreachable narration store/Kafka,
+  a voice-prep failure, or a follower that doesn't show up in time
+  (`REPLAY_READY_TIMEOUT_S`, default 60s) refuses the whole airing outright
+  (`replay_end` + an `operator_reply` error) rather than airing partially.
+  Solo requests (no `cast`) are completely unaffected.
+- `app/agent.py` gained four any-role relay handlers
+  (`replay_invite`/`replay_ready`/`replay_cue`/`replay_end`) that write to
+  two new local files (`REPLAY_CUE_FILE`, `REPLAY_READY_FILE`) — panes
+  still never consume Kafka directly.
+- Every cast worker (director and followers) needs `LAYOUT_PRESET=replay`,
+  the `POSTGRES_*` env vars, and reachable Kafka; as shipped that's
+  `worker-coder`/`worker-manager`/`worker-tester` only — the three A/B
+  coding-backend workers lack the Postgres env and replay library mount.
+  Needs a worker image rebuild (no new dependency). See
+  [docs/duet_replay.md](docs/duet_replay.md) for the full protocol
+  (message schemas, timeouts, ownership rules) and
+  [Duets](#duets-multiple-workers-same-episode) below.
+
 **Avatar rendering is now a pluggable provider layer** — `app/avatar.py`
 is a thin dispatcher now, not a renderer:
 
@@ -450,7 +485,8 @@ boss and the coder — whose spoken lines are written fresh by the local LLM
 on every airing and timed so speech and on-screen text finish together.
 Full pipeline docs: [docs/session_log_parser.md](docs/session_log_parser.md)
 → [docs/revoice.md](docs/revoice.md) → [docs/replay.md](docs/replay.md) →
-[docs/replay_pane.md](docs/replay_pane.md).
+[docs/replay_pane.md](docs/replay_pane.md) → (multi-worker)
+[docs/duet_replay.md](docs/duet_replay.md).
 
 One-time setup:
 
@@ -503,6 +539,37 @@ the stack:
 python app/replay.py replays/<episode>.json --voice-config config/workers/coder.yaml
 ```
 
+### Duets (multiple workers, same episode)
+
+Add `payload.cast` to a `replay_request` to have several workers perform
+the SAME episode together, each on its own Twitch channel, each voicing a
+different speaker — full protocol reference: [docs/duet_replay.md](docs/duet_replay.md).
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "replay_request",
+       "payload": {"episode": "2026-07-02_04-27-00_6ecdde82",
+                    "cast": {"boss": "manager", "coder": "coder"}}}'
+```
+
+- `coder` (the worker addressed) becomes the **director**: it prepares and
+  Postgres-persists the airing once, invites `manager`, and paces both
+  streams scene-by-scene with cues.
+- Every stream shows the **whole episode's visuals**, but only speaks its
+  own cast lines: the coder's stream plays the `coder` speaker's audio and
+  shows the avatar "listening" during boss lines; the manager's stream is
+  the mirror image.
+- **Duets never degrade to solo** — if the director can't reach the
+  narration store or Kafka, voice prep fails, or `manager` never confirms
+  ready in time, the whole airing refuses outright (an `operator_reply`
+  error, when the director could still reach Kafka at all) rather than
+  airing solo or partially.
+- Deployment: every cast worker needs `LAYOUT_PRESET=replay`, the
+  `POSTGRES_*` env vars, and reachable Kafka — as shipped that's `coder`/
+  `manager`/`tester` only (the three A/B coding-backend workers aren't
+  wired for Postgres or the replay library yet).
+
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
 > **Always use the project's `.venv` for local development — never install packages into or run scripts against the global/system Python on this machine.** Create it once with `python -m venv .venv`, then activate it before installing dependencies or running anything.
@@ -552,6 +619,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
+| `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to `worker-coder`/`worker-manager`/`worker-tester`; unset keeps the code default (`60.0`) |
 | `CODER_AVATAR_PROVIDER` / `CODER_NATIVE_AVATAR_PROVIDER` / `CODER_OPENCODE_AVATAR_PROVIDER` / `CODER_AIDER_AVATAR_PROVIDER` / `MANAGER_AVATAR_PROVIDER` / `TESTER_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 | `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
@@ -690,7 +758,7 @@ pod. Details in [docs/layout_system.md](docs/layout_system.md#kubernetes-configm
 ```
 virtualTubers/
 ├── app/
-│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats, task narration, real coding + testing flows
+│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats, task narration, real coding + testing flows, duet replay relay
 │   ├── llm_client.py     # Provider-switchable LLM client (Ollama | Claude)
 │   ├── coding_backend.py # Swappable coding backend layer (native | opencode | aider) + TaskResult
 │   ├── coding_backends/  # One adapter per backend provider
@@ -704,9 +772,10 @@ virtualTubers/
 │   ├── avatar_display.py # display_width()/build_bubble_box() shared by avatar.py and every avatar provider
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
 │   ├── session_log_parser.py # Saved Claude session logs -> redacted replay scripts
-│   ├── replay.py         # Performs a replay script as a paced show (display-only, audio-synced)
-│   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes
+│   ├── replay.py         # Performs a replay script as a paced show (display-only, audio-synced, duet cue hooks)
+│   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes solo or as a duet director/follower
 │   ├── revoice.py        # Per-airing narration pass: scenes + LLM-written spoken lines
+│   ├── narration_store.py # Postgres cache for voiced airings; duet director persists, followers load the same airing
 │   ├── tts_client.py     # Provider-switchable TTS (Piper | OpenAI | ElevenLabs), measured durations
 │   ├── audio_player.py   # Best-effort WAV playback into the streamed PulseAudio sink
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)

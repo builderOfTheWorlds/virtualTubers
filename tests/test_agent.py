@@ -11,6 +11,11 @@ from agent import (
     handle_clarification_request,
     handle_commit_notification,
     handle_operator_message,
+    handle_replay_cue,
+    handle_replay_end,
+    handle_replay_invite,
+    handle_replay_ready,
+    handle_replay_request,
     handle_retest_request,
     handle_viewer_joined,
     handle_task_assignment,
@@ -605,6 +610,270 @@ def test_handle_viewer_joined_llm_failure_still_queues_the_rerun(replay_env):
     assert json.loads(request_file.read_text()) == {"episode": "ep-one"}
 
 
+# ── Duet replay: agent B relay handlers ────────────────────────────────────────
+
+@pytest.fixture
+def duet_relay_env(tmp_path, monkeypatch):
+    """Point the request/cue/ready relay files at tmp paths for duet handler
+    tests. Returns (request_file, cue_file, ready_file); none exist yet."""
+    request_file = tmp_path / "replay_request.json"
+    cue_file = tmp_path / "replay_cue.json"
+    ready_file = tmp_path / "replay_ready.json"
+    monkeypatch.setenv("REPLAY_REQUEST_FILE", str(request_file))
+    monkeypatch.setenv("REPLAY_CUE_FILE", str(cue_file))
+    monkeypatch.setenv("REPLAY_READY_FILE", str(ready_file))
+    return request_file, cue_file, ready_file
+
+
+def test_handle_replay_request_forwards_valid_cast_into_request_file(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "operator", "type": "replay_request",
+        "payload": {"episode": "ep-one", "cast": {"boss": "worker-a", "coder": "worker-b"}},
+    }
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request["episode"] == "ep-one"
+    assert request["cast"] == {"boss": "worker-a", "coder": "worker-b"}
+    assert len(producer.sent) == 1
+    assert producer.sent[0]["type"] == "operator_reply"
+    assert "narration" in producer.sent[0]["payload"]
+
+
+@pytest.mark.parametrize(
+    "bad_cast",
+    [
+        "not-a-dict",
+        [],
+        {},
+        {"": "worker-b"},
+        {"coder": ""},
+        {"coder": "   "},
+        {1: "worker-b"},
+        {"coder": 5},
+    ],
+)
+def test_handle_replay_request_invalid_cast_sends_error_and_writes_nothing(duet_relay_env, bad_cast):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "operator", "type": "replay_request",
+        "payload": {"episode": "ep-one", "cast": bad_cast},
+    }
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    assert not request_file.exists()
+    assert len(producer.sent) == 1
+    sent = producer.sent[0]
+    assert sent["to"] == "operator"
+    assert sent["type"] == "operator_reply"
+    assert "cast" in sent["payload"]["error"]
+
+
+def test_handle_replay_request_without_cast_is_byte_for_byte_unchanged(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "operator", "type": "replay_request", "payload": {"episode": "ep-one"}}
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request == {"episode": "ep-one"}
+    assert "cast" not in request
+    assert len(producer.sent) == 1
+    assert "narration" in producer.sent[0]["payload"]
+
+
+def test_handle_replay_invite_writes_follower_request_file_with_spec_schema(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_invite",
+        "payload": {
+            "airing_id": "airing-123",
+            "episode": "ep-one",
+            "cast": {"boss": "director-1", "coder": "worker-b"},
+            "speed": 1.5,
+            "worker_name": "KODI-7",
+        },
+    }
+
+    handle_replay_invite("worker-b", {}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request == {
+        "mode": "follow",
+        "airing_id": "airing-123",
+        "episode": "ep-one",
+        "cast": {"boss": "director-1", "coder": "worker-b"},
+        "speed": 1.5,
+        "worker_name": "KODI-7",
+    }
+    assert producer.sent == []  # relay-only, nothing on the bus
+    assert llm.calls == []  # no LLM call
+
+
+def test_handle_replay_invite_dropped_when_request_file_exists(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    request_file.write_text('{"episode": "operator-queued"}')
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_invite",
+        "payload": {
+            "airing_id": "airing-123", "episode": "ep-one",
+            "cast": {"boss": "director-1"}, "speed": 1.0, "worker_name": "KODI-7",
+        },
+    }
+
+    handle_replay_invite("worker-b", {}, llm, producer, msg)
+
+    # Pending request file left untouched — dropped, not clobbered.
+    assert json.loads(request_file.read_text()) == {"episode": "operator-queued"}
+    assert producer.sent == []
+
+
+def test_handle_replay_ready_creates_entry_for_first_sender(duet_relay_env):
+    _, _, ready_file = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "worker-b", "type": "replay_ready", "payload": {"airing_id": "airing-123"}}
+
+    handle_replay_ready("director-1", {}, llm, producer, msg)
+
+    assert json.loads(ready_file.read_text()) == {"airing_id": "airing-123", "workers": ["worker-b"]}
+    assert producer.sent == []
+
+
+def test_handle_replay_ready_unions_sender_for_same_airing_id(duet_relay_env):
+    _, _, ready_file = duet_relay_env
+    ready_file.write_text(json.dumps({"airing_id": "airing-123", "workers": ["worker-b"]}))
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "worker-c", "type": "replay_ready", "payload": {"airing_id": "airing-123"}}
+
+    handle_replay_ready("director-1", {}, llm, producer, msg)
+
+    assert json.loads(ready_file.read_text()) == {
+        "airing_id": "airing-123", "workers": ["worker-b", "worker-c"],
+    }
+
+
+def test_handle_replay_ready_does_not_duplicate_the_same_sender(duet_relay_env):
+    _, _, ready_file = duet_relay_env
+    ready_file.write_text(json.dumps({"airing_id": "airing-123", "workers": ["worker-b"]}))
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "worker-b", "type": "replay_ready", "payload": {"airing_id": "airing-123"}}
+
+    handle_replay_ready("director-1", {}, llm, producer, msg)
+
+    assert json.loads(ready_file.read_text()) == {"airing_id": "airing-123", "workers": ["worker-b"]}
+
+
+def test_handle_replay_ready_replaces_entry_when_airing_id_differs(duet_relay_env):
+    _, _, ready_file = duet_relay_env
+    ready_file.write_text(json.dumps({"airing_id": "old-airing", "workers": ["worker-b", "worker-c"]}))
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "worker-d", "type": "replay_ready", "payload": {"airing_id": "new-airing"}}
+
+    handle_replay_ready("director-1", {}, llm, producer, msg)
+
+    assert json.loads(ready_file.read_text()) == {"airing_id": "new-airing", "workers": ["worker-d"]}
+
+
+def test_handle_replay_ready_replaces_corrupt_ready_file(duet_relay_env):
+    _, _, ready_file = duet_relay_env
+    ready_file.write_text("{not valid json")
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "worker-b", "type": "replay_ready", "payload": {"airing_id": "airing-123"}}
+
+    handle_replay_ready("director-1", {}, llm, producer, msg)
+
+    assert json.loads(ready_file.read_text()) == {"airing_id": "airing-123", "workers": ["worker-b"]}
+
+
+def test_handle_replay_cue_writes_cue_file_contents(duet_relay_env):
+    _, cue_file, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_cue",
+        "payload": {"airing_id": "airing-123", "scene_index": 4},
+    }
+
+    handle_replay_cue("worker-b", {}, llm, producer, msg)
+
+    assert json.loads(cue_file.read_text()) == {
+        "airing_id": "airing-123", "type": "cue", "scene_index": 4,
+    }
+    assert producer.sent == []
+    assert llm.calls == []
+
+
+def test_handle_replay_end_writes_end_file_contents(duet_relay_env):
+    _, cue_file, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_end",
+        "payload": {"airing_id": "airing-123", "reason": "finished"},
+    }
+
+    handle_replay_end("worker-b", {}, llm, producer, msg)
+
+    assert json.loads(cue_file.read_text()) == {
+        "airing_id": "airing-123", "type": "end", "reason": "finished",
+    }
+    assert producer.sent == []
+
+
+def test_handle_replay_cue_write_failure_logs_and_does_not_raise(duet_relay_env, monkeypatch, capsys):
+    monkeypatch.setattr(
+        agent, "_atomic_write_json",
+        lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
+    )
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_cue",
+        "payload": {"airing_id": "airing-123", "scene_index": 1},
+    }
+
+    handle_replay_cue("worker-b", {}, llm, producer, msg)  # must not raise
+
+    assert "failed to write replay_cue" in capsys.readouterr().out
+    assert producer.sent == []
+
+
+def test_handle_replay_invite_write_failure_logs_and_does_not_raise(duet_relay_env, monkeypatch, capsys):
+    monkeypatch.setattr(
+        agent, "_write_replay_request",
+        lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
+    )
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "director-1", "type": "replay_invite",
+        "payload": {"airing_id": "airing-123", "episode": "ep-one", "cast": {}, "speed": 1.0, "worker_name": "K"},
+    }
+
+    handle_replay_invite("worker-b", {}, llm, producer, msg)  # must not raise
+
+    assert "failed to write follower request" in capsys.readouterr().out
+    assert producer.sent == []
+
+
 # ── Retry-count round trip (coder → tester → manager) ─────────────────────────
 
 def test_retry_count_survives_coder_tester_manager_round_trip(monkeypatch):
@@ -650,4 +919,15 @@ def test_message_handlers_covers_all_documented_types():
         "operator_message",
         "replay_request",
         "viewer_joined",
+        "replay_invite",
+        "replay_ready",
+        "replay_cue",
+        "replay_end",
     }
+
+
+def test_message_handlers_registers_duet_replay_handlers():
+    assert MESSAGE_HANDLERS["replay_invite"] is handle_replay_invite
+    assert MESSAGE_HANDLERS["replay_ready"] is handle_replay_ready
+    assert MESSAGE_HANDLERS["replay_cue"] is handle_replay_cue
+    assert MESSAGE_HANDLERS["replay_end"] is handle_replay_end

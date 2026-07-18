@@ -38,13 +38,48 @@ becomes the avatar's speech bubble. The replayer performs whatever text it
 is given and never calls an LLM itself; without a voiced show it performs
 exactly as before, silently.
 
+**Duet replay hooks.** `Performer.__init__` accepts two optional
+keyword-only callbacks, both `None` by default (every existing call site,
+and every solo airing, is byte-for-byte unchanged):
+
+- `on_scene_start(scene_index)` — called immediately before performing
+  each scene. A duet **director** sets this to publish that scene's
+  `replay_cue` to its followers. A raised exception is caught and logged,
+  never taking the show down (a bus hiccup shouldn't matter — followers
+  recover via their own watchdog).
+- `wait_for_scene(scene_index)` — called before each scene (after
+  `on_scene_start`, though normally only one of the two is set) and blocks
+  until that scene is authorized. A duet **follower** sets this to poll
+  its cue file. Returning `J >= scene_index` proceeds (`J - scene_index >=
+  2` triggers an unpaced catch-up burst through the backlog); returning
+  `-1` ends the show early — an "interrupted" line prints, the avatar
+  returns to idle, and `perform()` returns cleanly instead of raising.
+
+Scene dicts also gain two optional keys duet playback reads:
+
+- `"owned"` (bool, default `True` when absent) — gates whether *this*
+  worker plays that scene's audio and shows the "speaking" avatar/bubble.
+  A scene that isn't owned still renders full visuals and prints the `♪`
+  narration line — every cast worker's stream shows the whole episode —
+  but sets the avatar to `"idle"` / `"listening to the show"` instead.
+- `"target_duration"` (float seconds, optional) — used instead of
+  `audio.duration` to scale visual pacing (same `[0.4, 3.0]` clamp) when
+  the scene isn't owned, or is owned but has no audio (e.g. a reused
+  airing dropped that WAV): the scene holds on the wall clock until
+  `target_duration` elapses, keeping this worker's stream in lockstep with
+  the scene's owner even with nothing to play back.
+
+Full protocol (director/follower roles, bus message schemas, timeouts,
+ownership rules): [docs/duet_replay.md](duet_replay.md).
+
 ## Signature
 
 ```python
 class Performer:
     def __init__(self, out=None, pacer=None, palette=None,
                  worker_name="KODI-7", state_path=None,
-                 max_output_lines=24)
+                 max_output_lines=24, *,
+                 on_scene_start=None, wait_for_scene=None)
     def perform(self, script: dict, show: list[dict] | None = None,
                 start: int = 0, limit: int | None = None) -> None
 
@@ -60,6 +95,12 @@ when unvoiced, scenes when voiced. `prepare_voiced_show` is the config
 glue: builds the LLM + TTS clients from a worker config's `llm`/`voice`
 sections and runs the narration pass — returns None (silent show) when
 `voice.provider` is `null`/missing.
+
+`perform()` is an index-based loop over scenes (not a plain `for`), so a
+duet follower's `wait_for_scene` hook can jump the index forward (catch-up
+burst) or abort mid-show (`docs/duet_replay.md`). With neither
+`on_scene_start` nor `wait_for_scene` set, behavior is identical to a
+straight-through loop — solo output is unaffected.
 
 ## Parameters (CLI)
 
@@ -81,7 +122,10 @@ sections and runs the narration pass — returns None (silent show) when
 ## Return Value
 
 None — output is the rendered performance on stdout. Interrupting with
-Ctrl-C prints `[replay] interrupted` and exits cleanly.
+Ctrl-C prints `[replay] interrupted` and exits cleanly. A duet follower's
+`wait_for_scene` hook returning `-1` ends the show early the same clean
+way: `perform()` prints an `══ interrupted ══` banner, sets the avatar to
+`idle` ("show interrupted"), and returns — never raises.
 
 ## Dependencies
 
@@ -125,6 +169,17 @@ python app/replay.py replays/episode.json --voice-config config/workers/coder.ya
 
 ## Changelog
 
+- **v1.2.0** (2026-07-13): Duet replay hooks — `Performer.__init__` gained
+  keyword-only `on_scene_start`/`wait_for_scene` (both `None` by default,
+  every existing caller unaffected); `perform()` became an index-based
+  loop so `wait_for_scene` can jump the index forward (fast-forward
+  catch-up, `docs/duet_replay.md`) or return `-1` to end the show early.
+  Scene dicts gained optional `"owned"` (default `True`) and
+  `"target_duration"` keys read by `_perform_scene`'s pacing: an un-owned
+  (or owned-but-silent) scene with `target_duration > 0` scales visual
+  pacing to it and holds the wall clock instead of playing/anchoring to
+  audio, and un-owned scenes show the avatar "listening" instead of
+  "speaking". See docs/duet_replay.md.
 - **v1.1.0** (2026-07-12): Spoken narration — scene-based `perform(show=)`,
   audio-anchored per-scene pacing (`Pacer.scale`), `estimate_event_seconds`,
   `prepare_voiced_show` config glue, `--voice-config` CLI. +7 tests.

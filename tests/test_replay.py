@@ -260,6 +260,261 @@ def test_perform_voiced_show_respects_start_and_limit(monkeypatch):
     assert "♪ one" not in text and "♪ three" not in text
 
 
+# ── duet scenes: owned / target_duration (docs/duet_replay.md) ─────────────
+
+def test_solo_show_unchanged_with_no_hooks_and_no_owned_key():
+    """A scene dict with neither "owned" nor "target_duration" (today's
+    revoice.py output) must behave identically to before — this is the
+    regression guard for the duet changes to _perform_scene/perform."""
+    out = io.StringIO()
+    performer = make_performer(out)
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "The boss wants a heartbeat.", "audio": None},
+    ]
+    performer.perform(SCRIPT, show=show)
+    text = out.getvalue()
+    assert "♪ The boss wants a heartbeat." in text
+    assert performer.on_scene_start is None
+    assert performer.wait_for_scene is None
+
+
+def test_unowned_scene_with_target_duration_scales_and_holds_no_audio(monkeypatch):
+    played = []
+    monkeypatch.setattr(replay, "play_wav", lambda path, out=None: played.append(path))
+    slept = []
+    monkeypatch.setattr(replay.time, "sleep", lambda s: slept.append(s))
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(enabled=True), palette=Palette(enabled=False))
+    show = [
+        {"kind": "coder_talk", "speaker": "coder", "events": [SCRIPT["events"][1]],
+         "narration": "Coder's take.", "audio": None,
+         "owned": False, "target_duration": 5.0},
+    ]
+    performer.perform(SCRIPT, show=show)
+
+    assert played == []  # never plays audio for a scene it doesn't own
+    # held roughly for target_duration (mocked sleep records the remainder)
+    assert slept and max(slept) == pytest.approx(5.0, abs=0.2)
+
+
+def test_owned_scene_without_audio_but_target_duration_also_holds(monkeypatch):
+    """Spec: owned scenes fall into the target_duration path too when audio
+    is None (e.g. a duet reuse that dropped this worker's own WAV)."""
+    played = []
+    monkeypatch.setattr(replay, "play_wav", lambda path, out=None: played.append(path))
+    slept = []
+    monkeypatch.setattr(replay.time, "sleep", lambda s: slept.append(s))
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(enabled=True), palette=Palette(enabled=False))
+    show = [
+        {"kind": "coder_talk", "speaker": "coder", "events": [SCRIPT["events"][1]],
+         "narration": "Coder's take.", "audio": None,
+         "owned": True, "target_duration": 3.0},
+    ]
+    performer.perform(SCRIPT, show=show)
+
+    assert played == []
+    assert slept and max(slept) == pytest.approx(3.0, abs=0.2)
+
+
+def test_target_duration_hold_skipped_when_pacing_disabled():
+    """--no-delay / fast-forward mode must not block on the hold."""
+    out = io.StringIO()
+    performer = make_performer(out)  # Pacer(enabled=False)
+    show = [
+        {"kind": "coder_talk", "speaker": "coder", "events": [SCRIPT["events"][1]],
+         "narration": "fast", "audio": None,
+         "owned": False, "target_duration": 50.0},
+    ]
+    import time as real_time
+    started = real_time.monotonic()
+    performer.perform(SCRIPT, show=show)
+    assert real_time.monotonic() - started < 2.0  # did not actually wait 50s
+
+
+def test_owned_scene_with_audio_plays_even_when_target_duration_present(monkeypatch):
+    """Case A (owned + real audio) still wins over target_duration when both
+    are present — today's audio-anchored path is untouched."""
+    playback = FakePlayback()
+    monkeypatch.setattr(replay, "play_wav", lambda path, out=None: playback)
+    waited = []
+    monkeypatch.setattr(replay, "wait_extra",
+                        lambda pb, started, min_seconds: waited.append(min_seconds))
+
+    out = io.StringIO()
+    performer = make_performer(out)
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "hi", "audio": FakeNarrationAudio(duration=2.0),
+         "owned": True, "target_duration": 999.0},
+    ]
+    performer.perform(SCRIPT, show=show)
+    assert playback.stopped  # disabled pacer stops rather than waits
+    assert waited == []
+
+
+def test_unowned_scene_sets_idle_avatar_not_speaking(tmp_path):
+    state_file = tmp_path / "agent_state.json"
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out, state_path=str(state_file))
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "the boss speaks", "audio": None,
+         "owned": False, "target_duration": 0.01},
+    ]
+    performer.perform(SCRIPT, show=show)
+    scene_calls = [c for c in calls if c[0] == "idle" and c[1] == "listening to the show"]
+    assert scene_calls == [("idle", "listening to the show", None)]
+    speaking_calls = [c for c in calls if c[0] == "speaking" and c[2] == "the boss speaks"]
+    assert speaking_calls == []  # never shows the bubble for an unowned scene
+
+
+def test_owned_scene_sets_speaking_avatar_with_bubble():
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out)
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "the boss speaks", "audio": None, "owned": True},
+    ]
+    performer.perform(SCRIPT, show=show)
+    assert ("speaking", "narrating the rerun", "the boss speaks") in calls
+
+
+# ── duet hooks: on_scene_start / wait_for_scene (docs/duet_replay.md) ──────
+
+def test_on_scene_start_called_once_per_scene_in_order_before_wait_for_scene():
+    order = []
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
+    ]
+
+    def on_scene_start(i):
+        order.append(("start", i))
+
+    def wait_for_scene(i):
+        order.append(("wait", i))
+        return i
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(enabled=False), palette=Palette(enabled=False),
+                          on_scene_start=on_scene_start, wait_for_scene=wait_for_scene)
+    performer.perform(SCRIPT, show=show)
+    assert order == [("start", 0), ("wait", 0), ("start", 1), ("wait", 1)]
+
+
+def test_on_scene_start_exception_is_swallowed_and_show_continues():
+    def blowing_up(i):
+        raise RuntimeError("cue publish failed")
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(enabled=False), palette=Palette(enabled=False),
+                          on_scene_start=blowing_up)
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
+    ]
+    performer.perform(SCRIPT, show=show)  # must not raise
+    text = out.getvalue()
+    assert "♪ s0" in text and "♪ s1" in text and "fin" in text
+
+
+def test_wait_for_scene_proceed_matches_solo_output():
+    """wait_for_scene(i) -> i every time (no jump) must render identically
+    to the no-hook case."""
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
+    ]
+
+    out_plain = io.StringIO()
+    make_performer(out_plain).perform(SCRIPT, show=[dict(s) for s in show])
+
+    out_hooked = io.StringIO()
+    performer = Performer(out=out_hooked, pacer=Pacer(enabled=False),
+                          palette=Palette(enabled=False),
+                          wait_for_scene=lambda i: i)
+    performer.perform(SCRIPT, show=[dict(s) for s in show])
+
+    assert out_plain.getvalue() == out_hooked.getvalue()
+
+
+def test_wait_for_scene_fast_forwards_when_two_or_more_behind():
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
+        {"events": [SCRIPT["events"][3]], "narration": "s2", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s3", "audio": None},
+    ]
+    wait_calls = []
+
+    def wait_for_scene(i):
+        wait_calls.append(i)
+        return 3 if i == 0 else i  # first call authorizes jumping to scene 3
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(enabled=True), palette=Palette(enabled=False),
+                          wait_for_scene=wait_for_scene)
+    enabled_during = []
+    original_perform_scene = performer._perform_scene
+
+    def spy(scene):
+        enabled_during.append(performer.pacer.enabled)
+        original_perform_scene(scene)
+
+    performer._perform_scene = spy
+    performer.perform(SCRIPT, show=show)
+
+    assert wait_calls == [0]  # one wait covers the whole catch-up batch
+    assert enabled_during == [True, False, False, False]
+    text = out.getvalue()
+    for marker in ("♪ s0", "♪ s1", "♪ s2", "♪ s3", "fin"):
+        assert marker in text
+    assert performer.pacer.enabled is True  # restored after catch-up
+
+
+def test_wait_for_scene_abort_ends_show_early_and_sets_idle():
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out, wait_for_scene=lambda i: -1)
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    show = [
+        {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
+        {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
+    ]
+    performer.perform(SCRIPT, show=show)
+    text = out.getvalue()
+    assert "interrupted" in text
+    assert "fin" not in text
+    assert "♪ s0" not in text  # aborted before performing any scene
+    assert calls[-1][0] == "idle"
+
+
 def test_load_script_from_json_and_directory(tmp_path):
     # JSON file
     p = tmp_path / "s.json"

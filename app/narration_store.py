@@ -39,7 +39,7 @@ ON CONFLICT (message_id, scene_index) DO UPDATE
 """
 
 LOAD_SQL = """
-SELECT scene_index, scene_kind, speaker, text, audio, audio_duration_s
+SELECT message_id, scene_index, scene_kind, speaker, text, audio, audio_duration_s
 FROM voiced_narration
 WHERE message_id = (
     SELECT message_id FROM voiced_narration
@@ -47,6 +47,13 @@ WHERE message_id = (
     ORDER BY aired_at DESC, ingested_at DESC
     LIMIT 1
 )
+ORDER BY scene_index;
+"""
+
+LOAD_BY_ID_SQL = """
+SELECT message_id, scene_index, scene_kind, speaker, text, audio, audio_duration_s
+FROM voiced_narration
+WHERE message_id = %(message_id)s
 ORDER BY scene_index;
 """
 
@@ -113,11 +120,29 @@ def save_airing(message_id, worker_id, episode, aired_at, show):
         conn.close()
 
 
+def _row_to_dict(row):
+    return {
+        "message_id": row[0],
+        "scene_index": row[1],
+        "scene_kind": row[2],
+        "speaker": row[3],
+        "text": row[4],
+        # psycopg2 hands bytea back as memoryview
+        "audio": bytes(row[5]) if row[5] is not None else None,
+        "audio_duration_s": row[6],
+    }
+
+
 def load_latest_airing(episode):
     """Scenes of the most recent cached airing of `episode` that has audio,
-    ordered by scene_index — a list of dicts with scene_index, scene_kind,
-    speaker, text, audio (bytes or None), audio_duration_s — or None when
-    the episode has never been cached. Raises on DB failure."""
+    ordered by scene_index — a list of dicts with message_id, scene_index,
+    scene_kind, speaker, text, audio (bytes or None), audio_duration_s — or
+    None when the episode has never been cached. Raises on DB failure.
+
+    message_id is included so a duet director reusing a cached airing
+    (replay_request payload.narration: "reuse") can tell its followers
+    exactly which airing_id to load via load_airing — "latest" can drift
+    out from under a show that takes a while to invite/ready its cast."""
     conn = _connect()
     try:
         with conn.cursor() as cur:
@@ -127,15 +152,26 @@ def load_latest_airing(episode):
         conn.close()
     if not rows:
         return None
-    return [
-        {
-            "scene_index": row[0],
-            "scene_kind": row[1],
-            "speaker": row[2],
-            "text": row[3],
-            # psycopg2 hands bytea back as memoryview
-            "audio": bytes(row[4]) if row[4] is not None else None,
-            "audio_duration_s": row[5],
-        }
-        for row in rows
-    ]
+    return [_row_to_dict(row) for row in rows]
+
+
+def load_airing(message_id):
+    """Scenes of the exact airing identified by `message_id`, ordered by
+    scene_index — same row-dict shape as load_latest_airing (message_id,
+    scene_index, scene_kind, speaker, text, audio, audio_duration_s), or
+    None when the id is unknown. Raises on DB failure (callers wrap).
+
+    This is the duet follower's read path: it loads the SAME airing the
+    director persisted and published as airing_id, rather than "whatever's
+    newest" — two workers airing different episodes at once would otherwise
+    make load_latest_airing ambiguous."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(LOAD_BY_ID_SQL, {"message_id": message_id})
+            rows = cur.fetchall()
+    finally:
+        conn.close()
+    if not rows:
+        return None
+    return [_row_to_dict(row) for row in rows]
