@@ -51,9 +51,10 @@ map:
   two new local files (`REPLAY_CUE_FILE`, `REPLAY_READY_FILE`) — panes
   still never consume Kafka directly.
 - Every cast worker (director and followers) needs `LAYOUT_PRESET=replay`,
-  the `POSTGRES_*` env vars, and reachable Kafka; as shipped that's
-  `worker-coder`/`worker-manager`/`worker-tester` only — the three A/B
-  coding-backend workers lack the Postgres env and replay library mount.
+  the `POSTGRES_*` env vars, and reachable Kafka; all six coder-role
+  workers (`worker-coder`/`worker-manager`/`worker-tester` and the three
+  A/B coding-backend workers) have these wired in `docker-compose.yml` —
+  set that worker's `*_LAYOUT_PRESET` stack env to `replay` to enable it.
   Needs a worker image rebuild (no new dependency). See
   [docs/duet_replay.md](docs/duet_replay.md) for the full protocol
   (message schemas, timeouts, ownership rules) and
@@ -583,9 +584,11 @@ curl -X POST http://localhost:8090/messages \
   error, when the director could still reach Kafka at all) rather than
   airing solo or partially.
 - Deployment: every cast worker needs `LAYOUT_PRESET=replay`, the
-  `POSTGRES_*` env vars, and reachable Kafka — as shipped that's `coder`/
-  `manager`/`tester` only (the three A/B coding-backend workers aren't
-  wired for Postgres or the replay library yet).
+  `POSTGRES_*` env vars, and reachable Kafka. All six coder-role workers
+  (`coder`/`manager`/`tester` plus the three A/B coding-backend workers
+  `coder-native`/`coder-opencode`/`coder-aider`) are wired for this in
+  `docker-compose.yml` — set that worker's `*_LAYOUT_PRESET` stack env
+  to `replay` to enable it.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
@@ -636,6 +639,7 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
+| `CODER_NATIVE_LAYOUT_PRESET` / `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
 | `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to `worker-coder`/`worker-manager`/`worker-tester`; unset keeps the code default (`60.0`) |
 | `CODER_AVATAR_PROVIDER` / `CODER_NATIVE_AVATAR_PROVIDER` / `CODER_OPENCODE_AVATAR_PROVIDER` / `CODER_AIDER_AVATAR_PROVIDER` / `MANAGER_AVATAR_PROVIDER` / `TESTER_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |

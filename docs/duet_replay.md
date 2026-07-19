@@ -361,14 +361,15 @@ None of these constants are environment-overridable except
     (default `/data/replays`) — followers rebuild scenes against the same
     episode script the director used, so the library must be in sync
     across every cast worker's host mount.
-- **As shipped, only `worker-coder`, `worker-manager`, and `worker-tester`
-  in `docker-compose.yml` have all of the above** (`LAYOUT_PRESET`
-  override env, `POSTGRES_*`, and the `/data/replays` mount). The three
-  A/B coding-backend workers (`worker-coder-native`,
-  `worker-coder-opencode`, `worker-coder-aider`) currently have Kafka only
-  — no Postgres env and no replay library mount — so they cannot
-  currently join a duet (or use solo narration reuse/caching either)
-  without extending their `docker-compose.yml` blocks to match.
+- **All six coder-role workers in `docker-compose.yml` have all of the
+  above** (`LAYOUT_PRESET` override env, `POSTGRES_*`, and the
+  `/data/replays` mount): `worker-coder`, `worker-manager`,
+  `worker-tester`, and the three A/B coding-backend workers
+  (`worker-coder-native`, `worker-coder-opencode`, `worker-coder-aider`,
+  overridden via `CODER_NATIVE_LAYOUT_PRESET` /
+  `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`). Any of
+  them can join a duet or use solo narration reuse/caching once its
+  `*_LAYOUT_PRESET` stack env is set to `replay`.
 - **Cue relay latency is bounded by the receiving worker's agent tick
   rate** (`agent.tick_rate_ms`, default `5000`ms) and does **not**
   accumulate scene-over-scene: each cue publish is independent (the ratchet

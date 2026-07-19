@@ -68,15 +68,32 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 102
       WORKER_ID: coder-native
+      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
+      # CODER_NATIVE_LAYOUT_PRESET=coder in the stack env to switch this
+      # worker back to its normal editor pane. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${CODER_NATIVE_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_NATIVE_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py) — required for this
+      # worker to join a duet or use solo narration reuse/caching
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-native.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-native:/data/repo
+      # "Rerun Theater" episode library (docs/replay_pane.md)
+      - /opt/virtualTubers/replays:/data/replays:ro
+      # Piper .onnx voice models for spoken replay narration
+      - /opt/virtualTubers/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -95,15 +112,32 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 103
       WORKER_ID: coder-opencode
+      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
+      # CODER_OPENCODE_LAYOUT_PRESET=coder in the stack env to switch this
+      # worker back to its normal editor pane. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${CODER_OPENCODE_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_OPENCODE_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py) — required for this
+      # worker to join a duet or use solo narration reuse/caching
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-opencode:/data/repo
+      # "Rerun Theater" episode library (docs/replay_pane.md)
+      - /opt/virtualTubers/replays:/data/replays:ro
+      # Piper .onnx voice models for spoken replay narration
+      - /opt/virtualTubers/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -122,15 +156,32 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 104
       WORKER_ID: coder-aider
+      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
+      # CODER_AIDER_LAYOUT_PRESET=coder in the stack env to switch this
+      # worker back to its normal editor pane. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${CODER_AIDER_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_AIDER_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py) — required for this
+      # worker to join a duet or use solo narration reuse/caching
+      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-aider.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-aider:/data/repo
+      # "Rerun Theater" episode library (docs/replay_pane.md)
+      - /opt/virtualTubers/replays:/data/replays:ro
+      # Piper .onnx voice models for spoken replay narration
+      - /opt/virtualTubers/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped

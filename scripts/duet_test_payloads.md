@@ -37,31 +37,29 @@ scene against `sample.json` — no more idle listeners. This still exercises
 invite/ready/cue fan-out to N followers, just now with N distinct voices
 too.
 
-## Known gap: worker4/5/6 will refuse as shipped
+## Fixed 2026-07-19: worker4/5/6 now have what they need
 
-`coder-native`, `coder-opencode`, and `coder-aider` are **not**
-duet-capable in the current `docker-compose.yml` (checked 2026-07-18).
-Compared to `coder`/`manager`/`tester`, each of those three is missing:
+`coder-native`, `coder-opencode`, and `coder-aider` used to be missing
+`LAYOUT_PRESET` override env, `POSTGRES_*`, and the replay/voices volume
+mounts that `coder`/`manager`/`tester` already had — `docker-compose.yml`
+now wires all three the same way (`CODER_NATIVE_LAYOUT_PRESET` /
+`CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`,
+`POSTGRES_HOST`/`PORT`/`DB`/`USER`/`PASSWORD`, and the
+`/opt/virtualTubers/replays:/data/replays:ro` +
+`/opt/virtualTubers/voices:/data/voices:ro` mounts).
 
-- `LAYOUT_PRESET` override — no env var is even wired up for them (no
-  `CODER_NATIVE_LAYOUT_PRESET` etc.), so there's no way to put them in
-  `replay` mode without adding one.
-- `POSTGRES_HOST`/`PORT`/`DB`/`USER`/`PASSWORD` — required for
-  `narration_store.available()` to be `True`; a follower can't
-  `load_airing` without it.
-- The `/opt/virtualTubers/replays:/data/replays:ro` and
-  `/opt/virtualTubers/voices:/data/voices:ro` volume mounts.
+All three now **default to `replay`** in `docker-compose.yml` (no stack
+env needs to be set) — set `CODER_NATIVE_LAYOUT_PRESET`/
+`CODER_OPENCODE_LAYOUT_PRESET`/`CODER_AIDER_LAYOUT_PRESET` to `coder` in
+the Portainer stack env if you want one of them back to its normal
+editor pane instead.
 
-Until those three env/mount blocks are extended to match `worker-coder`'s
-(see `docker-compose.yml` lines ~55-134 for the current blocks, ~3-52 for
-what to copy from), `worker4.json`/`worker5.json`/`worker6.json` will
-invite those followers but they'll never publish `replay_ready` — the
-director will hit `REPLAY_READY_TIMEOUT_S` (60s) and refuse the whole
-airing with `reason: "ready_timeout"` (per `docs/duet_replay.md`
-"Refusal rule"). `worker3.json` (tester only) works today since tester
-already has all three.
-
-**TODO**: add `LAYOUT_PRESET`/`POSTGRES_*`/replay-library+voices mounts
-to the `worker-coder-native`, `worker-coder-opencode`, and
-`worker-coder-aider` service blocks in `docker-compose.yml`, matching
-`worker-coder`'s block, before worker4-6 tests can pass.
+**Still required before worker4/5/6 will actually pass**, since this was
+a compose-file change: rebuild `vtube-worker:latest` (no new dependency,
+same image as before) and redeploy the stack — same two-step deploy as
+any other compose change (README's
+[Deploy / redeploy](../README.md#deploy--redeploy-after-a-code-change)).
+Until that redeploy happens, those three workers still boot with the
+old image/env and will invite-then-timeout exactly as before
+(`reason: "ready_timeout"`, `REPLAY_READY_TIMEOUT_S`, per
+`docs/duet_replay.md` "Refusal rule").
