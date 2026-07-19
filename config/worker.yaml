@@ -112,6 +112,15 @@ voice:
   # What the coder calls the boss in spoken narration
   boss_name: "the boss"
 
+  # false (default): boss/coder dialogue lines are paraphrased per airing by
+  # the LLM, sized to roughly fill the scene's on-screen time (revoice.py).
+  # true: skip the LLM for those lines entirely and speak the original
+  # scripted text in full, however long that takes — the scene just holds
+  # a bit longer for the voice to finish instead of desyncing. coder_work
+  # scenes (tool-call narration) have no single original line, so they are
+  # always paraphrased regardless of this setting.
+  verbatim: false
+
   # Speaking rate multiplier (1.0 = normal)
   rate: 1.0
 

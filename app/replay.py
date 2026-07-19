@@ -549,12 +549,14 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     tts = build_tts_client(config)
     if tts is None:
         return None
+    voice_config = config.get("voice") or {}
     return prepare_show(
         script, build_llm_client(config), tts, workdir,
         worker_name=worker_name,
-        boss_name=(config.get("voice") or {}).get("boss_name", "the boss"),
-        speaker_names=(config.get("voice") or {}).get("speaker_names") or {},
+        boss_name=voice_config.get("boss_name", "the boss"),
+        speaker_names=voice_config.get("speaker_names") or {},
         speed=speed, max_output_lines=max_output_lines, progress=progress,
+        verbatim=bool(voice_config.get("verbatim", False)),
     )
 
 

@@ -77,12 +77,13 @@ distinct dialogue to any of the personas in `speaker_names` — see
 ```python
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None) -> list[dict]
+                 progress=None, speaker_names=None, verbatim=False) -> list[dict]
 
 def plan_scenes(events: list[dict]) -> list[dict]
 def scene_visual_seconds(scene, max_output_lines, speed=1.0) -> float
 def target_words(seconds: float) -> int
-def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None) -> str
+def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
+                  verbatim=False) -> str
 def fallback_narration(scene, max_words) -> str
 ```
 
@@ -107,6 +108,16 @@ def fallback_narration(scene, max_words) -> str
   `"coder"` ids and to the raw speaker id as a last resort. Real parsed
   scripts never set `"speaker"`, so omitting this kwarg reproduces
   today's boss/coder-only behavior exactly.
+- `verbatim` (bool, default `False`; from a worker's `voice.verbatim`
+  config): skip the LLM entirely for `boss`/`coder_talk` scenes and speak
+  the original scripted line in full, untrimmed, instead of a paraphrase
+  sized to the scene's estimated screen time. `coder_work` scenes have no
+  single original line (they describe a run of tool calls), so they are
+  always paraphrased regardless of this flag. A verbatim line that runs
+  longer than the estimate doesn't desync anything — the audio-anchored
+  pacing ([replay.md](replay.md)) just holds the scene a bit longer for
+  the voice to finish once the visual-pacing clamp is hit, same as any
+  scene where the spoken line runs long.
 
 ## Return Value
 
@@ -163,6 +174,14 @@ The show must always air, so every step degrades instead of raising:
 
 ## Changelog
 
+- **v1.3.0** (2026-07-19): New `voice.verbatim` config flag, threaded through
+  `prepare_show`/`narrate_scene` as `verbatim=False`. When `True`,
+  `boss`/`coder_talk` scenes skip the LLM paraphrase entirely and speak
+  the original scripted line in full — no word-count trimming, no
+  mid-sentence cutoff on a fallback path. `coder_work` scenes are
+  unaffected (always paraphrased — there's no single original line to
+  read for a run of tool calls). Default is `False`, so existing configs
+  are unchanged.
 - **v1.2.0** (2026-07-18): `plan_scenes` gained an optional per-event
   `"speaker"` override — `event.get("speaker") or "boss"`/`"coder"` when
   absent, so real parsed scripts (which never set it) are byte-for-byte

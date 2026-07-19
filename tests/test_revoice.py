@@ -172,6 +172,24 @@ def test_narrate_scene_falls_back_to_raw_speaker_id_when_unmapped():
     assert "coder-native" in llm.calls[0]
 
 
+def test_narrate_scene_verbatim_reads_full_line_without_llm():
+    long_text = ("TESS-3 here, and before anyone asks, no, I have not found "
+                 "a bug yet, but the stream just started, give me a minute.")
+    scene = {"kind": "coder_talk", "speaker": "tester", "events": [{"text": long_text}]}
+    llm = FakeLLM(reply="A fresh spoken line.")
+    line = narrate_scene(scene, llm, words=11, worker_name="K", boss_name="B", verbatim=True)
+    assert line == long_text
+    assert llm.calls == []  # verbatim never calls the LLM for dialogue scenes
+
+
+def test_narrate_scene_verbatim_still_paraphrases_coder_work():
+    scene = plan_scenes(EVENTS)[2]
+    llm = FakeLLM(reply="A fresh spoken line.")
+    line = narrate_scene(scene, llm, words=20, worker_name="K", boss_name="B", verbatim=True)
+    assert line == "A fresh spoken line."
+    assert len(llm.calls) == 1  # coder_work always goes through the LLM/fallback path
+
+
 @pytest.mark.parametrize("index, fragment", [
     (0, "Fix the flaky test"),   # boss: speaks the message
     (1, "On it, boss."),         # coder_talk: speaks the narration
@@ -226,3 +244,13 @@ def test_prepare_show_threads_speaker_names(tmp_path):
     llm = FakeLLM(reply="A fresh spoken line.")
     prepare_show(script, llm, None, tmp_path, speaker_names={"tester": "TESS-3"})
     assert "TESS-3" in llm.calls[0]
+
+
+def test_prepare_show_verbatim_skips_llm_for_dialogue_scenes(tmp_path):
+    script = {"source": "ep1", "events": EVENTS}
+    llm = FakeLLM(reply="A fresh spoken line.")
+    show = prepare_show(script, llm, None, tmp_path, verbatim=True)
+    assert show[0]["narration"] == "Fix the flaky test please"  # boss, verbatim
+    assert show[1]["narration"] == "On it, boss."                # coder_talk, verbatim
+    assert show[2]["narration"] == "A fresh spoken line."         # coder_work, still LLM
+    assert len(llm.calls) == 1  # only the coder_work scene called the LLM

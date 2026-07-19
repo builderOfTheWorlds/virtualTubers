@@ -192,9 +192,19 @@ def _display_name(speaker, speaker_names, worker_name, boss_name):
     return speaker
 
 
-def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None):
+def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
+                   verbatim=False):
     """One spoken line for the scene: LLM-voiced, falling back to the
-    template line if the LLM is unreachable or returns nothing usable."""
+    template line if the LLM is unreachable or returns nothing usable.
+
+    `verbatim=True` skips paraphrasing entirely for `boss`/`coder_talk`
+    scenes — the original scripted line is spoken in full, untrimmed,
+    with no LLM call at all. `coder_work` scenes have no single original
+    line to read (they describe a run of tool calls), so they always go
+    through the normal LLM/fallback path regardless of `verbatim`."""
+    if verbatim and scene["kind"] in ("boss", "coder_talk"):
+        default = "New instructions." if scene["kind"] == "boss" else "Let me think."
+        return " ".join(scene["events"][0].get("text", default).split())
     name = _display_name(scene["speaker"], speaker_names, worker_name, boss_name)
     prompt = _PROMPTS[scene["kind"]].format(
         name=name, words=words,
@@ -216,7 +226,7 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None)
 
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None):
+                 progress=None, speaker_names=None, verbatim=False):
     """Build the voiced show for one airing.
 
     Returns plan_scenes()' scenes, each annotated with:
@@ -228,6 +238,11 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
     "preparing tonight's episode…" while the LLM and TTS work. `speaker_names`
     maps speaker id -> display name for any per-event speaker overrides
     (see plan_scenes); it falls back to worker_name/boss_name/raw id.
+    `verbatim=True` (from a worker's `voice.verbatim` config) reads
+    boss/coder dialogue lines in full instead of paraphrasing them to fit
+    the estimated screen time — see `narrate_scene`. The audio-anchored
+    pacing in replay.py adapts either way, so a longer verbatim line just
+    holds the scene a little longer rather than desyncing.
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
@@ -238,7 +253,7 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
         words = target_words(seconds)
         notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
         scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name,
-                                            speaker_names=speaker_names)
+                                            speaker_names=speaker_names, verbatim=verbatim)
         scene["audio"] = None
         if tts is None:
             continue
