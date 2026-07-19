@@ -95,6 +95,23 @@ def test_perform_skips_unknown_event_types():
     assert "hi" in out.getvalue()
 
 
+def test_speaker_names_override_display_name_for_tagged_scene():
+    """A scene tagged with a "speaker" that maps through speaker_names
+    prints that persona's name instead of the performing worker's own —
+    the on-screen half of multi-speaker duet narration (docs/revoice.md)."""
+    out = io.StringIO()
+    performer = make_performer(out, speaker_names={"tester": "TESS-3"})
+    show = [
+        {"kind": "coder_talk", "speaker": "tester",
+         "events": [SCRIPT["events"][1]], "narration": None, "audio": None},
+    ]
+    performer.perform(SCRIPT, show=show)
+    text = out.getvalue()
+    assert "TESS-3 ▸" in text
+    assert "KODI-7 ▸" not in text
+    assert performer._display_name == performer.worker_name  # reset after
+
+
 def test_avatar_state_written_and_show_survives_bad_path(tmp_path):
     # happy path: state file reflects the performance
     state_file = tmp_path / "agent_state.json"

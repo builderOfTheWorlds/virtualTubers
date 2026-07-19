@@ -44,6 +44,11 @@ voice:
     boss:
       model_path: "/data/voices/en_US-ryan-high.onnx"
   boss_name: "the boss"
+  speaker_names:
+    tester: "TESS-3"
+    coder-native: "NYX-1"
+    coder-opencode: "OKO-2"
+    coder-aider: "ADA-3"
   rate: 1.0
   verbosity: 0.8
 

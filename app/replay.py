@@ -142,7 +142,7 @@ class Performer:
 
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
                  state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
-                 on_scene_start=None, wait_for_scene=None):
+                 on_scene_start=None, wait_for_scene=None, speaker_names=None):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
@@ -157,6 +157,16 @@ class Performer:
         # there — a bus hiccup must not take the show down.
         self.on_scene_start = on_scene_start
         self.wait_for_scene = wait_for_scene
+        # Multi-speaker duet display names (docs/revoice.md): speaker id ->
+        # on-screen name, mirroring revoice._display_name. _display_name is
+        # the label _on_assistant_text actually prints; _perform_scene sets
+        # it per scene (via _resolve_display_name) and restores it to this
+        # default afterward, so a Performer with no speaker_names override
+        # — or an unvoiced show=None performance, whose synthetic scenes
+        # never carry a "speaker" key — renders exactly as before, under
+        # worker_name.
+        self.speaker_names = speaker_names or {}
+        self._display_name = self.worker_name
 
     # ── low-level emit helpers ───────────────────────────────────────────────
     def _write(self, text):
@@ -212,7 +222,7 @@ class Performer:
         text = event["text"]
         self._line()
         self._avatar("speaking", action="talking to the stream", bubble=text)
-        self._write(f"{c.green}{c.bold}{self.worker_name} ▸{c.reset} ")
+        self._write(f"{c.green}{c.bold}{self._display_name} ▸{c.reset} ")
         first = True
         for line in text.splitlines():
             if not first:
@@ -312,6 +322,24 @@ class Performer:
             handler(event)
             self.pacer.sleep(EVENT_PAUSE_S)
 
+    def _resolve_display_name(self, speaker):
+        """Map a scene's speaker id to the name _on_assistant_text prints.
+
+        Mirrors revoice._display_name's override/fallback order — a
+        speaker_names dict entry wins first, then a backward-compat
+        default, then the raw speaker id as a last resort — but a Performer
+        instance renders a single worker's own stream, so both of
+        revoice's backward-compat defaults (boss_name for "boss",
+        worker_name for "coder") collapse onto this Performer's own
+        worker_name, same as a missing/None speaker (today's scenes never
+        set one).
+        """
+        if speaker in self.speaker_names:
+            return self.speaker_names[speaker]
+        if speaker is None or speaker in ("boss", "coder"):
+            return self.worker_name
+        return speaker
+
     def _perform_scene(self, scene):
         """Perform one scene; when it carries synthesized narration, anchor
         the visual pacing to the audio's measured duration so both finish
@@ -327,7 +355,13 @@ class Performer:
         that instead of audio.duration, using the same clamp, and the scene
         holds on the wall clock until target_duration has elapsed — keeping
         this worker's stream in lockstep with the owner's, even with no
-        sound to anchor to."""
+        sound to anchor to.
+
+        Also resolves this scene's on-screen speaking label via
+        _resolve_display_name(scene.get("speaker")) so a multi-speaker
+        duet's dialogue bubbles show the actual persona, not just this
+        worker's own name — reset in the finally below so it can never
+        leak into the next scene."""
         owned = scene.get("owned", True)
         narration = scene.get("narration")
         audio = scene.get("audio")
@@ -359,10 +393,12 @@ class Performer:
                                    max(MIN_SCENE_SCALE, natural / target_duration))
             started = time.monotonic()
             hold_seconds = target_duration
+        self._display_name = self._resolve_display_name(scene.get("speaker"))
         try:
             self._perform_events(scene["events"])
         finally:
             self.pacer.scale = 1.0
+            self._display_name = self.worker_name
         if playback is not None:
             # Visuals done first (scale clamped, or estimate ran short):
             # hold the scene until the spoken line lands.
@@ -476,6 +512,7 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
         script, build_llm_client(config), tts, workdir,
         worker_name=worker_name,
         boss_name=(config.get("voice") or {}).get("boss_name", "the boss"),
+        speaker_names=(config.get("voice") or {}).get("speaker_names") or {},
         speed=speed, max_output_lines=max_output_lines, progress=progress,
     )
 
@@ -503,20 +540,25 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
     script = load_script(args.source)
+
+    config = None
+    if args.voice_config:
+        import yaml
+        config = yaml.safe_load(Path(args.voice_config).read_text(encoding="utf-8")) or {}
+
     performer = Performer(
         pacer=Pacer(speed=args.speed, enabled=not args.no_delay),
         palette=Palette(enabled=not args.no_color),
         worker_name=args.worker_name,
         state_path=args.state_file,
         max_output_lines=args.max_output_lines,
+        speaker_names=(config.get("voice") or {}).get("speaker_names") or {} if config else None,
     )
 
     show = None
     if args.voice_config:
         import tempfile
 
-        import yaml
-        config = yaml.safe_load(Path(args.voice_config).read_text(encoding="utf-8")) or {}
         with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
             show = prepare_voiced_show(
                 script, config, workdir, worker_name=args.worker_name,

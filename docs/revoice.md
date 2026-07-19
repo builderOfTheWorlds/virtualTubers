@@ -53,17 +53,36 @@ scenes straight from `narration_store.load_airing` instead.
 | `coder_talk` | coder | one `assistant_text` |
 | `coder_work` | coder | a run of consecutive `tool_call`s (≤ 8 per scene) |
 
+Every event may carry an optional `"speaker"` override. `plan_scenes`
+reads it as `event.get("speaker") or "boss"` for a `user_message` and
+`event.get("speaker") or "coder"` for `assistant_text`/`tool_call` — an
+explicit value wins, a missing/`null`/empty one falls back to the
+type-based default in the table above. A run of consecutive `tool_call`s
+only merges into one `coder_work` scene while every event shares the same
+speaker: the accumulator flushes *before* appending a tool_call whose
+speaker differs from the chunk's (so a mid-run persona swap starts a
+fresh scene instead of blending two personas' actions into one). The
+`kind` values (`boss`/`coder_talk`/`coder_work`) still describe scene
+*structure*, not persona — they're unaffected by which speaker is set.
+
+Real parsed session scripts (`session_log_parser.py`) never set this key
+— a recorded session is inherently one human and one assistant, so those
+scripts always resolve to exactly `"boss"`/`"coder"` and behavior is
+unchanged. Hand-authored episode scripts can set it explicitly to assign
+distinct dialogue to any of the personas in `speaker_names` — see
+`replays/sample.json` and [duet_replay.md](duet_replay.md).
+
 ## Signature
 
 ```python
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None) -> list[dict]
+                 progress=None, speaker_names=None) -> list[dict]
 
 def plan_scenes(events: list[dict]) -> list[dict]
 def scene_visual_seconds(scene, max_output_lines, speed=1.0) -> float
 def target_words(seconds: float) -> int
-def narrate_scene(scene, llm, words, worker_name, boss_name) -> str
+def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None) -> str
 def fallback_narration(scene, max_words) -> str
 ```
 
@@ -81,6 +100,13 @@ def fallback_narration(scene, max_words) -> str
   word-count sizing reflects real screen time.
 - `progress` (callable, optional): called with one message per scene —
   the theater pane prints these as a "preparing tonight's episode" screen.
+- `speaker_names` (dict, optional): speaker id → display name, resolved
+  by `_display_name(speaker, speaker_names, worker_name, boss_name)` for
+  any event carrying a per-event `"speaker"` override (see Scene grammar
+  above). Falls back to `boss_name`/`worker_name` for the `"boss"`/
+  `"coder"` ids and to the raw speaker id as a last resort. Real parsed
+  scripts never set `"speaker"`, so omitting this kwarg reproduces
+  today's boss/coder-only behavior exactly.
 
 ## Return Value
 
@@ -137,6 +163,26 @@ The show must always air, so every step degrades instead of raising:
 
 ## Changelog
 
+- **v1.2.0** (2026-07-18): `plan_scenes` gained an optional per-event
+  `"speaker"` override — `event.get("speaker") or "boss"`/`"coder"` when
+  absent, so real parsed scripts (which never set it) are byte-for-byte
+  unchanged. The `tool_call` accumulator now flushes before appending a
+  tool_call whose speaker differs from the current chunk's, so a
+  mid-run persona swap starts a fresh `coder_work` scene instead of
+  merging two personas' actions. `_PROMPTS` collapsed the old
+  `{boss_name}`/`{worker_name}` placeholders into one `{name}`
+  placeholder and dropped the literal "an AI coder" phrasing in the
+  `coder_talk`/`coder_work` templates for persona-neutral wording. New
+  `_display_name(speaker, speaker_names, worker_name, boss_name)` helper
+  resolves a scene's speaker id to its display name (explicit
+  `speaker_names` override → the `boss_name`/`worker_name` backward-compat
+  defaults → the raw speaker id). `narrate_scene` and `prepare_show` both
+  gained an optional `speaker_names=None` kwarg threaded straight through
+  to `_display_name`. Together this lets a hand-authored episode script
+  (`replays/sample.json`) assign distinct dialogue to up to 6 personas —
+  see [duet_replay.md](duet_replay.md)'s "Ownership & uncast-speaker
+  defaulting" section for how the cast/display-name wiring plays out
+  end-to-end.
 - **v1.1.0** (2026-07-12): No code changes to this module, but `plan_scenes`
   gained a second caller: `replay_pane.load_reused_show` (see
   docs/narration_store.md, docs/replay_pane.md) uses it to replan a

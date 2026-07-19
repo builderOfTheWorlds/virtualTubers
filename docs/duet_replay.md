@@ -271,9 +271,25 @@ None of these constants are environment-overridable except
 
 ## Ownership & uncast-speaker defaulting
 
-- v1 scripts only ever produce speakers `"boss"` and `"coder"` (see
-  `revoice.plan_scenes` — `docs/revoice.md`); the contract generalizes to
-  more speakers later without any format change.
+- Real recorded session scripts (parsed by `session_log_parser.py`) stay
+  2-speaker-only forever — always exactly `"boss"` and `"coder"` — since a
+  recorded session is inherently one human and one assistant; that's a
+  property of the parser, not a limit of this protocol. Hand-authored
+  episode scripts, however, can now tag events with any of up to 6
+  personas via the optional per-event `"speaker"` override in
+  `revoice.plan_scenes` (docs/revoice.md) — landed and working
+  end-to-end: `replays/sample.json` (1 `boss` scene + 5 distinct
+  `coder_talk` scenes, one per persona) plus `scripts/worker3.json`..
+  `scripts/worker6.json`, whose `cast` dicts map `tester`/`coder-native`/
+  `coder-opencode`/`coder-aider` to their own real worker ids instead of
+  idle placeholder followers. On-screen display names for those four
+  personas come from `config/workers/coder.yaml`'s `voice.speaker_names`
+  block (`tester` → `TESS-3`, `coder-native` → `NYX-1`, `coder-opencode`
+  → `OKO-2`, `coder-aider` → `ADA-3`), pulled from `config`'s `voice:`
+  section the same way `boss_name`/`worker_name` already were — once by
+  `replay.prepare_voiced_show` (feeds `revoice.prepare_show`'s narration
+  prompts) and once at each of the three `Performer(...)` construction
+  sites in `app/replay_pane.py` (feeds the on-screen dialogue label).
 - Director side: `owned = cast.get(speaker, self_id) == self_id` — any
   speaker **not present** in `cast` defaults to the director.
 - Follower side: `owned = cast.get(speaker) == self_id` (no default) — a

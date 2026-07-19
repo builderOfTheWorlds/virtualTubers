@@ -60,19 +60,23 @@ def plan_scenes(events):
         nonlocal work
         for start in range(0, len(work), MAX_SCENE_EVENTS):
             chunk = work[start:start + MAX_SCENE_EVENTS]
-            scenes.append({"kind": "coder_work", "speaker": "coder", "events": chunk})
+            speaker = chunk[0].get("speaker") or "coder"
+            scenes.append({"kind": "coder_work", "speaker": speaker, "events": chunk})
         work = []
 
     for event in events:
         kind = event.get("type")
         if kind == "tool_call":
+            speaker = event.get("speaker") or "coder"
+            if work and (work[0].get("speaker") or "coder") != speaker:
+                flush_work()
             work.append(event)
             continue
         flush_work()
         if kind == "user_message":
-            scenes.append({"kind": "boss", "speaker": "boss", "events": [event]})
+            scenes.append({"kind": "boss", "speaker": event.get("speaker") or "boss", "events": [event]})
         elif kind == "assistant_text":
-            scenes.append({"kind": "coder_talk", "speaker": "coder", "events": [event]})
+            scenes.append({"kind": "coder_talk", "speaker": event.get("speaker") or "coder", "events": [event]})
         # unknown event types: the performer skips them, so we drop them here
         # too rather than desync scene timing estimates
     flush_work()
@@ -130,20 +134,20 @@ def _scene_material(scene):
 
 _PROMPTS = {
     "boss": (
-        "You are voicing {boss_name}, the boss, sending the dev a request. "
+        "You are voicing {name}, the boss, sending the dev a request. "
         "Re-voice this message as ONE natural spoken line of about {words} "
         "words, keeping every concrete requirement intact:\n\n{material}"
     ),
     "coder_talk": (
-        "You are voicing {worker_name}, an AI coder live-streaming their "
-        "work. Re-voice this narration in your own words, about {words} "
-        "words, keeping the technical content accurate:\n\n{material}"
+        "You are voicing {name}, live-streaming their work. Re-voice this "
+        "narration in your own words, about {words} words, keeping the "
+        "technical content accurate:\n\n{material}"
     ),
     "coder_work": (
-        "You are voicing {worker_name}, an AI coder live-streaming their "
-        "work. Describe out loud, present tense, what you are doing in these "
-        "recorded actions - about {words} words, enough to talk over the "
-        "whole sequence:\n\n{material}"
+        "You are voicing {name}, live-streaming their work. Describe out "
+        "loud, present tense, what you are doing in these recorded actions "
+        "- about {words} words, enough to talk over the whole "
+        "sequence:\n\n{material}"
     ),
 }
 
@@ -173,11 +177,27 @@ def fallback_narration(scene, max_words):
     return _trim_words(line, max_words)
 
 
-def narrate_scene(scene, llm, words, worker_name, boss_name):
+def _display_name(speaker, speaker_names, worker_name, boss_name):
+    """Resolve a scene's speaker id to the name it's voiced/labeled under:
+    an explicit `speaker_names` override, then the two backward-compat
+    defaults (`boss_name` for "boss", `worker_name` for "coder"), then the
+    raw speaker id as a last resort."""
+    speaker_names = speaker_names or {}
+    if speaker in speaker_names:
+        return speaker_names[speaker]
+    if speaker == "boss":
+        return boss_name
+    if speaker == "coder":
+        return worker_name
+    return speaker
+
+
+def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None):
     """One spoken line for the scene: LLM-voiced, falling back to the
     template line if the LLM is unreachable or returns nothing usable."""
+    name = _display_name(scene["speaker"], speaker_names, worker_name, boss_name)
     prompt = _PROMPTS[scene["kind"]].format(
-        worker_name=worker_name, boss_name=boss_name, words=words,
+        name=name, words=words,
         material=_scene_material(scene),
     )
     if llm is not None:
@@ -196,7 +216,7 @@ def narrate_scene(scene, llm, words, worker_name, boss_name):
 
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None):
+                 progress=None, speaker_names=None):
     """Build the voiced show for one airing.
 
     Returns plan_scenes()' scenes, each annotated with:
@@ -205,7 +225,9 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                     when TTS is disabled/failed (scene plays silent).
 
     `progress(message)` is called per scene so the theater pane can show
-    "preparing tonight's episode…" while the LLM and TTS work.
+    "preparing tonight's episode…" while the LLM and TTS work. `speaker_names`
+    maps speaker id -> display name for any per-event speaker overrides
+    (see plan_scenes); it falls back to worker_name/boss_name/raw id.
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
@@ -215,7 +237,8 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
         seconds = scene_visual_seconds(scene, max_output_lines, speed)
         words = target_words(seconds)
         notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
-        scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name)
+        scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name,
+                                            speaker_names=speaker_names)
         scene["audio"] = None
         if tts is None:
             continue

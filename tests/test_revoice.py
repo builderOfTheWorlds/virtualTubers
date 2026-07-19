@@ -16,10 +16,13 @@ from revoice import (  # noqa: E402
 )
 
 
-def tool(name="Bash", **detail):
-    return {"type": "tool_call", "tool": name, "error": False,
-            "input_summary": "", "output_summary": "", "detail_file": None,
-            "detail": detail}
+def tool(name="Bash", speaker=None, **detail):
+    event = {"type": "tool_call", "tool": name, "error": False,
+             "input_summary": "", "output_summary": "", "detail_file": None,
+             "detail": detail}
+    if speaker is not None:
+        event["speaker"] = speaker
+    return event
 
 
 EVENTS = [
@@ -82,6 +85,37 @@ def test_plan_scenes_drops_unknown_event_types():
     assert len(scenes) == 1 and scenes[0]["kind"] == "coder_talk"
 
 
+def test_plan_scenes_honors_explicit_speaker_override():
+    events = [
+        {"type": "user_message", "text": "hi", "speaker": "director"},
+        {"type": "assistant_text", "text": "yo", "speaker": "tester"},
+        tool(command="run", speaker="coder-native"),
+    ]
+    scenes = plan_scenes(events)
+    assert scenes[0]["kind"] == "boss" and scenes[0]["speaker"] == "director"
+    assert scenes[1]["kind"] == "coder_talk" and scenes[1]["speaker"] == "tester"
+    assert scenes[2]["kind"] == "coder_work" and scenes[2]["speaker"] == "coder-native"
+
+
+def test_plan_scenes_splits_tool_work_on_speaker_change():
+    events = [
+        tool(command="a", speaker="coder-native"),
+        tool(command="b", speaker="coder-native"),
+        tool(command="c", speaker="tester"),
+        tool(command="d", speaker="tester"),
+    ]
+    scenes = plan_scenes(events)
+    assert [scene["speaker"] for scene in scenes] == ["coder-native", "tester"]
+    assert [len(scene["events"]) for scene in scenes] == [2, 2]
+
+
+def test_plan_scenes_does_not_split_tool_work_when_speaker_unchanged():
+    events = [tool(command="a", speaker="tester"), tool(command="b", speaker="tester")]
+    scenes = plan_scenes(events)
+    assert len(scenes) == 1
+    assert len(scenes[0]["events"]) == 2
+
+
 # ── sizing ───────────────────────────────────────────────────────────────────
 
 def test_target_words_scales_with_screen_time_and_clamps():
@@ -118,6 +152,24 @@ def test_narrate_scene_without_llm_uses_fallback():
     scene = plan_scenes(EVENTS)[2]
     line = narrate_scene(scene, None, words=20, worker_name="K", boss_name="B")
     assert "pytest -x" in line and "agent.py" in line
+
+
+def test_narrate_scene_uses_speaker_names_override():
+    scene = {"kind": "coder_talk", "speaker": "tester",
+             "events": [{"type": "assistant_text", "text": "hi"}]}
+    llm = FakeLLM(reply="A fresh spoken line.")
+    narrate_scene(scene, llm, words=20, worker_name="KODI-7", boss_name="the boss",
+                  speaker_names={"tester": "TESS-3"})
+    assert "TESS-3" in llm.calls[0]
+
+
+def test_narrate_scene_falls_back_to_raw_speaker_id_when_unmapped():
+    scene = {"kind": "coder_talk", "speaker": "coder-native",
+             "events": [{"type": "assistant_text", "text": "hi"}]}
+    llm = FakeLLM(reply="A fresh spoken line.")
+    narrate_scene(scene, llm, words=20, worker_name="KODI-7", boss_name="the boss",
+                  speaker_names={"tester": "TESS-3"})
+    assert "coder-native" in llm.calls[0]
 
 
 @pytest.mark.parametrize("index, fragment", [
@@ -166,3 +218,11 @@ def test_prepare_show_reports_progress(tmp_path):
     prepare_show({"events": EVENTS}, FakeLLM(), None, tmp_path,
                  progress=messages.append)
     assert len(messages) == 4 and "scene 1/4" in messages[0]
+
+
+def test_prepare_show_threads_speaker_names(tmp_path):
+    events = [{"type": "assistant_text", "text": "hi", "speaker": "tester"}]
+    script = {"source": "ep1", "events": events}
+    llm = FakeLLM(reply="A fresh spoken line.")
+    prepare_show(script, llm, None, tmp_path, speaker_names={"tester": "TESS-3"})
+    assert "TESS-3" in llm.calls[0]

@@ -413,6 +413,44 @@ def test_load_reused_show_none_when_load_raises(monkeypatch, capsys, tmp_path):
     assert "narration cache load failed" in capsys.readouterr().err
 
 
+def test_load_reused_show_speaker_comes_from_fresh_plan_scenes_not_row(monkeypatch, tmp_path):
+    """Regression test for the multi-speaker duet override (docs/revoice.md):
+    `_rebuild_scenes_from_rows` (shared by load_reused_show and the duet
+    follower path) matches cached rows to scenes purely on `scene_kind` — it
+    never reads a "speaker" key off the row at all. That's *why* narration
+    reuse keeps working correctly for a hand-authored multi-speaker script:
+    every call recomputes scenes fresh from plan_scenes(script), so a
+    scene's speaker always reflects the SCRIPT's own "speaker" tags, never
+    whatever (possibly stale, possibly absent) speaker info a cached row
+    happens to carry."""
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    script = {
+        "source": "multi_ep",
+        "events": [
+            {"type": "assistant_text", "text": "hi", "speaker": "tester"},
+            {"type": "assistant_text", "text": "yo", "speaker": "coder-native"},
+        ],
+    }
+    # Rows deliberately carry NO "speaker" key at all — if
+    # _rebuild_scenes_from_rows ever started reading row["speaker"] this
+    # would raise KeyError (or, with .get, silently leak stale/missing
+    # speaker info) instead of the script's own tags, catching the
+    # regression immediately.
+    rows = [
+        {"scene_index": 0, "scene_kind": "coder_talk",
+         "text": "cached line one", "audio": None, "audio_duration_s": None},
+        {"scene_index": 1, "scene_kind": "coder_talk",
+         "text": "cached line two", "audio": None, "audio_duration_s": None},
+    ]
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+
+    result = load_reused_show(script, "multi_ep", tmp_path)
+
+    assert result is not None
+    assert [scene["speaker"] for scene in result] == ["tester", "coder-native"]
+    assert [scene["narration"] for scene in result] == ["cached line one", "cached line two"]
+
+
 def test_perform_request_publishes_narration_after_voiced_show(library, monkeypatch):
     def fake_prepare(script, config, workdir, **kwargs):
         return [dict(scene, events=[]) for scene in _voiced_show()]

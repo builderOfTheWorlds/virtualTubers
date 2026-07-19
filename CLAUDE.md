@@ -300,4 +300,14 @@ Full hardware specs, ZFS layout, container configs, and troubleshooting lessons 
 
 ---
 
+## Concluding a Conversation
+
+When the user explicitly instructs an agent to "conclude the conversation" (or an equivalent closing phrase), treat it as a three-step close-out sequence rather than just ending the reply:
+
+1. **Write the session backup now.** Don't wait for the `SessionEnd` hook to fire on its own — invoke the existing parser (`claudeBackupUtility/.claude/hooks/log_session.py`'s `parse_session()`, or run `sweep_stale_sessions.py`) against the current transcript so `conversation.md` and the tool-call files land in `claudeBackupUtility/logs/claude/<project>/` before the session actually ends.
+2. **Remind the user to close the panel — don't try to do it yourself.** No Claude Code tool can control the VS Code UI. End the final message with an explicit reminder (e.g. "You can close this panel now") instead of attempting the action.
+3. **Forward the finalized conversation to a processing API.** This is a placeholder for future work — no such endpoint exists yet (as of 2026-07-18). Once one is configured (URL + auth wired into `config.yaml`), POST the finalized transcript/log output to it here. Until then, skip this step silently rather than guessing a URL.
+
+---
+
 **Also read `PROJECT_CLAUDE.md` in this directory for project-specific instructions.**

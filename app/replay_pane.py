@@ -514,6 +514,7 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
             worker_name=name,
             state_path=state_path,
             on_scene_start=on_scene_start,
+            speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
         )
         performer.perform(script, show=show)
 
@@ -622,6 +623,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
             worker_name=name,
             state_path=state_path,
             wait_for_scene=wait_for_scene,
+            speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
         )
         performer.perform(script, show=show)
     return True
@@ -664,6 +666,7 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         palette=Palette(enabled=True),
         worker_name=name,
         state_path=state_path,
+        speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
     )
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show = None

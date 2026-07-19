@@ -1,9 +1,9 @@
 # Duet test payloads — worker1.json .. worker6.json
 
 Ready-to-curl POST bodies for `POST /messages` (message-api, port 8090),
-one per cast size. All target the same known-working episode
-(`2026-07-02_04-27-00_6ecdde82`, `narration: "reuse"`) so results are
-comparable across files. `coder` is always the director.
+one per cast size. All target the same hand-authored fixture episode
+(`sample`, `narration: "reuse"`) so results are comparable across files.
+`coder` is always the director.
 
 ```bash
 curl -X POST http://192.168.1.120:8090/messages \
@@ -15,20 +15,27 @@ curl -X POST http://192.168.1.120:8090/messages \
 |---|---|---|---|---|
 | worker1.json | 1 | coder | coder (solo, no `cast` field) | — |
 | worker2.json | 2 | coder | coder, manager (boss) | — |
-| worker3.json | 3 | coder | coder, manager (boss) | tester |
-| worker4.json | 4 | coder | coder, manager (boss) | tester, coder-native |
-| worker5.json | 5 | coder | coder, manager (boss) | tester, coder-native, coder-opencode |
-| worker6.json | 6 | coder | coder, manager (boss) | tester, coder-native, coder-opencode, coder-aider |
+| worker3.json | 3 | coder | coder, manager (boss), tester | — |
+| worker4.json | 4 | coder | coder, manager (boss), tester, coder-native | — |
+| worker5.json | 5 | coder | coder, manager (boss), tester, coder-native, coder-opencode | — |
+| worker6.json | 6 | coder | coder, manager (boss), tester, coder-native, coder-opencode, coder-aider | — |
 
-v1 episode scripts only ever produce two speakers (`"boss"`/`"coder"` —
-see `docs/duet_replay.md` "Ownership & uncast-speaker defaulting"), so
-worker3-6 invite extra followers under synthetic cast keys
-(`extra1`, `extra2`, ...) that don't match any real scene speaker. Those
-workers still join the duet, load the airing, render full visuals, and
-follow every cue — they just never own a scene, so they sit "listening"
-the entire episode instead of speaking. This is intentional: it's testing
-that invite/ready/cue fan-out scales to N followers, not N distinct
-voices.
+The "Non-speaking followers" column is kept for historical comparison but
+no longer applies to any row — see below.
+
+Real (parsed) episode scripts still only ever produce two speakers
+(`"boss"`/`"coder"` — see `docs/duet_replay.md` "Ownership & uncast-speaker
+defaulting"), since a recorded session is inherently one human and one
+assistant. That limitation has been lifted for hand-authored scripts —
+landed, see `docs/revoice.md`'s changelog: `plan_scenes` now honors an
+optional per-event `"speaker"` override, so a fixture like
+`replays/sample.json` can tag up to 6 distinct personas with real
+dialogue. worker3-6 now cast `tester`, `coder-native`, `coder-opencode`,
+and `coder-aider` under their own real speaker names instead of the old
+synthetic `extra1..4` placeholders, and each one owns and speaks its own
+scene against `sample.json` — no more idle listeners. This still exercises
+invite/ready/cue fan-out to N followers, just now with N distinct voices
+too.
 
 ## Known gap: worker4/5/6 will refuse as shipped
 
