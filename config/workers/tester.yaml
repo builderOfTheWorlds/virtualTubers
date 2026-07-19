@@ -58,6 +58,7 @@ voice:
   boss_name: "the boss"
   rate: 1.0
   verbosity: 0.7
+  verbatim: true
 
 avatar:
   provider: builtin
