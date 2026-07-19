@@ -230,12 +230,29 @@ Build and ship the episode library (from the machine with the logs):
   `agent.py` only write the request file; they don't check whether
   anything is actually polling it. If the worker didn't boot with
   `layout.preset: replay` (or `LAYOUT_PRESET=replay` env —
-  `CODER_LAYOUT_PRESET`/`MANAGER_LAYOUT_PRESET`/`TESTER_LAYOUT_PRESET` in
-  `.env.example`), this pane doesn't exist in its tmux layout at all
-  (`config/layouts/coder.yaml` has no `replay` panel — only
-  `config/layouts/replay.yaml` does), so the file just sits there forever.
-  Confirm the target worker's layout before debugging anything else
-  (docs/operator_commands.md).
+  `CODER_LAYOUT_PRESET`/`MANAGER_LAYOUT_PRESET`/`TESTER_LAYOUT_PRESET`/
+  `CODER_NATIVE_LAYOUT_PRESET`/`CODER_OPENCODE_LAYOUT_PRESET`/
+  `CODER_AIDER_LAYOUT_PRESET` in `.env.example`), this pane doesn't exist
+  in its tmux layout at all (`config/layouts/coder.yaml` has no `replay`
+  panel — only `config/layouts/replay.yaml` does), so the file just sits
+  there forever. Confirm the target worker's layout before debugging
+  anything else (docs/operator_commands.md).
+- **The stream shows the editor pane instead of the theater** — the same
+  root cause as above, seen from the other direction: a worker with no
+  `LAYOUT_PRESET` wired into its `docker-compose.yml` block at all can
+  never enter replay mode no matter what env vars or API keys get set
+  elsewhere in the stack, because there's no override path to flip. This
+  bit the three A/B coding-backend workers (`worker-coder-native`,
+  `worker-coder-opencode`, `worker-coder-aider`) until 2026-07-19: unlike
+  `worker-coder`/`worker-manager`/`worker-tester`, they shipped with no
+  `*_LAYOUT_PRESET` env, no `POSTGRES_*` env, and no `/data/replays`/
+  `/data/voices` mounts, so they always ran the normal `coder` editor
+  layout regardless of what was updated (docs/duet_replay.md's
+  "Deployment requirements" has the full before/after). `docker-compose.yml`
+  now wires all three the same way as `worker-coder`, defaulting them to
+  `replay` — set `CODER_NATIVE_LAYOUT_PRESET`/`CODER_OPENCODE_LAYOUT_PRESET`/
+  `CODER_AIDER_LAYOUT_PRESET` to `coder` in the stack env to put one back
+  into its normal editor pane instead.
 - Unknown episode → stderr report + `False`; pane returns to idle. The
   agent already confirmed queueing to the operator; check worker logs.
 - Malformed request file → consumed and discarded (logged).

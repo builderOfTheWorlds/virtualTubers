@@ -49,12 +49,12 @@ llm:
 
 voice:
   provider: piper
-  model_path: "/data/voices/en_US-lessac-medium.onnx"
+  model_path: "/data/voices/en_US-lessac-low.onnx"
   voice_id: ""
   speakers:
     coder: {}
     boss:
-      model_path: "/data/voices/en_US-ryan-high.onnx"
+      model_path: "/data/voices/en_US-ryan-low.onnx"
   boss_name: "the boss"
   rate: 1.0
   verbosity: 0.7

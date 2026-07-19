@@ -22,8 +22,13 @@ from pathlib import Path
 
 BASE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main"
 
-# name -> repo path (the two default replay speakers: coder + boss)
+# name -> repo path (the two default replay speakers: coder + boss).
+# "low" tier is the deployed default (config/workers/*.yaml) — smaller model,
+# much faster synthesis, more robotic-sounding. "medium"/"high" are kept
+# here too so you can switch back (or A/B compare) without editing this file.
 VOICES = {
+    "en_US-lessac-low": "en/en_US/lessac/low/en_US-lessac-low.onnx",
+    "en_US-ryan-low": "en/en_US/ryan/low/en_US-ryan-low.onnx",
     "en_US-lessac-medium": "en/en_US/lessac/medium/en_US-lessac-medium.onnx",
     "en_US-ryan-high": "en/en_US/ryan/high/en_US-ryan-high.onnx",
 }

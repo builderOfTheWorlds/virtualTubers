@@ -18,7 +18,6 @@ so the boss and the coder can use different Piper models or cloud voice IDs.
 import os
 import shutil
 import subprocess
-import sys
 import wave
 from dataclasses import dataclass
 from pathlib import Path
@@ -66,31 +65,98 @@ def wav_duration(path):
 
 # ── Backends: (text, out_wav, voice_cfg) -> None, write a WAV ─────────────────
 
-def _piper(text, out_wav, voice_cfg):
-    """Piper (local, free). Needs the `piper` CLI + a .onnx voice model
-    (voice.model_path). Voices: https://huggingface.co/rhasspy/piper-voices"""
-    exe_name = "piper.exe" if os.name == "nt" else "piper"
-    venv_piper = Path(sys.executable).parent / exe_name
-    piper_exe = str(venv_piper) if venv_piper.exists() else shutil.which("piper")
-    if piper_exe is None:
-        raise TTSError(
-            "piper CLI not found — `pip install piper-tts` and set voice.model_path"
-        )
+# Loaded PiperVoice instances, cached by resolved model path and kept for
+# this worker process's entire lifetime. Piper's own CLI reloads the .onnx
+# model from disk and reinitializes an ONNX Runtime session on every single
+# invocation; going through the Python API directly and caching the loaded
+# voice means that cost is paid once per model, ever, instead of once per
+# scene — a 6-scene episode used to load the model 6 times, now it loads it
+# once the first time this worker ever narrates, then reuses it for every
+# replay for as long as the container runs.
+_LOCAL_VOICES = {}
+
+
+def _load_local_voice(model_path):
+    key = str(Path(model_path).resolve())
+    voice = _LOCAL_VOICES.get(key)
+    if voice is None:
+        try:
+            from piper.voice import PiperVoice
+        except ImportError as exc:
+            raise TTSError(
+                "piper-tts package not installed (`pip install piper-tts`)"
+            ) from exc
+        voice = PiperVoice.load(key)
+        _LOCAL_VOICES[key] = voice
+    return voice
+
+
+def _piper_local(text, out_wav, voice_cfg):
+    from piper.config import SynthesisConfig
+
     model = voice_cfg.get("model_path")
     if not model or not Path(model).exists():
         raise TTSError(
             f"Piper voice model not found at {model!r} — set voice.model_path to a "
             ".onnx file (see scripts/download_voices.py)"
         )
-    # stdout -> DEVNULL: piper writes audio to --output_file but prints
-    # progress to stdout; capturing it can deadlock on a full pipe buffer.
-    proc = subprocess.run(
-        [piper_exe, "--model", str(model), "--output_file", str(out_wav)],
-        input=text, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
-        text=True, timeout=300,
-    )
-    if proc.returncode != 0:
-        raise TTSError(f"piper failed (exit {proc.returncode}): {proc.stderr.strip()}")
+    voice = _load_local_voice(model)
+    rate = float(voice_cfg.get("rate") or 1.0)
+    # Piper's length_scale is inverse of speaking rate (bigger = slower).
+    syn_config = SynthesisConfig(length_scale=(1.0 / rate) if rate else None)
+    with wave.open(str(out_wav), "wb") as wav_file:
+        # Placeholder header: synthesize_wav only sets the real
+        # nchannels/sampwidth/framerate once its first audio chunk comes
+        # back, so if it raises before that (a synthesis failure), closing
+        # this still-headerless Wave_write on the way out of the `with`
+        # block raises its OWN wave.Error ("# channels not specified") that
+        # masks the real exception. Values here are overwritten by
+        # synthesize_wav on success; they only matter for a clean close on
+        # failure.
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(22050)
+        voice.synthesize_wav(text, wav_file, syn_config=syn_config)
+
+
+def _piper_remote(text, out_wav, voice_cfg, base_url):
+    """POST to a Piper HTTP server's own `/synthesize` endpoint — the server
+    that ships with piper-tts (`python -m piper.http_server`), no custom
+    server code needed. This is how synthesis moves off this container onto
+    a separate (potentially more powerful) machine: point voice.base_url (or
+    the TTS_BASE_URL env override) at it. `voice` in the request body is the
+    model's filename stem, so one remote server whose data dir holds every
+    persona's .onnx can serve all of them by name from a single process."""
+    import httpx
+
+    model = voice_cfg.get("model_path")
+    payload = {"text": text}
+    if model:
+        payload["voice"] = Path(model).stem
+    rate = float(voice_cfg.get("rate") or 1.0)
+    if rate:
+        payload["length_scale"] = 1.0 / rate
+    response = httpx.post(f"{base_url.rstrip('/')}/synthesize", json=payload, timeout=60)
+    try:
+        response.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+        raise TTSError(
+            f"remote piper request failed: {exc.response.status_code} {exc.response.text}"
+        ) from exc
+    Path(out_wav).write_bytes(response.content)
+
+
+def _piper(text, out_wav, voice_cfg):
+    """Piper (local, free). Voices: https://huggingface.co/rhasspy/piper-voices
+    Local mode (default) keeps one loaded PiperVoice per model resident in
+    this process (see _load_local_voice). Set voice.base_url (or env
+    TTS_BASE_URL) to synthesize against a remote piper.http_server instead —
+    see _piper_remote."""
+    base_url = voice_cfg.get("base_url")
+    if base_url:
+        _piper_remote(text, out_wav, voice_cfg, base_url)
+    else:
+        _piper_local(text, out_wav, voice_cfg)
 
 
 def _openai(text, out_wav, voice_cfg):
@@ -137,11 +203,34 @@ def _elevenlabs(text, out_wav, voice_cfg):
         wav.writeframes(pcm)
 
 
+FAKE_WORDS_PER_SECOND = 2.5  # matches revoice.py's own pacing estimate
+FAKE_MIN_DURATION_S = 0.5
+
+
+def _fake(text, out_wav, voice_cfg):
+    """Testing-only: skip real synthesis entirely and write a silent WAV
+    sized to roughly how long the line would take to read. No subprocess,
+    no model load, no network — so a replay's narration-prep pass costs
+    ~nothing per scene, while `target_duration`-based pacing and the duet
+    cue/watchdog timings (docs/duet_replay.md) still see a realistic,
+    proportional duration instead of a degenerate near-zero one. Never
+    selected by default — opt in with `voice.provider: fake` or the
+    `TTS_PROVIDER=fake` env override."""
+    duration = max(len(text.split()) / FAKE_WORDS_PER_SECOND, FAKE_MIN_DURATION_S)
+    rate = 16000
+    with wave.open(str(out_wav), "wb") as wav:
+        wav.setnchannels(1)
+        wav.setsampwidth(2)
+        wav.setframerate(rate)
+        wav.writeframes(b"\x00\x00" * int(duration * rate))
+
+
 _BACKENDS = {
     "piper": _piper,
     "kokoro": _piper,  # alias: same local .onnx setup until kokoro is wired
     "openai": _openai,
     "elevenlabs": _elevenlabs,
+    "fake": _fake,
 }
 
 
@@ -181,9 +270,13 @@ class TTSClient:
 def build_tts_client(config):
     """Build a TTSClient from a full worker config (or just its `voice`
     section). Returns None when voice is disabled (`provider: "null"`,
-    missing, or empty) — callers treat None as "perform silently"."""
+    missing, or empty) — callers treat None as "perform silently". Env var
+    TTS_BASE_URL overrides voice.base_url — pointing Piper synthesis at a
+    remote piper.http_server instead of running it in this container (see
+    _piper_remote)."""
     voice_config = config.get("voice", config) or {}
     provider = os.environ.get("TTS_PROVIDER") or voice_config.get("provider")
     if not provider or str(provider).lower() in ("null", "none", "off"):
         return None
-    return TTSClient({**voice_config, "provider": provider})
+    base_url = os.environ.get("TTS_BASE_URL") or voice_config.get("base_url")
+    return TTSClient({**voice_config, "provider": provider, "base_url": base_url})

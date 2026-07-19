@@ -37,6 +37,17 @@ services:
       # template-only narration is used instead. Unset/empty performs
       # normally. Never affects this worker's real coding-task LLM use.
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      # testing-only: override voice.provider (docs/tts_client.md). Set to
+      # "fake" to skip real TTS synthesis (no piper subprocess/model load)
+      # while still returning a real, duet-safe client with a proportional
+      # silent-WAV duration. Unset/empty keeps this worker's configured
+      # provider (piper).
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      # Point Piper synthesis at a remote piper.http_server instead of
+      # running it in this container (docs/tts_client.md) — e.g. once TTS
+      # moves onto a separate, more powerful machine. Unset/empty
+      # synthesizes locally (single resident model per worker process).
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -86,6 +97,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-native.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -130,6 +143,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -174,6 +189,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder-aider.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -213,6 +230,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -249,6 +268,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state

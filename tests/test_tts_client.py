@@ -5,6 +5,8 @@ import sys
 import wave
 from pathlib import Path
 
+import httpx
+import piper.voice
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
@@ -21,6 +23,40 @@ def write_wav(path, seconds=1.0, rate=8000):
         wav.setsampwidth(2)
         wav.setframerate(rate)
         wav.writeframes(struct.pack(f"<{frames}h", *([0] * frames)))
+
+
+def write_wav_into(wav_file, seconds=1.25, rate=8000):
+    """Same as write_wav, but onto an already-open wave.Wave_write (what
+    PiperVoice.synthesize_wav is handed)."""
+    frames = int(seconds * rate)
+    wav_file.setnchannels(1)
+    wav_file.setsampwidth(2)
+    wav_file.setframerate(rate)
+    wav_file.writeframes(struct.pack(f"<{frames}h", *([0] * frames)))
+
+
+class FakeVoice:
+    """Stand-in for piper.voice.PiperVoice: writes a known-duration silent
+    WAV instead of doing real synthesis. `load_calls` (a list passed in per
+    test, not a class attribute — avoids state leaking between tests) records
+    every model path PiperVoice.load() was called with."""
+
+    def __init__(self, model_path):
+        self.model_path = model_path
+
+    def synthesize_wav(self, text, wav_file, syn_config=None, **kwargs):
+        self.last_syn_config = syn_config
+        write_wav_into(wav_file)
+
+
+def make_fake_voice_class(load_calls):
+    """A FakeVoice subclass bound to this test's own load_calls list."""
+    class _FakeVoice(FakeVoice):
+        @classmethod
+        def load(cls, model_path):
+            load_calls.append(model_path)
+            return cls(model_path)
+    return _FakeVoice
 
 
 # ── build_tts_client ─────────────────────────────────────────────────────────
@@ -93,57 +129,130 @@ def test_synthesize_empty_text_raises(tmp_path):
         client.synthesize("   ", tmp_path / "out.wav")
 
 
-def test_synthesize_piper_returns_measured_duration(tmp_path, monkeypatch):
+def test_synthesize_piper_local_returns_measured_duration(tmp_path, monkeypatch):
     model = tmp_path / "voice.onnx"
     model.write_bytes(b"onnx")
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(piper.voice, "PiperVoice", make_fake_voice_class([]))
 
-    def fake_run(cmd, **kwargs):
-        out_index = cmd.index("--output_file") + 1
-        write_wav(Path(cmd[out_index]), seconds=1.25)
-
-        class Proc:
-            returncode = 0
-            stderr = ""
-        return Proc()
-
-    monkeypatch.setattr(tts_client.shutil, "which", lambda name: "piper")
-    monkeypatch.setattr(tts_client.subprocess, "run", fake_run)
     client = TTSClient({"provider": "piper", "model_path": str(model)})
     narration = client.synthesize("hello stream", tmp_path / "out.wav")
     assert narration.duration == pytest.approx(1.25, abs=0.01)
     assert narration.audio_path == tmp_path / "out.wav"
 
 
-def test_synthesize_piper_missing_model_raises(tmp_path, monkeypatch):
-    monkeypatch.setattr(tts_client.shutil, "which", lambda name: "piper")
+def test_piper_local_loads_model_only_once_across_scenes(tmp_path, monkeypatch):
+    """The whole point of the single-session change: PiperVoice.load() must
+    be paid once per model, not once per synthesize() call."""
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    load_calls = []
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(piper.voice, "PiperVoice", make_fake_voice_class(load_calls))
+
+    client = TTSClient({"provider": "piper", "model_path": str(model)})
+    client.synthesize("first line", tmp_path / "a.wav")
+    client.synthesize("second line", tmp_path / "b.wav")
+    assert len(load_calls) == 1
+
+
+def test_piper_local_rate_maps_to_inverse_length_scale(tmp_path, monkeypatch):
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    FakeCls = make_fake_voice_class([])
+    monkeypatch.setattr(piper.voice, "PiperVoice", FakeCls)
+
+    client = TTSClient({"provider": "piper", "model_path": str(model), "rate": 2.0})
+    client.synthesize("hi", tmp_path / "out.wav")
+    voice_instance = next(iter(tts_client._LOCAL_VOICES.values()))
+    assert voice_instance.last_syn_config.length_scale == pytest.approx(0.5)
+
+
+def test_synthesize_piper_local_missing_model_raises(tmp_path):
     client = TTSClient({"provider": "piper", "model_path": str(tmp_path / "gone.onnx")})
     with pytest.raises(TTSError, match="model not found"):
         client.synthesize("hi", tmp_path / "out.wav")
 
 
-def test_synthesize_piper_cli_missing_raises(tmp_path, monkeypatch):
-    monkeypatch.setattr(tts_client.shutil, "which", lambda name: None)
-    monkeypatch.setattr(tts_client.Path, "exists", lambda self: False)
-    client = TTSClient({"provider": "piper"})
-    with pytest.raises(TTSError, match="piper CLI not found"):
-        client.synthesize("hi", tmp_path / "out.wav")
-
-
-def test_synthesize_backend_failure_raises(tmp_path, monkeypatch):
+def test_piper_local_missing_package_raises_friendly_error(tmp_path, monkeypatch):
     model = tmp_path / "voice.onnx"
     model.write_bytes(b"onnx")
-
-    def fake_run(cmd, **kwargs):
-        class Proc:
-            returncode = 1
-            stderr = "boom"
-        return Proc()
-
-    monkeypatch.setattr(tts_client.shutil, "which", lambda name: "piper")
-    monkeypatch.setattr(tts_client.subprocess, "run", fake_run)
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setitem(sys.modules, "piper.voice", None)
     client = TTSClient({"provider": "piper", "model_path": str(model)})
-    with pytest.raises(TTSError, match="boom"):
+    with pytest.raises(TTSError, match="piper-tts package not installed"):
         client.synthesize("hi", tmp_path / "out.wav")
+
+
+def test_piper_local_synthesis_failure_propagates(tmp_path, monkeypatch):
+    class BoomVoice(FakeVoice):
+        @classmethod
+        def load(cls, model_path):
+            return cls(model_path)
+
+        def synthesize_wav(self, *a, **k):
+            raise RuntimeError("boom")
+
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(piper.voice, "PiperVoice", BoomVoice)
+    client = TTSClient({"provider": "piper", "model_path": str(model)})
+    with pytest.raises(RuntimeError, match="boom"):
+        client.synthesize("hi", tmp_path / "out.wav")
+
+
+# ── piper: remote mode (voice.base_url / TTS_BASE_URL) ──────────────────────
+
+def test_piper_remote_posts_text_and_writes_response(tmp_path, monkeypatch):
+    captured = {}
+
+    class FakeResponse:
+        content = b"fake-wav-bytes"
+
+        def raise_for_status(self):
+            pass
+
+    def fake_post(url, json=None, timeout=None):
+        captured["url"] = url
+        captured["json"] = json
+        return FakeResponse()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    client = TTSClient({
+        "provider": "piper",
+        "model_path": "/data/voices/en_US-lessac-low.onnx",
+        "base_url": "http://tts-box:5000",
+    })
+    out = tmp_path / "out.wav"
+    client._backend("hello stream", out, client.voice_for("coder"))
+    assert out.read_bytes() == b"fake-wav-bytes"
+    assert captured["url"] == "http://tts-box:5000/synthesize"
+    assert captured["json"]["text"] == "hello stream"
+    assert captured["json"]["voice"] == "en_US-lessac-low"
+
+
+def test_piper_remote_raises_on_http_error(tmp_path, monkeypatch):
+    request = httpx.Request("POST", "http://tts-box:5000/synthesize")
+
+    class FakeResponse:
+        status_code = 500
+        text = "model not loaded"
+
+        def raise_for_status(self):
+            raise httpx.HTTPStatusError("boom", request=request, response=self)
+
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: FakeResponse())
+    client = TTSClient({"provider": "piper", "base_url": "http://tts-box:5000"})
+    with pytest.raises(TTSError, match="model not loaded"):
+        client._backend("hi", tmp_path / "out.wav", client.voice_for("coder"))
+
+
+def test_build_tts_base_url_env_override(monkeypatch):
+    monkeypatch.setenv("TTS_BASE_URL", "http://remote-tts:5000")
+    client = build_tts_client({"voice": {"provider": "piper", "model_path": "/x.onnx"}})
+    assert client.voice_for("coder")["base_url"] == "http://remote-tts:5000"
 
 
 def test_openai_without_key_raises(tmp_path, monkeypatch):
@@ -152,3 +261,35 @@ def test_openai_without_key_raises(tmp_path, monkeypatch):
     # raises TTSError whether the package is missing or the key is unset
     with pytest.raises(TTSError):
         client.synthesize("hi", tmp_path / "out.wav")
+
+
+# ── fake (testing-only instant synthesis) ───────────────────────────────────
+
+def test_fake_is_not_none_unlike_null(monkeypatch):
+    monkeypatch.delenv("TTS_PROVIDER", raising=False)
+    # "fake" must stay a real client (duets treat None as a hard refusal),
+    # unlike "null"/"none", which build_tts_client turns into None.
+    assert build_tts_client({"voice": {"provider": "fake"}}) is not None
+    assert build_tts_client({"voice": {"provider": "null"}}) is None
+
+
+def test_fake_never_shells_out(tmp_path, monkeypatch):
+    def explode(*args, **kwargs):
+        raise AssertionError("fake provider must never spawn a subprocess")
+    monkeypatch.setattr(tts_client.subprocess, "run", explode)
+    client = TTSClient({"provider": "fake"})
+    narration = client.synthesize("hello stream", tmp_path / "out.wav")
+    assert narration.audio_path.exists()
+
+
+def test_fake_duration_scales_with_word_count(tmp_path):
+    client = TTSClient({"provider": "fake"})
+    short = client.synthesize("hi", tmp_path / "short.wav")
+    long = client.synthesize(" ".join(["word"] * 30), tmp_path / "long.wav")
+    assert long.duration > short.duration
+
+
+def test_fake_duration_floored_for_very_short_text(tmp_path):
+    client = TTSClient({"provider": "fake"})
+    narration = client.synthesize("hi", tmp_path / "out.wav")
+    assert narration.duration >= tts_client.FAKE_MIN_DURATION_S

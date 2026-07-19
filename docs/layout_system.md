@@ -235,3 +235,6 @@ if a per-role layout map is not desired.
 - [docs/panels.md](panels.md) — catalog of the five panel types and their fields.
 - [docs/message_bus_feed.md](message_bus_feed.md) — how the `kafka_feed` pane renders.
 - [docs/message_bus.md](message_bus.md) — the underlying Kafka message bus.
+- [docs/layout_live_reload.md](layout_live_reload.md) — parked proposal for
+  reloading layout config without an image rebuild/restart; today, layout
+  changes always require both (see that doc for why).

@@ -7,9 +7,11 @@ kafka-python>=2.0.2  # message bus (Kafka)
 # World state
 redis>=5.0
 
-# Text-to-speech — local Piper engine for spoken replay narration
-# (app/tts_client.py). Cloud engines (openai / elevenlabs) are optional,
-# import-guarded, and NOT installed by default.
+# Text-to-speech — Piper engine for spoken replay narration
+# (app/tts_client.py), used locally by default (voice.base_url unset) or
+# against a remote piper.http_server (voice.base_url set). Cloud engines
+# (openai / elevenlabs) are optional, import-guarded, and NOT installed by
+# default.
 piper-tts>=1.2.0
 
 # Terminal / display utilities

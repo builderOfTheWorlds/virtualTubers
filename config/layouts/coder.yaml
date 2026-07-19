@@ -39,4 +39,4 @@ panes:
   - use: filetree                       # bottom of col2; remainder stays avatar
     target: avatar
     split: v
-    size: 81
+    size: 50                            # was 81 (avatar ~19% tall) — now even 50/50 split

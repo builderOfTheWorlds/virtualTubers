@@ -10,6 +10,26 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Fixed: the three A/B coding-backend workers could never show Rerun Theater,
+no matter what** — `worker-coder-native`, `worker-coder-opencode`, and
+`worker-coder-aider` shipped in `docker-compose.yml` with no `LAYOUT_PRESET`
+override env, no `POSTGRES_*` env, and no `/data/replays`/`/data/voices`
+volume mounts — unlike `worker-coder`/`worker-manager`/`worker-tester`, which
+had all three from the start. That meant those workers always ran their
+normal `coder` editor layout; updating stream keys, `ANTHROPIC_API_KEY`, or
+anything else in the stack env could never switch them into the replay pane,
+because there was no override path wired up to flip. `docker-compose.yml` now
+gives all three the same `LAYOUT_PRESET`/`POSTGRES_*`/volume-mount treatment
+as `worker-coder`, via new `CODER_NATIVE_LAYOUT_PRESET` /
+`CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` stack env vars —
+**and, for now, all three default to `replay` (Rerun Theater) rather than
+`coder`** (set one to `coder` to put that worker back in its normal editor
+pane). Needs a worker image rebuild (no new dependency) + Portainer redeploy,
+same as any other compose change. See the updated "Deployment requirements"
+in [docs/duet_replay.md](docs/duet_replay.md) and the new second bullet in
+[docs/replay_pane.md](docs/replay_pane.md#error-handling)'s error-handling
+section for the full before/after.
+
 **`.env.example` now lists every env var `docker-compose.yml` actually reads** —
 it had drifted behind the compose file: `CODER_LAYOUT_PRESET` /
 `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET`, `TWITCH_CHANNEL_MAP`,
@@ -587,8 +607,9 @@ curl -X POST http://localhost:8090/messages \
   `POSTGRES_*` env vars, and reachable Kafka. All six coder-role workers
   (`coder`/`manager`/`tester` plus the three A/B coding-backend workers
   `coder-native`/`coder-opencode`/`coder-aider`) are wired for this in
-  `docker-compose.yml` — set that worker's `*_LAYOUT_PRESET` stack env
-  to `replay` to enable it.
+  `docker-compose.yml` — the three A/B workers currently default to
+  `replay` already; `coder`/`manager`/`tester` need their
+  `*_LAYOUT_PRESET` stack env set to `replay` to enable it.
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
@@ -730,7 +751,7 @@ Key sections inside a worker config:
 |---|---|
 | `agent` | Role, display name, system prompt, tick rate, context window |
 | `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
-| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. See [docs/tts_client.md](docs/tts_client.md) |
+| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](docs/tts_client.md) |
 | `avatar` | Name, title, ASCII expression states, speech bubble sizing |
 | `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager`; `LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. |
 | `stream` | RTMP URL/key, resolution, bitrate, fps |

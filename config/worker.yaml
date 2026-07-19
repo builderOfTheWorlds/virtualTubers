@@ -119,15 +119,34 @@ llm:
 # container's PulseAudio sink so it goes out on the stream.
 voice:
   # Provider: piper | kokoro (alias of piper) | openai | elevenlabs
+  #           | fake (testing — instant silent synthesis, see below)
   #           | null (silent — replays perform without narration)
   # piper is local + free: `pip install piper-tts` (in the worker image) and
   # a downloaded .onnx voice model (scripts/download_voices.py).
+  # fake: skips real synthesis entirely (no subprocess/model load) but still
+  # returns a real client with a proportional silent-WAV duration — unlike
+  # "null", this keeps a duet director's voice-prep check satisfied, so it's
+  # the way to get a fast *and* duet-safe test airing (docs/tts_client.md).
+  # Never leave set to "fake" for a real stream.
   # Env var TTS_PROVIDER overrides this at runtime.
   provider: "null"
 
   # piper/kokoro: path to the .onnx voice model (docker-compose mounts the
-  # host's /opt/virtualTubers/voices at /data/voices, read-only)
-  model_path: "/data/voices/en_US-lessac-medium.onnx"
+  # host's /opt/virtualTubers/voices at /data/voices, read-only). "low"
+  # quality tier is the deployed default — smaller/faster model, more
+  # robotic-sounding; scripts/download_voices.py also lists medium/high if
+  # you want to trade speed back for quality.
+  model_path: "/data/voices/en_US-lessac-low.onnx"
+
+  # piper/kokoro only: run synthesis against a remote piper.http_server
+  # (`python -m piper.http_server -m <model> --data-dir <dir with every
+  # persona's .onnx>`) instead of in this container — e.g. once you move TTS
+  # onto a separate, more powerful machine. Blank/unset (default):
+  # synthesize locally, keeping the loaded model resident in this worker
+  # process for its whole lifetime rather than reloading it per line (see
+  # app/tts_client.py's _load_local_voice). Env var TTS_BASE_URL overrides
+  # this at runtime.
+  base_url: ""
 
   # openai / elevenlabs: which cloud voice to use (OpenAI voice name, or the
   # ElevenLabs dashboard voice ID). API keys come from the environment only
@@ -140,7 +159,7 @@ voice:
   speakers:
     coder: {}
     boss:
-      model_path: "/data/voices/en_US-ryan-high.onnx"
+      model_path: "/data/voices/en_US-ryan-low.onnx"
 
   # What the coder calls the boss in spoken narration
   boss_name: "the boss"
@@ -154,7 +173,9 @@ voice:
   # always paraphrased regardless of this setting.
   verbatim: false
 
-  # Speaking rate multiplier (1.0 = normal)
+  # Speaking rate multiplier (1.0 = normal). piper/kokoro: mapped to Piper's
+  # length_scale (inverse — 2.0 here = length_scale 0.5 = faster speech),
+  # applied whether synthesizing locally or against a remote base_url.
   rate: 1.0
 
   # How much of the agent's narration gets spoken aloud (0.0–1.0)
