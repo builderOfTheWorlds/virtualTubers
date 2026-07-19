@@ -627,3 +627,33 @@ def test_load_script_from_json_and_directory(tmp_path):
     script = load_script(d)
     assert script["session_id"] == "ab12cd34"
     assert script["events"][0]["text"] == "hello"
+
+
+def test_prepare_voiced_show_builds_llm_client_by_default(monkeypatch):
+    import llm_client
+    import tts_client
+    import revoice
+
+    monkeypatch.setattr(tts_client, "build_tts_client", lambda config: object())
+    monkeypatch.setattr(llm_client, "build_llm_client", lambda config: "real-client")
+    captured = {}
+    monkeypatch.setattr(revoice, "prepare_show", lambda script, llm, tts, workdir, **kw: captured.setdefault("llm", llm))
+
+    replay.prepare_voiced_show(SCRIPT, {}, "/tmp/x")
+    assert captured["llm"] == "real-client"
+
+
+def test_prepare_voiced_show_skips_llm_when_env_set(monkeypatch):
+    import llm_client
+    import tts_client
+    import revoice
+
+    monkeypatch.setenv("REPLAY_SKIP_LLM", "1")
+    monkeypatch.setattr(tts_client, "build_tts_client", lambda config: object())
+    monkeypatch.setattr(llm_client, "build_llm_client",
+                        lambda config: (_ for _ in ()).throw(AssertionError("should not be called")))
+    captured = {}
+    monkeypatch.setattr(revoice, "prepare_show", lambda script, llm, tts, workdir, **kw: captured.setdefault("llm", llm))
+
+    replay.prepare_voiced_show(SCRIPT, {}, "/tmp/x")
+    assert captured["llm"] is None

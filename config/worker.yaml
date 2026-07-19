@@ -80,6 +80,39 @@ llm:
   # (see .env.example) — the Claude client never reads a key from this file.
 
 
+# ── Coding backend (app/coding_backend.py, docs/coding_backend.md) ────────────
+# Swappable "actually write the code" tool for coder-role workers — the A/B
+# test between our own minimal loop and two off-the-shelf CLIs. Omit this
+# entire section (the default for this template, and for manager/tester/the
+# legacy coder) to keep "narration-only" behavior: coding_backend.py is never
+# invoked, no workspace is seeded, no git commit flow runs.
+# coding_backend:
+#   # Which tool turns a task_assignment into real file edits + a commit.
+#   # Env var CODING_BACKEND overrides this at runtime.
+#   #   native   — our own minimal loop (llm_client + full-file replacement edits)
+#   #   opencode — shells out to `opencode run` (OpenCode CLI)
+#   #   aider    — shells out to `aider --message` (auto-commits itself)
+#   #   none     — narration-only, no code written (default if section omitted)
+#   provider: native
+#
+#   # Working directory the backend edits + commits in. Env var WORKSPACE_PATH
+#   # overrides this at runtime; docker-compose mounts a dedicated named
+#   # volume here per coding-backend worker (see docker-compose.yml).
+#   workspace: /data/repo
+#
+#   # Kill a hung tool run after this many seconds rather than blocking the
+#   # agent loop forever — a timed-out run reports as a failed result, never
+#   # a worker crash.
+#   timeout_s: 600
+#
+#   # Git commit author name. Defaults to agent.name above if omitted.
+#   # author: "NYX-1"
+#
+#   # opencode/aider only: override which LLM model the CLI is invoked with.
+#   # Defaults to this file's llm.model above if omitted.
+#   # model: "qwen2.5:7b-instruct-q4_K_M"
+
+
 # ── TTS / Voice settings (app/tts_client.py, docs/tts_client.md) ─────────────
 # Used by Rerun Theater's spoken narration (docs/revoice.md): each replay
 # scene gets a per-airing LLM-written line, synthesized and played into the

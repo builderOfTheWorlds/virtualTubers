@@ -714,6 +714,8 @@ by ffmpeg `frame= … speed=~1x` progress lines. If it shows
 
 All runtime behavior is config-driven — no code changes needed to retune an agent.
 
+**`config/worker.yaml` is the canonical template of every worker parameter that exists.** Whenever a code change adds a new config-readable parameter (a new `agent.py`/backend key, a new `coding_backend`/`voice`/etc. field), add it to `config/worker.yaml` too — as a real default if every worker should get it, or commented-out with an explanation if it's optional/per-worker — with a comment describing what it controls, its default, and any env var override. Per-worker configs (`config/workers/*.yaml`) should only ever be a subset/override of what's documented there; `config/worker.yaml` must never fall behind what the code actually reads.
+
 - `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state/message-bus settings)
 - `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml` — per-role configs mounted into each container at `/config/worker.yaml`
 - Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`

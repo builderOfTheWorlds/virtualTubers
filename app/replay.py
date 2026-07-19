@@ -18,6 +18,7 @@ the on-screen rendering and the spoken line finish together.
 """
 import argparse
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -541,7 +542,13 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     from its `llm`/`voice` sections and run revoice.prepare_show(). Returns
     None when voice is disabled (voice.provider null/missing) — meaning
     "perform silently". Imported lazily: revoice imports this module's
-    estimator, and llm_client drags in the anthropic/httpx deps."""
+    estimator, and llm_client drags in the anthropic/httpx deps.
+
+    `REPLAY_SKIP_LLM=1` skips building the LLM client (narrate_scene then
+    always takes its no-LLM fallback path — the same one it uses when the
+    LLM errors mid-show) so a test airing pays no LLM latency at all. Scoped
+    to this one call site, not llm_client.build_llm_client, so it can never
+    affect a worker's real coding-task LLM use."""
     from llm_client import build_llm_client
     from revoice import prepare_show
     from tts_client import build_tts_client
@@ -550,8 +557,10 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     if tts is None:
         return None
     voice_config = config.get("voice") or {}
+    skip_llm = os.environ.get("REPLAY_SKIP_LLM", "").lower() in ("1", "true", "yes")
+    llm = None if skip_llm else build_llm_client(config)
     return prepare_show(
-        script, build_llm_client(config), tts, workdir,
+        script, llm, tts, workdir,
         worker_name=worker_name,
         boss_name=voice_config.get("boss_name", "the boss"),
         speaker_names=voice_config.get("speaker_names") or {},

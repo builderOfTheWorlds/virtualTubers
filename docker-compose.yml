@@ -32,6 +32,11 @@ services:
       # for its cast to ready-up before refusing the airing. Unset/empty
       # keeps the code default (60s).
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      # testing-only: skip the LLM narration call on a fresh replay airing
+      # (app/replay.py prepare_voiced_show) so this worker's fallback,
+      # template-only narration is used instead. Unset/empty performs
+      # normally. Never affects this worker's real coding-task LLM use.
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -156,6 +161,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -191,6 +197,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
     volumes:
       - /opt/virtualTubers/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
