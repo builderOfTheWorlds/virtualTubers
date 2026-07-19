@@ -202,6 +202,17 @@ Build and ship the episode library (from the machine with the logs):
 
 ## Error Handling
 
+- **Request queued but nothing ever airs, no error anywhere** — the most
+  common false alarm. `handle_replay_request`/`handle_viewer_joined` in
+  `agent.py` only write the request file; they don't check whether
+  anything is actually polling it. If the worker didn't boot with
+  `layout.preset: replay` (or `LAYOUT_PRESET=replay` env —
+  `CODER_LAYOUT_PRESET`/`MANAGER_LAYOUT_PRESET`/`TESTER_LAYOUT_PRESET` in
+  `.env.example`), this pane doesn't exist in its tmux layout at all
+  (`config/layouts/coder.yaml` has no `replay` panel — only
+  `config/layouts/replay.yaml` does), so the file just sits there forever.
+  Confirm the target worker's layout before debugging anything else
+  (docs/operator_commands.md).
 - Unknown episode → stderr report + `False`; pane returns to idle. The
   agent already confirmed queueing to the operator; check worker logs.
 - Malformed request file → consumed and discarded (logged).

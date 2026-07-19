@@ -26,10 +26,18 @@ silent track (`-f lavfi -i anullsrc=...`) so the *video* broadcast never
 fails over an audio-only problem — same soft-degradation contract as the
 rest of the voice pipeline (an episode always airs, at worst muted).
 
+**Credential security.** Stream keys and RTMP URLs are redacted in all
+supervisor log output (`redact_stream_key()`) so they never reach Postgres
+via `log-shipper`. ffmpeg's stdout/stderr is also suppressed, preventing
+its startup output (which includes the full command line with credentials)
+from being logged to container logs.
+
 ## Signature
 
 ```python
 def resolve(env_name, config_value, default=None) -> str
+def log(msg: str) -> None
+def redact_stream_key(text: str) -> str
 def pulse_monitor_available(sink="vout") -> bool
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display) -> list[str]
 def decide_action(enabled: bool, proc_running: bool) -> "start" | "stop" | "noop"
@@ -87,6 +95,12 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Changelog
 
+- v1.2.0 (2026-07-18) — Security fix: added `redact_stream_key()` to mask
+  Twitch credentials (format `live_XXXX`) in supervisor log messages so they
+  never reach Postgres via `log-shipper`. Also suppressed ffmpeg's
+  stdout/stderr to prevent its startup output (which logs the full command
+  including the stream key) from being captured in container logs. Credential
+  redaction now matches the pattern already used in `session_log_parser.py`.
 - v1.1.2 (2026-07-12) — Fixed the third layer of the same bug: even after
   the `pulse-access` group fix (v1.1.1) let `pactl` connect, the null-sink
   load still failed ("Module initialization failed") because

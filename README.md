@@ -10,6 +10,20 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**`.env.example` now lists every env var `docker-compose.yml` actually reads** —
+it had drifted behind the compose file: `CODER_LAYOUT_PRESET` /
+`MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET`, `TWITCH_CHANNEL_MAP`,
+`PRESENCE_COOLDOWN_S`, `PRESENCE_IGNORE_USERS`, and `LOG_RETENTION_DAYS`
+were already documented in the [stack env var table](#required-stack-environment-variables)
+below and read by the compose file, but missing from the template itself —
+so a Portainer stack copy-pasted from `.env.example` silently ran every
+worker's default layout with no way to know a `LAYOUT_PRESET` override was
+even possible. This is also the #1 cause of "I sent a `replay_request` and
+nothing happened, no error anywhere": the request file gets written just
+fine, but nothing is polling it unless that worker booted with
+`layout.preset: replay` — see the new callout in
+[docs/replay_pane.md](docs/replay_pane.md#error-handling).
+
 **Rerun Theater can now perform as a duet — multiple workers airing the
 SAME episode together, each voicing a different speaker** — a
 `replay_request` may now carry `payload.cast`, a `{speaker: worker_id}`
@@ -259,8 +273,11 @@ into a `container_logs` table, alongside the existing `messages` table from
 `message-logger`. This means all of this project's container logs — workers,
 `message-logger`, `message-api`, etc. — can be reviewed with a single SQL
 query instead of `docker logs` per container. Ships new lines only; no
-historical backfill. See [docs/log_shipper.md](docs/log_shipper.md) for
-details, including a security note on the Docker socket mount.
+historical backfill. **All containers redact Twitch stream keys, API tokens,
+passwords, and other sensitive credentials before logging** — see
+`stream_supervisor.py`'s `redact_stream_key()` for the mechanism. See
+[docs/log_shipper.md](docs/log_shipper.md) for details, including security
+notes on credential redaction and Docker socket access.
 
 Postgres access also moved off the shared `mafober` role/database onto a
 project-dedicated `virtualtubers` role/database — see

@@ -116,11 +116,19 @@ side of the bound).
 
 ## Security Note
 
-Discovering sibling containers requires read access to the Docker socket,
-which is a broad permission grant (equivalent to host root) — there's no
-finer-grained way to scope it without a proxy like
-`tecnativa/docker-socket-proxy`. The socket is mounted read-only
-(`:ro`) to reduce, though not eliminate, the risk.
+**Docker socket access.** Discovering sibling containers requires read access to
+the Docker socket, which is a broad permission grant (equivalent to host root) —
+there's no finer-grained way to scope it without a proxy like
+`tecnativa/docker-socket-proxy`. The socket is mounted read-only (`:ro`) to
+reduce, though not eliminate, the risk.
+
+**Credential handling.** All containers in this project redact sensitive
+credentials (Twitch stream keys, API tokens, passwords, emails, private IPs)
+before logging — see `stream_supervisor.py`'s `redact_stream_key()` and
+`session_log_parser.py`'s `redact()` for examples. Log lines shipped to Postgres
+should never contain live credentials, but assume credentials *could* have been
+logged if the redaction rules are incomplete or missed — this is why log
+retention has a default TTL (`RETENTION_DAYS`, default 7 days).
 
 ## Changelog
 

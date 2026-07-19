@@ -76,11 +76,11 @@ Defined in: `docs/sql/02_create_tables.sql:28-46`, `services/message-logger/logg
 - `message-logger` — `insert_voiced_narration()` (`services/message-logger/logger.py`), triggered by `replay_narration` bus messages; inserts the text-only columns with `ON CONFLICT (message_id, scene_index) DO NOTHING`.
 - `app/replay_pane.py` via `app/narration_store.py` — after a voiced Rerun Theater airing, the pane upserts the full rows directly (including WAV bytes), reusing the same `message_id` it published on the bus, with `ON CONFLICT ... DO UPDATE` on the audio columns. Whichever writer lands second completes the row.
 
-**Why it exists:** one row per spoken scene of a Rerun Theater airing (`docs/revoice.md`). Originally a write-only transcript log; since the narration-reuse feature it doubles as the reuse cache — a `replay_request` with `payload.narration: "reuse"` reads the latest airing with audio back instead of calling the LLM + TTS again (`docs/narration_store.md`).
+**Why it exists:** one row per spoken scene of a Rerun Theater airing (`docs/revoice.md`). Originally a write-only transcript log; since the narration-reuse feature it doubles as the reuse cache — a `replay_request` with `payload.narration: "reuse"` reads the latest airing with audio back instead of calling the LLM + TTS again (`docs/narration_store.md`). Duet replays (`docs/duet_replay.md`) read it from both sides: the director persists or reuses an airing and hands its followers the airing's `message_id` as the `airing_id` in the duet invite; each follower then loads that **exact** airing via `narration_store.load_airing(message_id)` (no audio filter, silent scenes included) rather than "latest for the episode", which could drift while the cast is being invited.
 
 | Column | Type | Constraints | Meaning |
 |---|---|---|---|
-| `message_id` | UUID | PK (with `scene_index`) | The airing's `replay_narration` message ID (pane-minted UUID if Kafka was down) |
+| `message_id` | UUID | PK (with `scene_index`) | The airing's `replay_narration` message ID (pane-minted UUID if Kafka was down); doubles as the duet `airing_id` |
 | `worker_id` | TEXT | NOT NULL | Which worker aired the episode |
 | `episode` | TEXT | NOT NULL | Episode name (canonical script stem) |
 | `aired_at` | TIMESTAMPTZ | NOT NULL | When the airing happened |
@@ -94,7 +94,7 @@ Defined in: `docs/sql/02_create_tables.sql:28-46`, `services/message-logger/logg
 
 Indexes: `idx_voiced_narration_episode (episode)`.
 
-Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py` (`CREATE_TABLE_SQL`). Prose: `docs/revoice.md`, `docs/narration_store.md`, `docs/replay_pane.md`.
+Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py` (`CREATE_TABLE_SQL`). Prose: `docs/revoice.md`, `docs/narration_store.md`, `docs/replay_pane.md`, `docs/duet_replay.md`.
 
 ---
 
@@ -117,7 +117,7 @@ Indexes: `idx_container_logs_name (container_name)`, `idx_container_logs_timesta
 
 Security note: reading the Docker socket to discover sibling containers is equivalent to host root access; mounted `:ro` to reduce (not eliminate) that risk.
 
-Defined in: `docs/sql/02_create_tables.sql:48-57`, `services/log-shipper/shipper.py:17-27`. Prose: `docs/log_shipper.md`.
+Defined in: `docs/sql/02_create_tables.sql`, `services/log-shipper/shipper.py:17-27`. Prose: `docs/log_shipper.md`.
 
 ---
 
