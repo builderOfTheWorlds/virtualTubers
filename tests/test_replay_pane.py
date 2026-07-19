@@ -965,8 +965,17 @@ def test_director_invites_distinct_followers_deduped_and_cues_in_order(
     # Both speakers cast to the SAME follower — invites must dedupe to one.
     cast = {"boss": "workerB", "coder": "workerB"}
     request = {"episode": "duet_ep", "cast": cast, "speed": 1000}
-    relay_files["ready_file"].write_text(
-        json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+
+    # ready_file must arrive AFTER perform_director_request starts waiting
+    # (it clears any pre-existing file first — a stale ready_file from a
+    # PREVIOUS performance of this same reused airing_id must never satisfy
+    # this run's wait instantly, see the ready_file stale-state-hygiene
+    # regression test below), so simulate the follower's replay_ready
+    # landing mid-poll via the sleep hook, like the stop-signal tests do.
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
     ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
@@ -1017,6 +1026,49 @@ def test_director_ready_timeout_refuses_without_performing(
     assert "error" in errors[0]["payload"]
 
 
+def test_director_ignores_stale_ready_file_from_earlier_reused_airing(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """A narration:"reuse" airing keeps the SAME airing_id across every
+    separate performance of it (the persisted cache's message_id never
+    changes). handle_replay_ready (app/agent.py) unions a sender into an
+    existing ready_file whenever its airing_id still matches — so a
+    ready_file left over from a PREVIOUS performance of this same reused
+    airing already lists every follower as ready. Before the fix, the
+    director's wait loop read that stale file on its very first iteration
+    and proceeded immediately, cueing scenes before THIS run's followers
+    had loaded their own audio — which forces them into catch-up mode and
+    silently drops their owned audio (Performer.perform's catch_up_to path
+    calls playback.stop() instead of playing it, app/replay.py
+    _perform_scene). The director must treat a pre-existing ready_file as
+    untrustworthy and wait for a fresh replay_ready every time, even when
+    the airing_id is identical to last time."""
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    # Same airing_id as a hypothetical earlier performance — the reuse case.
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-123")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    # Stale: written BEFORE this call, exactly as a prior performance of the
+    # same reused airing_id would have left it. No fresh replay_ready ever
+    # arrives this time (nothing writes it during the poll), so if the
+    # director wrongly trusts this file, it succeeds instantly; if fixed, it
+    # must time out and refuse.
+    relay_files["ready_file"].write_text(
+        json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is False
+    assert FakePerformer.instances == []  # never performed — stale ready must not count
+    producer = holder["producer"]
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert ends[0]["payload"]["reason"] == "ready_timeout"
+
+
 def test_director_tells_followers_stopped_when_show_is_cut_short(
         duet_library, monkeypatch, duet_timeouts, relay_files):
     """When the Performer's should_stop hook fires mid-show, perform()
@@ -1039,8 +1091,13 @@ def test_director_tells_followers_stopped_when_show_is_cut_short(
     monkeypatch.setattr(replay_pane, "Performer", StoppedPerformer)
 
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
-    relay_files["ready_file"].write_text(
-        json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+
+    # ready_file must arrive AFTER the wait starts (perform_director_request
+    # clears any pre-existing file first) — simulate it landing mid-poll.
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
     ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
@@ -1138,8 +1195,13 @@ def test_director_annotates_ownership_and_strips_unowned_audio(
     # Director voices "boss" itself; "coder" belongs to workerB.
     cast = {"boss": "director-1", "coder": "workerB"}
     request = {"episode": "duet_ep", "cast": cast, "speed": 1000}
-    relay_files["ready_file"].write_text(
-        json.dumps({"airing_id": "airing-42", "workers": ["workerB"]}), encoding="utf-8")
+
+    # ready_file must arrive AFTER the wait starts (perform_director_request
+    # clears any pre-existing file first) — simulate it landing mid-poll.
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-42", "workers": ["workerB"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
     ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))

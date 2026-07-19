@@ -156,6 +156,24 @@ sender (from the message envelope `from`) is unioned into `workers`;
 different, missing, or corrupt content is replaced with a fresh
 single-sender entry for the new airing.
 
+**The director deletes this file itself before it starts waiting** (same
+stale-state-hygiene convention as `REPLAY_CUE_FILE`/`REPLAY_STOP_FILE`,
+right below), for a reason specific to reused airings: a `narration:
+"reuse"` request replays the SAME cached airing_id every time it's
+requested. Without the delete, a `ready_file` left over from a PREVIOUS
+performance of that airing_id already lists every follower as ready — the
+union/replace rule above treats it as still valid since the airing_id
+matches — so the director's wait loop would see "ready" on its very first
+read and start cueing scenes before this run's followers have actually
+loaded their own audio. A follower still catches up visually via the cue
+ratchet's `catch_up_to` fast-forward, but a scene it "catches up" through
+plays no audio (`Performer.perform`/`_perform_scene` call
+`playback.stop()` instead of letting it finish) — so a follower whose own
+speaking scene lands early in the episode can lose its voice for that
+entire performance with no error anywhere. Fixed 2026-07 (`app/
+replay_pane.py`); see `tests/test_replay_pane.py`'s
+`test_director_ignores_stale_ready_file_from_earlier_reused_airing`.
+
 ## Flow: prepare → persist → invite → ready → cue ratchet → end
 
 ```

@@ -503,7 +503,22 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
         _delete_stale_file(stop_file)
         should_stop = lambda: os.path.exists(stop_file)
 
+        # Stale-state hygiene, same convention as cue_file/stop_file above:
+        # handle_replay_ready (app/agent.py) unions a sender into an existing
+        # ready_file when its airing_id matches — which it always will for a
+        # narration:"reuse" airing performed more than once (the airing_id
+        # is the persisted cache's message_id, identical on every replay).
+        # Without this, a previous performance's ready_file already lists
+        # every follower, so the wait loop below sees "ready" on its very
+        # first read and starts firing cues before this run's followers have
+        # even loaded their own audio — they fall straight into the
+        # >=2-scenes-behind catch-up path (Performer.perform's catch_up_to),
+        # which discards owned audio via playback.stop() instead of playing
+        # it (app/replay.py _perform_scene). A follower whose own scene
+        # lands early in the episode can lose its voice entirely and look
+        # broken with no error anywhere.
         ready_file = _resolve_replay_ready_file()
+        _delete_stale_file(ready_file)
         try:
             timeout_s = float(os.environ.get(REPLAY_READY_TIMEOUT_ENV) or REPLAY_READY_TIMEOUT_DEFAULT_S)
         except (TypeError, ValueError):
