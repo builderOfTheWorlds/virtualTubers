@@ -48,6 +48,14 @@ DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
 IDLE_REDRAW_S = 300  # re-list the library occasionally (new episodes synced in)
 
+# Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): same
+# atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
+# handle_replay_stop (app/agent.py) writes it; every performance path below
+# wires it into its Performer's Pacer(should_stop=...) so an operator stop
+# lands within a fraction of a second, not just at the next scene boundary
+# (docs/replay.md ReplayStopped).
+DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
+
 # ── Duet replay (docs/duet_replay.md) ────────────────────────────────────────
 # Relay files the agent (app/agent.py) writes and this pane polls — same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
@@ -104,6 +112,10 @@ def _delete_stale_file(path):
         Path(path).unlink()
     except OSError:
         pass
+
+
+def _resolve_replay_stop_file():
+    return os.environ.get("REPLAY_STOP_FILE") or DEFAULT_REPLAY_STOP_FILE
 
 
 def _resolve_replay_cue_file():
@@ -482,6 +494,15 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
         cue_file = _resolve_replay_cue_file()
         _delete_stale_file(cue_file)
 
+        # Stop signal (docs/operator_commands.md `replay_stop`): stale-state
+        # hygiene first (a leftover stop from a PREVIOUS airing must never
+        # kill this new one before it starts), same convention as cue_file
+        # above. should_stop is checked both while waiting on followers
+        # below and inside the performance itself (Pacer, docs/replay.md).
+        stop_file = _resolve_replay_stop_file()
+        _delete_stale_file(stop_file)
+        should_stop = lambda: os.path.exists(stop_file)
+
         ready_file = _resolve_replay_ready_file()
         try:
             timeout_s = float(os.environ.get(REPLAY_READY_TIMEOUT_ENV) or REPLAY_READY_TIMEOUT_DEFAULT_S)
@@ -490,7 +511,11 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
         deadline = time.monotonic() + timeout_s
         followers_needed = set(followers)
         ready = False
+        stopped_before_ready = False
         while True:
+            if should_stop():
+                stopped_before_ready = True
+                break
             state = _read_json_file(ready_file)
             if isinstance(state, dict) and state.get("airing_id") == airing_id:
                 if followers_needed <= set(state.get("workers") or []):
@@ -499,6 +524,9 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
             if time.monotonic() >= deadline:
                 break
             time.sleep(REPLAY_READY_POLL_INTERVAL_S)
+        if stopped_before_ready:
+            return refuse("operator replay_stop received before duet cast was ready",
+                          reason="stopped", airing_id=airing_id)
         if not ready:
             return refuse("timed out waiting for duet followers to become ready",
                           reason="ready_timeout", airing_id=airing_id)
@@ -509,16 +537,18 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
                                                     {"airing_id": airing_id, "scene_index": index}))
 
         performer = Performer(
-            pacer=Pacer(speed=speed),
+            pacer=Pacer(speed=speed, should_stop=should_stop),
             palette=Palette(enabled=True),
             worker_name=name,
             state_path=state_path,
             on_scene_start=on_scene_start,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
         )
-        performer.perform(script, show=show)
+        completed = performer.perform(script, show=show)
+        _delete_stale_file(stop_file)
 
-        _send_replay_end(producer, self_id, followers, airing_id, "finished")
+        _send_replay_end(producer, self_id, followers, airing_id,
+                         "finished" if completed else "stopped")
     return True
 
 
@@ -584,8 +614,13 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
 
         # Stale-state hygiene: clear any leftover cue from a previous show
         # BEFORE announcing readiness, so this follower can never consume a
-        # cue/end meant for a different airing (docs/duet_replay.md).
+        # cue/end meant for a different airing (docs/duet_replay.md). Same
+        # for the operator stop signal (docs/operator_commands.md
+        # `replay_stop`) — a leftover from a PREVIOUS airing must never
+        # kill this new one before it starts.
         _delete_stale_file(cue_file)
+        stop_file = _resolve_replay_stop_file()
+        _delete_stale_file(stop_file)
 
         producer = _build_bus_producer(config)
         target = director or "operator"
@@ -603,6 +638,12 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
                 timeout_s = max(REPLAY_WATCHDOG_MIN_S, prev_duration + REPLAY_WATCHDOG_GRACE_S)
             deadline = time.monotonic() + timeout_s
             while True:
+                # Operator replay_stop reuses the existing cue-abort protocol
+                # (-1 -> perform()'s "interrupted" shutdown) rather than a
+                # separate code path — a follower blocked here (not inside
+                # Pacer.sleep) needs its own check.
+                if os.path.exists(stop_file):
+                    return -1
                 cue = _read_json_file(cue_file)
                 if isinstance(cue, dict) and cue.get("airing_id") == airing_id:
                     if cue.get("type") == "end":
@@ -618,7 +659,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
                 time.sleep(REPLAY_CUE_POLL_INTERVAL_S)
 
         performer = Performer(
-            pacer=Pacer(speed=speed),
+            pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
             palette=Palette(enabled=True),
             worker_name=name,
             state_path=state_path,
@@ -626,6 +667,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
         )
         performer.perform(script, show=show)
+        _delete_stale_file(stop_file)
     return True
 
 
@@ -661,8 +703,16 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         speed = default_speed
     script = load_script(source)
     name = str(request.get("worker_name") or worker_name)
+
+    # Stop signal (docs/operator_commands.md `replay_stop`): stale-state
+    # hygiene first — a leftover stop from a PREVIOUS episode must never
+    # kill this new one before it starts (same convention as the duet relay
+    # files above) — then consumed again after performing.
+    stop_file = _resolve_replay_stop_file()
+    _delete_stale_file(stop_file)
+
     performer = Performer(
-        pacer=Pacer(speed=speed),
+        pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
         palette=Palette(enabled=True),
         worker_name=name,
         state_path=state_path,
@@ -678,6 +728,7 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
                 message_id = publish_narration(show, config, source.stem, name)
                 persist_narration(message_id, show, config, source.stem, name)
         performer.perform(script, show=show)
+    _delete_stale_file(stop_file)
     return True
 
 

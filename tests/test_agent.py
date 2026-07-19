@@ -16,6 +16,7 @@ from agent import (
     handle_replay_invite,
     handle_replay_ready,
     handle_replay_request,
+    handle_replay_stop,
     handle_retest_request,
     handle_viewer_joined,
     handle_task_assignment,
@@ -874,6 +875,78 @@ def test_handle_replay_invite_write_failure_logs_and_does_not_raise(duet_relay_e
     assert producer.sent == []
 
 
+# ── replay_stop (any role → interrupt whatever the replay pane is doing) ────
+
+@pytest.fixture
+def replay_stop_env(tmp_path, monkeypatch):
+    """Point REPLAY_REQUEST_FILE/REPLAY_STOP_FILE at tmp paths for
+    handle_replay_stop tests. Returns (request_file, stop_file); neither
+    exists yet."""
+    request_file = tmp_path / "replay_request.json"
+    stop_file = tmp_path / "replay_stop.json"
+    monkeypatch.setenv("REPLAY_REQUEST_FILE", str(request_file))
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
+    return request_file, stop_file
+
+
+def test_handle_replay_stop_signals_stop_when_nothing_queued(replay_stop_env):
+    request_file, stop_file = replay_stop_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "operator", "type": "replay_stop", "payload": {}}
+
+    handle_replay_stop("coder", {}, llm, producer, msg)
+
+    assert stop_file.exists()
+    assert not request_file.exists()
+    assert len(producer.sent) == 1
+    assert producer.sent[0]["to"] == "operator"
+    assert producer.sent[0]["type"] == "operator_reply"
+    assert "narration" in producer.sent[0]["payload"]
+
+
+def test_handle_replay_stop_cancels_a_still_queued_request(replay_stop_env):
+    request_file, stop_file = replay_stop_env
+    request_file.write_text(json.dumps({"episode": "ep-one"}))
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "operator", "type": "replay_stop", "payload": {}}
+
+    handle_replay_stop("coder", {}, llm, producer, msg)
+
+    assert not request_file.exists()  # cancelled before the pane ever saw it
+    assert stop_file.exists()
+    assert "Cancelled" in producer.sent[0]["payload"]["narration"]
+
+
+def test_handle_replay_stop_never_calls_the_llm(replay_stop_env):
+    request_file, stop_file = replay_stop_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "operator", "type": "replay_stop", "payload": {}}
+
+    handle_replay_stop("coder", {}, llm, producer, msg)
+
+    assert llm.calls == []
+
+
+def test_handle_replay_stop_write_failure_reports_error(replay_stop_env, monkeypatch, capsys):
+    monkeypatch.setattr(
+        agent, "_atomic_write_json",
+        lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
+    )
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {"from": "operator", "type": "replay_stop", "payload": {}}
+
+    handle_replay_stop("coder", {}, llm, producer, msg)  # must not raise
+
+    assert "failed to signal replay stop" in capsys.readouterr().out
+    assert len(producer.sent) == 1
+    assert producer.sent[0]["type"] == "operator_reply"
+    assert "error" in producer.sent[0]["payload"]
+
+
 # ── Retry-count round trip (coder → tester → manager) ─────────────────────────
 
 def test_retry_count_survives_coder_tester_manager_round_trip(monkeypatch):
@@ -918,6 +991,7 @@ def test_message_handlers_covers_all_documented_types():
         "clarification_request",
         "operator_message",
         "replay_request",
+        "replay_stop",
         "viewer_joined",
         "replay_invite",
         "replay_ready",
@@ -931,3 +1005,7 @@ def test_message_handlers_registers_duet_replay_handlers():
     assert MESSAGE_HANDLERS["replay_ready"] is handle_replay_ready
     assert MESSAGE_HANDLERS["replay_cue"] is handle_replay_cue
     assert MESSAGE_HANDLERS["replay_end"] is handle_replay_end
+
+
+def test_message_handlers_registers_replay_stop():
+    assert MESSAGE_HANDLERS["replay_stop"] is handle_replay_stop

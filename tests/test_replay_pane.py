@@ -145,6 +145,34 @@ def test_perform_request_voice_failure_still_airs_silent(library, capsys, monkey
     assert "silent show" in captured.err
 
 
+# ── replay_stop: operator can interrupt a queued/running show ───────────────
+def test_perform_request_clears_stale_stop_file_before_and_after(
+        library, monkeypatch, tmp_path, fake_performer):
+    stop_file = tmp_path / "stop.json"
+    stop_file.write_text("{}", encoding="utf-8")  # stale, from a PREVIOUS airing
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
+
+    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+
+    assert ok is True
+    pacer = FakePerformer.instances[0].kwargs["pacer"]
+    assert pacer.should_stop() is False  # stale file cleared before performing
+    assert not stop_file.exists()  # consumed again after performing
+
+
+def test_perform_request_pacer_should_stop_reflects_stop_file(
+        library, monkeypatch, tmp_path, fake_performer):
+    stop_file = tmp_path / "stop.json"
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
+
+    perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+
+    pacer = FakePerformer.instances[0].kwargs["pacer"]
+    assert pacer.should_stop() is False
+    stop_file.write_text("{}", encoding="utf-8")
+    assert pacer.should_stop() is True
+
+
 # ── publish_narration: the durable transcript (docs/revoice.md) ─────────────
 class FakeBusProducer:
     def __init__(self, bootstrap_servers, topic):
@@ -745,8 +773,9 @@ class FakePerformer:
             if wait_for_scene is not None:
                 if wait_for_scene(i) == -1:
                     self.aborted = True
-                    return
+                    return False
         self.aborted = False
+        return True  # mirrors the real Performer.perform()'s bool contract
 
 
 class CapturingPerformer:
@@ -988,6 +1017,73 @@ def test_director_ready_timeout_refuses_without_performing(
     assert "error" in errors[0]["payload"]
 
 
+def test_director_tells_followers_stopped_when_show_is_cut_short(
+        duet_library, monkeypatch, duet_timeouts, relay_files):
+    """When the Performer's should_stop hook fires mid-show, perform()
+    returns False (docs/replay.md) — the director must relay that as
+    reason "stopped", not "finished" (docs/duet_replay.md)."""
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-123")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    class StoppedPerformer:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+
+        def perform(self, script, show=None, start=0, limit=None):
+            return False  # simulates an operator replay_stop firing mid-show
+
+    monkeypatch.setattr(replay_pane, "Performer", StoppedPerformer)
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    relay_files["ready_file"].write_text(
+        json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True  # an episode DID air, just cut short
+    producer = holder["producer"]
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert ends[0]["payload"] == {"airing_id": "airing-123", "reason": "stopped"}
+
+
+def test_director_refuses_with_stopped_reason_when_stop_arrives_before_ready(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, tmp_path):
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-55")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    stop_file = tmp_path / "stop.json"
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
+
+    def fake_sleep(seconds):
+        # Simulates an operator replay_stop landing partway through the
+        # director's ready-wait poll loop (never actually sleeps real time).
+        stop_file.write_text("{}", encoding="utf-8")
+
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
+    # ready_file is left empty — nobody ever becomes ready; the stop must
+    # win before the ready_timeout would otherwise fire.
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is False
+    assert FakePerformer.instances == []  # never performed
+    producer = holder["producer"]
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert ends[0]["payload"]["reason"] == "stopped"
+    assert ends[0]["payload"]["airing_id"] == "airing-55"
+
+
 def test_director_refuses_when_store_unavailable(
         duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: False)
@@ -1158,4 +1254,28 @@ def test_follower_wait_for_scene_ratchet(duet_library, monkeypatch, capturing_pe
 
     # No cue file at all — same watchdog timeout applies.
     cue_file.unlink()
+    assert wait_for_scene(0) == -1
+
+
+def test_follower_wait_for_scene_stops_immediately_on_stop_file(
+        duet_library, monkeypatch, capturing_performer, duet_timeouts, relay_files, tmp_path):
+    """An operator replay_stop reaches a follower directly through
+    wait_for_scene (not just via the director's own replay_end relay) —
+    docs/duet_replay.md."""
+    rows = _duet_rows(boss_duration=1.0, coder_duration=1.0)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane, "MessageProducer", RecordingProducer)
+
+    stop_file = tmp_path / "stop.json"
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
+
+    request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
+              "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+    assert ok is True
+    wait_for_scene = CapturingPerformer.instances[0].kwargs["wait_for_scene"]
+
+    stop_file.write_text("{}", encoding="utf-8")
     assert wait_for_scene(0) == -1

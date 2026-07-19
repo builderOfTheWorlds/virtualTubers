@@ -60,6 +60,23 @@ longer matches the current script all just fall back to (or skip) a fresh
 generation, logged to stderr, never a crash or a stalled show. `"voice":
 false` skips reuse too, same as it skips fresh narration.
 
+**Stopping a show (`replay_stop`).** An operator `replay_stop`
+(docs/operator_commands.md) reaches `app/agent.py`'s `handle_replay_stop`,
+which (1) deletes `REPLAY_REQUEST_FILE` if a request is still queued but
+hasn't been picked up yet — cancelling it outright — and (2) writes
+`REPLAY_STOP_FILE`, which every performance path here (`perform_request`,
+`perform_director_request`, `perform_follower_request`) wires into its
+`Performer`'s `Pacer(should_stop=...)` before it starts performing. A show
+already in flight notices within a fraction of a second (checked on every
+sleep and every typed character, docs/replay.md `ReplayStopped`) and shuts
+down cleanly — avatar back to idle, no crash. Each performance path clears
+any stale `REPLAY_STOP_FILE` from a *previous* airing before it starts and
+again after it finishes, so a stop can never bleed into a later, unrelated
+episode. A director additionally tells its followers the real reason
+(`replay_end` `"finished"` vs `"stopped"`) and, if the stop lands before
+every follower reported ready, refuses the airing outright with reason
+`"stopped"` instead of waiting out the full `ready_timeout`.
+
 **Duet replay (multi-worker airings).** A `replay_request` whose
 `payload.cast` maps at least one speaker to a worker other than the
 receiving one turns this pane into a **director**: it prepares and
@@ -121,6 +138,12 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
   still airs (docs/narration_store.md). **Duet replay also requires this on
   every cast worker**, director and followers alike (docs/duet_replay.md) —
   without it a duet refuses outright rather than degrading.
+- `REPLAY_STOP_FILE` (env, default `/tmp/replay_stop.json`): agent -> pane
+  stop signal written by `app/agent.py`'s `handle_replay_stop` on an
+  operator `replay_stop` (docs/operator_commands.md); this pane only ever
+  polls it via each performance path's `Pacer(should_stop=...)` (see
+  "Stopping a show" above; docs/replay.md `ReplayStopped`). Same
+  env-override + atomic-write convention as `REPLAY_REQUEST_FILE`.
 - `REPLAY_CUE_FILE` (env, default `/tmp/replay_cue.json`) /
   `REPLAY_READY_FILE` (env, default `/tmp/replay_ready.json`): duet relay
   files written by `app/agent.py`'s `handle_replay_cue`/`handle_replay_end`
@@ -249,6 +272,17 @@ Build and ship the episode library (from the machine with the logs):
 
 ## Changelog
 
+- **v1.5.0** (2026-07-19): `replay_stop` operator command — new
+  `REPLAY_STOP_FILE` relay, written by `app/agent.py`'s
+  `handle_replay_stop` (cancels a still-queued request outright; signals
+  an in-flight show to abort). `perform_request`/`perform_director_request`/
+  `perform_follower_request` all wire it into their `Performer`'s new
+  `Pacer(should_stop=...)` (docs/replay.md `ReplayStopped`), clearing any
+  stale stop file before starting and after finishing. The director path
+  also treats a stop that lands before the cast is ready as its own
+  refusal reason (`"stopped"`, distinct from `"ready_timeout"`) and tells
+  followers the real reason via `replay_end`. New `scripts/stop_replay.ps1`
+  (docs/operator_commands.md).
 - **v1.4.0** (2026-07-13): Duet replay — `perform_director_request` and
   `perform_follower_request` (docs/duet_replay.md): a `replay_request`
   `payload.cast` mapping any speaker to another worker turns this pane

@@ -43,21 +43,40 @@ MAX_SCENE_SCALE = 3.0
 TOOL_BEAT_S = 0.5       # pause for Read/generic tool events
 
 
+class ReplayStopped(Exception):
+    """Raised by Pacer.check_stop when its should_stop hook fires mid-show —
+    unwinds straight out of Performer.perform() (see perform() and
+    _perform_scene), same clean shutdown as a duet follower's
+    wait_for_scene returning -1."""
+
+
 class Pacer:
     """All sleeps/typing rhythm go through here so tests (and --no-delay)
     can run instantly with enabled=False. `scale` is the per-scene
-    audio-sync factor layered on top of the show-wide `speed`."""
+    audio-sync factor layered on top of the show-wide `speed`.
 
-    def __init__(self, speed=1.0, enabled=True):
+    `should_stop` (optional, no-arg callable returning bool) is polled on
+    every sleep and every typed character — an operator-issued stop
+    (docs/operator_commands.md `replay_stop`) is checked here rather than
+    only between scenes so it lands within a fraction of a second even
+    mid-typing, not just at the next scene boundary."""
+
+    def __init__(self, speed=1.0, enabled=True, should_stop=None):
         self.speed = max(speed, 0.01)
         self.enabled = enabled
         self.scale = 1.0
+        self.should_stop = should_stop
 
     @property
     def effective_speed(self):
         return max(self.speed * self.scale, 0.01)
 
+    def check_stop(self):
+        if self.should_stop is not None and self.should_stop():
+            raise ReplayStopped()
+
     def sleep(self, seconds):
+        self.check_stop()
         if self.enabled and seconds > 0:
             time.sleep(seconds / self.effective_speed)
 
@@ -68,6 +87,7 @@ class Pacer:
             return
         delay = 1.0 / (cps * self.effective_speed)
         for ch in text:
+            self.check_stop()
             write(ch)
             time.sleep(delay)
 
@@ -396,6 +416,13 @@ class Performer:
         self._display_name = self._resolve_display_name(scene.get("speaker"))
         try:
             self._perform_events(scene["events"])
+        except ReplayStopped:
+            # A stop mid-scene must not leave audio playing under a show
+            # that already unwound — same responsibility perform()'s
+            # ReplayStopped handler can't take since `playback` is local.
+            if playback is not None:
+                playback.stop()
+            raise
         finally:
             self.pacer.scale = 1.0
             self._display_name = self.worker_name
@@ -423,6 +450,13 @@ class Performer:
         (docs/duet_replay.md, "cue ratchet + fast-forward rule"). With
         neither on_scene_start nor wait_for_scene set this is exactly
         today's straight-through loop.
+
+        Returns True when the show ran to its natural end, False when it
+        was cut short — a duet follower's wait_for_scene returning -1, or
+        an operator replay_stop firing the pacer's should_stop hook
+        (ReplayStopped, docs/operator_commands.md) — so callers like
+        perform_director_request can tell followers the real reason
+        (docs/duet_replay.md `replay_end` "finished" vs "stopped").
         """
         c = self.c
         if show is None:
@@ -441,46 +475,53 @@ class Performer:
 
         n = len(scenes)
         i = 0
-        while i < n:
-            if self.on_scene_start is not None:
-                try:
-                    self.on_scene_start(i)
-                except Exception as exc:
-                    # A cue-publish failure must not take the show down —
-                    # the follower's watchdog will time out and recover.
-                    print(f"[replay] on_scene_start hook failed for scene {i}: {exc}",
-                          file=sys.stderr)
+        try:
+            while i < n:
+                if self.on_scene_start is not None:
+                    try:
+                        self.on_scene_start(i)
+                    except Exception as exc:
+                        # A cue-publish failure must not take the show down —
+                        # the follower's watchdog will time out and recover.
+                        print(f"[replay] on_scene_start hook failed for scene {i}: {exc}",
+                              file=sys.stderr)
 
-            catch_up_to = None
-            if self.wait_for_scene is not None:
-                authorized = self.wait_for_scene(i)
-                if authorized == -1:
-                    self._line()
-                    self._line(f"{c.bold}{c.magenta}══ interrupted ══{c.reset}")
-                    self._avatar("idle", action="show interrupted")
-                    return
-                if authorized - i >= 2:
-                    catch_up_to = min(authorized, n - 1)
+                catch_up_to = None
+                if self.wait_for_scene is not None:
+                    authorized = self.wait_for_scene(i)
+                    if authorized == -1:
+                        self._line()
+                        self._line(f"{c.bold}{c.magenta}══ interrupted ══{c.reset}")
+                        self._avatar("idle", action="show interrupted")
+                        return False
+                    if authorized - i >= 2:
+                        catch_up_to = min(authorized, n - 1)
 
-            self._perform_scene(scenes[i])
-            i += 1
+                self._perform_scene(scenes[i])
+                i += 1
 
-            if catch_up_to is not None:
-                # ≥2 scenes behind the cue: race through the backlog with
-                # pacing off so this stream catches back up to the director.
-                was_enabled = self.pacer.enabled
-                self.pacer.enabled = False
-                try:
-                    while i <= catch_up_to:
-                        self._perform_scene(scenes[i])
-                        i += 1
-                finally:
-                    self.pacer.enabled = was_enabled
+                if catch_up_to is not None:
+                    # ≥2 scenes behind the cue: race through the backlog with
+                    # pacing off so this stream catches back up to the director.
+                    was_enabled = self.pacer.enabled
+                    self.pacer.enabled = False
+                    try:
+                        while i <= catch_up_to:
+                            self._perform_scene(scenes[i])
+                            i += 1
+                    finally:
+                        self.pacer.enabled = was_enabled
+        except ReplayStopped:
+            self._line()
+            self._line(f"{c.bold}{c.magenta}══ stopped ══{c.reset}")
+            self._avatar("idle", action="show stopped by operator")
+            return False
 
         self._line()
         self._line(f"{c.bold}{c.magenta}══ fin ══{c.reset}")
         self._avatar("happy", action="that's the end of the rerun",
                      bubble="And that's how we did it!")
+        return True
 
 
 def load_script(source):

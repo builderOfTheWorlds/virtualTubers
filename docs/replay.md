@@ -72,6 +72,21 @@ Scene dicts also gain two optional keys duet playback reads:
 Full protocol (director/follower roles, bus message schemas, timeouts,
 ownership rules): [docs/duet_replay.md](duet_replay.md).
 
+**Stopping a show early.** `Pacer` accepts an optional `should_stop`
+no-arg callable, polled on every sleep and every typed character (not just
+between scenes, so an operator stop lands within a fraction of a second
+even mid-typing). When it returns `True`, `Pacer.check_stop` raises
+`ReplayStopped`, which `perform()` catches at the top level — same clean
+shutdown as a duet follower's `wait_for_scene` returning `-1`: a "stopped"
+banner prints, the avatar returns to idle, and `perform()` returns `False`
+instead of raising. `_perform_scene` also stops any in-flight audio
+playback before the exception propagates, so a stopped voiced scene never
+leaves narration playing under a show that already ended. `app/replay_pane.py`
+wires this to `REPLAY_STOP_FILE` (docs/replay_pane.md), written by
+`app/agent.py`'s `handle_replay_stop` on an operator `replay_stop`
+(docs/operator_commands.md) — `replay.py` itself has no bus/file
+awareness, it just calls whatever `should_stop` it's given.
+
 ## Signature
 
 ```python
@@ -81,7 +96,13 @@ class Performer:
                  max_output_lines=24, *,
                  on_scene_start=None, wait_for_scene=None)
     def perform(self, script: dict, show: list[dict] | None = None,
-                start: int = 0, limit: int | None = None) -> None
+                start: int = 0, limit: int | None = None) -> bool
+
+class Pacer:
+    def __init__(self, speed=1.0, enabled=True, should_stop=None)
+    def check_stop(self) -> None  # raises ReplayStopped if should_stop() is True
+
+class ReplayStopped(Exception): ...
 
 def load_script(source: str | Path) -> dict
 def estimate_event_seconds(event: dict, max_output_lines=24) -> float
@@ -121,11 +142,16 @@ straight-through loop — solo output is unaffected.
 
 ## Return Value
 
-None — output is the rendered performance on stdout. Interrupting with
-Ctrl-C prints `[replay] interrupted` and exits cleanly. A duet follower's
-`wait_for_scene` hook returning `-1` ends the show early the same clean
-way: `perform()` prints an `══ interrupted ══` banner, sets the avatar to
-`idle` ("show interrupted"), and returns — never raises.
+`perform()` returns `True` when the show ran to its natural end, `False`
+when it was cut short — either a duet follower's `wait_for_scene` hook
+returning `-1` (prints `══ interrupted ══`, avatar -> `idle` "show
+interrupted") or an operator `replay_stop` firing `should_stop`
+(`ReplayStopped`, prints `══ stopped ══`, avatar -> `idle` "show stopped by
+operator"). Both cases return cleanly — never raise — so callers like
+`perform_director_request` can tell followers the real reason
+(docs/duet_replay.md `replay_end` "finished" vs "stopped"). Interrupting
+the CLI with Ctrl-C prints `[replay] interrupted` and exits cleanly
+(unrelated to `should_stop`, which the CLI doesn't wire up).
 
 ## Dependencies
 
@@ -169,6 +195,14 @@ python app/replay.py replays/episode.json --voice-config config/workers/coder.ya
 
 ## Changelog
 
+- **v1.3.0** (2026-07-19): Stoppable shows — `Pacer(should_stop=...)` polled
+  on every sleep/typed character, raising the new `ReplayStopped` when it
+  fires; `perform()` catches it (same shutdown as the existing
+  `wait_for_scene`-abort path) and now returns `bool` (`True` finished,
+  `False` cut short) instead of always `None`. `_perform_scene` stops any
+  in-flight audio on a mid-scene stop before re-raising. Wired end-to-end
+  by the new `replay_stop` operator command (docs/operator_commands.md,
+  docs/replay_pane.md). +tests.
 - **v1.2.0** (2026-07-13): Duet replay hooks — `Performer.__init__` gained
   keyword-only `on_scene_start`/`wait_for_scene` (both `None` by default,
   every existing caller unaffected); `perform()` became an index-based

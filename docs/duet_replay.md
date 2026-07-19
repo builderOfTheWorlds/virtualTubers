@@ -98,12 +98,14 @@ that scene (`Performer.on_scene_start`).
 {"airing_id": "...", "reason": "finished"}
 ```
 
-`reason` is `"finished"` (normal end, after the last scene) or
+`reason` is `"finished"` (normal end, after the last scene), `"stopped"`
+(an operator `replay_stop` — docs/operator_commands.md — fired either
+mid-show or while the director was still waiting on `replay_ready`), or
 `"ready_timeout"` / `"aborted"` (refusal — see below). Only ever reaches
 followers that were actually invited: refusals that happen *before*
 invites go out (no Kafka producer, narration store unavailable, voice prep
 failure, persist failure) have nobody to send it to yet, so in those cases
-it's simply never sent — the `ready_timeout` refusal is the one case where
+it's simply never sent — `ready_timeout` and `stopped` are the cases where
 followers really are already waiting and get told to stop.
 
 ## The 3 relay files
@@ -215,6 +217,7 @@ happen at all — no solo fallback:
 | Voice preparation failed/disabled | during prepare | `"aborted"` |
 | Persisting a fresh airing failed (`persist_narration` → `None`) | during prepare | `"aborted"` |
 | Not every invited follower published `replay_ready` within the timeout | after invites | `"ready_timeout"` |
+| Operator `replay_stop` (docs/operator_commands.md) received before the cast was ready | after invites, during ready-wait | `"stopped"` |
 
 Every refusal path: logs `[replay_pane] duet refused: <reason>` to
 stderr, and — **when a Kafka producer exists** — publishes `replay_end`
@@ -247,8 +250,19 @@ authorizes performing **all** scenes `<= J`.
 - `type: "end"` with matching `airing_id` → returns `-1` (stop the show;
   `Performer.perform` prints an "interrupted" line, sets the avatar back
   to idle, and returns cleanly).
+- `REPLAY_STOP_FILE` exists → returns `-1` immediately, same as `"end"`.
+  This is checked directly (not routed through the director) so an
+  operator `replay_stop` sent straight to a follower stops it even without
+  the director's own `replay_end` relay arriving — see
+  docs/operator_commands.md and docs/replay_pane.md.
 - mismatched `airing_id`, or file missing/corrupt → keep waiting.
 - watchdog timeout (see below) → returns `-1`.
+
+Once a follower's own `Performer` is mid-scene (past `wait_for_scene`, now
+inside `_perform_scene`), the same `REPLAY_STOP_FILE` is also wired into
+its `Pacer(should_stop=...)` (docs/replay.md `ReplayStopped`) — so a stop
+that lands mid-typing doesn't have to wait for the next `wait_for_scene`
+poll either.
 
 `Performer.perform()`'s scene loop then performs scene `i` normally; if
 `J - i >= 2` (this follower is **2 or more scenes behind** the director's

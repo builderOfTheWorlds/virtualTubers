@@ -29,7 +29,7 @@ in Postgres for the results.
 
 ## Primary operator commands
 
-These two are the ones an operator uses day to day — everything else in the
+These are the ones an operator uses day to day — everything else in the
 message-type table (see below) is normally worker-to-worker traffic that
 flows automatically once one of these kicks off a ticket.
 
@@ -132,6 +132,46 @@ back — check that worker's container logs (`duet refused: ...`) if a
 duet airing seems to have silently gone nowhere. See docs/duet_replay.md
 for the full refusal rule and timeout table.
 
+### `replay_stop` — stop whatever this worker's replay pane is doing right now
+
+```json
+{"to": "coder", "type": "replay_stop", "payload": {}}
+```
+
+- `to`: any worker, or `broadcast` to stop a replay wherever one happens to
+  be running (safe to broadcast — a worker with nothing playing just
+  replies and does nothing else).
+- No payload fields — the request has nothing to configure.
+
+Any worker (no role gate) handles it, no LLM call:
+
+- A request that's been queued but **not yet started** (the pane hasn't
+  polled it yet) is cancelled outright — it never airs.
+- A show that's **already playing** is signalled to stop and unwinds
+  within a fraction of a second (checked on every sleep/typed character,
+  not just between scenes) — the avatar returns to idle and the pane goes
+  back to its idle screen. A duet director also tells its followers to
+  stop.
+- A worker with nothing queued or playing just answers `operator_reply`
+  and does nothing else — a stop is never an error.
+
+Always answers with an `operator_reply` so it's visible on the feed either
+way. Full mechanism: docs/replay_pane.md ("Stopping a show"), docs/replay.md
+(`ReplayStopped`).
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "broadcast", "type": "replay_stop", "payload": {}}'
+```
+
+Or with the dedicated helper (see below):
+
+```powershell
+.\scripts\stop_replay.ps1
+.\scripts\stop_replay.ps1 -To coder
+```
+
 ## Manual/debug commands
 
 `message-api`'s `type` field can be overridden to inject any of the other
@@ -211,6 +251,16 @@ terminate the string, breaking the parser several lines later with a
 confusing error. Keep string literals in this file ASCII-only, or use `-`
 instead of `—`; non-ASCII text is fine in `#` comments and `<# #>` blocks,
 which aren't string-parsed the same way.
+
+`scripts/stop_replay.ps1` is the exception to the preset-library pattern:
+"stop it now" needs to be a single command, not an edit-then-run, so it
+takes `-To` (default `broadcast`) and `-Url` directly and always sends
+`replay_stop`:
+
+```powershell
+.\scripts\stop_replay.ps1              # stop a replay on any worker
+.\scripts\stop_replay.ps1 -To coder    # stop just the coder's replay
+```
 
 ## See also
 

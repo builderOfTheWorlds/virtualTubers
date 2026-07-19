@@ -69,9 +69,20 @@ $Type    = "replay_request"
 # Long test
 # $Payload = '{"episode": "2026-07-12_21-42-20_462f5abc", "narration": "reuse"}'
 
+# Real 2-speaker duet (old default) - real recorded episode, boss/coder only
+# $Payload = '{"episode": "2026-07-02_04-27-00_6ecdde82", "cast": {"boss": "manager", "coder": "coder"},  "narration": "reuse"}'
 
+# 3-worker duet: sample fixture, boss/coder/tester (matches scripts/worker3.json).
+# All three are duet-capable in docker-compose.yml today (LAYOUT_PRESET=replay,
+# POSTGRES_*, replay library mount) - see scripts/duet_test_payloads.md.
+$Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester"}, "narration": "reuse"}'
 
-$Payload = '{"episode": "2026-07-02_04-27-00_6ecdde82", "cast": {"boss": "manager", "coder": "coder"},  "narration": "reuse"}'
+# Multi-speaker sample fixture: full 6-persona duet fan-out (matches scripts/worker6.json,
+# see replays/sample.json and docs/duet_replay.md). NOTE: coder-native/coder-opencode/
+# coder-aider are NOT duet-capable as shipped (missing LAYOUT_PRESET/POSTGRES_*/mounts)
+# and will refuse with ready_timeout - see the "Known gap" section of
+# scripts/duet_test_payloads.md.
+# $Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
 
 

@@ -54,6 +54,13 @@ DEFAULT_REPLAY_CUE_FILE = "/tmp/replay_cue.json"
 REPLAY_READY_FILE_ENV = "REPLAY_READY_FILE"
 DEFAULT_REPLAY_READY_FILE = "/tmp/replay_ready.json"
 
+# Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): the
+# pane's Performer polls it via Pacer.should_stop (docs/replay.md
+# ReplayStopped), same env-override + atomic-write convention as
+# REPLAY_REQUEST_FILE_ENV above.
+REPLAY_STOP_FILE_ENV = "REPLAY_STOP_FILE"
+DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
+
 # Episode library for viewer-join reruns — same path convention as
 # replay_pane.py, which owns the actual resolution/performance.
 REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
@@ -655,6 +662,10 @@ def _resolve_replay_request_file():
     return os.environ.get(REPLAY_REQUEST_FILE_ENV) or DEFAULT_REPLAY_REQUEST_FILE
 
 
+def _resolve_replay_stop_file():
+    return os.environ.get(REPLAY_STOP_FILE_ENV) or DEFAULT_REPLAY_STOP_FILE
+
+
 def _resolve_replay_cue_file():
     return os.environ.get(REPLAY_CUE_FILE_ENV) or DEFAULT_REPLAY_CUE_FILE
 
@@ -877,6 +888,63 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     ))
 
 
+def handle_replay_stop(worker_id, agent_config, llm_client, producer, msg,
+                       state_path=None, coding_backend=None):
+    """Operator lever: interrupt whatever this worker's replay pane is
+    doing right now (docs/replay_pane.md). Any role handles it, no LLM
+    call — the counterpart to handle_replay_request.
+
+    Two independent effects, since a request can be in either state when
+    the operator wants it stopped:
+
+    1. A still-QUEUED request (written but not yet picked up by the pane's
+       poll loop) is cancelled outright — REPLAY_REQUEST_FILE is deleted
+       before the pane ever sees it.
+    2. A currently PLAYING show is signalled to abort: REPLAY_STOP_FILE is
+       written, and the pane's Pacer.should_stop hook (docs/replay.md
+       ReplayStopped) picks it up on its very next sleep/typed character —
+       sub-second, not just at the next scene boundary — and unwinds
+       cleanly (avatar -> idle, "stopped" banner, no crash).
+
+    Both are best-effort against "nothing was actually happening": an idle
+    pane just leaves the stop file sitting there until the next request's
+    own stale-state cleanup consumes it, so a stop can never bleed into a
+    later, unrelated airing. Always answers the operator so a stop sent to
+    a genuinely idle worker doesn't look like it vanished.
+    """
+    request_file = _resolve_replay_request_file()
+    cancelled_queued = False
+    if os.path.exists(request_file):
+        try:
+            os.remove(request_file)
+            cancelled_queued = True
+        except OSError as exc:
+            print(f"[agent:{worker_id}] failed to cancel queued replay request: {exc}")
+
+    try:
+        _atomic_write_json(_resolve_replay_stop_file(), {
+            "stopped_by": msg.get("from"),
+            "stopped_at": time.time(),
+        })
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to signal replay stop: {exc}")
+        producer.send(build_message(
+            worker_id, "operator", "operator_reply",
+            {"error": f"could not signal replay stop: {exc}"},
+        ))
+        return
+
+    if cancelled_queued:
+        print(f"[agent:{worker_id}] cancelled queued replay request and signalled stop")
+        narration = "Cancelled the queued rerun and stopped whatever's currently playing."
+    else:
+        print(f"[agent:{worker_id}] signalled replay stop")
+        narration = "Stopping the rerun."
+    producer.send(build_message(
+        worker_id, "operator", "operator_reply", {"narration": narration},
+    ))
+
+
 # ── Duet replay: director/follower relay handlers ──────────────────────────
 # These four handle the bus side of the "duet replay" feature (multi-worker
 # Rerun Theater airings). Every one of them is any-role, makes NO LLM call,
@@ -1002,7 +1070,7 @@ def handle_replay_end(worker_id, agent_config, llm_client, producer, msg,
 # Dispatch table — the 8 message types from docs/VTuber_AI_Dev_Team_Concept.md
 # §3.4 (status_update is send-only heartbeat traffic; operator_message is
 # message-api's default type standing in for direct operator chat), plus the
-# viewer-join rerun trigger and the 5 duet replay relay types.
+# viewer-join rerun trigger, replay_stop, and the 5 duet replay relay types.
 MESSAGE_HANDLERS = {
     "task_assignment": handle_task_assignment,
     "commit_notification": handle_commit_notification,
@@ -1013,6 +1081,7 @@ MESSAGE_HANDLERS = {
     "clarification_request": handle_clarification_request,
     "operator_message": handle_operator_message,
     "replay_request": handle_replay_request,
+    "replay_stop": handle_replay_stop,
     "viewer_joined": handle_viewer_joined,
     "replay_invite": handle_replay_invite,
     "replay_ready": handle_replay_ready,

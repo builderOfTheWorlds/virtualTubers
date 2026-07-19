@@ -524,12 +524,89 @@ def test_wait_for_scene_abort_ends_show_early_and_sets_idle():
         {"events": [SCRIPT["events"][0]], "narration": "s0", "audio": None},
         {"events": [SCRIPT["events"][1]], "narration": "s1", "audio": None},
     ]
-    performer.perform(SCRIPT, show=show)
+    ok = performer.perform(SCRIPT, show=show)
     text = out.getvalue()
+    assert ok is False
     assert "interrupted" in text
     assert "fin" not in text
     assert "♪ s0" not in text  # aborted before performing any scene
     assert calls[-1][0] == "idle"
+
+
+def test_perform_returns_true_on_natural_completion():
+    out = io.StringIO()
+    assert make_performer(out).perform(SCRIPT) is True
+
+
+# ── operator replay_stop (docs/operator_commands.md, docs/replay_pane.md) ──
+
+def test_pacer_check_stop_raises_when_should_stop_true():
+    pacer = Pacer(should_stop=lambda: True)
+    with pytest.raises(replay.ReplayStopped):
+        pacer.check_stop()
+
+
+def test_pacer_sleep_and_type_out_unaffected_when_should_stop_false():
+    pacer = Pacer(enabled=False, should_stop=lambda: False)
+    pacer.sleep(1)  # must not raise
+    chunks = []
+    pacer.type_out(chunks.append, "hi", cps=1)
+    assert "".join(chunks) == "hi"
+
+
+def test_perform_stops_mid_show_and_sets_idle():
+    """An operator replay_stop (should_stop firing partway through) unwinds
+    cleanly instead of raising out of perform() — same shutdown shape as
+    the existing wait_for_scene abort, but reachable from a solo show with
+    no duet hooks at all."""
+    calls = {"n": 0}
+
+    def should_stop():
+        calls["n"] += 1
+        return calls["n"] > 3
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(speed=1000.0, should_stop=should_stop),
+                          palette=Palette(enabled=False))
+    avatar_calls = []
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        avatar_calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    ok = performer.perform(SCRIPT)
+    text = out.getvalue()
+    assert ok is False
+    assert "stopped" in text
+    assert "fin" not in text
+    assert avatar_calls[-1][0] == "idle"
+
+
+def test_replay_stopped_mid_scene_stops_in_flight_audio(monkeypatch):
+    """A stop firing while a voiced scene's audio is playing must stop that
+    audio too — otherwise narration keeps playing under a show that already
+    ended (_perform_scene's ReplayStopped handler)."""
+    playback = FakePlayback()
+    monkeypatch.setattr(replay, "play_wav", lambda path, out=None: playback)
+
+    calls = {"n": 0}
+
+    def should_stop():
+        calls["n"] += 1
+        return calls["n"] > 2
+
+    out = io.StringIO()
+    performer = Performer(out=out, pacer=Pacer(speed=1000.0, should_stop=should_stop),
+                          palette=Palette(enabled=False))
+    show = [
+        {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+         "narration": "hi", "audio": FakeNarrationAudio(duration=5.0)},
+    ]
+    ok = performer.perform(SCRIPT, show=show)
+    assert ok is False
+    assert playback.stopped
 
 
 def test_load_script_from_json_and_directory(tmp_path):
