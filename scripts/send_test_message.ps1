@@ -75,7 +75,8 @@ $Type    = "replay_request"
 # 3-worker duet: sample fixture, boss/coder/tester (matches scripts/worker3.json).
 # All three are duet-capable in docker-compose.yml today (LAYOUT_PRESET=replay,
 # POSTGRES_*, replay library mount) - see scripts/duet_test_payloads.md.
-$Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester"}, "narration": "reuse"}'
+# $Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester"}, "narration": "reuse"}'
+$Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester"}}'
 
 # Multi-speaker sample fixture: full 6-persona duet fan-out (matches scripts/worker6.json,
 # see replays/sample.json and docs/duet_replay.md). NOTE: coder-native/coder-opencode/

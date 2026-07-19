@@ -51,6 +51,7 @@ voice:
     coder-aider: "ADA-3"
   rate: 1.0
   verbosity: 0.8
+  verbatim: true
 
 avatar:
   provider: builtin
