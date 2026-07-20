@@ -13,6 +13,9 @@ jobs:
         run: |
           python3 -m venv .venv
           .venv/bin/pip install -r requirements.txt
+          .venv/bin/pip install -r services/message-api/requirements.txt
+          .venv/bin/pip install -r services/log-shipper/requirements.txt
+          .venv/bin/pip install -r services/message-logger/requirements.txt
       - name: Run tests
         run: .venv/bin/pytest -m "not slow"
 
