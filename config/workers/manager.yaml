@@ -39,7 +39,7 @@ llm:
 
 voice:
   provider: piper
-  model_path: "/data/voices/en_US-lessac-low.onnx"
+  model_path: "/data/voices/en_US-bryce-medium.onnx"
   voice_id: ""
   speakers:
     coder: {}

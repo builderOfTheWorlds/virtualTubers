@@ -42,7 +42,7 @@ coding_backend:
 
 voice:
   provider: piper
-  model_path: "/data/voices/en_US-lessac-low.onnx"
+  model_path: "/data/voices/en_US-kristin-medium.onnx"
   voice_id: ""
   speakers:
     coder: {}

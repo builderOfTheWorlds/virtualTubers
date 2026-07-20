@@ -22,15 +22,26 @@ from pathlib import Path
 
 BASE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main"
 
-# name -> repo path (the two default replay speakers: coder + boss).
-# "low" tier is the deployed default (config/workers/*.yaml) — smaller model,
-# much faster synthesis, more robotic-sounding. "medium"/"high" are kept
-# here too so you can switch back (or A/B compare) without editing this file.
+# name -> repo path. "low" tier is the deployed default (config/workers/*.yaml)
+# where available — smaller model, much faster synthesis, more
+# robotic-sounding; "medium"/"high" are kept here too so you can switch back
+# (or A/B compare) without editing this file.
+#
+# lessac/ryan are the original two replay-narration voices (coder/boss).
+# amy/bryce/danny/joe/kathleen/kristin give each of the 6 workers its own
+# distinct persona voice (config/workers/*.yaml's voice.model_path) — see
+# README.md's Rerun Theater section. All single-speaker en_US Piper voices;
+# add more from https://huggingface.co/rhasspy/piper-voices as personas grow.
 VOICES = {
     "en_US-lessac-low": "en/en_US/lessac/low/en_US-lessac-low.onnx",
     "en_US-ryan-low": "en/en_US/ryan/low/en_US-ryan-low.onnx",
     "en_US-lessac-medium": "en/en_US/lessac/medium/en_US-lessac-medium.onnx",
     "en_US-ryan-high": "en/en_US/ryan/high/en_US-ryan-high.onnx",
+    "en_US-bryce-medium": "en/en_US/bryce/medium/en_US-bryce-medium.onnx",
+    "en_US-danny-low": "en/en_US/danny/low/en_US-danny-low.onnx",
+    "en_US-joe-medium": "en/en_US/joe/medium/en_US-joe-medium.onnx",
+    "en_US-kathleen-low": "en/en_US/kathleen/low/en_US-kathleen-low.onnx",
+    "en_US-kristin-medium": "en/en_US/kristin/medium/en_US-kristin-medium.onnx",
 }
 
 

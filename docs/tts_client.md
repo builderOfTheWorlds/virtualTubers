@@ -31,6 +31,16 @@ the shared-utilities rule; autoVideo's copy depends on its own
 voice per speaker, so the boss and the coder speak with different Piper
 models (or cloud voice IDs) during replay dialogue.
 
+**Every worker has its own base voice.** Since `voice.speakers.coder` is
+empty by default, a worker's own `model_path` doubles as its "self" voice —
+whichever persona directs a solo replay narrates the `coder` slot in its
+own distinct model (`config/workers/*.yaml`: KODI-7 lessac, MAX-1 bryce,
+TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin; `boss` stays ryan
+for every worker, the shared narrative voice). This only differentiates
+**solo** shows — a duet's director still resolves both `boss`/`coder`
+audio from its own `voice.speakers` config regardless of which physical
+worker got cast into each role (docs/duet_replay.md).
+
 ## Signature
 
 ```python
@@ -175,6 +185,16 @@ cancels the show.
 
 ## Changelog
 
+- **v1.3.0** (2026-07-20): Each of the 6 workers now has its own distinct
+  Piper `model_path` in `config/workers/*.yaml` (KODI-7 lessac, MAX-1
+  bryce, TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin), so solo
+  Rerun Theater airings sound different per persona instead of all sharing
+  `en_US-lessac-low`. `boss` stays `ryan` for every worker — no code
+  change, since `voice.speakers.coder` already falls back to the base
+  `model_path` (see "Every worker has its own base voice" above). Added
+  the 5 new voices to `scripts/download_voices.py`'s `VOICES` catalog.
+  Duet directors are unaffected — they still resolve both roles from their
+  own `voice.speakers`, not the cast worker's `model_path`.
 - **v1.2.0** (2026-07-19): Piper now goes through the Python API
   (`piper.voice.PiperVoice`) instead of shelling out to the CLI, and caches
   one loaded model per worker process instead of reloading it on every

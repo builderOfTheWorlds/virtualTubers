@@ -10,6 +10,23 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Each of the 6 workers now has its own distinct voice for solo Rerun
+Theater airings** — previously every worker's `voice.model_path` pointed at
+the same `en_US-lessac-low.onnx`, so KODI-7, MAX-1, TESS-3, NYX-1, OKO-2,
+and ADA-3 all sounded identical when narrating the `coder` speaker slot
+(`voice.speakers.coder` is empty by default, so it falls back to the
+worker's own `model_path`). `config/workers/*.yaml` now gives each persona
+a distinct Piper voice — KODI-7 lessac, MAX-1 bryce, TESS-3 kathleen, NYX-1
+danny, OKO-2 joe, ADA-3 kristin — added to `scripts/download_voices.py`'s
+catalog so `./install.sh` fetches them automatically. `boss` stays `ryan`
+for every worker (the shared narrative voice). Config-only, no code change
+or image rebuild needed — just redeploy and let `install.sh` pull the new
+models. **Caveat**: this only differentiates **solo** shows; a duet's
+director still resolves both `boss`/`coder` audio from its own
+`voice.speakers` config regardless of which physical worker is cast into
+each role (docs/duet_replay.md), so duet voices are unaffected by this
+change. See [docs/tts_client.md](docs/tts_client.md).
+
 **Fixed: the three A/B coding-backend workers could never show Rerun Theater,
 no matter what** — `worker-coder-native`, `worker-coder-opencode`, and
 `worker-coder-aider` shipped in `docker-compose.yml` with no `LAYOUT_PRESET`
@@ -518,9 +535,13 @@ behave as "on" rather than silently going dark.
 ### Rerun Theater — replaying past sessions, with voices
 
 Rerun Theater re-performs saved (parsed, redacted) Claude Code dev sessions
-as stream shows, and can narrate them out loud with two TTS voices — the
-boss and the coder — whose spoken lines are written fresh by the local LLM
-on every airing and timed so speech and on-screen text finish together.
+as stream shows, and can narrate them out loud with two TTS voices per
+airing — the boss and the coder — whose spoken lines are written fresh by
+the local LLM on every airing and timed so speech and on-screen text finish
+together. For a **solo** show, "the coder" is that worker's own distinct
+persona voice (KODI-7, MAX-1, TESS-3, NYX-1, OKO-2, and ADA-3 each sound
+different — see [Recent Changes](#recent-changes) above); "the boss" is a
+shared voice every worker uses the same way.
 Full pipeline docs: [docs/session_log_parser.md](docs/session_log_parser.md)
 → [docs/revoice.md](docs/revoice.md) → [docs/replay.md](docs/replay.md) →
 [docs/replay_pane.md](docs/replay_pane.md) → (multi-worker)
@@ -751,7 +772,7 @@ Key sections inside a worker config:
 |---|---|
 | `agent` | Role, display name, system prompt, tick rate, context window |
 | `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
-| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](docs/tts_client.md) |
+| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. `model_path` doubles as this worker's own distinct persona voice, since `speakers.coder` is empty by default — see [Rerun Theater](#rerun-theater--replaying-past-sessions-with-voices) below. Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](docs/tts_client.md) |
 | `avatar` | Name, title, ASCII expression states, speech bubble sizing |
 | `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager`; `LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. |
 | `stream` | RTMP URL/key, resolution, bitrate, fps |

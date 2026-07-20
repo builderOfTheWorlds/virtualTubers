@@ -136,6 +136,18 @@ voice:
   # quality tier is the deployed default — smaller/faster model, more
   # robotic-sounding; scripts/download_voices.py also lists medium/high if
   # you want to trade speed back for quality.
+  #
+  # This is also this worker's OWN voice — the one it speaks with whenever
+  # it directs a show (solo replays, or a duet it happens to be director
+  # for) and narrates the "coder" speaker slot (voice.speakers.coder is
+  # empty by default, so it inherits this). Give every worker a distinct
+  # model_path so each persona sounds different; the deployed
+  # config/workers/*.yaml already does this — KODI-7 lessac, MAX-1 bryce,
+  # TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin. Note this only
+  # differentiates SOLO shows: in a duet, the DIRECTOR's voice.speakers
+  # mapping decides both roles' audio regardless of which physical worker
+  # is cast into them (docs/duet_replay.md) — the cast worker's own
+  # model_path isn't consulted there.
   model_path: "/data/voices/en_US-lessac-low.onnx"
 
   # piper/kokoro only: run synthesis against a remote piper.http_server
