@@ -339,6 +339,56 @@ None of these constants are environment-overridable except
   as a plain solo request (`any(worker_id != self_id for worker_id in
   cast.values())` is `False`).
 
+## Voice resolution: the director's config decides every speaker's audio
+
+Every cast member's WAV is synthesized **once**, by the director, from the
+director's own `voice.speakers` map (`app/tts_client.py`'s
+`TTSClient.voice_for(speaker)`) during `prepare_voice`/`prepare_show` —
+followers never resynthesize, they only ever play back audio the director
+already generated (`_rebuild_scenes_from_rows`'s `owns` predicate gates
+which cached scenes get copied into a follower's workdir). Practically:
+
+- **Named personas (`tester`/`coder-native`/`coder-opencode`/`coder-aider`)
+  resolve correctly no matter who directs**, as long as every worker's
+  `config/workers/*.yaml` defines an explicit `voice.speakers` entry for
+  each one — which they all do as of 2026-07-20 (docs/tts_client.md's
+  changelog). Before that fix, `voice_for()`'s fallback-to-base-voice
+  behavior for any speaker id with no override meant every persona except
+  `boss` (the only one with an explicit override) sounded like whichever
+  worker happened to direct — this is exactly why testing the 6-persona
+  `replays/sample.json` fixture once showed "the manager sounds different,
+  but everyone else is the same voice."
+- **`"coder"` is different on purpose — `speakers.coder` is left empty**
+  so a worker sounds like *itself* when narrating its own "coder" lines in
+  a solo real-session replay (falls back to that worker's own distinct
+  `model_path`; see docs/tts_client.md). The tradeoff shows up in duets:
+  `"coder"`'s voice is always the **director's** own base voice, not
+  necessarily the voice of whichever worker is actually cast into that
+  role.
+  - For a **real recorded session** (always exactly `boss`/`coder`),
+    `"coder"` is inherently self-referential — whoever performs that role
+    IS "the coder" for that show. **Convention: always address the
+    `replay_request` to the worker cast as `"coder"`** (`to ==
+    cast["coder"]`) — every example in this doc and every duet preset in
+    `scripts/send_test_message.ps1` already follows this. Do that and the
+    director's own (correct, distinct) voice is used automatically;
+    address the request to a *different* worker (e.g. `manager`) with the
+    same cast and the "coder" lines come out in that other worker's voice
+    instead.
+  - For a **hand-authored multi-persona episode where `"coder"` names a
+    specific persona** (`replays/sample.json`: `"coder"` == KODI-7,
+    distinct from `coder-native`/`coder-opencode`/`coder-aider`), the same
+    rule applies even more strictly: direct from `"coder"` (KODI-7)
+    specifically, or its lines speak in whichever other worker directed
+    instead of KODI-7's own voice.
+  - Directing from the worker cast as `"coder"` is a **calling
+    convention**, not something the code enforces — nothing rejects a
+    request addressed to `manager` with `coder` cast elsewhere. If you'd
+    rather not rely on operators/scripts remembering this, the robust fix
+    is routing TTS by the cast worker_id instead of the fixed role name,
+    which hasn't been done — see docs/tts_client.md's "Multi-persona
+    episodes are a separate case" for how far the current fix goes.
+
 ## Deployment requirements
 
 - **Worker image rebuild.** Duet replay ships in `app/replay.py`,
@@ -432,6 +482,20 @@ at all:
   a leftover value from an earlier dot-sourced run (e.g. VSCode F5) is
   used instead. See docs/operator_commands.md.
 
+## Debugging: "some personas all sound like the same voice"
+
+Not a duet bug either — see "Voice resolution" above. Two known causes:
+
+- **A speaker id has no `voice.speakers` entry on the director.** Fixed
+  as of 2026-07-20 for the six standard personas (every
+  `config/workers/*.yaml` now defines all of them), but a NEW persona
+  added later needs the same treatment or it'll silently inherit whichever
+  worker directs' base voice instead of failing loudly.
+- **The request was directed from the wrong worker.** `"coder"`'s voice
+  always comes from the director's own base voice, not the worker cast
+  into that role — see "Voice resolution" above for the addressing
+  convention this depends on.
+
 If the bus genuinely shows `replay_invite` going out with no matching
 `replay_ready` coming back, then it's a real refusal — check the
 director's container logs for `duet refused: ready_timeout` and confirm
@@ -449,9 +513,23 @@ Deployment requirements above).
 - `docs/operator_commands.md` — the `cast` field on `replay_request`.
 - `docs/revoice.md` — the narration pass every duet airing's audio and
   text ultimately comes from (unchanged by this feature).
+- `docs/tts_client.md` — `voice.speakers`/`voice.model_path` resolution;
+  the per-worker distinct voices and multi-persona fallback fix referenced
+  in "Voice resolution" above.
 
 ## Changelog
 
+- **v1.1.0** (2026-07-20): Documented (no protocol change) how voice
+  resolution actually works in a duet — the director's own
+  `voice.speakers` map voices every cast member, never the cast worker's
+  own config. Fixed the six standard personas to each carry an explicit
+  `voice.speakers` entry in every `config/workers/*.yaml`, so a
+  multi-persona duet (`replays/sample.json`) no longer has every persona
+  except `boss` collapse to the director's own voice. Documented the
+  remaining gap and its workaround: `"coder"` stays a self-referential
+  empty override (for solo replays to sound like the directing worker), so
+  a duet's `"coder"` role still needs to be directed from the worker
+  actually cast as `"coder"` — see "Voice resolution" above.
 - **v1.0.0** (2026-07-13): Initial version — director/follower duet
   replay: `replay_invite`/`replay_ready`/`replay_cue`/`replay_end` bus
   types, `REPLAY_CUE_FILE`/`REPLAY_READY_FILE` relay files, cue ratchet +

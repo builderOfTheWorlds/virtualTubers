@@ -114,12 +114,22 @@ from a live-tuned tmux session's `window_layout` string:
 | 1 | avatar | h | editor | 66 | columns 2+3 combined, ~66% wide | 1 |
 | 2 | htop | h | avatar | 50 | column 3 (whole), carved off the block | 3 |
 | 3 | kafka_feed | v | htop | 49 | column 3 bottom; remainder stays htop | 4 |
-| 4 | filetree | v | avatar | 81 | column 2 bottom; remainder stays avatar | 2 |
+| 4 | filetree | v | avatar | 20 | column 2 bottom; remainder stays avatar | 2 |
 
 Note how `htop` and `kafka_feed` end up at final indices 3 and 4 even though
 they were created 2nd and 3rd — `filetree`'s split (step 4) targets `avatar`
 (index 1) and inserts right after it, pushing both of them up by one. This is
 exactly the branching case described above.
+
+> **Keep this table in sync with the actual preset files.** It has drifted
+> before: `filetree`'s `-p` value here was 81 from the original live-tuned
+> session, then the real `config/layouts/coder.yaml`/`tester.yaml`/`manager.yaml`
+> were tuned down to 50 without this doc following — and `config/layouts/replay.yaml`
+> was never updated at all, so every worker defaulting to that preset (the three
+> A/B coding-backend workers) kept the original 81 and had its avatar pane cut
+> to ~19% of the column. All four presets now give `filetree` 20 (avatar ~80%),
+> sized for the animated `ascii_avatar` provider's ~20-row face plus bubble and
+> status bar — the `builtin` static face fits comfortably in far less.
 
 > **`size` is always the `-p` value, i.e. the new pane's %** — the target pane
 > keeps whatever percentage remains, never the pane being carved out.

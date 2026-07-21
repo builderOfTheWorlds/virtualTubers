@@ -32,4 +32,11 @@ panes:
   - use: filetree                       # bottom of col2; remainder stays avatar
     target: avatar
     split: v
-    size: 81
+    size: 20                            # was 81 (avatar only ~19% tall) — this preset was
+                                         # never updated when coder/tester/manager's avatar
+                                         # split was fixed, so every worker defaulting to
+                                         # this layout (the three A/B coder-backend workers)
+                                         # had its avatar pane almost entirely cut off. Now
+                                         # matches those presets: avatar keeps ~80% of the
+                                         # column for the animated ascii_avatar face
+                                         # (~20 content rows + bubble + status bar)

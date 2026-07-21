@@ -36,4 +36,7 @@ panes:
   - use: filetree                       # bottom of col2; remainder stays avatar
     target: avatar
     split: v
-    size: 50                            # was 81 (avatar ~19% tall) — now even 50/50 split
+    size: 20                            # was 81, then 50 — avatar still only showed its
+                                         # top half with the animated ascii_avatar face
+                                         # (~20 content rows + bubble + status bar); avatar
+                                         # now keeps ~80% of the column, filetree the rest

@@ -10,6 +10,24 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Fixed: the animated `ascii_avatar` face was cut off in every worker's tmux
+pane, and entirely unusable on the three A/B coding-backend workers** — the
+avatar pane's height is carved out of its column by the `filetree` pane's
+split percentage in `config/layouts/*.yaml` (`docs/build_layout.md`). That
+split had only ever been tuned for the old static `builtin` face (a handful
+of lines): `coder.yaml`/`tester.yaml`/`manager.yaml` gave `filetree` 50% of
+the column (avatar the other 50%), which still clipped the animated face's
+~20-row frame plus its speech bubble and status bar to its top half — and
+`config/layouts/replay.yaml` (the layout `worker-coder-native`,
+`worker-coder-opencode`, and `worker-coder-aider` all default to, per
+`docker-compose.yml`'s `LAYOUT_PRESET=replay` default) had never been updated
+at all and was still giving `filetree` 81%, squeezing avatar to ~19% of the
+column — effectively not rendering. All four presets now give `filetree`
+just 20% (avatar ~80%) — config-only, no rebuild needed, just a container
+restart to re-run `build_layout.py`. See [docs/build_layout.md](docs/build_layout.md)
+for the worked-example table (now kept in sync) and
+[docs/avatar_providers.md](docs/avatar_providers.md) for the provider itself.
+
 **Each of the 6 workers now has its own distinct voice** — previously every
 worker's `voice.model_path` pointed at the same `en_US-lessac-low.onnx`, so
 KODI-7, MAX-1, TESS-3, NYX-1, OKO-2, and ADA-3 all sounded identical.
@@ -39,9 +57,12 @@ needed — just redeploy and let `install.sh` pull the new models.
   `voice.speakers.coder` still decides the "coder" role's audio for
   whichever physical worker is cast there — it does not automatically
   become that worker's own voice, since the role name (not the cast
-  worker id) is what's looked up.
+  worker id) is what's looked up. Workaround: always address the
+  `replay_request` to the worker cast as `"coder"` (see the
+  [Duets](#duets-multiple-workers-same-episode) section below).
 
-See [docs/tts_client.md](docs/tts_client.md).
+See [docs/tts_client.md](docs/tts_client.md) and
+[docs/duet_replay.md](docs/duet_replay.md#voice-resolution-the-directors-config-decides-every-speakers-audio).
 
 **Fixed: the three A/B coding-backend workers could never show Rerun Theater,
 no matter what** — `worker-coder-native`, `worker-coder-opencode`, and
@@ -647,6 +668,12 @@ curl -X POST http://localhost:8090/messages \
   `docker-compose.yml` — the three A/B workers currently default to
   `replay` already; `coder`/`manager`/`tester` need their
   `*_LAYOUT_PRESET` stack env set to `replay` to enable it.
+- **Voice gotcha**: the worker you address (`to`) becomes the director,
+  and it voices *every* cast member from its own `voice.speakers` config —
+  not each worker's own. Always address the request to whichever worker is
+  cast as `"coder"` (as in the example above); addressing it to `manager`
+  instead makes the `"coder"` lines come out in the manager's voice. See
+  [docs/duet_replay.md](docs/duet_replay.md#voice-resolution-the-directors-config-decides-every-speakers-audio).
 
 To run a single worker outside Docker for quick iteration on `app/agent.py` or `app/avatar.py`:
 
