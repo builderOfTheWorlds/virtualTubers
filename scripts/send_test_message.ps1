@@ -84,9 +84,9 @@ $Type    = "replay_request"
 # each of CODER_NATIVE_LAYOUT_PRESET/CODER_OPENCODE_LAYOUT_PRESET/
 # CODER_AIDER_LAYOUT_PRESET to "replay" in the stack env and redeploy first,
 # or this will still refuse with ready_timeout.
-# $Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+$Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
-$Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
+# $Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
 
 
 # =====================================================================
