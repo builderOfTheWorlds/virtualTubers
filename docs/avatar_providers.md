@@ -40,6 +40,17 @@ class AvatarProvider:
   builtin static face redraws every 0.5s; the animated `ascii_avatar`
   backend ticks every 0.1s by default so its own frame-rate logic has
   enough resolution to work with).
+- Both providers visibly "talk" while a speech bubble is on screen: `ascii_avatar`
+  cycles 4 real mouth-open frames every 0.1s for its `speaking` state (also used
+  by `happy`, per the expression map below), and `builtin` (which has no frame
+  animation otherwise) alternates each expression's `mouth` with an optional
+  `talk_mouth` glyph once per tick (~0.5s) for as long as `render_tick` receives
+  non-empty `bubble_lines`. Every default expression that a bubble actually
+  accompanies (`speaking`, `happy`, `frustrated` — see the call sites in
+  `app/agent.py`/`app/replay.py`) has a `talk_mouth` entry in `builtin.py`'s
+  `DEFAULT_EXPRESSIONS`; a worker's `avatar.expressions.<name>` config override
+  can add or omit one per expression the same way it already overrides `eyes`/
+  `mouth` — an expression with no `talk_mouth` just keeps one static glyph.
 - `avatar_display.py` (`display_width()`, `build_bubble_box()`) is shared,
   presentation-only code both providers use to draw the bordered speech
   bubble consistently.
@@ -230,6 +241,12 @@ provider.render_tick("idle", None)
 
 ## Changelog
 
+- v1.1.0 (2026-07-21) — `BuiltinProvider` now alternates a `talk_mouth` glyph
+  (new, optional per-expression config key alongside `eyes`/`mouth`) once per
+  tick while a bubble is shown, so it visibly talks instead of holding one
+  static mouth for the bubble's whole duration — bringing it to parity with
+  `ascii_avatar`, which already animated `speaking`/`happy` via its own
+  `_SPEAK_FRAMES`.
 - v1.0.0 (2026-07-12) — Initial pluggable provider layer: registry +
   env/config/default selection, safe fallback to `BuiltinProvider` on any
   unknown name or construction failure, `ascii_avatar` adapter vendoring

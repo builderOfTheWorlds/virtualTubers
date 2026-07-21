@@ -16,9 +16,9 @@ DEFAULT_EXPRESSIONS = {
     "idle":       {"eyes": "◉  ◉", "mouth": "╰───╯"},
     "thinking":   {"eyes": "⊙  ⊙", "mouth": "─────"},
     "typing":     {"eyes": "◉  ◉", "mouth": "╰───╯"},
-    "speaking":   {"eyes": "◕  ◕", "mouth": "╰▾──╯"},
-    "frustrated": {"eyes": "◕  ◕", "mouth": "╭───╮"},
-    "happy":      {"eyes": "◉  ◉", "mouth": "╰▾▾▾╯"},
+    "speaking":   {"eyes": "◕  ◕", "mouth": "╰▾──╯", "talk_mouth": "╰───╯"},
+    "frustrated": {"eyes": "◕  ◕", "mouth": "╭───╮", "talk_mouth": "╭─▾─╮"},
+    "happy":      {"eyes": "◉  ◉", "mouth": "╰▾▾▾╯", "talk_mouth": "╰───╯"},
     "focused":    {"eyes": "◔  ◔", "mouth": "─────"},
 }
 
@@ -33,10 +33,20 @@ class BuiltinProvider(AvatarProvider):
     def __init__(self, avatar_config, name, title):
         super().__init__(avatar_config, name, title)
         self.expressions = (self.avatar_config.get("expressions") or DEFAULT_EXPRESSIONS)
+        self._talk_tick = 0
 
     def render_tick(self, expression, bubble_lines):
         face = self.expressions.get(expression, DEFAULT_EXPRESSIONS["idle"])
-        _render(self.name, self.title, expression, face["eyes"], face["mouth"], bubble_lines)
+        mouth = face["mouth"]
+        if bubble_lines and "talk_mouth" in face:
+            # This provider has no frame animation otherwise, so a bubble
+            # would sit next to one static mouth glyph for its whole
+            # duration. Alternate mouth/talk_mouth once per tick (~0.5s)
+            # so the avatar visibly talks while there's text on screen.
+            self._talk_tick += 1
+            if self._talk_tick % 2:
+                mouth = face["talk_mouth"]
+        _render(self.name, self.title, expression, face["eyes"], mouth, bubble_lines)
 
 
 def _render(name, title, expression, eyes, mouth, bubble_lines=None):

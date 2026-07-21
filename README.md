@@ -10,6 +10,19 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**The avatar now visibly talks while there's text on screen** — every code
+path that shows a speech bubble already paired it with the right expression
+(`speaking`/`happy`/`frustrated`), but the `builtin` static-box provider had
+zero frame animation, so the mouth was one fixed glyph for the bubble's whole
+duration no matter what. `avatar_providers/builtin.py`'s `DEFAULT_EXPRESSIONS`
+gained an optional `talk_mouth` entry per expression, alternated with the
+normal `mouth` once per tick (~0.5s) whenever `render_tick` gets non-empty
+`bubble_lines` — a worker's `avatar.expressions.<name>` config override can
+add/omit this the same way it already overrides `eyes`/`mouth`. The
+`ascii_avatar` provider already did this (its `speaking` state cycles 4 real
+mouth-open frames every 0.1s via `_SPEAK_FRAMES`); this brings `builtin` to
+parity. See [docs/avatar_providers.md](docs/avatar_providers.md).
+
 **Fixed: `docker build` could hang/get canceled transferring a bloated build
 context** — no `.dockerignore` existed, and Docker never reads `.gitignore`,
 so `docker build -t vtube-worker:latest .` (and every `services/*/Dockerfile`

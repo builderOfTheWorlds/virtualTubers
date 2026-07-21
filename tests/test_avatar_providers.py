@@ -50,6 +50,38 @@ def test_builtin_provider_defaults_to_default_expressions_when_unconfigured():
     assert provider.expressions == DEFAULT_EXPRESSIONS
 
 
+def test_builtin_provider_alternates_talk_mouth_while_bubble_shown(capsys):
+    provider = BuiltinProvider({}, "KODI-7", "Software Engineer")
+    provider.render_tick("speaking", ["hello"])
+    first = capsys.readouterr().out
+    provider.render_tick("speaking", ["hello"])
+    second = capsys.readouterr().out
+    assert DEFAULT_EXPRESSIONS["speaking"]["talk_mouth"] in first
+    assert DEFAULT_EXPRESSIONS["speaking"]["mouth"] in second
+    assert first != second
+
+
+def test_builtin_provider_holds_static_mouth_without_a_bubble(capsys):
+    provider = BuiltinProvider({}, "KODI-7", "Software Engineer")
+    provider.render_tick("speaking", None)
+    first = capsys.readouterr().out
+    provider.render_tick("speaking", None)
+    second = capsys.readouterr().out
+    assert first == second
+    assert DEFAULT_EXPRESSIONS["speaking"]["mouth"] in first
+
+
+def test_builtin_provider_expression_without_talk_mouth_stays_static(capsys):
+    # "idle" has no talk_mouth entry — a bubble showing alongside it (not a
+    # real code path today, but the fallback must not crash) keeps one glyph.
+    provider = BuiltinProvider({}, "KODI-7", "Software Engineer")
+    provider.render_tick("idle", ["hello"])
+    first = capsys.readouterr().out
+    provider.render_tick("idle", ["hello"])
+    second = capsys.readouterr().out
+    assert first == second
+
+
 def test_ascii_avatar_default_expression_map_matches_our_seven_expressions():
     assert DEFAULT_EXPRESSION_MAP == {
         "idle": "idle",
