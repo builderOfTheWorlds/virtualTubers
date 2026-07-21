@@ -31,3 +31,12 @@ and voice comes from this project's existing TTS pipeline. Consequently its
 heavier dependencies (`pyzmq`, `sounddevice`, `mcp`, `anthropic`) are not
 installed in the worker image; only `blessed` (and transitively what the
 frame modules import) was added to `requirements.txt`.
+
+`assets/` (110MB of PNGs — `gits_frames/` sequences, a banner image, a ghost
+portrait) was deleted from this snapshot: it only backs the upstream
+`musetalk`/`portrait`/`layered2d` frame sets, which pull in Pillow/numpy and
+are deliberately never loaded here (`avatar_providers/ascii_avatar.py` forces
+`frame_set="cyberpunk"`, pure ANSI text, regardless of persona). It was dead
+weight in every Docker build context and worker image. If a future frame set
+needs image assets, re-vendor just that subdirectory rather than restoring
+the whole thing.

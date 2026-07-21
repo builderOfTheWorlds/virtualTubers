@@ -10,6 +10,25 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**Fixed: `docker build` could hang/get canceled transferring a bloated build
+context** — no `.dockerignore` existed, and Docker never reads `.gitignore`,
+so `docker build -t vtube-worker:latest .` (and every `services/*/Dockerfile`
+build in `install.sh`, which all use `.` as their context) shipped the
+**entire** repo checkout to the daemon on every build — including `.git/`,
+and, on the deploy host (`/opt/virtualTubers`), `voices/` (Piper `.onnx`
+models fetched by `install.sh` itself) and `replays/` (the episode library) —
+several hundred MB of nothing any Dockerfile ever `COPY`s. A build context
+that large is slow enough to transfer that it can get killed by an idle/SSH
+timeout before the actual build even starts (`ERROR: failed to build: ...
+Canceled: context canceled`, observed mid-"load build context"). New
+`.dockerignore` excludes those plus the usual caches/venvs/IDE cruft.
+Separately, the vendored `repos/ascii-avatar/assets/` (110MB of PNGs backing
+upstream frame sets this project deliberately never loads — see
+[repos/README.md](repos/README.md)) was deleted from the snapshot, since it
+was dead weight in that same context and in every worker image. Both are
+config/vendored-content changes only — rerun `install.sh` on the host to
+rebuild with the now much smaller context.
+
 **Fixed: the animated `ascii_avatar` face was cut off in every worker's tmux
 pane, and entirely unusable on the three A/B coding-backend workers** — the
 avatar pane's height is carved out of its column by the `filetree` pane's

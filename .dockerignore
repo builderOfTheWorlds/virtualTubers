@@ -1,0 +1,65 @@
+# Docker does NOT read .gitignore — this file is the only thing that keeps
+# the build context small. Without it, every `docker build` (this repo's
+# Dockerfile and all services/*/Dockerfile, which all use `.` as their
+# context per install.sh) ships the ENTIRE checkout to the daemon, including
+# directories that live inside this same checkout on the deploy host
+# (/opt/virtualTubers) but are never COPY'd into any image:
+#   - voices/   — Piper .onnx voice models (scripts/download_voices.py), tens
+#                 of MB each across 7 voices
+#   - replays/  — Rerun Theater episode library (scripts/build_replay_library.py)
+# That bloated context (100+ MB) is slow enough to transfer that it can get
+# killed by an idle/SSH timeout mid-build ("context canceled") before the
+# actual build ever starts. Keep this in sync with what .gitignore excludes
+# for the same runtime-generated paths.
+
+# ── Git ────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── Runtime / world-state (generated at runtime, not build input) ─────────
+data/
+world-state/
+.logs/
+replays/
+voices/
+
+# ── Python ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ── Virtual environments ───────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Testing / coverage ──────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# ── Tooling / IDE ────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+
+# ── Claude Code ────────────────────────────────────────────────────────────
+.claude/
+
+# ── Secrets ──────────────────────────────────────────────────────────────
+.env
+
+# ── OS cruft ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Not needed inside any image ─────────────────────────────────────────
+docs/
+tests/
