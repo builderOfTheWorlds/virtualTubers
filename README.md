@@ -10,22 +10,38 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
-**Each of the 6 workers now has its own distinct voice for solo Rerun
-Theater airings** — previously every worker's `voice.model_path` pointed at
-the same `en_US-lessac-low.onnx`, so KODI-7, MAX-1, TESS-3, NYX-1, OKO-2,
-and ADA-3 all sounded identical when narrating the `coder` speaker slot
-(`voice.speakers.coder` is empty by default, so it falls back to the
-worker's own `model_path`). `config/workers/*.yaml` now gives each persona
-a distinct Piper voice — KODI-7 lessac, MAX-1 bryce, TESS-3 kathleen, NYX-1
-danny, OKO-2 joe, ADA-3 kristin — added to `scripts/download_voices.py`'s
-catalog so `./install.sh` fetches them automatically. `boss` stays `ryan`
-for every worker (the shared narrative voice). Config-only, no code change
-or image rebuild needed — just redeploy and let `install.sh` pull the new
-models. **Caveat**: this only differentiates **solo** shows; a duet's
-director still resolves both `boss`/`coder` audio from its own
-`voice.speakers` config regardless of which physical worker is cast into
-each role (docs/duet_replay.md), so duet voices are unaffected by this
-change. See [docs/tts_client.md](docs/tts_client.md).
+**Each of the 6 workers now has its own distinct voice** — previously every
+worker's `voice.model_path` pointed at the same `en_US-lessac-low.onnx`, so
+KODI-7, MAX-1, TESS-3, NYX-1, OKO-2, and ADA-3 all sounded identical.
+`config/workers/*.yaml` now gives each persona a distinct Piper voice —
+KODI-7 lessac, MAX-1 bryce, TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3
+kristin — added to `scripts/download_voices.py`'s catalog so `./install.sh`
+fetches them automatically. `boss` stays `ryan` for every worker (the
+shared narrative voice). Config-only, no code change or image rebuild
+needed — just redeploy and let `install.sh` pull the new models.
+
+- **Solo shows**: `voice.speakers.coder` is empty by default, so it falls
+  back to the worker's own `model_path` — the directing worker always
+  narrates its own "coder" lines in its own voice.
+- **Multi-persona duets** (e.g. `replays/sample.json`'s 6-way mic-check
+  fixture, driven by `scripts/send_test_message.ps1`) tag lines with the
+  literal persona id (`tester`, `coder-native`, `coder-opencode`,
+  `coder-aider`), not just `boss`/`coder`. The duet **director** voices
+  every cast member from its own `voice.speakers` map, and an id with no
+  entry silently falls back to the director's base voice — which is why
+  the bug initially looked like "only the boss sounds different, everyone
+  else is identical" (only `boss` had an override). Fixed by giving
+  `voice.speakers` an explicit entry for all four extra personas in every
+  worker's config, so any worker can direct a multi-persona show with each
+  cast member in its own voice.
+- **Remaining caveat**: for a **real, single-session** episode (only ever
+  `boss`/`coder` speaker ids) performed as a duet, the director's
+  `voice.speakers.coder` still decides the "coder" role's audio for
+  whichever physical worker is cast there — it does not automatically
+  become that worker's own voice, since the role name (not the cast
+  worker id) is what's looked up.
+
+See [docs/tts_client.md](docs/tts_client.md).
 
 **Fixed: the three A/B coding-backend workers could never show Rerun Theater,
 no matter what** — `worker-coder-native`, `worker-coder-opencode`, and

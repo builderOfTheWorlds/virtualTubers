@@ -37,9 +37,25 @@ whichever persona directs a solo replay narrates the `coder` slot in its
 own distinct model (`config/workers/*.yaml`: KODI-7 lessac, MAX-1 bryce,
 TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin; `boss` stays ryan
 for every worker, the shared narrative voice). This only differentiates
-**solo** shows — a duet's director still resolves both `boss`/`coder`
-audio from its own `voice.speakers` config regardless of which physical
-worker got cast into each role (docs/duet_replay.md).
+**solo** shows using a real (single-session) `boss`/`coder` episode — a
+duet's director still resolves the `boss`/`coder` roles from its own
+`voice.speakers` config regardless of which physical worker got cast into
+each one (docs/duet_replay.md).
+
+**Multi-persona episodes are a separate case.** A script isn't limited to
+`boss`/`coder` speaker ids — `replays/sample.json` (the 6-way duet fixture
+used by `scripts/send_test_message.ps1`) tags lines with the literal
+persona id (`tester`, `coder-native`, `coder-opencode`, `coder-aider`).
+Since a duet director voices every cast member from its OWN `voice.speakers`
+map, and `voice_for()` silently falls back to the base voice for any id
+with no override, a worker whose `speakers` block only defined `coder`/
+`boss` made every one of those four personas sound like the director's own
+base voice — the bug this looked like was "only the boss sounds different
+and everyone else is identical," because `boss` was the only id with an
+explicit override. Fixed by giving `voice.speakers` an explicit entry for
+all four extra personas in every `config/workers/*.yaml` (same models as
+the per-worker `model_path` table above) — see the comment in
+`config/worker.yaml`'s `voice.speakers` block.
 
 ## Signature
 
@@ -185,6 +201,14 @@ cancels the show.
 
 ## Changelog
 
+- **v1.3.1** (2026-07-20): Fixed multi-persona duets (e.g.
+  `replays/sample.json`'s 6-way mic-check fixture) where every persona
+  except `boss` sounded identical — the director's `voice.speakers` map
+  only had `coder`/`boss` entries, so `tester`/`coder-native`/
+  `coder-opencode`/`coder-aider` speaker ids all fell back to the
+  director's own base voice. Every `config/workers/*.yaml` now defines all
+  six speaker ids in `voice.speakers`, so any worker can direct a
+  multi-persona show with each persona in its own voice. Config-only.
 - **v1.3.0** (2026-07-20): Each of the 6 workers now has its own distinct
   Piper `model_path` in `config/workers/*.yaml` (KODI-7 lessac, MAX-1
   bryce, TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin), so solo

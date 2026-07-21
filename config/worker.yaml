@@ -143,11 +143,17 @@ voice:
   # empty by default, so it inherits this). Give every worker a distinct
   # model_path so each persona sounds different; the deployed
   # config/workers/*.yaml already does this — KODI-7 lessac, MAX-1 bryce,
-  # TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin. Note this only
-  # differentiates SOLO shows: in a duet, the DIRECTOR's voice.speakers
-  # mapping decides both roles' audio regardless of which physical worker
-  # is cast into them (docs/duet_replay.md) — the cast worker's own
-  # model_path isn't consulted there.
+  # TESS-3 kathleen, NYX-1 danny, OKO-2 joe, ADA-3 kristin.
+  #
+  # CAVEAT for a real (single-session) episode's boss/coder duet: the
+  # DIRECTOR's voice.speakers.coder decides the "coder" role's audio for
+  # EVERY cast member playing it, regardless of which physical worker is
+  # actually cast there (docs/duet_replay.md) — this worker's own
+  # model_path only differentiates shows THIS worker itself directs. A
+  # multi-persona episode (tester/coder-native/coder-opencode/coder-aider
+  # tagged as literal speaker ids, e.g. replays/sample.json) doesn't have
+  # this problem as long as every worker's voice.speakers below carries an
+  # entry for every persona — see that section's comment.
   model_path: "/data/voices/en_US-lessac-low.onnx"
 
   # piper/kokoro only: run synthesis against a remote piper.http_server
@@ -165,13 +171,28 @@ voice:
   # (OPENAI_API_KEY / ELEVEN_API_KEY) — never from this file.
   voice_id: ""
 
-  # Replay dialogue is two-voiced: per-speaker overrides merged over the
-  # base settings above. Give the boss a different model/voice than the
-  # coder so the back-and-forth reads as two characters.
+  # Replay dialogue has per-speaker overrides merged over the base settings
+  # above — a real single-session episode only ever has "boss"/"coder"
+  # speakers, but a multi-persona episode (e.g. replays/sample.json, used
+  # by the 6-way duet in scripts/send_test_message.ps1) tags lines with the
+  # actual worker id (tester, coder-native, coder-opencode, coder-aider).
+  # IMPORTANT: in a duet, the DIRECTOR's `speakers` map voices EVERY cast
+  # member — an id with no entry here just falls back to this worker's own
+  # base `model_path` above, so it'll sound like whichever worker directed,
+  # not like itself. Give every named speaker id an entry (as below) so any
+  # worker can direct a multi-persona show correctly, no matter who's cast.
   speakers:
     coder: {}
     boss:
       model_path: "/data/voices/en_US-ryan-low.onnx"
+    tester:
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    coder-native:
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    coder-opencode:
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    coder-aider:
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
 
   # What the coder calls the boss in spoken narration
   boss_name: "the boss"

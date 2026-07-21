@@ -47,6 +47,14 @@ voice:
     coder: {}
     boss:
       model_path: "/data/voices/en_US-ryan-low.onnx"
+    tester:
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    coder-native:
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    coder-opencode:
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    coder-aider:
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
   boss_name: "the boss"
   rate: 1.0
   verbosity: 0.5
