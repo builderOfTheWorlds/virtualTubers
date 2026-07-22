@@ -809,6 +809,18 @@ recreates its container from a stale or nonexistent image. `install.sh`'s
 header comment is the single source of truth for what it currently builds —
 keep it and this paragraph in sync with the file.
 
+**On a Windows host with Docker Desktop but no bash** (no WSL/Git Bash
+dependency needed) — `install.ps1` is the PowerShell equivalent, building the
+same tags from the same Dockerfiles:
+
+```powershell
+git pull
+.\install.ps1
+```
+
+Keep `install.ps1` in sync with `install.sh` — any new service's build line
+goes in both.
+
 ### Verify a worker is streaming to the right place
 
 Compose prefixes container names with the project, so they are
