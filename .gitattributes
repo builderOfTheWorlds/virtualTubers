@@ -1,0 +1,6 @@
+# Shell scripts get baked verbatim into container images (Dockerfile COPY,
+# executed via their #!/bin/bash shebang) — always check them out with LF,
+# regardless of a Windows clone's core.autocrlf setting. CRLF here turns the
+# shebang into `#!/bin/bash\r`, which the kernel can't find and reports as
+# "exec /startup.sh: no such file or directory".
+*.sh text eol=lf
