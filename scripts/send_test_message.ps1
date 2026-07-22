@@ -20,7 +20,8 @@
     .\scripts\send_test_message.ps1 -Url http://localhost:8090/messages
 #>
 param(
-    [string]$Url = "http://192.168.1.120:8090/messages"
+    # [string]$Url = "http://192.168.1.120:8090/messages"
+    [string]$Url = "http://192.168.2.158:8090/messages"
 )
 
 # Reset preset variables so stale values can't leak in from the console
