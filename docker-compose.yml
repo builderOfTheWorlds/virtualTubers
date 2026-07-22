@@ -400,10 +400,26 @@ services:
   # upstream example's extra host-facing listener isn't needed here, so
   # host-side Kafka tools pointed at localhost:9092 won't fully work, only
   # in-network clients will).
+  # One-shot init: apache/kafka runs as uid 1000 (appuser), but Docker
+  # creates a fresh named volume owned by root — chown it before Kafka
+  # starts, or every boot fails formatting its own metadata directory with
+  # AccessDeniedException. Runs once and exits; kafka waits for it to
+  # succeed before starting (depends_on + service_completed_successfully).
+  kafka-init-perms:
+    image: busybox:latest
+    profiles: ["local-infra"]
+    command: ["chown", "-R", "1000:1000", "/tmp/kraft-combined-logs"]
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+    restart: "no"
+
   kafka:
     image: apache/kafka:3.9.2
     profiles: ["local-infra"]
     hostname: kafka
+    depends_on:
+      kafka-init-perms:
+        condition: service_completed_successfully
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: 'broker,controller'
