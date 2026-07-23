@@ -5,8 +5,8 @@ Fetches the Piper .onnx voice models the replay narration uses
 (app/tts_client.py) from the rhasspy/piper-voices HuggingFace repo.
 
 Run locally, then sync the output directory to the deployment host's repo
-checkout at <repo>/voices (e.g. C:\Users\matt\PycharmProjects\virtualTubers\voices
-on d2000) — docker-compose mounts it read-only into the
+checkout at <repo>/voices (e.g. C:/Users/<you>/PycharmProjects/virtualTubers/voices
+on a Windows host) — docker-compose mounts it read-only into the
 workers at /data/voices (the paths config/worker.yaml's `voice` section
 points at).
 
