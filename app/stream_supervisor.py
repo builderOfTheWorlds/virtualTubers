@@ -16,15 +16,12 @@ import subprocess
 import sys
 import time
 
-from message_bus import load_worker_config
+from message_bus import load_worker_config, resolve
 from worker_control import WorkerControl
 
 POLL_INTERVAL_S = 3
 STOP_TIMEOUT_S = 10
 
-
-def resolve(env_name, config_value, default=None):
-    return os.environ.get(env_name) or config_value or default
 
 
 def log(msg):

@@ -19,11 +19,11 @@ services:
       # "ascii_avatar" (docs/avatar_providers.md). Unset keeps the worker
       # config's own avatar.provider (defaults to "builtin").
       AVATAR_PROVIDER: ${CODER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py)
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -84,13 +84,13 @@ services:
       # worker back to its normal editor pane. Env-only change, no rebuild.
       LAYOUT_PRESET: ${CODER_NATIVE_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_NATIVE_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py) — required for this
       # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -130,13 +130,13 @@ services:
       # worker back to its normal editor pane. Env-only change, no rebuild.
       LAYOUT_PRESET: ${CODER_OPENCODE_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_OPENCODE_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py) — required for this
       # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -176,13 +176,13 @@ services:
       # worker back to its normal editor pane. Env-only change, no rebuild.
       LAYOUT_PRESET: ${CODER_AIDER_LAYOUT_PRESET:-replay}
       AVATAR_PROVIDER: ${CODER_AIDER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py) — required for this
       # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -219,11 +219,11 @@ services:
       WORKER_ID: manager
       LAYOUT_PRESET: ${MANAGER_LAYOUT_PRESET:-manager}
       AVATAR_PROVIDER: ${MANAGER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py)
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -257,11 +257,11 @@ services:
       WORKER_ID: tester
       LAYOUT_PRESET: ${TESTER_LAYOUT_PRESET:-tester}
       AVATAR_PROVIDER: ${TESTER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py)
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -293,10 +293,10 @@ services:
     image: virtualtubers-message-logger:latest
     pull_policy: never
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       KAFKA_GROUP_ID: vtuber-logger
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -310,12 +310,12 @@ services:
     image: virtualtubers-message-api:latest
     pull_policy: never
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-192.168.1.120:9092}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # Backs POST /logs/prune (docs/log_shipper.md) — deletes container_logs
       # rows in a caller-specified time range.
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
@@ -349,7 +349,7 @@ services:
     image: virtualtubers-log-shipper:latest
     pull_policy: never
     environment:
-      POSTGRES_HOST: ${POSTGRES_HOST:-192.168.1.120}
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}

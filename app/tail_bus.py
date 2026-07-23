@@ -27,7 +27,7 @@ from datetime import datetime, timezone
 
 import yaml
 
-from message_bus import load_worker_config, MessageConsumer, BROADCAST
+from message_bus import load_worker_config, MessageConsumer, BROADCAST, resolve
 
 
 # Logs go to STDERR only — stdout is the display feed and must stay clean.
@@ -98,9 +98,6 @@ DEFAULT_FEED_CONFIG = {
 }
 
 
-def resolve(env_name, config_value, default=None):
-    """Env var wins, then config file value, then default."""
-    return os.environ.get(env_name) or config_value or default
 
 
 def load_feed_config(path):

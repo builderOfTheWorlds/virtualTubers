@@ -354,8 +354,10 @@ message_bus:
   # Backend: kafka (the old file-based bus is retired)
   backend: kafka
 
-  # Kafka bootstrap servers — can also be set via KAFKA_BOOTSTRAP_SERVERS env var
-  bootstrap_servers: "192.168.1.120:9092"
+  # Kafka bootstrap servers — set via the KAFKA_BOOTSTRAP_SERVERS env var
+  # (docker-compose.yml/.env). No in-repo default: this varies per
+  # deployment host and must never be hardcoded here.
+  bootstrap_servers: null
 
   # Topic all agents/services publish to and consume from
   # Can also be set via KAFKA_TOPIC env var

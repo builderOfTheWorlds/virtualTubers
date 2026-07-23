@@ -39,7 +39,7 @@ from pathlib import Path
 
 import narration_store
 from agent_state import resolve_state_path
-from message_bus import MessageProducer, build_message
+from message_bus import MessageProducer, build_message, resolve
 from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
 
 DEFAULT_LIBRARY = "/data/replays"
@@ -133,8 +133,8 @@ def _build_bus_producer(config):
     hard refusal (docs/duet_replay.md refusal rule); solo shows never call
     this at all."""
     bus_config = (config or {}).get("message_bus") or {}
-    bootstrap_servers = bus_config.get("bootstrap_servers")
-    topic = bus_config.get("topic")
+    bootstrap_servers = resolve("KAFKA_BOOTSTRAP_SERVERS", bus_config.get("bootstrap_servers"))
+    topic = resolve("KAFKA_TOPIC", bus_config.get("topic"))
     if not bootstrap_servers or not topic:
         return None
     try:
@@ -258,8 +258,8 @@ def publish_narration(show, config, episode, worker_name):
     if not show:
         return None
     bus_config = (config or {}).get("message_bus") or {}
-    bootstrap_servers = bus_config.get("bootstrap_servers")
-    topic = bus_config.get("topic")
+    bootstrap_servers = resolve("KAFKA_BOOTSTRAP_SERVERS", bus_config.get("bootstrap_servers"))
+    topic = resolve("KAFKA_TOPIC", bus_config.get("topic"))
     if not bootstrap_servers or not topic:
         return None
     payload = {

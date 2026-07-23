@@ -4,6 +4,7 @@ Shared Kafka message-envelope, producer, and consumer helpers used by
 agent.py, tail_bus.py, and the message-logger / message-api services.
 """
 import json
+import os
 import time
 import uuid
 from datetime import datetime, timezone
@@ -17,6 +18,16 @@ BROADCAST = "broadcast"
 def load_worker_config(path):
     with open(path, "r") as f:
         return yaml.safe_load(f)
+
+
+def resolve(env_name, config_value, default=None):
+    """Env var wins over a worker config's value, which wins over `default`.
+    The single source of truth for env-vs-config precedence — every reader of
+    message_bus/Postgres connection details (agent.py, replay_pane.py, ...)
+    must go through this, or a value can silently diverge between them when
+    an env var override isn't mirrored into config/workers/*.yaml (see
+    docs/duet_replay.md)."""
+    return os.environ.get(env_name) or config_value or default
 
 
 def build_message(from_, to, type_, payload=None):

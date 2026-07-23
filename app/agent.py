@@ -17,7 +17,7 @@ import random
 import time
 import argparse
 
-from message_bus import load_worker_config, build_message, MessageProducer, MessageConsumer
+from message_bus import load_worker_config, build_message, resolve, MessageProducer, MessageConsumer
 from worker_control import WorkerControl
 from llm_client import build_llm_client
 from coding_backend import build_coding_backend
@@ -65,10 +65,6 @@ DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
 # replay_pane.py, which owns the actual resolution/performance.
 REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
 DEFAULT_REPLAY_LIBRARY = "/data/replays"
-
-
-def resolve(env_name, config_value, default=None):
-    return os.environ.get(env_name) or config_value or default
 
 
 def _decide_test_outcome():

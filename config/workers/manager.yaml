@@ -89,6 +89,6 @@ world_state:
 
 message_bus:
   backend: kafka
-  bootstrap_servers: "192.168.1.120:9092"
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var — no hardcoded default
   topic: "vtuber.messages"
   worker_id: "manager"
