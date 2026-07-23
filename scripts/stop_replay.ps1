@@ -20,7 +20,7 @@
 #>
 param(
     [string]$To = "broadcast",
-    [string]$Url = "http://192.168.1.120:8090/messages"
+    [string]$Url = "http://192.168.2.158:8090/messages"
 )
 
 $body = @{

@@ -162,7 +162,7 @@ avatar:
 ```
 
 Or switch it at deploy time with **no config edit** — just set the env var
-on that worker's container (e.g. a Portainer stack env var):
+on that worker's container (e.g. a `.env` variable):
 
 ```bash
 AVATAR_PROVIDER=ascii_avatar
@@ -185,7 +185,7 @@ AVATAR_PROVIDER=builtin
 > env-only change takes effect on container restart *after* an image that
 > already contains `/repos/ascii-avatar/src` has been built and deployed
 > (`docker build -t vtube-worker:latest .` on the host, then redeploy the
-> stack in Portainer — see the root README's Deploy section). Once that
+> stack — see the root README's Deploy section). Once that
 > image is running, flipping `avatar.provider` / `AVATAR_PROVIDER` between
 > `builtin` and `ascii_avatar` needs no further rebuild.
 

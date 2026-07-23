@@ -18,7 +18,7 @@
     (prompts for the postgres superuser password; reuses .env for the rest)
 
 .EXAMPLE
-    .\scripts\install_db.ps1 -PgHost 192.168.1.120 -PgPort 5432 -SuperuserName postgres
+    .\scripts\install_db.ps1 -PgHost 192.168.2.158 -PgPort 5432 -SuperuserName postgres
 #>
 param(
     [string]$PgHost,

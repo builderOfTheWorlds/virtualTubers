@@ -5,7 +5,8 @@ Batch-parses claudeBackupUtility session logs into an episode library for
 the "Rerun Theater" replay pane (docs/replay_pane.md).
 
 Run on the machine that has the logs (the Windows dev box), then sync the
-output directory to the deployment host at /opt/virtualTubers/replays —
+output directory to the deployment host's repo checkout at <repo>/replays
+(e.g. C:\Users\matt\PycharmProjects\virtualTubers\replays on d2000) —
 docker-compose mounts it read-only into the workers at /data/replays.
 
     .venv/Scripts/python.exe scripts/build_replay_library.py \

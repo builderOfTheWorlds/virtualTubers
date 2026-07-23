@@ -63,7 +63,7 @@ class PruneLogsRequest(BaseModel):
 - `before` (datetime, optional) — deletes `container_logs` rows with `log_timestamp < before`.
   At least one of `after`/`before` is required; passing only one deletes everything on that side of the bound.
 
-Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints). Required for `/logs/prune`: `POSTGRES_HOST`/`POSTGRES_PORT` (defaults `192.168.1.120`/`5432`), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
+Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints). Required for `/logs/prune`: `POSTGRES_HOST`/`POSTGRES_PORT` (code default `localhost`/`5432` if unset, but `docker-compose.yml` requires both to be set explicitly in `.env` — e.g. `192.168.2.158`/`5432` for the d2000 deployment), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
 
 ## Return Value
 

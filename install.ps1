@@ -1,21 +1,23 @@
 #Requires -Version 5.1
 $ErrorActionPreference = "Stop"
 
-# Windows/PowerShell equivalent of install.sh — rebuilds the images this stack
-# needs after a `git pull`, and fetches the Piper voice models for Rerun
-# Theater's spoken narration. For hosts with Docker Desktop but no bash
-# (no WSL/Git Bash needed).
+# Rebuilds the images this stack needs after a `git pull`, and fetches the
+# Piper voice models for Rerun Theater's spoken narration. This is the
+# primary install path — production runs on d2000 (Windows, Docker Desktop,
+# plain `docker compose`, no Portainer). No WSL/Git Bash needed. install.sh
+# is the bash equivalent, for a Linux/macOS host or a Windows host with
+# WSL/Git Bash.
 #
 # Run from the repo root:
 #
 #   git pull; .\install.ps1
 #
-# None of these images are built by Portainer (or pulled by plain `docker
-# compose up`) — every service in docker-compose.yml uses `image:` +
-# `pull_policy: never`, never `build:`. Images must be built here, on the
-# host, then the stack redeployed (Portainer UI -> Update the stack ->
-# Re-pull image and redeploy, or `docker compose up -d` for a plain Compose
-# host) to pick them up.
+# None of these images are built by `docker compose up` — every service in
+# docker-compose.yml uses `image:` + `pull_policy: never`, never `build:`
+# (builds stay explicit/scriptable across every service in one pass rather
+# than being folded into the compose file). Images must be built here, on
+# the host, then the stack recreated (`docker compose up -d`) to pick them
+# up.
 #
 # Whenever a new service is added to the stack, add its build line to BOTH
 # this file and install.sh in the same change — see the "Deploy / redeploy"
@@ -63,4 +65,16 @@ Invoke-ImageBuild -Tag "virtualtubers-message-api:latest" -Dockerfile "services/
 Invoke-ImageBuild -Tag "virtualtubers-log-shipper:latest" -Dockerfile "services/log-shipper/Dockerfile"
 Invoke-ImageBuild -Tag "virtualtubers-twitch-presence:latest" -Dockerfile "services/twitch-presence/Dockerfile"
 
-Log "Done. Redeploy the stack (Portainer: Update the stack -> Re-pull image and redeploy), or 'docker compose up -d' for a plain Compose host."
+# --force-recreate, not a plain `up -d`: a container whose only difference is
+# an image rebuilt under the same tag looks unchanged to Compose, so `up -d`
+# alone would leave stale containers running old code. Recreating also gives
+# every worker a clean container filesystem, which matters for anything that
+# only initializes correctly on first boot within a container's writable
+# layer (e.g. PulseAudio's runtime state — see startup.sh's cleanup comment).
+Log "Recreating containers (docker compose up -d --force-recreate)"
+docker compose up -d --force-recreate
+if ($LASTEXITCODE -ne 0) {
+    throw "docker compose up -d --force-recreate failed (exit code $LASTEXITCODE)"
+}
+
+Log "Done. Stack recreated and running the freshly built images."

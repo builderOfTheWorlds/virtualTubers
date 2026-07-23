@@ -6,7 +6,7 @@ one per cast size. All target the same hand-authored fixture episode
 `coder` is always the director.
 
 ```bash
-curl -X POST http://192.168.1.120:8090/messages \
+curl -X POST http://192.168.2.158:8090/messages \
   -H "Content-Type: application/json" \
   -d @scripts/worker2.json
 ```
@@ -45,13 +45,13 @@ mounts that `coder`/`manager`/`tester` already had — `docker-compose.yml`
 now wires all three the same way (`CODER_NATIVE_LAYOUT_PRESET` /
 `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`,
 `POSTGRES_HOST`/`PORT`/`DB`/`USER`/`PASSWORD`, and the
-`/opt/virtualTubers/replays:/data/replays:ro` +
-`/opt/virtualTubers/voices:/data/voices:ro` mounts).
+`./replays:/data/replays:ro` +
+`./voices:/data/voices:ro` mounts).
 
-All three now **default to `replay`** in `docker-compose.yml` (no stack
-env needs to be set) — set `CODER_NATIVE_LAYOUT_PRESET`/
+All three now **default to `replay`** in `docker-compose.yml` (no env var
+needs to be set) — set `CODER_NATIVE_LAYOUT_PRESET`/
 `CODER_OPENCODE_LAYOUT_PRESET`/`CODER_AIDER_LAYOUT_PRESET` to `coder` in
-the Portainer stack env if you want one of them back to its normal
+`.env` if you want one of them back to its normal
 editor pane instead.
 
 **Still required before worker4/5/6 will actually pass**, since this was

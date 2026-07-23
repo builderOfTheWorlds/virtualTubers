@@ -73,7 +73,7 @@ demo side effects, no pipeline handoff.
 ```
 
 - `payload.episode` (str, required) — episode script name in the worker's
-  library (`/data/replays`, mounted from `/opt/virtualTubers/replays`;
+  library (`/data/replays`, mounted from `./replays` on the deploy host;
   `.json` suffix optional). Resolved basename-only — path components are
   stripped, so only library episodes are reachable.
 - `payload.speed` (number, optional) — playback speed multiplier.

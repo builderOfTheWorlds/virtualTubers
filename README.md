@@ -28,7 +28,7 @@ context** — no `.dockerignore` existed, and Docker never reads `.gitignore`,
 so `docker build -t vtube-worker:latest .` (and every `services/*/Dockerfile`
 build in `install.sh`, which all use `.` as their context) shipped the
 **entire** repo checkout to the daemon on every build — including `.git/`,
-and, on the deploy host (`/opt/virtualTubers`), `voices/` (Piper `.onnx`
+and, on the deploy host (`C:\Users\matt\PycharmProjects\virtualTubers`), `voices/` (Piper `.onnx`
 models fetched by `install.sh` itself) and `replays/` (the episode library) —
 several hundred MB of nothing any Dockerfile ever `COPY`s. A build context
 that large is slow enough to transfer that it can get killed by an idle/SSH
@@ -110,7 +110,7 @@ as `worker-coder`, via new `CODER_NATIVE_LAYOUT_PRESET` /
 `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` stack env vars —
 **and, for now, all three default to `replay` (Rerun Theater) rather than
 `coder`** (set one to `coder` to put that worker back in its normal editor
-pane). Needs a worker image rebuild (no new dependency) + Portainer redeploy,
+pane). Needs a worker image rebuild (no new dependency) + redeploy,
 same as any other compose change. See the updated "Deployment requirements"
 in [docs/duet_replay.md](docs/duet_replay.md) and the new second bullet in
 [docs/replay_pane.md](docs/replay_pane.md#error-handling)'s error-handling
@@ -120,9 +120,9 @@ section for the full before/after.
 it had drifted behind the compose file: `CODER_LAYOUT_PRESET` /
 `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET`, `TWITCH_CHANNEL_MAP`,
 `PRESENCE_COOLDOWN_S`, `PRESENCE_IGNORE_USERS`, and `LOG_RETENTION_DAYS`
-were already documented in the [stack env var table](#required-stack-environment-variables)
+were already documented in the [env var table](#required-environment-variables-env)
 below and read by the compose file, but missing from the template itself —
-so a Portainer stack copy-pasted from `.env.example` silently ran every
+so a `.env` copy-pasted from `.env.example` silently ran every
 worker's default layout with no way to know a `LAYOUT_PRESET` override was
 even possible. This is also the #1 cause of "I sent a `replay_request` and
 nothing happened, no error anywhere": the request file gets written just
@@ -191,11 +191,11 @@ is a thin dispatcher now, not a renderer:
   config, or `AVATAR_PROVIDER` env for a no-config-edit override) — no
   code change needed. `docker-compose.yml` gives every worker its own
   stack env var (`CODER_AVATAR_PROVIDER`, `MANAGER_AVATAR_PROVIDER`,
-  `TESTER_AVATAR_PROVIDER`, etc. — see `.env.example`), so a Portainer
+  `TESTER_AVATAR_PROVIDER`, etc. — see `.env.example`), so a stack
   redeploy can flip a single worker's avatar without editing any config
   file. The `Dockerfile` gained `COPY repos/ /repos/`, so the **first**
-  switch to `ascii_avatar` needs a worker image rebuild + Portainer
-  redeploy to get the vendored repo into the image; after that, flipping
+  switch to `ascii_avatar` needs a worker image rebuild + redeploy
+  to get the vendored repo into the image; after that, flipping
   between providers needs no rebuild. Full write-up of what changed and
   why: [docs/avatar_provider_integration.md](docs/avatar_provider_integration.md)
   (see also [docs/avatar_providers.md](docs/avatar_providers.md) and
@@ -308,7 +308,7 @@ saved Claude Code session logs become replayable stream content:
 - Config-only mode switch: `layout.preset: replay` (or
   `LAYOUT_PRESET=replay`) swaps the editor pane for the theater
   (`config/panels/replay.yaml`, `config/layouts/replay.yaml`).
-- Episode library: build locally, sync to `/opt/virtualTubers/replays` on
+- Episode library: build locally, sync to `C:\Users\matt\PycharmProjects\virtualTubers\replays` on
   the host — mounted `:ro` into coder/manager/tester at `/data/replays`.
   Persona re-voicing (unique shows per airing via the local LLM) is the
   planned next layer. See [docs/replay_pane.md](docs/replay_pane.md),
@@ -336,7 +336,7 @@ the same container:
   `stream_supervisor.py`, which starts/stops ffmpeg as a child process
   instead (and, as a side effect, auto-restarts it if it ever crashes on its
   own).
-- Landing this needs one worker-image rebuild + Portainer redeploy (like any
+- Landing this needs one worker-image rebuild + redeploy (like any
   code change); every toggle after that is just an HTTP call — see
   [docs/worker_control.md](docs/worker_control.md) and
   [docs/stream_supervisor.md](docs/stream_supervisor.md).
@@ -557,7 +557,7 @@ To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it 
 
 ### Shelling into a running container
 
-To poke around inside a running worker (check logs, inspect config, debug tmux panes), exec into it directly — no need to stop/restart anything. Since no `container_name` is pinned in `docker-compose.yml`, Compose auto-names containers `<project>-<service>-<n>`; under Portainer that's typically the `virtualtubers-` project prefix:
+To poke around inside a running worker (check logs, inspect config, debug tmux panes), exec into it directly — no need to stop/restart anything. Since no `container_name` is pinned in `docker-compose.yml`, Compose auto-names containers `<project>-<service>-<n>`, where the project prefix is `virtualtubers-` (from the repo folder name):
 
 ```bash
 docker exec -it virtualtubers-worker-coder-1 bash
@@ -583,8 +583,8 @@ For the full list of commands an operator can send (task assignment, direct chat
 
 ### Turning a worker on/off (no redeploy)
 
-Any worker can be paused and resumed without touching `docker-compose.yml`,
-Portainer, or rebuilding the image — via `message-api`'s `/workers` endpoints
+Any worker can be paused and resumed without touching `docker-compose.yml`
+or rebuilding the image — via `message-api`'s `/workers` endpoints
 (see [docs/worker_control.md](docs/worker_control.md) and
 [docs/message_api.md](docs/message_api.md)). "Off" stops both the agent
 (no more task/message processing) and the Twitch stream (ffmpeg stops
@@ -624,7 +624,7 @@ One-time setup:
   --logs "path/to/logs/claude/virtualTubers" --out replays
 
 # 2. Sync the episode library onto the deployment host
-#    replays/ -> /opt/virtualTubers/replays   (mounted :ro at /data/replays)
+#    replays/ -> C:\Users\matt\PycharmProjects\virtualTubers\replays   (mounted :ro at /data/replays)
 ```
 
 The Piper voice models (coder + boss) don't need a manual download/sync —
@@ -643,7 +643,7 @@ voice:
 ```
 
 Set `LAYOUT_PRESET=replay` on that worker (e.g. `CODER_LAYOUT_PRESET=replay`
-in the Portainer stack env) so its editor pane becomes the theater, and
+in `.env`) so its editor pane becomes the theater, and
 request a show:
 
 ```bash
@@ -718,29 +718,27 @@ pip install -r requirements.txt
 python3 app/avatar.py --config config/workers/coder.yaml
 ```
 
-## Deployment (Portainer)
+## Deployment (Docker Compose on d2000)
 
-In production the stack is managed by **Portainer** (the repo is checked out on the
-host, e.g. `/opt/virtualTubers`). Two things differ from a plain `docker compose`
-workflow and cause most "it won't pick up my change" confusion:
+The stack runs on **d2000**, a Windows machine on the local network running Docker
+Desktop, via plain `docker compose` — there is no Portainer in front of it. The repo
+is checked out directly on that host (e.g.
+`C:\Users\matt\PycharmProjects\virtualTubers`), and Kafka, Postgres, and Redis all
+run there too (see [Required environment variables](#required-environment-variables-env)
+below). One thing still causes most "it won't pick up my change" confusion:
 
-**1. Portainer stack env vars are NOT the CLI `.env` file.**
-Values set in the stack's **Environment variables** panel are injected by Portainer
-(as a `stack.env`) **only when you deploy/redeploy through the Portainer UI**. A
-manual `docker compose up -d` run from the host reads the local `.env` file instead
-and ignores the Portainer values. **Pick one mechanism and stick with it** — if the
-stack lives in Portainer, set env vars there and redeploy there; don't recreate
-containers from the CLI.
-
-**2. The worker image is never built by the stack.**
+**The worker image is never built by `docker compose up`.**
 The three workers use `image: vtube-worker:latest` with `pull_policy: never`, so
-Portainer will **not** build or pull it. You must build it on the host after any
-code change, then redeploy the stack so the containers pick up the new image.
+plain `docker compose up -d` will **not** build or pull it — it just fails or runs a
+stale image. You must build it on the host after any code change (`install.ps1`,
+below), then recreate the containers so they pick up the new image.
 
-### Required stack environment variables
+### Required environment variables (`.env`)
 
-Set these in the Portainer stack's **Environment variables** panel. Each worker
-streams to its **own** Twitch channel, so each needs that channel's key:
+Copy `.env.example` to `.env` on the host and fill these in — `docker compose`
+reads `.env` from the repo root automatically, no separate stack-env mechanism
+involved. Each worker streams to its **own** Twitch channel, so each needs that
+channel's key:
 
 | Variable | Example | Notes |
 |---|---|---|
@@ -750,10 +748,10 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `TESTER_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
 | `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
-| `KAFKA_BOOTSTRAP_SERVERS` | `192.168.1.120:9092` | Message-bus broker |
+| `KAFKA_BOOTSTRAP_SERVERS` | `192.168.2.158:9092` | Message-bus broker (runs on d2000 itself) |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
-| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | | `message-logger` Postgres connection |
+| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | `message-logger` Postgres connection (also on d2000) |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
 | `CODER_NATIVE_LAYOUT_PRESET` / `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
@@ -764,61 +762,46 @@ streams to its **own** Twitch channel, so each needs that channel's key:
 | `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
 | `PRESENCE_IGNORE_USERS` | `somebot,otherbot` | Optional — extra chat bots to never greet (extends the built-in list) |
 
-> Set each variable as its own `name` → `value` pair. Don't put a URL (or any value)
-> in the `name` field — that just creates a junk variable nothing reads.
+> `.env` is one `NAME=value` pair per line — see `.env.example` for the full
+> annotated template.
 
 ### Deploy / redeploy after a code change
 
-The `git` and `docker` commands must run **where the Docker daemon lives**: inside
-CT 101 (the Portainer LXC, `192.168.1.120`) on the `mafober` Proxmox host — *not*
-on the Proxmox host itself, and not on your local machine.
-
-SSH into the Proxmox host:
-
-```bash
-ssh root@192.168.1.117
-```
-
-Then, from the Proxmox shell:
-
-```bash
-pct enter 101                            # enter the Portainer LXC (CT 101)
-cd /opt/virtualTubers                    # the repo checkout
-git pull                                 # get the latest code
-./install.sh                             # fetches Piper voices + rebuilds every image the stack needs (see below)
-```
-
-Then in the **Portainer UI** → **Stacks** → this stack → **Update the stack**,
-enabling **Re-pull image and redeploy** / force recreate. Portainer recreates the
-workers on the freshly built images using the current stack env vars.
-
-> Env-only change (e.g. a new stream key)? Skip `install.sh` — just **Update the
-> stack** in Portainer to re-inject the env and recreate the containers.
-
-`install.sh` builds every image the stack needs directly (`docker build -f
-services/<name>/Dockerfile -t virtualtubers-<name>:latest .`), the same way it
-builds `vtube-worker:latest`. **No service in `docker-compose.yml` may use a
-`build:` block** — Portainer's stack working directory (`/data/compose/<id>/`)
-only contains the compose YAML, not the rest of the repo, so any `build:`
-pointing at `services/<name>/Dockerfile` fails on every deploy with `lstat
-.../services: no such file or directory`. Every service must be `image:` +
-`pull_policy: never`, built here first. **Whenever a new service is added to
-the stack, add its `docker build` line to `install.sh` in the same change** —
-a service missing from the script has no image on the host, so Portainer
-recreates its container from a stale or nonexistent image. `install.sh`'s
-header comment is the single source of truth for what it currently builds —
-keep it and this paragraph in sync with the file.
-
-**On a Windows host with Docker Desktop but no bash** (no WSL/Git Bash
-dependency needed) — `install.ps1` is the PowerShell equivalent, building the
-same tags from the same Dockerfiles:
+The `git` and `docker` commands must run **on d2000 itself** (RDP/console
+access, or PowerShell remoting into it) — that's where the Docker Desktop
+daemon lives:
 
 ```powershell
-git pull
-.\install.ps1
+cd C:\Users\matt\PycharmProjects\virtualTubers
+git pull                                 # get the latest code
+.\install.ps1                            # fetches Piper voices + rebuilds every image the stack needs (see below)
+docker compose up -d                     # recreate containers on the freshly built images
 ```
 
-Keep `install.ps1` in sync with `install.sh` — any new service's build line
+> Env-only change (e.g. a new stream key)? Skip `install.ps1` — just edit `.env`
+> and run `docker compose up -d` to re-inject it and recreate the containers.
+
+`install.ps1` builds every image the stack needs directly (`docker build -f
+services/<name>/Dockerfile -t virtualtubers-<name>:latest .`), the same way it
+builds `vtube-worker:latest`. **No service in `docker-compose.yml` may use a
+`build:` block** — every service is built explicitly via `install.ps1` (or its
+bash equivalent, `install.sh`) so builds stay scriptable and reproducible
+across every service in one pass. Every service must be `image:` +
+`pull_policy: never`. **Whenever a new service is added to the stack, add its
+`docker build` line to both `install.ps1` and `install.sh` in the same
+change** — a service missing from both scripts has no image on the host, so
+`docker compose up -d` recreates its container from a stale or nonexistent
+image. `install.ps1`'s header comment is the single source of truth for what
+it currently builds — keep it and this paragraph in sync with the file.
+
+**On a Linux/macOS host, or a Windows host with WSL/Git Bash** — `install.sh`
+is the bash equivalent, building the same tags from the same Dockerfiles:
+
+```bash
+git pull && ./install.sh
+```
+
+Keep `install.sh` in sync with `install.ps1` — any new service's build line
 goes in both.
 
 ### Verify a worker is streaming to the right place
@@ -957,6 +940,12 @@ virtualTubers/
 ├── requirements.txt        # Python dependencies (worker image)
 └── .env.example            # Template for stream keys, Kafka, and Postgres config
 ```
+
+> **Note:** the generic "Mafober Deployment Environment" section below is shared
+> boilerplate synced across every project on this machine, describing the default
+> homelab deploy target for *new* projects. It does not apply to virtualTubers —
+> this project's actual deployment target is **d2000** (`192.168.2.158`), documented
+> in [Deployment (Docker Compose on d2000)](#deployment-docker-compose-on-d2000) above.
 
 <!-- SHARED:START -->
 <!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->

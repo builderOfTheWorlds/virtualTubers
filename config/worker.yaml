@@ -132,7 +132,7 @@ voice:
   provider: "null"
 
   # piper/kokoro: path to the .onnx voice model (docker-compose mounts the
-  # host's /opt/virtualTubers/voices at /data/voices, read-only). "low"
+  # repo's ./voices at /data/voices, read-only). "low"
   # quality tier is the deployed default — smaller/faster model, more
   # robotic-sounding; scripts/download_voices.py also lists medium/high if
   # you want to trade speed back for quality.

@@ -118,8 +118,8 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
 ## Parameters (CLI / environment)
 
 - `--library` / `REPLAY_LIBRARY` (default `/data/replays`): episode script
-  directory — mounted `:ro` from `/opt/virtualTubers/replays` in
-  `docker-compose.yml`.
+  directory — mounted `:ro` from `./replays` (the repo root on the deploy
+  host) in `docker-compose.yml`.
 - `--request-file` / `REPLAY_REQUEST_FILE` (default
   `/tmp/replay_request.json`): the agent → pane handoff file. Same value
   must be visible to `agent.py` (same container, both default it).
@@ -220,7 +220,7 @@ Build and ship the episode library (from the machine with the logs):
 .venv/Scripts/python.exe scripts/build_replay_library.py \
   --logs "C:/Users/<you>/.../claudeBackupUtility/logs/claude/virtualTubers" \
   --out replays
-# then sync replays/ to the host: /opt/virtualTubers/replays
+# then sync replays/ to the host: C:\Users\matt\PycharmProjects\virtualTubers\replays
 ```
 
 ## Error Handling

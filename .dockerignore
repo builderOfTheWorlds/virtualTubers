@@ -3,7 +3,8 @@
 # Dockerfile and all services/*/Dockerfile, which all use `.` as their
 # context per install.sh) ships the ENTIRE checkout to the daemon, including
 # directories that live inside this same checkout on the deploy host
-# (/opt/virtualTubers) but are never COPY'd into any image:
+# (e.g. C:\Users\matt\PycharmProjects\virtualTubers on d2000) but are never
+# COPY'd into any image:
 #   - voices/   — Piper .onnx voice models (scripts/download_voices.py), tens
 #                 of MB each across 7 voices
 #   - replays/  — Rerun Theater episode library (scripts/build_replay_library.py)

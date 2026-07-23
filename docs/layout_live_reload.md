@@ -16,8 +16,8 @@ avatar-pane resize (`config/layouts/coder.yaml`, `avatar`/`filetree` split):
 1. **Layout config is baked into the image, not bind-mounted.** `Dockerfile`
    does `COPY config/panels/ /config/panels/` and `COPY config/layouts/
    /config/layouts/` at build time. Only the per-role `config/worker.yaml` gets
-   a runtime bind mount (`docker-compose.yml`:
-   `/opt/virtualTubers/config/workers/coder.yaml:/config/worker.yaml:ro`).
+   a runtime bind mount (`docker-compose.yml`, relative to the repo root on the
+   deploy host: `./config/workers/coder.yaml:/config/worker.yaml:ro`).
    Editing a layout preset in the repo has zero effect on a running container
    until a new image is built.
 2. **`build_layout.py` only ever runs once**, in `startup.sh` before the tmux

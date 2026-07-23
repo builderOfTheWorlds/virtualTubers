@@ -6,7 +6,7 @@ the worker's avatar pane can render via the provider layer in
 worker config — see `docs/avatar_providers.md`).
 
 Snapshots are plain copies (no `.git`), committed to this repo so the Docker
-image build and Portainer deploys need no extra fetch step.
+image build needs no extra fetch step.
 
 ## Vendored repositories
 

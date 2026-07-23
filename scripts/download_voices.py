@@ -4,8 +4,9 @@ download_voices.py
 Fetches the Piper .onnx voice models the replay narration uses
 (app/tts_client.py) from the rhasspy/piper-voices HuggingFace repo.
 
-Run locally, then sync the output directory to the deployment host at
-/opt/virtualTubers/voices — docker-compose mounts it read-only into the
+Run locally, then sync the output directory to the deployment host's repo
+checkout at <repo>/voices (e.g. C:\Users\matt\PycharmProjects\virtualTubers\voices
+on d2000) — docker-compose mounts it read-only into the
 workers at /data/voices (the paths config/worker.yaml's `voice` section
 points at).
 
@@ -85,7 +86,7 @@ def main():
                 failed += 1
 
     print(f"[download_voices] done -> {out} "
-          f"(sync to /opt/virtualTubers/voices on the deploy host)")
+          f"(sync to <repo>/voices on the deploy host)")
     return 1 if failed else 0
 
 

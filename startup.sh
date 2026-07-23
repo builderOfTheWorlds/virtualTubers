@@ -32,6 +32,19 @@ sleep 2
 # null sink — with it set, that load always failed ("Module initialization
 # failed"), which is why narration audio never made it to the stream even
 # after fixing the pulse-access group membership.
+#
+# Stale runtime state cleanup, same reason as the Xvfb lock removal above:
+# a plain container restart (crash + restart policy, or `docker restart`) —
+# unlike a full recreate — keeps the writable layer, so a PID file/socket
+# left behind by the PREVIOUS pulseaudio process (killed uncleanly on
+# shutdown) makes this run's `pulseaudio --system` fail ("Daemon startup
+# failed"), and every client (paplay, pactl, ffmpeg's `-f pulse` input) then
+# gets ECONNREFUSED against the dead socket. Both failures are swallowed
+# (`|| true` here; audio_player.py never checks paplay's exit code either),
+# so a worker that has restarted even once can lose narration/stream audio
+# permanently with no error anywhere else in the pipeline.
+pkill -9 pulseaudio 2>/dev/null || true
+rm -rf /var/run/pulse /run/pulse /tmp/pulse-*
 log "Starting PulseAudio"
 pulseaudio --system --disallow-exit --daemonize=true || true
 sleep 1

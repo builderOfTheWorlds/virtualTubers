@@ -135,7 +135,7 @@ Function/class parameters:
 
 ## Usage Examples
 
-Set the channel map in the Portainer stack env (or `.env` locally) and
+Set the channel map in `.env` and
 redeploy — each channel is the Twitch channel that worker streams to:
 
 ```bash

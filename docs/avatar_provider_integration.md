@@ -6,7 +6,7 @@ This document is a single narrative record of the 2026-07-12 project to make
 the worker avatar swappable: vendoring a third-party animated ASCII avatar
 project, building a pluggable provider layer around it, and wiring
 configuration all the way from the worker YAML up through `docker-compose.yml`
-and `.env` to Portainer's stack env panel. It exists so a reader can see the
+and `.env`. It exists so a reader can see the
 whole shape of the change in one place; for API-level detail, see
 [docs/avatar_providers.md](avatar_providers.md) (the provider layer reference)
 and [docs/avatar.md](avatar.md) (the dispatcher reference).
@@ -70,10 +70,9 @@ explicitly for something **configurable, per worker, with no code change**.
      empty — an empty env var is treated as "unset" by `load_provider()`
      (`os.environ.get(...) or ...`), so nothing changes for anyone who
      doesn't set it.
-   - `.env` / `.env.example` — the same six variables added, ready to copy
-     into Portainer's stack **Environment variables** panel (each is its own
-     `name` → `value` pair there, same as every other stack env var this
-     project uses).
+   - `.env` / `.env.example` — the same six variables added, ready to set
+     as `NAME=value` lines in `.env`, same as every other env var this
+     project uses.
    - `Dockerfile` — gained `COPY repos/ /repos/` so the vendored package
      actually reaches the running container.
 
@@ -98,8 +97,8 @@ Three ways, in order of how "sticky" the change is:
      ascii_avatar:
        persona: ghost   # ghost | oracle | spectre
    ```
-2. **Per deploy, per worker** — set that worker's env var in Portainer's
-   stack env panel (e.g. `CODER_AVATAR_PROVIDER=ascii_avatar`) and redeploy.
+2. **Per deploy, per worker** — set that worker's env var in `.env`
+   (e.g. `CODER_AVATAR_PROVIDER=ascii_avatar`) and redeploy.
 3. **Quick local test** — export `AVATAR_PROVIDER=ascii_avatar` before
    running `app/avatar.py` directly.
 

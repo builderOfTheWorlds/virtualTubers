@@ -1,20 +1,21 @@
 #!/bin/bash
 set -e
 
-# Rebuilds the images this stack needs after a `git pull`, and fetches the
-# Piper voice models for Rerun Theater's spoken narration.
-# Run from the repo root (e.g. /opt/virtualTubers on the Portainer host).
+# Bash equivalent of install.ps1 — rebuilds the images this stack needs
+# after a `git pull`, and fetches the Piper voice models for Rerun
+# Theater's spoken narration. Production runs on d2000 (Windows, Docker
+# Desktop) via install.ps1; use this instead on a Linux/macOS host, or a
+# Windows host with WSL/Git Bash.
+# Run from the repo root:
 #
 #   git pull && ./install.sh
 #
-# None of these images are built by Portainer — every service in
-# docker-compose.yml uses `image:` + `pull_policy: never`, never `build:`.
-# Portainer's stack working directory (/data/compose/<id>/) only holds the
-# compose YAML, not the rest of the repo, so a `build:` block pointing at
-# `services/<name>/Dockerfile` fails with "no such file or directory" on
-# every deploy. Images must be built here, on the host, then the stack
-# redeployed (Portainer UI → Update the stack → Re-pull image and redeploy)
-# to pick them up.
+# None of these images are built by `docker compose up` — every service in
+# docker-compose.yml uses `image:` + `pull_policy: never`, never `build:`
+# (builds stay explicit/scriptable across every service in one pass rather
+# than being folded into the compose file). Images must be built here, on
+# the host, then the stack recreated (`docker compose up -d`) to pick them
+# up.
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -43,4 +44,4 @@ docker build -t virtualtubers-log-shipper:latest -f services/log-shipper/Dockerf
 log "Building virtualtubers-twitch-presence:latest"
 docker build -t virtualtubers-twitch-presence:latest -f services/twitch-presence/Dockerfile .
 
-log "Done. Redeploy the stack (Portainer: Update the stack → Re-pull image and redeploy)."
+log "Done. Redeploy the stack: docker compose up -d"

@@ -76,13 +76,13 @@ docker compose up log-shipper
 
 Query recent logs across every container:
 ```bash
-psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
+psql -h 192.168.2.158 -U virtualtubers -d virtualtubers \
   -c "SELECT container_name, stream, message, log_timestamp FROM container_logs ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 
 Query just one container's errors:
 ```bash
-psql -h 192.168.1.120 -U virtualtubers -d virtualtubers \
+psql -h 192.168.2.158 -U virtualtubers -d virtualtubers \
   -c "SELECT message, log_timestamp FROM container_logs WHERE container_name = 'worker-coder' AND stream = 'stderr' ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 
@@ -96,7 +96,7 @@ window), without waiting for the hourly retention-based prune — via
 message-api's `POST /logs/prune` (see `app/log_prune.py`,
 `docs/message_api.md` if present):
 ```bash
-curl -X POST http://192.168.1.120:8090/logs/prune \
+curl -X POST http://192.168.2.158:8090/logs/prune \
   -H "Content-Type: application/json" \
   -d '{"after": "2026-07-01T00:00:00Z", "before": "2026-07-02T00:00:00Z"}'
 ```

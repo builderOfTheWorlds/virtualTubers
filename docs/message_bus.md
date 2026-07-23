@@ -36,7 +36,7 @@ class MessageConsumer:
 - `from_`/`to` (str, required) — worker IDs (`coder`/`manager`/`tester`/`operator`) or `broadcast` for `to`.
 - `type_` (str, required) — message type, e.g. `task_assignment`, `status_update`, `operator_message`.
 - `payload` (dict, optional, default `{}`) — free-form, type-specific data.
-- `bootstrap_servers` (str, required) — Kafka bootstrap servers, e.g. `192.168.1.120:9092`.
+- `bootstrap_servers` (str, required) — Kafka bootstrap servers, e.g. `192.168.2.158:9092`.
 - `topic` (str, required) — the single shared bus topic, e.g. `vtuber.messages`.
 - `group_id` (str, required) — consumer group ID; must be unique per logical consumer (see `docs/VTuber_AI_Dev_Team_Concept.md` for the naming convention) so consumers don't steal each other's messages.
 - `worker_id` (str, optional) — when set, `poll_new(to_filter=True)` only returns messages addressed to this worker or to `broadcast`.

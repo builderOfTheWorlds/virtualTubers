@@ -380,8 +380,9 @@ services:
   # ── Self-contained local infra for a standalone deployment (e.g. a
   # side-by-side perf-test host with no dependency on another environment's
   # shared Kafka/Postgres). Opt-in only: set COMPOSE_PROFILES=local-infra in
-  # .env to start these; without it they never start, so a mafober-style
-  # deployment pointing at an external Kafka/Postgres is unaffected.
+  # .env to start these; without it they never start, so an external-broker
+  # deployment (e.g. pointing at Kafka/Postgres on the deploy host itself,
+  # as the d2000 stack does) is unaffected.
   # Point .env at these by service name, not a host IP:
   #   KAFKA_BOOTSTRAP_SERVERS=kafka:9092
   #   POSTGRES_HOST=postgres
