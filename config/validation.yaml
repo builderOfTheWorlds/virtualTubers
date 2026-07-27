@@ -1,0 +1,81 @@
+# config/validation.yaml
+# Rules in YAML, engine in app/episode_schema.py (docs/campaign_platform_build.md
+# §"Validator" / CONTRACT.md §4). The SAME config and SAME engine run in two
+# places: the generator pipeline (fail the build, do not write the episode)
+# and the platform's ingest path (refuse to load, log loudly, do not air).
+# The platform must never trust a script just because it appeared in the
+# replays/ directory — these episodes go out live on Twitch.
+#
+# Regex values below are copied verbatim from docs/campaign_platform_build.md
+# — do not "improve" or tighten them here without a new, explicit decision.
+# The whole point of this file existing separately from app/episode_schema.py
+# is that adding a redaction pattern after an incident (like the 2026-07-12
+# password leak) becomes a config edit, not a rebuild and redeploy — see
+# docs/episode_schema.md's "adding a redaction pattern after an incident"
+# section.
+
+structure:
+  required_scene_fields: [speaker, kind]
+  unknown_kind: reject             # reject | warn | skip_scene
+  unknown_primitive: reject        # every render[].primitive must be defined
+                                    # in the MERGED primitive set for the
+                                    # campaign being loaded -- this is what
+                                    # gives campaign isolation for free.
+  unknown_speaker: reject           # reject | warn | skip_scene -- speaker
+                                    # must appear in the episode's cast list
+  unknown_target: reject             # reject | warn | skip_scene -- pane id
+                                    # must exist in the layout preset
+  external_refs: reject               # reject | warn | skip_scene -- no
+                                    # sidecar files; text payload must be
+                                    # inline (no detail_file, no bare
+                                    # relative .md/.txt/.json references)
+
+limits:
+  max_scenes: 5000
+  max_text_chars: 10000
+  max_scene_seconds: 90            # replaces MAX_SCENE_EVENTS -- one spoken
+                                    # line should not have to cover more than
+                                    # this much screen time
+                                    # (app/primitives.py::estimate_scene_seconds)
+
+assets:
+  root: assets                     # relative to the campaign's library dir
+                                    # (replays/<campaign>/assets/)
+  basename_only: true              # no path separators, no traversal --
+                                    # mirrors replay_pane.resolve_episode's
+                                    # containment property
+  must_exist: true                 # fail ingest, not the live airing
+  manifest: assets/approved.txt    # optional allowlist of displayable files
+                                    # (relative to the same library dir as
+                                    # `root`); if the manifest file itself
+                                    # doesn't exist, this check is skipped
+                                    # rather than failing every asset
+
+redaction:
+  on_match: reject                 # reject | redact | warn -- applies to
+                                    # every pattern below (global, not
+                                    # per-pattern)
+  patterns:
+    - name: password
+      regex: '(?i)\b(password|passwd|pwd|secret)\s*[:=]\s*\S+'
+    - name: api_key
+      regex: '\b(sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{36})\b'
+    - name: stream_key
+      regex: '\blive_[A-Za-z0-9]{20,}\b'
+    - name: public_ip
+      regex: '\b(?:\d{1,3}\.){3}\d{1,3}\b'
+      # Private LAN IPs stay readable BY DESIGN -- this `except` clause is a
+      # deliberate earlier decision made after a real incident (see
+      # docs/campaign_platform_build.md's "Config-driven patterns matter
+      # specifically because of the 2026-07-12 password leak" note, and
+      # app/session_log_parser.py's REDACTION_RULES / _is_private_ip, which
+      # this mirrors in spirit). Do NOT remove or narrow it -- a private
+      # 192.168.x/10.x/172.16-31.x/127.x address on stream is harmless and
+      # keeps the show legible; a public IP is not.
+      #
+      # Note this except clause is intentionally narrower than
+      # session_log_parser._is_private_ip: it does not exempt 0.x,
+      # 169.254.x (link-local), or the 100.64.0.0/10 tailnet range -- those
+      # all still get redacted here, matching session_log_parser's own
+      # treatment of tailnet addresses as NOT private.
+      except: '^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|127\.)'

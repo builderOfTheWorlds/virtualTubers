@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "schema": 1,
+    "campaign": "dnd",
+    "id": "fixture-dnd-01",
+    "title": "Fixture: valid dnd episode",
+    "created": "2026-07-26T00:00:00Z"
+  },
+  "cast": ["gm", "thorin", "sable"],
+  "scenes": [
+    {
+      "speaker": "gm",
+      "kind": "recap",
+      "text": "Last time, our heroes crossed the Weeping Fen and limped into Idra at dusk.",
+      "fallback": "The GM recaps last session.",
+      "mode": "sequence",
+      "render": []
+    },
+    {
+      "speaker": "gm",
+      "kind": "scene_set",
+      "text": "The tavern is low-ceilinged, smoke-dark, and louder than it looks from outside.",
+      "fallback": "The scene is set at the tavern.",
+      "mode": "parallel",
+      "render": [
+        {"primitive": "display_map", "payload": {"image": "idra_tavern.png"}},
+        {"primitive": "type_text", "target": "notes",
+         "payload": {"text": "The Rusted Tankard - Idra, dusk"}}
+      ]
+    },
+    {
+      "speaker": "thorin",
+      "kind": "dialogue",
+      "text": "Barkeep. Ale. And whatever you know about the woods road.",
+      "fallback": "Thorin orders a drink and asks about the road.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "open_inventory", "payload": {"character": "thorin"}}
+      ]
+    }
+  ]
+}

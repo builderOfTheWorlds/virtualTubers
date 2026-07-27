@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "schema": 1,
+    "campaign": "coder",
+    "id": "fixture-coder-01",
+    "title": "Fixture: valid coder episode",
+    "created": "2026-07-26T00:00:00Z"
+  },
+  "cast": ["boss", "coder"],
+  "scenes": [
+    {
+      "speaker": "boss",
+      "kind": "boss",
+      "text": "Please fix the flaky test and let me know when it's done.",
+      "fallback": "The boss asks for a fix.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_boss_message",
+         "payload": {"text": "Please fix the flaky test and let me know when it's done."}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Checking the config directory, then fixing the typo.",
+      "fallback": "Okay - running ls -la config/, then editing worker.yaml.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_command",
+         "payload": {"command": "ls -la config/", "output": "total 8\nworker.yaml"}},
+        {"primitive": "show_diff",
+         "payload": {"file": "config/worker.yaml", "hunks": ["- fps: 30", "+ fps: 60"]}}
+      ]
+    }
+  ]
+}
