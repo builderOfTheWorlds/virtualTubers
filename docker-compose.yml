@@ -1,26 +1,63 @@
 services:
 
-  worker-coder:
+  # ── Generic, interchangeable workers (docs/blank_workers.md) ────────────────
+  # worker-1 .. worker-8: eight IDENTICAL service definitions. No persona env,
+  # no per-worker stream key name, no per-worker config file — every worker
+  # mounts the SAME ./config directory and the SAME /config/worker.yaml
+  # (config/worker.yaml, a deliberately blank/inert default). Persona
+  # (agent.role/name/system_prompt, voice, avatar) is assigned at runtime via
+  # `POST /campaigns/{campaign}/start` (message-api), not from this file and
+  # not from .env — a worker with no persona assigned is just disabled
+  # (app/worker_control.py's existing blank==disabled convention; no new mode).
+  #
+  # The only things that differ between the eight blocks below are, by design:
+  #   - WORKER_ID          (fixed per-container identity, NOT a persona)
+  #   - DISPLAY_NUM         (Xvfb display isolation, extends the old 99+ scheme)
+  #   - the *names* of the three indexed override env vars
+  #     (WORKER_<N>_STREAM_KEY / WORKER_<N>_LAYOUT_PRESET / WORKER_<N>_AVATAR_PROVIDER)
+  # Everything else — image, volumes, Kafka/Redis/Postgres env, ipc/shm_size,
+  # restart policy, depends_on — is byte-for-byte identical (verified by
+  # tests/test_docker_compose_structure.py).
+  #
+  # Coding-backend workspace volumes (repo/repo-native/repo-opencode/
+  # repo-aider) and the tester's read-only cross-mounts are deliberately NOT
+  # here — those are coder-campaign-specific infra, not generic-worker infra.
+  # See docker-compose.coder.yml.
+
+  worker-1:
     image: vtube-worker:latest
     pull_policy: never
-    environment:
+    environment: &worker-env
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_STREAM_KEY:-coder}
+      # Indexed per-worker stream key (docs/blank_workers.md). Unset keeps
+      # this worker's stream pointed at the literal "worker-N" key on the
+      # bundled rtmp-preview server.
+      STREAM_KEY: ${WORKER_1_STREAM_KEY:-worker-1}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
-      WORKER_ID: coder
-      # Set CODER_LAYOUT_PRESET=replay in the stack env to switch this
-      # worker into Rerun Theater mode (docs/replay_pane.md) — env-only
+      # Fixed per-container identity — the message-bus `from`/routing id and
+      # the Redis worker_control/campaign_control key. NOT a persona: this
+      # never changes for this container's lifetime, unlike agent.role/name/
+      # system_prompt which are assigned at campaign-start time.
+      WORKER_ID: worker-1
+      # Every generic worker defaults to Rerun Theater mode so a freshly
+      # cast persona can perform episodes immediately — set
+      # WORKER_1_LAYOUT_PRESET to "coder"/"tester"/"manager" in the stack
+      # env to give this worker a live editor/htop pane instead. Env-only
       # change, no rebuild.
-      LAYOUT_PRESET: ${CODER_LAYOUT_PRESET:-coder}
+      LAYOUT_PRESET: ${WORKER_1_LAYOUT_PRESET:-replay}
       # Swap the avatar renderer without a config edit or rebuild — e.g.
-      # "ascii_avatar" (docs/avatar_providers.md). Unset keeps the worker
-      # config's own avatar.provider (defaults to "builtin").
-      AVATAR_PROVIDER: ${CODER_AVATAR_PROVIDER:-}
+      # "ascii_avatar" (docs/avatar_providers.md). Unset keeps the resolved
+      # persona's (or the base template's) avatar.provider.
+      AVATAR_PROVIDER: ${WORKER_1_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      # Left empty for local-commits-only mode until a git server exists;
+      # only matters once this worker is cast into a coding-backend role
+      # (CODING_BACKEND set — see docker-compose.coder.yml).
+      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       # narration reuse cache (app/narration_store.py)
       POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
@@ -48,10 +85,14 @@ services:
       # moves onto a separate, more powerful machine. Unset/empty
       # synthesizes locally (single resident model per worker process).
       TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/coder.yaml:/config/worker.yaml:ro
+    volumes: &worker-volumes
+      # Whole config directory, read-only (docs/blank_workers.md) — replaces
+      # the old one-file-per-worker bind mount. This worker resolves its own
+      # persona from config/campaigns/<campaign>/personas.yaml at runtime;
+      # message-api never reads persona files, it only stores
+      # {campaign, speaker} in Redis (app/campaign_control.py).
+      - ./config:/config:ro
       - world-state:/data/world-state
-      - repo:/data/repo
       # "Rerun Theater" episode library (docs/replay_pane.md) — parsed,
       # redacted session scripts synced onto the host; :ro because replays
       # only ever read them.
@@ -66,177 +107,17 @@ services:
       - rtmp-preview
       - redis
 
-  # ── A/B coding-backend coders — same task, three different tools writing
-  # real code into their own workspace volumes (docs/coding_backend.md).
-  worker-coder-native:
+  worker-2:
     image: vtube-worker:latest
     pull_policy: never
     environment:
-      CONFIG_PATH: /config/worker.yaml
-      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_NATIVE_STREAM_KEY:-coder-native}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      DISPLAY_NUM: 102
-      WORKER_ID: coder-native
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_NATIVE_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_NATIVE_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_NATIVE_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
-      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
-      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      # narration reuse cache (app/narration_store.py) — required for this
-      # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
-      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
-      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
-      TTS_PROVIDER: ${TTS_PROVIDER:-}
-      TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/coder-native.yaml:/config/worker.yaml:ro
-      - world-state:/data/world-state
-      - repo-native:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
-      # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
-    ipc: host
-    shm_size: 256mb
-    restart: unless-stopped
-    depends_on:
-      - rtmp-preview
-      - redis
-
-  worker-coder-opencode:
-    image: vtube-worker:latest
-    pull_policy: never
-    environment:
-      CONFIG_PATH: /config/worker.yaml
-      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_OPENCODE_STREAM_KEY:-coder-opencode}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      DISPLAY_NUM: 103
-      WORKER_ID: coder-opencode
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_OPENCODE_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_OPENCODE_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_OPENCODE_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
-      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
-      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      # narration reuse cache (app/narration_store.py) — required for this
-      # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
-      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
-      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
-      TTS_PROVIDER: ${TTS_PROVIDER:-}
-      TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/coder-opencode.yaml:/config/worker.yaml:ro
-      - world-state:/data/world-state
-      - repo-opencode:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
-      # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
-    ipc: host
-    shm_size: 256mb
-    restart: unless-stopped
-    depends_on:
-      - rtmp-preview
-      - redis
-
-  worker-coder-aider:
-    image: vtube-worker:latest
-    pull_policy: never
-    environment:
-      CONFIG_PATH: /config/worker.yaml
-      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_AIDER_STREAM_KEY:-coder-aider}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      DISPLAY_NUM: 104
-      WORKER_ID: coder-aider
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_AIDER_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_AIDER_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_AIDER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
-      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
-      GIT_SERVER_URL: ${GIT_SERVER_URL:-}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      # narration reuse cache (app/narration_store.py) — required for this
-      # worker to join a duet or use solo narration reuse/caching
-      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
-      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
-      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
-      TTS_PROVIDER: ${TTS_PROVIDER:-}
-      TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/coder-aider.yaml:/config/worker.yaml:ro
-      - world-state:/data/world-state
-      - repo-aider:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
-      # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
-    ipc: host
-    shm_size: 256mb
-    restart: unless-stopped
-    depends_on:
-      - rtmp-preview
-      - redis
-
-  worker-manager:
-    image: vtube-worker:latest
-    pull_policy: never
-    environment:
-      CONFIG_PATH: /config/worker.yaml
-      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_2_STREAM_KEY:-worker-2}
       DISPLAY_NUM: 100
-      WORKER_ID: manager
-      LAYOUT_PRESET: ${MANAGER_LAYOUT_PRESET:-manager}
-      AVATAR_PROVIDER: ${MANAGER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
-      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      # narration reuse cache (app/narration_store.py)
-      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
-      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
-      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
-      TTS_PROVIDER: ${TTS_PROVIDER:-}
-      TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/manager.yaml:/config/worker.yaml:ro
-      - world-state:/data/world-state
-      - ./replays:/data/replays:ro
-      - ./voices:/data/voices:ro
+      WORKER_ID: worker-2
+      LAYOUT_PRESET: ${WORKER_2_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_2_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -244,44 +125,107 @@ services:
       - rtmp-preview
       - redis
 
-  worker-tester:
+  worker-3:
     image: vtube-worker:latest
     pull_policy: never
     environment:
-      CONFIG_PATH: /config/worker.yaml
-      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_3_STREAM_KEY:-worker-3}
       DISPLAY_NUM: 101
-      WORKER_ID: tester
-      LAYOUT_PRESET: ${TESTER_LAYOUT_PRESET:-tester}
-      AVATAR_PROVIDER: ${TESTER_AVATAR_PROVIDER:-}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
-      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      # narration reuse cache (app/narration_store.py)
-      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
-      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
-      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
-      TTS_PROVIDER: ${TTS_PROVIDER:-}
-      TTS_BASE_URL: ${TTS_BASE_URL:-}
-    volumes:
-      - ./config/workers/tester.yaml:/config/worker.yaml:ro
-      - world-state:/data/world-state
-      - ./replays:/data/replays:ro
-      - ./voices:/data/voices:ro
-      # Read-only view of every coder's workspace, at the conventional
-      # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
-      # to a tmpdir before running pytest — these must stay :ro).
-      - repo:/data/repos/coder:ro
-      - repo-native:/data/repos/coder-native:ro
-      - repo-opencode:/data/repos/coder-opencode:ro
-      - repo-aider:/data/repos/coder-aider:ro
+      WORKER_ID: worker-3
+      LAYOUT_PRESET: ${WORKER_3_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_3_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  worker-4:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_4_STREAM_KEY:-worker-4}
+      DISPLAY_NUM: 102
+      WORKER_ID: worker-4
+      LAYOUT_PRESET: ${WORKER_4_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_4_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  worker-5:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_5_STREAM_KEY:-worker-5}
+      DISPLAY_NUM: 103
+      WORKER_ID: worker-5
+      LAYOUT_PRESET: ${WORKER_5_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_5_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  worker-6:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_6_STREAM_KEY:-worker-6}
+      DISPLAY_NUM: 104
+      WORKER_ID: worker-6
+      LAYOUT_PRESET: ${WORKER_6_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_6_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  worker-7:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_7_STREAM_KEY:-worker-7}
+      DISPLAY_NUM: 105
+      WORKER_ID: worker-7
+      LAYOUT_PRESET: ${WORKER_7_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_7_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  worker-8:
+    image: vtube-worker:latest
+    pull_policy: never
+    environment:
+      <<: *worker-env
+      STREAM_KEY: ${WORKER_8_STREAM_KEY:-worker-8}
+      DISPLAY_NUM: 106
+      WORKER_ID: worker-8
+      LAYOUT_PRESET: ${WORKER_8_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${WORKER_8_AVATAR_PROVIDER:-}
+    volumes: *worker-volumes
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -334,7 +278,7 @@ services:
     image: virtualtubers-twitch-presence:latest
     pull_policy: never
     environment:
-      # channel:worker_id pairs, e.g. "mycoderchannel:coder,mymgrchannel:manager"
+      # channel:worker_id pairs, e.g. "mychannel:worker-1,mychannel2:worker-2"
       TWITCH_CHANNEL_MAP: ${TWITCH_CHANNEL_MAP:-}
       MESSAGE_API_URL: http://message-api:8000/messages
       # Seconds before the same viewer in the same channel is greeted again
@@ -459,6 +403,11 @@ services:
 
 volumes:
   world-state:
+  # Coder-campaign-only workspaces (docker-compose.coder.yml). Declared here
+  # (not in the overlay) because Compose requires every volume an overlay
+  # file references to exist in the merged top-level `volumes:` section, and
+  # keeping them alongside the other named volumes avoids a second
+  # `volumes:` block that would itself need merging.
   repo:
   repo-native:
   repo-opencode:

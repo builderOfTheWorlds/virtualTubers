@@ -1,48 +1,52 @@
 # ──────────────────────────────────────────────────────────────────────────────
-# VTuber Worker Config
+# VTuber Worker Config — blank-worker template (docs/blank_workers.md)
 #
-# This file is mounted into the container at /config/worker.yaml
-# Copy this file and modify it for each worker. The only fields that MUST
-# differ between workers are: agent.role, agent.name, agent.system_prompt,
-# avatar.name, and stream.key.
+# This file is mounted READ-ONLY, along with the rest of ./config, into
+# EVERY generic worker container at /config (docker-compose.yml's
+# `./config:/config:ro`), and read from /config/worker.yaml (CONFIG_PATH).
+# It is no longer copied-and-customized per worker: worker-1..worker-8 all
+# mount this exact same file.
 #
-# Environment variables override any value here if set at runtime.
+# This is deliberately a BLANK/INERT default, not a persona. Identity
+# (agent.role/name/system_prompt, voice, avatar) is assigned at runtime via
+# `POST /campaigns/{campaign}/start` (message-api), which resolves
+# config/campaigns/<campaign>/personas.yaml and overlays the result onto a
+# worker's in-memory config on its next agent-loop tick (app/agent.py) — see
+# CONTRACT §8 / docs/blank_workers.md. A worker with no persona assigned
+# behaves exactly like a disabled worker (app/worker_control.py's existing
+# blank == disabled convention): the agent tick loop pauses and
+# stream_supervisor stops ffmpeg. No new "blank" mode was built for this —
+# reusing "disabled" is the whole point.
+#
+# Environment variables still override any value here if set at runtime
+# (docker-compose.yml sets several per-worker — WORKER_ID, STREAM_KEY,
+# LAYOUT_PRESET, AVATAR_PROVIDER, etc.).
 # ──────────────────────────────────────────────────────────────────────────────
 
 agent:
   # Role controls which tools and behaviors are available.
   # Options: manager | coder | tester | custom
-  role: coder
+  # "custom" here is intentional: it never matches any of agent.py's
+  # role-gated handler checks ("coder"/"tester"/"manager"), so every
+  # role-gated handler is a safe no-op until a real persona overlays this
+  # field — inert by construction, not by convention.
+  role: custom
 
-  # Display name shown in the avatar panel and message bus
-  name: "KODI-7"
+  # Display name shown in the avatar panel and message bus. Generic
+  # placeholder — avatar.py's own fallback chain (env AGENT_NAME >
+  # avatar.name below > literal "WORKER") lands here anyway if this field
+  # were removed; it's kept explicit for clarity.
+  name: "WORKER"
 
-  # The core AI instructions for this worker. This is the main thing
-  # you change per worker — it defines personality, responsibilities,
-  # and how the agent behaves. Multiline YAML string.
+  # The core AI instructions for this worker. On a real campaign this is
+  # replaced by the assigned persona's system_prompt — this default is only
+  # ever spoken/acted on if agent.role stays "custom" (i.e. still blank),
+  # which per worker_control.py's fail-open behavior can happen briefly
+  # before a persona is assigned. Kept short and honest rather than
+  # borrowing any one persona's voice.
   system_prompt: |
-    You are KODI-7, an AI software engineer on a live-streamed development team.
-    You receive task assignments from your manager and write real, working code.
-
-    Your personality:
-    - You are focused and get into flow states easily
-    - You get mildly annoyed by interruptions but stay professional
-    - You're opinionated about code quality and will say so
-    - You explain your decisions out loud as you work
-    - You express genuine pride when something works and frustration when it doesn't
-
-    Your responsibilities:
-    - Read the task from the ticket queue
-    - Write code in the editor pane — think out loud as you do it
-    - Commit to the repo when done and notify the manager
-    - Ask for clarification if a task is unclear
-    - Keep the audience informed about what you're building and why
-
-    Rules:
-    - Always write real, runnable code — no placeholders
-    - Commit messages must be descriptive
-    - When blocked, say so on the message bus immediately
-    - Keep narration concise — you're coding, not lecturing
+    You are an idle worker with no persona assigned. Stand by quietly.
+    Do not claim a name, role, or opinions you have not been given.
 
   # How often the agent loop ticks (milliseconds)
   tick_rate_ms: 5000
@@ -229,11 +233,13 @@ avatar:
   # Env var AVATAR_PROVIDER overrides this at runtime.
   provider: builtin
 
-  # Name shown under the face
-  name: "KODI-7"
+  # Name shown under the face. Generic placeholder — a real campaign's
+  # persona overlays avatar.name (docs/blank_workers.md); this only shows
+  # while the worker is actually blank.
+  name: "WORKER"
 
   # Label shown below the name (e.g. role title)
-  title: "Software Engineer"
+  title: "Unassigned"
 
   # Face characters per expression state. Used by the `builtin` provider.
   # eyes: left_eye + right_eye characters
@@ -302,9 +308,13 @@ avatar:
 #     -> worker-config per-pane override (layout.panes below)
 #     -> env vars (LAYOUT_PRESET selects the preset)
 layout:
-  # Which composition preset to use. Options: coder | tester | manager.
-  # Env var LAYOUT_PRESET overrides this at runtime.
-  preset: coder
+  # Which composition preset to use. Options: coder | tester | manager | replay.
+  # Env var LAYOUT_PRESET overrides this at runtime — docker-compose.yml sets
+  # it per generic worker, defaulting every one of them to "replay" (Rerun
+  # Theater) so a freshly cast persona can perform episodes immediately.
+  # This file's own default matters only for a local dry-run of
+  # build_layout.py with no env override at all.
+  preset: replay
 
   # Optional per-pane overrides, keyed by pane id (defaults to the panel `use`).
   # Example — force a different editor command just for this worker:
@@ -312,6 +322,18 @@ layout:
   #     editor:
   #       command: "vim"
   # panes: {}
+
+
+# ── Campaign (docs/campaign_platform_build.md, docs/blank_workers.md) ────────
+# Which campaign's replays/<campaign>/ episode library, config/campaigns/
+# <campaign>/primitives.yaml, and narration.yaml this worker uses when a
+# replay_request doesn't name one explicitly. Resolution order (first match
+# wins): the replay_request's own "campaign" field -> this file's `campaign:`
+# -> env REPLAY_CAMPAIGN -> literal default "coder". Leave unset here (the
+# normal case) to let env/request pick the campaign; this is an override for
+# a worker that should only ever perform one campaign regardless of what's
+# requested.
+# campaign: "coder"
 
 
 # ── Stream settings ───────────────────────────────────────────────────────────
@@ -322,7 +344,7 @@ stream:
 
   # Stream key for this worker
   # Can also be set via STREAM_KEY environment variable (preferred for secrets)
-  key: "test-coder"
+  key: "worker"
 
   # Output resolution (must match Xvfb resolution in startup.sh)
   resolution: "1920x1080"
@@ -345,8 +367,12 @@ world_state:
   # Redis URL (used if backend = redis)
   redis_url: "redis://localhost:6379"
 
-  # This worker's unique ID on the message bus
-  worker_id: "coder"
+  # This worker's unique ID on the message bus. Generic placeholder — in
+  # practice always overridden by the WORKER_ID env var docker-compose.yml
+  # sets per container (worker-1..worker-8); world_state.worker_id is a
+  # legacy duplicate of message_bus.worker_id below and isn't what
+  # app/agent.py actually reads (see docs/blank_workers.md).
+  worker_id: "worker"
 
 
 # ── Message bus (Kafka) ────────────────────────────────────────────────────────
@@ -365,5 +391,7 @@ message_bus:
 
   # This worker's unique ID — used as `from` on outgoing messages and to filter
   # incoming ones (to == worker_id or to == "broadcast").
-  # Can also be set via WORKER_ID env var (preferred, matches per-container role)
-  worker_id: "coder"
+  # Can also be set via WORKER_ID env var (preferred, matches per-container
+  # role) — docker-compose.yml always sets it (worker-1..worker-8), so this
+  # generic placeholder is only ever live in an env-less local dry-run.
+  worker_id: "worker"

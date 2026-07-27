@@ -1,0 +1,108 @@
+# Coder-campaign overlay (docs/blank_workers.md) — adds the A/B
+# coding-backend workspace wiring (docs/coding_backend.md) on top of the
+# generic worker-1..worker-8 fleet in docker-compose.yml. Opt-in only.
+#
+# Usage — plain `docker compose` does NOT pick this file up on its own
+# (Compose only auto-loads a file literally named docker-compose.override.yml,
+# and this is deliberately NOT that, so a bare `docker compose up` never
+# silently drags in workspace volumes nobody asked for):
+#
+#   docker compose -f docker-compose.yml -f docker-compose.coder.yml up -d
+#
+# or, to avoid repeating -f on every command, set in .env:
+#
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.coder.yml   # Linux/macOS
+#   COMPOSE_FILE=docker-compose.yml;docker-compose.coder.yml   # Windows
+#
+# Why an overlay file and not a `profiles:` entry on worker-1..worker-8
+# themselves (the way local-infra gates kafka/postgres): a Compose *profile*
+# can only turn a whole service on or off, in the file(s) where the FINAL
+# merged service is assembled — it cannot conditionally add volumes/env to a
+# service that is already unconditionally defined. worker-1..worker-8 must
+# stay always-on in docker-compose.yml (a worker with no persona assigned is
+# still a valid, running-but-idle container — blank == disabled, not
+# absent), so the extra workspace wiring has to arrive from a SEPARATE file
+# that Compose merges into the SAME service names by name. Per Compose's
+# documented multi-file merge rules (mapping-type attributes like
+# `environment` merge key-by-key; list-type attributes like `volumes`
+# concatenate), this file only ever ADDS keys/mounts the base file doesn't
+# already define, so nothing here can conflict with docker-compose.yml.
+# Tried and rejected: putting `profiles: ["coder-campaign"]` on the SAME
+# worker-N blocks in this file — Compose's merge rule for `profiles` is also
+# concatenation, so as soon as this file is loaded at all (even with the
+# profile not in COMPOSE_PROFILES), the merged worker-N would inherit a
+# profile gate its base definition never had, and would stop starting by
+# default. That's the opposite of what "always-on generic worker" means, so
+# this file's own inclusion (via -f / COMPOSE_FILE) is the ONLY opt-in
+# switch — no `profiles:` key appears anywhere below.
+#
+# Role assignment (which generic worker plays which coder-campaign role) is
+# a CONVENTION enforced only by this file's service names, not by code:
+#
+#   worker-1  →  "coder"          — repo volume only, no coding backend
+#                                   (narration-only, same as the old
+#                                   worker-coder — it never had one either)
+#   worker-2  →  "coder-native"   — repo-native,   CODING_BACKEND=native
+#   worker-3  →  "coder-opencode" — repo-opencode, CODING_BACKEND=opencode
+#   worker-4  →  "coder-aider"    — repo-aider,    CODING_BACKEND=aider
+#   worker-5  →  "manager"        — no extra mounts needed, left generic
+#   worker-6  →  "tester"         — read-only view of workers 1-4's workspaces
+#   worker-7, worker-8            — left fully generic/spare
+#
+# This lines up with app/agent.py's WORKSPACE_MOUNT_PATTERN =
+# "/data/repos/{coder_id}" with NO `agent.workspaces` config override
+# needed: coder_id there is `msg["from"]`, i.e. this container's own
+# WORKER_ID (worker-1 / worker-2 / worker-3 / worker-4) — the pattern's own
+# default already resolves to exactly the paths worker-6 mounts below.
+#
+# Cast the matching personas onto these same worker numbers when starting
+# the coder campaign (message-api, docs/blank_workers.md) so the two line
+# up — nothing enforces this mapping in code:
+#
+#   POST /campaigns/coder/start
+#   {"cast": {"coder": "worker-1", "coder-native": "worker-2",
+#             "coder-opencode": "worker-3", "coder-aider": "worker-4",
+#             "manager": "worker-5", "tester": "worker-6"}}
+#
+# Get the cast mapping wrong and the symptom is specific: the tester's
+# pytest runs will target an empty or wrong workspace, not a crash.
+
+services:
+
+  worker-1:
+    volumes:
+      - repo:/data/repo
+
+  worker-2:
+    environment:
+      # Overrides config/worker.yaml's (absent) coding_backend section —
+      # env wins over config wins over default, same as every other
+      # env-overridable setting in this codebase (app/coding_backend.py).
+      CODING_BACKEND: native
+      WORKSPACE_PATH: /data/repo
+    volumes:
+      - repo-native:/data/repo
+
+  worker-3:
+    environment:
+      CODING_BACKEND: opencode
+      WORKSPACE_PATH: /data/repo
+    volumes:
+      - repo-opencode:/data/repo
+
+  worker-4:
+    environment:
+      CODING_BACKEND: aider
+      WORKSPACE_PATH: /data/repo
+    volumes:
+      - repo-aider:/data/repo
+
+  worker-6:
+    volumes:
+      # Read-only view of every coder's workspace, at the conventional
+      # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
+      # to a tmpdir before running pytest — these must stay :ro).
+      - repo:/data/repos/worker-1:ro
+      - repo-native:/data/repos/worker-2:ro
+      - repo-opencode:/data/repos/worker-3:ro
+      - repo-aider:/data/repos/worker-4:ro
