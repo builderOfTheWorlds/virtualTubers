@@ -2,13 +2,118 @@
 
 ## Summary
 
-virtualTubers is an autonomous AI-powered VTuber streaming system where a team of AI agents (Manager, Coder, Tester) act as a live software development team. Each agent runs in its own Docker container, has its own personality and ASCII-art avatar, works inside a live terminal session (tmux + neovim/htop/etc.), and streams that session to Twitch over RTMP via ffmpeg. It's for anyone who wants to run an always-on, config-driven "AI dev team" stream without hand-building the streaming pipeline from scratch.
+virtualTubers is an autonomous AI-powered VTuber streaming **campaign platform**: a fleet of generic, interchangeable Docker worker containers (`worker-1`..`worker-8`) that get cast into a **campaign** — a set of personas, scripts, and visual primitives — at runtime, over an API, with no redeploy. The shipped "AI dev team" (Manager, Coder, Tester acting out a live software development team) is one campaign (`coder`); a D&D story show (`dnd`) ships as a second, proving the platform isn't coder-specific. Each worker runs its own personality and ASCII-art avatar, works inside a live terminal session (tmux + neovim/htop/etc.), and streams that session to Twitch over RTMP via ffmpeg. It's for anyone who wants to run an always-on, config-driven AI-cast stream — a dev team, a story show, or whatever comes third — without hand-building the streaming pipeline from scratch.
 
-The project is early-stage but the core loops are real: the agent brain (`app/agent.py`) has a perceive/think/act slice — it publishes heartbeats every tick and dispatches every incoming message type through role-gated handlers backed by a provider-switchable LLM (Ollama or Claude): the coder narrates a task and hands the commit to the tester, the tester reports `test_passed`/`bug_report` to the manager, and the manager re-delegates fixes (bounded at 3 retries) or reports back to the operator. Coders write real code through swappable backends (native / OpenCode / aider) and the tester really runs pytest against their workspaces. On top of that sits **Rerun Theater**: past real Claude Code dev sessions replay as paced, redacted shows — now with per-airing, two-voice **spoken narration** (boss + coder via local TTS) synchronized to the on-screen action. The terminal avatar (`app/avatar.py`) is still a simple expression-cycling stub. See the Phase 1 roadmap in the architecture doc for what's next.
+The project is early-stage but the core loops are real: the agent brain (`app/agent.py`) has a perceive/think/act slice — it publishes heartbeats every tick, resolves its currently-assigned persona, and dispatches every incoming message type through role-gated handlers backed by a provider-switchable LLM (Ollama or Claude). Cast as the coder campaign, a coder narrates a task and hands the commit to the tester, the tester reports `test_passed`/`bug_report` to the manager, and the manager re-delegates fixes (bounded at 3 retries) or reports back to the operator; coders write real code through swappable backends (native / OpenCode / aider) and the tester really runs pytest against their workspaces. On top of that sits **Rerun Theater**: any campaign's validated episode script — past real Claude Code dev sessions being the first one — replays as a paced, redacted show, with per-airing, multi-voice **spoken narration** synchronized to the on-screen action. The terminal avatar (`app/avatar.py`) is still a simple expression-cycling stub. See the Phase 1 roadmap in the architecture doc for what's next, and the [Campaigns](#campaigns) section below for how the campaign platform itself works.
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
 ## Recent Changes
+
+**The platform now performs *any* campaign, not just coder-session
+replays — Rerun Theater generalized into a campaign platform** — the
+biggest change since the project started. What used to be one hardcoded
+show (parse a Claude Code session log, group it into `boss`/`coder_talk`/
+`coder_work` scenes, render coder-specific event types with hardcoded
+rates) is now a declarative engine that performs a validated "performance
+score" for *any* campaign — coder-session replays being just the first one,
+proved out alongside a working second campaign (`dnd`):
+
+- **Episodes are a performance score, not a recording.** `meta`/`cast`/
+  `scenes[]` — each scene is one speaker, one narration line (`kind`,
+  `text`, `fallback`), and zero or more `render[]` visual primitives
+  (`mode: sequence|parallel`, optional `target` pane). No durations, no
+  `events[]`, no `detail_file` sidecars — every string is inline. New
+  `app/episode_schema.py` loads, normalizes, and validates every episode
+  against `config/validation.yaml` before it's allowed anywhere near a
+  pane — the same engine and the same config run on the generator side
+  (fail the build, don't write the episode) and the platform side (refuse
+  to load, log loudly, don't air), so a new redaction pattern after an
+  incident is a config edit, not a rebuild — the actual lesson from the
+  2026-07-12 password leak, now generalized.
+- **Visuals are config, not code.** A scene's `render[]` entries name a
+  **primitive** (`show_command`, `show_diff`, or a D&D campaign's
+  `display_map`/`open_inventory`) — a named recipe over a small, fixed set
+  of **behaviors** (`type`/`print`/`diff`/`image`/`pause`) that are the only
+  part still living in code. New `app/primitives.py` resolves
+  `config/primitives.yaml` (shared, presentation-neutral) deep-merged with
+  `config/campaigns/<name>/primitives.yaml` (campaign-specific, supports
+  `extends`), reproducing the old coder show's exact glyphs, colors, rates,
+  avatar expressions, and truncation footers (see
+  `tests/test_primitives.py`'s fidelity-table test). **Adding a primitive
+  is now a YAML edit — no code, no rebuild.**
+- **Narration prompts moved to config, keyed by scene `kind`** —
+  `config/campaigns/<name>/narration.yaml` replaces `app/revoice.py`'s old
+  hardcoded `_PROMPTS` dict. **`revoice.plan_scenes` is gone entirely**: it
+  existed only to group the old parser's raw per-tool-call events into
+  scenes, and a generator now emits scene-sized units directly, so there's
+  nothing left to group. `MAX_SCENE_EVENTS`'s old job (capping how much
+  screen time one spoken line has to cover) is now
+  `config/validation.yaml`'s `limits.max_scene_seconds`, enforced once at
+  ingest instead of by silently regrouping behind the generator's back.
+- **Episode generation moved OUT of the platform**, formalizing a boundary
+  that already existed in spirit: `app/session_log_parser.py` and
+  `scripts/build_replay_library.py` **moved** (not copied — the originals
+  are deleted) to `generators/coder/session_log_parser.py` and
+  `generators/coder/build_library.py` — same 17 `REDACTION_RULES` in the
+  same order, same `LEAK_AUDIT` re-scan, now also grouping raw events into
+  scenes (the old `plan_scenes` logic, relocated) and mapping them onto the
+  seven coder primitives. `generators/` is excluded from every
+  `docker build` context (`.dockerignore`) — it never ships in the worker
+  image and can carry whatever extra dependencies a generator needs. See
+  [generators/README.md](generators/README.md) and
+  [generators/coder/README.md](generators/coder/README.md).
+- **Episode libraries are namespaced per campaign** —
+  `replays/<campaign>/<episode>.json` (was a flat `replays/<episode>.json`).
+  `app/narration_store.py`'s reuse-cache lookup gained a `campaign` column
+  so two campaigns can never collide on "latest airing of X" if they ever
+  reuse the same episode filename/stem.
+- **Workers are now generic and boot blank** — `docker-compose.yml`'s three
+  hardcoded `worker-coder`/`worker-manager`/`worker-tester` services (plus
+  the three A/B coding-backend workers) are **gone**, replaced by eight
+  identical `worker-1`..`worker-8` containers with no baked-in persona —
+  `config/worker.yaml`'s `agent.role: custom` never matches any role-gated
+  handler, so a blank worker is inert by construction, not by convention.
+  Identity (name, system prompt, voice, avatar) is assigned **at runtime**
+  over two new `message-api` endpoints — `POST /campaigns/{campaign}/start`
+  (body `{"cast": {"<speaker>": "<worker_id>"}}`) and `POST /campaigns/stop`,
+  plus `GET /campaigns/active` — backed by new `app/campaign_control.py`
+  (Redis keys `campaign:active` + `worker:{id}:persona`) and a
+  `/tmp/persona.json` relay file each worker's agent loop rewrites on every
+  persona change; `app/avatar.py` and `app/replay_pane.py` poll that file,
+  the same "panes never touch Kafka/Redis directly" rule duets already
+  established. A worker with no persona assigned is simply **disabled** —
+  reuses `worker_control.py`'s existing fail-open flag, no new "blank" mode
+  was built. See [docs/blank_workers.md](docs/blank_workers.md) and
+  [docs/campaign_control.md](docs/campaign_control.md).
+- **Two places this shipped differently than the design doc planned**
+  (`docs/campaign_platform_build.md`, now flipped from "design agreed" to
+  "implemented" with a short reconciliation note at the top): (1) the coder
+  campaign's A/B workspace volumes live in a **second compose file**,
+  `docker-compose.coder.yml` (loaded via `-f` or `.env`'s `COMPOSE_FILE`),
+  not a `profiles:` entry — a Compose profile can't add volumes to a
+  service another file already defines unconditionally, and
+  `worker-1`..`worker-8` must stay always-on; (2) stream key and layout
+  preset do **not** actually hot-swap, despite the design doc's optimistic
+  table — `startup.sh` resolves both exactly once at container boot, with
+  no relay file or Redis key either one polls, so changing either still
+  needs a container restart today (system prompt, avatar, and voice
+  genuinely do hot-swap on the next agent tick).
+- **Deployment implications**: worker image rebuild required (new `app/`
+  modules — `primitives.py`, `episode_schema.py`, `campaign_control.py`);
+  `docker-compose.yml` and `.env.example` both changed shape — every old
+  per-role env var (`CODER_STREAM_KEY`, `MANAGER_LAYOUT_PRESET`,
+  `TESTER_AVATAR_PROVIDER`, etc.) is **gone**, replaced by indexed
+  `WORKER_1_*`..`WORKER_8_*` forms (see the
+  [env var table](#required-environment-variables-env) below) — an
+  existing `.env` from before this change needs re-keying, not just a
+  `docker compose up -d`. **No migration of the ~50 existing flat
+  `replays/*.json` episodes** (explicit hard-cut decision) — they stay
+  exactly where they are, simply unused by the new namespaced loader, while
+  `replays/coder/sample.json` ships as the new namespaced smoke-test
+  fixture. See `docs/campaign_platform_contract.md` / `docs/campaign_platform_build.md` for the
+  full frozen interface this was built against, and the new
+  [Campaigns](#campaigns) section below for how to actually run one.
 
 **The avatar now visibly talks while there's text on screen** — every code
 path that shows a speech bubble already paired it with the right expression
@@ -481,6 +586,8 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
 - (Optional) An [Anthropic API key](https://console.anthropic.com/) if any worker's config sets `llm.provider: claude` instead of `ollama`
 - (Optional) Piper voice models for spoken replay narration — fetched with `scripts/download_voices.py`, see [Rerun Theater](#rerun-theater--replaying-past-sessions-with-voices)
 - A reachable Kafka broker (agents/services publish and consume inter-agent messages there) and a Postgres instance (every message is durably logged there) — neither is bundled in `docker-compose.yml`; point at existing instances via `.env`
+- Redis — used for worker on/off state **and** campaign/persona assignment (`app/campaign_control.py`); bundled as the `redis` service in `docker-compose.yml`, so nothing extra to install for local/default use
+- (Optional) `docker-compose.coder.yml` if you want the coder campaign's real A/B coding-backend workspaces wired up — see [Campaigns](#campaigns) below. Episode generators (`generators/`) have no runtime prerequisite of their own beyond the project's `.venv` — they never ship in the worker image
 
 ## Installation
 
@@ -498,9 +605,12 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
    cp .env.example .env
    ```
    ```bash
-   CODER_STREAM_KEY=your_twitch_stream_key
-   MANAGER_STREAM_KEY=your_twitch_stream_key
-   TESTER_STREAM_KEY=your_twitch_stream_key
+   # One stream key per generic worker (worker-1..worker-8) — set only the
+   # ones you'll actually cast a persona onto; unset ones default to the
+   # local rtmp-preview server under the literal key "worker-N".
+   WORKER_1_STREAM_KEY=your_twitch_stream_key
+   WORKER_5_STREAM_KEY=your_twitch_stream_key
+   WORKER_6_STREAM_KEY=your_twitch_stream_key
    STREAM_RTMP_URL=rtmp://live.twitch.tv/app   # omit to use the local rtmp-preview server
 
    KAFKA_BOOTSTRAP_SERVERS=your_kafka_host:9092
@@ -511,8 +621,15 @@ See [docs/message_bus.md](docs/message_bus.md), [docs/message_logger.md](docs/me
    POSTGRES_DB=your_db
    POSTGRES_USER=your_user
    POSTGRES_PASSWORD=your_password
+
+   # Optional: load the coder-campaign overlay (A/B coding-backend
+   # workspace volumes) on every plain `docker compose` command —
+   # see Campaigns below. Linux/macOS uses `:`, Windows uses `;`.
+   # COMPOSE_FILE=docker-compose.yml:docker-compose.coder.yml
    ```
-   `.env` is gitignored — never commit real credentials.
+   `.env` is gitignored — never commit real credentials. See the full
+   [env var table](#required-environment-variables-env) below for every
+   variable `docker-compose.yml` reads.
 
 ## Git Remotes & GitHub Mirror
 
@@ -539,19 +656,36 @@ GitHub — set up 2026-07-05, so pushing to GitHub by hand is never needed:
 
 ## Usage
 
-Start the full stack (three workers + message-logger + message-api + Redis + local RTMP preview):
+Start the full stack (eight identical, blank generic workers + message-logger + message-api + twitch-presence + log-shipper + Redis + local RTMP preview):
 
 ```bash
 docker compose up
 ```
 
-This launches three worker containers — `worker-coder`, `worker-manager`, `worker-tester` — plus `message-logger`, `message-api`, a shared `redis` instance, and an `rtmp-preview` server for local testing. Each worker:
+This launches eight worker containers — `worker-1` through `worker-8`, no
+persona baked into any of them — plus `message-logger`, `message-api`, a
+shared `redis` instance, and an `rtmp-preview` server for local testing.
+Add `-f docker-compose.coder.yml` (or set `COMPOSE_FILE` in `.env`, see
+below) if you also want the coder campaign's A/B coding-backend workspace
+volumes wired up. Each worker container:
 
 1. Boots a virtual display (Xvfb) and PulseAudio sink
-2. Lays out a tmux session (file tree, ASCII avatar, editor/output pane, agent chat log, htop)
+2. Lays out a tmux session per its `layout.preset` (file tree, ASCII avatar,
+   editor/output pane, agent chat log, htop — or, by default, the Rerun
+   Theater pane, since every generic worker defaults to `LAYOUT_PRESET=replay`)
 3. Opens that session in xterm on the virtual display
-4. Starts the agent loop (`app/agent.py`), which publishes heartbeats, consumes messages addressed to it over the Kafka bus, and dispatches each one to its role's handler — narrating every step via its configured LLM as work flows coder → tester → manager → operator (see [docs/agent.md](docs/agent.md))
-5. Captures the display with ffmpeg and pushes it out over RTMP to the configured stream key
+4. Starts the agent loop (`app/agent.py`), which publishes heartbeats, checks
+   whether a campaign has assigned it a persona (`app/campaign_control.py`;
+   a worker with none assigned just idles, disabled), and — once cast —
+   consumes messages addressed to it over the Kafka bus and dispatches each
+   one to its role's handler, narrating every step via its configured LLM
+   (see [docs/agent.md](docs/agent.md))
+5. Captures the display with ffmpeg and pushes it out over RTMP to the
+   configured stream key
+
+To actually see the coder dev-team pipeline (or the D&D campaign) working
+end to end, cast a campaign onto some workers first — see
+[Campaigns](#campaigns) below.
 
 To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it defaults to `rtmp://rtmp-preview:1935/live`) and view the stream with a player like VLC pointed at `rtmp://localhost:1935/live/<stream_key>`.
 
@@ -560,16 +694,16 @@ To preview locally without a real Twitch key, leave `STREAM_RTMP_URL` unset (it 
 To poke around inside a running worker (check logs, inspect config, debug tmux panes), exec into it directly — no need to stop/restart anything. Since no `container_name` is pinned in `docker-compose.yml`, Compose auto-names containers `<project>-<service>-<n>`, where the project prefix is `virtualtubers-` (from the repo folder name):
 
 ```bash
-docker exec -it virtualtubers-worker-coder-1 bash
+docker exec -it virtualtubers-worker-1-1 bash
 ```
 
-Swap `worker-coder` for `worker-manager`, `worker-tester`, `message-logger`, `message-api`, or `log-shipper` as needed. Run `docker ps` first if you're unsure of the exact name/suffix on your host.
+Swap `worker-1` for `worker-2` .. `worker-8`, `message-logger`, `message-api`, `twitch-presence`, or `log-shipper` as needed. Run `docker ps` first if you're unsure of the exact name/suffix on your host, or check `GET /campaigns/active` (docs/campaign_control.md) if you need to know which worker number a given persona is currently cast onto.
 
 ### Inter-agent messaging (Kafka)
 
 Agents talk to each other over a Kafka topic (`vtuber.messages` by default) instead of a file — see `docs/message_bus.md`. Every message is durably logged to Postgres by the `message-logger` service (`docs/message_logger.md`).
 
-To send a worker an instruction (or inject a test message), use the `message-api` HTTP service (`docs/message_api.md`), exposed on port `8090`:
+To send a worker an instruction (or inject a test message), use the `message-api` HTTP service (`docs/message_api.md`), exposed on port `8090`. `to` is always routed by `WORKER_ID` (`worker-1`..`worker-8`) — a persona name like `coder` works too, but only once the coder campaign has been cast onto some worker as that speaker (see [Campaigns](#campaigns) below); the examples here use persona ids because they read better as documentation, following the same convention `docs/operator_commands.md` uses:
 
 ```bash
 curl -X POST http://localhost:8090/messages \
@@ -577,7 +711,7 @@ curl -X POST http://localhost:8090/messages \
   -d '{"to": "coder", "type": "task_assignment", "payload": {"task": "say hello"}}'
 ```
 
-The `coder` worker's agent loop picks up the message, calls its configured LLM (`llm.provider` in `config/workers/coder.yaml`) with its system prompt and the task, and replies with `task_complete` — then hands the commit to the tester (`commit_notification`), whose `test_passed`/`bug_report` verdict flows on to the manager and, as a `manager_report`, back to the operator. The whole exchange is visible in each worker's console output and the tmux "agent chat"/Kafka feed pane — see [docs/agent.md](docs/agent.md). To point a worker at Claude instead of Ollama, set that worker's `llm.provider: claude` and export `ANTHROPIC_API_KEY`.
+Whichever worker is currently cast as `coder`'s agent loop picks up the message, calls its configured LLM (`llm.provider` — a worker-level setting in `config/worker.yaml`, shared by every generic worker until overridden by the `LLM_PROVIDER` env var; a persona's `system_prompt`/`name`/`role` overlay on top, but not `llm.provider`) with its (persona-overlaid) system prompt and the task, and replies with `task_complete` — then hands the commit to the tester (`commit_notification`), whose `test_passed`/`bug_report` verdict flows on to the manager and, as a `manager_report`, back to the operator. The whole exchange is visible in each worker's console output and the tmux "agent chat"/Kafka feed pane — see [docs/agent.md](docs/agent.md). To point a worker at Claude instead of Ollama, set `llm.provider: claude` in `config/worker.yaml` (or `LLM_PROVIDER=claude` in `.env`) and export `ANTHROPIC_API_KEY`.
 
 For the full list of commands an operator can send (task assignment, direct chat, and manual/debug injections for every pipeline stage), see [docs/operator_commands.md](docs/operator_commands.md).
 
@@ -589,62 +723,76 @@ or rebuilding the image — via `message-api`'s `/workers` endpoints
 [docs/message_api.md](docs/message_api.md)). "Off" stops both the agent
 (no more task/message processing) and the Twitch stream (ffmpeg stops
 pushing frames); the container itself stays up the whole time, ready to
-resume instantly:
+resume instantly. Address by `WORKER_ID` directly (works whether or not a
+persona is cast):
 
 ```bash
-curl -X POST http://localhost:8090/workers/coder/disable   # agent pauses, stream goes offline
-curl http://localhost:8090/workers/coder                   # {"worker_id": "coder", "enabled": false}
-curl -X POST http://localhost:8090/workers/coder/enable    # resumes both, in place
+curl -X POST http://localhost:8090/workers/worker-1/disable   # agent pauses, stream goes offline
+curl http://localhost:8090/workers/worker-1                   # {"worker_id": "worker-1", "enabled": false}
+curl -X POST http://localhost:8090/workers/worker-1/enable    # resumes both, in place
 ```
 
 The flag lives in the shared `redis` service and defaults to enabled — a
 worker nobody has ever toggled, or a temporarily-unreachable Redis, both
-behave as "on" rather than silently going dark.
+behave as "on" rather than silently going dark. This is independent of
+persona assignment ([Campaigns](#campaigns) below): disabling a worker
+doesn't clear its persona, and casting/uncasting a persona doesn't change
+its enabled flag.
 
 ### Rerun Theater — replaying past sessions, with voices
 
-Rerun Theater re-performs saved (parsed, redacted) Claude Code dev sessions
-as stream shows, and can narrate them out loud with two TTS voices per
-airing — the boss and the coder — whose spoken lines are written fresh by
-the local LLM on every airing and timed so speech and on-screen text finish
-together. For a **solo** show, "the coder" is that worker's own distinct
-persona voice (KODI-7, MAX-1, TESS-3, NYX-1, OKO-2, and ADA-3 each sound
-different — see [Recent Changes](#recent-changes) above); "the boss" is a
-shared voice every worker uses the same way.
-Full pipeline docs: [docs/session_log_parser.md](docs/session_log_parser.md)
-→ [docs/revoice.md](docs/revoice.md) → [docs/replay.md](docs/replay.md) →
-[docs/replay_pane.md](docs/replay_pane.md) → (multi-worker)
-[docs/duet_replay.md](docs/duet_replay.md).
+Rerun Theater performs any campaign's validated episode scripts as stream
+shows — past Claude Code dev sessions (the `coder` campaign) being the
+first one — narrating them out loud with per-speaker TTS voices whose
+spoken lines are written fresh by the local LLM on every airing and timed
+so speech and on-screen text finish together. For a coder-campaign
+**solo** show, "the coder" speaker is whichever worker's cast persona
+voice is currently assigned (KODI-7, MAX-1, TESS-3, NYX-1, OKO-2, and
+ADA-3 each sound different — see [Recent Changes](#recent-changes) above);
+"the boss" is a shared voice every persona uses the same way. Every
+generic worker defaults to `LAYOUT_PRESET=replay`, so the theater pane is
+already there waiting — no layout change needed before requesting a show.
+Full pipeline docs: [generators/coder/README.md](generators/coder/README.md)
+(episode generation) → [docs/episode_schema.md](docs/episode_schema.md)
+(validation) → [docs/primitives.md](docs/primitives.md) (rendering) →
+[docs/revoice.md](docs/revoice.md) (narration) →
+[docs/replay.md](docs/replay.md) (performance) →
+[docs/replay_pane.md](docs/replay_pane.md) (the theater pane) →
+(multi-worker) [docs/duet_replay.md](docs/duet_replay.md).
 
 One-time setup:
 
 ```bash
-# 1. Build the episode library from your session logs (on the machine that has them)
-.venv/Scripts/python.exe scripts/build_replay_library.py \
-  --logs "path/to/logs/claude/virtualTubers" --out replays
+# 1. Build the coder-campaign episode library from your session logs
+#    (on the machine that has them)
+.venv/Scripts/python.exe generators/coder/build_library.py \
+  --logs "path/to/logs/claude/virtualTubers" --out replays/coder
 
 # 2. Sync the episode library onto the deployment host
 #    replays/ -> C:\Users\matt\PycharmProjects\virtualTubers\replays   (mounted :ro at /data/replays)
+#    Episodes are namespaced per campaign: replays/coder/<episode>.json,
+#    replays/dnd/<episode>.json, etc.
 ```
 
-The Piper voice models (coder + boss) don't need a manual download/sync —
+The Piper voice models don't need a manual download/sync —
 `./install.sh` fetches them straight into `voices/` on the deployment host
 (see [Deploy / redeploy](#deploy--redeploy-after-a-code-change) below), which
 is already the bind-mount source for `/data/voices`. Only needed manually for
 local preview off the host: `.venv/Scripts/python.exe scripts/download_voices.py --out voices`.
 
-Then enable it per worker (config-only, plus one image rebuild for the
-`piper-tts` dependency):
+Cast the coder campaign onto some workers — this assigns each speaker's
+persona (name, system prompt, avatar, **and** voice — `config/campaigns/
+coder/personas.yaml` already sets `voice.provider: piper` per speaker, so
+there's no separate "enable voice" config edit anymore) at runtime,
+no redeploy:
 
-```yaml
-# config/workers/<role>.yaml
-voice:
-  provider: piper          # "null" keeps replays silent
+```bash
+curl -X POST http://localhost:8090/campaigns/coder/start \
+  -H "Content-Type: application/json" \
+  -d '{"cast": {"coder": "worker-1", "manager": "worker-5", "tester": "worker-6"}}'
 ```
 
-Set `LAYOUT_PRESET=replay` on that worker (e.g. `CODER_LAYOUT_PRESET=replay`
-in `.env`) so its editor pane becomes the theater, and
-request a show:
+Then request a show:
 
 ```bash
 curl -X POST http://localhost:8090/messages \
@@ -661,10 +809,10 @@ command outputs get proportionally longer narration, so the avatar always
 has something to say over the scroll. Add `"voice": false` to the payload
 for a silent airing; voice failures (LLM/TTS/player down) automatically
 degrade to a silent show rather than cancelling it. Local preview without
-the stack:
+the stack (no persona cast needed — pass a worker config directly):
 
 ```bash
-python app/replay.py replays/<episode>.json --voice-config config/workers/coder.yaml
+python app/replay.py replays/coder/sample.json --voice-config config/workers/coder.yaml --campaign coder
 ```
 
 ### Duets (multiple workers, same episode)
@@ -693,13 +841,14 @@ curl -X POST http://localhost:8090/messages \
   ready in time, the whole airing refuses outright (an `operator_reply`
   error, when the director could still reach Kafka at all) rather than
   airing solo or partially.
-- Deployment: every cast worker needs `LAYOUT_PRESET=replay`, the
-  `POSTGRES_*` env vars, and reachable Kafka. All six coder-role workers
-  (`coder`/`manager`/`tester` plus the three A/B coding-backend workers
-  `coder-native`/`coder-opencode`/`coder-aider`) are wired for this in
-  `docker-compose.yml` — the three A/B workers currently default to
-  `replay` already; `coder`/`manager`/`tester` need their
-  `*_LAYOUT_PRESET` stack env set to `replay` to enable it.
+- Deployment: every cast worker needs `LAYOUT_PRESET=replay` (already the
+  default for every generic worker — see `.env.example`'s
+  `WORKER_N_LAYOUT_PRESET`), the `POSTGRES_*` env vars, and reachable
+  Kafka. All eight generic workers (`worker-1`..`worker-8`) already have
+  all three wired in `docker-compose.yml` — no per-worker env change
+  needed; just cast the personas you want (see [Campaigns](#campaigns)
+  below) and address the request to whichever worker is currently cast as
+  `"coder"`.
 - **Voice gotcha**: the worker you address (`to`) becomes the director,
   and it voices *every* cast member from its own `voice.speakers` config —
   not each worker's own. Always address the request to whichever worker is
@@ -718,6 +867,131 @@ pip install -r requirements.txt
 python3 app/avatar.py --config config/workers/coder.yaml
 ```
 
+> `config/workers/*.yaml` (the six old per-role files) are no longer
+> mounted by `docker-compose.yml` or read by any worker in the stack — they
+> stay on disk purely as reference for how each coder-campaign persona's
+> `agent.name`/`system_prompt`/`voice.model_path`/`avatar.*` was originally
+> authored (`config/campaigns/coder/personas.yaml` is the source of truth
+> now — see [Campaigns](#campaigns) below). They're still handy for a local
+> dry-run like the one above, since they carry a real, non-blank persona
+> out of the box — `config/worker.yaml` (what `docker-compose.yml` actually
+> mounts) is deliberately blank/inert.
+
+## Campaigns
+
+A **campaign** is a set of personas, scripts, and visual primitives for one
+kind of show — the coder dev-team pipeline (`coder`) and a D&D story show
+(`dnd`) both ship today; whatever comes third is another campaign, added
+with no platform code change. This is the core idea the campaign platform
+build (`docs/campaign_platform_build.md`, `docs/campaign_platform_contract.md`) generalized Rerun
+Theater into.
+
+### The generator/platform boundary
+
+**The platform performs a finished episode script. It does not generate
+one.** Everything under `app/` and `services/` consumes validated episode
+JSON from `replays/<campaign>/`; everything under `generators/` produces
+it. Neither side needs to know how the other is implemented — a generator
+can be a different language, run on a different machine, and need
+dependencies the worker image never installs (`generators/` is excluded
+from every `docker build` context via `.dockerignore`).
+
+```
+┌─ Generators (generators/, separate per campaign) ─┐        ┌─ Platform (app/, services/) ────────┐
+│  generators/coder/   session logs -> scenes       │        │  episode_schema.py  (validate/ingest) │
+│  generators/dnd/...  outline -> two-pass LLM      │ ─────▶ │  primitives.py      (render/estimate) │
+│  emit: validated episode JSON                     │ writes │  replay.py          (perform)         │
+└────────────────────────────────────────────────────┘  replays/<campaign>/*.json  └────────────────┘
+```
+
+The one sanctioned exception: a generator is expected to import
+`app/episode_schema.py` (and, transitively, `app/primitives.py`) to
+validate its own output **before writing anything** — the same engine and
+the same config the platform itself uses at ingest, so a bad episode fails
+the build rather than failing (or worse, quietly airing) on stream. See
+[generators/README.md](generators/README.md) for the full boundary
+writeup and [generators/coder/README.md](generators/coder/README.md) for
+the coder campaign's own generator (session log → redacted scenes →
+validated episode).
+
+### What a campaign is made of
+
+```
+config/campaigns/<name>/
+├── primitives.yaml   # named visual recipes this campaign adds/overrides
+│                     # (deep-merged over the shared config/primitives.yaml)
+├── narration.yaml    # LLM prompt + fallback template per scene `kind`
+└── personas.yaml     # speaker id -> {name, title, role, system_prompt,
+                       #                voice: {...}, avatar: {...}}
+```
+
+Plus, outside `config/`:
+
+- A **generator** under `generators/<name>/` that emits
+  `replays/<name>/<episode-id>.json` matching the episode schema
+  (`meta`/`cast`/`scenes[]` — see [docs/episode_schema.md](docs/episode_schema.md)).
+- Optionally, campaign-specific binary assets at `replays/<name>/assets/`
+  (referenced by bare basename only — the validator enforces containment
+  and existence at ingest).
+
+### Adding a new campaign
+
+1. Write `config/campaigns/<name>/primitives.yaml` — new named recipes
+   over the existing `type`/`print`/`diff`/`image`/`pause` behaviors (or
+   `extends:` an existing recipe with different styling/timing). No code
+   change; see [docs/primitives.md](docs/primitives.md)'s worked example.
+2. Write `config/campaigns/<name>/narration.yaml` — a prompt +
+   `fallback_template` per scene `kind` your episodes will use.
+3. Write `config/campaigns/<name>/personas.yaml` — one entry per speaker
+   id your episodes cast, each with a distinct Piper voice and avatar.
+4. Write a generator under `generators/<name>/` that emits episodes for
+   this campaign, validating against `episode_schema.py` +
+   `primitives.load_primitives("<name>")` before writing (see
+   [generators/README.md](generators/README.md)'s step-by-step).
+5. If the campaign needs coding-backend-style dedicated infra (workspace
+   volumes, extra mounts) beyond what a persona can carry, add it as a new
+   compose overlay file following `docker-compose.coder.yml`'s pattern
+   (see "Why an overlay file, not a `profiles:` entry" in
+   [docs/blank_workers.md](docs/blank_workers.md)) — most campaigns won't
+   need this at all.
+
+### Starting and stopping a campaign
+
+Casting is entirely an API operation — no `docker-compose.yml`/`.env`
+edit, no redeploy. `POST /campaigns/{campaign}/start` assigns each
+`{speaker: worker_id}` pair from the request body; every named worker
+picks up its new persona on its next agent tick (`app/campaign_control.py`,
+Redis-backed):
+
+```bash
+# Cast the D&D campaign onto three generic workers
+curl -X POST http://localhost:8090/campaigns/dnd/start \
+  -H "Content-Type: application/json" \
+  -d '{"cast": {"gm": "worker-1", "thorin": "worker-2", "sable": "worker-3"}}'
+
+# What's currently active?
+curl http://localhost:8090/campaigns/active
+# -> {"campaign": "dnd", "cast": {"gm": "worker-1", "thorin": "worker-2", "sable": "worker-3"}}
+
+# Send everyone back to blank (== disabled)
+curl -X POST http://localhost:8090/campaigns/stop
+```
+
+- Reassigning a worker that's mid-performance refuses with HTTP 409 unless
+  the request also sets `"force": true` — same "refuse rather than
+  degrade" spirit as duet replay's own refusal rule.
+- A worker with no persona assigned is simply **disabled** — it never
+  polls messages and never streams (reuses `worker_control.py`'s existing
+  fail-open flag, no new "blank" mode).
+- Switching *from* one campaign to another automatically clears the
+  persona of any worker that isn't named in the new cast, so nothing keeps
+  performing a stale persona forever.
+
+Full reference (Redis key shapes, the `/tmp/persona.json` relay file, what
+genuinely hot-swaps vs. what needs a container restart):
+[docs/campaign_control.md](docs/campaign_control.md) and
+[docs/blank_workers.md](docs/blank_workers.md).
+
 ## Deployment (Docker Compose on d2000)
 
 The stack runs on **d2000**, a Windows machine on the local network running Docker
@@ -728,7 +1002,7 @@ run there too (see [Required environment variables](#required-environment-variab
 below). One thing still causes most "it won't pick up my change" confusion:
 
 **The worker image is never built by `docker compose up`.**
-The three workers use `image: vtube-worker:latest` with `pull_policy: never`, so
+All eight generic workers use `image: vtube-worker:latest` with `pull_policy: never`, so
 plain `docker compose up -d` will **not** build or pull it — it just fails or runs a
 stale image. You must build it on the host after any code change (`install.ps1`,
 below), then recreate the containers so they pick up the new image.
@@ -737,33 +1011,43 @@ below), then recreate the containers so they pick up the new image.
 
 Copy `.env.example` to `.env` on the host and fill these in — `docker compose`
 reads `.env` from the repo root automatically, no separate stack-env mechanism
-involved. Each worker streams to its **own** Twitch channel, so each needs that
-channel's key:
+involved. **Per-worker variables are now indexed by generic worker number
+(`WORKER_1_*`..`WORKER_8_*`), not by role** — a stream key/layout preset/
+avatar provider is infra tied to the container, not to whatever persona a
+campaign later assigns it (docs/blank_workers.md). Cross-check this table
+against the always-current `.env.example` and `docker-compose.yml` if
+either changes further; both are the source of truth:
 
 | Variable | Example | Notes |
 |---|---|---|
 | `STREAM_RTMP_URL` | `rtmp://live.twitch.tv/app` | Omit/empty → falls back to the bundled local `rtmp-preview` |
-| `CODER_STREAM_KEY` | `live_xxxxxxxx` | Coder channel's Twitch stream key |
-| `MANAGER_STREAM_KEY` | `live_yyyyyyyy` | Manager channel's key |
-| `TESTER_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
+| `WORKER_1_STREAM_KEY` … `WORKER_8_STREAM_KEY` | `live_xxxxxxxx` | One Twitch stream key per generic worker. Unset keeps that worker's stream pointed at the literal `worker-N` key on the bundled `rtmp-preview` server |
 | `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.2.158:9092` | Message-bus broker (runs on d2000 itself) |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
-| `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
-| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | `message-logger` Postgres connection (also on d2000) |
-| `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
-| `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
-| `CODER_NATIVE_LAYOUT_PRESET` / `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
-| `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to `worker-coder`/`worker-manager`/`worker-tester`; unset keeps the code default (`60.0`) |
-| `CODER_AVATAR_PROVIDER` / `CODER_NATIVE_AVATAR_PROVIDER` / `CODER_OPENCODE_AVATAR_PROVIDER` / `CODER_AIDER_AVATAR_PROVIDER` / `MANAGER_AVATAR_PROVIDER` / `TESTER_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
-| `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
-| `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
+| `COMPOSE_PROFILES` | `local-infra` | Optional — uncomment to start the bundled local `kafka`/`postgres`/`kafka-init-perms` services instead of pointing at an external instance (they're `profiles: ["local-infra"]`-gated so they never start otherwise) |
+| `COMPOSE_FILE` | `docker-compose.yml:docker-compose.coder.yml` (Linux/macOS) or `docker-compose.yml;docker-compose.coder.yml` (Windows) | Optional — loads `docker-compose.coder.yml`, the coder-campaign overlay, automatically on every plain `docker compose` invocation instead of passing `-f docker-compose.coder.yml` by hand every time. This is deliberately **not** a `COMPOSE_PROFILES` entry — see [Campaigns](#campaigns) below for why a Compose profile can't do this job |
+| `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists. Only matters once a worker is cast into a coding-backend role (`CODING_BACKEND` set via `docker-compose.coder.yml`) |
+| `REDIS_URL` | *(optional)* | Worker on/off + campaign/persona state (docs/worker_control.md, docs/campaign_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
+| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | `message-logger` Postgres connection, plus narration caching (also on d2000) |
+| `WORKER_1_LAYOUT_PRESET` … `WORKER_8_LAYOUT_PRESET` | `coder` | Optional per-worker layout preset override. **Every generic worker defaults to `replay`** (Rerun Theater) so a freshly cast persona can perform episodes immediately — set one to `coder`/`tester`/`manager` to give that worker a live editor/htop pane instead (docs/replay_pane.md, docs/blank_workers.md) |
+| `WORKER_1_AVATAR_PROVIDER` … `WORKER_8_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps the resolved persona's (or the base template's) `avatar.provider` (defaults to `builtin`) |
+| `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to every generic worker; unset keeps the code default (`60.0`) |
+| `REPLAY_SKIP_LLM` | *(empty)* | Testing-only — skip the LLM narration rewrite on a fresh replay airing and use fallback/template narration instead. Never affects a worker's real coding-task LLM use |
+| `TTS_PROVIDER` | `fake` | Testing-only — override `voice.provider`; `fake` skips real Piper synthesis while still returning a duet-safe client. Never leave set to `fake` for a real stream |
+| `TTS_BASE_URL` | *(empty)* | Point Piper synthesis at a remote `piper.http_server` instead of running it in-container (docs/tts_client.md) |
+| `TWITCH_CHANNEL_MAP` | `mychannel:worker-1,other:worker-5` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
 | `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
 | `PRESENCE_IGNORE_USERS` | `somebot,otherbot` | Optional — extra chat bots to never greet (extends the built-in list) |
+| `LOG_RETENTION_DAYS` | `7` | Optional — `container_logs` rows older than this are purged hourly (docs/log_shipper.md) |
 
 > `.env` is one `NAME=value` pair per line — see `.env.example` for the full
-> annotated template.
+> annotated template. **Every old per-role variable
+> (`CODER_STREAM_KEY`/`MANAGER_LAYOUT_PRESET`/`TESTER_AVATAR_PROVIDER`/
+> `CODER_NATIVE_STREAM_KEY`/etc.) is gone** — an `.env` copied from before
+> the campaign platform build needs re-keying to the indexed `WORKER_N_*`
+> forms above, not just a re-run of `docker compose up -d`.
 
 ### Deploy / redeploy after a code change
 
@@ -807,17 +1091,17 @@ goes in both.
 ### Verify a worker is streaming to the right place
 
 Compose prefixes container names with the project, so they are
-`virtualtubers-worker-coder-1`, `-manager-1`, and `-tester-1`:
+`virtualtubers-worker-1-1` through `virtualtubers-worker-8-1`:
 
 ```bash
 # What env did the container actually receive?
-docker exec virtualtubers-worker-coder-1 env | grep -E 'STREAM_RTMP_URL|STREAM_KEY'
+docker exec virtualtubers-worker-1-1 env | grep -E 'STREAM_RTMP_URL|STREAM_KEY'
 
 # Where is ffmpeg pushing? (should be your Twitch ingest, not rtmp-preview)
-docker logs virtualtubers-worker-coder-1 2>&1 | grep -a 'ffmpeg broadcaster'
+docker logs virtualtubers-worker-1-1 2>&1 | grep -a 'ffmpeg broadcaster'
 
 # Full startup, minus the agent heartbeat spam:
-docker logs virtualtubers-worker-coder-1 2>&1 | grep -avE '\[agent' | tail -40
+docker logs virtualtubers-worker-1-1 2>&1 | grep -avE '\[agent' | tail -40
 ```
 
 A healthy worker logs
@@ -830,25 +1114,27 @@ by ffmpeg `frame= … speed=~1x` progress lines. If it shows
 
 All runtime behavior is config-driven — no code changes needed to retune an agent.
 
-**`config/worker.yaml` is the canonical template of every worker parameter that exists.** Whenever a code change adds a new config-readable parameter (a new `agent.py`/backend key, a new `coding_backend`/`voice`/etc. field), add it to `config/worker.yaml` too — as a real default if every worker should get it, or commented-out with an explanation if it's optional/per-worker — with a comment describing what it controls, its default, and any env var override. Per-worker configs (`config/workers/*.yaml`) should only ever be a subset/override of what's documented there; `config/worker.yaml` must never fall behind what the code actually reads.
+**`config/worker.yaml` is the canonical template of every worker parameter that exists — and, since the campaign platform build, it is a deliberately BLANK/inert default, not a persona.** `agent.role: custom` never matches any of `app/agent.py`'s role-gated handler checks, so every generic worker (`worker-1`..`worker-8`) boots inert until a campaign assigns it a real persona at runtime (see [Campaigns](#campaigns) below) — this is the same file every worker mounts (`./config:/config:ro`), not a per-worker copy. Whenever a code change adds a new config-readable parameter (a new `agent.py`/backend key, a new `coding_backend`/`voice`/etc. field), add it to `config/worker.yaml` too — as a real default if every worker should get it, or commented-out with an explanation if it's optional/per-worker — with a comment describing what it controls, its default, and any env var override; `config/worker.yaml` must never fall behind what the code actually reads.
 
-- `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state/message-bus settings)
-- `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml` — per-role configs mounted into each container at `/config/worker.yaml`
-- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `CODER_STREAM_KEY` / `MANAGER_STREAM_KEY` / `TESTER_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
+- `config/worker.yaml` — the annotated blank-default worker config (role/name/system-prompt placeholders, LLM/voice/avatar/stream/world-state/message-bus settings), mounted read-only into every one of the eight generic workers
+- `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml`, `coder-native.yaml`, `coder-opencode.yaml`, `coder-aider.yaml` — the six old per-role configs. **No longer mounted by any container** — kept on disk purely as the reference each persona in `config/campaigns/coder/personas.yaml` was originally lifted from verbatim (docs/blank_workers.md)
+- `config/campaigns/<campaign>/personas.yaml` — the actual source of truth for a persona's `name`/`title`/`role`/`system_prompt`/`voice`/`avatar`, assigned onto a generic worker at runtime (see [Campaigns](#campaigns) below)
+- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `WORKER_1_STREAM_KEY`..`WORKER_8_STREAM_KEY`, `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
 
 Key sections inside a worker config:
 
 | Section | Controls |
 |---|---|
-| `agent` | Role, display name, system prompt, tick rate, context window |
-| `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
-| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. `model_path` doubles as this worker's own distinct persona voice, since `speakers.coder` is empty by default — see [Rerun Theater](#rerun-theater--replaying-past-sessions-with-voices) below. Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](docs/tts_client.md) |
-| `avatar` | Name, title, ASCII expression states, speech bubble sizing |
-| `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager`; `LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. |
-| `stream` | RTMP URL/key, resolution, bitrate, fps |
+| `agent` | Role, display name, system prompt, tick rate, context window. Overlaid by a persona's `name`/`role`/`system_prompt` once a campaign casts one onto this worker |
+| `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature — worker-level, **not** overlaid by persona assignment |
+| `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker voice overrides (`voice.speakers`) needed for ANY worker to correctly direct a multi-persona duet — genuinely infra, so it's left in `config/worker.yaml` rather than a persona field. A cast persona's own `voice:` block (model path, rate, verbosity, `verbatim`) is deep-merged on top at runtime — see [Rerun Theater](#rerun-theater--replaying-past-sessions-with-voices) above and [Campaigns](#campaigns) below. Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](docs/tts_client.md) |
+| `avatar` | Name, title, ASCII expression states, speech bubble sizing — overlaid by a cast persona's `avatar:` block verbatim |
+| `layout` | Which tmux layout preset to use (`layout.preset`: `coder` \| `tester` \| `manager` \| `replay`; `LAYOUT_PRESET`/`WORKER_N_LAYOUT_PRESET` env overrides). Presets live in `config/layouts/`; reusable panel-type defaults in `config/panels/`. Optional per-pane overrides under `layout.panes.<id>`. **Does not hot-swap** — set at container boot only (docs/campaign_control.md) |
+| `campaign` | Which campaign's `replays/<campaign>/` library, primitives, and narration config this worker uses when a `replay_request` doesn't name one explicitly (docs/campaign_platform_build.md). Usually left unset so env/request picks the campaign |
+| `stream` | RTMP URL/key, resolution, bitrate, fps. **Stream key does not hot-swap** — resolved once at container boot (docs/campaign_control.md) |
 | `world_state` | Shared state backend (`file` \| `redis`) and connection info |
 | `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
-| `coding_backend` | Which tool writes real code (`provider`: `native` \| `opencode` \| `aider` \| `none`; `workspace`, `timeout_s`, optional `model` override). See [docs/coding_backend.md](docs/coding_backend.md). |
+| `coding_backend` | Which tool writes real code (`provider`: `native` \| `opencode` \| `aider` \| `none`; `workspace`, `timeout_s`, optional `model` override) — infra, wired per worker number by `docker-compose.coder.yml`, not by persona. See [docs/coding_backend.md](docs/coding_backend.md). |
 
 ### Worker on/off control (what's set up)
 
@@ -893,7 +1179,7 @@ pod. Details in [docs/layout_system.md](docs/layout_system.md#kubernetes-configm
 ```
 virtualTubers/
 ├── app/
-│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats, task narration, real coding + testing flows, duet replay relay
+│   ├── agent.py          # Agent loop (perceive/think/act): heartbeats, persona resolution, task narration, real coding + testing flows, duet replay relay
 │   ├── llm_client.py     # Provider-switchable LLM client (Ollama | Claude)
 │   ├── coding_backend.py # Swappable coding backend layer (native | opencode | aider) + TaskResult
 │   ├── coding_backends/  # One adapter per backend provider
@@ -901,44 +1187,58 @@ virtualTubers/
 │   ├── workspace_setup.py# Seeds coder workspace volumes from the sandbox template
 │   ├── test_runner.py    # Tester's real pytest execution (copy-to-tmpdir, ro mounts)
 │   ├── worker_control.py # Redis-backed per-worker on/off flag (agent + stream pause/resume)
+│   ├── campaign_control.py # Redis-backed active-campaign + per-worker persona assignment (new — campaign platform)
 │   ├── stream_supervisor.py # Starts/stops ffmpeg based on the on/off flag (replaces startup.sh's raw ffmpeg call)
-│   ├── avatar.py         # Terminal ASCII avatar dispatcher — polls agent_state.py, hands frames to an avatar_providers/ backend
+│   ├── avatar.py         # Terminal ASCII avatar dispatcher — polls agent_state.py + the persona relay file, hands frames to an avatar_providers/ backend
 │   ├── avatar_providers/ # Pluggable avatar rendering backends (builtin static face | ascii_avatar animated adapter)
 │   ├── avatar_display.py # display_width()/build_bubble_box() shared by avatar.py and every avatar provider
 │   ├── agent_state.py    # Small local state file bridging agent.py's activity to avatar.py's display
-│   ├── session_log_parser.py # Saved Claude session logs -> redacted replay scripts
-│   ├── replay.py         # Performs a replay script as a paced show (display-only, audio-synced, duet cue hooks)
-│   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes solo or as a duet director/follower
-│   ├── revoice.py        # Per-airing narration pass: scenes + LLM-written spoken lines
-│   ├── narration_store.py # Postgres cache for voiced airings; duet director persists, followers load the same airing
+│   ├── episode_schema.py # Load/normalize/validate an episode against config/validation.yaml (new — campaign platform)
+│   ├── primitives.py     # Behaviors + two-layer recipe resolution + screen-time estimation (new — campaign platform)
+│   ├── replay.py         # Performs a validated episode as a paced show via primitive recipes (display-only, audio-synced, duet cue hooks)
+│   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes solo or as a duet director/follower, per campaign
+│   ├── revoice.py        # Per-airing narration pass: LLM-written spoken lines sized to each scene's estimated screen time
+│   ├── narration_store.py # Postgres cache for voiced airings, keyed by (episode, campaign); duet director persists, followers load the same airing
 │   ├── tts_client.py     # Provider-switchable TTS (Piper | OpenAI | ElevenLabs), measured durations
 │   ├── audio_player.py   # Best-effort WAV playback into the streamed PulseAudio sink
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
 │   ├── tmux_control.py   # Agent's "hands": select a pane by name, type text/commands into it
 │   ├── message_bus.py    # Shared Kafka producer/consumer/schema helper
 │   └── tail_bus.py       # Rich configurable Kafka feed for the tmux "Message Bus" pane
+├── generators/            # Episode generators — OUTSIDE the platform, excluded from the worker image (new — campaign platform)
+│   ├── README.md          # The generator/platform boundary and how to add a campaign's generator
+│   └── coder/              # The coder campaign's generator (session_log_parser.py + build_library.py moved here from app/ and scripts/)
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
-│   ├── message-api/       # FastAPI service for injecting test messages onto the bus
-│   └── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
+│   ├── message-api/       # FastAPI service for injecting test messages + worker on/off + campaign/persona assignment onto the bus
+│   ├── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
+│   └── log-shipper/       # Ships every stack container's stdout/stderr into Postgres
 ├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
 ├── repos/                 # Vendored third-party avatar repos (see repos/README.md) — e.g. ascii-avatar, used by avatar_providers/ascii_avatar.py
 ├── config/
-│   ├── worker.yaml        # Annotated default/template worker config (selects a layout preset)
-│   ├── workers/           # Per-role configs (coder, manager, tester + coder-native/-opencode/-aider)
-│   ├── panels/            # Reusable panel-TYPE defaults (kafka_feed, avatar, filetree, editor, htop)
-│   └── layouts/           # Composition presets that place & size panels (coder, tester, manager)
+│   ├── worker.yaml        # Blank/inert default worker config (agent.role: custom) mounted into every generic worker
+│   ├── workers/           # The six old per-role configs (coder, manager, tester, coder-native/-opencode/-aider) — no longer mounted; kept as persona-authoring reference
+│   ├── campaigns/         # One directory per campaign (new — campaign platform)
+│   │   ├── coder/          # primitives.yaml, narration.yaml, personas.yaml for the coder dev-team campaign
+│   │   └── dnd/            # Same three files for the D&D story-show campaign (proves the platform generalizes)
+│   ├── primitives.yaml    # Shared, presentation-neutral visual primitives (new — campaign platform)
+│   ├── validation.yaml    # Episode validator rules: structure, limits, assets, redaction patterns (new — campaign platform)
+│   ├── panels/            # Reusable panel-TYPE defaults (kafka_feed, avatar, filetree, editor, htop, replay)
+│   └── layouts/           # Composition presets that place & size panels (coder, tester, manager, replay)
 ├── docs/
 │   ├── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
+│   ├── campaign_platform_build.md      # Campaign platform design doc + as-shipped reconciliation notes
+│   ├── primitives.md, episode_schema.md, campaign_control.md, blank_workers.md   # Campaign platform module docs
 │   ├── agent.md, llm_client.md         # Agent loop and LLM client docs
 │   ├── layout_system.md, panels.md, build_layout.md   # Config-driven panel system
 │   ├── message_bus.md, message_bus_feed.md, message_logger.md, message_api.md   # Per-module docs
-├── tests/                  # pytest suite (agent, llm_client, message_bus, message-api, build_layout, tail_bus)
+├── tests/                  # pytest suite (agent, llm_client, message_bus, message-api, build_layout, tail_bus, primitives, episode_schema, campaign_control, ...)
 ├── Dockerfile              # Worker container image (Xvfb, tmux, ffmpeg, Python, etc.)
-├── docker-compose.yml      # Local dev stack: 3 workers + message-logger + message-api + Redis + RTMP preview
+├── docker-compose.yml      # Local dev stack: 8 generic workers + message-logger + message-api + twitch-presence + log-shipper + Redis + RTMP preview
+├── docker-compose.coder.yml # Opt-in overlay: coder campaign's A/B coding-backend workspace volumes (new — campaign platform)
 ├── startup.sh              # Container entrypoint: sets up display, tmux layout, avatar, agent loop, and ffmpeg broadcaster
 ├── requirements.txt        # Python dependencies (worker image)
-└── .env.example            # Template for stream keys, Kafka, and Postgres config
+└── .env.example            # Template for indexed per-worker stream keys/layout/avatar overrides, Kafka, and Postgres config
 ```
 
 > **Note:** the generic "Mafober Deployment Environment" section below is shared

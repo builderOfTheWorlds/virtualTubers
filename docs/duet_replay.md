@@ -411,15 +411,18 @@ which cached scenes get copied into a follower's workdir). Practically:
     (default `/data/replays`) — followers rebuild scenes against the same
     episode script the director used, so the library must be in sync
     across every cast worker's host mount.
-- **All six coder-role workers in `docker-compose.yml` have all of the
-  above** (`LAYOUT_PRESET` override env, `POSTGRES_*`, and the
-  `/data/replays` mount): `worker-coder`, `worker-manager`,
-  `worker-tester`, and the three A/B coding-backend workers
-  (`worker-coder-native`, `worker-coder-opencode`, `worker-coder-aider`,
-  overridden via `CODER_NATIVE_LAYOUT_PRESET` /
-  `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`). Any of
-  them can join a duet or use solo narration reuse/caching once its
-  `*_LAYOUT_PRESET` stack env is set to `replay`.
+- **All eight generic workers in `docker-compose.yml` have all of the
+  above already** (`LAYOUT_PRESET` override env — defaulting to `replay`
+  out of the box — `POSTGRES_*`, and the `/data/replays` mount):
+  `worker-1`..`worker-8` are identical on this front (docs/blank_workers.md);
+  the old per-role `worker-coder`/`worker-manager`/`worker-tester` and the
+  three A/B coding-backend workers no longer exist as separate compose
+  services. Any generic worker can join a duet or use solo narration
+  reuse/caching as-is; casting the coder campaign's actual personas onto
+  specific worker numbers (and, for the A/B coding-backend roles, loading
+  `docker-compose.coder.yml` for their workspace volumes) is a runtime
+  `POST /campaigns/coder/start` call, not a compose-file/env change
+  (docs/campaign_control.md, docs/blank_workers.md).
 - **Cue relay latency is bounded by the receiving worker's agent tick
   rate** (`agent.tick_rate_ms`, default `5000`ms) and does **not**
   accumulate scene-over-scene: each cue publish is independent (the ratchet

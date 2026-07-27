@@ -98,7 +98,10 @@ Three ways, in order of how "sticky" the change is:
        persona: ghost   # ghost | oracle | spectre
    ```
 2. **Per deploy, per worker** — set that worker's env var in `.env`
-   (e.g. `CODER_AVATAR_PROVIDER=ascii_avatar`) and redeploy.
+   (e.g. `WORKER_1_AVATAR_PROVIDER=ascii_avatar` — the campaign platform
+   build renamed the six per-role vars named in "What we did" above to
+   indexed `WORKER_1_AVATAR_PROVIDER`..`WORKER_8_AVATAR_PROVIDER`,
+   docs/blank_workers.md) and redeploy.
 3. **Quick local test** — export `AVATAR_PROVIDER=ascii_avatar` before
    running `app/avatar.py` directly.
 

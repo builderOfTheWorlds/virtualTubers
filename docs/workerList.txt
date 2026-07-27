@@ -1,0 +1,44 @@
+# Env vars renamed under the campaign platform build (docs/blank_workers.md):
+# CODER/MANAGER/TESTER/CODER_NATIVE/CODER_OPENCODE/CODER_AIDER_STREAM_KEY are
+# gone — docker-compose.yml now runs generic worker-1..worker-8, each with an
+# indexed WORKER_N_STREAM_KEY. Mapped below using docker-compose.coder.yml's
+# worker-number convention (coder->worker-1, coder-native->worker-2,
+# coder-opencode->worker-3, coder-aider->worker-4, manager->worker-5,
+# tester->worker-6) so these channels keep the same persona once the coder
+# campaign is cast with `POST /campaigns/coder/start` (docs/campaign_control.md).
+
+# the_emperor_secus
+# https://www.twitch.tv/the_emperor_secus
+# Emperor
+WORKER_1_STREAM_KEY
+
+
+# mastermanagerchief
+# https://www.twitch.tv/mastermanagerchief
+# Chief
+WORKER_5_STREAM_KEY
+
+
+# burtyrenoldo
+# https://www.twitch.tv/burtyrenoldo
+# Burt
+WORKER_6_STREAM_KEY
+
+
+# ten_g_hands
+# https://www.twitch.tv/ten_g_hands
+# Hand
+WORKER_2_STREAM_KEY
+
+
+# spam_of_frogs
+# https://www.twitch.tv/spam_of_frogs
+# Frog
+WORKER_3_STREAM_KEY
+
+
+# braxton_caruso
+# https://www.twitch.tv/braxton_caruso
+# Brax
+WORKER_4_STREAM_KEY
+

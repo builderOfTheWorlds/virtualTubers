@@ -83,7 +83,7 @@ psql -h 192.168.2.158 -U virtualtubers -d virtualtubers \
 Query just one container's errors:
 ```bash
 psql -h 192.168.2.158 -U virtualtubers -d virtualtubers \
-  -c "SELECT message, log_timestamp FROM container_logs WHERE container_name = 'worker-coder' AND stream = 'stderr' ORDER BY log_timestamp DESC LIMIT 50;"
+  -c "SELECT message, log_timestamp FROM container_logs WHERE container_name = 'virtualtubers-worker-1-1' AND stream = 'stderr' ORDER BY log_timestamp DESC LIMIT 50;"
 ```
 
 Keep more than the default 7 days of history (set before `docker compose up`):
