@@ -1,0 +1,13 @@
+{
+  "to": "coder",
+  "type": "replay_request",
+  "payload": {
+    "episode": "harry_potter_ch1_doorstep_delivery",
+    "cast": {
+      "boss": "manager",
+      "coder": "coder",
+      "tester": "tester",
+      "coder-native": "coder-native"
+    }
+  }
+}

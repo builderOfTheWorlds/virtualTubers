@@ -87,9 +87,38 @@ $Type    = "replay_request"
 # or this will still refuse with ready_timeout.
 # $Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
-$Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
+# Harry Potter Ch. 1 "Doorstep Delivery" hand-authored 4-persona duet
+# (matches scripts/harry_potter_ch1.json): narrator -> boss/manager,
+# Dumbledore -> coder, McGonagall -> tester, Hagrid -> coder-native.
+# No "narration": "reuse" on first run - add it once this episode has
+# aired at least once and got cached to Postgres.
+# $Payload = '{"episode": "harry_potter_ch1_doorstep_delivery", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native"}}'
+
+# $Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
 
 # $Payload = '{"episode": "sample_roster", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+
+
+
+# $Payload = '{"episode": "2026-07-08_03-15-03_640f9d57", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+
+
+$Payload = '{"episode": "2026-07-01_18-51-34_818d7e11_6_workers", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+
+
+# $Payload = '{
+#     "episode": "harry_potter_ch1_doorstep_delivery",
+#     "cast": {
+#       "boss": "manager",
+#       "coder": "coder",
+#       "tester": "tester",
+#       "coder-native": "coder-native"
+#     }
+#   }'
+
+
+
+
 
 
 
