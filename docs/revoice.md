@@ -3,28 +3,43 @@
 ## Overview
 
 The per-airing narration pass for Rerun Theater — the "persona re-voicing"
-layer the replay pipeline was designed around. It takes a parsed episode
-script ([session_log_parser.md](session_log_parser.md)) and produces a
-**voiced show**: the script's events grouped into scenes, each with a
-spoken line (boss voice or coder voice) and its synthesized audio.
+layer the replay pipeline was designed around. It takes a validated episode
+([episode_schema.md](episode_schema.md)) — `meta`/`cast`/`scenes[]`, per
+campaign_platform_contract.md §1 — and produces a **voiced show**: the episode's own scenes,
+each given a spoken line and its synthesized audio.
 
 It runs at showtime, per airing — never baked into the episode library —
 so by default every re-run of the same episode gets fresh dialogue from
-the local LLM. `tool_call` events are never altered: narration is
-*additive*; the on-screen commands, edits, and outputs stay exactly what
-the parser recorded.
+the local LLM. A scene's `render[]` entries are never altered: narration is
+*additive*; the on-screen primitives stay exactly what the episode
+scripted.
+
+**Campaign-platform rewrite (2026-07-26).** This module used to own scene
+*planning*: `plan_scenes` grouped a flat list of parsed session events
+(`session_log_parser.py`) into `boss`/`coder_talk`/`coder_work` scenes,
+because the parser only ever emitted one raw event per turn/tool call.
+That grouping step is gone. A campaign generator (`generators/coder/`,
+`generators/dnd/`, ...) now emits scene-sized units directly — `kind` and
+`render[]` are already scene properties in the episode file — so
+`prepare_show` simply iterates `episode['scenes']`. Screen-time estimation,
+narration prompts, and fallback templates all moved from this module's own
+hardcoded tables (`_PROMPTS`, per-`kind` branching in
+`scene_visual_seconds`/`fallback_narration`) to config
+(`config/campaigns/<campaign>/narration.yaml`) and to the shared rendering
+engine (`app/primitives.py`), so a new campaign (a D&D story show, say)
+needs a YAML file here, not a code change.
 
 Fresh-per-airing is still the default, but a voiced airing is no longer
 throwaway: `app/replay_pane.py` caches the full show — spoken text **and**
 synthesized WAV bytes — to Postgres via `app/narration_store.py`
 (docs/narration_store.md). A `replay_request` with
 `payload.narration: "reuse"` (docs/operator_commands.md) skips this
-module's LLM + TTS entirely and rebuilds the show from that cache: scenes
-are replanned deterministically with `plan_scenes` (so the structure still
-matches the current script), then each scene's cached `narration` text and
-WAV are reattached in place of a fresh `narrate_scene`/TTS call. It falls
-back to a fresh call through this module whenever nothing usable is
-cached.
+module's LLM + TTS entirely and rebuilds the show from that cache:
+`replay_pane._rebuild_scenes_from_rows` zips the cached rows against the
+episode's own `scenes[]` by index (so the structure still matches the
+current episode), then each scene's cached `narration` text and WAV are
+reattached in place of a fresh `narrate_scene`/TTS call. It falls back to
+a fresh call through this module whenever nothing usable is cached.
 
 This module is unchanged by **duet replay** (multi-worker airings,
 docs/duet_replay.md) — a duet director runs this exact same narration pass
@@ -35,64 +50,102 @@ scenes straight from `narration_store.load_airing` instead.
 ### Timing model (why this makes audio and visuals line up)
 
 1. **Estimate** each scene's on-screen render time at base pacing
-   (`replay.estimate_event_seconds`).
+   (`primitives.estimate_scene_seconds`, over the scene's own `render[]`
+   recipes — summed under `mode: "sequence"`, maxed under `"parallel"`).
 2. **Size the line to the screen time**: ask the LLM for roughly
-   `seconds × 2.5` words (~150 wpm) — a scene with minutes of scrolling
-   output gets enough narration to talk over the whole thing; a two-second
-   beat gets one short sentence.
+   `seconds × 2.5` words (~150 wpm) — a scene with a long visual sequence
+   gets enough narration to talk over the whole thing; a two-second beat
+   gets one short sentence.
 3. **Synthesize and measure**: the real audio duration comes back from
    `tts_client`. The performer then scales that scene's visual pacing so
    text and speech finish together — *audio anchors, visuals adapt*
    ([replay.md](replay.md)).
 
-### Scene grammar
+### Narration prompts + fallbacks live in config, keyed by `kind`
 
-| Kind | Speaker | Source events |
-|---|---|---|
-| `boss` | boss | one `user_message` |
-| `coder_talk` | coder | one `assistant_text` |
-| `coder_work` | coder | a run of consecutive `tool_call`s (≤ 8 per scene) |
+`config/campaigns/<campaign>/narration.yaml`:
 
-Every event may carry an optional `"speaker"` override. `plan_scenes`
-reads it as `event.get("speaker") or "boss"` for a `user_message` and
-`event.get("speaker") or "coder"` for `assistant_text`/`tool_call` — an
-explicit value wins, a missing/`null`/empty one falls back to the
-type-based default in the table above. A run of consecutive `tool_call`s
-only merges into one `coder_work` scene while every event shares the same
-speaker: the accumulator flushes *before* appending a tool_call whose
-speaker differs from the chunk's (so a mid-run persona swap starts a
-fresh scene instead of blending two personas' actions into one). The
-`kind` values (`boss`/`coder_talk`/`coder_work`) still describe scene
-*structure*, not persona — they're unaffected by which speaker is set.
+```yaml
+coder_work:
+  prompt: |
+    You are voicing {name}, live-streaming their work. Describe out loud,
+    present tense, what you are doing in these recorded actions - about
+    {words} words, enough to talk over the whole sequence:
 
-Real parsed session scripts (`session_log_parser.py`) never set this key
-— a recorded session is inherently one human and one assistant, so those
-scripts always resolve to exactly `"boss"`/`"coder"` and behavior is
-unchanged. Hand-authored episode scripts can set it explicitly to assign
-distinct dialogue to any of the personas in `speaker_names` — see
-`replays/sample.json` and [duet_replay.md](duet_replay.md).
+    {material}
+  fallback_template: "Okay — {render_summary}."
+```
+
+Token set available to both `prompt` and `fallback_template`:
+
+| Token | Meaning |
+|---|---|
+| `{name}` | resolved on-screen speaker display name (see `SpeakerNames`/`_display_name` below) |
+| `{words}` | target word count for this scene's screen time (`prompt` only) |
+| `{text}` | the scene's own scripted text (`episode.scenes[i].text`) |
+| `{material}` | `{text}` when non-empty, else `primitives.render_summary(scene, primitives)` — what the LLM is told is happening |
+| `{render_summary}` | `primitives.render_summary(scene, primitives)` directly — a short description of the scene's `render[]` entries, used as the last-resort fallback for a scene with no scripted line |
+
+`load_narration_config(campaign)` loads this file; a missing file (a
+shared-only campaign) or any parse failure degrades to `{}` rather than
+raising — `fallback_line`'s own scene-level `fallback` text and its
+generic last resort keep a show airing even with no narration config at
+all, the same soft-degradation contract as an LLM/TTS outage.
 
 ## Signature
 
 ```python
-def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
-                 boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None, verbatim=False) -> list[dict]
+def load_narration_config(campaign, *, campaigns_dir=None) -> dict
 
-def plan_scenes(events: list[dict]) -> list[dict]
-def scene_visual_seconds(scene, max_output_lines, speed=1.0) -> float
+def scene_visual_seconds(scene, primitives, *, max_output_lines=24, speed=1.0) -> float
+
 def target_words(seconds: float) -> int
-def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
+
+def fallback_line(scene, narration_config, primitives, max_words, names) -> str
+
+def narrate_scene(scene, llm, words, names, narration_config, primitives,
                   verbatim=False) -> str
-def fallback_narration(scene, max_words) -> str
+
+def prepare_show(episode, llm, tts, workdir, *, primitives, narration_config,
+                 worker_name="KODI-7", boss_name="the boss", speed=1.0,
+                 max_output_lines=24, progress=None, speaker_names=None,
+                 verbatim=False) -> list[dict]
+
+class SpeakerNames:
+    worker_name: str = "KODI-7"
+    boss_name: str = "the boss"
+    speaker_names: dict = {}
 ```
+
+**Deleted** (campaign_platform_contract.md §5 — the event-grouping layer): `plan_scenes`,
+`_PROMPTS`, `fallback_narration`, `_scene_material`, `MAX_SCENE_EVENTS`.
+There is nothing left to group — a generator already emits scene-sized
+units — and `MAX_SCENE_EVENTS`'s old job (capping how much screen time one
+spoken line has to cover) is now `config/validation.yaml`'s
+`limits.max_scene_seconds` validator rule, checked once at ingest rather
+than by silently regrouping behind the generator's back.
+
+**Kept unchanged:** `WORDS_PER_SECOND=2.5`, `MIN_WORDS=8`, `MAX_WORDS=130`,
+`target_words`, `_trim_words`, `_display_name`'s resolution order,
+`SYSTEM_PROMPT`, and `prepare_show`'s soft-degradation contract.
 
 ## Parameters
 
-- `script` (dict, required): a parsed episode script (`events` list).
+- `episode` (dict, required): a normalized/validated episode — `meta`,
+  `cast`, `scenes` (each with `speaker`/`kind`/`text`/`fallback`/`mode`/
+  `render`), per campaign_platform_contract.md §1. `prepare_show` reads `episode['scenes']`
+  directly.
+- `primitives` (dict, required for every function above except
+  `target_words`/`fallback_line` sans render): the merged recipe table
+  for the episode's campaign (`primitives.load_primitives(campaign)`) —
+  needed to estimate screen time (`scene_visual_seconds`) and to describe
+  a scene's visuals to the LLM/fallback (`render_summary`, via
+  `narrate_scene`/`fallback_line`).
+- `narration_config` (dict, required): `load_narration_config(campaign)`'s
+  output — `{kind: {prompt, fallback_template}}`.
 - `llm` (object or None): anything with `complete(system_prompt, messages)`
   — `llm_client.build_llm_client(config)` in practice. `None` skips the LLM
-  and uses template narration.
+  and uses `fallback_line`.
 - `tts` (`TTSClient` or None): from `tts_client.build_tts_client`. `None`
   produces a narrated-but-silent show (text lines, no audio).
 - `workdir` (path, required): where scene WAVs are written (a per-show
@@ -101,63 +154,77 @@ def fallback_narration(scene, max_words) -> str
   word-count sizing reflects real screen time.
 - `progress` (callable, optional): called with one message per scene —
   the theater pane prints these as a "preparing tonight's episode" screen.
-- `speaker_names` (dict, optional): speaker id → display name, resolved
-  by `_display_name(speaker, speaker_names, worker_name, boss_name)` for
-  any event carrying a per-event `"speaker"` override (see Scene grammar
-  above). Falls back to `boss_name`/`worker_name` for the `"boss"`/
-  `"coder"` ids and to the raw speaker id as a last resort. Real parsed
-  scripts never set `"speaker"`, so omitting this kwarg reproduces
-  today's boss/coder-only behavior exactly.
+- `names` (`SpeakerNames`): bundles `worker_name`/`boss_name`/
+  `speaker_names` for `_display_name`'s resolution order (explicit
+  `speaker_names` override → `boss_name`/`worker_name` for the `"boss"`/
+  `"coder"` ids → the raw speaker id). `prepare_show`/`narrate_scene`'s
+  callers (`replay.py`'s `prepare_voiced_show`, `replay_pane.py`) still
+  take `worker_name`/`boss_name`/`speaker_names` as separate kwargs;
+  `prepare_show` builds the `SpeakerNames` bundle internally.
 - `verbatim` (bool, default `False`; from a worker's `voice.verbatim`
-  config): skip the LLM entirely for `boss`/`coder_talk` scenes and speak
-  the original scripted line in full, untrimmed, instead of a paraphrase
-  sized to the scene's estimated screen time. `coder_work` scenes have no
-  single original line (they describe a run of tool calls), so they are
-  always paraphrased regardless of this flag. A verbatim line that runs
-  longer than the estimate doesn't desync anything — the audio-anchored
-  pacing ([replay.md](replay.md)) just holds the scene a bit longer for
-  the voice to finish once the visual-pacing clamp is hit, same as any
-  scene where the spoken line runs long.
+  config): skip the LLM entirely whenever a scene's own `text` is
+  non-empty, and speak it in full, untrimmed, instead of a paraphrase
+  sized to the scene's estimated screen time. A scene with no scripted
+  text (pure visual business — `kind` no longer implies this the way
+  `coder_work` used to) always goes through the LLM/fallback path
+  regardless of this flag — replaces the old `kind in ("boss",
+  "coder_talk")` check now that `kind` is campaign-defined rather than a
+  fixed set. A verbatim line that runs longer than the estimate doesn't
+  desync anything — the audio-anchored pacing ([replay.md](replay.md))
+  just holds the scene a bit longer for the voice to finish once the
+  visual-pacing clamp is hit, same as any scene where the spoken line
+  runs long.
 
 ## Return Value
 
-`plan_scenes`' scene list, each annotated with:
+`prepare_show` returns `episode['scenes']` — the SAME list, annotated in
+place (no grouping/copy step any more) — each scene gaining:
 
 - `narration` (str, always present) — the spoken line
 - `audio` (`tts_client.Narration` or None) — path + measured duration;
   None means the scene performs silently
 
-Pass the list straight to `Performer.perform(script, show=...)`.
+Pass the list straight to `Performer.perform(episode, show=...)`.
+
+`fallback_line` and `narrate_scene` return a single spoken line (str,
+never empty) — the last-resort text a show speaks when the LLM is down or
+unconfigured.
 
 ## Dependencies
 
-`replay.py` (the pacing estimator — kept in lockstep with the Performer's
-handlers), and duck-typed `llm_client` / `tts_client` instances supplied by
-the caller. Standard library otherwise.
+`app/primitives.py` (`estimate_scene_seconds`, `render_summary` — the
+screen-time estimator and visuals-description helper, both frozen per
+campaign_platform_contract.md §2), `PyYAML` (narration config), and duck-typed `llm_client` /
+`tts_client` instances supplied by the caller. Standard library otherwise.
 
 ## Usage Examples
 
-The glue most callers want (builds LLM + TTS from a worker config):
+The glue most callers want (builds LLM + TTS + primitives/narration config
+from a worker config and a campaign name):
 
 ```python
 from replay import Performer, prepare_voiced_show
 import tempfile
 
 with tempfile.TemporaryDirectory() as workdir:
-    show = prepare_voiced_show(script, worker_config, workdir,
-                               worker_name="KODI-7", progress=print)
-    Performer(worker_name="KODI-7").perform(script, show=show)
+    show = prepare_voiced_show(episode, worker_config, workdir,
+                               worker_name="KODI-7", campaign="coder",
+                               progress=print)
+    Performer(worker_name="KODI-7", primitives=primitives_table).perform(episode, show=show)
 ```
 
-Direct use with explicit clients:
+Direct use with explicit clients and config:
 
 ```python
 from llm_client import build_llm_client
 from tts_client import build_tts_client
-from revoice import prepare_show
+from primitives import load_primitives
+from revoice import load_narration_config, prepare_show
 
-show = prepare_show(script, build_llm_client(config),
-                    build_tts_client(config), "/tmp/show")
+primitives = load_primitives("coder")
+narration_config = load_narration_config("coder")
+show = prepare_show(episode, build_llm_client(config), build_tts_client(config),
+                    "/tmp/show", primitives=primitives, narration_config=narration_config)
 voiced = sum(1 for scene in show if scene["audio"])
 ```
 
@@ -165,15 +232,40 @@ voiced = sum(1 for scene in show if scene["audio"])
 
 The show must always air, so every step degrades instead of raising:
 
-- LLM unreachable / empty reply → `fallback_narration` builds the line
-  from the (already-redacted) script text.
+- LLM unreachable / empty reply / no prompt configured for a scene's
+  `kind` → `fallback_line` builds the line from the scene's own
+  `fallback` text, or a `narration_config` `fallback_template`, or a
+  generic last resort built from `render_summary`.
+- A broken `fallback_template` (references a token this module doesn't
+  supply) degrades to the raw template text rather than raising — this
+  function IS the last line of defense.
+- A missing or malformed `narration.yaml` degrades `load_narration_config`
+  to `{}` rather than raising.
 - TTS failure on a scene → that scene's `audio` is None (plays silent at
   normal pacing); reported via `progress`.
-- Narration only ever sees parser-redacted material, so nothing new can
-  leak to a broadcast pane.
+- Narration only ever sees already-validated (and, when
+  `config/validation.yaml`'s `redaction.on_match` is `"redact"`, already-
+  scrubbed) episode text, so nothing new can leak to a broadcast pane.
 
 ## Changelog
 
+- **v2.0.0** (2026-07-26, campaign-platform build, campaign_platform_contract.md §5):
+  **`plan_scenes`, `_PROMPTS`, `fallback_narration`, `_scene_material`,
+  `MAX_SCENE_EVENTS` deleted.** `prepare_show` now iterates
+  `episode['scenes']` directly — no grouping step, since a campaign
+  generator already emits scene-sized units. New `load_narration_config`
+  (loads `config/campaigns/<campaign>/narration.yaml`), `fallback_line`
+  (scene `fallback` → narration config `fallback_template` →
+  `render_summary`-based generic last resort), new `SpeakerNames`
+  dataclass bundling `worker_name`/`boss_name`/`speaker_names` for
+  `_display_name`/`narrate_scene`/`fallback_line`. `scene_visual_seconds`
+  is now a thin delegate to `primitives.estimate_scene_seconds` (kept as
+  the public name since `replay_pane.py` and tests already use it).
+  `verbatim` now keys off "does this scene have non-empty `text`" instead
+  of `kind in ("boss", "coder_talk")`, since `kind` is campaign-defined
+  rather than a fixed set. `narrate_scene`/`prepare_show` gained required
+  `primitives`/`narration_config` parameters. See
+  docs/campaign_platform_build.md.
 - **v1.3.0** (2026-07-19): New `voice.verbatim` config flag, threaded through
   `prepare_show`/`narrate_scene` as `verbatim=False`. When `True`,
   `boss`/`coder_talk` scenes skip the LLM paraphrase entirely and speak
@@ -198,8 +290,8 @@ The show must always air, so every step degrades instead of raising:
   defaults → the raw speaker id). `narrate_scene` and `prepare_show` both
   gained an optional `speaker_names=None` kwarg threaded straight through
   to `_display_name`. Together this lets a hand-authored episode script
-  (`replays/sample.json`) assign distinct dialogue to up to 6 personas —
-  see [duet_replay.md](duet_replay.md)'s "Ownership & uncast-speaker
+  assign distinct dialogue to up to 6 personas — see
+  [duet_replay.md](duet_replay.md)'s "Ownership & uncast-speaker
   defaulting" section for how the cast/display-name wiring plays out
   end-to-end.
 - **v1.1.0** (2026-07-12): No code changes to this module, but `plan_scenes`

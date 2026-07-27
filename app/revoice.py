@@ -1,92 +1,97 @@
 """
 revoice.py
-Per-airing narration pass for Rerun Theater: turns a parsed episode script
-(session_log_parser.py) into a *voiced show* — the script's events grouped
-into scenes, each with a short spoken line (boss or coder voice) and its
-synthesized audio.
+Per-airing narration pass for Rerun Theater: turns a validated episode
+(app/episode_schema.py) into a *voiced show* -- the episode's own scenes,
+each given a short spoken line and its synthesized audio.
 
 Runs at showtime, per airing (never baked into the episode library), so
 every re-run of the same episode gets fresh dialogue from the local LLM.
-Tool_call events are never altered — narration is ADDITIVE; the on-screen
-commands/edits/outputs stay exactly what the parser recorded
-(docs/session_log_parser.md's re-voicing contract).
+A scene's `render[]` entries are never altered -- narration is ADDITIVE;
+the on-screen primitives stay exactly what the episode scripted
+(docs/campaign_platform_build.md's re-voicing contract).
 
 Timing model (docs/replay.md):
-1. Estimate how long each scene takes to render on screen at base pacing.
-2. Ask the LLM for a spoken line of roughly the matching word count — a
-   scene with minutes of scrolling output gets enough narration to fill it.
+1. Estimate how long each scene takes to render on screen at base pacing
+   (app/primitives.py::estimate_scene_seconds, over the scene's own
+   render[] recipes). There is no event-grouping step here any more --
+   a campaign generator already emits scene-sized units, one spoken line
+   per scene (docs/campaign_platform_build.md "What this deletes").
+2. Ask the LLM for a spoken line of roughly the matching word count -- a
+   scene with a long visual sequence gets enough narration to fill it.
 3. Synthesize the line and MEASURE the real audio duration; the performer
    then scales the scene's visual pacing so text and speech finish together
    (audio anchors, visuals adapt).
 
-Every step degrades gracefully: LLM unreachable -> template narration built
-from the (already-redacted) script text; TTS failure -> the scene simply
-plays silent at normal pacing. A show must never fail to air.
+Every step degrades gracefully: LLM unreachable -> the scene's own
+`fallback` text, or a narration.yaml fallback_template, or a last-resort
+line built from render_summary(); TTS failure -> the scene simply plays
+silent at normal pacing. A show must never fail to air.
 """
+import logging
+from dataclasses import dataclass, field
 from pathlib import Path
 
-from replay import estimate_event_seconds
+import yaml
 
-WORDS_PER_SECOND = 2.5   # ~150 wpm — typical conversational TTS rate
+from primitives import estimate_scene_seconds, render_summary
+
+log = logging.getLogger("revoice")
+
+WORDS_PER_SECOND = 2.5   # ~150 wpm -- typical conversational TTS rate
 MIN_WORDS = 8            # even a 1-second scene gets a real sentence
 MAX_WORDS = 130          # cap one scene's monologue (~50s of speech)
-MAX_SCENE_CONTEXT = 1800  # chars of scene material shown to the LLM
-MAX_SCENE_EVENTS = 8     # split marathon tool runs into multiple scenes
 
 SYSTEM_PROMPT = (
     "You write single spoken lines for a VTuber stream where AI personas "
-    "re-enact a real software development session. Reply with ONLY the "
-    "spoken line - no quotes, no stage directions, no markdown. Keep it "
-    "natural, casual, and in character. Never invent file names, commands, "
-    "or results that are not in the material given."
+    "re-enact a scripted campaign. Reply with ONLY the spoken line - no "
+    "quotes, no stage directions, no markdown. Keep it natural, casual, "
+    "and in character. Never invent details that are not in the material "
+    "given."
 )
 
 
-# ── Scene planning ────────────────────────────────────────────────────────────
+# -- Narration config loading --------------------------------------------------
 
-def plan_scenes(events):
-    """Group a script's events into scenes, each owned by one speaker.
-
-    boss        — one user_message (the boss talking to the coder)
-    coder_talk  — one assistant_text (the coder addressing the stream)
-    coder_work  — a run of consecutive tool_calls (the coder doing things),
-                  capped at MAX_SCENE_EVENTS so one spoken line never has to
-                  cover an unbounded stretch of screen time.
-    """
-    scenes = []
-    work = []
-
-    def flush_work():
-        nonlocal work
-        for start in range(0, len(work), MAX_SCENE_EVENTS):
-            chunk = work[start:start + MAX_SCENE_EVENTS]
-            speaker = chunk[0].get("speaker") or "coder"
-            scenes.append({"kind": "coder_work", "speaker": speaker, "events": chunk})
-        work = []
-
-    for event in events:
-        kind = event.get("type")
-        if kind == "tool_call":
-            speaker = event.get("speaker") or "coder"
-            if work and (work[0].get("speaker") or "coder") != speaker:
-                flush_work()
-            work.append(event)
-            continue
-        flush_work()
-        if kind == "user_message":
-            scenes.append({"kind": "boss", "speaker": event.get("speaker") or "boss", "events": [event]})
-        elif kind == "assistant_text":
-            scenes.append({"kind": "coder_talk", "speaker": event.get("speaker") or "coder", "events": [event]})
-        # unknown event types: the performer skips them, so we drop them here
-        # too rather than desync scene timing estimates
-    flush_work()
-    return scenes
+def _default_campaigns_dir():
+    in_container = Path("/config/campaigns")
+    if in_container.is_dir():
+        return in_container
+    return Path("config") / "campaigns"
 
 
-def scene_visual_seconds(scene, max_output_lines, speed=1.0):
-    """Wall-clock seconds this scene takes to render at the given speed."""
-    total = sum(estimate_event_seconds(e, max_output_lines) for e in scene["events"])
-    return total / max(speed, 0.01)
+def load_narration_config(campaign, *, campaigns_dir=None):
+    """config/campaigns/<campaign>/narration.yaml -> {kind: {prompt,
+    fallback_template}}.
+
+    Missing file (or any load failure) degrades to an empty config rather
+    than raising -- fallback_line()'s own scene['fallback'] and its
+    generic last resort keep a show airing even with no narration config
+    at all, the same soft-degradation contract as an LLM/TTS outage."""
+    campaigns_dir = Path(campaigns_dir) if campaigns_dir is not None else _default_campaigns_dir()
+    path = Path(campaigns_dir) / campaign / "narration.yaml"
+    if not path.is_file():
+        log.debug("no narration config at %s for campaign %r; scenes fall back to "
+                 "their own 'fallback' text", path, campaign)
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except OSError as exc:
+        log.error("failed to read narration config %s: %s", path, exc)
+        return {}
+    except yaml.YAMLError as exc:
+        log.error("failed to parse narration config %s: %s", path, exc)
+        return {}
+    return data or {}
+
+
+def scene_visual_seconds(scene, primitives, *, max_output_lines=24, speed=1.0):
+    """Thin delegate to primitives.estimate_scene_seconds -- kept as the
+    public name because replay_pane.py and the existing tests already use
+    it. All the per-`kind` timing branching that used to live here is gone;
+    screen time is now entirely a function of the scene's own render[]
+    recipes (see docs/campaign_platform_build.md "What this deletes")."""
+    return estimate_scene_seconds(scene, primitives, max_output_lines=max_output_lines, speed=speed)
 
 
 def target_words(seconds):
@@ -94,7 +99,7 @@ def target_words(seconds):
     return max(MIN_WORDS, min(MAX_WORDS, int(seconds * WORDS_PER_SECOND)))
 
 
-# ── Narration text ────────────────────────────────────────────────────────────
+# -- Narration text -------------------------------------------------------------
 
 def _trim_words(text, max_words):
     words = " ".join(text.split()).split(" ")
@@ -103,157 +108,138 @@ def _trim_words(text, max_words):
     return " ".join(words[:max_words]) + "…"
 
 
-def _scene_material(scene):
-    """Compact, truncated rendering of a scene's events for the LLM prompt.
-    The script is already redacted upstream, so this is broadcast-safe."""
-    parts = []
-    for event in scene["events"]:
-        kind = event.get("type")
-        if kind in ("user_message", "assistant_text"):
-            parts.append(event.get("text", ""))
-            continue
-        tool = event.get("tool", "?")
-        detail = event.get("detail") or {}
-        if tool in ("Bash", "PowerShell"):
-            parts.append(f"ran: {detail.get('command', event.get('input_summary', ''))}")
-            output = detail.get("output")
-            if output:
-                parts.append(f"output: {output[:400]}")
-        elif tool == "Edit":
-            parts.append(f"edited {detail.get('file', '?')}")
-        elif tool == "Write":
-            parts.append(f"wrote {detail.get('file', '?')}")
-        elif tool == "Read":
-            parts.append(f"read {detail.get('file', '?')}")
-        else:
-            parts.append(f"{tool}: {event.get('input_summary', '')[:120]}")
-        if event.get("error"):
-            parts.append("(that one FAILED)")
-    return "\n".join(parts)[:MAX_SCENE_CONTEXT]
+@dataclass
+class SpeakerNames:
+    """Bundles the three inputs _display_name resolves a speaker id
+    against (CONTRACT.md §5: "`names` bundles worker_name/boss_name/
+    speaker_names"): an explicit per-speaker override wins, then the
+    boss/coder legacy defaults, then the raw speaker id."""
+    worker_name: str = "KODI-7"
+    boss_name: str = "the boss"
+    speaker_names: dict = field(default_factory=dict)
 
 
-_PROMPTS = {
-    "boss": (
-        "You are voicing {name}, the boss, sending the dev a request. "
-        "Re-voice this message as ONE natural spoken line of about {words} "
-        "words, keeping every concrete requirement intact:\n\n{material}"
-    ),
-    "coder_talk": (
-        "You are voicing {name}, live-streaming their work. Re-voice this "
-        "narration in your own words, about {words} words, keeping the "
-        "technical content accurate:\n\n{material}"
-    ),
-    "coder_work": (
-        "You are voicing {name}, live-streaming their work. Describe out "
-        "loud, present tense, what you are doing in these recorded actions "
-        "- about {words} words, enough to talk over the whole "
-        "sequence:\n\n{material}"
-    ),
-}
-
-
-def fallback_narration(scene, max_words):
-    """Narration built without an LLM, straight from the redacted script."""
-    kind = scene["kind"]
-    if kind == "boss":
-        return _trim_words(scene["events"][0].get("text", "New instructions."), max_words)
-    if kind == "coder_talk":
-        return _trim_words(scene["events"][0].get("text", "Let me think."), max_words)
-    actions = []
-    for event in scene["events"]:
-        tool = event.get("tool", "?")
-        detail = event.get("detail") or {}
-        if tool in ("Bash", "PowerShell"):
-            command = (detail.get("command") or event.get("input_summary") or "a command")
-            actions.append(f"running {command.splitlines()[0][:60]}")
-        elif tool in ("Edit", "Write"):
-            target = detail.get("file") or "a file"
-            actions.append(f"{'editing' if tool == 'Edit' else 'writing'} {Path(target).name}")
-        elif tool == "Read":
-            actions.append(f"checking {Path(detail.get('file') or 'a file').name}")
-        else:
-            actions.append(f"using {tool}")
-    line = "Okay — " + ", then ".join(actions[:4]) + "."
-    return _trim_words(line, max_words)
-
-
-def _display_name(speaker, speaker_names, worker_name, boss_name):
+def _display_name(speaker, names):
     """Resolve a scene's speaker id to the name it's voiced/labeled under:
-    an explicit `speaker_names` override, then the two backward-compat
-    defaults (`boss_name` for "boss", `worker_name` for "coder"), then the
-    raw speaker id as a last resort."""
-    speaker_names = speaker_names or {}
+    an explicit `names.speaker_names` override, then the two backward-
+    compat defaults (`names.boss_name` for "boss", `names.worker_name` for
+    "coder"), then the raw speaker id as a last resort."""
+    speaker_names = names.speaker_names or {}
     if speaker in speaker_names:
         return speaker_names[speaker]
     if speaker == "boss":
-        return boss_name
+        return names.boss_name
     if speaker == "coder":
-        return worker_name
+        return names.worker_name
     return speaker
 
 
-def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
-                   verbatim=False):
-    """One spoken line for the scene: LLM-voiced, falling back to the
-    template line if the LLM is unreachable or returns nothing usable.
+def fallback_line(scene, narration_config, primitives, max_words, names):
+    """Narration built without an LLM -- the last line of defense, so this
+    must always produce something speakable and must never raise.
 
-    `verbatim=True` skips paraphrasing entirely for `boss`/`coder_talk`
-    scenes — the original scripted line is spoken in full, untrimmed,
-    with no LLM call at all. `coder_work` scenes have no single original
-    line to read (they describe a run of tool calls), so they always go
-    through the normal LLM/fallback path regardless of `verbatim`."""
-    if verbatim and scene["kind"] in ("boss", "coder_talk"):
-        default = "New instructions." if scene["kind"] == "boss" else "Let me think."
-        return " ".join(scene["events"][0].get("text", default).split())
-    name = _display_name(scene["speaker"], speaker_names, worker_name, boss_name)
-    prompt = _PROMPTS[scene["kind"]].format(
-        name=name, words=words,
-        material=_scene_material(scene),
-    )
-    if llm is not None:
+    Priority: the scene's own `fallback` text, then narration_config's
+    `fallback_template` for this scene's `kind` (formatted with
+    {name}/{render_summary}/{text}), then a generic last resort built from
+    render_summary()."""
+    fallback = (scene.get("fallback") or "").strip()
+    if fallback:
+        return _trim_words(fallback, max_words)
+
+    kind_cfg = narration_config.get(scene.get("kind")) or {}
+    template = kind_cfg.get("fallback_template")
+    if template:
+        name = _display_name(scene.get("speaker"), names)
+        try:
+            line = template.format(
+                name=name,
+                render_summary=render_summary(scene, primitives),
+                text=scene.get("text", ""),
+            )
+        except Exception:
+            log.debug("fallback_template formatting failed for kind %r; using raw template",
+                     scene.get("kind"), exc_info=True)
+            line = template
+        line = line.strip()
+        if line:
+            return _trim_words(line, max_words)
+
+    summary = render_summary(scene, primitives)
+    return _trim_words(summary or "Let's keep going.", max_words)
+
+
+def narrate_scene(scene, llm, words, names, narration_config, primitives, verbatim=False):
+    """One spoken line for the scene: LLM-voiced, falling back to
+    fallback_line() if the LLM is unreachable, unconfigured, has no prompt
+    for this scene's `kind`, or returns nothing usable.
+
+    `verbatim=True` speaks scene['text'] in full with no LLM call whenever
+    `text` is non-empty -- this replaces today's `kind in ("boss",
+    "coder_talk")` check now that `kind` is campaign-defined rather than a
+    fixed set (CONTRACT.md §5)."""
+    text = scene.get("text") or ""
+    if verbatim and text.strip():
+        return " ".join(text.split())
+
+    kind_cfg = narration_config.get(scene.get("kind")) or {}
+    prompt_template = kind_cfg.get("prompt")
+    if prompt_template and llm is not None:
+        name = _display_name(scene.get("speaker"), names)
+        material = text if text.strip() else render_summary(scene, primitives)
+        prompt = prompt_template.format(
+            name=name, words=words, text=text, material=material,
+            render_summary=render_summary(scene, primitives),
+        )
         try:
             line = (llm.complete(SYSTEM_PROMPT, [{"role": "user", "content": prompt}]) or "").strip()
             if line:
-                # A hard cap only — the word budget is a suggestion to the
+                # A hard cap only -- the word budget is a suggestion to the
                 # LLM; the performer syncs to whatever duration comes back.
                 return _trim_words(line, MAX_WORDS * 2)
         except Exception:
             pass  # LLM down mid-show: the fallback keeps the show airing
-    return fallback_narration(scene, words)
+    return fallback_line(scene, narration_config, primitives, words, names)
 
 
-# ── Show preparation (the per-airing pass) ────────────────────────────────────
+# -- Show preparation (the per-airing pass) ------------------------------------
 
-def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
-                 boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None, verbatim=False):
+def prepare_show(episode, llm, tts, workdir, *, primitives, narration_config,
+                 worker_name="KODI-7", boss_name="the boss", speed=1.0,
+                 max_output_lines=24, progress=None, speaker_names=None,
+                 verbatim=False):
     """Build the voiced show for one airing.
 
-    Returns plan_scenes()' scenes, each annotated with:
-        narration — the spoken line (always present)
-        audio     — tts_client.Narration (path + measured duration), or None
-                    when TTS is disabled/failed (scene plays silent).
+    Iterates episode['scenes'] DIRECTLY -- no grouping step; a campaign
+    generator already emits scene-sized units
+    (docs/campaign_platform_build.md "What this deletes"). Returns those
+    same scene dicts annotated with:
+        narration -- the spoken line (always present)
+        audio     -- tts_client.Narration (path + measured duration), or
+                    None when TTS is disabled/failed (scene plays silent).
 
     `progress(message)` is called per scene so the theater pane can show
-    "preparing tonight's episode…" while the LLM and TTS work. `speaker_names`
-    maps speaker id -> display name for any per-event speaker overrides
-    (see plan_scenes); it falls back to worker_name/boss_name/raw id.
-    `verbatim=True` (from a worker's `voice.verbatim` config) reads
-    boss/coder dialogue lines in full instead of paraphrasing them to fit
-    the estimated screen time — see `narrate_scene`. The audio-anchored
-    pacing in replay.py adapts either way, so a longer verbatim line just
-    holds the scene a little longer rather than desyncing.
+    "preparing tonight's episode…" while the LLM and TTS work.
+    `speaker_names` maps speaker id -> display name for any per-scene
+    speaker overrides; it falls back to worker_name/boss_name/raw id (see
+    SpeakerNames/_display_name). `verbatim=True` (from a worker's
+    `voice.verbatim` config) reads a scene's own text in full instead of
+    paraphrasing it to fit the estimated screen time -- see narrate_scene.
+    The audio-anchored pacing in replay.py adapts either way, so a longer
+    verbatim line just holds the scene a little longer rather than
+    desyncing.
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
     workdir.mkdir(parents=True, exist_ok=True)
-    scenes = plan_scenes(script.get("events", []))
+    names = SpeakerNames(worker_name=worker_name, boss_name=boss_name,
+                         speaker_names=speaker_names or {})
+    scenes = episode["scenes"]
     for index, scene in enumerate(scenes):
-        seconds = scene_visual_seconds(scene, max_output_lines, speed)
+        seconds = scene_visual_seconds(scene, primitives, max_output_lines=max_output_lines, speed=speed)
         words = target_words(seconds)
         notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
-        scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name,
-                                            speaker_names=speaker_names, verbatim=verbatim)
+        scene["narration"] = narrate_scene(scene, llm, words, names, narration_config,
+                                           primitives, verbatim=verbatim)
         scene["audio"] = None
         if tts is None:
             continue

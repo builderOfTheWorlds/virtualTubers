@@ -1,6 +1,11 @@
 """Tests for app/narration_store.py — direct Postgres persistence for voiced
 replay narrations (docs/narration_store.md). No real DB: _connect() is always
-monkeypatched to a fake connection/cursor recording what would be sent."""
+monkeypatched to a fake connection/cursor recording what would be sent.
+
+Campaign namespacing (CONTRACT.md §7): save_airing/load_latest_airing gained
+a `campaign` parameter so two campaigns sharing an episode filename/stem
+never collide on "latest airing of X" -- see the dedicated tests below.
+load_airing(message_id) is unaffected (keyed on the opaque airing id)."""
 import struct
 import sys
 import types
@@ -140,7 +145,7 @@ def test_save_airing_writes_one_row_per_scene_and_closes_connection(monkeypatch,
     monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
 
     result = narration_store.save_airing(
-        "msg-1", "coder", "ep1", "2026-07-12T00:00:00+00:00", show,
+        "msg-1", "coder", "ep1", "2026-07-12T00:00:00+00:00", show, campaign="coder",
     )
 
     assert result == 2
@@ -152,6 +157,7 @@ def test_save_airing_writes_one_row_per_scene_and_closes_connection(monkeypatch,
     assert params0["message_id"] == "msg-1"
     assert params0["worker_id"] == "coder"
     assert params0["episode"] == "ep1"
+    assert params0["campaign"] == "coder"
     assert params0["aired_at"] == "2026-07-12T00:00:00+00:00"
     assert params0["scene_index"] == 0
     assert params0["scene_kind"] == "coder_talk"
@@ -165,6 +171,7 @@ def test_save_airing_writes_one_row_per_scene_and_closes_connection(monkeypatch,
     assert params1["scene_kind"] == "boss"
     assert params1["speaker"] == "boss"
     assert params1["text"] == "ship the login fix"
+    assert params1["campaign"] == "coder"
     assert params1["audio"] is None
     assert params1["audio_duration_s"] is None
 
@@ -185,7 +192,7 @@ def test_save_airing_closes_connection_even_when_execute_raises(monkeypatch, tmp
     monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
 
     with pytest.raises(RuntimeError):
-        narration_store.save_airing("msg-1", "coder", "ep1", "now", show)
+        narration_store.save_airing("msg-1", "coder", "ep1", "now", show, campaign="coder")
 
     assert fake_conn.closed is True
 
@@ -200,7 +207,7 @@ def test_load_latest_airing_returns_dicts_with_message_id_and_bytes_audio(monkey
     fake_conn = FakeConn(fetch_rows=rows)
     monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
 
-    result = narration_store.load_latest_airing("ep1")
+    result = narration_store.load_latest_airing("ep1", "coder")
 
     assert fake_conn.closed is True
     assert result == [
@@ -214,11 +221,25 @@ def test_load_latest_airing_returns_dicts_with_message_id_and_bytes_audio(monkey
     assert isinstance(result[0]["audio"], bytes)
 
 
+def test_load_latest_airing_scopes_query_to_episode_and_campaign(monkeypatch):
+    """CONTRACT.md §7: two campaigns sharing an episode filename/stem must
+    never reuse each other's cached airing -- the query has to filter on
+    BOTH episode and campaign, not episode alone."""
+    fake_conn = FakeConn(fetch_rows=[])
+    monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
+
+    narration_store.load_latest_airing("ep1", "dnd")
+
+    sql, params = fake_conn.cur.calls[0]
+    assert "campaign = %(campaign)s" in sql
+    assert params == {"episode": "ep1", "campaign": "dnd"}
+
+
 def test_load_latest_airing_returns_none_when_nothing_cached(monkeypatch):
     fake_conn = FakeConn(fetch_rows=[])
     monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
 
-    result = narration_store.load_latest_airing("ep1")
+    result = narration_store.load_latest_airing("ep1", "coder")
 
     assert result is None
     assert fake_conn.closed is True

@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "schema": 1,
+    "campaign": "coder",
+    "id": "sample",
+    "title": "Sample Coder Session",
+    "created": "2026-07-26T00:00:00Z"
+  },
+  "cast": ["boss", "coder"],
+  "scenes": [
+    {
+      "speaker": "boss",
+      "kind": "boss",
+      "text": "Hey, can you fix the flaky test in the login suite?",
+      "fallback": "The boss asks for a fix to the flaky login test.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_boss_message",
+         "payload": {"text": "Hey, can you fix the flaky test in the login suite?"}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_talk",
+      "text": "On it, boss. Let me take a look.",
+      "fallback": "The coder acknowledges and gets started.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_coder_line",
+         "payload": {"text": "On it, boss. Let me take a look.", "name": "KODI-7"}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Checking what's actually failing, then fixing the off-by-one in the timeout check.",
+      "fallback": "Running the tests, then fixing the timeout check.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_command",
+         "payload": {"command": "pytest tests/test_login.py -x",
+                     "output": "FAILED tests/test_login.py::test_session_timeout"}},
+        {"primitive": "show_diff",
+         "payload": {"file": "app/login.py",
+                     "hunks": ["- if elapsed > timeout:", "+ if elapsed >= timeout:"]}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Adding a regression test so this doesn't come back.",
+      "fallback": "Writing a regression test for the boundary case.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_write",
+         "payload": {"file": "tests/test_login_timeout.py",
+                     "content": "def test_session_timeout_exact_boundary():\n    assert session_expired(timeout=30, elapsed=30)\n"}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Double-checking the worker config didn't drift while I was in there.",
+      "fallback": "Checking the worker config.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_read", "payload": {"file": "config/worker.yaml"}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Kicking off a subagent to confirm the whole suite is green before I call it done.",
+      "fallback": "Running the full suite one more time.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_tool",
+         "payload": {"tool": "Agent",
+                     "summary": "spawn test-runner subagent to confirm the whole suite passes"}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_work",
+      "text": "Hmm, that push didn't go through.",
+      "fallback": "The push failed and needs a retry.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_command",
+         "payload": {"command": "git push origin workingBranch", "error": true}}
+      ]
+    },
+    {
+      "speaker": "coder",
+      "kind": "coder_talk",
+      "text": "All green — fix is in, regression test's in place, should be good to go.",
+      "fallback": "Everything's green and the fix is ready.",
+      "mode": "sequence",
+      "render": [
+        {"primitive": "show_coder_line",
+         "payload": {"text": "All green — fix is in, regression test's in place, should be good to go.",
+                     "name": "KODI-7"}}
+      ]
+    }
+  ]
+}

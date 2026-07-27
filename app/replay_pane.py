@@ -11,10 +11,15 @@ REPLAY_REQUEST_FILE atomically; this pane polls for it, performs the
 episode, deletes the file, and returns to the idle screen. File-based on
 purpose — the pane never consumes Kafka and never executes anything from
 the bus; the only thing a bus message can influence is WHICH pre-built,
-pre-redacted episode in the library gets played.
+pre-validated episode in the library gets played.
 
-Episode names are resolved strictly to basenames inside REPLAY_LIBRARY, so
-a hostile payload can't traverse to arbitrary files.
+Episode names are resolved strictly to basenames inside
+REPLAY_LIBRARY/<campaign>/, so a hostile payload can't traverse to
+arbitrary files, and can't reach another campaign's library either
+(CONTRACT.md §7 campaign namespacing). Episodes are loaded and validated
+through app/episode_schema.py -- the same validator a generator's build
+pipeline runs, per docs/campaign_platform_build.md's "same config and same
+engine on both sides".
 
 The pane produces to Kafka (never consumes): after a voiced airing it
 publishes the spoken transcript as a replay_narration message so
@@ -34,19 +39,32 @@ import sys
 import tempfile
 import time
 import uuid
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
+import redis
+
+import episode_schema
 import narration_store
 from agent_state import resolve_state_path
+from build_layout import deep_merge
 from message_bus import MessageProducer, build_message, resolve
-from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
+from primitives import load_primitives
+from replay import Pacer, Palette, Performer, prepare_voiced_show
+from revoice import load_narration_config
+from worker_control import resolve_redis_url
 
 DEFAULT_LIBRARY = "/data/replays"
 DEFAULT_REQUEST_FILE = "/tmp/replay_request.json"
 DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
 IDLE_REDRAW_S = 300  # re-list the library occasionally (new episodes synced in)
+
+# Campaign resolution (CONTRACT.md §7): request["campaign"] > worker config
+# `campaign:` > env REPLAY_CAMPAIGN > "coder". See resolve_campaign().
+DEFAULT_CAMPAIGN = "coder"
+REPLAY_CAMPAIGN_ENV = "REPLAY_CAMPAIGN"
 
 # Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
@@ -81,6 +99,29 @@ REPLAY_FIRST_CUE_TIMEOUT_S = 120.0
 REPLAY_WATCHDOG_GRACE_S = 30.0
 REPLAY_WATCHDOG_MIN_S = 45.0
 
+# ── Persona relay file (agent.py -> this pane; CONTRACT.md §8) ──────────────
+# Same file app/agent.py writes and app/avatar.py also polls. Read here in
+# the idle loop, alongside the request/stop/cue files — this pane NEVER
+# touches Redis for persona state, only this local file
+# (docs/duet_replay.md's "panes never read Kafka/Redis directly" rule).
+PERSONA_FILE_ENV = "PERSONA_FILE"
+DEFAULT_PERSONA_FILE = "/tmp/persona.json"
+
+# ── Mid-airing guard (CONTRACT.md §8) ────────────────────────────────────────
+# worker:{id}:airing -- the ONE piece of persona-assignment state this pane
+# itself writes to Redis (everything else about personas is read-only local
+# file polling, see above). Set for the duration of one performance, cleared
+# in a `finally` so a crashed show can never wedge a worker un-reassignable.
+# services/message-api/api.py reads this (fails OPEN: absent == not airing)
+# to refuse a mid-airing campaign reassignment with 409 unless force=true.
+# Deliberately NOT part of app/worker_control.py (a different key/concept,
+# "enabled") or app/campaign_control.py (CONTRACT.md §8's frozen API is
+# exactly get_active/get_persona/start/stop, nothing else) -- kept local to
+# this module instead of adding a third mirror-shaped control class for one
+# flag.
+_AIRING_KEY_PREFIX = "worker"
+_AIRING_KEY_SUFFIX = "airing"
+
 
 def resolve_self_id(config, worker_name):
     """This worker's bus identity, for duet ownership matching (docs/
@@ -89,6 +130,29 @@ def resolve_self_id(config, worker_name):
     config-less/local run still resolves to a stable identity."""
     bus_config = (config or {}).get("message_bus") or {}
     return bus_config.get("worker_id") or os.environ.get("WORKER_ID") or worker_name
+
+
+def resolve_campaign(request, config, default_campaign=DEFAULT_CAMPAIGN):
+    """Campaign resolution order (CONTRACT.md §7):
+        request["campaign"] > worker config `campaign:` > env
+        REPLAY_CAMPAIGN > "coder".
+
+    An explicit request (the operator's actual ask, or a duet director's
+    invite payload -- see perform_director_request) and a worker's own
+    configured campaign both outrank a bare environment override: they are
+    the more specific signal. REPLAY_CAMPAIGN exists only as a coarse
+    fallback default for a standalone/dev run with no fuller context, which
+    is why only that last tier goes through message_bus.resolve()
+    (env-vs-default precedence) rather than the whole chain -- resolve()'s
+    own convention is "env wins over config", which would be backwards for
+    the first two tiers here."""
+    request_campaign = (request or {}).get("campaign")
+    if request_campaign:
+        return request_campaign
+    worker_campaign = (config or {}).get("campaign")
+    if worker_campaign:
+        return worker_campaign
+    return resolve(REPLAY_CAMPAIGN_ENV, None, default_campaign)
 
 
 def _read_json_file(path):
@@ -102,6 +166,102 @@ def _read_json_file(path):
         return json.loads(p.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
+
+
+def _resolve_persona_file():
+    return os.environ.get(PERSONA_FILE_ENV) or DEFAULT_PERSONA_FILE
+
+
+def persona_identity(persona_doc):
+    """(campaign, speaker) signature — the SAME change-detection key
+    app/agent.py's tick loop and app/avatar.py's poll loop both use, so
+    every consumer of the persona relay file agrees on what counts as "the
+    assigned persona changed". None when there's nothing to key off of."""
+    if not persona_doc:
+        return None
+    return (persona_doc.get("campaign"), persona_doc.get("speaker"))
+
+
+def apply_persona_to_config(config, persona_doc):
+    """Overlay a resolved persona's `voice` section onto a COPY of this
+    pane's worker config (CONTRACT.md §8), so the NEXT airing's
+    prepare_voice/build_tts_client call picks up the newly assigned
+    persona's Piper model — tts_client._LOCAL_VOICES is already keyed by
+    resolved model path, so no unload step is needed, just a config that
+    names the new one.
+
+    deep_merge (not a flat replace), so fields the persona's own `voice`
+    section doesn't set — most importantly `voice.speakers`, needed for ANY
+    worker to correctly direct a multi-persona duet regardless of its own
+    identity — keep coming from the base config untouched.
+
+    Also overlays `campaign`: a replay_request/viewer_joined rerun that
+    doesn't name its own "campaign" should default to whichever campaign
+    this worker is CURRENTLY cast into (resolve_campaign's worker-config
+    tier), not whatever was true at container boot — otherwise a worker
+    freshly cast into a different campaign would keep listing/performing
+    the OLD campaign's episode library by default.
+
+    Never mutates `config`."""
+    new_config = dict(config or {})
+    persona_voice = persona_doc.get("voice")
+    if isinstance(persona_voice, dict):
+        new_config["voice"] = deep_merge((config or {}).get("voice") or {}, persona_voice)
+    campaign = persona_doc.get("campaign")
+    if campaign:
+        new_config["campaign"] = campaign
+    return new_config
+
+
+# ── Mid-airing guard: worker:{id}:airing (CONTRACT.md §8) ───────────────────
+
+def _airing_key(worker_id):
+    return f"{_AIRING_KEY_PREFIX}:{worker_id}:{_AIRING_KEY_SUFFIX}"
+
+
+def _airing_redis_client(config):
+    """Constructed the same way worker_control.WorkerControl is (same URL
+    resolution, same short timeouts) but kept local to this module — see
+    the constants block above for why this doesn't live in
+    worker_control.py or campaign_control.py. Never raises: like
+    WorkerControl's own constructor, redis.Redis.from_url doesn't actually
+    connect until the first command, so there's nothing to catch here."""
+    return redis.Redis.from_url(
+        resolve_redis_url(config), socket_timeout=2, socket_connect_timeout=2,
+        decode_responses=True,
+    )
+
+
+def _set_airing(client, worker_id, airing):
+    """Best-effort write of the mid-airing guard flag — a failure here must
+    NEVER stop or delay a show (same posture as every other best-effort side
+    channel in this module: publish_narration, persist_narration, the duet
+    bus producer/_safe_send). message-api reads this flag and fails OPEN
+    (absent == not airing) specifically so a Redis hiccup can never wedge a
+    legitimate campaign reassignment."""
+    try:
+        if airing:
+            client.set(_airing_key(worker_id), "1")
+        else:
+            client.delete(_airing_key(worker_id))
+    except Exception as exc:
+        print(f"[replay_pane] failed to update airing flag for {worker_id} "
+              f"(airing={airing}): {exc}", file=sys.stderr)
+
+
+@contextmanager
+def _airing_flag(config, self_id):
+    """Set worker:{id}:airing for the duration of one performance and
+    guarantee it's cleared even if the performance raises — "a crashed show
+    can't wedge it forever" is the explicit CONTRACT.md §8 requirement; a
+    bare best-effort set with no `finally` would leave a worker permanently
+    unreassignable after any crash mid-show."""
+    client = _airing_redis_client(config)
+    _set_airing(client, self_id, True)
+    try:
+        yield
+    finally:
+        _set_airing(client, self_id, False)
 
 
 def _delete_stale_file(path):
@@ -159,18 +319,21 @@ def _safe_send(producer, message):
         return False
 
 
-def resolve_episode(library, episode):
-    """Map a requested episode name to a file inside the library.
+def resolve_episode(library, episode, campaign):
+    """Map a requested episode name to a file inside library/<campaign>/.
 
-    Basename-only (no traversal), '.json' optional, and a raw session
-    directory of the same name is accepted too. Returns None when nothing
-    matches — the caller reports, never raises.
+    Basename-only (no traversal) for BOTH `episode` and `campaign` — '.json'
+    optional on the episode name. Returns None when nothing matches — the
+    caller reports, never raises. This is the campaign-namespaced version of
+    the same containment property the library always had (CONTRACT.md §7):
+    a payload can never reach a file outside its own campaign's directory,
+    let alone outside the library.
     """
-    if not episode:
+    if not episode or not campaign:
         return None
     name = Path(str(episode)).name  # strips any path components
-    library = Path(library)
-    for candidate in (library / name, library / f"{name}.json"):
+    campaign_dir = Path(library) / Path(str(campaign)).name
+    for candidate in (campaign_dir / name, campaign_dir / f"{name}.json"):
         if candidate.exists():
             return candidate
     return None
@@ -197,20 +360,21 @@ def read_request(request_file):
     return request
 
 
-def list_episodes(library):
-    library = Path(library)
-    if not library.is_dir():
+def list_episodes(library, campaign):
+    campaign_dir = Path(library) / Path(str(campaign)).name
+    if not campaign_dir.is_dir():
         return []
-    return sorted(p.stem for p in library.glob("*.json"))
+    return sorted(p.stem for p in campaign_dir.glob("*.json"))
 
 
-def draw_idle_screen(library, worker_name):
-    episodes = list_episodes(library)
+def draw_idle_screen(library, worker_name, campaign):
+    episodes = list_episodes(library, campaign)
     print("\x1b[2J\x1b[H", end="")  # clear pane between shows
     print("╔══════════════════════════════════════╗")
     print("║          R E R U N   T H E A T E R   ║")
     print("╚══════════════════════════════════════╝")
     print(f" host: {worker_name}")
+    print(f" campaign: {campaign}")
     if episodes:
         print(f" {len(episodes)} episode(s) in the library:")
         for name in episodes[:20]:
@@ -218,12 +382,12 @@ def draw_idle_screen(library, worker_name):
         if len(episodes) > 20:
             print(f"   … and {len(episodes) - 20} more")
     else:
-        print(f" library empty ({library}) — sync episode scripts to the host")
+        print(f" library empty ({library}/{campaign}) — sync episode scripts to the host")
     print()
     print(' waiting for a replay_request ("perform episode X")…')
 
 
-def prepare_voice(script, config, workdir, worker_name, speed):
+def prepare_voice(episode, config, workdir, worker_name, speed, campaign):
     """Best-effort per-airing narration pass (docs/revoice.md). Returns a
     voiced show, or None for a silent performance — voice being disabled,
     unconfigured, or broken must never stop an episode from airing."""
@@ -231,7 +395,8 @@ def prepare_voice(script, config, workdir, worker_name, speed):
         return None
     try:
         show = prepare_voiced_show(
-            script, config, workdir, worker_name=worker_name, speed=speed,
+            episode, config, workdir, worker_name=worker_name, speed=speed,
+            campaign=campaign,
             progress=lambda message: print(f"[replay_pane] preparing: {message}"),
         )
     except Exception as exc:
@@ -285,7 +450,7 @@ def publish_narration(show, config, episode, worker_name):
     return msg["id"]
 
 
-def persist_narration(message_id, show, config, episode, worker_name):
+def persist_narration(message_id, show, config, episode, worker_name, campaign):
     """Best-effort: upsert the full airing (text + WAV bytes + measured
     duration) directly into Postgres's voiced_narration table via
     app/narration_store.py, so a later replay_request with
@@ -294,6 +459,10 @@ def persist_narration(message_id, show, config, episode, worker_name):
     Kafka being down just means we mint our own id — the cache must still
     work even without a bus. Never raises: a store outage must never stop
     or delay a show.
+
+    `campaign` is stored alongside `episode` (CONTRACT.md §7): two campaigns
+    reusing the same episode filename/stem no longer collide on "latest
+    airing of X" (see narration_store.py's SAVE_SQL/LOAD_SQL).
 
     Returns the message_id the airing was actually saved under (the one
     passed in, or the freshly-minted uuid when it was None) on success, or
@@ -313,7 +482,7 @@ def persist_narration(message_id, show, config, episode, worker_name):
         n = narration_store.save_airing(
             message_id, worker_id, episode,
             aired_at=datetime.now(timezone.utc).isoformat(),
-            show=show,
+            show=show, campaign=campaign,
         )
     except Exception as exc:
         print(f"[replay_pane] narration cache save failed: {exc}", file=sys.stderr)
@@ -322,13 +491,16 @@ def persist_narration(message_id, show, config, episode, worker_name):
     return message_id
 
 
-def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
+def _rebuild_scenes_from_rows(episode, rows, workdir, owns=None):
     """Shared by load_reused_show (solo/director reuse) and the duet
-    follower path (perform_follower_request): rebuild plan_scenes(script)
-    and splice each row's cached narration text — and optionally its
-    synthesized audio — back in. Returns None when the scene count or kind
-    sequence no longer lines up with `rows` — a stale/incompatible cache the
-    caller must refuse rather than perform partially.
+    follower path (perform_follower_request): splice each cached row's
+    narration text — and optionally its synthesized audio — back onto
+    `episode`'s OWN scenes, by index. No more plan_scenes() regrouping —
+    an episode's scenes[] already IS the unit of performance
+    (CONTRACT.md §7), so this just zips `episode["scenes"]` against `rows`.
+    Returns None when the scene count or kind sequence no longer lines up
+    with `rows` — a stale/incompatible cache the caller must refuse rather
+    than perform partially.
 
     `owns(scene, row)` gates whether that scene's audio bytes get written to
     `workdir` at all (default: every scene, i.e. no gating — the solo/
@@ -339,10 +511,9 @@ def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
     `owns`, so pacing stays correct on scenes this worker doesn't voice too.
     May raise (I/O, tts_client import) — callers wrap in their own try/except
     per their existing error-reporting conventions."""
-    from revoice import plan_scenes
     from tts_client import Narration, wav_duration
 
-    scenes = plan_scenes(script.get("events", []))
+    scenes = episode.get("scenes", [])
     if len(scenes) != len(rows) or any(
         scene["kind"] != row["scene_kind"] for scene, row in zip(scenes, rows)
     ):
@@ -359,7 +530,7 @@ def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
     return scenes
 
 
-def _load_cached_show(script, episode, workdir):
+def _load_cached_show(episode, episode_name, workdir, campaign):
     """Core of load_reused_show, also used by the duet director's
     narration:"reuse" path (perform_director_request), which additionally
     needs the raw rows to recover the reused airing's message_id/airing_id
@@ -369,32 +540,33 @@ def _load_cached_show(script, episode, workdir):
         print("[replay_pane] narration store unavailable — generating fresh narration")
         return None, None
     try:
-        cached = narration_store.load_latest_airing(episode)
+        cached = narration_store.load_latest_airing(episode_name, campaign)
     except Exception as exc:
         print(f"[replay_pane] narration cache load failed: {exc}", file=sys.stderr)
         return None, None
     if not cached:
-        print(f"[replay_pane] no cached narration for {episode!r} — generating fresh")
+        print(f"[replay_pane] no cached narration for {episode_name!r} — generating fresh")
         return None, None
     try:
-        scenes = _rebuild_scenes_from_rows(script, cached, workdir)
+        scenes = _rebuild_scenes_from_rows(episode, cached, workdir)
         if scenes is None:
             print(f"[replay_pane] cached narration no longer matches episode script "
                   f"— generating fresh")
             return None, None
-        print(f"[replay_pane] reusing cached narration for {episode!r} ({len(scenes)} scenes)")
+        print(f"[replay_pane] reusing cached narration for {episode_name!r} ({len(scenes)} scenes)")
         return scenes, cached
     except Exception as exc:
         print(f"[replay_pane] narration reuse failed: {exc}", file=sys.stderr)
         return None, None
 
 
-def load_reused_show(script, episode, workdir):
-    """Rebuild a voiced show from the latest cached airing of `episode`
-    instead of calling the LLM + TTS again. Returns the show, or None when
-    there's nothing usable to reuse — the caller falls back to a fresh
-    generation (show-must-air rule, docs/revoice.md). Never raises."""
-    scenes, _rows = _load_cached_show(script, episode, workdir)
+def load_reused_show(episode, episode_name, workdir, campaign):
+    """Rebuild a voiced show from the latest cached airing of `episode_name`
+    (within `campaign`) instead of calling the LLM + TTS again. Returns the
+    show, or None when there's nothing usable to reuse — the caller falls
+    back to a fresh generation (show-must-air rule, docs/revoice.md). Never
+    raises."""
+    scenes, _rows = _load_cached_show(episode, episode_name, workdir, campaign)
     return scenes
 
 
@@ -424,16 +596,36 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     producer, voice preparation, or persistence isn't available, or when a
     follower never shows up in time. Returns True only when the show
     actually aired."""
-    episode = request.get("episode")
-    source = resolve_episode(library, episode)
+    campaign = resolve_campaign(request, config)
+    requested_episode = request.get("episode")
+    source = resolve_episode(library, requested_episode, campaign)
     if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+        print(f"[replay_pane] episode not found in {library}/{campaign}: {requested_episode!r}",
+              file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
+
+    primitives_table = load_primitives(campaign)
+    # Item G / CONTRACT.md §4's unknown_kind escape hatch: load_episode's
+    # `kinds` defaults to None (check skipped) unless a caller supplies it —
+    # this is that supply point, so unknown_kind can actually fire through
+    # the normal ingest path instead of being permanently unreachable. `or
+    # None` (not a bare set()) matters: a campaign with no narration.yaml at
+    # all degrades to an EMPTY dict (load_narration_config's own documented
+    # soft-degradation), and an empty-but-not-None kinds set would reject
+    # every single scene's kind as "unknown" instead of skipping the check.
+    narration_kinds = set(load_narration_config(campaign)) or None
+    try:
+        episode = episode_schema.load_episode(source, primitives=primitives_table, campaign=campaign,
+                                              kinds=narration_kinds)
+    except episode_schema.EpisodeError as exc:
+        print(f"[replay_pane] episode failed validation ({requested_episode!r}): {exc}",
+              file=sys.stderr)
+        return False
+
     name = str(request.get("worker_name") or worker_name)
     cast = request.get("cast") or {}
     followers = sorted({worker_id for worker_id in cast.values()
@@ -458,15 +650,15 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show, airing_id = None, None
         if request.get("narration") == "reuse":
-            reused, rows = _load_cached_show(script, source.stem, workdir)
+            reused, rows = _load_cached_show(episode, source.stem, workdir, campaign)
             if reused is not None:
                 show, airing_id = reused, rows[0]["message_id"]
         if show is None:
-            show = prepare_voice(script, config, workdir, name, speed)
+            show = prepare_voice(episode, config, workdir, name, speed, campaign)
             if show is None:
                 return refuse("voice preparation failed or is disabled for this worker")
             message_id = publish_narration(show, config, source.stem, name)
-            airing_id = persist_narration(message_id, show, config, source.stem, name)
+            airing_id = persist_narration(message_id, show, config, source.stem, name, campaign)
             if airing_id is None:
                 return refuse("failed to persist duet airing for followers to load")
 
@@ -487,7 +679,8 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
 
         for follower in followers:
             payload = {"airing_id": airing_id, "episode": source.stem, "cast": cast,
-                      "speed": speed, "worker_name": name, "director": self_id}
+                      "speed": speed, "worker_name": name, "director": self_id,
+                      "campaign": campaign}
             _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
         invited = followers
 
@@ -551,15 +744,17 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
                 _safe_send(producer, build_message(self_id, follower, "replay_cue",
                                                     {"airing_id": airing_id, "scene_index": index}))
 
-        performer = Performer(
-            pacer=Pacer(speed=speed, should_stop=should_stop),
-            palette=Palette(enabled=True),
-            worker_name=name,
-            state_path=state_path,
-            on_scene_start=on_scene_start,
-            speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
-        )
-        completed = performer.perform(script, show=show)
+        with _airing_flag(config, self_id):
+            performer = Performer(
+                pacer=Pacer(speed=speed, should_stop=should_stop),
+                palette=Palette(enabled=True),
+                worker_name=name,
+                state_path=state_path,
+                on_scene_start=on_scene_start,
+                speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+                primitives=primitives_table,
+            )
+            completed = performer.perform(episode, show=show)
         _delete_stale_file(stop_file)
 
         _send_replay_end(producer, self_id, followers, airing_id,
@@ -576,23 +771,46 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
     one (the cue ratchet, see wait_for_scene below). Returns True only when
     the show actually aired."""
     airing_id = request.get("airing_id")
-    episode = request.get("episode")
+    requested_episode = request.get("episode")
     cast = request.get("cast")
     director = request.get("director")
-    if not airing_id or not episode or not isinstance(cast, dict):
+    if not airing_id or not requested_episode or not isinstance(cast, dict):
         print(f"[replay_pane] malformed follower request (airing_id={airing_id!r} "
-              f"episode={episode!r} cast={cast!r}) — ignoring", file=sys.stderr)
+              f"episode={requested_episode!r} cast={cast!r}) — ignoring", file=sys.stderr)
         return False
 
-    source = resolve_episode(library, episode)
+    # The director's invite payload carries the campaign it resolved
+    # (CONTRACT.md §7) so a follower whose own worker config/env might
+    # otherwise resolve a different default always loads the SAME episode
+    # the director is performing.
+    campaign = resolve_campaign(request, config)
+    source = resolve_episode(library, requested_episode, campaign)
     if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+        print(f"[replay_pane] episode not found in {library}/{campaign}: {requested_episode!r}",
+              file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
+
+    primitives_table = load_primitives(campaign)
+    # Item G / CONTRACT.md §4's unknown_kind escape hatch: load_episode's
+    # `kinds` defaults to None (check skipped) unless a caller supplies it —
+    # this is that supply point, so unknown_kind can actually fire through
+    # the normal ingest path instead of being permanently unreachable. `or
+    # None` (not a bare set()) matters: a campaign with no narration.yaml at
+    # all degrades to an EMPTY dict (load_narration_config's own documented
+    # soft-degradation), and an empty-but-not-None kinds set would reject
+    # every single scene's kind as "unknown" instead of skipping the check.
+    narration_kinds = set(load_narration_config(campaign)) or None
+    try:
+        episode = episode_schema.load_episode(source, primitives=primitives_table, campaign=campaign,
+                                              kinds=narration_kinds)
+    except episode_schema.EpisodeError as exc:
+        print(f"[replay_pane] episode failed validation ({requested_episode!r}): {exc}",
+              file=sys.stderr)
+        return False
     name = str(request.get("worker_name") or worker_name)
 
     if not narration_store.available():
@@ -613,7 +831,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         try:
             show = _rebuild_scenes_from_rows(
-                script, rows, workdir,
+                episode, rows, workdir,
                 owns=lambda scene, row: cast.get(scene.get("speaker")) == self_id,
             )
         except Exception as exc:
@@ -673,15 +891,17 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
                     return -1
                 time.sleep(REPLAY_CUE_POLL_INTERVAL_S)
 
-        performer = Performer(
-            pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
-            palette=Palette(enabled=True),
-            worker_name=name,
-            state_path=state_path,
-            wait_for_scene=wait_for_scene,
-            speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
-        )
-        performer.perform(script, show=show)
+        with _airing_flag(config, self_id):
+            performer = Performer(
+                pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
+                palette=Palette(enabled=True),
+                worker_name=name,
+                state_path=state_path,
+                wait_for_scene=wait_for_scene,
+                speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+                primitives=primitives_table,
+            )
+            performer.perform(episode, show=show)
         _delete_stale_file(stop_file)
     return True
 
@@ -707,16 +927,36 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         return perform_director_request(request, library, worker_name, state_path, self_id,
                                         default_speed=default_speed, config=config)
 
-    episode = request.get("episode")
-    source = resolve_episode(library, episode)
+    campaign = resolve_campaign(request, config)
+    requested_episode = request.get("episode")
+    source = resolve_episode(library, requested_episode, campaign)
     if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+        print(f"[replay_pane] episode not found in {library}/{campaign}: {requested_episode!r}",
+              file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
+
+    primitives_table = load_primitives(campaign)
+    # Item G / CONTRACT.md §4's unknown_kind escape hatch: load_episode's
+    # `kinds` defaults to None (check skipped) unless a caller supplies it —
+    # this is that supply point, so unknown_kind can actually fire through
+    # the normal ingest path instead of being permanently unreachable. `or
+    # None` (not a bare set()) matters: a campaign with no narration.yaml at
+    # all degrades to an EMPTY dict (load_narration_config's own documented
+    # soft-degradation), and an empty-but-not-None kinds set would reject
+    # every single scene's kind as "unknown" instead of skipping the check.
+    narration_kinds = set(load_narration_config(campaign)) or None
+    try:
+        episode = episode_schema.load_episode(source, primitives=primitives_table, campaign=campaign,
+                                              kinds=narration_kinds)
+    except episode_schema.EpisodeError as exc:
+        print(f"[replay_pane] episode failed validation ({requested_episode!r}): {exc}",
+              file=sys.stderr)
+        return False
+
     name = str(request.get("worker_name") or worker_name)
 
     # Stop signal (docs/operator_commands.md `replay_stop`): stale-state
@@ -732,17 +972,19 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         worker_name=name,
         state_path=state_path,
         speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+        primitives=primitives_table,
     )
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show = None
         if request.get("voice") is not False:  # request can force a silent airing
             if request.get("narration") == "reuse":
-                show = load_reused_show(script, source.stem, workdir)
+                show = load_reused_show(episode, source.stem, workdir, campaign)
             if show is None:
-                show = prepare_voice(script, config, workdir, name, speed)
+                show = prepare_voice(episode, config, workdir, name, speed, campaign)
                 message_id = publish_narration(show, config, source.stem, name)
-                persist_narration(message_id, show, config, source.stem, name)
-        performer.perform(script, show=show)
+                persist_narration(message_id, show, config, source.stem, name, campaign)
+        with _airing_flag(config, self_id):
+            performer.perform(episode, show=show)
     _delete_stale_file(stop_file)
     return True
 
@@ -770,6 +1012,9 @@ def main():
     parser.add_argument("--config", default=os.environ.get("CONFIG_PATH", DEFAULT_WORKER_CONFIG),
                         help="Worker config YAML — its voice+llm sections drive spoken "
                              "narration (voice.provider: null keeps shows silent)")
+    parser.add_argument("--campaign", default=None,
+                        help="Default campaign for requests that don't specify one "
+                             "(overrides the worker config's own `campaign:`, if any)")
     parser.add_argument("--once", action="store_true",
                         help="Handle at most one pending request, then exit (testing)")
     args = parser.parse_args()
@@ -779,9 +1024,12 @@ def main():
 
     state_path = resolve_state_path()
     config = load_worker_config(args.config)
+    if args.campaign:
+        config = dict(config or {}, campaign=args.campaign)
     provider = ((config or {}).get("voice") or {}).get("provider")
+    default_campaign = resolve_campaign(None, config)
     print(f"[replay_pane] library={args.library} request_file={args.request_file} "
-          f"voice={'on' if provider not in (None, 'null') else 'off'}")
+          f"campaign={default_campaign} voice={'on' if provider not in (None, 'null') else 'off'}")
 
     if args.once:
         request = read_request(args.request_file)
@@ -791,7 +1039,22 @@ def main():
         return
 
     last_drawn = 0.0
+    persona_file = _resolve_persona_file()
+    persona_identity_seen = None
     while True:
+        # Persona relay file (CONTRACT.md §8): agent.py writes this whenever
+        # this worker's Redis-assigned persona changes; this pane only ever
+        # POLLS it here, in the idle loop, alongside the request/stop/cue
+        # files above — never Redis or Kafka directly (docs/duet_replay.md).
+        persona_doc = _read_json_file(persona_file)
+        identity = persona_identity(persona_doc)
+        if identity is not None and identity != persona_identity_seen:
+            config = apply_persona_to_config(config, persona_doc)
+            default_campaign = resolve_campaign(None, config)
+            persona_identity_seen = identity
+            print(f"[replay_pane] persona updated: campaign={persona_doc.get('campaign')} "
+                  f"speaker={persona_doc.get('speaker')}")
+
         request = read_request(args.request_file)
         if request:
             try:
@@ -802,7 +1065,7 @@ def main():
             time.sleep(5)  # hold the final frame briefly
             last_drawn = 0.0  # force idle redraw
         if time.time() - last_drawn > IDLE_REDRAW_S:
-            draw_idle_screen(args.library, args.worker_name)
+            draw_idle_screen(args.library, args.worker_name, default_campaign)
             last_drawn = time.time()
         time.sleep(POLL_INTERVAL_S)
 

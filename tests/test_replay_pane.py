@@ -2,10 +2,14 @@
 the operator → agent → pane wiring for Rerun Theater.
 
 Safety property under test: a bus payload can only ever select a
-pre-built episode INSIDE the library — never a path outside it.
+pre-built episode INSIDE the library, and inside its OWN campaign's
+subdirectory (CONTRACT.md §7 campaign namespacing) — never a path outside
+it, and never another campaign's episode.
 """
+import importlib.util
 import json
 import sys
+import types
 import uuid
 from pathlib import Path
 
@@ -13,8 +17,31 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
+# app/episode_schema.py (CONTRACT.md §4) is being built by another agent in
+# parallel with this work and may not exist yet in this checkout. If it's
+# already importable, this does nothing -- real coverage of the actual
+# validator is that module's own test suite's job. Otherwise install a
+# minimal stand-in at import time so replay_pane.py's own `import
+# episode_schema` (and this file's) succeed; every test below monkeypatches
+# episode_schema.load_episode anyway (see patched_episode_schema), so this
+# stand-in's own behavior barely matters beyond letting imports resolve.
+if importlib.util.find_spec("episode_schema") is None:
+    _stub = types.ModuleType("episode_schema")
+
+    class _StubEpisodeError(Exception):
+        pass
+
+    def _stub_load_episode(path, *, primitives=None, rules=None, pane_ids=None,
+                           assets_dir=None, campaign=None, kinds=None):
+        return json.loads(Path(path).read_text(encoding="utf-8"))
+
+    _stub.EpisodeError = _StubEpisodeError
+    _stub.load_episode = _stub_load_episode
+    sys.modules["episode_schema"] = _stub
+
 import agent  # noqa: E402
 from agent import MESSAGE_HANDLERS, handle_replay_request  # noqa: E402
+import episode_schema  # noqa: E402
 import replay_pane  # noqa: E402
 from replay_pane import (  # noqa: E402
     list_episodes,
@@ -26,9 +53,79 @@ from replay_pane import (  # noqa: E402
     persist_narration,
     publish_narration,
     read_request,
+    resolve_campaign,
     resolve_episode,
     resolve_self_id,
 )
+
+
+def _fake_load_episode_from_disk(path, *, primitives=None, rules=None, pane_ids=None,
+                                 assets_dir=None, campaign=None, kinds=None):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+@pytest.fixture(autouse=True)
+def patched_episode_schema(monkeypatch):
+    """Most tests in this file exercise replay_pane.py's OWN orchestration
+    (campaign resolution, duet wiring, narration caching, request dispatch)
+    -- not episode_schema.py's validator, which has its own dedicated test
+    suite. Stubbing load_episode to a plain "read the JSON off disk" loader
+    keeps these tests independent of config/validation.yaml and whichever
+    primitives table happens to be loaded, while still exercising the REAL
+    file-resolution path (resolve_episode -> episode_schema.load_episode).
+    A test that specifically wants validation-refusal behavior overrides
+    this per-test (see test_perform_request_refuses_when_episode_fails_validation)."""
+    monkeypatch.setattr(episode_schema, "load_episode", _fake_load_episode_from_disk)
+
+
+@pytest.fixture(autouse=True)
+def no_stray_campaign_env(monkeypatch):
+    """Campaign resolution falls through to the REPLAY_CAMPAIGN env var
+    (CONTRACT.md §7) -- clear it so a value leaking in from the real shell
+    this test suite happens to run in can never change which default a test
+    resolves to."""
+    monkeypatch.delenv("REPLAY_CAMPAIGN", raising=False)
+
+
+class FakeAiringRedis:
+    """Duck-typed stand-in for a redis.Redis client, used ONLY for the
+    worker:{id}:airing mid-airing-guard flag (CONTRACT.md §8) --
+    perform_request/perform_director_request/perform_follower_request each
+    wrap their actual performance in `with _airing_flag(config, self_id)`,
+    which constructs a real client via replay_pane._airing_redis_client
+    otherwise. Real tests never touch actual Redis (see
+    tests/test_worker_control.py's own docstring) -- measured against the
+    default "redis://redis:6379", a real (failing) connection attempt costs
+    2+ seconds of DNS-resolution-failure latency on this dev machine, TWICE
+    per performance (set then delete), which would otherwise balloon this
+    whole file's runtime by minutes for a code path unrelated to what most
+    of these tests are actually about."""
+
+    def __init__(self):
+        self.store = {}
+        self.calls = []
+
+    def set(self, key, value):
+        self.calls.append(("set", key, value))
+        self.store[key] = value
+
+    def delete(self, key):
+        self.calls.append(("delete", key))
+        self.store.pop(key, None)
+
+    def get(self, key):
+        return self.store.get(key)
+
+
+@pytest.fixture(autouse=True)
+def fake_airing_redis(monkeypatch):
+    """Autouse so every existing perform_* test in this file stays hermetic
+    and fast without needing to know this mechanism exists; a test that
+    specifically wants to exercise the airing flag requests this fixture by
+    name to get the same fake instance and inspect `.calls`/`.store`."""
+    fake = FakeAiringRedis()
+    monkeypatch.setattr(replay_pane, "_airing_redis_client", lambda config: fake)
+    return fake
 
 
 class FakeProducer:
@@ -40,19 +137,34 @@ class FakeProducer:
         return message
 
 
+def _episode(scenes, campaign="coder", episode_id="ep1"):
+    return {
+        "meta": {"schema": 1, "campaign": campaign, "id": episode_id, "title": episode_id,
+                 "created": "2026-07-26T00:00:00Z"},
+        "cast": sorted({scene["speaker"] for scene in scenes}),
+        "scenes": scenes,
+    }
+
+
 @pytest.fixture
 def library(tmp_path):
     lib = tmp_path / "replays"
-    lib.mkdir()
-    script = {"source": "ep1", "events": [{"type": "assistant_text", "text": "hello stream"}]}
-    (lib / "ep1.json").write_text(json.dumps(script), encoding="utf-8")
+    campaign_dir = lib / "coder"
+    campaign_dir.mkdir(parents=True)
+    episode = _episode([
+        {"speaker": "coder", "kind": "coder_talk", "text": "hello stream", "fallback": "",
+         "mode": "sequence",
+         "render": [{"primitive": "show_coder_line",
+                    "payload": {"text": "hello stream", "name": "KODI-7"}}]},
+    ])
+    (campaign_dir / "ep1.json").write_text(json.dumps(episode), encoding="utf-8")
     return lib
 
 
-# ── resolve_episode: the traversal gate ──────────────────────────────────────
+# ── resolve_episode: the traversal gate (now campaign-scoped) ───────────────
 def test_resolve_episode_finds_with_and_without_extension(library):
-    assert resolve_episode(library, "ep1") == library / "ep1.json"
-    assert resolve_episode(library, "ep1.json") == library / "ep1.json"
+    assert resolve_episode(library, "ep1", "coder") == library / "coder" / "ep1.json"
+    assert resolve_episode(library, "ep1.json", "coder") == library / "coder" / "ep1.json"
 
 
 @pytest.mark.parametrize("hostile", [
@@ -62,14 +174,71 @@ def test_resolve_episode_finds_with_and_without_extension(library):
     "c:\\Users\\dev\\.env",
 ])
 def test_resolve_episode_never_escapes_library(library, hostile):
-    resolved = resolve_episode(library, hostile)
-    assert resolved is None or resolved.parent == library
+    resolved = resolve_episode(library, hostile, "coder")
+    assert resolved is None or resolved.parent == library / "coder"
+
+
+@pytest.mark.parametrize("hostile_campaign", [
+    "../../../etc",
+    "..\\..\\secrets",
+    "/etc",
+    "c:\\Users\\dev",
+])
+def test_resolve_episode_never_escapes_via_hostile_campaign(library, hostile_campaign):
+    """A hostile CAMPAIGN string (not just episode name) must also collapse
+    to a basename inside the library -- CONTRACT.md §7's namespacing must
+    not open a second traversal vector."""
+    resolved = resolve_episode(library, "ep1", hostile_campaign)
+    assert resolved is None or resolved.parent == library / Path(hostile_campaign).name
 
 
 def test_resolve_episode_missing_or_empty_returns_none(library):
-    assert resolve_episode(library, "nope") is None
-    assert resolve_episode(library, "") is None
-    assert resolve_episode(library, None) is None
+    assert resolve_episode(library, "nope", "coder") is None
+    assert resolve_episode(library, "", "coder") is None
+    assert resolve_episode(library, None, "coder") is None
+
+
+def test_resolve_episode_empty_or_none_campaign_returns_none(library):
+    assert resolve_episode(library, "ep1", "") is None
+    assert resolve_episode(library, "ep1", None) is None
+
+
+def test_resolve_episode_different_campaign_cannot_see_this_episode(library):
+    """The same episode NAME in a different campaign's directory must not
+    resolve -- this is the whole point of namespacing the library."""
+    assert resolve_episode(library, "ep1", "dnd") is None
+
+
+# ── resolve_campaign: request > worker config > env > "coder" ──────────────
+def test_resolve_campaign_request_wins_over_everything(monkeypatch):
+    monkeypatch.setenv("REPLAY_CAMPAIGN", "dnd")
+    config = {"campaign": "worker-configured"}
+    assert resolve_campaign({"campaign": "from-request"}, config) == "from-request"
+
+
+def test_resolve_campaign_worker_config_wins_over_env(monkeypatch):
+    monkeypatch.setenv("REPLAY_CAMPAIGN", "dnd")
+    config = {"campaign": "worker-configured"}
+    assert resolve_campaign({}, config) == "worker-configured"
+    assert resolve_campaign(None, config) == "worker-configured"
+
+
+def test_resolve_campaign_env_wins_over_hardcoded_default(monkeypatch):
+    monkeypatch.setenv("REPLAY_CAMPAIGN", "dnd")
+    assert resolve_campaign({}, {}) == "dnd"
+    assert resolve_campaign(None, None) == "dnd"
+
+
+def test_resolve_campaign_falls_back_to_coder_when_nothing_else_set():
+    assert resolve_campaign({}, {}) == "coder"
+    assert resolve_campaign(None, None) == "coder"
+
+
+def test_resolve_campaign_ignores_falsy_request_and_config_values():
+    # An explicit but empty/None campaign field must not "win" over a real
+    # lower-priority value -- only a truthy campaign counts.
+    assert resolve_campaign({"campaign": ""}, {"campaign": "worker-configured"}) == "worker-configured"
+    assert resolve_campaign({"campaign": None}, {}) == "coder"
 
 
 # ── read_request: consume-once, malformed-safe ───────────────────────────────
@@ -104,12 +273,29 @@ def test_perform_request_unknown_episode_reports_false(library, capsys):
     assert "not found" in capsys.readouterr().err
 
 
+def test_perform_request_refuses_when_episode_fails_validation(library, monkeypatch, capsys):
+    """episode_schema.load_episode raising EpisodeError (a real validation
+    failure) must refuse to air, not crash the pane (docs/campaign_platform_
+    build.md "Platform ingest — refuse to load, log loudly, do not air")."""
+    def explode(path, **kwargs):
+        raise episode_schema.EpisodeError("scene 2: unknown_primitive 'nope'")
+
+    monkeypatch.setattr(episode_schema, "load_episode", explode)
+    ok = perform_request({"episode": "ep1"}, library, "KODI-7", None)
+    assert ok is False
+    assert "failed validation" in capsys.readouterr().err
+
+
 def test_perform_request_voiced_show_prepared_from_config(library, capsys, monkeypatch):
     prepared = {}
 
-    def fake_prepare(script, config, workdir, **kwargs):
+    def fake_prepare(episode, config, workdir, **kwargs):
         prepared["config"] = config
-        return [{"events": script["events"], "narration": "tonight's line", "audio": None}]
+        # Carry over the episode's own render[] so the underlying visuals
+        # ("hello stream") still show up alongside the narration override --
+        # a real prepare_show() would do the same, annotating in place.
+        scene = dict(episode["scenes"][0], narration="tonight's line", audio=None)
+        return [scene]
 
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
     config = {"voice": {"provider": "piper"}}
@@ -276,7 +462,7 @@ def test_persist_narration_skips_silently_when_show_falsy(monkeypatch):
         raise AssertionError("must not touch the store for an empty show")
 
     monkeypatch.setattr(replay_pane.narration_store, "available", explode)
-    persist_narration("mid", None, {}, "ep1", "KODI-7")  # must not raise
+    persist_narration("mid", None, {}, "ep1", "KODI-7", "coder")  # must not raise
 
 
 def test_persist_narration_prints_notice_when_store_unavailable(monkeypatch, capsys):
@@ -287,30 +473,32 @@ def test_persist_narration_prints_notice_when_store_unavailable(monkeypatch, cap
 
     monkeypatch.setattr(replay_pane.narration_store, "save_airing", explode)
 
-    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7")
+    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7", "coder")
 
     assert "not cached for reuse" in capsys.readouterr().out
 
 
-def test_persist_narration_calls_save_airing_with_given_message_id(monkeypatch):
+def test_persist_narration_calls_save_airing_with_given_message_id_and_campaign(monkeypatch):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     calls = {}
 
-    def fake_save(message_id, worker_id, episode, aired_at, show):
+    def fake_save(message_id, worker_id, episode, aired_at, show, campaign):
         calls["message_id"] = message_id
         calls["worker_id"] = worker_id
         calls["episode"] = episode
         calls["show"] = show
+        calls["campaign"] = campaign
         return len(show)
 
     monkeypatch.setattr(replay_pane.narration_store, "save_airing", fake_save)
 
     persist_narration("mid-123", _voiced_show(), {"message_bus": {"worker_id": "coder"}},
-                      "ep1", "KODI-7")
+                      "ep1", "KODI-7", "coder")
 
     assert calls["message_id"] == "mid-123"
     assert calls["worker_id"] == "coder"
     assert calls["episode"] == "ep1"
+    assert calls["campaign"] == "coder"
     assert calls["show"] == _voiced_show()
 
 
@@ -318,13 +506,13 @@ def test_persist_narration_generates_uuid_when_message_id_none(monkeypatch):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     calls = {}
 
-    def fake_save(message_id, worker_id, episode, aired_at, show):
+    def fake_save(message_id, worker_id, episode, aired_at, show, campaign):
         calls["message_id"] = message_id
         return len(show)
 
     monkeypatch.setattr(replay_pane.narration_store, "save_airing", fake_save)
 
-    persist_narration(None, _voiced_show(), {}, "ep1", "KODI-7")
+    persist_narration(None, _voiced_show(), {}, "ep1", "KODI-7", "coder")
 
     assert uuid.UUID(calls["message_id"])  # raises ValueError if not a valid uuid
 
@@ -337,20 +525,23 @@ def test_persist_narration_save_failure_is_swallowed(monkeypatch, capsys):
 
     monkeypatch.setattr(replay_pane.narration_store, "save_airing", explode)
 
-    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7")  # must not raise
+    persist_narration("mid", _voiced_show(), {}, "ep1", "KODI-7", "coder")  # must not raise
 
     assert "narration cache save failed" in capsys.readouterr().err
 
 
 # ── load_reused_show: rebuild a voiced show from the cache ───────────────────
-def _reuse_script():
-    return {"source": "ep1", "events": [{"type": "assistant_text", "text": "hello stream"}]}
+def _reuse_episode():
+    return _episode([
+        {"speaker": "coder", "kind": "coder_talk", "text": "hello stream", "fallback": "",
+         "mode": "sequence", "render": []},
+    ])
 
 
 def test_load_reused_show_none_when_store_unavailable(monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: False)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is None
     assert "generating fresh narration" in capsys.readouterr().out
@@ -358,21 +549,37 @@ def test_load_reused_show_none_when_store_unavailable(monkeypatch, capsys, tmp_p
 
 def test_load_reused_show_none_when_nothing_cached(monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: None)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: None)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is None
     assert "generating fresh" in capsys.readouterr().out
+
+
+def test_load_reused_show_queries_with_campaign(monkeypatch, tmp_path):
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    seen = {}
+
+    def fake_load(episode, campaign):
+        seen["episode"] = episode
+        seen["campaign"] = campaign
+        return None
+
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", fake_load)
+    load_reused_show(_reuse_episode(), "ep1", tmp_path, "dnd")
+    assert seen == {"episode": "ep1", "campaign": "dnd"}
 
 
 def test_load_reused_show_returns_scenes_with_cached_text_and_no_audio(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
              "text": "cached line", "audio": None, "audio_duration_s": None}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: rows)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is not None
     assert len(result) == 1
@@ -386,11 +593,12 @@ def test_load_reused_show_writes_audio_file_and_sets_duration(monkeypatch, tmp_p
     audio_bytes = b"fake-wav-bytes-for-scene-zero"
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
              "text": "cached line", "audio": audio_bytes, "audio_duration_s": 3.25}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: rows)
     workdir = tmp_path / "work"
     workdir.mkdir()
 
-    result = load_reused_show(_reuse_script(), "ep1", workdir)
+    result = load_reused_show(_reuse_episode(), "ep1", workdir, "coder")
 
     assert result is not None
     scene = result[0]
@@ -407,9 +615,10 @@ def test_load_reused_show_none_when_scene_count_mismatch(monkeypatch, capsys, tm
         {"scene_index": 1, "scene_kind": "boss", "speaker": "boss",
          "text": "b", "audio": None, "audio_duration_s": None},
     ]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: rows)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is None
     assert "no longer matches" in capsys.readouterr().out
@@ -419,9 +628,10 @@ def test_load_reused_show_none_when_scene_kind_mismatch(monkeypatch, capsys, tmp
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     rows = [{"scene_index": 0, "scene_kind": "boss", "speaker": "coder",
              "text": "a", "audio": None, "audio_duration_s": None}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: rows)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is None
     assert "no longer matches" in capsys.readouterr().out
@@ -430,39 +640,40 @@ def test_load_reused_show_none_when_scene_kind_mismatch(monkeypatch, capsys, tmp
 def test_load_reused_show_none_when_load_raises(monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
 
-    def explode(episode):
+    def explode(episode, campaign):
         raise RuntimeError("db down")
 
     monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", explode)
 
-    result = load_reused_show(_reuse_script(), "ep1", tmp_path)
+    result = load_reused_show(_reuse_episode(), "ep1", tmp_path, "coder")
 
     assert result is None
     assert "narration cache load failed" in capsys.readouterr().err
 
 
-def test_load_reused_show_speaker_comes_from_fresh_plan_scenes_not_row(monkeypatch, tmp_path):
+def test_rebuild_scenes_from_rows_speaker_comes_from_episode_not_row(monkeypatch, tmp_path):
     """Regression test for the multi-speaker duet override (docs/revoice.md):
-    `_rebuild_scenes_from_rows` (shared by load_reused_show and the duet
-    follower path) matches cached rows to scenes purely on `scene_kind` — it
-    never reads a "speaker" key off the row at all. That's *why* narration
-    reuse keeps working correctly for a hand-authored multi-speaker script:
-    every call recomputes scenes fresh from plan_scenes(script), so a
-    scene's speaker always reflects the SCRIPT's own "speaker" tags, never
-    whatever (possibly stale, possibly absent) speaker info a cached row
-    happens to carry."""
+    _rebuild_scenes_from_rows (shared by load_reused_show and the duet
+    follower path) matches cached rows to the EPISODE's own scenes purely by
+    index + a pairwise `kind` guard — it never reads a "speaker" key off the
+    row at all. That's *why* narration reuse keeps working correctly for a
+    hand-authored multi-speaker episode: the episode's own scenes always
+    carry the authoritative "speaker" tag, never whatever (possibly stale,
+    possibly absent) speaker info a cached row happens to carry. This
+    replaces the old plan_scenes()-based version of this same guarantee —
+    there is no more grouping step, only a direct zip against
+    episode['scenes'], but the property being protected is identical."""
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    script = {
-        "source": "multi_ep",
-        "events": [
-            {"type": "assistant_text", "text": "hi", "speaker": "tester"},
-            {"type": "assistant_text", "text": "yo", "speaker": "coder-native"},
-        ],
-    }
-    # Rows deliberately carry NO "speaker" key at all — if
+    episode = _episode([
+        {"speaker": "tester", "kind": "coder_talk", "text": "hi", "fallback": "",
+         "mode": "sequence", "render": []},
+        {"speaker": "coder-native", "kind": "coder_talk", "text": "yo", "fallback": "",
+         "mode": "sequence", "render": []},
+    ])
+    # Rows deliberately carry NO "speaker" key at all -- if
     # _rebuild_scenes_from_rows ever started reading row["speaker"] this
     # would raise KeyError (or, with .get, silently leak stale/missing
-    # speaker info) instead of the script's own tags, catching the
+    # speaker info) instead of the episode's own tags, catching the
     # regression immediately.
     rows = [
         {"scene_index": 0, "scene_kind": "coder_talk",
@@ -470,9 +681,10 @@ def test_load_reused_show_speaker_comes_from_fresh_plan_scenes_not_row(monkeypat
         {"scene_index": 1, "scene_kind": "coder_talk",
          "text": "cached line two", "audio": None, "audio_duration_s": None},
     ]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing",
+                        lambda episode, campaign: rows)
 
-    result = load_reused_show(script, "multi_ep", tmp_path)
+    result = load_reused_show(episode, "multi_ep", tmp_path, "coder")
 
     assert result is not None
     assert [scene["speaker"] for scene in result] == ["tester", "coder-native"]
@@ -480,8 +692,8 @@ def test_load_reused_show_speaker_comes_from_fresh_plan_scenes_not_row(monkeypat
 
 
 def test_perform_request_publishes_narration_after_voiced_show(library, monkeypatch):
-    def fake_prepare(script, config, workdir, **kwargs):
-        return [dict(scene, events=[]) for scene in _voiced_show()]
+    def fake_prepare(episode, config, workdir, **kwargs):
+        return [dict(scene) for scene in _voiced_show()]
 
     FakeBusProducer.sent = []
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
@@ -498,9 +710,9 @@ def test_perform_request_publishes_narration_after_voiced_show(library, monkeypa
 
 # ── perform_request: narration "reuse" wiring ────────────────────────────────
 def test_perform_request_reuse_hit_skips_fresh_generation_and_publish(library, capsys, monkeypatch):
-    def fake_reused(script, episode, workdir):
+    def fake_reused(episode, episode_name, workdir, campaign):
         return [{"kind": "coder_talk", "speaker": "coder", "narration": "cached line",
-                 "audio": None, "events": []}]
+                "audio": None}]
 
     monkeypatch.setattr(replay_pane, "load_reused_show", fake_reused)
 
@@ -530,8 +742,8 @@ def test_perform_request_reuse_hit_skips_fresh_generation_and_publish(library, c
 def test_perform_request_reuse_miss_falls_back_to_fresh_generation(library, monkeypatch):
     monkeypatch.setattr(replay_pane, "load_reused_show", lambda *a, **kw: None)
 
-    def fake_prepare(script, config, workdir, **kwargs):
-        return [dict(scene, events=[]) for scene in _voiced_show()]
+    def fake_prepare(episode, config, workdir, **kwargs):
+        return [dict(scene) for scene in _voiced_show()]
 
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
     calls = {}
@@ -540,9 +752,10 @@ def test_perform_request_reuse_miss_falls_back_to_fresh_generation(library, monk
         calls["publish_show"] = show
         return "msg-id-123"
 
-    def fake_persist(message_id, show, config, episode, worker_name):
+    def fake_persist(message_id, show, config, episode, worker_name, campaign):
         calls["persist_message_id"] = message_id
         calls["persist_show"] = show
+        calls["persist_campaign"] = campaign
 
     monkeypatch.setattr(replay_pane, "publish_narration", fake_publish)
     monkeypatch.setattr(replay_pane, "persist_narration", fake_persist)
@@ -553,6 +766,7 @@ def test_perform_request_reuse_miss_falls_back_to_fresh_generation(library, monk
     assert ok is True
     assert calls["persist_message_id"] == "msg-id-123"
     assert calls["persist_show"] == calls["publish_show"]
+    assert calls["persist_campaign"] == "coder"
 
 
 def test_perform_request_voice_false_blocks_reuse_too(library, monkeypatch):
@@ -579,9 +793,10 @@ def test_load_worker_config_missing_or_bad_returns_none(tmp_path, capsys):
 
 
 def test_list_episodes_sorted_and_empty_for_missing_dir(library, tmp_path):
-    (library / "another.json").write_text("{}", encoding="utf-8")
-    assert list_episodes(library) == ["another", "ep1"]
-    assert list_episodes(tmp_path / "nope") == []
+    (library / "coder" / "another.json").write_text("{}", encoding="utf-8")
+    assert list_episodes(library, "coder") == ["another", "ep1"]
+    assert list_episodes(tmp_path / "nope", "coder") == []
+    assert list_episodes(library, "dnd") == []  # a campaign with no directory yet
 
 
 # ── agent handler: replay_request ────────────────────────────────────────────
@@ -730,8 +945,8 @@ class FakeAudio:
 
 def _fake_voiced_show_factory(with_audio=False):
     """A prepare_voiced_show() stand-in returning a 2-scene show matching
-    duet_library's script (one "boss" scene, one "coder" scene)."""
-    def fake(script, config, workdir, **kwargs):
+    duet_library's episode (one "boss" scene, one "coder_talk" scene)."""
+    def fake(episode, config, workdir, **kwargs):
         scenes = []
         for kind, speaker, text, duration in (
             ("boss", "boss", "boss line", 0.02),
@@ -739,7 +954,6 @@ def _fake_voiced_show_factory(with_audio=False):
         ):
             scenes.append({
                 "kind": kind, "speaker": speaker, "narration": text,
-                "events": [{"type": "assistant_text", "text": text}],
                 "audio": FakeAudio(duration) if with_audio else None,
             })
         return scenes
@@ -756,13 +970,13 @@ class FakePerformer:
 
     def __init__(self, **kwargs):
         self.kwargs = kwargs
+        self.performed_episode = None
         self.performed_show = None
-        self.performed_script = None
         self.aborted = None
         FakePerformer.instances.append(self)
 
-    def perform(self, script, show=None, start=0, limit=None):
-        self.performed_script = script
+    def perform(self, episode, show=None, start=0, limit=None):
+        self.performed_episode = episode
         self.performed_show = show
         on_scene_start = self.kwargs.get("on_scene_start")
         wait_for_scene = self.kwargs.get("wait_for_scene")
@@ -789,28 +1003,32 @@ class CapturingPerformer:
         self.performed_show = None
         CapturingPerformer.instances.append(self)
 
-    def perform(self, script, show=None, start=0, limit=None):
+    def perform(self, episode, show=None, start=0, limit=None):
         self.performed_show = show
 
 
 @pytest.fixture
 def duet_library(tmp_path):
     lib = tmp_path / "replays"
-    lib.mkdir()
-    script = {
-        "source": "duet_ep",
-        "events": [
-            {"type": "user_message", "text": "ship the login fix"},
-            {"type": "assistant_text", "text": "on it boss"},
-        ],
-    }
-    (lib / "duet_ep.json").write_text(json.dumps(script), encoding="utf-8")
+    campaign_dir = lib / "coder"
+    campaign_dir.mkdir(parents=True)
+    episode = _episode([
+        {"speaker": "boss", "kind": "boss", "text": "ship the login fix", "fallback": "",
+         "mode": "sequence",
+         "render": [{"primitive": "show_boss_message",
+                    "payload": {"text": "ship the login fix"}}]},
+        {"speaker": "coder", "kind": "coder_talk", "text": "on it boss", "fallback": "",
+         "mode": "sequence",
+         "render": [{"primitive": "show_coder_line",
+                    "payload": {"text": "on it boss", "name": "KODI-7"}}]},
+    ], episode_id="duet_ep")
+    (campaign_dir / "duet_ep.json").write_text(json.dumps(episode), encoding="utf-8")
     return lib
 
 
 def _duet_rows(boss_audio=None, coder_audio=None, boss_duration=None, coder_duration=None):
     """Rows shaped like narration_store.load_airing(), matching duet_library's
-    plan_scenes() output (scene 0 = boss, scene 1 = coder_talk)."""
+    episode (scene 0 = boss, scene 1 = coder_talk)."""
     return [
         {"scene_index": 0, "scene_kind": "boss", "speaker": "boss", "text": "boss line",
          "audio": boss_audio, "audio_duration_s": boss_duration},
@@ -988,6 +1206,7 @@ def test_director_invites_distinct_followers_deduped_and_cues_in_order(
     assert invites[0]["payload"] == {
         "airing_id": "airing-123", "episode": "duet_ep", "cast": cast,
         "speed": 1000.0, "worker_name": "director-1", "director": "director-1",
+        "campaign": "coder",
     }
     cues = [m for m in producer.sent if m["type"] == "replay_cue"]
     assert [c["payload"]["scene_index"] for c in cues] == [0, 1]
@@ -1085,7 +1304,7 @@ def test_director_tells_followers_stopped_when_show_is_cut_short(
         def __init__(self, **kwargs):
             self.kwargs = kwargs
 
-        def perform(self, script, show=None, start=0, limit=None):
+        def perform(self, episode, show=None, start=0, limit=None):
             return False  # simulates an operator replay_stop firing mid-show
 
     monkeypatch.setattr(replay_pane, "Performer", StoppedPerformer)
@@ -1254,6 +1473,32 @@ def test_follower_happy_path_loads_owned_audio_and_notifies_director(
     assert ready_msgs[0]["payload"] == {"airing_id": "airing-77"}
 
 
+def test_follower_uses_campaign_from_invite_payload(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """The director's invite payload carries the campaign it resolved
+    (see test_director_invites... asserting "campaign": "coder" in the
+    invite payload) so a follower whose own worker config/env might
+    otherwise resolve a DIFFERENT default still loads the SAME episode."""
+    rows = _duet_rows(boss_duration=1.0, coder_duration=1.0)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    # This follower's OWN config claims a different campaign ("dnd") -- the
+    # invite's explicit "campaign": "coder" must still win.
+    config = dict(_duet_config("follower-1"), campaign="dnd")
+    cast = {"boss": "director-1", "coder": "follower-1"}
+    request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
+              "speed": 1000, "worker_name": "KODI-Follower", "director": "director-1",
+              "campaign": "coder"}
+
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=config)
+
+    assert ok is True  # would have failed to resolve the episode under "dnd"
+
+
 def test_follower_missing_airing_returns_to_idle_without_performing(
         duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
@@ -1341,3 +1586,136 @@ def test_follower_wait_for_scene_stops_immediately_on_stop_file(
 
     stop_file.write_text("{}", encoding="utf-8")
     assert wait_for_scene(0) == -1
+
+
+# ── Persona relay file: apply_persona_to_config / persona_identity (CONTRACT.md §8) ─
+# "No mechanism exists to extend" (recon_platform.md §7) -- replay_pane.py's
+# config dict was load-once before this; every test below is new code.
+
+def test_persona_identity_none_for_falsy_doc():
+    assert replay_pane.persona_identity(None) is None
+    assert replay_pane.persona_identity({}) is None
+
+
+def test_persona_identity_is_campaign_speaker_tuple():
+    assert replay_pane.persona_identity({"campaign": "coder", "speaker": "coder"}) == ("coder", "coder")
+
+
+def test_apply_persona_to_config_deep_merges_voice_and_overlays_campaign():
+    config = {
+        "voice": {"provider": "piper", "model_path": "/data/voices/base.onnx",
+                  "speakers": {"boss": {"model_path": "/data/voices/boss.onnx"}}},
+        "campaign": "coder",
+    }
+    persona_doc = {
+        "campaign": "dnd", "speaker": "gm",
+        "voice": {"model_path": "/data/voices/gm.onnx", "rate": 1.0},
+    }
+
+    new_config = replay_pane.apply_persona_to_config(config, persona_doc)
+
+    assert new_config["voice"]["model_path"] == "/data/voices/gm.onnx"  # persona wins
+    assert new_config["voice"]["provider"] == "piper"  # base field kept
+    # base voice.speakers kept untouched -- needed for ANY worker to direct
+    # a multi-persona duet regardless of its own identity (infra, not persona).
+    assert new_config["voice"]["speakers"] == {"boss": {"model_path": "/data/voices/boss.onnx"}}
+    assert new_config["campaign"] == "dnd"  # so the NEXT default-campaign resolution follows the persona
+
+
+def test_apply_persona_to_config_never_mutates_the_input_config():
+    config = {"voice": {"model_path": "/data/voices/base.onnx"}}
+    replay_pane.apply_persona_to_config(
+        config, {"campaign": "dnd", "voice": {"model_path": "/data/voices/gm.onnx"}})
+    assert config == {"voice": {"model_path": "/data/voices/base.onnx"}}
+
+
+def test_apply_persona_to_config_handles_none_config():
+    new_config = replay_pane.apply_persona_to_config(
+        None, {"campaign": "dnd", "voice": {"model_path": "x"}})
+    assert new_config["campaign"] == "dnd"
+    assert new_config["voice"] == {"model_path": "x"}
+
+
+def test_apply_persona_to_config_without_voice_section_only_overlays_campaign():
+    config = {"voice": {"model_path": "/data/voices/base.onnx"}}
+    new_config = replay_pane.apply_persona_to_config(config, {"campaign": "dnd", "speaker": "gm"})
+    assert new_config["voice"] == {"model_path": "/data/voices/base.onnx"}
+    assert new_config["campaign"] == "dnd"
+
+
+# ── Mid-airing guard: worker:{id}:airing (CONTRACT.md §8) ───────────────────
+# fake_airing_redis (autouse, defined near the top of this file) keeps every
+# perform_* call in this section off real Redis.
+
+def test_perform_request_sets_then_clears_airing_flag_around_a_solo_performance(
+        library, fake_airing_redis):
+    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+    assert ok is True
+
+    key = replay_pane._airing_key("KODI-7")
+    assert fake_airing_redis.get(key) is None  # cleared after the show
+    set_at = next(i for i, c in enumerate(fake_airing_redis.calls) if c == ("set", key, "1"))
+    delete_at = next(i for i, c in enumerate(fake_airing_redis.calls) if c == ("delete", key))
+    assert set_at < delete_at  # set BEFORE clear, not the other way around
+
+
+def test_perform_request_clears_airing_flag_even_when_the_performance_crashes(
+        library, monkeypatch, fake_airing_redis):
+    """CONTRACT.md §8: 'cleared in a finally so a crashed show can't wedge
+    it forever' -- the explicit requirement this test guards. Without the
+    finally, a worker whose Performer raised mid-show would stay flagged as
+    airing permanently, and every future POST /campaigns/*/start naming it
+    would 409 forever with no way to clear it short of a Redis edit."""
+    class ExplodingPerformer:
+        def __init__(self, **kwargs):
+            pass
+
+        def perform(self, episode, show=None, start=0, limit=None):
+            raise RuntimeError("boom mid-show")
+
+    monkeypatch.setattr(replay_pane, "Performer", ExplodingPerformer)
+
+    with pytest.raises(RuntimeError, match="boom mid-show"):
+        perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+
+    key = replay_pane._airing_key("KODI-7")
+    assert fake_airing_redis.get(key) is None  # cleared despite the crash
+    assert ("delete", key) in fake_airing_redis.calls
+
+
+def test_director_sets_then_clears_airing_flag_around_the_performance(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, fake_airing_redis):
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-123")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
+
+    request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True
+    key = replay_pane._airing_key("director-1")
+    assert fake_airing_redis.get(key) is None
+    assert ("set", key, "1") in fake_airing_redis.calls
+    assert ("delete", key) in fake_airing_redis.calls
+
+
+def test_perform_request_airing_flag_uses_this_workers_own_self_id_not_the_display_name(
+        library, fake_airing_redis, monkeypatch):
+    """The airing flag must key off the worker's bus identity
+    (resolve_self_id), not an arbitrary display-name override -- otherwise
+    two differently-named requests for the same physical worker would set
+    two different keys and neither would ever look "airing" to the other."""
+    monkeypatch.setenv("WORKER_ID", "worker-1")
+    ok = perform_request({"episode": "ep1", "speed": 0, "worker_name": "KODI-7"},
+                         library, "worker-1", None)
+    assert ok is True
+    assert any(c[1] == replay_pane._airing_key("worker-1") for c in fake_airing_redis.calls)

@@ -45,9 +45,9 @@ _REQUIRED_ENV = ("POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD")
 
 def available() -> bool
 
-def save_airing(message_id, worker_id, episode, aired_at, show) -> int
+def save_airing(message_id, worker_id, episode, aired_at, show, campaign) -> int
 
-def load_latest_airing(episode) -> list[dict] | None
+def load_latest_airing(episode, campaign) -> list[dict] | None
 
 def load_airing(message_id) -> list[dict] | None
 ```
@@ -60,9 +60,14 @@ def load_airing(message_id) -> list[dict] | None
   logger's text-only row.
 - `worker_id` (str, required) — persona/worker that performed the airing.
 - `episode` (str, required) — the episode key. This is the canonical
-  script stem (`Path(source).stem`, e.g.
-  `"2026-07-02_04-27-00_6ecdde82"`) — the same value used to resolve the
-  episode file in `REPLAY_LIBRARY`.
+  episode stem (`Path(source).stem`, e.g. `"sample"`) — the same value
+  used to resolve the episode file in `REPLAY_LIBRARY/<campaign>/`.
+- `campaign` (str, required) — the campaign the episode was aired under
+  (campaign_platform_contract.md §7; added 2026-07-26). Two campaigns can reuse the same
+  episode filename/stem now that episodes live under
+  `replays/<campaign>/<episode>.json`, so the "latest airing of X" lookup
+  has to scope on `(episode, campaign)` together, not `episode` alone —
+  see `load_latest_airing` below.
 - `aired_at` (str, required) — ISO 8601 UTC timestamp of the airing.
 - `show` (list[dict], required) — the voiced show from
   `revoice.prepare_show`/`prepare_voiced_show`: each scene dict has
@@ -82,12 +87,13 @@ def load_airing(message_id) -> list[dict] | None
   `scene_index`: `message_id`, `scene_index`, `scene_kind`, `speaker`,
   `text`, `audio` (`bytes` or `None` — psycopg2 hands `bytea` back as a
   `memoryview`, so this converts it), `audio_duration_s`. Returns `None`
-  when the episode has never been cached with audio. Raises on DB failure;
-  callers (`replay_pane.load_reused_show`/`_load_cached_show`) wrap this
-  best-effort. `message_id` (added for duet replay) lets a duet director
-  reusing a cached airing (`narration: "reuse"`) tell its followers exactly
-  which airing to load via `load_airing` — "latest" can otherwise drift
-  out from under a show that takes a while to invite/ready its cast.
+  when that `(episode, campaign)` pair has never been cached with audio.
+  Raises on DB failure; callers (`replay_pane.load_reused_show`/
+  `_load_cached_show`) wrap this best-effort. `message_id` (added for duet
+  replay) lets a duet director reusing a cached airing (`narration:
+  "reuse"`) tell its followers exactly which airing to load via
+  `load_airing` — "latest" can otherwise drift out from under a show that
+  takes a while to invite/ready its cast.
 - `load_airing(message_id)` — same row-dict shape as `load_latest_airing`
   (including `message_id`), but selects the exact airing by `message_id`
   instead of "most recent with audio" — this is the duet **follower**'s
@@ -97,13 +103,16 @@ def load_airing(message_id) -> list[dict] | None
   (`replay_pane.perform_follower_request`) wrap this best-effort.
 
 The "latest" row set is selected by `LOAD_SQL`: the most recent
-`message_id` for that `episode` that has **at least one** scene with
-`audio IS NOT NULL`, ordered `aired_at DESC, ingested_at DESC` — a silent
-airing (voice off, or every scene's TTS failed) is never returned as a
-reuse candidate, since there'd be nothing to play back. `load_airing`
-(`LOAD_BY_ID_SQL`) has no such filter — it returns every row for that exact
-`message_id`, silent scenes included, since a duet follower needs the
-whole airing's structure regardless of which scenes it personally owns.
+`message_id` for that `episode` **and** `campaign` that has **at least
+one** scene with `audio IS NOT NULL`, ordered `aired_at DESC, ingested_at
+DESC` — a silent airing (voice off, or every scene's TTS failed) is never
+returned as a reuse candidate, since there'd be nothing to play back, and
+a different campaign's airing of an episode with the same filename/stem
+is never returned either. `load_airing` (`LOAD_BY_ID_SQL`) has no such
+filter — it returns every row for that exact `message_id`, silent scenes
+included, since a duet follower needs the whole airing's structure
+regardless of which scenes it personally owns; it also doesn't need a
+`campaign` filter at all, since a `message_id` is already globally unique.
 
 ## Dependencies
 
@@ -129,6 +138,7 @@ if narration_store.available():
         message_id, worker_id, episode,
         aired_at=datetime.now(timezone.utc).isoformat(),
         show=show,  # the voiced show from prepare_voiced_show
+        campaign=campaign,
     )
     print(f"cached narration ({n} scenes) for reuse")
 ```
@@ -142,7 +152,7 @@ from pathlib import Path
 import narration_store
 from tts_client import Narration, wav_duration
 
-cached = narration_store.load_latest_airing(episode)
+cached = narration_store.load_latest_airing(episode, campaign)
 if cached:
     for row in cached:
         if row["audio"]:
@@ -184,6 +194,19 @@ if rows:
 
 ## Changelog
 
+- **v1.2.0** (2026-07-26, campaign-platform build, campaign_platform_contract.md §7):
+  **Campaign namespacing** — `save_airing`/`load_latest_airing` gained a
+  required `campaign` parameter; `SAVE_SQL`/`LOAD_SQL` gained a `campaign`
+  column/clause. Two campaigns reusing the same episode filename/stem
+  (now that episodes live under `replays/<campaign>/<episode>.json`) no
+  longer collide on "latest airing of X". `load_airing(message_id)` is
+  unaffected — it's keyed on the opaque airing id, not the episode name.
+  Migration: `docs/sql/02_create_tables.sql` gained a `campaign TEXT NOT
+  NULL DEFAULT 'coder'` column (both in the `CREATE TABLE IF NOT EXISTS`
+  and via an idempotent `ALTER TABLE ... ADD COLUMN IF NOT EXISTS`, the
+  same pattern used for `audio`/`audio_duration_s`) plus an
+  `(episode, campaign)` index — existing rows default to `'coder'`, the
+  only campaign that existed before this column was added.
 - **v1.1.0** (2026-07-13): Duet replay support — `load_latest_airing()`
   rows gained a `message_id` field so a duet director reusing a cached
   airing can hand its followers a stable `airing_id`. New

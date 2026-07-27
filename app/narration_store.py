@@ -18,6 +18,15 @@ Everything here is best-effort, matching the show-must-air rule
 (docs/revoice.md): missing psycopg2, missing POSTGRES_* env, or a down
 database disable the store (save skipped, reuse falls back to a fresh
 generation) — never an exception into the show.
+
+Campaign namespacing (CONTRACT.md §7): the cache key used to be `episode`
+alone -- fine when only one campaign ever existed, but two campaigns can
+now reuse the same episode filename/stem (replays/<campaign>/<episode>.json
+per campaign, see docs/campaign_platform_build.md). `campaign` is stored
+alongside `episode` on every row, and load_latest_airing's "most recent
+airing of X" lookup is scoped to (episode, campaign) so campaigns can never
+collide on reuse. `load_airing(message_id)` is unaffected -- it's keyed on
+the opaque airing id, not the episode name, so it needed no change.
 """
 import os
 
@@ -26,10 +35,10 @@ _REQUIRED_ENV = ("POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD")
 
 SAVE_SQL = """
 INSERT INTO voiced_narration (
-    message_id, worker_id, episode, aired_at, scene_index, scene_kind,
-    speaker, text, audio, audio_duration_s
+    message_id, worker_id, episode, campaign, aired_at, scene_index,
+    scene_kind, speaker, text, audio, audio_duration_s
 ) VALUES (
-    %(message_id)s, %(worker_id)s, %(episode)s, %(aired_at)s,
+    %(message_id)s, %(worker_id)s, %(episode)s, %(campaign)s, %(aired_at)s,
     %(scene_index)s, %(scene_kind)s, %(speaker)s, %(text)s,
     %(audio)s, %(audio_duration_s)s
 )
@@ -43,7 +52,7 @@ SELECT message_id, scene_index, scene_kind, speaker, text, audio, audio_duration
 FROM voiced_narration
 WHERE message_id = (
     SELECT message_id FROM voiced_narration
-    WHERE episode = %(episode)s AND audio IS NOT NULL
+    WHERE episode = %(episode)s AND campaign = %(campaign)s AND audio IS NOT NULL
     ORDER BY aired_at DESC, ingested_at DESC
     LIMIT 1
 )
@@ -86,11 +95,14 @@ def _connect():
     return conn
 
 
-def save_airing(message_id, worker_id, episode, aired_at, show):
+def save_airing(message_id, worker_id, episode, aired_at, show, campaign):
     """Persist one voiced airing: a row per scene with narration text plus
     the WAV bytes and measured duration (silent scenes save text-only).
-    Returns the number of scenes saved. Raises on DB failure — callers
-    (replay_pane.persist_narration) wrap this best-effort."""
+    `campaign` is stored alongside `episode` (CONTRACT.md §7) so two
+    campaigns reusing the same episode filename/stem never collide on
+    "latest airing of X" -- see load_latest_airing. Returns the number of
+    scenes saved. Raises on DB failure — callers (replay_pane.
+    persist_narration) wrap this best-effort."""
     import psycopg2
 
     conn = _connect()
@@ -107,6 +119,7 @@ def save_airing(message_id, worker_id, episode, aired_at, show):
                     "message_id": message_id,
                     "worker_id": worker_id,
                     "episode": episode,
+                    "campaign": campaign,
                     "aired_at": aired_at,
                     "scene_index": index,
                     "scene_kind": scene.get("kind", ""),
@@ -133,11 +146,16 @@ def _row_to_dict(row):
     }
 
 
-def load_latest_airing(episode):
-    """Scenes of the most recent cached airing of `episode` that has audio,
-    ordered by scene_index — a list of dicts with message_id, scene_index,
-    scene_kind, speaker, text, audio (bytes or None), audio_duration_s — or
-    None when the episode has never been cached. Raises on DB failure.
+def load_latest_airing(episode, campaign):
+    """Scenes of the most recent cached airing of `episode` WITHIN
+    `campaign` that has audio, ordered by scene_index — a list of dicts
+    with message_id, scene_index, scene_kind, speaker, text, audio (bytes
+    or None), audio_duration_s — or None when that (episode, campaign) pair
+    has never been cached. Raises on DB failure.
+
+    `campaign` narrows the lookup (CONTRACT.md §7) so two campaigns that
+    happen to share an episode filename/stem never reuse each other's
+    airing.
 
     message_id is included so a duet director reusing a cached airing
     (replay_request payload.narration: "reuse") can tell its followers
@@ -146,7 +164,7 @@ def load_latest_airing(episode):
     conn = _connect()
     try:
         with conn.cursor() as cur:
-            cur.execute(LOAD_SQL, {"episode": episode})
+            cur.execute(LOAD_SQL, {"episode": episode, "campaign": campaign})
             rows = cur.fetchall()
     finally:
         conn.close()

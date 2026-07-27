@@ -1,38 +1,50 @@
 #!/usr/bin/env python3
 """
 replay.py
-Performs a parsed session script (app/session_log_parser.py) as a paced,
-colorized "show" on stdout — designed to run inside a tmux pane on stream,
-but equally happy in any terminal for local preview.
+Performs a validated episode (app/episode_schema.py) as a paced, colorized
+"show" on stdout -- designed to run inside a tmux pane on stream, but
+equally happy in any terminal for local preview.
 
-Display-only by design: recorded commands and edits are RENDERED, never
-executed. The only side effect is the avatar state file (agent_state.py),
-which the avatar pane already knows how to read.
+Display-only by design: every scene's `render[]` entries are recipes over
+a handful of behaviors (app/primitives.py) -- they are RENDERED, never
+executed. The only side effect outside the show's own output is the avatar
+state file (agent_state.py), which the avatar pane already knows how to
+read.
 
 Persona re-voicing / narration is a separate per-airing pass (revoice.py):
-it hands this module a "voiced show" — the script's events grouped into
-scenes, each with a spoken line and its synthesized audio (tts_client.py).
-The replayer performs whatever text it's given and never calls an LLM
-itself. Audio anchors the timing: each scene's visual pacing is scaled so
-the on-screen rendering and the spoken line finish together.
+it hands this module a "voiced show" -- the episode's own scenes, each
+with a spoken line and its synthesized audio (tts_client.py). The
+replayer performs whatever text it's given and never calls an LLM itself.
+Audio anchors the timing: each scene's visual pacing is scaled so the
+on-screen rendering and the spoken line finish together.
+
+Rendering itself is delegated to app/primitives.py's perform_entry() over
+a scene's render[] list -- this module owns only the show-level concerns:
+pacing (Pacer), styling (Palette), audio-anchored scene timing, duet
+hooks, and routing each entry's `target` to the right output sink.
 """
 import argparse
-import json
+import logging
 import os
 import sys
+import threading
 import time
 from pathlib import Path
 
 from agent_state import write_state
 from audio_player import play_wav, wait_extra
+from primitives import RenderContext, estimate_scene_seconds, perform_entry
 
+log = logging.getLogger("replay")
 
-# ── Pacing defaults (chars/sec and pauses; --speed scales everything) ────────
-DIALOGUE_CPS = 45       # human-ish typing for spoken lines
-CODE_CPS = 130          # faster for code being "written"
-OUTPUT_LINES_PER_S = 18  # terminal output scrolls in at this rate
-EVENT_PAUSE_S = 0.8     # beat between events
-MAX_OUTPUT_LINES = 24   # cap displayed command output / file content
+# ── Pacing defaults (--speed scales everything) ──────────────────────────────
+# Per-behavior timing (chars/sec, lines/sec, pause seconds) used to live here
+# as module constants; they now live in each campaign's own
+# config/campaigns/<campaign>/primitives.yaml recipes (CONTRACT.md §2 "the
+# constants MUST come out of replay.py") -- app/primitives.py estimates and
+# performs them. What's left here is show-level pacing, not per-behavior
+# rates.
+MAX_OUTPUT_LINES = 24   # default truncation cap threaded into RenderContext
 BUBBLE_CHARS = 120      # avatar speech-bubble excerpt length
 
 # Audio-anchored scenes scale visual pacing to the spoken line's measured
@@ -41,7 +53,6 @@ BUBBLE_CHARS = 120      # avatar speech-bubble excerpt length
 # ending early (visuals still going).
 MIN_SCENE_SCALE = 0.4
 MAX_SCENE_SCALE = 3.0
-TOOL_BEAT_S = 0.5       # pause for Read/generic tool events
 
 
 class ReplayStopped(Exception):
@@ -93,50 +104,6 @@ class Pacer:
             time.sleep(delay)
 
 
-def estimate_event_seconds(event, max_output_lines=MAX_OUTPUT_LINES):
-    """Seconds one event takes to render at speed 1.0 / scale 1.0.
-
-    Mirrors the Performer handlers' pacing math — revoice.py sizes each
-    scene's narration from this, and _perform_scene derives the audio-sync
-    scale from it, so keep the two in lockstep when touching pacing.
-    """
-
-    def displayed(text):
-        lines = text.splitlines()
-        return lines[:max_output_lines]
-
-    kind = event.get("type")
-    if kind == "user_message":
-        return len(event.get("text", "")) / (DIALOGUE_CPS * 2) + EVENT_PAUSE_S
-    if kind == "assistant_text":
-        return len(event.get("text", "")) / DIALOGUE_CPS + EVENT_PAUSE_S
-    if kind != "tool_call":
-        return 0.0
-
-    tool = event.get("tool")
-    detail = event.get("detail") or {}
-    seconds = EVENT_PAUSE_S
-    if tool in ("Bash", "PowerShell"):
-        command = detail.get("command") or event.get("input_summary") or ""
-        seconds += len(command) / CODE_CPS
-        output = detail.get("output")
-        if output:
-            seconds += len(displayed(output)) / OUTPUT_LINES_PER_S
-    elif tool == "Edit":
-        old, new = detail.get("old"), detail.get("new")
-        if old:
-            seconds += len(displayed(old)) / OUTPUT_LINES_PER_S
-        if new:
-            seconds += sum(len(line) for line in displayed(new)) / CODE_CPS
-    elif tool == "Write":
-        content = detail.get("content")
-        if content:
-            seconds += sum(len(line) for line in displayed(content)) / (CODE_CPS * 2)
-    else:
-        seconds += TOOL_BEAT_S
-    return seconds
-
-
 # ── ANSI helpers ─────────────────────────────────────────────────────────────
 class Palette:
     def __init__(self, enabled=True):
@@ -159,11 +126,13 @@ def _truncate_lines(text, max_lines):
 
 
 class Performer:
-    """Renders script events in order. One instance per episode."""
+    """Renders a validated episode's scenes in order. One instance per
+    episode."""
 
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
                  state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
-                 on_scene_start=None, wait_for_scene=None, speaker_names=None):
+                 on_scene_start=None, wait_for_scene=None, speaker_names=None,
+                 primitives=None, sinks=None):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
@@ -178,16 +147,28 @@ class Performer:
         # there — a bus hiccup must not take the show down.
         self.on_scene_start = on_scene_start
         self.wait_for_scene = wait_for_scene
-        # Multi-speaker duet display names (docs/revoice.md): speaker id ->
-        # on-screen name, mirroring revoice._display_name. _display_name is
-        # the label _on_assistant_text actually prints; _perform_scene sets
-        # it per scene (via _resolve_display_name) and restores it to this
-        # default afterward, so a Performer with no speaker_names override
-        # — or an unvoiced show=None performance, whose synthetic scenes
-        # never carry a "speaker" key — renders exactly as before, under
-        # worker_name.
+        # Multi-speaker duet display names (docs/revoice.md): kept for
+        # backward compatibility with the constructor's frozen shape
+        # (CONTRACT.md §6). The on-screen speaker label is now baked into a
+        # scene's render[] payload by the generator (e.g. show_coder_line's
+        # payload.name) rather than resolved here at render time, so
+        # _display_name/_resolve_display_name below no longer drive any
+        # visible output -- they're kept only so _perform_scene's existing
+        # set/reset-after-scene behavior (regression-tested) still holds.
         self.speaker_names = speaker_names or {}
         self._display_name = self.worker_name
+        # The merged primitive recipe table for this episode's campaign
+        # (app/primitives.py::load_primitives) -- required to render any
+        # scene with a non-empty render[]; a scene with render: [] never
+        # touches it, so a Performer built without one can still run a
+        # narration-only/no-visuals test.
+        self.primitives = primitives
+        # target -> writable sink (default: everything goes to `out`, i.e.
+        # this single stream is the "theater" pane). See _perform_render /
+        # _route_write and docs/replay.md's honest limit on unwired targets.
+        self.sinks = sinks or {"theater": self.out}
+        self._sink_locks = {name: threading.Lock() for name in self.sinks}
+        self._warned_targets = set()   # targets already warned about (see _route_write)
 
     # ── low-level emit helpers ───────────────────────────────────────────────
     def _write(self, text):
@@ -196,16 +177,6 @@ class Performer:
 
     def _line(self, text=""):
         self._write(text + "\n")
-
-    def _typed(self, text, cps, prefix="", color=""):
-        if prefix:
-            self._write(prefix)
-        if color:
-            self._write(color)
-        self.pacer.type_out(self._write, text, cps)
-        if color:
-            self._write(self.c.reset)
-        self._write("\n")
 
     def _avatar(self, expression, action="", bubble=None):
         """Best-effort avatar update — a missing/read-only state path must
@@ -219,147 +190,133 @@ class Performer:
         except OSError as exc:
             print(f"[replay] avatar state update skipped: {exc}", file=sys.stderr)
 
-    def _paced_output(self, text, color=""):
-        """Scroll pre-recorded output in line by line, truncated."""
-        lines, hidden = _truncate_lines(text, self.max_output_lines)
-        for line in lines:
-            self._line(f"{color}{line}{self.c.reset}" if color else line)
-            self.pacer.sleep(1.0 / OUTPUT_LINES_PER_S)
-        if hidden:
-            self._line(f"{self.c.dim}… ({hidden} more lines){self.c.reset}")
-
-    # ── event handlers ───────────────────────────────────────────────────────
-    def _on_user_message(self, event):
-        c = self.c
-        self._line()
-        self._line(f"{c.cyan}{c.bold}┌─ BOSS ─────────────────────────────{c.reset}")
-        self._avatar("thinking", action="reading a message from the boss")
-        for line in event["text"].splitlines():
-            self._typed(line, DIALOGUE_CPS * 2, prefix=f"{c.cyan}│ {c.reset}")
-        self._line(f"{c.cyan}└────────────────────────────────────{c.reset}")
-
-    def _on_assistant_text(self, event):
-        c = self.c
-        text = event["text"]
-        self._line()
-        self._avatar("speaking", action="talking to the stream", bubble=text)
-        self._write(f"{c.green}{c.bold}{self._display_name} ▸{c.reset} ")
-        first = True
-        for line in text.splitlines():
-            if not first:
-                self._write("  ")
-            self.pacer.type_out(self._write, line, DIALOGUE_CPS)
-            self._write("\n")
-            first = False
-
-    def _on_tool_call(self, event):
-        handler = {
-            "Bash": self._perform_shell,
-            "PowerShell": self._perform_shell,
-            "Edit": self._perform_edit,
-            "Write": self._perform_write,
-            "Read": self._perform_read,
-        }.get(event["tool"], self._perform_generic)
-        handler(event)
-        if event.get("error"):
-            self._avatar("frustrated", action=f"{event['tool']} failed",
-                         bubble="Ugh, that didn't work...")
-            self._line(f"{self.c.red}✗ that didn't work{self.c.reset}")
-
-    def _perform_shell(self, event):
-        c = self.c
-        detail = event.get("detail") or {}
-        command = detail.get("command") or event.get("input_summary") or "(command)"
-        self._line()
-        self._avatar("focused", action=f"running: {command[:60]}")
-        for i, line in enumerate(command.splitlines()):
-            prefix = f"{c.yellow}${c.reset} " if i == 0 else "  "
-            self._typed(line, CODE_CPS, prefix=prefix)
-        output = detail.get("output")
-        if output:
-            self._paced_output(output, color=c.dim)
-
-    def _perform_edit(self, event):
-        c = self.c
-        detail = event.get("detail") or {}
-        target = detail.get("file") or event.get("input_summary") or "(file)"
-        self._line()
-        self._line(f"{c.magenta}✎ editing {target}{c.reset}")
-        self._avatar("focused", action=f"editing {Path(target).name}")
-        old, new = detail.get("old"), detail.get("new")
-        if old:
-            lines, hidden = _truncate_lines(old, self.max_output_lines)
-            for line in lines:
-                self._line(f"{c.red}- {line}{c.reset}")
-                self.pacer.sleep(1.0 / OUTPUT_LINES_PER_S)
-            if hidden:
-                self._line(f"{c.dim}… ({hidden} more lines){c.reset}")
-        if new:
-            lines, hidden = _truncate_lines(new, self.max_output_lines)
-            for line in lines:
-                self._typed(line, CODE_CPS, prefix=f"{c.green}+ {c.reset}", color=c.green)
-            if hidden:
-                self._line(f"{c.dim}… ({hidden} more lines){c.reset}")
-
-    def _perform_write(self, event):
-        c = self.c
-        detail = event.get("detail") or {}
-        target = detail.get("file") or event.get("input_summary") or "(file)"
-        self._line()
-        self._line(f"{c.magenta}✎ new file {target}{c.reset}")
-        self._avatar("focused", action=f"writing {Path(target).name}")
-        content = detail.get("content")
-        if content:
-            lines, hidden = _truncate_lines(content, self.max_output_lines)
-            for line in lines:
-                self._typed(line, CODE_CPS * 2, prefix=f"{c.green}+ {c.reset}", color=c.green)
-            if hidden:
-                self._line(f"{c.dim}… ({hidden} more lines){c.reset}")
-
-    def _perform_read(self, event):
-        detail = event.get("detail") or {}
-        target = detail.get("file") or event.get("input_summary") or "(file)"
-        self._line(f"{self.c.dim}⋯ reading {target}{self.c.reset}")
-        self._avatar("focused", action=f"reading {Path(target).name}")
-        self.pacer.sleep(0.5)
-
-    def _perform_generic(self, event):
-        summary = event.get("input_summary", "")[:100]
-        self._line(f"{self.c.dim}⋯ {event['tool']}: {summary}{self.c.reset}")
-        self._avatar("focused", action=f"using {event['tool']}")
-        self.pacer.sleep(0.5)
-
-    # ── scene performance (a scene = events + optional spoken narration) ────
-    def _perform_events(self, events):
-        dispatch = {
-            "user_message": self._on_user_message,
-            "assistant_text": self._on_assistant_text,
-            "tool_call": self._on_tool_call,
-        }
-        for event in events:
-            handler = dispatch.get(event.get("type"))
-            if handler is None:
-                continue
-            handler(event)
-            self.pacer.sleep(EVENT_PAUSE_S)
-
     def _resolve_display_name(self, speaker):
-        """Map a scene's speaker id to the name _on_assistant_text prints.
-
-        Mirrors revoice._display_name's override/fallback order — a
-        speaker_names dict entry wins first, then a backward-compat
-        default, then the raw speaker id as a last resort — but a Performer
-        instance renders a single worker's own stream, so both of
-        revoice's backward-compat defaults (boss_name for "boss",
-        worker_name for "coder") collapse onto this Performer's own
-        worker_name, same as a missing/None speaker (today's scenes never
-        set one).
-        """
+        """Map a scene's speaker id to a display name, mirroring
+        revoice._display_name's override/fallback order. Kept for
+        _perform_scene's set/reset bookkeeping (see __init__) even though
+        nothing currently reads self._display_name for rendering — the
+        speaker label now comes from the render[] payload itself."""
         if speaker in self.speaker_names:
             return self.speaker_names[speaker]
         if speaker is None or speaker in ("boss", "coder"):
             return self.worker_name
         return speaker
+
+    # ── render routing (target -> sink) ──────────────────────────────────────
+    def _route_write(self, text, target=None):
+        """RenderContext.write: route one write() call to the sink for
+        `target` (already fully resolved by primitives.perform_entry as
+        entry override > recipe default > "theater" -- see
+        primitives.py::perform_entry). An unresolvable target falls back
+        to the theater sink and logs a WARNING rather than inventing
+        cross-pane IPC (docs/replay.md's honest limit). A per-target lock
+        keeps any single write() call atomic so `mode: parallel` entries on
+        different threads can never tear an ANSI escape sequence in half."""
+        target = target or "theater"
+        sink = self.sinks.get(target)
+        if sink is None:
+            # Warn once per target, not once per write() -- a typed line calls
+            # write() per character, which turned one unwired pane into
+            # thousands of identical log lines.
+            if target not in self._warned_targets:
+                self._warned_targets.add(target)
+                log.warning("no sink wired for render target %r; falling back to theater", target)
+            sink = self.sinks.get("theater") or self.out
+            target = "theater"
+        lock = self._sink_locks.get(target)
+        if lock is None:
+            lock = self._sink_locks.setdefault("theater", threading.Lock())
+        with lock:
+            sink.write(text)
+            sink.flush()
+
+    # ── scene rendering (a scene = render[] + optional spoken narration) ────
+    def _perform_one_entry(self, entry, ctx):
+        """Execute one render[] entry, never letting it take the scene (or
+        the show) down. ReplayStopped is the one exception that MUST keep
+        propagating -- it's how an operator replay_stop or a duet abort
+        unwinds perform() cleanly; anything else is a bug in one entry, not
+        a reason to kill the whole airing (the "show must always air"
+        rule), so it's logged loudly and the scene continues."""
+        try:
+            perform_entry(entry, self.primitives, ctx)
+        except ReplayStopped:
+            raise
+        except Exception:
+            log.error("render entry failed (primitive=%r); scene continues",
+                     entry.get("primitive") if isinstance(entry, dict) else entry,
+                     exc_info=True)
+
+    def _perform_render_parallel(self, render, ctx):
+        """mode: parallel -- every entry's behaviors run concurrently on
+        real threads, joined before this returns, so entries targeting
+        different panes (e.g. a map on "theater" and a caption on "notes")
+        genuinely render at the same time.
+
+        Pacer is safe to share across threads here: `scale`/`speed` are set
+        once per scene, before this ever runs, and nothing in the
+        behavior-execution path (sleep/type_out/check_stop) mutates them --
+        they only read. Writes are serialized per-sink (_route_write's
+        lock), so two entries can never tear a single write() call in
+        half; two entries that both target the SAME sink can still
+        visually interleave line-by-line -- an honest limit, not a bug,
+        see docs/replay.md.
+
+        A ReplayStopped raised on any thread is re-raised here (after every
+        thread has been joined) so an operator stop still unwinds the show
+        even though it fired on a background thread; any OTHER exception
+        is logged and swallowed per entry, matching the sequence-mode
+        behavior in _perform_one_entry."""
+        outcomes = [None] * len(render)
+
+        def run(index, entry):
+            try:
+                perform_entry(entry, self.primitives, ctx)
+            except Exception as exc:  # captured, not swallowed, until after join()
+                outcomes[index] = exc
+
+        threads = [threading.Thread(target=run, args=(index, entry), daemon=True)
+                  for index, entry in enumerate(render)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        stopped = next((exc for exc in outcomes if isinstance(exc, ReplayStopped)), None)
+        if stopped is not None:
+            raise stopped
+        for entry, exc in zip(render, outcomes):
+            if exc is not None:
+                log.error("render entry failed (primitive=%r); scene continues",
+                         entry.get("primitive") if isinstance(entry, dict) else entry,
+                         exc_info=exc)
+
+    def _perform_render(self, scene):
+        """Build a RenderContext and run scene['render'] entries.
+
+        mode 'sequence' (the default): one after another, in order. mode
+        'parallel': interleaved via real threads, joined before this
+        returns (see _perform_render_parallel) -- entries targeting
+        different sinks genuinely render simultaneously; entries sharing a
+        sink are serialized at the write() level so output can't corrupt,
+        even though their line ordering may interleave. A single entry
+        failing never aborts the rest of the scene in either mode."""
+        render = scene.get("render") or []
+        if not render:
+            return
+        ctx = RenderContext(
+            write=self._route_write,
+            pacer=self.pacer,
+            palette=self.c,
+            avatar=self._avatar,
+            max_output_lines=self.max_output_lines,
+        )
+        mode = scene.get("mode", "sequence")
+        if mode == "parallel" and len(render) > 1:
+            self._perform_render_parallel(render, ctx)
+        else:
+            for entry in render:
+                self._perform_one_entry(entry, ctx)
 
     def _perform_scene(self, scene):
         """Perform one scene; when it carries synthesized narration, anchor
@@ -378,11 +335,11 @@ class Performer:
         this worker's stream in lockstep with the owner's, even with no
         sound to anchor to.
 
-        Also resolves this scene's on-screen speaking label via
-        _resolve_display_name(scene.get("speaker")) so a multi-speaker
-        duet's dialogue bubbles show the actual persona, not just this
-        worker's own name — reset in the finally below so it can never
-        leak into the next scene."""
+        `natural` (the scene's own screen-time estimate the audio-sync
+        scale is derived from) now comes from
+        primitives.estimate_scene_seconds(scene, self.primitives, ...)
+        instead of summing per-event timings — that is the only change to
+        this method's math versus the pre-campaign-platform version."""
         owned = scene.get("owned", True)
         narration = scene.get("narration")
         audio = scene.get("audio")
@@ -397,26 +354,24 @@ class Performer:
 
         playback, started, hold_seconds = None, None, None
         if owned and audio is not None and audio.duration > 0:
-            natural = sum(
-                estimate_event_seconds(e, self.max_output_lines)
-                for e in scene["events"]
-            ) / self.pacer.speed
+            natural = estimate_scene_seconds(scene, self.primitives,
+                                             max_output_lines=self.max_output_lines,
+                                             speed=self.pacer.speed)
             self.pacer.scale = min(MAX_SCENE_SCALE,
                                    max(MIN_SCENE_SCALE, natural / audio.duration))
             playback = play_wav(audio.audio_path)
             started = time.monotonic()
         elif not (owned and audio is not None) and target_duration is not None and target_duration > 0:
-            natural = sum(
-                estimate_event_seconds(e, self.max_output_lines)
-                for e in scene["events"]
-            ) / self.pacer.speed
+            natural = estimate_scene_seconds(scene, self.primitives,
+                                             max_output_lines=self.max_output_lines,
+                                             speed=self.pacer.speed)
             self.pacer.scale = min(MAX_SCENE_SCALE,
                                    max(MIN_SCENE_SCALE, natural / target_duration))
             started = time.monotonic()
             hold_seconds = target_duration
         self._display_name = self._resolve_display_name(scene.get("speaker"))
         try:
-            self._perform_events(scene["events"])
+            self._perform_render(scene)
         except ReplayStopped:
             # A stop mid-scene must not leave audio playing under a show
             # that already unwound — same responsibility perform()'s
@@ -440,11 +395,14 @@ class Performer:
                 time.sleep(remaining)
 
     # ── top level ────────────────────────────────────────────────────────────
-    def perform(self, script, show=None, start=0, limit=None):
+    def perform(self, episode, show=None, start=0, limit=None):
         """Perform an episode. `show` is an optional voiced show from
-        revoice.prepare_show() — scenes with narration + audio; without it,
-        the script's events play silently exactly as before. start/limit
-        slice events when unvoiced, scenes when voiced.
+        revoice.prepare_show() -- the episode's own scenes annotated with
+        narration + audio; without it, `episode['scenes']` perform directly
+        with no narration (silent). start/limit slice the scene list
+        either way -- there is no more separate "unvoiced == one scene per
+        event" branch now that scenes[] is already the unit of performance
+        (no events[] grouping step, docs/campaign_platform_build.md).
 
         Index-based (rather than a plain for-loop) so a duet follower's
         wait_for_scene hook can jump the index forward or abort mid-show
@@ -460,16 +418,12 @@ class Performer:
         (docs/duet_replay.md `replay_end` "finished" vs "stopped").
         """
         c = self.c
-        if show is None:
-            events = script.get("events", [])[start:]
-            if limit is not None:
-                events = events[:limit]
-            scenes = [{"events": [event]} for event in events]
-        else:
-            scenes = show[start:]
-            if limit is not None:
-                scenes = scenes[:limit]
-        title = script.get("source", "episode")
+        scenes = episode.get("scenes", []) if show is None else show
+        scenes = scenes[start:]
+        if limit is not None:
+            scenes = scenes[:limit]
+        meta = episode.get("meta") or {}
+        title = meta.get("title") or meta.get("id") or episode.get("source") or "episode"
         self._line(f"{c.bold}{c.magenta}══ REPLAY: {title} "
                    f"({len(scenes)} scenes) ══{c.reset}")
         self._avatar("idle", action="getting ready for a rerun")
@@ -526,23 +480,35 @@ class Performer:
 
 
 def load_script(source):
-    """Accept a script .json OR a raw session log directory."""
-    source = Path(source)
-    if source.is_dir():
-        # Parse on the fly — keeps the pane command simple in the container.
-        from session_log_parser import parse_session
-        return parse_session(source)
-    return json.loads(source.read_text(encoding="utf-8"))
+    """Load and validate an episode .json via episode_schema.load_episode.
+
+    No more directory-source branch -- app/session_log_parser.py has moved
+    out to the generator side (docs/campaign_platform_build.md §9); the
+    platform only ever consumes pre-built, pre-validated episode JSON from
+    a campaign's own library. Imported lazily so this module stays
+    importable even in a context where episode_schema's own config
+    dependencies (config/validation.yaml, a campaign's primitives) aren't
+    set up -- only load_script()'s callers pay that cost."""
+    from episode_schema import load_episode
+    return load_episode(source)
 
 
-def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
+def prepare_voiced_show(episode, config, workdir, worker_name="KODI-7",
                         speed=1.0, max_output_lines=MAX_OUTPUT_LINES,
-                        progress=None):
+                        progress=None, campaign="coder"):
     """Glue for callers holding a worker config: build the LLM + TTS clients
-    from its `llm`/`voice` sections and run revoice.prepare_show(). Returns
-    None when voice is disabled (voice.provider null/missing) — meaning
-    "perform silently". Imported lazily: revoice imports this module's
-    estimator, and llm_client drags in the anthropic/httpx deps.
+    from its `llm`/`voice` sections, load this campaign's primitive recipes
+    and narration config, and run revoice.prepare_show(). Returns None when
+    voice is disabled (voice.provider null/missing) — meaning "perform
+    silently". Imported lazily: llm_client drags in the anthropic/httpx
+    deps, and this keeps every heavier import scoped to the one call site
+    that needs it (matching the rest of this function's existing style).
+
+    `campaign` selects which config/campaigns/<campaign>/{primitives,
+    narration}.yaml to load (CONTRACT.md §7 campaign namespacing); callers
+    that already resolved a campaign for this request (replay_pane.py) pass
+    it through, the CLI (main(), below) resolves it from --campaign or the
+    episode's own meta.campaign.
 
     `REPLAY_SKIP_LLM=1` skips building the LLM client (narrate_scene then
     always takes its no-LLM fallback path — the same one it uses when the
@@ -550,7 +516,8 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     to this one call site, not llm_client.build_llm_client, so it can never
     affect a worker's real coding-task LLM use."""
     from llm_client import build_llm_client
-    from revoice import prepare_show
+    from primitives import load_primitives
+    from revoice import load_narration_config, prepare_show
     from tts_client import build_tts_client
 
     tts = build_tts_client(config)
@@ -559,8 +526,11 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     voice_config = config.get("voice") or {}
     skip_llm = os.environ.get("REPLAY_SKIP_LLM", "").lower() in ("1", "true", "yes")
     llm = None if skip_llm else build_llm_client(config)
+    primitives_table = load_primitives(campaign)
+    narration_config = load_narration_config(campaign)
     return prepare_show(
-        script, llm, tts, workdir,
+        episode, llm, tts, workdir,
+        primitives=primitives_table, narration_config=narration_config,
         worker_name=worker_name,
         boss_name=voice_config.get("boss_name", "the boss"),
         speaker_names=voice_config.get("speaker_names") or {},
@@ -570,17 +540,20 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Perform a parsed session script as a stream show")
-    parser.add_argument("source", help="Script .json (from session_log_parser) or a session log directory")
+    parser = argparse.ArgumentParser(description="Perform a validated episode as a stream show")
+    parser.add_argument("source", help="Episode .json, validated via app/episode_schema.py")
     parser.add_argument("--speed", type=float, default=1.0, help="Playback speed multiplier")
     parser.add_argument("--no-delay", action="store_true", help="Render instantly (testing)")
     parser.add_argument("--no-color", action="store_true", help="Disable ANSI colors")
     parser.add_argument("--worker-name", default="KODI-7", help="Persona name for dialogue lines")
     parser.add_argument("--state-file", default=None,
                         help="Avatar state file to drive (default: none; in-container use /tmp/agent_state.json)")
-    parser.add_argument("--start", type=int, default=0, help="First event index to perform")
-    parser.add_argument("--limit", type=int, default=None, help="Max events to perform")
+    parser.add_argument("--start", type=int, default=0, help="First scene index to perform")
+    parser.add_argument("--limit", type=int, default=None, help="Max scenes to perform")
     parser.add_argument("--max-output-lines", type=int, default=MAX_OUTPUT_LINES)
+    parser.add_argument("--campaign", default=None,
+                        help="Campaign whose primitives/narration config to render with "
+                             "(default: the episode's own meta.campaign, else 'coder')")
     parser.add_argument("--voice-config", default=None,
                         help="Worker config YAML whose voice+llm sections drive spoken "
                              "narration (docs/revoice.md); omit for a silent show")
@@ -591,7 +564,11 @@ def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-    script = load_script(args.source)
+    episode = load_script(args.source)
+    campaign = args.campaign or (episode.get("meta") or {}).get("campaign") or "coder"
+
+    from primitives import load_primitives
+    primitives_table = load_primitives(campaign)
 
     config = None
     if args.voice_config:
@@ -605,6 +582,7 @@ def main():
         state_path=args.state_file,
         max_output_lines=args.max_output_lines,
         speaker_names=(config.get("voice") or {}).get("speaker_names") or {} if config else None,
+        primitives=primitives_table,
     )
 
     show = None
@@ -613,20 +591,21 @@ def main():
 
         with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
             show = prepare_voiced_show(
-                script, config, workdir, worker_name=args.worker_name,
+                episode, config, workdir, worker_name=args.worker_name,
                 speed=args.speed, max_output_lines=args.max_output_lines,
                 progress=lambda message: print(f"[replay] {message}"),
+                campaign=campaign,
             )
             if show is None:
                 print("[replay] voice disabled in config — performing silently")
             try:
-                performer.perform(script, show=show, start=args.start, limit=args.limit)
+                performer.perform(episode, show=show, start=args.start, limit=args.limit)
             except KeyboardInterrupt:
                 print("\n[replay] interrupted")
         return
 
     try:
-        performer.perform(script, show=show, start=args.start, limit=args.limit)
+        performer.perform(episode, show=show, start=args.start, limit=args.limit)
     except KeyboardInterrupt:
         print("\n[replay] interrupted")
 

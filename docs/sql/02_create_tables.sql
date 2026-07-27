@@ -53,10 +53,19 @@ CREATE INDEX IF NOT EXISTS idx_runs_worker ON coding_backend_runs (worker_id);
 -- with payload.narration: "reuse" can replay it without calling the LLM/TTS
 -- again. This insert and that upsert converge on one row set regardless of
 -- which lands first.
+--
+-- `campaign` (added 2026-07-26, campaign-platform build, CONTRACT.md §7):
+-- the "latest airing of X" reuse lookup used to key on `episode` alone,
+-- which was fine when only one campaign existed. Once episodes live under
+-- replays/<campaign>/<episode>.json, two campaigns can share an episode
+-- filename/stem, so the cache key needs `campaign` alongside `episode` --
+-- see app/narration_store.py's SAVE_SQL/LOAD_SQL. Existing rows default to
+-- 'coder', the only campaign that existed before this column was added.
 CREATE TABLE IF NOT EXISTS voiced_narration (
     message_id       UUID NOT NULL,
     worker_id        TEXT NOT NULL,
     episode          TEXT NOT NULL,
+    campaign         TEXT NOT NULL DEFAULT 'coder',
     aired_at         TIMESTAMPTZ NOT NULL,
     scene_index      INTEGER NOT NULL,
     scene_kind       TEXT NOT NULL,
@@ -68,8 +77,10 @@ CREATE TABLE IF NOT EXISTS voiced_narration (
     PRIMARY KEY (message_id, scene_index)
 );
 CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (episode);
+CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode_campaign ON voiced_narration (episode, campaign);
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio BYTEA;
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio_duration_s DOUBLE PRECISION;
+ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS campaign TEXT NOT NULL DEFAULT 'coder';
 
 CREATE TABLE IF NOT EXISTS container_logs (
     id             BIGSERIAL PRIMARY KEY,
