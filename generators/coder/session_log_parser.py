@@ -3,7 +3,14 @@
 session_log_parser.py
 Parses a claudeBackupUtility session log directory (conversation.md +
 tool_NNN_<Tool>.md detail files) into a canonical, redacted "event script"
-— the source material for stream replays (see docs/session_log_parser.md).
+— the raw source material for the coder campaign generator
+(generators/coder/build_library.py, see generators/coder/README.md).
+
+Moved here from app/session_log_parser.py (CONTRACT.md §9, the campaign
+platform's generator split): this module has zero inbound coupling from the
+platform itself — only a generator's build script ever calls
+parse_session(). See generators/README.md for the platform/generator
+boundary this move draws.
 
 The script is the *facts* of a session: user turns, assistant narration,
 and tool calls with enough re-enactment detail (edit old/new, shell
@@ -17,6 +24,12 @@ tokens, emails, user home paths) before an event leaves this module,
 because downstream consumers feed panes that ffmpeg broadcasts to a
 public stream. Private LAN IPs (RFC1918, loopback, link-local) are left
 readable — they're harmless and keep the shows legible.
+
+REDACTION_RULES below is preserved byte-for-byte from the pre-move version,
+in the same order (order is load-bearing — specific token shapes first,
+generic patterns last, the literal-username catch-all dead last). Do not
+reorder or "clean up" this list without re-reading CONTRACT.md §9's
+safety-property requirement.
 """
 import argparse
 import json

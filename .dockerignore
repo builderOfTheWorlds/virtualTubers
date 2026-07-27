@@ -24,6 +24,13 @@ world-state/
 replays/
 voices/
 
+# ── Generators (campaign_platform_build.md's step 9 boundary) ─────────────
+# Offline, per-campaign episode generators (e.g. generators/coder/) live
+# outside the platform on purpose (docs/campaign_platform_build.md) — they
+# need not share a language or deploy cycle with the worker image, and must
+# never end up inside it.
+generators/
+
 # ── Python ───────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
