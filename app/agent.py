@@ -16,9 +16,13 @@ import os
 import random
 import time
 import argparse
+from pathlib import Path
+
+import yaml
 
 from message_bus import load_worker_config, build_message, resolve, MessageProducer, MessageConsumer
 from worker_control import WorkerControl
+from campaign_control import CampaignControl
 from llm_client import build_llm_client
 from coding_backend import build_coding_backend
 from test_runner import run_pytest, workspace_testable
@@ -65,6 +69,16 @@ DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
 # replay_pane.py, which owns the actual resolution/performance.
 REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
 DEFAULT_REPLAY_LIBRARY = "/data/replays"
+
+# Agent -> pane persona relay file (CONTRACT.md §8, docs/campaign_control.md):
+# the fully resolved persona doc this worker is currently cast as, written
+# whenever CampaignControl.get_persona's resolved (campaign, speaker) pair
+# changes. avatar.py and replay_pane.py POLL this file -- they never touch
+# Redis or Kafka directly (docs/duet_replay.md's rule, restated for personas
+# by CONTRACT.md §8). Same env-override + atomic-write convention as every
+# other relay file in this module.
+PERSONA_FILE_ENV = "PERSONA_FILE"
+DEFAULT_PERSONA_FILE = "/tmp/persona.json"
 
 
 def _decide_test_outcome():
@@ -700,6 +714,110 @@ def _write_replay_request(request):
     return request_file
 
 
+# ── Persona resolution + relay file (CONTRACT.md §8) ────────────────────────
+# Recon confirmed (recon_platform.md §7) there is NO existing partial
+# mechanism here to extend: config is loaded exactly once at process boot
+# everywhere in this codebase. control.is_enabled() is the ONE existing
+# "cheap re-check every tick, no caching" precedent (worker_control.py) —
+# everything below mirrors that same shape for persona assignment.
+
+def _resolve_persona_file():
+    return os.environ.get(PERSONA_FILE_ENV) or DEFAULT_PERSONA_FILE
+
+
+def _default_campaigns_dir():
+    """Same in-container-vs-local-dev precedence as app/primitives.py's own
+    _default_campaigns_dir (duplicated locally rather than imported: it's a
+    private helper, not part of primitives.py's frozen public API)."""
+    in_container = Path("/config/campaigns")
+    if in_container.is_dir():
+        return in_container
+    return Path("config") / "campaigns"
+
+
+def _load_persona_doc(campaign, speaker, campaigns_dir=None):
+    """Load THIS worker's own mounted config/campaigns/<campaign>/
+    personas.yaml (docker-compose.yml mounts the whole ./config dir
+    read-only into every generic worker — docs/blank_workers.md) and return
+    `speaker`'s persona doc, or None if the file/speaker is missing or
+    unreadable. Never raises: the tick loop must not go down over a bad or
+    missing persona file — a resolution failure is treated exactly like "no
+    persona assigned" (blank == disabled, CONTRACT.md §8). message-api NEVER
+    reads this file itself — it only stores {campaign, speaker} in Redis
+    (app/campaign_control.py); resolving the actual persona doc worker-side,
+    here, is what keeps message-api dumb."""
+    base = Path(campaigns_dir) if campaigns_dir else _default_campaigns_dir()
+    path = base / campaign / "personas.yaml"
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            docs = yaml.safe_load(f)
+    except (OSError, yaml.YAMLError) as exc:
+        print(f"[agent] WARN could not read persona file {path}: {exc}")
+        return None
+    if not isinstance(docs, dict):
+        print(f"[agent] WARN persona file {path} did not contain a mapping")
+        return None
+    persona = docs.get(speaker)
+    if persona is None:
+        print(f"[agent] WARN campaign {campaign!r} personas.yaml has no entry for speaker {speaker!r}")
+    return persona
+
+
+def resolve_persona(campaign_control, worker_id, campaigns_dir=None):
+    """Worker-side persona resolution (CONTRACT.md §8): ask Redis (via
+    CampaignControl.get_persona, which fails OPEN -> None) which
+    {campaign, speaker} this worker is currently cast as, then resolve the
+    actual persona doc from THIS worker's OWN mounted config.
+
+    Returns (campaign, speaker, persona_doc), or None when nothing is
+    assigned or resolvable (no Redis assignment, malformed assignment,
+    missing/unreadable personas.yaml, or no entry for this speaker) —
+    callers (main()'s tick loop) then treat that exactly like "disabled":
+    blank == disabled, per CONTRACT.md §8, no separate mode."""
+    assignment = campaign_control.get_persona(worker_id)
+    if not assignment:
+        return None
+    campaign = assignment.get("campaign")
+    speaker = assignment.get("speaker")
+    if not campaign or not speaker:
+        return None
+    persona = _load_persona_doc(campaign, speaker, campaigns_dir)
+    if persona is None:
+        return None
+    return campaign, speaker, persona
+
+
+def apply_persona(base_agent_config, persona):
+    """Overlay a resolved persona doc's name/role/system_prompt onto a COPY
+    of this worker's boot-time agent config (CONTRACT.md §8's overlay list)
+    — tick_rate_ms/max_context_tokens/workspaces and everything else keep
+    coming from the worker's own config, never the persona (those are
+    infra-identity, not personality — recon_platform.md §2). Never mutates
+    `base_agent_config`. A persona missing one of these three fields simply
+    leaves the worker's own base value in place for that field."""
+    agent_config = dict(base_agent_config)
+    for field_name in ("name", "role", "system_prompt"):
+        if persona.get(field_name) is not None:
+            agent_config[field_name] = persona[field_name]
+    return agent_config
+
+
+def write_persona_file(campaign, speaker, persona):
+    """Atomic write of the agent -> pane persona relay file (same
+    tmp+os.replace idiom as _atomic_write_json/agent_state.write_state):
+    the fully resolved persona doc plus {campaign, speaker, updated_at}.
+    Panes (avatar.py, replay_pane.py) POLL this file — they never touch
+    Redis or Kafka (docs/duet_replay.md's rule; CONTRACT.md §8). Raises
+    OSError — callers decide how loudly to report a failure, same
+    convention as every other relay-file writer in this module."""
+    doc = dict(persona)
+    doc["campaign"] = campaign
+    doc["speaker"] = speaker
+    doc["updated_at"] = time.time()
+    _atomic_write_json(_resolve_persona_file(), doc)
+    return doc
+
+
 def _pick_rerun_episode(payload):
     """Which episode should a viewer-join rerun play? payload.episode wins
     (manual/test injections); otherwise a random pick from the episode
@@ -1092,7 +1210,8 @@ def main():
     args = parser.parse_args()
 
     config = load_worker_config(args.config)
-    agent_config = config.get("agent", {})
+    base_agent_config = config.get("agent", {})
+    agent_config = base_agent_config
     bus_config = config.get("message_bus", {})
 
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
@@ -1123,13 +1242,40 @@ def main():
     producer = MessageProducer(bootstrap_servers, topic)
     consumer = MessageConsumer(bootstrap_servers, topic, group_id=f"vtuber-agent-{worker_id}", worker_id=worker_id)
     control = WorkerControl.from_config(config)
+    campaign_control = CampaignControl.from_config(config)
 
     i = 0
+    current_persona_key = None
     while True:
         if not control.is_enabled(worker_id):
             write_state(state_path, "idle", action="disabled by operator")
             time.sleep(tick_rate_s)
             continue
+
+        # Re-read the persona each tick, right after the is_enabled() gate —
+        # same cheap "no caching" shape (CONTRACT.md §8). No persona
+        # assigned == treat exactly like disabled; this is NOT a new
+        # "blank" mode, it's the SAME idle/disabled path above, reused.
+        resolved = resolve_persona(campaign_control, worker_id)
+        if resolved is None:
+            current_persona_key = None
+            agent_config = base_agent_config
+            write_state(state_path, "idle", action="disabled by operator")
+            time.sleep(tick_rate_s)
+            continue
+
+        campaign, speaker, persona = resolved
+        agent_config = apply_persona(base_agent_config, persona)
+        persona_key_tuple = (campaign, speaker)
+        if persona_key_tuple != current_persona_key:
+            try:
+                write_persona_file(campaign, speaker, persona)
+            except OSError as exc:
+                print(f"[agent:{worker_id}] failed to write persona relay file: {exc}")
+            else:
+                print(f"[agent:{worker_id}] persona assigned: campaign={campaign} speaker={speaker} "
+                      f"name={agent_config.get('name')}")
+            current_persona_key = persona_key_tuple
 
         for msg in consumer.poll_new():
             print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")

@@ -15,17 +15,60 @@ Message shape is always the same three fields:
 {"to": "<worker or broadcast>", "type": "<message type>", "payload": {...}}
 ```
 
-`to` is one of `coder`, `coder-native`, `coder-opencode`, `coder-aider`,
-`manager`, `tester`, or `broadcast` (fans out to all workers). `type`
+`to` is a worker id or `broadcast` (fans out to all workers). `type`
 defaults to `operator_message` if omitted.
 
-The three `coder-*` workers carry a real coding backend
-(`docs/coding_backend.md`): a `task_assignment` sent to them edits actual
-files in their workspace volume, commits, and gets REALLY tested by the
-tester (`docs/test_runner.md`). The legacy `coder` remains narration-only.
-To A/B test the backends, send the same task to each — see
+**Worker ids changed under the campaign platform (docs/blank_workers.md,
+docs/campaign_control.md).** `docker-compose.yml` now runs eight identical,
+interchangeable workers — `worker-1`..`worker-8` — with no baked-in
+persona. `to` in every example below still works exactly as written IF the
+matching persona from `config/campaigns/coder/personas.yaml` has been cast
+onto a worker with `POST /campaigns/coder/start` (see "Campaign / persona
+assignment" below); otherwise substitute the actual `worker-N` id currently
+cast as that speaker (`GET /campaigns/active` shows the current mapping).
+The examples below keep the old persona-shaped ids (`coder`, `manager`,
+`tester`, ...) because they read better as documentation, not because
+those are real container ids anymore.
+
+The `coder-native`/`coder-opencode`/`coder-aider` personas carry a real
+coding backend (`docs/coding_backend.md`): a `task_assignment` sent to a
+worker cast as one of them edits actual files in that worker's workspace
+volume, commits, and gets REALLY tested by whichever worker is cast as
+`tester` (`docs/test_runner.md`). The legacy `coder` persona remains
+narration-only. To A/B test the backends, send the same task to each — see
 `sandbox/README.md` for canonical tasks, and query `coding_backend_runs`
-in Postgres for the results.
+in Postgres for the results. The workspace volumes these three personas
+need only exist when `docker-compose.coder.yml` is loaded alongside the
+base compose file (docs/blank_workers.md's "coder-campaign overlay").
+
+### Campaign / persona assignment
+
+Which persona each worker plays is assigned at runtime, over the API —
+not from `docker-compose.yml` and not from `.env`. Full reference:
+docs/campaign_control.md.
+
+```bash
+# Cast the coder campaign onto worker-1..worker-6 (docs/blank_workers.md's
+# worker-number convention for the coder-campaign overlay)
+curl -X POST http://localhost:8090/campaigns/coder/start \
+  -H "Content-Type: application/json" \
+  -d '{"cast": {"coder": "worker-1", "coder-native": "worker-2",
+                 "coder-opencode": "worker-3", "coder-aider": "worker-4",
+                 "manager": "worker-5", "tester": "worker-6"}}'
+
+# What's currently cast:
+curl http://localhost:8090/campaigns/active
+
+# Send everyone back to blank (== disabled, docs/worker_control.md):
+curl -X POST http://localhost:8090/campaigns/stop
+```
+
+A worker with no persona assigned is **disabled** — it never polls
+messages and never streams (worker_control.py's existing fail-open enable
+flag, reused rather than a new "blank" mode). Reassigning a worker while
+it's in the middle of a Rerun Theater performance (docs/replay_pane.md)
+refuses with HTTP 409 unless the request also sets `"force": true` — same
+"refuse rather than degrade" spirit as duet replay's own refusal rule.
 
 ## Primary operator commands
 
@@ -104,9 +147,11 @@ Any worker (no role gate) queues the episode for its "Rerun Theater" pane
 and confirms with an `operator_reply`. The show only actually appears if
 the worker's layout includes the replay pane (`layout.preset: replay` or
 `LAYOUT_PRESET=replay` — see `docs/replay_pane.md`); an unknown episode is
-reported in the worker's container logs. Episodes are pre-parsed, redacted
-scripts of past dev sessions built by `scripts/build_replay_library.py` —
-display-only, nothing is re-executed.
+reported in the worker's container logs. Episodes are validated
+`meta`/`cast`/`scenes[]` scripts (`docs/episode_schema.md`) built by a
+campaign generator — for the coder campaign,
+`generators/coder/build_library.py` — display-only, nothing is
+re-executed.
 
 **Duet example** — the coder directs and voices the `coder` speaker; the
 manager follows and voices the `boss` speaker; both streams show the
@@ -264,6 +309,8 @@ takes `-To` (default `broadcast`) and `-Url` directly and always sends
 
 ## See also
 
+- `docs/campaign_control.md` — runtime persona assignment (`/campaigns/*`), the persona relay file, and the mid-airing guard.
+- `docs/blank_workers.md` — the generic `worker-1`..`worker-8` fleet and the coder-campaign overlay.
 - `docs/message_api.md` — the HTTP endpoint itself.
 - `docs/agent.md` — how each message type is handled worker-side.
 - `docs/message_bus_feed.md` — reading the Kafka feed pane (highlight colors, filters).

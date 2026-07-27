@@ -70,6 +70,27 @@ it into the request file: an invalid cast is rejected with an
 `operator_reply` error and nothing is written, so a half-formed duet can
 never reach the pane. See "Duet replay relay handlers" below.
 
+**Runtime persona assignment (campaign_platform_contract.md §8, docs/campaign_control.md).**
+`main()`'s tick loop re-reads this worker's assigned persona every tick,
+right after the existing `WorkerControl.is_enabled()` check — same "cheap
+re-check, no caching" shape: `resolve_persona(campaign_control, worker_id)`
+asks Redis (`app/campaign_control.py`'s `CampaignControl.get_persona`,
+which fails OPEN) which `{campaign, speaker}` this worker is currently
+cast as, then resolves the actual persona doc from THIS worker's OWN
+mounted `config/campaigns/<campaign>/personas.yaml`. **No persona
+assigned == treated exactly like disabled** (same `write_state(idle,
+"disabled by operator")` / sleep / `continue` branch `is_enabled() ==
+False` already takes — not a new "blank" mode, per
+docs/blank_workers.md). When the resolved `(campaign, speaker)` pair
+changes, `apply_persona(base_agent_config, persona)` overlays ONLY
+`name`/`role`/`system_prompt` onto a copy of this worker's boot-time
+`agent` config (everything else — `tick_rate_ms`, `workspaces`,
+`coding_backend`, `message_bus.worker_id`, ... — stays infra, untouched),
+and `write_persona_file(campaign, speaker, persona)` atomically writes the
+full resolved persona doc to `/tmp/persona.json` (env `PERSONA_FILE`) for
+`app/avatar.py` and `app/replay_pane.py` to poll — panes never touch Redis
+or Kafka directly (docs/duet_replay.md's rule, restated for personas).
+
 This is the "think + narrate" slice of the agent brain — it proves the
 full team round trip (operator → coder → tester → manager → back to the
 operator on stream) end to end, now visibly landing on the avatar and
@@ -136,6 +157,15 @@ def handle_replay_cue(worker_id: str, agent_config: dict, llm_client, producer: 
 def handle_replay_end(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
 
 def main() -> None
+```
+
+Persona resolution + relay file (campaign_platform_contract.md §8, docs/campaign_control.md):
+
+```python
+def resolve_persona(campaign_control, worker_id: str, campaigns_dir: str | Path | None = None) -> tuple | None
+def apply_persona(base_agent_config: dict, persona: dict) -> dict
+def write_persona_file(campaign: str, speaker: str, persona: dict) -> dict
+def _load_persona_doc(campaign: str, speaker: str, campaigns_dir=None) -> dict | None
 ```
 
 ## Parameters
@@ -209,6 +239,25 @@ def main() -> None
 - `state_path` (str | None) — where to write avatar state
   (`agent_state.write_state`); `None` skips the write (used by tests that
   don't care about the avatar side effect).
+- `campaign_control` (`CampaignControl`) — `resolve_persona`'s first
+  argument; any object exposing `.get_persona(worker_id) -> dict | None`
+  works (duck-typed for tests). In `main()` this is
+  `CampaignControl.from_config(config)`.
+- `base_agent_config` (dict) — this worker's `config["agent"]` as loaded
+  ONCE at process boot; `apply_persona` never mutates it, always returning
+  a new overlay dict.
+- `persona` (dict) — one speaker's entry from a campaign's
+  `personas.yaml`: `{name, title, role, system_prompt, voice: {...},
+  avatar: {...}}` (campaign_platform_contract.md §8). `apply_persona` only reads
+  `name`/`role`/`system_prompt`; `write_persona_file` writes the whole dict
+  through, plus `campaign`/`speaker`/`updated_at`.
+- `campaigns_dir` (str | Path | None, `resolve_persona`/`_load_persona_doc`)
+  — override for the campaigns config root; defaults to `/config/campaigns`
+  in-container, else repo-relative `config/campaigns` (same precedence as
+  `app/primitives.py`'s own `_default_campaigns_dir`).
+- `PERSONA_FILE` (env, default `/tmp/persona.json`) — where
+  `write_persona_file` writes; `app/avatar.py` and `app/replay_pane.py`
+  poll the same path.
 - `task` (str, `demo_editor_note`) — the task description; flattened to one
   line and typed as a comment.
 - `--config` (CLI flag, default `/config/worker.yaml`) — path to the worker's
@@ -229,16 +278,26 @@ def main() -> None
 - `_send_manager_report` — the published message envelope
   (`producer.send`'s return value).
 - `main` — never returns; runs the tick loop until the process is killed.
+- `resolve_persona` — `(campaign, speaker, persona_doc)`, or `None` when no
+  persona is assigned/resolvable — the tick loop treats `None` exactly
+  like `is_enabled() == False`.
+- `apply_persona` — a new `agent_config` dict (never mutates its input).
+- `write_persona_file` — the dict actually written to disk
+  (`persona` + `campaign`/`speaker`/`updated_at`); raises `OSError` on a
+  write failure, same convention as `_write_replay_request` and friends.
 
 ## Dependencies
 
 - `message_bus` (`load_worker_config`, `build_message`, `MessageProducer`, `MessageConsumer`)
+- `worker_control.WorkerControl` (`is_enabled` gate) and
+  `campaign_control.CampaignControl` (`get_persona` — docs/campaign_control.md)
 - `llm_client` (`build_llm_client`)
 - `agent_state` (`resolve_state_path`, `write_state`)
 - `tmux_control` (`select_pane`, `send_keys`, `send_raw`, `send_command`, `TmuxError`)
 - Python standard library: `os`, `random` (the `_decide_test_outcome`
   stub — deliberately unseeded live; tests monkeypatch, never assert
-  statistically), `time`, `argparse`
+  statistically), `time`, `argparse`, `pathlib.Path`; `yaml` (PyYAML, for
+  reading `config/campaigns/<campaign>/personas.yaml`)
 
 ## Usage Examples
 
@@ -318,9 +377,28 @@ curl -X POST http://localhost:8090/messages \
   dropped invite (pending request file already present) is likewise just
   logged; the director's own `replay_ready` wait is what turns that into a
   visible refusal (docs/duet_replay.md).
+- **Persona resolution never crashes the tick loop.** `_load_persona_doc`
+  catches a missing/unreadable/malformed `personas.yaml` and a missing
+  speaker entry, logging and returning `None` in every case —
+  `resolve_persona` then returns `None`, which the tick loop treats
+  exactly like `is_enabled() == False`. A `write_persona_file` failure
+  (`OSError`, e.g. an unwritable `/tmp`) is caught and logged; the
+  overlay still applies to `agent_config` for this tick, but the relay
+  file is retried on the NEXT tick since the internal "last written" key
+  only advances on a successful write.
 
 ## Changelog
 
+- v2.4.0 (2026-07-26, campaign_platform_contract.md §8) — Runtime persona assignment:
+  `main()`'s tick loop calls the new `resolve_persona`
+  (`campaign_control.CampaignControl.get_persona` + this worker's own
+  mounted `config/campaigns/<campaign>/personas.yaml`) right after the
+  existing `is_enabled()` gate. No persona resolved is treated identically
+  to disabled. On a `(campaign, speaker)` change, `apply_persona` overlays
+  `name`/`role`/`system_prompt` onto a copy of the boot-time `agent`
+  config and `write_persona_file` atomically writes the resolved persona
+  to `/tmp/persona.json` (env `PERSONA_FILE`) for `app/avatar.py` and
+  `app/replay_pane.py` to poll. See docs/campaign_control.md.
 - v2.3.0 (2026-07-13) — Duet replay relay: four new any-role handlers
   (`handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`,
   `handle_replay_end`, added to `MESSAGE_HANDLERS`) relay director/follower

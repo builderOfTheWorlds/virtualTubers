@@ -14,6 +14,16 @@ control-plane outage or a worker nobody has toggled yet never silently kills
 a live stream. `set_enabled` does **not** fail open — it raises so the
 caller (the API) can tell the operator the toggle didn't take effect.
 
+**Runtime persona assignment (docs/campaign_control.md) reuses this exact
+mechanism rather than inventing a new one.** A worker with no persona
+assigned is treated by `app/agent.py`'s tick loop exactly as if
+`is_enabled(worker_id)` had returned `False` — same idle/disabled branch,
+no separate "blank" state (docs/blank_workers.md). `app/campaign_control.py`
+mirrors this module's shape (same Redis client construction, same
+`from_config` classmethod, same fail-open-on-read / propagate-on-write
+split) for its own two key kinds, `campaign:active` and
+`worker:{id}:persona`, living in the same Redis instance.
+
 ## Signature
 
 ```python

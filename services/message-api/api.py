@@ -10,16 +10,25 @@ Also exposes the /log-filter control endpoints — the HTTP surface for
 excluding a noisy message type (e.g. the heartbeat status_update flood)
 from message-logger's Postgres writes without a stack redeploy (see
 worker_control.py and log_filter_control.py).
+Also exposes the /campaigns control endpoints — runtime persona assignment
+for the generic worker-1..worker-8 fleet (CONTRACT.md §8,
+docs/campaign_control.md, docs/blank_workers.md): which campaign is active
+and which worker plays which speaker, backed by campaign_control.py. This
+service NEVER reads a campaign's personas.yaml itself — it only ever stores
+{campaign, speaker} pairs in Redis; each worker resolves its own persona doc
+from its own mounted config (app/agent.py), which is what keeps this
+service dumb.
 """
 import os
 from datetime import datetime
-from typing import Optional
+from typing import Dict, Optional
 
 import psycopg2
 import redis
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel
 
+from campaign_control import CampaignControl
 from log_filter_control import LogFilterControl
 from log_prune import prune_logs
 from message_bus import build_message, MessageProducer
@@ -32,6 +41,7 @@ producer = MessageProducer(
 )
 control = WorkerControl.from_config()
 log_filter = LogFilterControl.from_config()
+campaign_control = CampaignControl.from_config()
 
 # Example message types shown as a dropdown in /docs; accepts any string.
 MESSAGE_TYPE_EXAMPLES = {
@@ -40,16 +50,29 @@ MESSAGE_TYPE_EXAMPLES = {
     "coding_run_report": {"value": "coding_run_report"},
 }
 
-# WORKER_ID values assigned to each service in docker-compose.yml. Shown as a
-# dropdown of examples in /docs — worker_id still accepts any string, since
-# this list can drift from the compose file.
+# WORKER_ID values assigned by docker-compose.yml's generic worker fleet
+# (docs/blank_workers.md: worker-1..worker-8, identical/interchangeable
+# until a campaign casts a persona onto one). Shown as a dropdown of
+# examples in /docs — worker_id still accepts any string, since this list
+# can drift from the compose file. Genericized from the old hardcoded
+# 6-persona-named dropdown (coder/coder-native/.../tester) now that persona
+# names are no longer worker identities (recon_platform.md §5).
 WORKER_ID_EXAMPLES = {
+    "worker-1": {"value": "worker-1"},
+    "worker-2": {"value": "worker-2"},
+    "worker-3": {"value": "worker-3"},
+    "worker-4": {"value": "worker-4"},
+    "worker-5": {"value": "worker-5"},
+    "worker-6": {"value": "worker-6"},
+    "worker-7": {"value": "worker-7"},
+    "worker-8": {"value": "worker-8"},
+}
+
+# Shipped config/campaigns/<name>/ directories. Same "examples only, any
+# string accepted" looseness as WORKER_ID_EXAMPLES above.
+CAMPAIGN_EXAMPLES = {
     "coder": {"value": "coder"},
-    "coder-native": {"value": "coder-native"},
-    "coder-opencode": {"value": "coder-opencode"},
-    "coder-aider": {"value": "coder-aider"},
-    "manager": {"value": "manager"},
-    "tester": {"value": "tester"},
+    "dnd": {"value": "dnd"},
 }
 
 
@@ -62,6 +85,11 @@ class InjectMessage(BaseModel):
 class PruneLogsRequest(BaseModel):
     after: Optional[datetime] = None
     before: Optional[datetime] = None
+
+
+class StartCampaignRequest(BaseModel):
+    cast: Dict[str, str]
+    force: bool = False
 
 
 @app.get("/healthz")
@@ -99,6 +127,58 @@ def _set_worker_enabled(worker_id: str, enabled: bool):
     except redis.RedisError as exc:
         raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
     return {"worker_id": worker_id, "enabled": enabled}
+
+
+def _is_airing(worker_id: str) -> bool:
+    """Mid-airing guard read (CONTRACT.md §8): worker:{id}:airing, written
+    by app/replay_pane.py for the duration of one performance (set at
+    airing start, cleared in a `finally` so a crashed show can't wedge a
+    worker un-reassignable forever). Fails OPEN — absent/unreachable means
+    "not airing" — so a Redis hiccup here can never block a legitimate
+    campaign (re)assignment; reused control._client rather than a fourth
+    Redis-wrapper class for one flag."""
+    try:
+        value = control._client.get(f"worker:{worker_id}:airing")
+    except redis.RedisError as exc:
+        print(f"[message-api] WARN redis unreachable checking airing state for {worker_id}: {exc}")
+        return False
+    return value == "1"
+
+
+@app.post("/campaigns/{campaign}/start")
+def start_campaign(
+    body: StartCampaignRequest,
+    campaign: str = Path(..., openapi_examples=CAMPAIGN_EXAMPLES),
+):
+    airing = sorted({worker_id for worker_id in body.cast.values() if _is_airing(worker_id)})
+    if airing and not body.force:
+        raise HTTPException(
+            status_code=409,
+            detail=f"worker(s) currently mid-airing, refusing without force=true: {airing}",
+        )
+    try:
+        active = campaign_control.start(campaign, body.cast, force=body.force)
+    except redis.RedisError as exc:
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    return {"campaign": active["campaign"], "cast": active["cast"]}
+
+
+@app.post("/campaigns/stop")
+def stop_campaign():
+    try:
+        previous = campaign_control.get_active()
+        campaign_control.stop()
+    except redis.RedisError as exc:
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    return {"stopped": True, "campaign": (previous or {}).get("campaign")}
+
+
+@app.get("/campaigns/active")
+def get_active_campaign():
+    active = campaign_control.get_active()
+    if not active:
+        return {"campaign": None}
+    return {"campaign": active.get("campaign"), "cast": active.get("cast", {})}
 
 
 @app.get("/log-filter/{message_type}")

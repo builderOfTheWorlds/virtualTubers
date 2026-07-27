@@ -1009,3 +1009,179 @@ def test_message_handlers_registers_duet_replay_handlers():
 
 def test_message_handlers_registers_replay_stop():
     assert MESSAGE_HANDLERS["replay_stop"] is handle_replay_stop
+
+
+# ── Persona resolution + relay file (CONTRACT.md §8) ──────────────────────
+# "No mechanism exists to extend" (recon_platform.md §7) -- this is new code
+# from scratch, mirroring worker_control.is_enabled's cheap "no caching,
+# re-check every tick" shape.
+
+class FakeCampaignControl:
+    """Duck-typed stand-in for campaign_control.CampaignControl -- only
+    get_persona is used by agent.py's resolve_persona."""
+
+    def __init__(self, persona=None):
+        self.persona = persona
+
+    def get_persona(self, worker_id):
+        return self.persona
+
+
+@pytest.fixture
+def personas_dir(tmp_path):
+    campaigns = tmp_path / "campaigns"
+    coder_dir = campaigns / "coder"
+    coder_dir.mkdir(parents=True)
+    (coder_dir / "personas.yaml").write_text(
+        "coder:\n"
+        "  name: KODI-7\n"
+        "  role: coder\n"
+        "  system_prompt: |\n"
+        "    You are KODI-7.\n"
+        "  voice:\n"
+        "    model_path: /data/voices/en_US-lessac-low.onnx\n"
+        "  avatar:\n"
+        "    provider: builtin\n"
+        "    name: KODI-7\n"
+        "    title: Software Engineer\n"
+        "manager:\n"
+        "  name: MAX-1\n"
+        "  role: manager\n"
+        "  system_prompt: |\n"
+        "    You are MAX-1.\n"
+        "  voice:\n"
+        "    model_path: /data/voices/en_US-bryce-medium.onnx\n"
+        "  avatar:\n"
+        "    provider: builtin\n"
+        "    name: MAX-1\n"
+        "    title: Project Manager\n",
+        encoding="utf-8",
+    )
+    return campaigns
+
+
+def test_resolve_persona_returns_none_when_nothing_assigned():
+    """This None is the exact signal main()'s tick loop treats identically
+    to control.is_enabled() returning False -- blank == disabled, no
+    separate mode (CONTRACT.md §8)."""
+    assert agent.resolve_persona(FakeCampaignControl(None), "worker-1") is None
+
+
+@pytest.mark.parametrize("assignment", [
+    {"campaign": "coder"},          # missing speaker
+    {"speaker": "coder"},           # missing campaign
+    {"campaign": "", "speaker": "coder"},
+    {"campaign": "coder", "speaker": ""},
+])
+def test_resolve_persona_returns_none_for_incomplete_assignment(assignment, personas_dir):
+    cc = FakeCampaignControl(assignment)
+    assert agent.resolve_persona(cc, "worker-1", campaigns_dir=personas_dir) is None
+
+
+def test_resolve_persona_returns_campaign_speaker_and_full_doc(personas_dir):
+    cc = FakeCampaignControl({"campaign": "coder", "speaker": "coder"})
+    result = agent.resolve_persona(cc, "worker-1", campaigns_dir=personas_dir)
+    assert result is not None
+    campaign, speaker, persona = result
+    assert campaign == "coder"
+    assert speaker == "coder"
+    assert persona["name"] == "KODI-7"
+    assert persona["role"] == "coder"
+    assert persona["avatar"]["title"] == "Software Engineer"
+
+
+def test_resolve_persona_returns_none_when_campaign_directory_missing(tmp_path):
+    cc = FakeCampaignControl({"campaign": "ghost-campaign", "speaker": "x"})
+    result = agent.resolve_persona(cc, "worker-1", campaigns_dir=tmp_path / "campaigns")
+    assert result is None
+
+
+def test_resolve_persona_returns_none_when_speaker_not_in_personas_file(personas_dir, capsys):
+    cc = FakeCampaignControl({"campaign": "coder", "speaker": "nonexistent"})
+    result = agent.resolve_persona(cc, "worker-1", campaigns_dir=personas_dir)
+    assert result is None
+    assert "no entry for speaker" in capsys.readouterr().out
+
+
+def test_resolve_persona_detects_a_change_via_campaign_speaker_tuple(personas_dir):
+    """This (campaign, speaker) pair is the exact detection key main()'s
+    tick loop compares tick over tick to decide whether to overlay +
+    rewrite the relay file (CONTRACT.md §8's "on change")."""
+    cc = FakeCampaignControl({"campaign": "coder", "speaker": "coder"})
+    first_campaign, first_speaker, _ = agent.resolve_persona(cc, "worker-1", campaigns_dir=personas_dir)
+
+    cc.persona = {"campaign": "coder", "speaker": "manager"}
+    second_campaign, second_speaker, _ = agent.resolve_persona(cc, "worker-1", campaigns_dir=personas_dir)
+
+    assert (first_campaign, first_speaker) != (second_campaign, second_speaker)
+
+
+def test_load_persona_doc_returns_none_for_malformed_yaml(tmp_path):
+    campaigns = tmp_path / "campaigns"
+    (campaigns / "coder").mkdir(parents=True)
+    (campaigns / "coder" / "personas.yaml").write_text("{{not: yaml", encoding="utf-8")
+    assert agent._load_persona_doc("coder", "coder", campaigns_dir=campaigns) is None
+
+
+def test_load_persona_doc_returns_none_when_file_is_not_a_mapping(tmp_path):
+    campaigns = tmp_path / "campaigns"
+    (campaigns / "coder").mkdir(parents=True)
+    (campaigns / "coder" / "personas.yaml").write_text("- just\n- a\n- list\n", encoding="utf-8")
+    assert agent._load_persona_doc("coder", "coder", campaigns_dir=campaigns) is None
+
+
+def test_apply_persona_overlays_only_name_role_system_prompt():
+    base = {"tick_rate_ms": 5000, "name": "WORKER", "role": "custom",
+            "system_prompt": "stand by", "workspaces": {"coder": "/data/repos/coder"}}
+    persona = {"name": "KODI-7", "role": "coder", "system_prompt": "You are KODI-7.",
+              "voice": {"model_path": "x"}}
+
+    overlaid = agent.apply_persona(base, persona)
+
+    assert overlaid["name"] == "KODI-7"
+    assert overlaid["role"] == "coder"
+    assert overlaid["system_prompt"] == "You are KODI-7."
+    assert overlaid["tick_rate_ms"] == 5000  # infra field, untouched
+    assert overlaid["workspaces"] == {"coder": "/data/repos/coder"}  # infra field, untouched
+    assert "voice" not in overlaid  # persona's voice is NOT agent config's concern
+
+
+def test_apply_persona_never_mutates_the_base_config():
+    base = {"name": "WORKER", "role": "custom"}
+    agent.apply_persona(base, {"name": "KODI-7", "role": "coder"})
+    assert base == {"name": "WORKER", "role": "custom"}
+
+
+def test_apply_persona_keeps_base_value_when_persona_omits_a_field():
+    base = {"name": "WORKER", "role": "custom", "system_prompt": "stand by"}
+    overlaid = agent.apply_persona(base, {"name": "KODI-7"})
+    assert overlaid["role"] == "custom"
+    assert overlaid["system_prompt"] == "stand by"
+
+
+def test_write_persona_file_atomic_write_and_contents(tmp_path, monkeypatch):
+    persona_file = tmp_path / "persona.json"
+    monkeypatch.setenv("PERSONA_FILE", str(persona_file))
+    persona = {"name": "KODI-7", "role": "coder", "voice": {"model_path": "x"}}
+
+    doc = agent.write_persona_file("coder", "coder", persona)
+
+    on_disk = json.loads(persona_file.read_text(encoding="utf-8"))
+    assert on_disk == doc
+    assert on_disk["campaign"] == "coder"
+    assert on_disk["speaker"] == "coder"
+    assert on_disk["name"] == "KODI-7"
+    assert "updated_at" in on_disk
+    assert not (tmp_path / "persona.json.tmp").exists()  # tmp file consumed by os.replace
+
+
+def test_write_persona_file_does_not_mutate_the_input_persona_dict(tmp_path, monkeypatch):
+    monkeypatch.setenv("PERSONA_FILE", str(tmp_path / "persona.json"))
+    persona = {"name": "KODI-7"}
+    agent.write_persona_file("coder", "coder", persona)
+    assert persona == {"name": "KODI-7"}
+
+
+def test_write_persona_file_uses_default_path_when_env_unset(tmp_path, monkeypatch):
+    monkeypatch.delenv("PERSONA_FILE", raising=False)
+    assert agent._resolve_persona_file() == agent.DEFAULT_PERSONA_FILE

@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY app/message_bus.py /app/message_bus.py
 COPY app/worker_control.py /app/worker_control.py
+COPY app/campaign_control.py /app/campaign_control.py
 COPY app/log_filter_control.py /app/log_filter_control.py
 COPY app/log_prune.py /app/log_prune.py
 COPY services/message-api/api.py /app/api.py
