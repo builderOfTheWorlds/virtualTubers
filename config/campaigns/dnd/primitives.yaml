@@ -1,0 +1,33 @@
+# config/campaigns/dnd/primitives.yaml
+# Domain primitives for a D&D campaign — deep-merged over config/primitives.yaml.
+# Ships as a real second campaign proving the platform generalizes beyond the
+# coder show (docs/campaign_platform_build.md's D&D example), and exercises
+# `extends` against shared primitives genuinely (display_map, scene_heading).
+
+# Same recipe as the shared show_image, just a longer hold — positional
+# behaviors merge: this single-entry `behaviors` list deep-merges onto
+# show_image's own single behavior entry ({behavior: image, field:
+# payload.image, hold_s: 10, style: ...}), so `behavior`/`field` are inherited
+# and only `hold_s` changes.
+display_map:
+  extends: show_image
+  behaviors:
+    - hold_s: 20
+
+open_inventory:
+  target: notes
+  behaviors:
+    - behavior: print
+      field: payload.character
+      rate_lps: 10
+      style: {fg: cyan}
+
+# Same recipe as the shared type_text, different styling/pace — positional
+# merge again: this behaviors[0] deep-merges onto type_text's behaviors[0]
+# ({behavior: type, field: payload.text, rate_cps: 30, style: {fg: white}}),
+# inheriting `behavior`/`field` and overriding rate_cps/style.
+scene_heading:
+  extends: type_text
+  behaviors:
+    - rate_cps: 18
+      style: {fg: yellow, bold: true}

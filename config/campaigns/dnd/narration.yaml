@@ -1,0 +1,25 @@
+# config/campaigns/dnd/narration.yaml
+# Narration prompts + fallback templates for a D&D campaign, keyed by scene
+# `kind` — proves narration config is per-campaign data, not code
+# (docs/campaign_platform_build.md's D&D example, CONTRACT.md §3).
+
+recap:
+  prompt: |
+    You are the GM, briefly recapping what happened last session, roughly {words} words:
+
+    {text}
+  fallback_template: "The GM recaps last session."
+
+scene_set:
+  prompt: |
+    You are {name}, setting the scene. Roughly {words} words:
+
+    {text}
+  fallback_template: "The scene is set."
+
+dialogue:
+  prompt: |
+    You are {name}. Speak this line in character, roughly {words} words:
+
+    {text}
+  fallback_template: "{name} says something in character."

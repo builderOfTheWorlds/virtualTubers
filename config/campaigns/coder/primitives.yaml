@@ -1,0 +1,178 @@
+# config/campaigns/coder/primitives.yaml
+# Domain primitives for the coder campaign — deep-merged over
+# config/primitives.yaml (see app/primitives.py::load_primitives).
+#
+# These seven recipes reproduce today's (pre-campaign-platform) coder show
+# byte-for-byte in glyphs/colors/rates/avatar-expressions/truncation, per
+# app/replay.py's Performer handlers and its estimate_event_seconds formulas
+# (DIALOGUE_CPS=45, CODE_CPS=130, OUTPUT_LINES_PER_S=18, EVENT_PAUSE_S=0.8,
+# MAX_OUTPUT_LINES=24, TOOL_BEAT_S=0.5). See docs/primitives.md and
+# tests/test_primitives.py's fidelity-table test for the exact seconds match.
+#
+# Payload contract expected from the coder generator (generators/coder/,
+# built separately — see docs/campaign_platform_build.md §9):
+#   show_boss_message  {text}
+#   show_coder_line    {text, name}            # name = on-screen speaker label
+#   show_command       {command, output?, error?}
+#   show_diff          {file, hunks, error?}    # hunks: "- <old line>" for every
+#                                               # line of the pre-edit file, then
+#                                               # "+ <new line>" for every line of
+#                                               # the post-edit file, concatenated
+#                                               # in that order (old block first,
+#                                               # new block second) — this is what
+#                                               # lets the `diff` behavior's single
+#                                               # `payload.hunks` field reproduce
+#                                               # Edit's old-scroll/new-type split
+#                                               # exactly. Not a real unified diff.
+#   show_write         {file, content, error?}
+#   show_read          {file, error?}
+#   show_tool          {tool, summary, error?}  # summary MUST already be
+#                                               # pre-truncated to <=100 chars by
+#                                               # the generator (today's
+#                                               # `summary[:100]`) — primitives.py
+#                                               # does not truncate template tokens.
+#
+# `on_error` fires whenever `payload.error` is truthy, after the main
+# behaviors — this models today's `_on_tool_call`'s trailing red
+# "✗ that didn't work" line + frustrated avatar, uniformly for every tool
+# primitive (never for show_boss_message/show_coder_line, which have no
+# error concept).
+
+show_boss_message:
+  target: theater
+  avatar:
+    expression: thinking
+    action: "reading a message from the boss"
+  behaviors:
+    - behavior: print
+      text: ""
+    - behavior: print
+      text: "┌─ BOSS ─────────────────────────────"
+      style: {fg: cyan, bold: true}
+    - behavior: type
+      field: payload.text
+      rate_cps: 90          # DIALOGUE_CPS * 2
+      prefix: "│ "
+      prefix_style: {fg: cyan}
+    - behavior: print
+      text: "└────────────────────────────────────"
+      style: {fg: cyan, bold: true}
+    - behavior: pause
+      seconds: 0.8          # EVENT_PAUSE_S
+
+show_coder_line:
+  target: theater
+  avatar:
+    expression: speaking
+    action: "talking to the stream"
+    bubble: payload.text
+  behaviors:
+    - behavior: print
+      text: "{payload.name} ▸"
+      style: {fg: green, bold: true}
+    - behavior: type
+      field: payload.text
+      rate_cps: 45          # DIALOGUE_CPS
+      continuation_prefix: "  "
+    - behavior: pause
+      seconds: 0.8
+
+show_command:
+  target: theater
+  avatar:
+    expression: focused
+    action: "running: {payload.command}"
+  behaviors:
+    - behavior: type
+      field: payload.command
+      rate_cps: 130         # CODE_CPS
+      prefix: "$ "
+      prefix_style: {fg: yellow}
+      continuation_prefix: "  "
+    - behavior: print
+      field: payload.output
+      rate_lps: 18          # OUTPUT_LINES_PER_S
+      max_lines: 24         # MAX_OUTPUT_LINES
+      style: {dim: true}
+    - behavior: pause
+      seconds: 0.8
+  on_error:
+    avatar: {expression: frustrated, action: "that didn't work"}
+    line: {text: "✗ that didn't work", style: {fg: red}}
+
+show_diff:
+  target: theater
+  avatar:
+    expression: focused
+    action: "editing {payload.file}"
+  behaviors:
+    - behavior: print
+      text: "✎ editing {payload.file}"
+      style: {fg: magenta}
+    - behavior: diff
+      field: payload.hunks
+      rate_lps: 18          # OUTPUT_LINES_PER_S (removed lines scroll)
+      rate_cps: 130         # CODE_CPS (added lines type)
+      max_lines: 24
+      style: {add: green, remove: red}
+    - behavior: pause
+      seconds: 0.8
+  on_error:
+    avatar: {expression: frustrated, action: "that didn't work"}
+    line: {text: "✗ that didn't work", style: {fg: red}}
+
+show_write:
+  target: theater
+  avatar:
+    expression: focused
+    action: "writing {payload.file}"
+  behaviors:
+    - behavior: print
+      text: "✎ new file {payload.file}"
+      style: {fg: magenta}
+    - behavior: type
+      field: payload.content
+      rate_cps: 260         # CODE_CPS * 2 — Write types faster than Edit
+      prefix: "+ "
+      prefix_style: {fg: green}
+      style: {fg: green}
+      max_lines: 24
+    - behavior: pause
+      seconds: 0.8
+  on_error:
+    avatar: {expression: frustrated, action: "that didn't work"}
+    line: {text: "✗ that didn't work", style: {fg: red}}
+
+show_read:
+  target: theater
+  avatar:
+    expression: focused
+    action: "reading {payload.file}"
+  behaviors:
+    - behavior: print
+      text: "⋯ reading {payload.file}"
+      style: {dim: true}
+    - behavior: pause
+      seconds: 0.5          # TOOL_BEAT_S
+    - behavior: pause
+      seconds: 0.8          # EVENT_PAUSE_S
+  on_error:
+    avatar: {expression: frustrated, action: "that didn't work"}
+    line: {text: "✗ that didn't work", style: {fg: red}}
+
+show_tool:
+  target: theater
+  avatar:
+    expression: focused
+    action: "using {payload.tool}"
+  behaviors:
+    - behavior: print
+      text: "⋯ {payload.tool}: {payload.summary}"
+      style: {dim: true}
+    - behavior: pause
+      seconds: 0.5          # TOOL_BEAT_S
+    - behavior: pause
+      seconds: 0.8          # EVENT_PAUSE_S
+  on_error:
+    avatar: {expression: frustrated, action: "that didn't work"}
+    line: {text: "✗ that didn't work", style: {fg: red}}

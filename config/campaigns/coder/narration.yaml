@@ -1,0 +1,46 @@
+# config/campaigns/coder/narration.yaml
+# Narration prompts + fallback templates keyed by scene `kind`, for the coder
+# campaign. Prompts are lifted VERBATIM from app/revoice.py's (pre-rewrite)
+# module-level `_PROMPTS` dict — see docs/campaign_platform_build.md §"Narration
+# prompts live with kind, not with primitives" and CONTRACT.md §3.
+#
+# Token set available when the narration pass formats a prompt/fallback_template
+# (app/revoice.py's rewritten load_narration_config/fallback_line/narrate_scene):
+#   {name}            resolved on-screen speaker display name
+#   {words}           target word count for this scene's screen time
+#   {text}            the scene's own scripted text (episode's `scene.text`)
+#   {material}         a redacted rendering of what's happening (kept close to
+#                      today's revoice._scene_material for coder_work; for
+#                      boss/coder_talk this is simply the scene's own text)
+#   {render_summary}  app/primitives.py::render_summary(scene, primitives) — a
+#                      short description of the scene's render[] entries, used
+#                      only as a last-resort fallback for kinds with no single
+#                      scripted line to fall back on (coder_work).
+
+boss:
+  prompt: |
+    You are voicing {name}, the boss, sending the dev a request. Re-voice this message as ONE natural spoken line of about {words} words, keeping every concrete requirement intact:
+
+    {material}
+  # today's fallback_narration(scene) for kind "boss" just trims scene.text
+  # itself — no render[] to describe, so {text} is the faithful last resort.
+  fallback_template: "{text}"
+
+coder_talk:
+  prompt: |
+    You are voicing {name}, live-streaming their work. Re-voice this narration in your own words, about {words} words, keeping the technical content accurate:
+
+    {material}
+  # same reasoning as "boss": today's fallback speaks the scene's own text.
+  fallback_template: "{text}"
+
+coder_work:
+  prompt: |
+    You are voicing {name}, live-streaming their work. Describe out loud, present tense, what you are doing in these recorded actions - about {words} words, enough to talk over the whole sequence:
+
+    {material}
+  # coder_work scenes describe a run of tool calls with no single original
+  # line to read verbatim (today's fallback_narration builds "Okay - running
+  # X, then editing Y..." from the tool_call events); render_summary is the
+  # schema-generic replacement for that same "what's on screen" description.
+  fallback_template: "Okay — {render_summary}."

@@ -1,0 +1,41 @@
+# config/primitives.yaml
+# Shared, presentation-neutral primitives — the base layer every campaign's
+# own config/campaigns/<campaign>/primitives.yaml deep-merges over (see
+# app/primitives.py::load_primitives and docs/primitives.md).
+#
+# These four carry NO domain meaning on purpose: they know nothing about
+# "commands" or "dialogue" or "maps" — just the bare behaviors (type/print/
+# image/pause) with sane defaults. Domain primitives (show_command,
+# display_map, ...) live in a campaign's own primitives.yaml, optionally via
+# `extends` against one of these.
+#
+# Do not add domain-specific primitives here — that defeats the point of the
+# shared layer (see docs/campaign_platform_build.md, "Shared base + per-campaign
+# additions").
+
+type_text:
+  target: theater
+  behaviors:
+    - behavior: type
+      field: payload.text
+      rate_cps: 30
+      style: {fg: white}
+
+print_text:
+  target: theater
+  behaviors:
+    - behavior: print
+      field: payload.text
+      rate_lps: 10
+
+show_image:
+  target: theater
+  behaviors:
+    - behavior: image
+      field: payload.image
+      hold_s: 10
+
+beat:
+  behaviors:
+    - behavior: pause
+      seconds: 1.5

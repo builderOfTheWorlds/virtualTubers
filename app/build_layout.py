@@ -55,7 +55,12 @@ import yaml
 logging.basicConfig(
     stream=sys.stderr,
     level=os.environ.get("BUILD_LAYOUT_LOG_LEVEL", "INFO"),
-    format="%(asctime)s %(levelname)s build_layout %(message)s",
+    # %(name)s, NOT a hardcoded "build_layout": basicConfig configures the ROOT
+    # logger, and this module is now imported by app/primitives.py (for
+    # deep_merge), so every module's records inherit this format. Hardcoding a
+    # name here made replay/primitives/episode_schema log lines all claim to
+    # come from build_layout.
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
 )
 log = logging.getLogger("build_layout")
 
