@@ -77,10 +77,14 @@ CREATE TABLE IF NOT EXISTS voiced_narration (
     PRIMARY KEY (message_id, scene_index)
 );
 CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (episode);
-CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode_campaign ON voiced_narration (episode, campaign);
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio BYTEA;
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio_duration_s DOUBLE PRECISION;
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS campaign TEXT NOT NULL DEFAULT 'coder';
+-- Must come after the ADD COLUMN above: on a pre-campaign-column table (any
+-- database created before 2026-07-26), running this index statement first
+-- fails with 'column "campaign" does not exist' since CREATE TABLE IF NOT
+-- EXISTS above is a no-op against the existing table and never adds it.
+CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode_campaign ON voiced_narration (episode, campaign);
 
 CREATE TABLE IF NOT EXISTS container_logs (
     id             BIGSERIAL PRIMARY KEY,

@@ -20,8 +20,8 @@
     .\scripts\send_test_message.ps1 -Url http://localhost:8090/messages
 #>
 param(
-    # [string]$Url = "http://192.168.1.120:8090/messages"
-    [string]$Url = "http://192.168.2.158:8090/messages"
+    [string]$Url = "http://192.168.1.120:8090/messages"
+    # [string]$Url = "http://192.168.2.158:8090/messages"
 )
 
 # Reset preset variables so stale values can't leak in from the console
@@ -58,7 +58,18 @@ $Payload = $null
 # $Payload = '{"username": "deezzzz", "channel": "mycoderchannel"}'
 
 # --- Coder replay request: reenact a saved episode --------------------
-$To      = "coder"
+# NOTE (2026-07-27, blank-worker fleet): $To and every "cast" value below
+# must be the literal WORKER_ID (worker-1..worker-8), NOT the persona name.
+# Message routing (app/message_bus.py's poll_new) matches a message's `to`
+# field against each container's own WORKER_ID env var verbatim -- there is
+# no persona-name alias resolution anywhere in the pipeline. Persona names
+# only exist after POST /campaigns/coder/start assigns them to worker ids
+# (docs/campaign_control.md); find the current mapping with
+# GET /campaigns/active. The old $To = "coder" presets below predate
+# the worker-1..8 migration and will silently go nowhere (message-logger
+# still logs them, but no worker's consumer filter matches) until rewritten
+# to the assigned worker id, same as the fix made to the roundtable preset.
+$To      = "worker-1"
 $Type    = "replay_request"
 
 # Test small size
@@ -103,7 +114,15 @@ $Type    = "replay_request"
 # $Payload = '{"episode": "2026-07-08_03-15-03_640f9d57", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
 
-$Payload = '{"episode": "2026-07-01_18-51-34_818d7e11_6_workers", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+# 6-worker campaign-platform test story (replays/coder/test_worker_roundtable.json):
+# hand-authored episode where every persona speaks under its own id
+# (manager/coder/coder-native/coder-opencode/coder-aider/tester). cast maps
+# each episode speaker id to the WORKER_ID currently holding that persona
+# (assigned via POST /campaigns/coder/start -- see the NOTE above and
+# docker-compose.coder.yml's documented worker-1..6 convention). Never aired
+# before, so no "narration": "reuse" on this first run - add it once it's
+# aired once and gotten cached to Postgres.
+$Payload = '{"episode": "test_worker_roundtable", "cast": {"manager": "worker-5", "coder": "worker-1", "coder-native": "worker-2", "coder-opencode": "worker-3", "coder-aider": "worker-4", "tester": "worker-6"}}'
 
 
 # $Payload = '{

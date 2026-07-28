@@ -125,11 +125,22 @@ _AIRING_KEY_SUFFIX = "airing"
 
 def resolve_self_id(config, worker_name):
     """This worker's bus identity, for duet ownership matching (docs/
-    duet_replay.md "self id"): config.message_bus.worker_id wins, then the
-    WORKER_ID env var, falling back to the pane's --worker-name so a
-    config-less/local run still resolves to a stable identity."""
+    duet_replay.md "self id"): the WORKER_ID env var wins, then
+    config.message_bus.worker_id, falling back to the pane's --worker-name
+    so a config-less/local run still resolves to a stable identity. Must
+    match message_bus.resolve()'s env-over-config-over-default convention
+    (message_bus.py's own docstring: "every reader ... must go through
+    this, or a value can silently diverge") -- getting this backwards is
+    exactly what broke duet replays on the blank-worker fleet (worker-1..8
+    all share the same config/worker.yaml, whose message_bus.worker_id is a
+    literal "worker" placeholder meant to be overridden by WORKER_ID; with
+    config checked first, every worker's self_id resolved to "worker"
+    instead of its real id, so a director invited itself as its own
+    follower (never satisfiable) and follower replay_ready messages were
+    addressed to a director id nobody was listening on, silently deadlocking
+    every duet ready-wait until its 60s timeout)."""
     bus_config = (config or {}).get("message_bus") or {}
-    return bus_config.get("worker_id") or os.environ.get("WORKER_ID") or worker_name
+    return resolve("WORKER_ID", bus_config.get("worker_id"), worker_name)
 
 
 def resolve_campaign(request, config, default_campaign=DEFAULT_CAMPAIGN):
