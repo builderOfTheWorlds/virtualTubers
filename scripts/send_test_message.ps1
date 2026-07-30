@@ -122,7 +122,7 @@ $Type    = "replay_request"
 # docker-compose.coder.yml's documented worker-1..6 convention). Never aired
 # before, so no "narration": "reuse" on this first run - add it once it's
 # aired once and gotten cached to Postgres.
-$Payload = '{"episode": "test_worker_roundtable", "cast": {"manager": "worker-5", "coder": "worker-1", "coder-native": "worker-2", "coder-opencode": "worker-3", "coder-aider": "worker-4", "tester": "worker-6"}}'
+$Payload = '{"episode": "test_worker_roundtable", "cast": {"manager": "worker-5", "coder": "worker-1", "coder-native": "worker-2", "coder-opencode": "worker-3", "coder-aider": "worker-4", "tester": "worker-6"}, "narration": "reuse"}'
 
 
 # $Payload = '{

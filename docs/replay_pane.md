@@ -179,7 +179,17 @@ def apply_persona_to_config(config, persona_doc) -> dict
 - `--library` / `REPLAY_LIBRARY` (default `/data/replays`): episode script
   directory root — mounted `:ro` from `./replays` (the repo root on the
   deploy host) in `docker-compose.yml`. Episodes live under
-  `<library>/<campaign>/<episode>.json`.
+  `<library>/<campaign>/<episode>.json`. **"The repo root on the deploy
+  host" is not always the git checkout you're editing** — on a Portainer
+  git-stack deployment (e.g. mafober, see `PROJECT_CLAUDE.md`'s Deployment
+  environments section), Portainer materializes this bind source into its
+  own persistent stack directory (`/data/compose/<stack-id>/replays`),
+  separate from wherever the plain checkout used for editing code/config
+  lives. Copying a hand-authored episode into the checkout's `replays/`
+  directory can silently do nothing if that checkout isn't the one actually
+  bind-mounted — confirm with `docker inspect -f '{{range .Mounts}}{{.Source}}
+  -> {{.Destination}}{{println}}{{end}}' <container>` before assuming an
+  episode "isn't showing up" for any deeper reason.
 - `--campaign` (default none): overrides the worker config's own
   `campaign:` field as this pane's DEFAULT campaign for requests that
   don't specify one, and for the idle screen's episode listing. Does not
