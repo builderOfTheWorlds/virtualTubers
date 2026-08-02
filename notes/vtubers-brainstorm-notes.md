@@ -47,10 +47,19 @@ Status: early concept/design phase. The D&D campaign has existing content and wi
 
 ### Sage Role & Knowledge Propagation
 - The "sage" is a **role**, not a fixed character: whoever happens to be at the reset-trigger location when a loop resets becomes the next loop's sage. (Cyberpunk equivalent: whichever hacker is logged into the right machine when the reset hits.)
+- **Tenure**: a sage's term spans **two loops (two weeks)** — from the start of the loop in which they're anointed through the end of the following loop — before being replaced by a new sage. (Open question: does the outgoing sage need to be present again at the reset-trigger location to carry their own tenure into the second loop, or does it carry over automatically without re-triggering?)
 - **Two-stage knowledge unlock**:
   1. Mid-loop, players must actively seek out the current sage to receive a partial memory-infusion (not automatic at loop start).
   2. Full/complete knowledge only transfers to whichever character becomes the *next* sage — propagating that character's personality forward into the sage role.
 - Each new loop's cast starts with **zero memory** of their own past or the loop itself — the sage is the only knowledge bridge between loops.
+- **Handoff requires two characters, not one**: the outgoing sage (finishing their tenure) and the incoming sage-designate (a fresh character being brought into the role) are both active on stream during the transition — it's a relay/mentorship between two distinct characters, not an instant identity swap.
+- **Origin note**: the source-material elf sage (10k-year immortal survivor, sole source of information when the original PCs entered the story — see D&D backstory below) is effectively the "first" sage. In this format her fixed, single-character role becomes the template that then starts rotating through the cast.
+- Open question: is succession now a **deliberate choice/mentorship** — the outgoing sage grooms a specific character during the week — or still governed by the original "whoever happens to be at the reset-trigger location" rule? The two aren't quite the same mechanic and need reconciling.
+
+### Antagonist
+- Distinct from the sage. In the original source story, both the sage and the antagonist became immortal after "the event" — for this format the two are being deliberately differentiated.
+- The antagonist is a **static, singular character** (not a rotating role like the sage) who retains full memory across every single loop — thousands of years of accumulated cycles.
+- **The kicker**: the weight of that unbroken memory — endless repeated failures to escape the loop — is slowly **warping his mind** over time, making him progressively less stable/rational as an antagonist. (Open question: how does this decay get paced/shown across real-world weeks — gradual loop-by-loop drift, or bigger jumps tied to story arcs?)
 
 ### Chat / Viewer Interaction
 - Not yet decided whether chat interaction launches at day one or is added later.
@@ -63,6 +72,11 @@ Status: early concept/design phase. The D&D campaign has existing content and wi
 - Streaming to Twitch currently; multi-platform support is a future goal.
 
 ### Open Questions
-- How dead-end/failure branches should be handled (not yet worked out) — e.g. does a bad outcome trigger an early reset, or continue to the scheduled reset time regardless?
-- Whether the "duke"/convener figure and the antagonist are also recurring cross-genre roles (like the sage), and if so, whether they know about each other or the loop.
-- Whether other surviving characters (not just the new sage) retain any residual knowledge between loops, or whether the reset is a hard wipe for everyone but the sage line.
+- **RESOLVED** — failure handling: a bad outcome (e.g. a party wipe) does *not* trigger an early reset; the loop always runs to the scheduled weekly reset. Still need a concrete in-story contingency mechanism for what keeps the show going after a wipe (who/what fills the stream if the whole main cast is down?).
+- **RESOLVED** — residual knowledge: hard wipe for everyone except the sage line.
+- **RESOLVED** — antagonist is *not* a rotating role like the sage; he's a static immortal-by-accumulation character whose mind is being warped by thousands of years of memory (see Antagonist section).
+- Whether the "duke"/convener figure is also a recurring cross-genre role (like the sage) — still undecided, revisit later.
+- Sage tenure mechanics: does the outgoing sage need to re-trigger at the reset location to carry into their second loop, or is the second-loop tenure automatic?
+- Sage succession mechanism: deliberate mentorship/grooming by the outgoing sage during the week, vs. the original "whoever's at the reset-trigger location" randomness — need to pick one (or reconcile both).
+- Antagonist decay — not fleshed out yet; needs its own pass.
+- **PARKED** — contingency plan for a mid-loop party wipe (backup characters? other NPCs stepping in? a narrative device that revives/replaces the party at a cost?). Deliberately not being worked right now.

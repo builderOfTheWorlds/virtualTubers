@@ -314,6 +314,7 @@ above *are* measured.
 
 ## Related
 
+- **[../hardware/README.md](../hardware/README.md) — detailed parts-level build docs (2026-08-02).** The specific picks in this doc (Ryzen 7 9700X, RTX 5060 Ti, ~$1,325) are superseded there — GDDR/DRAM price hikes and a scope change (this box became a general "main server," not just a campaign-platform-dedicated one) moved the build significantly.
 - [mafober_summary.md](mafober_summary.md) — Proxmox host detail
 - [../campaign_platform_build.md](../campaign_platform_build.md) — the platform work this hosts
 - [../stream_supervisor.md](../stream_supervisor.md) — the ffmpeg broadcaster
