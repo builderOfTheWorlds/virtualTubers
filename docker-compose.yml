@@ -54,10 +54,9 @@ services:
       - ${REPO_ROOT:-.}/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md) — parsed,
-      # redacted session scripts synced onto the host; :ro because replays
-      # only ever read them.
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # No episode-library mount: the "Rerun Theater" library lives in
+      # Postgres (docs/episode_store.md), uploaded through message-api's
+      # POST /replays. The POSTGRES_* env above is all a worker needs.
       # Piper .onnx voice models for spoken replay narration
       # (docs/tts_client.md; download with scripts/download_voices.py)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
@@ -107,8 +106,7 @@ services:
       - ${REPO_ROOT:-.}/config/workers/coder-native.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-native:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
@@ -155,8 +153,7 @@ services:
       - ${REPO_ROOT:-.}/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-opencode:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
@@ -203,8 +200,7 @@ services:
       - ${REPO_ROOT:-.}/config/workers/coder-aider.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-aider:/data/repo
-      # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
@@ -245,7 +241,7 @@ services:
     volumes:
       - ${REPO_ROOT:-.}/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
@@ -285,7 +281,7 @@ services:
     volumes:
       - ${REPO_ROOT:-.}/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
-      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
       # Read-only view of every coder's workspace, at the conventional
       # /data/repos/<coder_id> paths agent.py resolves (test_runner copies

@@ -9,11 +9,12 @@ and tables, run against the shared Postgres instance referenced by
 1. **`01_create_role_and_database.sql`** — creates the `virtualtubers` login
    role and a dedicated `virtualtubers` database owned by it. Run once as a
    Postgres superuser (e.g. `postgres`).
-2. **`02_create_tables.sql`** — creates the `messages` and `container_logs`
-   tables. Run as the `virtualtubers` role against the `virtualtubers`
-   database. Optional: `message-logger` and `log-shipper` each create these
-   tables automatically (`CREATE TABLE IF NOT EXISTS`) the first time they
-   start, so this step is for reviewing/recreating the schema by hand.
+2. **`02_create_tables.sql`** — creates the `messages`, `voiced_narration`,
+   `replay_episodes` and `container_logs` tables. Run as the
+   `virtualtubers` role against the `virtualtubers` database. Optional:
+   `message-logger`, `log-shipper` and `message-api` each create the tables
+   they own automatically (`CREATE TABLE IF NOT EXISTS`) on startup, so
+   this step is for reviewing/recreating the schema by hand.
 
 ## Running
 
@@ -48,9 +49,17 @@ POSTGRES_PASSWORD=<the password you passed to 01_create_role_and_database.sql>
 ## Keeping in sync
 
 `02_create_tables.sql` mirrors the `CREATE_TABLE_SQL` constants in
-`services/message-logger/logger.py` and `services/log-shipper/shipper.py`.
-There's no single source of truth between the SQL file and the Python
-constants — if you change one, update the other.
+`services/message-logger/logger.py` (`messages`, `voiced_narration`),
+`services/log-shipper/shipper.py` (`container_logs`) and
+`app/episode_store.py` (`replay_episodes`). There's no single source of
+truth between the SQL file and the Python constants — if you change one,
+update the others, and `docs/database_schema.md` too.
+
+`replay_episodes` is the odd one out: no long-lived consumer owns it, so
+`message-api` runs its DDL best-effort at import (logged, never fatal) and
+retries on every `/replays` request until it succeeds. A Postgres that was
+down when `message-api` started therefore still gets the table on the
+first request after it comes back — the workers only ever read it.
 
 ## Common gotcha: wrong database in a manual client
 

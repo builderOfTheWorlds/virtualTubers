@@ -7,8 +7,10 @@
 # (docs/operator_commands.md) and drops the request file.
 #
 # Display-only: recorded commands/edits are rendered, never executed. Episode
-# scripts live in REPLAY_LIBRARY (default /data/replays, mounted read-only in
-# docker-compose.yml).
+# scripts are read from the Postgres `replay_episodes` table using the
+# container's POSTGRES_* env (docs/episode_store.md) — uploaded through
+# message-api's POST /replays. There is no library mount and no path argument;
+# without POSTGRES_* the pane idles saying the store is unavailable.
 # ──────────────────────────────────────────────────────────────────────────────
 type: replay
 title: "Rerun Theater"

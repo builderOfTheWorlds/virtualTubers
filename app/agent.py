@@ -23,6 +23,7 @@ from llm_client import build_llm_client
 from coding_backend import build_coding_backend
 from test_runner import run_pytest, workspace_testable
 from agent_state import resolve_state_path, write_state
+import episode_store
 from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
 
 
@@ -60,11 +61,6 @@ DEFAULT_REPLAY_READY_FILE = "/tmp/replay_ready.json"
 # REPLAY_REQUEST_FILE_ENV above.
 REPLAY_STOP_FILE_ENV = "REPLAY_STOP_FILE"
 DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
-
-# Episode library for viewer-join reruns — same path convention as
-# replay_pane.py, which owns the actual resolution/performance.
-REPLAY_LIBRARY_ENV = "REPLAY_LIBRARY"
-DEFAULT_REPLAY_LIBRARY = "/data/replays"
 
 
 def _decide_test_outcome():
@@ -703,15 +699,23 @@ def _write_replay_request(request):
 def _pick_rerun_episode(payload):
     """Which episode should a viewer-join rerun play? payload.episode wins
     (manual/test injections); otherwise a random pick from the episode
-    library — every arrival gets "a rerun", not one hardcoded show. Returns
-    None when no episode is available (no library mount, empty library)."""
+    library in Postgres (docs/episode_store.md) — every arrival gets "a
+    rerun", not one hardcoded show.
+
+    Returns None when no episode is available: an empty library, or a store
+    that can't be reached. handle_viewer_joined treats None as "skip the
+    rerun and just greet them", so a Postgres outage costs the viewer their
+    rerun but never their welcome."""
     requested = payload.get("episode")
     if requested and str(requested).strip():
         return str(requested).strip()
-    library = os.environ.get(REPLAY_LIBRARY_ENV) or DEFAULT_REPLAY_LIBRARY
+    if not episode_store.available():
+        return None
     try:
-        episodes = sorted(f[:-5] for f in os.listdir(library) if f.endswith(".json"))
-    except OSError:
+        episodes = sorted(episode_store.list_episodes())
+    except Exception as exc:
+        print(f"[agent] episode library unreachable, skipping rerun: "
+              f"{type(exc).__name__}: {exc}")
         return None
     if not episodes:
         return None
@@ -819,9 +823,9 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
 
     Deliberately NO LLM call and NO episode-name validation here beyond
     non-empty: the agent only writes the request file; replay_pane.py owns
-    resolution (basename-only, inside REPLAY_LIBRARY) so a hostile payload
-    can never reach files outside the episode library. Always answers the
-    operator so a bad episode name doesn't just vanish.
+    resolution (basename-only, against the episode store) so a hostile
+    payload can only ever name an episode an operator already uploaded.
+    Always answers the operator so a bad episode name doesn't just vanish.
 
     Optional payload.cast (duet replay contract): a speaker -> worker_id
     map. When present it must be a non-empty dict of non-empty strings

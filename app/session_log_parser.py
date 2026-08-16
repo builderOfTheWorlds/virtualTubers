@@ -115,6 +115,37 @@ def redact(text):
     return text
 
 
+# ── Leak audit ───────────────────────────────────────────────────────────────
+# Strict last-line-of-defense check on an already-redacted, serialized
+# episode — a leaked episode must never reach a broadcastable library.
+# Private LAN IPs (192.168.x etc.) are allowed by policy; tailnet (100.x)
+# and credential-looking assignments are not. The password arm tolerates
+# JSON escaping (password\": \"...) and only fires when the value is NOT the
+# redactor's [password] dummy marker.
+#
+# Lives here rather than in the tool that happens to run it, because BOTH
+# entry points into the library must apply the identical rule:
+# scripts/build_replay_library.py on the dev box, and episode_validator.py
+# on the server (docs/episode_validator.md).
+LEAK_AUDIT = re.compile(
+    r"frogg|sk-ant-[A-Za-z0-9_-]{8}|ghp_[A-Za-z0-9]{8}|100\.\d{1,3}\.\d"
+    r"|(?i:\w*(?:password|passwd|passphrase|pwd|secret)(?:\\?[\"'])*\s*[:=]>?\s*(?:\\?[\"'])*"
+    r"(?!\[password\])[^\s\\\"',;&|=\[])"
+)
+
+
+def audit(payload):
+    """Run the leak audit over a serialized episode. Returns the offending
+    match (str) or None when clean.
+
+    Callers that surface the result to a user must NOT echo the returned
+    match — it is, by construction, the secret itself."""
+    if not payload:
+        return None
+    found = LEAK_AUDIT.search(payload)
+    return found.group(0) if found else None
+
+
 # ── Noise filtering ──────────────────────────────────────────────────────────
 # Harness-injected user "turns" that carry nothing performable.
 NOISE_TAGS = (

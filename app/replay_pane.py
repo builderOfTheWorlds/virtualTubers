@@ -13,8 +13,17 @@ purpose — the pane never consumes Kafka and never executes anything from
 the bus; the only thing a bus message can influence is WHICH pre-built,
 pre-redacted episode in the library gets played.
 
-Episode names are resolved strictly to basenames inside REPLAY_LIBRARY, so
-a hostile payload can't traverse to arbitrary files.
+The library itself lives in Postgres (app/episode_store.py), uploaded and
+validated through message-api's POST /replays — there is no episode
+directory mounted into the worker any more. Requested names are still
+reduced to a bare basename before lookup, so a hostile payload can only
+ever name a row that an operator already uploaded and the validator
+already cleared.
+
+Postgres being unreachable therefore means no reruns at all: the idle
+screen says so plainly and a request reports the outage instead of
+performing. Like every other failure here, it degrades — it never raises
+out of the pane loop.
 
 The pane produces to Kafka (never consumes): after a voiced airing it
 publishes the spoken transcript as a replay_narration message so
@@ -37,16 +46,16 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+import episode_store
 import narration_store
 from agent_state import resolve_state_path
 from message_bus import MessageProducer, build_message, resolve
-from replay import Pacer, Palette, Performer, load_script, prepare_voiced_show
+from replay import Pacer, Palette, Performer, prepare_voiced_show
 
-DEFAULT_LIBRARY = "/data/replays"
 DEFAULT_REQUEST_FILE = "/tmp/replay_request.json"
 DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
-IDLE_REDRAW_S = 300  # re-list the library occasionally (new episodes synced in)
+IDLE_REDRAW_S = 300  # re-list the library occasionally (episodes get uploaded)
 
 # Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
@@ -159,21 +168,44 @@ def _safe_send(producer, message):
         return False
 
 
-def resolve_episode(library, episode):
-    """Map a requested episode name to a file inside the library.
+def sanitize_episode_name(episode):
+    """Reduce a requested episode to a bare library key: path components
+    stripped, a trailing '.json' dropped. Returns "" for anything empty.
 
-    Basename-only (no traversal), '.json' optional, and a raw session
-    directory of the same name is accepted too. Returns None when nothing
-    matches — the caller reports, never raises.
+    The store lookup is a parameterized equality match, so this is belt and
+    braces — but it keeps the property the old filesystem lookup had, that
+    what comes off the bus can only ever name an episode, never a path."""
+    name = Path(str(episode or "")).name
+    if name.endswith(".json"):
+        name = name[:-len(".json")]
+    return name
+
+
+def resolve_episode(episode):
+    """Look a requested episode up in the store.
+
+    Returns (name, script), or (None, None) when the episode isn't in the
+    library OR the store is unreachable — the caller reports the miss and
+    keeps the pane alive, so this never raises. The two cases are
+    distinguished on stderr, since "Postgres is down" is the one an operator
+    has to act on.
     """
-    if not episode:
-        return None
-    name = Path(str(episode)).name  # strips any path components
-    library = Path(library)
-    for candidate in (library / name, library / f"{name}.json"):
-        if candidate.exists():
-            return candidate
-    return None
+    name = sanitize_episode_name(episode)
+    if not name:
+        return None, None
+    if not episode_store.available():
+        print("[replay_pane] episode store unavailable (POSTGRES_* not configured)",
+              file=sys.stderr)
+        return None, None
+    try:
+        script = episode_store.load_episode(name)
+    except Exception as exc:
+        print(f"[replay_pane] episode store unreachable: {type(exc).__name__}: {exc}",
+              file=sys.stderr)
+        return None, None
+    if script is None:
+        return None, None
+    return name, script
 
 
 def read_request(request_file):
@@ -197,28 +229,39 @@ def read_request(request_file):
     return request
 
 
-def list_episodes(library):
-    library = Path(library)
-    if not library.is_dir():
-        return []
-    return sorted(p.stem for p in library.glob("*.json"))
+def list_episodes():
+    """Episode names from the store, or None when the store can't be read.
+
+    None and [] are deliberately different: with no filesystem fallback,
+    "the library is empty" and "Postgres is down" need different words on
+    the idle screen."""
+    if not episode_store.available():
+        return None
+    try:
+        return episode_store.list_episodes()
+    except Exception as exc:
+        print(f"[replay_pane] episode listing failed: {type(exc).__name__}: {exc}",
+              file=sys.stderr)
+        return None
 
 
-def draw_idle_screen(library, worker_name):
-    episodes = list_episodes(library)
+def draw_idle_screen(worker_name):
+    episodes = list_episodes()
     print("\x1b[2J\x1b[H", end="")  # clear pane between shows
     print("╔══════════════════════════════════════╗")
     print("║          R E R U N   T H E A T E R   ║")
     print("╚══════════════════════════════════════╝")
     print(f" host: {worker_name}")
-    if episodes:
+    if episodes is None:
+        print(" episode store unreachable — check Postgres; no reruns until it's back")
+    elif episodes:
         print(f" {len(episodes)} episode(s) in the library:")
         for name in episodes[:20]:
             print(f"   • {name}")
         if len(episodes) > 20:
             print(f"   … and {len(episodes) - 20} more")
     else:
-        print(f" library empty ({library}) — sync episode scripts to the host")
+        print(" library empty — upload episodes with POST /replays on message-api")
     print()
     print(' waiting for a replay_request ("perform episode X")…')
 
@@ -415,7 +458,7 @@ def _send_operator_error(producer, self_id, error):
     _safe_send(producer, build_message(self_id, "operator", "operator_reply", {"error": error}))
 
 
-def perform_director_request(request, library, worker_name, state_path, self_id,
+def perform_director_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None):
     """Duet director path (docs/duet_replay.md): prepare + persist the full
     airing exactly like a solo show, invite the other cast workers, and only
@@ -425,15 +468,14 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     follower never shows up in time. Returns True only when the show
     actually aired."""
     episode = request.get("episode")
-    source = resolve_episode(library, episode)
-    if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+    episode_name, script = resolve_episode(episode)
+    if script is None:
+        print(f"[replay_pane] episode not in the library: {episode!r}", file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
     name = str(request.get("worker_name") or worker_name)
     cast = request.get("cast") or {}
     followers = sorted({worker_id for worker_id in cast.values()
@@ -458,15 +500,15 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show, airing_id = None, None
         if request.get("narration") == "reuse":
-            reused, rows = _load_cached_show(script, source.stem, workdir)
+            reused, rows = _load_cached_show(script, episode_name, workdir)
             if reused is not None:
                 show, airing_id = reused, rows[0]["message_id"]
         if show is None:
             show = prepare_voice(script, config, workdir, name, speed)
             if show is None:
                 return refuse("voice preparation failed or is disabled for this worker")
-            message_id = publish_narration(show, config, source.stem, name)
-            airing_id = persist_narration(message_id, show, config, source.stem, name)
+            message_id = publish_narration(show, config, episode_name, name)
+            airing_id = persist_narration(message_id, show, config, episode_name, name)
             if airing_id is None:
                 return refuse("failed to persist duet airing for followers to load")
 
@@ -486,7 +528,7 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
                 scene["audio"] = None
 
         for follower in followers:
-            payload = {"airing_id": airing_id, "episode": source.stem, "cast": cast,
+            payload = {"airing_id": airing_id, "episode": episode_name, "cast": cast,
                       "speed": speed, "worker_name": name, "director": self_id}
             _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
         invited = followers
@@ -567,7 +609,7 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     return True
 
 
-def perform_follower_request(request, library, worker_name, state_path, self_id,
+def perform_follower_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None):
     """Duet follower path (docs/duet_replay.md): load the SAME airing the
     director already persisted — NEVER generate fresh narration here — keep
@@ -584,15 +626,14 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
               f"episode={episode!r} cast={cast!r}) — ignoring", file=sys.stderr)
         return False
 
-    source = resolve_episode(library, episode)
-    if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+    episode_name, script = resolve_episode(episode)
+    if script is None:
+        print(f"[replay_pane] episode not in the library: {episode!r}", file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
     name = str(request.get("worker_name") or worker_name)
 
     if not narration_store.available():
@@ -686,7 +727,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
     return True
 
 
-def perform_request(request, library, worker_name, state_path, default_speed=1.0,
+def perform_request(request, worker_name, state_path, default_speed=1.0,
                     config=None):
     """Resolve and perform one request. Returns True if an episode played.
 
@@ -700,23 +741,22 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
     """
     self_id = resolve_self_id(config, worker_name)
     if request.get("mode") == "follow":
-        return perform_follower_request(request, library, worker_name, state_path, self_id,
+        return perform_follower_request(request, worker_name, state_path, self_id,
                                         default_speed=default_speed, config=config)
     cast = request.get("cast")
     if isinstance(cast, dict) and any(worker_id != self_id for worker_id in cast.values()):
-        return perform_director_request(request, library, worker_name, state_path, self_id,
+        return perform_director_request(request, worker_name, state_path, self_id,
                                         default_speed=default_speed, config=config)
 
     episode = request.get("episode")
-    source = resolve_episode(library, episode)
-    if source is None:
-        print(f"[replay_pane] episode not found in {library}: {episode!r}", file=sys.stderr)
+    episode_name, script = resolve_episode(episode)
+    if script is None:
+        print(f"[replay_pane] episode not in the library: {episode!r}", file=sys.stderr)
         return False
     try:
         speed = float(request.get("speed") or default_speed)
     except (TypeError, ValueError):
         speed = default_speed
-    script = load_script(source)
     name = str(request.get("worker_name") or worker_name)
 
     # Stop signal (docs/operator_commands.md `replay_stop`): stale-state
@@ -737,11 +777,11 @@ def perform_request(request, library, worker_name, state_path, default_speed=1.0
         show = None
         if request.get("voice") is not False:  # request can force a silent airing
             if request.get("narration") == "reuse":
-                show = load_reused_show(script, source.stem, workdir)
+                show = load_reused_show(script, episode_name, workdir)
             if show is None:
                 show = prepare_voice(script, config, workdir, name, speed)
-                message_id = publish_narration(show, config, source.stem, name)
-                persist_narration(message_id, show, config, source.stem, name)
+                message_id = publish_narration(show, config, episode_name, name)
+                persist_narration(message_id, show, config, episode_name, name)
         performer.perform(script, show=show)
     _delete_stale_file(stop_file)
     return True
@@ -764,7 +804,6 @@ def load_worker_config(path):
 
 def main():
     parser = argparse.ArgumentParser(description="Rerun Theater pane — idles, performs requested episodes")
-    parser.add_argument("--library", default=os.environ.get("REPLAY_LIBRARY", DEFAULT_LIBRARY))
     parser.add_argument("--request-file", default=os.environ.get("REPLAY_REQUEST_FILE", DEFAULT_REQUEST_FILE))
     parser.add_argument("--worker-name", default=os.environ.get("WORKER_ID", "worker"))
     parser.add_argument("--config", default=os.environ.get("CONFIG_PATH", DEFAULT_WORKER_CONFIG),
@@ -780,13 +819,14 @@ def main():
     state_path = resolve_state_path()
     config = load_worker_config(args.config)
     provider = ((config or {}).get("voice") or {}).get("provider")
-    print(f"[replay_pane] library={args.library} request_file={args.request_file} "
+    print(f"[replay_pane] library={'postgres' if episode_store.available() else 'UNAVAILABLE'} "
+          f"request_file={args.request_file} "
           f"voice={'on' if provider not in (None, 'null') else 'off'}")
 
     if args.once:
         request = read_request(args.request_file)
         if request:
-            perform_request(request, args.library, args.worker_name, state_path,
+            perform_request(request, args.worker_name, state_path,
                             config=config)
         return
 
@@ -795,14 +835,14 @@ def main():
         request = read_request(args.request_file)
         if request:
             try:
-                perform_request(request, args.library, args.worker_name, state_path,
+                perform_request(request, args.worker_name, state_path,
                                 config=config)
             except Exception as exc:  # one bad episode must not kill the pane
                 print(f"[replay_pane] episode failed: {exc}", file=sys.stderr)
             time.sleep(5)  # hold the final frame briefly
             last_drawn = 0.0  # force idle redraw
         if time.time() - last_drawn > IDLE_REDRAW_S:
-            draw_idle_screen(args.library, args.worker_name)
+            draw_idle_screen(args.worker_name)
             last_drawn = time.time()
         time.sleep(POLL_INTERVAL_S)
 

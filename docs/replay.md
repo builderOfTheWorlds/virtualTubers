@@ -168,14 +168,20 @@ Local preview of an episode, fast:
 python app/replay.py path/to/scripts/2026-07-02_04-27-00_6ecdde82.json --speed 4
 ```
 
-In-container pane command (layout config), driving the avatar:
+Note that `load_script` still takes a filesystem path — this module is
+deliberately unchanged by the move of the *library* into Postgres, so local
+preview keeps working with no database. Fetch an episode out of the library
+first if you want to preview a deployed one:
 
-```yaml
-# a layout preset pane entry
-- use: editor
-  title: "Rerun Theater"
-  command: "python3 /app/replay.py /data/replays/episode.json --state-file /tmp/agent_state.json"
+```bash
+curl -sS http://localhost:8090/replays/2026-07-02_04-27-00_6ecdde82 > /tmp/ep.json
+python app/replay.py /tmp/ep.json --speed 4
 ```
+
+In-container the Rerun Theater pane runs `app/replay_pane.py`, not this
+module directly — the pane loads scripts from the `replay_episodes` table
+(docs/replay_pane.md, docs/episode_store.md). There is no `/data/replays`
+mount to point a pane command at.
 
 ## Error Handling
 
@@ -190,11 +196,22 @@ Voiced local preview (needs piper + a downloaded voice model, and Ollama
 reachable per the config's `llm` section):
 
 ```bash
-python app/replay.py replays/episode.json --voice-config config/workers/coder.yaml
+python app/replay.py replays/<episode>.json --voice-config config/workers/coder.yaml
 ```
+
+(`replays/` here is `scripts/build_replay_library.py`'s local output
+staging directory on the dev machine — not a deployed path.)
 
 ## Changelog
 
+- **v1.3.1** (2026-08-16): No code change. Docs only: the episode *library*
+  moved from `/data/replays` into Postgres (docs/episode_store.md), but
+  `load_script` still takes a local `.json` path or a raw session directory
+  so local preview needs no database. Replaced the stale in-container pane
+  command — that pane is `app/replay_pane.py`, which reads the store.
+  `Performer`/`Pacer` also gained a second caller:
+  `episode_validator._dry_run` renders every upload into a throwaway
+  `StringIO` as its "won't have issues replaying it" check.
 - **v1.3.0** (2026-07-19): Stoppable shows — `Pacer(should_stop=...)` polled
   on every sleep/typed character, raising the new `ReplayStopped` when it
   fires; `perform()` catches it (same shutdown as the existing

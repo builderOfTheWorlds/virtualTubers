@@ -5,6 +5,7 @@ redis) in addition to the root requirements.txt (kafka-python).
 KafkaProducer and redis.Redis are mocked at import time so these tests never
 touch a real broker or Redis instance.
 """
+import json
 import os
 import pathlib
 import sys
@@ -17,6 +18,7 @@ from fastapi.testclient import TestClient
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services" / "message-api"))
+sys.path.insert(0, str(ROOT / "app"))
 
 os.environ.setdefault("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 os.environ.setdefault("KAFKA_TOPIC", "test-topic")
@@ -140,4 +142,246 @@ def test_prune_logs_deletes_range(client):
 def test_prune_logs_returns_503_when_postgres_unavailable(client):
     with patch("api.prune_logs", side_effect=psycopg2.OperationalError("connection refused")):
         resp = client.post("/logs/prune", json={"after": "2026-07-01T00:00:00Z"})
+    assert resp.status_code == 503
+
+
+# ── /replays (Rerun Theater episode library) ────────────────────────────────
+# episode_store and validate_episode/resolve_name are monkeypatched per test
+# (never a real Postgres). _schema_ready is forced True so _ensure_schema()
+# doesn't attempt a real DB connection on every request that reaches it.
+import episode_validator  # noqa: E402
+
+VALID_SCRIPT = {
+    "source": "demo-ep",
+    "project": "virtualTubers",
+    "session_id": "sess-1",
+    "date": "2026-08-01",
+    "events": [{"type": "assistant_text", "text": "hi"}] * 5,
+}
+
+
+@pytest.fixture
+def no_store(client, monkeypatch):
+    """episode_store reachable == False for every /replays endpoint."""
+    monkeypatch.setattr(api.episode_store, "available", lambda: False)
+    return client
+
+
+@pytest.mark.parametrize("method,path,kwargs", [
+    ("post", "/replays", {"content": b"{}"}),
+    ("get", "/replays", {}),
+    ("get", "/replays/ep1", {}),
+    ("delete", "/replays/ep1", {}),
+])
+def test_replays_endpoints_503_when_store_unavailable(no_store, method, path, kwargs):
+    resp = getattr(no_store, method)(path, **kwargs)
+    assert resp.status_code == 503
+
+
+def test_upload_replay_success_stores_and_returns_info(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+    save_calls = []
+    monkeypatch.setattr(
+        api.episode_store, "save_episode",
+        lambda name, script, overwrite=False: save_calls.append((name, script, overwrite)) or True)
+
+    resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body == {"name": "demo-ep", "event_count": 5, "byte_size": 123, "created": True}
+    assert len(save_calls) == 1
+    assert save_calls[0][0] == "demo-ep"
+    assert save_calls[0][2] is False
+
+
+def test_upload_replay_overwrite_query_param_passed_through(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+    save_calls = []
+    monkeypatch.setattr(
+        api.episode_store, "save_episode",
+        lambda name, script, overwrite=False: save_calls.append(overwrite) or True)
+
+    resp = client.post(
+        "/replays?overwrite=true", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 200
+    assert save_calls == [True]
+
+
+def test_upload_replay_413_when_over_max_upload_bytes(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "MAX_UPLOAD_BYTES", 10)
+
+    resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 413
+
+
+def test_upload_replay_400_when_body_not_valid_json(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    resp = client.post("/replays", content=b"not json{")
+
+    assert resp.status_code == 400
+    assert "not valid json" in resp.json()["detail"]
+
+
+def test_upload_replay_400_when_episode_invalid(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    def raise_invalid(script, name=None):
+        raise episode_validator.EpisodeInvalid("missing required key(s): source")
+    monkeypatch.setattr(api, "validate_episode", raise_invalid)
+
+    resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 400
+    assert resp.json()["detail"] == "missing required key(s): source"
+
+
+def test_upload_replay_409_when_episode_already_exists(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+    monkeypatch.setattr(api.episode_store, "save_episode", lambda *a, **kw: False)
+
+    resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 409
+    assert "demo-ep" in resp.json()["detail"]
+
+
+def test_upload_replay_503_when_save_raises_operational_error(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+
+    def raise_op_error(*a, **kw):
+        raise psycopg2.OperationalError("connection refused")
+    monkeypatch.setattr(api.episode_store, "save_episode", raise_op_error)
+
+    resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 503
+
+
+def test_list_replays_returns_detailed_episode_metadata(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    episodes = [{"name": "ep1", "project": "virtualTubers", "session_id": "s1",
+                 "date": "2026-08-01", "event_count": 5, "byte_size": 123,
+                 "uploaded_by": "operator", "uploaded_at": "2026-08-01T00:00:00+00:00"}]
+    monkeypatch.setattr(api.episode_store, "list_episodes_detailed", lambda: episodes)
+
+    resp = client.get("/replays")
+
+    assert resp.status_code == 200
+    assert resp.json() == {"episodes": episodes}
+
+
+def test_list_replays_503_when_listing_raises_operational_error(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+
+    def raise_op_error():
+        raise psycopg2.OperationalError("connection refused")
+    monkeypatch.setattr(api.episode_store, "list_episodes_detailed", raise_op_error)
+
+    resp = client.get("/replays")
+
+    assert resp.status_code == 503
+
+
+def test_get_replay_returns_the_stored_script(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api.episode_store, "load_episode", lambda name: VALID_SCRIPT)
+
+    resp = client.get("/replays/demo-ep")
+
+    assert resp.status_code == 200
+    assert resp.json() == VALID_SCRIPT
+
+
+def test_get_replay_404_when_episode_missing(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api.episode_store, "load_episode", lambda name: None)
+
+    resp = client.get("/replays/nope")
+
+    assert resp.status_code == 404
+
+
+def test_get_replay_400_when_name_has_disallowed_characters(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    # A "/" would split into extra path segments and 404 on routing before
+    # ever reaching the handler; a space is invalid per NAME_RE but stays a
+    # single path segment, so it actually exercises _safe_name's rejection.
+    resp = client.get("/replays/bad name")
+
+    assert resp.status_code == 400
+
+
+def test_get_replay_503_when_load_raises_operational_error(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    def raise_op_error(name):
+        raise psycopg2.OperationalError("connection refused")
+    monkeypatch.setattr(api.episode_store, "load_episode", raise_op_error)
+
+    resp = client.get("/replays/demo-ep")
+
+    assert resp.status_code == 503
+
+
+def test_delete_replay_true_when_episode_removed(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api.episode_store, "delete_episode", lambda name: True)
+
+    resp = client.delete("/replays/demo-ep")
+
+    assert resp.status_code == 200
+    assert resp.json() == {"name": "demo-ep", "deleted": True}
+
+
+def test_delete_replay_false_when_episode_absent(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api.episode_store, "delete_episode", lambda name: False)
+
+    resp = client.delete("/replays/demo-ep")
+
+    assert resp.status_code == 200
+    assert resp.json() == {"name": "demo-ep", "deleted": False}
+
+
+def test_delete_replay_400_when_name_has_disallowed_characters(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    resp = client.delete("/replays/bad name")
+
+    assert resp.status_code == 400
+
+
+def test_delete_replay_503_when_delete_raises_operational_error(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+
+    def raise_op_error(name):
+        raise psycopg2.OperationalError("connection refused")
+    monkeypatch.setattr(api.episode_store, "delete_episode", raise_op_error)
+
+    resp = client.delete("/replays/demo-ep")
+
     assert resp.status_code == 503

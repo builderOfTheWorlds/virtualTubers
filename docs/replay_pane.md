@@ -14,7 +14,7 @@ operator ──POST /messages──▶ Kafka ──▶ agent.py handle_replay_re
                                             │ writes REPLAY_REQUEST_FILE (atomic)
                                             ▼
                               replay_pane.py (this program, polling)
-                                            │ resolves episode INSIDE library
+                                            │ loads episode from Postgres
                                             ▼
                               Performer renders the show + avatar reacts
 ```
@@ -22,8 +22,20 @@ operator ──POST /messages──▶ Kafka ──▶ agent.py handle_replay_re
 File-based handoff on purpose (same pattern as `agent_state.py`): the pane
 never **consumes** Kafka and never executes anything from the bus. The only
 thing a bus message can influence is **which pre-built, pre-redacted
-episode in the library plays** — episode names are resolved basename-only
-inside `REPLAY_LIBRARY`, so a hostile payload cannot reach other files.
+episode in the library plays** — a requested name is reduced to a bare
+basename and looked up as an equality match in the store, so a hostile
+payload can only ever name an episode an operator already uploaded and the
+validator already cleared.
+
+**The library lives in Postgres** ([episode_store.md](episode_store.md)),
+not on disk. Episodes are uploaded through `message-api`'s `POST /replays`
+([message_api.md](message_api.md)), which validates each one
+([episode_validator.md](episode_validator.md)) before inserting it. There
+is no `/data/replays` mount any more, and no `--library`/`REPLAY_LIBRARY`
+setting. The trade-off is real and deliberate: with no filesystem fallback,
+**a Postgres outage means no reruns at all** — the idle screen says so
+plainly, a request reports the outage instead of performing, and nothing
+crash-loops, but the shows don't air until the database is back.
 
 **Spoken narration.** When the worker config's `voice.provider` isn't
 `null`, each airing runs the per-airing narration pass first
@@ -96,30 +108,41 @@ reference, message schemas, timeouts, and deployment requirements:
 ## Signature
 
 ```python
-def resolve_episode(library, episode) -> Path | None
+def sanitize_episode_name(episode) -> str
+def resolve_episode(episode) -> tuple[str | None, dict | None]
 def read_request(request_file) -> dict | None      # consume-once
-def perform_request(request, library, worker_name, state_path,
+def perform_request(request, worker_name, state_path,
                     default_speed=1.0, config=None) -> bool
 def prepare_voice(script, config, workdir, worker_name, speed) -> list | None
 def publish_narration(show, config, episode, worker_name) -> str | None
 def persist_narration(message_id, show, config, episode, worker_name) -> None
 def load_reused_show(script, episode, workdir) -> list | None
 def load_worker_config(path) -> dict | None
-def list_episodes(library) -> list[str]
+def list_episodes() -> list[str] | None            # None == store unreachable
+def draw_idle_screen(worker_name) -> None
 
 # Duet replay (docs/duet_replay.md)
 def resolve_self_id(config, worker_name) -> str
-def perform_director_request(request, library, worker_name, state_path, self_id,
+def perform_director_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None) -> bool
-def perform_follower_request(request, library, worker_name, state_path, self_id,
+def perform_follower_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None) -> bool
 ```
 
+`resolve_episode` returns `(name, script)` — the sanitized library key and
+the episode dict — or `(None, None)` when the episode isn't in the library
+**or** the store is unreachable. The caller reports and returns `False`; it
+never raises. The two cases are distinguished on stderr, since "Postgres is
+down" is the one an operator has to act on. The returned `name` is the same
+string the old code got from `source.stem`, so the narration cache
+(`voiced_narration.episode`) and the duet protocol are unaffected.
+
+`list_episodes()` likewise distinguishes `[]` (library genuinely empty)
+from `None` (store unreachable), because with no filesystem fallback those
+need different words on the idle screen — see "Idle screen" below.
+
 ## Parameters (CLI / environment)
 
-- `--library` / `REPLAY_LIBRARY` (default `/data/replays`): episode script
-  directory — mounted `:ro` from `./replays` (the repo root on the deploy
-  host) in `docker-compose.yml`.
 - `--request-file` / `REPLAY_REQUEST_FILE` (default
   `/tmp/replay_request.json`): the agent → pane handoff file. Same value
   must be visible to `agent.py` (same container, both default it).
@@ -129,15 +152,20 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
   whose `voice` + `llm` sections drive spoken narration; missing/unreadable
   file, or `voice.provider: "null"`, means silent shows.
 - `--once`: handle at most one pending request then exit (testing).
-- `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD` (env, required for
-  narration caching), `POSTGRES_HOST` / `POSTGRES_PORT` (env, optional —
-  default `localhost:5432`): read by `app/narration_store.py`
-  (`available()`/`_connect()`), not by this file directly. Granted to
-  `worker-coder`/`worker-manager`/`worker-tester` in `docker-compose.yml`.
-  Missing/wrong values just disable narration caching and reuse — the show
-  still airs (docs/narration_store.md). **Duet replay also requires this on
-  every cast worker**, director and followers alike (docs/duet_replay.md) —
-  without it a duet refuses outright rather than degrading.
+- `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD` (env, **required**),
+  `POSTGRES_HOST` / `POSTGRES_PORT` (env, optional — default
+  `localhost:5432`): read by `app/episode_store.py` and
+  `app/narration_store.py` (`available()`/`_connect()`), not by this file
+  directly. Granted to every worker in `docker-compose.yml`. These now do
+  double duty:
+  - **The episode library itself** (docs/episode_store.md). Without them
+    there are no episodes at all — this is no longer a soft degradation.
+  - **Narration caching and reuse** (docs/narration_store.md). Missing or
+    wrong values here just mean an uncached fresh airing every time — the
+    show still airs.
+  **Duet replay also requires this on every cast worker**, director and
+  followers alike (docs/duet_replay.md) — without it a duet refuses
+  outright rather than degrading.
 - `REPLAY_STOP_FILE` (env, default `/tmp/replay_stop.json`): agent -> pane
   stop signal written by `app/agent.py`'s `handle_replay_stop` on an
   operator `replay_stop` (docs/operator_commands.md); this pane only ever
@@ -170,9 +198,11 @@ logged to stderr on failure).
 
 ## Dependencies
 
-`app/replay.py` (Performer + `prepare_voiced_show`), `app/agent_state.py`
-(avatar state path), `app/message_bus.py` (`MessageProducer`/`build_message`,
-for `publish_narration`), `app/narration_store.py` (`available`/
+`app/replay.py` (Performer + `prepare_voiced_show`), `app/episode_store.py`
+(`available`/`load_episode`/`list_episodes` — the episode library itself,
+docs/episode_store.md), `app/agent_state.py` (avatar state path),
+`app/message_bus.py` (`MessageProducer`/`build_message`, for
+`publish_narration`), `app/narration_store.py` (`available`/
 `save_airing`/`load_latest_airing`, for `persist_narration`/
 `load_reused_show` — docs/narration_store.md), standard library; `yaml`
 and (transitively, only when voice is on) `app/revoice.py` (`plan_scenes`
@@ -214,14 +244,25 @@ curl -X POST http://localhost:8090/messages \
                     "cast": {"boss": "manager", "coder": "coder"}}}'
 ```
 
-Build and ship the episode library (from the machine with the logs):
+Build and upload the episode library (build on the machine with the logs;
+upload to the running stack, which validates and stores each episode):
 
 ```bash
 .venv/Scripts/python.exe scripts/build_replay_library.py \
   --logs "C:/Users/<you>/.../claudeBackupUtility/logs/claude/virtualTubers" \
   --out replays
-# then sync replays/ to the host: C:\Users\matt\PycharmProjects\virtualTubers\replays
+
+for f in replays/*.json; do
+  echo -n "$(basename "$f" .json): "
+  curl -sS -X POST http://localhost:8090/replays \
+    -H 'Content-Type: application/json' --data-binary @"$f"
+  echo
+done
 ```
+
+`replays/` is now just a staging directory on the dev machine — nothing is
+copied to the deploy host. See docs/message_api.md for the upload API and
+docs/episode_validator.md for what an upload is checked against.
 
 ## Error Handling
 
@@ -254,9 +295,19 @@ Build and ship the episode library (from the machine with the logs):
   `CODER_AIDER_LAYOUT_PRESET` to `coder` in the stack env to put one back
   into its normal editor pane instead.
 - Unknown episode → stderr report + `False`; pane returns to idle. The
-  agent already confirmed queueing to the operator; check worker logs.
+  agent already confirmed queueing to the operator; check worker logs, then
+  `curl http://localhost:8090/replays` to see what's actually in the
+  library.
 - Malformed request file → consumed and discarded (logged).
-- Missing library dir → idle screen says so; nothing crashes.
+- **Episode store unreachable** → `resolve_episode` reports
+  `episode store unreachable: <error>` on stderr and returns
+  `(None, None)`, exactly like an unknown episode: the request is refused,
+  the pane returns to idle, nothing crashes or retries in a loop. The idle
+  screen distinguishes the three states — episodes listed, `library empty
+  — upload episodes with POST /replays on message-api`, and `episode store
+  unreachable — check Postgres; no reruns until it's back`. That last one
+  is the actionable failure: with the `/data/replays` mount gone there is
+  no fallback, so a Postgres outage means no reruns until it's fixed.
 - Avatar state write failures are non-fatal (see replay.md).
 - `publish_narration` never raises: no `message_bus` config, a missing
   `bootstrap_servers`/`topic`, or a Kafka connection failure all just skip
@@ -289,6 +340,20 @@ Build and ship the episode library (from the machine with the logs):
 
 ## Changelog
 
+- **v2.0.0** (2026-08-16): **The episode library moved from the filesystem
+  into Postgres** (docs/episode_store.md). `resolve_episode(episode)` now
+  returns `(name, script)` from `episode_store.load_episode` instead of a
+  `Path` from a directory glob, and `list_episodes()` takes no argument and
+  returns `None` when the store is unreachable. `--library`/
+  `REPLAY_LIBRARY` and `DEFAULT_LIBRARY` are gone, along with the `library`
+  parameter on `perform_request`/`perform_director_request`/
+  `perform_follower_request`/`draw_idle_screen` and the `/data/replays`
+  bind mount in `docker-compose.yml`. The idle screen gained a third state
+  for an unreachable store. Episodes are uploaded and validated through
+  `message-api`'s `POST /replays` (docs/message_api.md,
+  docs/episode_validator.md). Breaking for anyone calling these functions
+  directly; no change to the `replay_request` bus payload, the episode key,
+  the narration cache, or the duet protocol.
 - **v1.5.0** (2026-07-19): `replay_stop` operator command — new
   `REPLAY_STOP_FILE` relay, written by `app/agent.py`'s
   `handle_replay_stop` (cancels a still-queued request outright; signals

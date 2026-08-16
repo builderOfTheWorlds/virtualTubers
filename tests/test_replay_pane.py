@@ -41,18 +41,22 @@ class FakeProducer:
 
 
 @pytest.fixture
-def library(tmp_path):
-    lib = tmp_path / "replays"
-    lib.mkdir()
-    script = {"source": "ep1", "events": [{"type": "assistant_text", "text": "hello stream"}]}
-    (lib / "ep1.json").write_text(json.dumps(script), encoding="utf-8")
-    return lib
+def library(monkeypatch):
+    """In-memory episode_store stand-in: {name: script}, reachable and
+    seeded with one episode ("ep1") — mirrors the old filesystem fixture's
+    single ep1.json. Tests that need more episodes mutate the returned dict
+    directly (episode_store.list_episodes/load_episode read through it live)."""
+    scripts = {"ep1": {"source": "ep1", "events": [{"type": "assistant_text", "text": "hello stream"}]}}
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", lambda name: scripts.get(name))
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", lambda: sorted(scripts))
+    return scripts
 
 
 # ── resolve_episode: the traversal gate ──────────────────────────────────────
 def test_resolve_episode_finds_with_and_without_extension(library):
-    assert resolve_episode(library, "ep1") == library / "ep1.json"
-    assert resolve_episode(library, "ep1.json") == library / "ep1.json"
+    assert resolve_episode("ep1") == ("ep1", library["ep1"])
+    assert resolve_episode("ep1.json") == ("ep1", library["ep1"])
 
 
 @pytest.mark.parametrize("hostile", [
@@ -62,14 +66,43 @@ def test_resolve_episode_finds_with_and_without_extension(library):
     "c:\\Users\\dev\\.env",
 ])
 def test_resolve_episode_never_escapes_library(library, hostile):
-    resolved = resolve_episode(library, hostile)
-    assert resolved is None or resolved.parent == library
+    """None of these hostile basenames name a real library entry, so every
+    one misses — (None, None), never anything filesystem-shaped."""
+    assert resolve_episode(hostile) == (None, None)
+
+
+def test_resolve_episode_hostile_path_resolves_only_the_sanitized_basename(monkeypatch):
+    """The deeper safety property: requesting a episode via a traversal-
+    shaped payload can only ever reach the library entry that its BASENAME
+    names — never anything outside the store. If the library happens to
+    hold an episode literally named "passwd", a hostile "../../etc/passwd"
+    payload resolves to that (ordinary, operator-uploaded) episode, not to
+    any real filesystem path."""
+    scripts = {"passwd": {"source": "passwd", "events": []}}
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", lambda name: scripts.get(name))
+    assert resolve_episode("../../../etc/passwd") == ("passwd", scripts["passwd"])
 
 
 def test_resolve_episode_missing_or_empty_returns_none(library):
-    assert resolve_episode(library, "nope") is None
-    assert resolve_episode(library, "") is None
-    assert resolve_episode(library, None) is None
+    assert resolve_episode("nope") == (None, None)
+    assert resolve_episode("") == (None, None)
+    assert resolve_episode(None) == (None, None)
+
+
+def test_resolve_episode_none_when_store_unavailable(monkeypatch, capsys):
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: False)
+    assert resolve_episode("ep1") == (None, None)
+    assert "episode store unavailable" in capsys.readouterr().err
+
+
+def test_resolve_episode_none_when_load_raises(library, monkeypatch, capsys):
+    def explode(name):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", explode)
+    assert resolve_episode("ep1") == (None, None)
+    assert "episode store unreachable" in capsys.readouterr().err
 
 
 # ── read_request: consume-once, malformed-safe ───────────────────────────────
@@ -91,7 +124,7 @@ def test_read_request_discards_malformed_without_raising(tmp_path, content):
 
 # ── perform_request ──────────────────────────────────────────────────────────
 def test_perform_request_plays_existing_episode(library, capsys):
-    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None,
+    ok = perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None,
                          default_speed=1.0)
     out = capsys.readouterr().out
     assert ok is True
@@ -99,9 +132,9 @@ def test_perform_request_plays_existing_episode(library, capsys):
 
 
 def test_perform_request_unknown_episode_reports_false(library, capsys):
-    ok = perform_request({"episode": "missing"}, library, "KODI-7", None)
+    ok = perform_request({"episode": "missing"}, "KODI-7", None)
     assert ok is False
-    assert "not found" in capsys.readouterr().err
+    assert "not in the library" in capsys.readouterr().err
 
 
 def test_perform_request_voiced_show_prepared_from_config(library, capsys, monkeypatch):
@@ -113,7 +146,7 @@ def test_perform_request_voiced_show_prepared_from_config(library, capsys, monke
 
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", fake_prepare)
     config = {"voice": {"provider": "piper"}}
-    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None,
+    ok = perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None,
                          config=config)
     out = capsys.readouterr().out
     assert ok is True
@@ -127,7 +160,7 @@ def test_perform_request_voice_false_skips_preparation(library, capsys, monkeypa
 
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode)
     ok = perform_request({"episode": "ep1", "speed": 0, "voice": False},
-                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+                         "KODI-7", None, config={"voice": {"provider": "piper"}})
     assert ok is True
     assert "hello stream" in capsys.readouterr().out
 
@@ -137,7 +170,7 @@ def test_perform_request_voice_failure_still_airs_silent(library, capsys, monkey
         raise RuntimeError("ollama exploded")
 
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", broken_prepare)
-    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None,
+    ok = perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None,
                          config={"voice": {"provider": "piper"}})
     captured = capsys.readouterr()
     assert ok is True
@@ -152,7 +185,7 @@ def test_perform_request_clears_stale_stop_file_before_and_after(
     stop_file.write_text("{}", encoding="utf-8")  # stale, from a PREVIOUS airing
     monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
 
-    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+    ok = perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None)
 
     assert ok is True
     pacer = FakePerformer.instances[0].kwargs["pacer"]
@@ -165,7 +198,7 @@ def test_perform_request_pacer_should_stop_reflects_stop_file(
     stop_file = tmp_path / "stop.json"
     monkeypatch.setenv("REPLAY_STOP_FILE", str(stop_file))
 
-    perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None)
+    perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None)
 
     pacer = FakePerformer.instances[0].kwargs["pacer"]
     assert pacer.should_stop() is False
@@ -489,7 +522,7 @@ def test_perform_request_publishes_narration_after_voiced_show(library, monkeypa
     config = {"voice": {"provider": "piper"},
               "message_bus": {"bootstrap_servers": "kafka:9092", "topic": "vtuber.messages"}}
 
-    ok = perform_request({"episode": "ep1", "speed": 0}, library, "KODI-7", None, config=config)
+    ok = perform_request({"episode": "ep1", "speed": 0}, "KODI-7", None, config=config)
 
     assert ok is True
     assert len(FakeBusProducer.sent) == 1
@@ -520,7 +553,7 @@ def test_perform_request_reuse_hit_skips_fresh_generation_and_publish(library, c
     monkeypatch.setattr(replay_pane, "persist_narration", explode_persist)
 
     ok = perform_request({"episode": "ep1", "speed": 0, "narration": "reuse"},
-                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+                         "KODI-7", None, config={"voice": {"provider": "piper"}})
 
     out = capsys.readouterr().out
     assert ok is True
@@ -548,7 +581,7 @@ def test_perform_request_reuse_miss_falls_back_to_fresh_generation(library, monk
     monkeypatch.setattr(replay_pane, "persist_narration", fake_persist)
 
     ok = perform_request({"episode": "ep1", "speed": 0, "narration": "reuse"},
-                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+                         "KODI-7", None, config={"voice": {"provider": "piper"}})
 
     assert ok is True
     assert calls["persist_message_id"] == "msg-id-123"
@@ -566,7 +599,7 @@ def test_perform_request_voice_false_blocks_reuse_too(library, monkeypatch):
     monkeypatch.setattr(replay_pane, "prepare_voiced_show", explode_prepare)
 
     ok = perform_request({"episode": "ep1", "speed": 0, "voice": False, "narration": "reuse"},
-                         library, "KODI-7", None, config={"voice": {"provider": "piper"}})
+                         "KODI-7", None, config={"voice": {"provider": "piper"}})
 
     assert ok is True
 
@@ -578,10 +611,32 @@ def test_load_worker_config_missing_or_bad_returns_none(tmp_path, capsys):
     assert load_worker_config(bad) is None
 
 
-def test_list_episodes_sorted_and_empty_for_missing_dir(library, tmp_path):
-    (library / "another.json").write_text("{}", encoding="utf-8")
-    assert list_episodes(library) == ["another", "ep1"]
-    assert list_episodes(tmp_path / "nope") == []
+def test_list_episodes_returns_store_listing_when_available(monkeypatch):
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", lambda: ["another", "ep1"])
+    assert list_episodes() == ["another", "ep1"]
+
+
+def test_list_episodes_returns_empty_list_when_library_empty(monkeypatch):
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", lambda: [])
+    assert list_episodes() == []
+
+
+def test_list_episodes_returns_none_when_store_unavailable(monkeypatch):
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: False)
+    assert list_episodes() is None
+
+
+def test_list_episodes_returns_none_when_listing_raises(monkeypatch, capsys):
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+
+    def explode():
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", explode)
+    assert list_episodes() is None
+    assert "episode listing failed" in capsys.readouterr().err
 
 
 # ── agent handler: replay_request ────────────────────────────────────────────
@@ -794,9 +849,9 @@ class CapturingPerformer:
 
 
 @pytest.fixture
-def duet_library(tmp_path):
-    lib = tmp_path / "replays"
-    lib.mkdir()
+def duet_library(monkeypatch):
+    """In-memory episode_store stand-in seeded with one episode ("duet_ep"),
+    same shape as the old filesystem fixture's duet_ep.json."""
     script = {
         "source": "duet_ep",
         "events": [
@@ -804,8 +859,11 @@ def duet_library(tmp_path):
             {"type": "assistant_text", "text": "on it boss"},
         ],
     }
-    (lib / "duet_ep.json").write_text(json.dumps(script), encoding="utf-8")
-    return lib
+    scripts = {"duet_ep": script}
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", lambda name: scripts.get(name))
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", lambda: sorted(scripts))
+    return scripts
 
 
 def _duet_rows(boss_audio=None, coder_audio=None, boss_duration=None, coder_duration=None):
@@ -879,7 +937,7 @@ def test_perform_request_mode_follow_dispatches_to_follower(monkeypatch):
     monkeypatch.delenv("WORKER_ID", raising=False)
     calls = {}
 
-    def fake_follower(request, library, worker_name, state_path, self_id,
+    def fake_follower(request, worker_name, state_path, self_id,
                       default_speed=1.0, config=None):
         calls["args"] = (request, worker_name, self_id)
         return True
@@ -891,7 +949,7 @@ def test_perform_request_mode_follow_dispatches_to_follower(monkeypatch):
     monkeypatch.setattr(replay_pane, "perform_director_request", explode_director)
 
     request = {"mode": "follow", "airing_id": "a1", "episode": "duet_ep", "cast": {}}
-    ok = perform_request(request, "lib", "KODI-7", None)
+    ok = perform_request(request, "KODI-7", None)
 
     assert ok is True
     assert calls["args"] == (request, "KODI-7", "KODI-7")
@@ -901,7 +959,7 @@ def test_perform_request_cast_with_other_worker_dispatches_to_director(monkeypat
     monkeypatch.delenv("WORKER_ID", raising=False)
     calls = {}
 
-    def fake_director(request, library, worker_name, state_path, self_id,
+    def fake_director(request, worker_name, state_path, self_id,
                       default_speed=1.0, config=None):
         calls["self_id"] = self_id
         return True
@@ -913,7 +971,7 @@ def test_perform_request_cast_with_other_worker_dispatches_to_director(monkeypat
     monkeypatch.setattr(replay_pane, "perform_follower_request", explode_follower)
 
     request = {"episode": "ep1", "cast": {"coder": "worker-B"}}
-    ok = perform_request(request, "lib", "KODI-7", None)
+    ok = perform_request(request, "KODI-7", None)
 
     assert ok is True
     assert calls["self_id"] == "KODI-7"
@@ -932,7 +990,7 @@ def test_perform_request_cast_all_self_is_solo(library, monkeypatch, capsys):
     monkeypatch.setattr(replay_pane, "perform_follower_request", explode_follower)
 
     request = {"episode": "ep1", "speed": 0, "cast": {"coder": "KODI-7", "boss": "KODI-7"}}
-    ok = perform_request(request, library, "KODI-7", None)
+    ok = perform_request(request, "KODI-7", None)
 
     assert ok is True
     assert "hello stream" in capsys.readouterr().out
@@ -946,7 +1004,7 @@ def test_perform_request_empty_cast_is_solo(library, monkeypatch, capsys):
 
     monkeypatch.setattr(replay_pane, "perform_director_request", explode_director)
 
-    ok = perform_request({"episode": "ep1", "speed": 0, "cast": {}}, library, "KODI-7", None)
+    ok = perform_request({"episode": "ep1", "speed": 0, "cast": {}}, "KODI-7", None)
 
     assert ok is True
     assert "hello stream" in capsys.readouterr().out
@@ -977,7 +1035,7 @@ def test_director_invites_distinct_followers_deduped_and_cues_in_order(
             json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
     monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is True
@@ -1009,7 +1067,7 @@ def test_director_ready_timeout_refuses_without_performing(
     # ready file is left empty — nobody ever becomes ready.
 
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is False
@@ -1059,7 +1117,7 @@ def test_director_ignores_stale_ready_file_from_earlier_reused_airing(
         json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
 
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is False
@@ -1099,7 +1157,7 @@ def test_director_tells_followers_stopped_when_show_is_cut_short(
             json.dumps({"airing_id": "airing-123", "workers": ["workerB"]}), encoding="utf-8")
     monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is True  # an episode DID air, just cut short
@@ -1130,7 +1188,7 @@ def test_director_refuses_with_stopped_reason_when_stop_arrives_before_ready(
     # win before the ready_timeout would otherwise fire.
 
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is False
@@ -1153,7 +1211,7 @@ def test_director_refuses_when_store_unavailable(
     monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
 
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is False
@@ -1175,7 +1233,7 @@ def test_director_refuses_when_producer_unavailable(duet_library, monkeypatch, f
     # No message_bus config at all ⇒ _build_bus_producer returns None.
     request = {"episode": "duet_ep", "cast": {"boss": "workerB"}, "speed": 1000}
 
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config={})
 
     assert ok is False
@@ -1203,7 +1261,7 @@ def test_director_annotates_ownership_and_strips_unowned_audio(
             json.dumps({"airing_id": "airing-42", "workers": ["workerB"]}), encoding="utf-8")
     monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
 
-    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+    ok = perform_director_request(request, "director-1", None, "director-1",
                                   config=_duet_config("director-1"))
 
     assert ok is True
@@ -1232,7 +1290,7 @@ def test_follower_happy_path_loads_owned_audio_and_notifies_director(
     request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
               "speed": 1000, "worker_name": "KODI-Follower", "director": "director-1"}
 
-    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+    ok = perform_follower_request(request, "follower-1", None, "follower-1",
                                   config=_duet_config("follower-1"))
 
     assert ok is True
@@ -1261,7 +1319,7 @@ def test_follower_missing_airing_returns_to_idle_without_performing(
 
     request = {"mode": "follow", "airing_id": "missing-id", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
-    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1")
+    ok = perform_follower_request(request, "follower-1", None, "follower-1")
 
     assert ok is False
     assert FakePerformer.instances == []
@@ -1277,7 +1335,7 @@ def test_follower_scene_mismatch_returns_to_idle_without_performing(
 
     request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
-    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1")
+    ok = perform_follower_request(request, "follower-1", None, "follower-1")
 
     assert ok is False
     assert FakePerformer.instances == []
@@ -1293,7 +1351,7 @@ def test_follower_wait_for_scene_ratchet(duet_library, monkeypatch, capturing_pe
 
     request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
-    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+    ok = perform_follower_request(request, "follower-1", None, "follower-1",
                                   config=_duet_config("follower-1"))
     assert ok is True
     wait_for_scene = CapturingPerformer.instances[0].kwargs["wait_for_scene"]
@@ -1334,7 +1392,7 @@ def test_follower_wait_for_scene_stops_immediately_on_stop_file(
 
     request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
-    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+    ok = perform_follower_request(request, "follower-1", None, "follower-1",
                                   config=_duet_config("follower-1"))
     assert ok is True
     wait_for_scene = CapturingPerformer.instances[0].kwargs["wait_for_scene"]

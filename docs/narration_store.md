@@ -60,9 +60,14 @@ def load_airing(message_id) -> list[dict] | None
   logger's text-only row.
 - `worker_id` (str, required) — persona/worker that performed the airing.
 - `episode` (str, required) — the episode key. This is the canonical
-  script stem (`Path(source).stem`, e.g.
-  `"2026-07-02_04-27-00_6ecdde82"`) — the same value used to resolve the
-  episode file in `REPLAY_LIBRARY`.
+  script stem (e.g. `"2026-07-02_04-27-00_6ecdde82"`), which is also
+  `script["source"]` and the `replay_episodes.name` primary key
+  `replay_pane.resolve_episode` looks the script up by
+  (docs/episode_store.md). It used to be the stem of a file under
+  `REPLAY_LIBRARY`; keeping the identical string when the library moved
+  into Postgres is what let this narration cache carry on with no
+  migration. There is no foreign key — a deleted episode leaves its
+  narration rows behind, harmlessly unreachable.
 - `aired_at` (str, required) — ISO 8601 UTC timestamp of the airing.
 - `show` (list[dict], required) — the voiced show from
   `revoice.prepare_show`/`prepare_voiced_show`: each scene dict has

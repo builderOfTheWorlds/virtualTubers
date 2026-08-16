@@ -20,11 +20,22 @@ from message-logger's Postgres writes without a stack redeploy
 
 Also exposes `POST /logs/prune` — an on-demand delete of `container_logs`
 rows in a caller-specified time range, backed by `app/log_prune.py`. This is
-the one endpoint that *does* touch Postgres directly (a deliberate exception
-to the "pure producer" design above): it complements log-shipper's own
-hourly `RETENTION_DAYS`-based prune (docs/log_shipper.md), which only ever
-deletes by age, for reclaiming space from a known window without waiting for
-the retention cutoff to catch up.
+one of two endpoint groups that *do* touch Postgres directly (a deliberate
+exception to the "pure producer" design above): it complements log-shipper's
+own hourly `RETENTION_DAYS`-based prune (docs/log_shipper.md), which only
+ever deletes by age, for reclaiming space from a known window without
+waiting for the retention cutoff to catch up.
+
+And exposes the `/replays` endpoints — **the only way an episode enters the
+Rerun Theater library**. Episodes used to be JSON files hand-copied onto the
+deploy host and bind-mounted read-only into every worker at `/data/replays`,
+with nothing validating them anywhere in the loop. They are now uploaded
+here: `POST /replays` takes a pre-built episode script
+(`scripts/build_replay_library.py`), runs it through the four-stage gate in
+`app/episode_validator.py` (shape → name → leak audit → **dry-run render**),
+and only then inserts it into Postgres via `app/episode_store.py`. The
+workers read the library straight from that table, so there is no mount and
+no host filesystem access involved in adding a show.
 
 ## Signature
 
@@ -50,6 +61,16 @@ class PruneLogsRequest(BaseModel):
     before: Optional[datetime] = None
 
 @app.post("/logs/prune") def prune_logs_endpoint(body: PruneLogsRequest) -> dict
+
+# Rerun Theater episode library (docs/episode_store.md)
+MAX_UPLOAD_BYTES = 8 * 1024 * 1024
+
+@app.post("/replays") def upload_replay(body: bytes,
+                                        name: Optional[str] = None,
+                                        overwrite: bool = False) -> dict
+@app.get("/replays") def list_replays() -> dict
+@app.get("/replays/{name}") def get_replay(name: str) -> dict
+@app.delete("/replays/{name}") def delete_replay(name: str) -> dict
 ```
 
 ## Parameters
@@ -63,7 +84,31 @@ class PruneLogsRequest(BaseModel):
 - `before` (datetime, optional) — deletes `container_logs` rows with `log_timestamp < before`.
   At least one of `after`/`before` is required; passing only one deletes everything on that side of the bound.
 
-Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints). Required for `/logs/prune`: `POSTGRES_HOST`/`POSTGRES_PORT` (code default `localhost`/`5432` if unset, but `docker-compose.yml` requires both to be set explicitly in `.env` — e.g. `192.168.2.158`/`5432` for the d2000 deployment), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
+`POST /replays` takes the **raw episode JSON as the request body** —
+`application/json`, no multipart wrapper — so `curl --data-binary @file.json`
+uploads one directly and `python-multipart` isn't a dependency. Two optional
+query parameters:
+
+- `name` (str, optional) — overrides the library key. Defaults to the
+  script's own `source` field, which is the same string the episode's
+  filename stem used to be, so an unmodified episode keeps the key the rest
+  of the stack already knows it by (including `voiced_narration.episode`).
+- `overwrite` (bool, optional, default `false`) — replace an episode of the
+  same name instead of failing with `409`.
+
+`GET`/`DELETE /replays/{name}` take the library key as a path parameter,
+validated against the same `^[A-Za-z0-9._-]{1,128}$` rule the upload path
+applies, so a lookup can never be handed something an upload would refuse.
+
+Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints). Required for `/logs/prune` **and `/replays`**: `POSTGRES_HOST`/`POSTGRES_PORT` (code default `localhost`/`5432` if unset, but `docker-compose.yml` requires both to be set explicitly in `.env` — e.g. `192.168.2.158`/`5432` for the d2000 deployment), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
+
+This service also owns the `replay_episodes` table's DDL at runtime: no
+long-lived consumer owns it the way `message-logger` owns `messages`, so
+`api.py` calls `episode_store.ensure_schema()` best-effort at import (logged,
+never fatal) and retries on every `/replays` request until one succeeds — a
+module-level flag stops it costing a DDL round-trip per request thereafter.
+A Postgres that's down at container start must not stop `/messages` from
+working, and must heal on its own once the database is back.
 
 ## Return Value
 
@@ -74,6 +119,10 @@ Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_T
 - `GET /log-filter/{message_type}` — `{"type": ..., "excluded": bool}`, HTTP 200. Defaults to `excluded: true` for `status_update` and `false` for any other type that's never been toggled.
 - `POST /log-filter/{message_type}/exclude` / `/include` — same shape as the GET, reflecting the new state, HTTP 200.
 - `POST /logs/prune` — `{"deleted": int, "after": ..., "before": ...}`, HTTP 200.
+- `POST /replays` — `{"name": str, "event_count": int, "byte_size": int, "created": true}`, HTTP 200.
+- `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, sorted by name. No scripts.
+- `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform, HTTP 200.
+- `DELETE /replays/{name}` — `{"name": str, "deleted": bool}`, HTTP 200. `deleted: false` means the name was already absent (idempotent, not an error).
 - Malformed/missing required fields — HTTP 422 (FastAPI/Pydantic validation).
 
 ## Dependencies
@@ -82,6 +131,7 @@ Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_T
 - `worker_control.WorkerControl` (`app/worker_control.py`, copied into this service's image; docs/worker_control.md)
 - `log_filter_control.LogFilterControl` (`app/log_filter_control.py`, copied into this service's image; docs/log_filter_control.md)
 - `log_prune.prune_logs` (`app/log_prune.py`, copied into this service's image; docs/log_shipper.md)
+- `episode_store` and `episode_validator` (`app/episode_store.py`, `app/episode_validator.py`; docs/episode_store.md, docs/episode_validator.md). The validator's dry-run stage renders the episode, so the image also copies in `app/replay.py`, `app/revoice.py`, `app/session_log_parser.py`, `app/agent_state.py` and `app/audio_player.py` — all stdlib-only at import time, which is what makes running the renderer inside this service viable. No new pip dependency.
 - `fastapi`, `uvicorn`, `pydantic`, `redis`, `psycopg2`
 
 ## Usage Examples
@@ -123,6 +173,33 @@ curl -X POST http://localhost:8090/logs/prune \
   -d '{"after": "2026-07-01T00:00:00Z", "before": "2026-07-02T00:00:00Z"}'
 ```
 
+```bash
+# Upload one episode built by scripts/build_replay_library.py. The body is
+# the raw episode JSON — no multipart, no wrapper object.
+curl -X POST http://localhost:8090/replays \
+  -H "Content-Type: application/json" \
+  --data-binary @replays/2026-07-02_04-27-00_6ecdde82.json
+```
+
+```bash
+# Upload (or re-upload) a whole staging directory — this is also the
+# migration command for a library that used to live in ./replays.
+for f in replays/*.json; do
+  echo -n "$(basename "$f" .json): "
+  curl -sS -X POST http://localhost:8090/replays \
+    -H 'Content-Type: application/json' --data-binary @"$f"
+  echo
+done
+```
+
+```bash
+# See what's actually in the library, replace one episode, drop another.
+curl -sS http://localhost:8090/replays | python3 -m json.tool
+curl -X POST "http://localhost:8090/replays?overwrite=true" \
+  -H "Content-Type: application/json" --data-binary @replays/sample.json
+curl -X DELETE http://localhost:8090/replays/sample
+```
+
 ## Error Handling
 
 - Missing `to` field — HTTP 422 with a Pydantic validation error body.
@@ -133,6 +210,14 @@ curl -X POST http://localhost:8090/logs/prune \
 - Redis unreachable when writing a log filter — `exclude`/`include` return HTTP 503; the toggle did not take effect.
 - `/logs/prune` called with neither `after` nor `before` — HTTP 400.
 - `/logs/prune` called when Postgres is unreachable — HTTP 503; no rows deleted.
+- `POST /replays` with a body over `MAX_UPLOAD_BYTES` (8 MB) — HTTP 413, checked on the raw body before parsing. uvicorn imposes no body-size limit of its own, and every upload is held in memory and then dry-run rendered; the largest real episode is well under 1 MB.
+- `POST /replays` with a body that isn't valid JSON — HTTP 400.
+- `POST /replays` with an episode that fails validation — HTTP 400 with the validator's reason (bad shape, bad name, over the size limit, leak audit, or a failed dry-run render; docs/episode_validator.md). **A leak-audit failure never echoes the matched text** — it is by construction the secret, so the `detail` names the rule only. `tests/test_episode_validator.py` asserts a planted secret does not appear in the message.
+- `POST /replays` for a name that already exists, without `?overwrite=true` — HTTP 409; the stored episode is untouched.
+- Any `/replays` call when `POSTGRES_*` isn't configured for this service — HTTP 503 before anything else runs.
+- Any `/replays` call when Postgres is unreachable (`psycopg2.OperationalError`) — HTTP 503, mirroring `/logs/prune`. Nothing was written.
+- `GET /replays/{name}` for an unknown episode — HTTP 404.
+- `GET`/`DELETE /replays/{name}` with a name containing path separators or other disallowed characters — HTTP 400, before any query runs.
 
 ## Changelog
 
@@ -140,3 +225,4 @@ curl -X POST http://localhost:8090/logs/prune \
 - v1.1.0 (2026-07-07) — Added `/workers/{worker_id}` status and `/workers/{worker_id}/enable`/`disable` control endpoints, backed by `worker_control.WorkerControl`.
 - v1.2.0 (2026-07-09) — Added `/log-filter/{message_type}` status and `/log-filter/{message_type}/exclude`/`include` control endpoints, backed by `log_filter_control.LogFilterControl`.
 - v1.3.0 (2026-07-12) — Added `POST /logs/prune`, a manual time-range delete of `container_logs` rows backed by the new `app/log_prune.py`, complementing log-shipper's automatic age-based retention prune.
+- v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).

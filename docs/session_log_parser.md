@@ -33,18 +33,40 @@ broadcasts publicly. What gets replaced with a dummy marker:
 - Usernames in any form, home paths including the slugified
   `c--Users-<name>-...` form.
 
-The strict last-line-of-defense audit regex lives in
-`scripts/build_replay_library.py` (`LEAK_AUDIT`) — the build refuses to
-write any episode that fails it.
+The strict last-line-of-defense audit regex lives **in this module** as
+`LEAK_AUDIT`, exposed through `audit(payload)`. Two independent callers
+enforce it, which is the point of it living here rather than in either of
+them:
+
+- `scripts/build_replay_library.py` — refuses to write any episode that
+  fails it, on the dev machine.
+- `app/episode_validator.py` — refuses to store any *uploaded* episode
+  that fails it, on the server (docs/episode_validator.md). Since the
+  library became a Postgres table fed by `POST /replays`, the local build
+  is a convenience and this is the enforced gate.
 
 ## Signature
 
 ```python
+LEAK_AUDIT: re.Pattern       # one alternation: frogg | sk-ant- | ghp_ | 100.x | credential assignment
+
 def parse_session(session_dir: str | Path) -> dict
+
+def audit(payload: str) -> str | None    # the offending match, else None
 ```
 
 Also public: `redact(text) -> str`, `clean_user_text(text) -> str`,
 `parse_tool_detail(path, tool) -> dict | None`, `summarize(script) -> dict`.
+
+`audit()` takes the *serialized* script (the whole JSON string, not one
+event) and returns the first match, or `None` when the payload is clean.
+A falsy payload is clean by definition. **Callers must test the result and
+never echo it** — the returned string is, by construction, the secret. Both
+callers only branch on `is not None`: `build_replay_library.py` names the
+episode it skipped, and `episode_validator` raises an `EpisodeInvalid`
+naming the *categories* the audit covers and telling the operator to
+rebuild, with `tests/test_episode_validator.py` asserting a planted secret
+never appears in the raised message.
 
 ## Parameters
 
@@ -119,6 +141,12 @@ for d in sorted(Path(LOGS).iterdir()):
 
 ## Changelog
 
+- **v1.2.0** (2026-08-16): `LEAK_AUDIT` and the new `audit(payload)` helper
+  moved here from `scripts/build_replay_library.py`, which now imports
+  them. One copy, enforced in two places: the local build, and
+  `app/episode_validator.py` on every upload to `POST /replays` now that
+  the episode library lives in Postgres (docs/episode_store.md). Redaction
+  and parsing are unchanged.
 - **v1.1.0** (2026-07-12): Password/credential-value redaction added
   (`KEY=value` assignments, CLI flags, URL credentials → `[password]`)
   after a password reached a live stream. IP policy changed: private LAN

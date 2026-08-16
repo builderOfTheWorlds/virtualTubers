@@ -165,9 +165,10 @@ def main() -> None
   the rerun described below, for manual/test injections). Like
   `operator_message`, `viewer_joined` has no role gate. It does two things:
   **queues a Rerun Theater episode** for the replay pane (random pick from
-  the `REPLAY_LIBRARY`, default `/data/replays` — queued *before* the LLM
-  call so a dead LLM can't stop the show; an already-pending request file is
-  never stomped), then **greets the viewer**, introducing the rerun when one
+  `episode_store.list_episodes()`, i.e. the `replay_episodes` table in
+  Postgres — queued *before* the LLM call so a dead LLM can't stop the show;
+  an already-pending request file is never stomped), then **greets the
+  viewer**, introducing the rerun when one
   was queued. Unlike every other handler it publishes NOTHING back onto the
   bus — greeting and rerun are narration-only (console + avatar bubble +
   replay pane), so a burst of viewer arrivals can never fan out into bus
@@ -235,6 +236,10 @@ def main() -> None
 - `message_bus` (`load_worker_config`, `build_message`, `MessageProducer`, `MessageConsumer`)
 - `llm_client` (`build_llm_client`)
 - `agent_state` (`resolve_state_path`, `write_state`)
+- `episode_store` (`available`, `list_episodes`) — the Rerun Theater
+  library `_pick_rerun_episode` draws from (docs/episode_store.md). Reads
+  Postgres directly; `available() == False` or any store error returns
+  `None` and the viewer is greeted without a rerun.
 - `tmux_control` (`select_pane`, `send_keys`, `send_raw`, `send_command`, `TmuxError`)
 - Python standard library: `os`, `random` (the `_decide_test_outcome`
   stub — deliberately unseeded live; tests monkeypatch, never assert
@@ -321,6 +326,13 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.4.0 (2026-08-16) — The Rerun Theater library moved from the filesystem
+  into Postgres. `_pick_rerun_episode` now picks from
+  `episode_store.list_episodes()` instead of globbing a mounted directory;
+  `REPLAY_LIBRARY_ENV` / `DEFAULT_REPLAY_LIBRARY` and the `/data/replays`
+  mount are gone. A store outage returns `None`, so `handle_viewer_joined`
+  still greets the viewer — just without a rerun. See
+  docs/episode_store.md.
 - v2.3.0 (2026-07-13) — Duet replay relay: four new any-role handlers
   (`handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`,
   `handle_replay_end`, added to `MESSAGE_HANDLERS`) relay director/follower

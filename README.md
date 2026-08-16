@@ -10,6 +10,49 @@ See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for
 
 ## Recent Changes
 
+**The Rerun Theater episode library moved from the filesystem into Postgres,
+and nothing reaches it now without being validated first** — an episode used
+to be a JSON file: `scripts/build_replay_library.py` wrote `replays/*.json`
+on a dev box, an operator hand-synced that folder to the deploy host, and all
+six workers bind-mounted it read-only at `/data/replays`. Nothing between "a
+file appeared in `replays/`" and "it plays on a live Twitch stream" ever
+checked the file, and adding an episode meant filesystem access to the host —
+so a malformed or unredacted script was discovered only when it failed, or
+leaked, on air. Episodes are now uploaded to the new **`POST /replays`** on
+message-api and stored in a `replay_episodes` table; the workers read
+straight from Postgres and the six mounts are gone.
+
+- `app/episode_validator.py` (new) — the gate, four stages in order: shape
+  (the exact key set `session_log_parser.parse_session` emits, plus
+  per-event-type required fields) → name (basename-only,
+  `^[A-Za-z0-9._-]{1,128}$`) → leak audit → **dry-run render**, which
+  actually performs the whole episode through `replay.Performer` into a
+  throwaway buffer with pacing off and groups it with `revoice.plan_scenes`.
+  That last stage is the "won't have issues replaying it" check — an episode
+  that crashes the renderer is rejected at upload instead of on stream.
+- The leak audit is no longer a local-only step: `LEAK_AUDIT`/`audit()` moved
+  out of `scripts/build_replay_library.py` into `app/session_log_parser.py`,
+  so the same regex now guards both the local build and the server. A
+  leak-audit rejection reports the categories audited and tells you to
+  rebuild — **never the matched text**, which is by construction the secret.
+- `app/episode_store.py` (new) — the data-access module, modelled on
+  `app/narration_store.py`: lazy `psycopg2`, one connection per call, 5s
+  connect timeout, and it *raises* on DB failure so each caller picks its own
+  degradation. `app/replay_pane.py` and `app/agent.py` read it directly.
+- `name` is the primary key and keeps the exact string the old filename stem
+  had, so the `voiced_narration` narration cache and the duet protocol keep
+  matching with **no migration**.
+- Trade-off accepted: with no filesystem fallback, a Postgres outage means no
+  reruns. Every read path degrades visibly instead of crashing — the pane's
+  idle screen gained a third state, "episode store unreachable", distinct
+  from "library empty", and a `viewer_joined` still greets the viewer, just
+  without a show.
+- `--library`/`REPLAY_LIBRARY`, `DEFAULT_LIBRARY` and `DEFAULT_REPLAY_LIBRARY`
+  are gone. See [docs/episode_store.md](docs/episode_store.md),
+  [docs/episode_validator.md](docs/episode_validator.md),
+  [docs/message_api.md](docs/message_api.md) and
+  [docs/replay_pane.md](docs/replay_pane.md).
+
 **The avatar now visibly talks while there's text on screen** — every code
 path that shows a speech bubble already paired it with the right expression
 (`speaking`/`happy`/`frustrated`), but the `builtin` static-box provider had
@@ -304,14 +347,14 @@ saved Claude Code session logs become replayable stream content:
 - Operator wiring: send `{"type": "replay_request", "payload": {"episode":
   "<name>"}}` via message-api (docs/operator_commands.md); `agent.py`
   queues it (any role). Episode names resolve basename-only inside the
-  library — bus payloads can't reach other files.
+  library — bus payloads can't reach anything that isn't already in it.
 - Config-only mode switch: `layout.preset: replay` (or
   `LAYOUT_PRESET=replay`) swaps the editor pane for the theater
   (`config/panels/replay.yaml`, `config/layouts/replay.yaml`).
-- Episode library: build locally, sync to `C:\Users\matt\PycharmProjects\virtualTubers\replays` on
-  the host — mounted `:ro` into coder/manager/tester at `/data/replays`.
-  Persona re-voicing (unique shows per airing via the local LLM) is the
-  planned next layer. See [docs/replay_pane.md](docs/replay_pane.md),
+- Episode library: build locally, then upload to `POST /replays` — it lives
+  in Postgres now, not on the host filesystem (see the top Recent Changes
+  entry). Persona re-voicing (unique shows per airing via the local LLM) is
+  the planned next layer. See [docs/replay_pane.md](docs/replay_pane.md),
   [docs/replay.md](docs/replay.md), and
   [docs/session_log_parser.md](docs/session_log_parser.md).
 
@@ -623,9 +666,24 @@ One-time setup:
 .venv/Scripts/python.exe scripts/build_replay_library.py \
   --logs "path/to/logs/claude/virtualTubers" --out replays
 
-# 2. Sync the episode library onto the deployment host
-#    replays/ -> C:\Users\matt\PycharmProjects\virtualTubers\replays   (mounted :ro at /data/replays)
+# 2. Upload the episodes to the server. message-api validates each one
+#    (shape, leak audit, and a real dry-run render) before storing it in
+#    Postgres, which is where the workers read them from.
+for f in replays/*.json; do
+  echo -n "$(basename "$f" .json): "
+  curl -sS -X POST http://localhost:8090/replays \
+    -H 'Content-Type: application/json' --data-binary @"$f"
+  echo
+done
 ```
+
+`replays/` is a local staging directory on the machine that builds it —
+nothing is copied to the deploy host and there is no `/data/replays`
+mount. Adding an episode later is step 2 on its own; `curl
+http://localhost:8090/replays` lists what's in the library. See
+[docs/episode_store.md](docs/episode_store.md),
+[docs/episode_validator.md](docs/episode_validator.md), and the `/replays`
+routes in [docs/message_api.md](docs/message_api.md).
 
 The Piper voice models (coder + boss) don't need a manual download/sync —
 `./install.sh` fetches them straight into `voices/` on the deployment host
@@ -751,7 +809,7 @@ channel's key:
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.2.158:9092` | Message-bus broker (runs on d2000 itself) |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
-| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | `message-logger` Postgres connection (also on d2000) |
+| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | Postgres connection (also on d2000). Backs `message-logger`, `log-shipper`, the narration cache, **and the Rerun Theater episode library** — a worker without these can't perform a rerun at all (docs/episode_store.md) |
 | `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
 | `CODER_NATIVE_LAYOUT_PRESET` / `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
@@ -911,6 +969,8 @@ virtualTubers/
 │   ├── replay_pane.py    # "Rerun Theater" pane: idles, plays operator-requested episodes solo or as a duet director/follower
 │   ├── revoice.py        # Per-airing narration pass: scenes + LLM-written spoken lines
 │   ├── narration_store.py # Postgres cache for voiced airings; duet director persists, followers load the same airing
+│   ├── episode_store.py   # Postgres-backed Rerun Theater episode library (replaced the /data/replays mount)
+│   ├── episode_validator.py # Upload gate: shape + name + leak audit + dry-run render, before an episode is stored
 │   ├── tts_client.py     # Provider-switchable TTS (Piper | OpenAI | ElevenLabs), measured durations
 │   ├── audio_player.py   # Best-effort WAV playback into the streamed PulseAudio sink
 │   ├── build_layout.py   # Config-driven tmux layout engine (emits the tmux command sequence)
@@ -919,7 +979,7 @@ virtualTubers/
 │   └── tail_bus.py       # Rich configurable Kafka feed for the tmux "Message Bus" pane
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
-│   ├── message-api/       # FastAPI service for injecting test messages onto the bus
+│   ├── message-api/       # FastAPI service: injects test messages onto the bus, and owns /replays episode upload
 │   └── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
 ├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
 ├── repos/                 # Vendored third-party avatar repos (see repos/README.md) — e.g. ascii-avatar, used by avatar_providers/ascii_avatar.py

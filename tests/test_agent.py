@@ -498,14 +498,15 @@ def test_handle_operator_message_llm_failure_replies_with_error():
 
 @pytest.fixture
 def replay_env(tmp_path, monkeypatch):
-    """Point the episode library and request file at tmp dirs; returns
-    (library_path, request_file_path). Library starts empty."""
-    library = tmp_path / "replays"
-    library.mkdir()
+    """Point the episode library (Postgres, mocked via episode_store) and
+    request file at test doubles; returns (episode_names, request_file_path).
+    Library starts empty — tests append names to simulate uploaded episodes."""
+    episodes = []
     request_file = tmp_path / "replay_request.json"
-    monkeypatch.setenv("REPLAY_LIBRARY", str(library))
+    monkeypatch.setattr(agent.episode_store, "available", lambda: True)
+    monkeypatch.setattr(agent.episode_store, "list_episodes", lambda: list(episodes))
     monkeypatch.setenv("REPLAY_REQUEST_FILE", str(request_file))
-    return library, request_file
+    return episodes, request_file
 
 
 def test_handle_viewer_joined_greets_without_sending_bus_messages(tmp_path, replay_env):
@@ -545,8 +546,8 @@ def test_handle_viewer_joined_defaults_username_when_missing(replay_env):
 
 
 def test_handle_viewer_joined_queues_a_rerun_from_the_library(replay_env):
-    library, request_file = replay_env
-    (library / "ep-one.json").write_text("{}")
+    episodes, request_file = replay_env
+    episodes.append("ep-one")
     producer = FakeProducer()
     llm = FakeLLM(response="Welcome! Rolling a rerun for you.")
     msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
@@ -560,8 +561,8 @@ def test_handle_viewer_joined_queues_a_rerun_from_the_library(replay_env):
 
 
 def test_handle_viewer_joined_payload_episode_overrides_random_pick(replay_env):
-    library, request_file = replay_env
-    (library / "ep-one.json").write_text("{}")
+    episodes, request_file = replay_env
+    episodes.append("ep-one")
     producer = FakeProducer()
     llm = FakeLLM(response="Welcome!")
     msg = {"from": "operator", "type": "viewer_joined",
@@ -574,7 +575,7 @@ def test_handle_viewer_joined_payload_episode_overrides_random_pick(replay_env):
 
 
 def test_handle_viewer_joined_empty_library_still_greets(replay_env):
-    library, request_file = replay_env
+    episodes, request_file = replay_env
     producer = FakeProducer()
     llm = FakeLLM(response="Welcome in!")
     msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}
@@ -586,8 +587,8 @@ def test_handle_viewer_joined_empty_library_still_greets(replay_env):
 
 
 def test_handle_viewer_joined_does_not_stomp_pending_replay_request(replay_env):
-    library, request_file = replay_env
-    (library / "ep-one.json").write_text("{}")
+    episodes, request_file = replay_env
+    episodes.append("ep-one")
     request_file.write_text('{"episode": "operator-queued"}')
     producer = FakeProducer()
     llm = FakeLLM(response="Welcome!")
@@ -599,8 +600,8 @@ def test_handle_viewer_joined_does_not_stomp_pending_replay_request(replay_env):
 
 
 def test_handle_viewer_joined_llm_failure_still_queues_the_rerun(replay_env):
-    library, request_file = replay_env
-    (library / "ep-one.json").write_text("{}")
+    episodes, request_file = replay_env
+    episodes.append("ep-one")
     producer = FakeProducer()
     llm = FakeLLM(error=RuntimeError("connection refused"))
     msg = {"from": "operator", "type": "viewer_joined", "payload": {"username": "phil"}}

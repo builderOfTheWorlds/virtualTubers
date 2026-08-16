@@ -13,6 +13,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 from session_log_parser import (  # noqa: E402
+    audit,
     clean_user_text,
     parse_session,
     parse_tool_detail,
@@ -198,3 +199,32 @@ def test_shell_detail_with_non_dict_json_does_not_crash(tmp_path):
 
 def test_missing_detail_file_returns_none(tmp_path):
     assert parse_tool_detail(tmp_path / "nope.md", "Edit") is None
+
+
+# ── audit ────────────────────────────────────────────────────────────────────
+# The leak audit episode_validator runs server-side before an upload enters
+# the library — same regex build_replay_library.py checks on the dev box.
+@pytest.mark.parametrize("payload,expected", [
+    ("my username is frogg here", "frogg"),
+    ("key sk-ant-api03-AbCdEfGh123456 leaked", "sk-ant-api03-Ab"),
+    ("token ghp_abcdefghijklmnopqrst123 here", "ghp_abcdefgh"),
+    ("ollama at 100.37.208.112 is down", "100.37.2"),
+    ("POSTGRES_PASSWORD=hunter2 in the env", "POSTGRES_PASSWORD=h"),
+    ("export PGPASSWORD=tr0ub4dor", "PGPASSWORD=t"),
+])
+def test_audit_returns_the_offending_match(payload, expected):
+    assert audit(payload) == expected
+
+
+@pytest.mark.parametrize("payload", [
+    "nothing sensitive in this line at all",
+    "private lan ip 192.168.1.5 is fine",
+    "a normal password field: [password]",
+    "",
+])
+def test_audit_returns_none_for_clean_payload(payload):
+    assert audit(payload) is None
+
+
+def test_audit_returns_none_for_none_payload_without_raising():
+    assert audit(None) is None

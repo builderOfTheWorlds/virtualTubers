@@ -4,39 +4,32 @@ build_replay_library.py
 Batch-parses claudeBackupUtility session logs into an episode library for
 the "Rerun Theater" replay pane (docs/replay_pane.md).
 
-Run on the machine that has the logs (the Windows dev box), then sync the
-output directory to the deployment host's repo checkout at <repo>/replays
-(e.g. C:\Users\matt\PycharmProjects\virtualTubers\replays on d2000) —
-docker-compose mounts it read-only into the workers at /data/replays.
+Run on the machine that has the logs (the Windows dev box), then upload the
+episodes to the running stack, which validates each one and stores it in
+Postgres (docs/episode_store.md) — the workers read the library from there,
+not from a mounted directory:
 
     .venv/Scripts/python.exe scripts/build_replay_library.py \
         --logs "path/to/logs/claude/virtualTubers" --out replays
 
+    for f in replays/*.json; do
+        curl -sS -X POST http://<host>:8090/replays \
+            -H 'Content-Type: application/json' --data-binary @"$f"
+    done
+
 Skips sessions that produce fewer than --min-events events (nothing
 watchable in them). Redaction happens inside the parser; this script also
-runs the same strict leak audit the test suite uses and refuses to write
-any episode that fails it.
+runs the same strict leak audit the server applies on upload
+(session_log_parser.audit) and refuses to write any episode that fails it.
 """
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
-from session_log_parser import parse_session  # noqa: E402
-
-# Strict last-line-of-defense audit — a leaked episode must never reach a
-# broadcastable library. Private LAN IPs (192.168.x etc.) are allowed by
-# policy; tailnet (100.x) and credential-looking assignments are not.
-# The password arm tolerates JSON escaping (password\": \"...) and only
-# fires when the value is NOT the parser's [password] dummy marker.
-LEAK_AUDIT = re.compile(
-    r"frogg|sk-ant-[A-Za-z0-9_-]{8}|ghp_[A-Za-z0-9]{8}|100\.\d{1,3}\.\d"
-    r"|(?i:\w*(?:password|passwd|passphrase|pwd|secret)(?:\\?[\"'])*\s*[:=]>?\s*(?:\\?[\"'])*"
-    r"(?!\[password\])[^\s\\\"',;&|=\[])"
-)
+from session_log_parser import audit, parse_session  # noqa: E402
 
 
 def main():
@@ -63,9 +56,9 @@ def main():
             skipped += 1
             continue
         payload = json.dumps(script, indent=1, ensure_ascii=False)
-        leak = LEAK_AUDIT.search(payload)
+        leak = audit(payload)
         if leak:
-            print(f"  LEAK  {session_dir.name}: {leak.group(0)!r} — NOT writing")
+            print(f"  LEAK  {session_dir.name}: {leak!r} — NOT writing")
             failed += 1
             continue
         (out / f"{session_dir.name}.json").write_text(payload, encoding="utf-8")

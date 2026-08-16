@@ -407,13 +407,15 @@ which cached scenes get copied into a follower's workdir). Practically:
     (to `load_airing`) need `narration_store.available()` to be `True`.
   - Reachable Kafka (`KAFKA_BOOTSTRAP_SERVERS`/`KAFKA_TOPIC`) — already
     standard on every worker.
-  - The episode library mounted at `REPLAY_LIBRARY`
-    (default `/data/replays`) — followers rebuild scenes against the same
-    episode script the director used, so the library must be in sync
-    across every cast worker's host mount.
+  - Nothing else for the library: episodes come from the same Postgres
+    `replay_episodes` table (docs/episode_store.md), reached with the same
+    `POSTGRES_*` env above. Followers rebuild scenes against the same
+    episode script the director used, and since every cast worker reads
+    one shared table that is now automatic — there is no per-host library
+    to keep in sync, and no `/data/replays` mount.
 - **All six coder-role workers in `docker-compose.yml` have all of the
-  above** (`LAYOUT_PRESET` override env, `POSTGRES_*`, and the
-  `/data/replays` mount): `worker-coder`, `worker-manager`,
+  above** (`LAYOUT_PRESET` override env and `POSTGRES_*`):
+  `worker-coder`, `worker-manager`,
   `worker-tester`, and the three A/B coding-backend workers
   (`worker-coder-native`, `worker-coder-opencode`, `worker-coder-aider`,
   overridden via `CODER_NATIVE_LAYOUT_PRESET` /
@@ -454,11 +456,13 @@ then a `replay_cue` per scene to `manager`, and finally `replay_end`
 - **Panes never consume Kafka.** All 4 new message types, like every
   existing one, are handled entirely in `app/agent.py`; `app/replay_pane.py`
   only ever reads local JSON relay files it polls, never a Kafka client.
-- **Episode resolution is unchanged: basename-only, inside
-  `REPLAY_LIBRARY`.** A `cast` payload can only choose *which workers*
-  join the show and *which speaker* each one voices — it can never
-  influence *which file* gets loaded. `replay_pane.resolve_episode` strips
-  path components before ever touching the filesystem, same as solo.
+- **Episode resolution is unchanged: basename-only, inside the library.**
+  A `cast` payload can only choose *which workers* join the show and
+  *which speaker* each one voices — it can never influence *which episode*
+  gets loaded. `replay_pane.resolve_episode` strips path components and
+  the `.json` suffix before the lookup, and the lookup itself is a
+  parameterized equality match on `replay_episodes.name`, so a payload can
+  only ever select an episode already in the library — same as solo.
 - A malformed follower request (missing `airing_id`/`episode`, or `cast`
   not a dict) is rejected by `perform_follower_request` with a stderr log
   and no show — never a crash.
@@ -519,6 +523,15 @@ Deployment requirements above).
 
 ## Changelog
 
+- **v1.2.0** (2026-08-16): No protocol change — `airing_id`, the `cast`
+  map and all four message types are byte-for-byte identical. The episode
+  library moved from the `/data/replays` bind mount into the Postgres
+  `replay_episodes` table (docs/episode_store.md), so a cast worker's
+  deployment requirements lost the mount and gained nothing: the
+  `POSTGRES_*` env every follower already needed for `load_airing` now
+  also reaches the library. Keeping the old filename stem as the episode
+  key means `episode` in an invite still resolves the same script on every
+  follower, with no per-host library to keep in sync.
 - **v1.1.0** (2026-07-20): Documented (no protocol change) how voice
   resolution actually works in a duet — the director's own
   `voice.speakers` map voices every cast member, never the cast worker's

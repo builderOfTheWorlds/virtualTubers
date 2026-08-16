@@ -4,7 +4,7 @@ Local lookup for every Postgres table in this project — what exists, what each
 
 Postgres is an external, pre-existing instance (not run via docker-compose) — see `docs/sql/README.md` and `scripts/install_db.ps1` for one-time setup. There is no ORM; all access is raw SQL via `psycopg2`.
 
-**Source of truth:** `docs/sql/02_create_tables.sql` mirrors the `CREATE_TABLE_SQL` constants that `services/message-logger/logger.py` and `services/log-shipper/shipper.py` each run on startup. There are three independent copies of the schema (the SQL file + two Python constants); if you change one, update all three. This doc is a fourth copy, kept in sync for humans — it is not authoritative.
+**Source of truth:** `docs/sql/02_create_tables.sql` mirrors the `CREATE_TABLE_SQL` constants that `services/message-logger/logger.py`, `services/log-shipper/shipper.py` and `app/episode_store.py` each run on startup. There are four independent copies of the schema (the SQL file + three Python constants); if you change one, update all four. This doc is a fifth copy, kept in sync for humans — it is not authoritative.
 
 ---
 
@@ -98,6 +98,34 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py`
 
 ---
 
+## `replay_episodes`
+
+**Owner:** `message-api` service via `app/episode_store.py`. `services/message-api/api.py` is the only writer (`POST /replays`, `DELETE /replays/{name}`) and also runs the `CREATE TABLE IF NOT EXISTS` — best-effort at import, retried on every `/replays` request until it succeeds, since unlike `messages`/`container_logs` no long-lived consumer owns this table. Read directly by `app/replay_pane.py` and `app/agent.py` on every worker.
+
+**Why it exists:** the Rerun Theater episode library (`docs/episode_store.md`). Episodes used to be JSON files that an operator hand-copied to the deploy host, bind-mounted read-only into every worker at `/data/replays`, with nothing validating them anywhere in the loop — a malformed or unredacted script was discovered only when it failed, or leaked, live on stream. They are now uploaded to `POST /replays`, validated (`docs/episode_validator.md`: shape → name → leak audit → dry-run render) and stored here; the mount is gone.
+
+| Column | Type | Constraints | Meaning |
+|---|---|---|---|
+| `name` | TEXT | PRIMARY KEY | Episode key — the canonical script stem (`script["source"]`), the same value the old filename had |
+| `script` | JSONB | NOT NULL | The whole episode dict: `source`, `project`, `session_id`, `date`, `events` |
+| `project` | TEXT | NOT NULL, DEFAULT `''` | Denormalized `script.project`, so listings don't read every script |
+| `session_id` | TEXT | NOT NULL, DEFAULT `''` | Denormalized `script.session_id` |
+| `episode_date` | TEXT | NOT NULL, DEFAULT `''` | Denormalized `script.date` (the session's own date string, not a timestamp) |
+| `event_count` | INTEGER | NOT NULL | `len(script["events"])` |
+| `byte_size` | INTEGER | NOT NULL | Size of the serialized script in UTF-8 bytes |
+| `uploaded_by` | TEXT | NOT NULL, DEFAULT `'operator'` | Free-text attribution for the upload |
+| `uploaded_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When the episode was uploaded; refreshed by an `?overwrite=true` re-upload |
+
+Indexes: `idx_replay_episodes_uploaded_at (uploaded_at DESC)`.
+
+Inserts use `ON CONFLICT (name) DO NOTHING` normally — `message-api` turns the resulting "no row written" into a `409` — and `ON CONFLICT (name) DO UPDATE` when the upload passes `?overwrite=true`.
+
+`name` deliberately keeps the exact string the old filename stem had, which is also what `voiced_narration.episode` above stores, so the narration reuse cache and the duet protocol kept working with no migration. There is no FK between the two tables (narration rows outlive a deleted episode).
+
+Defined in: `docs/sql/02_create_tables.sql`, `app/episode_store.py` (`CREATE_TABLE_SQL`). Prose: `docs/episode_store.md`, `docs/episode_validator.md`, `docs/message_api.md`, `docs/replay_pane.md`.
+
+---
+
 ## `container_logs`
 
 **Owner:** `log-shipper` service (`services/log-shipper/shipper.py`) — tails stdout/stderr of every container in this project's docker-compose stack (discovered via a read-only-mounted Docker socket) and inserts each line.
@@ -124,8 +152,8 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/log-shipper/shipper.py:17
 ## Keeping this in sync
 
 When adding or changing a table:
-1. Update the owning service's `CREATE_TABLE_SQL` constant (`message-logger` or `log-shipper`).
+1. Update the owning module's `CREATE_TABLE_SQL` constant (`message-logger`, `log-shipper`, or `app/episode_store.py`).
 2. Update `docs/sql/02_create_tables.sql` to match.
 3. Update this file.
 
-There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the three schema copies above — with one exception: `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.
+There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with one exception: `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.

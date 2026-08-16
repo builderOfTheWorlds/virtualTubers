@@ -72,10 +72,14 @@ demo side effects, no pipeline handoff.
  "payload": {"episode": "2026-07-02_04-27-00_6ecdde82", "speed": 1.5}}
 ```
 
-- `payload.episode` (str, required) — episode script name in the worker's
-  library (`/data/replays`, mounted from `./replays` on the deploy host;
-  `.json` suffix optional). Resolved basename-only — path components are
-  stripped, so only library episodes are reachable.
+- `payload.episode` (str, required) — episode key in the library, i.e. the
+  `name` column of the `replay_episodes` table the worker reads from
+  Postgres (`.json` suffix optional and stripped). Episodes get there by
+  being uploaded to `POST /replays` (docs/message_api.md), which validates
+  them first (docs/episode_validator.md) — there is no filesystem library
+  and no host file-sync step any more. Resolved basename-only and
+  character-restricted, so a payload can only ever select an episode that
+  is already in the library.
 - `payload.speed` (number, optional) — playback speed multiplier.
 - `payload.worker_name` (str, optional) — persona name override for the
   dialogue lines.
