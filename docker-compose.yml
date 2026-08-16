@@ -3,11 +3,13 @@ services:
   worker-coder:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${CODER_STREAM_KEY:-coder}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
       WORKER_ID: coder
@@ -71,11 +73,13 @@ services:
   worker-coder-native:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${CODER_NATIVE_STREAM_KEY:-coder-native}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 102
       WORKER_ID: coder-native
@@ -117,11 +121,13 @@ services:
   worker-coder-opencode:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${CODER_OPENCODE_STREAM_KEY:-coder-opencode}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 103
       WORKER_ID: coder-opencode
@@ -163,11 +169,13 @@ services:
   worker-coder-aider:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${CODER_AIDER_STREAM_KEY:-coder-aider}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 104
       WORKER_ID: coder-aider
@@ -209,11 +217,13 @@ services:
   worker-manager:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 100
       WORKER_ID: manager
@@ -247,11 +257,13 @@ services:
   worker-tester:
     image: vtube-worker:latest
     pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
-      LLM_BASE_URL: ${LLM_BASE_URL:-http://host-gateway:11434}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 101
       WORKER_ID: tester
@@ -377,17 +389,23 @@ services:
       - "8088:80"
     restart: unless-stopped
 
-  # ── Self-contained local infra for a standalone deployment (e.g. a
-  # side-by-side perf-test host with no dependency on another environment's
-  # shared Kafka/Postgres). Opt-in only: set COMPOSE_PROFILES=local-infra in
-  # .env to start these; without it they never start, so an external-broker
-  # deployment (e.g. pointing at Kafka/Postgres on the deploy host itself,
-  # as the d2000 stack does) is unaffected.
-  # Point .env at these by service name, not a host IP:
+  # ── Self-contained local infra for a standalone deployment. Two
+  # independent opt-in profiles, mix and match per what's actually external
+  # for a given deployment:
+  #   COMPOSE_PROFILES=local-infra     → bundled Kafka only
+  #   COMPOSE_PROFILES=local-postgres  → bundled Postgres only
+  #   COMPOSE_PROFILES=local-infra,local-postgres → both (fully standalone,
+  #     e.g. a side-by-side perf-test host with no dependency on another
+  #     environment's shared Kafka/Postgres)
+  # Without the relevant profile, that service never starts, so an
+  # external-broker/external-Postgres deployment (e.g. argyle: local Kafka,
+  # Postgres on mafober) only starts what it actually needs.
+  # Point .env at whichever of these you enable by service name, not a host
+  # IP:
   #   KAFKA_BOOTSTRAP_SERVERS=kafka:9092
   #   POSTGRES_HOST=postgres
   # No depends_on linking the workers/services to these on purpose — adding
-  # one would force this profile on every deployment. restart: unless-stopped
+  # one would force these profiles on every deployment. restart: unless-stopped
   # means the workers just crash-loop briefly on first boot until Kafka/
   # Postgres finish initializing, same self-healing behavior as any
   # transient external-Kafka hiccup today.
@@ -446,7 +464,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    profiles: ["local-infra"]
+    profiles: ["local-postgres"]
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
