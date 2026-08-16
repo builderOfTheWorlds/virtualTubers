@@ -33,9 +33,16 @@ RUN apt-get update && apt-get install -y \
 # stream even though every step upstream of playback works correctly.
 RUN usermod -aG pulse-access root
 
-# lsd (prettier ls with icons)
-RUN curl -sL https://github.com/lsd-rs/lsd/releases/download/v1.1.1/lsd-v1.1.1-x86_64-unknown-linux-gnu.tar.gz \
-    | tar -xz -C /usr/local/bin --strip-components=1 lsd-v1.1.1-x86_64-unknown-linux-gnu/lsd
+# lsd (prettier ls with icons) — arch-aware: TARGETARCH is set automatically
+# by BuildKit (amd64/arm64), lsd's release assets use x86_64/aarch64 triples.
+RUN set -eux; \
+    case "$(dpkg --print-architecture)" in \
+        amd64)  LSD_ARCH=x86_64-unknown-linux-gnu ;; \
+        arm64)  LSD_ARCH=aarch64-unknown-linux-gnu ;; \
+        *) echo "unsupported architecture for lsd: $(dpkg --print-architecture)" >&2; exit 1 ;; \
+    esac; \
+    curl -sL "https://github.com/lsd-rs/lsd/releases/download/v1.1.1/lsd-v1.1.1-${LSD_ARCH}.tar.gz" \
+    | tar -xz -C /usr/local/bin --strip-components=1 "lsd-v1.1.1-${LSD_ARCH}/lsd"
 
 # ── Coding backends (see docs/coding_backend.md) ──────────────────────────────
 # Node 18 (required by the OpenCode CLI) via NodeSource.
