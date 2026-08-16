@@ -1,0 +1,73 @@
+{
+  "to": "coder",
+  "type": "replay_request",
+  "payload": {
+    "episode": "sample",
+    "cast": {
+      "boss": "manager",
+      "coder": "coder",
+      "tester": "harry",
+      "coder-native": "hermione",
+      "coder-opencode": "ron",
+      "coder-aider": "dumbledore"
+    },
+    "narration": "reuse",
+    "scenes": [
+      {
+        "id": "introduction_harry",
+        "speaker": "harry",
+        "text": "Hey everyone! Welcome to my channel! Today we're diving deep into the magical world of Harry Potter and the Philosopher's Stone!"
+      },
+      {
+        "id": "harry_background",
+        "speaker": "harry",
+        "text": "I'm Harry Potter, and I've been living with my terrible relatives, the Dursleys, for my whole life. But when I found out I was a wizard, everything changed!"
+      },
+      {
+        "id": "hermione_introduction",
+        "speaker": "hermione",
+        "text": "Hello everyone! I'm Hermione Granger, and I love learning about magic! Harry and Ron have been my best friends since we started at Hogwarts."
+      },
+      {
+        "id": "ron_character",
+        "speaker": "ron",
+        "text": "Hey there! I'm Ron Weasley, and I'm from a big family of wizards. I've always been a bit nervous about magic, but Harry and Hermione have helped me get better!"
+      },
+      {
+        "id": "dumbledore_mystery",
+        "speaker": "dumbledore",
+        "text": "Ah, young ones, the Philosopher's Stone is a powerful artifact that can grant immortality. But it must be protected from those who would misuse its power."
+      },
+      {
+        "id": "harry_troll_incident",
+        "speaker": "harry",
+        "text": "One day, I found a troll in the girls' bathroom! I had to save Hermione and Ron from it. It was scary but I knew I had to be brave!"
+      },
+      {
+        "id": "hermione_problem_solving",
+        "speaker": "hermione",
+        "text": "Harry and I worked together to solve the puzzle of the Devil's Snare! We needed to relax or it would kill us faster."
+      },
+      {
+        "id": "ron_chess_game",
+        "speaker": "ron",
+        "text": "I played wizard's chess with Harry and Hermione! It was really challenging, but we had to sacrifice myself to let Harry check the king!"
+      },
+      {
+        "id": "harry_confrontation",
+        "speaker": "harry",
+        "text": "In the end, I had to face Professor Quirrell and Voldemort himself! I was scared, but I knew I had to protect the Stone."
+      },
+      {
+        "id": "dumbledore_resolution",
+        "speaker": "dumbledore",
+        "text": "Good work, Harry! The Stone has been destroyed, and Voldemort can no longer return. Your courage and sacrifice have saved us all."
+      },
+      {
+        "id": "final_thoughts",
+        "speaker": "harry",
+        "text": "What I've learned is that friendship, bravery, and love are the most powerful magic of all. Thanks for joining me on this journey through the magical world!"
+      }
+    ]
+  }
+}

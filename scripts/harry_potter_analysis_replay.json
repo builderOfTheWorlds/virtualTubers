@@ -1,0 +1,49 @@
+{
+  "to": "coder",
+  "type": "replay_request",
+  "payload": {
+    "episode": "sample",
+    "cast": {
+      "boss": "manager",
+      "coder": "coder"
+    },
+    "narration": "reuse",
+    "scenes": [
+      {
+        "id": "introduction",
+        "speaker": "coder",
+        "text": "Hey everyone! Welcome to my channel! Today we're diving deep into the magical world of Harry Potter and the Philosopher's Stone! I'm so excited to explore this incredible story with you!"
+      },
+      {
+        "id": "character_harry",
+        "speaker": "coder",
+        "text": "Let's start with the main character, Harry Potter! You know, what makes Harry so special is that he's not just some ordinary kid. He's got this incredible connection to magic and to his past."
+      },
+      {
+        "id": "friendship",
+        "speaker": "coder",
+        "text": "Now let's talk about Harry's friends - Ron and Hermione! This trio is absolutely incredible. They each bring something different to the team."
+      },
+      {
+        "id": "mystery_stone",
+        "speaker": "coder",
+        "text": "Okay, now let's talk about the main mystery - the Philosopher's Stone! This isn't just any ordinary stone. It can make you immortal and turn anything into gold!"
+      },
+      {
+        "id": "battle_darkness",
+        "speaker": "coder",
+        "text": "Now let's talk about the big bad - Voldemort! This is where the story gets really intense."
+      },
+      {
+        "id": "key_themes",
+        "speaker": "coder",
+        "text": "Let me share some of the most important lessons from this story. First, friendship is incredibly powerful. Harry and his friends face impossible odds together, and that's what saves them."
+      },
+      {
+        "id": "conclusion",
+        "speaker": "coder",
+        "text": "So, what did we learn? Harry Potter and the Philosopher's Stone isn't just about magic - it's about growing up, learning to be brave, and understanding that we're all connected by friendship and love."
+      }
+    ]
+  }
+}
