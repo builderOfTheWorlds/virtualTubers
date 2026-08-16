@@ -65,9 +65,10 @@ class PruneLogsRequest(BaseModel):
 # Rerun Theater episode library (docs/episode_store.md)
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 
-@app.post("/replays") def upload_replay(body: bytes,
-                                        name: Optional[str] = None,
-                                        overwrite: bool = False) -> dict
+@app.post("/replays") async def upload_replay(request: Request,
+                                              name: Optional[str] = None,
+                                              overwrite: bool = False) -> dict
+# body is read via `await request.body()`, not a Body(...) param — see Changelog v1.4.1
 @app.get("/replays") def list_replays() -> dict
 @app.get("/replays/{name}") def get_replay(name: str) -> dict
 @app.delete("/replays/{name}") def delete_replay(name: str) -> dict
@@ -226,3 +227,4 @@ curl -X DELETE http://localhost:8090/replays/sample
 - v1.2.0 (2026-07-09) — Added `/log-filter/{message_type}` status and `/log-filter/{message_type}/exclude`/`include` control endpoints, backed by `log_filter_control.LogFilterControl`.
 - v1.3.0 (2026-07-12) — Added `POST /logs/prune`, a manual time-range delete of `container_logs` rows backed by the new `app/log_prune.py`, complementing log-shipper's automatic age-based retention prune.
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
+- v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.

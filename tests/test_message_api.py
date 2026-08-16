@@ -199,6 +199,31 @@ def test_upload_replay_success_stores_and_returns_info(client, monkeypatch):
     assert save_calls[0][2] is False
 
 
+def test_upload_replay_success_with_explicit_json_content_type(client, monkeypatch):
+    """Regression test: the README and scripts/build_replay_library.py both
+    document `curl -H 'Content-Type: application/json' --data-binary @file`.
+    A `bytes = Body(..., media_type=...)` param can get JSON-decoded before
+    validation on some fastapi/starlette versions, turning that exact,
+    documented call into a 422. Every other test in this file posts with no
+    Content-Type header and would not have caught that."""
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+    monkeypatch.setattr(
+        api.episode_store, "save_episode", lambda name, script, overwrite=False: True)
+
+    resp = client.post(
+        "/replays",
+        content=json.dumps(VALID_SCRIPT).encode(),
+        headers={"Content-Type": "application/json"},
+    )
+
+    assert resp.status_code == 200
+    assert resp.json()["name"] == "demo-ep"
+
+
 def test_upload_replay_overwrite_query_param_passed_through(client, monkeypatch):
     monkeypatch.setattr(api.episode_store, "available", lambda: True)
     monkeypatch.setattr(api, "_schema_ready", True)

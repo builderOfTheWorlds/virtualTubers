@@ -24,7 +24,7 @@ from typing import Optional
 
 import psycopg2
 import redis
-from fastapi import Body, FastAPI, HTTPException, Path, Query
+from fastapi import FastAPI, HTTPException, Path, Query, Request
 from pydantic import BaseModel
 
 import episode_store
@@ -191,8 +191,8 @@ def _safe_name(name: str) -> str:
 
 
 @app.post("/replays")
-def upload_replay(
-    body: bytes = Body(..., media_type="application/json"),
+async def upload_replay(
+    request: Request,
     name: Optional[str] = Query(
         None, description="Override the episode key; defaults to the script's 'source'"),
     overwrite: bool = Query(
@@ -200,8 +200,19 @@ def upload_replay(
 ):
     """Validate a pre-built episode script (scripts/build_replay_library.py)
     and store it in the library. The body is the raw episode JSON, so
-    `curl --data-binary @episode.json` uploads one directly."""
+    `curl --data-binary @episode.json` uploads one directly.
+
+    Reads the body via `request.body()` rather than a `bytes = Body(...)`
+    param on purpose: on fastapi>=0.14x, a `bytes`-typed Body param gets
+    JSON-decoded before its own type validator runs whenever the client's
+    Content-Type is application/json — which turned the documented
+    `-H 'Content-Type: application/json' --data-binary @file` upload into a
+    422, regardless of any `media_type=` hint passed to Body(). Reading
+    straight from the ASGI request bypasses that per-field coercion
+    entirely and always returns the raw bytes; json.loads() below is what
+    actually parses it."""
     _require_store()
+    body = await request.body()
     if len(body) > MAX_UPLOAD_BYTES:
         raise HTTPException(
             status_code=413,

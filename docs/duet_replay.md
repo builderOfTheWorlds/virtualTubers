@@ -393,9 +393,9 @@ which cached scenes get copied into a follower's workdir). Practically:
 
 - **Worker image rebuild.** Duet replay ships in `app/replay.py`,
   `app/replay_pane.py`, and `app/agent.py` — a normal code-change
-  rebuild + redeploy (see the README's
-  [Deploy / redeploy](../README.md#deploy--redeploy-after-a-code-change)
-  section). It introduces no new Python dependency: `app/narration_store.py`
+  rebuild + redeploy (see
+  [Deploy / redeploy](deployment.md#deploy--redeploy-after-a-code-change)
+  in docs/deployment.md). It introduces no new Python dependency: `app/narration_store.py`
   and `psycopg2-binary` were already added when narration caching landed
   (`docs/narration_store.md`).
 - **Every cast worker (director AND every follower) needs:**

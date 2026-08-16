@@ -57,8 +57,8 @@ editor pane instead.
 **Still required before worker4/5/6 will actually pass**, since this was
 a compose-file change: rebuild `vtube-worker:latest` (no new dependency,
 same image as before) and redeploy the stack — same two-step deploy as
-any other compose change (README's
-[Deploy / redeploy](../README.md#deploy--redeploy-after-a-code-change)).
+any other compose change (docs/deployment.md's
+[Deploy / redeploy](../docs/deployment.md#deploy--redeploy-after-a-code-change)).
 Until that redeploy happens, those three workers still boot with the
 old image/env and will invite-then-timeout exactly as before
 (`reason: "ready_timeout"`, `REPLAY_READY_TIMEOUT_S`, per

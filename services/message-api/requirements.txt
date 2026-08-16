@@ -1,5 +1,13 @@
 kafka-python>=2.0.2
-fastapi>=0.110
+# Pinned exact, not >=: an unpinned fastapi>=0.110 drifted onto 0.141.1,
+# where a `bytes`-typed Body(...) param gets JSON-decoded before its own
+# type validator runs whenever Content-Type is application/json — that
+# broke POST /replays for any client that (correctly, per this file's own
+# docs) sends that header. api.py now reads the body via request.body()
+# instead, which doesn't depend on this fastapi behavior either way, but
+# pin exact so a future bump is a deliberate choice, not silent drift.
+fastapi==0.141.1
+starlette==1.6.0
 uvicorn>=0.29
 pyyaml>=6.0
 redis>=5.0
