@@ -51,16 +51,16 @@ services:
       # synthesizes locally (single resident model per worker process).
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/coder.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo:/data/repo
       # "Rerun Theater" episode library (docs/replay_pane.md) — parsed,
       # redacted session scripts synced onto the host; :ro because replays
       # only ever read them.
-      - ./replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
       # Piper .onnx voice models for spoken replay narration
       # (docs/tts_client.md; download with scripts/download_voices.py)
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -104,13 +104,13 @@ services:
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/coder-native.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/coder-native.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-native:/data/repo
       # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
       # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -152,13 +152,13 @@ services:
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/coder-opencode.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-opencode:/data/repo
       # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
       # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -200,13 +200,13 @@ services:
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/coder-aider.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/coder-aider.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
       - repo-aider:/data/repo
       # "Rerun Theater" episode library (docs/replay_pane.md)
-      - ./replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
       # Piper .onnx voice models for spoken replay narration
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -243,10 +243,10 @@ services:
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/manager.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
-      - ./replays:/data/replays:ro
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -283,10 +283,10 @@ services:
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ./config/workers/tester.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
-      - ./replays:/data/replays:ro
-      - ./voices:/data/voices:ro
+      - ${REPO_ROOT:-.}/replays:/data/replays:ro
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
       # Read-only view of every coder's workspace, at the conventional
       # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
       # to a tmpdir before running pytest — these must stay :ro).
