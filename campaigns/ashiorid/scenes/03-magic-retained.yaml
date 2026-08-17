@@ -1,0 +1,25 @@
+id: magic-retained
+title: The Well That Held
+enter_narration: The seal takes. The last well holds.
+
+beats:
+  - type: narration
+    speaker: gm
+    text: >-
+      The well holds. The light in it drops to almost nothing and then stops
+      dropping, and every mage alive feels the floor of the world stop moving
+      under them.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      So magic survives into your age. Thin, rationed, watched over by people
+      who remember why. A sorcerer is rare. A sorcerer is also possible.
+
+  - type: dialogue
+    speaker: helen
+    text: >-
+      That's why it comes so easily to me and so hard to everyone else. There
+      was almost none left, and somehow I got a full share of it.
+
+default_next: letos-manor

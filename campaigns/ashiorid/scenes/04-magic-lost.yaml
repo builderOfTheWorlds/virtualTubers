@@ -1,0 +1,31 @@
+id: magic-lost
+title: The Well That Emptied
+enter_narration: The seal fails. The last well runs dry.
+
+beats:
+  - type: narration
+    speaker: gm
+    text: >-
+      The seal fails. The last well drains in the space of a held breath, and
+      the world goes quiet in a way that has no sound to it.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      So magic dies out of your age. What remains is inherited, hidden, and
+      hunted. A sorcerer is not rare. A sorcerer is impossible, and you are
+      looking at one.
+
+  - type: dialogue
+    speaker: helen
+    text: >-
+      Then what I can do shouldn't exist. Nobody ever explained that to me.
+      Nobody ever tried.
+
+  - type: dialogue
+    speaker: carl
+    text: >-
+      In a world with no magic, someone kept a working sorcerer alive for
+      twenty-odd years. That took planning.
+
+default_next: letos-manor

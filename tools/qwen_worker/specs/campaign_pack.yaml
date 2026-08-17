@@ -1,0 +1,166 @@
+task_id: campaign_pack
+
+goal: |
+  Implement the campaign pack loader for the virtualTubers campaign runtime.
+
+  A "campaign pack" is a directory on disk describing one show:
+
+      campaigns/<name>/
+        campaign.yaml     # metadata: name, title, genre, start_scene, gm,
+                          # players, primitives, theme
+        cast/<id>.yaml    # one file per cast member (personas)
+        scenes/*.yaml     # one file per scene-graph node
+        lore/             # optional reference material
+
+  Write a loader that turns that directory into typed objects. This module does
+  STRUCTURAL loading only — it must not check semantics such as whether a
+  branch's `next` points at a real scene, whether a beat's `primitive` is
+  registered, or whether a beat's `speaker` is in the cast. Those checks belong
+  to a separate campaign.validator module and must NOT be implemented here.
+
+target_files:
+  - app/campaign/__init__.py
+  - app/campaign/pack.py
+
+test_files:
+  - tests/test_campaign_pack.py
+
+context_files:
+  - app/episode_validator.py
+  - app/message_bus.py
+
+interface: |
+  app/campaign/__init__.py
+      May be empty (or a one-line docstring). It only makes `campaign` a package
+      so `from campaign.pack import ...` resolves — app/ is already on sys.path.
+
+  app/campaign/pack.py must export exactly these names:
+
+      class PackError(ValueError)
+          Raised for every structural problem. No other exception type may
+          escape load_pack() for a malformed pack — no KeyError, no
+          AttributeError, no yaml.YAMLError, no OSError.
+
+      @dataclass Beat
+          kind: str                  # from the YAML key `type` (renamed to avoid
+                                     # shadowing the builtin); REQUIRED per beat
+          speaker: str | None = None
+          text: str | None = None
+          primitive: str | None = None
+          params: dict = {}          # default_factory=dict
+          improv: bool = False
+          show: str | None = None
+
+      @dataclass Branch
+          id: str
+          next: str
+          when: dict = {}            # default_factory=dict; MUST be declared
+                                     # last — a field with a default cannot
+                                     # precede one without, or the dataclass
+                                     # raises TypeError at import time
+
+      @dataclass Scene
+          id: str
+          title: str | None = None
+          enter_narration: str | None = None
+          beats: list[Beat] = []     # default_factory=list
+          branches: list[Branch] = []
+          default_next: str | None = None
+
+      @dataclass CastMember
+          id: str
+          name: str                  # REQUIRED in the YAML
+          role: str                  # "gm" or "player", assigned by the loader
+                                     # from campaign.yaml's gm/players keys
+          archetype: str | None = None
+          system_prompt: str | None = None
+          voice: str | None = None
+          avatar: str | None = None
+
+      @dataclass CampaignPack
+          name: str
+          title: str | None
+          genre: str | None
+          start_scene: str
+          gm_id: str
+          player_ids: list[str]
+          primitives: list[str]
+          theme: dict
+          cast: dict[str, CastMember]
+          scenes: dict[str, Scene]
+          root: pathlib.Path
+          lore_dir: pathlib.Path | None
+
+          def scene(self, scene_id) -> Scene
+              Returns the scene, or raises PackError naming the missing id.
+
+          def member(self, member_id) -> CastMember
+              Returns the cast member, or raises PackError naming the missing id.
+
+      def load_pack(path) -> CampaignPack
+          Accepts a str or pathlib.Path.
+
+notes: |
+  Required keys in campaign.yaml: `name`, `start_scene`, `gm`. A missing one
+  raises PackError whose message CONTAINS THE MISSING KEY NAME (the tests match
+  on it). `players` defaults to [], `primitives` to [], `theme` to {}, and
+  `title`/`genre` to None.
+
+  Cast loading: iterate the ids from campaign.yaml — `gm` first, then `players`
+  in their declared order. Each id must have a matching `cast/<id>.yaml`; a
+  declared member with no file raises PackError NAMING THAT ID. Every cast file
+  must define `name`; if absent, raise PackError whose message contains "name".
+  `role` is set by the loader: "gm" for the gm id, "player" for each player id.
+  `player_ids` must preserve campaign.yaml's declared order. Do not auto-discover
+  cast files that were not declared.
+
+  Scene loading: read every *.yaml (and *.yml) file in scenes/, sorted by
+  filename for determinism. Each file is one scene and must define `id`; if
+  absent, raise PackError whose message contains "id". Two scenes sharing an id
+  raise PackError naming the duplicated id. Index scenes by id in a dict.
+
+  Every beat must define `type`; if absent, raise PackError whose message
+  contains "type". Map the YAML key `type` onto the dataclass field `kind`.
+
+  After loading, verify `start_scene` exists among the scenes; if not, raise
+  PackError whose message contains the missing scene id.
+
+  A missing pack directory, a missing campaign.yaml, or a missing scenes/
+  directory each raise PackError — messages must contain "campaign.yaml" and
+  "scenes" respectively for those two cases. campaign.yaml that parses to a
+  non-mapping (e.g. a list) is also a PackError.
+
+  lore_dir is the `lore/` path if that directory exists, else None.
+
+  Use `yaml.safe_load`, never `yaml.load`. Wrap every file read and YAML parse
+  so OSError and yaml.YAMLError surface as PackError.
+
+  Branches: `id` and `next` are both REQUIRED. A branch missing either raises
+  PackError whose message contains the missing key name. Never let a raw
+  KeyError escape — every dict access on parsed YAML must be guarded.
+
+  A YAML key written with no value parses as None, NOT as an empty container.
+  So `params:`, `when:`, `beats:`, `branches:`, `players:`, `primitives:` and
+  `theme:` must each collapse to their documented empty default when the parsed
+  value is None. `data.get("params", {})` is NOT sufficient — it returns None
+  when the key is present but empty. Use `data.get("params") or {}`.
+
+  `beats` and `branches` must each be a list when present and non-None; anything
+  else (e.g. a bare string) raises PackError whose message contains the field
+  name. Do not iterate a value you have not type-checked — iterating a string
+  silently yields characters.
+
+  `player_ids` must be a NEW list (`list(players)`), never an alias of the
+  parsed YAML list, so mutating the pack cannot corrupt a re-read.
+
+  Structure the cast loading as ONE helper (e.g.
+  `_load_cast_member(cast_dir, member_id, role)`) called for the GM and for each
+  player. Do not duplicate the read/parse/validate/construct block per role —
+  the two paths differ only in the `role` string.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, a DEBUG line per file loaded, and an INFO
+  line summarising the loaded pack (scene count, cast count). Use lazy
+  %-formatting (`log.debug("loading %s", path)`), never f-strings, in logging
+  calls. Never log at WARNING or above for an error you are already raising.
+  Import nothing you do not use.

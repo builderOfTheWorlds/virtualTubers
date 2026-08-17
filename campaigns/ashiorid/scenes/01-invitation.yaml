@@ -1,0 +1,60 @@
+id: invitation
+title: The Invitation
+enter_narration: >-
+  Ten thousand years to the day since the Event, and four strangers each
+  receive the same card.
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    text: >-
+      The card is heavier than paper has any right to be. Black ink, pressed
+      deep enough to read with your thumb.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "The Duke Sorensen Leto requests the pleasure of your company at the Ten
+      Thousandth Anniversary of the Event. R.S.V.P. to Ashiorid."
+
+  - type: narration
+    speaker: gm
+    text: >-
+      No return address. No courier anyone remembers seeing. It was simply
+      there, the way a bruise is simply there in the morning.
+
+  - type: dialogue
+    speaker: buffalo
+    text: >-
+      Ten thousand years. Somebody's counting very carefully for a thing nobody
+      will name out loud.
+
+  - type: dialogue
+    speaker: carl
+    text: >-
+      Four invitations. Four people who have never met. That's not hospitality,
+      that's a shortlist.
+
+  - type: dialogue
+    speaker: drokki
+    text: >-
+      Look at the pressing on this. That's not a printer's work, that's a
+      smith's. Somebody struck a die for a party invitation.
+
+  - type: dialogue
+    speaker: helen
+    improv: true
+    text: >-
+      Helen turns the card over and finds she already knows the shape of the
+      seal, without ever having seen it before.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Before we go to the manor, understand what the Event was. Everyone in
+      this world has an opinion. Almost nobody was there.
+
+default_next: the-age-of-war

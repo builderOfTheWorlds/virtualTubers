@@ -1,0 +1,180 @@
+task_id: campaign_cli
+
+goal: |
+  Implement the campaign command line — the operator's surface and this
+  project's main verification tool.
+
+  It plays a campaign pack locally with NO Kafka, NO tmux, NO docker and NO
+  TTS, so a writer can watch a pack in a terminal before any of the streaming
+  stack exists. It also validates a pack and lists its scenes.
+
+  It COMPOSES pieces that already exist and are already tested. Do not
+  reimplement any of them, and do not re-derive anything they already do:
+
+    - campaign.pack.load_pack        — reading the pack off disk
+    - campaign.validator.validate_pack — every semantic check
+    - campaign.renderer.SceneRenderer  — all display
+    - campaign.runtime.CampaignRuntime — position, advancing, persistence
+    - campaign.scene_graph selectors   — branch choice
+
+  This module is glue: parse arguments, build those objects, print the result,
+  return an exit code. It should be short.
+
+target_files:
+  - app/campaign/cli.py
+
+test_files:
+  - tests/test_campaign_cli.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/campaign/validator.py
+  - app/campaign/renderer.py
+  - app/campaign/runtime.py
+  - app/campaign/scene_graph.py
+
+interface: |
+  app/campaign/cli.py must export:
+
+      def main(argv=None, out=None) -> int
+
+          argv  list of arguments WITHOUT the program name; None means read
+                sys.argv[1:]
+          out   a writable stream; None means sys.stdout
+
+          Returns a process exit code. It must RETURN the code, never call
+          sys.exit() itself — the tests call main() directly and a raised
+          SystemExit fails them. The sole exception is argparse's own usage
+          error for a missing required argument, which is allowed to raise
+          SystemExit (a test asserts exactly that).
+
+      def build_parser() -> argparse.ArgumentParser
+
+  And end with the usual guard so the file is runnable:
+
+      if __name__ == "__main__":
+          sys.exit(main())
+
+  ARGUMENTS:
+
+      --pack PATH          REQUIRED. Path to the campaign pack directory.
+      --scene ID           Start at this scene instead of the pack's start_scene.
+      --validate           Validate the pack, print the report, do not play.
+      --list-scenes        Print every scene id, do not play.
+      --dry-run            Play with no side effects (the only play mode that
+                           exists today — accept the flag and treat playing as
+                           a dry run whether or not it is passed).
+      --force-branch ID    Use ForcedSelector(ID) for every branch.
+      --seed N             Use WeightedRandomSelector(seed=N) instead of the
+                           default ScriptedSelector. Integer.
+      --max-scenes N       Scene budget passed to runtime.run(). Default 100.
+      --state-file PATH    Save the final position here after playing.
+      --resume             Load the position from --state-file before playing.
+      --no-pace            Disable all typing delays (Pacer(enabled=False)).
+      --no-color           Disable ANSI colour (Palette(enabled=False)).
+      -v / --verbose       Turn on DEBUG logging to stderr.
+
+  EXIT CODES:
+      0  the show played, or the pack validated, or scenes were listed
+      1  any failure the operator caused: pack will not load, pack fails
+         validation, --scene names a scene that does not exist, --resume with
+         no --state-file, a state file that will not load
+
+notes: |
+  ORDER OF OPERATIONS in main():
+
+    1. Parse args.
+    2. Configure logging (DEBUG when -v, else WARNING) to STDERR, never to
+       `out` — `out` carries the show, and a test asserts the show's exact
+       text appears there.
+    3. Load the pack with load_pack(args.pack).
+    4. ALWAYS validate, even when playing. A pack with a dangling branch must
+       be rejected BEFORE a single line is performed — a test asserts no
+       dialogue reaches `out` for a broken pack. Print errors and return 1.
+
+       A pack that validates CLEANLY prints NOTHING here. The success verdict
+       ("ok") belongs to --validate alone: writing it on every invocation puts
+       a status line in front of the cold open, and a test asserts the very
+       first line of a dry run is the opening narration. Likewise --list-scenes
+       prints scene ids and nothing else. Report success only in the branch the
+       operator actually asked for.
+    5. --validate: print the report and return. --list-scenes: print the ids
+       and return. Neither plays anything.
+
+       By the time either of these branches runs, the pack is already known to
+       be valid — step 4 returned 1 otherwise. So --validate has warnings and a
+       success line to print, and NO errors: do not loop over report.errors
+       here, it is dead code that can only ever print nothing.
+    6. Otherwise build renderer + runtime and play.
+
+  EVERY expected failure must be reported as a readable one-line message
+  written to `out`, followed by `return 1`. No EXPECTED failure may escape
+  main() as a traceback: wrap the pack load in `except PackError`, the state
+  load in `except CampaignRuntimeError`, and the play in `except
+  (RendererError, CampaignRuntimeError)`.
+
+  CATCH THOSE NAMED TYPES AND NOTHING WIDER. Never write `except Exception`,
+  and never write `except (CampaignRuntimeError, Exception)` — the second
+  member makes the first meaningless. An UNEXPECTED error is a bug in this
+  program, and a bug must reach the operator as a traceback. If it is caught
+  and printed as "ERROR: ..." with exit 1, it becomes indistinguishable from a
+  dangling branch or a typo in their YAML, and they will spend the evening
+  debugging a pack that was fine. A test asserts an unexpected exception
+  propagates out of main(). The message must contain the offending value — the
+  bad path, the bad scene id, the dangling branch target — because that string
+  is what the tests match on.
+
+  VALIDATION OUTPUT: print each error on its own line and each warning on its
+  own line, both containing the text the validator produced verbatim (the
+  tests match on scene ids and branch targets appearing in `out`). Warnings do
+  NOT fail: a pack with an unreachable scene still returns 0, and the warning
+  text still has to reach `out`. On success print a short line containing the
+  word "ok" or "valid".
+
+  THE RENDERER for a dry run is built with ONLY these arguments:
+
+      SceneRenderer(pack, out=out, pacer=pacer, palette=palette)
+
+  Pass NO tts, NO state_path, NO audio_player, NO pane_control, NO improviser.
+  Those channels are what make a dry run silent and side-effect-free, and a
+  test asserts no avatar state file is created.
+
+  Build the pacer as Pacer(enabled=False) when --no-pace, else Pacer(), and
+  the palette as Palette(enabled=False) when --no-color, else Palette().
+  Import all three from their own modules: Pacer and Palette come from
+  `replay`, SceneRenderer from `campaign.renderer`.
+
+  SELECTOR: --force-branch wins over --seed. Build ForcedSelector(value) for
+  --force-branch, WeightedRandomSelector(seed=value) for --seed, and otherwise
+  pass None so the runtime and graph use their own ScriptedSelector default.
+  A forced branch id that a given scene does not have is NOT an error —
+  ForcedSelector already falls back to scripted matching — so never validate
+  it against the pack.
+
+  --scene: set runtime.state.scene_id AFTER constructing the runtime. Check the
+  id is in pack.scenes yourself first and return 1 with the bad id in the
+  message if not; do not let a KeyError or PackError escape.
+
+  --resume: call runtime.load() BEFORE applying --scene. With --resume and no
+  --state-file, print a message containing the word "state" and return 1.
+
+  --state-file without --resume still SAVES: after a successful play, call
+  runtime.save() whenever a state file was given. Save after playing, not
+  before.
+
+  PLAYING is one call: runtime.run(max_scenes=args.max_scenes). The runtime
+  already handles the budget, the branches and the history — do not write your
+  own loop over scenes, and do not call play_scene()/advance() directly.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, DEBUG on the parsed arguments and the
+  pack loaded, INFO on a completed show, ERROR in each failure branch, lazy
+  %-formatting (`log.debug("x %s", y)`) and never f-strings in logging calls.
+  Remember logging goes to stderr; operator-facing text goes to `out`.
+
+  Write to `out` with `out.write(...)` and include your own trailing newlines —
+  `out` is a plain stream, not print()'s target. Do not call print() without
+  file=out anywhere.
+
+  Import nothing you do not use. Use builtin generics (`list[str]`, `dict`,
+  `str | None`) and import nothing from `typing`.

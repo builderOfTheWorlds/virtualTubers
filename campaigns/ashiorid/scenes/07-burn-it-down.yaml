@@ -1,0 +1,45 @@
+id: burn-it-down
+title: Burn It Down
+enter_narration: >-
+  The hold does not break in time, and the manor starts to come down around
+  the four of you.
+
+beats:
+  - type: narration
+    speaker: gm
+    text: >-
+      The spell holds you a moment too long. By the time your hands are your
+      own again the hall is full of smoke and the ceiling has begun to speak.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Of three hundred guests, most do not reach a door. You will remember
+      the sound of that for the rest of the campaign, and so will I.
+
+  - type: action
+    speaker: drokki
+    primitive: roll_check
+    params:
+      skill: athletics
+      dc: 14
+
+  - type: dialogue
+    speaker: drokki
+    text: >-
+      Stone's holding, timber isn't. Follow the stone. Down, not out.
+
+  - type: action
+    speaker: carl
+    primitive: move_to
+    params:
+      destination: the servants' stair
+      manner: crawling under the smoke
+
+  - type: narration
+    speaker: gm
+    text: >-
+      At the bottom of the servants' stair, kneeling over a body he has carried
+      down here alone, is the old butler.
+
+default_next: grovley-revelation

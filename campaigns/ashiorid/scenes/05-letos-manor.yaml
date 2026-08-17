@@ -1,0 +1,68 @@
+id: letos-manor
+title: Leto's Manor
+enter_narration: >-
+  The manor of Duke Sorensen Leto the Third, lit for a party ten thousand years
+  in the making.
+
+beats:
+  - type: pane
+    show: party
+
+  - type: narration
+    speaker: gm
+    text: >-
+      The manor sits on a hill with its windows lit end to end, and the noise
+      of it reaches you before the gate does.
+
+  - type: action
+    speaker: buffalo
+    primitive: move_to
+    params:
+      destination: the great hall
+      manner: unhurried
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Inside there is more food than the four of you have seen in a year, and
+      perhaps three hundred guests, none of whom can tell you how they were
+      invited either.
+
+  - type: dialogue
+    speaker: drokki
+    text: >-
+      Hinges hand-cut. Floor's laid without a nail showing. Whoever built this
+      house was in no hurry at all, and that costs more than gold does.
+
+  - type: action
+    speaker: carl
+    primitive: search
+    params:
+      target: the great hall
+      detail: exits, and who is standing near them
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Two doors, both attended. A staircase up. No windows on the ground floor
+      that a person could pass through. Carl counts it and says nothing.
+
+  - type: dialogue
+    speaker: buffalo
+    text: >-
+      Three hundred people in a room and not one of them knows why. I've
+      walked into an ambush with better odds.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      An old man in a butler's coat crosses the hall toward you, and he has
+      been looking at the four of you specifically for some time.
+
+  - type: dialogue
+    speaker: helen
+    improv: true
+    text: >-
+      Helen asks the butler how the Duke knew her name.
+
+default_next: party-attack

@@ -1,0 +1,140 @@
+task_id: campaign_scene_graph
+
+goal: |
+  Implement the scene graph — how a campaign decides what happens next.
+
+  A pack's scenes form a directed graph. Each scene may declare `branches` (a
+  conditional edge, `Branch.when` matched against a runtime context) and a
+  `default_next` (the unconditional fallback edge). This module walks that graph.
+
+  The BranchSelector interface is the point of the module. Choosing an edge is
+  deliberately factored out so that a future ChatVoteSelector — the audience
+  voting on what the party does — drops in without the runtime changing. Ship
+  three implementations now: scripted (deterministic, the default), forced (the
+  --force-branch CLI flag), and weighted random (variety between runs).
+
+  Cycles are EXPECTED. The show's premise is a weekly time loop, so a scene
+  pointing back at an earlier one is correct content, not a bug. Traversal is
+  therefore bounded by a step budget; never add cycle detection and never refuse
+  to walk a cyclic graph.
+
+target_files:
+  - app/campaign/scene_graph.py
+
+test_files:
+  - tests/test_campaign_scene_graph.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/campaign/validator.py
+
+interface: |
+  app/campaign/scene_graph.py must export exactly these names:
+
+      class SceneGraphError(ValueError)
+          Raised for an unknown scene id, an edge pointing at a scene that does
+          not exist, or a selector naming a branch the scene does not have.
+
+      class BranchSelector
+          The pluggable seam. Base class with one method:
+
+          def select(self, scene, branches, context) -> str | None
+              `branches` is the scene's non-empty list of Branch objects,
+              `context` a dict of whatever the show knows. Return the id of the
+              chosen branch, or None to abstain (the caller then uses
+              default_next). The base implementation must raise
+              NotImplementedError — subclasses are the point.
+
+      class ScriptedSelector(BranchSelector)
+          Deterministic. Returns the FIRST branch whose `when` is satisfied by
+          the context, or None when none is. This is SceneGraph's default.
+
+      class ForcedSelector(BranchSelector)
+          def __init__(self, branch_id)
+          Returns branch_id when the scene actually has a branch with that id;
+          otherwise defers by delegating to ScriptedSelector's behaviour, so
+          forcing "failure" on a scene with no "failure" branch plays normally.
+
+      class WeightedRandomSelector(BranchSelector)
+          def __init__(self, seed=None)
+          Picks among the branches at random, weighted by `branch.when["weight"]`
+          (default 1 when absent). Holds its OWN random.Random(seed) instance —
+          never touch the module-level `random` functions, because a seeded show
+          must not be perturbed by unrelated code drawing from global state.
+          A branch with weight 0 is never chosen. If every weight is 0, abstain
+          by returning None.
+
+      class SceneGraph
+          def __init__(self, pack, selector=None)
+              `selector` defaults to a ScriptedSelector. Raises SceneGraphError
+              naming the start scene if pack.start_scene is not among the scenes.
+
+          @property
+          def start(self) -> Scene
+
+          def successors(self, scene_id) -> list[str]
+              Every scene id this scene can lead to — branch targets plus
+              default_next — DEDUPLICATED, preserving first-seen order. Unknown
+              scene_id raises SceneGraphError naming it. A scene with no edges
+              returns [].
+
+          def next_scene_id(self, scene_id, context=None, selector=None) -> str | None
+              Resolves one step. Returns None when the scene is terminal.
+
+          def walk(self, start=None, context=None, selector=None, max_steps=1000)
+              A LAZY iterator (a generator) yielding Scene objects, beginning at
+              `start` (default pack.start_scene) and following next_scene_id
+              until a scene is terminal or `max_steps` scenes have been yielded.
+
+notes: |
+  RESOLUTION ORDER for next_scene_id — follow exactly:
+
+    1. Look up the scene; unknown id -> SceneGraphError naming it.
+    2. If the scene has NO branches, skip the selector entirely (a test asserts
+       a selector that raises is never called for such a scene) and go to 4.
+    3. Call the selector. If it returns a branch id, that branch must exist on
+       this scene or SceneGraphError naming the returned id. Take its `next`.
+       If it returns None, fall through to 4.
+    4. Use scene.default_next. If that is None, return None — terminal scene.
+    5. Whatever id step 3 or 4 produced must exist in pack.scenes, or
+       SceneGraphError naming it.
+
+  `context=None` means an empty dict. Do not mutate the caller's context.
+
+  CONDITION MATCHING (ScriptedSelector): a branch matches when every key/value
+  pair in `branch.when` is present and equal in the context. An EMPTY `when`
+  matches unconditionally.
+
+  "weight" IS A RESERVED KEY inside `when`. It configures WeightedRandomSelector
+  and must be IGNORED by ScriptedSelector's condition matching — a branch with
+  `when={"weight": 5}` is an unconditional branch, not one requiring a context
+  with weight 5. Define the reserved name as a module-level constant
+  (e.g. `WEIGHT_KEY = "weight"`) and reference it in both selectors rather than
+  writing the literal twice.
+
+  `successors` deduplicates: FORK's opening scene branches to "victory" and
+  "defeat" and ALSO has `default_next: victory`, so "victory" appears once.
+  Preserve first-seen order rather than sorting.
+
+  `walk` must be a generator so an enormous max_steps costs nothing until
+  iterated — a test takes only the first item with max_steps=10_000_000. Yield
+  the starting scene FIRST, then each subsequent scene. max_steps counts scenes
+  YIELDED, so max_steps=5 on a self-looping scene yields exactly 5.
+
+  Validate `start` the same way as any scene id — walking from an unknown scene
+  raises SceneGraphError naming it. Because walk is a generator, that error
+  surfaces on first iteration, which is what the test expects.
+
+  This module does NOT re-validate the pack — campaign.validator already reports
+  dangling edges as a batch. SceneGraph raises only when it actually trips over
+  a bad edge while traversing.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, a DEBUG line when a branch is selected and
+  when a step resolves, lazy %-formatting (`log.debug("x %s", y)`) and never
+  f-strings in logging calls. Never log at WARNING or above for an error you are
+  already raising.
+
+  Import nothing you do not use. Use builtin generics (`list[str]`, `dict`) and
+  import nothing from `typing`. Import `Scene`/`Branch` from campaign.pack only
+  if you actually reference them.

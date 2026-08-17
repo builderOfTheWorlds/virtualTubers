@@ -47,3 +47,5 @@ voices/
 .DS_Store
 Thumbs.db
 /.env
+# Local-model worker staging output (tools/qwen_worker)
+.qwen_staging/

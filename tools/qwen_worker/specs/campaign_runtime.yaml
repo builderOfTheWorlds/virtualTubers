@@ -1,0 +1,213 @@
+task_id: campaign_runtime
+
+goal: |
+  Implement CampaignRuntime — the object that holds a *position* in a running
+  show and drives it forward.
+
+  It owns four things and nothing else:
+
+    - where the show currently is (which scene),
+    - what the show knows so far (the context dict branches key off),
+    - what has already played (history) and which pass through the loop,
+    - the ability to write that position to disk and read it back.
+
+  It COMPOSES pieces that already exist and are already tested. Do not
+  reimplement any of them:
+
+    - campaign.scene_graph.SceneGraph — all branch resolution
+    - campaign.renderer.SceneRenderer — all output, voice, panes, avatar
+
+  The renderer is INJECTED and OPTIONAL. With no renderer the runtime still
+  walks the graph and records history, printing and speaking nothing. That is
+  the path `--validate` and reachability checks use, and it is how most of this
+  module gets tested.
+
+target_files:
+  - app/campaign/runtime.py
+
+test_files:
+  - tests/test_campaign_runtime.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/campaign/scene_graph.py
+  - app/campaign/renderer.py
+
+interface: |
+  app/campaign/runtime.py must export exactly these names:
+
+      class CampaignRuntimeError(RuntimeError)
+          Raised for every operational fault: playing or advancing a show that
+          has already finished, saving with no state file, loading a file that
+          is missing, corrupt, for a different campaign, or naming a scene the
+          pack does not have.
+          Note this subclasses RuntimeError, not ValueError.
+
+      @dataclass CampaignState
+          campaign: str                 # pack.name — pinned so a saved position
+                                        # can never be restored into the wrong pack
+          scene_id: str | None          # current scene; None once finished
+          context: dict = {}            # what the show knows; branches read this
+          history: list[str] = []       # scene ids already played, in order
+          loop: int = 1                 # which pass through the weekly loop
+          carry: dict = {}              # SURVIVES reset() — the seam the deferred
+                                        # sage-memory work hangs off
+          finished: bool = False
+
+          def to_dict(self) -> dict          # plain JSON-serializable mapping
+          @classmethod from_dict(cls, data) -> CampaignState
+
+      class CampaignRuntime
+          def __init__(self, pack, renderer=None, graph=None, selector=None,
+                       state_file=None)
+
+              pack        a CampaignPack
+              renderer    anything with .render_scene(scene, context=None);
+                          None disables all output
+              graph       a SceneGraph; defaults to SceneGraph(pack)
+              selector    a BranchSelector used for every advance; when given it
+                          is passed through to the graph
+              state_file  path for save()/load(); None disables persistence
+
+              Store `pack`, `renderer`, `graph`, `selector` and `state_file` as
+              attributes of the same names — tests read `runtime.graph`.
+
+          @property current_scene -> Scene | None
+          def update_context(self, mapping) -> None
+          def play_scene(self) -> list
+          def advance(self, selector=None) -> str | None
+          def step(self) -> tuple[list, str | None]
+          def run(self, max_scenes=100) -> list[str]
+          def reset(self, keep_carry=True) -> None
+          def save(self, path=None) -> None
+          def load(self, path=None) -> None
+
+notes: |
+  CONSTRUCTION: build the default graph as SceneGraph(pack) when none is given.
+  SceneGraph's own constructor rejects a pack whose start_scene is missing by
+  raising SceneGraphError — do NOT catch it, do NOT pre-check it yourself. A
+  test asserts SceneGraphError escapes construction, so wrapping it in
+  CampaignRuntimeError fails.
+
+  Initial state is CampaignState(campaign=pack.name, scene_id=pack.start_scene)
+  with everything else at its default. Expose it as `self.state`; tests both
+  read and WRITE it directly (e.g. `runtime.state.scene_id = "middle"`), so it
+  must be a plain mutable attribute, not a property with a setter that
+  validates.
+
+  current_scene returns pack.scene(state.scene_id), or None when scene_id is
+  None.
+
+  update_context MERGES its argument into state.context — later keys overwrite
+  earlier ones, untouched keys survive. Never replace the dict wholesale.
+
+  play_scene:
+    - raise CampaignRuntimeError if state.finished
+    - append state.scene_id to state.history FIRST, so history is correct even
+      if the renderer raises
+    - if a renderer was injected, return renderer.render_scene(current_scene,
+      context=state.context) — pass the LIVE context dict, not a copy
+    - with no renderer, return [] and do not touch the renderer attribute
+    - do NOT advance; moving on is advance()'s job
+
+  advance:
+    - raise CampaignRuntimeError if state.finished
+    - ask the graph: graph.next_scene_id(state.scene_id, context=state.context,
+      selector=<the per-call selector, else self.selector>). Pass the per-call
+      selector when one was given, otherwise self.selector (which may be None —
+      the graph already handles None by using its own default).
+    - a non-None answer becomes state.scene_id and is returned
+    - a None answer means the show is over: set state.finished = True, set
+      state.scene_id = None, and return None
+
+  step calls play_scene() then advance() and returns the pair
+  (rendered, next_scene_id).
+
+  run:
+    - repeatedly step() from wherever the runtime CURRENTLY sits — run() does
+      not reset, so a resumed show continues rather than replaying the top
+    - stop when state.finished, or when max_scenes scenes have been played
+      DURING THIS CALL
+    - return the list of scene ids played DURING THIS CALL (not the whole
+      history — a resumed run returns only the tail it played)
+
+      ORDERING TRAP: advance() REASSIGNS state.scene_id, so reading
+      state.scene_id after stepping records the scene you are about to play,
+      not the one you just played, and appends a trailing None when the show
+      ends. The airtight way is to let play_scene() do the recording and slice
+      the history it appended to:
+
+          start = len(self.state.history)
+          ... loop calling self.play_scene() then self.advance() ...
+          return self.state.history[start:]
+
+      Do it that way rather than appending scene ids yourself.
+    - hitting the budget must NOT set finished; log a WARNING mentioning the
+      budget/max and return. Warn ONLY when the budget actually cut the run
+      short — a show that finished naturally on its very last allowed scene
+      hit no limit and must log nothing, so test `self.state.finished` before
+      warning rather than counting scenes alone. Cycles are a FEATURE here — the premise of the
+      show is a weekly time loop, so a scene whose default_next is itself is
+      legal and must be bounded by the budget, never by cycle detection.
+
+  reset — the weekly loop:
+    - state.scene_id back to pack.start_scene, finished False
+    - history and context emptied
+    - loop incremented by one
+    - carry PRESERVED by default; emptied only when keep_carry is False
+    This is the whole reason `carry` exists: everything the show learned is
+    wiped each loop except what an emergent memory-holder is allowed to keep.
+
+  PERSISTENCE:
+    save(path=None) writes json.dumps(state.to_dict()) to `path` or, when None,
+    self.state_file. With neither, raise CampaignRuntimeError. Create missing
+    parent directories (Path.mkdir(parents=True, exist_ok=True) on the parent).
+
+    load(path=None) reads the same file and replaces self.state. Raise
+    CampaignRuntimeError, chained with `from exc` where there is an
+    underlying error, for every one of these:
+      - the file does not exist or cannot be read
+      - the contents are not valid JSON
+      - the contents are valid JSON but are NOT a mapping (a list, a bare
+        string, a number)
+      - the mapping is missing "campaign" or is missing "scene_id"
+
+    "MISSING" MEANS THE KEY IS ABSENT, NOT THAT ITS VALUE IS None. Test it with
+    `"scene_id" not in data`, never with `data.get("scene_id") is None`. A
+    finished show is saved with scene_id set to None and MUST load back
+    successfully as a finished show — treating that None as a missing key
+    rejects every completed campaign and fails the suite.
+
+    ALL of this validation lives in load(). CampaignState.from_dict NEVER
+    raises and NEVER validates: it is a dumb constructor that fills defaults
+    for absent optional keys. Validate the payload in load() first, then hand
+    the already-checked mapping to from_dict.
+      - data["campaign"] != pack.name — include BOTH names in the message
+      - the restored scene_id is not None and is not in pack.scenes
+
+    NEVER index the loaded payload directly. `data["campaign"]` on a list
+    raises TypeError and on an incomplete mapping raises KeyError, and neither
+    is a CampaignRuntimeError, so both escape as the wrong exception type and
+    fail the suite. Check isinstance(data, dict) first, then check for the two
+    required keys, and only then read them. A state file is written by a
+    previous version of the show and edited by operators — treat it as
+    untrusted input, not as something you produced.
+
+    A finished show round-trips as finished with scene_id None, so validate the
+    scene id only when it is not None.
+
+  CampaignState.to_dict returns a plain dict of the seven fields — no dataclass
+  helpers that leak non-JSON types. from_dict must tolerate a MINIMAL payload
+  carrying only campaign and scene_id, filling every other field from the same
+  defaults the dataclass uses. Use field(default_factory=dict) /
+  field(default_factory=list) so two CampaignState instances never share a
+  mutable default.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, DEBUG on each scene played and each
+  advance, INFO when a show finishes or resets, WARNING on the budget stop,
+  ERROR inside the load failure paths, lazy %-formatting
+  (`log.debug("x %s", y)`) and never f-strings in logging calls.
+
+  Import nothing you do not use. Use builtin generics (`list[str]`, `dict`,
+  `str | None`) and import nothing from `typing`.

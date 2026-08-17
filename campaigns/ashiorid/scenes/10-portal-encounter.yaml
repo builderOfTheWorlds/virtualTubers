@@ -1,0 +1,66 @@
+id: portal-encounter
+title: The Portal
+enter_narration: >-
+  At the tunnel's mouth, a dying wizard finishes what he came to do.
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    text: >-
+      The tunnel comes out on the hillside. Behind you the manor is a single
+      column of fire, straight up, no wind to bend it.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      There is a man on the ground at the tunnel's mouth. He is not going to
+      get up again, and he knows it, and he is still speaking.
+
+  - type: action
+    speaker: carl
+    primitive: attack
+    params:
+      target: the dying wizard
+      weapon: longbow
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Carl's arrow finds him. It is not fast enough. The last syllable leaves
+      the wizard's mouth at the same moment the arrow arrives, and both of them
+      land.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      The air in front of you opens. Not a door — a tear, hanging at chest
+      height, edges moving like something wet.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Fingers come through it. Too many of them, on a hand that is far too
+      large, and they take hold of the edges from the inside and begin, very
+      patiently, to pull it wider.
+
+  - type: dialogue
+    speaker: drokki
+    text: >-
+      That's the eighty-sixth, then. It didn't need the room. It just needed a
+      hole.
+
+  - type: dialogue
+    speaker: helen
+    improv: true
+    text: >-
+      Helen realises she knows what is on the other side of the tear, and that
+      she has always known.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Ten thousand years to the day since the Event. That is where we stop
+      tonight.

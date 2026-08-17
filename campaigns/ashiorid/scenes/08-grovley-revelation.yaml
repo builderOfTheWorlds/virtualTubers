@@ -1,0 +1,79 @@
+id: grovley-revelation
+title: Grovley
+enter_narration: >-
+  In the subbasement, the butler tells the four of you what you are.
+
+beats:
+  - type: pane
+    show: party
+
+  - type: narration
+    speaker: gm
+    text: >-
+      His name is Grovley. He has served the house of Leto for longer than he
+      will say. He is kneeling beside the Duke's body, and he does not look
+      surprised to see you.
+
+  - type: dialogue
+    speaker: carl
+    text: >-
+      You knew we would come down here.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "I knew the four of you would still be standing," Grovley says. "That was
+      rather the point of you."
+
+  - type: narration
+    speaker: gm
+    text: >-
+      He tells you about the Begene Sisters. A breeding program run across four
+      bloodlines for a hundred years, and a ledger somewhere with your names
+      already written in it before any of you were born.
+
+  - type: action
+    speaker: carl
+    primitive: reveal_memory
+    params:
+      subject: the night the wood elves came
+      detail: there were four cribs in that house, and he has never once wondered why
+
+  - type: narration
+    speaker: gm
+    text: >-
+      You were not invited. You were assembled. Four bloodlines, chosen and
+      crossed and watched over for a century, and the four of you are what the
+      work produced.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "Leto was father to all of them," Grovley says, to nobody, with his hand
+      still on the dead man's shoulder. "To all of you."
+
+  - type: dialogue
+    speaker: helen
+    text: >-
+      No. I have a family. I have a village. I can name my grandmother's
+      grandmother.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "You can name what you were given to name," Grovley says, and he says it
+      kindly, which is worse.
+
+  - type: dialogue
+    speaker: buffalo
+    text: >-
+      Siblings. All this way, and I've been travelling with my own family for a
+      day and a half without knowing it.
+
+  - type: dialogue
+    speaker: drokki
+    text: >-
+      A hundred years of work and they burn the house on the anniversary of it.
+      Somebody wanted this finished tonight.
+
+default_next: the-vault

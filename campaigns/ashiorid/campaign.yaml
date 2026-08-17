@@ -1,0 +1,32 @@
+# The Ashiorid campaign — the opening arc.
+#
+# Curated from the Obsidian vault at ~/codeProjects/ashioridCampaign. Scene
+# text here is SPOKEN ALOUD by TTS on stream, so it is written as narration to
+# be heard, not as notes to be read. Keep lines short enough to breathe.
+name: ashiorid
+title: "Ashiorid — The Ten Thousandth Anniversary"
+genre: fantasy
+
+start_scene: invitation
+
+gm: gm
+players:
+  - buffalo
+  - helen
+  - carl
+  - drokki
+
+# Only these primitives may appear in an action beat. The cyberpunk set
+# (execute_exploit, scan_target) is deliberately absent — a second campaign
+# enables it in its own campaign.yaml, without touching any code.
+primitives:
+  - roll_check
+  - cast_spell
+  - attack
+  - move_to
+  - search
+  - reveal_memory
+
+theme:
+  accent: magenta
+  narration: dim

@@ -1,0 +1,145 @@
+task_id: campaign_primitives
+
+goal: |
+  Implement the action-primitive registry for the virtualTubers campaign runtime.
+
+  A "primitive" is the cosmetic verb a cast member performs in an action beat —
+  roll a check, cast a spell, run an exploit. It is PURELY NARRATION. There is no
+  dice engine, no RNG, no simulation, and no state. The script decides what
+  happens; a primitive only decides how it is worded. Rendering the same
+  primitive with the same arguments must produce byte-identical text forever, so
+  a recorded show replays word for word.
+
+  The registry is also what makes a second campaign config rather than code:
+  fantasy verbs and cyberpunk verbs are registered side by side, and each
+  campaign pack enables the subset it wants (pack.primitives is that list).
+
+target_files:
+  - app/campaign/primitives.py
+
+test_files:
+  - tests/test_campaign_primitives.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/campaign/validator.py
+
+interface: |
+  app/campaign/primitives.py must export exactly these names:
+
+      class PrimitiveError(ValueError)
+          Raised for every problem: unknown primitive, duplicate registration,
+          missing/unknown/invalid parameter. No other exception type may escape
+          a public call for bad input — no KeyError, no IndexError.
+
+      @dataclass(frozen=True) ParamSpec
+          name: str
+          required: bool = True
+          default: Any = None       # used only when required is False
+          choices: tuple = ()       # empty means "any value"
+
+      @dataclass(frozen=True) Primitive
+          name: str
+          genre: str                       # "fantasy" or "cyber"
+          summary: str                     # one line, for operator tooling
+          params: tuple[ParamSpec, ...] = ()
+          template: str = ""               # str.format template, see below
+          suffixes: tuple[tuple[str, str], ...] = ()
+
+          def validate(self, params: dict | None = None) -> dict
+              Returns a NEW dict of resolved params: every declared param present,
+              absent optional ones filled with their `default`. Must not mutate
+              the dict it was given. Raises PrimitiveError for a missing required
+              param, an undeclared param name, or a value outside `choices` —
+              the message must contain the offending name or value.
+
+          def render(self, actor: str, params: dict | None = None) -> str
+              Validates, then formats. Never raises anything but PrimitiveError.
+
+      class Registry
+          def __init__(self)                      # starts empty
+          def register(self, primitive) -> None   # duplicate name -> PrimitiveError
+          def get(self, name) -> Primitive        # unknown name -> PrimitiveError
+          def names(self, genre=None) -> list[str]   # SORTED; filtered when genre given
+          def __contains__(self, name) -> bool
+
+      DEFAULT_REGISTRY: Registry
+          Module-level, pre-populated at import with the shipped vocabulary below.
+
+      def get(name) -> Primitive
+      def names(genre=None) -> list[str]
+      def render(name, actor, params=None) -> str
+          Thin delegates to DEFAULT_REGISTRY. `render` looks the primitive up and
+          calls its render.
+
+notes: |
+  RENDERING CONTRACT — this is the part to get exactly right.
+
+  `render` builds the sentence in three steps:
+
+    1. Format `template` against the resolved params plus `actor`.
+    2. For each (param_name, fragment) in `suffixes`, IN ORDER: if the resolved
+       value for that param is not None, format `fragment` the same way and
+       append it. Skip the fragment entirely when the value is None.
+    3. Append "." unless the string already ends in ".", "!", or "?".
+
+  Every `template` MUST begin with "{actor}" — a test asserts each shipped
+  primitive's rendering starts with the actor's name. Neither `template` nor any
+  suffix fragment carries a trailing period; step 3 owns punctuation.
+
+  Format with a mapping-based call (e.g. `template.format(actor=actor, **resolved)`)
+  and let validate() guarantee the keys exist beforehand. A template must never
+  reference a param that is not declared in `params`; tests parse the templates
+  and assert this, so double-check each one you write.
+
+  VALIDATION rules:
+
+  - A required param absent from the supplied dict -> PrimitiveError naming it.
+  - A supplied key that matches no ParamSpec -> PrimitiveError naming it.
+  - A supplied value not in a non-empty `choices` -> PrimitiveError naming the
+    value. Only check `choices` when the value is not None, so an absent optional
+    param with choices resolves to None rather than raising.
+  - `params=None` is equivalent to `{}`.
+
+  THE SHIPPED VOCABULARY — register all eight into DEFAULT_REGISTRY at import.
+  Wording is yours, but the names, genres, and param names below are fixed
+  because tests reference them.
+
+  genre "fantasy":
+    roll_check      params: skill (required)
+                            dc (optional)
+                            outcome (optional, choices ("success", "failure"))
+                    The template must NOT contain the words "success" or "fail" —
+                    an outcome is only ever narrated when the script supplied one,
+                    via a suffix. A check with no outcome reads as the roll alone.
+    cast_spell      params: spell (required), target (optional), level (optional)
+    attack          params: target (required), weapon (optional)
+    move_to         params: destination (required), manner (optional)
+    search          params: target (required), detail (optional)
+    reveal_memory   params: subject (required), detail (optional)
+                    This is the loop-carrying "sage" character projecting a memory
+                    of a previous run of the campaign. Word it as a vision or
+                    recollection surfacing, not as a normal action.
+
+  genre "cyber":
+    execute_exploit params: exploit (required), target (optional)
+    scan_target     params: target (required), depth (optional)
+
+  These two are deliberate stubs proving a second genre needs no new code.
+
+  Every shipped primitive needs a non-empty `summary`, and every one must render
+  correctly from its REQUIRED params alone — tests call each with only those
+  filled in, so no template may reference an optional param outside a suffix.
+
+  Use frozen dataclasses. Because they are frozen and hold only tuples/strings,
+  the shipped primitives are safe module-level constants.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, a DEBUG line when a primitive is
+  registered and when one is rendered, lazy %-formatting (`log.debug("x %s", y)`)
+  and never f-strings in logging calls. Never log at WARNING or above for an
+  error you are already raising.
+
+  Import nothing you do not use. Use builtin generics (`list[str]`, `dict`)
+  throughout and import nothing from `typing` except `Any`, which ParamSpec.default
+  needs. Do not import from campaign.pack — this module has no dependency on it.

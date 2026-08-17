@@ -1,0 +1,70 @@
+id: the-vault
+title: The Word and the Worm
+enter_narration: >-
+  Behind the subbasement wall is the thing the Letos have been guarding for ten
+  thousand years.
+
+beats:
+  - type: pane
+    show: inventory
+
+  - type: action
+    speaker: drokki
+    primitive: search
+    params:
+      target: the subbasement wall
+      detail: a seam where there should be none
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Drokki finds the seam because Drokki finds seams. There is no handle, no
+      keyhole, no mechanism at all. There is a word, and Grovley speaks it, and
+      the wall is simply a door and always was.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Beyond it is a room the size of a cathedral and a shape in the middle of
+      it that your eyes will not agree on. It is held. It has been held here
+      since the Event.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "It is the only reason the eighty-sixth dimension is out there," Grovley
+      says, "and not in here. The Duke's family have stood in front of it for
+      ten thousand years. That duty is now yours."
+
+  - type: action
+    speaker: helen
+    primitive: reveal_memory
+    params:
+      subject: the worm
+      detail: she has dreamed this room, in a village that does not exist
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Grovley presses something into Buffalo's hand. Half a signet ring, cut
+      clean through, the edge still bright.
+
+  - type: dialogue
+    speaker: buffalo
+    text: >-
+      Half. Where's the other half.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      "With the person who ordered tonight," Grovley says. "Go through the
+      tunnel. Do not come back up through the house. There is no house."
+
+  - type: action
+    speaker: carl
+    primitive: move_to
+    params:
+      destination: the escape tunnel
+      manner: last through, watching behind
+
+default_next: portal-encounter

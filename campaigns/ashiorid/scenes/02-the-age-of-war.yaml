@@ -1,0 +1,56 @@
+id: the-age-of-war
+title: The Age of War
+enter_narration: >-
+  Ten thousand years ago the world burned its own magic for fuel, and a handful
+  of people tried to stop it.
+
+beats:
+  - type: narration
+    speaker: gm
+    text: >-
+      They called it the Age of War because nobody had the nerve to call it
+      what it was: a fire that had run out of things to eat and started on the
+      world itself.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Magic is not free. Every spell drew from the same well, and the armies
+      drew without counting. The moonwells went grey one after another, like
+      lamps going out down a long hall.
+
+  - type: narration
+    speaker: gm
+    text: >-
+      A small group went to the last well with a plan to close it before it
+      emptied. This is the moment the whole world hinges on, and this is where
+      you come in.
+
+  - type: action
+    speaker: helen
+    primitive: roll_check
+    params:
+      skill: arcana
+      dc: 18
+
+  - type: narration
+    speaker: gm
+    text: >-
+      Ten thousand years from now, four strangers will hold a card in their
+      hands, and what happens in this next breath decides what kind of world
+      they hold it in.
+
+branches:
+  - id: success
+    when:
+      outcome: success
+      weight: 1
+    next: magic-retained
+
+  - id: failure
+    when:
+      outcome: failure
+      weight: 1
+    next: magic-lost
+
+default_next: magic-retained

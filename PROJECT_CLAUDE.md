@@ -3,6 +3,20 @@
 > This file holds notes specific to this project only. Unlike `CLAUDE.md`, it is
 > never synced from or to the master template — edit it freely.
 
+## Campaign module — in progress (started 2026-08-16)
+
+A generic campaign layer (`app/campaign/`, `campaigns/`, `tools/qwen_worker/`) is
+being built alongside the existing dev-team show. Waves 1–3 are done and green;
+Wave 4 (`agent.py` integration, configs, compose, per-module docs) is not.
+
+**If you are picking that work up, read
+[docs/campaign_module_status.md](docs/campaign_module_status.md) first** — it
+covers the architecture decisions, the local-model worker harness and how to
+drive it, the seams left for the deferred weekly-loop/chat-voting work, and the
+review checklist for generated code.
+
+Nothing in that module is committed yet.
+
 ## Deployment target: argyre, via Portainer (moved off d2000 — 2026-08-16)
 
 This project previously ran on **d2000** via plain `docker compose`. As of

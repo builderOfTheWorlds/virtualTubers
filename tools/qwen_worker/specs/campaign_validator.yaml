@@ -1,0 +1,134 @@
+task_id: campaign_validator
+
+goal: |
+  Implement semantic validation for a loaded campaign pack.
+
+  app/campaign/pack.py already guarantees a pack is STRUCTURALLY sound (files
+  parse, required keys present, types correct). This module answers the next
+  question: is the pack internally consistent? It catches problems that load
+  cleanly but only explode mid-show — branch targets pointing at scenes that do
+  not exist, beats spoken by cast members who were never defined, action beats
+  naming primitives the campaign never enabled.
+
+  The defining behaviour: collect EVERY problem into a report instead of raising
+  on the first one. An operator fixing a campaign pack wants the whole list in
+  one pass, not a fix-rerun-fix-rerun loop.
+
+target_files:
+  - app/campaign/validator.py
+
+test_files:
+  - tests/test_campaign_validator.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/episode_validator.py
+
+interface: |
+  app/campaign/validator.py must export exactly these names:
+
+      class CampaignInvalid(ValueError)
+          Raised by ValidationReport.raise_if_invalid() when errors exist.
+
+      @dataclass ValidationReport
+          errors: list[str]    = []   # default_factory=list
+          warnings: list[str]  = []   # default_factory=list
+
+          @property
+          def ok(self) -> bool
+              True when there are no errors. Warnings do NOT make a pack invalid.
+
+          def __bool__(self) -> bool
+              Same truth value as .ok, so `if not report:` reads naturally.
+
+          def raise_if_invalid(self) -> None
+              No-op when ok. Otherwise raises CampaignInvalid whose message
+              contains every error string (join them, e.g. with "; " or newlines
+              — the tests match substrings of the individual errors).
+
+      def validate_pack(pack) -> ValidationReport
+          `pack` is a campaign.pack.CampaignPack. Never raises for a bad pack —
+          it reports. Only genuine internal faults may propagate.
+
+notes: |
+  ERRORS (these make a pack invalid):
+
+  - A Branch whose `next` names a scene not in pack.scenes.
+  - A Scene whose `default_next` is set and names a scene not in pack.scenes.
+  - Two branches within the SAME scene sharing an `id`.
+  - pack.start_scene not present in pack.scenes.
+  - A beat whose `speaker` is set but is not a key in pack.cast. This applies to
+    EVERY beat kind. A "pane" beat is allowed to omit its speaker, but if it does
+    name one, that name must exist — do not skip the check by kind, only by
+    whether `speaker` is None.
+  - A beat with kind "action" whose `primitive` is None/absent.
+  - A beat with kind "action" whose `primitive` is not in pack.primitives.
+  - A beat with kind "narration" or "dialogue" with no `text` (None or empty).
+    The error message must contain the word "text".
+  - A beat with kind "pane" with no `show`. Message must contain "show".
+  - A beat whose `kind` is not one of: narration, dialogue, action, pane.
+    The message must contain the offending kind.
+
+  Every error message MUST name the scene it came from AND the offending value,
+  because tests assert both appear in the same string — e.g.
+      f"scene {scene.id!r}: unknown speaker {beat.speaker!r}"
+
+  WARNINGS (suspicious, but the pack stays valid):
+
+  - A scene that cannot be reached from pack.start_scene. Compute this by WALKING
+    the graph (breadth- or depth-first) outward from start_scene, following each
+    visited scene's branch `next` values and its `default_next`, and collecting
+    the set of scenes actually visited. Every scene not in that set is warned
+    about, and its message must contain the scene id and the word "unreachable".
+
+    Do NOT implement this as "does any other scene name me?" — an inbound edge
+    from a scene that is itself unreachable does not make a scene reachable, and
+    a scene whose `default_next` is its own id has not thereby reached itself.
+    A traversal from start_scene gets both cases right for free; an inbound-edge
+    count gets both wrong.
+
+    start_scene is in the visited set by definition, so it is NEVER warned about.
+    Guard the walk against cycles (keep a visited set and skip what you have
+    already seen) — the show's premise is a time loop, so cycles are expected and
+    must not hang the validator. Skip targets that are not in pack.scenes; the
+    dangling-target error is already reported elsewhere.
+  - A scene with an empty `beats` list. Message must contain the scene id.
+  - A cast member id that never appears as any beat's `speaker`. Message must
+    contain the member id.
+
+  A self-referencing scene (default_next == its own id) is explicitly VALID and
+  is never an error — the show's premise is a time loop, so cycles are a feature.
+  Do not add cycle detection. (It may still be warned as unreachable if the
+  traversal above never arrives at it — those are different questions.)
+
+  Hoist the set of legal beat kinds to a module-level constant (e.g.
+  `VALID_BEAT_KINDS = frozenset({"narration", "dialogue", "action", "pane"})`)
+  rather than rebuilding a set literal inside the per-beat loop.
+
+  Iterate scenes in a deterministic order (`sorted(pack.scenes)`) so the report
+  is byte-identical between runs on the same pack. Make ONE pass over the scenes
+  for the per-scene checks — do not re-sort and re-loop over pack.scenes once per
+  category of check.
+
+  Structure the work as small helpers that append to the report, e.g.
+
+      _check_branches(scene, pack, report)   # dangling next, duplicate branch ids
+      _check_beats(scene, pack, report)      # kind, speaker, primitive, text, show
+      _reachable_scene_ids(pack) -> set[str] # the traversal described above
+      _check_cast_usage(pack, spoken, report)
+
+  `validate_pack` should read as a short outline of those calls, not carry the
+  logic itself.
+
+  Follow project logging conventions: module-level
+  `log = logging.getLogger(__name__)`, lazy %-formatting (never f-strings) in
+  logging calls, one DEBUG line per scene checked, and exactly one INFO summary
+  line at the end carrying the error and warning COUNTS as %d arguments. A test
+  asserts that INFO record exists on the "campaign.validator" logger, so it is
+  required, not optional.
+
+  Import nothing you do not use — that includes names from campaign.pack. The
+  module needs `CampaignPack` and `Scene` for type hints; it does not need
+  `Beat`, `Branch`, or `CastMember` unless you actually reference them. Use
+  builtin generics (`list[str]`, `set[str]`) throughout and import nothing from
+  `typing`; do not mix `typing.List` with `list[...]` in the same file.

@@ -1,0 +1,208 @@
+task_id: campaign_renderer
+
+goal: |
+  Implement SceneRenderer — the module that turns a scene's beats into a
+  performance an audience sees and hears.
+
+  This module COMPOSES pieces that already exist and are already tested. Do not
+  reimplement any of them:
+
+    - replay.Pacer   — every sleep and all typing rhythm
+    - replay.Palette — ANSI colour, already handles the "colour off" case
+    - agent_state.write_state — the avatar's expression and speech bubble
+    - campaign.primitives.render — the wording of an action beat
+
+  Every side-effect channel (voice, panes, avatar state, audio playback, improv)
+  is INJECTED and OPTIONAL. Given none of them, the renderer writes plain text to
+  a stream and does nothing else — that is the --dry-run path, and it is how
+  nearly all of this gets verified. It also means a dead TTS backend or a missing
+  tmux pane must DEGRADE the show, never end it.
+
+target_files:
+  - app/campaign/renderer.py
+
+test_files:
+  - tests/test_campaign_renderer.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/campaign/primitives.py
+  - app/agent_state.py
+
+interface: |
+  app/campaign/renderer.py must export exactly these names:
+
+      class RendererError(RuntimeError)
+          Raised for a beat the renderer cannot perform at all: unknown speaker,
+          unknown beat kind, a primitive that is unknown or not enabled for this
+          pack, or bad primitive params. These are authoring faults.
+          Note this subclasses RuntimeError, not ValueError.
+
+      @dataclass RenderedBeat
+          beat: Beat            # the source beat
+          kind: str             # beat.kind
+          speaker: str | None   # the speaker ID (not the display name)
+          text: str = ""        # the SPOKEN line only; "" for pane beats.
+                                # For dialogue this EXCLUDES the "Name: " label
+                                # — see "THE NAME LABEL IS DISPLAY ONLY" below.
+          audio: object = None  # the Narration returned by TTS, else None
+
+      class SceneRenderer
+          def __init__(self, pack, out=None, pacer=None, palette=None,
+                       state_path=None, tts=None, audio_dir=None,
+                       audio_player=None, pane_control=None, improviser=None)
+
+              out          defaults to sys.stdout
+              pacer        defaults to replay.Pacer()
+              palette      defaults to replay.Palette()
+              state_path   avatar state file; None disables avatar writes
+              tts          object with .synthesize(text, out_wav, speaker=...);
+                           None disables voice
+              audio_dir    directory for synthesized WAVs; defaults to a temp dir
+              audio_player one-arg callable given the audio path; None disables
+              pane_control one-arg callable given the pane name; None disables
+              improviser   callable (beat, cast_member) -> str; None disables
+
+              Store `out`, `state_path` and the hooks as attributes of the same
+              names — tests read `renderer.out` and `renderer.state_path`.
+
+          def render_beat(self, beat) -> RenderedBeat
+          def render_scene(self, scene, context=None) -> list[RenderedBeat]
+
+notes: |
+  BEAT KINDS — the four from campaign.pack, plus nothing else:
+
+    narration  Display `beat.text`. Attribute it to the speaker but do NOT print
+               a name label; narration is the voice of the scene.
+    dialogue   Display "<Display Name>: <text>". The display name is
+               pack.member(beat.speaker).name — the cast NAME, never the id.
+    action     Text is campaign.primitives.render(beat.primitive, display_name,
+               beat.params). The ACTOR passed to the primitive is the display
+               name, so the sentence reads "Buffalo attacks the door." Print the
+               resulting sentence with no name label.
+    pane       Produces NO output text at all and no speech. Its only effect is
+               calling pane_control(beat.show).
+
+  An unknown kind raises RendererError whose message contains the offending kind.
+
+  THE NAME LABEL IS DISPLAY ONLY — this is the single most important
+  distinction in the module, and getting it wrong fails six tests at once.
+
+  Keep two separate strings for every beat:
+
+    line  — what gets WRITTEN to `out`. For dialogue this is
+            "Helen: We should run." For narration and action it is just the
+            sentence, with no label.
+    text  — what gets SPOKEN, stored on RenderedBeat.text, and used as the
+            avatar bubble. This is ALWAYS the bare content with NO name prefix:
+            "We should run."
+
+  So for a dialogue beat by Helen with text "We should run.":
+      written to out            -> "Helen: We should run."
+      RenderedBeat.text         -> "We should run."
+      passed to tts.synthesize  -> "We should run."
+      avatar bubble             -> "We should run."
+
+  A character must never say their own name aloud before every line. Build
+  `line` by prefixing the label onto `text` at the moment you write it; never
+  the other way round, and never reassign `text` to include the label.
+
+  For narration and action beats `line` and `text` are identical.
+
+  SPEAKER RESOLUTION: any beat with a non-None speaker must resolve through
+  pack.member(); a missing one raises RendererError naming the speaker id.
+  pack.member raises PackError, so catch it and re-raise as RendererError.
+  A pane beat with speaker None resolves to nothing and that is fine.
+
+  PRIMITIVES: before rendering an action beat, check `beat.primitive` is in
+  pack.primitives — a real primitive the pack never enabled must raise
+  RendererError NAMING THE PRIMITIVE, not render. Then call primitives.render
+  and convert any PrimitiveError into RendererError, preserving the original
+  message text (chain with `from exc`) so the offending param name still shows.
+
+  IMPROV — the seam where a persona LLM riffs instead of reading the script:
+  when `beat.improv` is true AND an improviser was injected, call
+  improviser(beat, cast_member) and use its return value as `text` (the bare
+  spoken line — the name label is still added separately at write time, so an
+  improviser returning "Helen riffs" yields RenderedBeat.text == "Helen riffs",
+  never "Helen: Helen riffs").
+
+  Resolve improv BEFORE anything else uses the text — the improvised line is
+  what gets displayed, spoken, recorded, and bubbled. Fall back
+  to `beat.text` in every degenerate case: no improviser, the improviser raises,
+  or it returns None/empty/whitespace. Log a WARNING when it raises. The
+  scripted line is the intent, so it is also the safe default and the show never
+  stalls on a busy model.
+
+  VOICE: when `tts` is set and the beat produced non-empty text, synthesize to a
+  WAV under `audio_dir` and put the returned object on RenderedBeat.audio, then
+  call audio_player(path) if one was injected. The `speaker` argument passed to
+  synthesize is the speaker ID (e.g. "buffalo"), not the display name — voices
+  are configured per id. Give each WAV a unique filename so beats never collide.
+  If synthesis raises ANYTHING, log a WARNING and carry on with audio=None: a
+  dead voice backend degrades to a silent show, it does not end it. Pane beats
+  are never spoken.
+
+  PANES: call pane_control(beat.show) for pane beats only. If it raises
+  ANYTHING, log a WARNING and continue to the next beat — a missing tmux pane
+  must not take the show down. A test asserts a later narration beat still
+  renders after a pane hook raised.
+
+  AVATAR: when state_path is set, call agent_state.write_state(state_path,
+  expression, action, bubble) per spoken beat, with the beat's text as the
+  `bubble`. Pick a reasonable expression per kind (e.g. "neutral" narration,
+  "talking" dialogue, "focused" action). When state_path is None, do not touch
+  the filesystem at all.
+
+  SCENES: render_scene renders `scene.enter_narration` FIRST, when set, as a
+  narration beat attributed to pack.gm_id — it appears in the returned list like
+  any other beat. Then each beat in order. Returns the list of RenderedBeat. A
+  scene with no beats and no enter_narration returns [].
+
+  PACING: route every sleep and all typed output through the pacer; never call
+  time.sleep directly. Use pacer.type_out(write, text, cps) for displayed text
+  so --no-delay and the operator stop-signal keep working. Do NOT catch
+  replay.ReplayStopped — an operator stop must unwind out of the renderer.
+
+  The `cps` (characters per second) argument comes from the constant
+  `DIALOGUE_CPS`, which you must import from `replay` alongside Pacer and
+  Palette:
+
+      from replay import DIALOGUE_CPS, Pacer, Palette
+
+  Use DIALOGUE_CPS for dialogue and DIALOGUE_CPS for action lines, and
+  `DIALOGUE_CPS * 2` for narration (narration reads faster, matching how
+  replay.Performer types a user_message). These are the ONLY two pacing values
+  you need.
+
+  There is NO cps attribute on Palette or on Pacer — Palette carries colour
+  strings ONLY (.reset .dim .bold .cyan .green .yellow .red .magenta) and Pacer
+  carries .speed/.enabled/.scale. Do not read any other attribute off either
+  object; inventing one is the single most likely way to fail every test in this
+  suite at once.
+
+  Write through a small helper of your own, e.g.
+
+      def _emit(self, text, cps, color=""):
+          self.pacer.type_out(self.out.write, color + text + self.palette.reset, cps)
+          self.out.write("\n")
+
+  and make sure the trailing newline is written after each rendered line so
+  consecutive beats do not run together on one line.
+
+  Reuse `Palette` attributes for colour (`.cyan`, `.dim`, `.yellow`, `.bold`,
+  `.reset`) rather than writing raw escape codes. Tests run with
+  Palette(enabled=False), where every attribute is "", so all assertions are on
+  plain substrings — make sure a colourless render contains the bare text with
+  no stray markers.
+
+  Import Pacer and Palette from `replay` (app/ is on sys.path; the tests import
+  them that way too). Import write_state from `agent_state`.
+
+  Follow the project's logging conventions: module-level
+  `log = logging.getLogger(__name__)`, DEBUG per beat rendered, WARNING on each
+  degraded path (TTS failed, pane failed, improviser failed), lazy %-formatting
+  (`log.debug("x %s", y)`) and never f-strings in logging calls.
+
+  Import nothing you do not use. Use builtin generics (`list[str]`, `dict`) and
+  import nothing from `typing`.
