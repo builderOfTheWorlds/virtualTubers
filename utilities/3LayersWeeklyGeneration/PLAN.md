@@ -372,3 +372,50 @@ per-utility documentation convention.
   and isn't touched or duplicated here.
 - Not wiring the generated cache into the live show — still T5/T6, tracked
   separately.
+
+
+## Budgeting & Verification (The Arithmetic Fix)
+
+To ensure the 168-hour target is not just a "goal" but a mathematically enforced constraint, the following validation checks are added to the pipeline:
+
+### 1. Arc Continuity Check (Post-Layer 1)
+After `src/plan_arc.py` completes, a validator must verify:
+- **Sum of Segments**: $\sum_{i=1}^{n} 	ext{segment\_hours}_i pprox 	ext{hours\_total}$ (within $\pm 5\%$ tolerance to account for edge-case padding).
+- **Segment Count**: $n pprox rac{	ext{hours\_total}}{	ext{segment\_hours}}$ (e.g., $\sim 28$ segments).
+- **Failure Action**: If the sum is significantly lower than the target, the arc must re-plan the missing duration or flag a `CRITICAL` error.
+
+### 2. Segment Density Check (Post-Layer 2)
+After `src/plan_segment.py` completes, the validator checks:
+- **Min/Max Scene Bounds**: Each segment must contain at least 1 `spine` scene and enough `ambient` slots to approach the `segment_hours` target.
+- **Time Estimate**: $\sum (	ext{spine\_minutes} + 	ext::ambient\_minutes}) pprox 	ext{segment\_hours} 	imes 60$.
+- **Failure Action**: If a segment is too "thin" (e.g., only 10 minutes of planned content for a 6-hour slot), the segment must be flagged for "Expansion Required" or re-briefed.
+
+### 3. Word Budget Guard (Post-Layer 3)
+During `src/generate_segment_dialogue.py`, the engine tracks:
+- **Cumulative Word Count**: $\sum 	ext{words\_generated}$ must not exceed the global 1.5M-word budget for the 168-hour arc.
+- **Failure Action**: If the word count approaches the global limit, the generator must trigger a `WARNING` and potentially truncate or end the current run.
+
+This arithmetic ensures the "3-layer pipeline" is a closed-loop control system rather than an open-ended expansion.
+
+## Budgeting & Verification (The Arithmetic Fix)
+
+To ensure the 168-hour target is not just a "goal" but a mathematically enforced constraint, the following validation checks are added to the pipeline:
+
+### 1. Arc Continuity Check (Post-Layer 1)
+After `src/plan_arc.py` completes, a validator must verify:
+- **Sum of Segments**: $\sum_{i=1}^{n} \text{segment_hours}_i \approx \text{hours_total}$ (within $\pm 5\%$ tolerance to account for edge-case padding).
+- **Segment Count**: $n \approx \frac{\text{hours_total}}{\text{segment_hours}}$ (e.g., $\sim 28$ segments).
+- **Failure Action**: If the sum is significantly lower than the target, the arc must re-plan the missing duration or flag a `CRITICAL` error.
+
+### 2. Segment Density Check (Post-Layer 2)
+After `src/plan_segment.py` completes, the validator checks:
+- **Min/Max Scene Bounds**: Each segment must contain at least 1 `spine` scene and enough `ambient` slots to approach the `segment_hours` target.
+- **Time Estimate**: $\sum (\text{spine_minutes} + \text{ambient_minutes}) \approx \text{segment_hours} \times 60$.
+- **Failure Action**: If a segment is too "thin" (e.g., only 10 minutes of planned content for a 6-hour slot), the segment must be flagged for "Expansion Required" or re-briefed.
+
+### 3. Word Budget Guard (Post-Layer 3)
+During `src/generate_segment_dialogue.py`, the engine tracks:
+- **Cumulative Word Count**: $\sum \text{words_generated}$ must not exceed the global 1.5M-word budget for the 168-hour arc.
+- **Failure Action**: If the word count approaches the global limit, the generator must trigger a `WARNING` and potentially truncate or end the current run.
+
+This arithmetic ensures the "3-layer pipeline" is a closed-loop control system rather than an open-ended expansion.
