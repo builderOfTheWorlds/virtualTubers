@@ -1,0 +1,41 @@
+id: night-watch
+take: 1
+model: hermes3:70b
+generated_at: '2026-08-18T02:10:05.117754+00:00'
+beats:
+- kind: dialogue
+  speaker: buffalo
+  text: You ever think about the stars, Ash?
+- kind: narration
+  speaker: gm
+  text: 'ashiorid: Not really. Why?'
+- kind: dialogue
+  speaker: buffalo
+  text: No reason. Just something to look at.
+- kind: narration
+  speaker: gm
+  text: 'ashiorid: (yawns) Yeah.'
+- kind: dialogue
+  speaker: buffalo
+  text: Hear that?
+- kind: narration
+  speaker: gm
+  text: 'ashiorid: (listens) Wind?'
+- kind: dialogue
+  speaker: buffalo
+  text: Maybe.
+- kind: dialogue
+  speaker: buffalo
+  text: Should we wake 'em?
+- kind: narration
+  speaker: gm
+  text: 'ashiorid: No. Let ''em rest.'
+- kind: dialogue
+  speaker: buffalo
+  text: Yeah.
+- kind: narration
+  speaker: gm
+  text: 'ashiorid: What''s something small you''d admit now?'
+- kind: dialogue
+  speaker: buffalo
+  text: I miss my mom's cooking.

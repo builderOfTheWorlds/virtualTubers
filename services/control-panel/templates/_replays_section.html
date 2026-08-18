@@ -1,0 +1,34 @@
+<div id="replays-section">
+  {% if upload_result %}
+    {% if upload_result.ok %}
+      <div class="banner ok">uploaded <span class="mono">{{ upload_result.name }}</span> ({{ upload_result.event_count }} events)</div>
+    {% else %}
+      <div class="banner err">{{ upload_result.error }}</div>
+    {% endif %}
+  {% endif %}
+
+  <form class="inline-form" hx-post="/replays/upload" hx-target="#replays-section" hx-swap="outerHTML"
+        hx-encoding="multipart/form-data">
+    <input type="file" name="file" accept="application/json" required>
+    <input type="text" name="name" placeholder="override name (optional)" maxlength="128">
+    <label><input type="checkbox" name="overwrite" value="true"> overwrite existing</label>
+    <button class="btn" type="submit">Upload episode</button>
+  </form>
+
+  {% if replays_error %}
+    <div class="banner err">{{ replays_error }}</div>
+  {% endif %}
+
+  <table class="panel-table">
+    <thead>
+      <tr><th>name</th><th>project</th><th>date</th><th>events</th><th>bytes</th><th>uploaded by</th><th></th></tr>
+    </thead>
+    <tbody id="replays-table">
+      {% for replay in replays %}
+        {% include "_replay_row.html" %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div id="replay-view"></div>
+</div>

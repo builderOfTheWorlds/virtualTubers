@@ -1,0 +1,37 @@
+id: camp-fire
+take: 3
+model: hermes3:70b
+generated_at: '2026-08-18T02:00:55.127605+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire crackles and pops, casting dancing shadows on the faces of the travelers.
+- kind: dialogue
+  speaker: buffalo
+  text: We need to decide the watch order. I'll take first, Drokki can take second.
+- kind: dialogue
+  speaker: drokki
+  text: The fire will last the night if we ration it properly. We have enough wood.
+- kind: dialogue
+  speaker: carl
+  text: The rain won't stop until morning. Best to rest while we can.
+- kind: dialogue
+  speaker: helen
+  text: How long do you think this storm will last?
+- kind: dialogue
+  speaker: gm
+  text: The rain continues to patter against the ground, showing no signs of letting
+    up.
+- kind: dialogue
+  speaker: buffalo
+  text: No way to know for sure. Could be days.
+- kind: dialogue
+  speaker: drokki
+  text: Or it could stop by dawn. No sense worrying about it now.
+- kind: dialogue
+  speaker: carl
+  text: Sleep is the wisest choice. Nothing else can be done tonight.
+- kind: dialogue
+  speaker: gm
+  text: The fire dims as the night wears on, the rain a constant companion in the
+    darkness.

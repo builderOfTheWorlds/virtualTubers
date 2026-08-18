@@ -38,6 +38,9 @@ docker build -t virtualtubers-message-logger:latest -f services/message-logger/D
 log "Building virtualtubers-message-api:latest"
 docker build -t virtualtubers-message-api:latest -f services/message-api/Dockerfile .
 
+log "Building virtualtubers-control-panel:latest"
+docker build -t virtualtubers-control-panel:latest -f services/control-panel/Dockerfile .
+
 log "Building virtualtubers-log-shipper:latest"
 docker build -t virtualtubers-log-shipper:latest -f services/log-shipper/Dockerfile .
 

@@ -1,0 +1,25 @@
+id: buffalo-lost
+take: 3
+model: hermes3:70b
+generated_at: '2026-08-18T01:58:26.284775+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The group stands at a fork in the road, uncertain which path to take.
+- kind: dialogue
+  speaker: buffalo
+  text: We should definitely go left. I'm sure of it.
+- kind: dialogue
+  speaker: drokki
+  text: You sure about that, Buffalo? You got us lost last time.
+- kind: dialogue
+  speaker: helen
+  text: Well, we don't want to get stuck on the wrong trail. Maybe we should discuss
+    this.
+- kind: dialogue
+  speaker: carl
+  text: Actually, I'm pretty certain we need to go right. I recognize that boulder
+    from the map.
+- kind: dialogue
+  speaker: buffalo
+  text: Fine, we can try right. But I still think left was the way to go.

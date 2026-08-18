@@ -1,0 +1,27 @@
+id: the-meal
+take: 2
+model: hermes3:70b
+generated_at: '2026-08-18T02:22:19.237474+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party sits down to eat, but the food is not good, and there's enough of
+    it.
+- kind: dialogue
+  speaker: drokki
+  text: This meal is terrible! I could have done a much better job preparing it.
+- kind: dialogue
+  speaker: buffalo
+  text: Can we just drop it and eat in peace?
+- kind: dialogue
+  speaker: helen
+  text: Come on, let's try to make this a nice occasion despite the food.
+- kind: dialogue
+  speaker: drokki
+  text: Well, I bet the pot wasn't even cleaned properly before cooking this slop.
+- kind: dialogue
+  speaker: helen
+  text: So, what's on the agenda for tomorrow?
+- kind: dialogue
+  speaker: gm
+  text: The argument fizzles out as everyone focuses on finishing their meals.

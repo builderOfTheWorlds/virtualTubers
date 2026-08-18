@@ -1,0 +1,25 @@
+id: helen-almost
+take: 2
+model: hermes3:70b
+generated_at: '2026-08-18T02:07:52.116010+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The door is a perfect arch, and it's eerily familiar to Helen. She comments
+    on it aloud, intrigued by the sensation.
+- kind: dialogue
+  speaker: helen
+  text: That's odd... I've seen this doorway before, but I can't place where. It's
+    like a memory that doesn't belong to me.
+- kind: dialogue
+  speaker: buffalo
+  text: Maybe it's from your village, Helen. You know, where you grew up.
+- kind: dialogue
+  speaker: drokki
+  text: I think I've seen one like it in my travels. They're not that uncommon.
+- kind: dialogue
+  speaker: carl
+  text: Could be anywhere, really.
+- kind: dialogue
+  speaker: buffalo
+  text: Don't chase it, Helen. Some things are better left as mysteries.

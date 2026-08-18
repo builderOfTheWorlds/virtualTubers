@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>virtualTubers control panel</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/htmx.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>virtualTubers control panel</h1>
+    <p class="sub">talks only to message-api (<span class="mono">{{ message_api_url }}</span>) — no direct Redis/Kafka/Postgres access</p>
+  </header>
+
+  <section>
+    <h2>Workers</h2>
+    {% include "_workers_table.html" %}
+  </section>
+
+  <section>
+    <h2>Send a message</h2>
+    <form class="stack-form" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML">
+      <label>to
+        <select name="to">
+          {% for w in worker_ids %}<option value="{{ w }}">{{ w }}</option>{% endfor %}
+          <option value="broadcast">broadcast</option>
+        </select>
+      </label>
+      <label>type
+        <input type="text" name="type" value="operator_message" list="message-type-examples">
+        <datalist id="message-type-examples">
+          {% for t in message_type_examples %}<option value="{{ t }}">{% endfor %}
+        </datalist>
+      </label>
+      <label>payload (JSON object)
+        <textarea name="payload" rows="3" spellcheck="false">{}</textarea>
+      </label>
+      <button class="btn" type="submit">Send</button>
+    </form>
+    {% include "_message_result.html" %}
+  </section>
+
+  <section>
+    <h2>Log filter <span class="hint">excluding a type stops it being written to the messages table in Postgres</span></h2>
+    {% include "_log_filter_table.html" %}
+  </section>
+
+  <section>
+    <h2>Prune container logs</h2>
+    <form class="stack-form" hx-post="/logs/prune" hx-target="#prune-result" hx-swap="outerHTML"
+          hx-confirm="Delete container_logs rows in this time range? This cannot be undone.">
+      <label>after <input type="datetime-local" name="after"></label>
+      <label>before <input type="datetime-local" name="before"></label>
+      <button class="btn danger" type="submit">Prune</button>
+    </form>
+    {% include "_prune_result.html" %}
+  </section>
+
+  <section>
+    <h2>Rerun Theater replays</h2>
+    {% include "_replays_section.html" %}
+  </section>
+</body>
+</html>

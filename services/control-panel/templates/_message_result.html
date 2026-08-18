@@ -1,0 +1,13 @@
+<div id="message-result">
+  {% if message_result %}
+    {% if message_result.ok %}
+      <div class="banner ok">
+        sent — <span class="mono">{{ message_result.sent.id }}</span>
+        to <span class="mono">{{ message_result.sent.to }}</span>
+        as <span class="mono">{{ message_result.sent.type }}</span>
+      </div>
+    {% else %}
+      <div class="banner err">{{ message_result.error }}</div>
+    {% endif %}
+  {% endif %}
+</div>

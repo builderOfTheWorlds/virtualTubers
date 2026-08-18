@@ -1,0 +1,44 @@
+id: night-watch
+take: 2
+model: hermes3:70b
+generated_at: '2026-08-18T02:11:52.790748+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The night is quiet, with only the distant hoot of an owl breaking the silence.
+    Buffalo and Carl sit watch, while Helen and Drokki sleep nearby, their soft snores
+    blending with the gentle breeze.
+- kind: dialogue
+  speaker: buffalo
+  text: You think anything's out there tonight?
+- kind: dialogue
+  speaker: carl
+  text: Nah, it's all clear. Just the way I like it.
+- kind: dialogue
+  speaker: buffalo
+  text: Me too. Peacetime's the best time.
+- kind: dialogue
+  speaker: carl
+  text: S'pose we should wake the others soon?
+- kind: dialogue
+  speaker: buffalo
+  text: Soon enough. Let 'em rest a bit more.
+- kind: dialogue
+  speaker: carl
+  text: Fair 'nough. You know, I've never noticed how many stars there are 'til now.
+- kind: dialogue
+  speaker: buffalo
+  text: Yeah... it's like the whole sky's alive.
+- kind: dialogue
+  speaker: carl
+  text: Somet'n small I've been meanin' to tell ya... I get scared out here sometimes.
+- kind: dialogue
+  speaker: buffalo
+  text: S'okay, we all get scared. No shame in that.
+- kind: narration
+  speaker: gm
+  text: 'Carl: Thanks... means a lot.'
+- kind: dialogue
+  speaker: gm
+  text: The conversation fades as the two continue their watch, the night stretching
+    on in comfortable silence.

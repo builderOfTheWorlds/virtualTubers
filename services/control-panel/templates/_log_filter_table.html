@@ -1,0 +1,16 @@
+<div id="log-filter-section">
+  <table class="panel-table">
+    <thead>
+      <tr><th>message type</th><th>postgres logging</th><th></th></tr>
+    </thead>
+    <tbody id="log-filter-table">
+      {% for log_type in log_types %}
+        {% include "_log_filter_row.html" %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <form class="inline-form" hx-post="/log-filter/add" hx-target="#log-filter-section" hx-swap="outerHTML">
+    <input type="text" name="message_type" placeholder="message type, e.g. task_assignment" required maxlength="128">
+    <button class="btn" type="submit">Track type</button>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+id: the-meal
+take: 3
+model: hermes3:70b
+generated_at: '2026-08-18T02:23:40.855690+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party sits down to eat. The food is not good, and there's plenty of it.
+- kind: dialogue
+  speaker: drokki
+  text: This meat is overcooked! I could've done a much better job.
+- kind: dialogue
+  speaker: helen
+  text: Come on, let's try to enjoy the meal together.
+- kind: dialogue
+  speaker: gm
+  text: The argument escalates over trivial matters like who cooked and if the pot
+    was cleaned.
+- kind: dialogue
+  speaker: buffalo
+  text: Can we just drop it and eat?
+- kind: dialogue
+  speaker: gm
+  text: Everyone stops talking and continues eating in silence.

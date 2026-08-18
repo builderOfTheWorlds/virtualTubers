@@ -1,0 +1,37 @@
+# Offline batch-generation config for the Ashiorid pack.
+#
+# This is NOT the live runtime config (config/campaigns/ashiorid.yaml) — it
+# is consumed only by app/campaign/batch_generate.py, a standalone script
+# that pre-renders ambient-scene takes to disk for later curation. The live
+# path (cli.py / runtime.py / renderer.py) never reads this file and never
+# loads hermes3:70b.
+#
+# Same shape as ashiorid.yaml on purpose, so the two stay easy to diff.
+
+campaign:
+  pack: campaigns/ashiorid
+
+# Passed straight to app/llm_client.py's build_llm_client(). Bigger and
+# slower than the live llama3.1:8b is fine here — this runs offline, in
+# batches, with no live-pacing constraint.
+llm:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  model: "hermes3:70b"
+  # More variety than the live 0.8 — many takes of the same ambient scene
+  # need to genuinely diverge from each other, not just from the prompt.
+  temperature: 0.9
+  # generate_scene's own caps (max_beats * max_words) bound the real length;
+  # this only prevents a single runaway generation from stalling a batch.
+  max_tokens: 1024
+
+improv:
+  # Lines of rolling transcript the model can see. Kept small like the live
+  # config even though context is cheaper offline, so output stays
+  # comparable if this ever feeds back into a smaller live model.
+  max_recent: 8
+  # Hard cap on one spoken line, matching the live config so generated takes
+  # stay swappable with live-improvised lines later.
+  max_words: 45
+  # Hard cap on beats in one fully-generated ambient scene.
+  max_beats: 12

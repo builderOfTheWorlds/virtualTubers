@@ -334,6 +334,25 @@ services:
     depends_on:
       - redis
 
+  # Browser control panel over message-api's HTTP surface (docs/control_panel.md)
+  # — worker on/off, log-filter toggles, message injection, log pruning, and
+  # the Rerun Theater replay library, without needing curl. Talks only to
+  # message-api; never touches Redis/Kafka/Postgres directly itself.
+  control-panel:
+    image: virtualtubers-control-panel:latest
+    pull_policy: never
+    environment:
+      MESSAGE_API_URL: http://message-api:8000
+      # Optional HTTP Basic Auth — unset (default) means no login is
+      # required. Set both before exposing this port beyond the LAN.
+      CONTROL_PANEL_BASIC_AUTH_USER: ${CONTROL_PANEL_BASIC_AUTH_USER:-}
+      CONTROL_PANEL_BASIC_AUTH_PASS: ${CONTROL_PANEL_BASIC_AUTH_PASS:-}
+    ports:
+      - "8091:8000"
+    restart: unless-stopped
+    depends_on:
+      - message-api
+
   # Watches each worker's Twitch chat (anonymous IRC — no Twitch credentials
   # needed) and announces arriving viewers as `viewer_joined` messages via
   # message-api, so workers greet them on stream (docs/twitch_presence.md).

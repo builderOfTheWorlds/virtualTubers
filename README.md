@@ -84,6 +84,11 @@ curl -X POST http://localhost:8090/messages \
   -d '{"to": "coder", "type": "task_assignment", "payload": {"task": "say hello"}}'
 ```
 
+Or drive the same controls — worker on/off, log filtering, message
+injection, log pruning, the Rerun Theater replay library — from a browser at
+**http://localhost:8091** (`control-panel`, docs/control_panel.md), no curl
+required.
+
 For everything else — shelling into a container, the full inter-agent
 messaging protocol, pausing/resuming a worker, running Rerun Theater (solo
 shows and multi-worker duets, with spoken narration), and local development
@@ -121,7 +126,7 @@ ConfigMaps): **[docs/configuration.md](docs/configuration.md)**.
 Top level:
 
 - `app/` — agent loop, LLM/TTS/coding-backend clients, avatar rendering, Rerun Theater
-- `services/` — `message-logger`, `message-api`, `twitch-presence`
+- `services/` — `message-logger`, `message-api`, `control-panel`, `twitch-presence`
 - `sandbox/` — seeded-bug workspace the coder agents actually code on
 - `repos/` — vendored third-party avatar repos
 - `config/` — worker configs, tmux panel/layout presets

@@ -1,0 +1,26 @@
+id: carl-counts
+take: 1
+model: hermes3:70b
+generated_at: '2026-08-18T02:01:37.530640+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party enters a small tavern, the warmth of the fire and the murmur of
+    conversation enveloping them.
+- kind: dialogue
+  speaker: carl
+  text: There are eleven people in this room, not counting us. The door swings inward,
+    toward the bar.
+- kind: dialogue
+  speaker: buffalo
+  text: Huh, interesting. I didn't notice that shutter being repaired before.
+- kind: dialogue
+  speaker: drokki
+  text: (peering at the shutter) It's a sturdy repair. Should hold for a while.
+- kind: dialogue
+  speaker: helen
+  text: (glancing around) The same cart has passed by the window twice now. Odd.
+- kind: dialogue
+  speaker: gm
+  text: The conversation in the room continues, the party's observations seemingly
+    having little impact on the moment.

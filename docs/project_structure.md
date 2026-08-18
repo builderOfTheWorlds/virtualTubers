@@ -32,6 +32,7 @@ virtualTubers/
 ├── services/
 │   ├── message-logger/    # Consumes every bus message, logs it to Postgres
 │   ├── message-api/       # FastAPI service: injects test messages onto the bus, and owns /replays episode upload
+│   ├── control-panel/     # Browser dashboard over message-api's HTTP surface (docs/control_panel.md)
 │   └── twitch-presence/   # Watches Twitch chat, announces arriving viewers (viewer_joined)
 ├── sandbox/               # Seeded-bug workspace template the coder agents actually code on
 ├── repos/                 # Vendored third-party avatar repos (see repos/README.md) — e.g. ascii-avatar, used by avatar_providers/ascii_avatar.py

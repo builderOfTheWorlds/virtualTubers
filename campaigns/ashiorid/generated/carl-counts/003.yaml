@@ -1,0 +1,25 @@
+id: carl-counts
+take: 3
+model: hermes3:70b
+generated_at: '2026-08-18T02:03:12.304040+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party enters a small tavern, the smell of ale and roasted meat fills the
+    air. The wooden floors creak under their feet.
+- kind: dialogue
+  speaker: carl
+  text: Carl glances around, noting the five patrons scattered around the room, the
+    door that opens inward, and the freshly repaired window shutter.
+- kind: dialogue
+  speaker: buffalo
+  text: Buffalo grunts, uninterested in Carl's observations.
+- kind: dialogue
+  speaker: helen
+  text: Helen raises an eyebrow but says nothing.
+- kind: dialogue
+  speaker: drokki
+  text: Drokki takes a seat at an empty table, motioning for the others to join him.
+- kind: dialogue
+  speaker: gm
+  text: The bartender looks up from wiping a mug, eyeing the newcomers curiously.

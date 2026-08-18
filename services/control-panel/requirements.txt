@@ -1,0 +1,9 @@
+# Pinned exact to match services/message-api's pins (see that
+# requirements.txt for why: an unpinned fastapi>=0.110 drifted onto a
+# release with a breaking Body() behavior change).
+fastapi==0.141.1
+starlette==1.6.0
+uvicorn>=0.29
+jinja2>=3.1
+httpx>=0.27
+python-multipart>=0.0.9

@@ -1,0 +1,18 @@
+<tr id="log-filter-row-{{ log_type.type }}">
+  <td class="mono">{{ log_type.type }}</td>
+  <td>
+    {% if log_type.error %}
+      <span class="badge err" title="{{ log_type.error }}">error</span>
+    {% elif log_type.excluded %}
+      <span class="badge off">excluded</span>
+    {% else %}
+      <span class="badge on">logged</span>
+    {% endif %}
+  </td>
+  <td class="actions">
+    <button class="btn"
+      hx-post="/log-filter/{{ log_type.type }}/include" hx-target="closest tr" hx-swap="outerHTML">Log it</button>
+    <button class="btn danger"
+      hx-post="/log-filter/{{ log_type.type }}/exclude" hx-target="closest tr" hx-swap="outerHTML">Exclude</button>
+  </td>
+</tr>

@@ -1,0 +1,9 @@
+<div id="prune-result">
+  {% if prune_result %}
+    {% if prune_result.ok %}
+      <div class="banner ok">deleted {{ prune_result.deleted }} row(s) from container_logs</div>
+    {% else %}
+      <div class="banner err">{{ prune_result.error }}</div>
+    {% endif %}
+  {% endif %}
+</div>

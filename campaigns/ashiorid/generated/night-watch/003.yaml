@@ -1,0 +1,41 @@
+id: night-watch
+take: 3
+model: hermes3:70b
+generated_at: '2026-08-18T02:13:27.834081+00:00'
+beats:
+- kind: dialogue
+  speaker: buffalo
+  text: This night feels longer than most.
+- kind: dialogue
+  speaker: helen
+  text: It does. But it's quiet. That's nice.
+- kind: dialogue
+  speaker: buffalo
+  text: Nothing but crickets and the occasional owl.
+- kind: dialogue
+  speaker: helen
+  text: I like the sound of crickets. It's comforting, you know?
+- kind: dialogue
+  speaker: buffalo
+  text: Yeah. Carl snores louder than them, at least.
+- kind: dialogue
+  speaker: helen
+  text: Don't let him hear you say that.
+- kind: dialogue
+  speaker: buffalo
+  text: No worries there. You think we should wake them early?
+- kind: dialogue
+  speaker: helen
+  text: Hmm. No, let them sleep. We've got this.
+- kind: dialogue
+  speaker: buffalo
+  text: Hey, Helen?
+- kind: dialogue
+  speaker: helen
+  text: Yeah?
+- kind: dialogue
+  speaker: buffalo
+  text: I... I'm glad you're here. With me, I mean. Awake.
+- kind: dialogue
+  speaker: helen
+  text: Me too, Buff. Me too.

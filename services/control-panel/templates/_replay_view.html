@@ -1,0 +1,8 @@
+{% if error %}
+  <div class="banner err">{{ error }}</div>
+{% else %}
+  <div class="view-header">
+    <button class="btn" onclick="this.closest('#replay-view').innerHTML=''">Close</button>
+  </div>
+  <pre class="script-view">{{ pretty }}</pre>
+{% endif %}

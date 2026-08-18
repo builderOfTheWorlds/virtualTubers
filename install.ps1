@@ -62,6 +62,7 @@ if ($python) {
 Invoke-ImageBuild -Tag "vtube-worker:latest"
 Invoke-ImageBuild -Tag "virtualtubers-message-logger:latest" -Dockerfile "services/message-logger/Dockerfile"
 Invoke-ImageBuild -Tag "virtualtubers-message-api:latest" -Dockerfile "services/message-api/Dockerfile"
+Invoke-ImageBuild -Tag "virtualtubers-control-panel:latest" -Dockerfile "services/control-panel/Dockerfile"
 Invoke-ImageBuild -Tag "virtualtubers-log-shipper:latest" -Dockerfile "services/log-shipper/Dockerfile"
 Invoke-ImageBuild -Tag "virtualtubers-twitch-presence:latest" -Dockerfile "services/twitch-presence/Dockerfile"
 

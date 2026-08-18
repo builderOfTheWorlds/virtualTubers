@@ -1,0 +1,19 @@
+<tr id="worker-row-{{ worker.id }}">
+  <td class="mono">{{ worker.id }}</td>
+  <td>
+    {% if worker.error %}
+      <span class="badge err" title="{{ worker.error }}">error</span>
+    {% elif worker.enabled %}
+      <span class="badge on">enabled</span>
+    {% else %}
+      <span class="badge off">disabled</span>
+    {% endif %}
+  </td>
+  <td class="actions">
+    <button class="btn"
+      hx-post="/workers/{{ worker.id }}/enable" hx-target="closest tr" hx-swap="outerHTML">Enable</button>
+    <button class="btn danger"
+      hx-post="/workers/{{ worker.id }}/disable" hx-target="closest tr" hx-swap="outerHTML"
+      hx-confirm="Disable {{ worker.id }}? This pauses its agent loop and its Twitch stream.">Disable</button>
+  </td>
+</tr>

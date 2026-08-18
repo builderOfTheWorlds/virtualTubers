@@ -1,0 +1,25 @@
+id: carl-counts
+take: 2
+model: hermes3:70b
+generated_at: '2026-08-18T02:02:22.257349+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party enters a dimly lit tavern, the smell of ale and roasted meat hangs
+    heavy in the air. Raucous laughter echoes off the wooden walls.
+- kind: dialogue
+  speaker: buffalo
+  text: I could go for a pint and a bite. This looks like our kind of place.
+- kind: dialogue
+  speaker: carl
+  text: The door hinges creak, opening outwards. There are about twenty patrons inside.
+- kind: dialogue
+  speaker: drokki
+  text: Huh, good eye Carl. A round of drinks is on me!
+- kind: dialogue
+  speaker: helen
+  text: To Drokki's health and wealth! May his pockets be ever lined with gold!
+- kind: dialogue
+  speaker: gm
+  text: The barkeep, a gruff looking half-orc, eyes you suspiciously as you approach.
+    What'll it be, strangers?

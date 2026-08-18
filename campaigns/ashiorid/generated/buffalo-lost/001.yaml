@@ -1,0 +1,30 @@
+id: buffalo-lost
+take: 1
+model: hermes3:70b
+generated_at: '2026-08-18T01:57:13.132020+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The group stands at a crossroads, uncertain of which path to take.
+- kind: dialogue
+  speaker: buffalo
+  text: We should definitely go left. That's the way to the castle, I'm sure of it.
+- kind: dialogue
+  speaker: drokki
+  text: Oh, Buffalo, you never fail to entertain with your sense of direction!
+- kind: dialogue
+  speaker: carl
+  text: Actually, I think we need to go right. The castle is that way, based on the
+    map.
+- kind: dialogue
+  speaker: helen
+  text: You know, Buffalo, we really appreciate you taking the lead. But perhaps we
+    should consider Carl's input?
+- kind: dialogue
+  speaker: buffalo
+  text: I still think left is the correct way. But I suppose we could go right, if
+    everyone else insists.
+- kind: dialogue
+  speaker: gm
+  text: The group heads down the right path, with Buffalo trailing behind, still insisting
+    left was the way to go.
