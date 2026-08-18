@@ -4,15 +4,27 @@ enter_narration: >-
   The manor of Duke Sorensen Leto the Third, lit for a party ten thousand years
   in the making.
 
+lore: [the-event]
+
 beats:
   - type: pane
     show: party
 
   - type: narration
     speaker: gm
-    text: >-
-      The manor sits on a hill with its windows lit end to end, and the noise
-      of it reaches you before the gate does.
+    improv: true
+    text:
+      - >-
+        The manor sits on a hill with its windows lit end to end, and the noise
+        of it reaches you before the gate does.
+      - >-
+        You hear the house before you see it. Then you see it: every window on
+        the hill lit, top to bottom, as though somebody was told not to leave a
+        single one dark.
+      - >-
+        It stands on the hill fully lit, which is its own kind of statement, and
+        the sound of three hundred people enjoying themselves arrives well ahead
+        of you.
 
   - type: action
     speaker: buffalo
@@ -23,16 +35,35 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Inside there is more food than the four of you have seen in a year, and
-      perhaps three hundred guests, none of whom can tell you how they were
-      invited either.
+    improv: true
+    text:
+      - >-
+        Inside there is more food than the four of you have seen in a year, and
+        perhaps three hundred guests, none of whom can tell you how they were
+        invited either.
+      - >-
+        The tables hold more than the four of you have eaten in a year. Three
+        hundred guests, give or take, and every one you ask gives the same
+        useless answer about how they came to be here.
+      - >-
+        There is food enough to be insulting and roughly three hundred people
+        working through it, and not one of them has a better account of their
+        invitation than you do.
 
   - type: dialogue
     speaker: drokki
-    text: >-
-      Hinges hand-cut. Floor's laid without a nail showing. Whoever built this
-      house was in no hurry at all, and that costs more than gold does.
+    improv: true
+    text:
+      - >-
+        Hinges hand-cut. Floor's laid without a nail showing. Whoever built this
+        house was in no hurry at all, and that costs more than gold does.
+      - >-
+        Look at the hinges — cut by hand, every one. Not a nail showing in the
+        whole floor. You don't buy that. You wait for it, and waiting is the
+        expensive part.
+      - >-
+        This house was built by someone with time. Hand-cut hinges, a floor laid
+        blind, no shortcuts anywhere I can find. Gold is easy. That's not gold.
 
   - type: action
     speaker: carl
@@ -43,21 +74,49 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Two doors, both attended. A staircase up. No windows on the ground floor
-      that a person could pass through. Carl counts it and says nothing.
+    improv: true
+    text:
+      - >-
+        Two doors, both attended. A staircase up. No windows on the ground floor
+        that a person could pass through. Carl counts it and says nothing.
+      - >-
+        Two ways out, and someone standing at each. Stairs going up. Nothing on
+        this floor a body could fit through. Carl finishes counting and keeps
+        the total to himself.
+      - >-
+        The hall has two doors and both are minded. There are stairs. The ground
+        floor windows are decorative at best. Carl notes all of it and his face
+        does not change.
 
   - type: dialogue
     speaker: buffalo
-    text: >-
-      Three hundred people in a room and not one of them knows why. I've
-      walked into an ambush with better odds.
+    improv: true
+    text:
+      - >-
+        Three hundred people in a room and not one of them knows why. I've
+        walked into an ambush with better odds.
+      - >-
+        Nobody in this room can tell me why they're in it. Three hundred of
+        them. I have been in ambushes that felt more above board.
+      - >-
+        Every one of these people came because a card told them to. That's three
+        hundred. I've seen better-organised traps and fewer of them.
 
   - type: narration
     speaker: gm
-    text: >-
-      An old man in a butler's coat crosses the hall toward you, and he has
-      been looking at the four of you specifically for some time.
+    improv: true
+    text:
+      - >-
+        An old man in a butler's coat crosses the hall toward you, and he has
+        been looking at the four of you specifically for some time.
+      - >-
+        There is an old man in a butler's coat working his way across the hall,
+        and he is coming to you. He has been watching the four of you longer
+        than is comfortable to think about.
+      - >-
+        A butler, elderly, threading through the crowd on a line that ends at
+        your table. Whatever he wants, he settled on the four of you some while
+        ago.
 
   - type: dialogue
     speaker: helen

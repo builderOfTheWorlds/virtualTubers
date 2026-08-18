@@ -2,30 +2,70 @@ id: magic-lost
 title: The Well That Emptied
 enter_narration: The seal fails. The last well runs dry.
 
+lore: [moonwells, the-event, the-begene-program]
+
 beats:
   - type: narration
     speaker: gm
-    text: >-
-      The seal fails. The last well drains in the space of a held breath, and
-      the world goes quiet in a way that has no sound to it.
+    improv: true
+    text:
+      - >-
+        The seal fails. The last well drains in the space of a held breath, and
+        the world goes quiet in a way that has no sound to it.
+      - >-
+        It does not take. The last well empties in about as long as it takes to
+        decide not to breathe yet, and afterward there is a silence that isn't
+        made of the absence of noise.
+      - >-
+        The seal comes apart. What is left in the well goes out of it all at
+        once, and every person alive who could feel such a thing feels it stop
+        being there.
 
   - type: narration
     speaker: gm
-    text: >-
-      So magic dies out of your age. What remains is inherited, hidden, and
-      hunted. A sorcerer is not rare. A sorcerer is impossible, and you are
-      looking at one.
+    improv: true
+    text:
+      - >-
+        So magic dies out of your age. What remains is inherited, hidden, and
+        hunted. A sorcerer is not rare. A sorcerer is impossible, and you are
+        looking at one.
+      - >-
+        Which is why your century has none. Whatever survived was passed down in
+        private and kept out of sight, because the alternative was being found.
+        A sorcerer isn't uncommon in your age. A sorcerer cannot exist — and
+        there is one at this table.
+      - >-
+        That is the world you woke up in: no magic in it anywhere, only rumours
+        of inheritance and the people who go looking for them. Rare would be a
+        promotion. The word is impossible, and one of you is it.
 
   - type: dialogue
     speaker: helen
-    text: >-
-      Then what I can do shouldn't exist. Nobody ever explained that to me.
-      Nobody ever tried.
+    improv: true
+    text:
+      - >-
+        Then what I can do shouldn't exist. Nobody ever explained that to me.
+        Nobody ever tried.
+      - >-
+        So I'm the thing that isn't supposed to be possible. Twenty-odd years
+        and not one person sat me down about it.
+      - >-
+        Then every time I've done it, I've been doing something the world says
+        can't be done. And nobody ever mentioned that. Not once.
 
   - type: dialogue
     speaker: carl
-    text: >-
-      In a world with no magic, someone kept a working sorcerer alive for
-      twenty-odd years. That took planning.
+    improv: true
+    text:
+      - >-
+        In a world with no magic, someone kept a working sorcerer alive for
+        twenty-odd years. That took planning.
+      - >-
+        Consider the logistics. No magic anywhere, and yet here she is, fed and
+        housed and unfound for two decades. That isn't luck. Someone ran that.
+      - >-
+        Somebody hid a working sorcerer in a world that hunts them, and did it
+        for twenty years without a slip. I'd like to know who was paying for
+        that, and what they were buying.
 
 default_next: letos-manor

@@ -1,0 +1,324 @@
+task_id: campaign_improviser
+
+goal: |
+  Implement the persona improviser for the virtualTubers campaign runtime.
+
+  The show streams 24/7 and replays the same authored scenes hundreds of times.
+  The plot is *supposed* to repeat — the show is a weekly time loop — but the
+  WORDING must not. This module is what makes that true: it takes a beat's
+  scripted line as *intent* and asks a small local LLM to re-say it in that
+  character's voice, and it generates whole "ambient" filler scenes from a
+  prompt.
+
+  This is a NEW module. Nothing imports it yet.
+
+  THE TWO CONTRACTS. This module has two entry points and they fail in
+  deliberately OPPOSITE ways. Getting this backwards breaks the show, so read
+  it twice:
+
+      __call__(beat, cast_member)
+          RAISES ImproviserError on ANY failure (no llm, llm raised, empty or
+          unusable output). The renderer already wraps this call in try/except
+          and falls back to the beat's scripted text, so a raise costs one
+          line's freshness and nothing else.
+
+      generate_scene(scene)
+          NEVER RAISES. Returns [] on ANY failure — no llm, no prompt on the
+          scene, llm raised, unparsable output. The runtime treats [] as "skip
+          this filler scene and go straight to the next plot scene". If this
+          raised, a model outage would take the whole stream down instead of
+          just costing filler.
+
+  Do NOT unify these into one error policy. Do NOT make generate_scene raise.
+
+target_files:
+  - app/campaign/improviser.py
+
+test_files:
+  - tests/test_campaign_improviser.py
+
+context_files:
+  - app/campaign/pack.py
+  - app/llm_client.py
+
+interface: |
+  app/campaign/improviser.py must export exactly these names:
+
+      class ImproviserError(RuntimeError)
+          Raised by __call__ only. Never raised by generate_scene.
+
+      class LLMImproviser:
+
+          def __init__(self, pack, llm=None, max_recent=8, max_words=45,
+                       max_beats=12)
+
+              Stores, as PUBLIC attributes with exactly these names:
+                  self.pack       the CampaignPack
+                  self.llm        the client, or None
+                  self.max_recent int, transcript window size
+                  self.max_words  int, hard cap on one line
+                  self.max_beats  int, hard cap on a generated scene
+                  self.scene      None initially; the current Scene
+                  self.carry      {} initially; cross-loop memory dict
+                  self.loop       1 initially; int loop number
+                  self.recent     [] initially; list[str] of "Name: text"
+
+              The tests read every one of these directly. Do not rename them,
+              do not make them properties, do not prefix them with underscore.
+
+              `llm` is any object with a method
+              `complete(system_prompt, messages) -> str`, matching
+              app/llm_client.py. Do NOT import or construct an llm client in
+              this module — it is always injected. Do NOT import requests,
+              urllib, httpx or anything else that touches a network. The test
+              suite must never make a network call.
+
+          def update_context(self, scene=None, carry=None, loop=None) -> None
+              Sets each attribute ONLY when its argument is not None. Calling
+              update_context(scene=x) must leave carry and loop untouched.
+              Changing the scene must NOT clear self.recent — the rolling
+              window deliberately spans scene boundaries, because continuity
+              across a scene cut is the entire point of keeping it.
+
+          def observe(self, speaker_name, text) -> None
+              Appends f"{speaker_name}: {text}" to self.recent, then trims
+              self.recent to its LAST max_recent entries. A text that is None,
+              empty, or whitespace-only is ignored entirely — nothing is
+              appended.
+
+          def __call__(self, beat, cast_member) -> str
+              The renderer seam. Builds a prompt, calls
+              self.llm.complete(system_prompt, messages) EXACTLY ONCE, and
+              returns the sanitised line. Raises ImproviserError on any
+              failure. See PROMPT ASSEMBLY and SANITATION.
+
+          def generate_scene(self, scene) -> list[Beat]
+              Generates a whole ambient scene. Returns a list of Beat objects
+              (imported from campaign.pack). Returns [] on any failure. See
+              GENERATING A SCENE.
+
+notes: |
+  MESSAGE SHAPE. `messages` is a list of dicts, each with "role" and "content"
+  keys, e.g. [{"role": "user", "content": "<the whole user prompt>"}]. The
+  tests join every message's "content", so all user-facing context must live
+  in "content" values, not in the dict's other keys.
+
+  PROMPT ASSEMBLY for __call__.
+
+  The SYSTEM prompt must contain:
+    - cast_member.name
+    - cast_member.archetype, when it is set
+    - cast_member.system_prompt, verbatim, when it is set
+    - a standing instruction to reply with ONE spoken line, in character, with
+      no name label, no quotation marks and no stage directions
+  A cast member with no system_prompt and no archetype must still produce a
+  usable system prompt containing their name — never crash, never emit "None".
+
+  The USER message must contain:
+    - the scene title, when self.scene is set and has one
+    - the text of each lore note selected by self.scene.lore: for each stem in
+      that list, look up self.pack.lore.get(stem) and include it when found.
+      A stem with no matching note is SKIPPED SILENTLY — it must not raise.
+      Only the SELECTED notes travel; never dump the whole self.pack.lore
+      mapping, because context is a budget.
+    - the rolling transcript: self.recent, in order
+    - the memory section, but ONLY when self.loop > 1 or self.carry is
+      non-empty. It must contain the loop number and a rendering of the carry
+      mapping's keys and values. When loop == 1 and carry is empty, emit
+      NOTHING for this section — not an empty header, not "carry: {}".
+    - the beat's scripted text (beat.text) presented as INTENT — what the
+      character means — not as a script to copy. A beat whose text is None
+      must still produce a working prompt.
+    - the word budget: the number self.max_words must appear literally in the
+      user message or the system prompt.
+
+  SANITATION. This is the load-bearing part of the module.
+
+  A small model (llama3.1:8b) will label its own line, wrap it in quotes, add
+  stage directions, emit markdown and run long. Every one of those reaches
+  text-to-speech verbatim if it is not stripped, and a character announcing
+  their own name aloud is the loudest possible bug on stream.
+
+  Apply these steps IN THIS ORDER — the order is load-bearing too:
+
+    1. If the reply is not a str, raise ImproviserError.
+    2. Strip leading and trailing whitespace.
+    3. Strip a leading speaker label. Compare CASE-INSENSITIVELY — the model
+       emits "Helen:", "helen:" and "HELEN:" interchangeably and all three must
+       go. Write it by splitting on the colon and lowercasing both sides:
+
+           label, sep, rest = text.partition(":")
+           if sep and label.strip().lower() in {n.lower() for n in labels if n}:
+               text = rest.lstrip()
+
+       where `labels` holds cast_member.name and cast_member.id. Do NOT write
+       `text.startswith(name + ":")` — that is case-SENSITIVE and lets "HELEN:"
+       through to text-to-speech, which is the exact bug this step exists to
+       prevent. A label matching NEITHER is left alone — "Note: the door is
+       barred." keeps its "Note:", because that is content, not a label.
+    4. Delete stage directions: remove every "*...*" span AND its contents.
+       But FIRST unwrap markdown emphasis: "**text**" and "__text__" become
+       "text" (contents KEPT). So "We **should** run." -> "We should run."
+       while "*leans in* We should run." -> "We should run.". Double-asterisk
+       keeps its contents; single-asterisk deletes them. Handle the double
+       form before the single form or the single-asterisk rule will eat it.
+    5. Collapse all whitespace — newlines, tabs, runs of spaces — into single
+       spaces, so the result is ONE paragraph. Strip again.
+    6. Strip ONE wrapping pair of quotes: if the text now starts and ends with
+       a matching quote character (" or ' or the curly forms " and "), remove
+       both. Only strip when BOTH ends have one — an internal quote, as in
+       'He said "run" and I ran.', must survive untouched.
+    7. Cap the length: if the text has more than max_words whitespace-separated
+       words, keep the first max_words. If that truncated the text, ensure the
+       result ends in terminal punctuation. "Ensure" means CHECK FIRST:
+
+           last = words[-1]
+           if not last.endswith((".", "!", "?", "…")):
+               last = last.rstrip(",;:-")
+               words[-1] = last + "."
+           text = " ".join(words)
+
+       Appending "." unconditionally is wrong: a cut that lands on a word
+       already ending a sentence then produces "four.." or "four!.", and both
+       reach text-to-speech exactly as written. Strip a trailing comma,
+       semicolon, colon or dash ONLY on the branch that appends. The returned
+       text must still be exactly max_words words either way — the period joins
+       the last word, never becomes a separate token.
+    8. If the result is now empty or whitespace-only, raise ImproviserError.
+       "*shrugs*" (a stage direction and nothing else) and '""' both reduce to
+       empty and must therefore raise.
+
+  Every one of those defects can arrive at once, so the steps must compose:
+  '  Helen: *leans in* "We **should** run.\n\nNow."  ' must sanitise to exactly
+  'We should run. Now.'
+
+  Anything the llm call itself raises must be caught and re-raised as
+  ImproviserError. Use `raise ImproviserError(...) from exc`. Catch `Exception`
+  around the llm call ONLY — it is a foreign object and any failure there is
+  operationally equivalent — but do NOT wrap your own sanitation logic in a
+  broad catch, and never write `except (ImproviserError, Exception)`.
+
+  GENERATING A SCENE.
+
+  generate_scene(scene) returns [] IMMEDIATELY, logging at WARNING, when:
+    - self.llm is None
+    - scene.prompt is falsy (None or empty)
+    - the llm call raises
+    - the reply is not a str, or is empty/whitespace-only
+    - nothing parses out of the reply
+
+  Otherwise, build a prompt whose user message contains:
+    - scene.prompt, verbatim — the generation brief
+    - the cast roster: the ids AND names of the gm and every player, from
+      self.pack.cast. The tests assert the ids "helen" and "buffalo" appear.
+    - the lore notes selected by scene.lore, resolved through self.pack.lore
+      exactly as in __call__
+    - the rolling transcript and memory section, same rules as __call__
+    - an instruction to reply with one line per beat, formatted
+      "<speaker_id>: <what they say>"
+
+  Then parse the reply LINE BY LINE. Write this in the exact shape below — each
+  line of it is load-bearing and is pinned by a test. The guard on the reply
+  comes FIRST and is not optional: `reply` is whatever a foreign object handed
+  back, so it may be None or any non-string, and calling .splitlines() on it
+  raises AttributeError straight out of a function that must never raise:
+
+      if not isinstance(reply, str) or not reply.strip():
+          log.warning("generate_scene: unusable reply")
+          return []
+
+      beats = []
+      for line in reply.splitlines():
+          if len(beats) >= self.max_beats:
+              break
+          line = line.strip()
+          if not line:
+              continue
+
+          prefix, _, rest = line.partition(":")
+          if _ and prefix.strip() in self.pack.cast:
+              kind, speaker, raw = "dialogue", prefix.strip(), rest
+          else:
+              kind, speaker, raw = "narration", self.pack.gm_id, line
+
+          try:
+              text = self._sanitise(raw)          # no label argument here
+          except ImproviserError:
+              continue                            # contentless line, skip it
+          if not text:
+              continue
+
+          beats.append(Beat(kind=kind, speaker=speaker, text=text,
+                            texts=[text], improv=False,
+                            key=f"{scene.id}#gen{len(beats)}"))
+
+  Three things in that skeleton are exactly where a straightforward reading goes
+  wrong, so do not simplify any of them away:
+
+    - THE SANITISER RAISES AND generate_scene MUST NOT. Step 8 raises
+      ImproviserError on a line that reduces to nothing, and "*shrugs*" on its
+      own line is the single most common thing a small model emits. That raise
+      is correct for __call__ and fatal here: uncaught, one stage direction
+      takes the whole stream down. Catch ImproviserError around EACH line's
+      sanitisation and `continue`. Sanitising outside a try, or wrapping only
+      the llm call, leaves this hole open. A reply where NO line survives
+      yields [] — which is the normal empty return, not an error.
+
+    - max_beats COUNTS EMITTED BEATS, NOT SCANNED LINES. The guard reads
+      `len(beats) >= self.max_beats`. Using the loop's line index instead means
+      a reply padded with blank lines returns 3 beats when 6 were asked for,
+      because blank lines spent the budget without producing anything.
+
+    - key NUMBERS THE RETURNED LIST, NOT THE REPLY. It is
+      f"{scene.id}#gen{len(beats)}" — the position the beat will occupy in the
+      list you return. Using the line index instead makes the first beat of a
+      scene "#gen2" whenever the model opened with a blank line. Keys must run
+      0, 1, 2 … with no gaps, because the renderer's variant cycling keys off
+      them and a key is supposed to name a position.
+
+  Sanitation inside generate_scene runs the SAME steps as above EXCEPT step 3,
+  the speaker-label strip: there is no cast_member in scope here, and the label
+  was already removed by the parse when it matched a known id. Factor the
+  shared steps into one helper that takes the label names as an optional
+  argument, rather than writing the sequence twice. Call that helper ONCE per
+  line and reuse its result for both `text` and `texts` — sanitising twice does
+  the same work twice and gives the two fields two chances to disagree.
+
+  Every generated Beat must have:
+      kind      "dialogue" or "narration" as above
+      speaker   the cast id
+      text      the sanitised line
+      texts     [text] — a one-entry variant pool, so the renderer's variant
+                cycling finds a populated pool rather than an empty one
+      improv    False — these lines are ALREADY generated. Leaving improv True
+                would make the renderer call the model a second time on text
+                the model just wrote, doubling latency for no benefit.
+      key       f"{scene.id}#gen{index}" where index is the 0-based position of
+                the beat in the returned list. Keys must be unique within the
+                scene.
+
+  Construct Beats with keyword arguments only — Beat has many fields with
+  defaults and positional construction will silently misalign them.
+
+  LOGGING. Module-level `log = logging.getLogger(__name__)`. DEBUG when a
+  prompt is assembled and when a line is sanitised; INFO when a scene is
+  generated, with the beat count; WARNING on every path where generate_scene
+  returns []. Do NOT log at WARNING or above for a failure you are already
+  raising as ImproviserError — the caller handles it. All three levels are
+  asserted by tests: one checks a DEBUG record appears on the
+  "campaign.improviser" logger during __call__, one checks an INFO record
+  appears during generate_scene, and one checks that a failing __call__ emits
+  NOTHING at WARNING or above. Logging here is required, not decorative.
+
+  __call__ currently tends to come back with no logging in it at all, and that
+  is a test failure, not a style nit. It needs at least these two, and they must
+  use %-arguments rather than f-strings:
+
+      log.debug("improvising for %s in scene %s", cast_member.id, ...)
+      log.debug("sanitised %d chars to %d", len(reply), len(text)) Use lazy %-formatting
+  (`log.debug("generated %d beats", count)`), never f-strings, in logging
+  calls. Never log the full prompt or the full model reply at INFO or above.
+
+  STYLE. Builtin generics only (`list[str]`, `dict[str, str]`) — do NOT import
+  anything from `typing`. Import nothing you do not use. Import Beat from
+  campaign.pack. No f-strings in logging calls. No network imports.

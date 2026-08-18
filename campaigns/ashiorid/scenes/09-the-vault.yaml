@@ -4,6 +4,8 @@ enter_narration: >-
   Behind the subbasement wall is the thing the Letos have been guarding for ten
   thousand years.
 
+lore: [the-event, moonwells]
+
 beats:
   - type: pane
     show: inventory
@@ -17,24 +19,55 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Drokki finds the seam because Drokki finds seams. There is no handle, no
-      keyhole, no mechanism at all. There is a word, and Grovley speaks it, and
-      the wall is simply a door and always was.
+    improv: true
+    text:
+      - >-
+        Drokki finds the seam because Drokki finds seams. There is no handle, no
+        keyhole, no mechanism at all. There is a word, and Grovley speaks it, and
+        the wall is simply a door and always was.
+      - >-
+        The seam is there, and Drokki finds it, which is what Drokki is for. No
+        handle. No lock. Nothing to work at. Grovley says a word instead, and the
+        wall turns out to have been a door the entire time.
+      - >-
+        There is a line in the stone that has no business being there, and Drokki
+        has it inside a minute. Nothing to pull, nothing to turn. Then Grovley
+        speaks one word and the wall stops pretending.
 
   - type: narration
     speaker: gm
-    text: >-
-      Beyond it is a room the size of a cathedral and a shape in the middle of
-      it that your eyes will not agree on. It is held. It has been held here
-      since the Event.
+    improv: true
+    text:
+      - >-
+        Beyond it is a room the size of a cathedral and a shape in the middle of
+        it that your eyes will not agree on. It is held. It has been held here
+        since the Event.
+      - >-
+        Behind the wall is a space you could put a cathedral inside, and
+        something standing in the centre of it that no two of you would describe
+        the same way. It is bound. It has been bound down here since the Event.
+      - >-
+        The room beyond is far too large for the house above it. In the middle of
+        it is a shape your eye keeps sliding off. Whatever it is, it is held, and
+        it has been held since the day the world changed.
 
   - type: narration
     speaker: gm
-    text: >-
-      "It is the only reason the eighty-sixth dimension is out there," Grovley
-      says, "and not in here. The Duke's family have stood in front of it for
-      ten thousand years. That duty is now yours."
+    improv: true
+    text:
+      - >-
+        "It is the only reason the eighty-sixth dimension is out there," Grovley
+        says, "and not in here. The Duke's family have stood in front of it for
+        ten thousand years. That duty is now yours."
+      - >-
+        Grovley tells you it is the single reason the eighty-sixth dimension is
+        still on the outside of the world. The Letos have stood in front of it
+        for ten thousand years without a break, and that job has just changed
+        hands to the four of you.
+      - >-
+        "That is what keeps the eighty-sixth out there rather than in here," he
+        says. "One family has stood in front of it for ten thousand years. As of
+        tonight, you are the family."
 
   - type: action
     speaker: helen
@@ -45,20 +78,43 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Grovley presses something into Buffalo's hand. Half a signet ring, cut
-      clean through, the edge still bright.
+    improv: true
+    text:
+      - >-
+        Grovley presses something into Buffalo's hand. Half a signet ring, cut
+        clean through, the edge still bright.
+      - >-
+        Something goes into Buffalo's palm and Grovley closes his fingers over
+        it. Half a signet ring. Cut through cleanly, and the cut is still bright.
+      - >-
+        Grovley puts half a signet ring into Buffalo's hand. It has been divided
+        with something very sharp, and the new edge has not had time to dull.
 
   - type: dialogue
     speaker: buffalo
-    text: >-
-      Half. Where's the other half.
+    improv: true
+    text:
+      - >-
+        Half. Where's the other half.
+      - >-
+        This is half a ring. Who's got the rest of it.
+      - >-
+        Someone cut this. So somebody, somewhere, is carrying the other side.
 
   - type: narration
     speaker: gm
-    text: >-
-      "With the person who ordered tonight," Grovley says. "Go through the
-      tunnel. Do not come back up through the house. There is no house."
+    improv: true
+    text:
+      - >-
+        "With the person who ordered tonight," Grovley says. "Go through the
+        tunnel. Do not come back up through the house. There is no house."
+      - >-
+        Grovley says the other half is with whoever gave tonight's order. Then he
+        tells you to take the tunnel, and not to go back up through the house,
+        because there is no longer a house to go up through.
+      - >-
+        "The person who ordered this has it," he says. "Take the tunnel. Don't go
+        back the way you came — there's nothing up there now."
 
   - type: action
     speaker: carl

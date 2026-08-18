@@ -4,27 +4,60 @@ enter_narration: >-
   Ten thousand years ago the world burned its own magic for fuel, and a handful
   of people tried to stop it.
 
+lore: [the-event, moonwells]
+
 beats:
   - type: narration
     speaker: gm
-    text: >-
-      They called it the Age of War because nobody had the nerve to call it
-      what it was: a fire that had run out of things to eat and started on the
-      world itself.
+    improv: true
+    text:
+      - >-
+        They called it the Age of War because nobody had the nerve to call it
+        what it was: a fire that had run out of things to eat and started on the
+        world itself.
+      - >-
+        History gave it a clean name. The people who lived through it called it
+        the years the sky went the colour of a coin, and they did not write
+        much down, because there was nothing to write with and no one to read.
+      - >-
+        Every account of it begins with armies and ends with arithmetic. The
+        armies are the part people remember. The arithmetic is the part that
+        killed them.
 
   - type: narration
     speaker: gm
-    text: >-
-      Magic is not free. Every spell drew from the same well, and the armies
-      drew without counting. The moonwells went grey one after another, like
-      lamps going out down a long hall.
+    improv: true
+    text:
+      - >-
+        Magic is not free. Every spell drew from the same well, and the armies
+        drew without counting. The moonwells went grey one after another, like
+        lamps going out down a long hall.
+      - >-
+        There is a bottom to it. That is the whole lesson, and it took ten
+        thousand years and most of a world to teach. Every spell ever cast came
+        out of the same finite well, and the generals cast without ever once
+        asking how deep it went.
+      - >-
+        Picture a hall of lamps and a war fought by their light. Nobody
+        extinguishes them. They simply burn, and burn, and one evening the far
+        end of the hall is dark and nobody can say precisely when that happened.
 
   - type: narration
     speaker: gm
-    text: >-
-      A small group went to the last well with a plan to close it before it
-      emptied. This is the moment the whole world hinges on, and this is where
-      you come in.
+    improv: true
+    text:
+      - >-
+        A small group went to the last well with a plan to close it before it
+        emptied. This is the moment the whole world hinges on, and this is where
+        you come in.
+      - >-
+        One well was left. A handful of people walked to it carrying a plan thin
+        enough to see through, because a thin plan was the only kind left. Every
+        age that follows is decided at that well, including yours.
+      - >-
+        What happens next is not a battle. It is four or five people at the lip
+        of the last well in the world, trying to shut it before it runs out, and
+        everything you know about your own age is the shape of how that went.
 
   - type: action
     speaker: helen
@@ -35,10 +68,20 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Ten thousand years from now, four strangers will hold a card in their
-      hands, and what happens in this next breath decides what kind of world
-      they hold it in.
+    improv: true
+    text:
+      - >-
+        Ten thousand years from now, four strangers will hold a card in their
+        hands, and what happens in this next breath decides what kind of world
+        they hold it in.
+      - >-
+        The distance between that breath and this room is ten thousand years,
+        and it is not as long as it sounds. Four strangers, an invitation each,
+        and a world shaped entirely by which way this goes.
+      - >-
+        Hold the moment there. Somewhere on the far side of it, four people who
+        have never met are reading their names off a card, and they have no idea
+        they are standing downstream of this.
 
 branches:
   - id: success

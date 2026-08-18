@@ -139,6 +139,9 @@ Full annotated tree, one line per file: **[docs/project_structure.md](docs/proje
 
 <!-- SHARED:START -->
 <!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from virtualTubers — 2026-08-17 00:53
+
+<!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
 ### Added from virtualTubers — 2026-07-12 02:32
 
 ## Claude Code Hook: .venv Enforcement

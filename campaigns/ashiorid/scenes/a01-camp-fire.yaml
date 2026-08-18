@@ -1,0 +1,25 @@
+# AMBIENT — filler, not plot. Injected between spine scenes, never linked by a
+# branch or default_next. It has no beats: the whole scene is generated at
+# runtime from the prompt below, so it is different every time it airs.
+#
+# Ambient prompts must decide NOTHING. They can be injected anywhere in the
+# arc, so a scene that resolves a question or moves the party breaks the spine.
+id: camp-fire
+title: A Fire, Waiting
+ambient: true
+
+lore: [the-event]
+
+prompt: |
+  Rain has stopped the party for the evening. There is a fire, and it is
+  holding, and there is nothing to do until morning.
+
+  They talk the way people talk when they are tired and not in danger: about
+  the weather, about the last town, about whether the fire will last the night.
+  Buffalo wants the watch order settled. Drokki has opinions about how the fire
+  was laid. Carl says almost nothing and then says one exact thing. Helen asks
+  a question nobody can answer and lets it go.
+
+  Nothing is decided. Nobody learns anything. The rain does not stop.
+
+  Six to ten short lines. Everything here is read aloud, so write for the ear.

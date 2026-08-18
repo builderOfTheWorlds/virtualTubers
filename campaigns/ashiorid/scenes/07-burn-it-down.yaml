@@ -7,15 +7,35 @@ enter_narration: >-
 beats:
   - type: narration
     speaker: gm
-    text: >-
-      The spell holds you a moment too long. By the time your hands are your
-      own again the hall is full of smoke and the ceiling has begun to speak.
+    improv: true
+    text:
+      - >-
+        The spell holds you a moment too long. By the time your hands are your
+        own again the hall is full of smoke and the ceiling has begun to speak.
+      - >-
+        You get free a few seconds later than you needed to. The hall has filled
+        while you stood there, and above you the ceiling has started making the
+        noises ceilings make before they stop being ceilings.
+      - >-
+        The hold breaks late. Your hands come back to you in a room that is
+        already smoke to the shoulder, and there is a sound overhead that you
+        would rather not have recognised.
 
   - type: narration
     speaker: gm
-    text: >-
-      Of three hundred guests, most do not reach a door. You will remember
-      the sound of that for the rest of the campaign, and so will I.
+    improv: true
+    text:
+      - >-
+        Of three hundred guests, most do not reach a door. You will remember
+        the sound of that for the rest of the campaign, and so will I.
+      - >-
+        Three hundred came. Most of them do not get as far as a door. That is
+        not a thing any of you will put down again, and I will not pretend
+        otherwise.
+      - >-
+        The doors are barred and there are three hundred people in here. Do the
+        arithmetic later, when you can. The sound of it stays with the four of
+        you well past tonight.
 
   - type: action
     speaker: drokki
@@ -26,8 +46,16 @@ beats:
 
   - type: dialogue
     speaker: drokki
-    text: >-
-      Stone's holding, timber isn't. Follow the stone. Down, not out.
+    improv: true
+    text:
+      - >-
+        Stone's holding, timber isn't. Follow the stone. Down, not out.
+      - >-
+        Timber's going. Stone isn't. So we go where the stone goes, and the
+        stone goes down.
+      - >-
+        Don't head for the doors — the doors are in the timber. Stone's still
+        honest. Down.
 
   - type: action
     speaker: carl
@@ -38,8 +66,18 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      At the bottom of the servants' stair, kneeling over a body he has carried
-      down here alone, is the old butler.
+    improv: true
+    text:
+      - >-
+        At the bottom of the servants' stair, kneeling over a body he has carried
+        down here alone, is the old butler.
+      - >-
+        The servants' stair ends in a cellar, and the old butler is down there
+        on his knees beside a body he brought down himself, one man, all that
+        way.
+      - >-
+        At the foot of the stair you find the butler. He is kneeling. There is a
+        body laid out in front of him that he carried down here on his own, and
+        he is not surprised to see you.
 
 default_next: grovley-revelation

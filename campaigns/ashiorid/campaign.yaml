@@ -27,6 +27,13 @@ primitives:
   - search
   - reveal_memory
 
+# Filler scenes, injected between plot scenes to carry the hours between the
+# ~15 minutes of authored spine. `pool` is omitted, so every scene flagged
+# `ambient: true` is eligible. Set `every: 0` — or pass --no-ambient — to run
+# the spine alone.
+ambient:
+  every: 2
+
 theme:
   accent: magenta
   narration: dim

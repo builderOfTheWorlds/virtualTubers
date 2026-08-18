@@ -132,6 +132,21 @@ def test_load_pack_indexes_scenes_by_id(pack_root):
     assert pack.scenes["opening"].enter_narration == "A hall, ten thousand candles."
 
 
+def test_scene_filenames_are_cosmetic_and_need_not_match_the_id(tmp_path):
+    # Real packs number their files for directory sort order, so the stem
+    # NEVER equals the id. A loader that derives or checks the id against the
+    # filename fails every scene in every pack; pin it here so it cannot ship.
+    root = tmp_path / "testpack"
+    write_pack(root)
+    scenes_dir = root / "scenes"
+    (scenes_dir / "00-opening.yaml").rename(scenes_dir / "zzz-completely-unrelated.yaml")
+
+    pack = load_pack(root)
+
+    assert set(pack.scenes) == {"opening", "victory"}
+    assert pack.scenes["opening"].title == "The Opening"
+
+
 def test_scene_beats_are_typed_with_defaults(pack_root):
     beats = load_pack(pack_root).scenes["opening"].beats
 
@@ -210,6 +225,29 @@ def test_lore_dir_is_set_when_present(tmp_path):
     root = write_pack(tmp_path / "withlore", lore=True)
 
     assert load_pack(root).lore_dir == Path(root) / "lore"
+
+
+def test_pack_root_is_resolved_to_an_absolute_path(pack_root):
+    # Everything downstream joins onto pack.root — state files, lore, avatars.
+    # A relative or unnormalised root silently changes where those land.
+    unnormalised = Path(pack_root) / ".." / pack_root.name
+
+    pack = load_pack(unnormalised)
+
+    assert pack.root.is_absolute()
+    assert pack.root == Path(pack_root).resolve()
+    assert ".." not in pack.root.parts
+
+
+def test_an_unreadable_lore_file_raises_pack_error(tmp_path):
+    # Every other read in this module surfaces as PackError; lore must not be
+    # the one path that leaks a raw OSError to the operator.
+    root = write_pack(tmp_path / "badlore", lore=True)
+    (root / "lore" / "history.md").unlink()
+    (root / "lore" / "history.md").mkdir()
+
+    with pytest.raises(PackError):
+        load_pack(root)
 
 
 def test_load_pack_accepts_a_string_path(pack_root):
@@ -404,3 +442,295 @@ def test_player_ids_is_a_copy_not_the_parsed_list(pack_root):
     pack.player_ids.append("mallory")
 
     assert load_pack(pack_root).player_ids == ["alice", "bob"]
+
+
+# ── variant pools: `text` may be one string or a list of them ────────────────
+# A 24/7 show replays the same scene hundreds of times. A beat that carries a
+# pool of phrasings is how a repeated scene stops sounding like a recording.
+# `text` stays the FIRST entry so every existing caller keeps working.
+def test_scalar_text_normalizes_to_a_single_entry_pool(pack_root):
+    beat = load_pack(pack_root).scenes["opening"].beats[0]
+
+    assert beat.text == "The doors open."
+    assert beat.texts == ["The doors open."]
+
+
+def test_list_text_becomes_a_variant_pool(tmp_path):
+    scene = {
+        "id": "opening",
+        "beats": [{"type": "dialogue", "speaker": "alice",
+                   "text": ["We should run.", "This is where we leave.", "No."]}],
+    }
+    root = write_pack(tmp_path / "variants", scenes=[scene, VICTORY_SCENE])
+
+    beat = load_pack(root).scenes["opening"].beats[0]
+
+    assert beat.texts == ["We should run.", "This is where we leave.", "No."]
+    # `text` is the first variant — the scripted, canonical phrasing.
+    assert beat.text == "We should run."
+
+
+def test_absent_text_yields_an_empty_pool(pack_root):
+    pane = load_pack(pack_root).scenes["opening"].beats[3]
+
+    assert pane.text is None
+    assert pane.texts == []
+
+
+def test_null_text_yields_an_empty_pool(tmp_path):
+    scene = {"id": "opening", "beats": [{"type": "pane", "show": "map", "text": None}]}
+    root = write_pack(tmp_path / "nulltext", scenes=[scene, VICTORY_SCENE])
+
+    beat = load_pack(root).scenes["opening"].beats[0]
+
+    assert beat.text is None
+    assert beat.texts == []
+
+
+def test_empty_list_text_yields_an_empty_pool(tmp_path):
+    scene = {"id": "opening", "beats": [{"type": "narration", "speaker": "gm", "text": []}]}
+    root = write_pack(tmp_path / "emptylist", scenes=[scene, VICTORY_SCENE])
+
+    beat = load_pack(root).scenes["opening"].beats[0]
+
+    assert beat.text is None
+    assert beat.texts == []
+
+
+def test_directly_constructed_beat_defaults_to_an_empty_pool():
+    # The renderer builds a Beat by hand for `enter_narration`; that path must
+    # not require the loader's normalization.
+    beat = Beat(kind="narration", speaker="gm", text="A hall.")
+
+    assert beat.texts == []
+    assert beat.key == ""
+
+
+@pytest.mark.parametrize("bad_text", [42, {"a": 1}, True])
+def test_non_string_non_list_text_raises_pack_error(tmp_path, bad_text):
+    scene = {"id": "opening", "beats": [{"type": "narration", "speaker": "gm",
+                                         "text": bad_text}]}
+    root = write_pack(tmp_path / "badtext", scenes=[scene, VICTORY_SCENE])
+
+    with pytest.raises(PackError, match="opening"):
+        load_pack(root)
+
+
+def test_non_string_entry_in_a_variant_pool_raises_pack_error(tmp_path):
+    scene = {"id": "opening", "beats": [{"type": "narration", "speaker": "gm",
+                                         "text": ["fine", 7]}]}
+    root = write_pack(tmp_path / "badvariant", scenes=[scene, VICTORY_SCENE])
+
+    with pytest.raises(PackError, match="opening"):
+        load_pack(root)
+
+
+# ── beat keys: stable identity for deterministic variant cycling ─────────────
+def test_beats_carry_a_stable_key_of_scene_id_and_index(pack_root):
+    beats = load_pack(pack_root).scenes["opening"].beats
+
+    assert [beat.key for beat in beats] == [
+        "opening#0", "opening#1", "opening#2", "opening#3",
+    ]
+
+
+def test_beat_keys_are_unique_across_the_whole_pack(pack_root):
+    pack = load_pack(pack_root)
+
+    keys = [beat.key for scene in pack.scenes.values() for beat in scene.beats]
+
+    assert len(keys) == len(set(keys))
+
+
+def test_beat_keys_are_stable_across_reloads(pack_root):
+    first = [beat.key for beat in load_pack(pack_root).scenes["opening"].beats]
+    second = [beat.key for beat in load_pack(pack_root).scenes["opening"].beats]
+
+    assert first == second
+
+
+# ── ambient scenes: the filler tier ──────────────────────────────────────────
+AMBIENT_SCENE = {
+    "id": "camp-fire",
+    "ambient": True,
+    "prompt": "The party waits out a rainstorm. Nothing happens.",
+}
+
+
+def test_scene_ambient_defaults_to_false(pack_root):
+    assert load_pack(pack_root).scenes["opening"].ambient is False
+
+
+def test_scene_prompt_and_lore_default_to_empty(pack_root):
+    scene = load_pack(pack_root).scenes["opening"]
+
+    assert scene.prompt is None
+    assert scene.lore == []
+
+
+def test_ambient_scene_carries_its_flag_and_prompt(tmp_path):
+    root = write_pack(tmp_path / "amb", scenes=[OPENING_SCENE, VICTORY_SCENE, AMBIENT_SCENE])
+
+    scene = load_pack(root).scenes["camp-fire"]
+
+    assert scene.ambient is True
+    assert scene.prompt == "The party waits out a rainstorm. Nothing happens."
+    assert scene.beats == []
+
+
+def test_scene_lore_selector_is_loaded(tmp_path):
+    scene = {**dict(OPENING_SCENE), "lore": ["history"]}
+    root = write_pack(tmp_path / "loresel", scenes=[scene, VICTORY_SCENE], lore=True)
+
+    assert load_pack(root).scenes["opening"].lore == ["history"]
+
+
+def test_null_scene_lore_defaults_to_empty(tmp_path):
+    scene = {"id": "opening", "beats": [], "lore": None}
+    root = write_pack(tmp_path / "nulllore", scenes=[scene, VICTORY_SCENE])
+
+    assert load_pack(root).scenes["opening"].lore == []
+
+
+def test_non_bool_ambient_raises_pack_error(tmp_path):
+    scene = {"id": "opening", "beats": [], "ambient": "yes"}
+    root = write_pack(tmp_path / "badamb", scenes=[scene, VICTORY_SCENE])
+
+    with pytest.raises(PackError, match="ambient"):
+        load_pack(root)
+
+
+# ── lore is read into memory, not merely located ─────────────────────────────
+def test_lore_defaults_to_an_empty_mapping_when_absent(pack_root):
+    pack = load_pack(pack_root)
+
+    assert pack.lore == {}
+    assert pack.lore_dir is None
+
+
+def test_lore_notes_are_read_and_keyed_by_stem(tmp_path):
+    root = write_pack(tmp_path / "withlore", lore=True)
+    (root / "lore" / "the-event.md").write_text("The sky broke.\n", encoding="utf-8")
+
+    pack = load_pack(root)
+
+    assert set(pack.lore) == {"history", "the-event"}
+    assert pack.lore["the-event"] == "The sky broke.\n"
+    assert pack.lore["history"] == "# History\n"
+    # lore_dir stays, so nothing that used it breaks.
+    assert pack.lore_dir == Path(root) / "lore"
+
+
+def test_non_markdown_files_in_lore_are_ignored(tmp_path):
+    root = write_pack(tmp_path / "withlore", lore=True)
+    (root / "lore" / "notes.txt").write_text("ignore me\n", encoding="utf-8")
+
+    assert set(load_pack(root).lore) == {"history"}
+
+
+# ── ambient scheduling config on campaign.yaml ───────────────────────────────
+def test_ambient_config_defaults_to_disabled(pack_root):
+    pack = load_pack(pack_root)
+
+    assert pack.ambient_every == 0
+    assert pack.ambient_pool == []
+
+
+def test_ambient_config_is_read_from_campaign_yaml(tmp_path):
+    campaign = {**CAMPAIGN_YAML, "ambient": {"every": 2, "pool": ["camp-fire"]}}
+    root = write_pack(tmp_path / "amb", campaign=campaign,
+                      scenes=[OPENING_SCENE, VICTORY_SCENE, AMBIENT_SCENE])
+
+    pack = load_pack(root)
+
+    assert pack.ambient_every == 2
+    assert pack.ambient_pool == ["camp-fire"]
+
+
+def test_ambient_scene_ids_falls_back_to_every_flagged_scene(tmp_path):
+    campaign = {**CAMPAIGN_YAML, "ambient": {"every": 2}}
+    second = {"id": "road-talk", "ambient": True, "prompt": "They walk."}
+    root = write_pack(tmp_path / "amb", campaign=campaign,
+                      scenes=[OPENING_SCENE, VICTORY_SCENE, AMBIENT_SCENE, second])
+
+    pack = load_pack(root)
+
+    assert pack.ambient_pool == []
+    # sorted, so injection order is reproducible run to run
+    assert pack.ambient_scene_ids() == ["camp-fire", "road-talk"]
+
+
+def test_ambient_scene_ids_honours_an_explicit_pool(tmp_path):
+    campaign = {**CAMPAIGN_YAML, "ambient": {"every": 2, "pool": ["road-talk"]}}
+    second = {"id": "road-talk", "ambient": True, "prompt": "They walk."}
+    root = write_pack(tmp_path / "amb", campaign=campaign,
+                      scenes=[OPENING_SCENE, VICTORY_SCENE, AMBIENT_SCENE, second])
+
+    assert load_pack(root).ambient_scene_ids() == ["road-talk"]
+
+
+def test_ambient_scene_ids_is_empty_when_nothing_is_flagged(pack_root):
+    assert load_pack(pack_root).ambient_scene_ids() == []
+
+
+def test_null_ambient_section_defaults_to_disabled(tmp_path):
+    root = write_pack(tmp_path / "amb", campaign={**CAMPAIGN_YAML, "ambient": None})
+
+    pack = load_pack(root)
+
+    assert pack.ambient_every == 0
+    assert pack.ambient_pool == []
+
+
+def test_null_ambient_keys_default_to_disabled(tmp_path):
+    # `every:` written with no value parses as None, not as a missing key, so
+    # `.get("every", 0)` still hands back None and the comparison below blows up.
+    root = write_pack(tmp_path / "amb", campaign={
+        **CAMPAIGN_YAML, "ambient": {"every": None, "pool": None}})
+
+    pack = load_pack(root)
+
+    assert pack.ambient_every == 0
+    assert pack.ambient_pool == []
+
+
+def test_non_mapping_ambient_section_raises_pack_error(tmp_path):
+    root = write_pack(tmp_path / "amb", campaign={**CAMPAIGN_YAML, "ambient": ["nope"]})
+
+    with pytest.raises(PackError, match="ambient"):
+        load_pack(root)
+
+
+@pytest.mark.parametrize("bad_every", ["two", -1, 1.5])
+def test_bad_ambient_every_raises_pack_error(tmp_path, bad_every):
+    campaign = {**CAMPAIGN_YAML, "ambient": {"every": bad_every}}
+    root = write_pack(tmp_path / "amb", campaign=campaign)
+
+    with pytest.raises(PackError, match="every"):
+        load_pack(root)
+
+
+def test_ambient_pool_is_a_copy_not_the_parsed_list(tmp_path):
+    campaign = {**CAMPAIGN_YAML, "ambient": {"every": 2, "pool": ["camp-fire"]}}
+    root = write_pack(tmp_path / "amb", campaign=campaign,
+                      scenes=[OPENING_SCENE, VICTORY_SCENE, AMBIENT_SCENE])
+
+    pack = load_pack(root)
+    pack.ambient_pool.append("mallory")
+
+    assert load_pack(root).ambient_pool == ["camp-fire"]
+
+
+# ── the shipped pack keeps loading exactly as it did ─────────────────────────
+def test_the_ashiorid_pack_still_loads(tmp_path):
+    ashiorid = Path(__file__).resolve().parents[1] / "campaigns" / "ashiorid"
+    if not ashiorid.is_dir():
+        pytest.skip("ashiorid pack not present")
+
+    pack = load_pack(ashiorid)
+
+    assert pack.name == "ashiorid"
+    assert len(pack.scenes) >= 10
+    # every scene loaded before this change had no ambient tier
+    assert all(beat.texts for scene in pack.scenes.values()
+               for beat in scene.beats if beat.text)

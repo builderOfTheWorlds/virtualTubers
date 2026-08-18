@@ -1,0 +1,46 @@
+# Campaign runtime config for the Ashiorid pack.
+#
+# The pack itself (campaigns/ashiorid/) holds the show: scenes, cast, lore.
+# This file holds how the show is *driven* — which model improvises the lines,
+# how often filler is injected, and how long a generated line is allowed to run.
+#
+# Consumed by app/campaign/cli.py. Every value here is also settable from the
+# command line, and the command line wins.
+
+campaign:
+  pack: campaigns/ashiorid
+
+# Passed straight to app/llm_client.py's build_llm_client(). Provider stays
+# switchable — nothing in the improviser is Ollama-specific — but llama3.1:8b
+# is the default because it is small enough to keep pace with live speech.
+# LLM_PROVIDER and LLM_BASE_URL in the environment override these.
+llm:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  model: "llama3.1:8b"
+  # Warm, not chaotic. The personas need room to rephrase without drifting off
+  # the beat's stated intent.
+  temperature: 0.8
+  # A single spoken line. The hard word cap is improviser.max_words; this is
+  # only the ceiling that stops a runaway generation from blocking the show.
+  max_tokens: 256
+
+improv:
+  # Off unless asked for. --improv turns it on; --dry-run always forces it off,
+  # so the canon path stays reproducible and offline.
+  enabled: false
+  # Lines of rolling transcript the personas can see. Costs context on every
+  # single beat, so it stays small.
+  max_recent: 8
+  # Hard cap on one spoken line. Beyond roughly this length a small model starts
+  # summarising the scene back at you instead of saying something in character.
+  max_words: 45
+  # Hard cap on beats in one fully-generated ambient scene.
+  max_beats: 12
+
+ambient:
+  # Inject a filler scene after every N spine scenes. 0 disables injection.
+  # Overridden by --ambient-every / --no-ambient.
+  every: 2
+  # Empty means "any ambient-flagged scene in the pack". Named ids restrict it.
+  pool: []

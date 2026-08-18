@@ -18,6 +18,18 @@ goal: |
   registered, or whether a beat's `speaker` is in the cast. Those checks belong
   to a separate campaign.validator module and must NOT be implemented here.
 
+  This is a REVISION of a module that already exists and already passes 32
+  tests. Everything described below that is not marked as new must keep behaving
+  exactly as it does today; the existing tests are in the acceptance suite and
+  all of them must still pass. Four capabilities are being ADDED, each with its
+  own section in the notes:
+
+    1. VARIANT POOLS — a beat's `text` may be a list of alternate phrasings.
+    2. BEAT KEYS     — every loaded beat gets a stable "<scene_id>#<index>" id.
+    3. AMBIENT SCENES — a filler tier flagged on the scene and configured on
+                        campaign.yaml.
+    4. LORE          — `lore/*.md` is read into memory, not merely located.
+
 target_files:
   - app/campaign/__init__.py
   - app/campaign/pack.py
@@ -45,11 +57,18 @@ interface: |
           kind: str                  # from the YAML key `type` (renamed to avoid
                                      # shadowing the builtin); REQUIRED per beat
           speaker: str | None = None
-          text: str | None = None
+          text: str | None = None    # the FIRST variant; see VARIANT POOLS
           primitive: str | None = None
           params: dict = {}          # default_factory=dict
           improv: bool = False
           show: str | None = None
+          texts: list[str] = []      # default_factory=list; the full variant
+                                     # pool. See VARIANT POOLS below.
+          key: str = ""              # "<scene_id>#<index>"; see BEAT KEYS below.
+
+          Both new fields MUST be declared last and MUST have defaults — the
+          renderer constructs Beat(kind=..., speaker=..., text=...) by hand and
+          several test suites do the same.
 
       @dataclass Branch
           id: str
@@ -66,6 +85,14 @@ interface: |
           beats: list[Beat] = []     # default_factory=list
           branches: list[Branch] = []
           default_next: str | None = None
+          ambient: bool = False      # see AMBIENT SCENES below
+          prompt: str | None = None  # generation brief for an ambient scene
+          lore: list[str] = []       # default_factory=list; lore note stems
+                                     # that should enter this scene's context
+
+          The three new fields MUST be declared last and MUST have defaults —
+          other test suites construct Scene(id=..., beats=..., default_next=...)
+          directly.
 
       @dataclass CastMember
           id: str
@@ -90,6 +117,15 @@ interface: |
           scenes: dict[str, Scene]
           root: pathlib.Path
           lore_dir: pathlib.Path | None
+          lore: dict[str, str] = {}       # default_factory=dict; note stem -> text
+          ambient_every: int = 0          # 0 disables the ambient tier
+          ambient_pool: list[str] = []    # default_factory=list; [] means
+                                          # "every ambient-flagged scene"
+
+          The three new fields MUST be declared last and MUST have defaults.
+          Four other test suites construct CampaignPack(...) by keyword ending
+          at `lore_dir=None`; adding a field without a default breaks all of
+          them at import time.
 
           def scene(self, scene_id) -> Scene
               Returns the scene, or raises PackError naming the missing id.
@@ -97,8 +133,22 @@ interface: |
           def member(self, member_id) -> CastMember
               Returns the cast member, or raises PackError naming the missing id.
 
+          def ambient_scene_ids(self) -> list[str]
+              A METHOD, not a property — the tests call it as
+              `pack.ambient_scene_ids()`.
+
+              Returns `list(self.ambient_pool)` when that pool is non-empty.
+              Otherwise returns the ids of every scene whose `ambient` is True,
+              SORTED, so injection order is reproducible run to run. Returns []
+              when nothing is flagged and no pool is configured.
+
       def load_pack(path) -> CampaignPack
           Accepts a str or pathlib.Path.
+
+          The stored `root` MUST be `Path(path).resolve()` — absolute and
+          normalised. Everything downstream joins onto it (state files, lore,
+          avatar paths), so storing the caller's relative or `..`-containing
+          path silently changes where those land.
 
 notes: |
   Required keys in campaign.yaml: `name`, `start_scene`, `gm`. A missing one
@@ -119,6 +169,41 @@ notes: |
   absent, raise PackError whose message contains "id". Two scenes sharing an id
   raise PackError naming the duplicated id. Index scenes by id in a dict.
 
+  SCENE FILENAMES ARE PURELY COSMETIC. The `id:` field INSIDE the file is the
+  only authoritative identity. Filenames are numbered (`01-invitation.yaml`,
+  `05-party-attack.yaml`) purely so a directory listing reads in story order,
+  and they DO NOT match the ids: `01-invitation.yaml` contains `id: invitation`
+  and `00-opening.yaml` contains `id: opening`.
+
+  The filename's only two jobs are selecting *.yaml/*.yml and fixing sort
+  order. It NEVER contributes to a scene's identity.
+
+  Read the id out of the PARSED YAML, exactly like this:
+
+      for scene_file in scene_files:                  # sorted, cosmetic order
+          data = _load_yaml(scene_file)               # -> PackError on failure
+          if not isinstance(data, dict):
+              raise PackError(f"scene file {scene_file.name} is not a mapping")
+          scene_id = data.get("id")                   # <-- FROM THE YAML BODY
+          if not scene_id:
+              raise PackError(f"scene file {scene_file.name} missing 'id'")
+          if scene_id in scenes:
+              raise PackError(f"duplicate scene id {scene_id!r}")
+          scenes[scene_id] = _build_scene(data, scene_id)
+
+  Three specific mistakes have shipped here before. Do not repeat them:
+
+    - `scene_id = scene_file.stem` — WRONG. Derives identity from the filename,
+      so `pack.scenes` ends up keyed "00-opening" instead of "opening" and
+      every lookup, branch target and `start_scene` check fails.
+    - `if scene_file.stem != data["id"]: raise` — WRONG. Stems and ids differ
+      in every real pack; this rejects all of them.
+    - Passing the stem into a helper as the scene id — WRONG for the same
+      reason. If a helper needs the id, pass it the one parsed from the body.
+
+  The scene id parsed here is also what BEAT KEYS below are built from, so
+  getting it from the filename corrupts every beat key too.
+
   Every beat must define `type`; if absent, raise PackError whose message
   contains "type". Map the YAML key `type` onto the dataclass field `kind`.
 
@@ -130,7 +215,84 @@ notes: |
   "scenes" respectively for those two cases. campaign.yaml that parses to a
   non-mapping (e.g. a list) is also a PackError.
 
-  lore_dir is the `lore/` path if that directory exists, else None.
+  VARIANT POOLS — a beat's `text` may be ONE string or a LIST of strings.
+
+  The show runs 24/7 and replays the same scene hundreds of times, so a beat can
+  carry a pool of alternate phrasings. Normalize at load time:
+
+    text: "The doors open."          -> texts == ["The doors open."]
+                                        text  == "The doors open."
+    text: ["Run.", "We leave."]      -> texts == ["Run.", "We leave."]
+                                        text  == "Run."          (the FIRST)
+    text: absent                     -> texts == []   , text is None
+    text:            (null)          -> texts == []   , text is None
+    text: []         (empty list)    -> texts == []   , text is None
+
+  `text` is ALWAYS the first entry of a non-empty pool, and None for an empty
+  one. Never leave `text` holding a list — every existing consumer reads it as a
+  string and would render "['Run.', 'We leave.']" on stream.
+
+  A `text` value that is neither a string nor a list, and a list containing any
+  non-string entry, both raise PackError WHOSE MESSAGE CONTAINS THE SCENE ID.
+  Note that in Python `isinstance(True, int)` is True but a bool is not a str,
+  so `text: true` is already caught by the string check — no special case needed.
+
+  BEAT KEYS — every beat loaded from a scene file gets
+  `key = f"{scene_id}#{index}"` where `index` is its 0-BASED position in that
+  scene's `beats` list. So the third beat of scene `opening` has key
+  "opening#2". This is a stable identity the renderer uses to cycle variants
+  deterministically, so it must not depend on filename, load order or object id.
+
+  A Beat constructed directly in Python (not via the loader) keeps the default
+  key of "" — the renderer builds one by hand for `enter_narration`.
+
+  AMBIENT SCENES — a filler tier that is injected between plot scenes rather
+  than linked into the graph.
+
+  A scene sets `ambient: true` and carries a `prompt:` describing what happens;
+  it normally has NO beats at all, because its content is generated at runtime.
+  Load `ambient` (default False), `prompt` (default None) and `lore` (a list of
+  lore note stems, default []) onto Scene. A non-bool `ambient` raises PackError
+  whose message contains "ambient". This module does NOT check that an ambient
+  scene has a prompt — that is the validator's job.
+
+  campaign.yaml may carry an `ambient:` MAPPING:
+
+      ambient:
+        every: 2                 # inject after every N spine scenes; 0 = off
+        pool: [camp-fire]        # optional explicit pool
+
+  Absent or null -> ambient_every 0 and ambient_pool []. This applies to the
+  INNER keys too: `every:` and `pool:` written with no value parse as None, so
+  `ambient_config.get("every", 0)` still returns None and the subsequent
+  `ambient_every < 0` raises a raw TypeError. Collapse each to its default
+  BEFORE type-checking it: `every = ambient_config.get("every") or 0`. A
+  non-mapping `ambient:`
+  raises PackError whose message contains "ambient". `every` must be a
+  non-negative INTEGER; a string, a float, or a negative raises PackError whose
+  message contains "every". Reject bools here explicitly (`isinstance(x, bool)`
+  is True for int) and reject floats even when whole — 1.5 and 2.0 are both
+  invalid. `pool` must be a NEW list (`list(pool)`), never an alias of the
+  parsed YAML list.
+
+  LORE — read the notes, do not merely locate the directory.
+
+  lore_dir stays exactly as it was: the `lore/` path if that directory exists,
+  else None. IN ADDITION, populate `lore: dict[str, str]` by reading every
+  `*.md` file in that directory, keyed by FILENAME STEM (no extension) with the
+  file's full text as the value. `lore/the-event.md` becomes
+  `pack.lore["the-event"]`. Files with any other extension are ignored. No lore
+  directory means an empty dict, never None. Read with encoding="utf-8".
+
+  A lore read that fails MUST surface as PackError. Lore is not YAML, so it
+  does not go through the YAML helper and needs its OWN guard — wrap the read
+  in try/except OSError and re-raise as PackError. A bare `open(...).read()`
+  here leaks IsADirectoryError or PermissionError straight to the operator,
+  and this module's whole contract is that no other exception type escapes.
+
+  ERROR MESSAGES name the FULL path, not just the filename. `f"failed to load
+  {path}"`, never `{path.name}` — a pack has several `helen.yaml`-shaped files
+  and "failed to load helen.yaml" does not say which pack or which directory.
 
   Use `yaml.safe_load`, never `yaml.load`. Wrap every file read and YAML parse
   so OSError and yaml.YAMLError surface as PackError.
@@ -164,3 +326,18 @@ notes: |
   %-formatting (`log.debug("loading %s", path)`), never f-strings, in logging
   calls. Never log at WARNING or above for an error you are already raising.
   Import nothing you do not use.
+
+  NO DEAD EXCEPTION HANDLERS. The YAML helper already converts OSError and
+  yaml.YAMLError into PackError, so its callers must NOT wrap it again. This
+  shape has shipped here before and is pure dead code:
+
+      try:
+          data = _load_yaml(path)      # already raises PackError and nothing else
+      except PackError:
+          raise                        # re-raises what would have propagated
+      except Exception as exc:         # unreachable
+          raise PackError(...) from exc
+
+  Just call `_load_yaml(path)` directly. Catch an exception only where you are
+  genuinely converting one the callee does not already handle — the lore read
+  above is the one place in this module that needs it.

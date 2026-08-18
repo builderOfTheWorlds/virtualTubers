@@ -110,7 +110,11 @@ def run_pytest(repo_root, staged_files, test_paths, extra_files=None,
     python_bin = python_bin or str(Path(repo_root) / ".venv" / "bin" / "python")
     sandbox = build_sandbox(repo_root, staged_files, extra_files)
 
-    command = [python_bin, "-m", "pytest", *test_paths, "-q", "--no-header", "-p", "no:cacheprovider"]
+    # --maxfail/--tb keep the feedback useful: a broad failure otherwise fills
+    # the tail with 40+ bare test names and pushes every traceback off the top,
+    # so the model retries blind against the summary instead of the cause.
+    command = [python_bin, "-m", "pytest", *test_paths, "-q", "--no-header",
+               "--maxfail=3", "--tb=short", "-p", "no:cacheprovider"]
     log.info("running acceptance tests: %s", " ".join(test_paths))
 
     try:

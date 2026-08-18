@@ -3,34 +3,74 @@ title: The Party Attack
 enter_narration: >-
   The doors open on people who were not invited, and the room stops moving.
 
+lore: [the-event]
+
 beats:
   - type: pane
     show: combat
 
   - type: narration
     speaker: gm
-    text: >-
-      The music stops mid-bar, which is the first thing anyone notices. The
-      second thing is that nobody in the room can move.
+    improv: true
+    text:
+      - >-
+        The music stops mid-bar, which is the first thing anyone notices. The
+        second thing is that nobody in the room can move.
+      - >-
+        What people notice first is the music cutting off in the middle of a
+        bar. What they notice second, and much worse, is that not one person in
+        the hall can move.
+      - >-
+        The band stops partway through a note. In the half-second everyone
+        spends being annoyed about it, they all discover that they are held
+        exactly where they stand.
 
   - type: narration
     speaker: gm
-    text: >-
-      A holding spell, laid over three hundred people at once, by someone who
-      did not need to be in the room to do it. That should not be possible in
-      any age.
+    improv: true
+    text:
+      - >-
+        A holding spell, laid over three hundred people at once, by someone who
+        did not need to be in the room to do it. That should not be possible in
+        any age.
+      - >-
+        Three hundred people held at once, cast by someone who was not present
+        and did not have to be. There is no age of the world in which that is a
+        thing a person can do.
+      - >-
+        Consider what that costs. One spell, three hundred bodies, no caster
+        anywhere in the building. Nothing you know about magic accounts for it.
 
   - type: narration
     speaker: gm
-    text: >-
-      They come in through the main doors without hurrying. They walk to the
-      Duke, and one of them puts a blade through his heart while he is still
-      standing, still smiling, unable to fall.
+    improv: true
+    text:
+      - >-
+        They come in through the main doors without hurrying. They walk to the
+        Duke, and one of them puts a blade through his heart while he is still
+        standing, still smiling, unable to fall.
+      - >-
+        They use the front doors and they take their time about it. They cross
+        to the Duke. One of them runs a blade into his chest, and he stays
+        upright and stays smiling, because the spell will not let him do
+        otherwise.
+      - >-
+        In through the main doors, unhurried, straight to the Duke. The knife
+        goes in while he is still standing and still wearing the expression he
+        had a moment ago, and he cannot even fall down.
 
   - type: narration
     speaker: gm
-    text: >-
-      "Burn it down," their leader says. "We will search through the ashes."
+    improv: true
+    text:
+      - >-
+        "Burn it down," their leader says. "We will search through the ashes."
+      - >-
+        Their leader looks around the hall once and says to burn it, and that
+        they will go through the ashes afterward.
+      - >-
+        "Burn it," the one in front says, without raising their voice. "Whatever
+        we came for will still be here after."
 
   - type: action
     speaker: buffalo
@@ -41,8 +81,14 @@ beats:
 
   - type: dialogue
     speaker: buffalo
-    text: >-
-      My hand moves. That's all I need.
+    improv: true
+    text:
+      - >-
+        My hand moves. That's all I need.
+      - >-
+        One hand. That'll do.
+      - >-
+        There. My right hand's mine again. That's enough to be going on with.
 
   - type: action
     speaker: buffalo
@@ -61,10 +107,20 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      The doors are already barred from the outside. Smoke comes up through
-      the floorboards faster than fire should travel. Somebody set this before
-      they ever knocked.
+    improv: true
+    text:
+      - >-
+        The doors are already barred from the outside. Smoke comes up through
+        the floorboards faster than fire should travel. Somebody set this before
+        they ever knocked.
+      - >-
+        Barred from outside, all of them. And the smoke is coming up between the
+        floorboards, which is the wrong direction and far too soon. This was
+        laid well before anyone knocked.
+      - >-
+        Every door is barred from the far side. The smoke arrives through the
+        floor rather than along it, and it arrives early. None of this was
+        decided tonight.
 
 branches:
   - id: success

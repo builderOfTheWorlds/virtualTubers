@@ -4,15 +4,30 @@ enter_narration: >-
   Ten thousand years to the day since the Event, and four strangers each
   receive the same card.
 
+# Which lore notes enter the improviser's context for this scene. Only these
+# travel — context is a budget, not a dump.
+lore: [the-event]
+
 beats:
   - type: pane
     show: map
 
+  # A list under `text:` is a variant pool. The renderer cycles it keyed on the
+  # beat, so the spine can replay hundreds of times without repeating a line
+  # verbatim. The first entry is what a --dry-run prints, so it stays the
+  # canonical one.
   - type: narration
     speaker: gm
-    text: >-
-      The card is heavier than paper has any right to be. Black ink, pressed
-      deep enough to read with your thumb.
+    text:
+      - >-
+        The card is heavier than paper has any right to be. Black ink, pressed
+        deep enough to read with your thumb.
+      - >-
+        It is a small card and it weighs like a coin. The ink stands up off the
+        surface far enough to catch under a fingernail.
+      - >-
+        Paper should not sit in the hand like that. The lettering is pressed so
+        deep you could read it in the dark.
 
   - type: narration
     speaker: gm
@@ -22,27 +37,55 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      No return address. No courier anyone remembers seeing. It was simply
-      there, the way a bruise is simply there in the morning.
+    text:
+      - >-
+        No return address. No courier anyone remembers seeing. It was simply
+        there, the way a bruise is simply there in the morning.
+      - >-
+        Nobody delivered it. Nobody saw it arrive. It was on the table in the
+        morning and the door had been bolted all night.
+      - >-
+        There is no address to reply to and no one to ask. It was simply there,
+        and each of you has stopped trying to work out when.
 
   - type: dialogue
     speaker: buffalo
-    text: >-
-      Ten thousand years. Somebody's counting very carefully for a thing nobody
-      will name out loud.
+    improv: true
+    text:
+      - >-
+        Ten thousand years. Somebody's counting very carefully for a thing
+        nobody will name out loud.
+      - >-
+        Ten thousand years to the day. That's not a memory, that's a schedule.
+      - >-
+        Somebody's been keeping count. For ten thousand years. For a thing you
+        can't get a straight answer about.
 
   - type: dialogue
     speaker: carl
-    text: >-
-      Four invitations. Four people who have never met. That's not hospitality,
-      that's a shortlist.
+    improv: true
+    text:
+      - >-
+        Four invitations. Four people who have never met. That's not
+        hospitality, that's a shortlist.
+      - >-
+        Four of us. None of us know each other. Somebody picked us.
+      - >-
+        That's not a guest list. Guest lists have friends on them.
 
   - type: dialogue
     speaker: drokki
-    text: >-
-      Look at the pressing on this. That's not a printer's work, that's a
-      smith's. Somebody struck a die for a party invitation.
+    improv: true
+    text:
+      - >-
+        Look at the pressing on this. That's not a printer's work, that's a
+        smith's. Somebody struck a die for a party invitation.
+      - >-
+        This was struck, not printed. Somebody cut steel to make a card. Do you
+        know what that costs?
+      - >-
+        A die for this. Hand-cut. For an invitation. That's not wealth, lad,
+        that's a message.
 
   - type: dialogue
     speaker: helen
@@ -53,8 +96,12 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      Before we go to the manor, understand what the Event was. Everyone in
-      this world has an opinion. Almost nobody was there.
+    text:
+      - >-
+        Before we go to the manor, understand what the Event was. Everyone in
+        this world has an opinion. Almost nobody was there.
+      - >-
+        The manor can wait a moment. You need to know what the Event was first,
+        and you need to know that almost nobody agrees.
 
 default_next: the-age-of-war

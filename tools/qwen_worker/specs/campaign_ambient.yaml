@@ -1,0 +1,137 @@
+task_id: campaign_ambient
+
+goal: |
+  Implement the ambient-scene scheduler for the virtualTubers campaign runtime.
+
+  The authored spine of a campaign is about fifteen minutes long. The show
+  streams continuously, so filler ("ambient") scenes are injected between plot
+  scenes to carry the hours: the party waits out a rainstorm, argues about
+  supper, keeps a night watch. Ambient scenes are flagged in the pack and are
+  NOT linked into the scene graph — they are injected by this scheduler and
+  never reached by a branch or a `default_next`.
+
+  This module decides only two things: WHEN to inject, and WHICH scene to use.
+
+  It is pure scheduling. It makes no LLM calls, reads no files, imports no
+  network library, and is fully deterministic when a random.Random is injected.
+  Generating what an ambient scene actually contains belongs to
+  campaign.improviser; playing it belongs to campaign.runtime. Do not do either
+  here.
+
+  This is a NEW module. Nothing imports it yet.
+
+target_files:
+  - app/campaign/ambient.py
+
+test_files:
+  - tests/test_campaign_ambient.py
+
+context_files:
+  - app/campaign/pack.py
+
+interface: |
+  app/campaign/ambient.py must export exactly this name:
+
+      class AmbientScheduler:
+
+          def __init__(self, pack, every=2, pool=None, rng=None)
+
+              Stores, as PUBLIC attributes with exactly these names:
+                  self.pack   the CampaignPack
+                  self.every  int; 0 disables injection entirely
+                  self.pool   list[str] of ambient scene ids
+                  self.rng    the random.Random used for picking
+                  self.last   None initially; the id most recently returned by
+                              pick()
+
+              The tests read self.pool, self.every and self.last directly. Do
+              not rename them, do not make them properties, do not prefix them
+              with an underscore.
+
+          def should_inject(self, spine_scenes_played) -> bool
+              True when an ambient scene should be injected after that many
+              plot scenes have played. Must return a REAL bool.
+
+          def pick(self) -> str | None
+              The id of the next ambient scene to play, or None when the pool
+              is empty. Takes NO arguments besides self.
+
+notes: |
+  THE POOL.
+
+  When `pool` is None, take the pack's own list: `pack.ambient_scene_ids()`.
+  That is a METHOD — call it, do not read it as an attribute. It already
+  handles the pack's explicit `ambient_pool` config and its fallback to every
+  ambient-flagged scene, so this module must NOT re-derive that logic by
+  scanning pack.scenes itself.
+
+  When `pool` is given, use it instead of asking the pack.
+
+  Either way store a NEW list (`list(...)`), never an alias of the caller's
+  list or of the pack's, so a later mutation on the caller's side cannot
+  reach in and change the schedule.
+
+  pick() must never mutate self.pool — no pop, no remove, no shuffle in place.
+  Rotating through the pool by destroying it empties the schedule after one
+  pass, and the show runs for a week.
+
+  EVERY / should_inject.
+
+  `every` may arrive as None, 0, or a negative number, all of which mean
+  "ambient is switched off". Normalise those to 0 at construction. With
+  every == 0, should_inject must return False for every input, including 0.
+
+  With every > 0, inject when `spine_scenes_played` is a positive multiple of
+  `every`: 2, 4, 6... for every == 2.
+
+  spine_scenes_played == 0 must return False for EVERY value of `every`. Note
+  that `0 % n == 0` for all n, so a bare modulo test wrongly fires here. Guard
+  the zero case explicitly. Injecting at zero would open the stream on filler
+  instead of on the cold open, which is the single most visible way to get this
+  wrong.
+
+  An EMPTY pool must make should_inject return False regardless of `every` and
+  of the count — there is nothing to inject, and returning True would make the
+  runtime divert to a scene that does not exist.
+
+  Return a genuine bool. `bool(...)` the result rather than returning the
+  integer that `%` produces — the tests use `is True` / `is False`, and the
+  runtime serialises decisions into a JSON state file where a stray int is a
+  latent bug.
+
+  PICKING.
+
+  Use `self.rng`, defaulting to a module-level or freshly constructed
+  `random.Random()` when none is injected. Every random draw must go through
+  self.rng — never call the module-level `random.choice` directly, or the
+  seeded-determinism tests fail and the show stops being reproducible from a
+  seed.
+
+  Two schedulers built with `random.Random(11)` must produce identical
+  sequences of picks.
+
+  pick() must NOT return self.last while any alternative exists — the same
+  filler scene twice in a row is the most noticeable possible repeat. Implement
+  this by choosing from the pool MINUS self.last, and falling back to the whole
+  pool only when that leaves nothing (i.e. a single-entry pool). A single-entry
+  pool therefore returns its one scene every time, which is correct: there is
+  no alternative.
+
+  Do NOT implement this as "reroll until it differs" — with a one-entry pool
+  that loops forever and hangs the stream.
+
+  Over many calls every scene in the pool must appear; do not bias toward a
+  subset.
+
+  After choosing, set self.last to the chosen id and return it. On an empty
+  pool return None and leave self.last alone.
+
+  LOGGING. Module-level `log = logging.getLogger(__name__)`. DEBUG when an
+  injection decision is made and when a scene is picked; INFO once at
+  construction summarising the pool size and cadence. Use lazy %-formatting
+  (`log.debug("picked ambient scene %s", scene_id)`), never f-strings, in
+  logging calls.
+
+  STYLE. Builtin generics only (`list[str]`) — do NOT import anything from
+  `typing`. Import nothing you do not use; `random` is the only import this
+  module needs beyond `logging`. No network imports, no file I/O.

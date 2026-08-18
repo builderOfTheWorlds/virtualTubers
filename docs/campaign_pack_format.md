@@ -191,7 +191,18 @@ room evokes.
 
 No Python is involved at any step.
 
+## Content expansion
+
+The keys that turn a finite pack into 24/7 content — `ambient:` and `prompt:` on
+a scene, `lore:` selectors, and variant pools on a beat's `text` — are documented
+separately in
+[campaign_content_expansion.md](campaign_content_expansion.md), along with the
+authoring recipes for each. All of them are optional; a pack using none of them
+behaves exactly as this document describes.
+
 ## Changelog
 
+- **v1.1.0** (2026-08-17) — cross-reference the content-expansion additions
+  (`ambient`, `prompt`, `lore`, variant pools).
 - **v1.0.0** (2026-08-16) — initial format: pack layout, beat kinds, branch
   selection, `weight` reservation, validation rules, CLI authoring loop.

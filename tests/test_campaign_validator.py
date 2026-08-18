@@ -25,7 +25,8 @@ from campaign.validator import (  # noqa: E402
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
-def make_pack(scenes, cast=None, primitives=None, start_scene="opening"):
+def make_pack(scenes, cast=None, primitives=None, start_scene="opening",
+              lore=None, ambient_pool=None):
     """Build a CampaignPack directly — bypasses disk, keeps tests focused."""
     if cast is None:
         cast = {
@@ -45,6 +46,8 @@ def make_pack(scenes, cast=None, primitives=None, start_scene="opening"):
         scenes={scene.id: scene for scene in scenes},
         root=Path("/nonexistent"),
         lore_dir=None,
+        lore=lore or {},
+        ambient_pool=list(ambient_pool or []),
     )
 
 
@@ -376,3 +379,219 @@ def test_cast_member_who_never_speaks_is_a_warning():
 
     assert report.ok is True
     assert any("silent" in warning for warning in report.warnings)
+
+
+# ── ambient scenes ───────────────────────────────────────────────────────────
+# Ambient scenes are filler, injected between plot scenes by the scheduler.
+# They are deliberately NOT linked into the graph and deliberately carry no
+# beats — their content is generated at runtime from `prompt`. Both of those
+# properties trip warnings written for authored scenes, so they are exempted
+# here, and a matching set of errors replaces them.
+def ambient(scene_id="camp-fire", prompt="They wait out the rain.", **kwargs):
+    return Scene(id=scene_id, ambient=True, prompt=prompt, **kwargs)
+
+
+SPINE = [
+    Scene(id="opening", beats=[narration()], default_next="victory"),
+    Scene(id="victory", beats=[narration("You win.")]),
+]
+
+
+def test_a_well_formed_ambient_scene_is_clean():
+    report = validate_pack(make_pack([*SPINE, ambient()]))
+
+    assert report.errors == []
+    assert report.ok is True
+
+
+def test_an_ambient_scene_is_not_reported_unreachable():
+    # It is unreachable by construction — that is the whole design.
+    report = validate_pack(make_pack([*SPINE, ambient()]))
+
+    assert not any("unreachable" in w and "camp-fire" in w for w in report.warnings)
+
+
+def test_an_ambient_scene_with_a_prompt_is_not_reported_beatless():
+    report = validate_pack(make_pack([*SPINE, ambient()]))
+
+    assert not any("no beats" in w and "camp-fire" in w for w in report.warnings)
+
+
+def test_an_ambient_scene_with_neither_prompt_nor_beats_is_an_error():
+    # Nothing to play and nothing to generate from: it would air as silence.
+    report = validate_pack(make_pack([*SPINE, ambient(prompt=None)]))
+
+    assert report.ok is False
+    assert any("camp-fire" in e for e in report.errors)
+
+
+def test_an_ambient_scene_with_beats_and_no_prompt_is_fine():
+    scene = ambient(prompt=None, beats=[narration("The fire holds.")])
+    report = validate_pack(make_pack([*SPINE, scene]))
+
+    assert report.errors == []
+
+
+def test_an_empty_prompt_counts_as_no_prompt():
+    report = validate_pack(make_pack([*SPINE, ambient(prompt="   ")]))
+
+    assert report.ok is False
+
+
+def test_beats_inside_an_ambient_scene_are_still_validated():
+    scene = ambient(beats=[narration(speaker="phantom")])
+    report = validate_pack(make_pack([*SPINE, scene]))
+
+    assert any("phantom" in e for e in report.errors)
+
+
+def test_a_non_ambient_scene_is_still_warned_about_when_unreachable():
+    orphan = Scene(id="orphan", beats=[narration()])
+    report = validate_pack(make_pack([*SPINE, orphan]))
+
+    assert any("unreachable" in w and "orphan" in w for w in report.warnings)
+
+
+def test_a_non_ambient_scene_is_still_warned_about_when_beatless():
+    empty = Scene(id="empty", beats=[])
+    report = validate_pack(make_pack([*SPINE, empty]))
+
+    assert any("no beats" in w and "empty" in w for w in report.warnings)
+
+
+# ── ambient scenes must not be linked into the graph ─────────────────────────
+def test_an_ambient_scene_as_a_branch_target_is_an_error():
+    # Linking one would play it as plot and let the spine advance into filler.
+    scenes = [
+        Scene(id="opening", beats=[narration()], default_next="victory",
+              branches=[Branch(id="rest", next="camp-fire", when={})]),
+        Scene(id="victory", beats=[narration("You win.")]),
+        ambient(),
+    ]
+    report = validate_pack(make_pack(scenes))
+
+    assert report.ok is False
+    assert any("camp-fire" in e for e in report.errors)
+
+
+def test_an_ambient_scene_as_default_next_is_an_error():
+    scenes = [
+        Scene(id="opening", beats=[narration()], default_next="camp-fire"),
+        ambient(),
+    ]
+    report = validate_pack(make_pack(scenes))
+
+    assert report.ok is False
+    assert any("camp-fire" in e for e in report.errors)
+
+
+# ── the ambient pool ─────────────────────────────────────────────────────────
+def test_a_pool_naming_a_missing_scene_is_an_error():
+    report = validate_pack(make_pack([*SPINE, ambient()], ambient_pool=["ghost"]))
+
+    assert report.ok is False
+    assert any("ghost" in e for e in report.errors)
+
+
+def test_a_pool_naming_a_non_ambient_scene_is_an_error():
+    report = validate_pack(make_pack([*SPINE, ambient()], ambient_pool=["victory"]))
+
+    assert report.ok is False
+    assert any("victory" in e for e in report.errors)
+
+
+def test_a_pool_naming_a_real_ambient_scene_is_clean():
+    report = validate_pack(make_pack([*SPINE, ambient()], ambient_pool=["camp-fire"]))
+
+    assert report.errors == []
+
+
+def test_an_empty_pool_is_clean():
+    report = validate_pack(make_pack([*SPINE, ambient()], ambient_pool=[]))
+
+    assert report.errors == []
+
+
+# ── lore selectors ───────────────────────────────────────────────────────────
+def test_a_scene_selecting_a_missing_lore_note_is_an_error():
+    # Silently dropping it would quietly starve the improviser of context.
+    scene = Scene(id="opening", beats=[narration()], lore=["ghost-note"])
+    report = validate_pack(make_pack([scene], lore={"the-event": "text"}))
+
+    assert report.ok is False
+    assert any("ghost-note" in e for e in report.errors)
+
+
+def test_a_scene_selecting_a_present_lore_note_is_clean():
+    scene = Scene(id="opening", beats=[narration()], lore=["the-event"])
+    report = validate_pack(make_pack([scene], lore={"the-event": "text"}))
+
+    assert report.errors == []
+
+
+def test_a_scene_selecting_no_lore_is_clean():
+    report = validate_pack(make_pack(SPINE, lore={"the-event": "text"}))
+
+    assert report.errors == []
+
+
+def test_every_missing_lore_note_is_reported():
+    scene = Scene(id="opening", beats=[narration()], lore=["one", "two"])
+    report = validate_pack(make_pack([scene]))
+
+    assert any("one" in e for e in report.errors)
+    assert any("two" in e for e in report.errors)
+
+
+# ── variant pools ────────────────────────────────────────────────────────────
+def test_an_empty_variant_in_a_pool_is_an_error():
+    # A blank variant reaches TTS as silence mid-scene, and only on the run
+    # where the cycle happens to land on it.
+    beat = Beat(kind="dialogue", speaker="alice", text="We run.",
+                texts=["We run.", ""])
+    report = validate_pack(make_pack([Scene(id="opening", beats=[beat])]))
+
+    assert report.ok is False
+
+
+def test_a_whitespace_only_variant_is_an_error():
+    beat = Beat(kind="dialogue", speaker="alice", text="We run.",
+                texts=["We run.", "   "])
+    report = validate_pack(make_pack([Scene(id="opening", beats=[beat])]))
+
+    assert report.ok is False
+
+
+def test_a_healthy_variant_pool_is_clean():
+    beat = Beat(kind="dialogue", speaker="alice", text="We run.",
+                texts=["We run.", "This is where we leave."])
+    report = validate_pack(make_pack([Scene(id="opening", beats=[beat])]))
+
+    assert report.errors == []
+
+
+def test_a_single_entry_pool_is_clean():
+    beat = Beat(kind="dialogue", speaker="alice", text="We run.", texts=["We run."])
+    report = validate_pack(make_pack([Scene(id="opening", beats=[beat])]))
+
+    assert report.errors == []
+
+
+def test_an_action_beat_with_an_empty_pool_is_still_clean():
+    # Action and pane beats legitimately carry no text at all.
+    beat = Beat(kind="action", speaker="alice", primitive="roll_check")
+    report = validate_pack(make_pack([Scene(id="opening", beats=[beat])]))
+
+    assert report.errors == []
+
+
+# ── everything at once ───────────────────────────────────────────────────────
+def test_every_new_problem_is_collected_in_one_pass():
+    scenes = [
+        Scene(id="opening", beats=[narration()], default_next="camp-fire",
+              lore=["ghost-note"]),
+        ambient(prompt=None),
+    ]
+    report = validate_pack(make_pack(scenes, ambient_pool=["nowhere"]))
+
+    assert len(report.errors) >= 4

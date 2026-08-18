@@ -2,24 +2,54 @@ id: magic-retained
 title: The Well That Held
 enter_narration: The seal takes. The last well holds.
 
+lore: [moonwells, the-event]
+
 beats:
   - type: narration
     speaker: gm
-    text: >-
-      The well holds. The light in it drops to almost nothing and then stops
-      dropping, and every mage alive feels the floor of the world stop moving
-      under them.
+    improv: true
+    text:
+      - >-
+        The well holds. The light in it drops to almost nothing and then stops
+        dropping, and every mage alive feels the floor of the world stop moving
+        under them.
+      - >-
+        It takes. The glow sinks until there is almost nothing left of it, and
+        then it simply stays there, and everyone in the world who has ever cast
+        anything feels something under them go still.
+      - >-
+        The seal catches. Not cleanly, not all at once, but it catches, and the
+        long slide that every mage alive had learned to feel in their teeth
+        comes to a stop.
 
   - type: narration
     speaker: gm
-    text: >-
-      So magic survives into your age. Thin, rationed, watched over by people
-      who remember why. A sorcerer is rare. A sorcerer is also possible.
+    improv: true
+    text:
+      - >-
+        So magic survives into your age. Thin, rationed, watched over by people
+        who remember why. A sorcerer is rare. A sorcerer is also possible.
+      - >-
+        Which is why there is still magic in your century at all. Not much of
+        it, and not freely — it is measured out and minded by people who know
+        exactly what it cost. Rare is not the same as impossible.
+      - >-
+        That is the age you were born into: magic thinned almost to nothing but
+        never quite gone, kept under guard by those who remember the arithmetic.
+        A sorcerer is a rarity. A sorcerer is not a contradiction.
 
   - type: dialogue
     speaker: helen
-    text: >-
-      That's why it comes so easily to me and so hard to everyone else. There
-      was almost none left, and somehow I got a full share of it.
+    improv: true
+    text:
+      - >-
+        That's why it comes so easily to me and so hard to everyone else. There
+        was almost none left, and somehow I got a full share of it.
+      - >-
+        So there was almost nothing left to go around, and I got a whole
+        portion. That explains the ease. It doesn't explain why me.
+      - >-
+        Everyone else scrapes for it. I have never had to. If there was that
+        little left in the world, then someone decided where my share came from.
 
 default_next: letos-manor

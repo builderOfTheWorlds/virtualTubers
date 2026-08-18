@@ -14,6 +14,16 @@ goal: |
   on the first one. An operator fixing a campaign pack wants the whole list in
   one pass, not a fix-rerun-fix-rerun loop.
 
+  This is a REVISION of a module that already exists and already passes 40
+  tests. Everything not marked new must keep behaving exactly as it does today;
+  the existing tests are in the acceptance suite and all of them must still
+  pass. What is being added, all in the AMBIENT SCENES, LORE SELECTORS and
+  VARIANT POOLS sections of the notes:
+
+    1. Ambient scenes are EXEMPT from two warnings written for authored scenes.
+    2. Five new errors covering ambient scenes, the ambient pool, lore
+       selectors and variant pools.
+
 target_files:
   - app/campaign/validator.py
 
@@ -96,6 +106,61 @@ notes: |
   - A cast member id that never appears as any beat's `speaker`. Message must
     contain the member id.
 
+  AMBIENT SCENES (new).
+
+  An ambient scene (`scene.ambient is True`) is filler: it is INJECTED between
+  spine scenes by the runtime, never linked to from the graph, and it usually
+  carries a generation `prompt` instead of authored beats. That makes two of the
+  warnings above wrong for it by construction, and creates new errors of its own.
+
+  EXEMPTIONS — an ambient scene is never given these two warnings:
+    - "unreachable". It is unreachable on purpose; nothing links to it. Keep the
+      traversal exactly as it is and filter ambient scenes out when EMITTING the
+      warning — do not add ambient scenes to the visited set, and do not walk
+      outward from them. They are not a second set of roots.
+    - "has no beats". A beatless ambient scene is the normal case.
+  Both warnings must still fire for non-ambient scenes exactly as they do today;
+  tests assert that, so guard on `scene.ambient`, not on "does it have a prompt".
+
+  ERRORS on ambient scenes:
+    - An ambient scene with NEITHER a usable prompt NOR any beats. There would
+      be nothing to play. A prompt that is None, empty, or whitespace-only
+      counts as no prompt (`(scene.prompt or "").strip()`). An ambient scene
+      with authored beats and no prompt is FINE — the beats are the content.
+    - An ambient scene named as a branch's `next`, or as any scene's
+      `default_next`. Ambient scenes are injected, never linked; a link into one
+      would strand the spine. Note this fires when the target EXISTS and is
+      ambient, so it is a separate check from the dangling-target error — the
+      dangling check will not catch it.
+
+  Beats INSIDE an ambient scene are validated exactly like any other beats —
+  unknown speakers, bad kinds and missing text are all still errors there. The
+  exemptions above are about the scene, not its contents.
+
+  THE AMBIENT POOL (new).
+
+  `pack.ambient_pool` is a list of scene ids. For each entry, in order:
+    - not a key in pack.scenes -> error naming the entry
+    - present but NOT ambient-flagged -> error naming the entry
+  An empty or absent pool is clean — it means "use every ambient scene".
+
+  LORE SELECTORS (new).
+
+  A scene's `lore` list names lore notes by stem. Every stem that is not a key
+  in `pack.lore` is an error whose message contains the stem. Report EVERY
+  missing stem in a scene, not just the first — a test selects two missing
+  stems and asserts both appear. A scene with no `lore` is clean, and lore notes
+  that no scene selects are NOT a problem (not even a warning).
+
+  VARIANT POOLS (new).
+
+  A beat's `texts` is its variant pool — the renderer cycles through it so a
+  replayed scene is not verbatim-identical. An entry that is empty or
+  whitespace-only would render as silence, so any such entry is an error naming
+  the scene. A pool with a single entry is normal and clean. An EMPTY pool is
+  also clean: action and pane beats legitimately have no text at all, so check
+  the entries, never the length.
+
   A self-referencing scene (default_next == its own id) is explicitly VALID and
   is never an error — the show's premise is a time loop, so cycles are a feature.
   Do not add cycle detection. (It may still be warned as unreachable if the
@@ -105,17 +170,38 @@ notes: |
   `VALID_BEAT_KINDS = frozenset({"narration", "dialogue", "action", "pane"})`)
   rather than rebuilding a set literal inside the per-beat loop.
 
-  Iterate scenes in a deterministic order (`sorted(pack.scenes)`) so the report
-  is byte-identical between runs on the same pack. Make ONE pass over the scenes
-  for the per-scene checks — do not re-sort and re-loop over pack.scenes once per
-  category of check.
+  Iterate scenes in a deterministic order so the report is byte-identical
+  between runs on the same pack. Sort the scene IDS and look each scene up by
+  id — `Scene` is a plain dataclass with no ordering, so sorting Scene objects
+  raises TypeError. Write exactly this loop:
+
+      for scene_id in sorted(pack.scenes):
+          scene = pack.scenes[scene_id]
+          _check_branches(scene, pack, report)
+          _check_beats(scene, pack, report)
+          _check_scene_content(scene, report)
+          _check_lore(scene, pack, report)
+
+  Make ONE pass over the scenes for the per-scene checks — do not re-sort and
+  re-loop over pack.scenes once per category of check.
 
   Structure the work as small helpers that append to the report, e.g.
 
-      _check_branches(scene, pack, report)   # dangling next, duplicate branch ids
-      _check_beats(scene, pack, report)      # kind, speaker, primitive, text, show
+      _check_branches(scene, pack, report)   # dangling next, duplicate branch ids,
+                                             #   and ambient scenes used as targets
+      _check_beats(scene, pack, report)      # kind, speaker, primitive, text, show,
+                                             #   and empty variant-pool entries
+      _check_scene_content(scene, report)    # ambient with neither prompt nor beats
+      _check_lore(scene, pack, report)       # lore stems missing from pack.lore
       _reachable_scene_ids(pack) -> set[str] # the traversal described above
+      _check_ambient_pool(pack, report)      # pool entries missing or not ambient
       _check_cast_usage(pack, spoken, report)
+
+  The per-scene helpers stay inside the ONE pass over `sorted(pack.scenes)` shown
+  above; the pool check runs once, outside it.
+
+  Anywhere else you need scenes in order, use the same shape — sort ids, index
+  the dict. Never `sorted(pack.scenes.values())`.
 
   `validate_pack` should read as a short outline of those calls, not carry the
   logic itself.

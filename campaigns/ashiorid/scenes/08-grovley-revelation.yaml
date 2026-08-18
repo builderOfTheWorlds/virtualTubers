@@ -3,34 +3,71 @@ title: Grovley
 enter_narration: >-
   In the subbasement, the butler tells the four of you what you are.
 
+lore: [the-begene-program]
+
 beats:
   - type: pane
     show: party
 
   - type: narration
     speaker: gm
-    text: >-
-      His name is Grovley. He has served the house of Leto for longer than he
-      will say. He is kneeling beside the Duke's body, and he does not look
-      surprised to see you.
+    improv: true
+    text:
+      - >-
+        His name is Grovley. He has served the house of Leto for longer than he
+        will say. He is kneeling beside the Duke's body, and he does not look
+        surprised to see you.
+      - >-
+        The butler's name is Grovley. Ask him how long he has been with the
+        Letos and he will change the subject. He is on his knees beside the
+        Duke, and the four of you arriving does not appear to be news to him.
+      - >-
+        Grovley, he says, and offers nothing after it. He has served this house
+        longer than he intends to admit. He does not get up, and he does not
+        seem at all surprised that it is the four of you standing there.
 
   - type: dialogue
     speaker: carl
-    text: >-
-      You knew we would come down here.
+    improv: true
+    text:
+      - >-
+        You knew we would come down here.
+      - >-
+        You were waiting. Down here, specifically, for us.
+      - >-
+        You're not surprised. Which means you knew this stair was where we'd
+        end up.
 
   - type: narration
     speaker: gm
-    text: >-
-      "I knew the four of you would still be standing," Grovley says. "That was
-      rather the point of you."
+    improv: true
+    text:
+      - >-
+        "I knew the four of you would still be standing," Grovley says. "That was
+        rather the point of you."
+      - >-
+        Grovley says he knew the four of you would still be on your feet, and
+        that this was, in point of fact, what the four of you were for.
+      - >-
+        "I knew you four would survive it," he says. "Everything about you was
+        arranged so that you would."
 
   - type: narration
     speaker: gm
-    text: >-
-      He tells you about the Begene Sisters. A breeding program run across four
-      bloodlines for a hundred years, and a ledger somewhere with your names
-      already written in it before any of you were born.
+    improv: true
+    text:
+      - >-
+        He tells you about the Begene Sisters. A breeding program run across four
+        bloodlines for a hundred years, and a ledger somewhere with your names
+        already written in it before any of you were born.
+      - >-
+        Then he explains the Begene Sisters to you. A hundred years of deliberate
+        crossing across four bloodlines, and a book kept somewhere with all four
+        of your names entered in it before a single one of you was born.
+      - >-
+        The Begene Sisters, he says, as though that should mean something. Four
+        bloodlines. A century of work. A ledger with your names in it, written
+        down in advance of you existing.
 
   - type: action
     speaker: carl
@@ -41,39 +78,90 @@ beats:
 
   - type: narration
     speaker: gm
-    text: >-
-      You were not invited. You were assembled. Four bloodlines, chosen and
-      crossed and watched over for a century, and the four of you are what the
-      work produced.
+    improv: true
+    text:
+      - >-
+        You were not invited. You were assembled. Four bloodlines, chosen and
+        crossed and watched over for a century, and the four of you are what the
+        work produced.
+      - >-
+        The card was not an invitation. It was a collection notice. Four
+        bloodlines, picked and bred and minded for a hundred years, and you are
+        the output.
+      - >-
+        Nobody invited you anywhere. You were gathered. A century of selection
+        across four lines, and the four people sitting in this cellar are the
+        result it was aiming at.
 
   - type: narration
     speaker: gm
-    text: >-
-      "Leto was father to all of them," Grovley says, to nobody, with his hand
-      still on the dead man's shoulder. "To all of you."
+    improv: true
+    text:
+      - >-
+        "Leto was father to all of them," Grovley says, to nobody, with his hand
+        still on the dead man's shoulder. "To all of you."
+      - >-
+        His hand does not leave the dead man's shoulder. "He fathered all of
+        them," he says, to no one in particular. "Which is to say, all of you."
+      - >-
+        "He was father to every one of them," Grovley says, addressing the room
+        rather than any of you, his hand where it has been this whole time. "To
+        every one of you."
 
   - type: dialogue
     speaker: helen
-    text: >-
-      No. I have a family. I have a village. I can name my grandmother's
-      grandmother.
+    improv: true
+    text:
+      - >-
+        No. I have a family. I have a village. I can name my grandmother's
+        grandmother.
+      - >-
+        No. There's a village. There are people in it who raised me. I can go
+        back four generations by name.
+      - >-
+        That's not true. I know where I'm from. I can name every woman in my
+        line back further than you'd think.
 
   - type: narration
     speaker: gm
-    text: >-
-      "You can name what you were given to name," Grovley says, and he says it
-      kindly, which is worse.
+    improv: true
+    text:
+      - >-
+        "You can name what you were given to name," Grovley says, and he says it
+        kindly, which is worse.
+      - >-
+        Grovley tells her, gently, that she can name exactly what she was
+        provided to name. The gentleness does not help.
+      - >-
+        "You can name what somebody wrote down for you," he says. There is no
+        cruelty in how he says it at all, and that makes it land harder.
 
   - type: dialogue
     speaker: buffalo
-    text: >-
-      Siblings. All this way, and I've been travelling with my own family for a
-      day and a half without knowing it.
+    improv: true
+    text:
+      - >-
+        Siblings. All this way, and I've been travelling with my own family for a
+        day and a half without knowing it.
+      - >-
+        So we're related. I've been on the road a day and a half with my own
+        blood and nobody thought to mention it.
+      - >-
+        Brothers and sisters, then. Thirty-odd hours I've been walking beside my
+        own family without the first idea.
 
   - type: dialogue
     speaker: drokki
-    text: >-
-      A hundred years of work and they burn the house on the anniversary of it.
-      Somebody wanted this finished tonight.
+    improv: true
+    text:
+      - >-
+        A hundred years of work and they burn the house on the anniversary of it.
+        Somebody wanted this finished tonight.
+      - >-
+        Hundred years in the making and they put the torch to it on the exact
+        anniversary. That's not housekeeping. Someone wanted it closed tonight.
+      - >-
+        They waited a century and then chose this date to burn it. You don't
+        pick a date like that by accident.
 
 default_next: the-vault

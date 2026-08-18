@@ -12,6 +12,13 @@
 
 - At the start of every new conversation, read the project's `README.md` to understand the project's purpose, structure, and how it operates before taking any action.
 
+## Plans & Prompts
+
+- Save implementation plans and reusable prompt context to `.claude/prompts/` within the project directory.
+- This is the default location for all plans, prompt templates, and task context files.
+- File naming: use descriptive snake_case names (e.g., `financial_dashboard_db.md`, `auth_refactor.md`).
+- Plans saved here persist across conversations and serve as the starting context for resumed work.
+
 ## Task Execution Strategy
 
 - For complex or multi-step tasks, delegate work to sub-agents (using the Task tool) rather than doing everything in the main context window.
@@ -165,6 +172,31 @@ If a change genuinely belongs in the shared utility (i.e. it is useful to all co
 ---
 
 <!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from argyreServer — 2026-08-17 00:53
+
+## Installers and Uninstallers for Deployments
+
+- Whenever you stand up a new deployment on a machine — installing a system
+  package (apt/flatpak/etc.), configuring a new agent/sandbox, or adding a
+  Docker stack — create it as a paired `install.sh` **and** `uninstall.sh`,
+  not an install script alone. Do this by default for any deployment-shaped
+  task, not only when the user explicitly asks for "an install.sh".
+- Put the pair under a directory named for the thing being deployed (e.g.
+  `<tool>/scripts/install.sh` + `uninstall.sh`), following the
+  `install_sh_guide.md` conventions (color logging, idempotent checks, root
+  check, health check, success summary) adapted to what's actually being
+  installed.
+- The uninstaller must be safe by default: only remove what the installer
+  added, leave data/packages other things might depend on untouched, and
+  gate anything irreversible (data purges, wiping shared resources like a
+  full Ollama model inventory) behind an explicit opt-in flag plus a typed
+  confirmation prompt.
+- Document the pair in a `README.md` alongside the scripts (Summary,
+  Prerequisites, install/uninstall usage and flags, references) and link it
+  from the project's root README.
+- Reference implementations: `argyreServer/nemoclaw/` and
+  `argyreServer/flatpak/`.
+
 
 ## Centralized Logging (Grafana + Loki)
 
@@ -260,53 +292,6 @@ git push origin master
 git checkout -b workingBranch
 git push origin workingBranch
 ```
-
----
-
-## Mafober Deployment Environment
-
-Projects created or cloned into the managed projects root (`projects_root` in `config.yaml`) deploy to **mafober**, a Proxmox VE homelab host that also runs the shared Docker/Portainer stack for this machine.
-
-### Connection
-
-| Item | Value |
-|------|-------|
-| Hostname | `mafober` |
-| IP Address | `192.168.1.117` |
-| Proxmox Web UI | `https://192.168.1.117:8006` |
-| Portainer (Docker mgmt) | `https://192.168.1.120:9443` |
-| SSH / SFTP | port `22` on `192.168.1.117` |
-
-### Deploying a new project
-
-1. Create a ZFS dataset under `tank_0` for the project's persistent storage (`zfs create tank_0/utilities/<project>`) rather than relying on ephemeral CT storage or named Docker volumes.
-2. `chown` the new dataset to the UID/GID the container image expects (e.g. `1000:1000` for linuxserver images, `472:472` for Grafana-style images).
-3. Add an explicit bind mount for the dataset into CT 101 (the Portainer LXC): `pct set 101 -mp<N> /tank_0/utilities/<project>,mp=/tank_0/utilities/<project>`, then `pct restart 101`. Each ZFS dataset needs its own `mp` entry — mounting a parent dataset does not expose its children.
-4. Define the stack/container in Portainer (`https://192.168.1.120:9443`) pointing at the bind-mounted path.
-5. If the project should be scraped by Prometheus or shipped logs to Grafana, register it alongside the existing dashboards/exporters on the host.
-
-### Currently deployed on mafober
-
-- **Portainer** — Docker/stack management (CT 101)
-- **Plex** — media server
-- **qBittorrent** — torrent client
-- **Grafana** — dashboards
-- **Prometheus** — metrics
-- **node_exporter** / **zfs_exporter** — host-level metrics, run directly on the Proxmox host (not containerized)
-
-### More info
-
-Full hardware specs, ZFS layout, container configs, and troubleshooting lessons learned live in `mafober/mafober_summary.md` (a sibling project directory under the managed projects root). Check there first if these details aren't enough.
-
----
-
-## Concluding a Conversation
-
-When the user explicitly instructs an agent to "conclude the conversation" (or an equivalent closing phrase), treat it as a three-step close-out sequence rather than just ending the reply:
-
-1. **Write the session backup now.** Don't wait for the `SessionEnd` hook to fire on its own — invoke the existing parser (`claudeBackupUtility/.claude/hooks/log_session.py`'s `parse_session()`, or run `sweep_stale_sessions.py`) against the current transcript so `conversation.md` and the tool-call files land in `claudeBackupUtility/logs/claude/<project>/` before the session actually ends.
-2. **Remind the user to close the panel — don't try to do it yourself.** No Claude Code tool can control the VS Code UI. End the final message with an explicit reminder (e.g. "You can close this panel now") instead of attempting the action.
-3. **Forward the finalized conversation to a processing API.** This is a placeholder for future work — no such endpoint exists yet (as of 2026-07-18). Once one is configured (URL + auth wired into `config.yaml`), POST the finalized transcript/log output to it here. Until then, skip this step silently rather than guessing a URL.
 
 ---
 
