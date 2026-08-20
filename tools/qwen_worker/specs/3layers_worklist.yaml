@@ -1,0 +1,192 @@
+task_id: 3layers_worklist
+
+goal: |
+  Implement the scan-and-assign pass for the 3-layer offline content generator
+  — the pass that runs BEFORE any GPU time is spent.
+
+  WHY THIS MODULE EXISTS. The existing batch generator allocates take numbers
+  lazily: `batch_generate._next_take_number(scene_dir)` globs the directory for
+  `*.yaml` and returns `max(...) + 1`. That is correct for one sequential
+  writer and broken for a pool of eight: two workers both see `002.yaml` as the
+  highest, both claim take 3, and one silently overwrites the other's work.
+
+  The fix is NOT a lock around the allocator. It is to stop allocating lazily.
+  Scan the output tree once, compute every `(segment, slot, take)` that is not
+  yet on disk, assign each one its deterministic path up front, and emit an
+  ordered list. Four things fall out of that single change:
+
+    - race-freedom: every path is decided before any thread starts;
+    - idempotent resume: re-running the scan IS the resume, because a take
+      already on disk is simply not planned again;
+    - a hole in the middle gets refilled — lazy allocation would see `003` as
+      the max and plan take 4, leaving the missing `002` unfilled forever;
+    - an exact work count and ETA before an operator commits to a two-day run.
+
+  CONDITION ASSIGNMENT (design decision D12). Each ambient slot gets
+  `takes_per_slot` takes. Those takes were previously three interchangeable
+  variants of the same line; spending them on STORY-STATE COVERAGE instead
+  costs zero extra GPU time and is what lets the runtime pick a line that fits
+  the current state. Take 1 is ALWAYS neutral (`conditions: {}`) — that
+  invariant is load-bearing: if every take on a slot were conditioned and none
+  of the conditions matched the live state, the runtime would have nothing to
+  play and the stream would dead-air.
+
+  This module is nearly pure: it reads the output tree (existence checks) and,
+  in `build_worklist`, reads each segment's `brief.yaml`. No LLM, no network,
+  no writes.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/worklist.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_worklist.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/config.py
+  - utilities/3LayersWeeklyGeneration/src/vocabulary.py
+  - app/campaign/batch_generate.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/worklist.py must export exactly these
+  names:
+
+      class WorklistError(ValueError)
+          Raised for a malformed brief, a missing brief file, or a nonsensical
+          estimate argument. Every message must name the segment (and slot
+          where relevant) — during an unattended run the message is all the
+          operator gets.
+
+      @dataclass(frozen=True)
+      class WorkUnit
+          Fields, in this order:
+              segment_id: str
+              slot_id: str
+              take: int                    # 1-based
+              conditions: dict             # {} means the neutral take
+              path: pathlib.Path           # where this take will be written
+              slot: dict                   # the whole slot from the brief
+
+          `slot` is carried so a pool worker needs no second lookup into the
+          brief — the unit is self-contained work.
+
+          NOTE: `conditions` and `slot` are dicts, so instances are NOT
+          hashable even though the dataclass is frozen. Do not put WorkUnits in
+          a set. Deduplicate on `path` if you ever need to.
+
+      def take_path(segment_root, slot_id, take) -> pathlib.Path
+          Returns `segment_root / "slots" / slot_id / f"{take:03d}.yaml"`.
+          Zero-padding to three digits is required: take files are listed with
+          glob and read in name order downstream, and `10.yaml` would sort
+          before `2.yaml`.
+
+      def conditions_for(slot, take, config) -> dict
+          The condition mapping for a 1-based `take` on one ambient slot.
+          Reads `config["dialogue"]["neutral_takes"]` (default 1) and
+          `config["state"]["moods"]`.
+
+          Rules, in order:
+            - `take <= neutral_takes`  -> `{}`. Always. No exceptions.
+            - slot["sensitivity"] == "none"  -> `{}` for every take. The line
+              reads the same in any state; conditioning it would only shrink
+              the pool the runtime can draw from.
+            - otherwise build an ordered CANDIDATE list and index into it with
+              `(take - neutral_takes - 1) % len(candidates)`:
+                * sensitivity "tone": one candidate per declared mood, in
+                  config order — `{"mood": m}` for each m in
+                  config["state"]["moods"].
+                * sensitivity "flags": for each flag in slot["depends_on"], IN
+                  ORDER, two candidates: `{flag: True}` then `{flag: False}`.
+                  Both polarities of the first flag come before the second
+                  flag's — with the usual budget of two conditioned takes and
+                  one dependency, the useful split is true/false.
+            - if the candidate list is EMPTY (e.g. sensitivity "flags" with an
+              empty `depends_on`, or "tone" with no declared moods), return
+              `{}`. Nothing to condition on; a neutral take is still a useful
+              take.
+
+          The modulo means more takes than distinct conditions is NOT an error
+          — a second take under the same condition is ordinary variety.
+
+          Every mapping this function returns must be one that
+          `vocabulary.Vocabulary.validate_condition` accepts: flag values are
+          real `bool`, mood values come from the declared list.
+
+      def units_for_segment(segment_id, brief, segment_root, config) -> list[WorkUnit]
+          Plan one segment. `brief` is the loaded brief mapping; `segment_root`
+          is the directory that segment's output lives under.
+
+            - `brief["slots"]` is required. A brief with no "slots" key raises
+              WorklistError — an empty worklist and a malformed brief look
+              identical from the outside, and a two-day run must not exit in
+              three seconds reporting success.
+            - Slots with `kind == "spine"` produce NO units: spine dialogue is
+              authored in the campaign pack, and Layer 3 only fills ambient.
+            - Every other slot must have a "slot_id"; a slot without one raises
+              WorklistError naming the segment.
+            - For each ambient slot, for take in 1..config["dialogue"]["takes_per_slot"]:
+              SKIP the take if `take_path(...)` already exists on disk;
+              otherwise emit a WorkUnit.
+          Order: slots in brief order, takes ascending within a slot. Draining
+          in that order means stopping the run at any point leaves a contiguous
+          usable prefix of airtime rather than a scattered fraction.
+
+          Condition assignment keys off the TAKE NUMBER, never off position in
+          the returned list. If take 1 already exists, the first planned unit is
+          take 2 and it must still carry take 2's condition.
+
+      def build_worklist(output_root, segment_ids, config) -> list[WorkUnit]
+          The whole-run pass. For each segment id IN THE GIVEN ORDER, read
+          `output_root / "segments" / <segment_id> / "brief.yaml"` with
+          `yaml.safe_load`, then delegate to `units_for_segment` with
+          `segment_root = output_root / "segments" / <segment_id>`.
+          Concatenate.
+
+          A missing or unreadable brief raises WorklistError naming the
+          segment, logged at ERROR first.
+
+      def estimate_seconds(units, seconds_per_take, concurrency) -> float
+          `len(units) * seconds_per_take / concurrency`. An empty list is 0.
+          A `concurrency` less than 1 raises WorklistError — a divide-by-zero
+          traceback is a poor way to learn the config is wrong.
+
+notes: |
+  STYLE — match the project conventions visible in the context files:
+    - Module docstring explaining WHY plan-then-drain replaces lazy allocation
+      (the race described above), not just what the functions do.
+    - `log = logging.getLogger(__name__)` at module level.
+    - Type hints on public signatures, as `config.py` has.
+    - Imports: standard library plus `yaml`. Do NOT import from `app/`, and do
+      NOT import `vocabulary` — this module produces conditions, the caller
+      validates them.
+
+  LOGGING:
+    - DEBUG on entry to each public function.
+    - DEBUG per segment with the planned/skipped counts, in EXACTLY this
+      wording so it can be relied on:
+          log.debug("segment %s: planned %d, skipped %d", segment_id, planned, skipped)
+      During a resume that line is how an operator confirms the scan saw the
+      existing work, so both numbers must come from the ACTUAL scan: `planned`
+      is the number of units emitted for that segment, `skipped` is the number
+      of takes found already on disk. Deriving either from `takes_per_slot`
+      arithmetic gives a wrong (often negative) number and misleads the
+      operator at the moment they decide whether to trust the run.
+      `skipped` = (number of AMBIENT slots in the brief * takes_per_slot)
+      - planned. Note the spine slots must be excluded from that count, since
+      they were never candidates for generation in the first place.
+    - INFO once at the end of `build_worklist` with the total unit count. This
+      function runs ONCE per run, so INFO is right here; `conditions_for` runs
+      tens of thousands of times and must never log above DEBUG.
+    - ERROR immediately before every raise.
+
+  THE NEUTRAL INVARIANT IS NOT A DEFAULT — IT IS A GUARANTEE. Do not write
+  `conditions_for` so that a slot's sensitivity can reach take 1. Check
+  `take <= neutral_takes` FIRST, before any sensitivity branching.
+
+  ORDER MATTERS THROUGHOUT. Slot order comes from the brief, take order is
+  ascending, segment order is the caller's list. Do not sort, do not use a set
+  anywhere that feeds the output list, and do not use `glob` to discover slots
+  — the brief is the source of truth for what should exist, and the disk is
+  only consulted to learn what already does.
+
+  Do not add a `__main__` block, argparse, a `main()`, or any file writing.
+  This module plans; `pool.py` drains and writes.

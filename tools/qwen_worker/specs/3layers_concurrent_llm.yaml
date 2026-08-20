@@ -1,0 +1,184 @@
+task_id: 3layers_concurrent_llm
+
+goal: |
+  Implement the pooled, timeout-configurable Ollama client that every
+  concurrent layer of the 3-layer offline content generator drives.
+
+  WHY THIS MODULE EXISTS. The project already has a working Ollama client in
+  `app/llm_client.py` (see context files). It is correct for the live avatar
+  app, which makes one request at a time in response to a human. It is wrong
+  for a two-day unattended batch run for three reasons:
+
+    1. HARDCODED 120s TIMEOUT. `OllamaClient.complete` calls
+       `httpx.post(..., timeout=120)`. Batching raises total throughput BY
+       RAISING PER-REQUEST LATENCY: when eight requests are in flight against
+       one model instance, a single request that took 65s alone can take
+       several times that. Every one of those crosses 120s and dies. The
+       timeout must come from config.
+
+    2. NO CONNECTION POOLING. It calls the MODULE-LEVEL `httpx.post`, which
+       builds and tears down a connection for every call. This run makes
+       roughly 14,300 calls.
+
+    3. NO num_ctx. The context length drives the per-slot KV cache, which is
+       the memory lever that decides how many requests fit in parallel. It
+       must be settable per model profile.
+
+  AND THE FAILURE IS SILENT. `LLMImproviser.generate_scene` (the caller) wraps
+  its LLM call in a bare `except Exception:` that logs "generate_scene: LLM
+  call failed" WITHOUT the exception, then returns an empty take. So a
+  timeout is indistinguishable from "the model wrote nothing", and a run would
+  spend hours writing empty files while looking healthy. That is why this
+  module must log its own failure detail at ERROR before raising: that log
+  line is the only surviving evidence.
+
+  CONSTRAINT — DO NOT MODIFY `app/llm_client.py` OR ANY FILE UNDER `app/`.
+  It is shared with the live avatar app. This module SUBCLASSES `OllamaClient`
+  and overrides `complete`. That subclass relationship is required, not
+  cosmetic: existing code type-checks and constructs against `OllamaClient`.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/concurrent_llm.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_concurrent_llm.py
+
+context_files:
+  - app/llm_client.py
+  - utilities/3LayersWeeklyGeneration/src/config.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/concurrent_llm.py must export exactly
+  these names:
+
+      class PooledOllamaClient(OllamaClient)
+          Imported as `from llm_client import LLMError, OllamaClient`.
+          (The tests' conftest puts `app/` on sys.path, so it is a plain
+          top-level import — NOT `from app.llm_client import ...`.)
+
+          def __init__(self, base_url, model, temperature, max_tokens,
+                       timeout_s=600, num_ctx=None, http_client=None)
+
+              Call `super().__init__(base_url, model, temperature, max_tokens)`
+              so the parent's own normalisation (it does `base_url.rstrip("/")`)
+              and attributes are inherited rather than reimplemented.
+
+              Store `self.timeout_s` and `self.num_ctx`.
+
+              `http_client` is an injected httpx.Client-alike, used by the
+              tests so nothing touches the network. When it is None, build
+              ONE `httpx.Client(timeout=timeout_s)` and keep it as
+              `self.http_client`. Either way the attribute is named exactly
+              `http_client` — the tests read it.
+
+              Also record whether the client was injected or self-built; see
+              `close()`.
+
+          def complete(self, system_prompt, messages) -> str
+
+              POST to f"{self.base_url}/api/chat" through `self.http_client`
+              (never the module-level `httpx.post`), with the SAME json body
+              shape the parent sends:
+
+                  {"model": ..., "messages": [{"role": "system",
+                                               "content": system_prompt}] + messages,
+                   "stream": False,
+                   "options": {"temperature": ..., "num_predict": ...}}
+
+              plus: `options["num_ctx"] = self.num_ctx` ONLY when num_ctx is
+              not None. When it is None the key must be ABSENT — sending
+              `"num_ctx": None` would override the server's own default with
+              nonsense.
+
+              Pass `timeout=self.timeout_s` as a keyword argument to the post.
+
+              Return `response.json()["message"]["content"]`.
+
+              ERROR HANDLING — every failure leaves the method as LLMError,
+              and every one logs at ERROR first (see WHY above):
+
+                * httpx.HTTPStatusError from `response.raise_for_status()`:
+                  raise LLMError with the SAME shape the parent uses —
+                  f"Ollama request failed: {exc.response.status_code} {exc.response.text}"
+                  The body text carries Ollama's actual complaint (e.g.
+                  "model 'x' not found, try pulling it first"); httpx's own
+                  message drops it.
+
+                * httpx.TimeoutException (and its subclasses ReadTimeout,
+                  ConnectTimeout): LLMError naming the model and the
+                  configured timeout, so the log says which knob to turn.
+
+                * httpx.RequestError (connection refused, DNS, transport):
+                  LLMError naming the base_url.
+
+                * A reply body that is not the expected shape — a missing
+                  "message" or "content" key, or a non-dict — must become
+                  LLMError, NOT a KeyError or TypeError escaping raw. Catch
+                  (KeyError, TypeError) around the extraction.
+
+              Always `raise ... from exc`.
+
+          def close(self) -> None
+              Close `self.http_client` ONLY when this instance built it.
+              An INJECTED client is borrowed, not owned, and must be left
+              open: a caller may hand the same httpx.Client to two clients on
+              different model profiles to share one connection pool, and
+              closing a borrowed client would silently break its sibling
+              mid-run. Idempotent — calling it twice must not raise.
+
+          def __enter__(self) / def __exit__(self, exc_type, exc, tb)
+              `__enter__` returns self; `__exit__` calls `close()` and returns
+              None (it must NOT suppress exceptions).
+
+      def from_profile(profile) -> client
+          `profile` is one resolved model profile from `config.resolve_profile`
+          — a flat dict already merged over the `defaults:` block. Reads:
+              provider    (default "ollama")
+              base_url    (default "http://localhost:11434")
+              model       (default "mistral")
+              temperature (default 0.7)
+              max_tokens  (default 1024)
+              timeout_s   (default 600)
+              num_ctx     (default None)
+
+          provider "ollama"  -> a PooledOllamaClient built from those values.
+          any other provider -> delegate to `build_llm_client({"llm": profile})`
+                                from `llm_client`, which already handles
+                                "claude" and already raises LLMError for an
+                                unknown provider. Do not duplicate that
+                                dispatch here; a second copy of it will drift.
+
+          The 600s default is deliberate and must not be lowered to the
+          parent's 120: inheriting 120 is the exact bug this module exists to
+          fix, and a test asserts the default exceeds it.
+
+notes: |
+  STYLE — match the project conventions visible in the context files:
+    - Module docstring explaining WHY this wrapper exists (the three problems
+      above), and stating that `app/llm_client.py` is deliberately not
+      modified because it is shared with the live avatar app.
+    - `log = logging.getLogger(__name__)` at module level.
+    - Type hints on public signatures, as `config.py` has.
+    - Imports: standard library, `httpx`, and `llm_client` only.
+
+  THREAD SAFETY. One instance of this client is shared by the whole worker
+  pool — up to 8 threads call `complete()` at once. `httpx.Client` is
+  thread-safe for concurrent requests, so DO NOT add a lock around the post:
+  a lock would serialise the requests and destroy the entire point of the
+  pool. A lock is appropriate ONLY around close()'s idempotency flag, if you
+  use one. Keep `complete()` free of shared mutable state — no instance
+  counters, no accumulating list of responses, no `self._last_response`.
+
+  LOGGING:
+    - DEBUG on entry to `complete` with the model and message count. Do NOT
+      log prompt bodies at DEBUG — takes run to hundreds of words each and
+      14,300 of them would bury the log.
+    - DEBUG on success with the response length in characters.
+    - ERROR immediately before every raise, including the cause. This is the
+      module's whole diagnostic contribution; the caller swallows everything.
+    - Do not log at INFO. This module is called 14,300 times.
+
+  Do not add a `__main__` block, argparse, a `main()`, retry loops, or a
+  circuit breaker. Retries and failure-rate tripping belong to `pool.py`,
+  a later module — putting them here would hide failures from the component
+  whose job is to count them.

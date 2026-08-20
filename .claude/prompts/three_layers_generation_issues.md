@@ -7,11 +7,32 @@ actionable. Target tracker: Gitea (`gitea_admin/virtualTubers`).
 Measured baseline referenced throughout, from `campaigns/ashiorid/generated/manifest.jsonl`
 (24 takes): **105 words/take, 7.7 beats/take, 95.4 words/min**.
 
+Issues **#2**, **#6** and **#7** were resolved in the 2026-08-18 planning
+session (A) — the reasoning, the revised budget, and the sequenced build plan
+live in [three_layers_design_decisions.md](three_layers_design_decisions.md).
+
+Issues **#13-#17** were raised by the follow-up session (B) on efficiency,
+random events and branching (D10-D18 in the same doc). They are obligations
+the branching design creates, not defects in the original plan.
+
 ---
 
-## 1. [blocking] Plan has no budget arithmetic connecting segments to the 168-hour target
+## 1. [blocking] [RESOLVED 2026-08-18] Plan has no budget arithmetic connecting segments to the 168-hour target
 
 **Severity:** blocking — determines whether the whole shape is buildable.
+
+**Resolution:** PLAN.md now has a single "Budget" section (previously
+Hermes had produced this twice, verbatim-duplicated and with corrupted LaTeX
+escaping in the first copy, and it didn't do the arithmetic anyway — that
+attempt was reverted). It derives the full chain from the measured baseline:
+262 GPU-hours (best case) / 786 GPU-hours (worst case, pending #7) to
+generate 1.5M words; ~53,600 words / ~510 takes / ~170 slots per 6-hour
+segment. `generation.yaml`'s spec gained a top-level `budget:` block (the
+baseline + derivation inputs) and `segment.target_words` / `segment.target_slots`,
+so Layer 2 has a concrete number to hit. Flags two explicit open
+dependencies rather than silently resolving them: issue #7 (does
+`takes_per_slot` mean airtime or alternates — changes the total by 3x) and
+issue #2 (170 slots/segment needs Layer 2 batching to be requestable at all).
 
 The plan targets ~1.5M words / 168 hours but never derives the intermediate
 quantities. Working it from the measured baseline:
@@ -35,9 +56,22 @@ estimate, and `generation.yaml` carries the per-segment target.
 
 ---
 
-## 2. [blocking] Layer 2 has no batching; one 6-hour segment cannot fit in a single 4096-token call
+## 2. [blocking] [RESOLVED 2026-08-18] Layer 2 has no batching; one 6-hour segment cannot fit in a single 4096-token call
 
 **Severity:** blocking.
+
+**Resolution:** neither proposed fix taken as written. Blind batching gives the
+model no structural anchor (it doesn't know what span a batch covers), and
+shrinking `segment_hours` was rejected because the arc segment count and spine
+pacing are written around 6 h. Instead Layer 2 **fans out into 2a -> 2b**:
+2a emits ~9 chapter one-liners per segment (~40 min each) carrying their own
+`continuity_in`/`continuity_out`; 2b emits ~19 slots per chapter. At ~60
+tokens/slot that is ~1,140 tokens per call against ~10,200 for 170 slots in
+one shot. Resumable per chapter.
+
+The split has a second payoff: it is what makes Layer 2 **parallelisable**,
+provided cross-segment continuity flows through `arc_plan.yaml` rather than
+through a sibling segment's `brief.yaml` (see D6/D7 in the decisions doc).
 
 `plan_segment.py` is specced to emit a segment's entire slot list in **one** LLM
 call at `max_tokens: 4096`. Per issue #1 a 6-hour segment needs ~160 slot entries,
@@ -103,7 +137,14 @@ prompt template names participants inline.
 
 ---
 
-## 5. `target_minutes` is unreachable given max_beats x max_words
+## 5. [RESOLVED 2026-08-18] `target_minutes` is unreachable given max_beats x max_words
+
+**Resolution:** the second option is taken — `target_minutes` is **dropped from
+the brief schema**, and slot *count* carries duration (which is what #1's
+arithmetic already assumes: ~170 slots for 6 hours). PLAN.md's Layer 2 slot
+shape now reads `{slot_id, kind, prompt, lore, participants, sensitivity,
+depends_on}`; the two new fields are session B's state-coverage labels (D14),
+not a replacement for duration.
 
 The dialogue layer's caps (`max_beats: 12`, `max_words: 45`) bound a single take at
 **540 words ~= 4 minutes of audio**. Observed output averages 105 words ~= 45
@@ -123,7 +164,16 @@ is gone from the schema.
 
 ---
 
-## 6. `loop` and `carry` never reach Layer 3 — `_generate_take` overwrites them
+## 6. [RESOLVED 2026-08-18] `loop` and `carry` never reach Layer 3 — `_generate_take` overwrites them
+
+**Resolution:** the proposed fix is adopted, and is now doubly required.
+`LLMImproviser` holds mutable `scene`/`carry`/`loop`/`recent` state that
+`update_context` mutates, so sharing one across the worker pool (D5/D8) would
+cross-contaminate context between takes — Layer 3 needs one improviser per
+worker regardless. That rules out reusing `_generate_take` verbatim anyway,
+since it takes an improviser and mutates it. **One local ~10-line take
+function resolves the loop/carry defect and thread-safety together**, keeping
+`_write_take` / `_append_manifest` reuse intact.
 
 Layer 1 is specced to track `loop`, incrementing each time a segment plays
 `portal-encounter` (the spine's terminal scene, confirmed present at
@@ -153,7 +203,27 @@ the improviser context, covered by a test.
 
 ---
 
-## 7. Unresolved: is `takes_per_slot` alternates or airtime? (3x cost swing)
+## 7. [RESOLVED 2026-08-18] Unresolved: is `takes_per_slot` alternates or airtime? (3x cost swing)
+
+**Resolution: neither — `takes_per_slot` is a *choice pool*.** A slot is a
+recurring moment in a time-loop show; its 3 takes are three variants of that
+moment, all of which are usable inventory. Which one airs — or whether the
+story has branched far enough to need a fresh one — is decided at airtime by
+the scheduler tier (D4), from current story state.
+
+Consequences:
+- Nothing is discarded as curation waste, so generated words == usable words
+  and the 3x cost ambiguity disappears.
+- Nothing chains, so `_generate_take`'s `improviser.recent = []` reset is
+  **correct as written**.
+- Every take stays an independent unit of work, which is what makes the Layer 3
+  worker pool possible at all.
+
+The larger finding from the same session: **request concurrency, not pipeline
+structure, is the dominant cost lever.** Batching to one ollama instance at
+parallel-8 (multiple instances are counterproductive — the GB10 is
+memory-bandwidth-bound) is estimated to cut 262 GPU-hours to ~52. See D5 in the
+decisions doc; the multiplier is not yet measured.
 
 `_generate_take` resets `improviser.recent = []` between takes, so takes 1/2/3 of a
 slot are **three alternate versions of the same moment**, not three consecutive
@@ -262,3 +332,143 @@ and any missed one fails at runtime, not at load.
 
 **Done when:** a profile can be a single `model:` line and `src/config.py` fills
 the rest, with a test covering the merge.
+
+---
+
+## 13. Nothing prevents a drafted event from contradicting spine canon
+
+**Severity:** blocking for Layer 2 — a bad event table poisons every brief
+generated against it.
+
+`config/events.yaml` is **drafted by Layer 1** (hermes3:70b) and reviewed by
+hand (D15). The spine is authored canon that this pipeline never regenerates —
+[campaigns/ashiorid/scenes/](../../campaigns/ashiorid/scenes/) — so an event
+that sets `moonwell-tainted: true` in a window where a scripted spine scene
+narrates a clean moonwell produces content that contradicts what the show
+already said out loud.
+
+The model has no mechanism for noticing this, and the human gate is a person
+reading ~40 entries against ten scene files.
+
+**Fix:** `src/events.py` validates every drafted event before it is written —
+`scope: ambient` on every entry (never `spine`), `requires:`/`sets:` naming
+only keys and values from `generation.yaml`'s `state:` block, and no `sets:`
+key asserting state that a spine scene in that event's `windows` contradicts.
+Failures are surfaced in the file itself as comments so the human gate is
+reading a pre-flagged table rather than proofreading from scratch.
+
+**Done when:** an event asserting spine-contradicted state fails validation,
+covered by a test against a fake pack.
+
+---
+
+## 14. Neutral-take coverage has no guard, and its absence is silent
+
+**Severity:** blocking for the run — the failure only shows up on air.
+
+D12 makes take 001 of every ambient slot **unconditioned**: the guarantee that
+the picker always has something airable, whatever the live state and whatever
+is down. D16's step 4 ("air the neutral take, never dead-air") depends on it
+entirely.
+
+Nothing enforces it. A slot whose take 001 failed generation, or whose
+condition planning assigned a condition to all three takes, produces a library
+that looks complete — right take count, right word count, manifest intact —
+and dead-airs the first time that slot comes up in a state the pool does not
+cover. Under D17's pre-generate-everything choice this is discovered days
+after the run finished.
+
+**Fix:** a hard post-Layer-3 guard: every ambient slot has exactly one take
+with `conditions: {}`. **Fail, not warn** — this is the one outcome the whole
+design exists to prevent. The same check belongs in the work-list pass so a
+resumed run re-queues the missing neutral take rather than skipping the slot
+as complete.
+
+**Done when:** a fake output tree with a slot missing its neutral take fails
+the guard, and the work-list re-queues that take on rescan.
+
+---
+
+## 15. Fork convergence is a four-rule contract with no validator
+
+**Severity:** blocking for Layer 1 — a broken fork turns a shallow DAG into an
+exponential tree, which is the exact cost the branching design exists to
+avoid.
+
+D11's contract: variants share one `merge_at`; variants write the same
+`carry_out` key set from `state.carry_keys`; no post-merge segment conditions
+on which variant ran; forks never nest.
+
+Rule 3 is the one hermes3:70b will violate given the chance — writing "picking
+up from Helen's decision at the ford" into a post-merge synopsis is exactly
+what a coherence-seeking model does, and it silently re-couples the branches.
+
+**Fix:** `src/forks.py` validates all four rules after Layer 1 writes
+`arc_plan.yaml`, and rule 3 goes into Layer 1's prompt verbatim as well.
+Unlike the other budget guards this one **fails the stage** rather than
+warning, and it is never repaired silently.
+
+**Done when:** each of the four rules has a failing fixture and a passing one,
+and a violation aborts Layer 1 with a message naming the fork and the rule.
+
+---
+
+## 16. Patch-tier throughput is an unmeasured estimate that D17 leans on
+
+**Severity:** should be measured before the full run, not after.
+
+D16's picker patches a drifted slot with `llama3.1:8b` minutes before it airs.
+Whether that is viable rests on a derived number, not a measurement:
+~4.9 GB of weights against the GB10's ~273 GB/s, scaled by hermes3's measured
+31% of theoretical, gives ~17 tok/s ~= **~780 words/min** — about 5x the
+149 w/min consumption rate.
+
+If the real figure is materially lower, the sustainable patch rate drops and
+`segment.sensitivity_budget` (0.40) is set too high, which is only discoverable
+on air. D17's pre-generate-everything choice maximises lead time and therefore
+maximises drift, so this tier carries more load here than under the
+lead-buffer alternative that was rejected.
+
+**Fix:** benchmark `llama3.1:8b` single-stream against a *re-write* prompt
+(existing take + drifted state -> revised take), in the same sitting as the
+hermes3 concurrency benchmark. Write down the measured words/min and the
+sustainable patched-slots-per-airtime-hour, and set `sensitivity_budget` from
+it rather than from the 0.40 placeholder.
+
+**Done when:** a measured patch-path words/min exists and
+`segment.sensitivity_budget` is derived from it.
+
+---
+
+## 17. `carry` is structurally unreadable by the branch selector
+
+**Severity:** blocking for the scheduler tier (not for Layers 1-3).
+
+Verified in the code, not inferred:
+
+- [app/campaign/runtime.py:111](../../app/campaign/runtime.py#L111) —
+  `advance()` passes `self.state.context` to `graph.next_scene_id()`. `carry`
+  is never passed.
+- [app/campaign/scene_graph.py](../../app/campaign/scene_graph.py) —
+  `_branch_matches` tests `branch.when` keys against that `context` dict only.
+- [app/campaign/runtime.py:156](../../app/campaign/runtime.py#L156) —
+  `reset()` sets `context = {}` while preserving `carry`.
+
+So branch conditions can read only **loop-local** state. `carry` — the one
+thing that survives a loop reset, and D11's entire fork-convergence channel —
+is invisible to the selector. A fork that must be decided from `carry` cannot
+be, as written.
+
+This does **not** require editing anything under `app/` (this utility's
+standing constraint): `BranchSelector` is already a pluggable seam, so the
+scheduler supplies its own selector and merges `carry` into the context
+mapping it passes. The point of filing it is that it must be designed in
+deliberately rather than discovered at airtime.
+
+**Fix:** the scheduler tier's `BranchSelector` merges `carry` into selector
+context, with `context` winning on key collision (loop-local state is more
+recent than carried state). Document the precedence rule where the selector
+lives.
+
+**Done when:** the scheduler's selector resolves a fork from a `carry`-only
+condition, covered by a test.

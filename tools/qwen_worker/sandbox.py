@@ -23,13 +23,18 @@ log = logging.getLogger("qwen_worker.sandbox")
 
 # Directories copied into the verification sandbox. Everything the test suite
 # imports or reads must be here; .venv, .git and node_modules must not.
-SANDBOX_DIRS = ("app", "tests", "config", "campaigns", "tools")
+SANDBOX_DIRS = ("app", "tests", "config", "campaigns", "tools", "utilities")
 SANDBOX_FILES = ("pytest.ini",)
 
 # Never copied — large, irrelevant, or actively harmful to duplicate.
 COPY_IGNORE = shutil.ignore_patterns(
     "__pycache__", "*.pyc", ".pytest_cache", ".git", ".venv",
     "node_modules", "*.wav", "*.mp4", ".qwen_staging",
+    # utilities/3LayersWeeklyGeneration/output/ holds the generated take
+    # library, which grows to ~1.5M words. The sandbox is rebuilt on every
+    # attempt, so copying it would turn a milliseconds-cheap sandbox into a
+    # multi-gigabyte one. No test reads it — they all use tmp_path.
+    "output",
 )
 
 

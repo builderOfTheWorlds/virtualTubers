@@ -1,0 +1,268 @@
+task_id: 3layers_pool
+
+goal: |
+  Implement the worker pool that drains the worklist for the 3-layer offline
+  content generator.
+
+  This module is where three separate hazards meet. Each one is a real failure
+  that has a specific, non-obvious fix.
+
+  1. CONTEXT BLEED. `LLMImproviser` (app/campaign/improviser.py) is NOT
+     thread-safe: it holds mutable `scene`, `carry`, `loop` and `recent`
+     attributes that `update_context` rewrites on every take. Sharing one
+     across eight workers splices one slot's transcript into another slot's
+     prompt. The output is not a crash — it is takes that read as
+     non-sequiturs, with nothing in the log to say why. The fix is ONE
+     improviser per WORKER THREAD (not per unit — constructing one per unit
+     would re-read the pack tens of thousands of times). The pack and the LLM
+     client are read-only and stay shared.
+
+  2. INTERLEAVED WRITES. Every worker appending to the same manifest JSONL
+     corrupts it. The fix is not a lock: workers RETURN results, and ONE
+     dedicated writer thread performs every write. That also gives clean crash
+     semantics — the file is only ever touched by one thread.
+
+  3. SILENT FAILURE. `LLMImproviser.generate_scene` catches EVERY exception and
+     returns `[]`. A dead ollama, an OOM, or a wrong model name therefore
+     produces an endless stream of empty takes AT FULL SPEED, and the run looks
+     healthy the whole time. The fix is a rolling failure-rate circuit breaker
+     that aborts the run. It is the difference between losing ten minutes and
+     losing two days.
+
+  This module knows nothing about improvisers, YAML, or the LLM. Everything
+  concrete is injected as a callable, so the module is testable without a GPU
+  and reusable by any layer.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/pool.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_pool.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/worklist.py
+  - utilities/3LayersWeeklyGeneration/src/concurrent_llm.py
+  - app/campaign/batch_generate.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/pool.py must export exactly these
+  names:
+
+      class PoolError(RuntimeError)
+          Raised for a nonsensical configuration (concurrency < 1, an invalid
+          breaker window).
+
+      class CircuitBreakerTripped(PoolError)
+          Raised out of `run_pool` when the breaker trips. It is deliberately
+          an exception and not a return value: the caller must not be able to
+          mistake an aborted run for a completed one.
+
+      class CircuitBreaker
+          def __init__(self, window: int, failure_rate: float, min_samples: int)
+              `window` is how many recent outcomes are remembered — use
+              `collections.deque(maxlen=window)`. A window < 1 raises PoolError.
+
+          def record(self, ok: bool) -> None
+              Append one outcome. MUST be thread-safe: eight workers call it
+              concurrently. Guard the deque with a `threading.Lock`.
+
+          @property
+          def tripped(self) -> bool
+              True when BOTH:
+                - at least `min_samples` outcomes have been recorded in the
+                  current window, AND
+                - the failure fraction within the window is >= `failure_rate`.
+              Below `min_samples` it is always False. Three failures out of
+              three is 100% and is not evidence; aborting a two-day run on it
+              would be worse than the bug.
+              Because the deque is bounded, old failures age out on their own —
+              a rough patch at hour two must not abort a run that has since
+              recovered.
+
+      @dataclass
+      class PoolStats
+          Fields: planned: int, written: int, failed: int
+          `planned` is len(units). `written` counts units the writer accepted
+          without raising. `failed` counts units that exhausted their attempts,
+          produced empty beats, or whose write raised.
+
+      def run_pool(units, *, worker_factory, generate, writer,
+                   concurrency=4, max_attempts=2, breaker=None) -> PoolStats
+
+          `units`        an ordered sequence of worklist.WorkUnit.
+          `worker_factory()`  called ONCE PER WORKER THREAD, returns that
+                         thread's private context object (in production, an
+                         LLMImproviser). Never call it per unit, and never
+                         share one result between threads.
+          `generate(worker, unit)`  returns a list of beats. An empty list, or
+                         any exception, is a FAILED attempt.
+          `writer(unit, beats)`  called ONLY on the single writer thread.
+          `concurrency`  number of worker threads. < 1 raises PoolError.
+          `max_attempts` attempts per unit before it is counted failed.
+                         Default 2 — a single transient timeout should not
+                         cost a slot its take.
+          `breaker`      a CircuitBreaker, or None to disable the check.
+
+          THE WORKER LOOP — implement exactly this. Each worker thread:
+
+              worker = worker_factory()          # ONCE, before the loop
+              while True:
+                  if stop_event.is_set(): break
+                  unit = work_queue.get()        # blocking, no timeout
+                  if unit is None: break         # its sentinel
+                  if stop_event.is_set(): break
+
+                  beats = None
+                  for attempt in range(1, max_attempts + 1):
+                      try:
+                          result = generate(worker, unit)
+                      except Exception as exc:
+                          log.error("unit %s attempt %d failed: %s",
+                                    unit.slot_id, attempt, exc)
+                          continue                # next attempt
+                      if result:                  # non-empty == success
+                          beats = result
+                          break
+                      log.debug("unit %s attempt %d produced no beats",
+                                unit.slot_id, attempt)
+
+                  ok = beats is not None
+                  if ok:
+                      results_queue.put((unit, beats))
+                  else:
+                      log.error("unit %s failed after %d attempts",
+                                unit.slot_id, max_attempts)
+                      with stats_lock:
+                          stats.failed += 1
+
+                  if breaker is not None:
+                      breaker.record(ok)          # EXACTLY ONCE PER UNIT
+                      if breaker.tripped:
+                          stop_event.set()
+                          break                   # do NOT raise in the thread
+
+          Note the four things that loop gets right, each of which a naive
+          version gets wrong:
+
+            - `breaker.record(ok)` is called ONCE PER UNIT, after all attempts
+              — not once per attempt. A unit that succeeds on retry is a
+              success, and counting its first attempt as a failure would trip
+              the breaker on a perfectly healthy run.
+            - `stats.failed` is incremented at the point of failure. Do not
+              leave it to be reconstructed later; there is no later.
+            - A `generate` exception `continue`s to the next attempt rather
+              than abandoning the unit, and NEVER escapes the worker. A worker
+              that dies on its first bad unit silently shrinks the pool for the
+              rest of the run.
+            - The breaker sets `stop_event` and BREAKS. It does not raise
+              inside the worker thread — an exception there cannot reach the
+              caller and would only skip the thread's own cleanup. `run_pool`
+              raises on the main thread after the joins.
+
+          `stats.written` is incremented by the WRITER thread, not here — only
+          a write that actually succeeded counts as written.
+
+          Read only the breaker's public surface (`record`, `tripped`). Do not
+          reach into its internals for the log message; log the unit count and
+          the configured rate instead.
+
+          Dispatch units IN THE GIVEN ORDER: fill the queue in order before
+          starting any thread. Stopping the run at any point must leave a
+          contiguous usable prefix of airtime rather than a scattered fraction
+          that cannot air.
+
+          THE WRITER THREAD: one thread, started before the workers, looping
+          `item = results_queue.get()`, breaking on the `None` sentinel, else
+          calling `writer(unit, beats)`. On success `stats.written += 1`; on
+          exception, log at ERROR and `stats.failed += 1` — a full disk must
+          not stall the run.
+
+          THE ENDING — implement exactly this, in exactly this order, AFTER
+          the joins (see the shutdown protocol in the notes):
+
+              log.info("pool completed: %d written, %d failed",
+                       stats.written, stats.failed)
+
+              if breaker is not None and breaker.tripped:
+                  log.critical("circuit breaker tripped after %d units "
+                               "(threshold %.2f)", stats.planned,
+                               breaker.failure_rate)
+                  raise CircuitBreakerTripped(...)
+
+              return stats
+
+          The INFO line comes FIRST, on every path — including the aborted
+          one. Do not put it on the success path only. An abort is precisely
+          the case where the operator most needs the count: they come back to
+          a run that stopped early and the first question is "how much of the
+          week is usable?" A partial arc of real takes is salvageable; zero is
+          a restart. Logging the summary only when nothing went wrong answers
+          that question exactly when it did not need asking, and stays silent
+          when it did.
+
+          CRITICAL, not ERROR, for the trip: ERROR is already the noise floor
+          of a failing run, and only CRITICAL distinguishes "the run gave up"
+          from "one slot misbehaved".
+
+          `stats.written` and `stats.failed` are touched from several threads.
+          Guard every mutation with a single `threading.Lock`.
+
+notes: |
+  STYLE — match the project conventions visible in the context files:
+    - Module docstring explaining the three hazards above and WHY each fix is
+      what it is. This is the module a future reader will most want explained.
+    - `log = logging.getLogger(__name__)` at module level.
+    - Type hints on public signatures.
+    - Standard library only: threading, queue, collections, dataclasses,
+      logging, typing. No yaml, no httpx, no imports from `app/`, and do NOT
+      import worklist — units are used by attribute access only.
+
+  THREADING — use plain `threading.Thread` plus `queue.Queue`, NOT
+  `concurrent.futures`. The pool needs a dedicated writer thread and an early
+  stop, and an executor's map/submit model fights both.
+
+  SHUTDOWN PROTOCOL — follow this exactly. A previous attempt at this module
+  deadlocked forever in `writer_thread.join()` because the writer was still
+  blocked on an empty results queue that nothing ever closed. Both the workers
+  and the writer must have an unconditional way out:
+
+    1. Fill the work queue with every unit IN ORDER, then append exactly
+       `concurrency` `None` sentinels.
+    2. Start the writer thread, then the worker threads.
+    3. A worker loops: `unit = work_queue.get()`; `if unit is None: break`.
+       It must ALSO break when the stop event is set (see 6), and it must
+       still consume/discard remaining items or the queue is left full — a
+       bounded queue would then block a producer forever.
+    4. When a worker finishes (sentinel or stop), it exits its loop and
+       returns. Join all workers.
+    5. ONLY AFTER every worker has been joined, put ONE `None` sentinel on the
+       results queue. That is the writer's termination signal, and it is safe
+       precisely because no worker can still be producing. The writer loops
+       `item = results_queue.get()`, breaks on `None`, and returns. Join it.
+    6. Use a `threading.Event` as the stop flag for the breaker path. Set it,
+       and the workers fall out of their loop at the next `get`. The sequence
+       in 4-5 is UNCHANGED on that path — join workers, then close the writer,
+       then raise CircuitBreakerTripped. That ordering is what lets the run
+       keep the good takes it already produced.
+
+  Use unbounded `queue.Queue()` (no maxsize). Do not use `queue.join()` or
+  `task_done()` at all — that accounting adds a second synchronisation path
+  that can deadlock on the abort route, and the sentinel scheme above does not
+  need it.
+
+  Every thread this module starts MUST be joined before `run_pool` returns,
+  including on the CircuitBreakerTripped path. A daemon thread left running
+  after an abort will keep writing files behind the operator's back. Do not
+  set `daemon=True` and rely on interpreter exit to clean up.
+
+  LOGGING:
+    - INFO once when the pool starts (unit count, concurrency) and once when it
+      finishes (written/failed). These happen once per run.
+    - DEBUG per unit at most. This runs ~50,000 times; anything above DEBUG
+      per unit makes the log unreadable and slows the run.
+    - ERROR for a failed unit, naming its slot_id, and for a failed write.
+    - CRITICAL only for the breaker tripping.
+
+  Do not add a `__main__` block, argparse, a `main()`, retry backoff sleeps, or
+  progress bars. `main.py` owns the CLI; the layer modules own what `generate`
+  and `writer` actually do.

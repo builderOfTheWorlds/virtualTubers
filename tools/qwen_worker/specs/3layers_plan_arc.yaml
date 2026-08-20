@@ -1,0 +1,238 @@
+task_id: 3layers_plan_arc
+
+goal: |
+  Implement the ORCHESTRATOR for Layer 1 of the 3-layer offline content
+  generator. This module has exactly one public function, `plan_arc`, and it
+  owns four things and nothing else: resume, batching, retry/skip, and
+  writing.
+
+  All parsing, validation and prompt construction ALREADY EXIST in
+  `arc_schema.py` — read it in the context files and CALL it. Do not
+  reimplement `parse_reply`, `validate_batch` or `build_prompt`, and do not
+  inline any prompt text of your own.
+
+  Two properties matter more than anything else here, because a defect in
+  either is invisible until two GPU-days later:
+
+  1. THIS LAYER NEVER RAISES ON A MODEL FAILURE. It matches the contract
+     `LLMImproviser.generate_scene` already sets: swallow and continue. A
+     batch that will not validate after `max_attempts` is logged at WARNING
+     and SKIPPED. Losing six segments out of twenty-eight is a bad afternoon;
+     raising and losing the run is a bad week. The ONE exception is an
+     existing arc_plan.yaml that will not parse — see below.
+
+  2. RESUME IS THE SCAN. The plan is rewritten after EVERY batch, and a
+     re-run plans exactly the orders that are missing — computed by comparing
+     against the full expected set, not by appending after the highest one
+     seen. A skipped batch leaves a HOLE, and the next run must refill it. The
+     naive `max(order) + 1` resume looks at a plan whose highest order is 27,
+     concludes the arc is finished, and those six hours never come back.
+
+  No network in the tests: `llm` is injected and the suite passes a fake.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/plan_arc.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_plan_arc.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/arc_schema.py
+  - utilities/3LayersWeeklyGeneration/src/vocabulary.py
+  - app/campaign/pack.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/plan_arc.py must import from
+  arc_schema and re-export ArcPlanError, then define exactly one new public
+  function:
+
+      from arc_schema import (SYSTEM_PROMPT, ArcPlanError, build_context,
+                              build_prompt, n_segments, normalize_segment,
+                              parse_reply, validate_batch)
+
+      def plan_arc(pack, config, llm, vocab, out_path) -> dict
+          Returns `{"segments": [...]}` sorted ascending by `order`, and
+          writes the same mapping to `out_path` as YAML.
+
+          `out_path` is a pathlib.Path. `llm` is any object with
+          `complete(system_prompt, messages)`.
+
+          ArcPlanError is raised for exactly ONE condition: an existing
+          arc_plan.yaml that will not load. Every other failure logs and
+          skips. Silently treating a corrupt plan as absent would replan the
+          whole arc and overwrite whatever was recoverable in it.
+
+behaviour: |
+  THE ORCHESTRATOR — implement exactly this shape:
+
+      total = n_segments(config)
+      batch_size = config["arc"]["batch_size"]
+      max_attempts = config["arc"]["max_attempts"]
+
+      # --- resume ---
+      planned = {}                       # order -> segment mapping
+      if out_path.exists():
+          try:
+              existing = yaml.safe_load(out_path.read_text()) or {}
+          except yaml.YAMLError as exc:
+              log.error(...); raise ArcPlanError(...) from exc
+          for seg in existing.get("segments", []):
+              planned[seg["order"]] = seg
+
+      missing = [o for o in range(total) if o not in planned]
+
+      # --- batch loop ---
+      context = build_context(pack, config)
+      skipped = 0
+      for batch in chunks of `batch_size` taken from `missing`:
+          ... attempts, described below ...
+
+      # --- finish ---
+      log.info("arc plan complete: %d segments planned, %d segments skipped",
+               len(planned), skipped)
+
+  `skipped` counts SEGMENTS, not batches — `skipped += len(expected)`, never
+  `skipped += 1`. "1 skipped" reads as one lost hour-block when six are
+  actually missing, and the number an operator acts on is how much airtime
+  they have to make up.
+      return {"segments": [planned[o] for o in sorted(planned)]}
+
+  Note `missing` is computed against the FULL expected range, so a hole left
+  by an earlier skipped batch is picked up automatically. Do not compute it
+  from `max(order) + 1`.
+
+  ONE BATCH — implement exactly this. Use a REAL LOOP over
+  `range(1, max_attempts + 1)` with a `for/else`. Do NOT unroll it into a
+  "try, then retry once" pair of blocks: `arc.max_attempts` is a real knob
+  (an operator lowers it to fail fast on a minutes-per-call heavy model, and
+  raises it when the model is flaky), and an unrolled version passes at the
+  default of 2 while silently ignoring every other value.
+
+      expected = the orders in this batch
+      problems = None                    # carried from the previous attempt
+
+      for attempt in range(1, max_attempts + 1):
+          # INSIDE the loop, every attempt, using the CURRENT `problems`.
+          # Hoisting this above the loop is the one mistake that makes the
+          # whole retry mechanism inert: the second attempt then re-sends a
+          # byte-identical prompt and the model, at the same temperature,
+          # returns a byte-identical wrong answer. Naming what was wrong is
+          # the ONLY reason attempt two differs from attempt one.
+          prompt = build_prompt(context, expected, previous_continuity,
+                                config, problems)
+          try:
+              reply = llm.complete(system_prompt, [{"role": "user", "content": prompt}])
+              segments = [normalize_segment(s) for s in parse_reply(reply)]
+          except Exception as exc:
+              log.warning("batch %s attempt %d: %s", expected, attempt, exc)
+              problems = [str(exc)]
+              continue
+          problems = validate_batch(segments, expected, set(known ids),
+                                    vocab, config)
+          if not problems:
+              break
+          # `problems` now feeds the NEXT iteration's build_prompt call.
+          log.warning("batch %s attempt %d invalid: %s", expected, attempt, problems)
+      else:
+          skipped += len(expected)
+          continue          # NEVER raise. Move on to the next batch.
+
+      for seg in segments:
+          planned[seg["order"]] = seg
+
+      # AFTER EVERY BATCH, without exception — inside the batch loop, never
+      # once at the end. A 28-segment pass is minutes of heavy-model time, and
+      # the contract is that a crash costs at most ONE batch.
+      out_path.parent.mkdir(parents=True, exist_ok=True)
+      out_path.write_text(yaml.safe_dump(
+          {"segments": [planned[o] for o in sorted(planned)]},
+          sort_keys=False, allow_unicode=True))
+
+  Four things that loop gets right:
+
+    - An `llm.complete` that RAISES is handled identically to a reply that
+      will not parse. A dead ollama raises rather than answering badly, and
+      Layer 1 must not let that difference change its behaviour. Catch broadly
+      here — this is the one place a bare `except Exception` is correct.
+    - The retry prompt is given `problems` from the previous attempt. A bare
+      re-ask gets the same answer back at the same temperature; naming the
+      offending key is the entire reason attempt two differs from attempt one.
+    - The plan is written after every batch. A 28-segment pass is minutes of
+      heavy-model time; the contract is that a crash costs at most ONE batch,
+      not the four that came before it.
+    - A skipped batch does NOT renumber later segments. The hole stays a hole
+      so the next run's `missing` computation can find it.
+
+  CALLING THE MODEL — every call is exactly this, with no variation:
+
+      log.debug("calling model for batch %s attempt %d", expected, attempt)
+      reply = llm.complete(SYSTEM_PROMPT, [{"role": "user", "content": prompt}])
+
+  `SYSTEM_PROMPT` is a module-level string constant, several sentences long,
+  framing the model as a story architect planning a long-running serialized
+  arc for a live virtual-streamer campaign. It must be non-empty.
+  `OllamaClient.complete` forwards it as a real `role: system` message, so a
+  blank one means the heavy model plans 168 hours with no role framing at all
+  — and the resulting vagueness only surfaces two GPU-days downstream, where
+  it is indistinguishable from the model just being bad at the job.
+
+  The second argument is a LIST OF MESSAGE MAPPINGS, never a bare string.
+  `complete` concatenates it onto the system message and hands the result
+  straight to the ollama chat API, which requires `{"role": ..., "content":
+  ...}` objects.
+
+  THE PROMPT must contain:
+    - the campaign context;
+    - for the first batch, the literal phrase "start of the arc"; for every
+      later batch, the `continuity_out` of the highest-ordered segment planned
+      so far — this is the only thread stitching batch N to batch N+1, and
+      without it the arc reads as five unrelated novellas. Compute it
+      DEFENSIVELY:
+
+          previous = ""
+          if planned:                       # guard: may be empty!
+              previous = planned[max(planned)].get("continuity_out", "")
+          if not previous:
+              previous = "This is the start of the arc."
+
+      `planned` is empty on the first batch AND on the second batch when the
+      first one was skipped — a bare `max(planned)` raises
+      "max() iterable argument is empty" and kills a run that was supposed to
+      degrade gracefully.
+
+    - the LEGAL CARRY KEYS, rendered as a literal line in the prompt text.
+      Build it explicitly, e.g.:
+
+          "Legal carry_in/carry_out keys (use ONLY these): "
+          + ", ".join(config["state"]["carry_keys"])
+
+      Every one of those key strings must appear verbatim in the prompt. It is
+      not enough to say "use only the configured carry keys" — the model
+      cannot see the config.
+
+    - the exact order numbers being requested (e.g. "segments 6 through 11");
+    - the exact key list each segment must carry;
+    - (validation rejects an invented carry key, but rejection costs a
+      retry — stating the legal set up front is what makes the happy path
+      the common one);
+    - an instruction to reply with ONLY YAML under a `segments:` key;
+    - when retrying, the problems from the previous attempt.
+
+  WRITING: create `out_path.parent` with `mkdir(parents=True, exist_ok=True)`
+  before writing. Dump with `yaml.safe_dump(..., sort_keys=False,
+  allow_unicode=True)` and write segments in ascending `order` — Layer 2 reads
+  this file top to bottom, and a backfilled batch appended at the end would
+  put segment 1 after segment 28.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
+    decision points, INFO for the completion summary, WARNING for a retry and
+    for a skipped batch, ERROR inside error handlers.
+  - `build_context(pack, config)` is pure and unchanging across the run. Call
+    it ONCE before the batch loop and reuse the string.
+  - `vocab` is a `vocabulary.Vocabulary`; pass it straight through to
+    `validate_batch`.
+  - Do NOT modify anything under `app/` or `arc_schema.py` — the schema module
+    is already promoted and its tests are green.
+  - No network calls anywhere in this module. `llm` is always injected.

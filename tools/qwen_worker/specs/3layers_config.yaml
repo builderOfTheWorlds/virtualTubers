@@ -1,0 +1,142 @@
+task_id: 3layers_config
+
+goal: |
+  Implement the configuration loader for the hierarchical 3-layer offline
+  content generator that lives in `utilities/3LayersWeeklyGeneration/`.
+
+  That utility generates a 168-hour campaign script in three passes — an arc
+  layer, a segment layer and a dialogue layer — each of which talks to a local
+  Ollama model. All three are configured from ONE YAML file,
+  `utilities/3LayersWeeklyGeneration/config/generation.yaml`.
+
+  Each of the three layers (`arc`, `segment`, `dialogue`) declares a map of
+  NAMED MODEL PROFILES under its `models:` key, plus an `active_model:` naming
+  which profile to use by default. A `--model-profile NAME` command-line flag
+  can override that choice for whichever stages an invocation runs. A
+  `--test-mode` flag runs EVERY profile of a layer side by side, so the loader
+  must also be able to enumerate a layer's profile names.
+
+  A top-level `defaults:` block holds the keys every profile would otherwise
+  restate (`provider`, `base_url`, `temperature`, `max_tokens`, `timeout_s`).
+  Resolving a profile means merging that profile's own keys OVER the defaults,
+  so a profile can legitimately be a single `model:` line.
+
+  This module does loading and resolution ONLY. It must not build an LLM
+  client, must not talk to the network, and must not create directories — it
+  only computes and returns paths.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/config.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_config.py
+
+context_files:
+  - app/llm_client.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/config.py must export exactly these
+  names:
+
+      class ConfigError(Exception)
+          Raised for EVERY problem this module detects: an unreadable file,
+          malformed YAML, an unknown layer, an unknown profile name, a profile
+          missing from a layer. No other exception type may escape any public
+          function — no KeyError, no FileNotFoundError, no yaml.YAMLError.
+          Every message must name the offending thing (the layer, the profile
+          name, the path) so a failure is diagnosable from the log line alone.
+
+      def load_config(path) -> dict
+          Read and parse the YAML config at `path` (a str or pathlib.Path).
+          Returns the parsed mapping. An empty file yields {}. A missing file
+          or malformed YAML raises ConfigError.
+
+      def resolve_profile(config, layer, profile_name=None) -> dict
+          Resolve one layer's model profile to a complete, flat llm config
+          dict. `layer` is one of "arc", "segment", "dialogue".
+
+          - If `profile_name` is None, use config[layer]["active_model"].
+          - Start from a COPY of config["defaults"] (absent -> {}), then update
+            it with the profile's own keys. Profile keys win.
+          - The returned dict is a fresh object every call. Neither the config
+            tree nor the defaults block may be mutated — callers resolve
+            several profiles from one loaded config and must not see them bleed
+            into each other.
+          - Unknown layer, a layer with no `models:` map, or an unknown profile
+            name each raise ConfigError naming both the layer and the name.
+
+          The returned dict is the shape `app/llm_client.py`'s
+          `build_llm_client({"llm": <this dict>})` consumes — provider,
+          base_url, model, temperature, max_tokens — plus any extra keys the
+          profile carries (`timeout_s`, `num_ctx`), which are passed through
+          untouched for the caller to use.
+
+      def profile_names(config, layer) -> list[str]
+          Every profile name configured under that layer's `models:` map, in
+          the order the YAML declares them. Unknown layer raises ConfigError.
+          This is what --test-mode iterates.
+
+      def validate_profile_for_stages(config, profile_name, stages) -> None
+          Fail fast, before any GPU time is spent, when `--model-profile NAME`
+          is combined with a multi-stage invocation and NAME is not defined in
+          every stage it will run.
+
+          - `profile_name` None means "each layer uses its own active_model" —
+            always valid, return immediately.
+          - Otherwise check every layer in `stages` (an iterable of layer
+            names). Raise ConfigError naming the profile AND the first layer
+            missing it. Returns None on success.
+
+      def output_root(config, pack_path) -> pathlib.Path
+          config["output"]["dir"] joined with the pack directory's own name:
+          output/ashiorid for a pack_path of "campaigns/ashiorid". A trailing
+          slash on pack_path must not produce an empty final component.
+
+      def segment_dir(config, pack_path, segment_id) -> pathlib.Path
+          output_root(...) / "segments" / segment_id
+
+      def brief_path(config, pack_path, segment_id) -> pathlib.Path
+          segment_dir(...) / "brief.yaml"
+
+      def arc_plan_path(config, pack_path) -> pathlib.Path
+          output_root(...) / "arc_plan.yaml"
+
+notes: |
+  STYLE — match the project's conventions, which the context file shows:
+
+  - Module docstring at the top explaining what the module is for and why it
+    exists as its own file.
+  - `import logging` and a module-level `log = logging.getLogger(__name__)`.
+  - Standard library plus `yaml` only. Do NOT import `llm_client`,
+    `httpx`, `anthropic`, or anything from `app/` — this module is pure
+    loading and path arithmetic.
+
+  LOGGING — the project mandates a specific level strategy, and these layers
+  are long unattended runs where log quality is the only observability:
+
+  - DEBUG on entry to each public function with its arguments, and at each
+    decision point (which profile name was chosen, whether defaults were
+    found, which layer is being validated).
+  - DEBUG for the resolved outcome (e.g. the resolved model name), never the
+    whole dict at INFO.
+  - ERROR inside every error path, immediately before raising ConfigError,
+    logging what failed and with what inputs.
+  - Never log at INFO from a pure loader; it would drown the run's real
+    progress lines.
+
+  PATHS — `output_root` must work for pack_path values of "campaigns/ashiorid",
+  "campaigns/ashiorid/", and an absolute path. Use pathlib. A `Path("a/b/")`
+  has `.name == "b"` already, but do not rely on that for a value that arrives
+  as a plain string with a trailing separator — normalise it.
+
+  MERGING — the merge is one level deep and that is deliberate. `defaults:`
+  holds only scalars. Do not write a recursive deep-merge; a flat
+  `{**defaults, **profile}` (over copies) is exactly right and is what the
+  tests check for non-mutation.
+
+  ERROR MESSAGES — write them for someone reading a log at 3am:
+  "unknown profile 'ludicrous' for layer 'arc' (configured: light, heavy)"
+  is the standard to hit, not "KeyError: ludicrous".
+
+  Do not add a `__main__` block, an argparse parser, or a `main()`. This module
+  is imported by `main.py`, which owns the whole CLI surface.

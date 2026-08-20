@@ -1,0 +1,86 @@
+# Hierarchical 3-layer offline content generator — the single config file.
+#
+# MVP scope (2026-08-18): core spine + the closed state vocabulary. Macro-forks
+# (arc.forks) and the random-event table (events:) are deliberately ABSENT —
+# they are a later increment, and code that reads this file must not assume
+# they exist. See PLAN.md "Randomness, events and branching" for the design
+# they will land against.
+
+campaign:
+  pack: campaigns/ashiorid          # repo-root-relative; --pack overrides
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output   # <dir>/<pack-name>/... underneath
+
+# Merged into every model profile below, so a profile states only what it
+# overrides — typically just `model:`. Resolves issue #12.
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 4096
+  timeout_s: 600
+
+budget:
+  measured_baseline:                 # campaigns/ashiorid/generated/manifest.jsonl, 24 takes
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4   # GPU wall-clock throughput, NOT spoken pace
+  target_total_words: 1500000
+  target_total_hours: 168
+  target_words_per_hour: 8929        # target_total_words / target_total_hours
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "hermes3:70b"
+  active_model: heavy
+  hours_total: 168
+  segment_hours: 6                   # ~28 segments at the defaults
+  batch_size: 6                      # segments requested per LLM call
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "hermes3:70b"
+  active_model: heavy
+  target_words: 53600                # segment_hours * budget.target_words_per_hour
+  target_slots: 170                  # target_words / (words_per_take * takes_per_slot)
+  chapters_per_segment: 9            # ~40 min each; ~19 slots per 2b call
+  concurrency: 4                     # must be <= OLLAMA_NUM_PARALLEL
+  max_attempts: 2
+  sensitivity_budget: 0.40           # max fraction of slots that may be `flags`-sensitive
+  density_floor: 0.80                # segment slots must sum to >= this * target_words
+
+dialogue:
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 1024
+    heavy:
+      model: "hermes3:70b"
+      temperature: 0.9               # variety matters here, unlike planning
+      max_tokens: 1024
+      num_ctx: 8192                  # drives per-slot KV cache -> how many slots fit
+  active_model: heavy
+  max_recent: 8
+  max_words: 45
+  max_beats: 12
+  takes_per_slot: 3                  # a CHOICE POOL, not curation alternates
+  neutral_takes: 1                   # take 001 is ALWAYS unconditioned
+  concurrency: 8                     # must equal OLLAMA_NUM_PARALLEL
+  max_attempts: 2
+
+# The closed state vocabulary. Every slot `depends_on` key may name ONLY these.
+# Anything else fails validation rather than silently evaporating.
+state:
+  flags:      [helen-wounded, moonwell-tainted, buffalo-lost-axe]
+  moods:      [tense, weary, hopeful, giddy]
+  carry_keys: [helen-wounded, moonwell-tainted]

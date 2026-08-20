@@ -1,0 +1,277 @@
+task_id: 3layers_plan_segment
+
+goal: |
+  Implement the Layer 2 ORCHESTRATOR: resume, the 2a to 2b fan-out, retry and
+  skip, and writing `brief.yaml`. Every pure operation — parsing, validating,
+  building prompts, merging the brief — already exists in `segment_schema` and
+  is IMPORTED, never reimplemented. This module is thin on purpose. If you
+  find yourself writing a regex or a validation rule here, it belongs in
+  `segment_schema` and you should be calling it instead.
+
+  What Layer 2 does, in shape:
+
+    2a — ONE call. Nine chapter one-liners covering the segment's six hours.
+    2b — ONE call PER CHAPTER, roughly nineteen slots each, run CONCURRENTLY.
+
+  Two properties carry the whole design:
+
+  1. A CHAPTER IS FORTY MINUTES; A SEGMENT IS SIX HOURS. Losing one chapter to
+     a stubborn model is survivable. Losing the segment because one chapter
+     failed is not. A chapter that exhausts its attempts is logged at ERROR
+     and skipped, and the other eight are still written.
+
+  2. RESUME IS CHAPTER-GRANULAR. A 2b call is about a minute of a 70B model.
+     Re-running a whole segment because the process died on chapter eight
+     throws away eight minutes of GPU, and across 28 segments that is the
+     difference between a run that finishes overnight and one that does not.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/plan_segment.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_plan_segment.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/segment_schema.py
+  - utilities/3LayersWeeklyGeneration/src/plan_arc.py
+  - utilities/3LayersWeeklyGeneration/src/vocabulary.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/plan_segment.py exports ONE public
+  function:
+
+      def plan_segment(pack, arc_segment, config, llm, vocab, out_path)
+
+  It returns the brief dict, or None when the 2a pass never produced valid
+  chapters. `out_path` is a `pathlib.Path` to that segment's `brief.yaml`.
+
+  Import from segment_schema: SYSTEM_PROMPT_CHAPTERS, SYSTEM_PROMPT_SLOTS,
+  SegmentPlanError, parse_chapters, parse_slots, validate_chapters,
+  validate_slots, check_sensitivity_budget, build_chapter_prompt,
+  build_slot_prompt, merge_brief.
+
+  ------------------------------------------------------------------
+  CALLING THE MODEL — every call is exactly this shape
+  ------------------------------------------------------------------
+
+      reply = llm.complete(SYSTEM_PROMPT_CHAPTERS,
+                           [{"role": "user", "content": prompt}])
+
+  and for 2b, the same with SYSTEM_PROMPT_SLOTS. The system prompt is the
+  first positional argument and the second is a LIST of role/content
+  mappings. Use the constants imported from segment_schema; the tests
+  dispatch on their exact identity.
+
+  ------------------------------------------------------------------
+  STEP 1 — RESUME
+  ------------------------------------------------------------------
+
+      existing = None
+      if out_path.exists():
+          try:
+              existing = yaml.safe_load(out_path.read_text(encoding="utf-8"))
+          except Exception as exc:
+              raise SegmentPlanError(
+                  f"could not load existing brief {out_path}: {exc}") from exc
+
+  That raise is THE ONLY raise in this module. Everything else is a model
+  being unhelpful, which is logged and skipped. A corrupt brief is a corrupt
+  FILE, and silently starting over would overwrite work a person might still
+  recover by hand.
+
+  From `existing`, recover two things:
+
+      chapters = existing.get("chapters") or []          when existing
+      slots_by_chapter = {}
+      for slot in existing.get("slots") or []:
+          slots_by_chapter.setdefault(slot["chapter_id"], []).append(slot)
+
+  A chapter is DONE when its chapter_id is a key of `slots_by_chapter` with a
+  non-empty list. Everything else is missing and gets a 2b call.
+
+  Note what that means and get it right: resume is driven by which chapters
+  HAVE SLOTS, not by a count and not by `max(order)`. A run that lost chapter
+  four but finished five through nine must re-plan four and only four.
+
+  ------------------------------------------------------------------
+  STEP 2 — THE 2a PASS (skip entirely when `chapters` is already non-empty)
+  ------------------------------------------------------------------
+
+      max_attempts = config["segment"]["max_attempts"]
+      problems = None
+      chapters = []
+      for attempt in range(max_attempts):
+          prompt = build_chapter_prompt(pack, arc_segment, config, problems)
+          try:
+              reply = llm.complete(SYSTEM_PROMPT_CHAPTERS,
+                                   [{"role": "user", "content": prompt}])
+              candidate = parse_chapters(reply)
+          except Exception as exc:
+              log.warning("segment %s chapter pass attempt %d failed: %s",
+                          arc_segment["id"], attempt + 1, exc)
+              problems = [str(exc)]
+              continue
+          problems = validate_chapters(candidate, config)
+          if not problems:
+              chapters = candidate
+              break
+          log.warning(...)
+      else:
+          log.error("segment %s produced no valid chapters after %d attempts",
+                    arc_segment["id"], max_attempts)
+          return None
+
+  THREE THINGS THAT LOOP GETS RIGHT:
+
+    - `build_prompt` is INSIDE the loop, so the retry actually carries
+      `problems`. Hoisting it above the loop re-sends identical text and makes
+      the whole retry mechanism inert — the model has no way to know anything
+      was wrong.
+    - It is a real `for/else` over `range(max_attempts)`. Do NOT unroll it
+      into a first attempt followed by a hardcoded second: that ignores the
+      config knob and duplicates the prompt construction, and the duplicate is
+      where a detail quietly goes missing.
+    - Returning None WITHOUT WRITING A FILE. Do not write an empty or
+      chapter-less brief. A later resume must find nothing and try the segment
+      again from scratch, rather than inheriting a husk it thinks is finished.
+
+  ------------------------------------------------------------------
+  STEP 3 — THE 2b FAN-OUT
+  ------------------------------------------------------------------
+
+  Plan the missing chapters CONCURRENTLY with
+  `concurrent.futures.ThreadPoolExecutor(max_workers=config["segment"]["concurrency"])`.
+  Nine sequential 70B calls is nine minutes per segment and about four hours
+  across the week, for calls that share nothing and could all be in flight.
+
+  Do NOT use `src/pool.py` here. That module exists for Layer 3's fan-out of
+  tens of thousands of takes with a circuit breaker and a writer thread; nine
+  chapters do not need it.
+
+  Write ONE function that plans a single chapter and returns
+  `(chapter_id, slots_or_None)`. It never raises:
+
+      def _plan_chapter(pack, arc_segment, chapter, config, llm, vocab):
+          problems = None
+          for attempt in range(config["segment"]["max_attempts"]):
+              prompt = build_slot_prompt(pack, arc_segment, chapter, config,
+                                         problems)
+              try:
+                  reply = llm.complete(SYSTEM_PROMPT_SLOTS,
+                                       [{"role": "user", "content": prompt}])
+                  slots = parse_slots(reply)
+              except Exception as exc:
+                  log.warning(...)
+                  problems = [str(exc)]
+                  continue
+              problems = validate_slots(slots, pack, vocab, config)
+              if not problems:
+                  return chapter["chapter_id"], slots
+              log.warning(...)
+          log.error("segment %s chapter %s produced no valid slots after %d "
+                    "attempts", arc_segment["id"], chapter["chapter_id"],
+                    config["segment"]["max_attempts"])
+          return chapter["chapter_id"], None
+
+  Catching `Exception` around the model call is not defensive clutter: a
+  dropped ollama connection mid-run is an exception, not a bad reply, and one
+  chapter's dropped socket must not take the segment down with it.
+
+  ------------------------------------------------------------------
+  STEP 4 — SLOT IDS MUST BE MADE UNIQUE. This is the subtle one.
+  ------------------------------------------------------------------
+
+  Each 2b call sees only its own chapter, so EVERY ONE OF THEM numbers its
+  slots from s-001. Merged unchanged, nine chapters collide into nineteen
+  ids — and because `slot_id` becomes a directory name under `slots/`, the
+  later chapters' takes overwrite the earlier ones. Roughly five and a half of
+  the six hours would simply not exist on disk, and nothing anywhere in the
+  run would report a problem.
+
+  As soon as a chapter's slots come back valid, rewrite each id:
+
+      slot["slot_id"] = f"{chapter_id}-{slot['slot_id']}"
+
+  Prefix with the chapter id. Do NOT renumber globally from a running counter:
+  that makes an id depend on which chapters finished first, so a resumed run
+  renames slots that already have takes generated for them, orphaning every
+  one of them. The prefix scheme is deterministic, stable across reruns, and
+  still legible to a human grepping for a slot that sounded wrong.
+
+  Guard against double-prefixing on resume: only add the prefix if the id does
+  not already start with `f"{chapter_id}-"`.
+
+  ------------------------------------------------------------------
+  STEP 5 — WRITE AS CHAPTERS LAND, NOT ONLY AT THE END
+  ------------------------------------------------------------------
+
+  Consume the futures with `concurrent.futures.as_completed` ON THE MAIN
+  THREAD, and after each one: record its slots into `slots_by_chapter`, then
+  rebuild and write the whole brief.
+
+      out_path.parent.mkdir(parents=True, exist_ok=True)
+      brief = merge_brief(arc_segment, chapters, slots_by_chapter, config)
+      with open(out_path, "w", encoding="utf-8") as fh:
+          yaml.dump(brief, fh, sort_keys=False, allow_unicode=True)
+
+  `allow_unicode=True` is not cosmetic. A brief is read by a person before two
+  GPU-days are spent on it, and without it every em dash in the campaign's
+  prose is written as `—`.
+
+  Writing from the main thread as futures complete is what lets there be no
+  lock: the worker threads only ever return values. Writing only once at the
+  end means a crash on the ninth chapter throws away the eight that
+  succeeded, and the resume logic above has nothing to resume from.
+
+  ------------------------------------------------------------------
+  STEP 6 — THE TWO WARNINGS
+  ------------------------------------------------------------------
+
+  Per chapter, right after its slots validate:
+
+      message = check_sensitivity_budget(slots, config)
+      if message:
+          log.warning("segment %s chapter %s: %s", ...)
+
+  Do NOT retry on it. Over-subscribed state sensitivity is a judgement call a
+  human makes; the model would just return another plausible over-budget
+  chapter and burn the attempt.
+
+  Once, at the very end, on the merged brief:
+
+      target = config["segment"]["target_slots"]
+      floor = config["segment"]["density_floor"]
+      if target and len(brief["slots"]) < target * floor:
+          log.warning("segment %s density %.2f is below the floor of %.2f "
+                      "(%d slots against a target of %d)", ...)
+
+  The word "density" must appear in that message. It is the line between "a
+  chapter went missing" and "this segment cannot fill its six hours" — the
+  second one is dead air the schedule has no way to cover, and it needs to be
+  visible in the log without anyone doing arithmetic.
+
+  ------------------------------------------------------------------
+  THE ENDING
+  ------------------------------------------------------------------
+
+      log.info("segment %s planned: %d chapters, %d slots, %d chapters "
+               "skipped", arc_segment["id"], len(chapters),
+               len(brief["slots"]), skipped)
+      return brief
+
+  Count `skipped` in CHAPTERS, not in futures or batches. An operator reading
+  "1 skipped" needs it to mean forty minutes, and the number is how they
+  decide whether to re-run the segment.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
+    decision points, ERROR inside error handlers.
+  - Import `yaml`, `logging`, and `concurrent.futures` at module level.
+  - This module contains NO parsing, NO validation rules and NO prompt text.
+    All of it is imported from `segment_schema`.
+  - `pack` is an `app/campaign/pack.py` CampaignPack; read only.
+  - Do NOT modify anything under `app/` — it is shared with the live avatar
+    app.
+  - Aim for well under 200 lines. If it is growing past that, you are
+    reimplementing something segment_schema already exports.

@@ -172,6 +172,47 @@ If a change genuinely belongs in the shared utility (i.e. it is useful to all co
 ---
 
 <!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from virtualTubers — 2026-08-18 19:25
+
+## Posting Issues to Gitea
+
+When asked to turn a backlog/review document into tracked issues, use a small
+one-off script rather than posting issues by hand one at a time — it's
+idempotent (safe to re-run) and keeps titles/bodies consistent.
+
+### Pattern
+
+- Write the script to `.claude/prompts/post_issues_to_<name>.py` (project-local,
+  not a shared utility — each project's issue source doc differs).
+- Source doc: a markdown file with one `## ` heading per issue; heading text
+  becomes the issue title, everything until the next `## ` becomes the body.
+- Idempotency: before creating, GET all existing issues (`open` + `closed`,
+  paginated) and skip any title that already exists.
+- Support `--dry-run` to preview titles/body sizes before actually creating
+  anything.
+- Reference implementation: `virtualTubers/.claude/prompts/post_issues_to_gitea.py`.
+
+### Token handling
+
+- Gitea tokens live in `argyreServer/.env/.gitea` as `KEY=value` pairs (not a
+  standard `.env` shell format — read line-by-line and match the key).
+- A single Gitea instance may have multiple tokens with different scopes
+  (e.g. a repo-management token vs. an issues token). Use the narrowest one
+  that has the required scopes — for posting issues that's `read:issue` +
+  `write:issue`. A token missing a scope fails with an explicit
+  `HTTP 403: token does not have at least one of required scope(s): [...]`,
+  not a silent failure — read the error and ask the user for a rescoped
+  token rather than guessing.
+- Never print or log the token value. Pass it via `GITEA_TOKEN` env var (or
+  fall back to `~/.gitea_token` if unset) — don't embed it in the script.
+- Always run with `--dry-run` first to confirm parsing and connectivity
+  before creating real issues.
+
+### Base config
+
+- Gitea API base, owner, and repo (e.g. `http://192.168.1.120:3300`,
+  `gitea_admin`) are constants at the top of the script — update per project.
+
 ### Added from argyreServer — 2026-08-17 00:53
 
 ## Installers and Uninstallers for Deployments

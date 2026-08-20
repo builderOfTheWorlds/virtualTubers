@@ -1,0 +1,161 @@
+task_id: 3layers_vocabulary
+
+goal: |
+  Implement the closed-set vocabulary validator for the 3-layer offline content
+  generator in `utilities/3LayersWeeklyGeneration/`.
+
+  WHY THIS MODULE EXISTS. Three of the pipeline's layers are driven by a local
+  LLM that is asked to emit structured YAML. A model asked for "lore stems
+  relevant to this scene" will cheerfully invent one. Today an invented stem is
+  silently DROPPED — `LLMImproviser` looks it up in the pack's lore dict, misses,
+  and moves on without a word, so a slot that was supposed to carry context
+  quietly carries none. The same failure mode applies to story-state keys: a
+  slot conditioned on a state key nothing in the runtime can ever set produces a
+  take that can never air.
+
+  Both are the same bug — an open set where a closed one was intended — so one
+  module catches both, and every layer validates through it.
+
+  The closed sets are:
+    - LORE STEMS   — the keys of the campaign pack's `lore` dict.
+    - SCENE IDS    — the keys of the pack's `scenes` dict.
+    - FLAGS        — `config["state"]["flags"]`, booleans.
+    - MOODS        — `config["state"]["moods"]`, values for the single coarse
+                     tone dial addressed by the literal key name `mood`.
+    - CARRY KEYS   — `config["state"]["carry_keys"]`, the strict subset of
+                     flags that survive a time-loop reset.
+
+  The module is pure: no file IO, no network, no LLM. It reads an
+  already-loaded config mapping and an already-loaded pack object.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/vocabulary.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_vocabulary.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/config.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/vocabulary.py must export exactly these
+  names:
+
+      class VocabularyError(ValueError)
+          Raised by `check()` and by `Vocabulary.from_config_and_pack()` when
+          the configuration itself is inconsistent. Every message must name the
+          offending key(s) — a validator whose message does not say WHAT was
+          wrong is worthless in a multi-day unattended run.
+
+      class Vocabulary
+          Holds the five closed sets. Attributes, all frozenset:
+              lore_stems, scene_ids, flags, moods, carry_keys
+
+          @classmethod
+          def from_config_and_pack(cls, config, pack) -> "Vocabulary"
+              Build from a loaded generation.yaml mapping and a CampaignPack.
+              Reads config["state"]["flags"], ["moods"], ["carry_keys"], and
+              `pack.lore` / `pack.scenes` (both dicts — take their keys).
+
+              Raises VocabularyError when config has no "state" block, and when
+              `carry_keys` is not a subset of `flags` (the config documents it
+              as a subset; an out-of-set carry key would survive a loop reset
+              as a flag no slot can ever name). The message must name the
+              offending key.
+
+          def unknown_lore(self, stems) -> list[str]
+              The subset of `stems` not in lore_stems, IN INPUT ORDER.
+              A None or empty input returns []. Do not deduplicate — a stem
+              repeated twice is two occurrences of the same mistake and the
+              caller may want the count.
+
+          def unknown_state_keys(self, keys) -> list[str]
+              The subset of `keys` that is neither a declared flag nor the
+              literal string "mood". Input order, None-tolerant.
+
+          def unknown_carry_keys(self, keys) -> list[str]
+              The subset of `keys` not in carry_keys. Note this is STRICTER
+              than unknown_state_keys: a valid flag that is not a carry key is
+              reported here.
+
+          def unknown_scene_refs(self, scene_ids) -> list[str]
+              The subset not in scene_ids. Input order, None-tolerant.
+
+          def validate_condition(self, condition) -> list[str]
+              Validate one take's `conditions:` mapping, returning a list of
+              human-readable problem strings ([] means valid). EVERY problem is
+              reported, not just the first.
+
+              Rules:
+                - An empty mapping is the NEUTRAL condition. Always valid.
+                - Key "mood": the value must be in `moods`.
+                - Key that is a declared flag: the value must be a bool.
+                  Note `isinstance(True, int)` is True in Python — check for
+                  bool specifically, so 1 and "yes" are rejected.
+                - Any other key: unknown.
+              Each problem string must contain the offending key or value.
+
+          def validate_slot(self, slot) -> list[str]
+              The whole-slot pass every Layer 2 caller uses. `slot` is one
+              entry from a segment brief. Returns a list of problem strings,
+              [] when the slot is clean. Rules:
+
+                - slot["kind"] must be "spine" or "ambient"; anything else is
+                  one problem naming the offending kind, and no further checks
+                  are attempted on that slot.
+                - kind "spine": slot["scene_ref"] must be a known scene id.
+                - kind "ambient":
+                    * every stem in slot.get("lore") must be a known lore stem;
+                    * slot["sensitivity"] must be one of "none", "tone",
+                      "flags" — an unknown value is a problem naming it;
+                    * every key in slot.get("depends_on") must be a valid
+                      state key;
+                    * `depends_on` must be EMPTY unless sensitivity is
+                      "flags" — it is only meaningful there (design decision
+                      D14), and a non-empty one elsewhere means the model
+                      mislabelled the slot.
+
+              Missing optional keys (`lore`, `depends_on`, `participants`) are
+              treated as empty, not as errors — shape checking is the caller's
+              job, vocabulary checking is this module's.
+
+      def check(problems, where) -> None
+          Module-level. `problems` is a list of strings from any of the above.
+          Empty -> return None, no logging. Non-empty -> log at ERROR, then
+          raise VocabularyError whose message contains BOTH `where` (the
+          caller's location string, e.g. "seg-001 slot-004") and every problem
+          string.
+
+notes: |
+  STYLE — match the project conventions visible in the context file:
+    - Module docstring explaining the module's purpose and why it is one
+      module rather than four scattered checks.
+    - `log = logging.getLogger(__name__)` at module level.
+    - Standard library only. No yaml, no httpx, no imports from `app/`.
+    - Type hints on public signatures, as the context file has.
+
+  LOGGING:
+    - DEBUG on entry to each public method with its arguments.
+    - DEBUG for a clean result (e.g. "slot s-001 validated clean").
+    - ERROR only in `check()` and in the `from_config_and_pack` failure paths,
+      immediately before raising.
+    - Do NOT log at WARNING for individual problems. The caller decides
+      whether a problem list is fatal (Layer 1 fork/state checks) or a
+      retry-then-skip (Layer 2 slot checks); this module must not pre-judge.
+
+  ORDER MATTERS. Several methods are specified to return problems in INPUT
+  order. Use a list comprehension over the input, not a set difference — a set
+  difference loses both order and duplicates, and the tests check for both.
+
+  BOOL VS INT. `isinstance(True, int)` is True in Python. A flag condition
+  value must be checked with `isinstance(value, bool)`, and it must be checked
+  BEFORE any numeric interpretation, or `{"helen-wounded": 1}` slips through.
+
+  PROBLEM STRINGS are read by a human at 3am from a log line. Write them like
+  "unknown lore stem 'invented-stem' (pack knows: leto-manor, the-loop,
+  the-moonwell)" rather than "invalid". Sorting the known-set in the message
+  keeps it readable; the RETURNED list order is separate and must stay input
+  order.
+
+  Do not add a `__main__` block, argparse, or a `main()`. This module is
+  imported by the layer modules; `main.py` owns the CLI.

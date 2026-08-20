@@ -1,0 +1,253 @@
+task_id: 3layers_arc_schema
+
+goal: |
+  Implement the PURE half of Layer 1 of the 3-layer offline content generator:
+  the schema, the parser, the validator and the prompt builder for the arc
+  planner. Every function here is a function of its arguments — no LLM, no
+  network, no disk. The orchestrator that calls them (`plan_arc.py`) is a
+  separate module and is NOT your concern.
+
+  WHY THIS MODULE IS THE HIGH-STAKES ONE. Layers 2 and 3 both derive their
+  continuity from `arc_plan.yaml` and NEVER from a sibling segment's brief.
+  That is deliberate: it is what allows all 28 segments to be planned and
+  generated concurrently instead of in a 28-deep serial chain. The price is
+  that a defect here is not local. Anything this validator waves through is
+  inherited silently by every segment downstream and only surfaces two
+  GPU-days later, as dialogue that contradicts itself.
+
+  The single most important rule: THE CLOSED VOCABULARY IS ENFORCED HERE.
+  `carry_in` and `carry_out` may name ONLY the keys in
+  `config["state"]["carry_keys"]`, and `spine_scenes` only real scene ids from
+  the pack. This is not pedantry. An invented key like `helen-cursed` does not
+  fail at runtime — it EVAPORATES. Nothing ever sets it, so every slot that
+  reads it takes the else-branch forever and an entire story thread quietly
+  disappears with nothing in any log to say so. Rejecting it costs one retry.
+
+target_files:
+  - utilities/3LayersWeeklyGeneration/src/arc_schema.py
+
+test_files:
+  - utilities/3LayersWeeklyGeneration/tests/test_arc_schema.py
+
+context_files:
+  - utilities/3LayersWeeklyGeneration/src/vocabulary.py
+  - utilities/3LayersWeeklyGeneration/src/config.py
+  - app/campaign/pack.py
+
+interface: |
+  utilities/3LayersWeeklyGeneration/src/arc_schema.py must export exactly
+  these names:
+
+      class ArcPlanError(ValueError)
+          Raised for a config that cannot produce a segment count, a model
+          reply that cannot be parsed into a segment list, and an existing
+          arc_plan.yaml that will not load. NOT raised for a batch that fails
+          validation — that path logs and skips.
+
+      def n_segments(config) -> int
+          `math.ceil(config["arc"]["hours_total"] / config["arc"]["segment_hours"])`.
+          168/6 is 28 at the shipped defaults.
+
+          CEIL, not floor or round. 170 hours is 28 full segments plus a stub,
+          and rounding down silently drops the stub's two hours of airtime —
+          the one kind of shortfall nobody notices until the stream runs dry.
+
+          A `segment_hours` of 0 or less raises ArcPlanError. A
+          ZeroDivisionError traceback is a poor way to learn the config is
+          wrong.
+
+      def build_context(pack, config) -> str
+          The campaign description handed to the model on every call. Built
+          ONCE per run, not per batch. Contains, in a fixed order:
+
+            - `pack.title` and `pack.genre`;
+            - the SPINE scenes — every scene where `scene.ambient` is False —
+              each rendered as its id, title, and `enter_narration`. Scene ids
+              alone are not enough: the model paces the arc around the spine,
+              and without the narration it cannot know that
+              `portal-encounter` is the loop boundary.
+            - the lore notes from `pack.lore` (name and text);
+            - the ambient scene ids from `pack.ambient_scene_ids()`. Most
+              segments are pure ambient; a model that cannot see the ambient
+              pool writes `ambient_focus` entries that name nothing.
+
+          MUST BE DETERMINISTIC — sort every dict iteration by key, except the
+          spine scenes, which follow the pack's own scene order. Two runs must
+          produce a byte-identical string. A context that varies between runs
+          makes a misbehaving run impossible to reproduce and defeats any
+          prompt-level caching.
+
+      def parse_reply(reply: str) -> list[dict]
+          Extract the segment list from a raw model reply. Tolerate, in this
+          order:
+            - a ```yaml or bare ``` fence wrapping the YAML (instruction-tuned
+              models add one roughly half the time regardless of what the
+              prompt asked; retrying on that burns a 40-second generation to
+              get back an equivalent answer);
+            - prose before the YAML ("Sure! Here is the arc plan:");
+            - a mapping with a `segments:` key, OR a bare top-level list.
+              Dropping the wrapper is the most common deviation and the
+              content is unambiguous, so accepting it costs nothing.
+
+          Raise ArcPlanError when nothing parses, when `segments` is not a
+          list, or when the list holds anything that is not a mapping.
+
+          IMPLEMENT THE EXTRACTION EXACTLY THIS WAY:
+
+              text = reply.strip()
+
+              # 1. A fence, if there is one, wins outright.
+              m = re.search(r"```(?:yaml|yml)?\s*\n(.*?)```", text, re.DOTALL)
+              if m:
+                  candidates = [m.group(1)]
+              else:
+                  # 2. The whole reply, then the tail starting at the first
+                  #    line that looks like the start of the document.
+                  candidates = [text]
+                  lines = text.splitlines()
+                  for i, line in enumerate(lines):
+                      if line.startswith("segments:") or line.startswith("- "):
+                          candidates.append("\n".join(lines[i:]))
+                          break
+
+              for candidate in candidates:
+                  try:
+                      parsed = yaml.safe_load(candidate)
+                  except yaml.YAMLError:
+                      continue
+                  ... if it yields a usable shape, use it and stop ...
+
+          Try the WHOLE reply before trying to strip anything. A well-formed
+          reply is the common case and it parses as-is; heuristics that run
+          first are heuristics that can corrupt the common case. Do NOT invent
+          a regex to isolate "the YAML part" — a pattern like
+          `^(.*?)(?:\n|$)` matches only the FIRST LINE, which turns a perfect
+          multi-line reply into the string `segments:` and parses to None.
+          Prose is handled by the line-scan fallback above, nothing more.
+
+      def normalize_segment(seg: dict) -> dict
+          Return a copy with the deferred keys filled in:
+          `fork` defaults to None, `event_windows` defaults to [].
+          Values the model DID supply are preserved untouched.
+
+          Macro-forks and the random-event table are deferred out of the MVP,
+          but the on-disk schema is fixed NOW so the later increment does not
+          have to migrate an already-written arc plan. Filling these in
+          ourselves is strictly better than asking the model for them: with no
+          fork design and no event table in the prompt yet, anything it
+          invents for these keys is a hallucination.
+
+      def validate_batch(segments, expected_orders, known_ids, vocab, config) -> list[str]
+          Return a list of human-readable problem strings; empty means valid.
+          Return problems, do NOT raise — the caller decides whether to retry.
+          EVERY problem string must name the offending segment id (or its
+          index, when `id` itself is what is missing) and the offending value.
+          During an unattended run these strings are the entire diagnosis, and
+          they are also fed back into the retry prompt.
+
+          CHECK REQUIRED KEYS FIRST, AND RETURN EARLY. Every later check
+          indexes into the segment. Run them on a segment that is missing
+          `order` or `hours` and validation dies with a KeyError instead of
+          returning a problem — which turns a recoverable bad batch into a
+          crashed run, the exact opposite of this layer's contract. So:
+
+              problems = []
+              for index, seg in enumerate(segments):
+                  if not isinstance(seg, dict):
+                      problems.append(...); continue
+                  for key in REQUIRED_KEYS:
+                      if key not in seg:
+                          problems.append(f"segment {seg.get('id', index)!r} "
+                                          f"is missing required key {key!r}")
+              if problems:
+                  return problems          # do not fall through
+              ... all remaining checks, which may now index freely ...
+
+          Check all of:
+            - the eleven required keys are present: id, order, loop, hours,
+              spine_scenes, ambient_focus, synopsis, continuity_in,
+              continuity_out, carry_in, carry_out. The problem string must
+              contain the missing key's name.
+            - `len(segments) == len(expected_orders)` and the orders match
+              `expected_orders` EXACTLY, in order. The batch loop asks for a
+              specific span; a model that renumbers from zero on every call
+              would otherwise overwrite batch one five times over. A short
+              batch leaves hour-blocks unplanned that no later batch asks
+              about.
+            - `id` is not in `known_ids` and not duplicated within the batch.
+              Resume makes this reachable: the model is asked for orders 12-17
+              and answers with seg-001. Two segments with one id collide on
+              disk at `segments/<id>/brief.yaml`.
+            - `carry_in` and `carry_out` are MAPPINGS. Check the TYPE
+              FIRST and `continue` to the next segment if it is wrong —
+              calling `.keys()` on a list raises AttributeError, which is a
+              crashed run instead of a reported problem:
+
+                  value = seg["carry_out"]
+                  if not isinstance(value, dict):
+                      problems.append(f"segment {seg['id']!r} carry_out must "
+                                      f"be a mapping, got {type(value).__name__}")
+                  else:
+                      unknown = vocab.unknown_carry_keys(list(value.keys()))
+                      ...
+
+              (not lists — a bare list
+              is the shape a model reaches for when thinking of a set; it has
+              no values, so nothing downstream can read it, yet a
+              key-membership check that iterates a list still passes), and
+              every key is in `vocab.carry_keys`. Use
+              `vocab.unknown_carry_keys(...)`. Note a real flag that is not a
+              carry key is STILL rejected: carry keys are the subset that
+              survives a loop reset, so carrying a non-carry flag across the
+              boundary contradicts the reset it is supposed to survive.
+            - every entry in `spine_scenes` is a real scene id. Use
+              `vocab.unknown_scene_refs(...)`.
+            - `hours == config["arc"]["segment_hours"]`. Layer 2's slot budget
+              is computed from that constant; a segment claiming 3 hours gets
+              planned with 6 hours of slots.
+            - `synopsis` is a non-empty string after `.strip()`. The synopsis
+              is the entire brief Layer 2 receives for the segment; an empty
+              one passes a has-the-key check and produces 170 slots of
+              nothing.
+            - `loop` is a non-negative `int`. Reject bools, floats, strings
+              and None — note `isinstance(True, int)` is True in Python, so
+              check `type(x) is int` or exclude bool explicitly.
+
+      def build_prompt(context, expected_orders, previous_continuity,
+                       config, problems) -> str
+          Build the user prompt for ONE attempt. THE ONLY PLACE A PROMPT IS
+          CONSTRUCTED — the attempts loop calls it every time, passing
+          `problems=None` on the first attempt and the previous attempt's
+          problem list afterwards.
+
+          Do not inline prompt text into the retry path. An unrolled
+          "build one prompt, then build another for the retry" structure
+          duplicates the construction, and the duplicate is where the
+          continuity line and the carry-key list quietly go missing.
+
+          Must contain: `context`; the exact order numbers in
+          `expected_orders`; `previous_continuity` verbatim, or the literal
+          phrase "start of the arc" when it is empty; the required key list;
+          the legal carry keys rendered verbatim; an instruction to reply with
+          ONLY YAML under a `segments:` key; and, when `problems` is truthy,
+          each problem string. When `problems` is None or empty the prompt
+          must NOT mention a previous attempt.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
+    decision points, ERROR inside error handlers.
+  - `vocab` is a `vocabulary.Vocabulary`. Use its public methods
+    (`unknown_carry_keys`, `unknown_scene_refs`) rather than reaching into its
+    frozensets.
+  - `pack` is an `app/campaign/pack.py` CampaignPack. Read only: `.title`,
+    `.genre`, `.scenes` (dict of id -> Scene with `.title`,
+    `.enter_narration`, `.ambient`, `.prompt`), `.lore` (dict of name ->
+    text), and `.ambient_scene_ids()`.
+  - Also define a module-level `SYSTEM_PROMPT` string constant, several
+    sentences long, framing the model as a story architect planning a
+    long-running serialized arc for a live virtual-streamer campaign. The
+    orchestrator imports it from here.
+  - Do NOT modify anything under `app/` — it is shared with the live avatar
+    app.
+  - No network calls and no file I/O anywhere in this module.
