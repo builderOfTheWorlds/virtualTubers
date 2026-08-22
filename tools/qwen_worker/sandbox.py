@@ -23,7 +23,8 @@ log = logging.getLogger("qwen_worker.sandbox")
 
 # Directories copied into the verification sandbox. Everything the test suite
 # imports or reads must be here; .venv, .git and node_modules must not.
-SANDBOX_DIRS = ("app", "tests", "config", "campaigns", "tools", "utilities")
+SANDBOX_DIRS = ("app", "tests", "config", "campaigns", "tools", "utilities",
+                "services")
 SANDBOX_FILES = ("pytest.ini",)
 
 # Never copied — large, irrelevant, or actively harmful to duplicate.

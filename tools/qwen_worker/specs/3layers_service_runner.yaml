@@ -1,0 +1,268 @@
+task_id: 3layers_service_runner
+
+goal: |
+  Implement the dispatcher for the 3-layer generator's API service: the thing
+  that turns a queued job row into GPU work. It claims one job at a time,
+  drives the right layer function, mirrors what that function wrote to disk
+  into Postgres, and records the outcome on the job row.
+
+  WHY IT IS SHAPED AS FUNCTIONS AND NOT A THREAD. The obvious design is a
+  `while True:` loop in a thread. That is untestable except by sleeping, and a
+  test that sleeps is flaky on a loaded machine — which this machine is, since
+  it is also running a 70B model. So the unit of work is `dispatch_once(ctx)`,
+  a plain synchronous call that claims at most one job and returns whether it
+  did. `run_forever` is a thin loop over it, and the API's lifespan starts that
+  loop in a thread. Everything interesting is reachable without concurrency.
+
+  WHY THE DEPENDENCIES ARE INJECTED. `Context` carries the store, the config,
+  and the three layer functions. Tests substitute fakes for all of them; in
+  production `build_default_context()` wires the real ones. A module that
+  imports `plan_segment` at the top and calls it directly cannot be tested
+  without a GPU.
+
+  THE JOB ROW IS THE ONLY THING THE OPERATOR SEES. A run is GPU-hours. If a
+  status is wrong, or an error says "KeyError" instead of what actually broke,
+  the person watching `GET /jobs/{id}` has no way to tell a stuck run from a
+  slow one. Every exit path from a job must land on exactly one terminal
+  status with a readable reason.
+
+target_files:
+  - services/3layer-generator/runner.py
+
+test_files:
+  - services/3layer-generator/tests/test_service_runner.py
+
+context_files:
+  - services/3layer-generator/generation_store.py
+  - utilities/3LayersWeeklyGeneration/src/config.py
+  - utilities/3LayersWeeklyGeneration/src/plan_segment.py
+
+interface: |
+  services/3layer-generator/runner.py must export exactly these names.
+
+  ------------------------------------------------------------------
+  class Context
+  ------------------------------------------------------------------
+      A MUTABLE dataclass (`@dataclasses.dataclass`, not frozen — the tests
+      reassign `ctx.plan_arc` and `ctx.plan_segment` to inject failures).
+      Fields, all keyword-constructible, in this order:
+
+          config           dict        the loaded generation.yaml, already
+                                       overlaid with OUTPUT_DIR by the caller
+          pack_root        Path        directory holding campaign packs
+          output_root      Path        the working directory root
+          store            module      generation_store, or a stand-in
+          build_llm        callable    (profile_name, layer) -> llm client
+          load_pack        callable    (pack_path) -> pack
+          build_vocab      callable    (config, pack) -> vocab
+          plan_arc         callable
+          plan_segment     callable
+          generate_dialogue callable
+          _calls           any = None  test-only escape hatch; default None
+
+      Give `_calls` a default of None so production construction never has to
+      pass it.
+
+  ------------------------------------------------------------------
+  def build_default_context(config, pack_root, output_root) -> Context
+  ------------------------------------------------------------------
+      Wire the real dependencies: `generation_store` as the store,
+      `campaign.pack.load_pack`, `vocabulary.Vocabulary.from_config_and_pack`,
+      and the three real layer entry points (`plan_arc.plan_arc`,
+      `plan_segment.plan_segment`,
+      `generate_segment_dialogue.generate_segment_dialogue`).
+
+      THE FIRST PARAMETER IS THE CONFIG **DICT**, AND IT SHADOWS THE CONFIG
+      **MODULE**. Import the module under an alias and write `build_llm`
+      exactly like this:
+
+          import config as config_module
+          import concurrent_llm
+
+          def build_llm(profile_name, layer):
+              resolved = config_module.resolve_profile(
+                  config, layer, profile_name or None)
+              return concurrent_llm.from_profile(resolved)
+
+      Two things go wrong if you do not. Writing `config.resolve_profile(...)`
+      resolves against the dict parameter and fails at runtime with
+      "'dict' object has no attribute 'resolve_profile'". And the real
+      signature is `resolve_profile(config, layer, profile_name=None)` — the
+      config FIRST, then the layer, then the profile — so
+      `resolve_profile(profile_name, layer)` is wrong even against the module.
+      Pass `None` rather than `""` for an unset profile, so the function falls
+      back to the layer's `active_model`.
+
+      Neither mistake is caught by this module's own tests, which inject a fake
+      `build_llm`; both fail every single job the moment the service runs for
+      real.
+
+      IMPORT THE LAYER MODULES INSIDE THIS FUNCTION, not at module top level.
+      `generate_segment_dialogue` is Part C and does not exist yet; a
+      top-level import would make this whole module unimportable and take the
+      test suite down with it. A missing layer module must fail the ONE job
+      that needs it, not the service.
+
+  ------------------------------------------------------------------
+  def boot(ctx) -> None
+  ------------------------------------------------------------------
+      Run once at service start, before the dispatch loop.
+
+        1. `ctx.store.reconcile_orphans()` — see generation_store; a container
+           that restarted mid-job leaves a row `running` that nothing will
+           ever clear.
+        2. REHYDRATE: for every artifact in `ctx.store.list_artifacts(pack)`
+           whose file is missing from the working directory, write it back out
+           as YAML. Never overwrite a file that already exists — the local copy
+           is what the layer functions are mid-way through and the DB copy may
+           be a checkpoint behind.
+
+      Do NOT touch `queued` rows. They are work the operator submitted that
+      simply has not started, and failing them on every restart would silently
+      discard the queue.
+
+      Determine the pack list from the packs present under `ctx.pack_root`.
+
+  ------------------------------------------------------------------
+  def artifact_path(ctx, pack, kind, segment_id) -> Path
+  ------------------------------------------------------------------
+      Where an artifact of each kind lives in the working directory:
+
+          arc_plan  -> <output_root>/<pack>/arc_plan.yaml
+          brief     -> <output_root>/<pack>/segments/<segment_id>/brief.yaml
+          tree      -> <output_root>/<pack>/segments/<segment_id>/tree.yaml
+          dialogue  -> <output_root>/<pack>/segments/<segment_id>/dialogue.yaml
+
+  ------------------------------------------------------------------
+  def dispatch_once(ctx) -> bool
+  ------------------------------------------------------------------
+      Claim at most one job and run it to a terminal status. Return True when
+      a job was claimed (whatever its outcome), False when the queue was empty.
+
+        1. `rows = ctx.store.list_jobs(status="queued")`. That listing is
+           NEWEST FIRST, so take `rows[-1]` — the OLDEST queued job. Getting
+           this backwards turns the queue into a stack and starves the first
+           job submitted, which is the one the operator is watching.
+        2. `if not ctx.store.mark_running(job["id"]): return True` — somebody
+           else claimed it; report that a claim was attempted and move on.
+        3. Run the stage (below) inside try/except.
+        4. On success: `finish(id, "cancelled", result=...)` when the cancel
+           flag is set, otherwise `finish(id, "completed", result=...)`.
+        5. On exception: `finish(id, "failed", error=str(exc))`.
+
+      `error` MUST be `str(exc)` — the readable message — NOT a traceback and
+      NOT `repr(exc)`. The test asserts "Traceback" does not appear. The
+      traceback belongs in the log, via `log.exception(...)`.
+
+      NEVER let an exception escape `dispatch_once`. One bad job must not wedge
+      the queue for every job behind it.
+
+  ------------------------------------------------------------------
+  def run_forever(ctx, stop_event, poll_seconds=1.0) -> None
+  ------------------------------------------------------------------
+      `while not stop_event.is_set():` call `dispatch_once(ctx)`; when it
+      returns False, `stop_event.wait(poll_seconds)`. Use `wait`, not
+      `time.sleep`, so shutdown is immediate.
+
+  ------------------------------------------------------------------
+  THE STAGE DISPATCH
+  ------------------------------------------------------------------
+      Read `stage` off the job row. Build the pack, llm and vocab once per job
+      via the `ctx` callables, using `job["profile"]` when it is non-empty.
+
+      KEEP THE PACK NAME AND THE LOADED PACK IN SEPARATE VARIABLES. They are
+      both "the pack" in English and they are not interchangeable:
+
+          pack_name = job["pack"]                       # str, e.g. "ashiorid"
+          pack      = ctx.load_pack(ctx.pack_root / pack_name)   # the object
+
+      `pack_name` is what `artifact_path(...)`, `_mirror(...)` and every
+      `ctx.store.*_artifact(...)` call take — they build filesystem paths and
+      database keys. `pack` is what the LAYER FUNCTIONS take — `plan_arc`,
+      `plan_segment` and `generate_dialogue` all read `.genre`, `.scenes`,
+      `.lore` and `.cast` off it.
+
+      Passing the name where the object belongs fails every real job with
+      "'str' object has no attribute 'genre'", and passing the object where
+      the name belongs produces a database key like
+      "<campaign.pack.CampaignPack object at 0x7f...>". Name the two variables
+      differently and the confusion cannot occur. The acceptance tests assert
+      the layer functions receive the loaded object.
+
+      An UNKNOWN stage raises `ValueError(f"unknown stage {stage!r}")`, which
+      the wrapper turns into a failed job — it must not crash the loop.
+
+      `stage: "arc"`
+          `ctx.plan_arc(pack, config, llm, vocab, out_path)` where out_path is
+          `artifact_path(ctx, pack, "arc_plan", "")`. Then mirror it.
+          Result summary: `{"segments": <count>, "duration_s": ..., "artifacts": [...]}`.
+
+      `stage: "segment"`
+          The segment list is `job["params"]["segments"]` when present and
+          non-empty; otherwise every segment in the arc plan that has no
+          `brief.yaml` yet; and when `job["params"].get("rebrief")` is true,
+          every segment whose brief carries `needs_rebrief: true` instead.
+
+          For each segment IN ORDER:
+            - CHECK THE CANCEL FLAG FIRST and stop the loop if it is set.
+            - call `ctx.plan_segment(pack, arc_segment, config, llm, vocab,
+              out_path, progress=<cb>, cancel_check=<cb>)`
+            - mirror the brief and the tree.
+          Result summary includes `{"segments": <how many were planned>}`.
+
+      `stage: "dialogue"`
+          `ctx.generate_dialogue(pack, segment_ids, config, llm, out_root,
+          progress=<cb>, cancel_check=<cb>)`. Mirror any dialogue artifacts
+          written. Result summary carries the returned stats.
+
+      `stage: "all"`
+          arc, then segment, then dialogue, in that order, in ONE job. Check
+          the cancel flag at each stage boundary.
+
+  ------------------------------------------------------------------
+  THE CALLBACKS
+  ------------------------------------------------------------------
+      `progress` — a closure over the job id calling
+      `ctx.store.update_progress(job_id, {"done": done, "total": total,
+      "last_node": <the node's id>, "updated_at": <iso utc>})`.
+
+      The third argument the layer function passes is THE NODE RECORD that
+      just completed — read `node["node_id"]` off it for `last_node`. For the
+      dialogue stage the third argument is a segment id string; accept both by
+      taking `node["node_id"]` when it is a mapping and `str(node)` otherwise.
+
+      `cancel_check` — a closure calling `ctx.store.is_cancelled(job_id)`.
+      Pass it straight through; the layer functions own the polling policy.
+
+  ------------------------------------------------------------------
+  THE MIRROR (PLAN_v3 V9)
+  ------------------------------------------------------------------
+      After a layer function writes a file, read it back with
+      `yaml.safe_load` and call
+      `ctx.store.upsert_artifact(pack, kind, segment_id, content, job_id)`.
+      Skip silently when the file does not exist — a skipped leaf writes
+      nothing and that is not an error.
+
+      `result["artifacts"]` is a list of `f"{kind}:{segment_id}"` KEYS, never
+      filesystem paths. Paths are container-local scratch and mean nothing to
+      the GUI reading the job row. For the arc plan the key is `"arc_plan:"`.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
+    decision points, INFO on job claim and job completion, ERROR inside every
+    handler — and `log.exception` where a traceback is genuinely useful.
+  - Builtin generics only in annotations. Do NOT import from `typing`.
+  - `encoding="utf-8"` on every file open, both directions.
+  - Use `yaml.safe_load` / `yaml.safe_dump(..., sort_keys=False,
+    allow_unicode=True)`.
+  - Timestamps: `datetime.datetime.now(datetime.timezone.utc).isoformat()`.
+    Do NOT use `datetime.utcnow()` — deprecated in 3.12, and this service runs
+    on python:3.12-slim.
+  - Do NOT import plan_arc, plan_segment or generate_segment_dialogue at
+    module top level. See build_default_context.
+  - Do NOT write `except (SomeError, Exception)` anywhere: the second member
+    makes the first meaningless.
+  - Do NOT add threading beyond `run_forever`'s stop_event. The layer
+    functions own their own concurrency; this module runs one job at a time by
+    design (PLAN_v3 V3).

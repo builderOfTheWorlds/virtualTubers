@@ -490,7 +490,65 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  # Offline 3-layer content generator (utilities/3LayersWeeklyGeneration,
+  # PLAN_v3). Plans an arc, recursively segments it, and generates the dialogue
+  # library — driven over HTTP so the management GUI can submit and watch jobs.
+  # Job state and generated artifacts live in generator-postgres, NOT mafober.
+  3layer-generator:
+    image: virtualtubers-3layer-generator:latest
+    pull_policy: never
+    build:
+      context: .
+      dockerfile: services/3layer-generator/Dockerfile
+    environment:
+      GENERATOR_CONFIG: /data/config/generation.yaml
+      PACK_ROOT: /data/packs
+      DEFAULT_PACK: ${GENERATOR_PACK:-ashiorid}
+      # Consumed by generator_api.overlay_output_dir: generation.yaml ships a
+      # repo-relative host path and its mount is read-only, so the value is
+      # replaced in memory at startup. Without this the container writes into
+      # its own image layer.
+      OUTPUT_DIR: /data/output
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      POSTGRES_HOST: generator-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}
+      POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}
+      POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:?GENERATOR_POSTGRES_PASSWORD must be set in .env}
+    depends_on:
+      - generator-postgres
+    # host.docker.internal is a Docker Desktop nicety; on Linux it must be
+    # mapped explicitly or Ollama on the host is simply unreachable.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./campaigns:/data/packs:ro
+      - ./utilities/3LayersWeeklyGeneration/config:/data/config:ro
+      - ./utilities/3LayersWeeklyGeneration/output:/data/output
+    ports:
+      - "8092:8000"
+    restart: unless-stopped
+
+  # Local Postgres owning ONLY the 3-layer generator's data (PLAN_v3 V15).
+  # Deliberately separate from the mafober instance the rest of the stack uses:
+  # generation output is a distinct dataset with a distinct backup story, a
+  # GPU-hours run should not depend on the LAN, and an evolving generated
+  # schema has no business on the production database. Backup mirroring to
+  # mafober is a later, separate service.
+  generator-postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}
+      POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}
+      POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:?GENERATOR_POSTGRES_PASSWORD must be set in .env}
+    ports:
+      - "5455:5432"
+    volumes:
+      - generator-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
 volumes:
+  generator-postgres-data:
   world-state:
   repo:
   repo-native:

@@ -1,9 +1,9 @@
 """Shared fixtures for the Layer 2 test modules.
 
 Layer 2 is split the same way Layer 1 is — `segment_schema` (pure: parse,
-validate, build prompts, merge the brief) and `plan_segment` (the 2a/2b
-orchestrator) — so the config and the sample chapter/slot builders live here
-rather than drifting apart across two test files.
+validate, build prompts, merge the brief) and `plan_segment` (the recursive
+tree orchestrator) — so the config and the sample node/child/slot builders
+live here rather than drifting apart across two test files.
 """
 import pytest
 import yaml
@@ -19,13 +19,22 @@ def segment_config():
         "segment": {
             "target_words": 53600,
             "target_slots": 170,
-            "chapters_per_segment": 9,
+            "tree": {
+                "max_leaf_slots": 19,
+                "max_children": 12,
+                "max_depth": 4,
+                "min_node_words": 2000,
+                "leaf_density_floor": 0.80,
+            },
             "concurrency": 4,
             "max_attempts": 2,
             "sensitivity_budget": 0.40,
             "density_floor": 0.80,
         },
         "dialogue": {"takes_per_slot": 3, "neutral_takes": 1},
+        "budget": {"measured_baseline": {"words_per_take": 105,
+                                         "beats_per_take": 7.7,
+                                         "generation_words_per_min": 95.4}},
         "state": {
             "flags": ["helen-wounded", "moonwell-tainted", "buffalo-lost-axe"],
             "moods": ["tense", "weary", "hopeful", "giddy"],
@@ -54,18 +63,49 @@ def arc_segment():
     }
 
 
-def chapter(order, **overrides):
-    """A valid 2a chapter mapping."""
-    ch = {
-        "chapter_id": f"ch-{order + 1:02d}",
+def node(node_id="seg-001", parent_id=None, order=0, depth=0,
+         target_words=53600, target_slots=170, **overrides):
+    """One node of the segment tree. Depth 0 is the segment root."""
+    record = {
+        "node_id": node_id,
+        "parent_id": parent_id,
         "order": order,
-        "title": f"Chapter {order + 1}",
-        "summary": f"Forty minutes of the company's afternoon, part {order + 1}.",
+        "depth": depth,
+        "title": f"Node {node_id}",
+        "summary": "Part of the company's long afternoon.",
         "continuity_in": "They are walking.",
         "continuity_out": "They are still walking, but wetter.",
+        "target_words": target_words,
+        "target_slots": target_slots,
+        "kind": None,
+        "forced": False,
+        "children": [],
+        "slots": None,
     }
-    ch.update(overrides)
-    return ch
+    record.update(overrides)
+    return record
+
+
+def child(order, weight=1.0, **overrides):
+    """One entry as the model returns it from an expand call — no ids, no
+    word budgets. Those are derived locally by distribute_words()."""
+    record = {
+        "order": order,
+        "title": f"Child {order}",
+        "summary": f"A slice of the afternoon, part {order + 1}.",
+        "continuity_in": "They are walking.",
+        "continuity_out": "They are still walking.",
+        "weight": weight,
+    }
+    record.update(overrides)
+    return record
+
+
+def children_reply(count, weights=None):
+    weights = weights or [1.0] * count
+    return yaml.safe_dump(
+        {"children": [child(i, weight=weights[i]) for i in range(count)]},
+        sort_keys=False)
 
 
 def ambient_slot(index, **overrides):
@@ -97,11 +137,6 @@ def spine_slot(index, **overrides):
     return slot
 
 
-def chapters_reply(count):
-    return yaml.safe_dump({"chapters": [chapter(i) for i in range(count)]},
-                          sort_keys=False)
-
-
 def slots_reply(count, start=1, **overrides):
     return yaml.safe_dump(
         {"slots": [ambient_slot(i, **overrides) for i in range(start, start + count)]},
@@ -109,20 +144,22 @@ def slots_reply(count, start=1, **overrides):
 
 
 class FakeSegmentLLM:
-    """An LLM that answers 2a and 2b calls differently.
+    """An LLM that answers expand and leaf calls differently.
 
     It dispatches on the system prompt rather than on call order, because the
     2b calls run concurrently and their order is not knowable.
     """
 
-    def __init__(self, chapters=9, slots=19, chapter_replies=None,
-                 slot_replies=None):
-        self.chapters = chapters
+    def __init__(self, children=9, slots=19, chapter_replies=None,
+                 slot_replies=None, weights=None):
+        self.children = children
         self.slots = slots
+        self.weights = weights
         # Optional lists of canned replies, consumed in order, for testing
         # retries. When exhausted, the good reply is returned.
         self.chapter_replies = list(chapter_replies or [])
         self.slot_replies = list(slot_replies or [])
+        self.expand_prompts = []
         self.chapter_prompts = []
         self.slot_prompts = []
         self._lock = __import__("threading").Lock()
@@ -139,13 +176,14 @@ class FakeSegmentLLM:
 
         import segment_schema
         with self._lock:
-            if system_prompt == segment_schema.SYSTEM_PROMPT_CHAPTERS:
+            if system_prompt == segment_schema.SYSTEM_PROMPT_EXPAND:
+                self.expand_prompts.append(prompt)
                 self.chapter_prompts.append(prompt)
                 if self.chapter_replies:
                     return self.chapter_replies.pop(0)
-                return chapters_reply(self.chapters)
+                return children_reply(self.children, self.weights)
 
-            assert system_prompt == segment_schema.SYSTEM_PROMPT_SLOTS, (
+            assert system_prompt == segment_schema.SYSTEM_PROMPT_LEAF, (
                 "every call must use one of the two exported system prompts")
             self.slot_prompts.append(prompt)
             if self.slot_replies:

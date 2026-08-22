@@ -1,32 +1,40 @@
 task_id: 3layers_segment_schema
 
 goal: |
-  Implement the PURE half of Layer 2: the parsers, validators, prompt builders
-  and brief merger for the segment planner. Every function is a function of
-  its arguments — no LLM, no network, no disk. The orchestrator that drives
-  them (`plan_segment.py`) is a separate module and is NOT your concern.
+  Rewrite the PURE half of Layer 2 of the 3-layer offline content generator so
+  that a segment is divided by a RECURSIVE TREE rather than a flat list of nine
+  chapters. This module owns the parsing, the validation, the prompt text and
+  the final merge into `brief.yaml`. It never calls a model, never touches the
+  network, and never touches disk. The orchestrator that drives it
+  (`plan_segment.py`) is a separate module and is NOT your concern.
 
-  Layer 2 takes ONE entry out of `arc_plan.yaml` (six hours of airtime) and
-  turns it into a `brief.yaml` of roughly 170 authored slots, in two passes:
+  WHY THE TREE REPLACES THE FLAT SPLIT. A segment is six hours of airtime, and
+  how much *happens* in those six hours is wildly uneven. The flat version gave
+  a quiet stretch of road the same nine-way split as the arrival at the
+  moonwell. The tree lets the model say "this slice carries three times the
+  weight of that one", and recursion continues only where density actually
+  demands it. A uniform-weight run reproduces the old shape almost exactly —
+  root splits into ~9 leaves of ~19 slots — so the default behaviour does not
+  regress.
 
-    2a — one call, ~9 chapter one-liners covering the six hours.
-    2b — one call PER CHAPTER, ~19 slots each. These run concurrently.
+  TWO PROPERTIES MATTER MORE THAN ANY INDIVIDUAL FUNCTION HERE.
 
-  Two rules here are load-bearing and easy to get subtly wrong:
+  1. WORDS RECONCILE EXACTLY. A parent's `target_words` is split among its
+     children and the children's shares MUST sum back to it, to the word.
+     Slots may drift by a rounding unit; words may not. Words are the budget
+     that ties back to the 168-hour target, and a tree that leaks three
+     percent per level has lost a fifth of the week by depth four. Nothing in
+     the output will look wrong — the stream simply runs dry early.
 
-  1. THE BRIEF'S TOP-LEVEL SLOT KEY IS `slots`, NOT `scenes`. The already
-     promoted `worklist.build_worklist` does `brief["slots"]`. Naming it
-     anything else does not crash — it yields an empty worklist, and the run
-     reports success in three seconds having generated nothing.
+  2. THE TREE ALWAYS TERMINATES, AND NEVER BY DROPPING A NODE. Both
+     `max_depth` and expand-exhaustion force a LEAF, flagged `forced: True`.
+     A forced leaf is oversized and gets planned anyway; a dropped node is a
+     silent hole in the airtime that nothing downstream can detect.
 
-  2. `sensitivity` AND `depends_on` ARE A BUDGET, NOT A LABEL. Layer 3 gives
-     every slot exactly `takes_per_slot` takes, of which `neutral_takes` are
-     unconditioned. What is left is the conditioned budget, and each declared
-     flag needs TWO conditioned takes (true and false) to be covered. At the
-     shipped defaults, 3 takes minus 1 neutral is 2 — so a slot may declare
-     exactly ONE dependency. A slot declaring three needs six takes; the four
-     uncovered state combinations play a line written for the wrong state,
-     silently, forever.
+  Everything about slot validation and the sensitivity budget is UNCHANGED
+  from the current module. Its tests are preserved verbatim in the acceptance
+  file and are the oracle proving this rewrite did not disturb the parts it
+  had no business disturbing.
 
 target_files:
   - utilities/3LayersWeeklyGeneration/src/segment_schema.py
@@ -36,95 +44,190 @@ test_files:
 
 context_files:
   - utilities/3LayersWeeklyGeneration/src/vocabulary.py
-  - utilities/3LayersWeeklyGeneration/src/worklist.py
   - utilities/3LayersWeeklyGeneration/src/arc_schema.py
+  - utilities/3LayersWeeklyGeneration/src/worklist.py
 
 interface: |
   utilities/3LayersWeeklyGeneration/src/segment_schema.py must export exactly
   these names.
 
+  THE NODE RECORD — the single shape every unit below the segment root takes:
+
+      {
+        "node_id": str,          # f"{parent_id}-n{order}"
+        "parent_id": str | None,
+        "order": int,            # 0-based, contiguous among siblings
+        "depth": int,            # 0 = the segment root
+        "title": str,
+        "summary": str,
+        "continuity_in": str,
+        "continuity_out": str,
+        "target_words": int,
+        "target_slots": int,
+        "kind": "branch" | "leaf" | None,   # None = not yet resolved
+        "forced": bool,
+        "children": [node_id, ...],
+        "slots": [...] | None,
+      }
+
+  Node ids are `f"{parent_id}-n{order}"` — root `seg-01`, child `seg-01-n2`,
+  grandchild `seg-01-n2-n0`. NOT dotted: `worklist.take_path` uses the id as a
+  literal directory name, and dotted components read as file extensions to
+  every tool that later globs that tree.
+
   ------------------------------------------------------------------
   class SegmentPlanError(ValueError)
   ------------------------------------------------------------------
-      Raised ONLY for a model reply that cannot be parsed into a list.
-      NOT raised for content that fails validation — that path returns
-      problem strings so the orchestrator can retry with feedback.
+      Raised for a reply that cannot be parsed, and for an infeasible tree
+      config. NOT raised for a batch that fails validation — that path returns
+      problem strings and the caller retries.
 
   ------------------------------------------------------------------
-  SYSTEM_PROMPT_CHAPTERS  and  SYSTEM_PROMPT_SLOTS
+  SYSTEM_PROMPT_EXPAND   (renamed from SYSTEM_PROMPT_CHAPTERS)
+  SYSTEM_PROMPT_LEAF     (renamed from SYSTEM_PROMPT_SLOTS)
   ------------------------------------------------------------------
-      Two module-level string constants, several sentences each. The first
-      frames the model as breaking a six-hour segment into chapters; the
-      second as writing the individual improv prompts inside one chapter.
-      Both must be non-empty after `.strip()`.
-
-  ------------------------------------------------------------------
-  def parse_chapters(reply) -> list
-  def parse_slots(reply) -> list
-  ------------------------------------------------------------------
-      Same extraction algorithm for both — implement it once as a private
-      helper and call it from both with a different key name
-      ("chapters" / "slots").
-
-      IMPLEMENT EXACTLY THIS ALGORITHM, IN THIS ORDER:
-
-        1. If the text contains a ``` fence, take the text BETWEEN the first
-           fence and the next fence. Strip an optional language word
-           ("yaml", "yml", "json") off the front of the first line.
-        2. Otherwise use the whole text.
-        3. `yaml.safe_load` it.
-        4. If the result is a dict, return `result[key]` when that key is
-           present and is a list.
-        5. If the result is itself a list, return it.
-        6. Otherwise raise SegmentPlanError.
-
-      Do NOT write a regex like `^(.*?)(?:\n|$)` to find the payload. That
-      matches the first LINE and turns a perfect multi-line reply into the
-      string "chapters:".
-
-      Every element of the returned list must be a dict. If any is not,
-      raise SegmentPlanError.
+      Module-level string constants, several sentences each. EXPAND frames the
+      model as dividing a stretch of airtime into child slices, each carrying a
+      `weight` reflecting how much happens in it. LEAF is unchanged in spirit
+      from the current SYSTEM_PROMPT_SLOTS. Both must be non-empty. The
+      orchestrator imports both, and the test suite's fake LLM dispatches on
+      their identity — so these exact names must exist.
 
   ------------------------------------------------------------------
-  def validate_chapters(chapters, config) -> list[str]
+  def derive_target_slots(target_words, config) -> int
   ------------------------------------------------------------------
-      Returns a list of problem strings, [] when clean. Never raises.
+      `round(target_words / (words_per_take * takes_per_slot))`, reading
+      `config["budget"]["measured_baseline"]["words_per_take"]` and
+      `config["dialogue"]["takes_per_slot"]`. At the shipped defaults that is
+      105 * 3 = 315 words per slot, so the root's 53600 words derive to 170 —
+      which must equal the `segment.target_slots` the config states
+      independently.
 
-      CHECK REQUIRED KEYS FIRST, AND RETURN EARLY. Indexing a chapter for
-      `order` before you know `order` is present raises KeyError out of a
-      function whose whole contract is to return problems.
-
-        required = ["chapter_id", "order", "title", "summary",
-                    "continuity_in", "continuity_out"]
-        problems = []
-        for ch in chapters:
-            for key in required:
-                if key not in ch:
-                    problems.append(f"chapter is missing required key '{key}'")
-        if problems:
-            return problems
-
-      Then, in this order:
-        - `len(chapters)` must equal `config["segment"]["chapters_per_segment"]`.
-        - The set of `order` values must equal `set(range(len(chapters)))`.
-        - `chapter_id` values must be unique.
-        - Every `summary` must be a non-empty string. The problem string MUST
-          contain that chapter's `chapter_id`, because the whole point is to
-          tell the model which one to fix.
-
-          CHECK THE TYPE BEFORE CALLING .strip(). `summary:` with nothing
-          after it is valid YAML that parses to None, and the key IS present,
-          so the required-key check waves it through. `None.strip()` then
-          raises AttributeError out of a function whose entire contract is to
-          return problems rather than raise. Write it as:
-
-              if not isinstance(ch["summary"], str) or not ch["summary"].strip():
-
-          Apply the same isinstance-then-strip shape to every string field
-          you test for emptiness anywhere in this module.
+      Do NOT hard-code 315. The whole point of reading the measured baseline is
+      that re-measuring it re-derives every budget in the tree.
 
   ------------------------------------------------------------------
-  def validate_slots(slots, pack, vocab, config) -> list[str]
+  def leaf_eligible(target_slots, config) -> bool
+  ------------------------------------------------------------------
+      `target_slots <= config["segment"]["tree"]["max_leaf_slots"]`.
+      Return a real bool — the tests use `is True` / `is False`.
+
+  ------------------------------------------------------------------
+  def validate_tree_config(config) -> list[str]
+  ------------------------------------------------------------------
+      The knob interlock. Returns problem strings; [] when the config is
+      feasible. Reads `config["segment"]["tree"]`. Check ALL of:
+
+        - `max_children >= 2`
+        - `max_depth >= 1`
+        - `max_leaf_slots >= 1`
+        - `0 < leaf_density_floor <= 1`
+        - `min_node_words * 2 <= max_leaf_slots * words_per_take * takes_per_slot`
+
+      Every problem string MUST contain the name of the offending knob — the
+      tests assert on it, and an operator reading a startup failure needs to
+      know which of five numbers to change.
+
+      WHY THE LAST CHECK EXISTS. These knobs can be set mutually infeasible,
+      and the failure is silent rather than loud: if `min_node_words` exceeds
+      half a leaf's worth of words, no split can ever produce two floor-legal
+      children, so every expand call fails validation, retries, exhausts, and
+      degrades to a forced leaf. The run "succeeds" and quietly produces one
+      giant leaf per segment. Catching it once at startup costs nothing.
+
+      NOTE the caller raises SegmentPlanError on a non-empty result. This
+      function itself RETURNS, it does not raise — same discipline as every
+      other validator here.
+
+  ------------------------------------------------------------------
+  def distribute_words(children, node, config) -> list
+  ------------------------------------------------------------------
+      Turn the model's relative `weight` values into exact word budgets.
+      Return a NEW list of NEW dicts — do not mutate the input, the tests
+      assert the originals are untouched.
+
+      Implement exactly this:
+
+        1. `total = sum(float(c["weight"]) for c in children)`.
+        2. For each child, `share = round(node["target_words"] * weight / total)`.
+        3. RECONCILE: compute `remainder = node["target_words"] - sum(shares)`
+           and add it to the child with the LARGEST share. The sum must then
+           equal the parent exactly.
+        4. Set each child's `target_slots = derive_target_slots(its words, config)`.
+
+      Weights need NOT sum to 1. The model is asked for relative weight, and
+      normalising locally is arithmetic — demanding it of the model would be a
+      retry, and a 400-second generation, for something this line already fixes.
+
+      THE RECONCILIATION IN STEP 3 IS THE POINT OF THIS FUNCTION. Independent
+      rounding of each share does not sum to the parent. See goal property 1
+      for why a per-level leak is unacceptable. Derived per-child SLOT counts
+      are NOT reconciled — they may drift by one per child, and the
+      segment-level density check absorbs that. Words exactly, slots
+      approximately; do not try to reconcile twice.
+
+  ------------------------------------------------------------------
+  def parse_children(reply) -> list      (renamed from parse_chapters)
+  def parse_slots(reply) -> list         (unchanged)
+  ------------------------------------------------------------------
+      Extract the list from a raw model reply. `parse_children` reads a
+      `children:` key; `parse_slots` reads `slots:`. Both tolerate, in this
+      order: a ```yaml or bare ``` fence; prose before the document; a mapping
+      with the expected key OR a bare top-level list.
+
+      Keep the existing shared `_parse_reply(reply, key)` helper and give both
+      public functions a one-line body that calls it. Raise SegmentPlanError
+      when nothing parses or the result is not a list of mappings.
+
+  ------------------------------------------------------------------
+  def validate_children(children, node, config) -> list[str]
+                                          (renamed from validate_chapters)
+  ------------------------------------------------------------------
+      Returns problem strings, [] when clean. Never raises.
+
+      CHECK REQUIRED KEYS FIRST AND RETURN EARLY, exactly as the arc validator
+      does. The required keys are: order, title, summary, continuity_in,
+      continuity_out, weight. Every later check indexes into the child; running
+      them on a child missing `weight` dies with a KeyError, which turns a
+      recoverable bad batch into a crashed run — the precise opposite of this
+      function's contract.
+
+      Then, IN THIS ORDER:
+
+        - the list is non-empty. RETURN IMMEDIATELY if it is empty. Every
+          later check — and `distribute_words` in particular — divides by the
+          summed weight, which is 0 for an empty list. `validate_children`
+          must return a problem string, never raise, so this early return is
+          load-bearing, not defensive.
+        - `len(children) <= max_children`. The problem string must contain the
+          cap or the word `max_children`.
+        - the `order` values are exactly the set 0..N-1. They need NOT arrive
+          sorted — a complete but out-of-sequence set is FINE and must produce
+          no problem. Gaps and duplicates are problems.
+        - `weight` is a positive real number. Reject 0, negatives, strings and
+          None. `bool` is not acceptable either — note `isinstance(True, int)`
+          is True in Python.
+        - `summary`, `continuity_in` and `continuity_out` are non-empty after
+          `.strip()`. A value YAML read as None must be rejected, not crash.
+        - EVERY child's distributed word share is `>= min_node_words`. Compute
+          the shares by calling `distribute_words(children, node, config)`
+          inside this function — ONLY once every check above has passed, since
+          it needs a non-empty list and positive numeric weights — so a floor violation is caught BEFORE any child
+          node is created. The problem string must contain `min_node_words` or
+          the configured number.
+
+      Every problem string must name the offending child by its `order` (or
+      index when `order` itself is missing). During an unattended run these
+      strings are the entire diagnosis and they are fed verbatim into the retry
+      prompt.
+
+      DELIBERATELY NOT VALIDATED: whether child 0's `continuity_in` actually
+      follows from the parent's. It is prose, there is no deterministic check,
+      and this codebase does not add trust-based guards. Continuity is handled
+      on the prompt side — siblings are generated in one call and see each
+      other, and the ancestor chain carries the parent's continuity down.
+
+  def validate_slots(slots, pack, vocab, config, node=None) -> list[str]
   ------------------------------------------------------------------
       Returns a list of problem strings, [] when clean. Never raises.
 
@@ -274,114 +377,128 @@ interface: |
       would burn a retry on a judgement call the model cannot reliably fix.
 
   ------------------------------------------------------------------
-  def build_chapter_prompt(pack, arc_segment, config, problems) -> str
-  ------------------------------------------------------------------
-      The 2a user message. Must contain, all verbatim from the arguments:
-        - `arc_segment["synopsis"]`
-        - `arc_segment["continuity_in"]` and `arc_segment["continuity_out"]`
-        - `str(config["segment"]["chapters_per_segment"])`
-        - the required chapter key list, and — this one is not optional —
-          the legal range of `order` values, stated as actual numbers:
-          0 to `chapters_per_segment - 1`. `validate_chapters` requires the
-          orders to be exactly `range(n)`. A model told only "include an
-          order key" numbers them from 1, which is a rejected batch and a
-          wasted retry on EVERY segment of the week. A Python comment in
-          your source does not reach the model; the number has to be in the
-          returned string. DERIVE it from `chapters_per_segment` — do not
-          write a literal "0 to 8". A prompt that says "0 to 8" while asking
-          for five chapters contradicts itself in the same breath, and the
-          model resolves the contradiction whichever way it likes.
-        - an instruction to reply with ONLY YAML under a `chapters:` key
-        - each string in `problems`, when `problems` is truthy
 
-      When `problems` is None or empty the prompt must NOT contain the phrase
-      "previous attempt" in any casing.
+      NEW IN v3 — THE OPTIONAL `node` PARAMETER. Everything above is unchanged.
+      When `node` is given AND is not None, add ONE further check:
+
+          if len(slots) < node["target_slots"] * leaf_density_floor:
+              problem
+
+      When `node` is None, no count check happens at all — that is the current
+      behaviour and existing callers rely on it.
+
+      WHY THIS IS NEW. Today `validate_slots` does not check slot count
+      anywhere; `target_slots` appears only in the prompt and in one
+      segment-level density check at the very end. Under recursion there are
+      many more leaves and many more chances to under-deliver, and one
+      aggregate warning after the whole segment is planned is far too late to
+      retry. Catching it per-leaf converts a silent shortfall into a retry that
+      costs one call.
 
   ------------------------------------------------------------------
-  def build_slot_prompt(pack, arc_segment, chapter, config, problems) -> str
+  def build_expand_prompt(pack, arc_segment, ancestors, node, config, problems) -> str
+                                       (renamed from build_chapter_prompt)
   ------------------------------------------------------------------
-      The 2b user message for ONE chapter. Must contain:
+      The user prompt for ONE expand attempt. `ancestors` is a list of node
+      records, ROOT-EXCLUSIVE, ordered shallow -> deep; it is empty at depth 1.
 
-        - `chapter["summary"]` verbatim.
-        - A CONCRETE SLOT TARGET: the integer
-          `round(config["segment"]["target_slots"] / config["segment"]["chapters_per_segment"])`
-          rendered into the text (170/9 -> 19). Without a number the model
-          treats "a sequence of beats" as open-ended and stops wherever it
-          feels like, which is how a six-hour segment comes back with forty
-          slots.
-        - Every flag in `config["state"]["flags"]`, rendered verbatim, as the
-          legal `depends_on` keys. Validation rejects an invented key, but a
-          rejection costs a full retry — listing them up front is free.
-        - The cast: for each id in `pack.player_ids`, that id AND the member's
-          name from `pack.cast`.
-        - SPINE GROUND TRUTH: for each id in `arc_segment["spine_scenes"]`
-          that exists in `pack.scenes`, the scene's `enter_narration`
-          verbatim. The model bridges AROUND authored spine content and never
-          invents spine plot — it can only do that if it can see the real
-          narration.
-        - The literal phrase "for the ear" (any casing), as part of the
-          instruction that prompts are written to be SPOKEN. Prompts written
-          for the page produce takes that are unspeakable aloud; this matches
-          the pack format doc's existing ambient-authoring rule.
-        - The one-dependency budget rule, stated plainly.
-        - An instruction to reply with ONLY YAML under a `slots:` key.
-        - Each string in `problems`, when `problems` is truthy.
+      Must contain, in this order:
+        - the segment synopsis and both continuity ends from `arc_segment`;
+        - each ancestor's title and summary, IN DEPTH ORDER — the test asserts
+          the shallower title appears at a lower index in the string;
+        - this node's summary, continuity_in, continuity_out and its
+          `target_words` rendered as a number;
+        - an expected-children guideline:
+          `min(ceil(node["target_slots"] / max_leaf_slots), max_children)`,
+          rendered as a number;
+        - an explicit instruction to give each child a `weight` reflecting how
+          much happens in it;
+        - the required key list, and an instruction to reply with ONLY YAML
+          under a `children:` key;
+        - when `problems` is truthy, each problem string verbatim.
 
-      When `problems` is None or empty, no "previous attempt" phrasing.
+      When `problems` is None or empty the prompt must NOT contain the word
+      "previous" in any case — the test asserts on exactly that.
+
+      WHY THE EXPECTED-CHILDREN GUIDELINE. Without a number tied to the
+      airtime being divided, the model picks a count unrelated to it — usually
+      3 or 5 regardless of whether the node holds twenty slots or two hundred.
 
   ------------------------------------------------------------------
-  def merge_brief(arc_segment, chapters, slots_by_chapter, config) -> dict
+  def build_leaf_prompt(pack, arc_segment, ancestors, node, config, problems) -> str
+                                       (renamed from build_slot_prompt)
   ------------------------------------------------------------------
-      `slots_by_chapter` maps chapter_id -> list of slot dicts.
+      Same content as the current slot prompt, PLUS the ancestor chain, and
+      with the slot count taken from `node["target_slots"]` rather than
+      computed from a chapter count.
 
-      IMPLEMENT EXACTLY THIS:
+      Keep everything the current build_slot_prompt does: the legal state keys
+      rendered verbatim, the cast list, the spine ground truth, the
+      written-for-the-ear instruction, and the problems-on-retry behaviour.
 
-          out_slots = []
-          for ch in sorted(chapters, key=lambda c: c["order"]):
-              for slot in slots_by_chapter.get(ch["chapter_id"], []):
-                  slot = dict(slot)
-                  slot["chapter_id"] = ch["chapter_id"]
-                  out_slots.append(slot)
+      THE CAST MEMBER HAS ONLY THESE ATTRIBUTES: `id`, `name`, `role`,
+      `archetype`, `system_prompt`. Render the cast as the current version
+      does — `f"- {player_id}: {member.name}"` over `pack.player_ids`. There
+      is NO `description` attribute; reading one raises AttributeError against
+      every real pack and every test double.
 
-          return {
-              "segment_id": arc_segment["id"],
-              "order": arc_segment["order"],
-              "loop": arc_segment["loop"],
-              "hours": arc_segment["hours"],
-              "synopsis": arc_segment["synopsis"],
-              "continuity_in": arc_segment["continuity_in"],
-              "continuity_out": arc_segment["continuity_out"],
-              "carry_in": arc_segment.get("carry_in", {}),
-              "carry_out": arc_segment.get("carry_out", {}),
-              "chapters": sorted(chapters, key=lambda c: c["order"]),
-              "slots": out_slots,
-          }
+      SPINE GROUND TRUTH GOES TO EVERY LEAF regardless of depth — it is not
+      scoped to a branch. The current version already passes it to every
+      chapter; keep that.
 
-      Three things that block is careful about:
+  ------------------------------------------------------------------
+  def merge_brief(arc_segment, tree, config) -> dict
+  ------------------------------------------------------------------
+      `tree` is a dict of `node_id -> node record`, containing the root and
+      every descendant. Flatten it into the shape `worklist.py` already reads.
 
-        - Iteration is driven by CHAPTER ORDER, not by `slots_by_chapter`'s
-          key order. Chapters are 2b'd concurrently, so that dict arrives in
-          whatever order the pool finished. Airtime is sequential; a brief
-          ordered by completion time plays the segment's evening before its
-          morning.
-        - `.get(..., [])`, not `[...]`. merge_brief is called on partial state
-          during a resumed run and must not raise on chapters that have not
-          been 2b'd yet.
-        - `dict(slot)` copies before stamping `chapter_id`, so the caller's
-          slot dicts are not mutated underneath it.
+      THE ROOT'S node_id IS `arc_segment["id"]`. Note the arc segment record
+      spells it `id`, NOT `segment_id` — `segment_id` is the name that key
+      takes in the BRIEF this function returns. Reading `arc_segment["segment_id"]`
+      raises KeyError against every real arc plan. Alternatively find the root
+      as the node whose `parent_id` is None; either is acceptable, but do not
+      invent a key that does not exist on the input.
+
+      DFS from the root, visiting each node's children IN `order` — NOT in the
+      dict's insertion order, which is arbitrary after a concurrent run and is
+      what the test with reversed insertion checks. At each LEAF, append its
+      slots in their own order. Tag every emitted slot with
+      `slot["node_id"] = <the leaf's id>` (this REPLACES the old
+      `chapter_id` tag; no slot may carry a `chapter_id` key).
+
+      Return exactly these keys:
+        segment_id, order, loop, hours, synopsis, continuity_in,
+        continuity_out, carry_in, carry_out, slots, nodes
+
+      The first nine come from `arc_segment` exactly as the current version
+      builds them (`carry_in`/`carry_out` via `.get(..., {})`).
+
+      `nodes` is a flat summary list, one entry per node in the same DFS order,
+      each with: node_id, parent_id, depth, kind, forced, target_slots, and
+      `slots` = the ACTUAL number of slots that node emitted (0 for a branch).
+      This exists so a human reading brief.yaml by hand can see the tree shape
+      the run actually produced, and compare target against actual per node.
+      Note the key `slots` inside a `nodes` entry is an integer COUNT, while
+      the top-level `slots` is the list of slot records — that is intentional.
+
+      DRAINING IN ARC ORDER IS LOAD-BEARING. Stopping a run at any point must
+      leave a contiguous usable prefix of airtime rather than a scattered
+      fraction that cannot air.
 
 notes: |
   - Module-level `log = logging.getLogger(__name__)`.
   - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
-    decision points, ERROR inside error handlers.
-  - `vocab` is a `vocabulary.Vocabulary`. Use its public methods
-    (`validate_slot`, `unknown_lore`, `unknown_state_keys`) rather than
-    reaching into its frozensets.
-  - `pack` is an `app/campaign/pack.py` CampaignPack. Read only: `.title`,
-    `.genre`, `.scenes` (dict of id -> Scene with `.title`,
-    `.enter_narration`, `.ambient`, `.prompt`), `.lore`, `.cast` (dict of id
-    -> member with `.name`, `.role`), `.player_ids`, and `.gm_id`.
-  - Import yaml at module level.
-  - Do NOT modify anything under `app/` — it is shared with the live avatar
-    app.
+    every decision point, ERROR inside error handlers.
+  - Builtin generics only in annotations. Do NOT import from `typing`; the
+    current module imports List/Dict/Optional and this rewrite should not.
+  - `vocab` is a `vocabulary.Vocabulary`. Use its public methods, not its
+    frozensets.
+  - `pack` is an `app/campaign/pack.py` CampaignPack, read-only.
+  - Do NOT modify anything under `app/`.
   - No network calls and no file I/O anywhere in this module.
+  - Do NOT keep `parse_chapters`, `validate_chapters`, `build_chapter_prompt`,
+    `build_slot_prompt`, `SYSTEM_PROMPT_CHAPTERS` or `SYSTEM_PROMPT_SLOTS` as
+    aliases. They are gone; leaving shims would let a stale caller keep
+    working against the flat model.
+  - Do NOT read `config["segment"]["chapters_per_segment"]` anywhere. It has
+    been removed from generation.yaml and replaced by the `tree:` block.

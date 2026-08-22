@@ -102,3 +102,39 @@ CREATE TABLE IF NOT EXISTS container_logs (
 );
 CREATE INDEX IF NOT EXISTS idx_container_logs_name ON container_logs (container_name);
 CREATE INDEX IF NOT EXISTS idx_container_logs_timestamp ON container_logs (log_timestamp);
+
+-- Mirrors services/3layer-generator/generation_store.py CREATE_TABLE_SQL.
+-- One row per submitted generation run, and one JSONB document per generated
+-- artifact keyed on (pack, kind, segment_id). Every mutation in that module
+-- updates only its own columns, which is what keeps a progress write from
+-- clobbering a concurrent cancel.
+CREATE TABLE IF NOT EXISTS generation_jobs (
+    id               TEXT PRIMARY KEY,
+    pack             TEXT NOT NULL,
+    stage            TEXT NOT NULL,
+    profile          TEXT NOT NULL DEFAULT '',
+    status           TEXT NOT NULL,
+    params           JSONB NOT NULL DEFAULT '{}'::jsonb,
+    progress         JSONB,
+    result           JSONB,
+    error            TEXT,
+    cancel_requested BOOLEAN NOT NULL DEFAULT FALSE,
+    submitted_by     TEXT NOT NULL DEFAULT 'api',
+    created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    started_at       TIMESTAMPTZ,
+    finished_at      TIMESTAMPTZ,
+    heartbeat_at     TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
+    ON generation_jobs (status, created_at);
+
+CREATE TABLE IF NOT EXISTS generation_artifacts (
+    id          BIGSERIAL PRIMARY KEY,
+    pack        TEXT NOT NULL,
+    kind        TEXT NOT NULL,
+    segment_id  TEXT NOT NULL DEFAULT '',
+    content     JSONB NOT NULL,
+    job_id      TEXT,
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (pack, kind, segment_id)
+);

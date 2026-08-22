@@ -1,0 +1,292 @@
+task_id: 3layers_generation_store
+
+goal: |
+  Implement the Postgres store for the 3-layer generator's API service: the
+  job table, the artifact table, and the functions the service uses to drive
+  them. This module is ALL of the service's persistence. It contains no HTTP,
+  no threading, no LLM calls and no YAML — just SQL and the thin Python around
+  it.
+
+  WHY THIS MODULE IS THE ONE THAT MUST BE RIGHT. Generation runs for GPU-hours.
+  A job row is the only thing that tells the operator, and the management GUI,
+  what happened during those hours — whether a run finished, died, or was
+  cancelled, and how far it got. If a status is wrong, the GUI lies. If a
+  cancel flag is lost, an operator who cancelled a six-hour run watches it burn
+  the GPU anyway with no way to stop it.
+
+  THE CENTRAL DESIGN RULE: EVERY MUTATION UPDATES ONLY ITS OWN COLUMNS.
+  An earlier draft of this service kept job state in a JSON file and mutated it
+  by reading the whole record, changing a key, and writing the file back. That
+  is a read-modify-write race: the dispatcher thread writes `progress` several
+  times a minute while the API thread writes `cancel_requested` when the
+  operator clicks cancel. A progress write that read the record before the
+  cancel landed rewrites the file without the flag, the cancel silently
+  evaporates, and the job runs to completion.
+
+  Postgres removes the race for free, but ONLY IF YOU HONOUR IT. Never
+  implement an update as "SELECT the row, modify a dict, UPDATE every column".
+  `update_progress` touches `progress` and `heartbeat_at` and NOTHING ELSE.
+  `request_cancel` touches `cancel_requested` and NOTHING ELSE. Two such
+  statements against one row cannot destroy each other. One "UPDATE all the
+  columns from a dict I read a moment ago" statement reintroduces exactly the
+  bug this design exists to prevent.
+
+target_files:
+  - services/3layer-generator/generation_store.py
+
+test_files:
+  - services/3layer-generator/tests/test_generation_store.py
+
+context_files:
+  - app/episode_store.py
+
+interface: |
+  services/3layer-generator/generation_store.py must export exactly these
+  names. Follow `app/episode_store.py` (in your context) for module shape:
+  SQL as module-level string constants, then the functions.
+
+      CREATE_TABLE_SQL
+          A module-level string holding BOTH `CREATE TABLE IF NOT EXISTS`
+          statements and the index, exactly as written below. Copy it
+          verbatim — it is mirrored by hand into docs/sql/02_create_tables.sql
+          and the two must not drift.
+
+              CREATE TABLE IF NOT EXISTS generation_jobs (
+                  id               TEXT PRIMARY KEY,
+                  pack             TEXT NOT NULL,
+                  stage            TEXT NOT NULL,
+                  profile          TEXT NOT NULL DEFAULT '',
+                  status           TEXT NOT NULL,
+                  params           JSONB NOT NULL DEFAULT '{}'::jsonb,
+                  progress         JSONB,
+                  result           JSONB,
+                  error            TEXT,
+                  cancel_requested BOOLEAN NOT NULL DEFAULT FALSE,
+                  submitted_by     TEXT NOT NULL DEFAULT 'api',
+                  created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+                  started_at       TIMESTAMPTZ,
+                  finished_at      TIMESTAMPTZ,
+                  heartbeat_at     TIMESTAMPTZ
+              );
+              CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
+                  ON generation_jobs (status, created_at);
+
+              CREATE TABLE IF NOT EXISTS generation_artifacts (
+                  id          BIGSERIAL PRIMARY KEY,
+                  pack        TEXT NOT NULL,
+                  kind        TEXT NOT NULL,
+                  segment_id  TEXT NOT NULL DEFAULT '',
+                  content     JSONB NOT NULL,
+                  job_id      TEXT,
+                  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+                  UNIQUE (pack, kind, segment_id)
+              );
+
+      TERMINAL_STATUSES
+          A module-level frozenset: {"completed", "failed", "cancelled"}.
+
+      def available() -> bool
+          True when this process can reach the store: psycopg2 importable AND
+          POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD all present and
+          non-empty in os.environ. Same contract as
+          `episode_store.available()` — callers treat False as "no store
+          configured", never as an error. Import psycopg2 INSIDE the function
+          in a try/except ImportError, exactly as episode_store does, so this
+          module imports cleanly on a machine with no driver.
+
+      def _connect()
+          Copy `episode_store._connect()`: host from POSTGRES_HOST (default
+          "localhost"), port from POSTGRES_PORT (default "5432"), dbname/user/
+          password from the required env vars, `connect_timeout=5`, and
+          `conn.autocommit = True`. Every function below opens a connection,
+          does its work in a `try/finally`, and closes it in the `finally`.
+          There is no pool: this service runs one dispatcher thread and a
+          handful of API requests, and a connection costs a millisecond
+          against a LAN Postgres.
+
+      def ensure_schema() -> None
+          Execute CREATE_TABLE_SQL. Must be safe to call repeatedly — the
+          statements are all IF NOT EXISTS. Raises on DB failure; the caller
+          decides whether that is fatal.
+
+      def new_job_id() -> str
+          A unique, sortable, human-readable id:
+          `"job_" + utcnow().strftime("%Y%m%dT%H%M%S") + "_" + uuid4().hex[:6]`.
+          The random suffix is not decoration — two jobs submitted in the same
+          second would otherwise collide on the primary key, and a GUI that
+          submits a stage-per-segment batch does exactly that.
+
+      def submit(record) -> str
+          Insert one queued job. `record` is a dict; read `pack` and `stage`
+          (both required — raise KeyError naturally if absent), and OPTIONALLY
+          `profile` (default ""), `params` (default {}), `submitted_by`
+          (default "api"). Generate the id with `new_job_id()`, set
+          `status='queued'`, and let the database default `created_at`.
+          Return the new id.
+
+          Do NOT read any other key from `record`. The API hands this function
+          a request body; trusting it to name columns would let a caller set
+          `status` or `finished_at`.
+
+      def get(job_id) -> dict | None
+          The full row as a dict, or None when no such id. Use
+          `_row_to_dict` below so timestamps come back as strings.
+
+      def list_jobs(pack=None, stage=None, status=None) -> list
+          Rows matching every filter that is not None, `ORDER BY created_at
+          DESC` — newest first. All three None returns every job.
+
+          BUILD THE WHERE CLAUSE BY ACCUMULATING PARAMETERISED CONDITIONS:
+
+              clauses, params = [], []
+              if pack is not None:
+                  clauses.append("pack = %s"); params.append(pack)
+              ... same for stage and status ...
+              sql = "SELECT ... FROM generation_jobs"
+              if clauses:
+                  sql += " WHERE " + " AND ".join(clauses)
+              sql += " ORDER BY created_at DESC"
+
+          Never interpolate a filter value into the SQL string. These come
+          from HTTP query parameters.
+
+      def mark_running(job_id) -> bool
+          `UPDATE generation_jobs SET status='running', started_at=now()
+           WHERE id=%s AND status='queued'`.
+          Return True when exactly one row changed (`cur.rowcount == 1`),
+          False otherwise.
+
+          The `AND status='queued'` guard is what makes the claim atomic. It
+          is also why the return value matters: False means somebody else
+          already took this job, and the caller must not run it.
+
+      def update_progress(job_id, progress) -> None
+          `UPDATE generation_jobs SET progress=%s, heartbeat_at=now()
+           WHERE id=%s`, with `progress` wrapped in `psycopg2.extras.Json`.
+          TWO COLUMNS ONLY — see the central design rule in the goal.
+          An unknown id updates zero rows; that is a no-op, not an error.
+
+          `heartbeat_at` moves on every progress tick because the external
+          watchdog uses it to tell a slow job from a wedged one. A progress
+          update that did not touch it would make a healthy long-running node
+          look dead.
+
+      def finish(job_id, status, result=None, error=None) -> bool
+          Move a job to a terminal state.
+
+          Raise `ValueError` when `status` is not in TERMINAL_STATUSES —
+          `finish(id, "running")` is a caller bug and must not be written to
+          the database.
+
+          `UPDATE generation_jobs SET status=%s, result=%s, error=%s,
+           finished_at=now() WHERE id=%s AND status NOT IN
+           ('completed','failed','cancelled')`.
+          Return `cur.rowcount == 1`.
+
+          THE `status NOT IN (...)` GUARD IS LOAD-BEARING, NOT DEFENSIVE. When
+          a job is cancelled, the layer function returns a partial result and
+          the dispatcher marks it `cancelled` — and then the same dispatcher's
+          exception handler may also fire and try to mark it `failed`. Without
+          the guard the operator's deliberate cancel is relabelled a crash and
+          the partial result is overwritten. Returning False lets the second
+          caller know it lost and leave the row alone.
+
+          `result` is wrapped in `psycopg2.extras.Json` when not None, and
+          passed as None otherwise — do NOT wrap None in Json, which would
+          store a JSON `null` instead of a SQL NULL.
+
+      def request_cancel(job_id) -> bool
+          `UPDATE generation_jobs SET cancel_requested=TRUE
+           WHERE id=%s AND status IN ('queued','running')`.
+          Return `cur.rowcount == 1`. ONE COLUMN ONLY.
+          A terminal or unknown job returns False — the endpoint turns that
+          into its 404/409.
+
+      def is_cancelled(job_id) -> bool
+          `SELECT cancel_requested FROM generation_jobs WHERE id=%s`.
+          Return the boolean, or False when there is no such row.
+
+          This is polled in a hot loop between work units. Keep it to the one
+          column — do not call `get()` and read a key off the dict, which
+          would pull every JSONB document in the row across the wire on every
+          poll.
+
+      def reconcile_orphans() -> int
+          `UPDATE generation_jobs SET status='failed', finished_at=now(),
+           error='interrupted by service restart' WHERE status='running'`.
+          Return `cur.rowcount`.
+
+          Called once at service boot. A container that restarts mid-job
+          leaves its row `running` forever: the dispatcher only ever claims
+          `queued` rows, so nothing would clear it and the GUI would show a
+          job that no thread is working on, indefinitely.
+
+          It must NOT touch `queued` rows. Those are work the operator
+          submitted that simply has not started; failing them on every restart
+          would silently discard the queue.
+
+      def upsert_artifact(pack, kind, segment_id, content, job_id=None) -> None
+          `INSERT INTO generation_artifacts (pack, kind, segment_id, content,
+           job_id) VALUES (%s,%s,%s,%s,%s)
+           ON CONFLICT (pack, kind, segment_id) DO UPDATE
+             SET content = EXCLUDED.content,
+                 job_id  = EXCLUDED.job_id,
+                 updated_at = now()`.
+          `content` is wrapped in `psycopg2.extras.Json`.
+
+          Upsert, not insert: regenerating a segment must replace its
+          artifact, not accumulate a second copy that `load_artifact` would
+          then have to disambiguate.
+
+      def load_artifact(pack, kind, segment_id) -> dict | None
+          `SELECT content FROM generation_artifacts
+           WHERE pack=%s AND kind=%s AND segment_id=%s`.
+          Return the document, or None when absent. psycopg2 decodes JSONB to
+          a Python dict already — do not call `json.loads` on it.
+
+      def list_artifacts(pack) -> list
+          `SELECT id, pack, kind, segment_id, job_id, updated_at
+           FROM generation_artifacts WHERE pack=%s
+           ORDER BY kind, segment_id`.
+
+          METADATA ONLY — the `content` column MUST NOT be selected. The GUI's
+          artifact browser lists every artifact in a pack; a full segment tree
+          is tens of kilobytes and a pack has hundreds, so including the
+          bodies would turn a listing into a multi-megabyte response. Each
+          returned dict therefore has no "content" key at all.
+
+      def _row_to_dict(cursor, row) -> dict
+          Zip `[d[0] for d in cursor.description]` with `row`, then convert
+          every `datetime.datetime` value to a string with `.isoformat()`,
+          leaving None as None and every other type untouched.
+
+          THIS CONVERSION IS REQUIRED, NOT COSMETIC. These dicts are returned
+          straight out of FastAPI endpoints as JSON. A `datetime` is not
+          JSON-serialisable and would raise at response-encoding time — inside
+          the web layer, long after this module returned successfully, which
+          is a miserable place to debug it.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Follow the project logging conventions in CLAUDE.md: DEBUG on entry and at
+    decision points, INFO for job state transitions (submit, mark_running,
+    finish, reconcile_orphans), ERROR inside error handlers. Do not log the
+    `content` of an artifact or the full `params` — log ids, kinds and counts.
+  - `import psycopg2` and `from psycopg2.extras import Json` INSIDE the
+    functions that need them (or inside `_connect`), never at module top
+    level, so `available()` can be called on a machine with no driver.
+    episode_store.py shows the pattern.
+  - Builtin generics only in annotations (`list`, `dict`) — do NOT import
+    anything from `typing`.
+  - Every function that opens a connection must close it in a `finally`.
+  - Use `%s` placeholders and pass parameters as a tuple. Never build SQL with
+    f-strings or `.format()` — every value here arrives from an HTTP request.
+  - Do NOT write a `cancel()` function, a `delete_job()`, or any table-drop
+    helper. This service never deletes a job row and never drops a table.
+  - Do NOT catch `Exception` broadly. If a database call fails, let it
+    propagate — the dispatcher's own handler turns it into a failed job with a
+    readable error, and swallowing it here would report success for a write
+    that never landed. In particular never write
+    `except (psycopg2.Error, Exception)`: the second member makes the first
+    meaningless.
+  - No file I/O and no network calls other than the database connection.

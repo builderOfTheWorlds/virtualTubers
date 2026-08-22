@@ -1,0 +1,241 @@
+task_id: 3layers_service_api
+
+goal: |
+  Implement the HTTP surface of the 3-layer generator service — the interface
+  the management GUI drives. It does no generation itself: it validates a
+  request, writes a job row, and gets out of the way. `runner.py` does the
+  work; these endpoints only ever read and write job state.
+
+  VALIDATION IS THE WHOLE POINT OF THIS MODULE. A job that is going to fail
+  because the profile does not exist, or because `test_mode` arrived without a
+  segment, must be rejected at submit time with a 4xx the caller can act on.
+  Accepting it means the operator watches a queued row for forty minutes while
+  a dispatcher works through the jobs ahead of it, only to discover the same
+  thing this function could have said immediately. The cost of checking is one
+  dictionary lookup; the cost of not checking is a wasted afternoon.
+
+  THE ONE PLACE UNTRUSTED INPUT BECOMES A FILESYSTEM PATH is the `pack` field.
+  It is joined onto the read-only packs mount. A name containing a separator
+  or `..` must be rejected outright, not sanitised — there is no legitimate
+  request that needs one.
+
+target_files:
+  - services/3layer-generator/generator_api.py
+
+test_files:
+  - services/3layer-generator/tests/test_api.py
+
+context_files:
+  - services/3layer-generator/runner.py
+  - services/3layer-generator/generation_store.py
+  - utilities/3LayersWeeklyGeneration/src/config.py
+
+interface: |
+  services/3layer-generator/generator_api.py — NOT api.py. `services/message-api/api.py`
+  already claims the module name `api`, pytest puts both service directories on
+  sys.path, and whichever imports first wins; the collision makes this module's
+  tests bind to the wrong module entirely. Style follows `services/message-api/api.py`:
+  a module-level `app = FastAPI()`, plain `def` endpoints (NOT `async def` —
+  every call here is blocking I/O and FastAPI runs sync endpoints on a
+  threadpool, which is what we want).
+
+  ------------------------------------------------------------------
+  MODULE-LEVEL STATE — must be monkeypatchable
+  ------------------------------------------------------------------
+  The tests replace these by assigning to the module attribute, so every
+  endpoint must read them through the MODULE at call time, not capture them
+  into a default argument or a closure at import time:
+
+      store        = generation_store          (the module itself)
+      CONFIG       = None                      the loaded, overlaid config
+      PACK_ROOT    = Path(os.environ.get("PACK_ROOT", "/data/packs"))
+      OUTPUT_ROOT  = Path(os.environ.get("OUTPUT_DIR", "/data/output"))
+      DEFAULT_PACK = os.environ.get("DEFAULT_PACK", "ashiorid")
+      build_llm    = <callable>                so /preview can prove it never
+                                               calls a model
+
+  Inside an endpoint write `store.get(...)`, never `from generation_store
+  import get`. A name imported at module load cannot be monkeypatched.
+
+  ------------------------------------------------------------------
+  def overlay_output_dir(config, output_dir) -> dict
+  ------------------------------------------------------------------
+      Return the config with `config["output"]["dir"]` replaced by
+      `output_dir`. Mutating and returning the same dict is fine.
+
+      WHY THIS EXISTS AND IS TESTED SEPARATELY. `generation.yaml` ships
+      `output.dir` as a REPO-RELATIVE HOST PATH, and the config directory is
+      mounted read-only in the container, so it cannot be corrected in place.
+      Left alone, `config.output_root()` resolves it against the container's
+      working directory and every artifact lands inside the image layer
+      instead of on the bind mount — invisible until the container restarts
+      and a GPU-week is gone.
+
+  ------------------------------------------------------------------
+  def overlay_base_url(config, base_url) -> dict
+  ------------------------------------------------------------------
+      Return the config with `config["defaults"]["base_url"]` replaced by
+      `base_url`. When `base_url` is None or empty, return the config
+      UNCHANGED — a missing env var must not blank the configured default.
+
+      THE SAME TRAP AS overlay_output_dir, AND IT BITES HARDER. The shipped
+      `generation.yaml` carries `defaults.base_url: http://localhost:11434`,
+      which inside a container means the CONTAINER, not the host running
+      Ollama. Nothing else reads `OLLAMA_BASE_URL`, so without this overlay
+      that compose variable has no consumer whatsoever and every LLM call dies
+      with ECONNREFUSED — while the job still finishes `completed`, because
+      `plan_arc`'s contract is to log and skip a batch it cannot plan. The
+      operator gets a green job and an empty arc plan.
+
+      The lifespan must apply BOTH overlays:
+
+          loaded = config_module.load_config(config_path)
+          loaded = overlay_output_dir(loaded, os.environ.get("OUTPUT_DIR", "/data/output"))
+          loaded = overlay_base_url(loaded, os.environ.get("OLLAMA_BASE_URL"))
+          CONFIG = loaded
+
+  ------------------------------------------------------------------
+  def resolve_pack_path(pack) -> Path        (raises on a bad name)
+  ------------------------------------------------------------------
+      Reject and raise `HTTPException(400, ...)` when `pack`:
+        - contains "/" or "\\" or is absolute
+        - is "." or ".." or contains ".."
+        - does not exist as a directory under PACK_ROOT
+      Otherwise return `PACK_ROOT / pack`.
+
+  ------------------------------------------------------------------
+  ENDPOINTS
+  ------------------------------------------------------------------
+
+  GET /healthz
+      `{"status": "ok"}`. No database call — this is a liveness probe and it
+      must stay green while Postgres is down, or a DB blip restarts the
+      container mid-run.
+
+  POST /jobs
+      Body (all optional except `stage`):
+        pack, stage, profile, segments, dry_run, test_mode, rebrief, stingers
+
+      Read the body with a plain `dict` parameter or a Pydantic model — but
+      IGNORE every key outside that list. A caller must not be able to set
+      `status`, `result` or `finished_at` by naming them.
+
+      Validate, each failure a 400 whose body names the offending value:
+        1. `stage` in {"arc", "segment", "dialogue", "all"}.
+        2. `stingers` truthy -> 400 "stingers require events.yaml, not yet
+           built".
+        3. `pack` (default DEFAULT_PACK) resolves via resolve_pack_path.
+        4. `profile`, when given, must resolve for every stage in scope — call
+           `config.validate_profile_for_stages(CONFIG, profile, stages)` where
+           `stages` is ["arc","segment","dialogue"] for stage "all" and
+           [stage] otherwise. Turn its raised ConfigError into a 400 whose
+           message includes the offending profile name.
+        5. `test_mode` truthy -> `segments` must have EXACTLY one entry.
+
+      Then `store.submit({...})` with pack, stage, profile (default ""),
+      params={"segments": [...], "dry_run": ..., "test_mode": ...,
+      "rebrief": ...}, and return `{"id": job_id, "status": "queued"}`.
+
+  GET /jobs?pack=&stage=&status=
+      `store.list_jobs(pack=..., stage=..., status=...)` — pass through only
+      the parameters that were supplied. Returns the list directly.
+      Metadata only; never scan generated output.
+
+  GET /jobs/{job_id}
+      The full record, or 404 when `store.get` returns None.
+
+  POST /jobs/{job_id}/cancel
+      - `store.get` is None -> 404.
+      - status already terminal -> 409.
+      - Otherwise `store.request_cancel(job_id)`.
+      - When the job's stage is "arc", return HTTP **202** with
+        `{"status": "cancel_requested", "note": "arc stage is not
+        interruptible; cancellation will be honored before the next stage"}`.
+        `plan_arc` is a single LLM call with no hook, and a plain 200 would
+        imply the run stops now.
+
+        RETURNING A PLAIN DICT GIVES 200, ALWAYS. FastAPI takes the status
+        from the route decorator or from an explicit Response object, never
+        from the body. Since this one endpoint returns 202 on one path and 200
+        on another, the decorator cannot express it — return
+
+            from fastapi.responses import JSONResponse
+            return JSONResponse(status_code=202, content={...})
+
+        for the arc path, and a plain dict for the rest.
+      - Every other stage returns 200 with `{"status": "cancel_requested"}`.
+
+      Set the flag for the arc case too — it is honoured at the next stage
+      boundary of an "all" job, and it stops a queued arc job outright.
+
+  POST /preview
+      Body: `{pack?, stage: "segment", profile?, target_slots?}`.
+      NO job row, NO model call.
+
+        - Root `target_slots`: read `<OUTPUT_ROOT>/<pack>/arc_plan.yaml`. When
+          it is absent and `CONFIG["preview"]["require_arc_plan"]` is true
+          (DEFAULT TRUE when the key is missing), return **409** with a
+          message naming the arc stage. When the knob is false, take
+          `target_slots` from the body, and 400 when the body does not supply
+          it.
+          When the arc plan IS present, use
+          `CONFIG["segment"]["target_slots"]`.
+        - `expected_children = min(ceil(target_slots / max_leaf_slots),
+          max_children)`
+        - `expected_max_depth = max_depth`
+        - Also return a per-level word budget derived from
+          `CONFIG["segment"]["target_words"]`.
+
+      Return at least the keys `target_slots`, `expected_children`,
+      `expected_max_depth`.
+
+  GET /config?pack=
+      The loaded CONFIG, plus a `resolved_profile` key mapping each of the
+      three layers to `config.resolve_profile(CONFIG, layer)`. 400 on a pack
+      that fails resolve_pack_path. For GUI display only.
+
+  ------------------------------------------------------------------
+  LIFESPAN
+  ------------------------------------------------------------------
+      A FastAPI `lifespan` async context manager that on startup:
+        - loads generation.yaml from `os.environ["GENERATOR_CONFIG"]`, applies
+          `overlay_output_dir(..., os.environ["OUTPUT_DIR"])`, assigns CONFIG
+        - `store.ensure_schema()` — BEST EFFORT: wrap in try/except, log the
+          error and continue. A dead database must not stop the service from
+          booting, exactly as message-api treats episode_store.ensure_schema.
+        - `runner.boot(ctx)` then start `runner.run_forever(ctx, stop_event)`
+          on a daemon thread
+      and on shutdown sets the stop event and joins the thread with a timeout.
+
+      Guard the whole startup body in try/except so an import-time failure of
+      a not-yet-built layer module cannot prevent the app object existing —
+      the tests import the module with no environment set at all and must not
+      blow up.
+
+      DECLARE `CONFIG` IN THE `global` STATEMENT, alongside the runner handles.
+      Assigning `CONFIG = ...` inside the lifespan without naming it there
+      binds a FUNCTION-LOCAL and leaves the module attribute at None. This
+      failure is nasty precisely because it half-works: the dispatch loop is
+      handed the local and runs perfectly, while every endpoint reads the
+      module attribute and answers "CONFIG not loaded". Nothing in the logs
+      says anything is wrong. It survived a full unit suite because the tests
+      monkeypatch CONFIG and never execute the lifespan; it was only caught by
+      running the container.
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`.
+  - Endpoints are `def`, not `async def`.
+  - Raise `fastapi.HTTPException(status_code=..., detail=...)` for every 4xx.
+    The detail string must contain the offending value — the tests assert on
+    substrings like the profile name and "events.yaml".
+  - Builtin generics only in annotations. Do NOT import from `typing`.
+  - `encoding="utf-8"` on every file open.
+  - Import `runner` and `generation_store` at module level (both exist and are
+    dependency-light). Do NOT import the layer modules here at all — that is
+    runner.build_default_context's job.
+  - Do NOT put business logic in this module. No planning, no LLM calls, no
+    reading of generated slot content. If an endpoint needs to know something
+    about a tree, it asks the store or the config.
+  - Do NOT write `except (HTTPException, Exception)` — and be careful not to
+    catch HTTPException in a broad handler, which would turn every deliberate
+    400 into a 500.

@@ -35,6 +35,13 @@ from typing import List, Callable, Any, Optional
 
 log = logging.getLogger(__name__)
 
+# Poll interval for the cooperative cancellation check (v3, decision V11).
+# 2.0s is deliberate: `cancel_check` is a database round-trip and a run lasts
+# GPU-hours, so a sub-second interval would add thousands of pointless queries
+# to buy cancellation latency nobody can perceive. Read from the module at
+# call time — the test suite monkeypatches it.
+CANCEL_POLL_SECONDS = 2.0
+
 
 class PoolError(RuntimeError):
     """Raised for a nonsensical configuration (concurrency < 1, an invalid breaker window)."""
@@ -53,7 +60,7 @@ class CircuitBreaker:
     def __init__(self, window: int, failure_rate: float, min_samples: int):
         if window < 1:
             raise PoolError("window must be at least 1")
-        
+
         self.window = window
         self.failure_rate = failure_rate
         self.min_samples = min_samples
@@ -83,7 +90,7 @@ class CircuitBreaker:
         with self._lock:
             if len(self._outcomes) < self.min_samples:
                 return False
-            
+
             failures = sum(1 for outcome in self._outcomes if not outcome)
             rate = failures / len(self._outcomes)
             return rate >= self.failure_rate
@@ -97,7 +104,8 @@ class PoolStats:
 
 
 def run_pool(units, *, worker_factory, generate, writer,
-             concurrency=4, max_attempts=2, breaker=None) -> PoolStats:
+             concurrency=4, max_attempts=2, breaker=None,
+             cancel_check=None) -> PoolStats:
     """
     Run the worker pool that drains the worklist for the 3-layer offline content generator.
 
@@ -114,6 +122,16 @@ def run_pool(units, *, worker_factory, generate, writer,
                    Default 2 — a single transient timeout should not
                    cost a slot its take.
     `breaker`      a CircuitBreaker, or None to disable the check.
+    `cancel_check` a zero-argument callable returning bool, or None to
+                   disable. Polled on ONE dedicated thread — not per
+                   worker, because in production it is a database query and
+                   polling it from every worker at every unit boundary would
+                   multiply that by `concurrency` for no extra fidelity.
+                   When it returns True the pool sets `stop_event` and drains,
+                   reusing the breaker's existing stop path, and RETURNS
+                   partial stats. A cancel is a deliberate partial success:
+                   it must not raise, must not touch `stats.failed`, and must
+                   not trip the breaker.
 
     THE WORKER LOOP — implement exactly this. Each worker thread:
 
@@ -221,31 +239,31 @@ def run_pool(units, *, worker_factory, generate, writer,
     """
     if concurrency < 1:
         raise PoolError("concurrency must be at least 1")
-    
+
     log.info("starting pool with %d units, %d workers", len(units), concurrency)
-    
+
     # Setup queues and shared state
     work_queue = queue.Queue()
     results_queue = queue.Queue()
     stop_event = threading.Event()
     stats = PoolStats(planned=len(units), written=0, failed=0)
     stats_lock = threading.Lock()
-    
+
     # Fill the work queue in order
     for unit in units:
         work_queue.put(unit)
-    
+
     # Add sentinels for workers
     for _ in range(concurrency):
         work_queue.put(None)
-    
+
     # Start writer thread first
     def writer_thread():
         while True:
             item = results_queue.get()
             if item is None:
                 break
-            
+
             unit, beats = item
             try:
                 writer(unit, beats)
@@ -255,25 +273,25 @@ def run_pool(units, *, worker_factory, generate, writer,
                 log.error("failed to write unit %s: %s", unit.slot_id, exc)
                 with stats_lock:
                     stats.failed += 1
-    
+
     writer_thread_obj = threading.Thread(target=writer_thread)
     writer_thread_obj.start()
-    
+
     # Start worker threads
     def worker_thread():
         worker = worker_factory()
         while True:
             if stop_event.is_set():
                 break
-            
+
             try:
                 unit = work_queue.get(timeout=0.1)
             except queue.Empty:
                 continue
-                
+
             if unit is None:
                 break
-                
+
             if stop_event.is_set():
                 break
 
@@ -285,11 +303,11 @@ def run_pool(units, *, worker_factory, generate, writer,
                     log.error("unit %s attempt %d failed: %s",
                               unit.slot_id, attempt, exc)
                     continue
-                
+
                 if result:  # non-empty == success
                     beats = result
                     break
-                
+
                 log.debug("unit %s attempt %d produced no beats",
                           unit.slot_id, attempt)
 
@@ -307,21 +325,54 @@ def run_pool(units, *, worker_factory, generate, writer,
                 if breaker.tripped:
                     stop_event.set()
                     break  # do NOT raise in the thread
-    
+
     threads = []
     for _ in range(concurrency):
         thread = threading.Thread(target=worker_thread)
         thread.start()
         threads.append(thread)
-    
+
+    # Cooperative cancellation. Checks BEFORE its first wait: the flag can
+    # already be set when the pool starts, because the operator cancelled
+    # while the job was still queued, and sleeping first would burn a full
+    # interval of GPU on work that was already called off.
+    canceller = None
+    if cancel_check is not None:
+        poll_done = threading.Event()
+
+        def cancel_poller():
+            while True:
+                try:
+                    if cancel_check():
+                        log.info("cancellation requested; stopping pool")
+                        stop_event.set()
+                        return
+                except Exception as exc:
+                    # A transient DB blip must not abort six hours of work,
+                    # and must not kill this thread either — after which a
+                    # real cancel minutes later would never be seen.
+                    log.error("cancel_check raised, continuing: %s", exc)
+                if poll_done.wait(CANCEL_POLL_SECONDS):
+                    return
+
+        canceller = threading.Thread(target=cancel_poller, daemon=True)
+        canceller.start()
+
     # Wait for all workers to finish
     for thread in threads:
         thread.join()
-    
+
     # Close writer thread
     results_queue.put(None)
     writer_thread_obj.join()
-    
+
+    # Daemon, so a hung join can never wedge process exit — but still joined:
+    # a leaked poller keeps querying the database once per completed job for
+    # the life of the service.
+    if canceller is not None:
+        poll_done.set()
+        canceller.join(timeout=1.0)
+
     log.info("pool completed: %d written, %d failed",
              stats.written, stats.failed)
 

@@ -52,13 +52,31 @@ segment:
   active_model: heavy
   target_words: 53600                # segment_hours * budget.target_words_per_hour
   target_slots: 170                  # target_words / (words_per_take * takes_per_slot)
-  chapters_per_segment: 9            # ~40 min each; ~19 slots per 2b call
+  # Recursive segmentation (PLAN_v3 Part A) — replaces the flat
+  # `chapters_per_segment: 9`. A uniform-weight run reproduces that old shape
+  # almost exactly (root splits into ~9 leaves of ~19 slots), so the default
+  # behaviour does not regress; the new behaviour appears only when the model
+  # returns lopsided weights.
+  tree:
+    max_leaf_slots: 19    # node this size or smaller is planned directly into slots
+    max_children: 12      # fan-out cap per expand call
+    max_depth: 4          # cap below the segment root; hit + still oversized -> forced leaf
+    min_node_words: 2000  # anti-fragmentation floor, enforced by the validator
+    leaf_density_floor: 0.80   # a leaf returning fewer than this * target_slots fails
   concurrency: 4                     # must be <= OLLAMA_NUM_PARALLEL
   max_attempts: 2
   sensitivity_budget: 0.40           # max fraction of slots that may be `flags`-sensitive
   density_floor: 0.80                # segment slots must sum to >= this * target_words
 
 dialogue:
+  # Circuit breaker for the Layer 3 pool (PLAN_v2 Part C). A multi-day
+  # unattended run is exactly where this matters: a dead Ollama produces empty
+  # takes forever without raising, and the breaker is the difference between
+  # losing ten minutes and losing two days.
+  breaker:
+    window: 50           # rolling sample size
+    failure_rate: 0.5    # trip above this fraction failing
+    min_samples: 20      # never trip before this many samples
   models:
     light:
       model: "llama3.1:8b"

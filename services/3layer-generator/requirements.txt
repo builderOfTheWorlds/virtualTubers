@@ -1,0 +1,19 @@
+# Pinned exact, matching services/message-api/requirements.txt: an unpinned
+# fastapi>=0.110 drifted onto 0.141.1 once already and changed body handling
+# under the project's feet. A bump here should be a deliberate choice.
+fastapi==0.141.1
+starlette==1.6.0
+uvicorn>=0.29
+# generation_store.py — job rows and artifact documents (PLAN_v3 V2/V9).
+psycopg2-binary>=2.9
+# The layer modules read generation.yaml and write brief/tree YAML.
+pyyaml>=6.0
+# concurrent_llm.PooledOllamaClient imports httpx at module scope. Leaving it
+# out still lets the service boot and answer /healthz — the dispatcher just
+# never starts, which is the worst kind of failure. Caught only by actually
+# running the container.
+httpx>=0.27
+# app/llm_client.py imports anthropic at module scope, and concurrent_llm
+# subclasses its OllamaClient — so it is pulled in even though this service
+# only ever talks to Ollama. Matches the root requirements.txt pin.
+anthropic>=0.68

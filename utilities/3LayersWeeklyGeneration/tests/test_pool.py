@@ -19,6 +19,7 @@ Three separate hazards meet in this module, and each has a test section below.
 """
 import pathlib
 import threading
+import time
 
 import pytest
 
@@ -483,3 +484,141 @@ def test_a_concurrency_below_one_is_rejected():
     with pytest.raises(pool.PoolError):
         pool.run_pool(units(2), worker_factory=object, generate=always_ok,
                       writer=Recorder(), concurrency=0)
+
+
+# ---------------------------------------------------------------------------
+# 4. COOPERATIVE CANCELLATION (v3 / decision V11)
+#
+# A generation run is GPU-hours long. Without a way in, an operator who
+# cancels a six-hour job watches it burn the GPU to completion anyway. The
+# breaker already owns the "stop early and drain" machinery; cancellation
+# reuses it rather than inventing a second stop path.
+#
+# `cancel_check` is polled on ONE dedicated thread, not per worker: in
+# production it is a database query, and polling it from every worker at every
+# unit boundary would multiply that by `concurrency` for no extra fidelity.
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def fast_poll(monkeypatch):
+    """Production polls every 2 s — one cheap DB query against a run measured
+    in GPU-hours. Tests cannot wait that long, so shrink the interval and give
+    `generate` a small cost so units do not all drain before the first tick.
+    A pool whose units are free is not a pool this feature is for."""
+    monkeypatch.setattr(pool, "CANCEL_POLL_SECONDS", 0.02)
+
+
+def slow_generate(_worker, _unit):
+    time.sleep(0.01)
+    return BEATS
+
+
+def test_cancel_check_defaults_to_none_and_changes_nothing():
+    recorder = Recorder()
+    stats = pool.run_pool(units(8), worker_factory=lambda: object(),
+                          generate=lambda w, u: BEATS, writer=recorder,
+                          concurrency=2)
+    assert stats.written == 8
+    assert stats.failed == 0
+
+
+def test_cancel_check_stops_the_run_early(fast_poll):
+    recorder = Recorder()
+    stats = pool.run_pool(units(200), worker_factory=lambda: object(),
+                          generate=slow_generate, writer=recorder,
+                          concurrency=2, cancel_check=lambda: True)
+
+    # planned still reports the whole batch — the operator needs to know how
+    # much of the week was NOT produced, not just what was.
+    assert stats.planned == 200
+    assert stats.written < 200
+
+
+def test_cancel_returns_partial_stats_and_does_not_raise(fast_poll):
+    """A cancel is a deliberate partial success, not a failure. Raising here
+    would make the dispatcher record `status=failed` for something the
+    operator asked for on purpose."""
+    recorder = Recorder()
+    stats = pool.run_pool(units(200), worker_factory=lambda: object(),
+                          generate=slow_generate, writer=recorder,
+                          concurrency=2, cancel_check=lambda: True)
+    assert isinstance(stats, pool.PoolStats)
+    assert stats.written == len(recorder.writes)
+
+
+def test_an_already_cancelled_job_stops_before_doing_real_work():
+    """The flag can already be set when the pool starts — the operator
+    cancelled while the job sat queued. The first poll must happen BEFORE the
+    first wait, or the pool burns a full interval of GPU on work that was
+    already called off."""
+    recorder = Recorder()
+    stats = pool.run_pool(units(200), worker_factory=lambda: object(),
+                          generate=slow_generate, writer=recorder,
+                          concurrency=2, cancel_check=lambda: True)
+    assert stats.written < 200
+
+
+def test_cancel_check_returning_false_never_stops_the_run(fast_poll):
+    recorder = Recorder()
+    stats = pool.run_pool(units(12), worker_factory=lambda: object(),
+                          generate=lambda w, u: BEATS, writer=recorder,
+                          concurrency=3, cancel_check=lambda: False)
+    assert stats.written == 12
+    assert stats.failed == 0
+
+
+def test_cancel_check_is_actually_polled():
+    calls = []
+
+    def check():
+        calls.append(1)
+        return False
+
+    pool.run_pool(units(6), worker_factory=lambda: object(),
+                  generate=lambda w, u: BEATS, writer=Recorder(),
+                  concurrency=2, cancel_check=check)
+    assert calls, "cancel_check was never called"
+
+
+def test_a_raising_cancel_check_does_not_cancel_or_kill_the_run(fast_poll):
+    """A transient DB blip must not abort six hours of work, and must not
+    take the poller thread down either — after which a real cancel would
+    never be seen."""
+    recorder = Recorder()
+    stats = pool.run_pool(units(12), worker_factory=lambda: object(),
+                          generate=slow_generate, writer=recorder,
+                          concurrency=2,
+                          cancel_check=lambda: (_ for _ in ()).throw(
+                              RuntimeError("postgres went away")))
+    assert stats.written == 12
+    assert stats.failed == 0
+
+
+def test_poller_thread_exits_when_the_pool_finishes(fast_poll):
+    """A leaked daemon poller would keep querying the database forever, once
+    per completed job, for the life of the service."""
+    calls = []
+
+    def check():
+        calls.append(1)
+        return False
+
+    pool.run_pool(units(4), worker_factory=lambda: object(),
+                  generate=lambda w, u: BEATS, writer=Recorder(),
+                  concurrency=2, cancel_check=check)
+
+    settled = len(calls)
+    time.sleep(0.3)          # many poll intervals
+    assert len(calls) == settled, "poller kept running after run_pool returned"
+
+
+def test_cancel_does_not_trip_the_breaker_or_raise_it(fast_poll):
+    """Cancelling is not a failure signal — a cancelled run must not be
+    reported as a tripped circuit breaker."""
+    breaker = pool.CircuitBreaker(window=20, failure_rate=0.5, min_samples=2)
+    stats = pool.run_pool(units(200), worker_factory=lambda: object(),
+                          generate=slow_generate, writer=Recorder(),
+                          concurrency=2, breaker=breaker,
+                          cancel_check=lambda: True)
+    assert isinstance(stats, pool.PoolStats)
+    assert not breaker.tripped

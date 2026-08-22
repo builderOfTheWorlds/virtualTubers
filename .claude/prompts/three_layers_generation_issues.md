@@ -472,3 +472,154 @@ lives.
 
 **Done when:** the scheduler's selector resolves a fork from a `carry`-only
 condition, covered by a test.
+
+---
+
+## 18. [blocking-CI] `app/campaign/ambient.py` was never committed — the suite is red at HEAD
+
+**Severity:** blocking for any "full regression green" gate; harmless at runtime
+until the ambient scheduler is actually wired in.
+
+**Found:** 2026-08-21, while establishing the verification baseline for the
+PLAN_v3 build.
+
+**Symptom:** `pytest` at repo root aborts during collection:
+
+```
+ERROR tests/test_campaign_ambient.py
+E   ModuleNotFoundError: No module named 'campaign.ambient'
+```
+
+`tests/test_campaign_ambient.py` is tracked in git. `app/campaign/ambient.py`
+is not, has never appeared in any commit (`git log --all -- app/campaign/ambient.py`
+is empty), and has no staged copy under `.qwen_staging/`. A further **13
+failures** in `tests/test_campaign_validator.py` come from the same gap — the
+validator's ambient-related checks. Both were proven pre-existing by stashing
+all PLAN_v3 changes and re-running.
+
+This is the uncommitted Wave 4 that `PROJECT_CLAUDE.md` warns about
+("Nothing in that module is committed yet").
+
+**Why it matters:** every plan in this project uses "full suite green" as its
+release gate. While this is broken that gate cannot be met, so a real
+regression introduced later would be indistinguishable from the existing noise.
+
+**Fix:** regenerate through the existing harness — the spec is already written:
+
+```bash
+.venv/bin/python tools/qwen_worker/runner.py --model qwen3.8:27b \
+    run tools/qwen_worker/specs/campaign_ambient.yaml --attempts 3
+# review .qwen_staging/campaign_ambient/, then:
+.venv/bin/python tools/qwen_worker/runner.py --model qwen3.8:27b \
+    promote tools/qwen_worker/specs/campaign_ambient.yaml
+```
+
+Then confirm the 13 `test_campaign_validator.py` failures clear with it.
+Note `tools/qwen_worker/ollama_client.py` now sends `think: false`; that fix
+postdates the original campaign-module build and makes this dispatch viable on
+a qwen3-family model.
+
+**Scoped out of the PLAN_v3 build** deliberately — it predates that work and
+is unrelated to it.
+
+---
+
+## 19. [blocking-runtime] Ollama is bound to loopback, so the container cannot reach it
+
+**Severity:** blocking for any real generation run through the service. The
+unit suites and the API surface are unaffected.
+
+**Found:** 2026-08-22, running the first real arc job through
+`3layer-generator`.
+
+**Symptom:** every LLM call from the container fails, and — because
+`plan_arc`'s contract is to log and skip a batch it cannot plan — the job
+still finishes `completed` with an empty `arc_plan.yaml`:
+
+```
+LLM call failed (attempt 2/2): Ollama request to
+http://host.docker.internal:11434 failed: [Errno 111] Connection refused
+Skipping batch for orders [24, 25, 26, 27] after 2 attempts
+```
+
+**Cause:** the host's systemd unit pins
+
+```
+OLLAMA_HOST=127.0.0.1:11434
+```
+
+so Ollama listens on loopback only. `extra_hosts: host.docker.internal:host-gateway`
+(now in the compose entry) makes the NAME resolve, but nothing is listening on
+that interface.
+
+**Fix — operator decision, deliberately not made automatically.** Rebinding
+Ollama exposes an unauthenticated GPU inference endpoint beyond loopback, so it
+should be a conscious choice:
+
+```bash
+sudo systemctl edit ollama
+# [Service]
+# Environment="OLLAMA_HOST=0.0.0.0:11434"
+sudo systemctl restart ollama
+```
+
+If the machine is not on a trusted network, prefer binding to the docker bridge
+address only (`OLLAMA_HOST=172.17.0.1:11434`) rather than `0.0.0.0`.
+
+Verify with:
+
+```bash
+docker compose exec 3layer-generator python -c \
+  "import httpx; print(httpx.get('http://host.docker.internal:11434/api/tags').status_code)"
+```
+
+Related: issue #20 — this failure mode should not report `completed`.
+
+---
+
+## 20. [design] A run that plans nothing still reports `completed`
+
+**Severity:** design gap, not a crash. It is what made issue #19 hard to see.
+
+**Found:** 2026-08-22, same run.
+
+**Symptom:** with Ollama unreachable, every batch was skipped, `arc_plan.yaml`
+was written as `segments: []`, and the job row read
+`status: completed, error: null`. The operator's dashboard shows a green run
+that produced nothing.
+
+**Why it happens, and why it is not simply a bug:** `plan_arc` is deliberately
+tolerant — a single bad batch is logged and skipped so one stubborn batch
+cannot cost the whole arc (the same "degrade, don't drop" principle as Layer
+2's forced leaves). The runner faithfully reports that the layer function
+returned without raising. Each piece is behaving as specified; the emergent
+result is wrong.
+
+**Suggested fix:** the runner should treat an empty or near-empty result as a
+failure, not a success. Concretely, in `_run_arc`, when the mirrored arc plan
+has zero segments, `finish(..., "failed", error="arc plan produced no
+segments; check Ollama reachability")`. The same argument applies to a segment
+job that plans zero slots and a dialogue job that writes zero takes — a job
+whose whole output is empty is a failed job.
+
+Worth a config knob (`min_result_fraction`) rather than a hard zero-check, so a
+partially-successful run can still be flagged rather than silently accepted.
+
+---
+
+## 21. [hygiene] Generated artifacts on the bind mount are root-owned
+
+**Severity:** minor, but it makes the operator's own files awkward to manage.
+
+**Found:** 2026-08-22.
+
+**Symptom:** the container runs as root by default, so everything it writes to
+`./utilities/3LayersWeeklyGeneration/output/` is owned by `root:root` on the
+host. Removing or editing a generated plan needs `sudo`, and a stale file
+cannot be cleared by the user who owns the checkout.
+
+**Fix:** add `user: "1000:1000"` to the `3layer-generator` compose entry (the
+`secus` uid/gid on argyre), and make sure the output directory is writable by
+that uid. Check whether anything in the image needs root first — nothing
+obvious does; the service only reads its two ro mounts and writes the output
+mount.

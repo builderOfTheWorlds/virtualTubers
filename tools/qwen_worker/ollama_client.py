@@ -22,8 +22,8 @@ DEFAULT_MODEL = "qwen3-coder:30b"
 # A 30B model writing a whole module needs room; qwen3-coder:30b advertises a
 # 262144-token context. num_ctx is what actually gets allocated per request, so
 # it is set explicitly rather than left to Ollama's (much smaller) default.
-DEFAULT_NUM_CTX = 32768
-DEFAULT_NUM_PREDICT = 8192
+DEFAULT_NUM_CTX = 40960
+DEFAULT_NUM_PREDICT = 12288
 
 # Local generation of a full module is slow — minutes, not seconds.
 DEFAULT_TIMEOUT_S = 1800
@@ -36,12 +36,21 @@ class OllamaError(RuntimeError):
 def chat(system_prompt, user_prompt, model=DEFAULT_MODEL,
          base_url=DEFAULT_BASE_URL, temperature=0.1,
          num_ctx=DEFAULT_NUM_CTX, num_predict=DEFAULT_NUM_PREDICT,
-         timeout=DEFAULT_TIMEOUT_S):
+         timeout=DEFAULT_TIMEOUT_S, think=False):
     """Send one non-streaming chat completion and return the reply text.
 
     temperature defaults low (0.1): this is code generation against an
     executable spec, not creative writing — determinism is worth more than
     variety, and it materially cuts the retry rate on a local model.
+
+    think defaults to False. Reasoning models (qwen3.8:27b and the rest of the
+    qwen3 family) return their chain of thought in a separate `thinking` field
+    that does NOT count as output here, but DOES consume num_predict. On a long
+    spec the model spends the entire budget reasoning and returns an empty
+    `content`: three consecutive 400-second attempts on the 3layers_pool task
+    produced nothing at all that way. The spec IS the reasoning for this
+    harness — it states the design decisions and their rationale explicitly —
+    so thinking buys little and costs the whole completion.
 
     Raises OllamaError on transport failure, a non-200, malformed JSON, or an
     empty completion, so the caller's retry loop sees one exception type.
@@ -52,6 +61,8 @@ def chat(system_prompt, user_prompt, model=DEFAULT_MODEL,
     payload = {
         "model": model,
         "stream": False,
+        # Top-level, not inside options — Ollama reads it there.
+        "think": think,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
@@ -63,17 +74,31 @@ def chat(system_prompt, user_prompt, model=DEFAULT_MODEL,
         },
     }
 
-    request = urllib.request.Request(
-        f"{base_url.rstrip('/')}/api/chat",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
+    def _post(body_payload):
+        request = urllib.request.Request(
+            f"{base_url.rstrip('/')}/api/chat",
+            data=json.dumps(body_payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return response.read().decode("utf-8")
 
     started = time.monotonic()
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            body = response.read().decode("utf-8")
+        try:
+            body = _post(payload)
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:500]
+            # Non-reasoning models (qwen3-coder:30b and the campaign specs'
+            # other targets) reject the `think` key outright. Drop it and retry
+            # once rather than making this client model-specific.
+            if "think" in detail.lower():
+                log.debug("model %s rejects the think key; retrying without it", model)
+                payload.pop("think", None)
+                body = _post(payload)
+            else:
+                raise
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:500]
         log.error("ollama HTTP %s: %s", exc.code, detail)
