@@ -497,6 +497,7 @@ services:
   3layer-generator:
     image: virtualtubers-3layer-generator:latest
     pull_policy: never
+    network_mode: "host"
     build:
       context: .
       dockerfile: services/3layer-generator/Dockerfile
@@ -505,28 +506,22 @@ services:
       PACK_ROOT: /data/packs
       DEFAULT_PACK: ${GENERATOR_PACK:-ashiorid}
       # Consumed by generator_api.overlay_output_dir: generation.yaml ships a
-      # repo-relative host path and its mount is read-only, so the value is
+      # repo-relative host path and is mounted as ro, so the value is
       # replaced in memory at startup. Without this the container writes into
       # its own image layer.
       OUTPUT_DIR: /data/output
-      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
-      POSTGRES_HOST: generator-postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}
-      POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}
-      POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:?GENERATOR_POSTGRES_PASSWORD must be set in .env}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://127.0.0.1:11434}
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: 5455
+      POSTGRES_DB: generation
+      POSTGRES_USER: generation
+      POSTGRES_PASSWORD: u9RiAZBBKVVlmKsS5eKfPxVh
     depends_on:
       - generator-postgres
-    # host.docker.internal is a Docker Desktop nicety; on Linux it must be
-    # mapped explicitly or Ollama on the host is simply unreachable.
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
-      - ./campaigns:/data/packs:ro
-      - ./utilities/3LayersWeeklyGeneration/config:/data/config:ro
-      - ./utilities/3LayersWeeklyGeneration/output:/data/output
-    ports:
-      - "8092:8000"
+      - /home/secus/codeProjects/virtualTubers/campaigns:/data/packs:ro
+      - /home/secus/codeProjects/virtualTubers/utilities/3LayersWeeklyGeneration/config:/data/config:ro
+      - /home/secus/codeProjects/virtualTubers/utilities/3LayersWeeklyGeneration/output:/data/output
     restart: unless-stopped
 
   # Local Postgres owning ONLY the 3-layer generator's data (PLAN_v3 V15).

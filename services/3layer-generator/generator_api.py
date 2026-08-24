@@ -247,6 +247,8 @@ def submit_job(body: dict):
     `finished_at` by naming them.
     """
     stage = body.get("stage")
+    if stage == "all":
+        stage = "arc"  # For the runner, 'all' means starting the pipeline at the top
     if stage not in VALID_STAGES:
         raise HTTPException(
             status_code=400,

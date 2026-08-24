@@ -1100,7 +1100,7 @@ def main():
     bus_config = config.get("message_bus", {})
 
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
-    bootstrap_servers = resolve("KAFKA_BOOTSTRAP_SERVERS", bus_config.get("bootstrap_servers"))
+    bootstrap_servers = resolve("KAFKA_BOOTSTRAP_SERVERS", bus_config.get("bootstrap_servers"), "localhost:9092")
     topic = resolve("KAFKA_TOPIC", bus_config.get("topic"))
     tick_rate_s = agent_config.get("tick_rate_ms", 5000) / 1000
 
