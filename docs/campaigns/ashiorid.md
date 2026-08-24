@@ -20,7 +20,7 @@ Pack lives at [campaigns/ashiorid/](../../campaigns/ashiorid/).
 | `gm` | **Ashiorid**, the narrator | `narrator` | — |
 | `buffalo` | Half-orc paladin, Oath of Vengeance | `gruff` | That the people irritating him are his siblings |
 | `Alcinoe` | Human sorcerer, born **Alcinoe** | `bright` | That her village, her family and her name are all fabricated |
-| `carl` | Human ranger, 32 | `dry` | That the wood elves who saved him were sent |
+| `Vance` | Human ranger, 32 | `dry` | That the wood elves who saved him were sent |
 | `drokki` | Dwarf runeseeker of Vabokedos | `deep` | That his apprenticeship was the only placement that looked ordinary on purpose |
 
 Enabled primitives: `roll_check`, `cast_spell`, `attack`, `move_to`, `search`,
@@ -84,12 +84,12 @@ Weights (`3`/`2` on `party-attack`, `1`/`1` on `the-age-of-war`) only apply unde
 | `invitation` | Cold open. The card, the impossible delivery, four strangers reacting in character. Ends by handing off to the flashback. |
 | `the-age-of-war` | The Event, told straight. Alcinoe's arcana check is the hinge. |
 | `magic-retained` / `magic-lost` | Three-to-four beats each. Establish the premise, let Alcinoe react to what she now is. |
-| `letos-manor` | The ball. Drokki reads the joinery, Carl counts the exits, Buffalo says the quiet part. Grovley appears. |
+| `letos-manor` | The ball. Drokki reads the joinery, Vance counts the exits, Buffalo says the quiet part. Grovley appears. |
 | `party-attack` | Holding spell over three hundred people, Leto killed standing up, *"Burn it down, we will search through the ashes."* Doors already barred from outside. |
 | `burn-it-down` | The cost of the failed fork. Drokki reads the building's bones; they go down, not out. |
-| `grovley-revelation` | The Begene Sisters' program. Carl's memory of four cribs. *"Leto was father to all of them. To all of you."* |
+| `grovley-revelation` | The Begene Sisters' program. Vance's memory of four cribs. *"Leto was father to all of them. To all of you."* |
 | `the-vault` | The magic word, the thing holding back the 86th dimension, and the signet ring cut in half. |
-| `portal-encounter` | The dying wizard lands his last syllable as Carl's arrow lands. The tear opens; fingers widen it from inside. |
+| `portal-encounter` | The dying wizard lands his last syllable as Vance's arrow lands. The tear opens; fingers widen it from inside. |
 
 ## Lore
 

@@ -2954,10 +2954,10 @@ campaigns/ashiorid/generated/road-talk/001.yaml:8:  text: The sun beats down on 
 campaigns/ashiorid/generated/drokki-on-craft/002.yaml:5:beats:
 campaigns/ashiorid/generated/road-talk/002.yaml:5:beats:
 campaigns/ashiorid/generated/road-talk/002.yaml:8:  text: The sun beats down on the empty road stretching to the horizon. The party
-campaigns/ashiorid/generated/carl-counts/003.yaml:5:beats:
-campaigns/ashiorid/generated/carl-counts/001.yaml:5:beats:
+campaigns/ashiorid/generated/Vance-counts/003.yaml:5:beats:
+campaigns/ashiorid/generated/Vance-counts/001.yaml:5:beats:
 campaigns/ashiorid/scenes/a03-night-watch.yaml:5:lore: [moonwells]
-campaigns/ashiorid/generated/carl-counts/002.yaml:5:beats:
+campaigns/ashiorid/generated/Vance-counts/002.yaml:5:beats:
 campaigns/ashiorid/generated/buffalo-lost/003.yaml:5:beats:
 campaigns/ashiorid/scenes/08-grovley-revelation.yaml:3:enter_narration: >-
 campaigns/ashiorid/scenes/08-grovley-revelation.yaml:6:lore: [the-begene-program]

@@ -38,7 +38,7 @@ beats:
         he is finished, and he is still working through whatever he is saying.
 
   - type: action
-    speaker: carl
+    speaker: Vance
     primitive: attack
     params:
       target: the dying wizard
@@ -49,15 +49,15 @@ beats:
     improv: true
     text:
       - >-
-        Carl's arrow finds him. It is not fast enough. The last syllable leaves
+        Vance's arrow finds him. It is not fast enough. The last syllable leaves
         the wizard's mouth at the same moment the arrow arrives, and both of them
         land.
       - >-
-        The shot is good. The shot is also late. His final syllable and Carl's
+        The shot is good. The shot is also late. His final syllable and Vance's
         arrow reach their destinations in the same instant, and neither of them
         misses.
       - >-
-        Carl does not miss. Carl is simply not quicker than a word. The arrow and
+        Vance does not miss. Vance is simply not quicker than a word. The arrow and
         the last sound of the spell arrive together, and both of them work.
 
   - type: narration

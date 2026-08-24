@@ -27,7 +27,7 @@ beats:
         seem at all surprised that it is the four of you standing there.
 
   - type: dialogue
-    speaker: carl
+    speaker: Vance
     improv: true
     text:
       - >-
@@ -70,7 +70,7 @@ beats:
         down in advance of you existing.
 
   - type: action
-    speaker: carl
+    speaker: Vance
     primitive: reveal_memory
     params:
       subject: the night the wood elves came

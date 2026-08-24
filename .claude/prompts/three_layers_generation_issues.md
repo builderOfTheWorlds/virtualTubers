@@ -122,7 +122,7 @@ covers it.
 `generate_scene` builds its cast roster by iterating **the entire pack cast**
 (app/campaign/improviser.py, ~L181-186) and never reads a participants list.
 
-So a Layer 2 slot scoped to "Drokki and Carl alone" will still be generated with
+So a Layer 2 slot scoped to "Drokki and Vance alone" will still be generated with
 all five cast members offered to the model. The `participants` field in the brief
 creates a false sense of control.
 

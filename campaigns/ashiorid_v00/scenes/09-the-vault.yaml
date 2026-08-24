@@ -117,7 +117,7 @@ beats:
         back the way you came — there's nothing up there now."
 
   - type: action
-    speaker: carl
+    speaker: Vance
     primitive: move_to
     params:
       destination: the escape tunnel

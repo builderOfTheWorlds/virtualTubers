@@ -206,14 +206,14 @@ def test_render_accepts_no_params_when_none_are_required():
     primitive = Primitive(name="wait", genre="fantasy", summary="",
                           params=(), template="{actor} waits")
 
-    assert primitive.render("Carl", {}) == "Carl waits."
+    assert primitive.render("Vance", {}) == "Vance waits."
 
 
 def test_render_defaults_params_to_empty():
     primitive = Primitive(name="wait", genre="fantasy", summary="",
                           params=(), template="{actor} waits")
 
-    assert primitive.render("Carl") == "Carl waits."
+    assert primitive.render("Vance") == "Vance waits."
 
 
 # ── module-level convenience API ─────────────────────────────────────────────
