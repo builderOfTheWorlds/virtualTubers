@@ -85,7 +85,7 @@ lore: [the-event, moonwells]   # which lore notes enter model context here
 
 ```yaml
 - type: dialogue
-  speaker: helen
+  speaker: Alcinoe
   improv: true
   text:
     - "We should run."

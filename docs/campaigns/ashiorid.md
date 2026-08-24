@@ -19,7 +19,7 @@ Pack lives at [campaigns/ashiorid/](../../campaigns/ashiorid/).
 |---|---|---|---|
 | `gm` | **Ashiorid**, the narrator | `narrator` | — |
 | `buffalo` | Half-orc paladin, Oath of Vengeance | `gruff` | That the people irritating him are his siblings |
-| `helen` | Human sorcerer, born **Alcinoe** | `bright` | That her village, her family and her name are all fabricated |
+| `Alcinoe` | Human sorcerer, born **Alcinoe** | `bright` | That her village, her family and her name are all fabricated |
 | `carl` | Human ranger, 32 | `dry` | That the wood elves who saved him were sent |
 | `drokki` | Dwarf runeseeker of Vabokedos | `deep` | That his apprenticeship was the only placement that looked ordinary on purpose |
 
@@ -59,9 +59,9 @@ not off a scene edge.
 before the rest of the arc and decides what kind of world the show is set in:
 
 - `success` → **`magic-retained`**: the seal holds, magic survives thin and
-  rationed. Helen is *rare*.
+  rationed. Alcinoe is *rare*.
 - `failure` → **`magic-lost`**: the well empties, magic dies out of the age.
-  Helen is *impossible*, which is a much better question.
+  Alcinoe is *impossible*, which is a much better question.
 
 Both reconverge on `letos-manor`, so the fork changes the world's premise and
 every later scene's subtext without duplicating a single downstream scene. The
@@ -82,8 +82,8 @@ Weights (`3`/`2` on `party-attack`, `1`/`1` on `the-age-of-war`) only apply unde
 | Scene | Does |
 |---|---|
 | `invitation` | Cold open. The card, the impossible delivery, four strangers reacting in character. Ends by handing off to the flashback. |
-| `the-age-of-war` | The Event, told straight. Helen's arcana check is the hinge. |
-| `magic-retained` / `magic-lost` | Three-to-four beats each. Establish the premise, let Helen react to what she now is. |
+| `the-age-of-war` | The Event, told straight. Alcinoe's arcana check is the hinge. |
+| `magic-retained` / `magic-lost` | Three-to-four beats each. Establish the premise, let Alcinoe react to what she now is. |
 | `letos-manor` | The ball. Drokki reads the joinery, Carl counts the exits, Buffalo says the quiet part. Grovley appears. |
 | `party-attack` | Holding spell over three hundred people, Leto killed standing up, *"Burn it down, we will search through the ashes."* Doors already barred from outside. |
 | `burn-it-down` | The cost of the failed fork. Drokki reads the building's bones; they go down, not out. |
@@ -120,7 +120,7 @@ every scene has beats, every cast member speaks.
 ## Open threads (deliberately unresolved)
 
 - Who ordered the manor burned, and who holds the other half of the ring.
-- What the shape in the vault actually is, and why Helen has dreamed it.
+- What the shape in the vault actually is, and why Alcinoe has dreamed it.
 - Whether Grovley knew the attack was coming.
 - Whether the party were assembled *for* the vault, or *by* whoever wants it open.
 

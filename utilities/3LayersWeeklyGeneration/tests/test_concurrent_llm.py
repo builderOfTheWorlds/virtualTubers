@@ -29,7 +29,7 @@ from llm_client import LLMError, OllamaClient
 class FakeResponse:
     def __init__(self, payload=None, status_code=200, text=""):
         self._payload = payload if payload is not None else {
-            "message": {"content": "helen: The fire is low."}}
+            "message": {"content": "Alcinoe: The fire is low."}}
         self.status_code = status_code
         self.text = text
 
@@ -102,7 +102,7 @@ def test_trailing_slash_on_base_url_is_stripped_like_the_parent(http):
 def test_complete_posts_the_chat_payload_and_returns_the_content(client, http):
     reply = client.complete("You generate ambient scenes.",
                             [{"role": "user", "content": "A quiet moment."}])
-    assert reply == "helen: The fire is low."
+    assert reply == "Alcinoe: The fire is low."
 
     call = http.calls[0]
     assert call["url"] == "http://localhost:11434/api/chat"

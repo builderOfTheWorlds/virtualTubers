@@ -99,6 +99,6 @@ dialogue:
 # The closed state vocabulary. Every slot `depends_on` key may name ONLY these.
 # Anything else fails validation rather than silently evaporating.
 state:
-  flags:      [helen-wounded, moonwell-tainted, buffalo-lost-axe]
+  flags:      [Alcinoe-wounded, moonwell-tainted, buffalo-lost-axe]
   moods:      [tense, weary, hopeful, giddy]
-  carry_keys: [helen-wounded, moonwell-tainted]
+  carry_keys: [Alcinoe-wounded, moonwell-tainted]

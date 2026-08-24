@@ -1,13 +1,13 @@
 # The Begene Sisters' Program
 
 A hundred-year breeding program run across four bloodlines by the Begene
-Sisters, funded and directed by the house of Leto. Buffalo, Helen, Carl and
+Sisters, funded and directed by the house of Leto. Buffalo, Alcinoe, Carl and
 Drokki are its product. Duke Sorensen Leto III was father to all four.
 
 Each of them was placed with a family that had reason not to ask questions:
 
 - **Buffalo** — raised to an oath, and the oath is real even if the placement was not.
-- **Helen** — born Alcinoe, taken at birth and raised in a pocket-universe
+- **Alcinoe** — born Alcinoe, taken at birth and raised in a pocket-universe
   village she believes is centuries old.
 - **Carl** — taken from elf-slavers by the wood elves of Nafsari, which the
   players will assume was chance.

@@ -79,14 +79,14 @@ def test_later_batches_carry_the_previous_continuity_out(tmp_path, pack, config,
     """This is the only thread stitching batch N to batch N+1. Without it the
     arc reads as five unrelated novellas."""
     llm = FakeLLM([
-        reply_for(list(range(0, 6)), continuity_out="Helen collapses at the ford."),
+        reply_for(list(range(0, 6)), continuity_out="Alcinoe collapses at the ford."),
         reply_for(list(range(6, 12))),
         reply_for(list(range(12, 18))),
         reply_for(list(range(18, 24))),
         reply_for(list(range(24, 28))),
     ])
     plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
-    assert "Helen collapses at the ford." in llm.prompts[1]
+    assert "Alcinoe collapses at the ford." in llm.prompts[1]
 
 
 def test_the_prompt_states_the_closed_carry_vocabulary(tmp_path, pack, config, vocab):
@@ -125,7 +125,7 @@ def test_the_retry_prompt_says_what_was_wrong(tmp_path, pack, config, vocab):
     """A bare re-ask gets the same answer back at the same temperature. Naming
     the offending key is what changes the second attempt."""
     llm = FakeLLM([
-        reply_for(list(range(0, 6)), carry_out={"helen-cursed": True}),
+        reply_for(list(range(0, 6)), carry_out={"Alcinoe-cursed": True}),
         reply_for(list(range(0, 6))),
         reply_for(list(range(6, 12))),
         reply_for(list(range(12, 18))),
@@ -133,7 +133,7 @@ def test_the_retry_prompt_says_what_was_wrong(tmp_path, pack, config, vocab):
         reply_for(list(range(24, 28))),
     ])
     plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
-    assert "helen-cursed" in llm.prompts[1]
+    assert "Alcinoe-cursed" in llm.prompts[1]
 
 
 def test_a_batch_that_never_validates_is_skipped_not_raised(tmp_path, pack, config, vocab):
@@ -326,7 +326,7 @@ def test_the_written_plan_stays_human_readable(tmp_path, pack, config, vocab):
     """
     out = tmp_path / "arc_plan.yaml"
     llm = FakeLLM([reply_for(list(range(0, 6)),
-                             synopsis="Helen — bleeding — reaches the moonwell.")])
+                             synopsis="Alcinoe — bleeding — reaches the moonwell.")])
     config["arc"]["hours_total"] = 36
     plan_arc.plan_arc(pack, config, llm, vocab, out)
     written = out.read_text(encoding="utf-8")

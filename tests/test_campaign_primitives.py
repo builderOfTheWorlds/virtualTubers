@@ -98,14 +98,14 @@ def test_unknown_param_names_the_param():
     primitive = simple_primitive()
 
     with pytest.raises(PrimitiveError, match="colour"):
-        primitive.validate({"target": "Helen", "colour": "green"})
+        primitive.validate({"target": "Alcinoe", "colour": "green"})
 
 
 def test_every_unknown_param_is_reported_in_a_stable_order():
     primitive = simple_primitive()
 
     with pytest.raises(PrimitiveError) as excinfo:
-        primitive.validate({"target": "Helen", "colour": "green", "altitude": 3})
+        primitive.validate({"target": "Alcinoe", "colour": "green", "altitude": 3})
 
     message = str(excinfo.value)
     assert "colour" in message and "altitude" in message
@@ -119,7 +119,7 @@ def test_validate_returns_resolved_params_with_defaults_filled():
         template="{actor} waves at {target}",
     )
 
-    assert primitive.validate({"target": "Helen"}) == {"target": "Helen", "mood": "calm"}
+    assert primitive.validate({"target": "Alcinoe"}) == {"target": "Alcinoe", "mood": "calm"}
 
 
 def test_validate_does_not_mutate_the_caller_dict():
@@ -128,10 +128,10 @@ def test_validate_does_not_mutate_the_caller_dict():
         params=(ParamSpec("target"), ParamSpec("mood", required=False, default="calm")),
         template="{actor} waves at {target}",
     )
-    supplied = {"target": "Helen"}
+    supplied = {"target": "Alcinoe"}
     primitive.validate(supplied)
 
-    assert supplied == {"target": "Helen"}
+    assert supplied == {"target": "Alcinoe"}
 
 
 def test_value_outside_choices_names_the_value():
@@ -167,23 +167,23 @@ def test_absent_optional_param_with_choices_is_not_checked():
 
 # ── rendering ────────────────────────────────────────────────────────────────
 def test_render_fills_actor_and_params():
-    result = simple_primitive().render("Buffalo", {"target": "Helen"})
+    result = simple_primitive().render("Buffalo", {"target": "Alcinoe"})
 
-    assert "Buffalo" in result and "Helen" in result
+    assert "Buffalo" in result and "Alcinoe" in result
 
 
 def test_render_ends_in_a_sentence():
-    assert simple_primitive().render("Buffalo", {"target": "Helen"}).endswith(".")
+    assert simple_primitive().render("Buffalo", {"target": "Alcinoe"}).endswith(".")
 
 
 def test_render_appends_a_suffix_when_its_param_is_supplied():
-    result = simple_primitive().render("Buffalo", {"target": "Helen", "mood": "smug"})
+    result = simple_primitive().render("Buffalo", {"target": "Alcinoe", "mood": "smug"})
 
     assert "smug" in result
 
 
 def test_render_omits_a_suffix_when_its_param_is_absent():
-    result = simple_primitive().render("Buffalo", {"target": "Helen"})
+    result = simple_primitive().render("Buffalo", {"target": "Alcinoe"})
 
     assert "looking" not in result
 
@@ -196,9 +196,9 @@ def test_render_validates_its_params():
 def test_render_is_deterministic():
     """No dice, no RNG — a pack replays word for word."""
     primitive = simple_primitive()
-    first = primitive.render("Buffalo", {"target": "Helen", "mood": "smug"})
+    first = primitive.render("Buffalo", {"target": "Alcinoe", "mood": "smug"})
 
-    assert all(primitive.render("Buffalo", {"target": "Helen", "mood": "smug"}) == first
+    assert all(primitive.render("Buffalo", {"target": "Alcinoe", "mood": "smug"}) == first
                for _ in range(5))
 
 
@@ -276,7 +276,7 @@ def test_roll_check_rejects_an_unscripted_outcome():
 
 
 def test_cast_spell_names_the_spell_and_target():
-    result = render("cast_spell", "Helen", {"spell": "Moonbeam", "target": "the wraith"})
+    result = render("cast_spell", "Alcinoe", {"spell": "Moonbeam", "target": "the wraith"})
 
     assert "Moonbeam" in result and "the wraith" in result
 

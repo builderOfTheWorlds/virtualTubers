@@ -232,20 +232,20 @@ def test_a_short_batch_is_rejected(vocab, config):
 
 def test_a_carry_out_key_outside_the_vocabulary_is_rejected(vocab, config):
     """This is the failure the closed vocabulary exists to catch, and it is
-    invisible at runtime: nothing ever sets `helen-cursed`, so every slot that
+    invisible at runtime: nothing ever sets `Alcinoe-cursed`, so every slot that
     reads it takes the else-branch forever and the arc quietly loses a thread.
     A hard failure here costs one retry."""
-    problems = arc_schema.validate_batch([segment(0, carry_out={"helen-cursed": True})],
+    problems = arc_schema.validate_batch([segment(0, carry_out={"Alcinoe-cursed": True})],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
-    assert any("helen-cursed" in p for p in problems)
+    assert any("Alcinoe-cursed" in p for p in problems)
 
 
 def test_a_carry_in_key_outside_the_vocabulary_is_rejected(vocab, config):
-    problems = arc_schema.validate_batch([segment(0, carry_in={"helen-cursed": False})],
+    problems = arc_schema.validate_batch([segment(0, carry_in={"Alcinoe-cursed": False})],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
-    assert any("helen-cursed" in p for p in problems)
+    assert any("Alcinoe-cursed" in p for p in problems)
 
 
 def test_a_flag_that_is_not_a_carry_key_is_still_rejected_in_carry_out(vocab, config):
@@ -299,10 +299,10 @@ def test_a_nonsensical_loop_number_is_rejected(vocab, config, bad_loop):
 
 
 def test_carry_maps_must_be_mappings_not_lists(vocab, config):
-    """`carry_out: [helen-wounded]` is the shape a model reaches for when it
+    """`carry_out: [Alcinoe-wounded]` is the shape a model reaches for when it
     is thinking of a set. It has no values, so nothing downstream can read
     it, and a key-membership check that iterates a list still passes."""
-    problems = arc_schema.validate_batch([segment(0, carry_out=["helen-wounded"])],
+    problems = arc_schema.validate_batch([segment(0, carry_out=["Alcinoe-wounded"])],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
     assert problems
@@ -344,8 +344,8 @@ def test_the_prompt_lists_every_legal_carry_key(config):
 
 def test_problems_appear_in_the_prompt_when_supplied(config):
     prompt = arc_schema.build_prompt("CONTEXT", [0], "", config,
-                                   ["segment 'seg-001' carry_out has unknown key 'helen-cursed'"])
-    assert "helen-cursed" in prompt
+                                   ["segment 'seg-001' carry_out has unknown key 'Alcinoe-cursed'"])
+    assert "Alcinoe-cursed" in prompt
 
 
 def test_no_problem_text_leaks_into_a_first_attempt(config):

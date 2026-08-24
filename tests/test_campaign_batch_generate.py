@@ -28,7 +28,7 @@ class FakeLLM:
     """Records every call and returns canned replies in order."""
 
     def __init__(self, *replies):
-        self.replies = list(replies) or ["helen: A fresh line."]
+        self.replies = list(replies) or ["Alcinoe: A fresh line."]
         self.calls = []
 
     def complete(self, system_prompt, messages):
@@ -51,11 +51,11 @@ class ExplodingLLM:
 def make_pack(scenes=()):
     cast = {
         "gm": CastMember(id="gm", name="The Chronicler", role="gm", archetype="narrator"),
-        "helen": CastMember(id="helen", name="Helen", role="player", archetype="wizard"),
+        "Alcinoe": CastMember(id="Alcinoe", name="Alcinoe", role="player", archetype="wizard"),
     }
     return CampaignPack(
         name="testpack", title="Test", genre="fantasy", start_scene="opening",
-        gm_id="gm", player_ids=["helen"], primitives=[],
+        gm_id="gm", player_ids=["Alcinoe"], primitives=[],
         theme={}, cast=cast, scenes={s.id: s for s in scenes},
         root=Path("/nonexistent"), lore_dir=None, lore={},
     )
@@ -88,14 +88,14 @@ def test_next_take_number_ignores_non_numeric_files(tmp_path):
 def test_generate_take_returns_beats_as_dicts():
     scene = ambient_scene()
     pack = make_pack([scene])
-    llm = FakeLLM("helen: We should run.\ngm: The fire crackles.")
+    llm = FakeLLM("Alcinoe: We should run.\ngm: The fire crackles.")
     improviser = LLMImproviser(pack, llm=llm)
 
     beats = _generate_take(improviser, scene, take=1, max_attempts=2)
 
     assert len(beats) == 2
     assert all(set(b) == {"kind", "speaker", "text"} for b in beats)
-    assert beats[0]["speaker"] == "helen"
+    assert beats[0]["speaker"] == "Alcinoe"
     assert beats[0]["text"] == "We should run."
 
 
@@ -115,7 +115,7 @@ def test_generate_take_succeeds_on_second_attempt():
     scene = ambient_scene()
     pack = make_pack([scene])
     # First reply is blank -> generate_scene returns [] -> retry. Second succeeds.
-    llm = FakeLLM("   ", "helen: Good line.")
+    llm = FakeLLM("   ", "Alcinoe: Good line.")
     improviser = LLMImproviser(pack, llm=llm)
 
     beats = _generate_take(improviser, scene, take=1, max_attempts=2)
@@ -128,9 +128,9 @@ def test_generate_take_resets_transcript_between_attempts():
     """Each take is a standalone airing — no leakage from a prior observe() call."""
     scene = ambient_scene()
     pack = make_pack([scene])
-    llm = FakeLLM("helen: Fresh every time.")
+    llm = FakeLLM("Alcinoe: Fresh every time.")
     improviser = LLMImproviser(pack, llm=llm)
-    improviser.observe("helen", "leftover line from a previous take")
+    improviser.observe("Alcinoe", "leftover line from a previous take")
 
     _generate_take(improviser, scene, take=1, max_attempts=1)
 
@@ -139,7 +139,7 @@ def test_generate_take_resets_transcript_between_attempts():
 
 # ── disk writes ──────────────────────────────────────────────────────────────
 def test_write_take_round_trips_through_yaml(tmp_path):
-    beats = [{"kind": "dialogue", "speaker": "helen", "text": "We should run."}]
+    beats = [{"kind": "dialogue", "speaker": "Alcinoe", "text": "We should run."}]
     path = tmp_path / "001.yaml"
 
     _write_take(path, "camp-fire", 1, "hermes3:70b", "2026-08-17T00:00:00+00:00", beats)

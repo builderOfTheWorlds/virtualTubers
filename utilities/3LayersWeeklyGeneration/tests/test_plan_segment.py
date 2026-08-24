@@ -481,7 +481,7 @@ def test_the_sensitivity_budget_is_checked_on_the_whole_segment(pack, arc_segmen
     budget was written about the segment."""
     flagged = yaml.safe_dump(
         {"slots": [ambient_slot(i, sensitivity="flags",
-                                depends_on=["helen-wounded"])
+                                depends_on=["Alcinoe-wounded"])
                    for i in range(1, 20)]}, sort_keys=False)
     llm = FakeSegmentLLM(children=9, slots=19, slot_replies=[flagged] * 9)
 

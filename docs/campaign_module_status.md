@@ -129,7 +129,7 @@ dev-session shows.
 and cannot express dialogue, dice, or branches. Campaign beats are
 `narration` / `dialogue` / `action` / `pane`.
 
-**Primitives are purely cosmetic.** `roll_check` renders "Helen rolls arcana
+**Primitives are purely cosmetic.** `roll_check` renders "Alcinoe rolls arcana
 against DC 18" — it does not roll anything. Real mechanics, if ever wanted, go
 behind the registry, not inside it.
 

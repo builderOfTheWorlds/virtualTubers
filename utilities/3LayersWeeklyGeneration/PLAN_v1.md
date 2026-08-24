@@ -210,9 +210,9 @@ dialogue:
 # fails validation rather than silently evaporating — the same failure mode
 # issue #3 documents for unknown lore stems, handled by the same validator.
 state:
-  flags:      [helen-wounded, moonwell-tainted, buffalo-lost-axe]   # booleans
+  flags:      [Alcinoe-wounded, moonwell-tainted, buffalo-lost-axe]   # booleans
   moods:      [tense, weary, hopeful, giddy]                        # coarse tone dial
-  carry_keys: [helen-wounded, moonwell-tainted]  # subset of flags; survives a loop reset
+  carry_keys: [Alcinoe-wounded, moonwell-tainted]  # subset of flags; survives a loop reset
 
 events:
   table: config/events.yaml

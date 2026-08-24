@@ -26,9 +26,9 @@ import worklist
 CONFIG = {
     "dialogue": {"takes_per_slot": 3, "neutral_takes": 1},
     "state": {
-        "flags": ["helen-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+        "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
         "moods": ["tense", "weary", "hopeful", "giddy"],
-        "carry_keys": ["helen-wounded", "moonwell-tainted"],
+        "carry_keys": ["Alcinoe-wounded", "moonwell-tainted"],
     },
 }
 
@@ -69,7 +69,7 @@ def test_take_one_is_always_neutral_regardless_of_sensitivity():
     the live state has nothing to play, and the stream dead-airs."""
     for slot in (ambient("s", "none"),
                  ambient("s", "tone"),
-                 ambient("s", "flags", ["helen-wounded"])):
+                 ambient("s", "flags", ["Alcinoe-wounded"])):
         assert worklist.conditions_for(slot, 1, CONFIG) == {}
 
 
@@ -89,15 +89,15 @@ def test_a_tone_sensitive_slot_walks_the_declared_moods_in_order():
 def test_a_flag_sensitive_slot_covers_both_polarities_of_its_first_flag():
     """Two conditioned takes and one flag: the useful split is true/false, not
     two takes under the same condition."""
-    slot = ambient("s", "flags", ["helen-wounded"])
-    assert worklist.conditions_for(slot, 2, CONFIG) == {"helen-wounded": True}
-    assert worklist.conditions_for(slot, 3, CONFIG) == {"helen-wounded": False}
+    slot = ambient("s", "flags", ["Alcinoe-wounded"])
+    assert worklist.conditions_for(slot, 2, CONFIG) == {"Alcinoe-wounded": True}
+    assert worklist.conditions_for(slot, 3, CONFIG) == {"Alcinoe-wounded": False}
 
 
 def test_a_multi_flag_slot_exhausts_one_flag_before_starting_the_next():
-    slot = ambient("s", "flags", ["helen-wounded", "moonwell-tainted"])
+    slot = ambient("s", "flags", ["Alcinoe-wounded", "moonwell-tainted"])
     got = [worklist.conditions_for(slot, n, CONFIG) for n in (2, 3, 4, 5)]
-    assert got == [{"helen-wounded": True}, {"helen-wounded": False},
+    assert got == [{"Alcinoe-wounded": True}, {"Alcinoe-wounded": False},
                    {"moonwell-tainted": True}, {"moonwell-tainted": False}]
 
 
@@ -125,7 +125,7 @@ def test_every_conditioned_take_validates_against_the_state_vocabulary():
         scenes = {}
 
     vocab = vocabulary.Vocabulary.from_config_and_pack(CONFIG, FakePack())
-    slot = ambient("s", "flags", ["helen-wounded"])
+    slot = ambient("s", "flags", ["Alcinoe-wounded"])
     for take in (1, 2, 3):
         assert vocab.validate_condition(worklist.conditions_for(slot, take, CONFIG)) == []
     tone_slot = ambient("s", "tone")
@@ -231,13 +231,13 @@ def test_a_fully_generated_slot_yields_nothing(tmp_path):
 def test_a_replanned_take_keeps_the_condition_it_would_have_had(tmp_path):
     """Take 2 is the true-polarity take whether or not take 1 exists yet.
     Conditions must key off the take number, not off position in the worklist."""
-    brief = {"slots": [ambient("s-001", "flags", ["helen-wounded"])]}
+    brief = {"slots": [ambient("s-001", "flags", ["Alcinoe-wounded"])]}
     done = worklist.take_path(tmp_path, "s-001", 1)
     done.parent.mkdir(parents=True)
     done.write_text("beats: []\n")
 
     units = worklist.units_for_segment("seg-001", brief, tmp_path, CONFIG)
-    assert units[0].conditions == {"helen-wounded": True}
+    assert units[0].conditions == {"Alcinoe-wounded": True}
 
 
 def test_scanning_twice_gives_the_same_answer(tmp_path):

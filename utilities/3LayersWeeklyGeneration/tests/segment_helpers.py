@@ -36,9 +36,9 @@ def segment_config():
                                          "beats_per_take": 7.7,
                                          "generation_words_per_min": 95.4}},
         "state": {
-            "flags": ["helen-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+            "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
             "moods": ["tense", "weary", "hopeful", "giddy"],
-            "carry_keys": ["helen-wounded", "moonwell-tainted"],
+            "carry_keys": ["Alcinoe-wounded", "moonwell-tainted"],
         },
     }
 
@@ -55,9 +55,9 @@ def arc_segment():
         "ambient_focus": ["camp-chatter", "road-song"],
         "synopsis": "The company reaches the moonwell and finds it fouled.",
         "continuity_in": "They are two days out from the ridge.",
-        "continuity_out": "Helen is wounded and the well is tainted.",
+        "continuity_out": "Alcinoe is wounded and the well is tainted.",
         "carry_in": {},
-        "carry_out": {"helen-wounded": True, "moonwell-tainted": True},
+        "carry_out": {"Alcinoe-wounded": True, "moonwell-tainted": True},
         "event_windows": [],
         "fork": None,
     }
@@ -114,9 +114,9 @@ def ambient_slot(index, **overrides):
         "slot_id": f"s-{index:03d}",
         "kind": "ambient",
         "prompt": ("Around ninety seconds, written for the ear: Buffalo needles "
-                   "Helen about the map while the fire pops."),
+                   "Alcinoe about the map while the fire pops."),
         "lore": ["the-loop"],
-        "participants": ["helen", "buffalo"],
+        "participants": ["Alcinoe", "buffalo"],
         "sensitivity": "none",
         "depends_on": [],
     }
@@ -130,7 +130,7 @@ def spine_slot(index, **overrides):
         "slot_id": f"s-{index:03d}",
         "kind": "spine",
         "scene_ref": "moonwell",
-        "participants": ["helen", "buffalo"],
+        "participants": ["Alcinoe", "buffalo"],
         "summary": "They reach the moonwell.",
     }
     slot.update(overrides)

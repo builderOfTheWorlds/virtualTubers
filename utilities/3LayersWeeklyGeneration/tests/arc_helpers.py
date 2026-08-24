@@ -15,7 +15,7 @@ import yaml
 # Fixtures — a small pack and config, and an LLM that never touches a network.
 # --------------------------------------------------------------------------
 
-CARRY_KEYS = ["helen-wounded", "moonwell-tainted"]
+CARRY_KEYS = ["Alcinoe-wounded", "moonwell-tainted"]
 
 
 class FakeScene:
@@ -63,17 +63,17 @@ class FakePack:
         }
         self.lore = {
             "the-loop": "Time in Ashiorid folds back on itself every seventh day.",
-            "helen": "Helen carries a wound that never quite closes.",
+            "Alcinoe": "Alcinoe carries a wound that never quite closes.",
         }
         self.ambient_pool = ["camp-chatter", "road-song"]
 
         self.cast = {
             "gm": FakeCastMember("gm", "The Narrator", "gm"),
-            "helen": FakeCastMember("helen", "Helen Ward", "player"),
+            "Alcinoe": FakeCastMember("Alcinoe", "Alcinoe Ward", "player"),
             "buffalo": FakeCastMember("buffalo", "Buffalo Pike", "player"),
         }
         self.gm_id = "gm"
-        self.player_ids = ["helen", "buffalo"]
+        self.player_ids = ["Alcinoe", "buffalo"]
 
     def ambient_scene_ids(self):
         return list(self.ambient_pool)
@@ -100,7 +100,7 @@ def config():
             "max_attempts": 2,
         },
         "state": {
-            "flags": ["helen-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+            "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
             "moods": ["tense", "weary", "hopeful", "giddy"],
             "carry_keys": list(CARRY_KEYS),
         },
@@ -126,7 +126,7 @@ def segment(order, **overrides):
         "continuity_in": "They are on the road.",
         "continuity_out": "They make camp by the creek.",
         "carry_in": {},
-        "carry_out": {"helen-wounded": True},
+        "carry_out": {"Alcinoe-wounded": True},
         "event_windows": [],
         "fork": None,
     }

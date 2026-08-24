@@ -72,7 +72,7 @@ beats:
   - {type: pane,      show: combat}
   - {type: narration, speaker: gm,      text: "..."}
   - {type: dialogue,  speaker: buffalo, text: "...", improv: true}
-  - {type: action,    speaker: helen,   primitive: cast_spell,
+  - {type: action,    speaker: Alcinoe,   primitive: cast_spell,
      params: {spell: shatter, target: the barred doors, level: 3}}
 
 branches:

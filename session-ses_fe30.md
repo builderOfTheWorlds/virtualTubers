@@ -576,7 +576,7 @@ I'm starting by reviewing the plan file and getting oriented with how the projec
 532:   `update_context(scene, carry, loop)` (`improviser.py:29`) is the *only*
 533:   context channel, and `generate_scene` renders `Loop N` plus each carry
 534:   key/value into the user prompt (`improviser.py:210-213`). So
-535:   `{"helen-wounded": True}` and `{"mood": "tense"}` both ride the carry
+535:   `{"Alcinoe-wounded": True}` and `{"mood": "tense"}` both ride the carry
 536:   channel and render as key/value lines. Nothing in PLAN.md said how a
 537:   computed condition became prompt text; this is the answer, and it is worth
 538:   a test — `conditions_for` producing a mood dict that never reaches the
@@ -1266,9 +1266,9 @@ Let me look at the current implementation state and supporting docs.
 81: # The closed state vocabulary. Every slot `depends_on` key may name ONLY these.
 82: # Anything else fails validation rather than silently evaporating.
 83: state:
-84:   flags:      [helen-wounded, moonwell-tainted, buffalo-lost-axe]
+84:   flags:      [Alcinoe-wounded, moonwell-tainted, buffalo-lost-axe]
 85:   moods:      [tense, weary, hopeful, giddy]
-86:   carry_keys: [helen-wounded, moonwell-tainted]
+86:   carry_keys: [Alcinoe-wounded, moonwell-tainted]
 
 (End of file - total 86 lines)
 </content>
@@ -6330,7 +6330,7 @@ PLAN_v2 has far more design detail than my sketch — I should preserve its Part
 532:   `update_context(scene, carry, loop)` (`improviser.py:29`) is the *only*
 533:   context channel, and `generate_scene` renders `Loop N` plus each carry
 534:   key/value into the user prompt (`improviser.py:210-213`). So
-535:   `{"helen-wounded": True}` and `{"mood": "tense"}` both ride the carry
+535:   `{"Alcinoe-wounded": True}` and `{"mood": "tense"}` both ride the carry
 536:   channel and render as key/value lines. Nothing in PLAN.md said how a
 537:   computed condition became prompt text; this is the answer, and it is worth
 538:   a test — `conditions_for` producing a mood dict that never reaches the

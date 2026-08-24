@@ -149,7 +149,7 @@ notes: |
 
   BOOL VS INT. `isinstance(True, int)` is True in Python. A flag condition
   value must be checked with `isinstance(value, bool)`, and it must be checked
-  BEFORE any numeric interpretation, or `{"helen-wounded": 1}` slips through.
+  BEFORE any numeric interpretation, or `{"Alcinoe-wounded": 1}` slips through.
 
   PROBLEM STRINGS are read by a human at 3am from a log line. Write them like
   "unknown lore stem 'invented-stem' (pack knows: leto-manor, the-loop,

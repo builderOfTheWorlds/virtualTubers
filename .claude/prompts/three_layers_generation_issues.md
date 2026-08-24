@@ -400,7 +400,7 @@ D11's contract: variants share one `merge_at`; variants write the same
 on which variant ran; forks never nest.
 
 Rule 3 is the one hermes3:70b will violate given the chance — writing "picking
-up from Helen's decision at the ford" into a post-merge synopsis is exactly
+up from Alcinoe's decision at the ford" into a post-merge synopsis is exactly
 what a coherence-seeking model does, and it silently re-couples the branches.
 
 **Fix:** `src/forks.py` validates all four rules after Layer 1 writes

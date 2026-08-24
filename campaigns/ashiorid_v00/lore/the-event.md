@@ -13,6 +13,6 @@ it. Everything after that is contested.
 - *Seal holds* — the energy is saved. Magic survives into the present day,
   thin and rationed. A sorcerer is rare but possible.
 - *Seal fails* — the world is stripped. Magic dies out of the age. A working
-  sorcerer should not exist, which makes Helen a question rather than a person.
+  sorcerer should not exist, which makes Alcinoe a question rather than a person.
 
 The GM may cite either, but never both in the same loop.
