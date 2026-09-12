@@ -1,0 +1,89 @@
+segment_id: invitation-arc
+order: 0
+loop: 0
+hours: 6
+synopsis: Ten thousand years to the day since the Event, four strangers each receive
+  a mysterious card inviting them to a party at Leto's Manor.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-n1-gathering-1
+  kind: ambient
+  prompt: The first stranger arrives at Leto's Manor, bewildered by its ancient architecture
+    and the strange energy that seems to pulse through the air.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-n1
+- slot_id: invitation-arc-n1-gathering-2
+  kind: ambient
+  prompt: Another stranger steps through the manor's threshold, immediately struck
+    by how the very walls seem to shift and breathe with an otherworldly presence.
+  lore:
+  - moonwells
+  participants:
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-n1
+- slot_id: invitation-arc-n1-gathering-3
+  kind: ambient
+  prompt: The third arrival finds themselves in a corridor that appears to stretch
+    infinitely, filled with portraits of figures who seem to watch their approach
+    with knowing eyes.
+  lore:
+  - the-begene-program
+  participants:
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-n1
+- slot_id: invitation-arc-n1-gathering-4
+  kind: ambient
+  prompt: The final stranger materializes in a grand hall where the air hums with
+    ancient magic, and a single candle burns on a table, casting dancing shadows.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: invitation-arc-n1
+- slot_id: invitation-arc-n1-gathering-5
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: invitation-arc-n1
+nodes:
+- node_id: invitation-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+needs_rebrief: true

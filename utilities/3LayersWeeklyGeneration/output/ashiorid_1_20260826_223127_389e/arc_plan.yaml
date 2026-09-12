@@ -1,0 +1,183 @@
+segments:
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party they never asked for.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The four strangers learn about the Age of War and how the world's magic
+    was burned as fuel, leading to a catastrophic event that changed everything.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - magic-retained
+  synopsis: The seal holds, and the last well retains its magic. The four strangers
+    begin to understand that their lives are now tied to a legacy of magical preservation.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - magic-lost
+  synopsis: The seal fails, and the last well runs dry. Magic dies out, and the four
+    strangers realize they are now in a world where sorcery is impossible — unless
+    one of them is different.
+- ambient_focus: the-meal
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - letos-manor
+  synopsis: The four strangers arrive at Duke Sorensen Leto III's manor for a party
+    that was planned ten thousand years in advance, only to discover they are not
+    welcome.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - party-attack
+  synopsis: Uninvited guests attack the manor, and the four strangers must fight their
+    way through the chaos to survive.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 18
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The tear in the portal answers back, revealing the Bahadur's presence
+    and their true intentions.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 19
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont, a town where magic is scarce and danger
+    lurks in the shadows.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-arc
+  loop: 0
+  order: 20
+  spine_scenes:
+  - amulet-map
+  synopsis: Jasper and Juniper's map reveals the location of the next monument, setting
+    the party on a new quest.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 21
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party solves the riddle of the Malvakar monument, unlocking the next
+    fragment of the map.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 22
+  spine_scenes:
+  - the-vault
+  synopsis: The party discovers the secret kept in Leto's manor, and the truth about
+    the amulet begins to unfold.
+- ambient_focus: the-meal
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  order: 23
+  spine_scenes:
+  - portal-choice
+  synopsis: The party must decide whether to follow the path through the portal or
+    return to Malmont, setting up their next major choice.

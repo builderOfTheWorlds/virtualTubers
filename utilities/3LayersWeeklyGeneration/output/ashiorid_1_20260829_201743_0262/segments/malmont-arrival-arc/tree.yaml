@@ -1,0 +1,86 @@
+malmont-arrival-arc:
+  node_id: malmont-arrival-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers arrive in Malmont, a town that has never heard of them
+    and ho
+  summary: The four strangers arrive in Malmont, a town that has never heard of them
+    and holds its own dangers.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-n0
+  - malmont-arrival-arc-n1
+  slots: null
+malmont-arrival-arc-n0:
+  node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  order: 0
+  depth: 1
+  title: Arrival in Malmont
+  summary: The four strangers arrive in Malmont, a town that has never heard of them
+    and holds its own dangers. They take stock of their surroundings, noting the unusual
+    silence and the strange architecture that seems to shift in the corner of their
+    vision. The town's lack of recognition suggests they've arrived at a place where
+    the ordinary rules don't apply.
+  continuity_in: The strangers travel through the night, arriving at the edge of Malmont
+    with no clear destination in mind.
+  continuity_out: As they enter the town proper, they notice that the buildings seem
+    to be watching them, and the silence is broken only by distant sounds that don't
+    quite make sense.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-1
+    kind: ambient
+    prompt: The four strangers arrive in Malmont, a town that has never heard of them
+      and holds its own dangers. They take stock of their surroundings, noting the
+      unusual silence and the strange architecture that seems to shift in the corner
+      of their vision.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+malmont-arrival-arc-n1:
+  node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  order: 1
+  depth: 1
+  title: First Encounters and Dangers
+  summary: The strangers begin to explore Malmont's streets, encountering the town's
+    unique inhabitants and discovering the true nature of its dangers. They find themselves
+    drawn into a mystery involving ancient prophecies and the town's hidden history,
+    while simultaneously being pursued by something that seems to have been waiting
+    for their arrival.
+  continuity_in: The strangers enter the town proper, immediately sensing that something
+    is amiss with the place and its people.
+  continuity_out: Having discovered the first pieces of Malmont's secrets, they realize
+    they must move quickly to avoid whatever force is hunting them, setting the stage
+    for further exploration and conflict.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

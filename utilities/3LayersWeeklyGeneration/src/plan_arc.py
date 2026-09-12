@@ -60,6 +60,13 @@ def plan_arc(pack, config, llm, vocab, out_path) -> dict:
     
     # Build context once
     context = build_context(pack, config)
+
+    # Closed list of legal spine_scenes ids — same "non-ambient" filter
+    # build_context uses, computed once so every batch's prompt states the
+    # exact vocabulary validate_batch will check against.
+    spine_scene_ids = [
+        scene_id for scene_id, scene in pack.scenes.items() if not scene.ambient
+    ]
     
     # Initialize plan with existing segments
     plan_segments = list(existing_segments)
@@ -94,7 +101,8 @@ def plan_arc(pack, config, llm, vocab, out_path) -> dict:
                     expected_orders=batch_orders,
                     previous_continuity=previous_continuity,
                     config=config,
-                    problems=problems
+                    problems=problems,
+                    spine_scene_ids=spine_scene_ids
                 )
                 
                 # Call LLM

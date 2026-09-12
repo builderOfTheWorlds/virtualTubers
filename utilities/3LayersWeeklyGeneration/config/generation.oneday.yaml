@@ -1,0 +1,102 @@
+# "One day" demo config — same light/fast Ollama models as generation.demo.yaml,
+# but scoped to a full 24-hour arc (4 segments at 6h each, matching
+# generation.yaml's real segment_hours) instead of demo's 3x1h segments.
+# Each segment gets a small recursive tree (depth 2) instead of a single
+# leaf, so the segment/tree structure in the Data Viewer looks like the
+# real pipeline's shape, not just a flat leaf. Word/slot counts are kept
+# small on purpose to finish in a few minutes on local light models — this
+# is NOT full 168h production fidelity (see generation.yaml for that).
+#
+# Point GENERATOR_CONFIG_FILE at this file (docker-compose.yml / .env) the
+# same way generation.test.yaml / generation.demo.yaml are selected.
+#
+# Kept in sync by hand with generation.yaml's key structure — see
+# generation.test.yaml's header comment for why.
+
+campaign:
+  pack: campaigns/test_pack
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 120
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 9600
+  target_total_hours: 24
+  target_words_per_hour: 400
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  hours_total: 24            # -> n_segments = ceil(24/6) = 4 segments
+  segment_hours: 6           # matches generation.yaml's real segment length
+  batch_size: 4               # all 4 segments in one LLM call
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  target_words: 600          # per 6h segment — small on purpose, see header
+  target_slots: 15
+  tree:
+    max_leaf_slots: 5         # forces real recursion: 15 slots > 5 -> splits
+    max_children: 3
+    max_depth: 2              # root -> children -> leaves, 2 levels deep
+    min_node_words: 50
+    leaf_density_floor: 0.50  # forgiving — demo, not a QA gate
+  concurrency: 3
+  max_attempts: 4
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 10
+    failure_rate: 0.5
+    min_samples: 5
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+    heavy:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+      num_ctx: 2048
+  active_model: light
+  max_recent: 4
+  max_words: 45
+  max_beats: 6
+  takes_per_slot: 1          # one take per slot — demo, not final content
+  neutral_takes: 1
+  concurrency: 4
+  max_attempts: 2
+  seconds_per_take: 8         # rough estimate for the pre-run log line only
+
+# Must match whatever cast/carry vocabulary the test pack actually declares
+# — see generation.test.yaml's comment on why these stay empty rather than
+# borrowing ashiorid's.
+state:
+  flags: []
+  moods: [neutral]
+  carry_keys: []

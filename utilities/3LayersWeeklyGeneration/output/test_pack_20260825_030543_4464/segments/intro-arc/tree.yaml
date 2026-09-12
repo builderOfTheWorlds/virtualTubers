@@ -1,0 +1,53 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A one-sentence summary of what happens.
+  summary: A one-sentence summary of what happens.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - intro-arc-n0
+  - intro-arc-n1
+  slots: null
+intro-arc-n0:
+  node_id: intro-arc-n0
+  parent_id: intro-arc
+  order: 0
+  depth: 1
+  title: The Journey Begins
+  summary: The protagonist starts their journey from the starting point with initial
+    preparations and mindset.
+  continuity_in: The character stands at the threshold of their adventure, filled
+    with anticipation and uncertainty about what lies ahead.
+  continuity_out: The character takes their first step forward, leaving behind the
+    familiar territory and venturing into unknown paths.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+intro-arc-n1:
+  node_id: intro-arc-n1
+  parent_id: intro-arc
+  order: 1
+  depth: 1
+  title: The First Challenge
+  summary: The protagonist encounters their first significant obstacle that tests
+    their resolve and skills.
+  continuity_in: Having left the starting point, the character now faces the immediate
+    reality of their journey with new challenges emerging.
+  continuity_out: The character overcomes this initial hurdle, gaining confidence
+    and momentum for the trials to come.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

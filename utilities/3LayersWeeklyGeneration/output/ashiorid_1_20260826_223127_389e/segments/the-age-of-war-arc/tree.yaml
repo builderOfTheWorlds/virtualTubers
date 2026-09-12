@@ -1,0 +1,58 @@
+the-age-of-war-arc:
+  node_id: the-age-of-war-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers learn about the Age of War and how the world's magic was
+    burn
+  summary: The four strangers learn about the Age of War and how the world's magic
+    was burned as fuel, leading to a catastrophic event that changed everything.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-age-of-war-arc-n0
+  - the-age-of-war-arc-n1
+  slots: null
+the-age-of-war-arc-n0:
+  node_id: the-age-of-war-arc-n0
+  parent_id: the-age-of-war-arc
+  order: 0
+  depth: 1
+  title: The Great Conflagration
+  summary: The strangers discover the catastrophic event that consumed the world's
+    magic, learning how the desperate wars of ancient times led to the burning of
+    all magical sources. They understand how this created the current state of the
+    world where magic is scarce and dangerous.
+  continuity_in: The four strangers learn about the Age of War and how the world's
+    magic was burned as fuel, leading to a catastrophic event that changed everything.
+  continuity_out: The strangers realize they must find a way to restore balance to
+    their world before it's too late.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+the-age-of-war-arc-n1:
+  node_id: the-age-of-war-arc-n1
+  parent_id: the-age-of-war-arc
+  order: 1
+  depth: 1
+  title: Echoes of the Past
+  summary: The group explores how the destruction of magic affected different regions
+    and peoples, understanding that some areas were more severely impacted than others.
+    They begin to piece together what remnants of the old world might still exist.
+  continuity_in: The strangers realize they must find a way to restore balance to
+    their world before it's too late.
+  continuity_out: The four strangers set out on their journey to find the source of
+    the world's remaining magical energy.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

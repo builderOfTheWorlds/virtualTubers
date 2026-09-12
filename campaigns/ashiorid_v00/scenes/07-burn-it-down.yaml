@@ -38,14 +38,14 @@ beats:
         you well past tonight.
 
   - type: action
-    speaker: drokki
+    speaker: sodacan_bob
     primitive: roll_check
     params:
       skill: athletics
       dc: 14
 
   - type: dialogue
-    speaker: drokki
+    speaker: sodacan_bob
     improv: true
     text:
       - >-
@@ -58,7 +58,7 @@ beats:
         honest. Down.
 
   - type: action
-    speaker: Vance
+    speaker: Vigil
     primitive: move_to
     params:
       destination: the servants' stair

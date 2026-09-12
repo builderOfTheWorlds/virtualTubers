@@ -119,17 +119,14 @@ def _expected_segment_count(config):
     return math.ceil(total_hours / segment_hours)
 
 
-def _pack_names(ctx) -> list:
-    """The pack names present under `ctx.pack_root` (immediate subdirs)."""
-    root = pathlib.Path(ctx.pack_root)
-    if not root.is_dir():
-        return []
-    return sorted(p.name for p in root.iterdir() if p.is_dir())
-
-
-def artifact_path(ctx, pack, kind, segment_id) -> pathlib.Path:
-    """Where an artifact of each kind lives in the working directory."""
-    base = pathlib.Path(ctx.output_root) / pack
+def artifact_path(ctx, run, kind, segment_id) -> pathlib.Path:
+    """Where an artifact of each kind lives in the working directory,
+    namespaced under `run` (the output namespace a job writes to) — NOT
+    `pack` (the source pack cast/scenes/lore are loaded from). The two
+    happen to be equal for a job with no `run` on its row, which is exactly
+    what the `job.get("run") or job["pack"]` fallback in `dispatch_once`
+    arranges."""
+    base = pathlib.Path(ctx.output_root) / run
     if kind == "arc_plan":
         return base / "arc_plan.yaml"
     seg = base / "segments" / segment_id
@@ -142,19 +139,49 @@ def artifact_path(ctx, pack, kind, segment_id) -> pathlib.Path:
     raise ValueError(f"unknown artifact kind {kind!r}")
 
 
-def _mirror(ctx, pack, kind, segment_id, job_id) -> bool:
-    """Read an artifact file back and upsert it into the store.
+def _mirror_dialogue_takes(ctx, run, segment_id, job_id) -> int:
+    """Mirror every generated take file for one segment into the store.
+
+    Dialogue takes land at
+    `<output_root>/<run>/segments/<segment_id>/slots/<slot_id>/<take>.yaml`
+    — one file per (slot, take), NOT the single `dialogue.yaml` per segment
+    `artifact_path` knows how to build for the other three kinds. Each take
+    is mirrored under its own natural key so the Data Viewer can list and
+    open individual takes; `segment_id` here is
+    `<segment_id>/<slot_id>/<take>` to keep every take's key unique within
+    the (pack, kind, segment_id) constraint.
+
+    Returns how many take files were mirrored."""
+    slots_root = pathlib.Path(ctx.output_root) / run / "segments" / segment_id / "slots"
+    if not slots_root.is_dir():
+        return 0
+    count = 0
+    for slot_dir in sorted(slots_root.iterdir()):
+        if not slot_dir.is_dir():
+            continue
+        for take_file in sorted(slot_dir.glob("*.yaml")):
+            with open(take_file, "r", encoding="utf-8") as f:
+                content = yaml.safe_load(f)
+            key = f"{segment_id}/{slot_dir.name}/{take_file.stem}"
+            ctx.store.upsert_artifact(run, "dialogue", key, content, job_id)
+            count += 1
+    return count
+
+
+def _mirror(ctx, run, kind, segment_id, job_id) -> bool:
+    """Read an artifact file back and upsert it into the store, keyed on
+    `run` (the output namespace), not `pack`.
 
     Returns True when a file was read and mirrored, False when the file does
     not exist (a skipped leaf writes nothing and that is not an error).
     """
-    path = artifact_path(ctx, pack, kind, segment_id)
+    path = artifact_path(ctx, run, kind, segment_id)
     if not path.exists():
         log.debug("mirror: %s missing, skipping", path)
         return False
     with open(path, "r", encoding="utf-8") as f:
         content = yaml.safe_load(f)
-    ctx.store.upsert_artifact(pack, kind, segment_id, content, job_id)
+    ctx.store.upsert_artifact(run, kind, segment_id, content, job_id)
     log.debug("mirror: upserted %s:%s", kind, segment_id)
     return True
 
@@ -182,9 +209,9 @@ def _make_cancel_check(ctx, job_id):
     return cancel_check
 
 
-def _arc_segments(ctx, pack_name) -> list:
+def _arc_segments(ctx, run_name) -> list:
     """The segment list from the arc plan, or [] when absent."""
-    path = artifact_path(ctx, pack_name, "arc_plan", "")
+    path = artifact_path(ctx, run_name, "arc_plan", "")
     if not path.exists():
         return []
     with open(path, "r", encoding="utf-8") as f:
@@ -195,12 +222,12 @@ def _arc_segments(ctx, pack_name) -> list:
     return segments if isinstance(segments, list) else []
 
 
-def _select_segments(ctx, pack_name, job) -> list:
+def _select_segments(ctx, run_name, job) -> list:
     """Resolve which arc segments this job should plan, in order."""
     params = job.get("params") or {}
     requested = params.get("segments")
     if requested:
-        all_segments = _arc_segments(ctx, pack_name)
+        all_segments = _arc_segments(ctx, run_name)
         by_id = {s.get("id"): s for s in all_segments if isinstance(s, dict)}
         selected = []
         for seg_id in requested:
@@ -212,9 +239,9 @@ def _select_segments(ctx, pack_name, job) -> list:
 
     if params.get("rebrief"):
         selected = []
-        for seg in _arc_segments(ctx, pack_name):
+        for seg in _arc_segments(ctx, run_name):
             seg_id = seg.get("id")
-            brief_path = artifact_path(ctx, pack_name, "brief", seg_id)
+            brief_path = artifact_path(ctx, run_name, "brief", seg_id)
             if brief_path.exists():
                 with open(brief_path, "r", encoding="utf-8") as f:
                     brief = yaml.safe_load(f)
@@ -224,18 +251,18 @@ def _select_segments(ctx, pack_name, job) -> list:
 
     # Default: every segment in the arc plan that has no brief.yaml yet.
     selected = []
-    for seg in _arc_segments(ctx, pack_name):
+    for seg in _arc_segments(ctx, run_name):
         seg_id = seg.get("id")
-        brief_path = artifact_path(ctx, pack_name, "brief", seg_id)
+        brief_path = artifact_path(ctx, run_name, "brief", seg_id)
         if not brief_path.exists():
             selected.append(seg)
     return selected
 
 
-def _run_arc(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+def _run_arc(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
              result) -> None:
     """Drive the arc stage and fold its output into `result`."""
-    out_path = artifact_path(ctx, pack_name, "arc_plan", "")
+    out_path = artifact_path(ctx, run_name, "arc_plan", "")
     ctx.plan_arc(pack, ctx.config, llm, vocab, out_path)
 
     if not out_path.exists():
@@ -251,7 +278,7 @@ def _run_arc(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
             "arc stage produced an empty arc plan: every batch was skipped "
             f"(see the plan_arc warnings for this job); {out_path}")
 
-    if _mirror(ctx, pack_name, "arc_plan", "", job["id"]):
+    if _mirror(ctx, run_name, "arc_plan", "", job["id"]):
         result["artifacts"].append("arc_plan:")
     result["segments"] = len(segments)
 
@@ -264,69 +291,72 @@ def _run_arc(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
                     len(segments), expected, expected - len(segments))
 
 
-def _run_segment(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+def _run_segment(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                  result) -> None:
     """Drive the segment stage and fold its output into `result`."""
-    selected = _select_segments(ctx, pack_name, job)
+    selected = _select_segments(ctx, run_name, job)
     planned = 0
     for arc_segment in selected:
         if cancel_check is not None and cancel_check():
             log.info("segment stage: cancel requested, stopping")
             break
         seg_id = arc_segment.get("id")
-        out_path = artifact_path(ctx, pack_name, "brief", seg_id)
+        out_path = artifact_path(ctx, run_name, "brief", seg_id)
         ctx.plan_segment(pack, arc_segment, ctx.config, llm, vocab, out_path,
                          progress=progress, cancel_check=cancel_check)
-        if _mirror(ctx, pack_name, "brief", seg_id, job["id"]):
+        if _mirror(ctx, run_name, "brief", seg_id, job["id"]):
             result["artifacts"].append(f"brief:{seg_id}")
-        if _mirror(ctx, pack_name, "tree", seg_id, job["id"]):
+        if _mirror(ctx, run_name, "tree", seg_id, job["id"]):
             result["artifacts"].append(f"tree:{seg_id}")
         planned += 1
     result["segments"] = planned
 
 
-def _run_dialogue(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+def _run_dialogue(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                   result) -> None:
     """Drive the dialogue stage and fold its output into `result`."""
     params = job.get("params") or {}
     segment_ids = params.get("segments") or []
     stats = ctx.generate_dialogue(pack, segment_ids, ctx.config, llm,
-                                  ctx.output_root,
+                                  pathlib.Path(ctx.output_root) / run_name,
                                   progress=progress, cancel_check=cancel_check)
     if isinstance(stats, dict):
         for key, value in stats.items():
             if key not in ("artifacts", "segments", "duration_s"):
                 result[key] = value
     for seg_id in segment_ids:
-        if _mirror(ctx, pack_name, "dialogue", seg_id, job["id"]):
+        if _mirror(ctx, run_name, "dialogue", seg_id, job["id"]):
             result["artifacts"].append(f"dialogue:{seg_id}")
+        take_count = _mirror_dialogue_takes(ctx, run_name, seg_id, job["id"])
+        if take_count:
+            result["artifacts"].append(f"dialogue_takes:{seg_id}:{take_count}")
 
 
-def _run_stage(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+def _run_stage(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                result) -> None:
     """Dispatch a single stage, or the full arc->segment->dialogue chain."""
     stage = job["stage"]
     if stage == "arc":
-        _run_arc(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+        _run_arc(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                  result)
     elif stage == "segment":
-        _run_segment(ctx, job, pack_name, pack, llm, vocab, progress,
+        _run_segment(ctx, job, run_name, pack, llm, vocab, progress,
                      cancel_check, result)
     elif stage == "dialogue":
-        _run_dialogue(ctx, job, pack_name, pack, llm, vocab, progress,
+        _run_dialogue(ctx, job, run_name, pack, llm, vocab, progress,
                       cancel_check, result)
     elif stage == "all":
-        _run_arc(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+        _run_arc(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                  result)
         if cancel_check is not None and cancel_check():
             log.info("all stage: cancel requested after arc")
             return
-        _run_segment(ctx, job, pack_name, pack, llm, vocab, progress,
+        _run_segment(ctx, job, run_name, pack, llm, vocab, progress,
                      cancel_check, result)
         if cancel_check is not None and cancel_check():
             log.info("all stage: cancel requested after segment")
             return
-        _run_dialogue(ctx, job, pack_name, pack, llm, vocab, progress,
+        _run_dialogue(ctx, job, run_name, pack, llm, vocab, progress,
                       cancel_check, result)
     else:
         raise ValueError(f"unknown stage {stage!r}")
@@ -348,15 +378,19 @@ def boot(ctx) -> None:
     log.debug("boot: reconciling orphans")
     ctx.store.reconcile_orphans()
 
-    for pack_name in _pack_names(ctx):
-        for artifact in ctx.store.list_artifacts(pack_name):
+    # Runs, not source packs — a run is the output namespace artifacts are
+    # actually keyed on. `_pack_names`-style directory scanning under
+    # pack_root would list source packs (which may have no output at all,
+    # or whose latest run has a different, timestamped name).
+    for run_name in ctx.store.list_runs():
+        for artifact in ctx.store.list_artifacts(run_name):
             kind = artifact.get("kind")
             segment_id = artifact.get("segment_id", "")
-            path = artifact_path(ctx, pack_name, kind, segment_id)
+            path = artifact_path(ctx, run_name, kind, segment_id)
             if path.exists():
                 log.debug("boot: %s already on disk, not overwriting", path)
                 continue
-            content = ctx.store.load_artifact(pack_name, kind, segment_id)
+            content = ctx.store.load_artifact(run_name, kind, segment_id)
             if content is None:
                 continue
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -388,6 +422,9 @@ def dispatch_once(ctx) -> bool:
         return True
 
     pack_name = job["pack"]
+    # Historical rows (submitted before `run` existed) have run=None; fall
+    # back to pack_name so they keep writing where they always did.
+    run_name = job.get("run") or pack_name
     result = {"artifacts": []}
     started = datetime.datetime.now(datetime.timezone.utc)
 
@@ -398,7 +435,7 @@ def dispatch_once(ctx) -> bool:
         vocab = ctx.build_vocab(ctx.config, pack)
         progress = _make_progress(ctx, job_id)
         cancel_check = _make_cancel_check(ctx, job_id)
-        _run_stage(ctx, job, pack_name, pack, llm, vocab, progress, cancel_check,
+        _run_stage(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                    result)
     except Exception as exc:
         log.exception("dispatch_once: job_id=%s failed", job_id)

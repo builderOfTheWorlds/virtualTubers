@@ -88,9 +88,36 @@ $Type    = "replay_request"
 # or this will still refuse with ready_timeout.
 # $Payload = '{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
-$Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
+# $Payload = '{"episode": "sample_long", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}}'
 
 # $Payload = '{"episode": "sample_roster", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
+
+# =====================================================================
+# ASHIORID CAMPAIGN - the authored D&D campaign, not a session recording
+# =====================================================================
+# Built from campaigns/ashiorid_1 by .claude/prompts/build_campaign_episode.py,
+# which walks the pack's default_next scene chain and converts beats into
+# episode events, then uploads to the episode store:
+#
+#   .venv/bin/python3 .claude/prompts/build_campaign_episode.py \
+#       --pack campaigns/ashiorid_1 --name ashiorid --max-scenes 12 --upload
+#
+# Re-run that after editing the pack - the library holds a converted SNAPSHOT,
+# so scene edits do NOT reach the stream until the episode is rebuilt.
+#
+# Episode "ashiorid": 85 events / 1955 words / 12 spine scenes.
+# Its four speakers are WORKER ids already (the converter maps the campaign
+# cast: chadwick->coder, Leena->tester, Vigil->coder-native,
+# sodacan_bob->coder-opencode). GM/Ashiorid narration is user_message, so there is
+# deliberately no "manager" speaker and no coder-aider role in this episode.
+
+# Ashiorid SOLO - one worker performs every part. Verified airing 2026-08-31.
+# $Payload = '{"episode": "ashiorid", "voice": true}'
+
+# Ashiorid DUET - each character speaks on its own avatar. The cast keys are
+# the episode's speaker names, which for this episode are already worker ids,
+# so each maps to itself. Verified airing to "-- fin --" 2026-08-31.
+$Payload = '{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
 
 
 

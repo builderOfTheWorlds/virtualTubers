@@ -1,0 +1,116 @@
+segment_id: bahadur-revealed-arc
+order: 18
+loop: 0
+hours: 6
+synopsis: The tear in the portal answers back, revealing the Bahadur's presence and
+  their true intentions.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: bahadur-revealed-arc-n0-portal-response-1
+  kind: ambient
+  prompt: The tear in the portal answers back, revealing the Bahadur's presence and
+    their true intentions
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n0
+- slot_id: bahadur-revealed-arc-n0-portal-response-2
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: bahadur-revealed-arc-n0
+- slot_id: bahadur-revealed-arc-n1-bahadur-1
+  kind: ambient
+  prompt: The tear in the portal answers back, revealing the Bahadur's presence and
+    their true intentions.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-2
+  kind: ambient
+  prompt: The Bahadur emerge fully from the portal, their true forms revealed in all
+    their terrifying glory.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-3
+  kind: ambient
+  prompt: Their presence warps reality itself, and their intentions become clear as
+    they begin to reshape the world according to their dark designs.
+  lore:
+  - the-bahadur
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-4
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+nodes:
+- node_id: bahadur-revealed-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

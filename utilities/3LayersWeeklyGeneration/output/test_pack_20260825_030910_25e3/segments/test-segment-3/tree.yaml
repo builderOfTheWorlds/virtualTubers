@@ -1,0 +1,68 @@
+test-segment-3:
+  node_id: test-segment-3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Final validation of the generation pipeline with complete segment processing.
+  summary: Final validation of the generation pipeline with complete segment processing.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-3-n0
+  - test-segment-3-n1
+  slots: null
+test-segment-3-n0:
+  node_id: test-segment-3-n0
+  parent_id: test-segment-3
+  order: 0
+  depth: 1
+  title: Pipeline Validation and Testing
+  summary: Comprehensive validation of the generation pipeline including all segment
+    processing steps, testing edge cases, and ensuring data integrity throughout the
+    complete workflow.
+  continuity_in: Beginning of final validation process with complete segment processing
+  continuity_out: Pipeline validation completed, ready for final integration testing
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+test-segment-3-n1:
+  node_id: test-segment-3-n1
+  parent_id: test-segment-3
+  order: 1
+  depth: 1
+  title: Integration and Final Testing
+  summary: Complete integration testing of all pipeline components with final segment
+    processing verification, ensuring seamless handoff between modules and full system
+    functionality.
+  continuity_in: Pipeline validation completed, proceeding to integration testing
+  continuity_out: Final validation complete with successful segment processing
+  target_words: 250
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: test-segment-3-n1-1
+    kind: ambient
+    prompt: The final validation of the generation pipeline begins with complete segment
+      processing, where all components are integrated and tested for seamless handoff
+      between modules.
+    lore: []
+    participants:
+    - gm
+    - hero
+    sensitivity: none
+    depends_on: []
+  - slot_id: test-segment-3-n1-2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - gm
+    - hero

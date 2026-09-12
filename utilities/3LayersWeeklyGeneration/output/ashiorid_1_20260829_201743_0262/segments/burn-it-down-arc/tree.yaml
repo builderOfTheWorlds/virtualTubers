@@ -1,0 +1,146 @@
+burn-it-down-arc:
+  node_id: burn-it-down-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The hold does not break in time, and the manor starts to come down around
+    the fo
+  summary: The hold does not break in time, and the manor starts to come down around
+    the four of them as they fight for survival.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - burn-it-down-arc-n0
+  - burn-it-down-arc-n1
+  slots: null
+burn-it-down-arc-n0:
+  node_id: burn-it-down-arc-n0
+  parent_id: burn-it-down-arc
+  order: 0
+  depth: 1
+  title: Foundation Crumbles
+  summary: The structural integrity of the manor begins to fail as the hold weakens,
+    causing debris to fall and creating immediate danger for the four survivors who
+    must navigate collapsing corridors and unstable floors while maintaining their
+    defensive formation.
+  continuity_in: The hold does not break in time, and the manor starts to come down
+    around the four of them as they fight for survival.
+  continuity_out: The foundation gives way beneath their feet, sending shockwaves
+    through the building that threaten to crush them entirely.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: burn-it-down-arc-n0-foundation-crumbles-1
+    kind: ambient
+    prompt: The manor's foundations begin to crumble, sending tremors through the
+      building as debris starts falling from above.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n0-foundation-crumbles-2
+    kind: spine
+    scene_ref: burn-it-down
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+burn-it-down-arc-n1:
+  node_id: burn-it-down-arc-n1
+  parent_id: burn-it-down-arc
+  order: 1
+  depth: 1
+  title: Last Stand in the Hall
+  summary: As the manor's structure completely fails, the four survivors are forced
+    into a desperate final confrontation within the grand hall, where they must use
+    every remaining resource and tactical advantage to survive the catastrophic collapse
+    that will soon bury them all.
+  continuity_in: The foundation gives way beneath their feet, sending shockwaves through
+    the building that threaten to crush them entirely.
+  continuity_out: The manor's main hall collapses completely, trapping them in a final
+    deadly struggle for survival.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: burn-it-down-arc-n1-last-stand-1
+    kind: ambient
+    prompt: The foundation gives way beneath their feet, sending shockwaves through
+      the building that threaten to crush them entirely.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-last-stand-2
+    kind: ambient
+    prompt: The manor's main hall collapses completely, trapping them in a final deadly
+      struggle for survival.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-last-stand-3
+    kind: ambient
+    prompt: As the manor's structure completely fails, the four survivors are forced
+      into a desperate final confrontation within the grand hall.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-last-stand-4
+    kind: ambient
+    prompt: They must use every remaining resource and tactical advantage to survive
+      the catastrophic collapse that will soon bury them all.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-last-stand-5
+    kind: ambient
+    prompt: The hold does not break in time, and the manor starts to come down around
+      the four of them as they fight for survival.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

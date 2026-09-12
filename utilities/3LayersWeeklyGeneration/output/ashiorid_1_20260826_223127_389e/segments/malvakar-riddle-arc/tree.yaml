@@ -1,0 +1,114 @@
+malvakar-riddle-arc:
+  node_id: malvakar-riddle-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party solves the riddle of the Malvakar monument, unlocking the next
+    fragmen
+  summary: The party solves the riddle of the Malvakar monument, unlocking the next
+    fragment of the map.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-n0
+  - malvakar-riddle-arc-n1
+  slots: null
+malvakar-riddle-arc-n0:
+  node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  order: 0
+  depth: 1
+  title: Deciphering the Ancient Script
+  summary: The party carefully examines the intricate carvings and symbols on the
+    Malvakar monument, working through the complex riddle that has stumped them for
+    hours. They must interpret the ancient language, cross-reference it with their
+    knowledge of the region's history, and piece together the cryptic clues that will
+    unlock the next map fragment.
+  continuity_in: The party arrives at the Malvakar monument after a long journey through
+    treacherous terrain, having gathered enough information from local folklore to
+    understand this is the key location they've been seeking.
+  continuity_out: The party has successfully interpreted the monument's riddle, but
+    their victory is short-lived as they realize there may be more than one way to
+    approach the solution, leaving them uncertain if they've truly solved it correctly.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malvakar-riddle-arc-n1:
+  node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  order: 1
+  depth: 1
+  title: The Revelation and Its Consequences
+  summary: With the riddle solved, the monument yields its secret - a fragment of
+    the ancient map that reveals new locations and dangers ahead. However, as the
+    party celebrates their achievement, they discover that their solution has awakened
+    something dormant in the monument's vicinity, and they must now decide whether
+    to proceed with caution or continue forward into the unknown.
+  continuity_in: The party has successfully solved the riddle of the Malvakar monument,
+    unlocking the next fragment of the map through careful analysis and teamwork.
+  continuity_out: The party stands at a crossroads, having gained crucial information
+    about their quest but now faced with the realization that their discovery may
+    have unintended consequences, as they prepare to venture into the next mysterious
+    location revealed by the map fragment.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n1-revelation-1
+    kind: ambient
+    prompt: The party carefully examines the monument's inscriptions, searching for
+      patterns that might unlock its secrets.
+    lore:
+    - the-begene-program
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-revelation-2
+    kind: ambient
+    prompt: As the final piece clicks into place, the monument's surface glows with
+      ancient energy, revealing a fragment of the map.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-revelation-3
+    kind: ambient
+    prompt: The party celebrates their success, but soon notices the monument's glow
+      beginning to dim—something has been awakened.
+    lore:
+    - malmont
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-revelation-4
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

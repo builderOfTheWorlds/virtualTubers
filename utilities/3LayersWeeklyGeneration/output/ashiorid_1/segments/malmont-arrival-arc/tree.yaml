@@ -1,0 +1,142 @@
+malmont-arrival-arc:
+  node_id: malmont-arrival-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives in Malmont, a town that has never heard of them, and they
+    must
+  summary: The party arrives in Malmont, a town that has never heard of them, and
+    they must navigate its dual power structures while uncovering the secrets of their
+    new surroundings.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-n0
+  - malmont-arrival-arc-n1
+  slots: null
+malmont-arrival-arc-n0:
+  node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  order: 0
+  depth: 1
+  title: Arrival and First Impressions
+  summary: The party makes their initial approach to Malmont, noting the town's unusual
+    lack of familiarity with their reputation. They observe the dual power structures
+    at play - the established authority figures and the underground resistance movements
+    that seem to operate in parallel. The town's unique atmosphere and the immediate
+    need to understand local customs and politics creates an urgent sense of discovery.
+  continuity_in: The party arrives in Malmont, a town that has never heard of them,
+    and they must
+  continuity_out: The party navigates the complex power dynamics between established
+    authority and underground resistance movements while beginning their investigation
+    into local secrets.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malmont-arrival-arc-n1:
+  node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  order: 1
+  depth: 1
+  title: Uncovering Local Secrets
+  summary: The party begins to unravel the mysteries of Malmont's dual power structures,
+    discovering how the town's inhabitants maintain their separate worlds while subtly
+    influencing each other. They uncover clues about the town's history, its relationship
+    with the outside world, and the specific roles that various factions play in maintaining
+    the status quo. This investigation reveals deeper layers of intrigue than initially
+    apparent.
+  continuity_in: The party navigates the complex power dynamics between established
+    authority and underground resistance movements while beginning their investigation
+    into local secrets.
+  continuity_out: The party's investigation into Malmont's dual power structures reveals
+    that the town's secrets are more interconnected than they initially realized,
+    leading to a confrontation with one of the factions.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-1
+    kind: ambient
+    prompt: The party enters Malmont's main square, where local vendors sell strange
+      goods and the air hums with unspoken tensions between two distinct groups of
+      people.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-2
+    kind: ambient
+    prompt: As the party explores, they notice that certain buildings are marked with
+      symbols that seem to shift when no one is looking directly at them.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-3
+    kind: ambient
+    prompt: A hooded figure approaches the party, speaking only in riddles about the
+      town's moonwells and their connection to ancient powers.
+    lore:
+    - moonwells
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-4
+    kind: ambient
+    prompt: The party discovers a hidden journal in an old tavern, detailing the town's
+      dual power structures and how they've maintained balance for generations.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-5
+    kind: ambient
+    prompt: In a dimly lit alley, the party encounters a group of resistance fighters
+      who seem to know more about their arrival than they let on.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-6
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

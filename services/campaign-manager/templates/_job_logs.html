@@ -1,0 +1,47 @@
+<div id="job-logs-panel">
+    {% if not logs_available %}
+        <div class="alert alert-warning mb-0">
+            Log storage not reachable — set POSTGRES_HOST/DB/USER/PASSWORD for
+            campaign-manager and ensure log-shipper is running.
+        </div>
+    {% elif not logs %}
+        <div class="p-3 text-center text-muted mb-0">
+            No log lines captured yet for this job's time window.
+        </div>
+    {% else %}
+        <pre id="job-log-output" class="bg-dark text-white p-3 rounded mb-0" style="max-height: 400px; overflow-y: auto; font-size: 0.8rem;"><code>{% for line in logs %}<span class="text-{{ 'danger' if line.stream == 'stderr' else 'secondary' }}">[{{ line.timestamp }}]</span> {{ line.message }}
+{% endfor %}</code></pre>
+    {% endif %}
+
+    {% if artifacts %}
+    <div class="mt-4">
+        <h6>Artifacts</h6>
+        <table class="table table-sm table-striped table-dark mb-0" style="font-size: 0.8rem;">
+            <thead>
+                <tr>
+                    <th>Kind</th>
+                    <th>Segment</th>
+                    <th>Job</th>
+                    <th>Updated</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in artifacts %}
+                <tr>
+                    <td>{{ a.kind }}</td>
+                    <td>{{ a.segment_id or '—' }}</td>
+                    <td><small class="text-muted">{{ a.job_id }}</small></td>
+                    <td><small>{{ a.updated_at }}</small></td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="/data/artifact/{{ a.id }}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif artifacts_error %}
+    <div class="alert alert-danger mt-2 p-2" style="font-size: 0.8rem;">
+        {{ artifacts_error }}
+    </div>
+    {% endif %}
+</div>

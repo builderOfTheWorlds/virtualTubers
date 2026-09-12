@@ -1,0 +1,59 @@
+segment_id: malmont-arrival-arc
+order: 14
+loop: 0
+hours: 6
+synopsis: The four strangers arrive in Malmont, a town that has never heard of them
+  and holds its own dangers.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-n0-malmont-arrival-1
+  kind: ambient
+  prompt: The four strangers arrive in Malmont, a town that has never heard of them
+    and holds its own dangers. They take stock of their surroundings, noting the unusual
+    silence and the strange architecture that seems to shift in the corner of their
+    vision.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n0-malmont-arrival-2
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: malmont-arrival-arc-n0
+nodes:
+- node_id: malmont-arrival-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 0
+needs_rebrief: true

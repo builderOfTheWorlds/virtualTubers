@@ -1,0 +1,114 @@
+segment_id: magic-lost-arc
+order: 3
+loop: 0
+hours: 6
+synopsis: The seal fails, and the last well runs dry. Magic dies out, and the four
+  strangers realize they are now in a world where sorcery is impossible — unless one
+  of them is different.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-lost-arc-n0-collapse-1
+  kind: ambient
+  prompt: The seal shatters with a sound like breaking glass, and the last well runs
+    dry in an instant. Magic dies out around them, leaving only silence where once
+    there was power.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n0
+- slot_id: magic-lost-arc-n0-collapse-2
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-lost-arc-n0
+- slot_id: magic-lost-arc-n1-revelation-1
+  kind: ambient
+  prompt: The air feels different now—thicker, somehow. Leena notices her hands
+    trembling slightly, as if the world has shifted beneath her fingertips.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-revelation-2
+  kind: ambient
+  prompt: Vigil looks around, his usual confident demeanor faltering. "This is wrong,"
+    he murmurs. "We should have been able to do more."
+  lore:
+  - moonwells
+  participants:
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-revelation-3
+  kind: ambient
+  prompt: The chadwick's axe lies silent in the dirt. He glances at it, then at his
+    companions—his face a mask of confusion and fear.
+  lore:
+  - the-bahadur
+  participants:
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-revelation-4
+  kind: ambient
+  prompt: Sodacan Bob's eyes flicker with something unreadable. She senses a change in
+    herself, one that feels both familiar and foreign.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-revelation-5
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: flags
+  depends_on: []
+  node_id: magic-lost-arc-n1
+nodes:
+- node_id: magic-lost-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: magic-lost-arc-n0
+  parent_id: magic-lost-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: magic-lost-arc-n1
+  parent_id: magic-lost-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

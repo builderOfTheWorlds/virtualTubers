@@ -1,0 +1,432 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: intro-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - intro
+  synopsis: A one-sentence summary of what happens.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-1
+  loop: 0
+  order: 1
+  spine_scenes:
+  - intro
+  synopsis: Another one-sentence summary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-2
+  loop: 0
+  order: 2
+  spine_scenes:
+  - intro
+  synopsis: A third one-sentence summary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-3
+  loop: 0
+  order: 3
+  spine_scenes:
+  - intro
+  synopsis: Fourth one-sentence summary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-4
+  loop: 0
+  order: 4
+  spine_scenes:
+  - intro
+  synopsis: Fifth one-sentence summary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-5
+  loop: 0
+  order: 5
+  spine_scenes:
+  - intro
+  synopsis: Sixth one-sentence summary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out:
+    Leena-wounded: true
+  continuity_in: The party travels to the moonwell.
+  continuity_out: The party discovers Leena's grave injuries.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-6
+  loop: 0
+  order: 6
+  spine_scenes:
+  - intro
+  synopsis: The adventurers arrive at the moonwell, finding Leena gravely wounded.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: true
+  carry_out:
+    Leena-wounded: true
+    moonwell-tainted: true
+  continuity_in: The party discovers Leena's grave injuries.
+  continuity_out: The moonwell's corruption is revealed.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-7
+  loop: 0
+  order: 7
+  spine_scenes:
+  - intro
+  synopsis: The party tries to stabilize Leena and investigates the tainted moonwell.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: true
+    moonwell-tainted: true
+  carry_out:
+    Leena-wounded: true
+    moonwell-tainted: true
+  continuity_in: The moonwell's corruption is revealed.
+  continuity_out: The method to purify the moonwell is discovered.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-8
+  loop: 0
+  order: 8
+  spine_scenes:
+  - intro
+  synopsis: The party learns the nature of the moonwell's taint and how to purify
+    it.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: true
+    moonwell-tainted: true
+  carry_out:
+    Leena-wounded: true
+    moonwell-tainted: true
+  continuity_in: The method to purify the moonwell is discovered.
+  continuity_out: The components for the ritual are collected.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-9
+  loop: 0
+  order: 9
+  spine_scenes:
+  - intro
+  synopsis: The party gathers the necessary components to perform the purification
+    ritual.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: true
+    moonwell-tainted: true
+  carry_out: {}
+  continuity_in: The components for the ritual are collected.
+  continuity_out: The moonwell is purified and Leena is healed.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-10
+  loop: 0
+  order: 10
+  spine_scenes:
+  - intro
+  synopsis: The party performs the ritual to purify the moonwell and heal Leena.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The moonwell is purified and Leena is healed.
+  continuity_out: The party sets their sights on new adventures.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-11
+  loop: 0
+  order: 11
+  spine_scenes:
+  - intro
+  synopsis: With the moonwell purified, the party reflects on their journey and plans
+    their next steps.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party sets their sights on new adventures.
+  continuity_out: The party decides to investigate the tainted moonwell.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-12
+  loop: 0
+  order: 12
+  spine_scenes:
+  - intro
+  synopsis: The party discusses their next destination.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party decides to investigate the tainted moonwell.
+  continuity_out: The party arrives at the moonwell and senses a dark presence.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-13
+  loop: 0
+  order: 13
+  spine_scenes:
+  - intro
+  synopsis: The party journeys to the location of the tainted moonwell.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party arrives at the moonwell and senses a dark presence.
+  continuity_out: The corrupted guardian attacks the party.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-14
+  loop: 0
+  order: 14
+  spine_scenes:
+  - intro
+  synopsis: The party encounters the source of the taint, a corrupted guardian.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The corrupted guardian attacks the party.
+  continuity_out: The party defeats the guardian, but the taint remains.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-15
+  loop: 0
+  order: 15
+  spine_scenes:
+  - intro
+  synopsis: The party battles the corrupted guardian to cleanse the moonwell.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party defeats the guardian, but the taint remains.
+  continuity_out: The party must descend into the moonwell to confront the true evil.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-16
+  loop: 0
+  order: 16
+  spine_scenes:
+  - intro
+  synopsis: The party discovers the true source of the taint is deeper within the
+    well.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must descend into the moonwell to confront the true evil.
+  continuity_out: The party begins their descent, ready to face the unknown.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-17
+  loop: 0
+  order: 17
+  spine_scenes:
+  - intro
+  synopsis: The party prepares to descend into the depths of the tainted moonwell.
+- ambient_focus: The party cautiously makes their way down into the unknown depths.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party stands at the edge of the entrance, preparing to descend.
+  continuity_out: The party has reached the first level down, a vast cavern system.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-18
+  loop: 0
+  order: 18
+  spine_scenes:
+  - intro
+  synopsis: The adventurers begin their descent into the mysterious underground, unsure
+    of what awaits them.
+- ambient_focus: The party navigates through the dimly lit caverns, on alert for any
+    danger.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has reached the first level down, a vast cavern system.
+  continuity_out: The party discovers an ancient underground river flowing through
+    the caverns.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-19
+  loop: 0
+  order: 19
+  spine_scenes:
+  - intro
+  synopsis: The party cautiously explores the first level of the underground caverns,
+    wary of potential threats.
+- ambient_focus: The sound of rushing water echoes through the caverns as the party
+    approaches the river.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party discovers an ancient underground river flowing through
+    the caverns.
+  continuity_out: The party devises a plan to cross the river using their combined
+    skills and resources.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-20
+  loop: 0
+  order: 20
+  spine_scenes:
+  - intro
+  synopsis: The party comes across an ancient underground river and debates on how
+    to cross it safely.
+- ambient_focus: The party works together to construct a make-shift raft to cross
+    the river.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party devises a plan to cross the river using their combined
+    skills and resources.
+  continuity_out: The party successfully crosses the river on their makeshift raft.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-21
+  loop: 0
+  order: 21
+  spine_scenes:
+  - intro
+  synopsis: The party pools their resources and skills to create a raft capable of
+    crossing the treacherous underground river.
+- ambient_focus: The party cautiously scouts the far side of the river, alert for
+    any new dangers.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party successfully crosses the river on their makeshift raft.
+  continuity_out: The party discovers a hidden path leading further into the depths.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-22
+  loop: 0
+  order: 22
+  spine_scenes:
+  - intro
+  synopsis: After successfully crossing the river, the party scouts the new area,
+    searching for clues to their ultimate goal.
+- ambient_focus: The party follows the hidden path, unsure of where it leads.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party discovers a hidden path leading further into the depths.
+  continuity_out: The party reaches a seemingly ancient and long-abandoned underground
+    city.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-23
+  loop: 0
+  order: 23
+  spine_scenes:
+  - intro
+  synopsis: The party decides to follow the newly discovered path, hoping it will
+    lead them closer to their objective.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party reaches a seemingly ancient and long-abandoned underground
+    city.
+  continuity_out: The party discovers a mysterious structure in the center of the
+    city.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-24
+  loop: 0
+  order: 24
+  spine_scenes:
+  - intro
+  synopsis: The party cautiously explores the entrance of the underground city, wary
+    of potential dangers.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party discovers a mysterious structure in the center of the city.
+  continuity_out: The party encounters a group of creatures guarding the structure.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-25
+  loop: 0
+  order: 25
+  spine_scenes:
+  - intro
+  synopsis: The party investigates the mysterious structure, uncovering clues about
+    the city's history.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party encounters a group of creatures guarding the structure.
+  continuity_out: The party gains access to the interior of the mysterious structure.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-26
+  loop: 0
+  order: 26
+  spine_scenes:
+  - intro
+  synopsis: The party engages in a tense confrontation with the creatures, ultimately
+    driving them off.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party gains access to the interior of the mysterious structure.
+  continuity_out: The party must decide what to do with the artifact and how to proceed.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: segment-27
+  loop: 0
+  order: 27
+  spine_scenes:
+  - intro
+  synopsis: Inside the structure, the party discovers an ancient artifact and learns
+    more about the city's past.

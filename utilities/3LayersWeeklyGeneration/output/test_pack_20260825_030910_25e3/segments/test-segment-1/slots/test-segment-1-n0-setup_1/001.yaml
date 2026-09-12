@@ -1,0 +1,25 @@
+id: test-segment-1-n0-setup_1
+take: 1
+model: light
+generated_at: '2026-08-25T03:13:32.764786+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fluorescent lights in the development room hummed to life, illuminating
+    rows of workstations and the hero's determined face.
+- kind: dialogue
+  speaker: gm
+  text: The hero's fingers flew across the keyboard, typing out lines of code that
+    would soon bring the scene to life.
+- kind: dialogue
+  speaker: hero
+  text: Alright, let's get this pipeline started. I need to initialize the rendering
+    engine and configure the scene graph.
+- kind: dialogue
+  speaker: gm
+  text: The sound of crunching code and the occasional beep of a notification filled
+    the air as the hero worked tirelessly.
+- kind: dialogue
+  speaker: gm
+  text: The hero's eyes scanned the lines of code, making sure everything was in order,
+    before moving on to the next step in the pipeline.

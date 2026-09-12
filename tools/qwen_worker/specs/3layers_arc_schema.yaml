@@ -18,7 +18,7 @@ goal: |
   The single most important rule: THE CLOSED VOCABULARY IS ENFORCED HERE.
   `carry_in` and `carry_out` may name ONLY the keys in
   `config["state"]["carry_keys"]`, and `spine_scenes` only real scene ids from
-  the pack. This is not pedantry. An invented key like `Alcinoe-cursed` does not
+  the pack. This is not pedantry. An invented key like `Leena-cursed` does not
   fail at runtime — it EVAPORATES. Nothing ever sets it, so every slot that
   reads it takes the else-branch forever and an entire story thread quietly
   disappears with nothing in any log to say so. Rejecting it costs one retry.

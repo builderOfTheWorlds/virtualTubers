@@ -1,0 +1,133 @@
+amulet-map-arc:
+  node_id: amulet-map-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'Jasper and Juniper''s map reveals the location of the next monument, setting
+    the '
+  summary: Jasper and Juniper's map reveals the location of the next monument, setting
+    the party on a new quest.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-n0
+  - amulet-map-arc-n1
+  slots: null
+amulet-map-arc-n0:
+  node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  order: 0
+  depth: 1
+  title: The Map's Revelation
+  summary: Jasper and Juniper carefully study the ancient map, their eyes widening
+    as they trace the cryptic symbols that mark the location of the next monument.
+    The weight of discovery settles on their shoulders as they realize they've found
+    the key to their next quest.
+  continuity_in: The party examines the mysterious map with growing excitement
+  continuity_out: Jasper and Juniper's map reveals the location of the next monument,
+    setting the party on a new quest
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n0-map-revelation-1
+    kind: ambient
+    prompt: Jasper and Juniper carefully study the ancient map, their eyes widening
+      as they trace the cryptic symbols that mark the location of the next monument
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-map-revelation-2
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+amulet-map-arc-n1:
+  node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  order: 1
+  depth: 1
+  title: The Quest Begins
+  summary: With the monument's location confirmed, the party prepares for their journey
+    ahead. The weight of anticipation fills the air as they gather supplies and plan
+    their route, knowing that the next monument holds secrets that will shape their
+    destiny.
+  continuity_in: Jasper and Juniper's map reveals the location of the next monument,
+    setting the party on a new quest
+  continuity_out: The party sets out on their journey toward the next monument
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n1-quest-begin-1
+    kind: ambient
+    prompt: The party gathers around the map, studying the location of the next monument
+      with growing anticipation.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-quest-begin-2
+    kind: ambient
+    prompt: Vigil speaks of the dangers ahead, his voice carrying a weight that makes
+      the air feel thicker.
+    lore:
+    - moonwells
+    participants:
+    - Vigil
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-quest-begin-3
+    kind: ambient
+    prompt: The chadwick examines the map with keen interest, his axe resting nearby
+      as he ponders their next move.
+    lore:
+    - the-bahadur
+    participants:
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-quest-begin-4
+    kind: ambient
+    prompt: Sodacan Bob offers a quiet word about the secrets the next monument might hold,
+      eyes glancing toward the horizon.
+    lore:
+    - the-event
+    participants:
+    - sodacan_bob
+    - Leena
+    sensitivity: none
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-quest-begin-5
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

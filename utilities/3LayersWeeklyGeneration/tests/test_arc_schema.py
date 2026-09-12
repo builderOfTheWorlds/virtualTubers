@@ -232,30 +232,30 @@ def test_a_short_batch_is_rejected(vocab, config):
 
 def test_a_carry_out_key_outside_the_vocabulary_is_rejected(vocab, config):
     """This is the failure the closed vocabulary exists to catch, and it is
-    invisible at runtime: nothing ever sets `Alcinoe-cursed`, so every slot that
+    invisible at runtime: nothing ever sets `Leena-cursed`, so every slot that
     reads it takes the else-branch forever and the arc quietly loses a thread.
     A hard failure here costs one retry."""
-    problems = arc_schema.validate_batch([segment(0, carry_out={"Alcinoe-cursed": True})],
+    problems = arc_schema.validate_batch([segment(0, carry_out={"Leena-cursed": True})],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
-    assert any("Alcinoe-cursed" in p for p in problems)
+    assert any("Leena-cursed" in p for p in problems)
 
 
 def test_a_carry_in_key_outside_the_vocabulary_is_rejected(vocab, config):
-    problems = arc_schema.validate_batch([segment(0, carry_in={"Alcinoe-cursed": False})],
+    problems = arc_schema.validate_batch([segment(0, carry_in={"Leena-cursed": False})],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
-    assert any("Alcinoe-cursed" in p for p in problems)
+    assert any("Leena-cursed" in p for p in problems)
 
 
 def test_a_flag_that_is_not_a_carry_key_is_still_rejected_in_carry_out(vocab, config):
-    """`buffalo-lost-axe` is a real flag but not a carry key. Carry keys are
+    """`chadwick-lost-axe` is a real flag but not a carry key. Carry keys are
     the subset that survives a loop reset; carrying a non-carry flag across
     the boundary contradicts the reset it is supposed to survive."""
-    problems = arc_schema.validate_batch([segment(0, carry_out={"buffalo-lost-axe": True})],
+    problems = arc_schema.validate_batch([segment(0, carry_out={"chadwick-lost-axe": True})],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
-    assert any("buffalo-lost-axe" in p for p in problems)
+    assert any("chadwick-lost-axe" in p for p in problems)
 
 
 def test_a_spine_scene_that_does_not_exist_is_rejected(vocab, config):
@@ -299,10 +299,10 @@ def test_a_nonsensical_loop_number_is_rejected(vocab, config, bad_loop):
 
 
 def test_carry_maps_must_be_mappings_not_lists(vocab, config):
-    """`carry_out: [Alcinoe-wounded]` is the shape a model reaches for when it
+    """`carry_out: [Leena-wounded]` is the shape a model reaches for when it
     is thinking of a set. It has no values, so nothing downstream can read
     it, and a key-membership check that iterates a list still passes."""
-    problems = arc_schema.validate_batch([segment(0, carry_out=["Alcinoe-wounded"])],
+    problems = arc_schema.validate_batch([segment(0, carry_out=["Leena-wounded"])],
                                        expected_orders=[0], known_ids=set(),
                                        vocab=vocab, config=config)
     assert problems
@@ -344,8 +344,28 @@ def test_the_prompt_lists_every_legal_carry_key(config):
 
 def test_problems_appear_in_the_prompt_when_supplied(config):
     prompt = arc_schema.build_prompt("CONTEXT", [0], "", config,
-                                   ["segment 'seg-001' carry_out has unknown key 'Alcinoe-cursed'"])
-    assert "Alcinoe-cursed" in prompt
+                                   ["segment 'seg-001' carry_out has unknown key 'Leena-cursed'"])
+    assert "Leena-cursed" in prompt
+
+
+def test_the_prompt_lists_every_legal_spine_scene_id(config):
+    """Regression: validate_batch checks spine_scenes against a closed
+    scene-id vocabulary, but the prompt used to never state that
+    vocabulary — only loose scene titles/narration lived in `context`. The
+    model then invented full plot-description strings as scene ids, and
+    every batch failed validation. spine_scene_ids must be spelled out
+    explicitly so the model can only pick from what's actually legal."""
+    prompt = arc_schema.build_prompt("CONTEXT", [0], "", config, None,
+                                   spine_scene_ids=["intro", "camp-fire"])
+    assert "intro" in prompt
+    assert "camp-fire" in prompt
+
+
+def test_missing_spine_scene_ids_does_not_crash_the_prompt_builder(config):
+    """spine_scene_ids defaults to None (e.g. a pack with zero non-ambient
+    scenes) — build_prompt must degrade gracefully, not raise."""
+    prompt = arc_schema.build_prompt("CONTEXT", [0], "", config, None)
+    assert "none available" in prompt.lower()
 
 
 def test_no_problem_text_leaks_into_a_first_attempt(config):

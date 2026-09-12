@@ -1,0 +1,51 @@
+segment_id: test-segment-2
+order: 2
+loop: 0
+hours: 6
+synopsis: Verification of scene transition functionality and data flow.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: test-segment-2-n1-post_transition_1
+  kind: ambient
+  prompt: Confirm that the scene transition has completed successfully and verify
+    that data flow is continuing as expected
+  lore: []
+  participants:
+  - gm
+  - hero
+  sensitivity: none
+  depends_on: []
+  node_id: test-segment-2-n1
+- slot_id: test-segment-2-n1-post_transition_2
+  kind: spine
+  scene_ref: intro
+  participants:
+  - gm
+  - hero
+  node_id: test-segment-2-n1
+nodes:
+- node_id: test-segment-2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: test-segment-2-n0
+  parent_id: test-segment-2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: test-segment-2-n1
+  parent_id: test-segment-2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+needs_rebrief: true

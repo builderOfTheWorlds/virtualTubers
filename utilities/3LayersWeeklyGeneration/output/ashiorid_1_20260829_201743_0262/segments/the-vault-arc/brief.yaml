@@ -1,0 +1,34 @@
+segment_id: the-vault-arc
+order: 15
+loop: 0
+hours: 6
+synopsis: The party discovers the truth about what is hidden in Leto's manor subbasement,
+  and its connection to the moonwells.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: the-vault-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: the-vault-arc-n0
+  parent_id: the-vault-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: the-vault-arc-n1
+  parent_id: the-vault-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

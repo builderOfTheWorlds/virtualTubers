@@ -1,0 +1,73 @@
+segment_id: amulet-map-arc
+order: 11
+loop: 0
+hours: 6
+synopsis: Jasper and Juniper's map reveals the first location of a monument, setting
+  the stage for the party's quest to collect all nine fragments of the map and ultimately
+  find the Amulet of Wonder.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: amulet-map-arc-n0-map-first-revelation-1
+  kind: ambient
+  prompt: Jasper traces his finger along the ancient parchment, his voice barely above
+    a whisper as he deciphers the first marker on the map.
+  lore:
+  - amulet-of-wonder
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n0
+- slot_id: amulet-map-arc-n0-map-first-revelation-2
+  kind: ambient
+  prompt: Juniper's eyes widen as she realizes the significance of the first monument's
+    location, her voice trembling with excitement and trepidation.
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n0
+- slot_id: amulet-map-arc-n0-map-first-revelation-3
+  kind: spine
+  scene_ref: amulet-map
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: amulet-map-arc-n0
+nodes:
+- node_id: amulet-map-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 0
+needs_rebrief: true

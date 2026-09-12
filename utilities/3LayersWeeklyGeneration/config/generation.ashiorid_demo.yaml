@@ -1,0 +1,94 @@
+# Demo config scoped to the newly enriched ashiorid_1 pack (portal-choice,
+# malmont-arrival, amulet-map, bahadur-revealed, malvakar-riddle spine scenes
+# plus malmont-market / sodacan_bob-on-runes ambient scenes and three new lore
+# notes: the-bahadur, amulet-of-wonder, malmont).
+#
+# Light/fast local Ollama models, scoped to actually exercise the new spine:
+# hours_total=90 / segment_hours=6 -> 15 segments, one per spine scene.
+# Small per-segment word/slot budgets so a full local run finishes quickly
+# while still writing real generated prose through Layer 3.
+
+campaign:
+  pack: campaigns/ashiorid_1
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 180
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 13500
+  target_total_hours: 90
+  target_words_per_hour: 150
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  hours_total: 90            # -> n_segments = ceil(90/6) = 15 segments
+  segment_hours: 6
+  batch_size: 5
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  target_words: 900
+  target_slots: 15
+  tree:
+    max_leaf_slots: 6
+    max_children: 3
+    max_depth: 2
+    min_node_words: 60
+    leaf_density_floor: 0.50
+  concurrency: 4
+  max_attempts: 3
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 20
+    failure_rate: 0.5
+    min_samples: 8
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 300
+    heavy:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 300
+      num_ctx: 4096
+  active_model: light
+  max_recent: 6
+  max_words: 45
+  max_beats: 8
+  takes_per_slot: 1
+  neutral_takes: 1
+  concurrency: 6
+  max_attempts: 2
+  seconds_per_take: 8
+
+state:
+  flags:      [Leena-wounded, moonwell-tainted, chadwick-lost-axe]
+  moods:      [tense, weary, hopeful, giddy]
+  carry_keys: [Leena-wounded, moonwell-tainted]

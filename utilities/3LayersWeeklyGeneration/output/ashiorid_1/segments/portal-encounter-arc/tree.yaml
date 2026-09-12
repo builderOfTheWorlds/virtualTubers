@@ -1,0 +1,150 @@
+portal-encounter-arc:
+  node_id: portal-encounter-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: At the mouth of a tear in reality, a dying wizard reveals crucial information
+    ab
+  summary: At the mouth of a tear in reality, a dying wizard reveals crucial information
+    about the Bahadur and the nature of the portals that have been opening across
+    Ashiorid.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - portal-encounter-arc-n0
+  - portal-encounter-arc-n1
+  slots: null
+portal-encounter-arc-n0:
+  node_id: portal-encounter-arc-n0
+  parent_id: portal-encounter-arc
+  order: 0
+  depth: 1
+  title: The Wizard's Final Revelation
+  summary: The dying wizard, barely conscious, whispers secrets about the Bahadur's
+    true nature and how their portals operate across Ashiorid, with his final breaths
+    revealing the mechanism behind the reality tears.
+  continuity_in: At the mouth of a tear in reality, a dying wizard reveals crucial
+    information about the Bahadur and the nature of the portals that have been opening
+    across Ashiorid.
+  continuity_out: The wizard's dying words about the Bahadur's true nature begin to
+    unravel the mystery of how their portals operate across Ashiorid.
+  target_words: 540
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n0-wizard-revelation-1
+    kind: ambient
+    prompt: The dying wizard's voice barely whispers secrets about the Bahadur's true
+      nature
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-wizard-revelation-2
+    kind: ambient
+    prompt: The wizard reveals how the Bahadur's portals operate across Ashiorid
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-wizard-revelation-3
+    kind: ambient
+    prompt: The wizard speaks of the mechanism behind reality tears and their connection
+      to the Bahadur
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-wizard-revelation-4
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: portal-encounter-arc-n0-wizard-revelation-5
+    kind: ambient
+    prompt: The wizard's final words begin to unravel the mystery of how the Bahadur's
+      portals operate across Ashiorid
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+portal-encounter-arc-n1:
+  node_id: portal-encounter-arc-n1
+  parent_id: portal-encounter-arc
+  order: 1
+  depth: 1
+  title: The Consequences of Knowledge
+  summary: As the wizard's revelation sinks in, the characters must grapple with the
+    implications of what they've learned about the Bahadur and their portal network,
+    leading to immediate decisions about how to respond to this new understanding.
+  continuity_in: The wizard's dying words about the Bahadur's true nature begin to
+    unravel the mystery of how their portals operate across Ashiorid.
+  continuity_out: The characters face the consequences of understanding the Bahadur's
+    true nature and how their portals operate across Ashiorid, making critical decisions
+    about their next steps.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n1-consequence-1
+    kind: ambient
+    prompt: The weight of the wizard's final words settles on the group as they process
+      the truth about the Bahadur's portal network
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n1-consequence-2
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: portal-encounter-arc-n1-consequence-3
+    kind: ambient
+    prompt: As the characters grapple with the implications of their new understanding,
+      they must decide how to respond to the Bahadur's true nature and their portal
+      operations across Ashiorid
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

@@ -163,11 +163,16 @@ class Performer:
 
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
                  state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
-                 on_scene_start=None, wait_for_scene=None, speaker_names=None):
+                 on_scene_start=None, wait_for_scene=None, speaker_names=None,
+                 boss_name=None):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
         self.worker_name = worker_name
+        # Name shown on the user_message header and its avatar action. None
+        # keeps the historical "BOSS" label, so a caller that doesn't pass it
+        # renders exactly as before; a campaign sets it to the GM's name.
+        self.boss_name = boss_name
         self.state_path = state_path
         self.max_output_lines = max_output_lines
         # Duet hooks (both default None => today's straight-through solo
@@ -232,8 +237,14 @@ class Performer:
     def _on_user_message(self, event):
         c = self.c
         self._line()
-        self._line(f"{c.cyan}{c.bold}┌─ BOSS ─────────────────────────────{c.reset}")
-        self._avatar("thinking", action="reading a message from the boss")
+        # The header names whoever is speaking this side of the script. For a
+        # coding session that's the boss; for a campaign it's the GM/narrator
+        # (e.g. "Ashiorid"), so it comes from voice.boss_name rather than a
+        # hardcoded "BOSS". Pad/truncate to keep the box a fixed width.
+        label = (self.boss_name or "BOSS").upper()[:32]
+        rule = "─" * max(1, 36 - len(label) - 2)
+        self._line(f"{c.cyan}{c.bold}┌─ {label} {rule}{c.reset}")
+        self._avatar("thinking", action=f"reading a message from {self.boss_name or 'the boss'}")
         for line in event["text"].splitlines():
             self._typed(line, DIALOGUE_CPS * 2, prefix=f"{c.cyan}│ {c.reset}")
         self._line(f"{c.cyan}└────────────────────────────────────{c.reset}")
@@ -605,6 +616,7 @@ def main():
         state_path=args.state_file,
         max_output_lines=args.max_output_lines,
         speaker_names=(config.get("voice") or {}).get("speaker_names") or {} if config else None,
+        boss_name=(config.get("voice") or {}).get("boss_name") if config else None,
     )
 
     show = None

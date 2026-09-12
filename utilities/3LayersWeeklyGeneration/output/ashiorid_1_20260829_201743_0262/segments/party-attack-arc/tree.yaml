@@ -1,0 +1,94 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The doors open to people who were not invited, and the room stops moving
+    as a vi
+  summary: The doors open to people who were not invited, and the room stops moving
+    as a violent attack begins.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - party-attack-arc-n0
+  - party-attack-arc-n1
+  slots: null
+party-attack-arc-n0:
+  node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  order: 0
+  depth: 1
+  title: The Uninvited Arrival
+  summary: The doors swing open revealing unexpected guests who were never on the
+    invitation list, disrupting the carefully orchestrated movement of the room as
+    they enter.
+  continuity_in: The doors open to people who were not invited, and the room stops
+    moving as a violent attack begins.
+  continuity_out: The sudden intrusion of uninvited guests creates chaos that interrupts
+    the room's controlled environment.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: party-attack-arc-n0-1
+    kind: ambient
+    prompt: The doors swing open with a thunderous crash, revealing figures in dark
+      cloaks who were never on the invitation list. The room's movement halts abruptly
+      as they step inside, their presence disrupting the carefully orchestrated environment.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-2
+    kind: ambient
+    prompt: A violent attack begins as the uninvited guests draw weapons. The room
+      erupts into chaos, with screams and the clash of steel echoing off the walls
+      as the carefully maintained peace is shattered.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-3
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+party-attack-arc-n1:
+  node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  order: 1
+  depth: 1
+  title: The Assault Begins
+  summary: As the room ceases its movement, an immediate and violent attack erupts,
+    catching everyone off guard as the peaceful gathering transforms into a scene
+    of conflict.
+  continuity_in: The sudden intrusion of uninvited guests creates chaos that interrupts
+    the room's controlled environment.
+  continuity_out: The violent attack escalates as combatants engage in the confined
+    space of the moving room.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

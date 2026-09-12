@@ -1,0 +1,30 @@
+id: chadwick-lost
+take: 1
+model: hermes3:70b
+generated_at: '2026-08-18T01:57:13.132020+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The group stands at a crossroads, uncertain of which path to take.
+- kind: dialogue
+  speaker: chadwick
+  text: We should definitely go left. That's the way to the castle, I'm sure of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, Chadwick, you never fail to entertain with your sense of direction!
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we need to go right. The castle is that way, based on the
+    map.
+- kind: dialogue
+  speaker: Leena
+  text: You know, Chadwick, we really appreciate you taking the lead. But perhaps we
+    should consider Vigil's input?
+- kind: dialogue
+  speaker: chadwick
+  text: I still think left is the correct way. But I suppose we could go right, if
+    everyone else insists.
+- kind: dialogue
+  speaker: gm
+  text: The group heads down the right path, with Chadwick trailing behind, still insisting
+    left was the way to go.

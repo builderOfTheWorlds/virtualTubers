@@ -1,0 +1,98 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A one-sentence summary of what happens.
+  summary: A one-sentence summary of what happens.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - intro-arc-n0
+  - intro-arc-n1
+  slots: null
+intro-arc-n0:
+  node_id: intro-arc-n0
+  parent_id: intro-arc
+  order: 0
+  depth: 1
+  title: The Journey Begins
+  summary: The protagonist sets out on their quest with determination and hope.
+  continuity_in: The character stands at the threshold of their journey, filled with
+    anticipation and uncertainty about what lies ahead.
+  continuity_out: The character moves forward into the unknown, leaving behind familiar
+    surroundings and embracing new challenges.
+  target_words: 180
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: intro-arc-n0-1
+    kind: ambient
+    prompt: The hero stands at the threshold, looking back at what they're leaving
+      behind and forward to what awaits
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n0-2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - hero
+intro-arc-n1:
+  node_id: intro-arc-n1
+  parent_id: intro-arc
+  order: 1
+  depth: 1
+  title: First Challenges
+  summary: The protagonist encounters their first major obstacle that tests their
+    resolve and skills.
+  continuity_in: Having left the safety of home, the character faces their initial
+    test in an unfamiliar environment.
+  continuity_out: The character emerges from this trial stronger and more aware of
+    their capabilities, preparing for even greater trials ahead.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: intro-arc-n1-1
+    kind: spine
+    scene_ref: intro
+    participants:
+    - hero
+  - slot_id: intro-arc-n1-2
+    kind: ambient
+    prompt: The hero stands at the edge of a dark forest, their heart pounding as
+      they contemplate the path ahead
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n1-3
+    kind: ambient
+    prompt: A sudden gust of wind sends leaves swirling around the hero's feet, as
+      if the forest itself is watching their every move
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n1-4
+    kind: ambient
+    prompt: The hero's hand trembles slightly as they grasp their weapon, remembering
+      the lessons from their training
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []

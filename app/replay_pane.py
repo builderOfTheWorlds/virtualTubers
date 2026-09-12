@@ -600,6 +600,7 @@ def perform_director_request(request, worker_name, state_path, self_id,
             state_path=state_path,
             on_scene_start=on_scene_start,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+            boss_name=((config or {}).get("voice") or {}).get("boss_name"),
         )
         completed = performer.perform(script, show=show)
         _delete_stale_file(stop_file)
@@ -721,6 +722,7 @@ def perform_follower_request(request, worker_name, state_path, self_id,
             state_path=state_path,
             wait_for_scene=wait_for_scene,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+            boss_name=((config or {}).get("voice") or {}).get("boss_name"),
         )
         performer.perform(script, show=show)
         _delete_stale_file(stop_file)
@@ -772,6 +774,7 @@ def perform_request(request, worker_name, state_path, default_speed=1.0,
         worker_name=name,
         state_path=state_path,
         speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
+        boss_name=((config or {}).get("voice") or {}).get("boss_name"),
     )
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show = None

@@ -1,0 +1,100 @@
+segment_id: letos-manor-arc
+order: 4
+loop: 0
+hours: 6
+synopsis: The four strangers arrive at Duke Sorensen Leto III's manor for a party
+  that was planned ten thousand years in advance, only to discover they are not welcome.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-n1-hidden-truth-1
+  kind: ambient
+  prompt: The strangers gather at the manor's edge, noting the imposing structure
+    and the guards who refuse them entry.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-hidden-truth-2
+  kind: ambient
+  prompt: As they circle the manor, Leena notices strange symbols etched into the
+    stone walls.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-hidden-truth-3
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-hidden-truth-4
+  kind: ambient
+  prompt: Vigil discovers a hidden passage behind a tapestry, leading deeper into
+    the manor's secrets.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-hidden-truth-5
+  kind: ambient
+  prompt: The strangers find ancient texts revealing the true purpose of Duke Sorensen
+    Leto III's party.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+nodes:
+- node_id: letos-manor-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+needs_rebrief: true

@@ -1,0 +1,148 @@
+magic-retained-arc:
+  node_id: magic-retained-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal holds, and the last well retains its magic. The four strangers begin
+    to
+  summary: The seal holds, and the last well retains its magic. The four strangers
+    begin to understand that their lives are now tied to a legacy of magical preservation.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-retained-arc-n0
+  - magic-retained-arc-n1
+  slots: null
+magic-retained-arc-n0:
+  node_id: magic-retained-arc-n0
+  parent_id: magic-retained-arc
+  order: 0
+  depth: 1
+  title: The Weight of Understanding
+  summary: The four strangers grapple with the magnitude of their newfound responsibility
+    as guardians of the magical legacy. Each begins to comprehend how their individual
+    paths have converged to maintain the ancient seal that protects the last well.
+    They sense the weight of centuries of magical preservation resting on their shoulders,
+    and the implications of failure ripple through both the present and the future.
+  continuity_in: The seal holds, and the last well retains its magic. The four strangers
+    begin to understand that their lives are now tied to a legacy of magical preservation.
+  continuity_out: As they comprehend their role in the ancient magical legacy, the
+    strangers realize they must now prepare for the challenges ahead, understanding
+    that their actions will echo through generations.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-n0-weight-1
+    kind: ambient
+    prompt: The four strangers stand in silence, each lost in thought about their
+      newfound responsibility.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-n0-weight-2
+    kind: ambient
+    prompt: Vigil speaks softly, his voice carrying the weight of ancient knowledge.
+    lore:
+    - the-bahadur
+    - amulet-of-wonder
+    participants:
+    - Vigil
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-n0-weight-3
+    kind: ambient
+    prompt: Leena's hand trembles as she realizes the magnitude of what they've
+      become.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-n0-weight-4
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+magic-retained-arc-n1:
+  node_id: magic-retained-arc-n1
+  parent_id: magic-retained-arc
+  order: 1
+  depth: 1
+  title: The Threshold of Transformation
+  summary: With the seal secure and the well's magic intact, the four strangers find
+    themselves at a crossroads. They begin to see how their individual skills and
+    backgrounds have contributed to this moment, and they understand that their personal
+    journeys are now intertwined with the preservation of an ancient power. The weight
+    of their connection to the magical legacy becomes tangible as they prepare to
+    take on their roles as guardians.
+  continuity_in: As they comprehend their role in the ancient magical legacy, the
+    strangers realize they must now prepare for the challenges ahead, understanding
+    that their actions will echo through generations.
+  continuity_out: The strangers begin to understand how their individual journeys
+    have led them to this moment, and they prepare to embrace their roles as guardians
+    of the seal, knowing their personal growth is tied to the well's continued magic.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-n1-threshold-1
+    kind: ambient
+    prompt: The strangers stand at the threshold, feeling the weight of their new
+      responsibility
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-n1-threshold-2
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: magic-retained-arc-n1-threshold-3
+    kind: ambient
+    prompt: Each stranger reflects on how their past experiences have led them to
+      this moment of magical preservation
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

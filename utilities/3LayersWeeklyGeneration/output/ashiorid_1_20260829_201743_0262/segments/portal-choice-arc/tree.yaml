@@ -1,0 +1,168 @@
+portal-choice-arc:
+  node_id: portal-choice-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party must decide whether to enter the tear or stay and face the consequence
+  summary: The party must decide whether to enter the tear or stay and face the consequences
+    of inaction.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0
+  - portal-choice-arc-n1
+  slots: null
+portal-choice-arc-n0:
+  node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  order: 0
+  depth: 1
+  title: Entering the Tear
+  summary: The party decides to venture through the tear, accepting the unknown dangers
+    and potential rewards that await on the other side. This choice commits them to
+    an immediate journey into the mystical realm beyond.
+  continuity_in: The party must decide whether to enter the tear or stay and face
+    the consequences of inaction.
+  continuity_out: The party has entered the tear and is now experiencing the effects
+    of their decision.
+  target_words: 650
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0-n0
+  - portal-choice-arc-n0-n1
+  slots: null
+portal-choice-arc-n1:
+  node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  order: 1
+  depth: 1
+  title: Staying and Facing Consequences
+  summary: The party chooses to remain and confront the inevitable consequences of
+    their inaction. This path leads to a series of events where they must deal with
+    the deteriorating situation and its aftermath.
+  continuity_in: The party must decide whether to enter the tear or stay and face
+    the consequences of inaction.
+  continuity_out: The party has chosen to stay and is now experiencing the consequences
+    of their decision.
+  target_words: 50
+  target_slots: 0
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-n1-stay-1
+    kind: ambient
+    prompt: The weight of inaction settles on the party as they choose to remain and
+      face the consequences.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-stay-2
+    kind: ambient
+    prompt: Leena's wound begins to trouble her as the consequences of their choice
+      manifest.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-stay-3
+    kind: ambient
+    prompt: Vigil speaks quietly, his voice carrying the burden of what they've chosen
+      to avoid.
+    lore:
+    - moonwells
+    participants:
+    - Vigil
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-stay-4
+    kind: ambient
+    prompt: The chadwick's lost axe lies forgotten, a symbol of the path not taken.
+    lore:
+    - the-begene-program
+    participants:
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-stay-5
+    kind: ambient
+    prompt: Sodacan Bob's eyes reflect the growing darkness as the situation spirals beyond
+      their control.
+    lore:
+    - the-bahadur
+    participants:
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-stay-6
+    kind: ambient
+    prompt: The party's silence echoes through the chamber, filled with the gravity
+      of their choice.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+portal-choice-arc-n0-n0:
+  node_id: portal-choice-arc-n0-n0
+  parent_id: portal-choice-arc-n0
+  order: 0
+  depth: 2
+  title: The Descent Through the Tear
+  summary: The party begins their journey through the mystical tear, experiencing
+    the disorienting passage as reality bends around them. They witness strange phenomena
+    and feel the fabric of existence shifting between dimensions.
+  continuity_in: The party must decide whether to enter the tear or stay and face
+    the consequences of inaction.
+  continuity_out: The party has entered the tear and is now experiencing the effects
+    of their decision.
+  target_words: 195
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots: []
+portal-choice-arc-n0-n1:
+  node_id: portal-choice-arc-n0-n1
+  parent_id: portal-choice-arc-n0
+  order: 1
+  depth: 2
+  title: Emergence and First Encounters
+  summary: The party emerges on the other side of the tear into a realm vastly different
+    from their own. They encounter the strange inhabitants and environment of this
+    new world, beginning to understand the nature of their destination and the challenges
+    that await.
+  continuity_in: The party has entered the tear and is now experiencing the effects
+    of their decision.
+  continuity_out: The party has emerged into the new realm and begun exploring its
+    mysteries.
+  target_words: 455
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots: []

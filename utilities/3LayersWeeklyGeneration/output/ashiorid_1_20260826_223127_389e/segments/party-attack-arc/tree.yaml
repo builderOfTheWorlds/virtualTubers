@@ -1,0 +1,60 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Uninvited guests attack the manor, and the four strangers must fight their
+    way t
+  summary: Uninvited guests attack the manor, and the four strangers must fight their
+    way through the chaos to survive.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - party-attack-arc-n0
+  - party-attack-arc-n1
+  slots: null
+party-attack-arc-n0:
+  node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  order: 0
+  depth: 1
+  title: The Assault Begins
+  summary: The manor is suddenly overrun by hostile forces as the four strangers witness
+    the initial chaos unfold. They must quickly assess their surroundings and decide
+    how to respond to the immediate threat.
+  continuity_in: Uninvited guests attack the manor, and the four strangers must fight
+    their way through the chaos to survive.
+  continuity_out: The four strangers find themselves separated during the initial
+    assault, each forced to navigate different corridors and rooms as they try to
+    understand the scope of the attack.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+party-attack-arc-n1:
+  node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  order: 1
+  depth: 1
+  title: The Fight for Survival
+  summary: With the initial shock subsiding, the four strangers must now work together
+    or separately to overcome their attackers. They face increasingly dangerous encounters
+    as they fight their way through the manor's defenses and seek safety.
+  continuity_in: The four strangers find themselves separated during the initial assault,
+    each forced to navigate different corridors and each forced to navigate different
+    corridors and rooms as they try to understand the scope of the attack.
+  continuity_out: The four strangers regroup in the manor's central hall after their
+    individual struggles, realizing that they must combine their strengths to face
+    the greater threat that awaits them.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -1,0 +1,37 @@
+id: amulet-map-arc-n1-quest-begin-1
+take: 1
+beats:
+- kind: narration
+  text: 'Here is the scene:'
+  speaker: gm
+- kind: narration
+  text: 'Ashiorid: Alright, let''s review the layout of the next monument. It''s a
+    ancient temple complex deep in the heart of the Dragon''s Spine mountains.'
+  speaker: gm
+- kind: narration
+  text: 'Buffalo: ( muttering to himself ) I don''t like this. We''re getting in over
+    our heads, folks. Mark my words.'
+  speaker: gm
+- kind: dialogue
+  text: ( whispering to Vance ) I've heard the temple is cursed. Our ancestors said
+    that anyone who disturbs the temple's secrets will be consumed by darkness.
+  speaker: Alcinoe
+- kind: dialogue
+  text: ( low voice ) Silence, Alcinoe. We're not here to listen to old stories. We're
+    here to find the next piece of the map.
+  speaker: Vance
+- kind: narration
+  text: 'Drokki: ( grumbling ) And what''s the point of it all? So we can get a pretty
+    map? I''d rather be fighting monsters and collecting loot.'
+  speaker: gm
+- kind: narration
+  text: 'Ashiorid: ( sternly ) Drokki, focus. We need to solve the temple''s riddle
+    to unlock the door to the next dungeon. Can anyone read the inscription on the
+    temple''s entrance?'
+  speaker: gm
+- kind: narration
+  text: 'Buffalo: ( studying the map ) I think I can make out the words. It says...
+    "Only those who can balance the weight of life and death may pass."'
+  speaker: gm
+model: light
+generated_at: '2026-08-26T22:45:53.526960+00:00'

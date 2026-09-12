@@ -1,0 +1,147 @@
+grovley-revelation-arc:
+  node_id: grovley-revelation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: In the subbasement, the butler reveals what the four of them truly are and
+    their
+  summary: In the subbasement, the butler reveals what the four of them truly are
+    and their connection to the Leto family.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc-n0
+  - grovley-revelation-arc-n1
+  slots: null
+grovley-revelation-arc-n0:
+  node_id: grovley-revelation-arc-n0
+  parent_id: grovley-revelation-arc
+  order: 0
+  depth: 1
+  title: The Butler's Revelation
+  summary: The butler unveils the true nature of the four protagonists and their ancestral
+    ties to the Leto family, revealing secrets that have been buried for generations.
+  continuity_in: The four protagonists stand in the dimly lit subbasement, surrounded
+    by ancient artifacts and dusty family portraits, when the butler emerges from
+    the shadows with a knowing smile.
+  continuity_out: As the revelations unfold, the protagonists realize their destinies
+    are intertwined with the Leto family's legacy, setting the stage for their fateful
+    journey ahead.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc-n0-butler-revelation-1
+    kind: ambient
+    prompt: The butler's voice echoes through the subbasement as he reveals the truth
+      about the four protagonists' lineage
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-butler-revelation-2
+    kind: ambient
+    prompt: The butler recounts how the four protagonists are connected to the Leto
+      family's ancient magic
+    lore:
+    - the-bahadur
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-butler-revelation-3
+    kind: ambient
+    prompt: The butler explains the consequences of the protagonists' true nature
+      on their future destinies
+    lore:
+    - the-event
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-butler-revelation-4
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+grovley-revelation-arc-n1:
+  node_id: grovley-revelation-arc-n1
+  parent_id: grovley-revelation-arc
+  order: 1
+  depth: 1
+  title: The Weight of Heritage
+  summary: The protagonists grapple with their newfound understanding of their lineage
+    and the responsibilities that come with their connection to the Leto family's
+    dark history.
+  continuity_in: The protagonists process the butler's shocking revelations, their
+    faces reflecting a mixture of shock, confusion, and growing understanding as they
+    absorb their true heritage.
+  continuity_out: With their identities permanently altered by the truth, the four
+    protagonists prepare to embark on their separate paths, each carrying the weight
+    of their family legacy into the unknown.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc-n1-1
+    kind: ambient
+    prompt: The butler's voice echoes through the subbasement as he reveals the truth
+      about their lineage, each word heavy with consequence.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n1-2
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+  - slot_id: grovley-revelation-arc-n1-3
+    kind: ambient
+    prompt: As the weight of their heritage settles in, each protagonist reacts differently—some
+      with anger, others with acceptance, all forever changed.
+    lore:
+    - amulet-of-wonder
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

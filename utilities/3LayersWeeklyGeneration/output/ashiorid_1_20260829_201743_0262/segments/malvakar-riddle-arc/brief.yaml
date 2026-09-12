@@ -1,0 +1,121 @@
+segment_id: malvakar-riddle-arc
+order: 13
+loop: 0
+hours: 6
+synopsis: The party arrives at the Malvakar monument and solves its riddle, opening
+  the next doorway on their quest.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malvakar-riddle-arc-n0-malmont-arrival-1
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n0-malvakar-riddle-1
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n1-malmont-riddle-1
+  kind: ambient
+  prompt: The party gathers around the ancient monument, studying the riddle carved
+    into its surface with careful attention.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malmont-riddle-2
+  kind: ambient
+  prompt: Leena proposes a theory about the riddle's meaning, her voice carrying
+    weight in the hushed space.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malmont-riddle-3
+  kind: ambient
+  prompt: The group debates the riddle's interpretation, each member offering insight
+    from their unique perspective.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malmont-riddle-4
+  kind: ambient
+  prompt: As the final piece clicks into place, the monument trembles with ancient
+    power, preparing to reveal its secret.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malmont-riddle-5
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: flags
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+nodes:
+- node_id: malvakar-riddle-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

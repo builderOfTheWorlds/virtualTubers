@@ -1,0 +1,93 @@
+amulet-map-arc:
+  node_id: amulet-map-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Jasper and Juniper's map reveals the first location of a monument, setting
+    the s
+  summary: Jasper and Juniper's map reveals the first location of a monument, setting
+    the stage for the party's quest to collect all nine fragments of the map and ultimately
+    find the Amulet of Wonder.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-n0
+  - amulet-map-arc-n1
+  slots: null
+amulet-map-arc-n0:
+  node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  order: 0
+  depth: 1
+  title: The Map's First Revelation
+  summary: Jasper and Juniper's map reveals the first location of a monument, setting
+    the stage for the party's quest to collect all nine fragments of the map and ultimately
+    find the Amulet of Wonder.
+  continuity_in: The party gathers around the ancient map, its edges worn by time
+    and mystery.
+  continuity_out: With the first monument's location revealed, the party prepares
+    to embark on their quest across the realm.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n0-map-first-revelation-1
+    kind: ambient
+    prompt: Jasper traces his finger along the ancient parchment, his voice barely
+      above a whisper as he deciphers the first marker on the map.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-map-first-revelation-2
+    kind: ambient
+    prompt: Juniper's eyes widen as she realizes the significance of the first monument's
+      location, her voice trembling with excitement and trepidation.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-map-first-revelation-3
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+amulet-map-arc-n1:
+  node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  order: 1
+  depth: 1
+  title: The Journey Begins
+  summary: The party sets out from their starting point toward the first monument,
+    marking the beginning of their adventure to collect all nine map fragments and
+    find the Amulet of Wonder.
+  continuity_in: Having discovered the first location on the map, the party begins
+    their journey across treacherous lands and forgotten paths.
+  continuity_out: After reaching the first monument, the party discovers it's guarded
+    by ancient magic and must solve its riddle to claim the first fragment.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

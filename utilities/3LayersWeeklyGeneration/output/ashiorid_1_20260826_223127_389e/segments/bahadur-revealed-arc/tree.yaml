@@ -1,0 +1,135 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The tear in the portal answers back, revealing the Bahadur''s presence and
+    their '
+  summary: The tear in the portal answers back, revealing the Bahadur's presence and
+    their true intentions.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The Portal's Response
+  summary: The tear in the portal answers back, revealing the Bahadur's presence and
+    their true intentions. The ancient beings emerge from the rift, their malevolent
+    energy radiating through the dimensional gap.
+  continuity_in: The tear in the portal answers back, revealing the Bahadur's presence
+    and their true intentions.
+  continuity_out: The Bahadur's arrival creates a cascade of cosmic disturbances that
+    ripple through space-time, setting the stage for their grand design.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n0-portal-response-1
+    kind: ambient
+    prompt: The tear in the portal answers back, revealing the Bahadur's presence
+      and their true intentions
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-portal-response-2
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: The Bahadur's Manifestation
+  summary: The Bahadur emerge fully from the portal, their true forms revealed in
+    all their terrifying glory. Their presence warps reality itself, and their intentions
+    become clear as they begin to reshape the world according to their dark designs.
+  continuity_in: The Bahadur's arrival creates a cascade of cosmic disturbances that
+    ripple through space-time, setting the stage for their grand design.
+  continuity_out: The Bahadur's manifestation triggers the first phase of their plan,
+    initiating the transformation of the realm into their vision of order through
+    control.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n1-bahadur-1
+    kind: ambient
+    prompt: The tear in the portal answers back, revealing the Bahadur's presence
+      and their true intentions.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-bahadur-2
+    kind: ambient
+    prompt: The Bahadur emerge fully from the portal, their true forms revealed in
+      all their terrifying glory.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-bahadur-3
+    kind: ambient
+    prompt: Their presence warps reality itself, and their intentions become clear
+      as they begin to reshape the world according to their dark designs.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-bahadur-4
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: none
+    depends_on: []

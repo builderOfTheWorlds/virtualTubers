@@ -28,9 +28,9 @@ def make_pack(ambient_ids=("camp-fire", "road-talk", "night-watch"),
         scenes[scene_id] = Scene(id=scene_id, ambient=True, prompt="They wait.")
     return CampaignPack(
         name="testpack", title="Test", genre="fantasy", start_scene="opening",
-        gm_id="gm", player_ids=["Alcinoe"], primitives=[], theme={},
+        gm_id="gm", player_ids=["Leena"], primitives=[], theme={},
         cast={"gm": CastMember(id="gm", name="GM", role="gm"),
-              "Alcinoe": CastMember(id="Alcinoe", name="Alcinoe", role="player")},
+              "Leena": CastMember(id="Leena", name="Leena", role="player")},
         scenes=scenes, root=Path("/nonexistent"), lore_dir=None, lore={},
         ambient_every=ambient_every, ambient_pool=list(ambient_pool or []),
     )

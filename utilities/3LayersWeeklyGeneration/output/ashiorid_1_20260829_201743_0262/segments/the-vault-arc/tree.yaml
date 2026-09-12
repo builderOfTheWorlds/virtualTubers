@@ -1,0 +1,64 @@
+the-vault-arc:
+  node_id: the-vault-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The party discovers the truth about what is hidden in Leto''s manor subbasement, '
+  summary: The party discovers the truth about what is hidden in Leto's manor subbasement,
+    and its connection to the moonwells.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-n0
+  - the-vault-arc-n1
+  slots: null
+the-vault-arc-n0:
+  node_id: the-vault-arc-n0
+  parent_id: the-vault-arc
+  order: 0
+  depth: 1
+  title: The Hidden Archive
+  summary: The party delves into the forgotten records and ancient texts buried beneath
+    Leto's manor, uncovering the true nature of the moonwell phenomenon and its connection
+    to the family's dark legacy. They discover that the subbasement contains a collection
+    of artifacts and journals that trace the lineage of moonwell guardianship and
+    reveal how the family has been protecting secrets for generations.
+  continuity_in: The party discovers the truth about what is hidden in Leto's manor
+    subbasement,
+  continuity_out: The party realizes the full scope of their responsibility and the
+    dangers they now face, as the ancient knowledge they've uncovered begins to manifest
+    in disturbing ways.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+the-vault-arc-n1:
+  node_id: the-vault-arc-n1
+  parent_id: the-vault-arc
+  order: 1
+  depth: 1
+  title: The Moonwell Connection
+  summary: Through careful examination of the subbasement's findings, the party discovers
+    that Leto's family has been the guardian of a network of moonwells, with each
+    generation taking responsibility for maintaining the balance between the earthly
+    realm and the celestial forces. They learn how their own family line is connected
+    to this ancient duty, and what terrible consequences await if they fail in their
+    role as guardians.
+  continuity_in: The party realizes the full scope of their responsibility and the
+    dangers they now face, as the ancient knowledge they've uncovered begins to manifest
+    in disturbing ways.
+  continuity_out: The party understands their place in the cosmic order and prepares
+    for the trials ahead, knowing that their actions will affect not just their own
+    lives but the fate of the entire realm.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

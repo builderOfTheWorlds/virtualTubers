@@ -38,7 +38,7 @@ beats:
         he is finished, and he is still working through whatever he is saying.
 
   - type: action
-    speaker: Vance
+    speaker: Vigil
     primitive: attack
     params:
       target: the dying wizard
@@ -49,15 +49,15 @@ beats:
     improv: true
     text:
       - >-
-        Vance's arrow finds him. It is not fast enough. The last syllable leaves
+        Vigil's arrow finds him. It is not fast enough. The last syllable leaves
         the wizard's mouth at the same moment the arrow arrives, and both of them
         land.
       - >-
-        The shot is good. The shot is also late. His final syllable and Vance's
+        The shot is good. The shot is also late. His final syllable and Vigil's
         arrow reach their destinations in the same instant, and neither of them
         misses.
       - >-
-        Vance does not miss. Vance is simply not quicker than a word. The arrow and
+        Vigil does not miss. Vigil is simply not quicker than a word. The arrow and
         the last sound of the spell arrive together, and both of them work.
 
   - type: narration
@@ -93,7 +93,7 @@ beats:
         inside and begins, unhurriedly, to make it larger.
 
   - type: dialogue
-    speaker: drokki
+    speaker: sodacan_bob
     improv: true
     text:
       - >-
@@ -107,10 +107,10 @@ beats:
         room was never the point. It only ever needed a way through.
 
   - type: dialogue
-    speaker: Alcinoe
+    speaker: Leena
     improv: true
     text: >-
-      Alcinoe realises she knows what is on the other side of the tear, and that
+      Leena realises she knows what is on the other side of the tear, and that
       she has always known.
 
   - type: narration
@@ -126,3 +126,5 @@ beats:
       - >-
         Tonight is the anniversary. Exactly ten thousand years. And that is where
         we are going to stop.
+
+default_next: portal-choice

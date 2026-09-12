@@ -1,0 +1,54 @@
+test-segment-3:
+  node_id: test-segment-3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Final validation of the smoke test campaign structure and content generation.
+  summary: Final validation of the smoke test campaign structure and content generation.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-3-n0
+  - test-segment-3-n1
+  slots: null
+test-segment-3-n0:
+  node_id: test-segment-3-n0
+  parent_id: test-segment-3
+  order: 0
+  depth: 1
+  title: Structure Validation and Template Review
+  summary: Comprehensive review of the smoke test campaign structure including template
+    consistency, naming conventions, and organizational hierarchy to ensure all components
+    align with established standards.
+  continuity_in: Final validation of the smoke test campaign structure and content
+    generation.
+  continuity_out: Structure validation and template review complete, proceeding to
+    content generation verification.
+  target_words: 180
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+test-segment-3-n1:
+  node_id: test-segment-3-n1
+  parent_id: test-segment-3
+  order: 1
+  depth: 1
+  title: Content Generation Verification and Quality Assurance
+  summary: Detailed verification of generated content quality, accuracy, and completeness
+    against defined requirements while ensuring all automated tests pass successfully.
+  continuity_in: Structure validation and template review complete, proceeding to
+    content generation verification.
+  continuity_out: Content generation verification and quality assurance completed,
+    final campaign readiness confirmed.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -1,0 +1,158 @@
+segment_id: grovley-revelation-arc
+order: 6
+loop: 0
+hours: 6
+synopsis: The four strangers uncover the truth about their origins in the subbasement
+  of Leto's manor, as Grovley reveals their true lineage and the purpose behind the
+  family's long-guarded secrets.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: grovley-revelation-arc-n0-revelation-1
+  kind: ambient
+  prompt: The strangers gather in the dimly lit subbasement beneath Leto's manor,
+    each sensing that something profound is about to unfold as Grovley steps forward
+    with ancient knowledge.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n0-revelation-2
+  kind: ambient
+  prompt: Grovley's voice echoes through the stone chamber as he begins to speak of
+    their true heritage, the weight of centuries pressing down on each stranger.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n0-revelation-3
+  kind: ambient
+  prompt: The air grows thick with secrets as Grovley reveals the truth behind their
+    lineage, each word a crack in the foundation of what they believed.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n0-revelation-4
+  kind: ambient
+  prompt: As Grovley speaks of their true heritage, the strangers feel their understanding
+    of themselves and their place in the world shifting dramatically, preparing for
+    revelations that will change everything they thought they knew.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n0-revelation-5
+  kind: ambient
+  prompt: The strangers exchange glances, their faces reflecting the shock and wonder
+    of learning their true origins, as the weight of their destiny settles upon them.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n0-revelation-6
+  kind: spine
+  scene_ref: grovley-revelation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: grovley-revelation-arc-n0
+- slot_id: grovley-revelation-arc-n1-1
+  kind: ambient
+  prompt: The four strangers uncover the truth about their origins in the subbasement
+    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+    the family's long-guarded secrets.
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n1
+- slot_id: grovley-revelation-arc-n1-2
+  kind: spine
+  scene_ref: grovley-revelation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: grovley-revelation-arc-n1
+- slot_id: grovley-revelation-arc-n1-3
+  kind: ambient
+  prompt: The strangers process the shocking revelations about their bloodline and
+    the sacred duty that has been passed down through generations, grappling with
+    how this knowledge will shape their future.
+  lore:
+  - amulet-of-wonder
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: grovley-revelation-arc-n1
+nodes:
+- node_id: grovley-revelation-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: grovley-revelation-arc-n0
+  parent_id: grovley-revelation-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 6
+- node_id: grovley-revelation-arc-n1
+  parent_id: grovley-revelation-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

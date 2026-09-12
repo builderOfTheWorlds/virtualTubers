@@ -459,7 +459,7 @@ def test_an_unknown_lore_stem_is_rejected(pack, vocab, config):
 
 def test_an_unknown_participant_is_rejected(pack, vocab, config):
     problems = segment_schema.validate_slots(
-        [ambient_slot(1, participants=["Alcinoe", "nobody"])], pack, vocab, config)
+        [ambient_slot(1, participants=["Leena", "nobody"])], pack, vocab, config)
     assert problems and any("nobody" in p for p in problems)
 
 
@@ -490,7 +490,7 @@ def test_duplicate_slot_ids_are_rejected(pack, vocab, config):
 
 @pytest.mark.parametrize("sensitivity", ["none", "tone", "flags"])
 def test_the_three_declared_sensitivities_are_accepted(pack, vocab, config, sensitivity):
-    depends_on = ["Alcinoe-wounded"] if sensitivity == "flags" else []
+    depends_on = ["Leena-wounded"] if sensitivity == "flags" else []
     problems = segment_schema.validate_slots(
         [ambient_slot(1, sensitivity=sensitivity, depends_on=depends_on)],
         pack, vocab, config)
@@ -505,13 +505,13 @@ def test_an_unknown_sensitivity_is_rejected(pack, vocab, config):
 
 def test_a_depends_on_key_outside_the_state_vocabulary_is_rejected(pack, vocab, config):
     """The same evaporation failure the arc planner guards against, one layer
-    down: nothing ever sets `Alcinoe-cursed`, so the conditioned takes built
+    down: nothing ever sets `Leena-cursed`, so the conditioned takes built
     from it can never be selected and the slot quietly falls back to its
     neutral take forever."""
     problems = segment_schema.validate_slots(
-        [ambient_slot(1, sensitivity="flags", depends_on=["Alcinoe-cursed"])],
+        [ambient_slot(1, sensitivity="flags", depends_on=["Leena-cursed"])],
         pack, vocab, config)
-    assert problems and any("Alcinoe-cursed" in p for p in problems)
+    assert problems and any("Leena-cursed" in p for p in problems)
 
 
 def test_depends_on_must_be_empty_unless_sensitivity_is_flags(pack, vocab, config):
@@ -519,7 +519,7 @@ def test_depends_on_must_be_empty_unless_sensitivity_is_flags(pack, vocab, confi
     Dependencies declared on a `none` or `tone` slot are silently ignored, so
     the slot claims a state dependency it does not actually get."""
     problems = segment_schema.validate_slots(
-        [ambient_slot(1, sensitivity="tone", depends_on=["Alcinoe-wounded"])],
+        [ambient_slot(1, sensitivity="tone", depends_on=["Leena-wounded"])],
         pack, vocab, config)
     assert problems
 
@@ -541,8 +541,8 @@ def test_a_flags_slot_cannot_declare_more_states_than_takes_can_cover(pack, voca
     for the wrong state."""
     problems = segment_schema.validate_slots(
         [ambient_slot(1, sensitivity="flags",
-                      depends_on=["Alcinoe-wounded", "moonwell-tainted",
-                                  "buffalo-lost-axe"])],
+                      depends_on=["Leena-wounded", "moonwell-tainted",
+                                  "chadwick-lost-axe"])],
         pack, vocab, config)
     assert problems
 
@@ -551,7 +551,7 @@ def test_one_dependency_fits_the_budget_exactly(pack, vocab, config):
     """Two conditioned takes, two candidates (true and false). This is the
     shape the take budget was designed around."""
     problems = segment_schema.validate_slots(
-        [ambient_slot(1, sensitivity="flags", depends_on=["Alcinoe-wounded"])],
+        [ambient_slot(1, sensitivity="flags", depends_on=["Leena-wounded"])],
         pack, vocab, config)
     assert problems == []
 
@@ -560,7 +560,7 @@ def test_sensitivity_mix_counts_each_kind(config):
     slots = ([ambient_slot(i) for i in range(1, 6)]
              + [ambient_slot(i, sensitivity="tone") for i in range(6, 9)]
              + [ambient_slot(i, sensitivity="flags",
-                             depends_on=["Alcinoe-wounded"]) for i in range(9, 11)])
+                             depends_on=["Leena-wounded"]) for i in range(9, 11)])
     mix = segment_schema.sensitivity_mix(slots)
     assert mix == {"none": 5, "tone": 3, "flags": 2}
 
@@ -573,7 +573,7 @@ def test_spine_slots_are_not_counted_in_the_mix(config):
 
 
 def test_a_sensitivity_budget_within_the_cap_reports_nothing(config):
-    slots = ([ambient_slot(i, sensitivity="flags", depends_on=["Alcinoe-wounded"])
+    slots = ([ambient_slot(i, sensitivity="flags", depends_on=["Leena-wounded"])
               for i in range(1, 4)]
              + [ambient_slot(i) for i in range(4, 11)])
     assert segment_schema.check_sensitivity_budget(slots, config) is None
@@ -583,7 +583,7 @@ def test_exceeding_the_sensitivity_budget_is_reported(config):
     """Over the cap the three-take pool cannot cover the declared states and
     the airtime patch tier is over-subscribed. This is a WARNING, not a
     rejection — the brief is still usable, it just needs a human to look."""
-    slots = ([ambient_slot(i, sensitivity="flags", depends_on=["Alcinoe-wounded"])
+    slots = ([ambient_slot(i, sensitivity="flags", depends_on=["Leena-wounded"])
               for i in range(1, 8)]
              + [ambient_slot(i) for i in range(8, 11)])
     message = segment_schema.check_sensitivity_budget(slots, config)
@@ -748,7 +748,7 @@ def test_merge_brief_produces_the_worklist_contract(arc_segment, segment_config)
                 "slots"):
         assert key in brief, f"brief is missing {key!r}"
     assert brief["segment_id"] == "seg-001"
-    assert brief["carry_out"] == {"Alcinoe-wounded": True, "moonwell-tainted": True}
+    assert brief["carry_out"] == {"Leena-wounded": True, "moonwell-tainted": True}
 
 
 def test_merge_brief_flattens_leaves_in_dfs_order(arc_segment, segment_config):

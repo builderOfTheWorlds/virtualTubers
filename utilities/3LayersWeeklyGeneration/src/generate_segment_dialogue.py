@@ -202,6 +202,11 @@ def generate_segment_dialogue(pack, segment_ids, config, llm, out_root,
         def writer(unit, beats):
             generated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
             model = config["dialogue"].get("active_model", "")
+            # worklist.take_path derives a fresh <segment>/slots/<slot_id>/
+            # path per unit; nothing upstream creates that directory, so a
+            # segment's first take for a given slot fails with ENOENT
+            # unless the writer makes it first.
+            unit.path.parent.mkdir(parents=True, exist_ok=True)
             batch_generate._write_take(unit.path, unit.slot_id, unit.take,
                                        model, generated_at, beats)
             manifest_path = segment_root / "manifest.jsonl"

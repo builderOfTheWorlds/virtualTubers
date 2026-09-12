@@ -36,9 +36,9 @@ def segment_config():
                                          "beats_per_take": 7.7,
                                          "generation_words_per_min": 95.4}},
         "state": {
-            "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+            "flags": ["Leena-wounded", "moonwell-tainted", "chadwick-lost-axe"],
             "moods": ["tense", "weary", "hopeful", "giddy"],
-            "carry_keys": ["Alcinoe-wounded", "moonwell-tainted"],
+            "carry_keys": ["Leena-wounded", "moonwell-tainted"],
         },
     }
 
@@ -55,9 +55,9 @@ def arc_segment():
         "ambient_focus": ["camp-chatter", "road-song"],
         "synopsis": "The company reaches the moonwell and finds it fouled.",
         "continuity_in": "They are two days out from the ridge.",
-        "continuity_out": "Alcinoe is wounded and the well is tainted.",
+        "continuity_out": "Leena is wounded and the well is tainted.",
         "carry_in": {},
-        "carry_out": {"Alcinoe-wounded": True, "moonwell-tainted": True},
+        "carry_out": {"Leena-wounded": True, "moonwell-tainted": True},
         "event_windows": [],
         "fork": None,
     }
@@ -113,10 +113,10 @@ def ambient_slot(index, **overrides):
     slot = {
         "slot_id": f"s-{index:03d}",
         "kind": "ambient",
-        "prompt": ("Around ninety seconds, written for the ear: Buffalo needles "
-                   "Alcinoe about the map while the fire pops."),
+        "prompt": ("Around ninety seconds, written for the ear: Chadwick needles "
+                   "Leena about the map while the fire pops."),
         "lore": ["the-loop"],
-        "participants": ["Alcinoe", "buffalo"],
+        "participants": ["Leena", "chadwick"],
         "sensitivity": "none",
         "depends_on": [],
     }
@@ -130,7 +130,7 @@ def spine_slot(index, **overrides):
         "slot_id": f"s-{index:03d}",
         "kind": "spine",
         "scene_ref": "moonwell",
-        "participants": ["Alcinoe", "buffalo"],
+        "participants": ["Leena", "chadwick"],
         "summary": "They reach the moonwell.",
     }
     slot.update(overrides)

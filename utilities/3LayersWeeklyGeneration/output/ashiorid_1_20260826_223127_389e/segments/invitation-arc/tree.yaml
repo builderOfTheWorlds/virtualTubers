@@ -1,0 +1,152 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Ten thousand years to the day since the Event, four strangers each receive
+    the s
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party they never asked for.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: The Mysterious Cards
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party they never asked for. These
+    identical invitations appear simultaneously across different locations and circumstances,
+    each containing cryptic symbols and an address that seems to exist in a place
+    between realities.
+  continuity_in: Ten thousand years to the day since the Event, four strangers each
+    receive the same mysterious card inviting them to a party they never asked for.
+  continuity_out: The cards arrive simultaneously across four different locations,
+    each stranger receiving theirs at exactly the same moment.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-n0-mysterious-cards-1
+    kind: ambient
+    prompt: The first card appears in the hands of a stranger, its symbols glowing
+      faintly as they realize they're not alone in this moment.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n0-mysterious-cards-2
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: The Journey Begins
+  summary: Each stranger, drawn by an inexplicable force, begins their journey toward
+    the mysterious address on their card. Despite living in different parts of the
+    world and having no prior connection, they all feel compelled to follow the same
+    path, guided by the strange symbols that seem to pulse with their own heartbeat.
+  continuity_in: The cards arrive simultaneously across four different locations,
+    each stranger receiving theirs at exactly the same moment.
+  continuity_out: Each stranger begins their journey toward the mysterious address,
+    unaware of the others' movements or the true nature of their destination.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-n1-1
+    kind: ambient
+    prompt: Each stranger feels an inexplicable pull, as if their heartbeat is syncing
+      with the pulsing symbols on their card.
+    lore:
+    - amulet-of-wonder
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-2
+    kind: ambient
+    prompt: The symbols on the card seem to glow faintly, and each stranger's path
+      begins to feel guided by an unseen force.
+    lore:
+    - moonwells
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-3
+    kind: ambient
+    prompt: As they walk, the world around them subtly shifts—streets become familiar
+      yet foreign, as if the city itself remembers their destination.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-4
+    kind: ambient
+    prompt: A strange silence falls over the air—no birds, no traffic, just the soft
+      hum of something ancient stirring beneath their feet.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-5
+    kind: ambient
+    prompt: In the distance, a party invitation appears to beckon them all toward
+      one another, though none have seen it before.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

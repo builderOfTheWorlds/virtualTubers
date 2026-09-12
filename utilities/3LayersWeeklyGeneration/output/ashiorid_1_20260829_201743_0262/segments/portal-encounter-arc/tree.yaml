@@ -1,0 +1,136 @@
+portal-encounter-arc:
+  node_id: portal-encounter-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: At the edge of the tear in space, a dying wizard completes his mission and
+    warns
+  summary: At the edge of the tear in space, a dying wizard completes his mission
+    and warns of what lies beyond.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-encounter-arc-n0
+  - portal-encounter-arc-n1
+  slots: null
+portal-encounter-arc-n0:
+  node_id: portal-encounter-arc-n0
+  parent_id: portal-encounter-arc
+  order: 0
+  depth: 1
+  title: The Final Conjunction
+  summary: The dying wizard reaches the edge of the tear in space, his magical essence
+    flickering like a dying flame. He completes his ancient ritual, channeling the
+    last of his power into sealing the dimensional rift that has been growing stronger.
+    As he speaks his final words, the very fabric of reality around him shimmers and
+    distorts, revealing glimpses of what lies beyond - a realm of impossible geometries
+    and cosmic horrors that have been patiently waiting for this moment.
+  continuity_in: The dying wizard reaches the edge of the tear in space, his magical
+    essence flickering like a dying flame. He completes his ancient ritual, channeling
+    the last of his power into sealing the dimensional rift that has been growing
+    stronger.
+  continuity_out: As he speaks his final words, the very fabric of reality around
+    him shimmers and distorts, revealing glimpses of what lies beyond - a realm of
+    impossible geometries and cosmic horrors that have been patiently waiting for
+    this moment.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n0-1
+    kind: ambient
+    prompt: The dying wizard reaches the edge of the tear in space, his magical essence
+      flickering like a dying flame. He completes his ancient ritual, channeling the
+      last of his power into sealing the dimensional rift that has been growing stronger.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-2
+    kind: ambient
+    prompt: As he speaks his final words, the very fabric of reality around him shimmers
+      and distorts, revealing glimpses of what lies beyond - a realm of impossible
+      geometries and cosmic horrors that have been patiently waiting for this moment.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-3
+    kind: spine
+    scene_ref: portal-encounter
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+  - slot_id: portal-encounter-arc-n0-4
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+portal-encounter-arc-n1:
+  node_id: portal-encounter-arc-n1
+  parent_id: portal-encounter-arc
+  order: 1
+  depth: 1
+  title: The Warning Beyond
+  summary: With his final breath, the wizard delivers his warning to the void beyond
+    the tear. His voice echoes through dimensions as he describes the entities that
+    dwell in the spaces between spaces - beings of pure entropy and chaos that have
+    been drawn to this moment of dimensional weakness. He explains that these creatures
+    are not merely destructive but fundamentally incompatible with existence as they
+    know it, and their arrival will reshape reality itself. The warning resonates
+    across the void, carrying the weight of his knowledge into the unknown.
+  continuity_in: As he speaks his final words, the very fabric of reality around him
+    shimmers and distorts, revealing glimpses of what lies beyond - a realm of impossible
+    geometries and cosmic horrors that have been patiently waiting for this moment.
+  continuity_out: The warning resonates across the void, carrying the weight of his
+    knowledge into the unknown.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n1-warning-1
+    kind: ambient
+    prompt: The wizard's voice echoes through dimensions as he describes entities
+      of pure entropy and chaos drawn to this moment of dimensional weakness
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n1-warning-2
+    kind: ambient
+    prompt: His final words reveal glimpses of a realm of impossible geometries and
+      cosmic horrors patiently waiting for this moment of dimensional weakness
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n1-warning-3
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Vigil
+    - gm

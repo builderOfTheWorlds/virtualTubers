@@ -1,0 +1,22 @@
+id: intro
+title: Test Intro
+enter_narration: >-
+  A minimal scene used only to smoke-test the generation pipeline.
+
+lore: []
+
+beats:
+  - type: narration
+    speaker: gm
+    text:
+      - >-
+        This is a test scene. Nothing here is meant to be spoken on stream.
+
+  - type: dialogue
+    speaker: hero
+    improv: true
+    text:
+      - >-
+        Understood. This is just a test.
+
+default_next: intro

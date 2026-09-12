@@ -144,7 +144,7 @@ notes: |
     1. If the reply is not a str, raise ImproviserError.
     2. Strip leading and trailing whitespace.
     3. Strip a leading speaker label. Compare CASE-INSENSITIVELY — the model
-       emits "Alcinoe:", "Alcinoe:" and "Alcinoe:" interchangeably and all three must
+       emits "Leena:", "Leena:" and "Leena:" interchangeably and all three must
        go. Write it by splitting on the colon and lowercasing both sides:
 
            label, sep, rest = text.partition(":")
@@ -152,7 +152,7 @@ notes: |
                text = rest.lstrip()
 
        where `labels` holds cast_member.name and cast_member.id. Do NOT write
-       `text.startswith(name + ":")` — that is case-SENSITIVE and lets "Alcinoe:"
+       `text.startswith(name + ":")` — that is case-SENSITIVE and lets "Leena:"
        through to text-to-speech, which is the exact bug this step exists to
        prevent. A label matching NEITHER is left alone — "Note: the door is
        barred." keeps its "Note:", because that is content, not a label.
@@ -189,7 +189,7 @@ notes: |
        empty and must therefore raise.
 
   Every one of those defects can arrive at once, so the steps must compose:
-  '  Alcinoe: *leans in* "We **should** run.\n\nNow."  ' must sanitise to exactly
+  '  Leena: *leans in* "We **should** run.\n\nNow."  ' must sanitise to exactly
   'We should run. Now.'
 
   Anything the llm call itself raises must be caught and re-raised as
@@ -210,7 +210,7 @@ notes: |
   Otherwise, build a prompt whose user message contains:
     - scene.prompt, verbatim — the generation brief
     - the cast roster: the ids AND names of the gm and every player, from
-      self.pack.cast. The tests assert the ids "Alcinoe" and "buffalo" appear.
+      self.pack.cast. The tests assert the ids "Leena" and "chadwick" appear.
     - the lore notes selected by scene.lore, resolved through self.pack.lore
       exactly as in __call__
     - the rolling transcript and memory section, same rules as __call__

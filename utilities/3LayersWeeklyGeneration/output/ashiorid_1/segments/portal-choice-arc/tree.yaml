@@ -1,0 +1,101 @@
+portal-choice-arc:
+  node_id: portal-choice-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four must make a choice about whether to enter the open portal, knowing
+    that
+  summary: The four must make a choice about whether to enter the open portal, knowing
+    that their decision will determine not only their fate but also the future of
+    magic in Ashiorid.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0
+  - portal-choice-arc-n1
+  slots: null
+portal-choice-arc-n0:
+  node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  order: 0
+  depth: 1
+  title: The Weight of Choice
+  summary: The four companions gather around the open portal, each grappling with
+    the immense responsibility of their decision. They weigh the potential consequences
+    for themselves and the magical realm of Ashiorid, considering the possibility
+    of salvation versus destruction.
+  continuity_in: The four must make a choice about whether to enter the open portal,
+    knowing that their decision will determine not only their fate but also the future
+    of magic in Ashiorid.
+  continuity_out: The weight of their decision begins to shift as each companion makes
+    their choice, setting the stage for what comes next.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-n0-choice-1
+    kind: ambient
+    prompt: The four companions gather around the open portal, each grappling with
+      the immense responsibility of their decision. They weigh the potential consequences
+      for themselves and the magical realm of Ashiorid, considering the possibility
+      of salvation versus destruction.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-choice-2
+    kind: ambient
+    prompt: Leena's wound throbs as she considers the portal's call, while Vigil
+      weighs the cost of turning back. The chadwick's axe lies forgotten beside them,
+      and Sodacan Bob's ancient eyes hold the weight of countless choices.
+    lore:
+    - amulet-of-wonder
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-choice-3
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+portal-choice-arc-n1:
+  node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  order: 1
+  depth: 1
+  title: The Portal's Call
+  summary: As the companions deliberate, the portal's energy intensifies, creating
+    a palpable tension that affects not just their individual choices but the very
+    fabric of magic in Ashiorid. Each character's internal struggle reflects the broader
+    stakes of their decision.
+  continuity_in: The weight of their decision begins to shift as each companion makes
+    their choice, setting the stage for what comes next.
+  continuity_out: The portal's energy surges forward as the companions make their
+    final decisions, propelling them into the unknown.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

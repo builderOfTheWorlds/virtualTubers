@@ -4,6 +4,50 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**campaign-manager: job artifacts got a detail view and clickable links, and
+the live log panel got an autoscroll toggle.** Two small gaps closed on the
+Campaign Manager dashboard while walking through a running generation job:
+
+- The Data Viewer (`/data`) already had a per-artifact detail page —
+  `GET /data/artifact/{id}` → `templates/data_viewer_artifact.html`, a thin
+  proxy over generator-api's `GET /artifacts/{id}` that pretty-prints the
+  full JSON document (arc plan / brief / tree / dialogue) — but the
+  Artifacts table on a job's own page (`templates/_job_logs.html`, shared by
+  `job_detail.html` and its htmx-polled `_job_logs` partial) only listed
+  metadata with no way to open one. Added the same "View" button/column
+  there, linking to the existing `/data/artifact/{{ a.id }}` route. No
+  backend change needed — `generation_store.list_artifacts` already returns
+  `id` per row.
+  - This works for jobs still `running`/`queued` too: `job_detail.html`
+    polls `/job/{id}/logs` every 3s while the job is active, so a new
+    artifact (and its View link) appears within one poll cycle of being
+    written — no manual refresh. Caveat: `arc`-stage jobs write a single
+    `arc_plan` artifact only once the whole node graph finishes (no partial
+    writes), so a running arc job can legitimately show zero artifacts for a
+    while; `dialogue`/`segment` stages write incrementally per segment and
+    populate sooner. Confirmed live against a real running arc job backed by
+    the heavy `hermes3:70b` (Q4_0) model that this is model latency, not a
+    stuck job or a fetch bug — the job's `heartbeat_at` (bumped by
+    `runner.py`'s per-node `update_progress` call) was still null after
+    200s+, consistent with one slow LLM call rather than anything broken in
+    the artifact-listing path.
+- The Live Log Output panel (`_job_logs.html`) scrolls a fixed-height `<pre>`
+  and previously required manually scrolling down to see new lines as they
+  streamed in. Added an "Autoscroll" toggle switch next to the existing
+  "Refresh Now" button in `job_detail.html`: a small vanilla-JS block
+  persists the toggle's on/off state in `localStorage` (default on), jumps
+  `#job-log-output`'s `scrollTop` to `scrollHeight` on initial page load, and
+  redoes it after every htmx swap of the log panel (`htmx:afterSwap` —
+  covers both the 3s auto-poll on active jobs and manual "Refresh Now"
+  clicks) whenever the toggle is enabled. Flipping it off lets you read
+  backscroll without getting pulled back to the bottom on the next poll.
+- Both changes required a rebuild + recreate of the `campaign-manager`
+  container (`docker compose build campaign-manager && docker compose up -d
+  --no-deps campaign-manager`) since its templates are baked into the image
+  rather than bind-mounted — verified after each rebuild with real `curl`
+  output against the live container (`/healthz`, the rendered job page HTML)
+  rather than trusting the build log alone.
+
 **The Rerun Theater episode library moved from the filesystem into Postgres,
 and nothing reaches it now without being validated first** — an episode used
 to be a JSON file: `scripts/build_replay_library.py` wrote `replays/*.json`

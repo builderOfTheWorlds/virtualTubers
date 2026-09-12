@@ -29,13 +29,13 @@ CAMPAIGN = {
     "genre": "fantasy",
     "start_scene": "opening",
     "gm": "gm",
-    "players": ["buffalo"],
+    "players": ["chadwick"],
     "primitives": ["roll_check"],
 }
 
 CAST = {
     "gm": {"name": "The GM", "voice": "narrator"},
-    "buffalo": {"name": "Buffalo", "voice": "gruff"},
+    "chadwick": {"name": "Chadwick", "voice": "gruff"},
 }
 
 SCENES = [
@@ -44,8 +44,8 @@ SCENES = [
         "title": "The Opening",
         "enter_narration": "The hall is cold.",
         "beats": [
-            {"type": "dialogue", "speaker": "buffalo", "text": "I don't like this."},
-            {"type": "action", "speaker": "buffalo", "primitive": "roll_check",
+            {"type": "dialogue", "speaker": "chadwick", "text": "I don't like this."},
+            {"type": "action", "speaker": "chadwick", "primitive": "roll_check",
              "params": {"skill": "Insight", "dc": 14}},
         ],
         "branches": [
@@ -122,13 +122,13 @@ def test_a_dry_run_shows_the_scripted_lines(pack_dir):
 def test_dialogue_is_labelled_with_the_display_name(pack_dir):
     _, text = run("--pack", str(pack_dir), "--dry-run")
 
-    assert "Buffalo: I don't like this." in text
+    assert "Chadwick: I don't like this." in text
 
 
 def test_an_action_beat_is_expanded_through_its_primitive(pack_dir):
     _, text = run("--pack", str(pack_dir), "--dry-run")
 
-    assert "Buffalo rolls Insight against DC 14." in text
+    assert "Chadwick rolls Insight against DC 14." in text
 
 
 def test_the_default_branch_is_taken_with_no_context(pack_dir):

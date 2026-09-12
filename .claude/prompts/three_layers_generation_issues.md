@@ -122,7 +122,7 @@ covers it.
 `generate_scene` builds its cast roster by iterating **the entire pack cast**
 (app/campaign/improviser.py, ~L181-186) and never reads a participants list.
 
-So a Layer 2 slot scoped to "Drokki and Vance alone" will still be generated with
+So a Layer 2 slot scoped to "Sodacan Bob and Vigil alone" will still be generated with
 all five cast members offered to the model. The `participants` field in the brief
 creates a false sense of control.
 
@@ -400,7 +400,7 @@ D11's contract: variants share one `merge_at`; variants write the same
 on which variant ran; forks never nest.
 
 Rule 3 is the one hermes3:70b will violate given the chance — writing "picking
-up from Alcinoe's decision at the ford" into a post-merge synopsis is exactly
+up from Leena's decision at the ford" into a post-merge synopsis is exactly
 what a coherence-seeking model does, and it silently re-couples the branches.
 
 **Fix:** `src/forks.py` validates all four rules after Layer 1 writes

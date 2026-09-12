@@ -1,0 +1,193 @@
+segments:
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
+    manor. The card bears no return address and contains no identifying marks.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The four strangers gather at the manor, where they learn about the Age
+    of War and how the world's magic was burned for fuel. They debate whether to believe
+    the sealed history or the whispered truths of the past.
+- ambient_focus: the-meal
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - magic-retained
+  synopsis: The group discovers that the seal holds, and magic still survives in small,
+    controlled doses. They debate what this means for their future and how to navigate
+    a world where magic is scarce.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - magic-lost
+  synopsis: The seal fails, and the world is stripped of magic. The group must confront
+    a harsh new reality where sorcery no longer exists and their knowledge of magic
+    becomes dangerous.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - letos-manor
+  synopsis: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
+    only to find it is not what they expected. They are greeted by a butler who reveals
+    secrets about their true nature.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - party-attack
+  synopsis: As the party begins, unexpected guests arrive, and the manor's doors lock
+    from within. The group realizes they are not just guests but targets of a plot
+    that goes back ten thousand years.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 6
+  spine_scenes:
+  - grovley-revelation
+  synopsis: The four strangers uncover the truth about their origins in the subbasement
+    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+    the family's long-guarded secrets.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 7
+  spine_scenes:
+  - the-vault
+  synopsis: Behind the subbasement wall lies the secret the Letos have protected for
+    ten thousand years, a vault that holds more than just artifacts — it contains
+    the truth of what happened during the Event.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  order: 8
+  spine_scenes:
+  - portal-encounter
+  synopsis: At the mouth of a tear in reality, a dying wizard reveals crucial information
+    about the Bahadur and the nature of the portals that have been opening across
+    Ashiorid.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  order: 9
+  spine_scenes:
+  - portal-choice
+  synopsis: The four must make a choice about whether to enter the open portal, knowing
+    that their decision will determine not only their fate but also the future of
+    magic in Ashiorid.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 10
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont, a town that has never heard of them, and
+    they must navigate its dual power structures while uncovering the secrets of their
+    new surroundings.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-arc
+  loop: 0
+  order: 11
+  spine_scenes:
+  - amulet-map
+  synopsis: Jasper and Juniper's map reveals the first location of a monument, setting
+    the stage for the party's quest to collect all nine fragments of the map and ultimately
+    find the Amulet of Wonder.

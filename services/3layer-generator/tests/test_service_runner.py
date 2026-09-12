@@ -38,12 +38,15 @@ class FakeStore:
         self.artifacts = {}
         self.calls = []
         self._seq = 0
+        self.configs = {}
+        self._config_seq = 0
 
     def submit(self, record):
         self._seq += 1
         job_id = f"job_{self._seq:04d}"
         self.jobs[job_id] = {
-            "id": job_id, "pack": record["pack"], "stage": record["stage"],
+            "id": job_id, "pack": record["pack"], "run": record.get("run"),
+            "stage": record["stage"],
             "profile": record.get("profile", ""), "status": "queued",
             "params": record.get("params", {}), "progress": None,
             "result": None, "error": None, "cancel_requested": False,
@@ -55,15 +58,20 @@ class FakeStore:
     def get(self, job_id):
         return self.jobs.get(job_id)
 
-    def list_jobs(self, pack=None, stage=None, status=None):
+    def list_jobs(self, pack=None, run=None, stage=None, status=None):
         rows = list(self.jobs.values())
         if pack is not None:
             rows = [r for r in rows if r["pack"] == pack]
+        if run is not None:
+            rows = [r for r in rows if r["run"] == run]
         if stage is not None:
             rows = [r for r in rows if r["stage"] == stage]
         if status is not None:
             rows = [r for r in rows if r["status"] == status]
         return sorted(rows, key=lambda r: r["created_at"], reverse=True)
+
+    def list_runs(self):
+        return sorted({r["run"] for r in self.jobs.values() if r.get("run")})
 
     def mark_running(self, job_id):
         row = self.jobs.get(job_id)
@@ -114,15 +122,80 @@ class FakeStore:
         return count
 
     def upsert_artifact(self, pack, kind, segment_id, content, job_id=None):
-        self.artifacts[(pack, kind, segment_id)] = content
+        self._artifact_seq = getattr(self, "_artifact_seq", 0) + 1
+        key = (pack, kind, segment_id)
+        existing_id = self.artifacts.get(key, {}).get("_id") if isinstance(self.artifacts.get(key), dict) and "_id" in self.artifacts.get(key, {}) else None
+        artifact_id = existing_id or self._artifact_seq
+        self.artifacts[key] = {
+            "_id": artifact_id, "id": artifact_id, "pack": pack, "kind": kind,
+            "segment_id": segment_id, "content": content, "job_id": job_id,
+            "updated_at": f"t{self._artifact_seq}",
+        }
         self.calls.append(("upsert_artifact", kind, segment_id))
 
     def load_artifact(self, pack, kind, segment_id):
-        return self.artifacts.get((pack, kind, segment_id))
+        row = self.artifacts.get((pack, kind, segment_id))
+        return row["content"] if row else None
 
     def list_artifacts(self, pack):
-        return [{"pack": p, "kind": k, "segment_id": s}
-                for (p, k, s) in self.artifacts if p == pack]
+        return [{"id": row["id"], "pack": row["pack"], "kind": row["kind"],
+                  "segment_id": row["segment_id"], "job_id": row["job_id"],
+                  "updated_at": row["updated_at"]}
+                for (p, k, s), row in self.artifacts.items() if p == pack]
+
+    def get_artifact(self, artifact_id):
+        for row in self.artifacts.values():
+            if row["id"] == artifact_id:
+                return {k: v for k, v in row.items() if k != "_id"}
+        return None
+
+    # -- saved configs (generator_configs) --------------------------------
+
+    def list_configs(self):
+        rows = list(self.configs.values())
+        return sorted(rows, key=lambda r: r["created_at"], reverse=True)
+
+    def get_config_row(self, config_id):
+        return self.configs.get(config_id)
+
+    def get_active_config_row(self):
+        for row in self.configs.values():
+            if row["is_active"]:
+                return row
+        return None
+
+    def create_config(self, name, description, config_yaml):
+        for row in self.configs.values():
+            if row["name"] == name:
+                raise Exception(f"duplicate key value violates unique constraint: {name}")
+        self._config_seq += 1
+        config_id = self._config_seq
+        self.configs[config_id] = {
+            "id": config_id, "name": name, "description": description,
+            "config_yaml": config_yaml, "is_active": False,
+            "created_at": f"tc{config_id}", "updated_at": f"tc{config_id}",
+        }
+        return config_id
+
+    def update_config(self, config_id, description, config_yaml):
+        row = self.configs.get(config_id)
+        if row is None:
+            return False
+        row["description"] = description
+        row["config_yaml"] = config_yaml
+        row["updated_at"] = f"tc{config_id}-updated"
+        return True
+
+    def delete_config(self, config_id):
+        return self.configs.pop(config_id, None) is not None
+
+    def activate_config(self, config_id):
+        if config_id not in self.configs:
+            return False
+        for row in self.configs.values():
+            row["is_active"] = False
+        self.configs[config_id]["is_active"] = True
+        return True
 
 
 @pytest.fixture
@@ -134,7 +207,9 @@ def store():
 def ctx(tmp_path, store):
     """Everything the runner needs, with the layer functions faked."""
     calls = {"arc": [], "segment": [], "dialogue": []}
-    # boot() discovers packs by listing pack_root, so the pack has to exist.
+    # dispatch_once() loads the source pack from pack_root/<pack>, so it has
+    # to exist. (boot() no longer scans this directory — it discovers runs
+    # to rehydrate from job rows via ctx.store.list_runs().)
     (tmp_path / "packs" / "ashiorid").mkdir(parents=True, exist_ok=True)
     # A sentinel so the fakes can prove they were handed the LOADED pack and
     # not the pack name. The runner needs both — the name keys artifact paths
@@ -192,8 +267,8 @@ def ctx(tmp_path, store):
     )
 
 
-def queue(store, stage, **params):
-    return store.submit({"pack": "ashiorid", "stage": stage,
+def queue(store, stage, run="ashiorid", **params):
+    return store.submit({"pack": "ashiorid", "run": run, "stage": stage,
                          "profile": "heavy", "params": params})
 
 
@@ -221,7 +296,12 @@ def test_boot_leaves_queued_jobs_for_the_dispatcher(store, ctx):
 def test_boot_rehydrates_an_artifact_missing_from_disk(store, ctx):
     """The working directory is scratch; Postgres is the durable store. On a
     fresh volume the filesystem-based resume rule would otherwise re-plan
-    everything the database already holds."""
+    everything the database already holds.
+
+    boot() discovers which runs to rehydrate from job rows (`list_runs()`),
+    not by scanning the source pack directory — so a job establishing the
+    run has to exist, same as it would in production."""
+    queue(store, "segment")
     store.upsert_artifact("ashiorid", "brief", "seg-01",
                           {"segment_id": "seg-01", "slots": []})
 
@@ -233,6 +313,7 @@ def test_boot_rehydrates_an_artifact_missing_from_disk(store, ctx):
 
 
 def test_boot_does_not_overwrite_an_artifact_already_on_disk(store, ctx):
+    queue(store, "segment")
     target = ctx.output_root / "ashiorid" / "segments" / "seg-01" / "brief.yaml"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(yaml.safe_dump({"segment_id": "seg-01", "local": True}),
@@ -242,6 +323,24 @@ def test_boot_does_not_overwrite_an_artifact_already_on_disk(store, ctx):
     runner.boot(ctx)
 
     assert yaml.safe_load(target.read_text(encoding="utf-8")).get("local") is True
+
+
+def test_boot_rehydrates_two_runs_of_the_same_pack_independently(store, ctx):
+    """Two arc jobs against the same source pack, each with its own
+    timestamped run, must rehydrate into separate output directories."""
+    queue(store, "arc", run="ashiorid_20260101_000000")
+    queue(store, "arc", run="ashiorid_20260102_000000")
+    store.upsert_artifact("ashiorid_20260101_000000", "brief", "seg-01",
+                          {"segment_id": "seg-01", "slots": []})
+    store.upsert_artifact("ashiorid_20260102_000000", "brief", "seg-01",
+                          {"segment_id": "seg-01", "slots": []})
+
+    runner.boot(ctx)
+
+    first = ctx.output_root / "ashiorid_20260101_000000" / "segments" / "seg-01" / "brief.yaml"
+    second = ctx.output_root / "ashiorid_20260102_000000" / "segments" / "seg-01" / "brief.yaml"
+    assert first.exists()
+    assert second.exists()
 
 
 # ---------------------------------------------------------------------------

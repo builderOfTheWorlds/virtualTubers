@@ -31,12 +31,12 @@ from replay import Pacer, Palette  # noqa: E402
 def make_pack(scenes=(), primitives=("roll_check", "attack")):
     cast = {
         "gm": CastMember(id="gm", name="The Narrator", role="gm", voice="narrator"),
-        "buffalo": CastMember(id="buffalo", name="Buffalo", role="player"),
-        "Alcinoe": CastMember(id="Alcinoe", name="Alcinoe", role="player"),
+        "chadwick": CastMember(id="chadwick", name="Chadwick", role="player"),
+        "Leena": CastMember(id="Leena", name="Leena", role="player"),
     }
     return CampaignPack(
         name="testpack", title="Test", genre="fantasy", start_scene="opening",
-        gm_id="gm", player_ids=["buffalo", "Alcinoe"], primitives=list(primitives),
+        gm_id="gm", player_ids=["chadwick", "Leena"], primitives=list(primitives),
         theme={}, cast=cast, scenes={s.id: s for s in scenes},
         root=Path("/nonexistent"), lore_dir=None,
     )
@@ -85,10 +85,10 @@ def test_narration_reaches_the_output():
 
 def test_dialogue_is_labelled_with_the_display_name():
     renderer = build()
-    renderer.render_beat(Beat(kind="dialogue", speaker="buffalo", text="I don't like this."))
+    renderer.render_beat(Beat(kind="dialogue", speaker="chadwick", text="I don't like this."))
     output = renderer.out.getvalue()
 
-    assert "Buffalo" in output and "I don't like this." in output
+    assert "Chadwick" in output and "I don't like this." in output
 
 
 def test_dialogue_uses_the_cast_name_not_the_id():
@@ -100,19 +100,19 @@ def test_dialogue_uses_the_cast_name_not_the_id():
 
 def test_action_beat_renders_through_the_primitive():
     renderer = build()
-    renderer.render_beat(Beat(kind="action", speaker="buffalo",
+    renderer.render_beat(Beat(kind="action", speaker="chadwick",
                               primitive="roll_check", params={"skill": "Perception"}))
     output = renderer.out.getvalue()
 
-    assert "Buffalo" in output and "Perception" in output
+    assert "Chadwick" in output and "Perception" in output
 
 
 def test_action_beat_uses_the_display_name_as_the_actor():
     renderer = build()
-    renderer.render_beat(Beat(kind="action", speaker="Alcinoe",
+    renderer.render_beat(Beat(kind="action", speaker="Leena",
                               primitive="attack", params={"target": "the raider"}))
 
-    assert "Alcinoe attacks the raider" in renderer.out.getvalue()
+    assert "Leena attacks the raider" in renderer.out.getvalue()
 
 
 def test_pane_beat_emits_no_narration():
@@ -135,10 +135,10 @@ def test_render_beat_returns_a_record_of_what_was_performed():
 
 def test_rendered_action_text_is_the_expanded_sentence():
     renderer = build()
-    result = renderer.render_beat(Beat(kind="action", speaker="buffalo",
+    result = renderer.render_beat(Beat(kind="action", speaker="chadwick",
                                        primitive="attack", params={"target": "the door"}))
 
-    assert result.text == "Buffalo attacks the door."
+    assert result.text == "Chadwick attacks the door."
 
 
 def test_rendered_pane_beat_carries_no_text():
@@ -199,7 +199,7 @@ def test_unknown_primitive_names_the_primitive():
     renderer = build()
 
     with pytest.raises(RendererError, match="fireball"):
-        renderer.render_beat(Beat(kind="action", speaker="Alcinoe", primitive="fireball"))
+        renderer.render_beat(Beat(kind="action", speaker="Leena", primitive="fireball"))
 
 
 def test_primitive_not_enabled_for_this_pack_is_refused():
@@ -207,7 +207,7 @@ def test_primitive_not_enabled_for_this_pack_is_refused():
     renderer = build(make_pack(primitives=("roll_check",)))
 
     with pytest.raises(RendererError, match="attack"):
-        renderer.render_beat(Beat(kind="action", speaker="Alcinoe",
+        renderer.render_beat(Beat(kind="action", speaker="Leena",
                                   primitive="attack", params={"target": "x"}))
 
 
@@ -215,7 +215,7 @@ def test_bad_primitive_params_are_reported_as_a_render_error():
     renderer = build()
 
     with pytest.raises(RendererError):
-        renderer.render_beat(Beat(kind="action", speaker="Alcinoe", primitive="attack"))
+        renderer.render_beat(Beat(kind="action", speaker="Leena", primitive="attack"))
 
 
 def test_unknown_beat_kind_names_the_kind():
@@ -229,7 +229,7 @@ def test_unknown_beat_kind_names_the_kind():
 def test_avatar_state_is_written_when_a_path_is_given(tmp_path):
     state_path = tmp_path / "state.json"
     renderer = build(state_path=str(state_path))
-    renderer.render_beat(Beat(kind="dialogue", speaker="buffalo", text="Hello."))
+    renderer.render_beat(Beat(kind="dialogue", speaker="chadwick", text="Hello."))
 
     assert json.loads(state_path.read_text())["bubble"] == "Hello."
 
@@ -293,9 +293,9 @@ class FakeTTS:
 def test_speech_is_synthesized_when_a_tts_client_is_given(tmp_path):
     tts = FakeTTS()
     renderer = build(tts=tts, audio_dir=tmp_path)
-    renderer.render_beat(Beat(kind="dialogue", speaker="buffalo", text="Hello."))
+    renderer.render_beat(Beat(kind="dialogue", speaker="chadwick", text="Hello."))
 
-    assert tts.calls == [("Hello.", "buffalo")]
+    assert tts.calls == [("Hello.", "chadwick")]
 
 
 def test_pane_beats_are_never_spoken(tmp_path):
@@ -342,9 +342,9 @@ def test_improv_beats_are_routed_through_the_improviser():
 
     renderer = build(improviser=improviser)
     result = renderer.render_beat(
-        Beat(kind="dialogue", speaker="Alcinoe", text="We should run.", improv=True))
+        Beat(kind="dialogue", speaker="Leena", text="We should run.", improv=True))
 
-    assert result.text == "Alcinoe riffs on: We should run."
+    assert result.text == "Leena riffs on: We should run."
 
 
 def test_non_improv_beats_bypass_the_improviser():
@@ -353,7 +353,7 @@ def test_non_improv_beats_bypass_the_improviser():
 
     renderer = build(improviser=explode)
     result = renderer.render_beat(
-        Beat(kind="dialogue", speaker="Alcinoe", text="Scripted.", improv=False))
+        Beat(kind="dialogue", speaker="Leena", text="Scripted.", improv=False))
 
     assert result.text == "Scripted."
 
@@ -361,7 +361,7 @@ def test_non_improv_beats_bypass_the_improviser():
 def test_improv_without_an_improviser_falls_back_to_the_script():
     """Scripted text is the intent, so it is also the safe default."""
     result = build().render_beat(
-        Beat(kind="dialogue", speaker="Alcinoe", text="As written.", improv=True))
+        Beat(kind="dialogue", speaker="Leena", text="As written.", improv=True))
 
     assert result.text == "As written."
 
@@ -371,13 +371,13 @@ def test_a_failing_improviser_falls_back_to_the_script(tmp_path):
         raise RuntimeError("ollama is busy")
 
     result = build(improviser=explode).render_beat(
-        Beat(kind="dialogue", speaker="Alcinoe", text="As written.", improv=True))
+        Beat(kind="dialogue", speaker="Leena", text="As written.", improv=True))
 
     assert result.text == "As written."
 
 
 def test_an_improviser_returning_nothing_falls_back_to_the_script():
     result = build(improviser=lambda beat, member: "  ").render_beat(
-        Beat(kind="dialogue", speaker="Alcinoe", text="As written.", improv=True))
+        Beat(kind="dialogue", speaker="Leena", text="As written.", improv=True))
 
     assert result.text == "As written."

@@ -335,7 +335,7 @@ services:
       - redis
 
   # Browser control panel over message-api's HTTP surface (docs/control_panel.md)
-  # — worker on/off, log-filter toggles, message injection, log pruning, and
+  # — worker on/off, log-filter toggram, message injection, log pruning, and
   # the Rerun Theater replay library, without needing curl. Talks only to
   # message-api; never touches Redis/Kafka/Postgres directly itself.
   control-panel:
@@ -343,8 +343,6 @@ services:
     pull_policy: never
     environment:
       MESSAGE_API_URL: http://message-api:8000
-      # Optional HTTP Basic Auth — unset (default) means no login is
-      # required. Set both before exposing this port beyond the LAN.
       CONTROL_PANEL_BASIC_AUTH_USER: ${CONTROL_PANEL_BASIC_AUTH_USER:-}
       CONTROL_PANEL_BASIC_AUTH_PASS: ${CONTROL_PANEL_BASIC_AUTH_PASS:-}
     ports:
@@ -352,6 +350,31 @@ services:
     restart: unless-stopped
     depends_on:
       - message-api
+
+  # Campaign Manager Web GUI
+  # Handles job tracking and model pulling for the 3-layer generator
+  campaign-manager:
+    build:
+      context: ./services/campaign-manager
+      dockerfile: Dockerfile
+    pull_policy: never
+    environment:
+      GENERATOR_API_URL: http://host.docker.internal:8001
+      # Which container's log lines belong to the generator job runner.
+      GENERATOR_CONTAINER_NAME: ${GENERATOR_CONTAINER_NAME:-virtualtubers-3layer-generator-1}
+    ports:
+      - "8082:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Read-only Docker socket access so the job detail page can show the
+      # generator's live log output for a job's time window. Same pattern
+      # log-shipper uses; scoped to this one container's logs only, never
+      # writes/starts/stops anything.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    depends_on:
+      - 3layer-generator
 
   # Watches each worker's Twitch chat (anonymous IRC — no Twitch credentials
   # needed) and announces arriving viewers as `viewer_joined` messages via
@@ -502,7 +525,12 @@ services:
       context: .
       dockerfile: services/3layer-generator/Dockerfile
     environment:
-      GENERATOR_CONFIG: /data/config/generation.yaml
+      # Override to utilities/3LayersWeeklyGeneration/config/generation.test.yaml
+      # for fast smoke-test jobs (1 segment, tiny slot counts, light models,
+      # short timeouts) instead of the full 168-hour production scope. See
+      # GENERATOR_CONFIG_FILE in .env — defaults to the real config so this
+      # never silently changes production behaviour.
+      GENERATOR_CONFIG: /data/config/${GENERATOR_CONFIG_FILE:-generation.yaml}
       PACK_ROOT: /data/packs
       DEFAULT_PACK: ${GENERATOR_PACK:-ashiorid}
       # Consumed by generator_api.overlay_output_dir: generation.yaml ships a
@@ -513,9 +541,13 @@ services:
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://127.0.0.1:11434}
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_PORT: 5455
-      POSTGRES_DB: generation
-      POSTGRES_USER: generation
-      POSTGRES_PASSWORD: u9RiAZBBKVVlmKsS5eKfPxVh
+      POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}
+      POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}
+      POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:?GENERATOR_POSTGRES_PASSWORD must be set in .env}
+    # host networking already binds 0.0.0.0:8000 for the app's own
+    # LLM_BASE_URL default (127.0.0.1:11434 Ollama) — but port 8000 itself
+    # collides with Portainer on this host, so run the API on 8001 instead.
+    command: ["uvicorn", "generator_api:app", "--host", "0.0.0.0", "--port", "8001"]
     depends_on:
       - generator-postgres
     volumes:

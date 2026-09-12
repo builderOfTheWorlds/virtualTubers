@@ -1,0 +1,139 @@
+magic-lost-arc:
+  node_id: magic-lost-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal fails, and the last well runs dry. Magic dies out, and the four
+    strange
+  summary: The seal fails, and the last well runs dry. Magic dies out, and the four
+    strangers realize they are now in a world where sorcery is impossible — unless
+    one of them is different.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-lost-arc-n0
+  - magic-lost-arc-n1
+  slots: null
+magic-lost-arc-n0:
+  node_id: magic-lost-arc-n0
+  parent_id: magic-lost-arc
+  order: 0
+  depth: 1
+  title: The Collapse of Magical Reality
+  summary: The seal fails and the last well runs dry, marking the definitive end of
+    magic in their world. The four strangers witness the complete collapse of the
+    magical infrastructure they've come to rely on, leaving them suddenly vulnerable
+    and human in a realm where sorcery was once commonplace. They realize that without
+    magic, their journey has fundamentally changed and their abilities are now meaningless.
+  continuity_in: The seal fails, and the last well runs dry. Magic dies out, and the
+    four strangers realize they are now in a world where sorcery is impossible — unless
+    one of them is different.
+  continuity_out: The four strangers stand in the ruins of what was once a magical
+    realm, their bodies now subject to natural laws, yet each carrying the potential
+    for something different.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-lost-arc-n0-collapse-1
+    kind: ambient
+    prompt: The seal shatters with a sound like breaking glass, and the last well
+      runs dry in an instant. Magic dies out around them, leaving only silence where
+      once there was power.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-n0-collapse-2
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+magic-lost-arc-n1:
+  node_id: magic-lost-arc-n1
+  parent_id: magic-lost-arc
+  order: 1
+  depth: 1
+  title: The Revelation of Individual Difference
+  summary: As magic fades from the world around them, the four strangers begin to
+    notice subtle differences in their own experiences. While others seem to have
+    lost all magical abilities, one among them retains some capacity for the arcane
+    — or perhaps discovers they were never truly human at all. This realization creates
+    a schism among the group as they question who among them might be the key to restoring
+    magic or understanding what has really happened.
+  continuity_in: The four strangers stand in the ruins of what was once a magical
+    realm, their bodies now subject to natural laws, yet each carrying the potential
+    for something different.
+  continuity_out: The group is divided by this discovery, with one member's unique
+    abilities becoming both a source of hope and suspicion among the others.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-lost-arc-n1-revelation-1
+    kind: ambient
+    prompt: The air feels different now—thicker, somehow. Leena notices her hands
+      trembling slightly, as if the world has shifted beneath her fingertips.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-n1-revelation-2
+    kind: ambient
+    prompt: Vigil looks around, his usual confident demeanor faltering. "This is wrong,"
+      he murmurs. "We should have been able to do more."
+    lore:
+    - moonwells
+    participants:
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-n1-revelation-3
+    kind: ambient
+    prompt: The chadwick's axe lies silent in the dirt. He glances at it, then at his
+      companions—his face a mask of confusion and fear.
+    lore:
+    - the-bahadur
+    participants:
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-n1-revelation-4
+    kind: ambient
+    prompt: Sodacan Bob's eyes flicker with something unreadable. She senses a change in
+      herself, one that feels both familiar and foreign.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-n1-revelation-5
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: flags
+    depends_on: []

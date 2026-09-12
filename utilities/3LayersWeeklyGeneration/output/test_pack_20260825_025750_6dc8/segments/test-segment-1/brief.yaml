@@ -1,0 +1,19 @@
+segment_id: test-segment-1
+order: 1
+loop: 0
+hours: 6
+synopsis: Initial testing of the campaign pipeline with basic scene execution.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: test-segment-1
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: true
+  target_slots: 6
+  slots: 0
+needs_rebrief: true

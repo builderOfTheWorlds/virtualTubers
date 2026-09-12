@@ -1,0 +1,114 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Ten thousand years to the day since the Event, four strangers each receive
+    a mys
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    a mysterious card inviting them to a party at Leto's Manor.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: The Cards Arrive
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    a mysterious card inviting them to a party at Leto's Manor. Each card bears strange
+    symbols and promises revelations about their past lives. The recipients are drawn
+    from different walks of life - a scholar, a soldier, a healer, and a merchant
+    - all living in the shadow of the great upheaval that changed everything.
+  continuity_in: Ten thousand years to the day since the Event, four strangers each
+    receive a mysterious card inviting them to a party at Leto's Manor.
+  continuity_out: The cards arrive simultaneously across the realm, each stranger
+    feeling an inexplicable pull toward the manor despite their different locations
+    and circumstances.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: The Gathering
+  summary: Each stranger arrives at Leto's Manor to find it unlike anything they've
+    ever seen - a place where time seems to flow differently, where the very air hums
+    with ancient energy. They discover that others have arrived before them, and that
+    this gathering is part of something far larger than individual destiny. The manor
+    itself begins to shift and change as the party commences, revealing secrets about
+    their shared past and the Event that transformed their world.
+  continuity_in: The cards arrive simultaneously across the realm, each stranger feeling
+    an inexplicable pull toward the manor despite their different locations and circumstances.
+  continuity_out: As the party continues, the strangers realize they are not alone
+    in their journey - others have been watching, waiting, and preparing for this
+    convergence of destinies.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-n1-gathering-1
+    kind: ambient
+    prompt: The first stranger arrives at Leto's Manor, bewildered by its ancient
+      architecture and the strange energy that seems to pulse through the air.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-gathering-2
+    kind: ambient
+    prompt: Another stranger steps through the manor's threshold, immediately struck
+      by how the very walls seem to shift and breathe with an otherworldly presence.
+    lore:
+    - moonwells
+    participants:
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-gathering-3
+    kind: ambient
+    prompt: The third arrival finds themselves in a corridor that appears to stretch
+      infinitely, filled with portraits of figures who seem to watch their approach
+      with knowing eyes.
+    lore:
+    - the-begene-program
+    participants:
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-gathering-4
+    kind: ambient
+    prompt: The final stranger materializes in a grand hall where the air hums with
+      ancient magic, and a single candle burns on a table, casting dancing shadows.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: invitation-arc-n1-gathering-5
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

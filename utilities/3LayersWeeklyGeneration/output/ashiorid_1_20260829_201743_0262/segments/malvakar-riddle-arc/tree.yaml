@@ -1,0 +1,140 @@
+malvakar-riddle-arc:
+  node_id: malvakar-riddle-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives at the Malvakar monument and solves its riddle, opening
+    the ne
+  summary: The party arrives at the Malvakar monument and solves its riddle, opening
+    the next doorway on their quest.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-n0
+  - malvakar-riddle-arc-n1
+  slots: null
+malvakar-riddle-arc-n0:
+  node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  order: 0
+  depth: 1
+  title: Arrival at the Malvakar Monument
+  summary: The party reaches the ancient Malvakar monument, a towering structure of
+    weathered stone that seems to pulse with dormant magic. They observe the intricate
+    carvings and mysterious symbols etched into its surface, preparing to face the
+    riddle that guards the next doorway.
+  continuity_in: The party continues their journey through the Whispering Woods, following
+    ancient maps and cryptic clues toward the legendary monument.
+  continuity_out: The party examines the riddle inscribed on the monument's entrance,
+    pondering its meaning as they prepare to solve it.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n0-malmont-arrival-1
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: malvakar-riddle-arc-n0-malvakar-riddle-1
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+malvakar-riddle-arc-n1:
+  node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  order: 1
+  depth: 1
+  title: Solving the Riddle and Opening Passage
+  summary: After careful deliberation and collaborative problem-solving, the party
+    successfully deciphers the ancient riddle carved into the monument. The structure
+    responds with a rumbling groan as the entrance begins to shift, revealing the
+    path forward that leads deeper into the mysterious domain.
+  continuity_in: The party examines the riddle inscribed on the monument's entrance,
+    pondering its meaning as they prepare to solve it.
+  continuity_out: The party moves through the newly opened doorway, continuing their
+    quest toward the moonwell.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n1-malmont-riddle-1
+    kind: ambient
+    prompt: The party gathers around the ancient monument, studying the riddle carved
+      into its surface with careful attention.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malmont-riddle-2
+    kind: ambient
+    prompt: Leena proposes a theory about the riddle's meaning, her voice carrying
+      weight in the hushed space.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malmont-riddle-3
+    kind: ambient
+    prompt: The group debates the riddle's interpretation, each member offering insight
+      from their unique perspective.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malmont-riddle-4
+    kind: ambient
+    prompt: As the final piece clicks into place, the monument trembles with ancient
+      power, preparing to reveal its secret.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malmont-riddle-5
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: flags
+    depends_on: []

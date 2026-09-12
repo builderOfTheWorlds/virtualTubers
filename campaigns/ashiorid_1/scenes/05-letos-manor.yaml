@@ -27,7 +27,7 @@ beats:
         of you.
 
   - type: action
-    speaker: buffalo
+    speaker: chadwick
     primitive: move_to
     params:
       destination: the great hall
@@ -51,7 +51,7 @@ beats:
         invitation than you do.
 
   - type: dialogue
-    speaker: drokki
+    speaker: sodacan_bob
     improv: true
     text:
       - >-
@@ -66,7 +66,7 @@ beats:
         blind, no shortcuts anywhere I can find. Gold is easy. That's not gold.
 
   - type: action
-    speaker: Vance
+    speaker: Vigil
     primitive: search
     params:
       target: the great hall
@@ -78,18 +78,18 @@ beats:
     text:
       - >-
         Two doors, both attended. A staircase up. No windows on the ground floor
-        that a person could pass through. Vance counts it and says nothing.
+        that a person could pass through. Vigil counts it and says nothing.
       - >-
         Two ways out, and someone standing at each. Stairs going up. Nothing on
-        this floor a body could fit through. Vance finishes counting and keeps
+        this floor a body could fit through. Vigil finishes counting and keeps
         the total to himself.
       - >-
         The hall has two doors and both are minded. There are stairs. The ground
-        floor windows are decorative at best. Vance notes all of it and his face
+        floor windows are decorative at best. Vigil notes all of it and his face
         does not change.
 
   - type: dialogue
-    speaker: buffalo
+    speaker: chadwick
     improv: true
     text:
       - >-
@@ -119,9 +119,9 @@ beats:
         ago.
 
   - type: dialogue
-    speaker: Alcinoe
+    speaker: Leena
     improv: true
     text: >-
-      Alcinoe asks the butler how the Duke knew her name.
+      Leena asks the butler how the Duke knew her name.
 
 default_next: party-attack

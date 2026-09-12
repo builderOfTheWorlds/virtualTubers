@@ -11,7 +11,7 @@ beats:
     show: inventory
 
   - type: action
-    speaker: drokki
+    speaker: sodacan_bob
     primitive: search
     params:
       target: the subbasement wall
@@ -22,15 +22,15 @@ beats:
     improv: true
     text:
       - >-
-        Drokki finds the seam because Drokki finds seams. There is no handle, no
+        Sodacan Bob finds the seam because Sodacan Bob finds seams. There is no handle, no
         keyhole, no mechanism at all. There is a word, and Grovley speaks it, and
         the wall is simply a door and always was.
       - >-
-        The seam is there, and Drokki finds it, which is what Drokki is for. No
+        The seam is there, and Sodacan Bob finds it, which is what Sodacan Bob is for. No
         handle. No lock. Nothing to work at. Grovley says a word instead, and the
         wall turns out to have been a door the entire time.
       - >-
-        There is a line in the stone that has no business being there, and Drokki
+        There is a line in the stone that has no business being there, and Sodacan Bob
         has it inside a minute. Nothing to pull, nothing to turn. Then Grovley
         speaks one word and the wall stops pretending.
 
@@ -70,7 +70,7 @@ beats:
         tonight, you are the family."
 
   - type: action
-    speaker: Alcinoe
+    speaker: Leena
     primitive: reveal_memory
     params:
       subject: the worm
@@ -81,17 +81,17 @@ beats:
     improv: true
     text:
       - >-
-        Grovley presses something into Buffalo's hand. Half a signet ring, cut
+        Grovley presses something into Chadwick's hand. Half a signet ring, cut
         clean through, the edge still bright.
       - >-
-        Something goes into Buffalo's palm and Grovley closes his fingers over
+        Something goes into Chadwick's palm and Grovley closes his fingers over
         it. Half a signet ring. Cut through cleanly, and the cut is still bright.
       - >-
-        Grovley puts half a signet ring into Buffalo's hand. It has been divided
+        Grovley puts half a signet ring into Chadwick's hand. It has been divided
         with something very sharp, and the new edge has not had time to dull.
 
   - type: dialogue
-    speaker: buffalo
+    speaker: chadwick
     improv: true
     text:
       - >-
@@ -117,7 +117,7 @@ beats:
         back the way you came — there's nothing up there now."
 
   - type: action
-    speaker: Vance
+    speaker: Vigil
     primitive: move_to
     params:
       destination: the escape tunnel

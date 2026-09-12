@@ -1,0 +1,59 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The tear in space answers back, revealing the Bahadur's presence and their
+    conne
+  summary: The tear in space answers back, revealing the Bahadur's presence and their
+    connection to the Event.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The Tear Responds
+  summary: The tear in space answers back, revealing the Bahadur's presence and their
+    connection to the Event. The rift pulses with ancient energy as the Bahadur's
+    influence manifests, showing how their actions during the Event created this spatial
+    anomaly that now echoes with their power.
+  continuity_in: The tear in space answers back, revealing the Bahadur's presence
+    and their connection to the Event.
+  continuity_out: The Bahadur's presence begins to manifest through the rift, establishing
+    their influence over the spatial anomaly.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: The Bahadur's Connection Revealed
+  summary: As the tear responds, the Bahadur's connection to the Event becomes clear.
+    Their presence in the rift shows how they orchestrated the spatial distortion
+    during the Event, with their power now flowing through the anomaly and creating
+    a bridge between past and present.
+  continuity_in: The Bahadur's presence begins to manifest through the rift, establishing
+    their influence over the spatial anomaly.
+  continuity_out: The Bahadur's connection to the Event becomes fully revealed, setting
+    up their role in the current crisis.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

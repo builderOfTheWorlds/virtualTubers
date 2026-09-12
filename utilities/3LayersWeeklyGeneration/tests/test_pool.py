@@ -46,7 +46,7 @@ def units(count, root=None):
     return [unit(slot_id=f"s-{n:03d}", take=1, root=root) for n in range(count)]
 
 
-BEATS = [{"speaker": "Alcinoe", "text": "The fire is low."}]
+BEATS = [{"speaker": "Leena", "text": "The fire is low."}]
 
 
 class Recorder:

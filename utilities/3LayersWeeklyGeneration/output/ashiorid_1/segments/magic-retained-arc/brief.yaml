@@ -1,0 +1,137 @@
+segment_id: magic-retained-arc
+order: 2
+loop: 0
+hours: 6
+synopsis: The group discovers that the seal holds, and magic still survives in small,
+  controlled doses. They debate what this means for their future and how to navigate
+  a world where magic is scarce.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-retained-arc-n0-weight-1
+  kind: ambient
+  prompt: The group sits in contemplative silence, each member processing the revelation
+    that magic persists in small, controlled doses despite the seal holding.
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n0-weight-2
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n0-weight-3
+  kind: ambient
+  prompt: Vigil speaks up, his voice carrying a note of cautious optimism about the
+    implications of magic's survival, while Leena remains skeptical.
+  lore:
+  - amulet-of-wonder
+  - the-bahadur
+  participants:
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n1-navigating-1
+  kind: ambient
+  prompt: The group sits in contemplation, each member weighing the implications of
+    magic's survival in small doses
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-navigating-2
+  kind: ambient
+  prompt: Leena voices concerns about the practical limitations of controlled magic
+    in their current situation
+  lore:
+  - amulet-of-wonder
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-navigating-3
+  kind: ambient
+  prompt: Vigil proposes a strategy for conserving magical resources while maintaining
+    their objectives
+  lore:
+  - the-event
+  - malmont
+  participants:
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-navigating-4
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-navigating-5
+  kind: ambient
+  prompt: The group reaches a tentative agreement on how to proceed, balancing their
+    goals with the reality of diminished magical power
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+nodes:
+- node_id: magic-retained-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: magic-retained-arc-n0
+  parent_id: magic-retained-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: magic-retained-arc-n1
+  parent_id: magic-retained-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

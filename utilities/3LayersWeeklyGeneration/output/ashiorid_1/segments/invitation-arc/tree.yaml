@@ -1,0 +1,62 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Ten thousand years to the day since the Event, four strangers each receive
+    the s
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
+    manor. The card bears no return address and contains no identifying marks.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: The Mysterious Cards
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
+    manor. The card bears no return address and contains no identifying marks.
+  continuity_in: Ten thousand years to the day since the Event, four strangers each
+    receive the same mysterious card inviting them to a party at Duke Sorensen Leto
+    III's manor. The card bears no return address and contains no identifying marks.
+  continuity_out: As the four strangers simultaneously receive identical cards, each
+    feels an inexplicable pull toward the same destination - the manor of Duke Sorensen
+    Leto III.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: The Gathering at the Manor
+  summary: The four strangers arrive at Duke Sorensen Leto III's manor, where they
+    discover that the mysterious party is connected to the Event and that they have
+    been chosen for a purpose beyond their understanding.
+  continuity_in: As the four strangers simultaneously receive identical cards, each
+    feels an inexplicable pull toward the same destination - the manor of Duke Sorensen
+    Leto III.
+  continuity_out: The four strangers stand in the grand hall of the manor, each carrying
+    the weight of their mysterious invitation and the realization that they are not
+    alone in their quest for answers.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

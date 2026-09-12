@@ -1,0 +1,66 @@
+test-segment-3:
+  node_id: test-segment-3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Final validation of the smoke test campaign structure and content generation.
+  summary: Final validation of the smoke test campaign structure and content generation.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-3-n0
+  - test-segment-3-n1
+  slots: null
+test-segment-3-n0:
+  node_id: test-segment-3-n0
+  parent_id: test-segment-3
+  order: 0
+  depth: 1
+  title: Structure Validation and Content Planning
+  summary: Comprehensive review of smoke test campaign architecture and content strategy
+    development
+  continuity_in: Final validation of the smoke test campaign structure and content
+    generation
+  continuity_out: Content planning and structural refinement for smoke test campaign
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+test-segment-3-n1:
+  node_id: test-segment-3-n1
+  parent_id: test-segment-3
+  order: 1
+  depth: 1
+  title: Implementation and Testing Verification
+  summary: Execution of validated campaign structure with content generation and testing
+    verification
+  continuity_in: Content planning and structural refinement for smoke test campaign
+  continuity_out: Final validation of the smoke test campaign structure and content
+    generation
+  target_words: 250
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: test-segment-3-n1-1
+    kind: ambient
+    prompt: The hero reviews the campaign structure while the gm monitors system outputs
+    lore: []
+    participants:
+    - hero
+    - gm
+    sensitivity: none
+    depends_on: []
+  - slot_id: test-segment-3-n1-2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - hero
+    - gm

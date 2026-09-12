@@ -1,0 +1,99 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A one-sentence summary of what happens.
+  summary: A one-sentence summary of what happens.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - intro-arc-n0
+  - intro-arc-n1
+  slots: null
+intro-arc-n0:
+  node_id: intro-arc-n0
+  parent_id: intro-arc
+  order: 0
+  depth: 1
+  title: The Journey Begins
+  summary: The protagonist starts their journey from the village gate, walking toward
+    the mysterious forest that lies beyond.
+  continuity_in: The story opens with the protagonist waking up in their small village
+    home, feeling restless and drawn to adventure.
+  continuity_out: The protagonist emerges from the village gates, stepping onto the
+    worn path that leads toward the ancient forest.
+  target_words: 180
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: intro-arc-n0-1
+    kind: ambient
+    prompt: The protagonist stands at the village gate, feeling the weight of their
+      decision to leave everything familiar behind
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n0-2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - hero
+intro-arc-n1:
+  node_id: intro-arc-n1
+  parent_id: intro-arc
+  order: 1
+  depth: 1
+  title: Into the Unknown
+  summary: The protagonist ventures deeper into the forest, discovering strange markings
+    on trees and hearing mysterious sounds.
+  continuity_in: The protagonist has left the village behind and is now walking along
+    a narrow path through dense woodland.
+  continuity_out: The protagonist reaches a clearing where they find an ancient stone
+    circle, its purpose unclear but somehow significant.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: intro-arc-n1-1
+    kind: ambient
+    prompt: The protagonist hears strange whispers in the wind as they walk along
+      the narrow path through the dense woodland.
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n1-2
+    kind: ambient
+    prompt: The protagonist notices strange markings on the trees around them, some
+      of which seem to glow faintly in the dim light.
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n1-3
+    kind: ambient
+    prompt: A low, resonant hum begins to emanate from deep within the forest, making
+      the protagonist pause and listen intently.
+    lore: []
+    participants:
+    - hero
+    sensitivity: tone
+    depends_on: []
+  - slot_id: intro-arc-n1-4
+    kind: spine
+    scene_ref: intro
+    participants:
+    - hero

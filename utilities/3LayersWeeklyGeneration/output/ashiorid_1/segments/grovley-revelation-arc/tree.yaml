@@ -1,0 +1,178 @@
+grovley-revelation-arc:
+  node_id: grovley-revelation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers uncover the truth about their origins in the subbasement
+    of L
+  summary: The four strangers uncover the truth about their origins in the subbasement
+    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+    the family's long-guarded secrets.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc-n0
+  - grovley-revelation-arc-n1
+  slots: null
+grovley-revelation-arc-n0:
+  node_id: grovley-revelation-arc-n0
+  parent_id: grovley-revelation-arc
+  order: 0
+  depth: 1
+  title: The Revelation in the Subbasement
+  summary: The four strangers uncover the truth about their origins in the subbasement
+    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+    the family's long-guarded secrets.
+  continuity_in: The strangers gather in the dimly lit subbasement beneath Leto's
+    manor, each sensing that something profound is about to unfold as Grovley steps
+    forward with ancient knowledge.
+  continuity_out: As Grovley speaks of their true heritage, the strangers feel their
+    understanding of themselves and their place in the world shifting dramatically,
+    preparing for revelations that will change everything they thought they knew.
+  target_words: 600
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc-n0-revelation-1
+    kind: ambient
+    prompt: The strangers gather in the dimly lit subbasement beneath Leto's manor,
+      each sensing that something profound is about to unfold as Grovley steps forward
+      with ancient knowledge.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-revelation-2
+    kind: ambient
+    prompt: Grovley's voice echoes through the stone chamber as he begins to speak
+      of their true heritage, the weight of centuries pressing down on each stranger.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-revelation-3
+    kind: ambient
+    prompt: The air grows thick with secrets as Grovley reveals the truth behind their
+      lineage, each word a crack in the foundation of what they believed.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-revelation-4
+    kind: ambient
+    prompt: As Grovley speaks of their true heritage, the strangers feel their understanding
+      of themselves and their place in the world shifting dramatically, preparing
+      for revelations that will change everything they thought they knew.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-revelation-5
+    kind: ambient
+    prompt: The strangers exchange glances, their faces reflecting the shock and wonder
+      of learning their true origins, as the weight of their destiny settles upon
+      them.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n0-revelation-6
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+grovley-revelation-arc-n1:
+  node_id: grovley-revelation-arc-n1
+  parent_id: grovley-revelation-arc
+  order: 1
+  depth: 1
+  title: The Weight of Destiny
+  summary: The four strangers uncover the truth about their origins in the subbasement
+    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+    the family's long-guarded secrets.
+  continuity_in: The strangers process the shocking revelations about their bloodline
+    and the sacred duty that has been passed down through generations, grappling with
+    how this knowledge will shape their future.
+  continuity_out: With their identities forever altered by the truth of their origins,
+    the strangers prepare to leave the subbasement and face the world with new understanding
+    of their roles in an ancient prophecy.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc-n1-1
+    kind: ambient
+    prompt: The four strangers uncover the truth about their origins in the subbasement
+      of Leto's manor, as Grovley reveals their true lineage and the purpose behind
+      the family's long-guarded secrets.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc-n1-2
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: grovley-revelation-arc-n1-3
+    kind: ambient
+    prompt: The strangers process the shocking revelations about their bloodline and
+      the sacred duty that has been passed down through generations, grappling with
+      how this knowledge will shape their future.
+    lore:
+    - amulet-of-wonder
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

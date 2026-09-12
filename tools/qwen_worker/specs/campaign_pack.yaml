@@ -291,8 +291,8 @@ notes: |
   and this module's whole contract is that no other exception type escapes.
 
   ERROR MESSAGES name the FULL path, not just the filename. `f"failed to load
-  {path}"`, never `{path.name}` — a pack has several `Alcinoe.yaml`-shaped files
-  and "failed to load Alcinoe.yaml" does not say which pack or which directory.
+  {path}"`, never `{path.name}` — a pack has several `Leena.yaml`-shaped files
+  and "failed to load Leena.yaml" does not say which pack or which directory.
 
   Use `yaml.safe_load`, never `yaml.load`. Wrap every file read and YAML parse
   so OSError and yaml.YAMLError surface as PackError.

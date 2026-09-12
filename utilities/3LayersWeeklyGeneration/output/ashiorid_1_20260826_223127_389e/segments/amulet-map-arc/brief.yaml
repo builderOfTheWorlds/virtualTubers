@@ -1,0 +1,116 @@
+segment_id: amulet-map-arc
+order: 20
+loop: 0
+hours: 6
+synopsis: Jasper and Juniper's map reveals the location of the next monument, setting
+  the party on a new quest.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: amulet-map-arc-n0-map-revelation-1
+  kind: ambient
+  prompt: Jasper and Juniper carefully study the ancient map, their eyes widening
+    as they trace the cryptic symbols that mark the location of the next monument
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n0
+- slot_id: amulet-map-arc-n0-map-revelation-2
+  kind: spine
+  scene_ref: amulet-map
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: amulet-map-arc-n0
+- slot_id: amulet-map-arc-n1-quest-begin-1
+  kind: ambient
+  prompt: The party gathers around the map, studying the location of the next monument
+    with growing anticipation.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n1
+- slot_id: amulet-map-arc-n1-quest-begin-2
+  kind: ambient
+  prompt: Vigil speaks of the dangers ahead, his voice carrying a weight that makes
+    the air feel thicker.
+  lore:
+  - moonwells
+  participants:
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n1
+- slot_id: amulet-map-arc-n1-quest-begin-3
+  kind: ambient
+  prompt: The chadwick examines the map with keen interest, his axe resting nearby
+    as he ponders their next move.
+  lore:
+  - the-bahadur
+  participants:
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: amulet-map-arc-n1
+- slot_id: amulet-map-arc-n1-quest-begin-4
+  kind: ambient
+  prompt: Sodacan Bob offers a quiet word about the secrets the next monument might hold,
+    eyes glancing toward the horizon.
+  lore:
+  - the-event
+  participants:
+  - sodacan_bob
+  - Leena
+  sensitivity: none
+  depends_on: []
+  node_id: amulet-map-arc-n1
+- slot_id: amulet-map-arc-n1-quest-begin-5
+  kind: spine
+  scene_ref: amulet-map
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: amulet-map-arc-n1
+nodes:
+- node_id: amulet-map-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

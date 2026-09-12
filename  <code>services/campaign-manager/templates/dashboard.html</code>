@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width well-width, initial-scale=1.0">
+    <title>Campaign Manager</title>
+    <link href="https://cdn.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { margin-bottom: 20px; }
+        .status-queued { color: #6c757d; font-weight: bold; }
+        .status-running { color: #0d6efd; font-weight: bold; animation: pulse 2s infinite; }
+        .status-completed { color: #198754; font-weight: bold; }
+        .status-failed { color:             #dc3545; font-weight: bold; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="container mt-4">
+    <nav class="navbar navbar-dark bg-dark mb-4 p-2">
+        <span class="navbar-brand">Campaign Generator Manager</span>
+    </nav>
+
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Submit New Generation Job</div>
+                <div class="card-body">
+                    <form action="/jobs/submit" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Pack Name</label>
+                            <input type="text" name="pack" class="form-control" value="ashiorid" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Stage</label>
+                            <select name="stage" class="form-select">
+                                <option value="arc">Arc (Plan)</option>
+                                <option value="segment">Segment (Develop)</option>
+                                <option value="dialogue">Dialogue (Write)</option>
+                                <option value="all">All (Full Pipeline)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Profile</label>
+                            <input type="text" name="profile" class="form-control" placeholder="e.g. default">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Segments (JSON Array)</label>
+                            <textarea name="segments_json" class="form-control" rows="3">["segment_1", "segment_2"]</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Job</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Model Management -->
+            <div class="card">
+                <div class="control-header">Model Management (Ollama)</div>
+                <div class="card-body">
+                    <form action="/models/run" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">HF/Ollama Model URL</label>
+                            <input type="text" name="model_url" class="form-control" 
+                                   placeholder="hf.co/..."
+                                   oninput="this.value = this.value.trim().replace(/^https?:\/\//, '').replace(/^hf\.co/, 'huggingface.co').replace(/\/$/, '')">
+                        </div>
+                        <button type="submit" class="btn btn-info w-100 text-white">Run/Pull Model</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- List Column -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Active & Recent Jobs</span>
+                    <button class="btn btn-sm btn-outline-secondary" hx-get="/" hx_target="body">Refresh</button>
+                </div>
+                <div class="card-body p-0">
+                    {% if jobs_error %}
+                        <div class="alert alert-danger m-3">{{ jobs_error }}</div>
+                    {% elif not jobs %}
+                        <div class="p-4 text-center text-muted">No jobs found.</div>
+                    {% else %}
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Pack</th>
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for job in jobs %}
+                                <tr>
+                                    <td class="small text-monospace">{{ job.id }}</td>
+                                    <td>{{ job.pack }}</td>
+                                    <td><span class="badge bg-info text-dark">{{ job.stage }}</span></td>
+                                    <td><span class="status-{{ job.status }}">{{ job.status }}</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="/job/{{ job.id }}" class="btn btn-sm btn-outline-primary">View</a>
+                                            {% if job.status in ['queued', 'running'] %}
+                                            <button class="btn btn-sm btn-outline-danger" 
+                                                    hx-post="/jobs/{{ job.id }}/cancel" 
+                                                    hx-swap="none"
+                                                    onclick="return confirm('Cancel this job?')">Cancel</button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

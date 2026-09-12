@@ -390,9 +390,9 @@ denominator. So the vocabulary is closed and declared in `generation.yaml`:
 
 ```yaml
 state:
-  flags:      [Alcinoe-wounded, moonwell-tainted, buffalo-lost-axe, ...]  # booleans
+  flags:      [Leena-wounded, moonwell-tainted, chadwick-lost-axe, ...]  # booleans
   moods:      [tense, weary, hopeful, giddy]                            # coarse tone dial
-  carry_keys: [Alcinoe-wounded, moonwell-tainted]                         # survive a loop reset
+  carry_keys: [Leena-wounded, moonwell-tainted]                         # survive a loop reset
 ```
 
 Every `depends_on`, every event's `sets:`/`requires:`, and every fork's
@@ -415,7 +415,7 @@ gains:
 - slot_id: ch03-s07
   kind: ambient
   sensitivity: flags        # none | tone | flags
-  depends_on: [Alcinoe-wounded]   # closed vocabulary (D13), validated
+  depends_on: [Leena-wounded]   # closed vocabulary (D13), validated
 ```
 
 - `none` — campfire small talk, craft nerdery, road banter. Airs identically

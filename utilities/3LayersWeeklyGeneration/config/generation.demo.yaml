@@ -1,0 +1,99 @@
+# Demo config — same fast/light models as generation.test.yaml, but scoped
+# up just enough (3 arc segments instead of 1, a handful of tree nodes and
+# dialogue takes per segment) that the Data Viewer has more than one
+# single-segment arc_plan to browse. Still finishes in well under a minute
+# on the light local models — NOT for real campaign content.
+#
+# Point GENERATOR_CONFIG_FILE at this file (docker-compose.yml /.env) the
+# same way generation.test.yaml is selected.
+#
+# Kept in sync by hand with generation.yaml's key structure — see
+# generation.test.yaml's header comment for why.
+
+campaign:
+  pack: campaigns/test_pack
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 120
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 6000
+  target_total_hours: 3
+  target_words_per_hour: 2000
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  hours_total: 3            # -> n_segments = ceil(3/1) = 3 segments
+  segment_hours: 1
+  batch_size: 3              # single batch, all 3 segments in one LLM call
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  target_words: 400
+  target_slots: 8
+  tree:
+    max_leaf_slots: 8         # root is already leaf-sized: no recursion
+    max_children: 3
+    max_depth: 1
+    min_node_words: 50
+    leaf_density_floor: 0.50  # forgiving — this is a demo, not a QA gate
+  concurrency: 3
+  max_attempts: 2
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 10
+    failure_rate: 0.5
+    min_samples: 5
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+    heavy:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+      num_ctx: 2048
+  active_model: light
+  max_recent: 4
+  max_words: 45
+  max_beats: 6
+  takes_per_slot: 1          # one take, not 3 — this is a demo, not final content
+  neutral_takes: 1
+  concurrency: 4
+  max_attempts: 2
+  seconds_per_take: 8         # rough estimate for the pre-run log line only
+
+# Must match whatever cast/carry vocabulary the test pack actually declares
+# — see generation.test.yaml's comment on why these stay empty rather than
+# borrowing ashiorid's.
+state:
+  flags: []
+  moods: [neutral]
+  carry_keys: []

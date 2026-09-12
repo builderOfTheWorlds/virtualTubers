@@ -1,0 +1,132 @@
+letos-manor-arc:
+  node_id: letos-manor-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers arrive at Duke Sorensen Leto III's manor for a party that
+    was
+  summary: The four strangers arrive at Duke Sorensen Leto III's manor for a party
+    that was planned ten thousand years in advance, only to discover they are not
+    welcome.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-n0
+  - letos-manor-arc-n1
+  slots: null
+letos-manor-arc-n0:
+  node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  order: 0
+  depth: 1
+  title: Arrival and Rejection
+  summary: The four strangers arrive at Duke Sorensen Leto III's manor for a party
+    that was planned ten thousand years in advance, only to discover they are not
+    welcome. They are immediately met with hostility from the duke's servants and
+    guards who recognize them as outsiders. The strangers attempt to explain their
+    presence but are quickly ushered away by the stern guards. Despite their attempts
+    at diplomacy, they realize this is a place where they don't belong, and the duke's
+    estate seems to be designed to exclude them rather than welcome them.
+  continuity_in: The four strangers arrive at Duke Sorensen Leto III's manor for a
+    party that was planned ten thousand years in advance, only to discover they are
+    not welcome.
+  continuity_out: The strangers are turned away by the duke's guards and servants
+    who refuse to allow them entry. They must now find another way to approach the
+    duke or leave this place entirely.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+letos-manor-arc-n1:
+  node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  order: 1
+  depth: 1
+  title: The Hidden Truth
+  summary: After being rejected from the manor, the strangers discover that Duke Sorensen
+    Leto III's party was not just a social gathering but part of a larger cosmic ritual.
+    The duke has been waiting for ten thousand years to perform a ceremony that requires
+    specific outsiders to participate. The strangers realize their presence wasn't
+    accidental - they were chosen for a reason. As they explore the manor's hidden
+    passages, they uncover ancient texts revealing that this party was designed to
+    open a gateway between dimensions, and they are the key elements needed to complete
+    the ritual.
+  continuity_in: The strangers are turned away by the duke's guards and servants who
+    refuse to allow them entry. They must now find another way to approach the duke
+    or leave this place entirely.
+  continuity_out: The strangers have discovered that they were specifically chosen
+    for a cosmic ritual, and their presence at the manor was part of a ten-thousand-year
+    plan orchestrated by Duke Sorensen Leto III.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-n1-hidden-truth-1
+    kind: ambient
+    prompt: The strangers gather at the manor's edge, noting the imposing structure
+      and the guards who refuse them entry.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-hidden-truth-2
+    kind: ambient
+    prompt: As they circle the manor, Leena notices strange symbols etched into
+      the stone walls.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-hidden-truth-3
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: letos-manor-arc-n1-hidden-truth-4
+    kind: ambient
+    prompt: Vigil discovers a hidden passage behind a tapestry, leading deeper into
+      the manor's secrets.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-hidden-truth-5
+    kind: ambient
+    prompt: The strangers find ancient texts revealing the true purpose of Duke Sorensen
+      Leto III's party.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

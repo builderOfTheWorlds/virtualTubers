@@ -1,0 +1,65 @@
+test-segment-2:
+  node_id: test-segment-2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Verification of scene transition functionality and data flow.
+  summary: Verification of scene transition functionality and data flow.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-2-n0
+  - test-segment-2-n1
+  slots: null
+test-segment-2-n0:
+  node_id: test-segment-2-n0
+  parent_id: test-segment-2
+  order: 0
+  depth: 1
+  title: Pre-transition validation checks
+  summary: Initial verification of scene transition parameters and data flow integrity
+    before execution
+  continuity_in: Scene transition verification initiated with parameter validation
+  continuity_out: Parameter validation complete, ready for transition execution
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+test-segment-2-n1:
+  node_id: test-segment-2-n1
+  parent_id: test-segment-2
+  order: 1
+  depth: 1
+  title: Post-transition monitoring and data flow confirmation
+  summary: Confirmation of successful scene transition completion and verification
+    of data flow continuation
+  continuity_in: Transition execution completed successfully
+  continuity_out: Scene transition verified, data flow confirmed operational
+  target_words: 250
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: test-segment-2-n1-post_transition_1
+    kind: ambient
+    prompt: Confirm that the scene transition has completed successfully and verify
+      that data flow is continuing as expected
+    lore: []
+    participants:
+    - gm
+    - hero
+    sensitivity: none
+    depends_on: []
+  - slot_id: test-segment-2-n1-post_transition_2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - gm
+    - hero

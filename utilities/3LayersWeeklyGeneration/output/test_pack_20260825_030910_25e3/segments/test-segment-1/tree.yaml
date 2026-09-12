@@ -1,0 +1,108 @@
+test-segment-1:
+  node_id: test-segment-1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Initial testing of the pipeline with basic scene rendering.
+  summary: Initial testing of the pipeline with basic scene rendering.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-1-n0
+  - test-segment-1-n1
+  slots: null
+test-segment-1-n0:
+  node_id: test-segment-1-n0
+  parent_id: test-segment-1
+  order: 0
+  depth: 1
+  title: Pipeline Setup and Configuration
+  summary: Initial testing of the pipeline with basic scene rendering begins with
+    configuring the development environment, setting up necessary dependencies, and
+    establishing the foundational architecture for scene processing. This phase establishes
+    the groundwork for all subsequent rendering operations.
+  continuity_in: Initial testing of the pipeline with basic scene rendering begins
+    with configuring the development environment, setting up necessary dependencies,
+    and establishing the foundational architecture for scene processing.
+  continuity_out: Pipeline configuration complete, ready to proceed with basic scene
+    rendering tests.
+  target_words: 180
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: test-segment-1-n0-setup_1
+    kind: ambient
+    prompt: The developer initializes the pipeline by configuring the development
+      environment and setting up necessary dependencies for scene processing.
+    lore: []
+    participants:
+    - gm
+    - hero
+    sensitivity: none
+    depends_on: []
+  - slot_id: test-segment-1-n0-setup_2
+    kind: spine
+    scene_ref: intro
+    participants:
+    - gm
+    - hero
+test-segment-1-n1:
+  node_id: test-segment-1-n1
+  parent_id: test-segment-1
+  order: 1
+  depth: 1
+  title: Basic Scene Rendering Tests
+  summary: Execution of fundamental rendering operations including simple geometry
+    processing, lighting calculations, and basic shader applications. This phase validates
+    core pipeline functionality through controlled testing scenarios that ensure proper
+    data flow from input to output visualization.
+  continuity_in: Pipeline configuration complete, ready to proceed with basic scene
+    rendering tests.
+  continuity_out: Basic rendering tests completed successfully, confirming pipeline
+    stability for advanced operations.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: test-segment-1-n1-0
+    kind: ambient
+    prompt: The pipeline begins its initial test run with basic scene rendering operations.
+    lore: []
+    participants:
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: test-segment-1-n1-1
+    kind: ambient
+    prompt: Simple geometry processing and lighting calculations are executed to validate
+      core functionality.
+    lore: []
+    participants:
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: test-segment-1-n1-2
+    kind: ambient
+    prompt: Basic shader applications are applied to ensure proper data flow from
+      input to output visualization.
+    lore: []
+    participants:
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: test-segment-1-n1-3
+    kind: spine
+    scene_ref: intro
+    participants:
+    - gm
+    - hero
+    sensitivity: none
+    depends_on: []

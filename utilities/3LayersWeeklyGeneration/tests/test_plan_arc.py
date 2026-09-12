@@ -79,14 +79,14 @@ def test_later_batches_carry_the_previous_continuity_out(tmp_path, pack, config,
     """This is the only thread stitching batch N to batch N+1. Without it the
     arc reads as five unrelated novellas."""
     llm = FakeLLM([
-        reply_for(list(range(0, 6)), continuity_out="Alcinoe collapses at the ford."),
+        reply_for(list(range(0, 6)), continuity_out="Leena collapses at the ford."),
         reply_for(list(range(6, 12))),
         reply_for(list(range(12, 18))),
         reply_for(list(range(18, 24))),
         reply_for(list(range(24, 28))),
     ])
     plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
-    assert "Alcinoe collapses at the ford." in llm.prompts[1]
+    assert "Leena collapses at the ford." in llm.prompts[1]
 
 
 def test_the_prompt_states_the_closed_carry_vocabulary(tmp_path, pack, config, vocab):
@@ -103,6 +103,27 @@ def test_the_prompt_asks_for_the_orders_it_actually_wants(tmp_path, pack, config
     llm = perfect_llm(28, 6)
     plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
     assert "6" in llm.prompts[1] and "11" in llm.prompts[1]
+
+
+def test_the_prompt_states_the_closed_spine_scene_vocabulary(tmp_path, pack, config, vocab):
+    """Regression: validate_batch rejects any spine_scenes id not in
+    vocab.scene_ids, but the prompt never used to state that closed set —
+    only scene titles/narration reached the model via `context`, as loose
+    prose. Every real batch then failed validation because the model wrote
+    plot descriptions instead of the pack's actual (non-ambient) scene ids.
+    The prompt must explicitly enumerate every legal spine_scenes id under
+    its own labeled section (ambient scene ids are also listed elsewhere in
+    the prompt via `context`, for `ambient_focus`, so this checks the
+    spine-scenes section specifically rather than presence anywhere)."""
+    llm = perfect_llm(28, 6)
+    plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    prompt = llm.prompts[0]
+    assert "Legal spine_scenes ids" in prompt
+    spine_section = prompt.split("Legal spine_scenes ids", 1)[1].split("Legal carry keys", 1)[0]
+    for scene_id in ("arrival", "moonwell", "portal-encounter"):
+        assert scene_id in spine_section
+    for ambient_id in ("camp-chatter", "road-song"):
+        assert ambient_id not in spine_section
 
 
 # --- retry and skip ---
@@ -125,7 +146,7 @@ def test_the_retry_prompt_says_what_was_wrong(tmp_path, pack, config, vocab):
     """A bare re-ask gets the same answer back at the same temperature. Naming
     the offending key is what changes the second attempt."""
     llm = FakeLLM([
-        reply_for(list(range(0, 6)), carry_out={"Alcinoe-cursed": True}),
+        reply_for(list(range(0, 6)), carry_out={"Leena-cursed": True}),
         reply_for(list(range(0, 6))),
         reply_for(list(range(6, 12))),
         reply_for(list(range(12, 18))),
@@ -133,7 +154,7 @@ def test_the_retry_prompt_says_what_was_wrong(tmp_path, pack, config, vocab):
         reply_for(list(range(24, 28))),
     ])
     plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
-    assert "Alcinoe-cursed" in llm.prompts[1]
+    assert "Leena-cursed" in llm.prompts[1]
 
 
 def test_a_batch_that_never_validates_is_skipped_not_raised(tmp_path, pack, config, vocab):
@@ -326,7 +347,7 @@ def test_the_written_plan_stays_human_readable(tmp_path, pack, config, vocab):
     """
     out = tmp_path / "arc_plan.yaml"
     llm = FakeLLM([reply_for(list(range(0, 6)),
-                             synopsis="Alcinoe — bleeding — reaches the moonwell.")])
+                             synopsis="Leena — bleeding — reaches the moonwell.")])
     config["arc"]["hours_total"] = 36
     plan_arc.plan_arc(pack, config, llm, vocab, out)
     written = out.read_text(encoding="utf-8")

@@ -1,0 +1,49 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A one-sentence summary of what happens.
+  summary: A one-sentence summary of what happens.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - intro-arc-n0
+  - intro-arc-n1
+  slots: null
+intro-arc-n0:
+  node_id: intro-arc-n0
+  parent_id: intro-arc
+  order: 0
+  depth: 1
+  title: The Quiet Road
+  summary: Travelers move steadily along a peaceful stretch of road with minimal obstacles.
+  continuity_in: The journey begins from the starting point with calm conditions.
+  continuity_out: The steady pace continues as the path gradually becomes more challenging.
+  target_words: 180
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+intro-arc-n1:
+  node_id: intro-arc-n1
+  parent_id: intro-arc
+  order: 1
+  depth: 1
+  title: Arrival at Moonwell
+  summary: The party reaches the mysterious moonwell, where significant events unfold.
+  continuity_in: The journey continues with increasing tension as the destination
+    nears.
+  continuity_out: The exploration of the moonwell's mysteries begins with important
+    discoveries.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

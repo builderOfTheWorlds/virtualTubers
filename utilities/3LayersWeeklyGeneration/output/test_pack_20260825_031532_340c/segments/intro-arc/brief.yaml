@@ -1,0 +1,85 @@
+segment_id: intro-arc
+order: 0
+loop: 0
+hours: 6
+synopsis: A one-sentence summary of what happens.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: intro-arc-n0-1
+  kind: ambient
+  prompt: The hero stands at the threshold, looking back at what they're leaving behind
+    and forward to what awaits
+  lore: []
+  participants:
+  - hero
+  sensitivity: tone
+  depends_on: []
+  node_id: intro-arc-n0
+- slot_id: intro-arc-n0-2
+  kind: spine
+  scene_ref: intro
+  participants:
+  - hero
+  node_id: intro-arc-n0
+- slot_id: intro-arc-n1-1
+  kind: spine
+  scene_ref: intro
+  participants:
+  - hero
+  node_id: intro-arc-n1
+- slot_id: intro-arc-n1-2
+  kind: ambient
+  prompt: The hero stands at the edge of a dark forest, their heart pounding as they
+    contemplate the path ahead
+  lore: []
+  participants:
+  - hero
+  sensitivity: tone
+  depends_on: []
+  node_id: intro-arc-n1
+- slot_id: intro-arc-n1-3
+  kind: ambient
+  prompt: A sudden gust of wind sends leaves swirling around the hero's feet, as if
+    the forest itself is watching their every move
+  lore: []
+  participants:
+  - hero
+  sensitivity: tone
+  depends_on: []
+  node_id: intro-arc-n1
+- slot_id: intro-arc-n1-4
+  kind: ambient
+  prompt: The hero's hand trembles slightly as they grasp their weapon, remembering
+    the lessons from their training
+  lore: []
+  participants:
+  - hero
+  sensitivity: tone
+  depends_on: []
+  node_id: intro-arc-n1
+nodes:
+- node_id: intro-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: intro-arc-n0
+  parent_id: intro-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: intro-arc-n1
+  parent_id: intro-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+needs_rebrief: true

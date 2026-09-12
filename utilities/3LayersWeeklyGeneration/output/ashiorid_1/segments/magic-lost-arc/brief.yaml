@@ -1,0 +1,135 @@
+segment_id: magic-lost-arc
+order: 3
+loop: 0
+hours: 6
+synopsis: The seal fails, and the world is stripped of magic. The group must confront
+  a harsh new reality where sorcery no longer exists and their knowledge of magic
+  becomes dangerous.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-lost-arc-n0-shattering-dawn-1
+  kind: ambient
+  prompt: The moment the seal breaks, reality fractures around the group. They witness
+    the immediate collapse of magical phenomena—spells fizzling out, enchanted objects
+    turning to dust, and the very air growing heavy with the absence of arcane energy.
+  lore:
+  - the-event
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n0
+- slot_id: magic-lost-arc-n0-shattering-dawn-2
+  kind: ambient
+  prompt: The group begins to understand that their magical abilities are now not
+    just useless but potentially deadly in this new world order. Leena feels the
+    weight of her lost powers, while Vigil tries to process what has become of their
+    familiar tools.
+  lore:
+  - amulet-of-wonder
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n0
+- slot_id: magic-lost-arc-n0-shattering-dawn-3
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-lost-arc-n0
+- slot_id: magic-lost-arc-n1-dangerous-knowledge-1
+  kind: ambient
+  prompt: The group gathers in the dim light of the ruined sanctuary, each member
+    slowly realizing that their magic is no longer a tool but a weapon that could
+    kill them or others.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-dangerous-knowledge-2
+  kind: ambient
+  prompt: As Vigil speaks, his voice carries a weight of regret and realization —
+    the group's knowledge of magic has become a burden they never asked for.
+  lore:
+  - moonwells
+  participants:
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-dangerous-knowledge-3
+  kind: ambient
+  prompt: The air thickens with tension as the group debates whether to hide their
+    magic or risk exposing themselves in a world where sorcery is now forbidden.
+  lore:
+  - the-begene-program
+  participants:
+  - sodacan_bob
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-dangerous-knowledge-4
+  kind: ambient
+  prompt: Leena's hand trembles as she recalls the last time she used her powers
+    — the memory is haunting, a reminder of how quickly magic can become a death sentence.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-lost-arc-n1
+- slot_id: magic-lost-arc-n1-dangerous-knowledge-5
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-lost-arc-n1
+nodes:
+- node_id: magic-lost-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: magic-lost-arc-n0
+  parent_id: magic-lost-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: magic-lost-arc-n1
+  parent_id: magic-lost-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

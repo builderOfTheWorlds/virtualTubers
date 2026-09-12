@@ -1,0 +1,276 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The four protagonists arrive at Leto's manor for the party.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The four protagonists each receive a mysterious invitation to Leto's manor.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four protagonists arrive at Leto's manor for the party.
+  continuity_out: The uninvited guests attack the party.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The four protagonists attend the grand party at Leto's manor, meeting
+    various guests and learning about the significance of the ten thousandth anniversary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The uninvited guests attack the party.
+  continuity_out: The manor begins to burn.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - party-attack
+  synopsis: The party is disrupted by an attack from uninvited guests, forcing the
+    four protagonists to defend themselves and the other attendees.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The manor begins to burn.
+  continuity_out: The four protagonists discover the secret room in the subbasement.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - burn-it-down
+  synopsis: The manor catches fire during the attack, and the four protagonists must
+    escape the burning building while also trying to uncover the reason behind the
+    attack.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four protagonists discover the secret room in the subbasement.
+  continuity_out: The four protagonists must decide what to do with the information
+    Grovley provided.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the secret subbasement room, Grovley reveals to the four protagonists
+    what they are and their role in the coming events.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four protagonists must decide what to do with the information
+    Grovley provided.
+  continuity_out: The four protagonists leave the manor and head towards Malmont.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - the-vault
+  synopsis: The four protagonists explore the hidden vault behind the subbasement
+    wall and discover its contents, which will shape their journey going forward.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group leaves the ashes of Leto's manor behind.
+  continuity_out: The group is confronted by Malmont's night watch.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: moonwell-malmont
+  loop: 0
+  order: 6
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The group arrives in Malmont and tries to understand their place in this
+    new society.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group is confronted by Malmont's night watch.
+  continuity_out: The group learns of the Bahadur's influence and the state of magic
+    in the world.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-confrontation
+  loop: 0
+  order: 7
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The night watch reveals the group's connection to the Bahadur and the
+    true nature of the world's magic.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group learns of the Bahadur's influence and the state of magic
+    in the world.
+  continuity_out: The group obtains a map that will guide their future adventures.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-ally
+  loop: 0
+  order: 8
+  spine_scenes:
+  - amulet-map
+  synopsis: The group finds an ally in Malmont who provides them with a map to guide
+    their future quests.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group obtains a map that will guide their future adventures.
+  continuity_out: The group reaches the Malvakar monument and faces its riddle.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-quest
+  loop: 0
+  order: 9
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The group sets out on their first quest, following the map to the Malvakar
+    monument.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group reaches the Malvakar monument and faces its riddle.
+  continuity_out: The group learns the truth about the portals and the Bahadur's plans.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-confrontation
+  loop: 0
+  order: 10
+  spine_scenes:
+  - portal-encounter
+  synopsis: At the Malvakar monument, the group confronts a dying wizard who reveals
+    the nature of the portals.
+- ambient_focus: Vigil-counts
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group learns the truth about the portals and the Bahadur's plans.
+  continuity_out: The group makes a crucial decision regarding the portal, shaping
+    the future of the world.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-decision
+  loop: 0
+  order: 11
+  spine_scenes:
+  - portal-choice
+  synopsis: The group must decide whether to allow the portal to open or to close
+    it, with significant consequences either way.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has decided the portal's fate.
+  continuity_out: The group must deal with the aftermath and implications of their
+    choice.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-consequences-arc
+  loop: 0
+  order: 18
+  spine_scenes:
+  - portal-choice
+  - bahadur-revealed
+  synopsis: The group deals with the immediate consequences of their portal decision,
+    encountering unexpected Bahadur activity.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has left the manor ruins.
+  continuity_out: The group has established a presence in Malmont.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 19
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The group arrives in Malmont, where they must navigate the town's unique
+    power dynamics.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has learned of the amulet's existence.
+  continuity_out: The group has committed to the quest.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-quest-arc
+  loop: 0
+  order: 20
+  spine_scenes:
+  - amulet-map
+  synopsis: The group learns about the Amulet of Wonder and the quest it represents.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has begun their quest.
+  continuity_out: The group has solved the riddle or failed to do so.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-encounter-arc
+  loop: 0
+  order: 21
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The group encounters the Malvakar monument and its cryptic riddle.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has learned of the moonwells' importance.
+  continuity_out: The group has discovered the truth behind the lost magic.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: moonwell-mystery-arc
+  loop: 0
+  order: 22
+  spine_scenes:
+  - magic-lost
+  - magic-retained
+  synopsis: The group investigates the moonwells and the mystery of the lost magic.
+- ambient_focus: Leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has uncovered Bahadur activities.
+  continuity_out: The confrontation has changed the group's understanding of the Bahadur
+    threat.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-confrontation-arc
+  loop: 0
+  order: 23
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The group faces a direct confrontation with the Bahadur forces.

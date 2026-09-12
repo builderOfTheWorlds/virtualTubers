@@ -1,0 +1,96 @@
+letos-manor-arc:
+  node_id: letos-manor-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The four strangers arrive at Duke Sorensen Leto III''s manor for the party,
+    only '
+  summary: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
+    only to find it is not what they expected. They are greeted by a butler who reveals
+    secrets about their true nature.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-n0
+  - letos-manor-arc-n1
+  slots: null
+letos-manor-arc-n0:
+  node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  order: 0
+  depth: 1
+  title: Arrival at the Manor
+  summary: The four strangers arrive at Duke Sorensen Leto III's manor for what they
+    believe is a social gathering, but the atmosphere feels wrong from the moment
+    they step through the gates. Strange whispers seem to follow them, and the architecture
+    appears both grand and unsettling.
+  continuity_in: The four strangers arrive at Duke Sorensen Leto III's manor for the
+    party, only
+  continuity_out: The strangers approach the imposing entrance where a formal butler
+    awaits with an unsettling smile.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-n0-arrival-1
+    kind: ambient
+    prompt: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
+      only to find it is not what they expected. They are greeted by a butler who
+      reveals secrets about their true nature.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n0-arrival-2
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+  - slot_id: letos-manor-arc-n0-arrival-3
+    kind: ambient
+    prompt: The strangers approach the imposing entrance where a formal butler awaits
+      with an unsettling smile.
+    lore:
+    - moonwells
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+letos-manor-arc-n1:
+  node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  order: 1
+  depth: 1
+  title: The Butler's Revelation
+  summary: A butler who appears to know their true nature greets them at the door,
+    revealing that they are not who they think they are. He speaks of their past lives
+    and duties, exposing secrets that will change everything they believed about themselves.
+  continuity_in: The strangers approach the imposing entrance where a formal butler
+    awaits with an unsettling smile.
+  continuity_out: The revelation shatters their understanding of who they are, leaving
+    them to grapple with their true identities.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

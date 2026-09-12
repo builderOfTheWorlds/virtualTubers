@@ -1,0 +1,116 @@
+segment_id: malmont-arrival-arc
+order: 10
+loop: 0
+hours: 6
+synopsis: The party arrives in Malmont, a town that has never heard of them, and they
+  must navigate its dual power structures while uncovering the secrets of their new
+  surroundings.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-1
+  kind: ambient
+  prompt: The party enters Malmont's main square, where local vendors sell strange
+    goods and the air hums with unspoken tensions between two distinct groups of people.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-2
+  kind: ambient
+  prompt: As the party explores, they notice that certain buildings are marked with
+    symbols that seem to shift when no one is looking directly at them.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-3
+  kind: ambient
+  prompt: A hooded figure approaches the party, speaking only in riddles about the
+    town's moonwells and their connection to ancient powers.
+  lore:
+  - moonwells
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-4
+  kind: ambient
+  prompt: The party discovers a hidden journal in an old tavern, detailing the town's
+    dual power structures and how they've maintained balance for generations.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-5
+  kind: ambient
+  prompt: In a dimly lit alley, the party encounters a group of resistance fighters
+    who seem to know more about their arrival than they let on.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-6
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: malmont-arrival-arc-n1
+nodes:
+- node_id: malmont-arrival-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 6
+needs_rebrief: true

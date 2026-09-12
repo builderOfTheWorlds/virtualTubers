@@ -1,0 +1,104 @@
+# Fast smoke-test config — mirrors generation.yaml's SHAPE exactly (same
+# keys, same structure) but with drastically reduced scope and the light
+# (smaller/faster) models active everywhere, so a full arc/segment/dialogue
+# run completes in well under a minute instead of 30+.
+#
+# Use this for iterating on pipeline/prompt changes and for the dashboard's
+# "Submit New Generation Job" smoke tests — never for real campaign content.
+# Point GENERATOR_CONFIG at this file (see docker-compose.yml's
+# GENERATOR_CONFIG_FILE override) instead of editing generation.yaml.
+#
+# Kept in sync by hand with generation.yaml's key structure — there is no
+# schema/merge tooling, so if generation.yaml gains a new top-level key,
+# this file needs it too (with a small-scope value) or config.py's readers
+# will KeyError.
+
+campaign:
+  pack: campaigns/test_pack
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024        # small replies, faster generation
+  timeout_s: 120          # fail fast instead of waiting the full 600s
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 2000
+  target_total_hours: 1
+  target_words_per_hour: 2000
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"   # both point at the light model here
+  active_model: light
+  hours_total: 1            # -> n_segments = ceil(1/1) = 1 segment total
+  segment_hours: 1
+  batch_size: 6              # >= n_segments, so it's a single batch
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3-coder:30b"
+    heavy:
+      model: "qwen3-coder:30b"
+  active_model: light
+  target_words: 300          # tiny — a handful of slots, not 170
+  target_slots: 5
+  tree:
+    max_leaf_slots: 5        # root is already leaf-sized: no recursion
+    max_children: 3
+    max_depth: 1
+    min_node_words: 50
+    leaf_density_floor: 0.50  # forgiving — this is a smoke test, not a QA gate
+  concurrency: 2
+  max_attempts: 2
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 10
+    failure_rate: 0.5
+    min_samples: 5
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+    heavy:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 256
+      num_ctx: 2048
+  active_model: light
+  max_recent: 4
+  max_words: 45
+  max_beats: 6
+  takes_per_slot: 1          # one take, not 3 — this is a smoke test
+  neutral_takes: 1
+  concurrency: 2
+  max_attempts: 2
+
+# Must match whatever cast/carry vocabulary the test pack actually declares.
+# test_pack has no flags/carry keys of its own, so these stay empty rather
+# than borrowing ashiorid's (Leena-wounded etc.) — a segment that carries
+# a key this list doesn't have fails validation exactly like the real thing
+# would, which is useful, but the *keys themselves* should reflect the pack
+# under test, not a copy-paste from generation.yaml.
+state:
+  flags: []
+  moods: [neutral]
+  carry_keys: []

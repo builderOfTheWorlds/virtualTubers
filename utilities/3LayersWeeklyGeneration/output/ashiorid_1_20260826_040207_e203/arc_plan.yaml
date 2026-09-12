@@ -1,0 +1,161 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The protagonists arrive at Leto's Manor.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The four protagonists each receive a mysterious invitation to Leto's Manor
+    for the Ten Thousandth Anniversary celebration.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The protagonists arrive at Leto's Manor.
+  continuity_out: The party is interrupted by an attack.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The protagonists explore Leto's Manor and meet each other for the first
+    time.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is interrupted by an attack.
+  continuity_out: The manor begins to burn.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - party-attack
+  synopsis: Uninvited guests attack the celebration, causing chaos and forcing the
+    protagonists to take action.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The manor begins to burn.
+  continuity_out: The protagonists discover the vault.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - burn-it-down
+  synopsis: The protagonists fight to escape the burning manor and uncover a hidden
+    vault.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The protagonists discover the vault.
+  continuity_out: The protagonists must choose how to use the knowledge they've gained.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - the-vault
+  synopsis: Inside the vault, the protagonists learn the truth about their origins
+    and the Event from Grovley.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The protagonists must choose how to use the knowledge they've gained.
+  continuity_out: The fate of magic is decided.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - portal-encounter
+  synopsis: The protagonists encounter a dying wizard at a mysterious portal and must
+    decide the fate of magic in their world.
+- ambient_focus: Leena-almost
+  carry_in: {}
+  carry_out:
+    Leena-wounded: true
+  continuity_in: The group is in the subbasement, having just spoken with Grovley.
+  continuity_out: The group has witnessed the last moonwell run dry and found the
+    vault behind the subbasement wall.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: seal-fails-arc
+  loop: 0
+  order: 24
+  spine_scenes:
+  - magic-lost
+  - the-vault
+  synopsis: The seal on the last moonwell fails, causing the well to run dry. The
+    group discovers the subbasement wall and what lies behind it.
+- ambient_focus: Vigil-counts
+  carry_in:
+    Leena-wounded: true
+  carry_out: {}
+  continuity_in: The group has found the vault and is deciding what to do next.
+  continuity_out: The portal has been opened, and the group must decide whether to
+    go through.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-opens-arc
+  loop: 0
+  order: 25
+  spine_scenes:
+  - portal-encounter
+  synopsis: A dying wizard appears and opens a portal, revealing the true nature of
+    the vault and its contents.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out:
+    moonwell-tainted: true
+  continuity_in: The group has decided to attend the anniversary party at Leto's manor.
+  continuity_out: The party has been crashed by unknown attackers, putting the group
+    and other guests in danger.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-crashers-arc
+  loop: 0
+  order: 26
+  spine_scenes:
+  - invitation
+  - party-attack
+  synopsis: The group arrives at Leto's manor for the anniversary party, but unexpected
+    guests crash the event.
+- ambient_focus: sodacan_bob-on-craft
+  carry_in:
+    moonwell-tainted: true
+  carry_out: {}
+  continuity_in: The party has been crashed, and the manor is under attack.
+  continuity_out: The manor is burning down, and the group must find a way out.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: manor-in-flames-arc
+  loop: 0
+  order: 27
+  spine_scenes:
+  - letos-manor
+  - burn-it-down
+  synopsis: The manor catches fire, and the group must find a way to escape the burning
+    building.

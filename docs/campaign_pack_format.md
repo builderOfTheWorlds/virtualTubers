@@ -17,7 +17,7 @@ campaigns/<name>/
   campaign.yaml     # metadata, cast roster, enabled primitives, theme
   cast/
     gm.yaml         # one file per cast member; filename = the id used in beats
-    buffalo.yaml
+    chadwick.yaml
     ...
   scenes/
     01-invitation.yaml   # one file per scene; filenames are cosmetic, `id:` is authoritative
@@ -71,8 +71,8 @@ enter_narration: >-
 beats:
   - {type: pane,      show: combat}
   - {type: narration, speaker: gm,      text: "..."}
-  - {type: dialogue,  speaker: buffalo, text: "...", improv: true}
-  - {type: action,    speaker: Alcinoe,   primitive: cast_spell,
+  - {type: dialogue,  speaker: chadwick, text: "...", improv: true}
+  - {type: action,    speaker: Leena,   primitive: cast_spell,
      params: {spell: shatter, target: the barred doors, level: 3}}
 
 branches:

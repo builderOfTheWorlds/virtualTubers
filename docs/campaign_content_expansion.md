@@ -85,7 +85,7 @@ lore: [the-event, moonwells]   # which lore notes enter model context here
 
 ```yaml
 - type: dialogue
-  speaker: Alcinoe
+  speaker: Leena
   improv: true
   text:
     - "We should run."
@@ -124,7 +124,7 @@ no network. It is the reproducibility guarantee the canon regression rests on.
 - **56 beats** marked `improv: true` (was 3)
 - `lore:` selectors on 9 of 10 spine scenes, so the three lore notes finally
   reach a model
-- **8 ambient scenes** — `a01-camp-fire` … `a08-buffalo-lost`
+- **8 ambient scenes** — `a01-camp-fire` … `a08-chadwick-lost`
 - `config/campaigns/ashiorid.yaml` — the `llama3.1:8b` block
 
 Ambient scene files sit in `scenes/` alongside the spine with an `a` prefix, not

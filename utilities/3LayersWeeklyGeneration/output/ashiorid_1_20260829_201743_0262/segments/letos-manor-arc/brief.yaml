@@ -1,0 +1,125 @@
+segment_id: letos-manor-arc
+order: 2
+loop: 0
+hours: 6
+synopsis: The four arrive at Duke Sorensen Leto III's manor, which is lit for a party
+  ten thousand years in the making.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-n0-arrival-1
+  kind: ambient
+  prompt: The four adventurers approach the grand entrance of Duke Sorensen Leto III's
+    manor, where elaborate preparations for a party celebrating ten thousand years
+    of tradition have been underway. The mansion gleams with ornate decorations and
+    welcoming lights, setting the stage for what promises to be a momentous occasion.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-arrival-2
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n1-welcoming-1
+  kind: ambient
+  prompt: The four stand at the threshold of Duke Sorensen Leto III's manor, taking
+    in the grandeur of the celebration that has been prepared for this historic moment.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-welcoming-2
+  kind: ambient
+  prompt: As they enter, servants in ornate uniforms greet them with formal protocol,
+    their voices carrying the weight of tradition and ceremony.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-welcoming-3
+  kind: ambient
+  prompt: The air is thick with the scent of exotic spices and the sound of distant
+    music, as guests from across the realm gather to witness this rare milestone.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-welcoming-4
+  kind: ambient
+  prompt: Leena notices a familiar face among the guests, someone whose presence
+    here might be more significant than it first appears.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-welcoming-5
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: letos-manor-arc-n1
+nodes:
+- node_id: letos-manor-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

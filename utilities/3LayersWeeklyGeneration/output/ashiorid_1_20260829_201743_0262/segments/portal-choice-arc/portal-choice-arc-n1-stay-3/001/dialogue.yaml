@@ -1,0 +1,20 @@
+id: portal-choice-arc-n1-stay-3
+take: 1
+beats:
+- kind: narration
+  text: 'Here are the responses:'
+  speaker: gm
+- kind: narration
+  text: 'Buffalo: We can''t just walk away, can we?'
+  speaker: gm
+- kind: dialogue
+  text: I think we have no choice.
+  speaker: Alcinoe
+- kind: dialogue
+  text: We know what happens to the last well. We can't afford to find another.
+  speaker: Vance
+- kind: narration
+  text: 'Drokki: If we don''t, what''s to stop them from finding a new one?'
+  speaker: gm
+model: light
+generated_at: '2026-08-29T20:29:35.875759+00:00'

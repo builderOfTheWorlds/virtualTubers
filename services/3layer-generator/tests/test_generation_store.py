@@ -35,9 +35,10 @@ def clean_tables():
     yield
 
 
-def _submit(pack="ashiorid", stage="segment", profile="heavy", params=None):
+def _submit(pack="ashiorid", stage="segment", profile="heavy", params=None, run=None):
     return generation_store.submit({
         "pack": pack,
+        "run": run,
         "stage": stage,
         "profile": profile,
         "params": params if params is not None else {"segments": ["seg-01"]},
@@ -70,6 +71,7 @@ def test_submit_returns_id_and_queues_the_job():
     assert row["id"] == job_id
     assert row["status"] == "queued"
     assert row["pack"] == "ashiorid"
+    assert row["run"] is None
     assert row["stage"] == "segment"
     assert row["profile"] == "heavy"
     assert row["params"] == {"segments": ["seg-01"]}
@@ -128,6 +130,42 @@ def test_list_jobs_with_no_filters_returns_everything():
     _submit(pack="a")
     _submit(pack="b")
     assert len(generation_store.list_jobs()) == 2
+
+
+# --------------------------------------------------------------------------
+# run: the output namespace, separate from the source pack
+# --------------------------------------------------------------------------
+
+def test_submit_persists_the_run():
+    job_id = _submit(run="ashiorid_20260823_193045")
+    row = generation_store.get(job_id)
+    assert row["run"] == "ashiorid_20260823_193045"
+
+
+def test_list_jobs_filters_by_run():
+    first = _submit(run="ashiorid_20260101_000000")
+    _submit(run="ashiorid_20260102_000000")
+
+    rows = generation_store.list_jobs(run="ashiorid_20260101_000000")
+    assert [r["id"] for r in rows] == [first]
+
+
+def test_list_runs_returns_distinct_non_null_runs_sorted():
+    _submit(run="ashiorid_20260102_000000")
+    _submit(run="ashiorid_20260101_000000")
+    _submit(run="ashiorid_20260102_000000")  # duplicate run, e.g. a segment job
+    _submit(run=None)  # historical row with no run — must not show up
+
+    assert generation_store.list_runs() == [
+        "ashiorid_20260101_000000",
+        "ashiorid_20260102_000000",
+    ]
+
+
+def test_list_runs_is_empty_when_no_job_has_a_run():
+    _submit()
+    _submit()
+    assert generation_store.list_runs() == []
 
 
 # --------------------------------------------------------------------------

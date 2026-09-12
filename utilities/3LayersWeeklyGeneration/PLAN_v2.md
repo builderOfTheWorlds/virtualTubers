@@ -532,7 +532,7 @@ Two things this pins down that nothing currently states:
   `update_context(scene, carry, loop)` (`improviser.py:29`) is the *only*
   context channel, and `generate_scene` renders `Loop N` plus each carry
   key/value into the user prompt (`improviser.py:210-213`). So
-  `{"Alcinoe-wounded": True}` and `{"mood": "tense"}` both ride the carry
+  `{"Leena-wounded": True}` and `{"mood": "tense"}` both ride the carry
   channel and render as key/value lines. Nothing in PLAN.md said how a
   computed condition became prompt text; this is the answer, and it is worth
   a test — `conditions_for` producing a mood dict that never reaches the

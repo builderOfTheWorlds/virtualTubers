@@ -1,0 +1,25 @@
+# Minimal throwaway test pack — NOT production content.
+# Structured to satisfy the arc/segment/dialogue generator's requirements
+# (mirrors campaigns/ashiorid_1/campaign.yaml) with a tiny scope so a
+# test job completes fast instead of targeting a real multi-hour campaign.
+name: test_pack
+title: "Test Pack — Smoke Test Campaign"
+genre: test
+
+start_scene: intro
+
+gm: gm
+players:
+  - hero
+
+primitives:
+  - roll_check
+  - move_to
+  - search
+
+ambient:
+  every: 0
+
+theme:
+  accent: gray
+  narration: dim

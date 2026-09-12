@@ -1,0 +1,181 @@
+segments:
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: Ten thousand years to the day since the Event, four strangers each receive
+    a mysterious card inviting them to a party at Leto's Manor.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The four strangers learn about the Age of War, the world's magic being
+    consumed as fuel, and the choices that led to the Event.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - letos-manor
+  synopsis: The four arrive at Duke Sorensen Leto III's manor, which is lit for a
+    party ten thousand years in the making.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - party-attack
+  synopsis: The doors open to people who were not invited, and the room stops moving
+    as a violent attack begins.
+- ambient_focus: the-meal
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - burn-it-down
+  synopsis: The hold does not break in time, and the manor starts to come down around
+    the four of them as they fight for survival.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the subbasement, the butler reveals what the four of them truly are
+    and their connection to the Leto family.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 12
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The tear in space answers back, revealing the Bahadur's presence and their
+    connection to the Event.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 13
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party arrives at the Malvakar monument and solves its riddle, opening
+    the next doorway on their quest.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 14
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The four strangers arrive in Malmont, a town that has never heard of them
+    and holds its own dangers.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 15
+  spine_scenes:
+  - the-vault
+  synopsis: The party discovers the truth about what is hidden in Leto's manor subbasement,
+    and its connection to the moonwells.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  order: 16
+  spine_scenes:
+  - portal-encounter
+  synopsis: At the edge of the tear in space, a dying wizard completes his mission
+    and warns of what lies beyond.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  order: 17
+  spine_scenes:
+  - portal-choice
+  synopsis: The party must decide whether to enter the tear or stay and face the consequences
+    of inaction.

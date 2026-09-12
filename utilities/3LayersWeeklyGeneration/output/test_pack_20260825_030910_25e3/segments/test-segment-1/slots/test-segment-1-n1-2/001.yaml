@@ -1,0 +1,19 @@
+id: test-segment-1-n1-2
+take: 1
+model: light
+generated_at: '2026-08-25T03:13:26.143237+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The studio is dimly lit, with a faint glow emanating from the rows of monitors
+    lining the walls.
+- kind: dialogue
+  speaker: hero
+  text: What's the first test?
+- kind: dialogue
+  speaker: gm
+  text: A simple shader, applied to a 2D texture to see if the graphics card is processing
+    the data correctly.
+- kind: dialogue
+  speaker: hero
+  text: Looks like it's working.

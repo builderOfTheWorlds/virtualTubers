@@ -1,0 +1,130 @@
+segment_id: the-age-of-war-arc
+order: 1
+loop: 0
+hours: 6
+synopsis: The four strangers learn about the Age of War, the world's magic being consumed
+  as fuel, and the choices that led to the Event.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: the-age-of-war-arc-n0-age-of-war-1
+  kind: ambient
+  prompt: The four strangers gather around a flickering fire, listening as Leena
+    recounts the rise of magic as the world's primary fuel source.
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-age-of-war-2
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-age-of-war-3
+  kind: ambient
+  prompt: Vigil speaks quietly about the devastating conflicts that arose from nations
+    fighting over magical resources, his voice heavy with the weight of history.
+  lore:
+  - the-event
+  - the-bahadur
+  participants:
+  - Vigil
+  - Leena
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n1-event-consequences-1
+  kind: ambient
+  prompt: The strangers gather around a flickering fire, sharing stories of the Age
+    of War and how magic was consumed as fuel.
+  lore:
+  - the-event
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+- slot_id: the-age-of-war-arc-n1-event-consequences-2
+  kind: ambient
+  prompt: Leena recounts how the magic reserves were completely depleted during
+    the Event, forcing humanity to adapt or perish.
+  lore:
+  - the-event
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+- slot_id: the-age-of-war-arc-n1-event-consequences-3
+  kind: ambient
+  prompt: Vigil and the others discuss how the Event reshaped their world, forcing
+    desperate choices that still echo today.
+  lore:
+  - the-event
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+- slot_id: the-age-of-war-arc-n1-event-consequences-4
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+nodes:
+- node_id: the-age-of-war-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: the-age-of-war-arc-n0
+  parent_id: the-age-of-war-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: the-age-of-war-arc-n1
+  parent_id: the-age-of-war-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

@@ -27,7 +27,7 @@ beats:
         seem at all surprised that it is the four of you standing there.
 
   - type: dialogue
-    speaker: Vance
+    speaker: Vigil
     improv: true
     text:
       - >-
@@ -70,7 +70,7 @@ beats:
         down in advance of you existing.
 
   - type: action
-    speaker: Vance
+    speaker: Vigil
     primitive: reveal_memory
     params:
       subject: the night the wood elves came
@@ -109,7 +109,7 @@ beats:
         every one of you."
 
   - type: dialogue
-    speaker: Alcinoe
+    speaker: Leena
     improv: true
     text:
       - >-
@@ -137,7 +137,7 @@ beats:
         cruelty in how he says it at all, and that makes it land harder.
 
   - type: dialogue
-    speaker: buffalo
+    speaker: chadwick
     improv: true
     text:
       - >-
@@ -151,7 +151,7 @@ beats:
         own family without the first idea.
 
   - type: dialogue
-    speaker: drokki
+    speaker: sodacan_bob
     improv: true
     text:
       - >-

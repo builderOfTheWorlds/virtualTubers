@@ -70,6 +70,15 @@ def client(monkeypatch, store, tmp_path):
 
 def submit(client, **body):
     body.setdefault("stage", "segment")
+    # Most tests here are about pack/profile/params validation, not the
+    # run-naming behavior — default a `run` so segment/dialogue submissions
+    # (which require one explicitly; see test_run_naming below) don't fail
+    # on that unrelated to what the test is checking. Pass run=None
+    # explicitly to test the "no run supplied" path.
+    if "run" not in body:
+        body["run"] = "ashiorid_test"
+    elif body["run"] is None:
+        del body["run"]
     return client.post("/jobs", json=body)
 
 
@@ -152,6 +161,57 @@ def test_a_caller_cannot_set_the_status_field(client, store):
     claims to be already completed."""
     response = submit(client, segments=["seg-01"], status="completed")
     assert store.get(response.json()["id"])["status"] == "queued"
+
+
+# ---------------------------------------------------------------------------
+# POST /jobs — run naming
+# ---------------------------------------------------------------------------
+
+def test_an_arc_job_with_no_run_gets_one_auto_generated(client, store):
+    response = submit(client, stage="arc", run=None)
+
+    assert response.status_code in (200, 201)
+    run = response.json()["run"]
+    assert run.startswith("ashiorid_")
+    assert store.get(response.json()["id"])["run"] == run
+
+
+def test_an_all_job_with_no_run_gets_one_auto_generated(client, store):
+    """'all' normalizes to 'arc' for the runner, and gets the same
+    fresh-pipeline treatment."""
+    response = submit(client, stage="all", run=None)
+    assert response.status_code in (200, 201)
+    assert response.json()["run"].startswith("ashiorid_")
+
+
+def test_two_arc_jobs_with_no_run_get_distinct_runs(client, store):
+    first = submit(client, stage="arc", run=None).json()["run"]
+    second = submit(client, stage="arc", run=None).json()["run"]
+    assert first != second
+
+
+@pytest.mark.parametrize("stage", ["segment", "dialogue"])
+def test_a_segment_or_dialogue_job_with_no_run_is_rejected(client, stage):
+    """Only an arc job starts a fresh pipeline; segment/dialogue continue an
+    existing run's arc plan and would silently look in the wrong place
+    (or nowhere) without one."""
+    response = submit(client, stage=stage, run=None, segments=["seg-01"])
+    assert response.status_code == 400
+    assert "run is required" in response.text
+
+
+def test_an_explicit_run_is_honoured(client, store):
+    response = submit(client, stage="segment", run="ashiorid_20260101_000000",
+                      segments=["seg-01"])
+    assert response.status_code in (200, 201)
+    assert response.json()["run"] == "ashiorid_20260101_000000"
+    assert store.get(response.json()["id"])["run"] == "ashiorid_20260101_000000"
+
+
+@pytest.mark.parametrize("evil", ["../etc", "a/b", "..", "/absolute"])
+def test_a_run_name_that_escapes_the_mount_is_rejected(client, evil):
+    assert submit(client, stage="segment", run=evil,
+                  segments=["seg-01"]).status_code == 400
 
 
 # ---------------------------------------------------------------------------
@@ -405,3 +465,201 @@ def test_config_endpoint_works_after_a_real_lifespan(monkeypatch, tmp_path, stor
 
     with TestClient(api.app) as client:
         assert client.get("/config").status_code == 200
+
+
+# ---------------------------------------------------------------------------
+# Saved configs — /configs CRUD + /configs/{id}/activate
+# ---------------------------------------------------------------------------
+
+VALID_CONFIG_YAML = """
+output:
+  dir: /data/output
+budget:
+  measured_baseline:
+    words_per_take: 105
+arc:
+  models:
+    light: {model: a}
+    heavy: {model: b}
+  active_model: heavy
+segment:
+  target_words: 300
+  target_slots: 5
+  models:
+    light: {model: a}
+    heavy: {model: b}
+  active_model: heavy
+  tree: {max_leaf_slots: 5, max_children: 3, max_depth: 1, min_node_words: 50, leaf_density_floor: 0.5}
+dialogue:
+  models:
+    light: {model: a}
+    heavy: {model: b}
+  active_model: heavy
+  takes_per_slot: 1
+state:
+  flags: []
+  moods: [neutral]
+  carry_keys: []
+"""
+
+
+def test_a_new_config_can_be_saved(client, store):
+    response = client.post("/configs", json={
+        "name": "fast-test", "description": "smoke test scope",
+        "config_yaml": VALID_CONFIG_YAML,
+    })
+    assert response.status_code == 200
+    config_id = response.json()["id"]
+    assert store.get_config_row(config_id)["name"] == "fast-test"
+
+
+def test_saving_a_config_requires_a_name(client):
+    response = client.post("/configs", json={"config_yaml": VALID_CONFIG_YAML})
+    assert response.status_code == 400
+
+
+def test_saving_a_config_requires_config_yaml(client):
+    response = client.post("/configs", json={"name": "no-body"})
+    assert response.status_code == 400
+
+
+def test_malformed_yaml_is_rejected_at_save_time(client):
+    response = client.post("/configs", json={
+        "name": "broken", "config_yaml": "not: valid: yaml: at: all: [",
+    })
+    assert response.status_code == 400
+
+
+def test_a_non_mapping_config_is_rejected(client):
+    response = client.post("/configs", json={
+        "name": "just-a-list", "config_yaml": "- 1\n- 2\n",
+    })
+    assert response.status_code == 400
+
+
+def test_duplicate_config_names_are_rejected(client):
+    body = {"name": "dupe", "config_yaml": VALID_CONFIG_YAML}
+    first = client.post("/configs", json=body)
+    assert first.status_code == 200
+    second = client.post("/configs", json=body)
+    assert second.status_code == 409
+
+
+def test_saved_configs_are_listed(client, store):
+    client.post("/configs", json={"name": "one", "config_yaml": VALID_CONFIG_YAML})
+    client.post("/configs", json={"name": "two", "config_yaml": VALID_CONFIG_YAML})
+    response = client.get("/configs")
+    assert response.status_code == 200
+    names = {row["name"] for row in response.json()}
+    assert names == {"one", "two"}
+
+
+def test_getting_one_saved_config(client):
+    config_id = client.post("/configs", json={
+        "name": "solo", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    response = client.get(f"/configs/{config_id}")
+    assert response.status_code == 200
+    assert response.json()["name"] == "solo"
+
+
+def test_getting_an_unknown_saved_config_is_404(client):
+    assert client.get("/configs/9999").status_code == 404
+
+
+def test_a_saved_config_can_be_edited(client, store):
+    config_id = client.post("/configs", json={
+        "name": "editable", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    edited_yaml = VALID_CONFIG_YAML.replace("target_slots: 5", "target_slots: 10")
+    response = client.put(f"/configs/{config_id}", json={
+        "description": "updated", "config_yaml": edited_yaml,
+    })
+    assert response.status_code == 200
+    row = store.get_config_row(config_id)
+    assert "target_slots: 10" in row["config_yaml"]
+    assert row["description"] == "updated"
+
+
+def test_editing_an_unknown_config_is_404(client):
+    response = client.put("/configs/9999", json={"config_yaml": VALID_CONFIG_YAML})
+    assert response.status_code == 404
+
+
+def test_a_saved_config_can_be_deleted(client, store):
+    config_id = client.post("/configs", json={
+        "name": "throwaway", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    response = client.delete(f"/configs/{config_id}")
+    assert response.status_code == 200
+    assert store.get_config_row(config_id) is None
+
+
+def test_deleting_an_unknown_config_is_404(client):
+    assert client.delete("/configs/9999").status_code == 404
+
+
+def test_activating_a_config_marks_it_active_and_applies_it(client, store):
+    config_id = client.post("/configs", json={
+        "name": "activate-me", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    response = client.post(f"/configs/{config_id}/activate")
+    assert response.status_code == 200
+    assert store.get_config_row(config_id)["is_active"] is True
+    # CONFIG was mutated in place to reflect the newly-activated document.
+    assert api.CONFIG["segment"]["target_slots"] == 5
+
+
+def test_activating_a_second_config_deactivates_the_first(client, store):
+    first_id = client.post("/configs", json={
+        "name": "first", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    second_id = client.post("/configs", json={
+        "name": "second", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    client.post(f"/configs/{first_id}/activate")
+    client.post(f"/configs/{second_id}/activate")
+    assert store.get_config_row(first_id)["is_active"] is False
+    assert store.get_config_row(second_id)["is_active"] is True
+
+
+def test_activating_an_unknown_config_is_404(client):
+    assert client.post("/configs/9999/activate").status_code == 404
+
+
+def test_activating_a_config_that_does_not_resolve_a_profile_is_rejected(client, store):
+    broken_yaml = "output: {dir: /data/output}\narc: {}\n"
+    config_id = client.post("/configs", json={
+        "name": "incomplete", "config_yaml": broken_yaml,
+    }).json()["id"]
+    response = client.post(f"/configs/{config_id}/activate")
+    assert response.status_code == 400
+    # Must NOT have been marked active — store and running CONFIG stay
+    # in sync on failure.
+    assert store.get_config_row(config_id)["is_active"] is False
+
+
+def test_editing_the_active_config_reapplies_it_live(client, store):
+    config_id = client.post("/configs", json={
+        "name": "live", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    client.post(f"/configs/{config_id}/activate")
+    edited_yaml = VALID_CONFIG_YAML.replace("target_slots: 5", "target_slots: 42")
+    client.put(f"/configs/{config_id}", json={"config_yaml": edited_yaml})
+    assert api.CONFIG["segment"]["target_slots"] == 42
+
+
+def test_editing_an_inactive_config_does_not_touch_the_live_config(client, store):
+    active_id = client.post("/configs", json={
+        "name": "stays-active", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    client.post(f"/configs/{active_id}/activate")
+    before = dict(api.CONFIG)
+
+    other_id = client.post("/configs", json={
+        "name": "not-active", "config_yaml": VALID_CONFIG_YAML,
+    }).json()["id"]
+    edited_yaml = VALID_CONFIG_YAML.replace("target_slots: 5", "target_slots: 999")
+    client.put(f"/configs/{other_id}", json={"config_yaml": edited_yaml})
+
+    assert api.CONFIG["segment"]["target_slots"] == before["segment"]["target_slots"]

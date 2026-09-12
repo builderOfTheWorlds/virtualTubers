@@ -1,0 +1,15 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A one-sentence summary of what happens.
+  summary: A one-sentence summary of what happens.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

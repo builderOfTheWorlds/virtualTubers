@@ -1,0 +1,26 @@
+id: portal-choice-arc-n1-stay-1
+take: 1
+beats:
+- kind: narration
+  text: 'Here are the lines for each character:'
+  speaker: gm
+- kind: narration
+  text: 'Ashiorid: "The weight of inaction settles on the party as they choose to
+    remain and face the consequences, Alcinoe, I''m afraid your presence here is a
+    significant part of that equation."'
+  speaker: gm
+- kind: narration
+  text: 'Buffalo: "I''m still hungry."'
+  speaker: gm
+- kind: dialogue
+  text: If I'm a... a question, then what does that make me? A thing without answers?
+  speaker: Alcinoe
+- kind: dialogue
+  text: If magic truly died out, then what's that thing I've been carrying around
+    in my pack for years? The crystal orb, it glows with an otherworldly energy.
+  speaker: Vance
+- kind: narration
+  text: 'Drokki: "Be careful, friend, not everyone can see what''s truly there."'
+  speaker: gm
+model: light
+generated_at: '2026-08-29T20:29:32.455598+00:00'

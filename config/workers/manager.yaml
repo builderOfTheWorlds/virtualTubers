@@ -53,9 +53,19 @@ voice:
       model_path: "/data/voices/en_US-joe-medium.onnx"
     coder-aider:
       model_path: "/data/voices/en_US-kristin-medium.onnx"
-  boss_name: "the boss"
+  boss_name: "Ashiorid"
+  # Campaign display names (docs/revoice.md speaker_names): speaker id ->
+  # on-screen name. Keys are WORKER ids because the episode's speakers are
+  # worker ids; each maps to the character that tuber plays. coder-aider is
+  # deliberately absent - it is the open tuber with no character assigned.
+  speaker_names:
+    coder: "Chadwick"
+    tester: "Leena"
+    coder-native: "Vigil"
+    coder-opencode: "Sodacan Bob"
   rate: 1.0
   verbosity: 0.9
+  verbatim: true
 
 avatar:
   provider: builtin

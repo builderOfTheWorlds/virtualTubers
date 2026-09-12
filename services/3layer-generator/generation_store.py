@@ -58,6 +58,14 @@ CREATE TABLE IF NOT EXISTS generation_jobs (
 CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
     ON generation_jobs (status, created_at);
 
+-- Added after generation_jobs already shipped (2026-08-23): the output
+-- namespace a job writes/reads under, distinct from `pack` (the source
+-- pack's cast/scenes/lore). NULL on rows written before this column
+-- existed; the dispatcher falls back to `pack` for those. No migration
+-- framework in this project — ADD COLUMN IF NOT EXISTS is how every table
+-- here evolves in place (see voiced_narration below).
+ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS run TEXT;
+
 CREATE TABLE IF NOT EXISTS generation_artifacts (
     id          BIGSERIAL PRIMARY KEY,
     pack        TEXT NOT NULL,
@@ -68,12 +76,30 @@ CREATE TABLE IF NOT EXISTS generation_artifacts (
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     UNIQUE (pack, kind, segment_id)
 );
+
+-- Saved generation.yaml-shaped configs (2026-08-25) — the management GUI's
+-- "Saved Configurations" section. Each row is one named, complete config
+-- document (raw YAML text, parsed/validated at save and at activate time,
+-- never at rest) so an operator can keep a fast smoke-test config and the
+-- real production config side by side and switch between them without
+-- editing files on disk or rebuilding the container. `config_yaml` is the
+-- WHOLE document, not a diff — same shape as generation.yaml — so activating
+-- a row is just "load this text instead of the file".
+CREATE TABLE IF NOT EXISTS generator_configs (
+    id          BIGSERIAL PRIMARY KEY,
+    name        TEXT NOT NULL UNIQUE,
+    description TEXT NOT NULL DEFAULT '',
+    config_yaml TEXT NOT NULL,
+    is_active   BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 """
 
 TERMINAL_STATUSES = frozenset({"completed", "failed", "cancelled"})
 
 _JOB_COLUMNS = (
-    "id, pack, stage, profile, status, params, progress, result, error, "
+    "id, pack, run, stage, profile, status, params, progress, result, error, "
     "cancel_requested, submitted_by, created_at, started_at, finished_at, "
     "heartbeat_at"
 )
@@ -130,19 +156,21 @@ def new_job_id() -> str:
 
 def submit(record: dict) -> str:
     """Insert one queued job. `record` must contain `pack` and `stage`;
-    optionally `profile`, `params`, `submitted_by`. Returns the new id.
+    optionally `run`, `profile`, `params`, `submitted_by`. Returns the new id.
 
     Only the whitelisted keys are read — the API hands this function a raw
     request body and trusting it to name columns would let a caller set
     `status` or `finished_at`."""
     pack = record["pack"]
+    run = record.get("run")
     stage = record["stage"]
     profile = record.get("profile", "")
     params = record.get("params", {})
     submitted_by = record.get("submitted_by", "api")
 
     job_id = new_job_id()
-    log.info("submit: job_id=%s pack=%s stage=%s profile=%s", job_id, pack, stage, profile)
+    log.info("submit: job_id=%s pack=%s run=%s stage=%s profile=%s",
+              job_id, pack, run, stage, profile)
 
     from psycopg2.extras import Json
     conn = _connect()
@@ -150,9 +178,9 @@ def submit(record: dict) -> str:
         with conn.cursor() as cur:
             cur.execute(
                 "INSERT INTO generation_jobs "
-                "(id, pack, stage, profile, status, params, submitted_by) "
-                "VALUES (%s, %s, %s, %s, 'queued', %s, %s)",
-                (job_id, pack, stage, profile, Json(params), submitted_by),
+                "(id, pack, run, stage, profile, status, params, submitted_by) "
+                "VALUES (%s, %s, %s, %s, %s, 'queued', %s, %s)",
+                (job_id, pack, run, stage, profile, Json(params), submitted_by),
             )
     finally:
         conn.close()
@@ -176,15 +204,18 @@ def get(job_id: str) -> dict | None:
         conn.close()
 
 
-def list_jobs(pack: str | None = None, stage: str | None = None,
-              status: str | None = None) -> list:
-    """Rows matching every filter that is not None, newest first. All three
-    None returns every job."""
+def list_jobs(pack: str | None = None, run: str | None = None,
+              stage: str | None = None, status: str | None = None) -> list:
+    """Rows matching every filter that is not None, newest first. All None
+    returns every job."""
     clauses: list = []
     params: list = []
     if pack is not None:
         clauses.append("pack = %s")
         params.append(pack)
+    if run is not None:
+        clauses.append("run = %s")
+        params.append(run)
     if stage is not None:
         clauses.append("stage = %s")
         params.append(stage)
@@ -197,13 +228,32 @@ def list_jobs(pack: str | None = None, stage: str | None = None,
         sql += " WHERE " + " AND ".join(clauses)
     sql += " ORDER BY created_at DESC"
 
-    log.debug("list_jobs: pack=%s stage=%s status=%s", pack, stage, status)
+    log.debug("list_jobs: pack=%s run=%s stage=%s status=%s", pack, run, stage, status)
     conn = _connect()
     try:
         with conn.cursor() as cur:
             cur.execute(sql, tuple(params))
             rows = cur.fetchall()
             return [_row_to_dict(cur, row) for row in rows]
+    finally:
+        conn.close()
+
+
+def list_runs() -> list:
+    """Every distinct non-null `run` value across all jobs, sorted.
+
+    The source of truth for what `boot()` should rehydrate — replaces
+    scanning PACK_ROOT, which lists source packs, not output runs."""
+    log.debug("list_runs: querying distinct run values")
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT DISTINCT run FROM generation_jobs "
+                "WHERE run IS NOT NULL ORDER BY run",
+            )
+            rows = cur.fetchall()
+            return [row[0] for row in rows]
     finally:
         conn.close()
 
@@ -402,6 +452,29 @@ def list_artifacts(pack: str) -> list:
         conn.close()
 
 
+def get_artifact(artifact_id: int) -> dict | None:
+    """One artifact row INCLUDING its content, by primary key id. None when
+    absent. Distinct from `load_artifact` (natural key, content only) and
+    `list_artifacts` (metadata only, no content) — this is the GUI's
+    single-artifact detail view, so it needs both the identifying columns
+    and the full document in one round trip."""
+    log.debug("get_artifact: artifact_id=%s", artifact_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT id, pack, kind, segment_id, content, job_id, updated_at "
+                "FROM generation_artifacts WHERE id = %s",
+                (artifact_id,),
+            )
+            row = cur.fetchone()
+            if row is None:
+                return None
+            return _row_to_dict(cur, row)
+    finally:
+        conn.close()
+
+
 def _row_to_dict(cursor, row: tuple) -> dict:
     """Zip cursor.description column names with the row tuple, converting
     every datetime to an ISO-8601 string. These dicts are returned straight
@@ -415,3 +488,151 @@ def _row_to_dict(cursor, row: tuple) -> dict:
         else:
             result[name] = value
     return result
+
+
+# ---------------------------------------------------------------------------
+# Saved generator configs — the management GUI's "Saved Configurations"
+# section. See CREATE_TABLE_SQL's comment on generator_configs for the
+# design rationale (whole-document rows, validated at the edges not at
+# rest).
+# ---------------------------------------------------------------------------
+
+_CONFIG_COLUMNS = "id, name, description, config_yaml, is_active, created_at, updated_at"
+
+
+def list_configs() -> list:
+    """Every saved config, newest first. Metadata AND config_yaml both
+    included — these documents are small (a few KB of YAML), unlike
+    generation_artifacts, so there is no separate metadata-only listing."""
+    log.debug("list_configs: querying all saved configs")
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_CONFIG_COLUMNS} FROM generator_configs "
+                "ORDER BY created_at DESC",
+            )
+            rows = cur.fetchall()
+            return [_row_to_dict(cur, row) for row in rows]
+    finally:
+        conn.close()
+
+
+def get_config_row(config_id: int) -> dict | None:
+    """One saved config by id, or None."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_CONFIG_COLUMNS} FROM generator_configs WHERE id = %s",
+                (config_id,),
+            )
+            row = cur.fetchone()
+            if row is None:
+                return None
+            return _row_to_dict(cur, row)
+    finally:
+        conn.close()
+
+
+def get_active_config_row() -> dict | None:
+    """The one row with is_active = TRUE, or None when nothing is active
+    yet (a fresh install with saved configs but none activated)."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_CONFIG_COLUMNS} FROM generator_configs "
+                "WHERE is_active = TRUE LIMIT 1",
+            )
+            row = cur.fetchone()
+            if row is None:
+                return None
+            return _row_to_dict(cur, row)
+    finally:
+        conn.close()
+
+
+def create_config(name: str, description: str, config_yaml: str) -> int:
+    """Insert one saved config. Raises (via psycopg2's IntegrityError) on a
+    duplicate name — the API layer turns that into a 409, not this module,
+    which stays a thin, honest wrapper over the UNIQUE constraint."""
+    log.info("create_config: name=%s", name)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO generator_configs (name, description, config_yaml) "
+                "VALUES (%s, %s, %s) RETURNING id",
+                (name, description, config_yaml),
+            )
+            return cur.fetchone()[0]
+    finally:
+        conn.close()
+
+
+def update_config(config_id: int, description: str, config_yaml: str) -> bool:
+    """Overwrite description + config_yaml (NOT name — renaming is a
+    delete+recreate, so nothing else that might reference a config by name
+    silently starts pointing at different content) and bump updated_at.
+    Returns True when a row changed."""
+    log.info("update_config: config_id=%s", config_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE generator_configs SET description = %s, config_yaml = %s, "
+                "updated_at = now() WHERE id = %s",
+                (description, config_yaml, config_id),
+            )
+            return cur.rowcount == 1
+    finally:
+        conn.close()
+
+
+def delete_config(config_id: int) -> bool:
+    """Remove one saved config. Deleting the active one just leaves nothing
+    active — it does NOT fall back to another row or to the on-disk file,
+    so the caller (API layer) decides what that means for the running
+    service rather than this module guessing."""
+    log.info("delete_config: config_id=%s", config_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM generator_configs WHERE id = %s", (config_id,))
+            return cur.rowcount == 1
+    finally:
+        conn.close()
+
+
+def activate_config(config_id: int) -> bool:
+    """Mark exactly one config active, atomically. Both statements run in
+    the same autocommit-off transaction block so a crash between them can
+    never leave two rows (or zero rows, mid-switch) marked active. Returns
+    False when config_id doesn't exist — the UPDATE ... WHERE id = %s
+    touches zero rows and the whole transaction rolls back via `with conn`,
+    so the CLEAR statement is undone too rather than leaving nothing
+    active."""
+    log.info("activate_config: config_id=%s", config_id)
+    import psycopg2
+    conn = psycopg2.connect(
+        host=os.environ.get("POSTGRES_HOST", "localhost"),
+        port=os.environ.get("POSTGRES_PORT", "5432"),
+        dbname=os.environ["POSTGRES_DB"],
+        user=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
+        connect_timeout=5,
+    )
+    conn.autocommit = False
+    try:
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute("UPDATE generator_configs SET is_active = FALSE WHERE is_active = TRUE")
+                cur.execute(
+                    "UPDATE generator_configs SET is_active = TRUE WHERE id = %s",
+                    (config_id,),
+                )
+                changed = cur.rowcount == 1
+        return changed
+    finally:
+        conn.close()

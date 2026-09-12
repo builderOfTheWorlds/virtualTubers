@@ -1,0 +1,57 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: intro-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - intro
+  synopsis: A one-sentence summary of what happens.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: test-segment-1
+  loop: 0
+  order: 1
+  spine_scenes:
+  - intro
+  synopsis: Initial testing of the pipeline with basic scene rendering.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: test-segment-2
+  loop: 0
+  order: 2
+  spine_scenes:
+  - intro
+  synopsis: Verification of scene transition mechanics and data flow.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: test-segment-3
+  loop: 0
+  order: 3
+  spine_scenes:
+  - intro
+  synopsis: Final validation of the generation pipeline with complete segment processing.

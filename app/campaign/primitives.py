@@ -43,7 +43,7 @@ class Primitive:
     `template` is formatted against the resolved params plus `actor` and always
     opens with the actor. Each entry in `suffixes` pairs a param name with a
     fragment appended only when the script supplied that param, so one
-    definition covers "Buffalo attacks the wraith." and "Buffalo attacks the
+    definition covers "Chadwick attacks the wraith." and "Chadwick attacks the
     wraith with his axe."
     """
     name: str

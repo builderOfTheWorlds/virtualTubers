@@ -1,0 +1,89 @@
+id: bahadur-revealed
+title: The Eighty-Sixth
+enter_narration: >-
+  The tear does not close. It answers back.
+
+lore: [the-event, moonwells, the-bahadur]
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        A voice comes through the widening gap before the rest of it does,
+        unhurried, amused, and entirely too pleased to have finally found you.
+      - >-
+        Something speaks through the tear before anything else follows it, and
+        the tone is wrong for an invasion. It sounds like it has been waiting.
+      - >-
+        The voice on the other side does not shout. It greets you, and that is
+        worse than a threat would have been.
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        "Ord thanks you," it says, "for finally opening a door we have been
+        polishing for ten thousand years."
+      - >-
+        "You call us the eighty-sixth," the voice says, "but our world has a
+        name. Ord. And we have been very patient with yours."
+      - >-
+        "Ten thousand years we have waited on our side of this," it says,
+        "and you have just done what a whole family could not."
+
+  - type: dialogue
+    speaker: sodacan_bob
+    improv: true
+    text:
+      - >-
+        Bahadur. That's a Bahadur, or I've never read a rune in my life.
+      - >-
+        That's Bahadur craft behind that voice. I'd stake my forge on it.
+      - >-
+        I know that cadence. That's how the old texts say a Bahadur speaks
+        when it isn't bothering to lie.
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        "Muad'Malik sends his regard," the voice adds, almost gently, "though
+        he has not been entirely himself in some centuries."
+      - >-
+        "Our Sultan does not come himself these days," it says. "He has other
+        appetites now. But he remembers Ashiorid fondly."
+      - >-
+        "Tell your world," it says, "that the one who leads us is not the one
+        who began this. That one is not well. The rest of us are still quite
+        determined."
+
+  - type: action
+    speaker: Leena
+    primitive: cast_spell
+    params:
+      spell: shield
+      target: the tear
+      level: 1
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        The gap does not close. It simply, quietly, stops widening, which is
+        the only mercy any of you are going to get tonight.
+      - >-
+        It holds. Not sealed, not beaten back, just held, which will have to
+        be enough for now.
+      - >-
+        The voice goes quiet and the tear stops growing, and none of you
+        trust either fact to last.
+
+default_next: malmont-arrival

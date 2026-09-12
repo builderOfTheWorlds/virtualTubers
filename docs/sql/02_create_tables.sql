@@ -128,6 +128,11 @@ CREATE TABLE IF NOT EXISTS generation_jobs (
 CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
     ON generation_jobs (status, created_at);
 
+-- Added 2026-08-23: the output namespace a job writes/reads under, distinct
+-- from `pack` (the source pack's cast/scenes/lore). NULL on rows written
+-- before this column existed.
+ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS run TEXT;
+
 CREATE TABLE IF NOT EXISTS generation_artifacts (
     id          BIGSERIAL PRIMARY KEY,
     pack        TEXT NOT NULL,

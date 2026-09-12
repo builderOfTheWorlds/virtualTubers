@@ -49,7 +49,7 @@ def config(segment_config):
 class FakeBeat:
     """Matches what _beat_to_dict reads: kind, speaker, text."""
 
-    def __init__(self, speaker="Alcinoe", text="The fire is low.", kind="line"):
+    def __init__(self, speaker="Leena", text="The fire is low.", kind="line"):
         self.kind = kind
         self.speaker = speaker
         self.text = text
@@ -113,13 +113,13 @@ def test_generate_take_calls_generate_scene(config):
 
 
 def test_the_scene_carries_the_slot_prompt_and_lore(config):
-    slot = ambient_slot(1, prompt="Buffalo needles Alcinoe.", lore=["the-loop"])
+    slot = ambient_slot(1, prompt="Chadwick needles Leena.", lore=["the-loop"])
     improviser = RecordingImproviser()
 
     gsd.generate_take(improviser, unit(slot=slot), config)
 
     scene = improviser.scenes_generated[0]
-    assert scene.prompt == "Buffalo needles Alcinoe."
+    assert scene.prompt == "Chadwick needles Leena."
     assert scene.lore == ["the-loop"]
 
 
@@ -156,7 +156,7 @@ def test_the_transcript_window_is_reset_between_takes(config):
     """Two takes of the SAME slot are alternates, not a conversation. Leaving
     `recent` populated makes take 2 read as a reply to take 1."""
     improviser = RecordingImproviser()
-    improviser.recent = ["Alcinoe: something from a previous slot"]
+    improviser.recent = ["Leena: something from a previous slot"]
 
     gsd.generate_take(improviser, unit(), config)
 
@@ -198,7 +198,7 @@ def _library(tmp_path, conditions_per_slot):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(yaml.safe_dump({"slot_id": slot_id, "take": take,
                                             "conditions": conditions,
-                                            "beats": [{"speaker": "Alcinoe",
+                                            "beats": [{"speaker": "Leena",
                                                        "text": "hi"}]}),
                             encoding="utf-8")
     return root

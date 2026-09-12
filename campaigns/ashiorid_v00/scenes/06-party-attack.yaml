@@ -73,14 +73,14 @@ beats:
         we came for will still be here after."
 
   - type: action
-    speaker: buffalo
+    speaker: chadwick
     primitive: roll_check
     params:
       skill: constitution save
       dc: 16
 
   - type: dialogue
-    speaker: buffalo
+    speaker: chadwick
     improv: true
     text:
       - >-
@@ -91,14 +91,14 @@ beats:
         There. My right hand's mine again. That's enough to be going on with.
 
   - type: action
-    speaker: buffalo
+    speaker: chadwick
     primitive: attack
     params:
       target: the nearest intruder
       weapon: greatsword
 
   - type: action
-    speaker: Alcinoe
+    speaker: Leena
     primitive: cast_spell
     params:
       spell: shatter

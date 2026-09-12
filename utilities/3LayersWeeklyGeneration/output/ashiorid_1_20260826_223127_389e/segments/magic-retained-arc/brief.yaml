@@ -1,0 +1,121 @@
+segment_id: magic-retained-arc
+order: 2
+loop: 0
+hours: 6
+synopsis: The seal holds, and the last well retains its magic. The four strangers
+  begin to understand that their lives are now tied to a legacy of magical preservation.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-retained-arc-n0-weight-1
+  kind: ambient
+  prompt: The four strangers stand in silence, each lost in thought about their newfound
+    responsibility.
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n0-weight-2
+  kind: ambient
+  prompt: Vigil speaks softly, his voice carrying the weight of ancient knowledge.
+  lore:
+  - the-bahadur
+  - amulet-of-wonder
+  participants:
+  - Vigil
+  - Leena
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n0-weight-3
+  kind: ambient
+  prompt: Leena's hand trembles as she realizes the magnitude of what they've become.
+  lore:
+  - malmont
+  - the-event
+  participants:
+  - Leena
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n0-weight-4
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-retained-arc-n0
+- slot_id: magic-retained-arc-n1-threshold-1
+  kind: ambient
+  prompt: The strangers stand at the threshold, feeling the weight of their new responsibility
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-threshold-2
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: magic-retained-arc-n1
+- slot_id: magic-retained-arc-n1-threshold-3
+  kind: ambient
+  prompt: Each stranger reflects on how their past experiences have led them to this
+    moment of magical preservation
+  lore:
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-n1
+nodes:
+- node_id: magic-retained-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: magic-retained-arc-n0
+  parent_id: magic-retained-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: magic-retained-arc-n1
+  parent_id: magic-retained-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

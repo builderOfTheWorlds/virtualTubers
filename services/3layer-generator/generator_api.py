@@ -141,6 +141,48 @@ def resolve_pack_path(pack) -> Path:
     return candidate
 
 
+def validate_run_name(run) -> str:
+    """Reject a `run` value that isn't a safe single path component.
+
+    Same separator/`..`/absolute checks as `resolve_pack_path`, but a `run`
+    is an OUTPUT namespace under OUTPUT_ROOT, not a source pack — it need
+    not (and for a freshly auto-generated run, will not) already exist on
+    disk, so there is no directory-existence check here.
+    """
+    if not isinstance(run, str) or run == "":
+        raise HTTPException(status_code=400, detail=f"invalid run name {run!r}")
+    if "/" in run or "\\" in run:
+        raise HTTPException(
+            status_code=400,
+            detail=f"run name {run!r} must not contain a path separator",
+        )
+    if run.startswith("/"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"run name {run!r} must not be absolute",
+        )
+    if run in (".", "..") or ".." in run:
+        raise HTTPException(
+            status_code=400,
+            detail=f"run name {run!r} must not be '.' or '..'",
+        )
+    return run
+
+
+def generate_run_name(pack: str) -> str:
+    """A fresh output namespace for a top-of-pipeline run: `<pack>_<UTC
+    timestamp>_<suffix>`, e.g. `ashiorid_20260823_193045_a1b2`. The random
+    suffix guards against two submissions landing in the same wall-clock
+    second — which second-resolution alone can't rule out even for jobs
+    submitted one at a time by a human or a script, let alone two clients
+    racing each other."""
+    import datetime
+    import uuid
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d_%H%M%S")
+    suffix = uuid.uuid4().hex[:4]
+    return f"{pack}_{stamp}_{suffix}"
+
+
 # ---------------------------------------------------------------------------
 # Lifespan
 # ---------------------------------------------------------------------------
@@ -240,7 +282,7 @@ def submit_job(body: dict):
     """Validate a job request and write a job row.
 
     Body (all optional except `stage`):
-      pack, stage, profile, segments, dry_run, test_mode, rebrief, stingers
+      pack, run, stage, profile, segments, dry_run, test_mode, rebrief, stingers
 
     Read the body with a plain `dict` parameter and IGNORE every key outside
     that list. A caller must not be able to set `status`, `result` or
@@ -264,6 +306,25 @@ def submit_job(body: dict):
     pack = body.get("pack") or DEFAULT_PACK
     resolve_pack_path(pack)
 
+    # `run` is the OUTPUT namespace (arc_plan/briefs/dialogue land under
+    # OUTPUT_ROOT/<run>), separate from `pack` (the source cast/scenes/lore).
+    # An "arc" job (which is what "all" normalizes to above) starts a fresh
+    # pipeline, so it gets a timestamped run auto-generated when the caller
+    # doesn't name one. "segment"/"dialogue" jobs continue a run an earlier
+    # arc job already produced — auto-generating a new one for them would
+    # point them at an arc plan that doesn't exist, so `run` is required.
+    run = body.get("run") or None
+    if run is not None:
+        run = validate_run_name(run)
+    elif stage == "arc":
+        run = generate_run_name(pack)
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail=f"run is required for stage {stage!r}; pass the run its "
+                    "arc job produced to continue that generation",
+        )
+
     profile = body.get("profile") or ""
     if profile:
         stages = ["arc", "segment", "dialogue"] if stage == "all" else [stage]
@@ -286,6 +347,7 @@ def submit_job(body: dict):
 
     job_id = store.submit({
         "pack": pack,
+        "run": run,
         "stage": stage,
         "profile": profile,
         "params": {
@@ -295,14 +357,14 @@ def submit_job(body: dict):
             "rebrief": body.get("rebrief", False),
         },
     })
-    return {"id": job_id, "status": "queued"}
+    return {"id": job_id, "run": run, "status": "queued"}
 
 
 @app.get("/jobs")
-def list_jobs(pack: str = None, stage: str = None, status: str = None):
+def list_jobs(pack: str = None, run: str = None, stage: str = None, status: str = None):
     """List jobs, passing through only the parameters that were supplied.
     Metadata only; never scan generated output."""
-    return store.list_jobs(pack=pack, stage=stage, status=status)
+    return store.list_jobs(pack=pack, run=run, stage=stage, status=status)
 
 
 @app.get("/jobs/{job_id}")
@@ -353,13 +415,19 @@ def preview(body: dict):
     """Preview the tree shape that would be planned. NO job row, NO model
     call.
 
-    Body: `{pack?, stage: "segment", profile?, target_slots?}`.
+    Body: `{pack?, run?, stage: "segment", profile?, target_slots?}`.
+
+    `run` names the output namespace the segment stage would continue —
+    same fallback as job submission: when omitted, falls back to `pack` so
+    a caller previewing against a pre-migration run (no `run` on its job
+    row, output still under OUTPUT_ROOT/<pack>) keeps working.
     """
     pack = body.get("pack") or DEFAULT_PACK
     resolve_pack_path(pack)
+    run = body.get("run") or pack
 
-    # Root target_slots: read `<OUTPUT_ROOT>/<pack>/arc_plan.yaml`.
-    arc_plan_path = OUTPUT_ROOT / pack / "arc_plan.yaml"
+    # Root target_slots: read `<OUTPUT_ROOT>/<run>/arc_plan.yaml`.
+    arc_plan_path = OUTPUT_ROOT / run / "arc_plan.yaml"
     require_arc_plan = CONFIG.get("preview", {}).get("require_arc_plan", True)
 
     if arc_plan_path.exists():
@@ -418,3 +486,212 @@ def get_config(pack: str = None):
     result = dict(CONFIG)
     result["resolved_profile"] = resolved_profile
     return result
+
+
+# ---------------------------------------------------------------------------
+# Generated data viewer — read-only browse surface over generation_artifacts.
+# Metadata listing stays cheap (no content column, per list_artifacts'
+# own docstring); a single artifact's full document is only fetched when
+# the GUI drills into it.
+# ---------------------------------------------------------------------------
+
+@app.get("/runs")
+def list_runs():
+    """Every distinct output namespace a job has ever written to, sorted.
+    Drives the run picker in the data viewer."""
+    return store.list_runs()
+
+
+@app.get("/artifacts")
+def list_artifacts_endpoint(run: str):
+    """Metadata for every artifact under one run (arc plan, briefs, trees,
+    dialogue) — no content, so listing hundreds of segments stays a small
+    response. `run` is required: an unscoped listing across every run in
+    the database is never what the viewer wants."""
+    return store.list_artifacts(run)
+
+
+@app.get("/artifacts/{artifact_id}")
+def get_artifact_endpoint(artifact_id: int):
+    """One artifact's full document by primary key, or 404."""
+    row = store.get_artifact(artifact_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"artifact {artifact_id!r} not found")
+    return row
+
+
+# ---------------------------------------------------------------------------
+# Saved configs — the management GUI's "Saved Configurations" section.
+#
+# Every mutating endpoint here VALIDATES the YAML by actually parsing it
+# (config_module.load_config-equivalent) before writing anything, so a saved
+# row can never contain unparseable YAML that only blows up later when
+# someone activates it. Activation goes further: it also re-derives the
+# resolved_profile for all three layers, the same check /config does, so a
+# structurally-valid-but-wrong-shaped document (missing an `arc:` block,
+# say) is rejected at activate time with a clear 400, not a 500 the next
+# time a job tries to read CONFIG["arc"].
+# ---------------------------------------------------------------------------
+
+def _parse_config_yaml_or_400(config_yaml: str) -> dict:
+    """Parse `config_yaml` the same way config.load_config parses a file on
+    disk, without needing a real file. Raises HTTPException(400) on
+    malformed YAML or a non-mapping top level."""
+    import yaml
+    try:
+        parsed = yaml.safe_load(config_yaml)
+    except yaml.YAMLError as exc:
+        raise HTTPException(status_code=400, detail=f"malformed YAML: {exc}")
+    if parsed is None:
+        parsed = {}
+    if not isinstance(parsed, dict):
+        raise HTTPException(status_code=400, detail="config must be a YAML mapping at the top level")
+    return parsed
+
+
+@app.get("/configs")
+def list_saved_configs():
+    """Every saved config, newest first, each carrying its own is_active
+    flag — the GUI needs no separate 'what's active' call."""
+    return store.list_configs()
+
+
+@app.post("/configs")
+def create_saved_config(body: dict):
+    """Save a new named config. Body: {name, description?, config_yaml}.
+
+    `config_yaml` is validated by parsing it, but NOT required to resolve
+    every profile — a work-in-progress draft (e.g. missing the `dialogue:`
+    block while an operator is still filling it in) can be saved and edited
+    further before it's ever activated, where the stricter check applies.
+    """
+    name = body.get("name")
+    if not isinstance(name, str) or not name.strip():
+        raise HTTPException(status_code=400, detail="name is required")
+    name = name.strip()
+    description = body.get("description") or ""
+    config_yaml = body.get("config_yaml")
+    if not isinstance(config_yaml, str) or not config_yaml.strip():
+        raise HTTPException(status_code=400, detail="config_yaml is required")
+
+    _parse_config_yaml_or_400(config_yaml)
+
+    try:
+        config_id = store.create_config(name, description, config_yaml)
+    except Exception as exc:
+        # psycopg2's IntegrityError on the UNIQUE(name) constraint — surface
+        # as 409, not a bare 500, so the GUI can say "name already taken".
+        if "unique" in str(exc).lower() or "duplicate" in str(exc).lower():
+            raise HTTPException(status_code=409, detail=f"a saved config named {name!r} already exists")
+        raise HTTPException(status_code=500, detail=f"failed to save config: {exc}")
+
+    return {"id": config_id, "name": name}
+
+
+@app.get("/configs/{config_id}")
+def get_saved_config(config_id: int):
+    """One saved config by id, or 404."""
+    row = store.get_config_row(config_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"config {config_id!r} not found")
+    return row
+
+
+@app.put("/configs/{config_id}")
+def update_saved_config(config_id: int, body: dict):
+    """Edit a saved config's description/config_yaml (name is immutable —
+    see generation_store.update_config's docstring). Body: {description?,
+    config_yaml}."""
+    row = store.get_config_row(config_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"config {config_id!r} not found")
+
+    config_yaml = body.get("config_yaml")
+    if not isinstance(config_yaml, str) or not config_yaml.strip():
+        raise HTTPException(status_code=400, detail="config_yaml is required")
+    _parse_config_yaml_or_400(config_yaml)
+
+    description = body.get("description")
+    if description is None:
+        description = row["description"]
+
+    store.update_config(config_id, description, config_yaml)
+
+    # If the edited row is the one currently live, re-apply it immediately
+    # so an operator fixing a typo in the active config doesn't also have
+    # to remember to re-activate it.
+    if row["is_active"]:
+        _apply_config_yaml(config_yaml)
+
+    return store.get_config_row(config_id)
+
+
+@app.delete("/configs/{config_id}")
+def delete_saved_config(config_id: int):
+    """Remove a saved config. Deleting the active one does NOT touch the
+    live CONFIG — the dispatcher keeps running whatever was last applied,
+    it just has no saved row to point back to anymore."""
+    row = store.get_config_row(config_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"config {config_id!r} not found")
+    store.delete_config(config_id)
+    return {"status": "deleted", "id": config_id}
+
+
+def _apply_config_yaml(config_yaml: str) -> None:
+    """Parse `config_yaml`, apply the same overlays lifespan() applies to a
+    file-loaded config, validate it resolves every layer's profile, then
+    mutate the module-level CONFIG dict IN PLACE (clear + update, never
+    reassign the name) so every existing reference — this module's CONFIG,
+    runner.Context.config, and the build_llm closure over it — sees the
+    change immediately with no service restart.
+
+    Raises HTTPException(400) if the config doesn't resolve, so a broken
+    saved row can never take down the running dispatcher.
+    """
+    import config as config_module
+
+    parsed = _parse_config_yaml_or_400(config_yaml)
+    parsed = overlay_output_dir(parsed, os.environ.get("OUTPUT_DIR", "/data/output"))
+    parsed = overlay_base_url(parsed, os.environ.get("OLLAMA_BASE_URL"))
+
+    for layer in ("arc", "segment", "dialogue"):
+        try:
+            config_module.resolve_profile(parsed, layer)
+        except Exception as exc:
+            raise HTTPException(
+                status_code=400,
+                detail=f"config does not resolve a valid {layer!r} profile: {exc}",
+            )
+
+    global CONFIG
+    if CONFIG is None:
+        # Boot-time GENERATOR_CONFIG was never set (CONFIG stayed None per
+        # lifespan()'s own comment) — nothing to mutate in place yet, so
+        # start owning a real dict now. Every reference taken AFTER this
+        # point (runner.Context.config, closures) will see it; anything
+        # that captured the old `None` before activation can't have
+        # meaningfully used it anyway.
+        CONFIG = parsed
+    else:
+        CONFIG.clear()
+        CONFIG.update(parsed)
+    log.info("_apply_config_yaml: CONFIG updated in place")
+
+
+@app.post("/configs/{config_id}/activate")
+def activate_saved_config(config_id: int):
+    """Make this saved config the live one: validates it, applies it to the
+    running service in place (no restart), then marks it active in the
+    store. Applying BEFORE marking active means a config that fails
+    validation never gets marked active with a CONFIG that doesn't match —
+    the store and the running process cannot drift out of sync on failure.
+    """
+    row = store.get_config_row(config_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"config {config_id!r} not found")
+
+    _apply_config_yaml(row["config_yaml"])
+    store.activate_config(config_id)
+
+    return {"status": "activated", "id": config_id, "name": row["name"]}

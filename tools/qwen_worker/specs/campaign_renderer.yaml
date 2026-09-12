@@ -78,7 +78,7 @@ notes: |
                pack.member(beat.speaker).name — the cast NAME, never the id.
     action     Text is campaign.primitives.render(beat.primitive, display_name,
                beat.params). The ACTOR passed to the primitive is the display
-               name, so the sentence reads "Buffalo attacks the door." Print the
+               name, so the sentence reads "Chadwick attacks the door." Print the
                resulting sentence with no name label.
     pane       Produces NO output text at all and no speech. Its only effect is
                calling pane_control(beat.show).
@@ -91,14 +91,14 @@ notes: |
   Keep two separate strings for every beat:
 
     line  — what gets WRITTEN to `out`. For dialogue this is
-            "Alcinoe: We should run." For narration and action it is just the
+            "Leena: We should run." For narration and action it is just the
             sentence, with no label.
     text  — what gets SPOKEN, stored on RenderedBeat.text, and used as the
             avatar bubble. This is ALWAYS the bare content with NO name prefix:
             "We should run."
 
-  So for a dialogue beat by Alcinoe with text "We should run.":
-      written to out            -> "Alcinoe: We should run."
+  So for a dialogue beat by Leena with text "We should run.":
+      written to out            -> "Leena: We should run."
       RenderedBeat.text         -> "We should run."
       passed to tts.synthesize  -> "We should run."
       avatar bubble             -> "We should run."
@@ -124,8 +124,8 @@ notes: |
   when `beat.improv` is true AND an improviser was injected, call
   improviser(beat, cast_member) and use its return value as `text` (the bare
   spoken line — the name label is still added separately at write time, so an
-  improviser returning "Alcinoe riffs" yields RenderedBeat.text == "Alcinoe riffs",
-  never "Alcinoe: Alcinoe riffs").
+  improviser returning "Leena riffs" yields RenderedBeat.text == "Leena riffs",
+  never "Leena: Leena riffs").
 
   Resolve improv BEFORE anything else uses the text — the improvised line is
   what gets displayed, spoken, recorded, and bubbled. Fall back
@@ -137,7 +137,7 @@ notes: |
   VOICE: when `tts` is set and the beat produced non-empty text, synthesize to a
   WAV under `audio_dir` and put the returned object on RenderedBeat.audio, then
   call audio_player(path) if one was injected. The `speaker` argument passed to
-  synthesize is the speaker ID (e.g. "buffalo"), not the display name — voices
+  synthesize is the speaker ID (e.g. "chadwick"), not the display name — voices
   are configured per id. Give each WAV a unique filename so beats never collide.
   If synthesis raises ANYTHING, log a WARNING and carry on with audio=None: a
   dead voice backend degrades to a silent show, it does not end it. Pane beats

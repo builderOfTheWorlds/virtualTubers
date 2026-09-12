@@ -1,0 +1,56 @@
+<div id="configs-section">
+    {% if banner %}
+        <div class="alert alert-{{ 'success' if banner.ok else 'danger' }} m-2 py-2">{{ banner.msg }}</div>
+    {% endif %}
+    {% if configs_error %}
+        <div class="alert alert-danger m-3">{{ configs_error }}</div>
+    {% elif not configs %}
+        <div class="p-4 text-center text-muted">
+            No saved configs yet. <a href="/configs/new">Create one</a>.
+        </div>
+    {% else %}
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Active</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cfg in configs %}
+                <tr>
+                    <td class="fw-bold">{{ cfg.name }}</td>
+                    <td class="small text-muted">{{ cfg.description or '—' }}</td>
+                    <td>
+                        {% if cfg.is_active %}
+                            <span class="badge bg-success">active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">inactive</span>
+                        {% endif %}
+                    </td>
+                    <td class="small text-muted">{{ cfg.updated_at }}</td>
+                    <td>
+                        <div class="btn-group">
+                            {% if not cfg.is_active %}
+                            <button class="btn btn-sm btn-outline-success"
+                                    hx-post="/configs/{{ cfg.id }}/activate"
+                                    hx-target="#configs-section"
+                                    hx-swap="outerHTML">Activate</button>
+                            {% endif %}
+                            <a href="/configs/{{ cfg.id }}/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    hx-post="/configs/{{ cfg.id }}/delete"
+                                    hx-target="#configs-section"
+                                    hx-swap="outerHTML"
+                                    onclick="return confirm('Delete config {{ cfg.name }}?')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

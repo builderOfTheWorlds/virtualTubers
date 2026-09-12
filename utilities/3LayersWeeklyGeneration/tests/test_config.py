@@ -38,9 +38,9 @@ MINIMAL = {
         "active_model": "heavy",
     },
     "state": {
-        "flags": ["Alcinoe-wounded", "moonwell-tainted"],
+        "flags": ["Leena-wounded", "moonwell-tainted"],
         "moods": ["tense", "weary"],
-        "carry_keys": ["Alcinoe-wounded"],
+        "carry_keys": ["Leena-wounded"],
     },
 }
 

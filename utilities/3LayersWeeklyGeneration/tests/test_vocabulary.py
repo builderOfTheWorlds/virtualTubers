@@ -14,9 +14,9 @@ import vocabulary as vocabulary_module
 
 CONFIG = {
     "state": {
-        "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+        "flags": ["Leena-wounded", "moonwell-tainted", "chadwick-lost-axe"],
         "moods": ["tense", "weary", "hopeful", "giddy"],
-        "carry_keys": ["Alcinoe-wounded", "moonwell-tainted"],
+        "carry_keys": ["Leena-wounded", "moonwell-tainted"],
     }
 }
 
@@ -85,7 +85,7 @@ def test_unknown_lore_preserves_input_order_and_does_not_deduplicate_away_signal
 # ── state keys (D13) ──────────────────────────────────────────────────────────
 
 def test_unknown_state_keys_flags_anything_outside_the_vocabulary(vocab):
-    assert vocab.unknown_state_keys(["Alcinoe-wounded", "dragon-appeased"]) == \
+    assert vocab.unknown_state_keys(["Leena-wounded", "dragon-appeased"]) == \
         ["dragon-appeased"]
 
 
@@ -96,15 +96,15 @@ def test_mood_is_a_valid_state_key(vocab):
 
 def test_unknown_carry_keys_is_narrower_than_state_keys(vocab):
     """A flag that does not survive a loop reset is not a valid carry key."""
-    assert vocab.unknown_state_keys(["buffalo-lost-axe"]) == []
-    assert vocab.unknown_carry_keys(["buffalo-lost-axe"]) == ["buffalo-lost-axe"]
-    assert vocab.unknown_carry_keys(["Alcinoe-wounded"]) == []
+    assert vocab.unknown_state_keys(["chadwick-lost-axe"]) == []
+    assert vocab.unknown_carry_keys(["chadwick-lost-axe"]) == ["chadwick-lost-axe"]
+    assert vocab.unknown_carry_keys(["Leena-wounded"]) == []
 
 
 # ── conditions: a take's `conditions:` mapping ────────────────────────────────
 
 def test_validate_condition_accepts_a_boolean_flag(vocab):
-    assert vocab.validate_condition({"Alcinoe-wounded": True}) == []
+    assert vocab.validate_condition({"Leena-wounded": True}) == []
     assert vocab.validate_condition({"moonwell-tainted": False}) == []
 
 
@@ -119,8 +119,8 @@ def test_validate_condition_rejects_an_undeclared_mood_value(vocab):
 
 def test_validate_condition_rejects_a_non_boolean_flag_value(vocab):
     """Flags are booleans. A string value means the model invented a schema."""
-    problems = vocab.validate_condition({"Alcinoe-wounded": "very"})
-    assert problems and any("Alcinoe-wounded" in p for p in problems)
+    problems = vocab.validate_condition({"Leena-wounded": "very"})
+    assert problems and any("Leena-wounded" in p for p in problems)
 
 
 def test_validate_condition_rejects_an_unknown_key(vocab):
@@ -174,8 +174,8 @@ def test_check_logs_at_error_before_raising(caplog):
 def test_validate_slot_accepts_a_well_formed_ambient_slot(vocab):
     slot = {
         "slot_id": "s-001", "kind": "ambient", "prompt": "A quiet moment.",
-        "lore": ["the-moonwell"], "participants": ["Alcinoe"],
-        "sensitivity": "flags", "depends_on": ["Alcinoe-wounded"],
+        "lore": ["the-moonwell"], "participants": ["Leena"],
+        "sensitivity": "flags", "depends_on": ["Leena-wounded"],
     }
     assert vocab.validate_slot(slot) == []
 
@@ -200,7 +200,7 @@ def test_validate_slot_rejects_an_unknown_sensitivity_value(vocab):
 def test_validate_slot_requires_depends_on_to_be_empty_unless_flags_sensitive(vocab):
     """`depends_on` is only meaningful for `sensitivity: flags` (D14)."""
     slot = {"slot_id": "s-004", "kind": "ambient", "prompt": "x",
-            "sensitivity": "none", "depends_on": ["Alcinoe-wounded"]}
+            "sensitivity": "none", "depends_on": ["Leena-wounded"]}
     assert vocab.validate_slot(slot)
 
 

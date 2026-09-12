@@ -289,7 +289,7 @@ def validate_batch(segments, expected_orders, known_ids, vocab, config) -> List[
 
 
 def build_prompt(context, expected_orders, previous_continuity,
-                config, problems) -> str:
+                config, problems, spine_scene_ids=None) -> str:
     """
     Build the user prompt for ONE attempt.
     
@@ -299,6 +299,11 @@ def build_prompt(context, expected_orders, previous_continuity,
         previous_continuity: Continuity from previous batch or empty string
         config: Configuration dictionary
         problems: List of problem strings from previous attempt, or None
+        spine_scene_ids: The closed list of legal `spine_scenes` values —
+            the pack's non-ambient scene ids. Required so the model is told
+            the exact closed vocabulary validate_batch checks against,
+            instead of inferring scene identifiers from titles/narration
+            in `context` and inventing ids that fail validation.
         
     Returns:
         The complete prompt string
@@ -320,20 +325,57 @@ def build_prompt(context, expected_orders, previous_continuity,
         prompt_lines.append("Start of the arc.")
     
     prompt_lines.append("")
-    prompt_lines.append("Required keys for each segment:")
-    required_keys = [
-        "id", "order", "loop", "hours", "spine_scenes", "ambient_focus",
-        "synopsis", "continuity_in", "continuity_out", "carry_in", "carry_out"
-    ]
-    for key in required_keys:
-        prompt_lines.append(f"- {key}")
-    
+    prompt_lines.append("Each segment is a YAML mapping with EXACTLY these keys and types:")
+    prompt_lines.append("- id: string, unique across the whole arc")
+    prompt_lines.append("- order: integer, must match the requested order for that segment")
+    prompt_lines.append("- loop: integer (0 or greater) — NOT a boolean, NOT true/false")
+    prompt_lines.append("- hours: integer, must equal " + str(config["arc"]["segment_hours"]))
+    prompt_lines.append(
+        "- spine_scenes: a list of scene ids chosen ONLY from the closed list below — "
+        "never invent a scene id, never use a scene's title or a plot description as an id"
+    )
+    prompt_lines.append("- ambient_focus: string")
+    prompt_lines.append("- synopsis: non-empty string")
+    prompt_lines.append("- continuity_in: string")
+    prompt_lines.append("- continuity_out: string")
+    prompt_lines.append(
+        "- carry_in: a YAML mapping (use `{}` for none) — NOT a list, NOT null"
+    )
+    prompt_lines.append(
+        "- carry_out: a YAML mapping (use `{}` for none) — NOT a list, NOT null"
+    )
+
     prompt_lines.append("")
-    prompt_lines.append("Legal carry keys:")
+    prompt_lines.append("Legal spine_scenes ids (use ONLY these, nothing else):")
+    scene_ids = sorted(spine_scene_ids or [])
+    if scene_ids:
+        for scene_id in scene_ids:
+            prompt_lines.append(f"- {scene_id}")
+    else:
+        prompt_lines.append("- (none available — return an empty list for spine_scenes)")
+
+    prompt_lines.append("")
+    prompt_lines.append("Legal carry keys (carry_in/carry_out keys must come only from this list):")
     carry_keys = sorted(config["state"]["carry_keys"])
     for key in carry_keys:
         prompt_lines.append(f"- {key}")
-    
+
+    prompt_lines.append("")
+    prompt_lines.append("Example of one correctly-shaped segment:")
+    prompt_lines.append(
+        "  - id: " + (f"{scene_ids[0]}-arc" if scene_ids else "segment_000") + "\n"
+        "    order: " + str(expected_orders[0]) + "\n"
+        "    loop: 0\n"
+        "    hours: " + str(config["arc"]["segment_hours"]) + "\n"
+        "    spine_scenes: [" + (scene_ids[0] if scene_ids else "") + "]\n"
+        "    ambient_focus: \"\"\n"
+        "    synopsis: A short description of the segment's events.\\n"
+        "    continuity_in: \"\"\n"
+        "    continuity_out: \"\"\n"
+        "    carry_in: {}\n"
+        "    carry_out: {}"
+    )
+
     prompt_lines.append("")
     prompt_lines.append("Reply with ONLY YAML under a 'segments:' key.")
     

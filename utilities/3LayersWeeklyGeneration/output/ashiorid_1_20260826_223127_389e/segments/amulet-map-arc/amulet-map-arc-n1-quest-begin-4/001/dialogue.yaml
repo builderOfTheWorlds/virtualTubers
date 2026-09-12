@@ -1,0 +1,27 @@
+id: amulet-map-arc-n1-quest-begin-4
+take: 1
+beats:
+- kind: narration
+  text: 'Here is the start of the scene:'
+  speaker: gm
+- kind: narration
+  text: 'Drokki: "The wind''s been picking up, Buffalo. I''ve been thinking the land''s
+    trying to tell us something, but I''m not sure I''m listening."'
+  speaker: gm
+- kind: narration
+  text: 'Buffalo: "Aye, and what''s that something, Drokki? A warning or a promise?"'
+  speaker: gm
+- kind: dialogue
+  text: Promises are made to be broken, I've found. But sometimes it's the warnings
+    that bring us closer to the truth.
+  speaker: Alcinoe
+- kind: dialogue
+  text: You all know I've been studying the ancient lore. I think the next monument
+    we find could be key to understanding the Event.
+  speaker: Vance
+- kind: narration
+  text: 'Ashiorid (GM): "As you walk towards the horizon, the sun beats down on your
+    faces, but the air grows thick with an unsettling energy... "'
+  speaker: gm
+model: light
+generated_at: '2026-08-26T22:45:58.152144+00:00'

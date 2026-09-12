@@ -1,0 +1,114 @@
+portal-choice-arc:
+  node_id: portal-choice-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party must decide whether to follow the path through the portal or return
+    to
+  summary: The party must decide whether to follow the path through the portal or
+    return to Malmont, setting up their next major choice.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0
+  - portal-choice-arc-n1
+  slots: null
+portal-choice-arc-n0:
+  node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  order: 0
+  depth: 1
+  title: The Portal's Call
+  summary: The party stands at the threshold of the mysterious portal, weighing the
+    unknown dangers against the potential rewards of whatever lies beyond. They must
+    consider the portal's strange energy signatures, the ancient warnings from Malmont's
+    archives, and their own readiness for whatever awaits them on the other side.
+  continuity_in: The party must decide whether to follow the path through the portal
+    or return to Malmont, setting up their next major choice.
+  continuity_out: The party chooses to step through the shimmering portal, leaving
+    Malmont behind as they embark on a new journey of discovery and peril.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-n0-portal-1
+    kind: ambient
+    prompt: The party stands at the threshold of the mysterious portal, weighing the
+      unknown dangers against the potential rewards of whatever lies beyond
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-portal-2
+    kind: ambient
+    prompt: The party must consider the portal's strange energy signatures, the ancient
+      warnings from Malmont's archives, and their own readiness for whatever awaits
+      them on the other side
+    lore:
+    - malmont
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-portal-3
+    kind: ambient
+    prompt: The party must decide whether to follow the path through the portal or
+      return to Malmont, setting up their next major choice
+    lore:
+    - amulet-of-wonder
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-portal-4
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+portal-choice-arc-n1:
+  node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  order: 1
+  depth: 1
+  title: The Familiar Path Home
+  summary: After much deliberation, the party decides that the risks of venturing
+    through the unknown portal outweigh the potential benefits. They choose to return
+    to Malmont, where they can regroup, gather more information, and prepare for future
+    challenges with the knowledge they've gained from their recent experiences.
+  continuity_in: The party must decide whether to follow the path through the portal
+    or return to Malmont, setting up their next major choice.
+  continuity_out: The party turns back toward Malmont, their footsteps heavy with
+    the weight of their decision and the uncertainty that lies ahead in their homeland.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

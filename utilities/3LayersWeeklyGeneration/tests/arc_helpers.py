@@ -15,7 +15,7 @@ import yaml
 # Fixtures — a small pack and config, and an LLM that never touches a network.
 # --------------------------------------------------------------------------
 
-CARRY_KEYS = ["Alcinoe-wounded", "moonwell-tainted"]
+CARRY_KEYS = ["Leena-wounded", "moonwell-tainted"]
 
 
 class FakeScene:
@@ -63,17 +63,17 @@ class FakePack:
         }
         self.lore = {
             "the-loop": "Time in Ashiorid folds back on itself every seventh day.",
-            "Alcinoe": "Alcinoe carries a wound that never quite closes.",
+            "Leena": "Leena carries a wound that never quite closes.",
         }
         self.ambient_pool = ["camp-chatter", "road-song"]
 
         self.cast = {
             "gm": FakeCastMember("gm", "The Narrator", "gm"),
-            "Alcinoe": FakeCastMember("Alcinoe", "Alcinoe Ward", "player"),
-            "buffalo": FakeCastMember("buffalo", "Buffalo Pike", "player"),
+            "Leena": FakeCastMember("Leena", "Leena Ward", "player"),
+            "chadwick": FakeCastMember("chadwick", "Chadwick Pike", "player"),
         }
         self.gm_id = "gm"
-        self.player_ids = ["Alcinoe", "buffalo"]
+        self.player_ids = ["Leena", "chadwick"]
 
     def ambient_scene_ids(self):
         return list(self.ambient_pool)
@@ -100,7 +100,7 @@ def config():
             "max_attempts": 2,
         },
         "state": {
-            "flags": ["Alcinoe-wounded", "moonwell-tainted", "buffalo-lost-axe"],
+            "flags": ["Leena-wounded", "moonwell-tainted", "chadwick-lost-axe"],
             "moods": ["tense", "weary", "hopeful", "giddy"],
             "carry_keys": list(CARRY_KEYS),
         },
@@ -126,7 +126,7 @@ def segment(order, **overrides):
         "continuity_in": "They are on the road.",
         "continuity_out": "They make camp by the creek.",
         "carry_in": {},
-        "carry_out": {"Alcinoe-wounded": True},
+        "carry_out": {"Leena-wounded": True},
         "event_windows": [],
         "fork": None,
     }

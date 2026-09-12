@@ -1,0 +1,43 @@
+id: test-segment-1-n0-1
+take: 1
+beats:
+- kind: narration
+  text: 'Here is the ambient scene:'
+  speaker: gm
+- kind: dialogue
+  text: The hero stands in front of a large, dimly lit control panel, surrounded by
+    rows of humming computer servers.
+  speaker: gm
+- kind: dialogue
+  text: What's the status on the render farm?
+  speaker: hero
+- kind: dialogue
+  text: It's online, but we're still waiting on the final batch of asset imports to
+    complete.
+  speaker: gm
+- kind: dialogue
+  text: And what's the target resolution for this scene?
+  speaker: hero
+- kind: dialogue
+  text: We're going for 4K, with a 24 frame rate. We'll also be using the new volumetric
+    lighting plugin.
+  speaker: gm
+- kind: dialogue
+  text: I see. And what's the overall mood we're going for with this scene?
+  speaker: hero
+- kind: dialogue
+  text: It's a dramatic, nighttime atmosphere. We'll be using a combination of blue
+    and purple hues to create a sense of tension.
+  speaker: gm
+- kind: dialogue
+  text: Got it. I'll start working on the lighting and cameras.
+  speaker: hero
+- kind: dialogue
+  text: Sounds good. I'll start checking in on the asset import status and see if
+    we can accelerate the process.
+  speaker: gm
+- kind: dialogue
+  text: (muttering to himself) Okay, let's see how this all comes together...
+  speaker: hero
+model: light
+generated_at: '2026-08-25T03:19:09.265737+00:00'

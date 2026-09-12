@@ -1,0 +1,129 @@
+segment_id: the-age-of-war-arc
+order: 1
+loop: 0
+hours: 6
+synopsis: The four strangers gather at the manor, where they learn about the Age of
+  War and how the world's magic was burned for fuel. They debate whether to believe
+  the sealed history or the whispered truths of the past.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: the-age-of-war-arc-n0-revelation-1
+  kind: ambient
+  prompt: The four strangers gather at the manor, where they learn about the Age of
+    War and how the world's magic was burned for fuel.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-revelation-2
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-revelation-3
+  kind: ambient
+  prompt: They debate whether to believe the sealed history or the whispered truths
+    of the past.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-revelation-4
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n0-revelation-5
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: the-age-of-war-arc-n0
+- slot_id: the-age-of-war-arc-n1-weight-of-truth-1
+  kind: ambient
+  prompt: The strangers gather in the manor's great hall, where ancient tomes whisper
+    secrets of a world consumed by magic's final flame.
+  lore:
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+- slot_id: the-age-of-war-arc-n1-weight-of-truth-2
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: the-age-of-war-arc-n1
+- slot_id: the-age-of-war-arc-n1-weight-of-truth-3
+  kind: ambient
+  prompt: As the truth of the Age of War settles over them, the strangers debate whether
+    to trust the sealed records or the rumors that have survived in the shadows.
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-n1
+nodes:
+- node_id: the-age-of-war-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: the-age-of-war-arc-n0
+  parent_id: the-age-of-war-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+- node_id: the-age-of-war-arc-n1
+  parent_id: the-age-of-war-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

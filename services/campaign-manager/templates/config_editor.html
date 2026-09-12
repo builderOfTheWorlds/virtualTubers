@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'Edit' if config and config.id else 'New' }} Config — Campaign Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">← Back to Dashboard</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">
+                {% if config and config.id %}
+                    Edit Config: {{ config.name }}
+                {% else %}
+                    New Saved Config
+                {% endif %}
+            </h4>
+        </div>
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST"
+                  action="{{ '/configs/' ~ config.id ~ '/edit' if config and config.id else '/configs/new' }}">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    {% if config and config.id %}
+                        <input type="text" class="form-control" value="{{ config.name }}" disabled>
+                        <div class="form-text">Name can't be changed after saving — delete and recreate to rename.</div>
+                    {% else %}
+                        <input type="text" name="name" class="form-control"
+                               value="{{ config.name if config else '' }}"
+                               placeholder="e.g. fast-test" required>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <input type="text" name="description" class="form-control"
+                           value="{{ config.description if config else '' }}"
+                           placeholder="What this config is for">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Config YAML</label>
+                    <textarea name="config_yaml" class="form-control" rows="30"
+                              style="font-family: monospace; font-size: 0.85rem;"
+                              required>{{ config.config_yaml if config else '' }}</textarea>
+                    <div class="form-text">
+                        Same shape as generation.yaml — top-level campaign/output/defaults/budget/arc/segment/dialogue/state keys.
+                        Validated by the generator when saved; must fully resolve arc/segment/dialogue model profiles before it can be activated.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="/" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

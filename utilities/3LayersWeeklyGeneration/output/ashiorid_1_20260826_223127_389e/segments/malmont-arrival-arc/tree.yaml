@@ -1,0 +1,141 @@
+malmont-arrival-arc:
+  node_id: malmont-arrival-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives in Malmont, a town where magic is scarce and danger lurks
+    in t
+  summary: The party arrives in Malmont, a town where magic is scarce and danger lurks
+    in the shadows.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-n0
+  - malmont-arrival-arc-n1
+  slots: null
+malmont-arrival-arc-n0:
+  node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  order: 0
+  depth: 1
+  title: The Weight of Silence
+  summary: The party arrives in Malmont, a town where magic is scarce and danger lurks
+    in the shadows. They immediately notice the absence of magical auras that they're
+    accustomed to, making every step feel heavier with anticipation. The cobblestone
+    streets echo with an unnatural quiet, as if the very air holds its breath. The
+    locals keep their distance, eyes darting nervously between the party and the dark
+    alleys that branch off from the main square.
+  continuity_in: The party arrives in Malmont, a town where magic is scarce and danger
+    lurks in the shadows.
+  continuity_out: The party navigates the quiet streets of Malmont, their footsteps
+    echoing in the unnatural silence as they search for information about local threats
+    and opportunities.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-1
+    kind: ambient
+    prompt: The party steps into Malmont and immediately feels the absence of magical
+      auras, making every step feel heavier with anticipation
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+malmont-arrival-arc-n1:
+  node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  order: 1
+  depth: 1
+  title: Shadows of the Past
+  summary: As the party explores Malmont's main square, they discover a weathered
+    stone marker that tells the tale of a great magical cataclysm that once shattered
+    the town's protective wards. The marker speaks of how the very fabric of magic
+    in this region was torn asunder, leaving only whispers and echoes of what once
+    was. Strange symbols carved into the stone seem to pulse faintly with residual
+    energy, drawing the party's attention as they realize this is no ordinary place.
+  continuity_in: The party navigates the quiet streets of Malmont, their footsteps
+    echoing in the unnatural silence as they search for information about local threats
+    and opportunities.
+  continuity_out: The party investigates the ancient stone marker, uncovering secrets
+    that suggest a deeper mystery lies beneath Malmont's seemingly peaceful surface,
+    with the residual magical energy hinting at future revelations.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n1-shadows-of-the-past-1
+    kind: ambient
+    prompt: The party discovers a weathered stone marker in Malmont's main square,
+      telling the tale of a great magical cataclysm that shattered the town's protective
+      wards
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-shadows-of-the-past-2
+    kind: ambient
+    prompt: Strange symbols carved into the stone seem to pulse faintly with residual
+      energy, drawing the party's attention as they realize this is no ordinary place
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-shadows-of-the-past-3
+    kind: ambient
+    prompt: The marker speaks of how the very fabric of magic in this region was torn
+      asunder, leaving only whispers and echoes of what once was
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-shadows-of-the-past-4
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

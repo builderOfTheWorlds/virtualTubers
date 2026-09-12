@@ -1,0 +1,139 @@
+segment_id: the-vault-arc
+order: 7
+loop: 0
+hours: 6
+synopsis: Behind the subbasement wall lies the secret the Letos have protected for
+  ten thousand years, a vault that holds more than just artifacts — it contains the
+  truth of what happened during the Event.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: the-vault-arc-n0-hidden-vault-1
+  kind: ambient
+  prompt: The ancient vault door creaks open, revealing dusty scrolls and strange
+    artifacts that whisper of the Event
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc-n0
+- slot_id: the-vault-arc-n0-hidden-vault-2
+  kind: spine
+  scene_ref: the-vault
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: the-vault-arc-n0
+- slot_id: the-vault-arc-n0-hidden-vault-3
+  kind: ambient
+  prompt: As documents are uncovered, the truth about what happened during the Event
+    begins to emerge — and it's more terrible than anyone imagined
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc-n0
+- slot_id: the-vault-arc-n1-1
+  kind: ambient
+  prompt: The first glimpse of the vault's contents reveals ancient texts that speak
+    of the Event's true nature
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc-n1
+- slot_id: the-vault-arc-n1-2
+  kind: ambient
+  prompt: As artifacts are uncovered, the weight of hidden truths begins to press
+    upon the explorers
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc-n1
+- slot_id: the-vault-arc-n1-3
+  kind: ambient
+  prompt: The vault's records show the Letos' protection was not just about preserving
+    items, but concealing a catastrophic truth
+  lore:
+  - the-event
+  participants:
+  - Vigil
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: the-vault-arc-n1
+- slot_id: the-vault-arc-n1-4
+  kind: ambient
+  prompt: A hidden chamber reveals the full scope of what happened during the Event,
+    challenging everything the Letos believed
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: the-vault-arc-n1
+- slot_id: the-vault-arc-n1-5
+  kind: ambient
+  prompt: The truth begins to spread beyond the vault, reaching those who will be
+    forced to confront the reality of what occurred during the Event
+  lore:
+  - the-event
+  participants:
+  - chadwick
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: the-vault-arc-n1
+- slot_id: the-vault-arc-n1-6
+  kind: spine
+  scene_ref: the-vault
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: the-vault-arc-n1
+nodes:
+- node_id: the-vault-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: the-vault-arc-n0
+  parent_id: the-vault-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: the-vault-arc-n1
+  parent_id: the-vault-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 6

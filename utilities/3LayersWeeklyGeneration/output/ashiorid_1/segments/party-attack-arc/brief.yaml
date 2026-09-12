@@ -1,0 +1,35 @@
+segment_id: party-attack-arc
+order: 5
+loop: 0
+hours: 6
+synopsis: As the party begins, unexpected guests arrive, and the manor's doors lock
+  from within. The group realizes they are not just guests but targets of a plot that
+  goes back ten thousand years.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: party-attack-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 0
+needs_rebrief: true

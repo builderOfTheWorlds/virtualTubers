@@ -1,0 +1,15 @@
+test-segment-1:
+  node_id: test-segment-1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Initial test segment to verify pipeline functionality.
+  summary: Initial test segment to verify pipeline functionality.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -582,6 +582,22 @@ def build_leaf_prompt(pack, arc_segment, ancestors, node, config, problems) -> s
                  "sensitivity, depends_on")
     lines.append("spine: slot_id, kind, scene_ref, participants")
     lines.append("")
+    lines.append(
+        "sensitivity must be EXACTLY one of: none, tone, flags — never any "
+        "other word (e.g. not 'low', 'high', 'medium')."
+    )
+    lines.append("")
+    lore_stems = sorted(pack.lore.keys())
+    if lore_stems:
+        lines.append("Legal lore stems (lore must use ONLY these, nothing else):")
+        for stem in lore_stems:
+            lines.append(f"- {stem}")
+    else:
+        lines.append(
+            "This pack has no lore stems defined. lore must be an empty "
+            "list: []"
+        )
+    lines.append("")
     lines.append("Reply with ONLY YAML under a `slots:` key.")
 
     if problems:

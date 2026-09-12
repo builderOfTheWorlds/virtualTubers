@@ -1,0 +1,78 @@
+segment_id: portal-choice-arc
+order: 9
+loop: 0
+hours: 6
+synopsis: The four must make a choice about whether to enter the open portal, knowing
+  that their decision will determine not only their fate but also the future of magic
+  in Ashiorid.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: portal-choice-arc-n0-choice-1
+  kind: ambient
+  prompt: The four companions gather around the open portal, each grappling with the
+    immense responsibility of their decision. They weigh the potential consequences
+    for themselves and the magical realm of Ashiorid, considering the possibility
+    of salvation versus destruction.
+  lore:
+  - the-begene-program
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n0
+- slot_id: portal-choice-arc-n0-choice-2
+  kind: ambient
+  prompt: Leena's wound throbs as she considers the portal's call, while Vigil weighs
+    the cost of turning back. The chadwick's axe lies forgotten beside them, and Sodacan Bob's
+    ancient eyes hold the weight of countless choices.
+  lore:
+  - amulet-of-wonder
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n0
+- slot_id: portal-choice-arc-n0-choice-3
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: portal-choice-arc-n0
+nodes:
+- node_id: portal-choice-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 0
+needs_rebrief: true

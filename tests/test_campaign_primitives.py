@@ -98,14 +98,14 @@ def test_unknown_param_names_the_param():
     primitive = simple_primitive()
 
     with pytest.raises(PrimitiveError, match="colour"):
-        primitive.validate({"target": "Alcinoe", "colour": "green"})
+        primitive.validate({"target": "Leena", "colour": "green"})
 
 
 def test_every_unknown_param_is_reported_in_a_stable_order():
     primitive = simple_primitive()
 
     with pytest.raises(PrimitiveError) as excinfo:
-        primitive.validate({"target": "Alcinoe", "colour": "green", "altitude": 3})
+        primitive.validate({"target": "Leena", "colour": "green", "altitude": 3})
 
     message = str(excinfo.value)
     assert "colour" in message and "altitude" in message
@@ -119,7 +119,7 @@ def test_validate_returns_resolved_params_with_defaults_filled():
         template="{actor} waves at {target}",
     )
 
-    assert primitive.validate({"target": "Alcinoe"}) == {"target": "Alcinoe", "mood": "calm"}
+    assert primitive.validate({"target": "Leena"}) == {"target": "Leena", "mood": "calm"}
 
 
 def test_validate_does_not_mutate_the_caller_dict():
@@ -128,10 +128,10 @@ def test_validate_does_not_mutate_the_caller_dict():
         params=(ParamSpec("target"), ParamSpec("mood", required=False, default="calm")),
         template="{actor} waves at {target}",
     )
-    supplied = {"target": "Alcinoe"}
+    supplied = {"target": "Leena"}
     primitive.validate(supplied)
 
-    assert supplied == {"target": "Alcinoe"}
+    assert supplied == {"target": "Leena"}
 
 
 def test_value_outside_choices_names_the_value():
@@ -167,38 +167,38 @@ def test_absent_optional_param_with_choices_is_not_checked():
 
 # ── rendering ────────────────────────────────────────────────────────────────
 def test_render_fills_actor_and_params():
-    result = simple_primitive().render("Buffalo", {"target": "Alcinoe"})
+    result = simple_primitive().render("Chadwick", {"target": "Leena"})
 
-    assert "Buffalo" in result and "Alcinoe" in result
+    assert "Chadwick" in result and "Leena" in result
 
 
 def test_render_ends_in_a_sentence():
-    assert simple_primitive().render("Buffalo", {"target": "Alcinoe"}).endswith(".")
+    assert simple_primitive().render("Chadwick", {"target": "Leena"}).endswith(".")
 
 
 def test_render_appends_a_suffix_when_its_param_is_supplied():
-    result = simple_primitive().render("Buffalo", {"target": "Alcinoe", "mood": "smug"})
+    result = simple_primitive().render("Chadwick", {"target": "Leena", "mood": "smug"})
 
     assert "smug" in result
 
 
 def test_render_omits_a_suffix_when_its_param_is_absent():
-    result = simple_primitive().render("Buffalo", {"target": "Alcinoe"})
+    result = simple_primitive().render("Chadwick", {"target": "Leena"})
 
     assert "looking" not in result
 
 
 def test_render_validates_its_params():
     with pytest.raises(PrimitiveError, match="target"):
-        simple_primitive().render("Buffalo", {})
+        simple_primitive().render("Chadwick", {})
 
 
 def test_render_is_deterministic():
     """No dice, no RNG — a pack replays word for word."""
     primitive = simple_primitive()
-    first = primitive.render("Buffalo", {"target": "Alcinoe", "mood": "smug"})
+    first = primitive.render("Chadwick", {"target": "Leena", "mood": "smug"})
 
-    assert all(primitive.render("Buffalo", {"target": "Alcinoe", "mood": "smug"}) == first
+    assert all(primitive.render("Chadwick", {"target": "Leena", "mood": "smug"}) == first
                for _ in range(5))
 
 
@@ -206,14 +206,14 @@ def test_render_accepts_no_params_when_none_are_required():
     primitive = Primitive(name="wait", genre="fantasy", summary="",
                           params=(), template="{actor} waits")
 
-    assert primitive.render("Vance", {}) == "Vance waits."
+    assert primitive.render("Vigil", {}) == "Vigil waits."
 
 
 def test_render_defaults_params_to_empty():
     primitive = Primitive(name="wait", genre="fantasy", summary="",
                           params=(), template="{actor} waits")
 
-    assert primitive.render("Vance") == "Vance waits."
+    assert primitive.render("Vigil") == "Vigil waits."
 
 
 # ── module-level convenience API ─────────────────────────────────────────────
@@ -226,14 +226,14 @@ def test_module_names_reads_the_default_registry():
 
 
 def test_module_render_dispatches_by_name():
-    result = render("roll_check", "Buffalo", {"skill": "Strength"})
+    result = render("roll_check", "Chadwick", {"skill": "Strength"})
 
-    assert "Buffalo" in result and "Strength" in result
+    assert "Chadwick" in result and "Strength" in result
 
 
 def test_module_render_on_unknown_primitive_names_it():
     with pytest.raises(PrimitiveError, match="telekinesis"):
-        render("telekinesis", "Buffalo", {})
+        render("telekinesis", "Chadwick", {})
 
 
 # ── the shipped vocabulary ───────────────────────────────────────────────────
@@ -257,14 +257,14 @@ def test_fantasy_and_cyber_are_the_only_genres():
 
 def test_roll_check_does_not_invent_an_outcome():
     """The script owns outcomes; the primitive only narrates."""
-    result = render("roll_check", "Buffalo", {"skill": "Perception", "dc": 15})
+    result = render("roll_check", "Chadwick", {"skill": "Perception", "dc": 15})
 
     assert "15" in result
     assert "success" not in result.lower() and "fail" not in result.lower()
 
 
 def test_roll_check_can_narrate_a_scripted_outcome():
-    result = render("roll_check", "Buffalo",
+    result = render("roll_check", "Chadwick",
                     {"skill": "Perception", "outcome": "failure"})
 
     assert "Perception" in result
@@ -272,18 +272,18 @@ def test_roll_check_can_narrate_a_scripted_outcome():
 
 def test_roll_check_rejects_an_unscripted_outcome():
     with pytest.raises(PrimitiveError, match="maybe"):
-        render("roll_check", "Buffalo", {"skill": "Perception", "outcome": "maybe"})
+        render("roll_check", "Chadwick", {"skill": "Perception", "outcome": "maybe"})
 
 
 def test_cast_spell_names_the_spell_and_target():
-    result = render("cast_spell", "Alcinoe", {"spell": "Moonbeam", "target": "the wraith"})
+    result = render("cast_spell", "Leena", {"spell": "Moonbeam", "target": "the wraith"})
 
     assert "Moonbeam" in result and "the wraith" in result
 
 
 def test_reveal_memory_exists_for_the_sage():
     """The loop-carrying character projects a memory of a previous run."""
-    result = render("reveal_memory", "Drokki", {"subject": "the moonwell"})
+    result = render("reveal_memory", "Sodacan Bob", {"subject": "the moonwell"})
 
     assert "the moonwell" in result
 
@@ -296,9 +296,9 @@ def test_every_shipped_primitive_renders_from_required_params_alone(name):
         if spec.required and spec.choices:
             params[spec.name] = spec.choices[0]
 
-    result = primitive.render("Buffalo", params)
+    result = primitive.render("Chadwick", params)
 
-    assert result.startswith("Buffalo") and result.endswith(".")
+    assert result.startswith("Chadwick") and result.endswith(".")
 
 
 @pytest.mark.parametrize("name", FANTASY + CYBER)

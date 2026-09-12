@@ -1,0 +1,54 @@
+test-segment-1:
+  node_id: test-segment-1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Initial testing of the campaign pipeline with basic scene rendering.
+  summary: Initial testing of the campaign pipeline with basic scene rendering.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - test-segment-1-n0
+  - test-segment-1-n1
+  slots: null
+test-segment-1-n0:
+  node_id: test-segment-1-n0
+  parent_id: test-segment-1
+  order: 0
+  depth: 1
+  title: Pipeline Architecture and Setup
+  summary: Initial testing of the campaign pipeline with basic scene rendering, focusing
+    on establishing the foundational architecture and configuration parameters for
+    the rendering system.
+  continuity_in: Campaign pipeline initialization begins with setting up core rendering
+    frameworks and establishing baseline configuration parameters for scene processing.
+  continuity_out: Pipeline architecture and setup complete, transitioning to scene
+    composition and asset integration phase.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+test-segment-1-n1:
+  node_id: test-segment-1-n1
+  parent_id: test-segment-1
+  order: 1
+  depth: 1
+  title: Scene Composition and Asset Integration
+  summary: Initial testing of the campaign pipeline with basic scene rendering, continuing
+    with scene composition and integration of various assets into the rendering framework.
+  continuity_in: Pipeline architecture and setup complete, transitioning to scene
+    composition and asset integration phase.
+  continuity_out: Scene composition and asset integration completed, ready for final
+    rendering and quality assessment.
+  target_words: 250
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

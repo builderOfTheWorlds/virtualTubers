@@ -1,0 +1,45 @@
+id: test-segment-3-n1-1
+take: 1
+beats:
+- kind: narration
+  text: 'Hero: Let me review the entire campaign structure, see how the narrative
+    unfolds.'
+  speaker: gm
+- kind: narration
+  text: 'Narrator (GM): System output: current campaign path is 73% aligned with primary
+    storyline.'
+  speaker: gm
+- kind: narration
+  text: 'Hero: What''s the main conflict driving the narrative, something the player
+    needs to resolve by the midpoint?'
+  speaker: gm
+- kind: narration
+  text: 'Narrator (GM): System output: player has 4/10 chances to resolve the main
+    conflict organically, requires additional support from NPCs.'
+  speaker: gm
+- kind: narration
+  text: 'Hero: How can I leverage the player''s skills to increase those chances,
+    add some variable difficulty to the challenge?'
+  speaker: gm
+- kind: narration
+  text: 'Narrator (GM): System output: suggested modification: increase player''s
+    charisma score by 20% to improve NPC relationships.'
+  speaker: gm
+- kind: narration
+  text: 'Hero: That''s not what I''m looking for, I want to create a more dynamic
+    encounter.'
+  speaker: gm
+- kind: narration
+  text: 'Narrator (GM): System output: recommended dynamic encounter type: ''surprise
+    ambush'', 32% increase in engagement metrics.'
+  speaker: gm
+- kind: narration
+  text: 'Hero: Okay, let''s implement that, but I want the system to suggest a unique
+    encounter setup based on the player''s choices.'
+  speaker: gm
+- kind: narration
+  text: 'Narrator (GM): System output: processing... suggestion: set ambush in a heavily
+    trafficked area, with 3 possible escape routes.'
+  speaker: gm
+model: light
+generated_at: '2026-08-25T03:19:29.894736+00:00'
