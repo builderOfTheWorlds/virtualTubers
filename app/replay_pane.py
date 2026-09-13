@@ -458,6 +458,118 @@ def _send_operator_error(producer, self_id, error):
     _safe_send(producer, build_message(self_id, "operator", "operator_reply", {"error": error}))
 
 
+# ── local roundtable tiles (roundtable_stream_design.md §4/§4.1, WP-6 task 1) ─
+# The GM container hosts one tile pane per cast slot (app/tile_pane.py). Tiles
+# are LOCAL: they are invited and cued by relay FILES the director writes, not
+# by Kafka — a tile never consumes the bus. The six character workers have no
+# tiles at all, so every write below is gated on _resolve_local_tiles() and
+# every one of them is best-effort (a failed relay write must never take the
+# show down; the tile's own watchdog is the backstop, same philosophy as
+# _safe_send above).
+ROUNDTABLE_PRESET = "roundtable"
+TILE_RELAY_DIR_ENV = "TILE_RELAY_DIR"
+LAYOUT_PRESET_ENV = "LAYOUT_PRESET"
+
+
+def _atomic_write_json(path, data):
+    """Atomic write of a small director -> tile relay file (same
+    temp+replace pattern as agent_state.py / agent.py's _atomic_write_json)
+    so a polling tile never reads a half-written cue. Raises OSError —
+    callers decide how loudly to report a failure."""
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+    os.replace(tmp_path, path)
+
+
+def _layout_preset(config):
+    """The worker's layout preset, LAYOUT_PRESET env winning over the config
+    file — same precedence build_layout.resolve_preset uses, supporting both
+    `layout: {preset: roundtable}` and the `layout: roundtable` shorthand."""
+    layout = (config or {}).get("layout")
+    file_preset = None
+    if isinstance(layout, dict):
+        file_preset = layout.get("preset")
+    elif isinstance(layout, str):
+        file_preset = layout
+    return os.environ.get(LAYOUT_PRESET_ENV) or file_preset
+
+
+def _resolve_local_tiles(cast, config):
+    """The slot ids this worker drives as LOCAL tiles, or [] when it has
+    none. Opt-in on purpose (design §4, WP-6 task 1): only the GM container
+    runs tile panes, so the six character workers must resolve to [] and
+    behave exactly as they did before this wire existed.
+
+    Two gates, both required: a relay dir must be configured
+    (TILE_RELAY_DIR), AND the worker's layout preset / agent role must name
+    the roundtable. The roster itself is every slot in the cast — the cast's
+    VALUES are worker/slot ids — INCLUDING the director's own slot, because
+    the GM is a character whose lines are played by its TILE, not by the
+    director process (§1.1/§4.1)."""
+    if not os.environ.get(TILE_RELAY_DIR_ENV):
+        return []
+    role = ((config or {}).get("agent") or {}).get("role")
+    if _layout_preset(config) != ROUNDTABLE_PRESET and role != ROUNDTABLE_PRESET:
+        return []
+    return sorted({str(slot) for slot in (cast or {}).values() if slot})
+
+
+def _write_tile_relay_file(path, payload, label):
+    """Best-effort atomic relay write — one tile failing to be written must
+    never stop the show or the other tiles (see _safe_send)."""
+    try:
+        _atomic_write_json(path, payload)
+        return True
+    except OSError as exc:
+        print(f"[replay_pane] tile relay write failed ({label} -> {path}): {exc}",
+              file=sys.stderr)
+        return False
+
+
+def _clear_tile_relay_files(relay_dir, slots):
+    """Stale-state hygiene BEFORE anything else, same convention as the
+    director's cue_file/ready_file/stop_file clearing below. A leftover
+    cue/end from a PREVIOUS airing is read on the tile's very first poll,
+    which either aborts the new show instantly (a stale "end") or
+    fast-forwards it into Performer.perform's catch-up path where owned
+    audio is discarded instead of played. tile_pane.clear_stale_relay_files
+    does the same thing, but it runs in the TILE process — a tile may not
+    even be polling yet, so the director must do its own clearing."""
+    import tile_pane
+    for slot in slots:
+        _delete_stale_file(tile_pane.tile_cue_file(relay_dir, slot))
+        _delete_stale_file(tile_pane.tile_request_file(relay_dir, slot))
+
+
+def _write_tile_requests(relay_dir, slots, payload):
+    """Kick each tile off once, up front — mirroring how replay_invite
+    precedes cues for remote followers."""
+    import tile_pane
+    for slot in slots:
+        _write_tile_relay_file(tile_pane.tile_request_file(relay_dir, slot),
+                               payload, "request")
+
+
+def _write_tile_cues(relay_dir, slots, airing_id, index):
+    import tile_pane
+    for slot in slots:
+        _write_tile_relay_file(
+            tile_pane.tile_cue_file(relay_dir, slot),
+            {"airing_id": airing_id, "type": "cue", "scene_index": index}, "cue")
+
+
+def _write_tile_end(relay_dir, slots, airing_id):
+    """`type: "end"` makes a tile's wait_for_scene return -1 so it drops back
+    to idle instead of sitting on a watchdog. Written on a normal finish AND
+    on every refusal path."""
+    import tile_pane
+    for slot in slots:
+        _write_tile_relay_file(
+            tile_pane.tile_cue_file(relay_dir, slot),
+            {"airing_id": airing_id, "type": "end"}, "end")
+
+
 def perform_director_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None):
     """Duet director path (docs/duet_replay.md): prepare + persist the full
@@ -478,15 +590,35 @@ def perform_director_request(request, worker_name, state_path, self_id,
         speed = default_speed
     name = str(request.get("worker_name") or worker_name)
     cast = request.get("cast") or {}
+    # Local roundtable tiles (§4.1) are driven by relay FILES, not Kafka —
+    # tile_pane.py never sends replay_ready. A cast slot resolved as a local
+    # tile must therefore never enter `followers`/the ready-wait below, or
+    # the director waits REPLAY_READY_TIMEOUT_S for a replay_ready that is
+    # never coming and refuses every all-local (or mixed) roundtable show.
+    # Computed here (before followers) deliberately: _resolve_local_tiles
+    # only needs cast + config, not the airing that's built further down.
+    local_tile_slots = set(_resolve_local_tiles(cast, config))
     followers = sorted({worker_id for worker_id in cast.values()
-                        if worker_id and worker_id != self_id})
+                        if worker_id and worker_id != self_id
+                        and worker_id not in local_tile_slots})
 
     producer = _build_bus_producer(config)
     invited = []  # only populated once invites actually go out — a refusal
                   # before that point has nobody to send replay_end to yet
+    # Local roundtable tiles (§4.1): resolved further down, once the airing
+    # exists. Mutable holder so refuse() — a closure used by refusal paths
+    # BOTH before and after that point — can see whatever has been resolved
+    # so far. Empty on the earliest refusals (no producer, no narration
+    # store), which is exactly right: nothing has been told to start yet.
+    tiles = {"relay_dir": None, "slots": []}
 
     def refuse(log_message, operator_error=None, reason="aborted", airing_id=None):
         print(f"[replay_pane] duet refused: {log_message}", file=sys.stderr)
+        # Tiles first: a refusal must release every tile that was already
+        # kicked off, so none sits on a watchdog. Guarded and best-effort —
+        # a refusal must never raise.
+        if tiles["slots"] and tiles["relay_dir"]:
+            _write_tile_end(tiles["relay_dir"], tiles["slots"], airing_id)
         if producer is not None:
             _send_replay_end(producer, self_id, invited, airing_id, reason)
             _send_operator_error(producer, self_id, operator_error or log_message)
@@ -533,6 +665,29 @@ def perform_director_request(request, worker_name, state_path, self_id,
             _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
         invited = followers
 
+        # ── local roundtable tiles (design §4/§4.1, WP-6 task 1) ──────────
+        # The GM also hosts a tile pane per cast slot IN THIS CONTAINER.
+        # They are invited/cued by relay FILES rather than Kafka, but the
+        # sequence mirrors the remote followers exactly: stale hygiene,
+        # then one request each up front, then a cue per scene, then an end.
+        # A non-roundtable worker resolves to [] here and writes nothing at
+        # all, so the six character channels behave exactly as before.
+        local_tiles = sorted(local_tile_slots)
+        if local_tiles:
+            import tile_pane
+            relay_dir = tile_pane.resolve_relay_dir()
+            tile_pane.ensure_relay_dir(relay_dir)
+            # Stale-state hygiene FIRST, before a single new byte is
+            # written — same rule (and the same repeat-bug history) as the
+            # cue_file/ready_file/stop_file clearing just below.
+            _clear_tile_relay_files(relay_dir, local_tiles)
+            tiles["relay_dir"] = relay_dir
+            tiles["slots"] = local_tiles
+            _write_tile_requests(relay_dir, local_tiles, {
+                "airing_id": airing_id, "episode": episode_name, "cast": cast,
+                "speed": speed, "worker_name": name,
+            })
+
         cue_file = _resolve_replay_cue_file()
         _delete_stale_file(cue_file)
 
@@ -569,7 +724,17 @@ def perform_director_request(request, worker_name, state_path, self_id,
         followers_needed = set(followers)
         ready = False
         stopped_before_ready = False
-        while True:
+        # No remote Kafka followers to wait on (e.g. an all-local roundtable
+        # cast, or a solo show): nothing will ever write the ready_file, so
+        # polling it would be an unconditional timeout every time. The empty
+        # set is trivially "ready" — but an already-signalled stop must
+        # still be honored before we declare that and start performing.
+        if not followers_needed:
+            if should_stop():
+                stopped_before_ready = True
+            else:
+                ready = True
+        while not ready and not stopped_before_ready:
             if should_stop():
                 stopped_before_ready = True
                 break
@@ -592,6 +757,11 @@ def perform_director_request(request, worker_name, state_path, self_id,
             for follower in followers:
                 _safe_send(producer, build_message(self_id, follower, "replay_cue",
                                                     {"airing_id": airing_id, "scene_index": index}))
+            # Same hook, same clock: local tile cues are written here too so
+            # the roundtable can never desync from the character channels by
+            # more than one scene boundary (WP-6 §6 risk row).
+            if local_tiles:
+                _write_tile_cues(tiles["relay_dir"], local_tiles, airing_id, index)
 
         performer = Performer(
             pacer=Pacer(speed=speed, should_stop=should_stop),
@@ -607,6 +777,10 @@ def perform_director_request(request, worker_name, state_path, self_id,
 
         _send_replay_end(producer, self_id, followers, airing_id,
                          "finished" if completed else "stopped")
+        # Release every local tile too — without this a tile sits polling
+        # until its watchdog fires instead of dropping straight back to idle.
+        if local_tiles:
+            _write_tile_end(tiles["relay_dir"], local_tiles, airing_id)
     return True
 
 

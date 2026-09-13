@@ -1,0 +1,125 @@
+segment_id: malmont-arrival-arc
+order: 7
+loop: 0
+hours: 6
+synopsis: The group arrives in Malmont and begins to explore the town, learning about
+  its power structure and magical resources.
+continuity_in: The group has traveled south from the manor.
+continuity_out: The group has learned about Malmont's two power centers.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-n0-malmont-arrival-1
+  kind: ambient
+  prompt: The group steps off the carriage onto the cobblestones of Malmont, taking
+    in the sights and sounds of their new surroundings.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n0-malmont-arrival-2
+  kind: ambient
+  prompt: Leena notices the contrast between the pristine district and the war-torn
+    area, wondering about the town's history.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n0-malmont-arrival-3
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-1
+  kind: ambient
+  prompt: The group steps off the carriage onto the cobblestones of Malmont, taking
+    in the sights and sounds of their new surroundings.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-2
+  kind: ambient
+  prompt: Leena examines the ancient stone architecture, noting how it reflects the
+    town's long history.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-3
+  kind: ambient
+  prompt: Chadwick scans the streets for potential threats, his axe at the ready despite
+    the peaceful appearance.
+  lore:
+  - malmont
+  participants:
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-4
+  kind: ambient
+  prompt: Vigil listens carefully to the conversations around them, trying to piece
+    together the town's social structure.
+  lore:
+  - malmont
+  participants:
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-malmont-arrival-5
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malmont-arrival-arc-n1
+nodes:
+- node_id: malmont-arrival-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

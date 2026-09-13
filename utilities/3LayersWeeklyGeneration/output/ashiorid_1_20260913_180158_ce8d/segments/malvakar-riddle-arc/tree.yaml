@@ -1,0 +1,142 @@
+malvakar-riddle-arc:
+  node_id: malvakar-riddle-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group solves the riddle of the Malvakar monument and gains a fragment
+    of the
+  summary: The group solves the riddle of the Malvakar monument and gains a fragment
+    of the map.
+  continuity_in: The group is searching for the monuments.
+  continuity_out: The group has obtained one fragment of the map.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-n0
+  - malvakar-riddle-arc-n1
+  slots: null
+malvakar-riddle-arc-n0:
+  node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  order: 0
+  depth: 1
+  title: Deciphering the Ancient Riddle
+  summary: The group carefully studies the cryptic symbols and inscriptions on the
+    Malvakar monument, working together to piece together the ancient puzzle that
+    has puzzled travelers for generations.
+  continuity_in: The group is searching for the monuments.
+  continuity_out: The group has deciphered the riddle and unlocked the first clue.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n0-malvakar-1
+    kind: ambient
+    prompt: The group examines the intricate symbols etched into the Malvakar monument,
+      their fingers tracing the ancient grooves as they attempt to decipher the meaning
+      behind the cryptic inscriptions.
+    lore:
+    - the-begene-program
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n0-malvakar-2
+    kind: ambient
+    prompt: As Leena whispers a theory about the alignment of the symbols, Chadwick
+      points out a pattern that seems to match the markings on the map fragment they
+      found earlier.
+    lore:
+    - the-begene-program
+    - malmont
+    participants:
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n0-malvakar-3
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+malvakar-riddle-arc-n1:
+  node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  order: 1
+  depth: 1
+  title: Claiming the Map Fragment
+  summary: Having solved the riddle, the group carefully extracts the fragment of
+    the map from its hidden compartment, feeling the ancient power of the monument
+    flow through them as they claim their prize.
+  continuity_in: The group has deciphered the riddle and unlocked the first clue.
+  continuity_out: The group has obtained one fragment of the map.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n1-claim-1
+    kind: ambient
+    prompt: Leena carefully examines the mechanism of the monument, her fingers tracing
+      ancient symbols as she tries to understand how the riddle connects to the hidden
+      compartment.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-claim-2
+    kind: ambient
+    prompt: Vigil studies the glowing runes etched into the stone, his voice soft
+      as he mutters about the alignment of celestial bodies and how they might relate
+      to the riddle's solution.
+    lore:
+    - malmont
+    participants:
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-claim-3
+    kind: ambient
+    prompt: Chadwick, axe in hand, watches the others work, occasionally stepping
+      forward to help stabilize the monument as they uncover the hidden compartment.
+    lore:
+    - moonwells
+    participants:
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-claim-4
+    kind: ambient
+    prompt: The group holds their breath as they carefully extract the fragment, feeling
+      a strange energy pulse through the stone, as if the monument itself is aware
+      of what has been taken.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-claim-5
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

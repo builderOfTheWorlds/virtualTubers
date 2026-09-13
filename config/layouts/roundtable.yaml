@@ -1,0 +1,151 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Layout preset: roundtable
+#
+# The 7th channel — the "main" stream (roundtable_stream_design.md v1.1 §6).
+# Hosted by the GM container (tuber_0). Seven tiles (one per character slot,
+# INCLUDING the GM's own — §1.1) + the show log + a status strip.
+#
+# Information model: breadth here, depth on the individual character channels.
+# A viewer watching only this channel hears EVERY character's voice, because all
+# seven tiles play their own owned audio into the same Pulse `vout` sink that
+# ffmpeg captures (§4.1). Deliberately NO filetree and NO editor pane — those are
+# the "depth" panes that belong on the character channels.
+#
+# ── The show_log pane is the DIRECTOR (§6.1) ──────────────────────────────────
+# The pane below with `use: replay` is app/replay_pane.py running as the duet
+# DIRECTOR for this show. That is not a coincidence of placement — it is the
+# design:
+#
+#   replay.Performer.perform() already walks every scene in order, and
+#   _perform_scene sets the per-scene display label (_resolve_display_name)
+#   before _on_assistant_text writes "label + text" to the Performer's `out`.
+#
+# So the director process, running in a pane, ALREADY renders the full ordered
+# transcript of the show under the correct per-persona names. Pointing its pane
+# at the log slot means:
+#   * the director process has a home (no headless side-channel, no startup.sh change),
+#   * there is NO separate show-log program, no per-airing JSONL, no relay writer,
+#     and no tail_bus.py sibling command (all of which v1.0 of the design planned),
+#   * the log can never drift from the tiles' timing — it IS the loop that fires
+#     their cues,
+#   * scroll-back comes free from tmux history-limit.
+# The director owns no scenes (§4.1), so this pane is silent: pure text. Correct
+# for a log.
+#
+# ── Geometry ──────────────────────────────────────────────────────────────────
+# Percentages below were derived from tmux's split arithmetic at the engine's
+# 240x67 default (the §8.5 spike), not guessed:
+#   htop 9%  -> 6 rows | show_log 34% -> 20 rows (~18 visible lines)
+#   two tile rows of 18 and 20 rows; 4 columns of 58-60 each
+# A tile needs ~10 rows (compact face 5 + line 2 + status 1 + borders 2), so 18
+# leaves 8 spare. This matters: config/layouts/replay.yaml carries a comment
+# recording that a preset once shipped with its avatar pane almost entirely cut
+# off because nobody checked. Confirm visually on the GM container before
+# calling WP-4 done.
+#
+# Adding/removing a tile is one entry in this list (OPEN-4). The 8th grid cell is
+# spare capacity, not a committed slot.
+# ──────────────────────────────────────────────────────────────────────────────
+preset: roundtable
+panes:
+  # ── Base pane: the GM's own tile (top-left). ────────────────────────────────
+  # tuber_0 is a character, so it gets a tile like everyone else; only the
+  # border color + title mark it as the narrator.
+  - use: tile
+    id: tile_tuber_0
+    title: "tuber_0 · GM / narrator"
+    border_color: magenta
+    with:
+      slot: "tuber_0"
+
+  # ── Bottom strip: htop, split off the base first so the tile grid divides
+  #    the remaining area cleanly. ──────────────────────────────────────────────
+  - use: htop
+    target: tile_tuber_0
+    split: v
+    size: 9
+
+  # ── The show log = the director process (§6.1 above). ──────────────────────
+  - use: replay
+    id: show_log
+    title: "Show Log · all dialogue & actions in order"
+    border_color: yellow
+    target: tile_tuber_0
+    split: v
+    size: 34
+
+  # ── Second tile row, carved off the remaining tile area. ───────────────────
+  - use: tile
+    id: tile_tuber_4
+    title: "tuber_4"
+    target: tile_tuber_0
+    split: v
+    size: 50
+    with:
+      slot: "tuber_4"
+
+  # ── Top row, columns 2-4. ──────────────────────────────────────────────────
+  - use: tile
+    id: tile_tuber_1
+    title: "tuber_1"
+    target: tile_tuber_0
+    split: h
+    size: 75
+    with:
+      slot: "tuber_1"
+
+  - use: tile
+    id: tile_tuber_2
+    title: "tuber_2"
+    target: tile_tuber_1
+    split: h
+    size: 66
+    with:
+      slot: "tuber_2"
+
+  - use: tile
+    id: tile_tuber_3
+    title: "tuber_3"
+    target: tile_tuber_2
+    split: h
+    size: 50
+    with:
+      slot: "tuber_3"
+
+  # ── Second row, columns 2-4. ───────────────────────────────────────────────
+  - use: tile
+    id: tile_tuber_5
+    title: "tuber_5"
+    target: tile_tuber_4
+    split: h
+    size: 75
+    with:
+      slot: "tuber_5"
+
+  - use: tile
+    id: tile_tuber_6
+    title: "tuber_6"
+    target: tile_tuber_5
+    split: h
+    size: 66
+    with:
+      slot: "tuber_6"
+
+  # ── Spare 8th grid cell (§6 / OPEN-4). ─────────────────────────────────────
+  # Without this, tuber_6 absorbs the unused cell and renders DOUBLE WIDTH
+  # (118 vs ~59 cols) — confirmed in real tmux during the §8.5 geometry spike.
+  #
+  # It is a TILE, not an htop strip: an htop here read as a seventh "character"
+  # sitting in the character grid on the live broadcast, which looked like a
+  # layout bug. Pinning it to the (uncast) tuber_7 slot means it renders as a
+  # neutral idle tile, and promoting the roster to 8 characters later (OPEN-4)
+  # is then a no-op here. The bottom status strip still provides htop.
+  - use: tile
+    id: tile_spare
+    title: "—"
+    border_color: colour240
+    target: tile_tuber_6
+    split: h
+    size: 50
+    with:
+      slot: "tuber_7"

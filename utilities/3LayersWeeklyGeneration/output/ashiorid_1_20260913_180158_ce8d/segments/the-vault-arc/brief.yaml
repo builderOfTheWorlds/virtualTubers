@@ -1,0 +1,142 @@
+segment_id: the-vault-arc
+order: 5
+loop: 0
+hours: 6
+synopsis: The four explore the vault, uncovering ancient artifacts and a dying wizard
+  who reveals the true nature of the portal and the consequences of its opening. They
+  must make a crucial decision that will determine the fate of Ashiorid.
+continuity_in: They decide to explore the vault and confront the looming threat.
+continuity_out: The portal opens, and they must face the consequences of their choice.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: the-vault-arc-vault-1
+  kind: ambient
+  prompt: The four adventurers step into the ancient vault, their footsteps echoing
+    off the stone walls as they take in the weight of centuries.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-2
+  kind: ambient
+  prompt: Dust swirls around their boots as they uncover a weathered amulet, its surface
+    shimmering with an otherworldly energy.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-3
+  kind: ambient
+  prompt: A dying wizard's voice whispers warnings about the portal's true nature,
+    his words heavy with the weight of fate.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-4
+  kind: ambient
+  prompt: The air grows thick with magic as they find a map revealing the location
+    of the source of the portal's power.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-5
+  kind: ambient
+  prompt: Leena stumbles upon a hidden chamber, her wound throbbing as she discovers
+    an ancient moonwell's tainted core.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-6
+  kind: ambient
+  prompt: Chadwick's axe clatters to the ground as he realizes the true cost of opening
+    the portal, his face grim with understanding.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-7
+  kind: ambient
+  prompt: The four stand before a crystalline artifact, its glow pulsing in rhythm
+    with the heartbeat of the world.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-8
+  kind: ambient
+  prompt: As they gather around the dying wizard, his final words echo through the
+    vault—choices must be made.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: the-vault-arc
+- slot_id: the-vault-arc-vault-9
+  kind: spine
+  scene_ref: the-vault
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: the-vault-arc
+nodes:
+- node_id: the-vault-arc
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: true
+  target_slots: 9
+  slots: 9

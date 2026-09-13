@@ -1,0 +1,117 @@
+letos-manor-arc:
+  node_id: letos-manor-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four explore Leto's manor, marveling at its opulence and grandeur. They
+    unco
+  summary: The four explore Leto's manor, marveling at its opulence and grandeur.
+    They uncover hidden passages and rooms, hinting at the manor's secrets. As they
+    delve deeper, they stumble upon Grovley, the butler, who seems to know more than
+    he lets on.
+  continuity_in: The party is interrupted by a sudden attack.
+  continuity_out: The manor starts to burn, forcing them to flee.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-n0
+  - letos-manor-arc-n1
+  slots: null
+letos-manor-arc-n0:
+  node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  order: 0
+  depth: 1
+  title: Grand Entrance and Hidden Corridors
+  summary: The party enters Leto's manor and is immediately struck by its opulence
+    and grandeur. They explore the main halls, discovering hidden passages and secret
+    rooms that hint at the manor's deeper mysteries. The exploration reveals architectural
+    secrets and forgotten chambers.
+  continuity_in: The party is interrupted by a sudden attack.
+  continuity_out: They encounter Grovley, the butler, who seems to know more than
+    he lets on.
+  target_words: 540
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-n0-grand-entrance-1
+    kind: ambient
+    prompt: The party enters Leto's manor and is immediately struck by its opulence
+      and grandeur
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: letos-manor-arc-n0-hidden-corridors-1
+    kind: ambient
+    prompt: They explore the main halls, discovering hidden passages and secret rooms
+      that hint at the manor's deeper mysteries
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: letos-manor-arc-n0-architectural-secrets-1
+    kind: ambient
+    prompt: The exploration reveals architectural secrets and forgotten chambers
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: letos-manor-arc-n0-grovley-encounter-1
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+  - slot_id: letos-manor-arc-n0-party-attack-1
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: flags
+letos-manor-arc-n1:
+  node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  order: 1
+  depth: 1
+  title: Confrontation with the Butler
+  summary: The party confronts Grovley, the butler, who reveals himself to be more
+    knowledgeable about the manor's secrets than initially apparent. His cryptic responses
+    and suspicious behavior suggest he may be hiding crucial information about the
+    manor's hidden passages and the source of the attack.
+  continuity_in: They encounter Grovley, the butler, who seems to know more than he
+    lets on.
+  continuity_out: The manor starts to burn, forcing them to flee.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

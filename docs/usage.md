@@ -108,7 +108,7 @@ voice:
   provider: piper          # "null" keeps replays silent
 ```
 
-Set `LAYOUT_PRESET=replay` on that worker (e.g. `CODER_LAYOUT_PRESET=replay`
+Set `LAYOUT_PRESET=replay` on that worker (e.g. `TUBER1_LAYOUT_PRESET=replay`
 in `.env`) so its editor pane becomes the theater, and
 request a show:
 

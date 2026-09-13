@@ -8,19 +8,19 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_STREAM_KEY:-coder}
+      STREAM_KEY: ${TUBER1_STREAM_KEY:-coder}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
       WORKER_ID: coder
-      # Set CODER_LAYOUT_PRESET=replay in the stack env to switch this
+      # Set TUBER1_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode (docs/replay_pane.md) — env-only
       # change, no rebuild.
-      LAYOUT_PRESET: ${CODER_LAYOUT_PRESET:-coder}
+      LAYOUT_PRESET: ${TUBER1_LAYOUT_PRESET:-coder}
       # Swap the avatar renderer without a config edit or rebuild — e.g.
       # "ascii_avatar" (docs/avatar_providers.md). Unset keeps the worker
       # config's own avatar.provider (defaults to "builtin").
-      AVATAR_PROVIDER: ${CODER_AVATAR_PROVIDER:-}
+      AVATAR_PROVIDER: ${TUBER1_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -60,6 +60,10 @@ services:
       # Piper .onnx voice models for spoken replay narration
       # (docs/tts_client.md; download with scripts/download_voices.py)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -77,16 +81,16 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_NATIVE_STREAM_KEY:-coder-native}
+      STREAM_KEY: ${TUBER2_STREAM_KEY:-coder-native}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 102
       WORKER_ID: coder-native
       # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_NATIVE_LAYOUT_PRESET=coder in the stack env to switch this
+      # TUBER2_LAYOUT_PRESET=coder in the stack env to switch this
       # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_NATIVE_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_NATIVE_AVATAR_PROVIDER:-}
+      LAYOUT_PRESET: ${TUBER2_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${TUBER2_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
@@ -109,6 +113,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -124,16 +132,16 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_OPENCODE_STREAM_KEY:-coder-opencode}
+      STREAM_KEY: ${TUBER3_STREAM_KEY:-coder-opencode}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 103
       WORKER_ID: coder-opencode
       # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_OPENCODE_LAYOUT_PRESET=coder in the stack env to switch this
+      # TUBER3_LAYOUT_PRESET=coder in the stack env to switch this
       # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_OPENCODE_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_OPENCODE_AVATAR_PROVIDER:-}
+      LAYOUT_PRESET: ${TUBER3_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${TUBER3_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
@@ -156,6 +164,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -171,16 +183,16 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${CODER_AIDER_STREAM_KEY:-coder-aider}
+      STREAM_KEY: ${TUBER4_STREAM_KEY:-coder-aider}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 104
       WORKER_ID: coder-aider
       # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # CODER_AIDER_LAYOUT_PRESET=coder in the stack env to switch this
+      # TUBER4_LAYOUT_PRESET=coder in the stack env to switch this
       # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${CODER_AIDER_LAYOUT_PRESET:-replay}
-      AVATAR_PROVIDER: ${CODER_AIDER_AVATAR_PROVIDER:-}
+      LAYOUT_PRESET: ${TUBER4_LAYOUT_PRESET:-replay}
+      AVATAR_PROVIDER: ${TUBER4_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       GIT_SERVER_URL: ${GIT_SERVER_URL:-}
@@ -203,6 +215,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -218,13 +234,13 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${MANAGER_STREAM_KEY:-manager}
+      STREAM_KEY: ${TUBER6_STREAM_KEY:-manager}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 100
       WORKER_ID: manager
-      LAYOUT_PRESET: ${MANAGER_LAYOUT_PRESET:-manager}
-      AVATAR_PROVIDER: ${MANAGER_AVATAR_PROVIDER:-}
+      LAYOUT_PRESET: ${TUBER6_LAYOUT_PRESET:-manager}
+      AVATAR_PROVIDER: ${TUBER6_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -243,6 +259,10 @@ services:
       - world-state:/data/world-state
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -258,13 +278,13 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
-      STREAM_KEY: ${TESTER_STREAM_KEY:-tester}
+      STREAM_KEY: ${TUBER5_STREAM_KEY:-tester}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 101
       WORKER_ID: tester
-      LAYOUT_PRESET: ${TESTER_LAYOUT_PRESET:-tester}
-      AVATAR_PROVIDER: ${TESTER_AVATAR_PROVIDER:-}
+      LAYOUT_PRESET: ${TUBER5_LAYOUT_PRESET:-tester}
+      AVATAR_PROVIDER: ${TUBER5_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -283,6 +303,10 @@ services:
       - world-state:/data/world-state
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
+      # follower in a roundtable show resolves the show header's voice NAMES
+      # through this file, so every worker needs it, not just the GM.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
       # Read-only view of every coder's workspace, at the conventional
       # /data/repos/<coder_id> paths agent.py resolves (test_runner copies
       # to a tmpdir before running pytest — these must stay :ro).
@@ -290,6 +314,67 @@ services:
       - repo-native:/data/repos/coder-native:ro
       - repo-opencode:/data/repos/coder-opencode:ro
       - repo-aider:/data/repos/coder-aider:ro
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  # ── The 7th channel: GM / roundtable (tuber_0) ──────────────────────────────
+  # roundtable_stream_design.md v1.1 §9. The "main" stream: 7 tiles (one per
+  # character slot, including the GM's own) + the show log + a status strip.
+  #
+  # This container is the DIRECTOR of every roundtable show — it runs the LLM
+  # narration and the TTS for EVERY speaker in the cast, then cues the six
+  # character channels scene-by-scene (docs/duet_replay.md). Two mounts are
+  # therefore load-bearing and easy to forget:
+  #   * /data/voices      — without it the GM cannot synthesize ANY speaker, so
+  #                         there is no audio on ANY channel (not just this one).
+  #   * /config/voices.yaml — the symbolic voice registry (§7.2), which is how a
+  #                         show header's voice name resolves to a real model.
+  worker-gm:
+    image: vtube-worker:latest
+    pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${TUBER0_STREAM_KEY:-tuber0}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # 99-104 are taken by the six character workers; the GM takes 105.
+      DISPLAY_NUM: 105
+      WORKER_ID: tuber_0
+      LAYOUT_PRESET: ${GM_LAYOUT_PRESET:-roundtable}
+      AVATAR_PROVIDER: ${GM_AVATAR_PROVIDER:-}
+      # Where the director writes per-tile cue/request relay files and each tile
+      # writes its own avatar state (§5.1 — tiles cannot share one state file).
+      TILE_RELAY_DIR: ${TILE_RELAY_DIR:-/tmp/tiles}
+      VOICE_REGISTRY_PATH: /config/voices.yaml
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache + the shared airing followers load (app/narration_store.py)
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      # With 7 slots to gather instead of 2, the default 60s ready window is
+      # tighter than it looks — tune here, measured during the §8.4 rehearsal.
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/tuber_0.yaml:/config/worker.yaml:ro
+      # CRITICAL: the GM does ALL the TTS for every speaker in every show.
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # The symbolic voice registry (§7.2) — resolves show-header voice names.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
+      - world-state:/data/world-state
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
@@ -328,6 +413,15 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — POST
+      # /replays validates that a show header's voice NAMES are known (§8.1 V1).
+      VOICE_REGISTRY_PATH: /config/voices.yaml
+    volumes:
+      # Registry only — deliberately NO /data/voices mount. message-api must
+      # validate voice names without being able to see voice files; that
+      # asymmetry is the entire reason the registry exists (§7.2). Checking the
+      # assets themselves is V2's job, in a container that has them (§8.2).
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
     ports:
       - "8090:8000"
     restart: unless-stopped

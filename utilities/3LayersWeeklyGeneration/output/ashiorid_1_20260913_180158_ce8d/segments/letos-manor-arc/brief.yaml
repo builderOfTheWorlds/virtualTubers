@@ -1,0 +1,99 @@
+segment_id: letos-manor-arc
+order: 1
+loop: 0
+hours: 6
+synopsis: The four explore Leto's manor, marveling at its opulence and grandeur. They
+  uncover hidden passages and rooms, hinting at the manor's secrets. As they delve
+  deeper, they stumble upon Grovley, the butler, who seems to know more than he lets
+  on.
+continuity_in: The party is interrupted by a sudden attack.
+continuity_out: The manor starts to burn, forcing them to flee.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-n0-grand-entrance-1
+  kind: ambient
+  prompt: The party enters Leto's manor and is immediately struck by its opulence
+    and grandeur
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-hidden-corridors-1
+  kind: ambient
+  prompt: They explore the main halls, discovering hidden passages and secret rooms
+    that hint at the manor's deeper mysteries
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-architectural-secrets-1
+  kind: ambient
+  prompt: The exploration reveals architectural secrets and forgotten chambers
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-grovley-encounter-1
+  kind: spine
+  scene_ref: grovley-revelation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-party-attack-1
+  kind: spine
+  scene_ref: party-attack
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: flags
+  node_id: letos-manor-arc-n0
+nodes:
+- node_id: letos-manor-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+- node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+needs_rebrief: true

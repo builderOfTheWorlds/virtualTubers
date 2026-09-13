@@ -283,3 +283,224 @@ def test_from_profile_applies_sane_defaults_for_an_omitted_timeout():
 def test_from_profile_rejects_an_unknown_provider():
     with pytest.raises(LLMError):
         concurrent_llm.from_profile({"provider": "carrier-pigeon", "model": "m"})
+
+
+# ── complete_streaming: the arc-stage-only token-progress path ────────────────
+
+class FakeStreamResponse:
+    """Stands in for the object httpx.Client.stream()'s context manager
+    yields: raise_for_status() plus an iter_lines() generator over
+    pre-baked NDJSON lines, exactly like Ollama's streaming /api/chat."""
+
+    def __init__(self, lines, status_code=200, text=""):
+        self._lines = lines
+        self.status_code = status_code
+        self.text = text
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise httpx.HTTPStatusError(
+                f"{self.status_code}", request=None, response=self)
+
+    def iter_lines(self):
+        yield from self._lines
+
+
+class FakeStreamContextManager:
+    def __init__(self, response=None, raises=None):
+        self._response = response
+        self._raises = raises
+
+    def __enter__(self):
+        if self._raises is not None:
+            raise self._raises
+        return self._response
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+
+class FakeStreamingHTTPClient:
+    """Stands in for httpx.Client for the .stream() call path. Records every
+    stream() call it is handed, same pattern as FakeHTTPClient.post()."""
+
+    def __init__(self, lines=None, status_code=200, text="", raises=None):
+        self.calls = []
+        self.closed = False
+        self._lines = lines if lines is not None else [
+            '{"message": {"content": "Leena: "}}',
+            '{"message": {"content": "The fire is low."}}',
+        ]
+        self._status_code = status_code
+        self._text = text
+        self._raises = raises
+
+    def stream(self, method, url, json=None, **kwargs):
+        self.calls.append({"method": method, "url": url, "json": json, "kwargs": kwargs})
+        if self._raises is not None:
+            return FakeStreamContextManager(raises=self._raises)
+        response = FakeStreamResponse(self._lines, self._status_code, self._text)
+        return FakeStreamContextManager(response=response)
+
+    def close(self):
+        self.closed = True
+
+
+def _streaming_client(http=None, **kwargs):
+    defaults = dict(base_url="http://localhost:11434", model="hermes3:70b",
+                    temperature=0.9, max_tokens=1024, timeout_s=600, num_ctx=8192)
+    defaults.update(kwargs)
+    return concurrent_llm.PooledOllamaClient(
+        http_client=http if http is not None else FakeStreamingHTTPClient(), **defaults)
+
+
+def test_complete_streaming_concatenates_content_across_ndjson_lines():
+    client = _streaming_client()
+    reply = client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert reply == "Leena: The fire is low."
+
+
+def test_complete_streaming_sends_stream_true_unlike_complete():
+    http = FakeStreamingHTTPClient()
+    client = _streaming_client(http=http)
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert http.calls[0]["json"]["stream"] is True
+
+
+def test_complete_streaming_posts_to_the_same_chat_endpoint():
+    http = FakeStreamingHTTPClient()
+    client = _streaming_client(http=http)
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert http.calls[0]["url"] == "http://localhost:11434/api/chat"
+    assert http.calls[0]["json"]["model"] == "hermes3:70b"
+
+
+def test_complete_streaming_skips_unparsable_lines_without_failing():
+    http = FakeStreamingHTTPClient(lines=[
+        '{"message": {"content": "A"}}',
+        "not json at all",
+        '{"message": {"content": "B"}}',
+    ])
+    client = _streaming_client(http=http)
+    assert client.complete_streaming("sys", [{"role": "user", "content": "hi"}]) == "AB"
+
+
+def test_complete_streaming_ignores_lines_with_no_content_field():
+    http = FakeStreamingHTTPClient(lines=[
+        '{"done": false}',
+        '{"message": {"content": "A"}}',
+    ])
+    client = _streaming_client(http=http)
+    assert client.complete_streaming("sys", [{"role": "user", "content": "hi"}]) == "A"
+
+
+def test_complete_streaming_raises_llmerror_on_empty_content():
+    http = FakeStreamingHTTPClient(lines=['{"done": true}'])
+    client = _streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_complete_streaming_raises_llmerror_on_http_error():
+    http = FakeStreamingHTTPClient(status_code=500, text="internal error")
+    client = _streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_complete_streaming_raises_llmerror_on_timeout():
+    http = FakeStreamingHTTPClient(raises=httpx.ReadTimeout("timed out"))
+    client = _streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_complete_streaming_calls_on_progress_at_least_once_for_a_slow_stream(monkeypatch):
+    """The 2s throttle means a normal fast test stream never fires a
+    callback — force the clock so we can prove the throttle logic itself
+    (not just 'on_progress is never called')."""
+    fake_time = [1000.0]
+
+    def fake_monotonic():
+        fake_time[0] += 3.0  # jump 3s on every read, past the 2s threshold
+        return fake_time[0]
+
+    monkeypatch.setattr(concurrent_llm.time, "monotonic", fake_monotonic)
+
+    http = FakeStreamingHTTPClient(lines=[
+        '{"message": {"content": "A"}}',
+        '{"message": {"content": "B"}}',
+    ])
+    client = _streaming_client(http=http)
+    seen = []
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}],
+                              on_progress=seen.append)
+    assert len(seen) >= 1
+    assert seen[0]["model"] == "hermes3:70b"
+    assert seen[0]["n_decoded"] >= 1
+    assert "tokens_per_s" in seen[0]
+
+
+def test_complete_streaming_never_calls_on_progress_more_than_once_per_2s():
+    """A fast test stream (no monkeypatched clock) generates all lines
+    within microseconds — well under the throttle window — so on_progress
+    must not fire at all here. This is the companion to the monkeypatched
+    test above: together they pin the throttle at exactly 2s, not 0."""
+    http = FakeStreamingHTTPClient(lines=[
+        '{"message": {"content": "A"}}',
+        '{"message": {"content": "B"}}',
+        '{"message": {"content": "C"}}',
+    ])
+    client = _streaming_client(http=http)
+    seen = []
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}],
+                              on_progress=seen.append)
+    assert seen == []
+
+
+def test_complete_streaming_with_no_on_progress_callback_does_not_crash():
+    client = _streaming_client()
+    reply = client.complete_streaming("sys", [{"role": "user", "content": "hi"}],
+                                      on_progress=None)
+    assert reply == "Leena: The fire is low."
+
+
+# ── complete_streaming: generated text visible in logs, not just counts ───────
+
+def test_complete_streaming_logs_generated_text_even_with_no_on_progress(caplog):
+    """The whole point: the actual text must reach the log even when the
+    caller supplied no on_progress callback at all (arc-stage caller may
+    have none set — e.g. tests, or a caller that only wants the log)."""
+    client = _streaming_client()
+    caplog.set_level("INFO", logger="concurrent_llm")
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    joined = "\n".join(r.message for r in caplog.records)
+    assert "Leena" in joined
+    assert "fire is low" in joined
+
+
+def test_complete_streaming_final_flush_logs_text_that_never_hit_the_2s_tick():
+    """A fast fake stream finishes well under 2s, so the throttled log
+    inside the loop never fires — the final flush after the loop is the
+    ONLY thing that can put this text in the log. This is the regression
+    test for silently losing the whole response when a call is fast."""
+    client = _streaming_client()
+
+    import logging as _logging
+    records = []
+
+    class _Capture(_logging.Handler):
+        def emit(self, record):
+            records.append(record.getMessage())
+
+    handler = _Capture()
+    concurrent_llm.log.addHandler(handler)
+    concurrent_llm.log.setLevel("INFO")
+    try:
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    finally:
+        concurrent_llm.log.removeHandler(handler)
+
+    joined = "\n".join(records)
+    assert "final_text" in joined
+    assert "Leena" in joined

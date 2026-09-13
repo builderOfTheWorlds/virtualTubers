@@ -271,9 +271,9 @@ docs/episode_validator.md for what an upload is checked against.
   `agent.py` only write the request file; they don't check whether
   anything is actually polling it. If the worker didn't boot with
   `layout.preset: replay` (or `LAYOUT_PRESET=replay` env —
-  `CODER_LAYOUT_PRESET`/`MANAGER_LAYOUT_PRESET`/`TESTER_LAYOUT_PRESET`/
-  `CODER_NATIVE_LAYOUT_PRESET`/`CODER_OPENCODE_LAYOUT_PRESET`/
-  `CODER_AIDER_LAYOUT_PRESET` in `.env.example`), this pane doesn't exist
+  `TUBER1_LAYOUT_PRESET`/`TUBER6_LAYOUT_PRESET`/`TUBER5_LAYOUT_PRESET`/
+  `TUBER2_LAYOUT_PRESET`/`TUBER3_LAYOUT_PRESET`/
+  `TUBER4_LAYOUT_PRESET` in `.env.example`), this pane doesn't exist
   in its tmux layout at all (`config/layouts/coder.yaml` has no `replay`
   panel — only `config/layouts/replay.yaml` does), so the file just sits
   there forever. Confirm the target worker's layout before debugging
@@ -291,8 +291,8 @@ docs/episode_validator.md for what an upload is checked against.
   layout regardless of what was updated (docs/duet_replay.md's
   "Deployment requirements" has the full before/after). `docker-compose.yml`
   now wires all three the same way as `worker-coder`, defaulting them to
-  `replay` — set `CODER_NATIVE_LAYOUT_PRESET`/`CODER_OPENCODE_LAYOUT_PRESET`/
-  `CODER_AIDER_LAYOUT_PRESET` to `coder` in the stack env to put one back
+  `replay` — set `TUBER2_LAYOUT_PRESET`/`TUBER3_LAYOUT_PRESET`/
+  `TUBER4_LAYOUT_PRESET` to `coder` in the stack env to put one back
   into its normal editor pane instead.
 - Unknown episode → stderr report + `False`; pane returns to idle. The
   agent already confirmed queueing to the operator; check worker logs, then

@@ -1,0 +1,160 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers each receive an invitation to Leto's manor for the ten
+    thousa
+  summary: The four strangers each receive an invitation to Leto's manor for the ten
+    thousandth anniversary celebration. They arrive and meet for the first time, feeling
+    an inexplicable connection. The party begins, but an ominous feeling lingers in
+    the air.
+  continuity_in: ''
+  continuity_out: The party is interrupted by a sudden attack.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: Arrival at Leto's Manor
+  summary: The four strangers each receive an invitation to Leto's manor for the ten
+    thousandth anniversary celebration. They arrive and meet for the first time, feeling
+    an inexplicable connection. The party begins, but an ominous feeling lingers in
+    the air.
+  continuity_in: The four strangers have received invitations to Leto's manor for
+    the ten thousandth anniversary celebration and are now arriving at the estate.
+  continuity_out: The party is interrupted by a sudden attack.
+  target_words: 540
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-n0-arrival-1
+    kind: ambient
+    prompt: The four strangers arrive at Leto's Manor, each feeling an inexplicable
+      connection to the others as they step through the grand entrance.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n0-arrival-2
+    kind: ambient
+    prompt: Inside the manor, the strangers exchange glances, sensing that something
+      ancient and powerful is stirring within these walls.
+    lore:
+    - the-bahadur
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n0-arrival-3
+    kind: ambient
+    prompt: As the party begins, an ominous feeling lingers in the air, unspoken but
+      deeply felt by all present.
+    lore:
+    - the-event
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n0-arrival-4
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+  - slot_id: invitation-arc-n0-arrival-5
+    kind: ambient
+    prompt: The strangers' connection deepens as they realize they are not alone in
+      their journey, and that the celebration may be just the beginning of something
+      far greater.
+    lore:
+    - amulet-of-wonder
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: The Ominous Celebration
+  summary: As the strangers gather in the grand hall of Leto's manor, they feel an
+    inexplicable connection to one another. The celebration begins with traditional
+    festivities, but an ominous feeling lingers in the air as if something terrible
+    is about to occur.
+  continuity_in: The four strangers have arrived at Leto's manor and are beginning
+    their first meeting together at the anniversary celebration.
+  continuity_out: The party is interrupted by a sudden attack.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-n1-ominous-celebration-1
+    kind: ambient
+    prompt: The four strangers gather in the grand hall of Leto's manor, each feeling
+      an inexplicable connection to the others as traditional festivities begin.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-ominous-celebration-2
+    kind: ambient
+    prompt: As the celebration continues, an ominous feeling lingers in the air—something
+      terrible seems imminent, though none can quite name what it is.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-n1-ominous-celebration-3
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

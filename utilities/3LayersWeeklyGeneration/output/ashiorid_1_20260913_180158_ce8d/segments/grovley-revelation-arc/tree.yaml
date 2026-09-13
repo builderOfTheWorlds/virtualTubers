@@ -1,0 +1,56 @@
+grovley-revelation-arc:
+  node_id: grovley-revelation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'In the subbasement, Grovley explains the four''s roles as products of the
+    Begene '
+  summary: In the subbasement, Grovley explains the four's roles as products of the
+    Begene Sisters' Program and their connection to the Event. He reveals the existence
+    of the vault and its contents, urging them to take action before it's too late.
+  continuity_in: They learn of the vault and the importance of the Event.
+  continuity_out: They decide to explore the vault and confront the looming threat.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc-n0
+  - grovley-revelation-arc-n1
+  slots: null
+grovley-revelation-arc-n0:
+  node_id: grovley-revelation-arc-n0
+  parent_id: grovley-revelation-arc
+  order: 0
+  depth: 1
+  title: The Begene Sisters' Program Revealed
+  summary: Grovley explains how the four protagonists were created as products of
+    the Begene Sisters' experimental program, detailing their unique connections to
+    the Event and the cosmic forces at play.
+  continuity_in: They learn of the vault and the importance of the Event.
+  continuity_out: They understand their roles as pawns in a larger cosmic game and
+    begin to grasp the urgency of the situation.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+grovley-revelation-arc-n1:
+  node_id: grovley-revelation-arc-n1
+  parent_id: grovley-revelation-arc
+  order: 1
+  depth: 1
+  title: The Vault's Secret and Urgent Warning
+  summary: Grovley reveals the existence of the vault containing crucial information
+    about the Event, warning them that time is running out before the threat becomes
+    unstoppable.
+  continuity_in: They understand their roles as pawns in a larger cosmic game and
+    begin to grasp the urgency of the situation.
+  continuity_out: They decide to explore the vault and confront the looming threat.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

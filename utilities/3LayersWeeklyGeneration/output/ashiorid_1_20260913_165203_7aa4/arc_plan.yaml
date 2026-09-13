@@ -1,0 +1,151 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: Ten thousand years to the day since the Event, four strangers each receive
+    the same card — an invitation to a party that was never meant to happen. The card
+    bears no name or address, only a symbol and a date. The players are drawn together
+    by fate, each feeling a strange pull toward the same mysterious event.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The players are brought into a vision of the Age of War — ten thousand
+    years ago, when the world burned its own magic for fuel. A small group attempts
+    to stop it, but their choices have consequences that echo through time. The nature
+    of the seal is revealed, and the players must decide whether the magic will be
+    saved or lost.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - magic-retained
+  synopsis: The seal holds. Magic survives, though thin and rationed. The players
+    are now aware of the cost of this survival — the world's magic is not abundant,
+    and the last well is still intact. A new threat looms as the Bahadur begin to
+    stir, drawn by whispers from the past.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - letos-manor
+  synopsis: The four strangers arrive at the manor of Duke Sorensen Leto III, lit
+    for a party ten thousand years in the making. The house is ornate and full of
+    secrets. As they enter, they are met with the realization that not everyone was
+    invited — and some of those who arrived are not who they claim to be.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - party-attack
+  synopsis: The doors open on people who were not invited. The room stops moving,
+    and a confrontation begins. A group of intruders attacks the party with no warning.
+    The players must fight their way through the chaos, uncovering hidden truths about
+    the manor and the Leto family’s dark legacy.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - burn-it-down
+  synopsis: The hold does not break in time, and the manor starts to come down around
+    the four of you. The structure is collapsing as the players fight their way out,
+    and they must navigate through the ruins. During the escape, a mysterious figure
+    emerges — one who knows more than they should about the players' identities and
+    the true nature of the party.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 12
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party discovers that the tear in reality is not a random occurrence
+    but a response to their presence, revealing the Bahadur's influence and their
+    ancient plan for returning home.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 13
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party arrives at the northern monument and must solve the Malvakar
+    riddle to open the next door, uncovering a clue about the Amulet of Wonder's location.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 14
+  spine_scenes:
+  - the-vault
+  synopsis: The party ventures into the hidden vault beneath Leto's Manor, where they
+    discover ancient secrets that connect the Event to the Amulet of Wonder.

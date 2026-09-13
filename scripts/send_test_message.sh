@@ -17,7 +17,8 @@
 #
 set -euo pipefail
 
-URL="${1:-http://192.168.2.170:8090/messages}"
+# URL="${1:-http://192.168.2.170:8090/messages}"
+URL="${1:-http://192.168.1.23:8090/messages}"
 # URL="${1:-http://192.168.1.120:8090/messages}"
 # URL="${1:-http://192.168.2.158:8090/messages}"
 
@@ -84,8 +85,8 @@ TYPE="replay_request"
 # Multi-speaker sample fixture: full 6-persona duet fan-out (matches scripts/worker6.json,
 # see replays/sample.json and docs/duet_replay.md). All six workers are now
 # duet-capable in docker-compose.yml (LAYOUT_PRESET/POSTGRES_*/mounts) - set
-# each of CODER_NATIVE_LAYOUT_PRESET/CODER_OPENCODE_LAYOUT_PRESET/
-# CODER_AIDER_LAYOUT_PRESET to "replay" in the stack env and redeploy first,
+# each of TUBER2_LAYOUT_PRESET/TUBER3_LAYOUT_PRESET/
+# TUBER4_LAYOUT_PRESET to "replay" in the stack env and redeploy first,
 # or this will still refuse with ready_timeout.
 # PAYLOAD='{"episode": "sample", "cast": {"boss": "manager", "coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode", "coder-aider": "coder-aider"}, "narration": "reuse"}'
 
@@ -118,7 +119,31 @@ TYPE="replay_request"
 # Ashiorid DUET - each character speaks on its own avatar. The cast keys are
 # the episode's speaker names, which for this episode are already worker ids,
 # so each maps to itself. Verified airing to "-- fin --" 2026-08-31.
-PAYLOAD='{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+# PAYLOAD='{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+
+# =====================================================================
+# ASHIORID GENERATED - 3-layer generator output, NOT the authored pack
+# =====================================================================
+# Built from generator run ashiorid_1_20260913_180158_ce8d (arc job
+# job_20260913T180158_66d6a7 / segment job job_20260913T194943_2d5ff1 /
+# dialogue job job_20260913T195715_f66367: 73 dialogue takes, 0 failed,
+# across 13 of 15 planned segments - 2 segments produced zero content,
+# see Gitea issue #15) by:
+#
+#   .venv/bin/python3 .claude/prompts/build_generated_episode.py \
+#       --run ashiorid_1_20260913_180158_ce8d --name ashiorid_generated_ce8d --upload
+#
+# Re-run that (new --name) after generating a new run - this converter has
+# no relationship to build_campaign_episode.py's authored-pack episodes.
+#
+# Episode "ashiorid_generated_ce8d": 346 events / 6353 words. Content quality
+# is visibly rougher than the authored "ashiorid" episode above - see the
+# converter's module docstring for the specific junk patterns it strips
+# (meta-filler lines, unreliable narration/dialogue kind labelling). Same
+# 4-worker duet cast as the authored episode (Chadwick/Leena/Vigil/Sodacan
+# Bob -> coder/tester/coder-native/coder-opencode; Ashiorid/manager narrates
+# any line the converter couldn't attribute to a mapped speaker).
+PAYLOAD='{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
 
 # =====================================================================
 

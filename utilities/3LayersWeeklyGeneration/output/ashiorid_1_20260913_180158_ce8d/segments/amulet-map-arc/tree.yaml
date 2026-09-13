@@ -1,0 +1,87 @@
+amulet-map-arc:
+  node_id: amulet-map-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group discusses the implications of the map fragments and plans their
+    next m
+  summary: The group discusses the implications of the map fragments and plans their
+    next move around the campfire.
+  continuity_in: The group has one fragment of the map.
+  continuity_out: The group has decided on their next destination.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-n0
+  - amulet-map-arc-n1
+  slots: null
+amulet-map-arc-n0:
+  node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  order: 0
+  depth: 1
+  title: Map Analysis and Debate
+  summary: The group examines the map fragment closely, debating its meaning and significance
+    while sharing theories about what it might reveal.
+  continuity_in: The group has one fragment of the map.
+  continuity_out: The group has analyzed the fragment and formed initial theories
+    about its contents.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n0-map-analysis-1
+    kind: ambient
+    prompt: The group huddles around the fire, studying the fragment with varying
+      degrees of scrutiny and skepticism.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-map-analysis-2
+    kind: ambient
+    prompt: Leena offers a theory about the symbols on the fragment, while Chadwick
+      remains unconvinced.
+    lore:
+    - the-bahadur
+    - the-begene-program
+    participants:
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-map-analysis-3
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+amulet-map-arc-n1:
+  node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  order: 1
+  depth: 1
+  title: Strategic Planning and Decision Making
+  summary: After discussing possibilities, the group moves to strategic planning,
+    deciding on their next destination and how to proceed with their quest.
+  continuity_in: The group has analyzed the fragment and formed initial theories about
+    its contents.
+  continuity_out: The group has decided on their next destination.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -112,6 +112,33 @@ sleep 1
 # client size and redraw so its panes expand to the full frame (no fixed 240x67 box).
 DISPLAY="${DISPLAY}" tmux set -g window-size latest \; refresh-client -t "${SESSION}" 2>/dev/null || true
 
+# ── 6.5 Voice registry inventory check (V2) ───────────────────────────────────
+# roundtable_stream_design.md v1.1 §8.2. A show header names voices symbolically
+# (e.g. "alto_bright"); message-api validates that the NAME is known at upload,
+# but it has no /data/voices mount and so cannot check the asset. This is the
+# tier that can: it confirms every registry entry's model file exists and
+# actually loads.
+#
+# Why this runs at boot and says so loudly: the director's voice preparation is
+# best-effort and returns None on failure, which the duet refusal contract turns
+# into "the show does not air on ANY channel" — with an error that does not name
+# the offending voice. Discovering that at air time is expensive; discovering it
+# here is free.
+#
+# Non-fatal by design, exactly like the PulseAudio sink above: a worker with one
+# bad voice should still boot, broadcast, and perform every show that doesn't
+# cast it.
+if [ -f /app/voice_registry.py ]; then
+    log "Verifying voice registry (V2 inventory check)"
+    if VOICE_CHECK=$(python3 /app/voice_registry.py --verify 2>&1); then
+        log "Voice registry OK: $(echo "${VOICE_CHECK}" | tail -1)"
+    else
+        log "WARNING: voice registry verification FAILED — a show casting a failed"
+        log "         voice will refuse to air on EVERY channel (design §8.2):"
+        echo "${VOICE_CHECK}" | while IFS= read -r line; do log "         ${line}"; done
+    fi
+fi
+
 # ── 7. Agent loop ─────────────────────────────────────────────────────────────
 log "Starting agent loop"
 python3 /app/agent.py --config "${CONFIG_PATH}" &

@@ -1,0 +1,95 @@
+segment_id: bahadur-revealed-arc
+order: 8
+loop: 0
+hours: 6
+synopsis: The group encounters the Bahadur in Malmont at night and learns about their
+  origins and intentions.
+continuity_in: The group is exploring Malmont.
+continuity_out: The group has learned about the Bahadur's necromancy and plans.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: bahadur-revealed-arc-n1-bahadur-1
+  kind: ambient
+  prompt: The group observes the Bahadur's necromantic preparations in the shadows
+    of Malmont's streets.
+  lore:
+  - the-bahadur
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-2
+  kind: ambient
+  prompt: Leena listens intently as a Bahadur elder explains the Begene Program's
+    origins.
+  lore:
+  - the-begene-program
+  - the-bahadur
+  participants:
+  - Leena
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-3
+  kind: ambient
+  prompt: Chadwick notices strange symbols carved into the ancient stones of Malmont's
+    ruins.
+  lore:
+  - malmont
+  - the-bahadur
+  participants:
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-4
+  kind: ambient
+  prompt: Vigil examines a moonwell that has been corrupted by Bahadur magic.
+  lore:
+  - moonwells
+  - the-bahadur
+  participants:
+  - Vigil
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-bahadur-5
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: bahadur-revealed-arc-n1
+nodes:
+- node_id: bahadur-revealed-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+needs_rebrief: true

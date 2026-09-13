@@ -1,0 +1,130 @@
+segment_id: portal-choice-arc
+order: 6
+loop: 0
+hours: 6
+synopsis: The group discusses the implications of their choice at the portal as they
+  travel the road south.
+continuity_in: The portal has opened, and the group must decide what to do.
+continuity_out: The group has made their choice, and must now face the consequences.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: portal-choice-arc-n0-1
+  kind: ambient
+  prompt: Leena reflects on the weight of their choice while the group travels south,
+    considering how the portal's opening might affect the moonwell.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n0
+- slot_id: portal-choice-arc-n0-2
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: portal-choice-arc-n0
+- slot_id: portal-choice-arc-n0-3
+  kind: ambient
+  prompt: Chadwick shares his concerns about the axe he lost, wondering if it was
+    a wise choice to proceed through the portal without it.
+  lore:
+  - the-begene-program
+  participants:
+  - chadwick
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n0
+- slot_id: portal-choice-arc-n1-1
+  kind: ambient
+  prompt: Leena reflects on the weight of their choice while the group travels south
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n1
+- slot_id: portal-choice-arc-n1-2
+  kind: ambient
+  prompt: Chadwick expresses concern about the path they've chosen and its consequences
+  lore:
+  - the-bahadur
+  - the-event
+  participants:
+  - chadwick
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n1
+- slot_id: portal-choice-arc-n1-3
+  kind: ambient
+  prompt: Vigil shares their thoughts on what lies ahead as they travel the road south
+  lore:
+  - malmont
+  - the-begene-program
+  participants:
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n1
+- slot_id: portal-choice-arc-n1-4
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: portal-choice-arc-n1
+- slot_id: portal-choice-arc-n1-5
+  kind: ambient
+  prompt: The group's mood shifts as they consider the implications of their decision,
+    with Leena feeling a sense of foreboding
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-n1
+nodes:
+- node_id: portal-choice-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

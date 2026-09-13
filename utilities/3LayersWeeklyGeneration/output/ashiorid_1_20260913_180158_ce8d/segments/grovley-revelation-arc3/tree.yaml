@@ -1,0 +1,169 @@
+grovley-revelation-arc3:
+  node_id: grovley-revelation-arc3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group discusses Grovley's revelation around a campfire. They debate the
+    impl
+  summary: The group discusses Grovley's revelation around a campfire. They debate
+    the implications of their origins and the true purpose of the amulet they seek.
+  continuity_in: The group has reached a new understanding of Grovley's words.
+  continuity_out: The group has decided to continue their quest for the amulet, despite
+    the risks and uncertainties.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc3-n0
+  - grovley-revelation-arc3-n1
+  slots: null
+grovley-revelation-arc3-n0:
+  node_id: grovley-revelation-arc3-n0
+  parent_id: grovley-revelation-arc3
+  order: 0
+  depth: 1
+  title: The Weight of Truth
+  summary: The group sits in contemplation around the campfire, grappling with Grovley's
+    revelation about their true origins and the amulet's purpose. Each member wrestles
+    with the implications of their discovery.
+  continuity_in: The group has reached a new understanding of Grovley's words.
+  continuity_out: The group begins to discuss their next steps and the risks ahead.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc3-n0-grovley-fire-1
+    kind: ambient
+    prompt: The group sits in contemplation around the campfire, grappling with Grovley's
+      revelation about their true origins and the amulet's purpose. Each member wrestles
+      with the implications of their discovery.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n0-grovley-fire-2
+    kind: ambient
+    prompt: The group discusses the implications of Grovley's revelation, with each
+      member expressing their concerns and questions about their origins and the amulet
+      they seek.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n0-grovley-fire-3
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+grovley-revelation-arc3-n1:
+  node_id: grovley-revelation-arc3-n1
+  parent_id: grovley-revelation-arc3
+  order: 1
+  depth: 1
+  title: Choosing Their Path
+  summary: After heated debate and quiet reflection, the group makes a collective
+    decision about whether to continue their quest for the amulet. They weigh the
+    dangers against the potential rewards of uncovering their true destiny.
+  continuity_in: The group begins to discuss their next steps and the risks ahead.
+  continuity_out: The group has decided to continue their quest for the amulet, despite
+    the risks and uncertainties.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-1
+    kind: ambient
+    prompt: Leena stares into the fire, her wounded arm resting on her knee. The weight
+      of Grovley's revelation settles over the group like smoke.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-2
+    kind: ambient
+    prompt: Chadwick's voice cuts through the night air, his axe still gripped tightly
+      in his hand despite its loss.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-3
+    kind: ambient
+    prompt: Vigil leans forward, his expression unreadable, as he contemplates the
+      implications of their origins.
+    lore:
+    - the-begene-program
+    - amulet-of-wonder
+    participants:
+    - Vigil
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-4
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-5
+    kind: ambient
+    prompt: The group falls silent, each member lost in thought. The fire crackles
+      and pops as they weigh their options.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc3-n1-grovley-revelation-6
+    kind: ambient
+    prompt: Sodacan Bob speaks softly, his voice barely audible above the wind. "What
+      if we're not meant to understand?"
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - sodacan_bob
+    - Vigil
+    sensitivity: tone
+    depends_on: []

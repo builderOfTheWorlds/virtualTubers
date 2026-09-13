@@ -1,0 +1,139 @@
+malmont-arrival-arc:
+  node_id: malmont-arrival-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The group arrives in Malmont and begins to explore the town, learning about
+    its '
+  summary: The group arrives in Malmont and begins to explore the town, learning about
+    its power structure and magical resources.
+  continuity_in: The group has traveled south from the manor.
+  continuity_out: The group has learned about Malmont's two power centers.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-n0
+  - malmont-arrival-arc-n1
+  slots: null
+malmont-arrival-arc-n0:
+  node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  order: 0
+  depth: 1
+  title: Arrival and Initial Exploration
+  summary: The group arrives in Malmont and begins to explore the town's layout, observing
+    the contrasting districts and initial interactions with locals to understand the
+    basic power structure.
+  continuity_in: The group has traveled south from the manor.
+  continuity_out: The group has observed the town's two distinct power centers and
+    their influence on different districts.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-1
+    kind: ambient
+    prompt: The group steps off the carriage onto the cobblestones of Malmont, taking
+      in the sights and sounds of their new surroundings.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-2
+    kind: ambient
+    prompt: Leena notices the contrast between the pristine district and the war-torn
+      area, wondering about the town's history.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n0-malmont-arrival-3
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+malmont-arrival-arc-n1:
+  node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  order: 1
+  depth: 1
+  title: Power Center Investigation
+  summary: The group delves deeper into understanding Malmont's two main power centers,
+    learning about their magical resources, leadership dynamics, and how they affect
+    the town's daily operations.
+  continuity_in: The group has observed the town's two distinct power centers and
+    their influence on different districts.
+  continuity_out: The group has learned about Malmont's two power centers.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-1
+    kind: ambient
+    prompt: The group steps off the carriage onto the cobblestones of Malmont, taking
+      in the sights and sounds of their new surroundings.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-2
+    kind: ambient
+    prompt: Leena examines the ancient stone architecture, noting how it reflects
+      the town's long history.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-3
+    kind: ambient
+    prompt: Chadwick scans the streets for potential threats, his axe at the ready
+      despite the peaceful appearance.
+    lore:
+    - malmont
+    participants:
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-4
+    kind: ambient
+    prompt: Vigil listens carefully to the conversations around them, trying to piece
+      together the town's social structure.
+    lore:
+    - malmont
+    participants:
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-malmont-arrival-5
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

@@ -25,20 +25,22 @@ channel's key:
 | Variable | Example | Notes |
 |---|---|---|
 | `STREAM_RTMP_URL` | `rtmp://live.twitch.tv/app` | Omit/empty → falls back to the bundled local `rtmp-preview` |
-| `CODER_STREAM_KEY` | `live_xxxxxxxx` | Coder channel's Twitch stream key |
-| `MANAGER_STREAM_KEY` | `live_yyyyyyyy` | Manager channel's key |
-| `TESTER_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
+| `TUBER1_STREAM_KEY` | `live_xxxxxxxx` | Coder channel's Twitch stream key |
+| `TUBER6_STREAM_KEY` | `live_yyyyyyyy` | Manager channel's key |
+| `TUBER5_STREAM_KEY` | `live_zzzzzzzz` | Tester channel's key |
+| `TUBER0_STREAM_KEY` | `live_00000000` | GM / roundtable channel's key — the 7th channel (`worker-gm`, worker id `tuber_0`) |
 | `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
 | `KAFKA_BOOTSTRAP_SERVERS` | `192.168.2.158:9092` | Message-bus broker (runs on d2000 itself) |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
 | `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | Postgres connection (also on d2000). Backs `message-logger`, `log-shipper`, the narration cache, **and the Rerun Theater episode library** — a worker without these can't perform a rerun at all (docs/episode_store.md) |
-| `CODER_NATIVE_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
-| `CODER_LAYOUT_PRESET` / `MANAGER_LAYOUT_PRESET` / `TESTER_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
-| `CODER_NATIVE_LAYOUT_PRESET` / `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
+| `TUBER2_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
+| `TUBER1_LAYOUT_PRESET` / `TUBER6_LAYOUT_PRESET` / `TUBER5_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
+| `TUBER2_LAYOUT_PRESET` / `TUBER3_LAYOUT_PRESET` / `TUBER4_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
+| `GM_LAYOUT_PRESET` | `roundtable` | Layout preset for the GM / roundtable channel. Defaults to `roundtable` |
 | `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to `worker-coder`/`worker-manager`/`worker-tester`; unset keeps the code default (`60.0`) |
-| `CODER_AVATAR_PROVIDER` / `CODER_NATIVE_AVATAR_PROVIDER` / `CODER_OPENCODE_AVATAR_PROVIDER` / `CODER_AIDER_AVATAR_PROVIDER` / `MANAGER_AVATAR_PROVIDER` / `TESTER_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
+| `TUBER1_AVATAR_PROVIDER` / `TUBER2_AVATAR_PROVIDER` / `TUBER3_AVATAR_PROVIDER` / `TUBER4_AVATAR_PROVIDER` / `TUBER6_AVATAR_PROVIDER` / `TUBER5_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 | `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
 | `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
@@ -46,6 +48,25 @@ channel's key:
 
 > `.env` is one `NAME=value` pair per line — see `.env.example` for the full
 > annotated template.
+
+> **Why `TUBER<n>_` keys but still role-based worker ids?** Only the env var
+> **key names** were migrated to slots. `WORKER_ID` values (`coder`,
+> `manager`, …), the compose service names (`worker-coder`, `worker-manager`,
+> …), `TWITCH_CHANNEL_MAP` values and the `config/workers/<role>.yaml`
+> filenames are deliberately unchanged. An episode's `speaker` values *are*
+> worker ids, and every episode in the library speaks as
+> `coder`/`tester`/`coder-native`/`coder-opencode`/`coder-aider`. Renaming the
+> worker ids without migrating those episodes would leave each `speaker`
+> matching no `voice.speakers` entry, so the line silently falls through to the
+> base voice — all six characters would collapse onto **one** voice with no
+> error raised. The full worker-id migration is therefore WP-7, gated on live
+> verification. Spec: `.claude/prompts/roundtable_stream_design.md` v1.1
+> §2.1–2.2.
+
+> The GM container (`worker-gm`) additionally needs the **voices mount**
+> (`/data/voices`) plus `config/voices.yaml` (the symbolic voice registry). It
+> is the director that synthesizes *every* speaker in the cast, so without
+> those there is no audio on **any** channel, not just the roundtable one.
 
 ## Deploy / redeploy after a code change
 

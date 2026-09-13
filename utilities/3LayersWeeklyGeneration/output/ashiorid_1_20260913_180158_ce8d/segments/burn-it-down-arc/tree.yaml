@@ -1,0 +1,160 @@
+burn-it-down-arc:
+  node_id: burn-it-down-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The manor burns, and the four must navigate the flames and collapsing structures
+  summary: The manor burns, and the four must navigate the flames and collapsing structures
+    to escape. They discover a hidden subbasement where Grovley reveals the truth
+    about their identities and the significance of the ten thousandth anniversary.
+  continuity_in: They escape the burning manor and find themselves in a subbasement
+    with Grovley.
+  continuity_out: They learn of the vault and the importance of the Event.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - burn-it-down-arc-n0
+  - burn-it-down-arc-n1
+  slots: null
+burn-it-down-arc-n0:
+  node_id: burn-it-down-arc-n0
+  parent_id: burn-it-down-arc
+  order: 0
+  depth: 1
+  title: Escape Through the Burning Manor
+  summary: The four protagonists must navigate through flames and collapsing structures
+    to escape the burning manor, facing immediate physical danger and chaos as the
+    building deteriorates around them.
+  continuity_in: They escape the burning manor and find themselves in a subbasement
+    with Grovley.
+  continuity_out: They discover the hidden subbasement where Grovley reveals the truth
+    about their identities.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: burn-it-down-arc-n0-escape-1
+    kind: ambient
+    prompt: The four protagonists must navigate through flames and collapsing structures
+      to escape the burning manor, facing immediate physical danger and chaos as the
+      building deteriorates around them
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n0-escape-2
+    kind: ambient
+    prompt: They discover a hidden subbasement where Grovley reveals the truth about
+      their identities and the significance of the ten thousandth anniversary
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n0-escape-3
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+burn-it-down-arc-n1:
+  node_id: burn-it-down-arc-n1
+  parent_id: burn-it-down-arc
+  order: 1
+  depth: 1
+  title: Revelation in the Subbasement
+  summary: In the hidden subbasement, Grovley reveals the truth about their identities
+    and the significance of the ten thousandth anniversary, while they learn about
+    the vault and the importance of the Event.
+  continuity_in: They discover the hidden subbasement where Grovley reveals the truth
+    about their identities.
+  continuity_out: They learn of the vault and the importance of the Event.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: burn-it-down-arc-n1-revelation-1
+    kind: ambient
+    prompt: The four survivors emerge from the collapsing manor, their lungs filled
+      with smoke and ash, finding themselves in a hidden subbasement lit by flickering
+      torches.
+    lore:
+    - the-event
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-revelation-2
+    kind: ambient
+    prompt: Grovley steps forward from the shadows, his voice echoing off the stone
+      walls as he begins to speak of their true identities and the ten thousandth
+      anniversary.
+    lore:
+    - the-event
+    - the-bahadur
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-revelation-3
+    kind: ambient
+    prompt: As Grovley speaks, the ground trembles beneath their feet, and the walls
+      of the subbasement begin to shift, revealing hidden passages.
+    lore:
+    - the-event
+    - the-begene-program
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-revelation-4
+    kind: ambient
+    prompt: The four exchange glances, realizing that what they thought they knew
+      about themselves and their mission is about to be completely rewritten.
+    lore:
+    - the-event
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: burn-it-down-arc-n1-revelation-5
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick

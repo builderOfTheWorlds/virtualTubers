@@ -1,0 +1,457 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers each receive an invitation to Leto's manor for the
+    Ten Thousandth Anniversary celebration. They arrive and meet for the first time,
+    sensing something momentous about to occur.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The party explores Leto's manor, taking in the opulent decorations and
+    mysterious atmosphere. They mingle with other guests, uncovering hints about the
+    significance of the Ten Thousandth Anniversary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - party-attack
+  synopsis: The manor is attacked by unknown assailants. The party must defend themselves
+    and uncover the reason behind the assault. In the chaos, they discover clues leading
+    to a hidden vault.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - the-vault
+  synopsis: The party locates and opens the hidden vault, revealing its contents and
+    their connection to the Bahadur. They must confront the implications of this discovery
+    and decide how to proceed.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - burn-it-down
+  synopsis: Faced with a dire threat, the party must make difficult decisions to protect
+    themselves and the knowledge they've gained. The manor burns as they fight to
+    survive and escape.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the aftermath, the party meets Grovley, who reveals their true nature
+    as products of the Begene Sisters' Program. They must grapple with this revelation
+    and its implications for their identities and purpose.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is traveling south on the road from the burned manor.
+  continuity_out: The party is established in Malmont, making connections and learning
+    about the town.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 6
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and begins to uncover the town's secrets
+    and power dynamics.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is in Malmont, making connections and uncovering secrets.
+  continuity_out: The party knows about the Bahadur and their plans, and must decide
+    how to respond.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 7
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party encounters the Bahadur for the first time and learns about their
+    origins and goals.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has learned about the Amulet of Wonder and the dungeons
+    that lead to it.
+  continuity_out: The party has solved the Malvakar riddle and gained the next map
+    fragment.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 8
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party travels to the Malvakar monument and must solve its riddle to
+    gain the next map fragment.
+- ambient_focus: camp-fire
+  carry_in:
+    moonwell-tainted: The party is carrying an artifact tainted by moonwell energy.
+  carry_out: {}
+  continuity_in: The party is traveling between dungeons, carrying a moonwell-tainted
+    artifact.
+  continuity_out: The moonwell is safe, but the artifact has been lost.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 1
+  order: 9
+  spine_scenes:
+  - magic-retained
+  synopsis: The party visits a sealed moonwell and must make a stand to protect it
+    from the Bahadur.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has lost the moonwell-tainted artifact and magic is fading
+    from the world.
+  continuity_out: The party has confronted the loss of magic and the Bahadur's role
+    in it.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc
+  loop: 2
+  order: 10
+  spine_scenes:
+  - magic-lost
+  synopsis: The party must venture into a greyed-out moonwell and confront the consequences
+    of the Age of War.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is searching for a way to close the portal permanently.
+  continuity_out: The party knows the portal must be closed, but the means to do so
+    remain unclear.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  order: 11
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard who reveals the nature of the portal
+    and the threat it poses.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party knows the portal must be closed, but the means to do so
+    remain unclear.
+  continuity_out: The party decides to follow the map, unsure of what they will find.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc-loop1
+  loop: 1
+  order: 12
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers receive the same card again, this time with a map to
+    the location of the last well. They debate whether to follow its lead.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party decides to follow the map, unsure of what they will find.
+  continuity_out: The party successfully reaches the well and begins to investigate
+    its secrets.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc-loop1
+  loop: 1
+  order: 13
+  spine_scenes:
+  - magic-retained
+  synopsis: The party arrives at the sealed well, only to find it already being guarded
+    by a group of Bahadur agents. They must find a way to approach the well without
+    drawing attention to themselves.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party successfully reaches the well and begins to investigate
+    its secrets.
+  continuity_out: The party realizes they must make a choice about the well's fate.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-loop1
+  loop: 1
+  order: 14
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party learns more about the history of the Age of War from the Bahadur
+    agents guarding the well. They discover that the seal on the well may be more
+    fragile than they initially believed.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party realizes they must make a choice about the well's fate.
+  continuity_out: The party must deal with the immediate aftermath of their decision.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc-loop1
+  loop: 1
+  order: 15
+  spine_scenes:
+  - magic-lost
+  synopsis: The party decides to break the seal on the well, believing it to be the
+    only way to close the portal. As the magic drains from the world, they face unexpected
+    consequences.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must deal with the immediate aftermath of their decision.
+  continuity_out: The party must decide whether to attempt to rescue Grovley.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc-loop1
+  loop: 1
+  order: 16
+  spine_scenes:
+  - letos-manor
+  synopsis: The party returns to the ruins of Leto's manor, searching for answers
+    about the Begene Sisters' program. They discover that Grovley has been captured
+    by agents of the Sultan.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must decide whether to attempt to rescue Grovley.
+  continuity_out: The party must confront the full extent of the Sultan's power and
+    the implications of the Begene Sisters' program.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc-loop1
+  loop: 1
+  order: 17
+  spine_scenes:
+  - grovley-revelation
+  synopsis: The party infiltrates the Sultan's stronghold and confronts him, attempting
+    to rescue Grovley. They learn more about the true nature of the Begene Sisters'
+    program and the Sultan's plans.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must navigate the new dynamic in Malmont.
+  continuity_out: The party uncovers a lead on their next destination.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop1
+  loop: 1
+  order: 18
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and discovers the town's uneasy balance of
+    power between the constable's watch and a shadowy presence.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must decipher the new map fragment.
+  continuity_out: The party sets out towards the next dungeon.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-loop1
+  loop: 1
+  order: 19
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party solves the riddle of the Malvakar monument and gains the next
+    map fragment.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must grapple with the consequences of their choice.
+  continuity_out: The party faces the repercussions of their actions.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc-loop1
+  loop: 1
+  order: 20
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard at the portal and must decide the
+    portal's fate.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must find a way to restore magic.
+  continuity_out: The party discovers a potential solution.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc-loop2
+  loop: 2
+  order: 21
+  spine_scenes:
+  - magic-lost
+  synopsis: The party delves into the implications of the world being stripped of
+    magic.
+- ambient_focus: leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party must reconcile the past with the present.
+  continuity_out: The party uncovers a hidden truth about the Age of War.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-loop2
+  loop: 2
+  order: 22
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party learns more about the Age of War and its impact on the present.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party demands answers from Grovley.
+  continuity_out: Grovley reveals a shocking secret about the program.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc-loop2
+  loop: 2
+  order: 23
+  spine_scenes:
+  - grovley-revelation
+  synopsis: The party confronts Grovley about his role in the Begene Sisters' program.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has learned about the Bahadur's plans and the nature of
+    the portals.
+  continuity_out: The party must make a decision about the portal, which will have
+    significant impact on the future of Ashiorid.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc-loop2
+  loop: 1
+  order: 24
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard at the portal, who reveals shocking
+    information about the nature of the portals and the true intentions of the Bahadur.
+    The party must decide whether to allow the portal to remain open or to close it,
+    knowing that doing so may have far-reaching consequences.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has learned about the existence of the amulet map and the
+    monuments.
+  continuity_out: The party uncovers a lead on the location of the next monument and
+    must decide whether to pursue it.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop2
+  loop: 1
+  order: 25
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and discovers that the town is divided between
+    a lawful constable's watch and a mysterious, unnamed power. They must navigate
+    the town's politics while searching for information about the amulet map and the
+    next monument.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has discovered the location of the Malvakar monument and
+    is determined to solve its riddle.
+  continuity_out: The party gains access to the dungeon and discovers a crucial piece
+    of the amulet map.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-loop2
+  loop: 1
+  order: 26
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party reaches the Malvakar monument and must solve its riddle to gain
+    access to the dungeon. Inside, they face challenges that test their resolve and
+    force them to confront their own fears and weaknesses.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has acquired the map fragment from the Malvakar dungeon.
+  continuity_out: The party must choose whether to follow the map into dangerous territory
+    or to seek an alternate path.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-arc-loop2
+  loop: 1
+  order: 27
+  spine_scenes:
+  - amulet-map
+  synopsis: With the map fragment from the Malvakar dungeon, the party must decide
+    their next move. They discover that the map is leading them towards a dangerous
+    and forbidden area, and they must weigh the risks against the potential rewards.
+    Meanwhile, they continue to be pursued by agents of the Bahadur.

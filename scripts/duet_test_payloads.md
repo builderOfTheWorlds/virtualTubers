@@ -42,15 +42,15 @@ too.
 `coder-native`, `coder-opencode`, and `coder-aider` used to be missing
 `LAYOUT_PRESET` override env, `POSTGRES_*`, and the replay/voices volume
 mounts that `coder`/`manager`/`tester` already had — `docker-compose.yml`
-now wires all three the same way (`CODER_NATIVE_LAYOUT_PRESET` /
-`CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`,
+now wires all three the same way (`TUBER2_LAYOUT_PRESET` /
+`TUBER3_LAYOUT_PRESET` / `TUBER4_LAYOUT_PRESET`,
 `POSTGRES_HOST`/`PORT`/`DB`/`USER`/`PASSWORD`, and the
 `./replays:/data/replays:ro` +
 `./voices:/data/voices:ro` mounts).
 
 All three now **default to `replay`** in `docker-compose.yml` (no env var
-needs to be set) — set `CODER_NATIVE_LAYOUT_PRESET`/
-`CODER_OPENCODE_LAYOUT_PRESET`/`CODER_AIDER_LAYOUT_PRESET` to `coder` in
+needs to be set) — set `TUBER2_LAYOUT_PRESET`/
+`TUBER3_LAYOUT_PRESET`/`TUBER4_LAYOUT_PRESET` to `coder` in
 `.env` if you want one of them back to its normal
 editor pane instead.
 

@@ -22,6 +22,12 @@ import wave
 from dataclasses import dataclass
 from pathlib import Path
 
+# The symbolic voice registry (§7.2) is the ONE place that knows a show
+# header's voice name -> backend fragment. Imported rather than re-implemented
+# so message-api's upload validation and this synthesizing tier can never
+# disagree about which names are known.
+import voice_registry
+
 
 class TTSError(RuntimeError):
     pass
@@ -247,21 +253,47 @@ class TTSClient:
             )
         self._backend = _BACKENDS[self.provider]
 
-    def voice_for(self, speaker):
-        """Base voice config with the named speaker's overrides merged in."""
+    def voice_for(self, speaker, voice_name=None):
+        """Base voice config with one layer of overrides merged in.
+
+        Precedence, highest first (roundtable_stream_design.md v1.1 §7.2):
+
+          1. `voice_name` — a SYMBOLIC registry name from a show header,
+             resolved through voice_registry to a backend fragment. The show
+             is casting this slot deliberately, so it outranks worker config.
+          2. `voice.speakers[speaker]` — this worker's per-slot config, the
+             only override that existed before v1.1.
+          3. the base voice config — everything else (provider, rate, …).
+
+        Called with no `voice_name` this is byte-identical to the pre-registry
+        implementation, which is what keeps §7.4's "an episode without a show
+        header behaves exactly as today" contract true.
+
+        An UNKNOWN name falls back to slot config rather than raising: a show
+        that passed upload-time validation (§8.1) can still meet a worker whose
+        registry mount is stale, and a wrong-but-working voice beats a dead
+        show (§10 only refuses when there is no usable voice at all).
+        """
         merged = {k: v for k, v in self.config.items() if k != "speakers"}
-        overrides = (self.config.get("speakers") or {}).get(speaker) or {}
-        merged.update(overrides)
+        if voice_name and voice_registry.is_known(voice_name):
+            # resolve() hands back a copy, so merging it can never mutate the
+            # cached registry — but we still only ever read it.
+            merged.update(voice_registry.resolve(voice_name))
+        else:
+            merged.update((self.config.get("speakers") or {}).get(speaker) or {})
         return merged
 
-    def synthesize(self, text, out_wav, speaker="coder"):
+    def synthesize(self, text, out_wav, speaker="coder", voice_name=None):
         """Render `text` as `speaker` to a WAV; return Narration with the
-        measured duration. Raises TTSError on empty text or backend failure."""
+        measured duration. Raises TTSError on empty text or backend failure.
+
+        `voice_name` is an optional symbolic registry name (§7.2) for this
+        line — see voice_for for the precedence it takes."""
         if not text or not text.strip():
             raise TTSError("narration text is empty")
         out_wav = Path(out_wav)
         out_wav.parent.mkdir(parents=True, exist_ok=True)
-        self._backend(text, out_wav, self.voice_for(speaker))
+        self._backend(text, out_wav, self.voice_for(speaker, voice_name))
         if not out_wav.exists():
             raise TTSError(f"TTS backend {self.provider!r} produced no output")
         return Narration(audio_path=out_wav, duration=wav_duration(out_wav))

@@ -1,0 +1,138 @@
+segment_id: malmont-arrival-arc2
+order: 13
+loop: 2
+hours: 6
+synopsis: The group arrives in Malmont under the cover of night. They seek shelter
+  and information, trying to remain inconspicuous in the unfamiliar town.
+continuity_in: The group has decided to continue their quest for the amulet.
+continuity_out: The group has gathered valuable information and made contacts in Malmont.
+carry_in: {}
+carry_out:
+  Leena-wounded: Leena was injured during the encounter with the night watch.
+slots:
+- slot_id: malmont-arrival-arc2-n0-malmont-arrival-1
+  kind: ambient
+  prompt: The group stealthily enters Malmont's cobblestone streets at nightfall,
+    their eyes scanning for signs of danger or shelter.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n0
+- slot_id: malmont-arrival-arc2-n0-malmont-arrival-2
+  kind: ambient
+  prompt: Leena whispers a quiet prayer to the moonwells, hoping for guidance in this
+    strange town.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n0
+- slot_id: malmont-arrival-arc2-n0-malmont-arrival-3
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malmont-arrival-arc2-n0
+- slot_id: malmont-arrival-arc2-n1-malmont-01
+  kind: ambient
+  prompt: The group cautiously enters Malmont's main street, scanning for potential
+    threats or informants.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n1
+- slot_id: malmont-arrival-arc2-n1-malmont-02
+  kind: ambient
+  prompt: Leena discreetly approaches a local merchant, attempting to gather information
+    about recent events in town.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n1
+- slot_id: malmont-arrival-arc2-n1-malmont-03
+  kind: ambient
+  prompt: Chadwick keeps watch from a nearby rooftop while the others search for shelter.
+  lore:
+  - malmont
+  participants:
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n1
+- slot_id: malmont-arrival-arc2-n1-malmont-04
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: malmont-arrival-arc2-n1
+- slot_id: malmont-arrival-arc2-n1-malmont-05
+  kind: ambient
+  prompt: Vigil tries to blend in with the crowd, subtly observing the town's layout
+    and key landmarks.
+  lore:
+  - malmont
+  participants:
+  - Vigil
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n1
+- slot_id: malmont-arrival-arc2-n1-malmont-06
+  kind: ambient
+  prompt: The group discusses their strategy for gathering information without drawing
+    attention to themselves.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc2-n1
+nodes:
+- node_id: malmont-arrival-arc2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: malmont-arrival-arc2-n0
+  parent_id: malmont-arrival-arc2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: malmont-arrival-arc2-n1
+  parent_id: malmont-arrival-arc2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 6

@@ -2,7 +2,7 @@
 
 ## Getting your Twitch stream key
 
-This project streams over RTMP, so the credential you need is your Twitch **stream key**, not a developer API key. It's used to set `CODER_STREAM_KEY`, `MANAGER_STREAM_KEY`, and `TESTER_STREAM_KEY` (see [README.md](../README.md#installation)).
+This project streams over RTMP, so the credential you need is your Twitch **stream key**, not a developer API key. It's used to set `TUBER1_STREAM_KEY`, `TUBER6_STREAM_KEY`, and `TUBER5_STREAM_KEY` (see [README.md](../README.md#installation)).
 
 1. Go to [dashboard.twitch.tv](https://dashboard.twitch.tv) (or click your avatar → **Creator Dashboard**)
 2. In the left sidebar, click the **Settings** gear icon → **Stream**

@@ -14,6 +14,12 @@ COPY app/log_prune.py /app/log_prune.py
 # stdlib-only modules replay itself pulls in at import time.
 COPY app/episode_store.py /app/episode_store.py
 COPY app/episode_validator.py /app/episode_validator.py
+# Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2). The
+# validator's V1 stage (§8.1) checks that a show header's voice NAMES are known
+# — a pure config lookup, which is why it can run here where /data/voices is
+# deliberately NOT mounted. revoice.py imports it too. Without this file the
+# validator raises ImportError on every upload.
+COPY app/voice_registry.py /app/voice_registry.py
 COPY app/session_log_parser.py /app/session_log_parser.py
 COPY app/replay.py /app/replay.py
 COPY app/revoice.py /app/revoice.py

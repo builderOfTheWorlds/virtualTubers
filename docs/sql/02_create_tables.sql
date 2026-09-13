@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS generation_jobs (
     status           TEXT NOT NULL,
     params           JSONB NOT NULL DEFAULT '{}'::jsonb,
     progress         JSONB,
+    llm_progress     JSONB,
     result           JSONB,
     error            TEXT,
     cancel_requested BOOLEAN NOT NULL DEFAULT FALSE,
@@ -132,6 +133,18 @@ CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
 -- from `pack` (the source pack's cast/scenes/lore). NULL on rows written
 -- before this column existed.
 ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS run TEXT;
+
+-- Added 2026-09-13: live token-decode progress for the CURRENT in-flight LLM
+-- call, distinct from `progress` (which tracks done/total WORK UNITS —
+-- segments planned, tree nodes expanded). This is sub-call granularity:
+-- {"model": "hermes3:70b", "n_decoded": 269, "tokens_per_s": 4.1,
+--  "started_at": "...", "updated_at": "..."} — written every ~2s while a
+-- streaming completion is in flight, cleared (set NULL) once it finishes.
+-- Only ever populated by the arc stage today (see concurrent_llm.py
+-- complete_streaming) — the segment/dialogue stages run several LLM calls
+-- concurrently, where a single "tokens decoded" number would be ambiguous
+-- about which call it describes, so they are out of scope for now.
+ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS llm_progress JSONB;
 
 CREATE TABLE IF NOT EXISTS generation_artifacts (
     id          BIGSERIAL PRIMARY KEY,

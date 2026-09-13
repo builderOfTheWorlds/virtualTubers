@@ -42,6 +42,9 @@ voices/
 
 # ── Secrets ───────────────────────────────────────────────────────────────────
 .env
+# Timestamped .env backups (taken before identity/key migrations) — they hold the
+# same real stream keys and passwords as .env, so they must never be committed.
+.env.bak.*
 
 # ── OS cruft ──────────────────────────────────────────────────────────────────
 .DS_Store

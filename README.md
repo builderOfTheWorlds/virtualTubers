@@ -41,9 +41,9 @@ shape/name/leak-audit/dry-run-render validator on upload.
    cp .env.example .env
    ```
    ```bash
-   CODER_STREAM_KEY=your_twitch_stream_key
-   MANAGER_STREAM_KEY=your_twitch_stream_key
-   TESTER_STREAM_KEY=your_twitch_stream_key
+   TUBER1_STREAM_KEY=your_twitch_stream_key
+   TUBER6_STREAM_KEY=your_twitch_stream_key
+   TUBER5_STREAM_KEY=your_twitch_stream_key
    STREAM_RTMP_URL=rtmp://live.twitch.tv/app   # omit to use the local rtmp-preview server
 
    KAFKA_BOOTSTRAP_SERVERS=your_kafka_host:9092

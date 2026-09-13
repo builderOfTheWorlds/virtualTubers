@@ -31,6 +31,22 @@ from fastapi.responses import JSONResponse
 import generation_store
 import runner
 
+# Configure the root logger once, at import time — before anything else in
+# this process calls logging.getLogger(...).info/.debug. Without this, every
+# log.info/log.debug call across this service and the 3-layer generator
+# library (generation_store, runner, plan_arc, concurrent_llm, ...) is
+# silently discarded: Python's root logger defaults to WARNING with no
+# handler attached, so nothing ever reaches `docker logs` even though the
+# calls are already in the code. Uvicorn's own access/error logs configure
+# their own loggers, which is why those show up while the app's never did.
+# GENERATOR_LOG_LEVEL lets an operator raise verbosity (e.g. DEBUG) without
+# a rebuild; defaults to INFO so job lifecycle and streaming-LLM text logs
+# (concurrent_llm.complete_streaming) are visible by default.
+logging.basicConfig(
+    level=os.environ.get("GENERATOR_LOG_LEVEL", "INFO").upper(),
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
+
 log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------

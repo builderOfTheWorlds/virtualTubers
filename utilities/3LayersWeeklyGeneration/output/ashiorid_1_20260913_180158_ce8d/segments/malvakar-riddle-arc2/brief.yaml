@@ -1,0 +1,35 @@
+segment_id: malvakar-riddle-arc2
+order: 14
+loop: 3
+hours: 6
+synopsis: The group travels to the Malvakar monument, discussing their plans and the
+  riddle they must solve to gain the next map fragment.
+continuity_in: The group has gathered information and made contacts in Malmont.
+continuity_out: The group has solved the riddle and gained the next map fragment,
+  but they have also drawn unwanted attention.
+carry_in:
+  Leena-wounded: Leena was injured during the encounter with the night watch.
+carry_out: {}
+slots: []
+nodes:
+- node_id: malvakar-riddle-arc2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: malvakar-riddle-arc2-n0
+  parent_id: malvakar-riddle-arc2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: malvakar-riddle-arc2-n1
+  parent_id: malvakar-riddle-arc2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 0

@@ -16,7 +16,7 @@ from arc_schema import (SYSTEM_PROMPT, ArcPlanError, build_context,
 log = logging.getLogger(__name__)
 
 
-def plan_arc(pack, config, llm, vocab, out_path) -> dict:
+def plan_arc(pack, config, llm, vocab, out_path, on_llm_progress=None) -> dict:
     """
     Plan an arc by generating segments in batches.
     
@@ -26,6 +26,13 @@ def plan_arc(pack, config, llm, vocab, out_path) -> dict:
         llm: Object with complete(system_prompt, messages) method
         vocab: Vocabulary object for validation
         out_path: pathlib.Path to write the plan YAML
+        on_llm_progress: Optional callback for live token-decode progress
+            during the LLM call — forwarded to llm.complete_streaming's
+            on_progress when the llm object supports streaming (see
+            concurrent_llm.PooledOllamaClient.complete_streaming). Ignored
+            (falls back to llm.complete) for any llm object that doesn't
+            expose complete_streaming — this keeps every existing test's
+            plain-.complete() fake llm working unchanged.
         
     Returns:
         Dictionary mapping {"segments": [...]} sorted by order
@@ -102,12 +109,17 @@ def plan_arc(pack, config, llm, vocab, out_path) -> dict:
                     previous_continuity=previous_continuity,
                     config=config,
                     problems=problems,
-                    spine_scene_ids=spine_scene_ids
+                    spine_scene_ids=spine_scene_ids,
+                    known_ids={seg['id'] for seg in plan_segments}
                 )
                 
                 # Call LLM
                 messages = [{"role": "user", "content": prompt}]
-                response = llm.complete(SYSTEM_PROMPT, messages)
+                if on_llm_progress is not None and hasattr(llm, "complete_streaming"):
+                    response = llm.complete_streaming(SYSTEM_PROMPT, messages,
+                                                       on_progress=on_llm_progress)
+                else:
+                    response = llm.complete(SYSTEM_PROMPT, messages)
                 
                 # Parse reply
                 segments = parse_reply(response)

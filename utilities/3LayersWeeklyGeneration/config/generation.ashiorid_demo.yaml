@@ -36,8 +36,8 @@ arc:
     light:
       model: "qwen3-coder:30b"
     heavy:
-      model: "qwen3-coder:30b"
-  active_model: light
+      model: "hermes3:70b"
+  active_model: heavy
   hours_total: 90            # -> n_segments = ceil(90/6) = 15 segments
   segment_hours: 6
   batch_size: 5

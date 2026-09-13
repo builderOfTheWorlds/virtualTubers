@@ -1,0 +1,144 @@
+portal-choice-arc:
+  node_id: portal-choice-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group discusses the implications of their choice at the portal as they
+    trave
+  summary: The group discusses the implications of their choice at the portal as they
+    travel the road south.
+  continuity_in: The portal has opened, and the group must decide what to do.
+  continuity_out: The group has made their choice, and must now face the consequences.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0
+  - portal-choice-arc-n1
+  slots: null
+portal-choice-arc-n0:
+  node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  order: 0
+  depth: 1
+  title: The Weight of Choice
+  summary: The group gathers around the portal, each member weighing the potential
+    consequences of their decision while traveling south on the winding road.
+  continuity_in: The portal has opened, and the group must decide what to do.
+  continuity_out: The group discusses the implications of their choice at the portal
+    as they travel the road south.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-n0-1
+    kind: ambient
+    prompt: Leena reflects on the weight of their choice while the group travels south,
+      considering how the portal's opening might affect the moonwell.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-2
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: portal-choice-arc-n0-3
+    kind: ambient
+    prompt: Chadwick shares his concerns about the axe he lost, wondering if it was
+      a wise choice to proceed through the portal without it.
+    lore:
+    - the-begene-program
+    participants:
+    - chadwick
+    - Vigil
+    - Leena
+    sensitivity: tone
+    depends_on: []
+portal-choice-arc-n1:
+  node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  order: 1
+  depth: 1
+  title: Road Southward
+  summary: As the group continues their journey southward, the weight of their decision
+    settles over them while they navigate the challenging terrain and consider what
+    lies ahead.
+  continuity_in: The group discusses the implications of their choice at the portal
+    as they travel the road south.
+  continuity_out: The group has made their choice, and must now face the consequences.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-n1-1
+    kind: ambient
+    prompt: Leena reflects on the weight of their choice while the group travels south
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-2
+    kind: ambient
+    prompt: Chadwick expresses concern about the path they've chosen and its consequences
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-3
+    kind: ambient
+    prompt: Vigil shares their thoughts on what lies ahead as they travel the road
+      south
+    lore:
+    - malmont
+    - the-begene-program
+    participants:
+    - Vigil
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-4
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: portal-choice-arc-n1-5
+    kind: ambient
+    prompt: The group's mood shifts as they consider the implications of their decision,
+      with Leena feeling a sense of foreboding
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

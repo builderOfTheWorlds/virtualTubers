@@ -202,6 +202,26 @@ def _make_progress(ctx, job_id):
     return progress
 
 
+def _make_llm_progress(ctx, job_id):
+    """A live token-decode progress callback closure over the job id, for
+    the arc stage's single sequential LLM call (see plan_arc's
+    on_llm_progress / concurrent_llm.PooledOllamaClient.complete_streaming).
+    Distinct from _make_progress: this describes progress WITHIN one LLM
+    call (tokens decoded so far), not across work units.
+
+    Best-effort: an update_llm_progress failure (e.g. a Postgres blip) must
+    never abort the arc-planning call it is merely reporting on, so it is
+    logged and swallowed rather than raised.
+    """
+    def on_llm_progress(snapshot):
+        try:
+            ctx.store.update_llm_progress(job_id, snapshot)
+        except Exception:
+            log.warning("_make_llm_progress: failed to write progress for job_id=%s",
+                        job_id, exc_info=True)
+    return on_llm_progress
+
+
 def _make_cancel_check(ctx, job_id):
     """A cancel-check closure over the job id."""
     def cancel_check():
@@ -263,7 +283,21 @@ def _run_arc(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
              result) -> None:
     """Drive the arc stage and fold its output into `result`."""
     out_path = artifact_path(ctx, run_name, "arc_plan", "")
-    ctx.plan_arc(pack, ctx.config, llm, vocab, out_path)
+    on_llm_progress = _make_llm_progress(ctx, job["id"])
+    try:
+        ctx.plan_arc(pack, ctx.config, llm, vocab, out_path,
+                     on_llm_progress=on_llm_progress)
+    finally:
+        # Clear the last in-flight snapshot so a finished/failed job never
+        # shows a stale "still decoding" panel — see update_llm_progress's
+        # docstring on why None means "nothing in flight right now". This
+        # is itself best-effort: a store failure here must never mask
+        # whatever plan_arc raised (or overshadow its success).
+        try:
+            ctx.store.update_llm_progress(job["id"], None)
+        except Exception:
+            log.warning("_run_arc: failed to clear llm_progress for job_id=%s",
+                        job["id"], exc_info=True)
 
     if not out_path.exists():
         raise EmptyOutputError(

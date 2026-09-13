@@ -1,0 +1,246 @@
+segments:
+- ambient_focus: Leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four arrive at the manor, unsure of what to expect.
+  continuity_out: The party is in full swing when the uninvited guests arrive.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers each receive an invitation to Leto's manor for a mysterious
+    event. They arrive and meet each other for the first time, sensing something momentous
+    in the air.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four are shown to their rooms to rest before the party.
+  continuity_out: The doors open on unwelcome guests.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The manor is a sight to behold, full of strange magics and opulent decor.
+    The four explore, getting a sense of the scope of the event they've stumbled into.
+- ambient_focus: Vigil-counts
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The uninvited guests crash the party.
+  continuity_out: The manor is burning.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - party-attack
+  synopsis: Chaos erupts as uninvited guests attack. The four find themselves in the
+    thick of battle, defending the manor and its guests.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The manor is ablaze.
+  continuity_out: The four escape into the night.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - burn-it-down
+  synopsis: The manor is lost, the four barely escaping with their lives. They regroup
+    in the aftermath, trying to make sense of what just happened.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four find Grovley in the subbasement.
+  continuity_out: The four must decide what to do next.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the subbasement, Grovley reveals secrets to the four. They are not
+    who they thought they were, and the night's events have greater implications than
+    they realized.
+- ambient_focus: Leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The four find the vault.
+  continuity_out: The artifact's purpose becomes clear.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - the-vault
+  synopsis: Behind a hidden wall, the four discover what the Letos were guarding.
+    An artifact of immense power, it will change their destinies forevermore.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has escaped the burning manor and is following the map.
+  continuity_out: The party is settling into Malmont and learning its dynamics.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 6
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and discovers the town's divided power structure.
+    They begin seeking information on the next monument.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has learned of the nine monuments from Jasper and Juniper's
+    map.
+  continuity_out: The party has solved the Malvakar riddle and obtained the next fragment.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 7
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party reaches the Malvakar monument and must solve its riddle to gain
+    the next map fragment. Tensions rise as they debate their path forward.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has gained the second map fragment and is deciding their
+    next destination.
+  continuity_out: The party has made a decision regarding the Bahadur and set a new
+    course.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 8
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party encounters agents of the Bahadur in Malmont and learns more
+    about the foreign faction's goals. They face a choice about aligning with or against
+    them.
+- ambient_focus: leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is en route to the next monument, with tensions simmering.
+  continuity_out: Leena's crisis has come to a head, with potential for the party
+    to fracture.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc
+  loop: 0
+  order: 9
+  spine_scenes:
+  - magic-lost
+  synopsis: Leena faces a crisis of faith as the party travels, leading to a confrontation
+    about the nature of magic and Leena's role. The group dynamic is tested.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has reached the monument and gained the next fragment.
+  continuity_out: The party has made a choice about the portal, with potential long-term
+    consequences.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  order: 10
+  spine_scenes:
+  - portal-choice
+  synopsis: The party reaches the next monument and faces a choice about using the
+    portal. The decision tests their resolve and reveals hidden allegiances.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has fragmented after the portal decision and is pursuing
+    separate leads.
+  continuity_out: The separate party members have each gained new information and
+    potential allies.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-market-arc
+  loop: 0
+  order: 11
+  spine_scenes:
+  - amulet-map
+  synopsis: The party, now split, explores Malmont in separate groups. They uncover
+    more about the town's power dynamics and the amulet's history. New alliances form.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out:
+    Leena-wounded: false
+  continuity_in: The party has learned about the Event and the amulet from Grovley.
+  continuity_out: The party is pursued by the Bahadur agents as they head towards
+    Malmont.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-loop1
+  loop: 1
+  order: 12
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party discusses the implications of the Event and the state of magic
+    in the world. They encounter a group of Bahadur agents who are seeking the amulet
+    for their own purposes.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: false
+  carry_out:
+    Leena-wounded: false
+  continuity_in: The party is pursued by the Bahadur agents as they head towards Malmont.
+  continuity_out: The party decides to investigate the power structure in Malmont
+    further.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop1
+  loop: 1
+  order: 13
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and seeks information about the amulet and
+    the Bahadur. They discover the town is divided between those who support the constable's
+    watch and those who follow a mysterious power.
+- ambient_focus: ''
+  carry_in:
+    Leena-wounded: false
+  carry_out:
+    Leena-wounded: false
+  continuity_in: The party decides to investigate the power structure in Malmont further.
+  continuity_out: The party retrieves the fragment of the map from the dungeon.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-loop1
+  loop: 1
+  order: 14
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party travels to the northern monument and solves the riddle to gain
+    access to the dungeon. Inside, they face traps and puzzles that test their abilities
+    and resolve.

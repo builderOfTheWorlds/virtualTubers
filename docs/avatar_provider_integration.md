@@ -64,9 +64,9 @@ explicitly for something **configurable, per worker, with no code change**.
      an explicit `provider: builtin` for clarity).
    - `docker-compose.yml` — every worker service gets an `AVATAR_PROVIDER`
      environment variable sourced from its own stack env var
-     (`CODER_AVATAR_PROVIDER`, `CODER_NATIVE_AVATAR_PROVIDER`,
-     `CODER_OPENCODE_AVATAR_PROVIDER`, `CODER_AIDER_AVATAR_PROVIDER`,
-     `MANAGER_AVATAR_PROVIDER`, `TESTER_AVATAR_PROVIDER`), defaulting to
+     (`TUBER1_AVATAR_PROVIDER`, `TUBER2_AVATAR_PROVIDER`,
+     `TUBER3_AVATAR_PROVIDER`, `TUBER4_AVATAR_PROVIDER`,
+     `TUBER6_AVATAR_PROVIDER`, `TUBER5_AVATAR_PROVIDER`), defaulting to
      empty — an empty env var is treated as "unset" by `load_provider()`
      (`os.environ.get(...) or ...`), so nothing changes for anyone who
      doesn't set it.
@@ -98,7 +98,7 @@ Three ways, in order of how "sticky" the change is:
        persona: ghost   # ghost | oracle | spectre
    ```
 2. **Per deploy, per worker** — set that worker's env var in `.env`
-   (e.g. `CODER_AVATAR_PROVIDER=ascii_avatar`) and redeploy.
+   (e.g. `TUBER1_AVATAR_PROVIDER=ascii_avatar`) and redeploy.
 3. **Quick local test** — export `AVATAR_PROVIDER=ascii_avatar` before
    running `app/avatar.py` directly.
 

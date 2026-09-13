@@ -1,0 +1,242 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The party is interrupted by a sudden attack.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers each receive an invitation to Leto's manor for the
+    ten thousandth anniversary celebration. They arrive and meet for the first time,
+    feeling an inexplicable connection. The party begins, but an ominous feeling lingers
+    in the air.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is interrupted by a sudden attack.
+  continuity_out: The manor starts to burn, forcing them to flee.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The four explore Leto's manor, marveling at its opulence and grandeur.
+    They uncover hidden passages and rooms, hinting at the manor's secrets. As they
+    delve deeper, they stumble upon Grovley, the butler, who seems to know more than
+    he lets on.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The manor starts to burn, forcing them to flee.
+  continuity_out: They escape the burning manor and find themselves in a subbasement
+    with Grovley.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - party-attack
+  synopsis: Uninvited guests storm the party, causing chaos and panic. The four must
+    defend themselves and uncover the attackers' motives. They discover a connection
+    to the Bahadur and their nefarious plans, putting the weight of the world's fate
+    on their shoulders.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: They escape the burning manor and find themselves in a subbasement
+    with Grovley.
+  continuity_out: They learn of the vault and the importance of the Event.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - burn-it-down
+  synopsis: The manor burns, and the four must navigate the flames and collapsing
+    structures to escape. They discover a hidden subbasement where Grovley reveals
+    the truth about their identities and the significance of the ten thousandth anniversary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: They learn of the vault and the importance of the Event.
+  continuity_out: They decide to explore the vault and confront the looming threat.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the subbasement, Grovley explains the four's roles as products of the
+    Begene Sisters' Program and their connection to the Event. He reveals the existence
+    of the vault and its contents, urging them to take action before it's too late.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: They decide to explore the vault and confront the looming threat.
+  continuity_out: The portal opens, and they must face the consequences of their choice.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - the-vault
+  synopsis: The four explore the vault, uncovering ancient artifacts and a dying wizard
+    who reveals the true nature of the portal and the consequences of its opening.
+    They must make a crucial decision that will determine the fate of Ashiorid.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The portal has opened, and the group must decide what to do.
+  continuity_out: The group has made their choice, and must now face the consequences.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  order: 6
+  spine_scenes:
+  - portal-choice
+  synopsis: The group discusses the implications of their choice at the portal as
+    they travel the road south.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has traveled south from the manor.
+  continuity_out: The group has learned about Malmont's two power centers.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  order: 7
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The group arrives in Malmont and begins to explore the town, learning
+    about its power structure and magical resources.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group is exploring Malmont.
+  continuity_out: The group has learned about the Bahadur's necromancy and plans.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 8
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The group encounters the Bahadur in Malmont at night and learns about
+    their origins and intentions.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group is searching for the monuments.
+  continuity_out: The group has obtained one fragment of the map.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  order: 9
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The group solves the riddle of the Malvakar monument and gains a fragment
+    of the map.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has one fragment of the map.
+  continuity_out: The group has decided on their next destination.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-arc
+  loop: 0
+  order: 10
+  spine_scenes:
+  - amulet-map
+  synopsis: The group discusses the implications of the map fragments and plans their
+    next move around the campfire.
+- ambient_focus: vigil-counts
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group is reflecting on past events.
+  continuity_out: The group has reached a new understanding of Grovley's words.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc2
+  loop: 1
+  order: 11
+  spine_scenes:
+  - grovley-revelation
+  synopsis: The group revisits Grovley's revelations and debates their significance
+    as Vigil counts the stars.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The group has reached a new understanding of Grovley's words.
+  continuity_out: The group has decided to continue their quest for the amulet, despite
+    the risks and uncertainties.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc3
+  loop: 1
+  order: 12
+  spine_scenes:
+  - grovley-revelation
+  synopsis: The group discusses Grovley's revelation around a campfire. They debate
+    the implications of their origins and the true purpose of the amulet they seek.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out:
+    Leena-wounded: Leena was injured during the encounter with the night watch.
+  continuity_in: The group has decided to continue their quest for the amulet.
+  continuity_out: The group has gathered valuable information and made contacts in
+    Malmont.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc2
+  loop: 2
+  order: 13
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The group arrives in Malmont under the cover of night. They seek shelter
+    and information, trying to remain inconspicuous in the unfamiliar town.
+- ambient_focus: road-talk
+  carry_in:
+    Leena-wounded: Leena was injured during the encounter with the night watch.
+  carry_out: {}
+  continuity_in: The group has gathered information and made contacts in Malmont.
+  continuity_out: The group has solved the riddle and gained the next map fragment,
+    but they have also drawn unwanted attention.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc2
+  loop: 3
+  order: 14
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The group travels to the Malvakar monument, discussing their plans and
+    the riddle they must solve to gain the next map fragment.

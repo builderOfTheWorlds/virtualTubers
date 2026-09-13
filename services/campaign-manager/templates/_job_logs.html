@@ -1,4 +1,19 @@
 <div id="job-logs-panel">
+    {% if job.llm_progress %}
+    <div class="alert alert-info d-flex justify-content-between align-items-center mb-3 py-2"
+         style="font-size: 0.85rem;">
+        <div>
+            <strong>Live model output:</strong>
+            {{ job.llm_progress.model }} —
+            {{ job.llm_progress.n_decoded }} chunks decoded
+            @ {{ "%.2f"|format(job.llm_progress.tokens_per_s) }} tok/s
+        </div>
+        <div class="text-muted">
+            updated {{ job.llm_progress.updated_at }}
+        </div>
+    </div>
+    {% endif %}
+
     {% if not logs_available %}
         <div class="alert alert-warning mb-0">
             Log storage not reachable — set POSTGRES_HOST/DB/USER/PASSWORD for

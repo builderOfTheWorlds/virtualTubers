@@ -1,0 +1,31 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: tile
+#
+# One character slot's mini-stage on the roundtable channel
+# (roundtable_stream_design.md v1.1 §5). A tile performs the scenes cast to its
+# slot: it plays audio ONLY for scenes that slot owns, paces visually to the
+# other slots' timing, and drives a small avatar — the same rendering contract
+# the proven duet follower implements (app/replay_pane.py
+# perform_follower_request), driven by local relay files instead of Kafka.
+#
+# EVERY tile uses this one panel type, including the GM's (§1.1): the GM is a
+# character like any other, so a bug in tile rendering is fixed once for all
+# seven. A layout's `with:` block is the only thing that differentiates them.
+#
+# Required per-placement `with:` keys (see config/layouts/roundtable.yaml):
+#   slot  — the stable slot id this tile is pinned to (e.g. "tuber_2"). The
+#           persona DISPLAY name is resolved per-show from the show header
+#           (§7.1), never from this file — a tile is a platform identity, and
+#           character names are story data.
+#
+# The avatar rendered here is deliberately small and deliberately placeholder
+# grade (§5.1): current avatars are MVP scaffolding slated for replacement, and
+# app/avatar.py cannot be reused per-tile anyway (its state path is not
+# per-instance — see app/agent_state.py resolve_state_path). tile_pane.py owns a
+# compact render and its own per-tile state file; when avatars are replaced,
+# this panel is the single seam that changes.
+# ──────────────────────────────────────────────────────────────────────────────
+type: tile
+title: "Tile"
+border_color: blue
+command: "python3 /app/tile_pane.py --slot {slot} --config {config_path}"

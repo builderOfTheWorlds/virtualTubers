@@ -1,0 +1,57 @@
+malvakar-riddle-arc2:
+  node_id: malvakar-riddle-arc2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group travels to the Malvakar monument, discussing their plans and the
+    riddl
+  summary: The group travels to the Malvakar monument, discussing their plans and
+    the riddle they must solve to gain the next map fragment.
+  continuity_in: The group has gathered information and made contacts in Malmont.
+  continuity_out: The group has solved the riddle and gained the next map fragment,
+    but they have also drawn unwanted attention.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc2-n0
+  - malvakar-riddle-arc2-n1
+  slots: null
+malvakar-riddle-arc2-n0:
+  node_id: malvakar-riddle-arc2-n0
+  parent_id: malvakar-riddle-arc2
+  order: 0
+  depth: 1
+  title: Journey to Malvakar
+  summary: The group embarks on their journey to the Malvakar monument, discussing
+    strategies and debating the nature of the riddle they must solve to obtain the
+    next map fragment.
+  continuity_in: The group has gathered information and made contacts in Malmont.
+  continuity_out: The group has arrived at the Malvakar monument and begun their discussion
+    of the riddle.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malvakar-riddle-arc2-n1:
+  node_id: malvakar-riddle-arc2-n1
+  parent_id: malvakar-riddle-arc2
+  order: 1
+  depth: 1
+  title: Riddle Resolution
+  summary: The group works together to solve the complex riddle at the Malvakar monument,
+    ultimately succeeding in obtaining the next map fragment while inadvertently attracting
+    the attention of hostile forces.
+  continuity_in: The group has arrived at the Malvakar monument and begun their discussion
+    of the riddle.
+  continuity_out: The group has solved the riddle and gained the next map fragment,
+    but they have also drawn unwanted attention.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

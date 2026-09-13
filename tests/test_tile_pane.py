@@ -1,0 +1,517 @@
+"""Tests for app/tile_pane.py — the roundtable tile pane (design spec
+.claude/prompts/roundtable_stream_design.md §5 / WP-3).
+
+Fully mocked: no Kafka, no Postgres, no real audio, no piper. The real
+Performer is replaced by the same kind of recording stand-ins
+tests/test_replay_pane.py uses for the duet paths, so nothing here touches
+timing, pacing or playback.
+
+The load-bearing properties under test:
+  * a tile plays audio ONLY for the scenes its slot owns (the follower
+    contract, reused rather than reimplemented);
+  * the local cue ratchet obeys exactly the duet cue protocol;
+  * stale relay files from a previous airing are cleared BEFORE performing;
+  * every failure degrades to idle instead of raising out of the pane loop;
+  * two tiles write to DIFFERENT avatar state files (§5.1 / review finding
+    G2 — the whole reason this module exists instead of reusing avatar.py).
+"""
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
+
+import replay_pane  # noqa: E402
+import tile_pane  # noqa: E402
+from tile_pane import (  # noqa: E402
+    clear_stale_relay_files,
+    draw_idle_screen,
+    handle_once,
+    make_owns,
+    make_wait_for_scene,
+    perform_tile_request,
+    render_tile,
+    resolve_relay_dir,
+    tile_cue_file,
+    tile_request_file,
+    tile_state_file,
+)
+
+
+# ── stand-ins ────────────────────────────────────────────────────────────────
+class FakePerformer:
+    """Records constructor kwargs and the show it was handed; perform() is a
+    no-op walk so nothing real gets timed, paced or played."""
+    instances = []
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.performed_show = None
+        self.performed_script = None
+        FakePerformer.instances.append(self)
+
+    def perform(self, script, show=None, start=0, limit=None):
+        self.performed_script = script
+        self.performed_show = show
+        # Write avatar state the way the real Performer._avatar does, so the
+        # per-tile state-path guard exercises a real write_state call.
+        state_path = self.kwargs.get("state_path")
+        if state_path:
+            tile_pane.write_tile_state(state_path, "speaking",
+                                       action=f"performing {len(show or [])} scenes")
+        return True
+
+
+@pytest.fixture
+def fake_performer(monkeypatch):
+    FakePerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", FakePerformer)
+    return FakePerformer
+
+
+@pytest.fixture
+def tile_library(monkeypatch):
+    """In-memory episode_store stand-in holding one two-scene episode —
+    same shape as test_replay_pane.py's duet_library."""
+    script = {
+        "source": "round_ep",
+        "events": [
+            {"type": "user_message", "text": "open the session"},
+            {"type": "assistant_text", "text": "on it"},
+        ],
+    }
+    scripts = {"round_ep": script}
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", lambda name: scripts.get(name))
+    monkeypatch.setattr(replay_pane.episode_store, "list_episodes", lambda: sorted(scripts))
+    return scripts
+
+
+def _rows(boss_audio=None, coder_audio=None, boss_duration=None, coder_duration=None):
+    """Rows shaped like narration_store.load_airing(), matching
+    tile_library's plan_scenes() output (scene 0 = boss, scene 1 = coder)."""
+    return [
+        {"scene_index": 0, "scene_kind": "boss", "speaker": "boss", "text": "boss line",
+         "audio": boss_audio, "audio_duration_s": boss_duration},
+        {"scene_index": 1, "scene_kind": "coder_talk", "speaker": "coder", "text": "coder line",
+         "audio": coder_audio, "audio_duration_s": coder_duration},
+    ]
+
+
+@pytest.fixture
+def store(monkeypatch):
+    """narration_store stand-in: available, serving whatever rows the test
+    parks in holder['rows'] (None ⇒ missing airing)."""
+    holder = {"rows": _rows(), "raises": None}
+
+    def load_airing(airing_id):
+        if holder["raises"] is not None:
+            raise holder["raises"]
+        return holder["rows"]
+
+    monkeypatch.setattr(tile_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(tile_pane.narration_store, "load_airing", load_airing)
+    return holder
+
+
+@pytest.fixture
+def relay(tmp_path, monkeypatch):
+    """A relay dir plus a stop-file path that does NOT exist, so the shared
+    operator replay_stop signal can't leak in from the host /tmp."""
+    d = tmp_path / "tiles"
+    d.mkdir()
+    monkeypatch.setenv("REPLAY_STOP_FILE", str(tmp_path / "no_such_stop.json"))
+    return d
+
+
+@pytest.fixture
+def fast_cues(monkeypatch):
+    """Tiny cue-protocol timeouts so the watchdog resolves near-instantly.
+    Patched on replay_pane because that is where tile_pane reads them from —
+    proof in itself that the constants are shared, not redefined."""
+    monkeypatch.setattr(replay_pane, "REPLAY_CUE_POLL_INTERVAL_S", 0.01)
+    monkeypatch.setattr(replay_pane, "REPLAY_FIRST_CUE_TIMEOUT_S", 0.1)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_MIN_S", 0.1)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_GRACE_S", 0.05)
+
+
+CAST = {"boss": "tuber_0", "coder": "tuber_2"}
+
+
+def _request(**over):
+    request = {"airing_id": "airing-1", "episode": "round_ep", "cast": dict(CAST),
+               "speed": 1000, "worker_name": "Vex"}
+    request.update(over)
+    return request
+
+
+# ── relay path resolution ────────────────────────────────────────────────────
+def test_relay_paths_are_per_slot(monkeypatch):
+    monkeypatch.delenv("TILE_RELAY_DIR", raising=False)
+    assert resolve_relay_dir() == "/tmp/tiles"
+    monkeypatch.setenv("TILE_RELAY_DIR", "/tmp/elsewhere")
+    assert resolve_relay_dir() == "/tmp/elsewhere"
+    assert resolve_relay_dir("/explicit") == "/explicit"  # flag beats env
+
+    assert tile_request_file("/r", "tuber_2") == "/r/tuber_2.request.json"
+    assert tile_cue_file("/r", "tuber_2") == "/r/tuber_2.cue.json"
+    assert tile_state_file("/r", "tuber_2") == "/r/tuber_2.state.json"
+
+
+# ── the owns predicate ───────────────────────────────────────────────────────
+def test_owns_predicate_matches_only_this_slots_speakers():
+    owns = make_owns(CAST, "tuber_2")
+    assert owns({"speaker": "coder"}, None) is True
+    assert owns({"speaker": "boss"}, None) is False
+    assert owns({"speaker": "nobody"}, None) is False   # uncast speaker
+    assert owns({}, None) is False                      # speakerless scene
+    assert make_owns(None, "tuber_2")({"speaker": "coder"}) is False
+
+
+def test_owned_scenes_keep_audio_and_unowned_scenes_are_stripped(
+        tile_library, store, relay, fake_performer, fast_cues):
+    """The follower contract, exercised through the real
+    replay_pane._rebuild_scenes_from_rows: only this slot's audio bytes ever
+    reach this tile, but pacing data survives for every scene."""
+    store["rows"] = _rows(boss_audio=b"boss-wav", coder_audio=b"coder-wav",
+                          boss_duration=1.5, coder_duration=2.5)
+
+    ok = perform_tile_request(_request(), "tuber_2", str(relay))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    boss = next(s for s in show if s["speaker"] == "boss")
+    coder = next(s for s in show if s["speaker"] == "coder")
+    assert boss["owned"] is False
+    assert boss["audio"] is None            # never written to this tile's dir
+    assert boss["target_duration"] == 1.5   # still paced to the owner's timing
+    assert coder["owned"] is True
+    assert coder["audio"] is not None
+    assert coder["audio"].duration == 2.5
+    assert coder["narration"] == "coder line"  # the director's text, not regenerated
+
+
+def test_a_different_slot_owns_the_other_scene(
+        tile_library, store, relay, fake_performer, fast_cues):
+    """Same airing, different tile: ownership flips. One code path, seven
+    tiles."""
+    store["rows"] = _rows(boss_audio=b"boss-wav", coder_audio=b"coder-wav",
+                          boss_duration=1.0, coder_duration=1.0)
+
+    assert perform_tile_request(_request(), "tuber_0", str(relay)) is True
+    show = FakePerformer.instances[0].performed_show
+    boss = next(s for s in show if s["speaker"] == "boss")
+    coder = next(s for s in show if s["speaker"] == "coder")
+    assert boss["owned"] is True and boss["audio"] is not None
+    assert coder["owned"] is False and coder["audio"] is None
+
+
+# ── the cue ratchet ──────────────────────────────────────────────────────────
+def _ratchet(relay, fast_cues_unused=None, show=None):
+    show = show or [{"target_duration": 1.0}, {"target_duration": 1.0}]
+    cue_file = tile_cue_file(str(relay), "tuber_2")
+    return make_wait_for_scene(cue_file, "airing-1", show, "tuber_2"), Path(cue_file)
+
+
+def test_cue_ratchet_returns_index_on_matching_cue(relay, fast_cues):
+    wait, cue_file = _ratchet(relay)
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "cue", "scene_index": 1}),
+                        encoding="utf-8")
+    assert wait(1) == 1
+    # A cue AHEAD of us authorizes the jump (Performer's catch-up rule).
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "cue", "scene_index": 3}),
+                        encoding="utf-8")
+    assert wait(1) == 3
+
+
+def test_cue_ratchet_returns_minus_one_on_end_cue(relay, fast_cues):
+    wait, cue_file = _ratchet(relay)
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "end",
+                                    "reason": "finished"}), encoding="utf-8")
+    assert wait(0) == -1
+
+
+def test_cue_ratchet_returns_minus_one_on_watchdog_timeout(relay, fast_cues, capsys):
+    wait, cue_file = _ratchet(relay)
+    assert not cue_file.exists()
+    assert wait(0) == -1          # first-cue timeout
+    assert wait(1) == -1          # per-scene watchdog
+    assert "watchdog timed out" in capsys.readouterr().err
+
+
+def test_cue_ratchet_ignores_a_cue_for_another_airing(relay, fast_cues):
+    wait, cue_file = _ratchet(relay)
+    cue_file.write_text(json.dumps({"airing_id": "some-other-airing", "type": "cue",
+                                    "scene_index": 5}), encoding="utf-8")
+    assert wait(0) == -1  # never authorized; the watchdog is what fires
+
+
+def test_cue_ratchet_ignores_a_cue_below_the_requested_index(relay, fast_cues):
+    """A stale cue for an EARLIER scene must never authorize a later one —
+    the ratchet only ever moves forward."""
+    wait, cue_file = _ratchet(relay)
+    cue_file.write_text(json.dumps({"airing_id": "airing-1", "type": "cue", "scene_index": 0}),
+                        encoding="utf-8")
+    assert wait(1) == -1
+
+
+def test_cue_ratchet_ignores_malformed_cue_payloads(relay, fast_cues):
+    wait, cue_file = _ratchet(relay)
+    for payload in ['{"airing_id": "airing-1", "type": "cue", "scene_index": "1"}',
+                    '{"airing_id": "airing-1", "type": "cue"}',
+                    '{"airing_id": "airing-1"}',
+                    "not json at all"]:
+        cue_file.write_text(payload, encoding="utf-8")
+        assert wait(0) == -1
+
+
+def test_cue_ratchet_reuses_the_follower_timeout_constants(relay, monkeypatch):
+    """Guard against someone re-adding tile-local timeout numbers: the tile
+    must read replay_pane's constants at call time."""
+    seen = []
+    monkeypatch.setattr(replay_pane, "REPLAY_FIRST_CUE_TIMEOUT_S", 0.0)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_MIN_S", 0.0)
+    monkeypatch.setattr(replay_pane, "REPLAY_WATCHDOG_GRACE_S", 0.0)
+    monkeypatch.setattr(replay_pane, "REPLAY_CUE_POLL_INTERVAL_S", 0.0)
+    monkeypatch.setattr(tile_pane.time, "sleep", lambda s: seen.append(s))
+    wait, _cue = _ratchet(relay)
+    assert wait(0) == -1  # a zeroed timeout fires immediately
+    assert not hasattr(tile_pane, "REPLAY_CUE_POLL_INTERVAL_S")
+    assert not hasattr(tile_pane, "REPLAY_FIRST_CUE_TIMEOUT_S")
+
+
+# ── stale-state hygiene ──────────────────────────────────────────────────────
+def test_clear_stale_relay_files_removes_cue_and_request(relay):
+    cue = Path(tile_cue_file(str(relay), "tuber_2"))
+    req = Path(tile_request_file(str(relay), "tuber_2"))
+    cue.write_text("{}", encoding="utf-8")
+    req.write_text("{}", encoding="utf-8")
+    other = Path(tile_cue_file(str(relay), "tuber_3"))
+    other.write_text("{}", encoding="utf-8")
+
+    clear_stale_relay_files(str(relay), "tuber_2")
+
+    assert not cue.exists()
+    assert not req.exists()
+    assert other.exists()      # another tile's relay file is not ours to delete
+    clear_stale_relay_files(str(relay), "tuber_2")  # idempotent, never raises
+
+
+def test_stale_cue_from_a_previous_airing_is_cleared_before_performing(
+        tile_library, store, relay, monkeypatch, fast_cues):
+    """The real bug this guards: a leftover cue/end from the PREVIOUS show
+    is read on the first poll of the new one and either aborts it instantly
+    or fast-forwards it past its own audio."""
+    cue = Path(tile_cue_file(str(relay), "tuber_2"))
+    req = Path(tile_request_file(str(relay), "tuber_2"))
+    cue.write_text(json.dumps({"airing_id": "old-airing", "type": "end"}), encoding="utf-8")
+    req.write_text(json.dumps({"airing_id": "old-airing"}), encoding="utf-8")
+
+    observed = {}
+
+    class CheckingPerformer(FakePerformer):
+        def perform(self, script, show=None, start=0, limit=None):
+            observed["cue_exists_at_perform_time"] = cue.exists()
+            observed["request_exists_at_perform_time"] = req.exists()
+            return super().perform(script, show=show, start=start, limit=limit)
+
+    FakePerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", CheckingPerformer)
+
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is True
+    assert observed == {"cue_exists_at_perform_time": False,
+                        "request_exists_at_perform_time": False}
+    assert not cue.exists()  # and consumed again on the way out
+
+
+# ── degradation: nothing raises out of the pane loop ─────────────────────────
+def test_malformed_request_file_is_consumed_and_pane_returns_to_idle(
+        tile_library, store, relay, fake_performer, capsys):
+    req = Path(tile_request_file(str(relay), "tuber_2"))
+    req.write_text("{ this is not json", encoding="utf-8")
+
+    assert handle_once("tuber_2", str(relay)) is False
+
+    assert not req.exists()                 # consumed, not left to wedge the pane
+    assert FakePerformer.instances == []    # nothing performed
+    assert "malformed" in capsys.readouterr().err.lower()
+
+
+@pytest.mark.parametrize("payload", [
+    {},                                                    # nothing at all
+    {"airing_id": "a1"},                                   # no episode
+    {"episode": "round_ep"},                               # no airing_id
+    {"airing_id": "a1", "episode": "round_ep", "cast": "nope"},  # cast not a dict
+    {"airing_id": "a1", "episode": "not_in_library", "cast": dict(CAST)},
+])
+def test_unusable_requests_degrade_to_idle(tile_library, store, relay, fake_performer,
+                                           capsys, payload):
+    assert perform_tile_request(payload, "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert capsys.readouterr().err  # the reason is always reported
+
+
+def test_non_dict_request_degrades(tile_library, store, relay, fake_performer, capsys):
+    assert perform_tile_request(["not", "a", "dict"], "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert "malformed" in capsys.readouterr().err.lower()
+
+
+def test_unavailable_narration_store_degrades(tile_library, relay, monkeypatch,
+                                              fake_performer, capsys):
+    monkeypatch.setattr(tile_pane.narration_store, "available", lambda: False)
+
+    def boom(airing_id):
+        raise AssertionError("must not touch the store when it is unavailable")
+
+    monkeypatch.setattr(tile_pane.narration_store, "load_airing", boom)
+
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert "narration store unavailable" in capsys.readouterr().err
+
+
+def test_unreachable_narration_store_degrades(tile_library, store, relay,
+                                              fake_performer, capsys):
+    store["raises"] = RuntimeError("connection refused")
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert "airing load failed" in capsys.readouterr().err
+
+
+def test_missing_airing_degrades(tile_library, store, relay, fake_performer, capsys):
+    store["rows"] = None
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert "no cached airing" in capsys.readouterr().err
+
+
+def test_airing_that_no_longer_matches_the_script_degrades(
+        tile_library, store, relay, fake_performer, capsys):
+    store["rows"] = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
+                      "text": "x", "audio": None, "audio_duration_s": None}]
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+    assert "no longer matches" in capsys.readouterr().err
+
+
+def test_a_raising_performer_does_not_escape_handle_once(
+        tile_library, store, relay, monkeypatch, capsys):
+    class ExplodingPerformer(FakePerformer):
+        def perform(self, script, show=None, start=0, limit=None):
+            raise RuntimeError("tmux pane went away")
+
+    FakePerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", ExplodingPerformer)
+    Path(tile_request_file(str(relay), "tuber_2")).write_text(
+        json.dumps(_request()), encoding="utf-8")
+
+    assert handle_once("tuber_2", str(relay)) is False  # degraded, not raised
+    assert "show failed" in capsys.readouterr().err
+
+
+def test_handle_once_with_no_request_is_a_no_op(tile_library, store, relay, fake_performer):
+    assert handle_once("tuber_2", str(relay)) is False
+    assert FakePerformer.instances == []
+
+
+# ── per-tile avatar state (§5.1 / G2 regression guard) ───────────────────────
+def test_two_tiles_write_to_different_state_files(
+        tile_library, store, relay, fake_performer, fast_cues):
+    """THE reason this module exists: avatar.py resolves one state path per
+    container (AGENT_STATE_FILE env -> config -> /tmp/agent_state.json), so
+    seven tiles would share one file and render seven identical faces. Each
+    tile must own its own state path."""
+    state_a = tile_state_file(str(relay), "tuber_2")
+    state_b = tile_state_file(str(relay), "tuber_5")
+    assert state_a != state_b
+
+    perform_tile_request(_request(), "tuber_2", str(relay), state_path=state_a)
+    perform_tile_request(_request(), "tuber_5", str(relay), state_path=state_b)
+
+    paths = [inst.kwargs["state_path"] for inst in FakePerformer.instances]
+    assert paths == [state_a, state_b]
+    assert len(set(paths)) == 2
+
+    # ...and both files really exist independently on disk.
+    a, b = Path(state_a), Path(state_b)
+    assert a.is_file() and b.is_file()
+    assert json.loads(a.read_text(encoding="utf-8"))["expression"] == "speaking"
+    assert json.loads(b.read_text(encoding="utf-8"))["expression"] == "speaking"
+
+
+def test_tile_state_path_ignores_agent_state_file_env(monkeypatch, tmp_path):
+    """A tile must NOT inherit the container-wide AGENT_STATE_FILE — that is
+    exactly the collision agent_state.resolve_state_path would cause."""
+    monkeypatch.setenv("AGENT_STATE_FILE", str(tmp_path / "shared.json"))
+    assert tile_state_file("/tmp/tiles", "tuber_3") == "/tmp/tiles/tuber_3.state.json"
+
+
+def test_write_tile_state_degrades_on_unwritable_path(capsys):
+    assert tile_pane.write_tile_state("/nonexistent-dir/nope.json", "idle") is None
+    assert "avatar state update skipped" in capsys.readouterr().err
+    assert tile_pane.write_tile_state(None, "idle") is None  # no state path configured
+
+
+# ── idle screen (§5: the roundtable never goes blank) ────────────────────────
+def test_idle_screen_shows_the_slot_and_a_neutral_listening_status(relay, capsys):
+    state_path = tile_state_file(str(relay), "tuber_4")
+    lines = draw_idle_screen("tuber_4", state_path)
+
+    body = "\n".join(lines)
+    assert "tuber_4" in body
+    assert "status: listening" in body
+    assert json.loads(Path(state_path).read_text(encoding="utf-8"))["expression"] == "idle"
+    assert capsys.readouterr().out.endswith(body + "\n")
+
+
+def test_tile_render_is_small_enough_for_a_tile(relay):
+    """§5.1 constraint 2: a tile gets roughly 15-16 rows. The render must
+    stay well inside that, and never emit an unbounded line."""
+    lines = render_tile("tuber_6", expression="speaking",
+                        line="a very long spoken line " * 20, status="speaking")
+    assert len(lines) <= 12
+    assert max(len(line) for line in lines) <= tile_pane.TILE_WIDTH
+
+
+def test_render_tile_falls_back_for_an_unknown_expression():
+    lines = render_tile("tuber_1", expression="wildly_unknown")
+    assert any("_" in line for line in lines)  # still drew a face, no KeyError
+
+
+# ── CLI ──────────────────────────────────────────────────────────────────────
+def test_cli_defaults_state_file_into_the_relay_dir(monkeypatch, tmp_path, relay,
+                                                    tile_library, store, fake_performer):
+    calls = {}
+
+    def fake_handle_once(slot, relay_dir, state_path=None, config=None, default_speed=1.0):
+        calls.update(slot=slot, relay_dir=relay_dir, state_path=state_path)
+        return False
+
+    monkeypatch.setattr(tile_pane, "handle_once", fake_handle_once)
+    monkeypatch.setattr(tile_pane, "load_worker_config", lambda *a, **kw: None, raising=False)
+    monkeypatch.setattr(tile_pane.replay_pane, "load_worker_config", lambda path: None)
+
+    assert tile_pane.main(["--slot", "tuber_2", "--relay-dir", str(relay), "--once"]) == 0
+    assert calls["slot"] == "tuber_2"
+    assert calls["relay_dir"] == str(relay)
+    assert calls["state_path"] == tile_state_file(str(relay), "tuber_2")
+
+
+def test_cli_state_file_override_wins(monkeypatch, tmp_path, relay):
+    calls = {}
+    monkeypatch.setattr(tile_pane, "handle_once",
+                        lambda slot, relay_dir, **kw: calls.update(kw) or False)
+    monkeypatch.setattr(tile_pane.replay_pane, "load_worker_config", lambda path: None)
+    override = str(tmp_path / "custom.json")
+
+    tile_pane.main(["--slot", "tuber_2", "--relay-dir", str(relay),
+                    "--state-file", override, "--once"])
+    assert calls["state_path"] == override
+
+
+def test_cli_requires_a_slot():
+    with pytest.raises(SystemExit):
+        tile_pane.build_parser().parse_args([])

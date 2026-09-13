@@ -418,8 +418,8 @@ which cached scenes get copied into a follower's workdir). Practically:
   `worker-coder`, `worker-manager`,
   `worker-tester`, and the three A/B coding-backend workers
   (`worker-coder-native`, `worker-coder-opencode`, `worker-coder-aider`,
-  overridden via `CODER_NATIVE_LAYOUT_PRESET` /
-  `CODER_OPENCODE_LAYOUT_PRESET` / `CODER_AIDER_LAYOUT_PRESET`). Any of
+  overridden via `TUBER2_LAYOUT_PRESET` /
+  `TUBER3_LAYOUT_PRESET` / `TUBER4_LAYOUT_PRESET`). Any of
   them can join a duet or use solo narration reuse/caching once its
   `*_LAYOUT_PRESET` stack env is set to `replay`.
 - **Cue relay latency is bounded by the receiving worker's agent tick

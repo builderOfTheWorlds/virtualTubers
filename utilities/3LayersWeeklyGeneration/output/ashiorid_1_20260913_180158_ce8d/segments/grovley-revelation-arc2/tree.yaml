@@ -1,0 +1,144 @@
+grovley-revelation-arc2:
+  node_id: grovley-revelation-arc2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The group revisits Grovley's revelations and debates their significance as
+    Vigil
+  summary: The group revisits Grovley's revelations and debates their significance
+    as Vigil counts the stars.
+  continuity_in: The group is reflecting on past events.
+  continuity_out: The group has reached a new understanding of Grovley's words.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc2-n0
+  - grovley-revelation-arc2-n1
+  slots: null
+grovley-revelation-arc2-n0:
+  node_id: grovley-revelation-arc2-n0
+  parent_id: grovley-revelation-arc2
+  order: 0
+  depth: 1
+  title: Grovley's Words Echo Through the Night
+  summary: The group gathers around Vigil as he carefully examines the night sky,
+    contemplating the deeper meanings behind Grovley's revelations while the stars
+    whisper their ancient secrets.
+  continuity_in: The group is reflecting on past events.
+  continuity_out: The group begins to understand the connection between Grovley's
+    words and the cosmic forces at play.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc2-n0-grovley-1
+    kind: ambient
+    prompt: Leena looks up at the stars, her voice barely a whisper as she recalls
+      Grovley's words about the moonwells and their connection to the ancient forces.
+    lore:
+    - moonwells
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n0-grovley-2
+    kind: ambient
+    prompt: Chadwick leans back, his usual bravado replaced by contemplation, as he
+      tries to piece together how Grovley's revelation might tie into the larger cosmic
+      narrative.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n0-grovley-3
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+grovley-revelation-arc2-n1:
+  node_id: grovley-revelation-arc2-n1
+  parent_id: grovley-revelation-arc2
+  order: 1
+  depth: 1
+  title: A New Understanding Emerges
+  summary: Through careful discussion and observation, the group reaches a breakthrough
+    in their comprehension of Grovley's revelations, linking them to the celestial
+    patterns Vigil has been studying.
+  continuity_in: The group begins to understand the connection between Grovley's words
+    and the cosmic forces at play.
+  continuity_out: The group has reached a new understanding of Grovley's words.
+  target_words: 550
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: grovley-revelation-arc2-n1-1
+    kind: ambient
+    prompt: Leena reflects on Grovley's words, her voice barely above a whisper as
+      she tries to process the implications.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n1-2
+    kind: ambient
+    prompt: Vigil points to the stars, his voice steady and knowing, connecting Grovley's
+      revelations to the cosmic patterns he's been studying.
+    lore:
+    - the-bahadur
+    - amulet-of-wonder
+    participants:
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n1-3
+    kind: ambient
+    prompt: Chadwick looks skeptical, arms crossed, questioning whether Grovley's
+      words hold any real weight in the face of what they've seen.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n1-4
+    kind: ambient
+    prompt: The group sits in contemplative silence, each lost in their own thoughts
+      as they weigh the significance of what they've learned.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: grovley-revelation-arc2-n1-5
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

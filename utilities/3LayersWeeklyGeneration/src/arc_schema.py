@@ -289,7 +289,7 @@ def validate_batch(segments, expected_orders, known_ids, vocab, config) -> List[
 
 
 def build_prompt(context, expected_orders, previous_continuity,
-                config, problems, spine_scene_ids=None) -> str:
+                config, problems, spine_scene_ids=None, known_ids=None) -> str:
     """
     Build the user prompt for ONE attempt.
     
@@ -304,6 +304,16 @@ def build_prompt(context, expected_orders, previous_continuity,
             the exact closed vocabulary validate_batch checks against,
             instead of inferring scene identifiers from titles/narration
             in `context` and inventing ids that fail validation.
+        known_ids: ids already used by earlier segments in this arc.
+            validate_batch rejects any new segment whose id repeats one of
+            these (`collides with already-planned segment`), but until this
+            was added the model was never told what they were — it had no
+            way to know a `<scene>-arc` id it just invented was already
+            taken, which meant every batch that revisits a spine scene
+            (loop/fork segments, the common case in a *_continuation
+            config) failed both attempts and the whole batch got skipped.
+            Listed explicitly, with guidance to suffix a repeat visit
+            (e.g. `<scene>-arc-loop2`) instead of reusing the bare id.
         
     Returns:
         The complete prompt string
@@ -359,6 +369,16 @@ def build_prompt(context, expected_orders, previous_continuity,
     carry_keys = sorted(config["state"]["carry_keys"])
     for key in carry_keys:
         prompt_lines.append(f"- {key}")
+
+    if known_ids:
+        prompt_lines.append("")
+        prompt_lines.append(
+            "These segment ids are ALREADY PLANNED — do not reuse any of them, "
+            "even for a segment that revisits the same spine scene (a loop/fork "
+            "segment). Suffix a repeat visit instead, e.g. '<scene>-arc-loop2':"
+        )
+        for existing_id in sorted(known_ids):
+            prompt_lines.append(f"- {existing_id}")
 
     prompt_lines.append("")
     prompt_lines.append("Example of one correctly-shaped segment:")

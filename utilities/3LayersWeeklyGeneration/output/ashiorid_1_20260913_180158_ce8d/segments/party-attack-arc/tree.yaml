@@ -1,0 +1,144 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'Uninvited guests storm the party, causing chaos and panic. The four must
+    defend '
+  summary: Uninvited guests storm the party, causing chaos and panic. The four must
+    defend themselves and uncover the attackers' motives. They discover a connection
+    to the Bahadur and their nefarious plans, putting the weight of the world's fate
+    on their shoulders.
+  continuity_in: The manor starts to burn, forcing them to flee.
+  continuity_out: They escape the burning manor and find themselves in a subbasement
+    with Grovley.
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - party-attack-arc-n0
+  - party-attack-arc-n1
+  slots: null
+party-attack-arc-n0:
+  node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  order: 0
+  depth: 1
+  title: The Assault Begins
+  summary: Uninvited guests storm the party, causing chaos and panic. The four must
+    defend themselves and uncover the attackers' motives. They discover a connection
+    to the Bahadur and their nefarious plans, putting the weight of the world's fate
+    on their shoulders.
+  continuity_in: The manor starts to burn, forcing them to flee.
+  continuity_out: The guests are driven back, but the attack has only just begun.
+  target_words: 540
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: party-attack-arc-n0-assault-1
+    kind: ambient
+    prompt: The sound of breaking glass echoes through the manor as masked figures
+      burst through the windows, their weapons drawn.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-assault-2
+    kind: ambient
+    prompt: Leena's sword clashes with a dagger, her movements fluid and desperate
+      as she fights off an attacker.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-assault-3
+    kind: ambient
+    prompt: Chadwick's axe crashes down, sending an attacker sprawling, but more are
+      closing in from all sides.
+    lore:
+    - the-bahadur
+    participants:
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-assault-4
+    kind: ambient
+    prompt: The manor begins to burn, smoke filling the air as the attackers' flames
+      spread through the halls.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-assault-5
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+party-attack-arc-n1:
+  node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  order: 1
+  depth: 1
+  title: Escape to the Subbasement
+  summary: The four escape the burning manor and find themselves in a subbasement
+    with Grovley. Here they must regroup and plan their next move while the chaos
+    continues above.
+  continuity_in: The guests are driven back, but the attack has only just begun.
+  continuity_out: They discover hidden passages leading to the heart of the Bahadur's
+    operation.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: party-attack-arc-n1-escape-1
+    kind: ambient
+    prompt: The sound of crackling flames echoes as Leena and the others flee the
+      burning manor, their footsteps urgent on the stone floor.
+    lore:
+    - the-bahadur
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n1-escape-2
+    kind: ambient
+    prompt: Chadwick's axe clatters to the ground as he grabs for a loose stone, his
+      breath ragged with panic and exertion.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n1-escape-3
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob

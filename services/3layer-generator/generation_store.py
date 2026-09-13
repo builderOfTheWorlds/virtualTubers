@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS generation_jobs (
     status           TEXT NOT NULL,
     params           JSONB NOT NULL DEFAULT '{}'::jsonb,
     progress         JSONB,
+    llm_progress     JSONB,
     result           JSONB,
     error            TEXT,
     cancel_requested BOOLEAN NOT NULL DEFAULT FALSE,
@@ -65,6 +66,17 @@ CREATE INDEX IF NOT EXISTS idx_generation_jobs_status_created
 -- framework in this project — ADD COLUMN IF NOT EXISTS is how every table
 -- here evolves in place (see voiced_narration below).
 ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS run TEXT;
+
+-- Live token-decode progress for the CURRENT in-flight LLM call, distinct
+-- from `progress` (done/total WORK UNITS — segments planned, tree nodes
+-- expanded). Sub-call granularity: {"model": ..., "n_decoded": N,
+-- "tokens_per_s": X, "started_at": ..., "updated_at": ...} — written every
+-- ~2s while a streaming completion is in flight (see concurrent_llm.py's
+-- complete_streaming), cleared (NULL) once it finishes. Arc-stage only: the
+-- segment/dialogue stages run several LLM calls concurrently, where a
+-- single "tokens decoded" number would be ambiguous about which call it
+-- describes.
+ALTER TABLE generation_jobs ADD COLUMN IF NOT EXISTS llm_progress JSONB;
 
 CREATE TABLE IF NOT EXISTS generation_artifacts (
     id          BIGSERIAL PRIMARY KEY,
@@ -99,9 +111,9 @@ CREATE TABLE IF NOT EXISTS generator_configs (
 TERMINAL_STATUSES = frozenset({"completed", "failed", "cancelled"})
 
 _JOB_COLUMNS = (
-    "id, pack, run, stage, profile, status, params, progress, result, error, "
-    "cancel_requested, submitted_by, created_at, started_at, finished_at, "
-    "heartbeat_at"
+    "id, pack, run, stage, profile, status, params, progress, llm_progress, "
+    "result, error, cancel_requested, submitted_by, created_at, started_at, "
+    "finished_at, heartbeat_at"
 )
 
 
@@ -292,6 +304,27 @@ def update_progress(job_id: str, progress: dict) -> None:
                 "UPDATE generation_jobs SET progress = %s, heartbeat_at = now() "
                 "WHERE id = %s",
                 (Json(progress), job_id),
+            )
+    finally:
+        conn.close()
+
+
+def update_llm_progress(job_id: str, llm_progress: dict | None) -> None:
+    """Write the live token-decode progress document and bump the
+    heartbeat. TWO COLUMNS ONLY, same discipline as update_progress — a
+    concurrent cancel or status write must never be clobbered by this.
+    Pass None to clear the field once the streaming call finishes (a
+    stale in-flight snapshot must never linger after the call it
+    described has ended). An unknown id updates zero rows — a no-op."""
+    from psycopg2.extras import Json
+    log.debug("update_llm_progress: job_id=%s", job_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE generation_jobs SET llm_progress = %s, heartbeat_at = now() "
+                "WHERE id = %s",
+                (Json(llm_progress) if llm_progress is not None else None, job_id),
             )
     finally:
         conn.close()

@@ -177,6 +177,46 @@ def fallback_narration(scene, max_words):
     return _trim_words(line, max_words)
 
 
+def show_bindings(script):
+    """Extract the show header's per-slot bindings ONCE, for every caller.
+
+    Returns (names_by_slot, voices_by_slot):
+        names_by_slot  — slot id -> persona DISPLAY name (§7.1, §14 risk row 2:
+                         `show.persona.<slot>.name` is authoritative when
+                         present, so a show's cast can never be mislabeled by
+                         a stale worker config).
+        voices_by_slot — slot id -> SYMBOLIC registry voice name (§7.2), fed
+                         straight to TTSClient.synthesize(voice_name=…).
+
+    Deliberately tolerant: a missing, non-dict or persona-less `show` block
+    yields two empty dicts, which restores today's behaviour exactly (§7.4) —
+    recorded-session replays have no header at all. A malformed header must
+    never be the reason a show fails to air, so nothing here raises; entries
+    that aren't usable are simply skipped.
+    """
+    show = (script or {}).get("show") if isinstance(script, dict) else None
+    if not isinstance(show, dict):
+        return {}, {}
+    persona = show.get("persona")
+    if not isinstance(persona, dict):
+        return {}, {}
+
+    names, voices = {}, {}
+    for slot, binding in persona.items():
+        if not isinstance(binding, dict):
+            continue  # a scalar persona entry is malformed — ignore, don't die
+        name = binding.get("name")
+        if name:
+            names[str(slot)] = str(name)
+        voice = binding.get("voice")
+        if voice:
+            # A symbolic NAME only. A header carrying model_path/voice_id is
+            # rejected upstream at upload (§8.1); here we just never look for
+            # one, so platform detail can't sneak in through story data.
+            voices[str(slot)] = str(voice)
+    return names, voices
+
+
 def _display_name(speaker, speaker_names, worker_name, boss_name):
     """Resolve a scene's speaker id to the name it's voiced/labeled under:
     an explicit `speaker_names` override, then the two backward-compat
@@ -226,7 +266,8 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
 
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None, verbatim=False):
+                 progress=None, speaker_names=None, verbatim=False,
+                 voice_names=None):
     """Build the voiced show for one airing.
 
     Returns plan_scenes()' scenes, each annotated with:
@@ -243,10 +284,25 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
     the estimated screen time — see `narrate_scene`. The audio-anchored
     pacing in replay.py adapts either way, so a longer verbatim line just
     holds the scene a little longer rather than desyncing.
+
+    The script's optional `show` header (§7.1) is read here through
+    show_bindings():
+      * persona DISPLAY names layer OVER `speaker_names` — the show casting a
+        slot is authoritative over worker config (§14, risk row 2);
+      * per-slot SYMBOLIC voice names (§7.2) are passed to synthesize(), which
+        resolves them through the registry.
+    `voice_names` lets a caller supply/override that slot -> voice-name map
+    directly (e.g. a tile that already parsed the header); it wins over the
+    header so an explicit argument is never silently ignored. Both are
+    optional, and an episode with no header behaves exactly as before (§7.4).
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
     workdir.mkdir(parents=True, exist_ok=True)
+    header_names, header_voices = show_bindings(script)
+    # Config first, header on top: the persona name wins where both exist.
+    speaker_names = {**(speaker_names or {}), **header_names}
+    voice_names = {**header_voices, **(voice_names or {})}
     scenes = plan_scenes(script.get("events", []))
     for index, scene in enumerate(scenes):
         seconds = scene_visual_seconds(scene, max_output_lines, speed)
@@ -258,9 +314,17 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
         if tts is None:
             continue
         try:
+            # The kwarg is only passed when this slot is actually cast by a
+            # header. Uncast slots take the exact pre-v1.1 call — which also
+            # keeps every duck-typed `tts` (test fakes, thin wrappers) that
+            # predates `voice_name` working untouched (§7.4).
+            extra = {}
+            voice_name = voice_names.get(scene["speaker"])
+            if voice_name:
+                extra["voice_name"] = voice_name
             scene["audio"] = tts.synthesize(
                 scene["narration"], workdir / f"scene_{index:03d}.wav",
-                speaker=scene["speaker"],
+                speaker=scene["speaker"], **extra,
             )
         except Exception as exc:
             notify(f"scene {index + 1}: TTS failed ({exc}) — playing silent")

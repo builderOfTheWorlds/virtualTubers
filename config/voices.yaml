@@ -1,0 +1,45 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# config/voices.yaml — the symbolic voice registry
+# (roundtable_stream_design.md v1.1 §7.2)
+#
+# Story data (a show header's `show.persona.<slot>.voice`) references ONLY the
+# names in this file. It never carries a model_path, voice_id or base_url — those
+# are platform details and a show header containing one is rejected at upload
+# (§8.1 rule 5).
+#
+# Why a registry exists at all: message-api validates uploads but has NO
+# /data/voices mount, so it cannot stat a voice file. Membership in this file is
+# a config lookup, which it CAN do. The container that actually synthesizes
+# resolves the same name to the backend fragment below. One source of truth,
+# two tiers of validation (§8.1 V1 name check, §8.2 V2 inventory check).
+#
+# An entry's value is a `voice_cfg` FRAGMENT — exactly what TTSClient.voice_for
+# merges over the base voice config — so it is provider-agnostic by
+# construction: model_path for piper, voice_id for openai/elevenlabs.
+#
+# Names describe a VOICE, never a character ("alto_bright", not
+# "alcinoe_voice"): the same registry serves every campaign, and the
+# persona->voice binding lives in the show header where it can change per show.
+#
+# Adding a voice: drop the .onnx in voices/, add one line here, re-run
+#   python3 app/voice_registry.py --verify
+# ──────────────────────────────────────────────────────────────────────────────
+version: 1
+
+voices:
+  # Narrator-leaning (the GM / tuber_0 slot usually takes one of these)
+  narrator_warm:   {provider: piper, model_path: /data/voices/en_US-lessac-medium.onnx}
+  narrator_plain:  {provider: piper, model_path: /data/voices/en_US-lessac-low.onnx}
+
+  # Higher register
+  alto_bright:     {provider: piper, model_path: /data/voices/en_US-kathleen-low.onnx}
+  alto_warm:       {provider: piper, model_path: /data/voices/en_US-kristin-medium.onnx}
+
+  # Mid register
+  tenor_low:       {provider: piper, model_path: /data/voices/en_US-danny-low.onnx}
+  tenor_high:      {provider: piper, model_path: /data/voices/en_US-ryan-high.onnx}
+
+  # Lower register
+  baritone_mid:    {provider: piper, model_path: /data/voices/en_US-joe-medium.onnx}
+  baritone_soft:   {provider: piper, model_path: /data/voices/en_US-bryce-medium.onnx}
+  bass_low:        {provider: piper, model_path: /data/voices/en_US-ryan-low.onnx}

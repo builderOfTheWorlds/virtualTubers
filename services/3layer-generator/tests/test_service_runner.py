@@ -88,6 +88,12 @@ class FakeStore:
             self.jobs[job_id]["heartbeat_at"] = "t-beat"
             self.calls.append(("update_progress", job_id))
 
+    def update_llm_progress(self, job_id, llm_progress):
+        if job_id in self.jobs:
+            self.jobs[job_id]["llm_progress"] = llm_progress
+            self.jobs[job_id]["heartbeat_at"] = "t-beat"
+            self.calls.append(("update_llm_progress", job_id))
+
     def finish(self, job_id, status, result=None, error=None):
         row = self.jobs.get(job_id)
         if row is None or row["status"] in ("completed", "failed", "cancelled"):
@@ -218,7 +224,7 @@ def ctx(tmp_path, store):
     # "'str' object has no attribute 'genre'".
     loaded_pack = object()
 
-    def fake_plan_arc(pack, config, llm, vocab, out_path):
+    def fake_plan_arc(pack, config, llm, vocab, out_path, on_llm_progress=None):
         assert pack is loaded_pack, (
             "layer functions take the LOADED PACK object, not the pack name")
         calls["arc"].append(out_path)
@@ -629,7 +635,7 @@ def test_the_context_carries_the_config_dict_not_the_module(tmp_path):
 
 def _plan_arc_writing(segments):
     """A fake plan_arc that returns normally after writing `segments`."""
-    def fake(pack, config, llm, vocab, out_path):
+    def fake(pack, config, llm, vocab, out_path, on_llm_progress=None):
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(yaml.safe_dump({"segments": segments}),
                             encoding="utf-8")

@@ -1,0 +1,139 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Worker config: tuber_0 — the GM / roundtable slot
+# (roundtable_stream_design.md v1.1 §4, §9)
+#
+# This is the 7th container. Two jobs, one process tree:
+#
+#   1. DIRECTOR of every roundtable show. Its replay_pane runs as the duet
+#      director (docs/duet_replay.md): it prepares the airing (LLM narration +
+#      TTS for EVERY speaker in the cast), persists it to voiced_narration,
+#      invites the six character slots, then cues scene-by-scene. Because it does
+#      all the synthesis for all speakers, this container MUST have the voices
+#      mount — without it there is no audio on ANY channel (§9).
+#
+#   2. A CHARACTER in its own right (§1.1). tuber_0 has a tile, a voice, an
+#      avatar and lines like any other slot. Its lines are played by its TILE,
+#      not by the director process — the director owns no scenes and is silent
+#      (§4.1). Its pane instead serves as the show log (§6.1).
+#
+# Slot vs persona: everything here is SLOT-level platform identity. The GM's
+# per-show character NAME and VOICE come from the show header (§7.1) and are
+# never written here — `speaker_names` below is only the fallback for an episode
+# that carries no show header (§7.4).
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  # The handoff protocol's role gate (app/agent.py) branches on this. "roundtable"
+  # is a new role that none of the dev-team handlers match, so the GM ignores
+  # commit_notification / bug_report / test_passed etc. and only handles the
+  # any-role messages it actually needs (replay_request, replay_ready, ...).
+  # Design §2.2 step 3 decision (a): role-gating stays, read from config.
+  role: roundtable
+  name: "GM"
+  system_prompt: |
+    You are the GM — the game master and director of a live-streamed roundtable
+    show. You do not write code. You run the table.
+
+    Your responsibilities:
+    - Direct each show: cue the cast, keep scenes moving, close cleanly
+    - Narrate connective tissue between characters' beats
+    - Keep the audience oriented: who is speaking, where we are in the story
+
+    Rules:
+    - You are a narrator, not a participant — never speak for another character
+    - Keep narration to 1-2 sentences; the cast carries the scene
+    - Never break the fiction to discuss infrastructure
+
+  tick_rate_ms: 8000
+  max_context_tokens: 8000
+
+llm:
+  provider: ollama
+  base_url: "http://100.37.208.112:11434"
+  model: "qwen2.5:7b-instruct-q4_K_M"
+  temperature: 0.6
+  max_tokens: 1024
+
+# ── Voice ─────────────────────────────────────────────────────────────────────
+# The GM synthesizes for EVERY speaker in a show, so every slot needs an entry
+# here as the fallback pool. A show header's registry voice (§7.2) overrides any
+# of these per show; these are what a header-less episode uses (§7.4).
+#
+# Precedence, highest first (validated against the real TTSClient):
+#   show header registry voice  >  voice.speakers[slot]  >  this base config
+voice:
+  provider: piper
+  model_path: "/data/voices/en_US-lessac-medium.onnx"   # GM's own default voice
+  voice_id: ""
+  speakers:
+    tuber_0:
+      model_path: "/data/voices/en_US-lessac-medium.onnx"
+    tuber_1:
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_2:
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_3:
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_4:
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_5:
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_6:
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format) must keep working
+    # unchanged — design §2 rule 5. Their speaker ids are not slots.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  # Slot-neutral display fallbacks. Real character names arrive per-show in the
+  # show header (§7.1); these only appear for a header-less episode, and being
+  # visibly slot-shaped is deliberate — it makes a missing header obvious on
+  # screen rather than silently showing a wrong name (§14 risk row 2).
+  speaker_names:
+    tuber_0: "tuber_0"
+    tuber_1: "tuber_1"
+    tuber_2: "tuber_2"
+    tuber_3: "tuber_3"
+    tuber_4: "tuber_4"
+    tuber_5: "tuber_5"
+    tuber_6: "tuber_6"
+  boss_name: "Ashiorid"
+  rate: 1.0
+  verbosity: 0.9
+  verbatim: true
+
+avatar:
+  provider: builtin
+  name: "GM"
+  title: "Game Master"
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: roundtable
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  key: "test-tuber0"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "tuber_0"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "tuber_0"
