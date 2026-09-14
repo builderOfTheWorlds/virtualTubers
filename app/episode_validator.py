@@ -256,6 +256,41 @@ def _check_show(script):
                 f"'show.slots' ({', '.join(sorted(cast))}) — cast the slot or "
                 f"reassign the line")
 
+    # Optional audio block (docs/voice_gate.md): how many voices may sound at
+    # once on this show (default 1 = strict serialization) and the deliberate
+    # silence between lines. Checked statically here — the gate itself reads
+    # the same key at air time, so a value that fails here can never reach a
+    # live show, and a value that passes here is guaranteed sane.
+    audio = show.get("audio")
+    if audio is not None:
+        if not isinstance(audio, dict):
+            raise EpisodeInvalid(
+                f"'show.audio' must be an object (e.g. "
+                f"{{\"max_concurrent\": 1, \"line_gap_s\": 0.25}}), got "
+                f"{type(audio).__name__}")
+        max_concurrent = audio.get("max_concurrent")
+        if max_concurrent is not None:
+            if isinstance(max_concurrent, bool) or not isinstance(max_concurrent, int):
+                raise EpisodeInvalid(
+                    f"'show.audio.max_concurrent' must be an integer number of "
+                    f"simultaneous voices, got {type(max_concurrent).__name__}")
+            if not (1 <= max_concurrent <= ROSTER_SIZE):
+                raise EpisodeInvalid(
+                    f"'show.audio.max_concurrent' is {max_concurrent}, outside "
+                    f"the valid range 1..{ROSTER_SIZE} — 1 means one voice at a "
+                    f"time (the default); go higher for deliberate overlap, "
+                    f"but never more than the roster can supply")
+        line_gap_s = audio.get("line_gap_s")
+        if line_gap_s is not None:
+            if isinstance(line_gap_s, bool) or not isinstance(line_gap_s, (int, float)):
+                raise EpisodeInvalid(
+                    f"'show.audio.line_gap_s' must be a number of seconds, "
+                    f"got {type(line_gap_s).__name__}")
+            if not (0.0 <= float(line_gap_s) <= 60.0):
+                raise EpisodeInvalid(
+                    f"'show.audio.line_gap_s' is {line_gap_s}s, outside the "
+                    f"valid range 0..60 — 0 means back-to-back lines")
+
 
 def validate_episode(script, name=None):
     """Validate an uploaded episode end to end.

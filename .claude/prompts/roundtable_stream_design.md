@@ -16,6 +16,13 @@
 
 ## 0. Revision notes (v1.0 → v1.1)
 
+**v1.2 (2026-09-13) — voice overlap fix:** §16 adds the *voice gate* (one
+voice at a time on the shared roundtable sink — `app/voice_gate.py`), the
+correct director ownership rule (the director never owns a line a local tile
+plays — closing the GM double-play), and the `show.audio` escape hatch
+(`max_concurrent` / `line_gap_s`). Root causes and behaviour are pinned in
+`docs/voice_gate.md`.
+
 Seven findings from the v1.0 review. Four were false claims about existing code;
 three were design gaps. Two of the fixes made the build *smaller*, not bigger.
 
@@ -901,3 +908,98 @@ makes the log the director's own pane, so there is no second timeline to drift.
 - `docs/control_panel.md` — the operator surface that will need the rehearsal control.
 - `ring_composition_spec.md` — the story-structure spec (context only, separate
   concern).
+- `docs/voice_gate.md` — the one-voice-at-a-time gate, the escape hatch, and
+  the director-ownership rule (§16).
+
+---
+
+## 16. Voice overlap — the gate, the ownership rule, the escape hatch
+
+*Added v1.2 (2026-09-13). Full behaviour spec: `docs/voice_gate.md`.*
+
+The roundtable channel mixes **all** its voices into one Pulse sink (seven
+tiles + the director all `paplay` into `vout`). The v1.1 build left that
+shared bus unserialized. Three concrete failure modes were found
+(2026-09-13, confirmed in code):
+
+| # | Failure | Code location | Hearing |
+|---|---|---|---|
+| A | **Director double-plays the GM line.** Ownership test `cast.get(speaker, self_id) == self_id` is `True` for the GM's own slot *while the GM tile also owns it* → two paplays of the same line into one sink | `replay_pane.py` (annotation loop in `perform_director_request`) | The narrator doubled/smeared — the loudest line on the show |
+| B | **Scene-boundary bleed.** The director cues scene N+1 when its own *silent* render ends; the tile's *audio* (paplay) is slightly longer in reality (spawn, pulse buffering) → N+1 starts under N's tail | `replay.py` `_perform_scene` / the two independent hold clocks | Voices bleeding into each other between lines |
+| C | **No escape hatch.** Nothing anywhere to allow *deliberate* overlap (duet/edge case) or to forbid it explicitly | — (0 matches for `max_concurrent`/gate) | No way to express intent either way |
+
+### 16.1 The rule — one voice at a time
+
+`app/voice_gate.py`: a counting lock over N **seat files** using
+`fcntl.flock`. A voice line acquires the lowest free seat *before* its audio
+starts and releases it *after* the audio has fully finished (`wait_extra`
+returns), on every exit path (stop / exception / pacer-off).
+
+- **N=1 (default)** → the second voice line cannot start while the first is
+  audible → overlap is *impossible*, not merely improbable.
+- **Cross-process**: tiles and director are separate processes; they lock the
+  same seat files → the bound holds between them (the flock is the arbiter,
+  not any one process's goodwill).
+- **Crash-safe**: the kernel frees a flock when the holder dies — a killed
+  tile releases its seat with zero cleanup (this is why it's a file lock,
+  not a lease server).
+- **Never withholds audio**: acquire is bounded (default 90s ≥ longest legal
+  line); timeout ⇒ WARN + play anyway. Unusable gate dir ⇒ WARN + play as if
+  no gate. The gate can *delay*, never *delete*.
+- **Auditable**: every acquire/release is appended to `events.jsonl` in the
+  gate dir — the on-air sequence can be reconstructed from one file.
+
+### 16.2 The ownership rule (closes A)
+
+> **The director never owns a line that a local tile (or invited remote
+> follower) is cast to. Exactly one performer per line — the one whose tile
+> shows the speaking bubble.**
+
+Implemented in `replay_pane.perform_director_request`: the old
+`cast.get(speaker, self_id) == self_id` fallback now additionally requires
+that the line is **not** mapped to a tile by the cast (and, on the follower
+side, the same invariant holds by construction — a follower owns only lines
+whose cast value is itself). A line cast to *no* tile (a narration speaker
+absent from the cast, e.g. the Ashiorid duet's non-slot speakers) stays
+owned by the director — it would otherwise be heard on **no** channel.
+
+### 16.3 The escape hatch (closes C)
+
+```yaml
+# episode.json, next to show.slots / show.cast:
+show:
+  audio:
+    max_concurrent: 2   # how many voices may sound at once (1..7; default 1)
+    line_gap_s: 0.25    # deliberate beat between lines (0..60s; default 0)
+```
+
+Resolution (first sane source wins; bad values degrade, never raise):
+`VOICE_GATE_CONCURRENT` / `VOICE_GATE_LINE_GAP_S` / `VOICE_GATE_ACQUIRE_TIMEOUT_S`
+(env) → `show.audio` (episode) → `voice.audio` (worker config) → defaults
+(1 seat, 0s gap, 90s acquire timeout, container-private gate dir).
+Bound-checking is shared by the validator (upload, `episode_validator._check_show`:
+`max_concurrent` 1..7, `line_gap_s` 0..60) and the runtime, so a passing
+header is guaranteed sane on air.
+
+### 16.4 Container scope (deliberate, not an oversight)
+
+The default gate dir is the container's own /tmp, because voices only mix
+inside a single Pulse sink and a single container: the GM container's
+director + its seven tiles (the only processes that can actually overlap)
+share it; character containers each have their own (uncontended, correct).
+Not /data/world-state (shared by ALL workers — a roundtable line must not
+wedged a character channel's line behind the acquire timeout) and not
+$TILE_RELAY_DIR (a pure-file wire whose exact contents the suite asserts).
+Overrides: `VOICE_GATE_DIR` env or `show.audio.gate_dir`.
+
+### 16.5 Files
+
+- `app/voice_gate.py` — the gate (flock seat files, Seat, resolve_voice_gate,
+  layered defaults)
+- `app/replay.py` `_perform_scene` — acquire before `play_wav`, release after
+  the audio is fully done (stop/exception/pacer-off paths included)
+- `app/replay_pane.py` — ownership rule (§16.2) + `build_voice_gate` (director,
+  follower, solo)
+- `app/tile_pane.py` — gate into every tile's Performer
+- `tests/test_voice_gate.py`, `tests/test_director_tile_fanout.py` — new suites
+- `docs/voice_gate.md` — operator-facing behaviour spec

@@ -164,7 +164,7 @@ class Performer:
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
                  state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
                  on_scene_start=None, wait_for_scene=None, speaker_names=None,
-                 boss_name=None):
+                 boss_name=None, voice_gate=None, line_gap_s=0.0):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
@@ -183,6 +183,16 @@ class Performer:
         # there — a bus hiccup must not take the show down.
         self.on_scene_start = on_scene_start
         self.wait_for_scene = wait_for_scene
+        # Voice gate (docs/voice_gate.md): a cross-process "one voice at a
+        # time" semaphore. When set, every OWNED voice line acquires a seat
+        # before starting and releases it only after the audio has finished,
+        # so the next voice line (this process or a sibling container in a
+        # duet) physically cannot start underneath this one. None (default)
+        # = no gate, today's behaviour — the caller decides, per show.
+        self.voice_gate = voice_gate
+        # Deliberate silence between consecutive lines on this performer
+        # (escape-hatch tuning; 0.0 = back-to-back as before).
+        self.line_gap_s = max(0.0, float(line_gap_s))
         # Multi-speaker duet display names (docs/revoice.md): speaker id ->
         # on-screen name, mirroring revoice._display_name. _display_name is
         # the label _on_assistant_text actually prints; _perform_scene sets
@@ -407,6 +417,7 @@ class Performer:
                 self._avatar("idle", action="listening to the show")
 
         playback, started, hold_seconds = None, None, None
+        seat = None
         if owned and audio is not None and audio.duration > 0:
             natural = sum(
                 estimate_event_seconds(e, self.max_output_lines)
@@ -414,6 +425,13 @@ class Performer:
             ) / self.pacer.speed
             self.pacer.scale = min(MAX_SCENE_SCALE,
                                    max(MIN_SCENE_SCALE, natural / audio.duration))
+            # Voice gate (docs/voice_gate.md): hold a seat from the moment the
+            # player is spawned until the line has fully finished, so no other
+            # voice line in this container/process group can start under it.
+            # None when the gate is disabled (gate unavailable, timeout) — the
+            # line still plays; that is the liveness guarantee by design.
+            if self.voice_gate is not None and self.pacer.enabled:
+                seat = self.voice_gate.acquire()
             playback = play_wav(audio.audio_path)
             started = time.monotonic()
         elif not (owned and audio is not None) and target_duration is not None and target_duration > 0:
@@ -434,6 +452,8 @@ class Performer:
             # ReplayStopped handler can't take since `playback` is local.
             if playback is not None:
                 playback.stop()
+            if seat is not None:
+                seat.release()
             raise
         finally:
             self.pacer.scale = 1.0
@@ -442,13 +462,26 @@ class Performer:
             # Visuals done first (scale clamped, or estimate ran short):
             # hold the scene until the spoken line lands.
             if self.pacer.enabled:
-                wait_extra(playback, started, audio.duration)
+                try:
+                    wait_extra(playback, started, audio.duration)
+                finally:
+                    # The seat is held until the audio has FINISHED — that
+                    # is what makes the next voice line wait (docs/
+                    # voice_gate.md). Released even on a mid-wait stop.
+                    if seat is not None:
+                        seat.release()
             else:
                 playback.stop()
+                if seat is not None:
+                    seat.release()
         elif hold_seconds is not None and self.pacer.enabled:
             remaining = hold_seconds - (time.monotonic() - started)
             if remaining > 0:
                 time.sleep(remaining)
+        if playback is not None and self.pacer.enabled and self.line_gap_s > 0:
+            # Deliberate beat of air between lines (show tuning escape hatch;
+            # goes through the pacer so an operator stop still lands).
+            self.pacer.sleep(self.line_gap_s)
 
     # ── top level ────────────────────────────────────────────────────────────
     def perform(self, script, show=None, start=0, limit=None):

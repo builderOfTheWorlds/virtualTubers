@@ -492,6 +492,149 @@ def test_relay_write_failure_never_takes_the_show_down(
     assert "tile relay write failed" in capsys.readouterr().err
 
 
+# ── audio ownership: exactly one performer per line (double-play regression) ──
+class _Audio:
+    """Minimal Narration stand-in: the director's ownership loop only reads
+    .duration, and _perform_scene's owned branch is what the fix targets."""
+
+    def __init__(self, duration):
+        self.audio_path = Path("scene.wav")
+        self.duration = duration
+
+
+def test_director_is_silent_on_a_line_its_own_tile_will_play(
+        library, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer):
+    """THE double-play regression: with the roundtable cast {boss: tuber_0,
+    coder: tuber_1}, the old formula (cast.get(speaker, self_id) == self_id)
+    gave the DIRECTOR (tuber_0) owned=True on the `boss` line while tile
+    tuber_0 ALSO owned it — two paplays of the same line into one vout sink,
+    the 'characters talking over each other' heard on air. After the fix the
+    director must strip its own audio for every line the cast maps to a tile
+    slot, and keep only target_duration for pacing (it is silent, §4.1)."""
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    def voiced(script, config, workdir, **kwargs):
+        return [
+            {"kind": "boss", "speaker": "boss", "narration": "gm line",
+             "events": [{"type": "assistant_text", "text": "gm line"}],
+             "audio": _Audio(1.5)},
+            {"kind": "coder_talk", "speaker": "coder", "narration": "coder line",
+             "events": [{"type": "assistant_text", "text": "coder line"}],
+             "audio": _Audio(2.5)},
+        ]
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", voiced)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: AIRING)
+    _become_ready(monkeypatch, relay_files)
+
+    assert _run_director() is True
+    show = FakePerformer.instances[-1].performed_show
+    gm_line = next(s for s in show if s["speaker"] == "boss")
+    coder_line = next(s for s in show if s["speaker"] == "coder")
+    # Neither line is owned by the director — both are tile-mapped.
+    assert gm_line["owned"] is False and gm_line["audio"] is None
+    assert coder_line["owned"] is False and coder_line["audio"] is None
+    # ...but target_duration IS kept, so the director's silent clock still
+    # paces the tiles correctly (the cue ratchet depends on it).
+    assert gm_line["target_duration"] == 1.5
+    assert coder_line["target_duration"] == 2.5
+
+
+def test_director_still_owns_a_line_no_tiles_are_cast_for(
+        library, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer):
+    """Counterpart of the double-play fix: a speaker the cast does NOT map to
+    any slot (e.g. a header narrator 'narrator', or the header-less 'boss'
+    in a two-speaker duet where the cast is {coder, tester}) must stay owned
+    by the DIRECTOR, or that line would be heard on NO channel. The fix must
+    silence the director only for lines a tile actually plays — here we prove
+    it by casting a speaker to no slot at all (speaker 'narrator' absent from
+    CAST, whose values are all local tiles)."""
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    def voiced(script, config, workdir, **kwargs):
+        return [
+            # 'narrator' is NOT in CAST → cast.get falls back to self_id and
+            # cast.get("narrator") is None (not a tile) → director owns it.
+            {"kind": "boss", "speaker": "narrator", "narration": "narration",
+             "events": [{"type": "assistant_text", "text": "narration"}],
+             "audio": _Audio(1.0)},
+            {"kind": "coder_talk", "speaker": "coder", "narration": "tile line",
+             "events": [{"type": "assistant_text", "text": "tile line"}],
+             "audio": _Audio(2.0)},
+        ]
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", voiced)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: AIRING)
+    _become_ready(monkeypatch, relay_files)
+
+    assert _run_director() is True
+    show = FakePerformer.instances[-1].performed_show
+    narration = next(s for s in show if s["speaker"] == "narrator")
+    tile_line = next(s for s in show if s["speaker"] == "coder")
+    assert narration["owned"] is True and narration["audio"] is not None
+    assert tile_line["owned"] is False and tile_line["audio"] is None
+
+
+# ── voice gate escape hatch: show.audio flows into the gate ──────────────────
+def test_build_voice_gate_honours_show_audio_header(monkeypatch, tmp_path):
+    """show.audio.max_concurrent=N (the deliberate-overlap escape hatch) must
+    resolve to N seats; the default (no audio block) must stay at 1 seat —
+    one voice at a time, so two lines can never sound together. Same gate
+    dir for all holders, so the seat count really bounds concurrency."""
+    monkeypatch.setenv("VOICE_GATE_DIR", str(tmp_path))
+
+    gate_off, gap_off = replay_pane.build_voice_gate(
+        {"show": {"slots": ["tuber_0"]}}, None, tag="default")
+    gate_on, gap_on = replay_pane.build_voice_gate(
+        {"show": {"slots": ["tuber_0"], "audio": {"max_concurrent": 2,
+                                                   "line_gap_s": 0.25}}},
+        None, tag="duet")
+
+    assert gate_off.seats == 1 and gap_off == 0.0
+    assert gate_on.seats == 2 and gap_on == 0.25
+    assert Path(gate_off.gate_dir) == Path(gate_on.gate_dir) == Path(
+        os.environ["VOICE_GATE_DIR"])
+
+    # Two seats: exactly two lines may sound together, the third waits.
+    s1 = gate_on.acquire()
+    s2 = gate_on.acquire()
+    assert {s1.seat, s2.seat} == {0, 1}
+    assert voice_gate_probe_acquire(gate_on) is None  # both taken — blocked
+    s1.release()
+    s2.release()
+
+    # One-seat default: exactly one line at a time (the no-overlap guarantee).
+    first = gate_off.acquire()
+    assert first is not None
+    assert voice_gate_probe_acquire(gate_off) is None  # second is blocked
+    first.release()
+    assert gate_off.acquire() is not None  # free again after release
+
+
+def voice_gate_probe_acquire(gate):
+    """Acquire via a fresh gate with a short timeout so a 'blocked' test
+    can't hang on a contended seat."""
+    probe = type(gate)(gate.gate_dir, seats=gate.seats,
+                       acquire_timeout_s=0.15, tag="probe")
+    return probe.acquire()
+
+
+def test_build_voice_gate_degrades_when_dir_unusable(monkeypatch, tmp_path, capsys):
+    """The gate must never withhold audio: an unusable dir degrades to
+    (None, gap) so the show runs exactly as before."""
+    blocker = tmp_path / "file"
+    blocker.write_text("x", encoding="utf-8")
+    monkeypatch.setenv("VOICE_GATE_DIR", str(blocker / "nope"))
+    gate, gap = replay_pane.build_voice_gate({"show": {"slots": ["tuber_0"]}}, None)
+    assert gate is None and gap == 0.0
+
+
 # ── coexistence with the Kafka fan-out ───────────────────────────────────────
 def test_roundtable_cast_never_reaches_kafka_even_with_tile_relay_failures(
         library, airing, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer):

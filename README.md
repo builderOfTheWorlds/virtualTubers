@@ -121,6 +121,18 @@ Full config-section reference, worker on/off control internals, and the
 config-driven tmux layout system (which maps directly onto Kubernetes
 ConfigMaps): **[docs/configuration.md](docs/configuration.md)**.
 
+### One voice at a time (voice gate)
+
+On the roundtable channel every tile *and* the director feed one shared
+Pulse sink, so by default **only one voice line can sound at a time** — a
+new line physically cannot start before the previous one has finished
+(`fcntl.flock` seat files shared by the container's processes; crash-safe,
+never withholds audio). Deliberate overlap is a per-episode config escape
+hatch: `show.audio.max_concurrent: 2..7` (+ `line_gap_s`) in the episode
+header, or `VOICE_GATE_CONCURRENT` at runtime —
+**[docs/voice_gate.md](docs/voice_gate.md)** (rules, escape hatch, event log
+for reconstructing the on-air sequence).
+
 ## Project Structure
 
 Top level:

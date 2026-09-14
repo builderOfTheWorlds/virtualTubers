@@ -526,6 +526,13 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
         # from the first frame to the last.
         renderer = TileRenderer(slot, state_path)
         renderer.draw()
+        # Voice gate (docs/voice_gate.md): all seven tiles + the director in
+        # this container share one gate (the container's own /tmp), so a
+        # tile cannot start its line while a sibling tile's line is still
+        # sounding — the roundtable gets "one voice at a time" (default 1
+        # seat; show.audio.max_concurrent or VOICE_GATE_CONCURRENT allows
+        # deliberate overlap).
+        gate, line_gap_s = replay_pane.build_voice_gate(script, config, tag=f"tile:{slot}")
         performer = Performer(
             out=renderer,
             pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
@@ -535,6 +542,8 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
             wait_for_scene=wait_for_scene,
             speaker_names=voice.get("speaker_names") or {},
             boss_name=voice.get("boss_name"),
+            voice_gate=gate,
+            line_gap_s=line_gap_s,
         )
         performer.perform(script, show=show)
         # Leave the final frame up (the caller holds it for

@@ -135,6 +135,32 @@ def _resolve_replay_ready_file():
     return os.environ.get("REPLAY_READY_FILE") or DEFAULT_REPLAY_READY_FILE
 
 
+def build_voice_gate(script, config, tag="worker"):
+    """The voice gate for one airing (docs/voice_gate.md), from the layered
+    sources in voice_gate.resolve_voice_gate: VOICE_GATE_* env (whole stack,
+    compose) > the episode's show.audio header (per show) > the worker
+    config's voice.audio (per worker) > defaults (1 seat, 0 gap, shared
+    world-state dir).
+
+    Returns (gate, line_gap_s); gate is None when the gate dir is unusable
+    or flock is unavailable — the show then runs exactly as before (no
+    serialization), which is the required degrade: audio must never be
+    withheld over a broken gate.
+
+    All containers of one duet resolve the SAME gate dir and seat count
+    from the same (script, env) — the default dir lives on the shared
+    world-state named volume, which is what makes the seat a real lock
+    ACROSS containers, not just within one process."""
+    import voice_gate
+    gate_dir, seats, line_gap_s, acquire_timeout_s = voice_gate.resolve_voice_gate(
+        script, config, roster_size=7)
+    gate = voice_gate.VoiceGate(gate_dir, seats=seats,
+                                acquire_timeout_s=acquire_timeout_s, tag=tag)
+    if not gate.available():
+        return None, line_gap_s
+    return gate, line_gap_s
+
+
 def _build_bus_producer(config):
     """Best-effort Kafka producer from a worker config's message_bus
     section — None when unconfigured or construction fails (e.g. Kafka
@@ -649,9 +675,34 @@ def perform_director_request(request, worker_name, state_path, self_id,
         # this worker doesn't own has its audio stripped so it never gets
         # played here, but keeps target_duration so visual pacing still
         # tracks the owner's timing.
+        #
+        # Ownership rule — exactly one performer per line:
+        #   * speaker mapped to a LOCAL TILE slot → the tile owns it
+        #     (design §4.1: "the director owns no scenes and is silent —
+        #     the GM's own lines are played by the GM's TILE"). Before this
+        #     fix the old formula (cast.get(speaker, self_id) == self_id)
+        #     gave owned=True on BOTH the director and the GM tile for the
+        #     GM's own-slot lines → two paplays ~300 ms apart into the same
+        #     Pulse vout sink → "characters talking over each other".
+        #   * speaker mapped to a REMOTE FOLLOWER  → that follower owns it
+        #     (unchanged).
+        #   * speaker not mapped in cast at all (solo, or the "boss"
+        #     narrator in a header-less two-speaker duet) → the DIRECTOR
+        #     must own it, or the line would be heard on no channel at
+        #     all (unchanged).
+        #
+        # The fix: the director owns a line only if the old formula says so
+        # AND the line is NOT mapped to a local tile slot — when the
+        # director's own slot (or any speaker's slot) resolves to a tile,
+        # that tile plays the line and the director stays silent. Lines the
+        # cast does not map to a slot (header-less "boss" narration, etc.)
+        # are unaffected: they fall back to the director exactly as before,
+        # so a non-slot speaker is still audible on a roundtable airing.
+        local_tile_set = set(local_tile_slots)
         for scene in show:
             speaker = scene.get("speaker")
-            owned = cast.get(speaker, self_id) == self_id
+            old_formula = cast.get(speaker, self_id) == self_id
+            owned = old_formula and (cast.get(speaker) not in local_tile_set)
             audio = scene.get("audio")
             scene["owned"] = owned
             if audio is not None:
@@ -763,6 +814,7 @@ def perform_director_request(request, worker_name, state_path, self_id,
             if local_tiles:
                 _write_tile_cues(tiles["relay_dir"], local_tiles, airing_id, index)
 
+        gate, line_gap_s = build_voice_gate(script, config, tag=f"director:{self_id}")
         performer = Performer(
             pacer=Pacer(speed=speed, should_stop=should_stop),
             palette=Palette(enabled=True),
@@ -771,6 +823,8 @@ def perform_director_request(request, worker_name, state_path, self_id,
             on_scene_start=on_scene_start,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
             boss_name=((config or {}).get("voice") or {}).get("boss_name"),
+            voice_gate=gate,
+            line_gap_s=line_gap_s,
         )
         completed = performer.perform(script, show=show)
         _delete_stale_file(stop_file)
@@ -889,6 +943,7 @@ def perform_follower_request(request, worker_name, state_path, self_id,
                     return -1
                 time.sleep(REPLAY_CUE_POLL_INTERVAL_S)
 
+        gate, line_gap_s = build_voice_gate(script, config, tag=f"follower:{self_id}")
         performer = Performer(
             pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
             palette=Palette(enabled=True),
@@ -897,6 +952,8 @@ def perform_follower_request(request, worker_name, state_path, self_id,
             wait_for_scene=wait_for_scene,
             speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
             boss_name=((config or {}).get("voice") or {}).get("boss_name"),
+            voice_gate=gate,
+            line_gap_s=line_gap_s,
         )
         performer.perform(script, show=show)
         _delete_stale_file(stop_file)
@@ -942,6 +999,7 @@ def perform_request(request, worker_name, state_path, default_speed=1.0,
     stop_file = _resolve_replay_stop_file()
     _delete_stale_file(stop_file)
 
+    gate, line_gap_s = build_voice_gate(script, config, tag=f"solo:{name}")
     performer = Performer(
         pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
         palette=Palette(enabled=True),
@@ -949,6 +1007,8 @@ def perform_request(request, worker_name, state_path, default_speed=1.0,
         state_path=state_path,
         speaker_names=((config or {}).get("voice") or {}).get("speaker_names") or {},
         boss_name=((config or {}).get("voice") or {}).get("boss_name"),
+        voice_gate=gate,
+        line_gap_s=line_gap_s,
     )
     with tempfile.TemporaryDirectory(prefix="replay_voice_") as workdir:
         show = None
