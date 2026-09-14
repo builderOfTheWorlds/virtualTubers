@@ -1,5 +1,6 @@
 """
-Tests for the roundtable layout preset (roundtable_stream_design.md v1.1 §5/§6).
+Tests for the roundtable layout preset (roundtable_stream_design.md v1.1 §5/§6,
+updated v1.3 — see config/layouts/roundtable.yaml header for the "why").
 
 Unlike tests/test_build_layout.py — which builds synthetic panels/layouts under
 tmp_path to exercise the ENGINE — this module points the same engine at the REAL
@@ -45,48 +46,23 @@ def test_tuber_0_selects_roundtable_preset():
     assert cfg["agent"]["role"] == "roundtable"
 
 
-# ── Shape ─────────────────────────────────────────────────────────────────────
-def test_roundtable_resolves_to_nine_panes(built):
-    """8 tiles (7 cast + 1 grid-balancing spare) + the show log. The htop
-    "System" strip was removed in v1.2: it is operator telemetry, it read on
-    the live broadcast as an extra character sitting in the grid, and every row
-    it occupied came out of the tiles."""
-    assert len(built["panes"]) == 9
+# ── Shape (v1.3: pure tile grid — no show log, no system strip) ──────────────
+def test_roundtable_resolves_to_eight_panes(built):
+    """8 tiles only: 7 cast + 1 grid-balancing spare. v1.2's left-side show-log
+    column was removed — it left the grid columns too narrow to read (the
+    tuber_1/tuber_5 regression) — and the htop "System" strip was removed
+    earlier still (operator telemetry that read as an extra character)."""
+    assert len(built["panes"]) == 8
 
 
 def test_no_system_monitor_strip_on_the_broadcast(built):
     assert _by_use(built["panes"], "htop") == []
 
 
-# ── The 20% / 80% broadcast geometry (v1.2) ──────────────────────────────────
-def test_show_log_is_the_base_pane_so_it_spans_the_full_height(built):
-    """The log column is only full-height because it is the BASE pane and every
-    split is carved OUT of it (or out of the grid). If a later pane ever
-    targets show_log with split: v, the column gets cut short on air."""
-    assert built["panes"][0]["id"] == "show_log"
-    vertical_splits_off_the_log = [
-        p for p in built["panes"][1:]
-        if p.get("target") == "show_log" and str(p.get("split", "v")).lower() != "h"
-    ]
-    assert vertical_splits_off_the_log == []
-
-
-def test_character_grid_takes_eighty_percent_off_the_log(built):
-    """Exactly one pane splits the log, horizontally, at 80% — that single
-    split is what makes the log 20% of the width."""
-    off_the_log = [p for p in built["panes"][1:] if p.get("target") == "show_log"]
-    assert len(off_the_log) == 1
-    grid = off_the_log[0]
-    assert grid["id"] == "tile_tuber_0"
-    assert grid["split"] == "h"
-    assert grid["size"] == 80
-
-
-def test_every_non_base_pane_is_carved_out_of_the_grid(built):
-    """Everything except the grid's own split hangs off a tile, never off the
-    log — the structural guarantee that the log keeps its full height."""
-    for pane in built["panes"][2:]:
-        assert pane["target"].startswith("tile_"), pane["id"]
+def test_no_show_log_pane_on_the_broadcast(built):
+    """The director's transcript is no longer given a pane on this channel —
+    every pixel is a character tile."""
+    assert _by_use(built["panes"], "replay") == []
 
 
 def _cast_tiles(panes):
@@ -128,7 +104,54 @@ def test_every_tile_has_a_distinct_id(built):
 
 def test_all_pane_ids_are_distinct(built):
     ids = [p["id"] for p in built["panes"]]
-    assert len(set(ids)) == len(ids) == 9
+    assert len(set(ids)) == len(ids) == 8
+
+
+# ── Even 4x2 grid geometry (v1.3 — the tuber_1/tuber_5 narrowness fix) ───────
+def test_base_pane_is_a_tile_not_a_sidebar(built):
+    """The base pane must be a character tile now — a base pane that is
+    anything else (a log, a status strip) eats into the grid's own even-split
+    math (see the layout file's header for the 75/66/50 derivation)."""
+    assert built["panes"][0]["id"] == "tile_tuber_0"
+    assert built["panes"][0]["use"] == "tile"
+
+
+def test_rows_are_split_exactly_in_half(built):
+    """The only vertical (stacked) split is the one carving the bottom row off
+    the base — and it must be a flat 50, otherwise the two rows of tiles are
+    uneven heights."""
+    vertical_splits = [p for p in built["panes"][1:]
+                       if str(p.get("split", "v")).lower() != "h"]
+    assert len(vertical_splits) == 1
+    assert vertical_splits[0]["id"] == "tile_tuber_4"
+    assert vertical_splits[0]["size"] == 50
+
+
+def test_each_row_is_cut_into_four_equal_columns(built):
+    """tmux split-window -p sizes the NEW pane as a percentage of its target's
+    CURRENT size, so four even columns need shrinking splits (75, 66, 50), not
+    a flat 25 each time — see the layout file header for the derivation. This
+    is the actual fix for tiles rendering too narrow to read: the columns were
+    always even, but of a base that used to be narrowed by a sidebar."""
+    by_id = {p["id"]: p for p in built["panes"]}
+    top_row = [by_id["tile_tuber_1"], by_id["tile_tuber_2"], by_id["tile_tuber_3"]]
+    bottom_row = [by_id["tile_tuber_5"], by_id["tile_tuber_6"], by_id["tile_spare"]]
+    for row, targets in (
+        (top_row, ["tile_tuber_0", "tile_tuber_1", "tile_tuber_2"]),
+        (bottom_row, ["tile_tuber_4", "tile_tuber_5", "tile_tuber_6"]),
+    ):
+        sizes = [p["size"] for p in row]
+        assert sizes == [75, 66, 50]
+        for pane, target in zip(row, targets):
+            assert pane["split"] == "h"
+            assert pane["target"] == target
+
+
+def test_no_pane_targets_a_removed_show_log(built):
+    """Regression guard: nothing in the shipped preset may reference the old
+    show_log pane id — that pane no longer exists."""
+    for pane in built["panes"]:
+        assert pane.get("target") != "show_log"
 
 
 # ── Per-tile command substitution ─────────────────────────────────────────────
@@ -158,13 +181,6 @@ def test_each_tile_gets_exactly_one_send_keys(built):
     assert sum(1 for l in tile_lines if "--slot tuber_7 " in l) == 1
 
 
-# ── The director / show-log pane (§6.1) ───────────────────────────────────────
-def test_exactly_one_replay_pane_is_the_show_log(built):
-    replays = _by_use(built["panes"], "replay")
-    assert len(replays) == 1
-    assert replays[0]["id"] == "show_log"
-
-
 # ── Breadth-only: no depth panes (§6) ─────────────────────────────────────────
 @pytest.mark.parametrize("forbidden", ["filetree", "editor"])
 def test_no_depth_panes_on_the_roundtable(built, forbidden):
@@ -182,7 +198,7 @@ def test_one_runtime_yaml_written_per_pane(built):
     written = sorted(p.name for p in built["runtime"].glob("*.yaml"))
     expected = sorted(f"{p['id']}.yaml" for p in built["panes"])
     assert written == expected
-    assert len(written) == 9
+    assert len(written) == 8
 
 
 def test_tile_runtime_config_records_its_slot(built):

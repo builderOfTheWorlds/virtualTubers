@@ -2,91 +2,74 @@
 # Layout preset: roundtable
 #
 # The 7th channel — the "main" stream (roundtable_stream_design.md v1.1 §6).
-# Hosted by the GM container (tuber_0). Seven tiles (one per character slot,
-# INCLUDING the GM's own — §1.1) + the show log.
+# Hosted by the GM container (tuber_0). Eight tiles: one per character slot
+# (tuber_0..tuber_6, INCLUDING the GM's own — §1.1) plus a spare grid-balancing
+# tile, laid out as an EVEN 4x2 grid filling the whole screen.
 #
-# Information model: breadth here, depth on the individual character channels.
-# A viewer watching only this channel hears EVERY character's voice, because all
-# seven tiles play their own owned audio into the same Pulse `vout` sink that
-# ffmpeg captures (§4.1). Deliberately NO filetree and NO editor pane — those are
-# the "depth" panes that belong on the character channels.
+# ── v1.3: pure tile grid, no show log, no system strip ────────────────────────
+# Two earlier ideas were tried and dropped:
+#   * a left-side "Show Log" column (v1.2) — pulled 20% of the width off the
+#     grid, which meant the grid's own even-quarters math (see below) was
+#     computed against a narrower remainder than the columns actually need to
+#     read at a normal font size. Character voicelines in a tile need real
+#     width; the log duplicated what the director's own scenes already make
+#     visible tile-by-tile, so it was cut rather than re-sized.
+#   * an htop "System" strip — operator telemetry that read on the live
+#     broadcast as an eighth "character" sitting in the grid.
+# Both are gone. Every pixel on this channel is a character tile now.
 #
-# ── The show_log pane is the DIRECTOR (§6.1) ──────────────────────────────────
-# The pane below with `use: replay` is app/replay_pane.py running as the duet
-# DIRECTOR for this show. That is not a coincidence of placement — it is the
-# design:
+# ── Geometry: four equal columns, two equal rows ──────────────────────────────
+# tmux's `split-window -p <pct>` sizes the NEWLY CREATED pane to <pct> percent
+# of its TARGET's current size at split time — not of the whole screen. To cut
+# a full-width base pane into four EQUAL columns, the size passed to each
+# successive split must shrink to account for the pane getting smaller, not
+# stay at a flat 25:
 #
-#   replay.Performer.perform() already walks every scene in order, and
-#   _perform_scene sets the per-scene display label (_resolve_display_name)
-#   before _on_assistant_text writes "label + text" to the Performer's `out`.
+#   split 1 (target: the 100%-wide base) size=75  -> new pane = 75%, base = 25%
+#   split 2 (target: that 75% pane)      size=66  -> new pane = 66% of 75% = 50%
+#   split 3 (target: that 50% pane)      size=50  -> new pane = 50% of 50% = 25%
 #
-# So the director process, running in a pane, ALREADY renders the full ordered
-# transcript of the show under the correct per-persona names. Pointing its pane
-# at the log slot means:
-#   * the director process has a home (no headless side-channel, no startup.sh change),
-#   * there is NO separate show-log program, no per-airing JSONL, no relay writer,
-#     and no tail_bus.py sibling command (all of which v1.0 of the design planned),
-#   * the log can never drift from the tiles' timing — it IS the loop that fires
-#     their cues,
-#   * scroll-back comes free from tmux history-limit.
-# The director owns no scenes (§4.1), so this pane is silent: pure text. Correct
-# for a log.
+# i.e. size_k = 100 * (N-1-k) / (N-k) for the k-th additional pane out of N
+# total columns (N=4 here: 75, 66.67 (rounded to 66), 50). This is the general
+# form of the tiling math the ORIGINAL preset already used for its 4-column
+# rows — reused unmodified here, just now applied to a 100%-wide base instead
+# of an 80%-wide remainder left over from a sidebar. That is the actual fix for
+# "tuber_1/tuber_5 unreadably narrow": the columns were never uneven, they were
+# even quarters of a pane that itself was too narrow.
 #
-# ── Geometry (v1.2 — broadcast layout) ────────────────────────────────────────
-# Two regions, and nothing else on screen:
+# The two ROWS are cut first (target: the base pane, split: v i.e. stacked,
+# size=50 -> exact halves), then each row's four columns are cut independently
+# with the same 75/66/50 sequence, so the grid ends up eight equal cells:
 #
-#   ┌─ show_log ─┬──────────── the character grid ────────────┐
-#   │            │  tuber_0  │  tuber_1  │  tuber_2  │ tuber_3│
-#   │  20% wide  ├───────────┼───────────┼───────────┼────────┤
-#   │ FULL HEIGHT│  tuber_4  │  tuber_5  │  tuber_6  │   —    │
-#   └────────────┴───────────────────────────────────────────-┘
+#   ┌───────────┬───────────┬───────────┬───────────┐
+#   │  tuber_0  │  tuber_1  │  tuber_2  │  tuber_3  │
+#   ├───────────┼───────────┼───────────┼───────────┤
+#   │  tuber_4  │  tuber_5  │  tuber_6  │     —     │
+#   └───────────┴───────────┴───────────┴───────────┘
 #
-# The show log is the BASE pane, so the first split carves the 80% character
-# grid off it and the log keeps the remaining 20% for the FULL height of the
-# window. Every later split happens strictly inside the grid, so nothing can
-# shorten the log column.
+# At startup.sh's real xterm (1920x1080 / font 14 => 160x44) that is ~40-col,
+# ~22-row tiles — a tile needs ~9 rows (border 2 + name 1 + face 2 + 2 dialogue
+# lines + separator 1 + status 1), so there is real headroom. Confirm with
+# `tmux list-panes` on the GM container after any change here — arithmetic
+# alone has hidden a layout bug in this file before (the double-width tuber_6
+# regression the spare tile below exists to prevent).
 #
-# There is deliberately no htop/"System" strip: it is operator telemetry, it
-# read on the live broadcast as an eighth "character" sitting in the grid, and
-# every row it took came out of the tiles. The status strip is gone; `docker
-# stats` / the control panel are where system load belongs.
-#
-# At startup.sh's real xterm (1920x1080 / font 14 => 160x44) that gives a 32-col
-# log column and four ~32-col tile columns of ~21 rows each — a tile renders a 9
-# row frame (border 2 + name 1 + face 2 + 2 dialogue lines + separator 1 +
-# status 1), so there is real headroom. config/layouts/replay.yaml carries a
-# comment recording that a preset once shipped with its avatar pane almost
-# entirely cut off because nobody checked. Confirm visually on the GM container.
-#
-# Adding/removing a tile is one entry in this list (OPEN-4). The 8th grid cell is
-# spare capacity, not a committed slot.
+# Adding/removing a tile is one entry in this list (OPEN-4). The 8th grid cell
+# is spare capacity, not a committed slot.
 # ──────────────────────────────────────────────────────────────────────────────
 preset: roundtable
 panes:
-  # ── Base pane: the show log = the director process (§6.1 above). ───────────
-  # BASE on purpose: every subsequent split is carved out of the character
-  # grid, never out of this column, which is what keeps it full height.
-  - use: replay
-    id: show_log
-    title: "Show Log · all dialogue & actions in order"
-    border_color: yellow
-
-  # ── The character grid: 80% of the width, carved off the log in one split.
-  #    This pane becomes the top-left tile (the GM's own — tuber_0 is a
-  #    character like everyone else; only border color + title mark it as the
-  #    narrator) and every other tile subdivides it. ───────────────────────────
+  # ── Base pane: the GM's own tile (top-left). ────────────────────────────────
+  # tuber_0 is a character, so it gets a tile like everyone else; only the
+  # border color + title mark it as the narrator.
   - use: tile
     id: tile_tuber_0
     title: "tuber_0 · GM / narrator"
     border_color: magenta
-    target: show_log
-    split: h
-    size: 80
     with:
       slot: "tuber_0"
 
-  # ── Second tile row, carved off the grid before the columns are split so
-  #    both rows divide evenly. ────────────────────────────────────────────────
+  # ── Bottom row, split off the base first so both rows divide evenly. ───────
   - use: tile
     id: tile_tuber_4
     title: "tuber_4"
@@ -96,7 +79,7 @@ panes:
     with:
       slot: "tuber_4"
 
-  # ── Top row, columns 2-4. ──────────────────────────────────────────────────
+  # ── Top row, columns 2-4 (75/66/50 -> four equal quarters, see header). ────
   - use: tile
     id: tile_tuber_1
     title: "tuber_1"
@@ -124,7 +107,7 @@ panes:
     with:
       slot: "tuber_3"
 
-  # ── Second row, columns 2-4. ───────────────────────────────────────────────
+  # ── Bottom row, columns 2-4. ───────────────────────────────────────────────
   - use: tile
     id: tile_tuber_5
     title: "tuber_5"

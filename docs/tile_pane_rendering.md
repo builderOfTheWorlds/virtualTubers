@@ -119,6 +119,9 @@ each tile a 31x20 pane; the frame renders 9 rows at 31 columns. Verified with
 
 ## Changelog
 
+- **v1.3** — Show log column removed (it left the grid too narrow to read —
+  the tuber_1/tuber_5 regression); the character grid is now a full-screen
+  even 4x2 tile grid.
 - **v1.2** — Avatar now persists for the whole show via `TileRenderer`; tiles
   show the last 2 spoken lines; faces added for every Performer expression; ANSI
   stripped before clipping. Layout: `System`/htop strip removed, show log moved
