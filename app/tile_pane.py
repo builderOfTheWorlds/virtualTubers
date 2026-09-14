@@ -55,14 +55,16 @@ diagnostics go to stderr.
 """
 import argparse
 import os
+import re
 import sys
 import tempfile
 import time
+from collections import deque
 from pathlib import Path
 
 import narration_store
 import replay_pane
-from agent_state import write_state
+from agent_state import read_state, write_state
 from replay import Pacer, Palette, Performer
 
 DEFAULT_RELAY_DIR = "/tmp/tiles"
@@ -121,7 +123,30 @@ TILE_FACES = {
     "speaking": ["( ^ _ ^ )", " \\_____/ "],
     "listening": ["( . _ . )", "  \\___/  "],
     "idle": ["( - _ - )", "  \\___/  "],
+    # The expressions replay.Performer._avatar actually writes while a show
+    # runs. Without entries here every non-speaking moment fell back to the
+    # `idle` face, so a tile looked asleep for most of the broadcast.
+    "thinking": ["( o _ o )", "  \\~~~/  "],
+    "focused": ["( > _ < )", "  \\___/  "],
+    "frustrated": ["( x _ x )", "  /~~~\\  "],
 }
+
+# How many spoken lines a tile keeps on screen under its avatar. The avatar is
+# ALWAYS drawn (§5.1: the roundtable never goes blank) and these rows are always
+# reserved — blank when the slot has not spoken yet — so the frame height never
+# changes and neighbouring tiles never shift on air.
+TILE_DIALOGUE_LINES = 2
+
+# Redraw cadence for a line that is still being typed out. The Performer types
+# character by character; redrawing the whole frame per character would repaint
+# the pane thousands of times a scene, so partial lines refresh on a timer and
+# every COMPLETED line redraws immediately.
+TILE_PARTIAL_REDRAW_S = 0.15
+
+# The Performer emits ANSI color even with a disabled palette upstream of us
+# (prefixes, the odd literal); a tile re-renders into a fixed-width box, so all
+# escape sequences are stripped before the text is measured and clipped.
+_ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
 
 # Tile geometry is DETECTED AT RENDER TIME, not assumed.
 #
@@ -183,17 +208,24 @@ def write_tile_state(state_path, expression, action="", bubble=None):
 
 
 def _clip(text, width):
-    text = " ".join(str(text or "").split())
+    text = " ".join(_ANSI_RE.sub("", str(text or "")).split())
     if len(text) <= width:
         return text
     return text[: max(0, width - 1)] + "…"
 
 
 def render_tile(slot, expression="idle", line="", status="listening", out=None,
-                clear=True, width=None):
-    """Draw the compact tile frame: face + current line + status (§5's
-    sketch), never the full-pane art. Returns the rendered lines so tests can
-    assert on them without scraping stdout.
+                clear=True, width=None, lines=None):
+    """Draw the compact tile frame: name + face + the last `lines` spoken +
+    status (§5's sketch), never the full-pane art. Returns the rendered lines so
+    tests can assert on them without scraping stdout.
+
+    The avatar is drawn on EVERY frame, in every state — a tile must never go
+    blank or collapse to text (§5). `lines` is the dialogue history (oldest
+    first, at most TILE_DIALOGUE_LINES kept); `line` is the single-line
+    shorthand kept for callers that only have a current line. The dialogue rows
+    are always reserved even when empty, so the frame is a fixed height and a
+    tile that starts talking cannot shove its neighbours around on air.
 
     `width` defaults to the pane's DETECTED width (resolve_tile_width) so the
     frame always fits its real tmux pane — see the comment on
@@ -205,22 +237,112 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     tile_width = width or resolve_tile_width()
     inner = tile_width - 2
     line_chars = tile_width - 4
-    lines = ["┌" + "─" * inner + "┐"]
-    lines.append("│ " + _clip(slot, inner - 2).ljust(inner - 2) + " │")
+
+    if lines is None:
+        lines = [line] if line else []
+    # Newest at the bottom, oldest trimmed off the top; always exactly
+    # TILE_DIALOGUE_LINES rows so the frame height is constant.
+    dialogue = list(lines)[-TILE_DIALOGUE_LINES:]
+    dialogue = [""] * (TILE_DIALOGUE_LINES - len(dialogue)) + dialogue
+
+    rows = ["┌" + "─" * inner + "┐"]
+    rows.append("│ " + _clip(slot, inner - 2).ljust(inner - 2) + " │")
     for row in face:
-        lines.append("│" + row.center(inner) + "│")
-    lines.append("│ " + _clip(line, line_chars).ljust(line_chars) + " │")
-    lines.append("├" + "─" * inner + "┤")
-    lines.append("│ " + _clip(f"status: {status}", inner - 2).ljust(inner - 2) + " │")
-    lines.append("└" + "─" * inner + "┘")
+        rows.append("│" + row.center(inner) + "│")
+    for spoken in dialogue:
+        rows.append("│ " + _clip(spoken, line_chars).ljust(line_chars) + " │")
+    rows.append("├" + "─" * inner + "┤")
+    rows.append("│ " + _clip(f"status: {status}", inner - 2).ljust(inner - 2) + " │")
+    rows.append("└" + "─" * inner + "┘")
     if clear:
         out.write("\x1b[2J\x1b[H")
-    out.write("\n".join(lines) + "\n")
+    out.write("\n".join(rows) + "\n")
     try:
         out.flush()
     except Exception:  # a StringIO in tests, a closed pipe in production
         pass
-    return lines
+    return rows
+
+
+class TileRenderer:
+    """The Performer's `out` for a tile — the piece that makes a tile look like
+    a tile while a show is running.
+
+    Before this existed the tile handed the Performer no `out` at all, so the
+    Performer wrote the FULL replay transcript straight to the pane's stdout:
+    the framed avatar was drawn once at idle and then immediately scrolled off
+    the top by dialogue, shell output and edit diffs. On air that read as
+    "the avatar disappears as soon as the show starts".
+
+    So: every byte the Performer writes is SWALLOWED here (it is the other
+    panes' job to show a transcript — the show_log pane is the director itself,
+    §6.1) and used only as a clock to repaint the tile frame.
+
+    The displayed dialogue comes from the tile's own avatar STATE file rather
+    than by scraping the transcript. `replay.Performer._avatar` writes the
+    complete spoken text as `bubble` (plus the expression) atomically at the
+    start of every spoken line, so reading it back gives whole, correctly
+    ordered lines with no ANSI parsing and no guessing where one speaker's line
+    ends and the next begins. Unowned scenes write expression `idle` with no
+    bubble, which is exactly right: this tile stays visible and quiet while
+    another character talks.
+    """
+
+    def __init__(self, slot, state_path, out=None, history=TILE_DIALOGUE_LINES):
+        self.slot = slot
+        self.state_path = state_path
+        self.out = out or sys.stdout
+        self.lines = deque(maxlen=max(1, history))
+        self.expression = "listening"
+        self.status = "listening"
+        self._last_bubble = None
+        self._last_draw = 0.0
+
+    # ── the file-like contract the Performer uses ────────────────────────────
+    def write(self, text):
+        """Swallow the transcript, then repaint on a timer."""
+        self._maybe_redraw()
+        return len(text or "")
+
+    def flush(self):
+        self._maybe_redraw()
+
+    def _maybe_redraw(self, force=False):
+        now = time.monotonic()
+        state = read_state(self.state_path) if self.state_path else None
+        bubble = (state or {}).get("bubble")
+        changed = self._absorb(state, bubble)
+        # A new spoken line repaints IMMEDIATELY; otherwise the frame refreshes
+        # on a timer so per-character typing can't repaint the pane thousands
+        # of times a scene.
+        if changed or force or (now - self._last_draw) >= TILE_PARTIAL_REDRAW_S:
+            self.draw()
+
+    def _absorb(self, state, bubble):
+        """Fold a state read into the renderer. Returns True when something
+        worth an immediate repaint changed."""
+        changed = False
+        expression = (state or {}).get("expression")
+        if expression and expression != self.expression:
+            self.expression = expression
+            self.status = "speaking" if expression == "speaking" else "listening"
+            changed = True
+        if bubble and bubble != self._last_bubble:
+            self._last_bubble = bubble
+            self.lines.append(bubble)
+            changed = True
+        return changed
+
+    def refresh(self):
+        """Repaint now, whatever the timer says — used to land the final frame
+        of a show."""
+        self._maybe_redraw(force=True)
+
+    def draw(self):
+        self._last_draw = time.monotonic()
+        return render_tile(self.slot, expression=self.expression,
+                           lines=list(self.lines), status=self.status,
+                           out=self.out)
 
 
 def draw_idle_screen(slot, state_path=None, out=None):
@@ -396,7 +518,16 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
         wait_for_scene = make_wait_for_scene(cue_file, airing_id, show, slot,
                                              stop_file=stop_file)
         voice = (config or {}).get("voice") or {}
+        # The Performer writes its transcript into the tile renderer instead of
+        # straight to the pane. Without this the avatar frame was drawn once at
+        # idle and then scrolled off the top by the first scene's dialogue —
+        # the tile showed a wall of text for the whole show. The renderer keeps
+        # the avatar and the last TILE_DIALOGUE_LINES spoken lines on screen
+        # from the first frame to the last.
+        renderer = TileRenderer(slot, state_path)
+        renderer.draw()
         performer = Performer(
+            out=renderer,
             pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
             palette=Palette(enabled=True),
             worker_name=name,
@@ -406,6 +537,10 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
             boss_name=voice.get("boss_name"),
         )
         performer.perform(script, show=show)
+        # Leave the final frame up (the caller holds it for
+        # TILE_HOLD_FINAL_FRAME_S) rather than whatever the last partial
+        # repaint happened to catch.
+        renderer.refresh()
 
     # The cue file is this tile's alone; consume it so the NEXT show starts
     # from a clean slate too (the request file was already consumed by

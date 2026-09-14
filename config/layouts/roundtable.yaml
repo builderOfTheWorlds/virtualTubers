@@ -3,7 +3,7 @@
 #
 # The 7th channel — the "main" stream (roundtable_stream_design.md v1.1 §6).
 # Hosted by the GM container (tuber_0). Seven tiles (one per character slot,
-# INCLUDING the GM's own — §1.1) + the show log + a status strip.
+# INCLUDING the GM's own — §1.1) + the show log.
 #
 # Information model: breadth here, depth on the individual character channels.
 # A viewer watching only this channel hears EVERY character's voice, because all
@@ -32,49 +32,61 @@
 # The director owns no scenes (§4.1), so this pane is silent: pure text. Correct
 # for a log.
 #
-# ── Geometry ──────────────────────────────────────────────────────────────────
-# Percentages below were derived from tmux's split arithmetic at the engine's
-# 240x67 default (the §8.5 spike), not guessed:
-#   htop 9%  -> 6 rows | show_log 34% -> 20 rows (~18 visible lines)
-#   two tile rows of 18 and 20 rows; 4 columns of 58-60 each
-# A tile needs ~10 rows (compact face 5 + line 2 + status 1 + borders 2), so 18
-# leaves 8 spare. This matters: config/layouts/replay.yaml carries a comment
-# recording that a preset once shipped with its avatar pane almost entirely cut
-# off because nobody checked. Confirm visually on the GM container before
-# calling WP-4 done.
+# ── Geometry (v1.2 — broadcast layout) ────────────────────────────────────────
+# Two regions, and nothing else on screen:
+#
+#   ┌─ show_log ─┬──────────── the character grid ────────────┐
+#   │            │  tuber_0  │  tuber_1  │  tuber_2  │ tuber_3│
+#   │  20% wide  ├───────────┼───────────┼───────────┼────────┤
+#   │ FULL HEIGHT│  tuber_4  │  tuber_5  │  tuber_6  │   —    │
+#   └────────────┴───────────────────────────────────────────-┘
+#
+# The show log is the BASE pane, so the first split carves the 80% character
+# grid off it and the log keeps the remaining 20% for the FULL height of the
+# window. Every later split happens strictly inside the grid, so nothing can
+# shorten the log column.
+#
+# There is deliberately no htop/"System" strip: it is operator telemetry, it
+# read on the live broadcast as an eighth "character" sitting in the grid, and
+# every row it took came out of the tiles. The status strip is gone; `docker
+# stats` / the control panel are where system load belongs.
+#
+# At startup.sh's real xterm (1920x1080 / font 14 => 160x44) that gives a 32-col
+# log column and four ~32-col tile columns of ~21 rows each — a tile renders a 9
+# row frame (border 2 + name 1 + face 2 + 2 dialogue lines + separator 1 +
+# status 1), so there is real headroom. config/layouts/replay.yaml carries a
+# comment recording that a preset once shipped with its avatar pane almost
+# entirely cut off because nobody checked. Confirm visually on the GM container.
 #
 # Adding/removing a tile is one entry in this list (OPEN-4). The 8th grid cell is
 # spare capacity, not a committed slot.
 # ──────────────────────────────────────────────────────────────────────────────
 preset: roundtable
 panes:
-  # ── Base pane: the GM's own tile (top-left). ────────────────────────────────
-  # tuber_0 is a character, so it gets a tile like everyone else; only the
-  # border color + title mark it as the narrator.
-  - use: tile
-    id: tile_tuber_0
-    title: "tuber_0 · GM / narrator"
-    border_color: magenta
-    with:
-      slot: "tuber_0"
-
-  # ── Bottom strip: htop, split off the base first so the tile grid divides
-  #    the remaining area cleanly. ──────────────────────────────────────────────
-  - use: htop
-    target: tile_tuber_0
-    split: v
-    size: 9
-
-  # ── The show log = the director process (§6.1 above). ──────────────────────
+  # ── Base pane: the show log = the director process (§6.1 above). ───────────
+  # BASE on purpose: every subsequent split is carved out of the character
+  # grid, never out of this column, which is what keeps it full height.
   - use: replay
     id: show_log
     title: "Show Log · all dialogue & actions in order"
     border_color: yellow
-    target: tile_tuber_0
-    split: v
-    size: 34
 
-  # ── Second tile row, carved off the remaining tile area. ───────────────────
+  # ── The character grid: 80% of the width, carved off the log in one split.
+  #    This pane becomes the top-left tile (the GM's own — tuber_0 is a
+  #    character like everyone else; only border color + title mark it as the
+  #    narrator) and every other tile subdivides it. ───────────────────────────
+  - use: tile
+    id: tile_tuber_0
+    title: "tuber_0 · GM / narrator"
+    border_color: magenta
+    target: show_log
+    split: h
+    size: 80
+    with:
+      slot: "tuber_0"
+
+  # ── Second tile row, carved off the grid before the columns are split so
+  #    both rows divide evenly. ────────────────────────────────────────────────
   - use: tile
     id: tile_tuber_4
     title: "tuber_4"
@@ -133,13 +145,13 @@ panes:
 
   # ── Spare 8th grid cell (§6 / OPEN-4). ─────────────────────────────────────
   # Without this, tuber_6 absorbs the unused cell and renders DOUBLE WIDTH
-  # (118 vs ~59 cols) — confirmed in real tmux during the §8.5 geometry spike.
+  # (confirmed in real tmux during the §8.5 geometry spike).
   #
-  # It is a TILE, not an htop strip: an htop here read as a seventh "character"
-  # sitting in the character grid on the live broadcast, which looked like a
-  # layout bug. Pinning it to the (uncast) tuber_7 slot means it renders as a
-  # neutral idle tile, and promoting the roster to 8 characters later (OPEN-4)
-  # is then a no-op here. The bottom status strip still provides htop.
+  # It is a TILE, not a status strip: anything else here read as a seventh
+  # "character" sitting in the character grid on the live broadcast, which
+  # looked like a layout bug. Pinning it to the (uncast) tuber_7 slot means it
+  # renders as a neutral idle tile, and promoting the roster to 8 characters
+  # later (OPEN-4) is then a no-op here.
   - use: tile
     id: tile_spare
     title: "—"

@@ -46,8 +46,47 @@ def test_tuber_0_selects_roundtable_preset():
 
 
 # ── Shape ─────────────────────────────────────────────────────────────────────
-def test_roundtable_resolves_to_ten_panes(built):
-    assert len(built["panes"]) == 10
+def test_roundtable_resolves_to_nine_panes(built):
+    """8 tiles (7 cast + 1 grid-balancing spare) + the show log. The htop
+    "System" strip was removed in v1.2: it is operator telemetry, it read on
+    the live broadcast as an extra character sitting in the grid, and every row
+    it occupied came out of the tiles."""
+    assert len(built["panes"]) == 9
+
+
+def test_no_system_monitor_strip_on_the_broadcast(built):
+    assert _by_use(built["panes"], "htop") == []
+
+
+# ── The 20% / 80% broadcast geometry (v1.2) ──────────────────────────────────
+def test_show_log_is_the_base_pane_so_it_spans_the_full_height(built):
+    """The log column is only full-height because it is the BASE pane and every
+    split is carved OUT of it (or out of the grid). If a later pane ever
+    targets show_log with split: v, the column gets cut short on air."""
+    assert built["panes"][0]["id"] == "show_log"
+    vertical_splits_off_the_log = [
+        p for p in built["panes"][1:]
+        if p.get("target") == "show_log" and str(p.get("split", "v")).lower() != "h"
+    ]
+    assert vertical_splits_off_the_log == []
+
+
+def test_character_grid_takes_eighty_percent_off_the_log(built):
+    """Exactly one pane splits the log, horizontally, at 80% — that single
+    split is what makes the log 20% of the width."""
+    off_the_log = [p for p in built["panes"][1:] if p.get("target") == "show_log"]
+    assert len(off_the_log) == 1
+    grid = off_the_log[0]
+    assert grid["id"] == "tile_tuber_0"
+    assert grid["split"] == "h"
+    assert grid["size"] == 80
+
+
+def test_every_non_base_pane_is_carved_out_of_the_grid(built):
+    """Everything except the grid's own split hangs off a tile, never off the
+    log — the structural guarantee that the log keeps its full height."""
+    for pane in built["panes"][2:]:
+        assert pane["target"].startswith("tile_"), pane["id"]
 
 
 def _cast_tiles(panes):
@@ -89,7 +128,7 @@ def test_every_tile_has_a_distinct_id(built):
 
 def test_all_pane_ids_are_distinct(built):
     ids = [p["id"] for p in built["panes"]]
-    assert len(set(ids)) == len(ids) == 10
+    assert len(set(ids)) == len(ids) == 9
 
 
 # ── Per-tile command substitution ─────────────────────────────────────────────
@@ -143,7 +182,7 @@ def test_one_runtime_yaml_written_per_pane(built):
     written = sorted(p.name for p in built["runtime"].glob("*.yaml"))
     expected = sorted(f"{p['id']}.yaml" for p in built["panes"])
     assert written == expected
-    assert len(written) == 10
+    assert len(written) == 9
 
 
 def test_tile_runtime_config_records_its_slot(built):

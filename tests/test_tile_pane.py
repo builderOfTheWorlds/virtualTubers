@@ -481,6 +481,171 @@ def test_render_tile_falls_back_for_an_unknown_expression():
     assert any("_" in line for line in lines)  # still drew a face, no KeyError
 
 
+def test_every_expression_the_performer_writes_has_its_own_face():
+    """replay.Performer._avatar writes these; a missing entry silently fell
+    back to the idle face, so a tile looked asleep through most of a show."""
+    for expression in ("speaking", "listening", "idle", "thinking",
+                       "focused", "frustrated"):
+        assert expression in tile_pane.TILE_FACES
+
+
+# ── avatar + last two lines (the broadcast tile contract) ────────────────────
+def _dialogue_rows(lines, width=None):
+    """The dialogue area, located structurally rather than by prefix (the
+    centered face rows also start with '│ '). Frame shape is:
+    top, name, face..., dialogue x TILE_DIALOGUE_LINES, separator, status, bottom.
+    """
+    n = tile_pane.TILE_DIALOGUE_LINES
+    return lines[-(n + 3):-3]
+
+
+def test_tile_always_reserves_exactly_two_dialogue_rows(relay):
+    """Fixed height in every state, so a tile that starts talking can never
+    shove its neighbours around on air."""
+    width = 40
+    empty = render_tile("tuber_1", width=width)
+    one = render_tile("tuber_1", lines=["only line"], width=width)
+    many = render_tile("tuber_1", lines=["a", "b", "c", "d"], width=width)
+    assert len(empty) == len(one) == len(many)
+    for frame in (empty, one, many):
+        assert len(_dialogue_rows(frame, width)) == tile_pane.TILE_DIALOGUE_LINES
+
+
+def test_tile_shows_the_last_two_lines_newest_at_the_bottom(relay):
+    lines = render_tile("tuber_1", lines=["first", "second", "third"], width=40)
+    rows = _dialogue_rows(lines, 40)
+    assert "second" in rows[0]
+    assert "third" in rows[1]
+    assert "first" not in "\n".join(rows)   # scrolled off
+
+
+def test_avatar_face_is_drawn_alongside_the_dialogue(relay):
+    """The avatar must be present at ALL times — including while lines show."""
+    body = "\n".join(render_tile("tuber_1", expression="speaking",
+                                 lines=["talking now"], width=40))
+    for face_row in tile_pane.TILE_FACES["speaking"]:
+        assert face_row.strip() in body
+    assert "talking now" in body
+
+
+def test_render_strips_ansi_so_the_box_never_overflows():
+    colored = "\x1b[32m\x1b[1mVEX ▸\x1b[0m hello there"
+    lines = render_tile("tuber_1", lines=[colored], width=40)
+    body = "\n".join(lines)
+    assert "\x1b[32m" not in body
+    assert "VEX ▸ hello there" in body
+    assert max(len(l) for l in lines) <= 40
+
+
+# ── TileRenderer: the Performer's `out` ──────────────────────────────────────
+class _Sink:
+    def __init__(self):
+        self.text = ""
+
+    def write(self, text):
+        self.text += text
+        return len(text)
+
+    def flush(self):
+        pass
+
+
+def _renderer(relay, slot="tuber_2"):
+    state_path = tile_state_file(str(relay), slot)
+    sink = _Sink()
+    r = tile_pane.TileRenderer(slot, state_path, out=sink)
+    return r, sink, state_path
+
+
+def test_renderer_swallows_the_transcript_instead_of_scrolling_the_tile(relay):
+    """THE bug this class fixes: the Performer's full transcript used to go
+    straight to the pane and scrolled the avatar off the top."""
+    r, sink, _state = _renderer(relay)
+    r.write("VEX ▸ a long line of transcript that must never reach the pane\n")
+    assert "long line of transcript" not in sink.text
+    assert "tuber_2" in sink.text          # a tile frame was drawn instead
+
+
+def test_renderer_write_reports_the_byte_count_it_was_given(relay):
+    """The Performer treats `out` as a file object; write() must behave."""
+    r, _sink, _state = _renderer(relay)
+    assert r.write("hello") == 5
+    assert r.write("") == 0
+    assert r.write(None) == 0
+
+
+def test_renderer_picks_up_spoken_lines_from_the_avatar_state_file(relay):
+    r, sink, state_path = _renderer(relay)
+    tile_pane.write_tile_state(state_path, "speaking", bubble="first line")
+    r.write("x")
+    tile_pane.write_tile_state(state_path, "speaking", bubble="second line")
+    r.write("x")
+
+    assert list(r.lines) == ["first line", "second line"]
+    frame = "\n".join(r.draw())
+    assert "first line" in frame and "second line" in frame
+
+
+def test_renderer_keeps_only_the_last_two_lines(relay):
+    r, _sink, state_path = _renderer(relay)
+    for text in ("one", "two", "three"):
+        tile_pane.write_tile_state(state_path, "speaking", bubble=text)
+        r.write("x")
+    assert list(r.lines) == ["two", "three"]
+
+
+def test_renderer_repeated_bubble_is_not_duplicated(relay):
+    """The Performer writes many times per spoken line (it types character by
+    character); only a NEW bubble is a new line."""
+    r, _sink, state_path = _renderer(relay)
+    tile_pane.write_tile_state(state_path, "speaking", bubble="just once")
+    for _ in range(10):
+        r.write("c")
+    assert list(r.lines) == ["just once"]
+
+
+def test_renderer_tracks_expression_and_status(relay):
+    r, _sink, state_path = _renderer(relay)
+    tile_pane.write_tile_state(state_path, "speaking", bubble="mine")
+    r.write("x")
+    assert r.expression == "speaking"
+    assert r.status == "speaking"
+
+    # An unowned scene: this tile stays visible and goes quiet.
+    tile_pane.write_tile_state(state_path, "idle", action="listening to the show")
+    r.write("x")
+    assert r.expression == "idle"
+    assert r.status == "listening"
+    assert list(r.lines) == ["mine"]  # the last line stays on screen
+
+
+def test_renderer_degrades_when_the_state_file_is_missing(relay, tmp_path):
+    r = tile_pane.TileRenderer("tuber_2", str(tmp_path / "nope.json"), out=_Sink())
+    r.write("x")                       # must not raise
+    assert list(r.lines) == []
+    assert "tuber_2" in "\n".join(r.draw())
+
+
+def test_renderer_refresh_forces_a_repaint(relay):
+    r, sink, _state = _renderer(relay)
+    sink.text = ""
+    r.refresh()
+    assert "tuber_2" in sink.text
+
+
+def test_performer_is_given_the_tile_renderer_as_its_out(
+        tile_library, store, relay, fake_performer, fast_cues):
+    """Wiring guard: if the Performer is ever constructed without `out`, the
+    transcript goes back to scrolling the avatar off the pane."""
+    state_path = tile_state_file(str(relay), "tuber_2")
+    assert perform_tile_request(_request(), "tuber_2", str(relay),
+                                state_path=state_path) is True
+    out = FakePerformer.instances[0].kwargs.get("out")
+    assert isinstance(out, tile_pane.TileRenderer)
+    assert out.slot == "tuber_2"
+    assert out.state_path == state_path
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────────
 def test_cli_defaults_state_file_into_the_relay_dir(monkeypatch, tmp_path, relay,
                                                     tile_library, store, fake_performer):
