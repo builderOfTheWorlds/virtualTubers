@@ -416,6 +416,121 @@ def test_owned_scene_sets_speaking_avatar_with_bubble():
     assert ("speaking", "narrating the rerun", "the boss speaks") in calls
 
 
+def test_unowned_dialogue_does_not_set_the_speaking_bubble(tmp_path):
+    """THE roundtable bug this locks down: a tile/follower renders another
+    character's `assistant_text` for pacing, and that must NOT leak into the
+    tile's own speech bubble. Before the fix `_on_assistant_text` fired the
+    speaking+dialogue-bubble avatar write unconditionally, so every tile
+    echoed every character — all tiles showing the same lines.
+
+    A scene this performer does NOT own must leave the avatar undisturbed by
+    the dialogue (still the idle "listening to the show" from _perform_scene).
+    """
+    state_file = tmp_path / "agent_state.json"
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out, state_path=str(state_file))
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    show = [
+        {"kind": "coder_talk", "speaker": "coder",
+         "events": [SCRIPT["events"][1]],                 # "On it, boss.\nStarting now."
+         "narration": "a line this tile does own elsewhere",
+         "audio": None, "owned": False, "target_duration": 0.01},
+    ]
+    performer.perform(SCRIPT, show=show)
+
+    # The narration line is already gated on ownership — the DIALOGUE bubble
+    # must be too: no "talking to the stream" speaking write may reach the
+    # avatar for an unowned scene. (The "On it, boss." text must not appear as
+    # a bubble either.)
+    bubbles = [c[2] for c in calls if c[0] == "speaking"]
+    assert not any(b and "On it" in b for b in bubbles)
+    assert not any(c[1] == "talking to the stream" for c in calls if c[0] == "speaking")
+
+
+def test_owned_dialogue_sets_the_speaking_bubble(tmp_path):
+    """The OWNED case: a tile that really owns a dialogue scene must still
+    set its speaking face + bubble for the dialogue line. The gate must route,
+    not silence."""
+    state_file = tmp_path / "agent_state.json"
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out, state_path=str(state_file))
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    dialogue = "On it, boss.\nStarting now."
+    show = [
+        {"kind": "coder_talk", "speaker": "coder",
+         "events": [SCRIPT["events"][1]],
+         "narration": None, "audio": None, "owned": True},
+    ]
+    performer.perform(SCRIPT, show=show)
+    # The dialogue bubble must be present, carrying the spoken text.
+    assert any(c[0] == "speaking" and c[1] == "talking to the stream"
+               and c[2] == dialogue for c in calls)
+
+
+def test_solo_dialogue_still_sets_bubble_without_owned_key(tmp_path):
+    """Solo/backwards-compat: a scene with NO 'owned' key defaults to owned,
+    so the dialogue bubble must still appear exactly as before today's fix."""
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out)
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    dialogue = "On it, boss.\nStarting now."
+    show = [
+        {"kind": "coder_talk", "speaker": "coder",
+         "events": [SCRIPT["events"][1]], "narration": None, "audio": None},
+        # ^ no "owned" key at all — the revoice.py solo output shape
+    ]
+    performer.perform(SCRIPT, show=show)
+    assert any(c[0] == "speaking" and c[1] == "talking to the stream"
+               and c[2] == dialogue for c in calls)
+
+
+def test_unowned_tool_error_does_not_set_the_uggh_bubble(tmp_path):
+    """Companion guard: the tool-call failure bubble is the same class of
+    voiceline (a bubble of TEXT), so it must also honor ownership and not be
+    echoed into a tile that is only rendering the failed call for pacing."""
+    state_file = tmp_path / "agent_state.json"
+    calls = []
+    out = io.StringIO()
+    performer = make_performer(out, state_path=str(state_file))
+    original_avatar = performer._avatar
+
+    def spy(expression, action="", bubble=None):
+        calls.append((expression, action, bubble))
+        original_avatar(expression, action=action, bubble=bubble)
+
+    performer._avatar = spy
+    show = [
+        {"kind": "coder_work", "speaker": "coder",
+         "events": [SCRIPT["events"][4]],               # the Edit with error:True
+         "narration": None, "audio": None,
+         "owned": False, "target_duration": 0.01},
+    ]
+    performer.perform(SCRIPT, show=show)
+    assert not any(c[0] == "frustrated" and c[2] == "Ugh, that didn't work..."
+                   for c in calls)
+
+
 # ── duet hooks: on_scene_start / wait_for_scene (docs/duet_replay.md) ──────
 
 def test_on_scene_start_called_once_per_scene_in_order_before_wait_for_scene():

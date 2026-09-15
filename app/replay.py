@@ -203,6 +203,25 @@ class Performer:
         # worker_name.
         self.speaker_names = speaker_names or {}
         self._display_name = self.worker_name
+        # Whether THIS performer should drive its avatar (face + speech bubble)
+        # for the scenes it is rendering right now. _perform_scene sets it from
+        # the scene's "owned" flag (default True) for the duration of that
+        # scene's events and restores it afterward.
+        #
+        # Why this exists: duet followers and roundtable tiles render the FULL
+        # show (every scene's visuals, in sync) but must only *voice* the
+        # scenes their own slot owns. The per-scene narration line already
+        # honors ownership (see _perform_scene's "narration" block), but the
+        # per-EVENT avatar writes inside the handlers (_on_assistant_text's
+        # speaking bubble, _on_assistant_text's dialogue, tool-calls' focused
+        # face) fired unconditionally — so a roundtable tile echoed EVERY
+        # character's dialogue into its own speech bubble (all tiles showing
+        # the same lines), while its owner's channel and the GM's narration
+        # were the only other lines. Gating these writes on _scene_owned makes
+        # the avatar track the same ownership the audio already tracks.
+        # True by default: a solo performance (scenes never set "owned") and
+        # the owner of a duet scene render exactly as before.
+        self._scene_owned = True
 
     # ── low-level emit helpers ───────────────────────────────────────────────
     def _write(self, text):
@@ -263,7 +282,16 @@ class Performer:
         c = self.c
         text = event["text"]
         self._line()
-        self._avatar("speaking", action="talking to the stream", bubble=text)
+        # The dialogue is a voiceline: it drives this avatar (a "speaking"
+        # face + the line as the speech bubble) ONLY when the scene is this
+        # performer's own. Duet followers and roundtable tiles render the full
+        # show for pacing, so an ungated write here echoes EVERY character's
+        # line into THIS tile's bubble — the "all tiles show the same text"
+        # bug. Ownership is carried in self._scene_owned (set in _perform_scene
+        # from the scene's "owned" flag, default True), the same gate the
+        # narration line and the audio already honor.
+        if self._scene_owned:
+            self._avatar("speaking", action="talking to the stream", bubble=text)
         self._write(f"{c.green}{c.bold}{self._display_name} ▸{c.reset} ")
         first = True
         for line in text.splitlines():
@@ -283,8 +311,13 @@ class Performer:
         }.get(event["tool"], self._perform_generic)
         handler(event)
         if event.get("error"):
-            self._avatar("frustrated", action=f"{event['tool']} failed",
-                         bubble="Ugh, that didn't work...")
+            # Same ownership gate as the dialogue bubble above: a "Ugh, that
+            # didn't work..." speech bubble is a voiceline, so it belongs only
+            # to the performer that owns the scene — not echoed into every
+            # tile that renders this tool call for pacing.
+            if self._scene_owned:
+                self._avatar("frustrated", action=f"{event['tool']} failed",
+                             bubble="Ugh, that didn't work...")
             self._line(f"{self.c.red}✗ that didn't work{self.c.reset}")
 
     def _perform_shell(self, event):
@@ -444,6 +477,11 @@ class Performer:
             started = time.monotonic()
             hold_seconds = target_duration
         self._display_name = self._resolve_display_name(scene.get("speaker"))
+        # Drive this avatar for the scene only when it is actually ours — the
+        # same "owned" gate the audio and the narration line above already use
+        # (see the "owned"/"narration" handling earlier in this method). Restored
+        # in the finally below so it can never leak into the next scene.
+        self._scene_owned = scene.get("owned", True)
         try:
             self._perform_events(scene["events"])
         except ReplayStopped:
@@ -458,6 +496,7 @@ class Performer:
         finally:
             self.pacer.scale = 1.0
             self._display_name = self.worker_name
+            self._scene_owned = True
         if playback is not None:
             # Visuals done first (scale clamped, or estimate ran short):
             # hold the scene until the spoken line lands.

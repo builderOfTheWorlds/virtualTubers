@@ -13,6 +13,21 @@
     character and break the string, cascading into confusing parse errors
     several lines later. Keep double-quoted string literals ASCII-only.
 
+    A preset MAY also set $To2/$Type2/$Payload2 to fire a second POST right
+    after the first. This exists because the roundtable channel (tuber_0)
+    and the six individual character channels are two separate audiences
+    that no single replay_request can address at once: a request "to" a
+    character worker (e.g. "coder") fans out over Kafka to the OTHER
+    character workers only, while a request "to" tuber_0 resolves every
+    cast slot to a LOCAL tile and never touches Kafka at all
+    (app/replay_pane.py _resolve_local_tiles) - so tuber_0/roundtable
+    never joins a character-directed duet, and the six character channels
+    never join a tuber_0-directed one. Firing both airs the same episode
+    on all seven channels; see docs/duet_replay.md and
+    .claude/prompts/roundtable_stream_design.md SS2.2 WP-7 (identity-rename
+    migration that would let one request address both, not yet run in
+    this deployment).
+
 .EXAMPLE
     .\scripts\send_test_message.ps1
 
@@ -31,6 +46,13 @@ param(
 $To      = $null
 $Type    = $null
 $Payload = $null
+
+# Optional second POST (roundtable companion request - see synopsis). Left
+# unset by presets that don't need it; reset here so a stale value can't
+# leak in the same way $To/$Type/$Payload can't.
+$To2      = $null
+$Type2    = $null
+$Payload2 = $null
 
 # =====================================================================
 # PRESET MESSAGES — uncomment exactly ONE section
@@ -117,7 +139,30 @@ $Type    = "replay_request"
 # Ashiorid DUET - each character speaks on its own avatar. The cast keys are
 # the episode's speaker names, which for this episode are already worker ids,
 # so each maps to itself. Verified airing to "-- fin --" 2026-08-31.
-$Payload = '{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+# $Payload = '{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+
+# Ashiorid GENERATED - the 3-layer-generator's output episode (campaign-manager
+# job, not the hand-authored campaigns/ashiorid_1 pack above). Confirmed live
+# on 2026-09-15: this is the episode actually airing on the six character
+# channels; speakers are manager/coder/tester/coder-native/coder-opencode
+# (manager's "boss"-narrator lines are left uncast here on purpose - an
+# uncast speaker stays owned by the director per docs/duet_replay.md's
+# ownership rule, so they're still heard, just not on a dedicated tile).
+$Payload = '{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+
+# Roundtable companion (see synopsis): SAME episode, SAME speaker names, but
+# addressed to tuber_0 so the GM's local tiles (config/workers/tuber_0.yaml
+# roster: tuber_1=Chadwick/coder, tuber_2=Vigil/coder-native,
+# tuber_3=Sodacan Bob/coder-opencode, tuber_5=Leena/tester,
+# tuber_6=MAX-1/manager) light up too. manager IS mapped here (unlike the
+# request above) so its narrator lines get MAX-1's own tile instead of
+# falling to the roundtable director's own uncast-speaker fallback. Fired
+# right after the request above so both audiences get the same show - keep
+# this episode name in sync with $Payload's above by hand; nothing enforces
+# it automatically.
+$To2      = "tuber_0"
+$Type2    = "replay_request"
+$Payload2 = '{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "tuber_1", "coder-native": "tuber_2", "coder-opencode": "tuber_3", "tester": "tuber_5", "manager": "tuber_6"}}'
 
 
 
@@ -128,26 +173,36 @@ if (-not $To -or -not $Type -or -not $Payload) {
     exit 1
 }
 
-try {
-    $payloadObj = $Payload | ConvertFrom-Json
-} catch {
-    Write-Error "Invalid payload JSON: $_"
-    exit 1
+function Send-TestMessage {
+    param([string]$Url, [string]$To, [string]$Type, [string]$Payload)
+
+    try {
+        $payloadObj = $Payload | ConvertFrom-Json
+    } catch {
+        Write-Error "Invalid payload JSON: $_"
+        exit 1
+    }
+
+    $body = @{
+        to      = $To
+        type    = $Type
+        payload = $payloadObj
+    } | ConvertTo-Json -Depth 10
+
+    Write-Host "POST $Url  (to=$To, type=$Type)"
+
+    try {
+        $response = Invoke-RestMethod -Uri $Url -Method Post -ContentType "application/json" -Body $body
+    } catch {
+        Write-Error "Request to $Url failed: $_"
+        exit 1
+    }
+
+    $response | ConvertTo-Json -Depth 10
 }
 
-$body = @{
-    to      = $To
-    type    = $Type
-    payload = $payloadObj
-} | ConvertTo-Json -Depth 10
+Send-TestMessage -Url $Url -To $To -Type $Type -Payload $Payload
 
-Write-Host "POST $Url  (to=$To, type=$Type)"
-
-try {
-    $response = Invoke-RestMethod -Uri $Url -Method Post -ContentType "application/json" -Body $body
-} catch {
-    Write-Error "Request to $Url failed: $_"
-    exit 1
+if ($To2 -and $Type2 -and $Payload2) {
+    Send-TestMessage -Url $Url -To $To2 -Type $Type2 -Payload $Payload2
 }
-
-$response | ConvertTo-Json -Depth 10

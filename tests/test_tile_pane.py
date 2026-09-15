@@ -25,6 +25,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 import replay_pane  # noqa: E402
 import tile_pane  # noqa: E402
+import replay as _replay  # noqa: E402  (real Performer path, for the end-to-end ownership test)
+from agent_state import read_state  # noqa: E402
 from tile_pane import (  # noqa: E402
     clear_stale_relay_files,
     draw_idle_screen,
@@ -692,6 +694,85 @@ def test_performer_is_given_the_tile_renderer_as_its_out(
     assert isinstance(out, tile_pane.TileRenderer)
     assert out.slot == "tuber_2"
     assert out.state_path == state_path
+
+
+# ── end-to-end bubble ownership: the real Performer, a real cast ──────────
+class _RecordingRealPerformer:
+    """Thin wrapper over the REAL replay_pane.Performer that records every
+    _avatar() call it makes during perform_tile_request(). This is the seam
+    that lets one test verify (a) the owning tile still gets its dialogue
+    bubble, and (b) the non-owning tile never gets another character's
+    dialogue bubble — both through the ACTUAL production code path, not a
+    stand-in.
+
+    The underlying Performer runs unmodified; the wrapper only observes
+    `_avatar` as a side channel.
+    """
+    instances = []
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        self.avatar_calls = []
+        from replay import Performer as _RealP
+        self._real = _RealP(**kwargs)
+        _RecordingRealPerformer.instances.append(self)
+
+    def perform(self, script, show=None, start=0, limit=None):
+        real_avatar = self._real._avatar
+
+        def spy(expression, action="", bubble=None):
+            self.avatar_calls.append((expression, action, bubble))
+            return real_avatar(expression, action=action, bubble=bubble)
+
+        self._real._avatar = spy
+        return self._real.perform(script, show=show, start=start, limit=limit)
+
+
+def test_real_performer_does_not_echo_a_foreign_dialogue_bubble(
+        tile_library, store, relay, monkeypatch):
+    """THE user-visible bug, proven through the ACTUAL Performer.
+
+    A campaign voiceline is an assistant_text event (the dialogue beat).
+    When a tile renders a scene it does NOT own (for pacing), the
+    Performer's `_on_assistant_text` must not fire an avatar "speaking" +
+    bubble write for that text. Before the fix, EVERY tile's Performer,
+    writing its avatar unconditionally per assistant_text, echoed every
+    character's dialogue into its own speech bubble, so all the roundtable
+    tiles showed the same lines.
+
+    The fixture's cast maps `coder` -> tuber_2, `boss` -> tuber_0, so:
+      * drive the perform_tile_request for tuber_3 (owns NEITHER scene).
+        Its Performer will render BOTH scenes for pacing — including the
+        coder scene's "on it" assistant_text beat.
+        After the fix, tuber_3's avatar must not receive a `speaking`
+        + `"talking to the stream"` bubble, because neither scene is its own.
+        This is the leak the user reported: a tile showing a line it didn't
+        say.
+    """
+    _RecordingRealPerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", _RecordingRealPerformer)
+
+    # Silence the voice-gate build (it would try to bind a local flock file).
+    monkeypatch.setattr(replay_pane, "build_voice_gate",
+                        lambda script, cfg, tag="": (None, 0.0))
+
+    # The tile's cue ratchet would otherwise block waiting for the FIRST cue;
+    # swap in a no-op that authorizes each scene on request. (The relay
+    # protocol itself is already pinned by the other tests in this file.)
+    monkeypatch.setattr(
+        tile_pane, "make_wait_for_scene",
+        lambda cue_file, airing_id, show, slot, stop_file=None: (lambda i: i))
+
+    request = _request()  # cast: {"boss": "tuber_0", "coder": "tuber_2"}
+    # tuber_3 is not in the cast at all — it owns zero scenes.
+    assert perform_tile_request(request, "tuber_3", str(relay)) is True
+
+    performed = _RecordingRealPerformer.instances[0]
+    talking = [c for c in performed.avatar_calls
+               if c[0] == "speaking" and c[1] == "talking to the stream"]
+    # No speaking/dialogue bubble may reach a tile that owns no dialogue.
+    assert talking == [], \
+        f"non-owning tile tuber_3 echoed a dialogue bubble: {talking}"
 
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
