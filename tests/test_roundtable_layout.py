@@ -257,8 +257,11 @@ def test_uncast_tiles_render_grey_not_the_active_color(built):
 # ── Status bar label (v1.4) ────────────────────────────────────────────────────
 def test_roundtable_sets_a_static_status_bar_label(built):
     """The tmux status bar's default '[worker] 0:python3*' segment is
-    meaningless to a viewer — the roundtable preset overrides it."""
+    meaningless to a viewer — the roundtable preset overrides it, and blanks
+    the window-list segment that would otherwise concatenate straight onto
+    the label with no separator."""
     joined = "\n".join(built["lines"])
     assert "tmux set -t worker status-left 'virtualTubers_roundtable'" in joined
+    assert "tmux set -t worker window-status-format ''" in joined
     # Cosmetic only: the underlying session keeps its real name everywhere.
     assert built["lines"][0] == "tmux new-session -d -s worker -x 240 -y 67"

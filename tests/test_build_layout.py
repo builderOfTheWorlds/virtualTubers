@@ -245,6 +245,12 @@ def test_status_label_sets_status_left_without_renaming_the_session(dirs, worker
     lines, _ = build_layout.build(worker_config, dirs["panels"], dirs["layouts"], dirs["runtime"])
     joined = "\n".join(lines)
     assert "tmux set -t worker status-left 'virtualTubers_roundtable'" in joined
+    # The window-list segment ("0:python3*") sits BETWEEN status-left and
+    # status-right in tmux's default status-format — blanking status-right
+    # alone still concatenated it straight onto the label with no separator
+    # (the real regression seen live: "virtualTubers_roundtable0:python3*").
+    assert "tmux set -t worker window-status-format ''" in joined
+    assert "tmux set -t worker window-status-current-format ''" in joined
     # The actual tmux session must still be named "worker" — a label is
     # cosmetic, not a rename, so every existing -t worker:... target keeps
     # working (attach commands, pane targeting, every other test in this file).
@@ -256,6 +262,7 @@ def test_no_status_label_means_no_status_bar_commands(dirs, worker_config):
     joined = "\n".join(lines)
     assert "status-left" not in joined
     assert "status-right" not in joined
+    assert "window-status" not in joined
 
 
 # ── roster titles (v1.4 — tile panes only) ─────────────────────────────────────

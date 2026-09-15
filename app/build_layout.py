@@ -300,11 +300,13 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     ``status_label``, when set, replaces the tmux status bar's default
     bottom-left segment (``[<session>] <window-index>:<window-name>*`` — on
     the roundtable that rendered as the meaningless "[worker] 0:python3*" on
-    air) with a single static string. This is COSMETIC ONLY: the underlying
-    tmux session is still named ``worker`` (SESSION_NAME) everywhere — the
-    label is a `status-left` override, not a rename, so every existing
-    ``tmux ... -t worker:...`` command (attach, pane targeting, tests) keeps
-    working unchanged.
+    air) with a single static string, and blanks the window-list segment that
+    otherwise sits between status-left and status-right (tmux concatenates it
+    straight onto the label with no separator otherwise). This is COSMETIC
+    ONLY: the underlying tmux session is still named ``worker`` (SESSION_NAME)
+    everywhere — the label is a `status-left` override, not a rename, so
+    every existing ``tmux ... -t worker:...`` command (attach, pane
+    targeting, tests) keeps working unchanged.
     """
     lines = []
     session = SESSION_NAME
@@ -313,10 +315,17 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     if status_label:
         lines.append(f"tmux set -t {session} status-left {_q(status_label)}")
         lines.append(f"tmux set -t {session} status-left-length {len(str(status_label)) + 4}")
-        # window-status (the "0:python3*" segment) sits in status-left by
-        # default too far right to hide without also clobbering status-left;
-        # the clean fix is to blank the per-window text so only our label shows.
         lines.append(f"tmux set -t {session} status-right ''")
+        # The window-list segment (tmux's default "0:python3*") sits BETWEEN
+        # status-left and status-right in status-format[0] — blanking
+        # status-right alone still left it concatenated straight onto the
+        # label with no separator (confirmed on the live broadcast: rendered
+        # as "virtualTubers_roundtable0:python3*"). Blanking the per-window
+        # format strings removes that middle segment entirely so only the
+        # label shows.
+        lines.append(f"tmux set -t {session} window-status-format ''")
+        lines.append(f"tmux set -t {session} window-status-current-format ''")
+        lines.append(f"tmux set -t {session} window-status-separator ''")
 
     # id -> tmux pane index, assigned as panes are created (base=0, then 1,2,...).
     # tmux inserts each new pane immediately after its split target and shifts
