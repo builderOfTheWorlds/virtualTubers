@@ -24,6 +24,15 @@ process (`roundtable_stream_design.md` §6.1) and renders the full ordered
 transcript there. A tile shows an avatar and recent lines; the log shows
 everything.
 
+### Why no name row inside the frame
+
+`render_tile` accepts `slot` but does not draw it. The character name already
+appears on the pane's own tmux top border — `build_layout.py`'s
+`_resolve_tile_title` resolves it and `emit_tmux` sets it via
+`select-pane -T`. A name row one line inside the box duplicated that border
+text (confirmed on a live broadcast frame: every tile showed its resolved
+name twice). `slot` stays a parameter for API/call-site stability.
+
 ### Where the displayed lines come from
 
 Not from scraping the transcript. `replay.Performer._avatar` atomically writes
@@ -37,9 +46,9 @@ bubble — the tile stays visible and quiet while another character talks.
 
 ```python
 render_tile(slot, expression="idle", line="", status="listening", out=None,
-            clear=True, width=None, lines=None) -> list[str]
+            clear=True, width=None, height=None, lines=None) -> list[str]
 
-TileRenderer(slot, state_path, out=None, history=TILE_DIALOGUE_LINES)
+TileRenderer(slot, state_path, out=None, history=TileRenderer.DEFAULT_HISTORY)
 ```
 
 ## Parameters
@@ -82,7 +91,7 @@ same. `write()` returns the byte count it was handed.
 | `TILE_AVATAR_LINES` | `3` | Fixed height of the AVATAR subpanel — "an OK height for now" per the design ask. |
 | `TILE_STATUS_LINES` | `1` | Fixed height of the STATUS subpanel. |
 | `MIN_DIALOGUE_LINES` | `2` | Floor for the TEXT subpanel — how small it can shrink to on a tiny/undetected pane. |
-| `TILE_FIXED_OVERHEAD` | `9` | Rows outside the TEXT subpanel (borders, name row, 3 dividers, avatar, status). `resolve_dialogue_line_count` subtracts this from the pane's real height. |
+| `TILE_FIXED_OVERHEAD` | `8` | Rows outside the TEXT subpanel (top+bottom border, avatar, avatar/text divider, text/status divider, status). `resolve_dialogue_line_count` subtracts this from the pane's real height. |
 | `TILE_PARTIAL_REDRAW_S` | `0.15` | Mid-line repaint cadence. A *new* line repaints immediately; per-character typing does not. |
 | `TILE_FACES` | 6 entries, 3 rows each | One per expression `Performer._avatar` writes (`speaking`, `listening`, `idle`, `thinking`, `focused`, `frustrated`). A missing entry silently falls back to `idle`, which made tiles look asleep mid-show. |
 
@@ -122,6 +131,11 @@ each tile a 31x20 pane; the frame renders 9 rows at 31 columns. Verified with
 
 ## Changelog
 
+- **v1.5** — Removed the redundant name row inside the frame: the character
+  name already appears on the pane's own tmux top border
+  (`build_layout.py`'s `_resolve_tile_title` + `select-pane -T`), so a tile
+  showed its name twice. The frame now starts straight into the AVATAR
+  subpanel; `TILE_FIXED_OVERHEAD` dropped by 2 rows accordingly.
 - **v1.4** — Three visually distinct subpanels (avatar / text / status), each
   behind its own divider; avatar grew from 2 to 3 rows; the TEXT subpanel now
   sizes itself from the pane's real detected height

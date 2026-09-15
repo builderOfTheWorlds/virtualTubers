@@ -456,13 +456,17 @@ def test_write_tile_state_degrades_on_unwritable_path(capsys):
 
 
 # ── idle screen (§5: the roundtable never goes blank) ────────────────────────
-def test_idle_screen_shows_the_slot_and_a_neutral_listening_status(relay, capsys):
+def test_idle_screen_shows_a_neutral_listening_status(relay, capsys):
+    """The slot/character name is NOT drawn inside the frame — it comes from
+    the pane's own tmux border (build_layout.py's _resolve_tile_title) — so
+    this only asserts the avatar+status contract, not a slot string."""
     state_path = tile_state_file(str(relay), "tuber_4")
     lines = draw_idle_screen("tuber_4", state_path)
 
     body = "\n".join(lines)
-    assert "tuber_4" in body
     assert "status: listening" in body
+    for face_row in tile_pane.TILE_FACES["idle"]:
+        assert face_row.strip() in body
     assert json.loads(Path(state_path).read_text(encoding="utf-8"))["expression"] == "idle"
     assert capsys.readouterr().out.endswith(body + "\n")
 
@@ -545,17 +549,18 @@ def test_avatar_face_is_drawn_alongside_the_dialogue(relay):
 
 def test_tile_renders_avatar_text_and_status_as_distinct_subpanels(relay):
     """The design ask: avatar / text / status must read as three SEPARATE
-    subpanels (each behind its own divider), not one undifferentiated block."""
+    subpanels (each behind its own divider), not one undifferentiated block.
+    No separate name row: the character name lives on the pane's own tmux
+    border, not inside the frame."""
     lines = render_tile("tuber_1", expression="speaking", lines=["hello"],
                         status="speaking", width=40, height=20)
     dividers = [i for i, row in enumerate(lines) if row.startswith("├")]
-    # name/avatar + avatar/text + text/status = 3 internal dividers.
-    assert len(dividers) == 3
-    avatar_start = dividers[0] + 1
-    avatar_rows = lines[avatar_start:avatar_start + tile_pane.TILE_AVATAR_LINES]
+    # avatar/text + text/status = 2 internal dividers.
+    assert len(dividers) == 2
+    avatar_rows = lines[1:1 + tile_pane.TILE_AVATAR_LINES]
     for face_row in tile_pane.TILE_FACES["speaking"]:
         assert any(face_row.strip() in row for row in avatar_rows)
-    status_row = lines[dividers[2] + 1]
+    status_row = lines[dividers[1] + 1]
     assert "status: speaking" in status_row
 
 
@@ -590,11 +595,14 @@ def _renderer(relay, slot="tuber_2"):
 
 def test_renderer_swallows_the_transcript_instead_of_scrolling_the_tile(relay):
     """THE bug this class fixes: the Performer's full transcript used to go
-    straight to the pane and scrolled the avatar off the top."""
+    straight to the pane and scrolled the avatar off the top. The slot/name
+    is not drawn inside the frame (it's on the tmux border), so this checks
+    for the idle FACE having been drawn instead of the transcript text."""
     r, sink, _state = _renderer(relay)
     r.write("VEX ▸ a long line of transcript that must never reach the pane\n")
     assert "long line of transcript" not in sink.text
-    assert "tuber_2" in sink.text          # a tile frame was drawn instead
+    for face_row in tile_pane.TILE_FACES["listening"]:
+        assert face_row.strip() in sink.text   # a tile frame was drawn instead
 
 
 def test_renderer_write_reports_the_byte_count_it_was_given(relay):
@@ -660,14 +668,17 @@ def test_renderer_degrades_when_the_state_file_is_missing(relay, tmp_path):
     r = tile_pane.TileRenderer("tuber_2", str(tmp_path / "nope.json"), out=_Sink())
     r.write("x")                       # must not raise
     assert list(r.lines) == []
-    assert "tuber_2" in "\n".join(r.draw())
+    body = "\n".join(r.draw())
+    for face_row in tile_pane.TILE_FACES["listening"]:
+        assert face_row.strip() in body
 
 
 def test_renderer_refresh_forces_a_repaint(relay):
     r, sink, _state = _renderer(relay)
     sink.text = ""
     r.refresh()
-    assert "tuber_2" in sink.text
+    for face_row in tile_pane.TILE_FACES["listening"]:
+        assert face_row.strip() in sink.text
 
 
 def test_performer_is_given_the_tile_renderer_as_its_out(

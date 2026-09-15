@@ -140,6 +140,13 @@ TILE_FACES = {
 # (the last spoken lines), then STATUS. Each is bounded by its own "├──┤"
 # divider so the tile visibly reads as three sections, not one undifferentiated
 # box — that's the whole point of splitting them out.
+#
+# There is deliberately NO separate name row inside the frame: tmux's own
+# pane-border-format already prints the resolved character name on the
+# pane's top border (build_layout.py's _resolve_tile_title -> `-T`), so a
+# second name repeated one line below it inside the box (the raw slot id,
+# e.g. "tuber_1") was pure duplication — confirmed redundant on the live
+# broadcast frame once the border already showed "Chadwick".
 TILE_AVATAR_LINES = 3    # fixed — "an OK height for now" per the design ask
 TILE_STATUS_LINES = 1    # fixed — one line is enough for "status: speaking"
 
@@ -149,11 +156,10 @@ TILE_STATUS_LINES = 1    # fixed — one line is enough for "status: speaking"
 # MIN_DIALOGUE_LINES is the floor so a tiny/undetected pane still shows
 # something rather than an empty text subpanel.
 MIN_DIALOGUE_LINES = 2
-# Fixed overhead OUTSIDE the text subpanel, in rows: top border + name row +
-# name/avatar divider + avatar (3) + avatar/text divider + text/status divider
-# + status (1) + bottom border = 2 + 1 + 1 + TILE_AVATAR_LINES + 1 + 1 +
-# TILE_STATUS_LINES.
-TILE_FIXED_OVERHEAD = 2 + 1 + 1 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES
+# Fixed overhead OUTSIDE the text subpanel, in rows: top border + avatar (3)
+# + avatar/text divider + text/status divider + status (1) + bottom border
+# = 2 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES.
+TILE_FIXED_OVERHEAD = 2 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES
 
 # Kept for backward compatibility with callers/tests that reference a static
 # "how many dialogue lines" constant; live rendering computes this per-frame
@@ -279,6 +285,15 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     TILE_STATUS_LINES row). Returns the rendered lines so tests can assert on
     them without scraping stdout.
 
+    `slot` is accepted but NOT drawn inside the frame: the character name
+    already appears on the pane's own tmux border (build_layout.py's
+    _resolve_tile_title), so repeating it inside the box was pure
+    duplication (confirmed on a live broadcast frame — every tile showed its
+    resolved name twice, once on the border and once one line inside it).
+    Kept as a parameter for call-site/API stability and because a future
+    caller without a tmux border (e.g. a bare terminal test run) may still
+    want it available.
+
     The avatar is drawn on EVERY frame, in every state — a tile must never go
     blank or collapse to text (§5). `lines` is the dialogue history (oldest
     first); `line` is the single-line shorthand kept for callers that only
@@ -310,9 +325,11 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     dialogue = [""] * (dialogue_line_count - len(dialogue)) + dialogue
 
     rows = ["┌" + "─" * inner + "┐"]
-    rows.append("│ " + _clip(slot, inner - 2).ljust(inner - 2) + " │")
     # ── AVATAR subpanel ──────────────────────────────────────────────────────
-    rows.append("├" + "─" * inner + "┤")
+    # No name row here — tmux's pane-border-format (build_layout.py's
+    # _resolve_tile_title -> `select-pane -T`) already prints the resolved
+    # character name on the pane's own top border, so this box starts
+    # straight into the avatar.
     for row in face:
         rows.append("│" + row.center(inner) + "│")
     # ── TEXT subpanel ────────────────────────────────────────────────────────
