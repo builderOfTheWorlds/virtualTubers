@@ -79,9 +79,12 @@ same. `write()` returns the byte count it was handed.
 
 | Name | Value | Meaning |
 |---|---|---|
-| `TILE_DIALOGUE_LINES` | `2` | Dialogue rows, **always reserved** (blank when unused) so the frame is a fixed height and a tile that starts talking never shifts its neighbours. |
+| `TILE_AVATAR_LINES` | `3` | Fixed height of the AVATAR subpanel — "an OK height for now" per the design ask. |
+| `TILE_STATUS_LINES` | `1` | Fixed height of the STATUS subpanel. |
+| `MIN_DIALOGUE_LINES` | `2` | Floor for the TEXT subpanel — how small it can shrink to on a tiny/undetected pane. |
+| `TILE_FIXED_OVERHEAD` | `9` | Rows outside the TEXT subpanel (borders, name row, 3 dividers, avatar, status). `resolve_dialogue_line_count` subtracts this from the pane's real height. |
 | `TILE_PARTIAL_REDRAW_S` | `0.15` | Mid-line repaint cadence. A *new* line repaints immediately; per-character typing does not. |
-| `TILE_FACES` | 6 entries | One per expression `Performer._avatar` writes (`speaking`, `listening`, `idle`, `thinking`, `focused`, `frustrated`). A missing entry silently falls back to `idle`, which made tiles look asleep mid-show. |
+| `TILE_FACES` | 6 entries, 3 rows each | One per expression `Performer._avatar` writes (`speaking`, `listening`, `idle`, `thinking`, `focused`, `frustrated`). A missing entry silently falls back to `idle`, which made tiles look asleep mid-show. |
 
 ## Dependencies
 
@@ -119,6 +122,19 @@ each tile a 31x20 pane; the frame renders 9 rows at 31 columns. Verified with
 
 ## Changelog
 
+- **v1.4** — Three visually distinct subpanels (avatar / text / status), each
+  behind its own divider; avatar grew from 2 to 3 rows; the TEXT subpanel now
+  sizes itself from the pane's real detected height
+  (`resolve_dialogue_line_count`) instead of a fixed 2 lines, so it actually
+  "takes up the rest of the tuber panel". Pane titles resolve through a new
+  `roster:` key in the worker config (`build_layout.py`'s `_resolve_tile_title`)
+  instead of showing the raw slot id — `Game Master` for the GM, the real
+  character name for a cast slot, `Offline` for an uncast one. Every ACTIVE
+  tile now renders in one shared light-blue (`colour117`) instead of a
+  per-slot rainbow; uncast tiles render grey (`colour240`). The tmux status
+  bar's default `[worker] 0:python3*` segment is replaced with a static
+  `status_label` (layout-level, cosmetic only — the session keeps its real
+  name).
 - **v1.3** — Show log column removed (it left the grid too narrow to read —
   the tuber_1/tuber_5 regression); the character grid is now a full-screen
   even 4x2 tile grid.

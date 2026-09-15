@@ -24,8 +24,21 @@
 # per-instance — see app/agent_state.py resolve_state_path). tile_pane.py owns a
 # compact render and its own per-tile state file; when avatars are replaced,
 # this panel is the single seam that changes.
+#
+# ── Color (v1.4) ──────────────────────────────────────────────────────────────
+# `border_color` doubles as the pane's text color: tmux's `select-pane -P
+# fg=<color>` (build_layout.py's emit_tmux) sets the pane's default style, and
+# a tile never emits its own SGR codes, so whatever tmux picks IS the color of
+# every character the tile prints — confirmed against a live captured frame.
+# `colour117` is a light, readable sky-blue used for every ACTIVE tuber, so
+# every character on the roundtable reads consistently instead of the old
+# per-slot rainbow (magenta/dark-blue/grey) that was hard to read on stream.
+# A tile with no character assigned (config/layouts/roundtable.yaml's
+# tile_tuber_4, tile_spare) overrides this back to grey (colour240) to signal
+# "offline" — keep that override in sync with tile_pane.py's
+# resolve_display_name() Offline fallback in the SAME layout entry.
 # ──────────────────────────────────────────────────────────────────────────────
 type: tile
 title: "Tile"
-border_color: blue
+border_color: colour117
 command: "python3 /app/tile_pane.py --slot {slot} --config {config_path}"

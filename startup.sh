@@ -144,6 +144,24 @@ log "Starting agent loop"
 python3 /app/agent.py --config "${CONFIG_PATH}" &
 AGENT_PID=$!
 
+# ── 7.5 Roundtable director (headless) ─────────────────────────────────────────
+# app/replay_pane.py is not merely a display: running it IS how any
+# replay_request ever actually airs (perform_request / perform_director_request
+# in app/replay_pane.py poll the request file the agent writes). Every layout
+# used to host it as a visible "Rerun Theater" tmux pane (config/panels/
+# replay.yaml), so removing that pane from a layout (e.g. the roundtable
+# preset's v1.3 pure-tile-grid pass) silently stops the SHOW from ever airing
+# at all — replay_request gets queued to a file nobody polls, with no error
+# anywhere (confirmed live: only tile_pane.py/agent.py/stream_supervisor.py
+# processes running, zero replay_pane.py). Launching it here, unconditionally
+# and off-screen, decouples "the director runs" from "a layout chose to also
+# show its log" — a future layout can drop the pane again without breaking
+# playback. TILE_RELAY_DIR-gated in the process itself (_resolve_local_tiles),
+# so this is a no-op for the six character workers beyond one idle process.
+log "Starting roundtable director (headless — see startup.sh §7.5)"
+python3 /app/replay_pane.py --config "${CONFIG_PATH}" &
+REPLAY_PANE_PID=$!
+
 # ── 8. Stream supervisor ───────────────────────────────────────────────────────
 # Runs ffmpeg as a child process it starts/stops based on this worker's on/off
 # flag (app/worker_control.py, toggled via message-api's /workers/{id}/enable|

@@ -4,10 +4,11 @@
 # The 7th channel — the "main" stream (roundtable_stream_design.md v1.1 §6).
 # Hosted by the GM container (tuber_0). Eight tiles: one per character slot
 # (tuber_0..tuber_6, INCLUDING the GM's own — §1.1) plus a spare grid-balancing
-# tile, laid out as an EVEN 4x2 grid filling the whole screen.
+# tile, laid out as an EVEN 4x2 grid filling the whole screen, PLUS one hidden
+# director pane (see below) that is not part of the visible grid.
 #
-# ── v1.3: pure tile grid, no show log, no system strip ────────────────────────
-# Two earlier ideas were tried and dropped:
+# ── v1.3: pure tile grid, no VISIBLE show log, no system strip ────────────────
+# Two earlier ideas were tried and dropped from the VISIBLE layout:
 #   * a left-side "Show Log" column (v1.2) — pulled 20% of the width off the
 #     grid, which meant the grid's own even-quarters math (see below) was
 #     computed against a narrower remainder than the columns actually need to
@@ -16,7 +17,17 @@
 #     visible tile-by-tile, so it was cut rather than re-sized.
 #   * an htop "System" strip — operator telemetry that read on the live
 #     broadcast as an eighth "character" sitting in the grid.
-# Both are gone. Every pixel on this channel is a character tile now.
+# Both are gone from the SCREEN. The director PROCESS they hosted is not —
+# see "director pane (hidden)" below. `config/panels/replay.yaml`'s
+# `python3 /app/replay_pane.py` is not just a display: it IS the roundtable
+# duet director (perform_director_request in app/replay_pane.py). Dropping
+# the pane that ran it from this file stops anyone from ever launching that
+# process, so a replay_request gets queued to the request file and then
+# nothing ever polls it — the roundtable silently stops airing entirely,
+# with no error anywhere (confirmed live: 8 tile_pane.py processes running,
+# zero replay_pane.py processes, after the show-log pane was first removed).
+# Every pixel of the VISIBLE grid is a character tile now; the director still
+# runs, just off-screen.
 #
 # ── Geometry: four equal columns, two equal rows ──────────────────────────────
 # tmux's `split-window -p <pct>` sizes the NEWLY CREATED pane to <pct> percent
@@ -58,21 +69,31 @@
 # is spare capacity, not a committed slot.
 # ──────────────────────────────────────────────────────────────────────────────
 preset: roundtable
+# Cosmetic only (v1.4): the tmux status bar's default bottom-left segment is
+# "[<session>] <window-index>:<window-name>*" — literally "[worker] 0:python3*"
+# on air, meaningless to a viewer. build_layout.py (see its status_label
+# handling) turns this into a single static label instead of touching the
+# actual tmux session name, which stays "worker" everywhere else (attach
+# commands, pane targeting, existing docs/tests all assume it).
+status_label: "virtualTubers_roundtable"
 panes:
   # ── Base pane: the GM's own tile (top-left). ────────────────────────────────
-  # tuber_0 is a character, so it gets a tile like everyone else; only the
-  # border color + title mark it as the narrator.
+  # tuber_0 is a character, so it gets a tile like everyone else. It no longer
+  # overrides border_color: every ACTIVE tuber (including the GM) renders in
+  # the same light-blue (config/panels/tile.yaml's colour117) so the cast
+  # reads consistently on stream — a per-slot rainbow (this used to be
+  # magenta) was flagged as confusing on the live broadcast (v1.4).
   - use: tile
     id: tile_tuber_0
-    title: "tuber_0 · GM / narrator"
-    border_color: magenta
     with:
       slot: "tuber_0"
 
   # ── Bottom row, split off the base first so both rows divide evenly. ───────
+  # tuber_4 (coder-aider) has no character assigned (see tuber_0.yaml's
+  # `roster` config) — grey/offline like the spare cell, not light blue.
   - use: tile
     id: tile_tuber_4
-    title: "tuber_4"
+    border_color: colour240
     target: tile_tuber_0
     split: v
     size: 50
@@ -82,7 +103,6 @@ panes:
   # ── Top row, columns 2-4 (75/66/50 -> four equal quarters, see header). ────
   - use: tile
     id: tile_tuber_1
-    title: "tuber_1"
     target: tile_tuber_0
     split: h
     size: 75
@@ -91,7 +111,6 @@ panes:
 
   - use: tile
     id: tile_tuber_2
-    title: "tuber_2"
     target: tile_tuber_1
     split: h
     size: 66
@@ -100,7 +119,6 @@ panes:
 
   - use: tile
     id: tile_tuber_3
-    title: "tuber_3"
     target: tile_tuber_2
     split: h
     size: 50
@@ -110,7 +128,6 @@ panes:
   # ── Bottom row, columns 2-4. ───────────────────────────────────────────────
   - use: tile
     id: tile_tuber_5
-    title: "tuber_5"
     target: tile_tuber_4
     split: h
     size: 75
@@ -119,7 +136,6 @@ panes:
 
   - use: tile
     id: tile_tuber_6
-    title: "tuber_6"
     target: tile_tuber_5
     split: h
     size: 66

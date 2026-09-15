@@ -143,9 +143,48 @@ def deep_merge(base, override):
     return result
 
 
-def resolve_pane(placement, panels_dir, worker_overrides):
+# Default display names when a worker config carries no `roster` entry (or no
+# `roster` key at all) for a tile's slot — v1.4: pane titles must show the
+# character's name, not the raw slot id, but a slot with nothing cast to it
+# (or a config that predates the `roster` key) must still show something
+# sane rather than a KeyError or a blank border.
+ROSTER_DEFAULT_GM_TITLE = "Game Master"
+ROSTER_DEFAULT_OFFLINE_TITLE = "Offline"
+
+
+def _resolve_tile_title(resolved, worker_config, explicit_title=None):
+    """A tile's on-screen name (design ask, v1.4): `roster.<slot>` in the
+    worker config, keyed by the tile's slot — NOT hardcoded per-layout-entry,
+    so renaming a character is a one-line config edit, not a layout edit.
+
+    Precedence, highest first:
+      1. `explicit_title` — a title actually set by the layout placement or a
+         worker-config pane override (NOT the panel-type default "Tile",
+         which every tile pane inherits from config/panels/tile.yaml and must
+         never win over the roster).
+      2. `roster.<slot>` from the worker config.
+      3. Slot-shaped fallback: `tuber_0` -> ROSTER_DEFAULT_GM_TITLE ("Game
+         Master" — the GM/narrator has no character cast, but is still the
+         host, not "offline"); every other slot -> ROSTER_DEFAULT_OFFLINE_TITLE
+         ("Offline" — no character assigned to that slot yet).
+
+    A no-op for every non-tile pane (`slot` is only ever set via a tile's
+    `with:` block), so this can't affect any other panel type.
+    """
+    if explicit_title:
+        return explicit_title
+    slot = resolved.get("slot")
+    if not slot:
+        return resolved.get("title")
+    roster = worker_config.get("roster")
+    if isinstance(roster, dict) and roster.get(slot):
+        return str(roster[slot])
+    return ROSTER_DEFAULT_GM_TITLE if slot == "tuber_0" else ROSTER_DEFAULT_OFFLINE_TITLE
+
+
+def resolve_pane(placement, panels_dir, worker_overrides, worker_config=None):
     """Resolve one pane: panel-type default -> layout placement/overrides
-    (incl. ``with:``) -> worker per-pane override.
+    (incl. ``with:``) -> worker per-pane override -> roster title (tiles only).
 
     Returns the merged pane dict, or None if disabled.
     """
@@ -174,7 +213,10 @@ def resolve_pane(placement, panels_dir, worker_overrides):
         placement_layer = deep_merge(placement_layer, with_block)
     resolved = deep_merge(resolved, placement_layer)
 
-    # Worker-config per-pane override wins over the layout.
+    # Worker-config per-pane override wins over the layout. Tracked separately
+    # from `resolved`'s title (which already carries the panel-type default)
+    # so a tile's roster lookup can tell "nobody actually set a title" apart
+    # from "the panel default happens to be truthy".
     wo = worker_overrides.get(pane_id) or worker_overrides.get(use)
     if isinstance(wo, dict):
         log.debug("pane '%s': applying worker override %s", pane_id, wo)
@@ -182,6 +224,10 @@ def resolve_pane(placement, panels_dir, worker_overrides):
 
     resolved.setdefault("id", pane_id)
     resolved.setdefault("use", use)
+
+    if use == "tile":
+        explicit_title = placement_layer.get("title") or (wo or {}).get("title")
+        resolved["title"] = _resolve_tile_title(resolved, worker_config or {}, explicit_title)
 
     if resolved.get("enabled") is False:
         log.debug("pane '%s' disabled; omitting", pane_id)
@@ -241,7 +287,8 @@ def _q(s):
     return "'" + str(s).replace("'", "'\\''") + "'"
 
 
-def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_ROWS):
+def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_ROWS,
+             status_label=None):
     """Build the ordered list of tmux command lines that reproduce the layout.
 
     ``panes`` is the ordered list of resolved (enabled) pane dicts. Panes are
@@ -249,11 +296,27 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     created by splitting its ``target`` pane (default: the base pane). tmux
     numbers panes 0..N in creation order, which is exactly the emission order,
     so ``id -> pane index`` is deterministic.
+
+    ``status_label``, when set, replaces the tmux status bar's default
+    bottom-left segment (``[<session>] <window-index>:<window-name>*`` — on
+    the roundtable that rendered as the meaningless "[worker] 0:python3*" on
+    air) with a single static string. This is COSMETIC ONLY: the underlying
+    tmux session is still named ``worker`` (SESSION_NAME) everywhere — the
+    label is a `status-left` override, not a rename, so every existing
+    ``tmux ... -t worker:...`` command (attach, pane targeting, tests) keeps
+    working unchanged.
     """
     lines = []
     session = SESSION_NAME
 
     lines.append(f"tmux new-session -d -s {session} -x {cols} -y {rows}")
+    if status_label:
+        lines.append(f"tmux set -t {session} status-left {_q(status_label)}")
+        lines.append(f"tmux set -t {session} status-left-length {len(str(status_label)) + 4}")
+        # window-status (the "0:python3*" segment) sits in status-left by
+        # default too far right to hide without also clobbering status-left;
+        # the clean fix is to blank the per-window text so only our label shows.
+        lines.append(f"tmux set -t {session} status-right ''")
 
     # id -> tmux pane index, assigned as panes are created (base=0, then 1,2,...).
     # tmux inserts each new pane immediately after its split target and shifts
@@ -342,7 +405,7 @@ def build(config_path, panels_dir, layouts_dir, runtime_dir):
 
     resolved_panes = []
     for placement in placements:
-        pane = resolve_pane(placement, panels_dir, worker_overrides)
+        pane = resolve_pane(placement, panels_dir, worker_overrides, worker_config)
         if pane is None:
             continue
         # Persist the resolved config so pane processes read one source of truth.
@@ -351,7 +414,8 @@ def build(config_path, panels_dir, layouts_dir, runtime_dir):
 
     log.info("resolved %d panes for preset '%s'", len(resolved_panes), preset)
 
-    lines = emit_tmux(resolved_panes, config_path, runtime_dir)
+    status_label = layout.get("status_label")
+    lines = emit_tmux(resolved_panes, config_path, runtime_dir, status_label=status_label)
     return lines, resolved_panes
 
 

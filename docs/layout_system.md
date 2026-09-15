@@ -126,6 +126,33 @@ override) accepts these keys:
 | `command` | Override the shell command the pane runs. |
 | `with` | Free-form per-instance override block, deep-merged into the pane. |
 
+## Layout-level knobs
+
+Set once at the top of a `config/layouts/<preset>.yaml` file (siblings of
+`preset:`/`panes:`), not per-pane:
+
+| Knob | Purpose |
+|---|---|
+| `status_label` | Static text for the tmux status bar's bottom-left segment, replacing the default `[<session>] <window-index>:<window-name>*` (e.g. `[worker] 0:python3*`). Cosmetic only — the underlying tmux session keeps its real name (`worker`), so every `-t worker:...` target (attach, pane commands, tests) is unaffected. |
+
+## `tile` panes: the `roster` map (roundtable-specific)
+
+A `tile` pane's on-screen `title` is NOT set per-placement like other panes.
+`build_layout.py`'s `_resolve_tile_title` resolves it from a `roster:` map in
+the worker config, keyed by the tile's `slot` (e.g. `config/workers/tuber_0.yaml`):
+
+```yaml
+roster:
+  tuber_1: "Chadwick"
+  tuber_2: "Vigil"
+```
+
+Precedence: an explicit `title:` on the placement/worker-pane override still
+wins first; then `roster.<slot>`; then a slot-shaped fallback — `tuber_0`
+(the GM) shows `"Game Master"`, every other uncast slot shows `"Offline"`.
+Renaming a character or adding a new one to the roster is therefore a
+one-line config edit, never a layout edit.
+
 ## Editing the layout (config-only workflows)
 
 ### Disable a pane

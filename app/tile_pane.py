@@ -119,23 +119,46 @@ def ensure_relay_dir(relay_dir):
 # talking right now", not expressiveness. Kept tiny deliberately: the tile
 # is the seam the real avatar work lands in, and a big render here would
 # only be thrown away (§5.1, §12 deferred).
+#
+# v1.4: three ROWS per expression (was two) — the design ask for an "avatar
+# subpanel" of about 3 lines, and enough vertical room to read as a face
+# rather than a glyph pair once it's boxed off from the text/status
+# subpanels below it.
 TILE_FACES = {
-    "speaking": ["( ^ _ ^ )", " \\_____/ "],
-    "listening": ["( . _ . )", "  \\___/  "],
-    "idle": ["( - _ - )", "  \\___/  "],
+    "speaking": ["  ___  ", " ( ^_^ )", "  \\___/ "],
+    "listening": ["  ___  ", " ( ._. )", "  \\___/ "],
+    "idle": ["  ___  ", " ( -_- )", "  \\___/ "],
     # The expressions replay.Performer._avatar actually writes while a show
     # runs. Without entries here every non-speaking moment fell back to the
     # `idle` face, so a tile looked asleep for most of the broadcast.
-    "thinking": ["( o _ o )", "  \\~~~/  "],
-    "focused": ["( > _ < )", "  \\___/  "],
-    "frustrated": ["( x _ x )", "  /~~~\\  "],
+    "thinking": ["  ___  ", " ( o_o )", "  \\~~~/ "],
+    "focused": ["  ___  ", " ( >_< )", "  \\___/ "],
+    "frustrated": ["  ___  ", " ( x_x )", "  /~~~\\ "],
 }
 
-# How many spoken lines a tile keeps on screen under its avatar. The avatar is
-# ALWAYS drawn (§5.1: the roundtable never goes blank) and these rows are always
-# reserved — blank when the slot has not spoken yet — so the frame height never
-# changes and neighbouring tiles never shift on air.
-TILE_DIALOGUE_LINES = 2
+# The three subpanels the design calls for, top to bottom: AVATAR, then TEXT
+# (the last spoken lines), then STATUS. Each is bounded by its own "├──┤"
+# divider so the tile visibly reads as three sections, not one undifferentiated
+# box — that's the whole point of splitting them out.
+TILE_AVATAR_LINES = 3    # fixed — "an OK height for now" per the design ask
+TILE_STATUS_LINES = 1    # fixed — one line is enough for "status: speaking"
+
+# The TEXT subpanel is the one that's supposed to "take up the rest of the
+# tuber panel" — sized from the pane's DETECTED height every render, not
+# hardcoded, the same principle resolve_tile_width already uses for width.
+# MIN_DIALOGUE_LINES is the floor so a tiny/undetected pane still shows
+# something rather than an empty text subpanel.
+MIN_DIALOGUE_LINES = 2
+# Fixed overhead OUTSIDE the text subpanel, in rows: top border + name row +
+# name/avatar divider + avatar (3) + avatar/text divider + text/status divider
+# + status (1) + bottom border = 2 + 1 + 1 + TILE_AVATAR_LINES + 1 + 1 +
+# TILE_STATUS_LINES.
+TILE_FIXED_OVERHEAD = 2 + 1 + 1 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES
+
+# Kept for backward compatibility with callers/tests that reference a static
+# "how many dialogue lines" constant; live rendering computes this per-frame
+# from the pane's real detected height via resolve_dialogue_line_count().
+TILE_DIALOGUE_LINES = MIN_DIALOGUE_LINES
 
 # Redraw cadence for a line that is still being typed out. The Performer types
 # character by character; redrawing the whole frame per character would repaint
@@ -167,6 +190,11 @@ _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
 FALLBACK_TILE_WIDTH = 36
 MIN_TILE_WIDTH = 18
 
+# Same story for HEIGHT (v1.4, TILE_HEIGHT / resolve_tile_height): the text
+# subpanel needs to know how many rows it actually has to fill.
+FALLBACK_TILE_HEIGHT = 20
+MIN_TILE_HEIGHT = TILE_FIXED_OVERHEAD + MIN_DIALOGUE_LINES
+
 
 def resolve_tile_width():
     """The width to render this tile at, detected fresh each call so a tmux
@@ -186,6 +214,35 @@ def resolve_tile_width():
     except (OSError, ValueError, AttributeError):
         pass
     return FALLBACK_TILE_WIDTH
+
+
+def resolve_tile_height():
+    """The height to render this tile at, detected fresh each call — mirrors
+    resolve_tile_width. This is what lets the text subpanel actually "take up
+    the rest of the tuber panel" instead of a hardcoded row count: a wider
+    pane on a different DISPLAY_NUM/font-size combination gets a bigger text
+    area automatically."""
+    override = os.environ.get("TILE_HEIGHT")
+    if override:
+        try:
+            return max(MIN_TILE_HEIGHT, int(override))
+        except (TypeError, ValueError):
+            pass
+    try:
+        detected = os.get_terminal_size(sys.stdout.fileno()).lines
+        if detected >= MIN_TILE_HEIGHT:
+            return detected
+    except (OSError, ValueError, AttributeError):
+        pass
+    return FALLBACK_TILE_HEIGHT
+
+
+def resolve_dialogue_line_count(height=None):
+    """How many rows the TEXT subpanel gets: whatever is left in the tile
+    after the fixed avatar/status/border/divider overhead, floored at
+    MIN_DIALOGUE_LINES so a very short pane still shows something."""
+    h = height if height is not None else resolve_tile_height()
+    return max(MIN_DIALOGUE_LINES, h - TILE_FIXED_OVERHEAD)
 
 
 # Kept for callers/tests that want a static default; live rendering uses
@@ -215,42 +272,54 @@ def _clip(text, width):
 
 
 def render_tile(slot, expression="idle", line="", status="listening", out=None,
-                clear=True, width=None, lines=None):
-    """Draw the compact tile frame: name + face + the last `lines` spoken +
-    status (§5's sketch), never the full-pane art. Returns the rendered lines so
-    tests can assert on them without scraping stdout.
+                clear=True, width=None, height=None, lines=None):
+    """Draw the tile frame as three bordered SUBPANELS, top to bottom:
+    AVATAR (fixed TILE_AVATAR_LINES rows), TEXT (the last spoken lines — grows
+    to fill whatever vertical room is left), and STATUS (fixed
+    TILE_STATUS_LINES row). Returns the rendered lines so tests can assert on
+    them without scraping stdout.
 
     The avatar is drawn on EVERY frame, in every state — a tile must never go
     blank or collapse to text (§5). `lines` is the dialogue history (oldest
-    first, at most TILE_DIALOGUE_LINES kept); `line` is the single-line
-    shorthand kept for callers that only have a current line. The dialogue rows
-    are always reserved even when empty, so the frame is a fixed height and a
-    tile that starts talking cannot shove its neighbours around on air.
+    first); `line` is the single-line shorthand kept for callers that only
+    have a current line. The TEXT subpanel's row count is resolved from the
+    pane's real detected height (resolve_dialogue_line_count) so it actually
+    fills the panel instead of a hardcoded 2 lines, and stays fixed for a
+    given height so a tile that starts talking cannot shove its neighbours
+    around on air.
 
-    `width` defaults to the pane's DETECTED width (resolve_tile_width) so the
-    frame always fits its real tmux pane — see the comment on
-    resolve_tile_width for why assuming a width put a broken-looking tile on
-    a live broadcast. Tests pass an explicit width for determinism.
+    `width`/`height` default to the pane's DETECTED size (resolve_tile_width /
+    resolve_tile_height) so the frame always fits its real tmux pane — see the
+    comment on resolve_tile_width for why assuming a size put a broken-looking
+    tile on a live broadcast. Tests pass explicit values for determinism.
     """
     out = out or sys.stdout
     face = TILE_FACES.get(expression) or TILE_FACES["idle"]
     tile_width = width or resolve_tile_width()
+    tile_height = height if height is not None else resolve_tile_height()
     inner = tile_width - 2
     line_chars = tile_width - 4
+    dialogue_line_count = resolve_dialogue_line_count(tile_height)
 
     if lines is None:
         lines = [line] if line else []
     # Newest at the bottom, oldest trimmed off the top; always exactly
-    # TILE_DIALOGUE_LINES rows so the frame height is constant.
-    dialogue = list(lines)[-TILE_DIALOGUE_LINES:]
-    dialogue = [""] * (TILE_DIALOGUE_LINES - len(dialogue)) + dialogue
+    # dialogue_line_count rows so the TEXT subpanel's height is constant for a
+    # given tile size.
+    dialogue = list(lines)[-dialogue_line_count:]
+    dialogue = [""] * (dialogue_line_count - len(dialogue)) + dialogue
 
     rows = ["┌" + "─" * inner + "┐"]
     rows.append("│ " + _clip(slot, inner - 2).ljust(inner - 2) + " │")
+    # ── AVATAR subpanel ──────────────────────────────────────────────────────
+    rows.append("├" + "─" * inner + "┤")
     for row in face:
         rows.append("│" + row.center(inner) + "│")
+    # ── TEXT subpanel ────────────────────────────────────────────────────────
+    rows.append("├" + "─" * inner + "┤")
     for spoken in dialogue:
         rows.append("│ " + _clip(spoken, line_chars).ljust(line_chars) + " │")
+    # ── STATUS subpanel ──────────────────────────────────────────────────────
     rows.append("├" + "─" * inner + "┤")
     rows.append("│ " + _clip(f"status: {status}", inner - 2).ljust(inner - 2) + " │")
     rows.append("└" + "─" * inner + "┘")
@@ -286,9 +355,19 @@ class TileRenderer:
     ends and the next begins. Unowned scenes write expression `idle` with no
     bubble, which is exactly right: this tile stays visible and quiet while
     another character talks.
+
+    `history` bounds how many spoken lines are RETAINED (kept generous —
+    render_tile only ever displays the last `resolve_dialogue_line_count()` of
+    them, which is derived from the pane's real height at draw time, not from
+    this buffer size).
     """
 
-    def __init__(self, slot, state_path, out=None, history=TILE_DIALOGUE_LINES):
+    # Comfortably larger than any real TEXT subpanel will ever display, so the
+    # buffer is never the limiting factor — render_tile's height-derived slice
+    # is.
+    DEFAULT_HISTORY = 50
+
+    def __init__(self, slot, state_path, out=None, history=DEFAULT_HISTORY):
         self.slot = slot
         self.state_path = state_path
         self.out = out or sys.stdout
@@ -350,6 +429,7 @@ def draw_idle_screen(slot, state_path=None, out=None):
     "listening" status (§5). The roundtable channel never goes blank."""
     write_tile_state(state_path, "idle", action="waiting for the next round")
     return render_tile(slot, expression="idle", line="", status="listening", out=out)
+
 
 
 # ── the follower contract, locally ───────────────────────────────────────────

@@ -467,13 +467,17 @@ def test_idle_screen_shows_the_slot_and_a_neutral_listening_status(relay, capsys
     assert capsys.readouterr().out.endswith(body + "\n")
 
 
-def test_tile_render_is_small_enough_for_a_tile(relay):
-    """§5.1 constraint 2: a tile gets roughly 15-16 rows. The render must
-    stay well inside that, and never emit an unbounded line."""
+def test_tile_render_fits_the_detected_pane_height(relay):
+    """v1.4: the text subpanel grows to fill the pane instead of a fixed 2
+    lines, so this asserts the CONTRACT (exact row count for a given detected
+    height + width, never an unbounded/wrapped line) rather than the now
+    outdated fixed 15-16 row budget."""
+    width, height = 36, 20
     lines = render_tile("tuber_6", expression="speaking",
-                        line="a very long spoken line " * 20, status="speaking")
-    assert len(lines) <= 12
-    assert max(len(line) for line in lines) <= tile_pane.TILE_WIDTH
+                        line="a very long spoken line " * 20, status="speaking",
+                        width=width, height=height)
+    assert len(lines) == height
+    assert max(len(line) for line in lines) <= width
 
 
 def test_render_tile_falls_back_for_an_unknown_expression():
@@ -489,43 +493,70 @@ def test_every_expression_the_performer_writes_has_its_own_face():
         assert expression in tile_pane.TILE_FACES
 
 
-# ── avatar + last two lines (the broadcast tile contract) ────────────────────
-def _dialogue_rows(lines, width=None):
-    """The dialogue area, located structurally rather than by prefix (the
-    centered face rows also start with '│ '). Frame shape is:
-    top, name, face..., dialogue x TILE_DIALOGUE_LINES, separator, status, bottom.
-    """
-    n = tile_pane.TILE_DIALOGUE_LINES
+# ── avatar + text + status subpanels (the broadcast tile contract, v1.4) ─────
+def _dialogue_rows(lines, height=None):
+    """The TEXT subpanel, located structurally: top, name, name/avatar-divider,
+    avatar (TILE_AVATAR_LINES), avatar/text-divider, TEXT rows,
+    text/status-divider, status, bottom. `height` must match what the frame
+    was rendered at so the dialogue-row count lines up with
+    resolve_dialogue_line_count(height)."""
+    n = tile_pane.resolve_dialogue_line_count(height)
     return lines[-(n + 3):-3]
 
 
-def test_tile_always_reserves_exactly_two_dialogue_rows(relay):
-    """Fixed height in every state, so a tile that starts talking can never
-    shove its neighbours around on air."""
-    width = 40
-    empty = render_tile("tuber_1", width=width)
-    one = render_tile("tuber_1", lines=["only line"], width=width)
-    many = render_tile("tuber_1", lines=["a", "b", "c", "d"], width=width)
-    assert len(empty) == len(one) == len(many)
+def test_tile_text_subpanel_fills_the_detected_height(relay):
+    """The TEXT subpanel grows/shrinks with the pane's height and stays a
+    FIXED size for a given height in every state, so a tile that starts
+    talking can never shove its neighbours around on air."""
+    width, height = 40, 24
+    empty = render_tile("tuber_1", width=width, height=height)
+    one = render_tile("tuber_1", lines=["only line"], width=width, height=height)
+    many = render_tile("tuber_1", lines=["a", "b", "c", "d"], width=width, height=height)
+    assert len(empty) == len(one) == len(many) == height
+    expected = tile_pane.resolve_dialogue_line_count(height)
     for frame in (empty, one, many):
-        assert len(_dialogue_rows(frame, width)) == tile_pane.TILE_DIALOGUE_LINES
+        assert len(_dialogue_rows(frame, height)) == expected
 
 
-def test_tile_shows_the_last_two_lines_newest_at_the_bottom(relay):
-    lines = render_tile("tuber_1", lines=["first", "second", "third"], width=40)
-    rows = _dialogue_rows(lines, 40)
-    assert "second" in rows[0]
-    assert "third" in rows[1]
-    assert "first" not in "\n".join(rows)   # scrolled off
+def test_tile_text_subpanel_grows_with_a_taller_pane(relay):
+    """The design ask: text should 'take up the rest of the tuber panel' —
+    a taller pane must give the TEXT subpanel more rows, not a fixed 2."""
+    short = render_tile("tuber_1", width=40, height=20)
+    tall = render_tile("tuber_1", width=40, height=30)
+    assert len(_dialogue_rows(short, 20)) < len(_dialogue_rows(tall, 30))
+
+
+def test_tile_shows_the_last_lines_newest_at_the_bottom(relay):
+    width, height = 40, 20
+    lines = render_tile("tuber_1", lines=["first", "second", "third"], width=width, height=height)
+    rows = _dialogue_rows(lines, height)
+    assert "third" in rows[-1]
+    assert "second" in rows[-2]
 
 
 def test_avatar_face_is_drawn_alongside_the_dialogue(relay):
     """The avatar must be present at ALL times — including while lines show."""
     body = "\n".join(render_tile("tuber_1", expression="speaking",
-                                 lines=["talking now"], width=40))
+                                 lines=["talking now"], width=40, height=20))
     for face_row in tile_pane.TILE_FACES["speaking"]:
         assert face_row.strip() in body
     assert "talking now" in body
+
+
+def test_tile_renders_avatar_text_and_status_as_distinct_subpanels(relay):
+    """The design ask: avatar / text / status must read as three SEPARATE
+    subpanels (each behind its own divider), not one undifferentiated block."""
+    lines = render_tile("tuber_1", expression="speaking", lines=["hello"],
+                        status="speaking", width=40, height=20)
+    dividers = [i for i, row in enumerate(lines) if row.startswith("├")]
+    # name/avatar + avatar/text + text/status = 3 internal dividers.
+    assert len(dividers) == 3
+    avatar_start = dividers[0] + 1
+    avatar_rows = lines[avatar_start:avatar_start + tile_pane.TILE_AVATAR_LINES]
+    for face_row in tile_pane.TILE_FACES["speaking"]:
+        assert any(face_row.strip() in row for row in avatar_rows)
+    status_row = lines[dividers[2] + 1]
+    assert "status: speaking" in status_row
 
 
 def test_render_strips_ansi_so_the_box_never_overflows():
@@ -586,12 +617,18 @@ def test_renderer_picks_up_spoken_lines_from_the_avatar_state_file(relay):
     assert "first line" in frame and "second line" in frame
 
 
-def test_renderer_keeps_only_the_last_two_lines(relay):
+def test_renderer_retains_more_than_the_display_slice(relay):
+    """v1.4: TileRenderer keeps a generous history (DEFAULT_HISTORY); it's
+    render_tile's resolve_dialogue_line_count() that decides how many of
+    those lines actually show, based on the pane's real height."""
     r, _sink, state_path = _renderer(relay)
     for text in ("one", "two", "three"):
         tile_pane.write_tile_state(state_path, "speaking", bubble=text)
         r.write("x")
-    assert list(r.lines) == ["two", "three"]
+    assert list(r.lines) == ["one", "two", "three"]
+    # ...but a render at a small height only shows the tail of it.
+    frame = "\n".join(render_tile(r.slot, lines=list(r.lines), width=30, height=20))
+    assert "three" in frame
 
 
 def test_renderer_repeated_bubble_is_not_duplicated(relay):

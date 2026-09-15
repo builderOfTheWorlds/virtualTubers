@@ -120,6 +120,30 @@ avatar:
 layout:
   preset: roundtable
 
+# ── Roster: slot -> on-screen character name (build_layout.py v1.4) ──────────
+# Read by build_layout.py's _resolve_tile_title when it resolves EVERY tile's
+# pane title on this container (the GM hosts all 8 tiles, so this is the one
+# config that actually needs the full map — the six character workers each
+# only ever build their OWN tile pane, on their own individual channel).
+#
+# Precedence in _resolve_tile_title: an explicit layout `title:` override wins
+# first; this map is checked second; a slot absent here falls back to
+# "Game Master" for tuber_0 or "Offline" for everyone else.
+#
+# Two slots are deliberately absent: tuber_4 (coder-aider) has no character
+# assigned yet (design's "OPEN" tuber, .claude/prompts/build_campaign_episode.py
+# SPEAKER_TO_WORKER comment) — keep it absent so it shows "Offline", and keep
+# config/layouts/roundtable.yaml's tile_tuber_4 border_color: colour240 (grey)
+# in sync with that. tuber_0 is also absent here on purpose: it uses the
+# ROSTER_DEFAULT_GM_TITLE fallback ("Game Master") rather than repeating the
+# `agent.name`/`avatar.title` GM identity a third time in this file.
+roster:
+  tuber_1: "Chadwick"        # coder / KODI-7
+  tuber_2: "Vigil"           # coder-native / NYX-1
+  tuber_3: "Sodacan Bob"     # coder-opencode / OKO-2
+  tuber_5: "Leena"           # tester / TESS-3
+  tuber_6: "MAX-1"           # manager — active worker, no campaign character cast
+
 stream:
   rtmp_url: "rtmp://localhost:1935/live"
   key: "test-tuber0"

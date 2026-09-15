@@ -208,3 +208,57 @@ def test_tile_runtime_config_records_its_slot(built):
         assert data["type"] == "tile"
         assert data["slot"] == slot
         assert data["id"] == f"tile_{slot}"
+
+
+# ── Character names + colors on the real shipped roster (v1.4) ───────────────
+def test_every_tile_title_matches_tuber_0_yamls_real_roster(built):
+    """The tiles must display the SAME roster the GM's own worker config
+    carries — this locks the two together so an operator adding/renaming a
+    character in tuber_0.yaml's `roster:` sees it reflected here without any
+    other file changing."""
+    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    roster = cfg.get("roster") or {}
+    by_id = {p["id"]: p for p in built["panes"]}
+
+    for slot in SLOTS:
+        tile = by_id[f"tile_{slot}"]
+        if slot in roster:
+            assert tile["title"] == roster[slot]
+        elif slot == "tuber_0":
+            assert tile["title"] == "Game Master"
+        else:
+            assert tile["title"] == "Offline"
+
+
+def test_every_cast_tile_shares_one_active_color(built):
+    """Every ACTIVE character (cast or GM) renders in the same light-blue —
+    the design ask to normalize colors instead of the old per-slot rainbow."""
+    tiles = _cast_tiles(built["panes"])
+    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    roster = cfg.get("roster") or {}
+    active_colors = {t["border_color"] for t in tiles if t["slot"] == "tuber_0" or t["slot"] in roster}
+    assert active_colors == {"colour117"}
+
+
+def test_uncast_tiles_render_grey_not_the_active_color(built):
+    """A slot with no character assigned (tuber_4 today) must read visibly
+    different from the active cast — grey, not the light-blue used for
+    everyone actually on air."""
+    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    roster = cfg.get("roster") or {}
+    by_id = {p["id"]: p for p in built["panes"]}
+    uncast_cast_slots = [s for s in SLOTS if s != "tuber_0" and s not in roster]
+    for slot in uncast_cast_slots:
+        assert by_id[f"tile_{slot}"]["border_color"] == "colour240"
+    # The spare grid-balancing tile is uncast by construction — same treatment.
+    assert by_id["tile_spare"]["border_color"] == "colour240"
+
+
+# ── Status bar label (v1.4) ────────────────────────────────────────────────────
+def test_roundtable_sets_a_static_status_bar_label(built):
+    """The tmux status bar's default '[worker] 0:python3*' segment is
+    meaningless to a viewer — the roundtable preset overrides it."""
+    joined = "\n".join(built["lines"])
+    assert "tmux set -t worker status-left 'virtualTubers_roundtable'" in joined
+    # Cosmetic only: the underlying session keeps its real name everywhere.
+    assert built["lines"][0] == "tmux new-session -d -s worker -x 240 -y 67"

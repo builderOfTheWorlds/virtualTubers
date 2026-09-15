@@ -234,3 +234,111 @@ def test_shorthand_layout_string(dirs, tmp_path, monkeypatch):
 # ── substitute() unit behavior ────────────────────────────────────────────────
 def test_substitute_leaves_unknown_tokens_intact():
     assert build_layout.substitute("a {x} b {y}", {"x": "1"}) == "a 1 b {y}"
+
+
+# ── status_label (v1.4) ────────────────────────────────────────────────────────
+def test_status_label_sets_status_left_without_renaming_the_session(dirs, worker_config):
+    data = yaml.safe_load((pathlib.Path(dirs["layouts"]) / "coder.yaml").read_text(encoding="utf-8"))
+    data["status_label"] = "virtualTubers_roundtable"
+    (pathlib.Path(dirs["layouts"]) / "coder.yaml").write_text(yaml.safe_dump(data), encoding="utf-8")
+
+    lines, _ = build_layout.build(worker_config, dirs["panels"], dirs["layouts"], dirs["runtime"])
+    joined = "\n".join(lines)
+    assert "tmux set -t worker status-left 'virtualTubers_roundtable'" in joined
+    # The actual tmux session must still be named "worker" — a label is
+    # cosmetic, not a rename, so every existing -t worker:... target keeps
+    # working (attach commands, pane targeting, every other test in this file).
+    assert lines[0] == "tmux new-session -d -s worker -x 240 -y 67"
+
+
+def test_no_status_label_means_no_status_bar_commands(dirs, worker_config):
+    lines, _ = build_layout.build(worker_config, dirs["panels"], dirs["layouts"], dirs["runtime"])
+    joined = "\n".join(lines)
+    assert "status-left" not in joined
+    assert "status-right" not in joined
+
+
+# ── roster titles (v1.4 — tile panes only) ─────────────────────────────────────
+@pytest.fixture
+def tile_dirs(tmp_path):
+    """A minimal panels/layouts pair with ONE tile pane, mirroring the real
+    config/panels/tile.yaml's shape (a truthy default title that must never
+    beat the roster lookup)."""
+    panels = tmp_path / "panels"
+    layouts = tmp_path / "layouts"
+    runtime = tmp_path / "runtime"
+    panels.mkdir()
+    layouts.mkdir()
+    (panels / "tile.yaml").write_text(yaml.safe_dump({
+        "type": "tile", "title": "Tile", "border_color": "colour117",
+        "command": "python3 /app/tile_pane.py --slot {slot}",
+    }), encoding="utf-8")
+    (layouts / "roundtable.yaml").write_text(yaml.safe_dump({
+        "preset": "roundtable",
+        "panes": [
+            {"use": "tile", "id": "tile_tuber_1", "with": {"slot": "tuber_1"}},
+            {"use": "tile", "id": "tile_tuber_4", "target": "tile_tuber_1",
+             "split": "h", "size": 50, "with": {"slot": "tuber_4"}},
+            {"use": "tile", "id": "tile_tuber_0", "target": "tile_tuber_1",
+             "split": "v", "size": 50, "with": {"slot": "tuber_0"}},
+            {"use": "tile", "id": "tile_explicit", "target": "tile_tuber_1",
+             "split": "v", "size": 50, "title": "Literal Override",
+             "with": {"slot": "tuber_1"}},
+        ],
+    }), encoding="utf-8")
+    return {"panels": str(panels), "layouts": str(layouts), "runtime": str(runtime)}
+
+
+@pytest.fixture
+def roster_worker_config(tmp_path):
+    path = tmp_path / "worker.yaml"
+    path.write_text(yaml.safe_dump({
+        "layout": {"preset": "roundtable"},
+        "roster": {"tuber_1": "Chadwick"},
+    }), encoding="utf-8")
+    return str(path)
+
+
+def test_roster_name_wins_over_the_panel_default_title(tile_dirs, roster_worker_config, monkeypatch):
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    _, panes = build_layout.build(roster_worker_config, tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_1")
+    assert tile["title"] == "Chadwick"       # not the panel default "Tile"
+
+
+def test_gm_slot_falls_back_to_game_master(tile_dirs, roster_worker_config, monkeypatch):
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    _, panes = build_layout.build(roster_worker_config, tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_0")
+    assert tile["title"] == "Game Master"
+
+
+def test_uncast_slot_falls_back_to_offline(tile_dirs, roster_worker_config, monkeypatch):
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    _, panes = build_layout.build(roster_worker_config, tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_4")
+    assert tile["title"] == "Offline"
+
+
+def test_explicit_layout_title_still_wins_over_the_roster(tile_dirs, roster_worker_config, monkeypatch):
+    """An operator-set literal title (layout.panes.<id>.title, or here a
+    per-placement `title:`) must still be respected — the roster only fills
+    in when nobody set one."""
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    _, panes = build_layout.build(roster_worker_config, tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_explicit")
+    assert tile["title"] == "Literal Override"
+
+
+def test_no_roster_key_at_all_still_resolves_offline(tile_dirs, tmp_path, monkeypatch):
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    worker_path = tmp_path / "no_roster.yaml"
+    worker_path.write_text(yaml.safe_dump({"layout": {"preset": "roundtable"}}), encoding="utf-8")
+    _, panes = build_layout.build(str(worker_path), tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_1")
+    assert tile["title"] == "Offline"
