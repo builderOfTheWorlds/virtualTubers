@@ -60,6 +60,24 @@ else
     log "WARNING: could not create PulseAudio null sink 'vout': ${SINK_OUTPUT} — narration audio will stream silent (docs/stream_supervisor.md)"
 fi
 
+# PulseAudio's default system.pa loads module-suspend-on-idle, which parks
+# ("SUSPENDED") any sink with no active stream after a couple of seconds.
+# The roundtable channel's paplay calls are bursty by design (one line, then
+# silence until the next cue) — vout sits idle between lines, gets suspended,
+# and the FIRST paplay after that gap has to physically resume the sink
+# before ffmpeg's `-f pulse -i vout.monitor` capture sees any samples. That
+# resume isn't instant: it consistently ate the leading ~0.25-0.5s of every
+# new line, so the audience heard dialogue start mid-word. Unloading
+# suspend-on-idle keeps vout RUNNING permanently once created, at the cost
+# of a few extra idle watts inside the container — a fair trade for a
+# broadcast where every line is heard from its first syllable. Best-effort:
+# module-suspend-on-idle may already be gone on some base images.
+if pactl unload-module module-suspend-on-idle 2>/dev/null; then
+    log "Disabled PulseAudio suspend-on-idle (keeps 'vout' from clipping the start of each line)"
+else
+    log "module-suspend-on-idle not loaded (nothing to disable) — continuing"
+fi
+
 # ── 4+5. Tmux session + panes (config-driven) ─────────────────────────────────
 # The layout engine resolves config/layouts/<preset>.yaml + config/panels/*.yaml,
 # writes each pane's resolved config to /tmp/panes/<id>.yaml, and emits the tmux

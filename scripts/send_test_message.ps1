@@ -155,14 +155,17 @@ $Payload = '{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "coder", "t
 # roster: tuber_1=Chadwick/coder, tuber_2=Vigil/coder-native,
 # tuber_3=Sodacan Bob/coder-opencode, tuber_5=Leena/tester,
 # tuber_6=MAX-1/manager) light up too. manager IS mapped here (unlike the
-# request above) so its narrator lines get MAX-1's own tile instead of
-# falling to the roundtable director's own uncast-speaker fallback. Fired
-# right after the request above so both audiences get the same show - keep
-# this episode name in sync with $Payload's above by hand; nothing enforces
-# it automatically.
+# request above) so its narrator lines get a tile at all instead of falling
+# to the roundtable director's own uncast-speaker fallback — mapped to
+# tuber_0 (the "Game Master" tile itself, Ashiorid's actual seat), NOT
+# tuber_6/MAX-1: mapping manager->tuber_6 left tuber_0's own tile owning no
+# scenes at all, so the "Game Master" panel showed no dialogue all show
+# (Gitea-reported bug, fixed here). Fired right after the request above so
+# both audiences get the same show - keep this episode name in sync with
+# $Payload's above by hand; nothing enforces it automatically.
 $To2      = "tuber_0"
 $Type2    = "replay_request"
-$Payload2 = '{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "tuber_1", "coder-native": "tuber_2", "coder-opencode": "tuber_3", "tester": "tuber_5", "manager": "tuber_6"}}'
+$Payload2 = '{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "tuber_1", "coder-native": "tuber_2", "coder-opencode": "tuber_3", "tester": "tuber_5", "manager": "tuber_0"}}'
 
 
 

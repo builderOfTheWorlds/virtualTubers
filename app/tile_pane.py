@@ -58,6 +58,7 @@ import os
 import re
 import sys
 import tempfile
+import textwrap
 import time
 from collections import deque
 from pathlib import Path
@@ -277,6 +278,28 @@ def _clip(text, width):
     return text[: max(0, width - 1)] + "…"
 
 
+def _wrap_dialogue(lines, width):
+    """Word-wrap each spoken bubble to `width` columns, oldest first,
+    flattening into individual display ROWS.
+
+    Before this existed the TEXT subpanel ran every bubble through _clip,
+    which collapses it to ONE row and truncates anything past `width` with
+    an ellipsis — so on the live broadcast a tile showed only the first
+    handful of words of whatever a character was saying, no matter how
+    long the actual line was. Wrapping keeps the full line on screen,
+    spread across as many rows as it needs; render_tile still trims the
+    flattened row list down to whatever the pane's detected height allows
+    (oldest rows drop off the top first, same as before).
+    """
+    rows = []
+    for spoken in lines:
+        text = " ".join(_ANSI_RE.sub("", str(spoken or "")).split())
+        if not text:
+            continue
+        rows.extend(textwrap.wrap(text, max(1, width)) or [""])
+    return rows
+
+
 def render_tile(slot, expression="idle", line="", status="listening", out=None,
                 clear=True, width=None, height=None, lines=None):
     """Draw the tile frame as three bordered SUBPANELS, top to bottom:
@@ -318,10 +341,14 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
 
     if lines is None:
         lines = [line] if line else []
-    # Newest at the bottom, oldest trimmed off the top; always exactly
-    # dialogue_line_count rows so the TEXT subpanel's height is constant for a
-    # given tile size.
-    dialogue = list(lines)[-dialogue_line_count:]
+    # Word-wrap every bubble to the TEXT subpanel's width FIRST, then slice
+    # to however many rows the pane actually has — newest content at the
+    # bottom, oldest rows trimmed off the top, always exactly
+    # dialogue_line_count rows so the TEXT subpanel's height is constant for
+    # a given tile size. (Previously each bubble was force-fit onto a SINGLE
+    # row via _clip + ellipsis truncation, so only the first few words of a
+    # spoken line ever made it to air — see _wrap_dialogue.)
+    dialogue = _wrap_dialogue(lines, line_chars)[-dialogue_line_count:]
     dialogue = [""] * (dialogue_line_count - len(dialogue)) + dialogue
 
     rows = ["┌" + "─" * inner + "┐"]
@@ -335,7 +362,7 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     # ── TEXT subpanel ────────────────────────────────────────────────────────
     rows.append("├" + "─" * inner + "┤")
     for spoken in dialogue:
-        rows.append("│ " + _clip(spoken, line_chars).ljust(line_chars) + " │")
+        rows.append("│ " + spoken.ljust(line_chars) + " │")
     # ── STATUS subpanel ──────────────────────────────────────────────────────
     rows.append("├" + "─" * inner + "┤")
     rows.append("│ " + _clip(f"status: {status}", inner - 2).ljust(inner - 2) + " │")

@@ -85,6 +85,30 @@ voice:
       model_path: "/data/voices/en_US-ryan-low.onnx"
     coder:
       model_path: "/data/voices/en_US-lessac-low.onnx"
+    # WORKER-id keyed speakers (docs/revoice.md speaker_names): a campaign
+    # episode built by build_campaign_episode.py / build_generated_episode.py
+    # carries NO show header, so its speakers are worker ids
+    # (tester/coder-native/coder-opencode/coder-aider/manager), not tuber
+    # slots — exactly the keys every OTHER worker config's voice.speakers
+    # already has (see config/workers/coder.yaml etc.). This map was missing
+    # every one of them; TTSClient.voice_for's fallback for an unmatched
+    # speaker is `{}` merged over the base voice, so tester/coder-native/
+    # coder-opencode/coder-aider/manager all silently collapsed onto the
+    # GM's OWN base voice (lessac-medium) here — "every voice sounds the
+    # same except the GM" on the roundtable, while the six individual
+    # character channels (which DO have these keys) sounded correct. Values
+    # mirror the individual channels exactly, so a character's voice is
+    # identical whether heard solo or at the table.
+    tester:
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    coder-native:
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    coder-opencode:
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    coder-aider:
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    manager:
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
   # Slot-neutral display fallbacks. Real character names arrive per-show in the
   # show header (§7.1); these only appear for a header-less episode, and being
   # visibly slot-shaped is deliberate — it makes a missing header obvious on
