@@ -545,13 +545,15 @@ def test_director_is_silent_on_a_line_its_own_tile_will_play(
 
 def test_director_still_owns_a_line_no_tiles_are_cast_for(
         library, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer):
-    """Counterpart of the double-play fix: a speaker the cast does NOT map to
-    any slot (e.g. a header narrator 'narrator', or the header-less 'boss'
-    in a two-speaker duet where the cast is {coder, tester}) must stay owned
-    by the DIRECTOR, or that line would be heard on NO channel. The fix must
-    silence the director only for lines a tile actually plays — here we prove
-    it by casting a speaker to no slot at all (speaker 'narrator' absent from
-    CAST, whose values are all local tiles)."""
+    """Counterpart of the double-play fix, for a NON-roundtable duet (the
+    director has no local tile at all — a normal visible replay pane): a
+    speaker the cast does NOT map to any slot (e.g. a header narrator
+    'narrator', or the header-less 'boss' in a two-speaker duet where the
+    cast is {coder, tester}) must stay owned by the DIRECTOR, or that line
+    would be heard on NO channel. The fix must silence the director only
+    for lines a tile actually plays — here we prove it by casting a
+    speaker to no slot at all (speaker 'narrator' absent from CAST, whose
+    values are all local tiles), with self_id NOT itself a tile slot."""
     holder = {}
     monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
 
@@ -573,12 +575,68 @@ def test_director_still_owns_a_line_no_tiles_are_cast_for(
     monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: AIRING)
     _become_ready(monkeypatch, relay_files)
 
-    assert _run_director() is True
+    # Non-roundtable config (character role/preset) — _resolve_local_tiles
+    # returns [] regardless of self_id, so the director has no tile at all
+    # here, matching the original (pre-fix) test shape exactly.
+    assert _run_director(config=_character_config()) is True
     show = FakePerformer.instances[-1].performed_show
     narration = next(s for s in show if s["speaker"] == "narrator")
     tile_line = next(s for s in show if s["speaker"] == "coder")
     assert narration["owned"] is True and narration["audio"] is not None
     assert tile_line["owned"] is False and tile_line["audio"] is None
+
+
+def test_uncast_speaker_routes_to_directors_own_tile_on_the_roundtable(
+        library, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer):
+    """The fix for 'the very first voice showed no text': on the roundtable
+    the director IS a tile slot (tuber_0 hosts its own tile). An episode
+    with a speaker the cast never explicitly maps (revoice.plan_scenes
+    defaults a speaker-less user_message to "boss") must NOT fall through
+    to the invisible director pane the way it does in a plain duet —
+    it must be treated as if cast to the director's OWN slot, so tuber_0's
+    tile actually plays AND displays it. Before this fix such a line was
+    heard (director still owned it per the old formula) but shown on no
+    tile at all — several of these lines open both shipped campaign
+    episodes (ashiorid, ashiorid_generated_ce8d), so the audience heard
+    the very first line of the show with nothing on screen for it."""
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    def voiced(script, config, workdir, **kwargs):
+        return [
+            # 'boss' is NOT in CAST (mirrors a speaker-less user_message
+            # event, which plan_scenes defaults to speaker="boss").
+            {"kind": "boss", "speaker": "boss", "narration": "opening narration",
+             "events": [{"type": "assistant_text", "text": "opening narration"}],
+             "audio": _Audio(1.0)},
+            {"kind": "coder_talk", "speaker": "coder", "narration": "tile line",
+             "events": [{"type": "assistant_text", "text": "tile line"}],
+             "audio": _Audio(2.0)},
+        ]
+
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", voiced)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: AIRING)
+    _become_ready(monkeypatch, relay_files)
+
+    # self_id="tuber_0" (the default _run_director self_id) IS one of
+    # CAST's tile-mapped values — the roundtable shape.
+    assert _run_director() is True
+    show = FakePerformer.instances[-1].performed_show
+    narration = next(s for s in show if s["speaker"] == "boss")
+    tile_line = next(s for s in show if s["speaker"] == "coder")
+    # The director stays silent for BOTH lines now — tuber_0's own tile
+    # (not the hidden director pane) owns the uncast "boss" narration,
+    # exactly like it owns any other speaker explicitly cast to it.
+    assert narration["owned"] is False and narration["audio"] is None
+    assert tile_line["owned"] is False and tile_line["audio"] is None
+    # And the tile request payload actually written to the relay carries
+    # the rerouted mapping, so tuber_0's own make_owns() agrees and really
+    # plays/displays the line instead of silently disagreeing with
+    # scene["owned"].
+    request = json.loads((relay_dir / "tuber_0.request.json").read_text())
+    assert request["cast"].get("boss") == "tuber_0"
 
 
 # ── voice gate escape hatch: show.audio flows into the gate ──────────────────

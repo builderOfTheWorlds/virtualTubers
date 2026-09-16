@@ -689,20 +689,45 @@ def perform_director_request(request, worker_name, state_path, self_id,
         #   * speaker not mapped in cast at all (solo, or the "boss"
         #     narrator in a header-less two-speaker duet) → the DIRECTOR
         #     must own it, or the line would be heard on no channel at
-        #     all (unchanged).
+        #     all (unchanged) — UNLESS the director itself is a roundtable
+        #     tile slot (self_id in local_tile_slots), in which case an
+        #     uncast speaker is routed to the director's OWN tile instead
+        #     (see effective_cast below). Without this, an uncast "boss"
+        #     narration line (revoice.plan_scenes defaults a speaker-less
+        #     user_message to "boss") is heard on air but displayed on NO
+        #     tile at all — reported live as "the very first voice did not
+        #     show text" (the ashiorid_generated_ce8d/ashiorid episodes both
+        #     open with several speaker-less GM narration lines before the
+        #     first line whose speaker happens to be explicitly cast).
         #
         # The fix: the director owns a line only if the old formula says so
         # AND the line is NOT mapped to a local tile slot — when the
         # director's own slot (or any speaker's slot) resolves to a tile,
         # that tile plays the line and the director stays silent. Lines the
-        # cast does not map to a slot (header-less "boss" narration, etc.)
-        # are unaffected: they fall back to the director exactly as before,
-        # so a non-slot speaker is still audible on a roundtable airing.
+        # cast does not map to a slot fall back to the director UNLESS the
+        # director is itself a local tile (the roundtable's tuber_0), in
+        # which case effective_cast below reroutes them to that tile so a
+        # non-slot speaker is still audible AND visible on a roundtable
+        # airing — never heard from a tile-less, invisible pane.
         local_tile_set = set(local_tile_slots)
+        # effective_cast: on the roundtable (self_id has its own tile), any
+        # speaker cast doesn't map at all is treated as if it were
+        # explicitly mapped to self_id — the GM's own tile picks up its own
+        # unattributed narration instead of it vanishing into the hidden
+        # director pane. On a plain (non-roundtable) duet, self_id is never
+        # in local_tile_set (the director has no tile there — it has a
+        # normal visible replay pane), so this is a no-op and behavior is
+        # byte-identical to before.
+        effective_cast = dict(cast)
+        if self_id in local_tile_set:
+            for scene in show:
+                speaker = scene.get("speaker")
+                if speaker not in effective_cast:
+                    effective_cast[speaker] = self_id
         for scene in show:
             speaker = scene.get("speaker")
-            old_formula = cast.get(speaker, self_id) == self_id
-            owned = old_formula and (cast.get(speaker) not in local_tile_set)
+            old_formula = effective_cast.get(speaker, self_id) == self_id
+            owned = old_formula and (effective_cast.get(speaker) not in local_tile_set)
             audio = scene.get("audio")
             scene["owned"] = owned
             if audio is not None:
@@ -735,7 +760,16 @@ def perform_director_request(request, worker_name, state_path, self_id,
             tiles["relay_dir"] = relay_dir
             tiles["slots"] = local_tiles
             _write_tile_requests(relay_dir, local_tiles, {
-                "airing_id": airing_id, "episode": episode_name, "cast": cast,
+                # effective_cast (not the raw `cast` payload) — every tile's
+                # own make_owns() independently re-checks
+                # cast.get(speaker) == slot, so it must see the SAME
+                # uncast-speaker-routed-to-self_id rerouting the annotation
+                # loop above just applied, or the tile that owns an
+                # uncast/"boss" narration line per `scene["owned"]` would
+                # disagree with its own local ownership check and never
+                # actually play/display it (the exact "first voice showed
+                # no text" bug this fix addresses).
+                "airing_id": airing_id, "episode": episode_name, "cast": effective_cast,
                 "speed": speed, "worker_name": name,
             })
 
