@@ -69,6 +69,50 @@ def wav_duration(path):
     return float(proc.stdout.strip())
 
 
+# Extra silent lead-in prepended to every synthesized line (roundtable
+# audio-cutoff fix, see docs/roundtable_audio_and_voice_bugs.md #1). Even
+# with PulseAudio's vout sink kept permanently running (startup.sh unloads
+# module-suspend-on-idle), audio_player.play_wav's own `subprocess.Popen`
+# still pays real wall-clock cost to fork/exec paplay and have it connect
+# to the Pulse socket before the first sample plays — verified on a live
+# airing to still eat a small residual sliver even after the sink fix. A
+# scene's visual pacing is anchored to the WAV's MEASURED duration
+# (tts_client.Narration.duration / replay.Performer._perform_scene), so
+# padding the file itself (rather than delaying playback) keeps that
+# anchor correct: the pad becomes part of what's timed, not a separate
+# desync source. 150ms comfortably covers observed paplay startup latency
+# without being long enough to read as a delay between lines.
+LEADING_SILENCE_S = 0.15
+
+
+def _pad_leading_silence(out_wav, seconds=LEADING_SILENCE_S):
+    """Prepend `seconds` of silence to a just-synthesized WAV, in place.
+
+    Reads the file's own params (channels/sample width/rate) so the pad
+    matches whatever the backend actually wrote — piper, a remote piper
+    server, and each cloud backend all emit slightly different formats
+    (see _piper_local, _openai, _elevenlabs). Best-effort: a WAV `wave`
+    can't parse (never happens for synthesize()'s own output, but a
+    defensive backend swap should still degrade rather than break the
+    show) is left untouched rather than raising — the tiny residual
+    cutoff this leaves is strictly better than failing the line entirely.
+    """
+    out_wav = Path(out_wav)
+    try:
+        with wave.open(str(out_wav), "rb") as src:
+            params = src.getparams()
+            frames = src.readframes(src.getnframes())
+    except (wave.Error, EOFError, OSError):
+        return
+    silence_frames = int(params.framerate * seconds)
+    silence = b"\x00" * (silence_frames * params.nchannels * params.sampwidth)
+    tmp_path = out_wav.with_suffix(out_wav.suffix + ".pad.tmp")
+    with wave.open(str(tmp_path), "wb") as dst:
+        dst.setparams(params)
+        dst.writeframes(silence + frames)
+    tmp_path.replace(out_wav)
+
+
 # ── Backends: (text, out_wav, voice_cfg) -> None, write a WAV ─────────────────
 
 # Loaded PiperVoice instances, cached by resolved model path and kept for
@@ -296,6 +340,7 @@ class TTSClient:
         self._backend(text, out_wav, self.voice_for(speaker, voice_name))
         if not out_wav.exists():
             raise TTSError(f"TTS backend {self.provider!r} produced no output")
+        _pad_leading_silence(out_wav)
         return Narration(audio_path=out_wav, duration=wav_duration(out_wav))
 
 

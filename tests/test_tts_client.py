@@ -137,7 +137,10 @@ def test_synthesize_piper_local_returns_measured_duration(tmp_path, monkeypatch)
 
     client = TTSClient({"provider": "piper", "model_path": str(model)})
     narration = client.synthesize("hello stream", tmp_path / "out.wav")
-    assert narration.duration == pytest.approx(1.25, abs=0.01)
+    # synthesize() pads a LEADING_SILENCE_S silent lead-in onto every WAV
+    # (roundtable audio-cutoff fix, docs/roundtable_audio_and_voice_bugs.md
+    # #1), so the measured duration is the backend's own 1.25s plus that pad.
+    assert narration.duration == pytest.approx(1.25 + tts_client.LEADING_SILENCE_S, abs=0.01)
     assert narration.audio_path == tmp_path / "out.wav"
 
 

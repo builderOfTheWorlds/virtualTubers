@@ -97,8 +97,8 @@ voice:
     # GM's OWN base voice (lessac-medium) here — "every voice sounds the
     # same except the GM" on the roundtable, while the six individual
     # character channels (which DO have these keys) sounded correct. Values
-    # mirror the individual channels exactly, so a character's voice is
-    # identical whether heard solo or at the table.
+    # mirror the individual channels exactly EXCEPT `manager` (see its own
+    # comment below), so a character sounds identical solo or at the table.
     tester:
       model_path: "/data/voices/en_US-kathleen-low.onnx"
     coder-native:
@@ -107,8 +107,23 @@ voice:
       model_path: "/data/voices/en_US-joe-medium.onnx"
     coder-aider:
       model_path: "/data/voices/en_US-kristin-medium.onnx"
+    # `manager` is DELIBERATELY NOT mirrored to MAX-1's own voice
+    # (en_US-bryce-medium, used on config/workers/manager.yaml and every
+    # individual character channel) the way the other worker-id speakers
+    # above are. On the roundtable specifically, the companion
+    # replay_request payload (scripts/send_test_message.sh/.ps1) maps the
+    # `manager` speaker id to tuber_0 itself — because in the
+    # ashiorid_generated_ce8d episode `manager` is how Ashiorid/GM
+    # narration is carried (build_campaign_episode.py's SPEAKER_TO_WORKER:
+    # "gm": "manager"), not an appearance by the MAX-1 character. Giving
+    # `manager` MAX-1's voice here made the GM's lines heard in MAX-1's
+    # voice while displayed on the "Game Master" tile — reported as "I hear
+    # a voice but the panel showing MAX-1 has no text" (the audience was
+    # correctly hearing MAX-1's TIMBRE attached to the wrong tile's
+    # narration). Using tuber_0's own voice keeps what's heard consistent
+    # with what's displayed for this slot.
     manager:
-      model_path: "/data/voices/en_US-bryce-medium.onnx"
+      model_path: "/data/voices/en_US-lessac-medium.onnx"
   # Slot-neutral display fallbacks. Real character names arrive per-show in the
   # show header (§7.1); these only appear for a header-less episode, and being
   # visibly slot-shaped is deliberate — it makes a missing header obvious on
