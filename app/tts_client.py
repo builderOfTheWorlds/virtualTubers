@@ -73,16 +73,22 @@ def wav_duration(path):
 # audio-cutoff fix, see docs/roundtable_audio_and_voice_bugs.md #1). Even
 # with PulseAudio's vout sink kept permanently running (startup.sh unloads
 # module-suspend-on-idle), audio_player.play_wav's own `subprocess.Popen`
-# still pays real wall-clock cost to fork/exec paplay and have it connect
-# to the Pulse socket before the first sample plays — verified on a live
-# airing to still eat a small residual sliver even after the sink fix. A
-# scene's visual pacing is anchored to the WAV's MEASURED duration
-# (tts_client.Narration.duration / replay.Performer._perform_scene), so
-# padding the file itself (rather than delaying playback) keeps that
-# anchor correct: the pad becomes part of what's timed, not a separate
-# desync source. 150ms comfortably covers observed paplay startup latency
-# without being long enough to read as a delay between lines.
-LEADING_SILENCE_S = 0.15
+# still pays real wall-clock cost to fork/exec paplay, connect to the Pulse
+# socket, and have that NEW client stream actually start flowing samples
+# into the sink's monitor before the first real sample is heard — verified
+# on a live airing to still eat a slice of the first word even at 150ms
+# (measuring this precisely in-container is noisy: independent captures
+# with parec/ffmpeg each carry their own several-hundred-ms connect
+# latency, so treat this value as tuned empirically from listening, not
+# derived from a clean instrument reading). A scene's visual pacing is
+# anchored to the WAV's MEASURED duration (tts_client.Narration.duration /
+# replay.Performer._perform_scene), so padding the file itself (rather
+# than delaying playback) keeps that anchor correct: the pad becomes part
+# of what's timed, not a separate desync source. 400ms is a deliberately
+# generous margin over the ~150-250ms of paplay/Pulse stream-open jitter
+# observed — cheap insurance since it never desyncs anything, just adds a
+# near-silent beat before each line.
+LEADING_SILENCE_S = 0.4
 
 
 def _pad_leading_silence(out_wav, seconds=LEADING_SILENCE_S):
