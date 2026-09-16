@@ -33,7 +33,9 @@ CODE_CPS = 130          # faster for code being "written"
 OUTPUT_LINES_PER_S = 18  # terminal output scrolls in at this rate
 EVENT_PAUSE_S = 0.8     # beat between events
 MAX_OUTPUT_LINES = 24   # cap displayed command output / file content
-BUBBLE_CHARS = 120      # avatar speech-bubble excerpt length
+BUBBLE_CHARS = 4000     # avatar speech-bubble excerpt length — a safety
+                        # ceiling only, not a display-length choice (see
+                        # _avatar below)
 
 # Audio-anchored scenes scale visual pacing to the spoken line's measured
 # duration, clamped so a scene never crawls or blurs; outside the clamp the
