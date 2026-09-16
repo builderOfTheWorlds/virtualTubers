@@ -9,6 +9,21 @@
 # Pick a message by uncommenting exactly one preset section below
 # (and commenting out the others).
 #
+# A preset MAY also set TO2/TYPE2/PAYLOAD2 to fire a second POST right
+# after the first. This exists because the roundtable channel (tuber_0)
+# and the six individual character channels are two separate audiences
+# that no single replay_request can address at once: a request "to" a
+# character worker (e.g. "coder") fans out over Kafka to the OTHER
+# character workers only, while a request "to" tuber_0 resolves every
+# cast slot to a LOCAL tile and never touches Kafka at all
+# (app/replay_pane.py _resolve_local_tiles) - so tuber_0/roundtable
+# never joins a character-directed duet, and the six character channels
+# never join a tuber_0-directed one. Firing both airs the same episode
+# on all seven channels; see docs/duet_replay.md and
+# .claude/prompts/roundtable_stream_design.md SS2.2 WP-7 (identity-rename
+# migration that would let one request address both, not yet run in
+# this deployment).
+#
 # Requires: curl, jq
 #
 # Usage:
@@ -33,6 +48,13 @@ done
 TO=""
 TYPE=""
 PAYLOAD=""
+
+# Optional second POST (roundtable companion request - see header comment
+# above). Left unset by presets that don't need it; reset here so a stale
+# value can't leak in the same way TO/TYPE/PAYLOAD can't.
+TO2=""
+TYPE2=""
+PAYLOAD2=""
 
 # =====================================================================
 # PRESET MESSAGES — uncomment exactly ONE section
@@ -120,6 +142,20 @@ TYPE="replay_request"
 # the episode's speaker names, which for this episode are already worker ids,
 # so each maps to itself. Verified airing to "-- fin --" 2026-08-31.
 # PAYLOAD='{"episode": "ashiorid", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
+#
+# Roundtable companion (see header comment above): SAME episode, SAME
+# speaker names, but addressed to tuber_0 so the GM's local tiles
+# (config/workers/tuber_0.yaml roster: tuber_1=Chadwick/coder,
+# tuber_2=Vigil/coder-native, tuber_3=Sodacan Bob/coder-opencode,
+# tuber_5=Leena/tester, tuber_6=MAX-1/manager) light up too. manager IS
+# mapped here (unlike the request above) so its narrator lines get
+# MAX-1's own tile instead of falling to the roundtable director's own
+# uncast-speaker fallback. Fired right after the request above so both
+# audiences get the same show - keep this episode name in sync with
+# PAYLOAD's above by hand; nothing enforces it automatically.
+# TO2="tuber_0"
+# TYPE2="replay_request"
+# PAYLOAD2='{"episode": "ashiorid", "cast": {"coder": "tuber_1", "coder-native": "tuber_2", "coder-opencode": "tuber_3", "tester": "tuber_5"}}'
 
 # =====================================================================
 # ASHIORID GENERATED - 3-layer generator output, NOT the authored pack
@@ -145,6 +181,20 @@ TYPE="replay_request"
 # any line the converter couldn't attribute to a mapped speaker).
 PAYLOAD='{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "coder", "tester": "tester", "coder-native": "coder-native", "coder-opencode": "coder-opencode"}}'
 
+# Roundtable companion (see header comment above): SAME episode, SAME
+# speaker names, but addressed to tuber_0 so the GM's local tiles
+# (config/workers/tuber_0.yaml roster: tuber_1=Chadwick/coder,
+# tuber_2=Vigil/coder-native, tuber_3=Sodacan Bob/coder-opencode,
+# tuber_5=Leena/tester, tuber_6=MAX-1/manager) light up too. manager IS
+# mapped here (unlike the request above) so its narrator lines get
+# MAX-1's own tile instead of falling to the roundtable director's own
+# uncast-speaker fallback. Fired right after the request above so both
+# audiences get the same show - keep this episode name in sync with
+# PAYLOAD's above by hand; nothing enforces it automatically.
+TO2="tuber_0"
+TYPE2="replay_request"
+PAYLOAD2='{"episode": "ashiorid_generated_ce8d", "cast": {"coder": "tuber_1", "coder-native": "tuber_2", "coder-opencode": "tuber_3", "tester": "tuber_5", "manager": "tuber_6"}}'
+
 # =====================================================================
 
 if [[ -z "$TO" || -z "$TYPE" || -z "$PAYLOAD" ]]; then
@@ -152,19 +202,31 @@ if [[ -z "$TO" || -z "$TYPE" || -z "$PAYLOAD" ]]; then
     exit 1
 fi
 
-if ! echo "$PAYLOAD" | jq empty >/dev/null 2>&1; then
-    echo "Error: Invalid payload JSON: $PAYLOAD" >&2
-    exit 1
+send_test_message() {
+    local url="$1" to="$2" type="$3" payload="$4"
+
+    if ! echo "$payload" | jq empty >/dev/null 2>&1; then
+        echo "Error: Invalid payload JSON: $payload" >&2
+        exit 1
+    fi
+
+    local body
+    body=$(jq -n --arg to "$to" --arg type "$type" --argjson payload "$payload" \
+        '{to: $to, type: $type, payload: $payload}')
+
+    echo "POST $url  (to=$to, type=$type)"
+
+    local response
+    if ! response=$(curl -sS -f -X POST "$url" -H "Content-Type: application/json" -d "$body"); then
+        echo "Error: Request to $url failed." >&2
+        exit 1
+    fi
+
+    echo "$response" | jq .
+}
+
+send_test_message "$URL" "$TO" "$TYPE" "$PAYLOAD"
+
+if [[ -n "$TO2" && -n "$TYPE2" && -n "$PAYLOAD2" ]]; then
+    send_test_message "$URL" "$TO2" "$TYPE2" "$PAYLOAD2"
 fi
-
-BODY=$(jq -n --arg to "$TO" --arg type "$TYPE" --argjson payload "$PAYLOAD" \
-    '{to: $to, type: $type, payload: $payload}')
-
-echo "POST $URL  (to=$TO, type=$TYPE)"
-
-if ! RESPONSE=$(curl -sS -f -X POST "$URL" -H "Content-Type: application/json" -d "$BODY"); then
-    echo "Error: Request to $URL failed." >&2
-    exit 1
-fi
-
-echo "$RESPONSE" | jq .
