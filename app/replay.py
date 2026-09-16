@@ -275,7 +275,33 @@ class Performer:
         label = (self.boss_name or "BOSS").upper()[:32]
         rule = "─" * max(1, 36 - len(label) - 2)
         self._line(f"{c.cyan}{c.bold}┌─ {label} {rule}{c.reset}")
-        self._avatar("thinking", action=f"reading a message from {self.boss_name or 'the boss'}")
+        # Ownership-gated, mirroring _on_assistant_text's contract exactly
+        # (the same "duet followers/roundtable tiles render the full show
+        # but only speak their own scenes" rule — see that method's
+        # comment). Before this gate, EVERY performer rendering this event
+        # — owning tile or not — got its avatar unconditionally forced to
+        # "thinking"/no-bubble, clobbering whatever bubble
+        # Performer._perform_scene's scene-level narration handling had
+        # JUST set moments earlier for an owned "boss"-kind scene (a GM
+        # narration line, revoice.py). On the roundtable this meant a
+        # narrated boss/GM scene's bubble was wiped the instant its single
+        # user_message event rendered — the owning tile flashed to
+        # "thinking" with an empty bubble, i.e. NO TEXT for that line,
+        # reported live as "the very first voice did not show text". A
+        # non-owning tile's avatar was equally clobbered away from its
+        # correct "idle"/listening state to "thinking" for the same reason.
+        #
+        # Fixed to match the assistant_text contract: owned -> "speaking"
+        # with the event's own text as the bubble (so a narrated boss/GM
+        # scene keeps showing its line, and a plain user_message — the
+        # original recorded-dev-session use case — now ALSO shows its text
+        # instead of a bare "thinking" face); not owned -> stays "idle"/
+        # listening, exactly like every other unowned-scene event.
+        if self._scene_owned:
+            self._avatar("speaking", action=f"reading a message from {self.boss_name or 'the boss'}",
+                         bubble=event["text"])
+        else:
+            self._avatar("idle", action="listening to the show")
         for line in event["text"].splitlines():
             self._typed(line, DIALOGUE_CPS * 2, prefix=f"{c.cyan}│ {c.reset}")
         self._line(f"{c.cyan}└────────────────────────────────────{c.reset}")

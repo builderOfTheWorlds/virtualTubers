@@ -392,7 +392,14 @@ def test_unowned_scene_sets_idle_avatar_not_speaking(tmp_path):
     ]
     performer.perform(SCRIPT, show=show)
     scene_calls = [c for c in calls if c[0] == "idle" and c[1] == "listening to the show"]
-    assert scene_calls == [("idle", "listening to the show", None)]
+    # Two identical calls are expected and harmless (idempotent state): one
+    # from _perform_scene's scene-level narration handling, one from
+    # _on_user_message's own ownership gate (added so a user_message event
+    # never CLOBBERS a scene-level bubble set moments earlier for an OWNED
+    # scene — see that method's docstring). Both agree on "idle"/no bubble
+    # for an unowned scene, so asserting the set of distinct calls (not the
+    # exact count) is what the test actually cares about.
+    assert set(scene_calls) == {("idle", "listening to the show", None)}
     speaking_calls = [c for c in calls if c[0] == "speaking" and c[2] == "the boss speaks"]
     assert speaking_calls == []  # never shows the bubble for an unowned scene
 
@@ -414,6 +421,42 @@ def test_owned_scene_sets_speaking_avatar_with_bubble():
     ]
     performer.perform(SCRIPT, show=show)
     assert ("speaking", "narrating the rerun", "the boss speaks") in calls
+
+
+def test_owned_boss_scenes_final_avatar_state_keeps_the_bubble(tmp_path):
+    """THE roundtable regression this locks down ('the very first voice did
+    not show text'): a "boss"-kind scene's narration bubble
+    (Performer._perform_scene's scene-level handling) must survive its OWN
+    user_message event rendering moments later. Before the fix,
+    _on_user_message unconditionally wrote bubble=None for every
+    performer rendering the event — owning or not — clobbering the
+    just-set narration bubble the instant the event's box drew. Checking
+    calls (as test_owned_scene_sets_speaking_avatar_with_bubble does) isn't
+    enough to catch this: that test passes even when a LATER call wipes
+    the bubble right back out, because it only asserts the desired call
+    happened SOMEWHERE in the list. What a tile/avatar pane actually reads
+    is the on-disk state right after the scene renders — so call
+    _perform_scene directly (not the full perform(), whose "fin" screen at
+    the very end would overwrite the bubble regardless of this bug and
+    mask the regression) and assert on that.
+
+    The FINAL bubble is the event's own text (event["text"]), mirroring
+    _on_assistant_text's contract exactly — not the scene-level
+    `narration` field, which is the TTS-synthesized spoken line and can
+    differ from the raw event text (LLM paraphrase mode); the two only
+    happen to match under voice.verbatim: true. What matters for this
+    regression is that the bubble is non-empty and reflects THIS event,
+    not that it wasn't reset back to None.
+    """
+    state_file = tmp_path / "agent_state.json"
+    out = io.StringIO()
+    performer = make_performer(out, state_path=str(state_file))
+    scene = {"kind": "boss", "speaker": "boss", "events": [SCRIPT["events"][0]],
+             "narration": "the boss speaks", "audio": None, "owned": True}
+    performer._perform_scene(scene)
+    final_state = read_state(str(state_file))
+    assert final_state["bubble"] == SCRIPT["events"][0]["text"]
+    assert final_state["expression"] == "speaking"
 
 
 def test_unowned_dialogue_does_not_set_the_speaking_bubble(tmp_path):
