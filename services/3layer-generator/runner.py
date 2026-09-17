@@ -21,6 +21,7 @@ import datetime
 import logging
 import math
 import pathlib
+import shutil
 
 import yaml
 
@@ -45,6 +46,15 @@ class Context:
     plan_arc: object
     plan_segment: object
     generate_dialogue: object
+    # Optional post-1.5 seam: a `ctx.load_pack_for_job(pack_name)` callable
+    # that materializes the pack from Postgres (generation_store) instead of
+    # reading the `campaigns/:ro` host mount. `None` (the default, and the
+    # value every existing test's Context carries) means "not yet cut over"
+    # — dispatch_once() falls back to `ctx.load_pack(ctx.pack_root /
+    # pack_name)`, which is exactly what those tests were written and
+    # passed against, so the cutover is a per-context opt-in rather than a
+    # rewrite of every existing test's fake.
+    load_pack_for_job: object = None
     _calls: object = None
 
 
@@ -59,6 +69,7 @@ def build_default_context(config, pack_root, output_root) -> Context:
     """
     import config as config_module
     import concurrent_llm
+    import generation_store
 
     import campaign.pack
     import vocabulary
@@ -71,17 +82,22 @@ def build_default_context(config, pack_root, output_root) -> Context:
             config, layer, profile_name or None)
         return concurrent_llm.from_profile(resolved)
 
+    def _load_pack_for_job(pack_name):
+        return _load_pack_for_job_from_postgres(
+            generation_store.materialize_pack, campaign.pack.load_pack, pack_name)
+
     return Context(
         config=config,
         pack_root=pathlib.Path(pack_root),
         output_root=pathlib.Path(output_root),
-        store=__import__("generation_store"),
+        store=generation_store,
         build_llm=build_llm,
         load_pack=campaign.pack.load_pack,
         build_vocab=vocabulary.Vocabulary.from_config_and_pack,
         plan_arc=plan_arc.plan_arc,
         plan_segment=plan_segment.plan_segment,
         generate_dialogue=generate_segment_dialogue.generate_segment_dialogue,
+        load_pack_for_job=_load_pack_for_job,
     )
 
 
@@ -89,6 +105,32 @@ def _utc_now_iso() -> str:
     """Current UTC time as an ISO-8601 string. `datetime.utcnow()` is
     deprecated in 3.12 and the service image is python:3.12-slim."""
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def _load_pack_for_job_from_postgres(materialize, load_pack, pack_name):
+    """The ONE place a generation job resolves pack content once the 1.5
+    cutover is in effect: materialize pack_name's rows out of Postgres into
+    a fresh temp dir (the caller passes in whatever `materialize`
+    implementation its own `Context` uses — the real generation_store's in
+    production, a FakeStore's in tests), load that temp dir through the
+    real `load_pack`, and return the loaded pack. The temp dir is cleaned
+    up HERE the moment load_pack returns — every layer function and
+    vocabulary builder in this codebase takes the pack as an in-memory
+    object (verified: none of plan_arc / plan_segment /
+    generate_segment_dialogue / vocabulary reads a file off `pack.root` or
+    `pack.lore_dir` after load; the only other `pack.root` read in the code
+    is `batch_generate.py`, a separate CLI entry point that doesn't take a
+    `Context` and keeps its own, unchanged, host-mount-based behavior).
+
+    Raises `FileNotFoundError` (surfaced as a job failure with a readable
+    error, same as today's "campaign.yaml not found in ...") if the pack
+    has no rows at all.
+    """
+    root = materialize(pack_name)
+    try:
+        return load_pack(root)
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
 
 
 class EmptyOutputError(RuntimeError):
@@ -463,7 +505,24 @@ def dispatch_once(ctx) -> bool:
     started = datetime.datetime.now(datetime.timezone.utc)
 
     try:
-        pack = ctx.load_pack(ctx.pack_root / pack_name)
+        if ctx.load_pack_for_job is not None:
+            # 1.5 cutover (decision 5): pack content comes from Postgres
+            # (the `store`'s materialize function), never off the
+            # `campaigns/:ro` host mount. This is the ONLY branch that runs
+            # once `build_default_context` is used — the fallback below is
+            # purely so a Context can still point `pack_root` at a
+            # hand-built directory (tests, the `batch_generate.py` CLI path,
+            # anything not yet cut over).
+            try:
+                pack = ctx.load_pack_for_job(pack_name)
+            except FileNotFoundError as exc:
+                raise FileNotFoundError(
+                    f"pack {pack_name!r} has no rows in Postgres — "
+                    f"import it with scripts/import_packs_to_postgres.py "
+                    f"before queueing jobs against it: {exc}"
+                ) from exc
+        else:
+            pack = ctx.load_pack(ctx.pack_root / pack_name)
         profile = job.get("profile") or None
         llm = ctx.build_llm(profile, job["stage"])
         vocab = ctx.build_vocab(ctx.config, pack)

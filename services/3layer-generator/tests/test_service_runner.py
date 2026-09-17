@@ -837,3 +837,101 @@ def test_a_complete_arc_plan_records_no_shortfall(store, ctx):
     row = store.get(job)
     assert row["status"] == "completed"
     assert "skipped_segments" not in row["result"]
+
+
+# ---------------------------------------------------------------------------
+# 1.5 cutover — the job pipeline reads pack content from Postgres, not the
+# campaigns/:ro host mount (decision 5). The existing ctx fixture's fake
+# layer functions assert pack IS a shared sentinel object, which is exactly
+# the pre-cutover call shape this branch is replacing — so these tests build
+# their own non-identity fakes and a ctx with load_pack_for_job wired to
+# the real (materialize, load_pack) pair, pointing pack_root at an
+# EMPTY directory to prove the host mount is genuinely never consulted.
+# ---------------------------------------------------------------------------
+import campaign.pack as _campaign_pack
+from tests.pack_fixtures import seed_minimal_pack
+import dataclasses
+
+
+def _make_cutover_ctx(tmp_path, store):
+    """A Context like the shared ctx fixture's, but with load_pack_for_job
+    cut over and pack_root deliberately pointed at a directory that does
+    NOT exist — the whole point of this test is that a nonexistent host
+    path must not matter at all."""
+    loaded_pack = object()
+
+    def fake_plan_arc(pack, config, llm, vocab, out_path, on_llm_progress=None):
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(yaml.safe_dump({"segments": [{"id": "seg-01"}]}),
+                            encoding="utf-8")
+        return {"segments": [{"id": "seg-01"}]}
+
+    def fake_plan_segment(pack, arc_segment, config, llm, vocab, out_path,
+                          progress=None, cancel_check=None):
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(yaml.safe_dump({"segment_id": arc_segment["id"],
+                                            "slots": [{"slot_id": "s-1"}]}),
+                            encoding="utf-8")
+        out_path.with_name("tree.yaml").write_text(
+            yaml.safe_dump({arc_segment["id"]: {"kind": "leaf"}}), encoding="utf-8")
+        return {"segment_id": arc_segment["id"], "slots": [{"slot_id": "s-1"}]}
+
+    def fake_generate_dialogue(pack, segment_ids, config, llm, out_root,
+                               progress=None, cancel_check=None):
+        return {"planned": 1, "written": 1, "failed": 0}
+
+    return dataclasses.replace(
+        runner.Context(
+            config={"output": {"dir": str(tmp_path / "out")},
+                    "segment": {"concurrency": 2},
+                    "arc": {}, "dialogue": {}},
+            pack_root=tmp_path / "definitely-empty-and-nonexistent",
+            output_root=tmp_path / "out",
+            store=store,
+            build_llm=lambda profile, layer: object(),
+            load_pack=lambda pack_path: (_ for _ in ()).throw(
+                AssertionError("pack_root was consulted — cutover failed")),
+            build_vocab=lambda config, pack: object(),
+            plan_arc=fake_plan_arc,
+            plan_segment=fake_plan_segment,
+            generate_dialogue=fake_generate_dialogue,
+        ),
+        load_pack_for_job=lambda pack_name: runner._load_pack_for_job_from_postgres(
+            store.materialize_pack, _campaign_pack.load_pack, pack_name),
+    )
+
+
+def test_a_job_loads_its_pack_from_postgres_not_the_host_mount(tmp_path, store):
+    """The cutover assertion, exactly as the plan's Task 1.5 Step 3 describes
+    it: a pack with zero files at its (nonexistent) pack_root must still
+    dispatch and complete, because the only thing ever consulted is the
+    (fake) store's materialize function — not a filesystem path at all."""
+    seed_minimal_pack(store, "ashiorid")
+
+    # Belt and braces: a pack_root directory that doesn't even exist on disk.
+    # dispatch_once used to call ctx.load_pack(ctx.pack_root / pack_name)
+    # directly, which against this empty/nonexistent dir would fail with the
+    # same "campaign.yaml not found in ..." a missing pack produces today.
+    ctx = _make_cutover_ctx(tmp_path, store)
+
+    job = queue(store, "arc")
+    assert runner.dispatch_once(ctx) is True
+    row = store.get(job)
+    assert row["status"] == "completed", f"job failed: {row['error']!r}"
+    assert row["result"]["artifacts"]
+
+
+def test_a_pack_with_no_rows_in_the_store_fails_with_an_actionable_error(
+        tmp_path, store):
+    """Symmetric case: cut over, but the pack was never imported. The job
+    must fail cleanly (not crash the dispatcher loop) with an error that
+    names the import script, since that's the one thing an operator can do
+    about this specific failure mode."""
+    empty_store = FakeStore()
+    ctx = _make_cutover_ctx(tmp_path, empty_store)
+
+    job = queue(empty_store, "arc")
+    assert runner.dispatch_once(ctx) is True
+    row = empty_store.get(job)
+    assert row["status"] == "failed"
+    assert "import_packs_to_postgres.py" in row["error"]
