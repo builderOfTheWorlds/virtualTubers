@@ -106,6 +106,58 @@ CREATE TABLE IF NOT EXISTS generator_configs (
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Campaign pack content (2026-09) — moved off host files specifically so no
+-- container needs write access to a host directory to support browser-driven
+-- editing (see .hermes/plans/2026-09-17_010237-unified-manager-gui.md for
+-- why). One row per campaign.yaml/scene/cast-member/lore-note, each the
+-- WHOLE document as YAML/text — same shape those files had on disk, not a
+-- normalized schema, so load_pack()'s existing parser needs zero changes:
+-- a pack is materialized back into that exact directory shape in a
+-- container-local temp dir (never a host bind mount) whenever something
+-- needs to call load_pack() against it.
+-- worker_id (added with the same 2026-09 work, per decision 3 "no
+-- hardcoded values"): the Rerun Theater worker id a cast member's dialogue
+-- lines are attributed to by the episode builder. NULL = GM narration,
+-- matching the old unmapped-speaker fallback, so pre-existing rows need no
+-- backfill.
+CREATE TABLE IF NOT EXISTS pack_campaigns (
+    pack_name     TEXT PRIMARY KEY,
+    campaign_yaml TEXT NOT NULL,
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS pack_scenes (
+    id          BIGSERIAL PRIMARY KEY,
+    pack_name   TEXT NOT NULL REFERENCES pack_campaigns(pack_name) ON DELETE CASCADE,
+    scene_id    TEXT NOT NULL,
+    scene_yaml  TEXT NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (pack_name, scene_id)
+);
+
+CREATE TABLE IF NOT EXISTS pack_cast (
+    id          BIGSERIAL PRIMARY KEY,
+    pack_name   TEXT NOT NULL REFERENCES pack_campaigns(pack_name) ON DELETE CASCADE,
+    member_id   TEXT NOT NULL,
+    member_yaml TEXT NOT NULL,
+    worker_id   TEXT,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (pack_name, member_id)
+);
+
+CREATE TABLE IF NOT EXISTS pack_lore (
+    id          BIGSERIAL PRIMARY KEY,
+    pack_name   TEXT NOT NULL REFERENCES pack_campaigns(pack_name) ON DELETE CASCADE,
+    lore_name   TEXT NOT NULL,
+    lore_text   TEXT NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (pack_name, lore_name)
+);
 """
 
 TERMINAL_STATUSES = frozenset({"completed", "failed", "cancelled"})
@@ -667,5 +719,250 @@ def activate_config(config_id: int) -> bool:
                 )
                 changed = cur.rowcount == 1
         return changed
+    finally:
+        conn.close()
+
+# ---------------------------------------------------------------------------
+# Campaign pack content — the Pack Viewer / Pack Editor's backing store
+# (2026-09 unified manager GUI plan). Same design rationale as
+# generator_configs: whole-document rows, small YAML/text, validated at the
+# edges (materialize + load_pack before a write lands) rather than at rest.
+# ---------------------------------------------------------------------------
+
+import shutil
+import tempfile
+from pathlib import Path
+
+_PACK_CAMPAIGN_COLUMNS = "pack_name, campaign_yaml, created_at, updated_at"
+_PACK_SCENE_COLUMNS = "id, pack_name, scene_id, scene_yaml, created_at, updated_at"
+_PACK_CAST_COLUMNS = "id, pack_name, member_id, member_yaml, worker_id, created_at, updated_at"
+_PACK_LORE_COLUMNS = "id, pack_name, lore_name, lore_text, created_at, updated_at"
+
+
+def list_pack_names() -> list:
+    """Every pack with a campaign_yaml row, alphabetical. Drives the GUI's
+    Pack dropdown and the /packs endpoint (a PLAIN LIST — same shape the
+    old PACK_ROOT scan produced; do not wrap it in an object)."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT pack_name FROM pack_campaigns ORDER BY pack_name")
+            return [row[0] for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def get_campaign_row(pack_name: str) -> dict | None:
+    """One pack's campaign.yaml row, or None when the pack does not exist."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_PACK_CAMPAIGN_COLUMNS} FROM pack_campaigns "
+                "WHERE pack_name = %s", (pack_name,))
+            row = cur.fetchone()
+            return _row_to_dict(cur, row) if row else None
+    finally:
+        conn.close()
+
+
+def list_scenes(pack_name: str) -> list:
+    """Every scene row for a pack, by scene_id. Raises on a foreign-key-
+    impossible pack (no campaign row) — callers treat that as 404."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_PACK_SCENE_COLUMNS} FROM pack_scenes "
+                "WHERE pack_name = %s ORDER BY scene_id", (pack_name,))
+            return [_row_to_dict(cur, row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def list_cast(pack_name: str) -> list:
+    """Every cast-member row for a pack, by member_id. worker_id may be
+    None — that is the 'falls through to GM narration' state, not an error."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_PACK_CAST_COLUMNS} FROM pack_cast "
+                "WHERE pack_name = %s ORDER BY member_id", (pack_name,))
+            return [_row_to_dict(cur, row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def list_lore(pack_name: str) -> list:
+    """Every lore-note row for a pack, by lore_name."""
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"SELECT {_PACK_LORE_COLUMNS} FROM pack_lore "
+                "WHERE pack_name = %s ORDER BY lore_name", (pack_name,))
+            return [_row_to_dict(cur, row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def materialize_pack(pack_name: str) -> Path:
+    """Write pack_name's DB rows into a fresh container-local temp directory
+    shaped exactly like a pack on disk (campaign.yaml, cast/*.yaml,
+    scenes/*.yaml, lore/*.md), so load_pack() -- which only knows how to
+    read a directory -- keeps working completely unchanged.
+
+    Caller owns cleanup: shutil.rmtree(path) in a finally. Deliberately NOT
+    cached across calls -- pack content changes via the editor and a stale
+    materialized copy silently validating against old content would be
+    worse than the small cost of rewriting a few small YAML files per call.
+
+    Raises FileNotFoundError if pack_name has no campaign_yaml row.
+    """
+    campaign_row = get_campaign_row(pack_name)
+    if campaign_row is None:
+        raise FileNotFoundError(f"no pack named {pack_name!r} in Postgres")
+
+    root = Path(tempfile.mkdtemp(prefix=f"pack-{pack_name}-"))
+    (root / "campaign.yaml").write_text(campaign_row["campaign_yaml"], encoding="utf-8")
+
+    cast_dir = root / "cast"
+    cast_dir.mkdir()
+    for row in list_cast(pack_name):
+        (cast_dir / f"{row['member_id']}.yaml").write_text(row["member_yaml"], encoding="utf-8")
+
+    scenes_dir = root / "scenes"
+    scenes_dir.mkdir()
+    for row in list_scenes(pack_name):
+        (scenes_dir / f"{row['scene_id']}.yaml").write_text(row["scene_yaml"], encoding="utf-8")
+
+    lore_rows = list_lore(pack_name)
+    if lore_rows:
+        lore_dir = root / "lore"
+        lore_dir.mkdir()
+        for row in lore_rows:
+            (lore_dir / f"{row['lore_name']}.md").write_text(row["lore_text"], encoding="utf-8")
+
+    return root
+
+
+def upsert_campaign(pack_name: str, campaign_yaml: str) -> None:
+    """Insert or replace a pack's campaign.yaml. The FIRST row of a new pack;
+    scene/cast/lore rows hang off it via their foreign key, so this is
+    always the write that creates a pack."""
+    log.info("upsert_campaign: pack_name=%s", pack_name)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO pack_campaigns (pack_name, campaign_yaml) "
+                "VALUES (%s, %s) "
+                "ON CONFLICT (pack_name) DO UPDATE "
+                "SET campaign_yaml = EXCLUDED.campaign_yaml, updated_at = now()",
+                (pack_name, campaign_yaml),
+            )
+    finally:
+        conn.close()
+
+
+def upsert_scene(pack_name: str, scene_id: str, scene_yaml: str) -> None:
+    """Insert or replace one scene row (natural key pack_name+scene_id)."""
+    log.info("upsert_scene: pack_name=%s scene_id=%s", pack_name, scene_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO pack_scenes (pack_name, scene_id, scene_yaml) "
+                "VALUES (%s, %s, %s) "
+                "ON CONFLICT (pack_name, scene_id) DO UPDATE "
+                "SET scene_yaml = EXCLUDED.scene_yaml, updated_at = now()",
+                (pack_name, scene_id, scene_yaml),
+            )
+    finally:
+        conn.close()
+
+
+def delete_scene(pack_name: str, scene_id: str) -> bool:
+    """Remove one scene row. Returns True when a row was deleted."""
+    log.info("delete_scene: pack_name=%s scene_id=%s", pack_name, scene_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM pack_scenes WHERE pack_name = %s AND scene_id = %s",
+                (pack_name, scene_id),
+            )
+            return cur.rowcount > 0
+    finally:
+        conn.close()
+
+
+def upsert_cast_member(pack_name: str, member_id: str, member_yaml: str,
+                       worker_id: str | None = None) -> None:
+    """Insert or replace one cast row. worker_id=None leaves the column
+    untouched on UPDATE (COALESCE) -- callers omitting it must not
+    accidentally clear an operator-set mapping; pass '' explicitly only if a
+    reset was requested. New rows store NULL."""
+    log.info("upsert_cast_member: pack_name=%s member_id=%s", pack_name, member_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO pack_cast (pack_name, member_id, member_yaml, worker_id) "
+                "VALUES (%s, %s, %s, %s) "
+                "ON CONFLICT (pack_name, member_id) DO UPDATE "
+                "SET member_yaml = EXCLUDED.member_yaml, "
+                    "worker_id = COALESCE(EXCLUDED.worker_id, pack_cast.worker_id), "
+                    "updated_at = now()",
+                (pack_name, member_id, member_yaml, worker_id),
+            )
+    finally:
+        conn.close()
+
+
+def delete_cast_member(pack_name: str, member_id: str) -> bool:
+    """Remove one cast row. Returns True when a row was deleted."""
+    log.info("delete_cast_member: pack_name=%s member_id=%s", pack_name, member_id)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM pack_cast WHERE pack_name = %s AND member_id = %s",
+                (pack_name, member_id),
+            )
+            return cur.rowcount > 0
+    finally:
+        conn.close()
+
+
+def upsert_lore(pack_name: str, lore_name: str, lore_text: str) -> None:
+    """Insert or replace one lore-note row."""
+    log.info("upsert_lore: pack_name=%s lore_name=%s", pack_name, lore_name)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO pack_lore (pack_name, lore_name, lore_text) "
+                "VALUES (%s, %s, %s) "
+                "ON CONFLICT (pack_name, lore_name) DO UPDATE "
+                "SET lore_text = EXCLUDED.lore_text, updated_at = now()",
+                (pack_name, lore_name, lore_text),
+            )
+    finally:
+        conn.close()
+
+
+def delete_lore(pack_name: str, lore_name: str) -> bool:
+    """Remove one lore-note row. Returns True when a row was deleted."""
+    log.info("delete_lore: pack_name=%s lore_name=%s", pack_name, lore_name)
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM pack_lore WHERE pack_name = %s AND lore_name = %s",
+                (pack_name, lore_name),
+            )
+            return cur.rowcount > 0
     finally:
         conn.close()

@@ -40,6 +40,10 @@ class FakeStore:
         self._seq = 0
         self.configs = {}
         self._config_seq = 0
+        self.pack_campaigns = {}
+        self.pack_scenes = {}
+        self.pack_cast = {}
+        self.pack_lore = {}
 
     def submit(self, record):
         self._seq += 1
@@ -202,6 +206,125 @@ class FakeStore:
             row["is_active"] = False
         self.configs[config_id]["is_active"] = True
         return True
+
+    # -- Campaign pack content (Pack Viewer / Editor) ---------------------
+    # Same surface as generation_store's pack_* functions, in-memory.
+    # materialize_pack writes a REAL directory so tests exercising it drive
+    # the real campaign.pack.load_pack, not a fake of it.
+
+    def _pack_init(self, pack_name):
+        if pack_name not in self.pack_campaigns:
+            self.pack_campaigns[pack_name] = None
+            self.pack_scenes[pack_name] = {}
+            self.pack_cast[pack_name] = {}
+            self.pack_lore[pack_name] = {}
+
+    def list_pack_names(self):
+        return sorted(self.pack_campaigns)
+
+    def get_campaign_row(self, pack_name):
+        row = self.pack_campaigns.get(pack_name)
+        if row is None:
+            return None
+        return dict(row, pack_name=pack_name)
+
+    def list_scenes(self, pack_name):
+        rows = sorted((dict(r, scene_id=r["scene_id"])
+                       for r in self.pack_scenes.get(pack_name, {}).values()),
+                      key=lambda r: r["scene_id"])
+        return [
+            {"id": i, "pack_name": pack_name, "scene_id": r["scene_id"],
+             "scene_yaml": r["scene_yaml"]}
+            for i, r in enumerate(rows)
+        ]
+
+    def list_cast(self, pack_name):
+        rows = sorted(self.pack_cast.get(pack_name, {}).values(),
+                      key=lambda r: r["member_id"])
+        return [
+            {"id": i, "pack_name": pack_name, "member_id": r["member_id"],
+             "member_yaml": r["member_yaml"],
+             "worker_id": r.get("worker_id")}
+            for i, r in enumerate(rows)
+        ]
+
+    def list_lore(self, pack_name):
+        rows = sorted(self.pack_lore.get(pack_name, {}).values(),
+                      key=lambda r: r["lore_name"])
+        return [
+            {"id": i, "pack_name": pack_name, "lore_name": r["lore_name"],
+             "lore_text": r["lore_text"]}
+            for i, r in enumerate(rows)
+        ]
+
+    def materialize_pack(self, pack_name):
+        import pathlib
+        import tempfile
+        campaign = self.pack_campaigns.get(pack_name)
+        if campaign is None:
+            raise FileNotFoundError(
+                f"no pack named {pack_name!r} in the (fake) store")
+        root = pathlib.Path(tempfile.mkdtemp(prefix=f"fake-pack-{pack_name}-"))
+        (root / "campaign.yaml").write_text(campaign["campaign_yaml"],
+                                            encoding="utf-8")
+        (root / "cast").mkdir()
+        for r in self.pack_cast.get(pack_name, {}).values():
+            (root / "cast" / f"{r['member_id']}.yaml").write_text(
+                r["member_yaml"], encoding="utf-8")
+        (root / "scenes").mkdir()
+        for r in self.pack_scenes.get(pack_name, {}).values():
+            (root / "scenes" / f"{r['scene_id']}.yaml").write_text(
+                r["scene_yaml"], encoding="utf-8")
+        lore = list(self.pack_lore.get(pack_name, {}).values())
+        if lore:
+            (root / "lore").mkdir()
+            for r in lore:
+                (root / "lore" / f"{r['lore_name']}.md").write_text(
+                    r["lore_text"], encoding="utf-8")
+        return root
+
+    def upsert_campaign(self, pack_name, campaign_yaml):
+        row = self.pack_campaigns.get(pack_name)
+        if row is None:
+            self._pack_init(pack_name)
+            self.pack_campaigns[pack_name] = {"campaign_yaml": campaign_yaml}
+            self.pack_scenes[pack_name] = {}
+            self.pack_cast[pack_name] = {}
+            self.pack_lore[pack_name] = {}
+        else:
+            self.pack_campaigns[pack_name]["campaign_yaml"] = campaign_yaml
+
+    def upsert_scene(self, pack_name, scene_id, scene_yaml):
+        self._pack_init(pack_name)
+        self.pack_scenes[pack_name].setdefault(scene_id, {})
+        self.pack_scenes[pack_name][scene_id]["scene_id"] = scene_id
+        self.pack_scenes[pack_name][scene_id]["scene_yaml"] = scene_yaml
+
+    def delete_scene(self, pack_name, scene_id):
+        return self.pack_scenes.get(pack_name, {}).pop(scene_id, None) is not None
+
+    def upsert_cast_member(self, pack_name, member_id, member_yaml,
+                           worker_id=None):
+        import datetime
+        self._pack_init(pack_name)
+        row = self.pack_cast[pack_name].setdefault(member_id, {})
+        row["member_id"] = member_id
+        row["member_yaml"] = member_yaml
+        if worker_id is not None:
+            row["worker_id"] = worker_id
+        row["updated_at"] = datetime.datetime.now(datetime.timezone.utc)
+
+    def delete_cast_member(self, pack_name, member_id):
+        return self.pack_cast.get(pack_name, {}).pop(member_id, None) is not None
+
+    def upsert_lore(self, pack_name, lore_name, lore_text):
+        self._pack_init(pack_name)
+        row = self.pack_lore[pack_name].setdefault(lore_name, {})
+        row["lore_name"] = lore_name
+        row["lore_text"] = lore_text
+
+    def delete_lore(self, pack_name, lore_name):
+        return self.pack_lore.get(pack_name, {}).pop(lore_name, None) is not None
 
 
 @pytest.fixture
