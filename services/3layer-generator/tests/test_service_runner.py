@@ -1134,11 +1134,19 @@ def _seed_a_minimal_generated_run(store, run):
 
 def _make_publish_ctx(tmp_path, store, pack_name, run):
     """A Context whose only non-trivial wiring is the publish path's
-    dependencies (store artifact accessors + the pack load seam). No LLM,
-    no layer function, none of which the publish stage uses — so a bare
-    lambda suffices for the slots the runner calls but this stage never
-    does."""
+    dependencies (store artifact accessors + the pack load seam). The
+    publish stage never calls an LLM — but dispatch_once() historically
+    called `build_llm` unconditionally (a real bug: generate.yaml has no
+    "publish" layer, so the real factory raised ConfigError on every job
+    and the unit suite stayed green because this lambda never raised
+    either). Now the fake *raises* if called, so a regression that
+    re-routes publish through the LLM path fails loudly instead of
+    silently passing."""
     loaded_pack = object()
+    def _no_llm(profile, layer):
+        raise AssertionError(
+            "publish is a deterministic stage and must not call an LLM; "
+            f"build_llm was invoked with profile={profile!r} layer={layer!r}")
     return runner.Context(
         config={"output": {"dir": str(tmp_path / "out")},
                 "segment": {"concurrency": 2},
@@ -1146,7 +1154,7 @@ def _make_publish_ctx(tmp_path, store, pack_name, run):
         pack_root=tmp_path / "packs",
         output_root=tmp_path / "out",
         store=store,
-        build_llm=lambda profile, layer: object(),
+        build_llm=_no_llm,
         load_pack=lambda pack_path: loaded_pack,
         build_vocab=lambda config, pack: object(),
         plan_arc=lambda *a, **k: (_ for _ in ()).throw(

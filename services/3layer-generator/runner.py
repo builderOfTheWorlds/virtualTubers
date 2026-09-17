@@ -585,7 +585,15 @@ def dispatch_once(ctx) -> bool:
         else:
             pack = ctx.load_pack(ctx.pack_root / pack_name)
         profile = job.get("profile") or None
-        llm = ctx.build_llm(profile, job["stage"])
+        if job["stage"] == "publish":
+            # publish is a deterministic stage — it never calls an LLM, and
+            # generation.yaml has no "publish" layer, so build_llm(profile,
+            # "publish") would raise ConfigError ("unknown layer") for
+            # every job. The live dispatcher proved it; the unit suite
+            # never did because every fake Context stubs build_llm.
+            llm = None
+        else:
+            llm = ctx.build_llm(profile, job["stage"])
         vocab = ctx.build_vocab(ctx.config, pack)
         progress = _make_progress(ctx, job_id)
         cancel_check = _make_cancel_check(ctx, job_id)
