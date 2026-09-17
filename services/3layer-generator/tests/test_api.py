@@ -61,6 +61,12 @@ def llm_calls(monkeypatch):
 @pytest.fixture
 def client(monkeypatch, store, tmp_path):
     (tmp_path / "packs" / "ashiorid").mkdir(parents=True)
+    # Seed the pack's existence row the same way the real service does now
+    # (resolve_pack_path checks pack_campaigns, not the on-disk dir — the
+    # two must both be present for a pack to be "real", and this test
+    # fixture has always created the on-disk half explicitly, so pair it
+    # with the DB half here rather than in every individual test).
+    store.upsert_campaign("ashiorid", "name: ashiorid\nstart_scene: intro\ngm: gm\n")
     monkeypatch.setattr(api, "CONFIG", CONFIG)
     monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "packs")
     monkeypatch.setattr(api, "OUTPUT_ROOT", tmp_path / "out")
@@ -886,12 +892,14 @@ def test_packs_lists_store_pack_names(client, store):
 def test_packs_does_not_leak_disk_entries(client, tmp_path):
     """Postgres is the only source now (decision 5): a directory under
     PACK_ROOT with no pack_campaigns row must not appear in /packs. This is
-    the whole point of cutting the endpoint over from a disk scan."""
+    the whole point of cutting the endpoint over from a disk scan.
+    The `ashiorid` row (seeded by the client fixture) SHOULD appear — that's
+    the only pack that exists in the fake store."""
     (tmp_path / "packs" / "ghost_on_disk_only").mkdir(parents=True, exist_ok=True)
 
     body = client.get("/packs").json()
 
-    assert body == []
+    assert body == ["ashiorid"]       # only the store-seeded pack
     assert "ghost_on_disk_only" not in body
 
 
@@ -899,7 +907,9 @@ def test_packs_is_sorted(client, store):
     seed_minimal_pack(store, "zebra")
     store.upsert_campaign("alpha", "name: alpha\nstart_scene: intro\ngm: gm\n")
     store.upsert_campaign("midpack", "name: midpack\nstart_scene: intro\ngm: gm\n")
-    assert client.get("/packs").json() == ["alpha", "midpack", "zebra"]
+    # `ashiorid` is seeded by the client fixture; the test packs are added
+    # above.  All four, sorted.
+    assert client.get("/packs").json() == ["alpha", "ashiorid", "midpack", "zebra"]
 
 
 def test_profiles_lists_configured_model_names_per_layer(client):

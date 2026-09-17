@@ -124,12 +124,19 @@ def resolve_pack_path(pack) -> Path:
     Reject and raise `HTTPException(400, ...)` when `pack`:
       - contains "/" or "\\" or is absolute
       - is "." or ".." or contains ".."
-      - does not exist as a directory under PACK_ROOT
-    Otherwise return `PACK_ROOT / pack`.
+    The name-safety checks above are load-bearing in their own right — this
+    is the ONE PLACE UNTRUSTED INPUT BECOMES A FILESYSTEM PATH, and a name
+    containing a separator or `..` must be rejected outright, not sanitised.
 
-    This is the ONE PLACE UNTRUSTED INPUT BECOMES A FILESYSTEM PATH. A name
-    containing a separator or `..` must be rejected outright, not
-    sanitised — there is no legitimate request that needs one.
+    Existence is checked against the `pack_campaigns` table, NOT the
+    on-disk PACK_ROOT. Since the Phase-1 cutover (decision 5) Postgres is the
+    single source of truth for pack content: a pack imported from the host
+    must be usable even when this container's host mount is hidden or empty
+    (which is exactly the plan's cutover smoke test). The returned
+    `PACK_ROOT / pack` path is best-effort — a stage that reads pack
+    content directly from Postgres (all of them, via `load_pack_for_job`)
+    never touches it; it is only there for the two or three legacy call
+    sites that still expect a directory to exist.
     """
     if not isinstance(pack, str) or pack == "":
         raise HTTPException(status_code=400, detail=f"invalid pack name {pack!r}")
@@ -148,13 +155,25 @@ def resolve_pack_path(pack) -> Path:
             status_code=400,
             detail=f"pack name {pack!r} must not be '.' or '..'",
         )
-    candidate = PACK_ROOT / pack
-    if not candidate.is_dir():
+    # Existence: a row in pack_campaigns, not a directory on the host mount.
+    # A live Postgres failure is relayed as a 500-class error with the real
+    # cause, not masked as "pack does not exist" (which would send an
+    # operator looking at the wrong DB, the exact trap the Phase-0 checklist
+    # step for task 1.5 exists to guard against).
+    try:
+        exists = store.get_campaign_row(pack) is not None
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"could not confirm pack {pack!r} exists in Postgres: {exc}",
+        )
+    if not exists:
         raise HTTPException(
             status_code=400,
-            detail=f"pack {pack!r} does not exist under {PACK_ROOT}",
+            detail=f"pack {pack!r} not found in pack_campaigns (import it from "
+                   f"the host with scripts/import_packs_to_postgres.py {pack})",
         )
-    return candidate
+    return PACK_ROOT / pack
 
 
 def validate_run_name(run) -> str:
