@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lore: {{ lore_name or '—' }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-dark bg-dark mb-4 p-2">
+    <span class="navbar-brand me-4">Campaign Generator Manager</span>
+    <a href="/" class="btn btn-outline-light btn-sm">Dashboard</a>
+    <a href="/packs" class="btn btn-outline-light btn-sm">Packs</a>
+    {% if pack_name %}
+    <a href="/packs/{{ pack_name }}" class="btn btn-outline-light btn-sm">← {{ pack_name }}</a>
+    {% endif %}
+</nav>
+<div class="container" style="max-width: 900px;">
+
+    {% if pack_name %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lore note: {{ lore_name or '—' }}</h4>
+        <a href="/packs/{{ pack_name }}" class="btn btn-outline-secondary btn-sm">← Back to pack</a>
+    </div>
+    {% endif %}
+
+    {% if save_error %}
+    <div class="alert alert-danger">
+        <strong>Not saved.</strong> {{ save_error }}
+    </div>
+    {% endif %}
+    {% if save_ok %}
+    <div class="alert alert-success">Saved.</div>
+    {% endif %}
+
+    {% if pack_name %}
+    <form method="POST" action="/packs/{{ pack_name }}/lore/{{ lore_name }}">
+        <div class="mb-3">
+            <label class="form-label">Lore text (markdown)</label>
+            <textarea name="lore_text" class="form-control" rows="18"
+                      style="font-size: 0.9rem;">{{ lore_text }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Lore Note</button>
+        <a href="/packs/{{ pack_name }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+    {% else %}
+    <p class="text-danger">The lore note could not be loaded — it may not exist, or the generator API is unreachable. See the error above.</p>
+    {% endif %}
+    <a href="/packs" class="btn btn-outline-secondary mt-3">← All packs</a>
+</div>
+</body>
+</html>

@@ -21,7 +21,12 @@ GENERATOR_API_URL = os.environ.get("GENERATOR_API_URL", "http://localhost:8000")
 GENERATOR_CONTAINER_NAME = os.environ.get("GENERATOR_CONTAINER_NAME", "virtualtubers-3layer-generator-1")
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+# check_dir=False so importing `main` (tests, local dev, subprocess tooling)
+# does not crash on a checkout where an empty `static/` dir isn't materialized
+# yet — the Dockerfile still mkdirs it before COPY, and a mount that serves
+# nothing must not take the whole app down. (No template references /static.)
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static"),
+                                 check_dir=False), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 http_client = httpx.AsyncClient(base_url=GENERATOR_API_URL, timeout=10.0)
@@ -448,13 +453,255 @@ async def data_viewer_artifact(request: Request, artifact_id: int):
 
 
 # ---------------------------------------------------------------------------
+# Pack Viewer + Pack Editor — campaign pack content (campaign.yaml, cast,
+# scenes, lore) as it lives in the generator database. This service stays a
+# pure HTTP client of the generator API throughout: it holds no DB
+# credentials and never touches the host filesystem, so browser-driven edits
+# reach Postgres the same way every other mutation in this stack already
+# does — an HTTP endpoint on the one service that already holds the store
+# connection. (This is the revision the plan's first draft got wrong with a
+# read-write bind mount.)
+#
+# The generator API is the single place that runs load_pack() and enforces
+# the decision-4 pre-write gate; these routes just forward the form body and
+# relay whatever status/detail comes back, re-rendering the same template
+# with the error inline on failure so the operator never loses the pack they
+# were editing.
+# ---------------------------------------------------------------------------
+
+def _extract_detail(result) -> str:
+    try:
+        return result.json().get("detail", result.text)
+    except Exception:
+        return result.text or f"HTTP {result.status_code}"
+
+
+@app.get("/packs", response_class=HTMLResponse)
+async def packs_list(request: Request):
+    """Every pack name (from the generator DB via GET /packs), with a deep
+    link into each one's full view. The dashboard's Pack dropdown already
+    knows these names for job submission; this is the same list surfaced as
+    its own section so an operator can get there without submitting a job
+    first."""
+    packs, packs_error = await _fetch_packs()
+    return templates.TemplateResponse(
+        request, "packs.html",
+        {"request": request, "packs": packs, "packs_error": packs_error},
+    )
+
+
+@app.get("/packs/{pack_name}", response_class=HTMLResponse)
+async def pack_viewer(request: Request, pack_name: str):
+    """Full read-only view of a pack: campaign meta, cast (with worker_id),
+    scenes (start/ambient/default_next), and lore note names. Sourced
+    entirely from GET /packs/{pack_name} — the generator API materializes
+    the rows, runs the real load_pack(), and returns a JSON projection;
+    nothing here parses or validates the pack itself."""
+    try:
+        result = await http_client.get(f"/packs/{pack_name}")
+    except httpx.RequestError as exc:
+        return _render_pack_error(request, f"generator-api unreachable: {exc}")
+    if not result.is_success:
+        return _render_pack_error(request, _extract_detail(result))
+    pack = result.json()
+    return templates.TemplateResponse(
+        request, "pack_viewer.html",
+        {"request": request, "pack_name": pack_name, "pack": pack, "pack_error": None},
+    )
+
+
+def _render_pack_error(request: Request, error: str):
+    return templates.TemplateResponse(
+        request, "pack_viewer.html",
+        {"request": request, "pack_name": None, "pack": None, "pack_error": error},
+    )
+
+
+@app.get("/packs/{pack_name}/scenes/{scene_id}", response_class=HTMLResponse)
+async def pack_scene_detail(request: Request, pack_name: str, scene_id: str):
+    """One scene's raw YAML, pre-filled into an editable form (Phase 2's
+    editor lives on the same template, per the plan: the viewer and the
+    editor share a surface, they only differ on whether a form was just
+    posted). The parsed view is not rendered as separate structured fields
+    — the plan's decision 2 settled on one raw-YAML textarea per document,
+    with the generator API's 422 diagnostic (carrying the real load_pack
+    error) as the error path a bad edit hits, rather than a client-side
+    per-field form for every optional beat/branch field."""
+    try:
+        result = await http_client.get(f"/packs/{pack_name}/scenes/{scene_id}")
+    except httpx.RequestError as exc:
+        return _render_scene_error(request, f"generator-api unreachable: {exc}")
+    if not result.is_success:
+        return _render_scene_error(request, _extract_detail(result))
+    data = result.json()
+    return templates.TemplateResponse(
+        request, "pack_scene_detail.html",
+        {
+            "request": request,
+            "pack_name": pack_name,
+            "scene_id": scene_id,
+            "scene_yaml": data["scene_yaml"],
+            "save_error": None,
+            "save_ok": None,
+        },
+    )
+
+
+def _render_scene_error(request: Request, error: str):
+    return templates.TemplateResponse(
+        request, "pack_scene_detail.html",
+        {"request": request, "pack_name": None, "scene_id": None,
+         "scene_yaml": "", "save_error": error, "save_ok": None},
+    )
+
+
+@app.post("/packs/{pack_name}/scenes/{scene_id}", response_class=HTMLResponse)
+async def save_pack_scene(
+    request: Request,
+    pack_name: str,
+    scene_id: str,
+    scene_yaml: str = Form(...),
+):
+    """Create or replace one scene via PUT /packs/{pack_name}/scenes/{id}.
+    Any 4xx comes back with the generator API's own `detail` — for a 422
+    that's the real load_pack() diagnostic, so an operator sees exactly what
+    would break, re-typed the text, and can immediately see the corrected
+    form again (textarea re-populated from `scene_yaml`) rather than
+    being dropped to a bare error page."""
+    payload = {"scene_yaml": scene_yaml}
+    try:
+        result = await http_client.put(f"/packs/{pack_name}/scenes/{scene_id}",
+                                       json=payload)
+    except httpx.RequestError as exc:
+        return _render_scene_error(request, f"generator-api unreachable: {exc}")
+
+    if result.is_success:
+        return templates.TemplateResponse(
+            request, "pack_scene_detail.html",
+            {"request": request, "pack_name": pack_name, "scene_id": scene_id,
+             "scene_yaml": scene_yaml, "save_error": None, "save_ok": True},
+        )
+    return templates.TemplateResponse(
+        request, "pack_scene_detail.html",
+        {"request": request, "pack_name": pack_name, "scene_id": scene_id,
+         "scene_yaml": scene_yaml, "save_error": _extract_detail(result),
+         "save_ok": None},
+    )
+
+
+@app.get("/packs/{pack_name}/cast/{member_id}", response_class=HTMLResponse)
+async def pack_cast_member_detail(request: Request, pack_name: str, member_id: str):
+    try:
+        result = await http_client.get(f"/packs/{pack_name}/cast/{member_id}")
+    except httpx.RequestError as exc:
+        return _render_cast_error(request, f"generator-api unreachable: {exc}")
+    if not result.is_success:
+        return _render_cast_error(request, _extract_detail(result))
+    data = result.json()
+    return templates.TemplateResponse(
+        request, "pack_cast_detail.html",
+        {"request": request, "pack_name": pack_name, "member_id": member_id,
+         "member_yaml": data["member_yaml"], "worker_id": data.get("worker_id") or "",
+         "save_error": None, "save_ok": None},
+    )
+
+
+def _render_cast_error(request: Request, error: str):
+    return templates.TemplateResponse(
+        request, "pack_cast_detail.html",
+        {"request": request, "pack_name": None, "member_id": None,
+         "member_yaml": "", "worker_id": "", "save_error": error, "save_ok": None},
+    )
+
+
+@app.post("/packs/{pack_name}/cast/{member_id}", response_class=HTMLResponse)
+async def save_pack_cast_member(
+    request: Request,
+    pack_name: str,
+    member_id: str,
+    member_yaml: str = Form(...),
+    worker_id: str = Form(""),
+):
+    payload = {"member_yaml": member_yaml, "worker_id": worker_id or None}
+    try:
+        result = await http_client.put(f"/packs/{pack_name}/cast/{member_id}",
+                                       json=payload)
+    except httpx.RequestError as exc:
+        return _render_cast_error(request, f"generator-api unreachable: {exc}")
+
+    if result.is_success:
+        return templates.TemplateResponse(
+            request, "pack_cast_detail.html",
+            {"request": request, "pack_name": pack_name, "member_id": member_id,
+             "member_yaml": member_yaml, "worker_id": worker_id,
+             "save_error": None, "save_ok": True},
+        )
+    return templates.TemplateResponse(
+        request, "pack_cast_detail.html",
+        {"request": request, "pack_name": pack_name, "member_id": member_id,
+         "member_yaml": member_yaml, "worker_id": worker_id,
+         "save_error": _extract_detail(result), "save_ok": None},
+    )
+
+
+@app.get("/packs/{pack_name}/lore/{lore_name}", response_class=HTMLResponse)
+async def pack_lore_detail(request: Request, pack_name: str, lore_name: str):
+    try:
+        result = await http_client.get(f"/packs/{pack_name}/lore/{lore_name}")
+    except httpx.RequestError as exc:
+        return _render_lore_error(request, f"generator-api unreachable: {exc}")
+    if not result.is_success:
+        return _render_lore_error(request, _extract_detail(result))
+    data = result.json()
+    return templates.TemplateResponse(
+        request, "pack_lore_detail.html",
+        {"request": request, "pack_name": pack_name, "lore_name": lore_name,
+         "lore_text": data["lore_text"], "save_error": None, "save_ok": None},
+    )
+
+
+def _render_lore_error(request: Request, error: str):
+    return templates.TemplateResponse(
+        request, "pack_lore_detail.html",
+        {"request": request, "pack_name": None, "lore_name": None,
+         "lore_text": "", "save_error": error, "save_ok": None},
+    )
+
+
+@app.post("/packs/{pack_name}/lore/{lore_name}", response_class=HTMLResponse)
+async def save_pack_lore(
+    request: Request,
+    pack_name: str,
+    lore_name: str,
+    lore_text: str = Form(...),
+):
+    try:
+        result = await http_client.put(f"/packs/{pack_name}/lore/{lore_name}",
+                                       json={"lore_text": lore_text})
+    except httpx.RequestError as exc:
+        return _render_lore_error(request, f"generator-api unreachable: {exc}")
+
+    if result.is_success:
+        return templates.TemplateResponse(
+            request, "pack_lore_detail.html",
+            {"request": request, "pack_name": pack_name, "lore_name": lore_name,
+             "lore_text": lore_text, "save_error": None, "save_ok": True},
+        )
+    return templates.TemplateResponse(
+        request, "pack_lore_detail.html",
+        {"request": request, "pack_name": pack_name, "lore_name": lore_name,
+         "lore_text": lore_text, "save_error": _extract_detail(result),
+         "save_ok": None},
+    )
+
+
+# ---------------------------------------------------------------------------
 # Saved Configurations — thin proxy over the generator-api /configs surface.
 # This service does no YAML validation of its own; the generator API is the
 # single source of truth for what a valid config looks like (it actually
 # has to resolve model profiles against it), so every route here just
 # forwards the body and relays whatever status/detail comes back.
 # ---------------------------------------------------------------------------
-
 @app.get("/partials/configs", response_class=HTMLResponse)
 async def partial_configs(request: Request):
     """HTMX refresh target for just the Saved Configurations card."""

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene: {{ scene_id or '—' }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-dark bg-dark mb-4 p-2">
+    <span class="navbar-brand me-4">Campaign Generator Manager</span>
+    <a href="/" class="btn btn-outline-light btn-sm">Dashboard</a>
+    <a href="/packs" class="btn btn-outline-light btn-sm">Packs</a>
+    {% if pack_name %}
+    <a href="/packs/{{ pack_name }}" class="btn btn-outline-light btn-sm">← {{ pack_name }}</a>
+    {% endif %}
+</nav>
+<div class="container" style="max-width: 900px;">
+
+    {% if pack_name %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Scene: {{ scene_id or '—' }}</h4>
+        <a href="/packs/{{ pack_name }}" class="btn btn-outline-secondary btn-sm">← Back to pack</a>
+    </div>
+    {% endif %}
+
+    {% if save_error %}
+    <div class="alert alert-danger">
+        <strong>Not saved.</strong> {{ save_error }}
+    </div>
+    {% endif %}
+    {% if save_ok %}
+    <div class="alert alert-success">Saved.</div>
+    {% endif %}
+
+    {% if pack_name %}
+    <p class="text-muted small">
+        Raw YAML, edited directly — saving runs the generator's own
+        <code>load_pack()</code> against the whole pack first, so an edit
+        that would break the pack is rejected with the exact reason and
+        nothing is stored.
+    </p>
+    <form method="POST" action="/packs/{{ pack_name }}/scenes/{{ scene_id }}">
+        <textarea name="scene_yaml" class="form-control mb-3" rows="24"
+                  style="font-family: monospace; font-size: 0.85rem;">{{ scene_yaml }}</textarea>
+        <button type="submit" class="btn btn-primary">Save Scene</button>
+        <a href="/packs/{{ pack_name }}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+    {% else %}
+    <p class="text-danger">The scene could not be loaded — it may not exist, or the generator API is unreachable. See the error above.</p>
+    {% endif %}
+    <a href="/packs" class="btn btn-outline-secondary mt-3">← All packs</a>
+</div>
+</body>
+</html>
