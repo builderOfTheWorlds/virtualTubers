@@ -456,6 +456,12 @@ services:
       GENERATOR_API_URL: http://host.docker.internal:8001
       # Which container's log lines belong to the generator job runner.
       GENERATOR_CONTAINER_NAME: ${GENERATOR_CONTAINER_NAME:-virtualtubers-3layer-generator-1}
+      # Optional HTTP Basic Auth on the whole service (mirrors control-panel's
+      # own pattern — off unless BOTH are set; /healthz is always open).
+      # Phase 2 turns this service into a write surface for campaign content,
+      # so set both in .env before enabling write access anywhere.
+      CAMPAIGN_MANAGER_BASIC_AUTH_USER: ${CAMPAIGN_MANAGER_BASIC_AUTH_USER:-}
+      CAMPAIGN_MANAGER_BASIC_AUTH_PASS: ${CAMPAIGN_MANAGER_BASIC_AUTH_PASS:-}
     ports:
       - "8082:8080"
     extra_hosts:

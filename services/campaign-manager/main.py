@@ -1,11 +1,14 @@
 
 import os
 import json
+import logging
+import base64
+import secrets
 from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import httpx
@@ -20,6 +23,23 @@ BASE_DIR = Path(__file__).resolve().parent
 GENERATOR_API_URL = os.environ.get("GENERATOR_API_URL", "http://localhost:8000")
 GENERATOR_CONTAINER_NAME = os.environ.get("GENERATOR_CONTAINER_NAME", "virtualtubers-3layer-generator-1")
 
+log = logging.getLogger("campaign-manager")
+
+# ── Optional HTTP Basic Auth — no-ops unless both vars are set ──────────────
+# Copied from services/control-panel/panel.py (the reference implementation
+# this decision 1 asks us to match — same functions, same `secrets.
+# compare_digest` timing-safe comparison, same /healthz bypass so the
+# container healthcheck never needs credentials). Env-var names differ
+# (CAMPAIGN_MANAGER_ vs CONTROL_PANEL_, this service's own convention);
+# see control-panel's `CONTROL_PANEL_BASIC_AUTH_*`.
+BASIC_AUTH_USER = os.environ.get("CAMPAIGN_MANAGER_BASIC_AUTH_USER", "")
+BASIC_AUTH_PASS = os.environ.get("CAMPAIGN_MANAGER_BASIC_AUTH_PASS", "")
+
+
+def _auth_enabled() -> bool:
+    return bool(BASIC_AUTH_USER and BASIC_AUTH_PASS)
+
+
 app = FastAPI()
 # check_dir=False so importing `main` (tests, local dev, subprocess tooling)
 # does not crash on a checkout where an empty `static/` dir isn't materialized
@@ -28,6 +48,25 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static"),
                                  check_dir=False), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
+
+@app.middleware("http")
+async def basic_auth_middleware(request: Request, call_next):
+    if not _auth_enabled() or request.url.path == "/healthz":
+        return await call_next(request)
+    header = request.headers.get("authorization", "")
+    user = pw = ""
+    if header.startswith("Basic "):
+        try:
+            user, _, pw = base64.b64decode(header[6:]).decode("utf-8").partition(":")
+        except Exception:
+            log.warning("malformed Authorization header")
+    if secrets.compare_digest(user, BASIC_AUTH_USER) and secrets.compare_digest(pw, BASIC_AUTH_PASS):
+        return await call_next(request)
+    return PlainTextResponse(
+        "authentication required", status_code=401,
+        headers={"WWW-Authenticate": 'Basic realm="campaign-manager"'},
+    )
 
 http_client = httpx.AsyncClient(base_url=GENERATOR_API_URL, timeout=10.0)
 
