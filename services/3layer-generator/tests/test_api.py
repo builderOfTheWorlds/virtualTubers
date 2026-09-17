@@ -109,7 +109,7 @@ def test_an_unknown_stage_is_rejected(client):
     assert submit(client, stage="interpretive-dance").status_code == 400
 
 
-@pytest.mark.parametrize("stage", ["arc", "segment", "dialogue", "all"])
+@pytest.mark.parametrize("stage", ["arc", "segment", "dialogue", "all", "publish"])
 def test_every_known_stage_is_accepted(client, stage):
     assert submit(client, stage=stage, segments=["seg-01"]).status_code in (200, 201)
 
@@ -206,6 +206,129 @@ def test_an_explicit_run_is_honoured(client, store):
     assert response.status_code in (200, 201)
     assert response.json()["run"] == "ashiorid_20260101_000000"
     assert store.get(response.json()["id"])["run"] == "ashiorid_20260101_000000"
+
+
+# ---------------------------------------------------------------------------
+# Phase 3 (task 3.1/3.4): the `publish` job stage + its upload proxy endpoint
+# ---------------------------------------------------------------------------
+
+def test_a_publish_job_carries_the_episode_naming_in_its_params(client, store):
+    """The runner's `_run_publish` reads `episode_name`/`episode_source` from
+    `job["params"]` — this is the ONLY path they get there, so a submit
+    without them lands a job whose publish stage would fall back to
+    `run`-derived naming (fine, but not the operator's). Campaign-manager's
+    Publish button sends them; proving they reach the row is what makes that
+    true end to end, not a claim about the route."""
+    response = client.post("/jobs", json={
+        "pack": "ashiorid",
+        "run": "ashiorid_20260913_180158_ce8d",
+        "stage": "publish",
+        "profile": "",
+        "episode_name": "ashiorid_generated_ce8d",
+        "episode_source": "ashiorid",
+        "episode_project": "virtualTubers",
+    })
+    assert response.status_code in (200, 201), response.text
+    row = store.get(response.json()["id"])
+    assert row["stage"] == "publish"
+    assert row["params"]["episode_name"] == "ashiorid_generated_ce8d"
+    assert row["params"]["episode_source"] == "ashiorid"
+    assert row["params"]["episode_project"] == "virtualTubers"
+
+
+def test_a_publish_job_without_episode_naming_falls_back_cleanly(client, store):
+    """Not every submitter knows the naming convention — a bare publish
+    submit must simply OMIT the keys (runner falls back to
+    `run`-derived defaults), not crash or store `null` where a string is
+    expected (which the runner's `or` fallbacks would actually handle, but
+    not storing them at all is the cleaner contract to assert)."""
+    response = client.post("/jobs", json={
+        "pack": "ashiorid",
+        "run": "ashiorid_20260913_180158_ce8d",
+        "stage": "publish",
+        "profile": "",
+    })
+    assert response.status_code in (200, 201), response.text
+    params = store.get(response.json()["id"])["params"]
+    assert params.get("episode_name") is None
+    assert params.get("episode_source") is None
+
+
+def test_publish_requires_run_like_every_non_arc_stage(client, store):
+    """A publish without a run has nothing to build an episode from — same
+    failure class as segment/dialogue without a run, for the same reason
+    (it operates on an existing run's artifacts). Reject it at submit time
+    rather than queueing a job that can only fail later."""
+    response = client.post("/jobs", json={
+        "pack": "ashiorid", "stage": "publish", "profile": ""})
+    assert response.status_code == 400
+    assert "run is required" in response.text
+
+
+# ---------------------------------------------------------------------------
+# POST /publish/{run}/upload — the proxy to message-api's POST /replays
+# ---------------------------------------------------------------------------
+
+def test_publish_upload_404s_when_the_run_has_no_episode_json(client, tmp_path):
+    response = client.post("/publish/never-ran/upload")
+    assert response.status_code == 404
+    assert "no episode.json" in response.text
+
+
+def test_publish_upload_forwards_to_message_api(monkeypatch, client, tmp_path):
+    """The ONE way an episode reaches the library: this endpoint's proxy of
+    message-api's POST /replays. Provable without a real message-api by
+    stubbing httpx.Client (the generator's one outbound HTTP call in this
+    codepath) and asserting the exact path, query params, and body bytes it
+    would have sent — the real integration (message-api's validation) is
+    message-api's own test suite's concern, not this service's."""
+    import generator_api as api
+    written_run = "ashiorid_20260913_180158_ce8d"
+    episode_dir = tmp_path / "out" / written_run
+    episode_dir.mkdir(parents=True)
+    episode_body = b'{"source": "ashiorid", "events": [{"type": "user_message", "text": "hi"}]}'
+    (episode_dir / "episode.json").write_bytes(episode_body)
+    api.OUTPUT_ROOT = tmp_path / "out"
+
+    captured = {}
+
+    class _FakeResponse:
+        is_success = True
+        status_code = 200
+        text = '{"name": "ashiorid_generated_ce8d", "created": true}'
+        def json(self):
+            return {"name": "ashiorid_generated_ce8d", "created": True}
+
+    class _FakeClient:
+        def __init__(self, *a, **k):
+            pass
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+        def post(self, url, content=None, headers=None, params=None):
+            captured["url"] = url
+            captured["content"] = content
+            captured["headers"] = headers
+            captured["params"] = params
+            return _FakeResponse()
+
+    import httpx as httpx_module
+    # Patch Client on the REAL httpx module (restored on test exit): the
+    # endpoint's `import httpx` resolves that same module object out of
+    # sys.modules, so patching a copied attribute would silently miss it.
+    monkeypatch.setattr(httpx_module, "Client", _FakeClient)
+    monkeypatch.setenv("MESSAGE_API_URL", "http://127.0.0.1:8090")
+
+    response = client.post(f"/publish/{written_run}/upload",
+                           params={"name": "ashiorid_generated_ce8d"})
+    assert response.status_code == 200, response.text
+    assert captured["url"] == "http://127.0.0.1:8090/replays"
+    assert captured["content"] == episode_body
+    assert captured["params"] == {"name": "ashiorid_generated_ce8d"}
+    body = response.json()
+    assert body["status"] == "uploaded"
+    assert body["name"] == "ashiorid_generated_ce8d"
 
 
 @pytest.mark.parametrize("evil", ["../etc", "a/b", "..", "/absolute"])

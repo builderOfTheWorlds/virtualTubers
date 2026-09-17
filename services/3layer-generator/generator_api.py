@@ -70,7 +70,7 @@ _runner_ctx = None
 _runner_thread = None
 _stop_event = threading.Event()
 
-VALID_STAGES = {"arc", "segment", "dialogue", "all"}
+VALID_STAGES = {"arc", "segment", "dialogue", "all", "publish"}
 
 
 # ---------------------------------------------------------------------------
@@ -357,7 +357,10 @@ def submit_job(body: dict):
     # pipeline, so it gets a timestamped run auto-generated when the caller
     # doesn't name one. "segment"/"dialogue" jobs continue a run an earlier
     # arc job already produced — auto-generating a new one for them would
-    # point them at an arc plan that doesn't exist, so `run` is required.
+    # point them at a run that doesn't exist, so `run` is required.
+    # (`publish` needs an existing run for the same reason — it builds its
+    # episode from that run's finished artifacts; there is no "arc job" to
+    # point at, so the message is deliberately stage-agnostic.)
     run = body.get("run") or None
     if run is not None:
         run = validate_run_name(run)
@@ -366,8 +369,8 @@ def submit_job(body: dict):
     else:
         raise HTTPException(
             status_code=400,
-            detail=f"run is required for stage {stage!r}; pass the run its "
-                    "arc job produced to continue that generation",
+            detail=f"run is required for stage {stage!r}; pass the run this "
+                    "work belongs to (the name a prior arc job created)",
         )
 
     profile = body.get("profile") or ""
@@ -400,6 +403,14 @@ def submit_job(body: dict):
             "dry_run": body.get("dry_run", False),
             "test_mode": body.get("test_mode", False),
             "rebrief": body.get("rebrief", False),
+            # publish-stage-only: episode naming (the runner's
+            # _run_publish reads these from job["params"]; ignored by every
+            # other stage). Kept here (not in a separate top-level param) so
+            # they travel with the job row the runner already reads, and are
+            # ignored — not leaked into — the stages that don't use them.
+            "episode_name": body.get("episode_name") or None,
+            "episode_source": body.get("episode_source"),
+            "episode_project": body.get("episode_project"),
         },
     })
     return {"id": job_id, "run": run, "status": "queued"}
@@ -878,6 +889,65 @@ def get_artifact_endpoint(artifact_id: int):
     if row is None:
         raise HTTPException(status_code=404, detail=f"artifact {artifact_id!r} not found")
     return row
+
+
+@app.post("/publish/{run}/upload")
+def upload_run_episode(run: str, name: str | None = None, overwrite: bool = False):
+    """Phase 3: upload a `publish` job's episode.json into the episode store.
+
+    The publish stage (runner._run_publish) already wrote
+    `${OUTPUT_ROOT}/${run}/episode.json`. This endpoint doesn't re-derive
+    or re-validate that file — message-api's own POST /replays is the single
+    place validation happens (same rule the whole plan applies: exactly
+    one service owns a piece of validation, the rest of the stack forwards
+    it). Here we're the forwarding side: read the file, relay it verbatim,
+    relay message-api's status back (including its 4xx/409 with the real
+    reason), and let campaign-manager's Publish flow surface that to the
+    operator.
+
+    `name` defaults to the episode's own `source` field (message-api's documented
+    behavior), so the caller usually doesn't need to pass it — but passing it
+    overrides, which is what the original `--name` CLI flag meant for
+    `.claude/prompts/build_generated_episode.py`.
+    """
+    import httpx
+
+    episode_path = OUTPUT_ROOT / run / "episode.json"
+    if not episode_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"no episode.json under {run!r} — was a `publish` job for "
+                   f"this run run (and completed) yet?",
+        )
+    body = episode_path.read_bytes()
+
+    message_api = os.environ.get("MESSAGE_API_URL", "http://127.0.0.1:8090")
+    url = f"{message_api.rstrip('/')}/replays"
+    query = {}
+    if name:
+        query["name"] = name
+    if overwrite:
+        query["overwrite"] = "true"
+    try:
+        with httpx.Client(timeout=60.0) as client:
+            resp = client.post(
+                url, content=body, headers={"Content-Type": "application/json"},
+                params=query)
+    except httpx.RequestError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail=f"message-api ({message_api}) unreachable: {exc}",
+        )
+
+    try:
+        detail = resp.json()
+    except Exception:
+        detail = resp.text[:500]
+    if not resp.is_success:
+        raise HTTPException(status_code=resp.status_code, detail=detail)
+    if isinstance(detail, dict):
+        return {"episode": run, "status": "uploaded", **detail}
+    return {"episode": run, "status": "uploaded", "message_api": detail}
 
 
 # ---------------------------------------------------------------------------

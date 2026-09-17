@@ -1,4 +1,5 @@
 
+import asyncio
 import os
 import json
 import logging
@@ -6,6 +7,7 @@ import base64
 import secrets
 from pathlib import Path
 from typing import Any, Optional
+from urllib.parse import quote
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
@@ -22,6 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent
 # In production (Docker), this would be http://3layer-generator:8000
 GENERATOR_API_URL = os.environ.get("GENERATOR_API_URL", "http://localhost:8000")
 GENERATOR_CONTAINER_NAME = os.environ.get("GENERATOR_CONTAINER_NAME", "virtualtubers-3layer-generator-1")
+# control-panel (the Rerun Theater viewer / log / worker manager) — the
+# Publish flow cross-links INTO it (job_detail.html's "view this episode in
+# the control panel" banner) rather than duplicating its viewer. Port 8091
+# matches the docker-compose mapping already in place.
+CONTROL_PANEL_URL = os.environ.get("CONTROL_PANEL_URL", "http://localhost:8091")
 
 log = logging.getLogger("campaign-manager")
 
@@ -257,7 +264,15 @@ async def job_detail(request: Request, job_id: str):
             "logs": logs,
             "logs_available": log_reader.available(),
             "artifacts": artifacts,
-            "artifacts_error": artifacts_error
+            "artifacts_error": artifacts_error,
+            # Phase 3 publish banner (set by /jobs/{id}/publish's redirect
+            # query string — no server-side state to lose on the redirect).
+            "published": request.query_params.get("published") == "1",
+            "publish_episode_name": request.query_params.get("episode_name") or "",
+            "publish_event_count": request.query_params.get("event_count") or "",
+            "publish_error": request.query_params.get("publish_error") or "",
+            "control_panel_url": request.query_params.get("control_panel_url")
+                                 or CONTROL_PANEL_URL,
         }
     )
 
@@ -385,6 +400,137 @@ async def cancel_job_ui(request: Request, job_id: str):
         return HTMLResponse("<div class='alert alert-success'>Cancel requested</div>")
     else:
         return HTMLResponse(f"<div class='alert alert-danger'>{result.text}</div>")
+
+
+# How long to wait for a `publish` job to finish (it does no LLM work — pure
+# conversion of finished artifacts — so a generous bounded wait finishes it in
+# practice; on timeout we redirect to the job's own page, which keeps polling
+# and where the operator can also submit the upload manually via the banner.)
+_PUBLISH_WAIT_BUDGET_S = 120
+_PUBLISH_POLL_INTERVAL_S = 1.0
+
+# A `publish` job for a completed dialogue job's run: the episode key is
+# derived from the pack + run's 4-char uuid suffix — matching the original
+# script's documented convention (`ashiorid_generated_ce8d`, not
+# `<pack>_<timestamp>_<suffix>` which is the RUN namespace, not the
+# episode library key) so an operator's muscle memory from the old CLI
+# still fits.
+def _publish_episode_name(pack: str, run: str) -> str:
+    suffix = run.rsplit("_", 1)[-1] if run else ""
+    return f"{pack}_generated_{suffix}" if suffix else f"{pack}_generated"
+
+
+async def _wait_for_job_terminal(http, job_id: str, budget_s: float,
+                                 interval_s: float):
+    """Poll one job until it's no longer queued/running (or the budget runs
+    out). Returns the job row, or None on budget exhaustion. Kept separate
+    from the route so it can be exercised without touching the route's
+    redirect-and-template rendering.
+    """
+    import time
+    deadline = time.monotonic() + budget_s
+    while True:
+        r = await http.get(f"/jobs/{job_id}")
+        if not r.is_success:
+            return None
+        job = r.json()
+        if job.get("status") not in ("queued", "running"):
+            return job
+        if time.monotonic() >= deadline:
+            return None
+        await asyncio.sleep(interval_s)
+
+
+@app.post("/jobs/{job_id}/publish", response_class=HTMLResponse)
+async def publish_job_ui(request: Request, job_id: str):
+    """Phase 3 (task 3.2): turn a completed dialogue job's run into an
+    episode in the library.
+
+    Flow, entirely over the generator API (this service stays a pure HTTP
+    client — no Postgres, no filesystem, same as every other route in this
+    file):
+      1. Read the job — it must exist, be completed, and have a `run`.
+      2. Submit the `publish` job for that run (with a derived `episode_name`,
+         per the original build_generated_episode.py's convention).
+      3. Wait (bounded) for it to finish.
+      4. Call the generator's `/publish/{run}/upload` (task 3.1's Step 4),
+         which proxies the finished `episode.json` to message-api's own
+         `POST /replays` (the one real validator, per its module's own rule).
+
+    Every step's real error is relayed back to the job_detail page in a
+    banner (query string — no session state to lose on redirect) rather
+    than a bare 500, so an operator can read exactly what failed and
+    retry from the same place.
+    """
+    # 1. The job this button was asked to publish from.
+    job_result = await http_client.get(f"/jobs/{job_id}")
+    if not job_result.is_success:
+        return _publish_redirect(job_id,
+                                 error=f"generator-api error: {job_result.status_code}")
+    job = job_result.json()
+    run = job.get("run")
+    pack = job.get("pack")
+    if job.get("status") != "completed":
+        return _publish_redirect(job_id,
+                                 error=f"job {job_id} is {job.get('status')!r} "
+                                       f"(not completed), can't publish from it")
+    if not run:
+        return _publish_redirect(job_id,
+                                 error=f"job {job_id} has no run namespace to publish")
+
+    # 2. Submit the publish job for that run.
+    episode_name = _publish_episode_name(pack, run)
+    submit_result = await http_client.post("/jobs", json={
+        "pack": pack,
+        "run": run,
+        "stage": "publish",
+        "profile": "",
+        "episode_name": episode_name,
+    })
+    if not submit_result.is_success:
+        return _publish_redirect(job_id,
+                                 error=f"failed to submit publish job: "
+                                       f"{_extract_detail(submit_result)}")
+    publish_job_id = submit_result.json().get("id")
+
+    # 3. Wait for it to finish (bounded).
+    pub_job = await _wait_for_job_terminal(
+        http_client, publish_job_id, _PUBLISH_WAIT_BUDGET_S, _PUBLISH_POLL_INTERVAL_S)
+    if pub_job is None:
+        # Redirect to the publish JOB's own page (it will keep moving; the
+        # operator can retry the upload from there once it completes).
+        return RedirectResponse(
+            url=f"/job/{publish_job_id}?publish_error="
+                + quote(f"publish job still running after "
+                        f"{int(_PUBLISH_WAIT_BUDGET_S)}s — it is still working, "
+                        f"check that job page"),
+            status_code=303)
+    if pub_job.get("status") != "completed":
+        return _publish_redirect(job_id,
+                                 error=f"publish job failed: "
+                                       f"{(pub_job.get('error') or str(pub_job))[:200]}")
+
+    # 4. Upload the finished episode into the library.
+    up = await http_client.post(f"/publish/{run}/upload",
+                                params={"name": episode_name})
+    if not up.is_success:
+        return _publish_redirect(job_id,
+                                 error=f"upload failed: {_extract_detail(up)}")
+    result = pub_job.get("result") or {}
+    return RedirectResponse(
+        url=(f"/job/{job_id}?published=1"
+             f"&episode_name={quote(episode_name)}"
+             f"&event_count={result.get('event_count', '?')}"
+             f"&control_panel_url={quote(CONTROL_PANEL_URL)}"),
+        status_code=303)
+
+
+def _publish_redirect(job_id: str, error: str) -> RedirectResponse:
+    """Single place the publish flow's error banners come from — one
+    query string, one percent-encoding rule, so a test only has to check
+    the `publish_error` value in exactly one shape."""
+    return RedirectResponse(url=f"/job/{job_id}?publish_error={quote(error)}",
+                            status_code=303)
 
 
 @app.post("/models/run", response_class=HTMLResponse)

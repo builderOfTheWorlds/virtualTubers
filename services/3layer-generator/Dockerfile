@@ -21,5 +21,10 @@ COPY utilities/3LayersWeeklyGeneration/src/ /app/
 COPY services/3layer-generator/generation_store.py /app/generation_store.py
 COPY services/3layer-generator/runner.py /app/runner.py
 COPY services/3layer-generator/generator_api.py /app/generator_api.py
+# Phase 3's publish stage: runner._run_publish imports both by bare name,
+# and campaign_episode_builder imports episode_builder — both must sit flat
+# next to runner.py, matching the rest of this image's layout.
+COPY services/3layer-generator/episode_builder.py /app/episode_builder.py
+COPY services/3layer-generator/campaign_episode_builder.py /app/campaign_episode_builder.py
 
 CMD ["uvicorn", "generator_api:app", "--host", "0.0.0.0", "--port", "8000"]

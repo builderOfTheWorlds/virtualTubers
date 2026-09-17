@@ -41,6 +41,41 @@
                             <p><strong>Finished At:</strong> {{ job.finished_at or 'N/A' }}</p>
                         </div>
                     </div>
+
+                    {% if published and publish_episode_name %}
+                    <div class="alert alert-success">
+                        <h5 class="mb-2">Episode published <span class="badge bg-success">{{ publish_event_count }} events</span></h5>
+                        <p class="mb-1">
+                            <strong>{{ publish_episode_name }}</strong> is now in the episode library.
+                        </p>
+                        <a href="{{ control_panel_url }}/replays/{{ publish_episode_name }}/view"
+                           class="btn btn-sm btn-outline-success" target="_blank" rel="noopener">
+                            View it in the control panel
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if publish_error %}
+                    <div class="alert alert-danger">
+                        <h5 class="mb-1">Publish failed</h5>
+                        <p class="mb-0">{{ publish_error }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if job.status == 'completed' and job.run and not published %}
+                    <div class="d-flex align-items-center justify-content-between mt-3 flex-wrap gap-2">
+                        <p class="mb-0 text-muted small">
+                            Ready to publish: this run's dialogue can be turned into an
+                            episode in the library.
+                        </p>
+                        <form method="post" action="/jobs/{{ job.id }}/publish">
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                    onclick="return confirm('Publish this run as an episode in the library?')">
+                                Publish to Episode Store
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
                     <hr>
                     <h5>Parameters</h5>
                     <pre class="bg-dark text-white p-3 rounded"><code>{{ job.params | tojson(indent=2) }}</code></pre>

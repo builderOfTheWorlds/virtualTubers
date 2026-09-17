@@ -408,6 +408,64 @@ def _run_dialogue(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
             result["artifacts"].append(f"dialogue_takes:{seg_id}:{take_count}")
 
 
+def _run_publish(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
+                 result) -> None:
+    """Phase 3: turn a run's artifacts into an episode script.
+
+    No LLM, no layer function — pure conversion of what arc/segment/
+    dialogue already produced. `episode_name` and `episode_source` come from
+    job["params"] so campaign-manager's Publish button can name the
+    episode exactly the way the operator sees it on the job detail page,
+    rather than this stage inventing a name on its own.
+    """
+    import json
+    import episode_builder
+
+    params = job.get("params") or {}
+    episode_name = params.get("episode_name") or run_name
+    episode_source = params.get("episode_source") or job["pack"]
+    episode_project = params.get("episode_project") or "virtualTubers"
+
+    # The cast rows are keyed by SOURCE pack name (the job row's `pack`),
+    # not by `run` (the output namespace) — same as everything else in this
+    # file that reads cast, `pack` is the source-content pointer and `run`
+    # is only ever the artifact/output pointer.
+    speaker_map = episode_builder.build_speaker_map(ctx.store, job["pack"])
+
+    # generation_artifacts is keyed by `run` in this service (see
+    # _mirror, upsert_artifact — the column is misleadingly named `pack`
+    # but takes `run` as its value), and every other artifact accessor in
+    # this file (generation_store) works the same way: `list_artifacts(run)`
+    # for metadata, `get_artifact(id)` for content.
+    artifacts = ctx.store.list_artifacts(run_name)
+    ep = episode_builder.build_episode(
+        run_name, episode_source, episode_project, artifacts,
+        ctx.store.get_artifact, speaker_map)
+    if not ep["events"]:
+        # A generated run with zero usable events (empty takes, every
+        # dialogue slot blank) is a total failure behind a green status,
+        # exactly the trap EmptyOutputError exists to catch for the other
+        # stages — a publish with nothing to say should fail the job the
+        # same way, with a message that says why, instead of writing a
+        # five-event-minimum-violating file to disk.
+        raise EmptyOutputError(
+            f"publish: run {run_name!r} produced an episode with 0 events "
+            f"after cleaning (see slots seen/empty in the dialogue stage's "
+            f"job result) — nothing to air")
+
+    out_dir = pathlib.Path(ctx.output_root) / run_name
+    out_dir.mkdir(parents=True, exist_ok=True)
+    written = out_dir / "episode.json"
+    written.write_text(json.dumps(ep, indent=1, ensure_ascii=False),
+                       encoding="utf-8")
+    result.update({
+        "event_count": len(ep["events"]),
+        "episode_name": episode_name,
+        "written_to": str(written),
+    })
+    result["artifacts"].append("episode")
+
+
 def _run_stage(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                result) -> None:
     """Dispatch a single stage, or the full arc->segment->dialogue chain."""
@@ -421,6 +479,9 @@ def _run_stage(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
     elif stage == "dialogue":
         _run_dialogue(ctx, job, run_name, pack, llm, vocab, progress,
                       cancel_check, result)
+    elif stage == "publish":
+        _run_publish(ctx, job, run_name, pack, llm, vocab, progress,
+                     cancel_check, result)
     elif stage == "all":
         _run_arc(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                  result)

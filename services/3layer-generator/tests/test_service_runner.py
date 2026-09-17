@@ -935,3 +935,225 @@ def test_a_pack_with_no_rows_in_the_store_fails_with_an_actionable_error(
     row = empty_store.get(job)
     assert row["status"] == "failed"
     assert "import_packs_to_postgres.py" in row["error"]
+# ---------------------------------------------------------------------------
+# Phase 3 — the `publish` job stage, and its two builders, as unit-logic
+# tests. These live here (not in a dedicated test_episode_builder.py file,
+# though they ARE those same unit tests, just in the file whose FakeStore
+# already carries the artifact/cast surface they need) so the fake's
+# existing `list_artifacts`/`get_artifact` can be reused directly rather
+# than re-inventing an equivalent fake in a second file.
+# ---------------------------------------------------------------------------
+from episode_builder import build_speaker_map as build_speaker_map_  # noqa: E402
+from episode_builder import build_episode as build_generated_episode  # noqa: E402
+from campaign_episode_builder import build_episode as build_campaign_episode  # noqa: E402
+
+
+def test_build_speaker_map_covers_member_id_and_display_name_and_case(store):
+    """The one non-obvious guarantee of the decision-3 replacement for the
+    old hardcoded dicts: whatever FORM a beat's `speaker` field happens to
+    arrive in (member id, display name, any casing), all of it resolves to
+    the same worker_id, and a cast row with no worker_id at all is simply
+    absent from the map (not an error).
+
+    The contract is on `_speaker_lookup` (the only real consumer): it is
+    case-insensitive, so the MAP only needs to carry the original case and
+    the lowercased form of each key — a single `.lower()` at lookup time
+    covers the rest. Assert against the lookup, not against raw keys, or
+    this test enforces a stronger (and useless) invariant than the code
+    actually provides."""
+    store.upsert_cast_member("alpha", "gm", "name: Ashiorid\n", worker_id="manager")
+    store.upsert_cast_member("alpha", "unmapped", "name: Somebody\n")  # no worker_id
+    from episode_builder import _speaker_lookup
+    for form in ("gm", "GM", "Gm", "ashiorid", "Ashiorid", "ASHIORID"):
+        assert _speaker_lookup(build_speaker_map_(store, "alpha"), form) == "manager"
+    # Unmapped cast member: no worker routing at all, no error.
+    m = build_speaker_map_(store, "alpha")
+    assert "unmapped" not in m and "somebody" not in m and "SomEBODY" not in m
+    assert _speaker_lookup(m, "Somebody") is None
+    assert _speaker_lookup(m, "someone") is None
+
+
+def test_generated_episode_routes_beats_via_speaker_map_not_a_hidden_constant(store):
+    """Four beats, one per branch of the converter's speaker routing —
+    all driven by the `worker_id` column, no hardcoded name constants:
+
+      1. beat.speaker is the member id (lowercase as a cast row's id
+         happens to be)  -> routed to that row's worker id.
+      2. beat.speaker is the display name, and the beat's TEXT also starts
+         with "Name: ..." -> that redundant name prefix is stripped (the
+         original script's exact behavior for this branch).
+      3. beat.speaker is empty, text is "Name: ..." for a cast member with
+         NO worker id (an NPC-style cast row) -> falls through to GM
+         narration, name kept inline.
+      4. beat.speaker is empty, plain text -> GM narration.
+
+    This is the exact behavior of the old hardcoded `SPEAKER_TO_WORKER`
+    dicts, but now driven by data (a pack's cast rows) instead of a code
+    constant — so an operator changes routing in the Pack Editor, not in
+    this file (decision 3)."""
+    store.upsert_cast_member("alpha", "chadwick", "name: Chadwick\n", worker_id="coder")
+    store.upsert_cast_member("alpha", "grovley", "name: Grovley\n")  # never mapped
+
+    store.upsert_artifact("run-1", "arc_plan", "",
+                          {"segments": [{"id": "seg-01", "order": 1}]}, "job-1")
+    store.upsert_artifact("run-1", "tree", "seg-01", {
+        "seg-01": {"kind": "leaf", "order": 1,
+                   "slots": [{"slot_id": "slot-a", "kind": "generated"}]}}, "job-1")
+    store.upsert_artifact("run-1", "dialogue", "seg-01/slot-a/001",
+                          {"beats": [
+                              {"speaker": "chadwick", "text": "We did it, I think."},
+                              {"speaker": "Chadwick", "text": "Chadwick: We really did it."},
+                              {"speaker": "", "text": "Grovley: I never expected to build a rocket."},
+                              {"speaker": "", "text": "The room falls silent."},
+                          ]}, "job-1")
+
+    speaker_map = build_speaker_map_(store, "alpha")
+    ep = build_generated_episode(
+        "run-1", "alpha", "virtualTubers",
+        store.list_artifacts("run-1"), store.get_artifact, speaker_map)
+    events = ep["events"]
+    assert len(events) == 4
+
+    assert events[0] == {"type": "assistant_text",
+                         "text": "We did it, I think.", "speaker": "coder"}
+    assert events[1] == {"type": "assistant_text",
+                         "text": "We really did it.", "speaker": "coder"}
+    assert events[2] == {"type": "user_message",
+                         "text": "Grovley: I never expected to build a rocket."}
+    assert events[3] == {"type": "user_message", "text": "The room falls silent."}
+
+
+def test_publish_stage_end_to_end_writes_the_episode_json(store, tmp_path):
+    """The full `publish` stage, driven through dispatch_once() the same
+    way every other stage is: a run with a complete arc/tree/dialogue
+    triplet, a cast with a mapped GM row, and the publish stage's own
+    `params` (episode naming) — must end with the job `completed`, an
+    episode.json written, and result fields the GUI's Publish flow can
+    read off directly."""
+    store.upsert_cast_member("alpha", "gm", "name: Ashiorid\n", worker_id="manager")
+    _seed_a_minimal_generated_run(store, "run-pub-1")
+
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-pub-1")
+    job = store.submit({
+        "pack": "alpha", "run": "run-pub-1", "stage": "publish", "profile": "",
+        "params": {"episode_name": "ashiorid_generated_run-pub-1"},
+    })
+    assert runner.dispatch_once(ctx) is True
+    row = store.get(job)
+    assert row["status"] == "completed", f"publish failed: {row['error']!r}"
+    assert row["result"]["event_count"] >= 1
+    assert row["result"]["episode_name"] == "ashiorid_generated_run-pub-1"
+    out = pathlib.Path(ctx.output_root) / "run-pub-1" / "episode.json"
+    assert out.exists()
+    import json as _json
+    body = _json.loads(out.read_text(encoding="utf-8"))
+    assert body["source"] == "alpha"
+    assert len(body["events"]) == row["result"]["event_count"]
+
+
+def test_publish_stage_fails_cleanly_when_the_run_has_no_events(store, tmp_path):
+    """A run whose dialogue is all empty takes (a real, observed failure
+    mode — see the original script's docstring) must be a `failed` job with
+    a message an operator can act on, not a `completed` job writing a
+    zero-event file, and not a crash that wedges the dispatcher."""
+    store.upsert_cast_member("alpha", "gm", "name: Ashiorid\n", worker_id="manager")
+    store.upsert_artifact("run-empty-1", "arc_plan", "", {
+        "segments": [{"id": "seg-01", "order": 1}]}, "job-1")
+    store.upsert_artifact("run-empty-1", "tree", "seg-01", {
+        "seg-01": {"kind": "leaf", "order": 1,
+                   "slots": [{"slot_id": "slot-a", "kind": "generated"}]}}, "job-1")
+    # A dialogue take EXISTING but with every beat's text empty after
+    # cleaning (pure filler) is the shape that produces zero events.
+    store.upsert_artifact("run-empty-1", "dialogue", "seg-01/slot-a/001", {
+        "beats": [{"speaker": "gm", "text": "Here is the first line of the scene"}]
+    }, "job-1")
+
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-empty-1")
+    job = store.submit({
+        "pack": "alpha", "run": "run-empty-1", "stage": "publish", "profile": "",
+        "params": {},
+    })
+    assert runner.dispatch_once(ctx) is True
+    row = store.get(job)
+    assert row["status"] == "failed"
+    assert "0 events" in row["error"]
+    assert not (pathlib.Path(ctx.output_root) / "run-empty-1" / "episode.json").exists()
+
+
+def test_campaign_episode_builder_uses_the_same_speaker_map_mechanism(store):
+    """build_campaign_episode.build_episode() must route dialogue beats
+    through the EXACT same speaker_map built from Postgres — not through a
+    second, independent hardcoded constant — so an operator editing
+    `pack_cast.worker_id` changes BOTH the generated and the authored
+    converters' routing at once (decision 3's requirement that the mapping
+    live in one place, not two files each with their own constant)."""
+    store.upsert_cast_member("alpha", "Chadwick", "name: Chadwick\n", worker_id="coder")
+
+    # A minimal in-memory Pack-shaped object with two scenes: one narration
+    # beat (GM) and one dialogue beat tagged with the cast MEMBER ID
+    # (uppercase, as an authored scene file might write it), proving the
+    # authored path resolves through the same map the generated path does.
+    import types
+    beat_narration = types.SimpleNamespace(kind="narration", speaker="gm", text="A quiet moment.")
+    beat_dialogue = types.SimpleNamespace(kind="dialogue", speaker="Chadwick", text="We did it.")
+    scene = types.SimpleNamespace(
+        enter_narration="The room falls silent.",
+        beats=[beat_narration, beat_dialogue],
+        ambient=False, default_next=None)
+    pack = types.SimpleNamespace(
+        start_scene="s1",
+        scene=lambda sid: scene if sid == "s1" else (_ for _ in ()).throw(KeyError(sid)))
+
+    speaker_map = build_speaker_map_(store, "alpha")
+    ep = build_campaign_episode(pack, "alpha", "virtualTubers", max_scenes=5,
+                                speaker_map=speaker_map)
+
+    by_text = {e["text"]: e for e in ep["events"]}
+    # enter_narration -> user_message, GM voice
+    assert by_text["The room falls silent."]["type"] == "user_message"
+    # a narration beat -> user_message
+    assert by_text["A quiet moment."]["type"] == "user_message"
+    # a dialogue beat -> assistant_text routed to the cast row's worker id
+    assert by_text["We did it."]["type"] == "assistant_text"
+    assert by_text["We did it."]["speaker"] == "coder"
+
+
+def _seed_a_minimal_generated_run(store, run):
+    """A run with exactly one segment, one leaf, one slot, and one
+    dialogue take holding one real beat — the smallest shape big enough to
+    produce at least one event, for the publish-stage tests above."""
+    store.upsert_artifact(run, "arc_plan", "",
+                          {"segments": [{"id": "seg-01", "order": 1}]}, "job-1")
+    store.upsert_artifact(run, "tree", "seg-01", {
+        "seg-01": {"kind": "leaf", "order": 1,
+                   "slots": [{"slot_id": "slot-a", "kind": "generated"}]}}, "job-1")
+    store.upsert_artifact(run, "dialogue", "seg-01/slot-a/001", {
+        "beats": [{"speaker": "gm", "text": "The scene opens on an empty room."}]
+    }, "job-1")
+
+
+def _make_publish_ctx(tmp_path, store, pack_name, run):
+    """A Context whose only non-trivial wiring is the publish path's
+    dependencies (store artifact accessors + the pack load seam). No LLM,
+    no layer function, none of which the publish stage uses — so a bare
+    lambda suffices for the slots the runner calls but this stage never
+    does."""
+    loaded_pack = object()
+    return runner.Context(
+        config={"output": {"dir": str(tmp_path / "out")},
+                "segment": {"concurrency": 2},
+                "arc": {}, "dialogue": {}},
+        pack_root=tmp_path / "packs",
+        output_root=tmp_path / "out",
+        store=store,
+        build_llm=lambda profile, layer: object(),
+        load_pack=lambda pack_path: loaded_pack,
+        build_vocab=lambda config, pack: object(),
+        plan_arc=lambda *a, **k: (_ for _ in ()).throw(
+            AssertionError("publish must not call the arc layer")),
+        plan_segment=lambda *a, **k: (_ for _ in ()).throw(
+            AssertionError("publish must not call the segment layer")),
+        generate_dialogue=lambda *a, **k: (_ for _ in ()).throw(
+            AssertionError("publish must not call the dialogue layer")),
+        load_pack_for_job=lambda pack_name2: loaded_pack,
+    )
