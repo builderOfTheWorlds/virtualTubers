@@ -1,0 +1,29 @@
+id: invitation-arc-n0-arrival-2
+take: 1
+beats:
+- kind: narration
+  text: 'Here is the start of the scene:'
+  speaker: gm
+- kind: narration
+  text: 'Ashiorid: (looking around the manor with a hint of unease) It seems we have
+    all gathered under... unfortunate circumstances.'
+  speaker: gm
+- kind: narration
+  text: 'Chadwick: (squinting at Ashiorid) Unfortunate circumstances? You mean this
+    manor, which is rumored to be cursed?'
+  speaker: gm
+- kind: dialogue
+  text: (glancing around the room, her eyes lingering on the portraits on the walls)
+    I don't think it's the manor itself that's the problem. I think it's what's inside
+    it.
+  speaker: Leena
+- kind: dialogue
+  text: (standing by the window, his eyes fixed on something outside) Whatever it
+    is, I think it's getting stronger by the minute.
+  speaker: Vigil
+- kind: narration
+  text: 'Sodacan Bob: (muttering to himself) I''m starting to think we should just
+    leave. This doesn''t feel right.'
+  speaker: gm
+model: light
+generated_at: '2026-09-13T19:57:33.855773+00:00'

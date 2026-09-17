@@ -1,0 +1,21 @@
+segment_id: party-attack-arc
+order: 5
+loop: 0
+hours: 6
+synopsis: The doors open to people who were not invited, and the room stops moving.
+  The party is under attack, and the players must defend themselves while trying to
+  understand what they’ve stumbled into.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: party-attack-arc
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+needs_rebrief: true

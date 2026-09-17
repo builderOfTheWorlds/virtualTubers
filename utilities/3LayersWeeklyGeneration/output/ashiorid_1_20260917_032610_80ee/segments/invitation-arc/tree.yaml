@@ -1,0 +1,53 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Ten thousand years to the day since the Event, four strangers each receive
+    the s
+  summary: 'Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card. The card bears no return address and contains only a
+    single word: ''Come.'''
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-1
+    kind: ambient
+    prompt: The mysterious card arrives in unexpected places—what does each stranger
+      feel upon seeing the word "Come"?
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-2
+    kind: ambient
+    prompt: Each stranger experiences a moment of recognition—what connects them to
+      this single word?
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-3
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

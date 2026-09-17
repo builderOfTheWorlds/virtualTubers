@@ -1,0 +1,87 @@
+segment_id: portal-choice-arc-loop2
+order: 20
+loop: 2
+hours: 6
+synopsis: The party must make a difficult decision about what to do with the portal,
+  knowing that their choice will have far-reaching consequences.
+continuity_in: The party has successfully solved the riddle and obtained the next
+  map fragment, but their actions have drawn unwanted attention.
+continuity_out: The party has made their choice regarding the portal, but the consequences
+  of that choice are now beginning to become clear.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: portal-choice-arc-loop2-n0-1
+  kind: ambient
+  prompt: The party discusses the potential consequences of their choice regarding
+    the portal, considering the far-reaching impact it may have.
+  lore:
+  - the-event
+  - the-begene-program
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop2-n0
+- slot_id: portal-choice-arc-loop2-n0-2
+  kind: ambient
+  prompt: The party continues to weigh the options, trying to predict what the future
+    may hold based on their decision.
+  lore:
+  - moonwells
+  - amulet-of-wonder
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop2-n0
+- slot_id: portal-choice-arc-loop2-n0-3
+  kind: ambient
+  prompt: The party reaches a consensus on what to do with the portal, but the decision
+    weighs heavily on their minds.
+  lore:
+  - the-event
+  - the-begene-program
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop2-n0
+nodes:
+- node_id: portal-choice-arc-loop2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: portal-choice-arc-loop2-n0
+  parent_id: portal-choice-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: portal-choice-arc-loop2-n1
+  parent_id: portal-choice-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

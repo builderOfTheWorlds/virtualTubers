@@ -1,0 +1,48 @@
+magic-lost-arc:
+  node_id: magic-lost-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The seal fails, and the last well empties. The players face a world where
+    magic '
+  summary: The seal fails, and the last well empties. The players face a world where
+    magic is gone — a harsh reality that makes their journey more urgent and desperate.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-lost-arc-seal-fails-1
+    kind: ambient
+    prompt: The seal shatters with a deafening crack, and the last moonwell goes dry
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-seal-fails-2
+    kind: ambient
+    prompt: Magic drains from the world like water through a broken dam
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-seal-fails-3
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

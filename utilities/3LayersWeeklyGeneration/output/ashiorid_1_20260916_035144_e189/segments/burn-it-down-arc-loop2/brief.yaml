@@ -1,0 +1,139 @@
+segment_id: burn-it-down-arc-loop2
+order: 22
+loop: 2
+hours: 6
+synopsis: The party must escape the burning manor and find a way to safety, while
+  also dealing with the loss of their temporary home and the implications of the attack.
+continuity_in: Grovley has revealed more information about the party's nature and
+  the true stakes of their quest, but the party is still uncertain about their next
+  steps.
+continuity_out: The party has escaped the burning manor, but they are now on the run
+  and in need of a new plan.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: burn-it-down-arc-loop2-n0-1
+  kind: ambient
+  prompt: The party fights through the flames and collapsing structure of the burning
+    manor to reach safety.
+  lore:
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: burn-it-down-arc-loop2-n0
+- slot_id: burn-it-down-arc-loop2-n0-2
+  kind: ambient
+  prompt: The party grapples with the loss of their sanctuary and what it means for
+    their mission.
+  lore:
+  - moonwells
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: burn-it-down-arc-loop2-n0
+- slot_id: burn-it-down-arc-loop2-n0-3
+  kind: spine
+  scene_ref: portal-encounter
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: burn-it-down-arc-loop2-n0
+- slot_id: burn-it-down-arc-loop2-n0-4
+  kind: ambient
+  prompt: The party emerges from the inferno, on the run and in need of a new plan.
+  lore:
+  - amulet-of-wonder
+  - malmont
+  - the-bahadur
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: burn-it-down-arc-loop2-n0
+- slot_id: burn-it-down-arc-loop2-n1-1
+  kind: ambient
+  prompt: The party gathers to discuss their next steps after the devastating attack
+    on Leto's Manor. How will they move forward?
+  lore:
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: burn-it-down-arc-loop2-n1
+- slot_id: burn-it-down-arc-loop2-n1-2
+  kind: ambient
+  prompt: As the party debates their options, they grapple with the implications of
+    Grovley's revelations about their nature and the stakes of their quest. How do
+    they process this new information?
+  lore:
+  - the-begene-program
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: burn-it-down-arc-loop2-n1
+- slot_id: burn-it-down-arc-loop2-n1-3
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: burn-it-down-arc-loop2-n1
+nodes:
+- node_id: burn-it-down-arc-loop2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: burn-it-down-arc-loop2-n0
+  parent_id: burn-it-down-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: burn-it-down-arc-loop2-n1
+  parent_id: burn-it-down-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

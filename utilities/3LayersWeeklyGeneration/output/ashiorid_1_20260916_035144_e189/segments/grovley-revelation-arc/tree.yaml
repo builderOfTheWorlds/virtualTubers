@@ -1,0 +1,47 @@
+grovley-revelation-arc:
+  node_id: grovley-revelation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Grovley reveals the truth about the four strangers' origins.
+  summary: Grovley reveals the truth about the four strangers' origins.
+  continuity_in: The four strangers escape the manor and learn Grovley's revelation.
+  continuity_out: The four strangers learn of the vault and the portal.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - grovley-revelation-arc-n0
+  - grovley-revelation-arc-n1
+  slots: null
+grovley-revelation-arc-n0:
+  node_id: grovley-revelation-arc-n0
+  parent_id: grovley-revelation-arc
+  order: 0
+  depth: 1
+  title: Grovley's Revelation
+  summary: Grovley reveals the truth about the four strangers' origins.
+  continuity_in: The four strangers escape the manor and learn Grovley's revelation.
+  continuity_out: The four strangers learn of the vault and the portal.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+grovley-revelation-arc-n1:
+  node_id: grovley-revelation-arc-n1
+  parent_id: grovley-revelation-arc
+  order: 1
+  depth: 1
+  title: The Vault and the Portal
+  summary: The four strangers learn of the vault and the portal.
+  continuity_in: The four strangers learn of the vault and the portal.
+  continuity_out: The four strangers learn of the vault and the portal.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

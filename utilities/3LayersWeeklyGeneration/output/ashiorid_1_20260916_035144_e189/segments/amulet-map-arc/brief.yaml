@@ -1,0 +1,59 @@
+segment_id: amulet-map-arc
+order: 8
+loop: 0
+hours: 6
+synopsis: Jasper and Juniper's map has one mark on it. Everything else has to be earned.
+continuity_in: The four arrive in Malmont.
+continuity_out: The map begins to fill in.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: amulet-map-arc-n0-1
+  kind: ambient
+  prompt: Jasper and Juniper show the others the map with its single mark, hinting
+    at the adventures to come. The group discusses their next steps.
+  lore:
+  - amulet-of-wonder
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: amulet-map-arc-n0
+- slot_id: amulet-map-arc-n0-2
+  kind: spine
+  scene_ref: amulet-map
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: amulet-map-arc-n0
+nodes:
+- node_id: amulet-map-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

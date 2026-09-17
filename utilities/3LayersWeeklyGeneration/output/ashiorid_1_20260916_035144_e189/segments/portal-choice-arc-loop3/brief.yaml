@@ -1,0 +1,60 @@
+segment_id: portal-choice-arc-loop3
+order: 27
+loop: 3
+hours: 6
+synopsis: The party is confronted with a decision about the portal that the dying
+  wizard opened. They must choose whether to close it or leave it open, knowing the
+  consequences of their choice. The tension in Malmont and the party's own desires
+  come into play as they make their decision.
+continuity_in: The party has gained information about Malmont and its power dynamics.
+continuity_out: The party has made a decision about the portal, which will have lasting
+  consequences.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: portal-choice-arc-loop3-n0-1
+  kind: ambient
+  prompt: The party stands before the glowing portal, weighing their options. The
+    fate of Malmont hangs in the balance.
+  lore:
+  - malmont
+  - the-bahadur
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop3-n0
+- slot_id: portal-choice-arc-loop3-n0-2
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: portal-choice-arc-loop3-n0
+nodes:
+- node_id: portal-choice-arc-loop3
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: portal-choice-arc-loop3-n0
+  parent_id: portal-choice-arc-loop3
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: portal-choice-arc-loop3-n1
+  parent_id: portal-choice-arc-loop3
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

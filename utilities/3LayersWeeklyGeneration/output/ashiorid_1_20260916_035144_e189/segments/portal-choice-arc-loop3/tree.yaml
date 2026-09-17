@@ -1,0 +1,78 @@
+portal-choice-arc-loop3:
+  node_id: portal-choice-arc-loop3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party is confronted with a decision about the portal that the dying wizard
+    o
+  summary: The party is confronted with a decision about the portal that the dying
+    wizard opened. They must choose whether to close it or leave it open, knowing
+    the consequences of their choice. The tension in Malmont and the party's own desires
+    come into play as they make their decision.
+  continuity_in: The party has gained information about Malmont and its power dynamics.
+  continuity_out: The party has made a decision about the portal, which will have
+    lasting consequences.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-loop3-n0
+  - portal-choice-arc-loop3-n1
+  slots: null
+portal-choice-arc-loop3-n0:
+  node_id: portal-choice-arc-loop3-n0
+  parent_id: portal-choice-arc-loop3
+  order: 0
+  depth: 1
+  title: The Party's Dilemma
+  summary: The party grapples with the weighty decision of whether to close the portal
+    or leave it open, considering the potential consequences. Tensions rise as they
+    debate the best course of action.
+  continuity_in: The party has learned about the power dynamics in Malmont and the
+    implications of the portal.
+  continuity_out: The party reaches a decision on what to do with the portal.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-choice-arc-loop3-n0-1
+    kind: ambient
+    prompt: The party stands before the glowing portal, weighing their options. The
+      fate of Malmont hangs in the balance.
+    lore:
+    - malmont
+    - the-bahadur
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-loop3-n0-2
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+portal-choice-arc-loop3-n1:
+  node_id: portal-choice-arc-loop3-n1
+  parent_id: portal-choice-arc-loop3
+  order: 1
+  depth: 1
+  title: The Aftermath
+  summary: The party deals with the fallout and consequences of their choice regarding
+    the portal. This has significant impact on Malmont and shapes the future path
+    of the story.
+  continuity_in: The party has made their decision about the portal.
+  continuity_out: The longer-term effects of the party's decision become clear.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

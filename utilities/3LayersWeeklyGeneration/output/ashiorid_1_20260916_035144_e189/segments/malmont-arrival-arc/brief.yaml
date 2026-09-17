@@ -1,0 +1,104 @@
+segment_id: malmont-arrival-arc
+order: 7
+loop: 0
+hours: 6
+synopsis: Four days south of the ash where a manor used to stand, the road widens
+  into Malmont, and Malmont has never heard of any of you.
+continuity_in: The four make their choice at the portal.
+continuity_out: The four arrive in Malmont.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-n0-1
+  kind: ambient
+  prompt: The road widens into Malmont, a town that has never heard of any of the
+    party. What do they find there?
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n0-2
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n0-3
+  kind: ambient
+  prompt: How does the group react to arriving in a place that has no knowledge of
+    them or their past?
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n0
+- slot_id: malmont-arrival-arc-n1-1
+  kind: ambient
+  prompt: The four materialize on the outskirts of Malmont, a town that has never
+    heard of them.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-2
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malmont-arrival-arc-n1
+- slot_id: malmont-arrival-arc-n1-3
+  kind: ambient
+  prompt: The four take in their new surroundings, far from the ash and manor they
+    left behind.
+  lore:
+  - malmont
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-n1
+nodes:
+- node_id: malmont-arrival-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

@@ -1,0 +1,83 @@
+malvakar-riddle-arc-loop4:
+  node_id: malvakar-riddle-arc-loop4
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives at the Malvakar, the northern monument. They must solve
+    a ridd
+  summary: The party arrives at the Malvakar, the northern monument. They must solve
+    a riddle to open the doorway. The riddle is already answering itself if they know
+    where to look. Sodacan Bob's knowledge of runes proves crucial in deciphering
+    the riddle and opening the door.
+  continuity_in: The party has decided to seek out the Amulet of Wonder and are following
+    the map to the monuments.
+  continuity_out: The party has successfully opened the door to the dungeon and must
+    now face its challenges.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-loop4-n0
+  - malvakar-riddle-arc-loop4-n1
+  slots: null
+malvakar-riddle-arc-loop4-n0:
+  node_id: malvakar-riddle-arc-loop4-n0
+  parent_id: malvakar-riddle-arc-loop4
+  order: 0
+  depth: 1
+  title: Arrival at Malvakar
+  summary: The party arrives at the northern monument, Malvakar, as they follow the
+    map in search of the Amulet of Wonder. They discover a sealed doorway that will
+    only open if they can solve a cryptic riddle.
+  continuity_in: The party has decided to seek out the Amulet of Wonder and are following
+    the map to the monuments.
+  continuity_out: The party studies the riddle on the door and begins to decipher
+    its meaning.
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-loop4-n0-1
+    kind: ambient
+    prompt: The party arrives at the Malvakar, the northern monument. They see a sealed
+      doorway with a cryptic riddle carved into it.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-loop4-n0-2
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+malvakar-riddle-arc-loop4-n1:
+  node_id: malvakar-riddle-arc-loop4-n1
+  parent_id: malvakar-riddle-arc-loop4
+  order: 1
+  depth: 1
+  title: Deciphering the Riddle
+  summary: The riddle on the door is complex, but hints at the answer being found
+    in the surrounding environment. Sodacan Bob's knowledge of runes proves essential
+    as he spots the clues hidden in plain sight that allow them to solve the riddle.
+  continuity_in: The party studies the riddle on the door and begins to decipher its
+    meaning.
+  continuity_out: With the riddle solved, the door to the dungeon opens, revealing
+    the challenges that await inside.
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -1,0 +1,148 @@
+bahadur-revealed-arc-loop2:
+  node_id: bahadur-revealed-arc-loop2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party must confront the revelation of the Bahadur's true nature and their
+    ro
+  summary: The party must confront the revelation of the Bahadur's true nature and
+    their role in the events of the world, while also dealing with the potential betrayal
+    of one of their own members.
+  continuity_in: The party has escaped the burning manor, but they are now on the
+    run and in need of a new plan.
+  continuity_out: The party has confronted the Bahadur revelation and made a decision
+    about how to proceed, but the consequences of their choice are still unknown.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-loop2-n0
+  - bahadur-revealed-arc-loop2-n1
+  slots: null
+bahadur-revealed-arc-loop2-n0:
+  node_id: bahadur-revealed-arc-loop2-n0
+  parent_id: bahadur-revealed-arc-loop2
+  order: 0
+  depth: 1
+  title: Uncovering the Truth
+  summary: The party delves into the mystery surrounding the Bahadur and their own
+    roles in the unfolding events, uncovering shocking revelations that challenge
+    their understanding of the world.
+  continuity_in: The party has escaped the burning manor, but they are now on the
+    run and in need of a new plan.
+  continuity_out: The party has discovered the true nature of the Bahadur and their
+    own roles in the events of the world.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-loop2-n0-1
+    kind: ambient
+    prompt: The party, having escaped the burning manor, must now confront the revelations
+      about the Bahadur and their own roles in the unfolding events. How do they process
+      this new information and what do they plan to do next?
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-loop2-n0-2
+    kind: ambient
+    prompt: As the party discusses their next move, they must also deal with the potential
+      betrayal of one of their own members. How do they confront this issue and what
+      consequences might it have on their group dynamic?
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-loop2-n0-3
+    kind: ambient
+    prompt: The party realizes they need more information to fully understand the
+      implications of the Bahadur revelation. Where might they go to find answers
+      and what challenges might they face along the way?
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-loop2-n0-4
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+bahadur-revealed-arc-loop2-n1:
+  node_id: bahadur-revealed-arc-loop2-n1
+  parent_id: bahadur-revealed-arc-loop2
+  order: 1
+  depth: 1
+  title: Confronting Betrayal
+  summary: As the party grapples with the revelation of the Bahadur, they must also
+    confront the possibility of betrayal within their own ranks, testing their bonds
+    of trust and loyalty.
+  continuity_in: The party has discovered the true nature of the Bahadur and their
+    own roles in the events of the world.
+  continuity_out: The party has confronted the potential betrayal and made a decision
+    about how to proceed, but the consequences of their choice are still unknown.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-loop2-n1-1
+    kind: ambient
+    prompt: The party, reeling from the revelations about the Bahadur, must confront
+      the possibility of betrayal within their own ranks. How do they react to this
+      new information, and how does it affect their trust in one another?
+    lore:
+    - the-bahadur
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-loop2-n1-2
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: bahadur-revealed-arc-loop2-n1-3
+    kind: ambient
+    prompt: As the party grapples with the weight of their decisions, they must also
+      consider the consequences of their actions. What will happen next, and how will
+      they face the challenges that lie ahead?
+    lore:
+    - malmont
+    - moonwells
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []

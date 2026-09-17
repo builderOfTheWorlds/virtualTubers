@@ -1,0 +1,18 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The doors open to people who were not invited, and the room stops moving.
+    The pa
+  summary: The doors open to people who were not invited, and the room stops moving.
+    The party is under attack, and the players must defend themselves while trying
+    to understand what they’ve stumbled into.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

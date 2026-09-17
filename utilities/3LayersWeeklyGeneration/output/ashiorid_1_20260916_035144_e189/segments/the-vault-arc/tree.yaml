@@ -1,0 +1,119 @@
+the-vault-arc:
+  node_id: the-vault-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four enter the vault and discover its contents.
+  summary: The four enter the vault and discover its contents.
+  continuity_in: The four strangers learn of the vault and the portal.
+  continuity_out: The four strangers encounter the dying wizard.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-n0
+  - the-vault-arc-n1
+  slots: null
+the-vault-arc-n0:
+  node_id: the-vault-arc-n0
+  parent_id: the-vault-arc
+  order: 0
+  depth: 1
+  title: The Vault's Defenses
+  summary: The party overcomes the magical traps and guardians protecting the vault.
+  continuity_in: The four learn of the vault and decide to enter it.
+  continuity_out: The party reaches the vault's inner chamber.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-vault-arc-n0-1
+    kind: ambient
+    prompt: The party encounters a gauntlet of deadly traps and guardians as they
+      make their way through the vault.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-n0-2
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+the-vault-arc-n1:
+  node_id: the-vault-arc-n1
+  parent_id: the-vault-arc
+  order: 1
+  depth: 1
+  title: The Chamber of Secrets
+  summary: In the vault's innermost chamber, the party discovers the moonwell, the
+    dying wizard, and the vault's true purpose.
+  continuity_in: The party reaches the vault's inner chamber.
+  continuity_out: The dying wizard reveals the vault's secrets to the party.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-vault-arc-n1-1
+    kind: ambient
+    prompt: In the vault's inner chamber, the party discovers a moonwell, a dying
+      wizard, and the vault's true purpose.
+    lore:
+    - moonwells
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-n1-2
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: the-vault-arc-n1-3
+    kind: ambient
+    prompt: The dying wizard reveals the vault's secrets to the party.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-n1-4
+    kind: spine
+    scene_ref: portal-encounter
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

@@ -1,0 +1,116 @@
+malmont-arrival-arc:
+  node_id: malmont-arrival-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Four days south of the ash where a manor used to stand, the road widens into
+    Mal
+  summary: Four days south of the ash where a manor used to stand, the road widens
+    into Malmont, and Malmont has never heard of any of you.
+  continuity_in: The four make their choice at the portal.
+  continuity_out: The four arrive in Malmont.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-n0
+  - malmont-arrival-arc-n1
+  slots: null
+malmont-arrival-arc-n0:
+  node_id: malmont-arrival-arc-n0
+  parent_id: malmont-arrival-arc
+  order: 0
+  depth: 1
+  title: Choosing the Portal
+  summary: At the ash where the manor once stood, the group must choose which portal
+    to step through, not knowing where it leads.
+  continuity_in: The four make their choice at the portal.
+  continuity_out: The portal activates, and the four are transported away.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n0-1
+    kind: ambient
+    prompt: The road widens into Malmont, a town that has never heard of any of the
+      party. What do they find there?
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n0-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: malmont-arrival-arc-n0-3
+    kind: ambient
+    prompt: How does the group react to arriving in a place that has no knowledge
+      of them or their past?
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+malmont-arrival-arc-n1:
+  node_id: malmont-arrival-arc-n1
+  parent_id: malmont-arrival-arc
+  order: 1
+  depth: 1
+  title: Arrival in Malmont
+  summary: The four materialize on the outskirts of Malmont, a town that has never
+    heard of them, far from the ash and manor they left behind.
+  continuity_in: The portal deposits the four on the edge of Malmont.
+  continuity_out: The four arrive in Malmont.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-n1-1
+    kind: ambient
+    prompt: The four materialize on the outskirts of Malmont, a town that has never
+      heard of them.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malmont-arrival-arc-n1-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: malmont-arrival-arc-n1-3
+    kind: ambient
+    prompt: The four take in their new surroundings, far from the ash and manor they
+      left behind.
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

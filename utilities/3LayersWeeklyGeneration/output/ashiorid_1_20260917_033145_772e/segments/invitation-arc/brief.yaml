@@ -1,0 +1,21 @@
+segment_id: invitation-arc
+order: 0
+loop: 0
+hours: 1
+synopsis: 'Ten thousand years to the day since the Event, four strangers each receive
+  the same mysterious card — an invitation to a party that never was. The card bears
+  no name, no address, only a single symbol: a moonwell cracked open.'
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: invitation-arc
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+needs_rebrief: true

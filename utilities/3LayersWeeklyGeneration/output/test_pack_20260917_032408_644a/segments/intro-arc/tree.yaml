@@ -1,0 +1,15 @@
+intro-arc:
+  node_id: intro-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A short description of the segment's events.
+  summary: A short description of the segment's events.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

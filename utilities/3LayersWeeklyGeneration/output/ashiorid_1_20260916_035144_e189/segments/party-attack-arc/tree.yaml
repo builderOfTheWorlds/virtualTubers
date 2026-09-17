@@ -1,0 +1,51 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party is attacked by intruders.
+  summary: The party is attacked by intruders.
+  continuity_in: The four strangers learn of the coming party attack.
+  continuity_out: The manor begins to burn.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - party-attack-arc-n0
+  - party-attack-arc-n1
+  slots: null
+party-attack-arc-n0:
+  node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  order: 0
+  depth: 1
+  title: Intruders crash the party
+  summary: Masked figures burst into the manor, brandishing weapons and torches. The
+    partygoers scream and scatter as the attackers begin setting fires.
+  continuity_in: The four strangers learn of the coming party attack.
+  continuity_out: Chaos erupts as the manor begins to burn and partygoers flee.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+party-attack-arc-n1:
+  node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  order: 1
+  depth: 1
+  title: Desperate escape
+  summary: The four adventurers fight their way through the burning manor, protecting
+    fleeing guests and battling the mysterious assailants. They help as many as they
+    can escape the inferno.
+  continuity_in: Chaos erupts as the manor begins to burn and partygoers flee.
+  continuity_out: The manor is fully ablaze, the four battered but alive outside the
+    wreckage.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

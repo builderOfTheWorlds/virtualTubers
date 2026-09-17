@@ -1,0 +1,38 @@
+segment_id: malvakar-riddle-arc-loop2
+order: 13
+loop: 2
+hours: 6
+synopsis: The party solves the riddle of the Malvakar monument and gains the next
+  map fragment. Sodacan Bob reveals his knowledge of runes and offers to help decipher
+  the map.
+continuity_in: The party sets out from Malmont to find the next dungeon.
+continuity_out: The party emerges from the Malvakar dungeon with the next map piece.
+carry_in:
+  Alcinoe-wounded: true
+carry_out:
+  Alcinoe-wounded: true
+  moonwell-tainted: true
+slots: []
+nodes:
+- node_id: malvakar-riddle-arc-loop2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malvakar-riddle-arc-loop2-n0
+  parent_id: malvakar-riddle-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: malvakar-riddle-arc-loop2-n1
+  parent_id: malvakar-riddle-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

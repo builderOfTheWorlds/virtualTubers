@@ -1,0 +1,76 @@
+amulet-map-arc:
+  node_id: amulet-map-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Jasper and Juniper's map has one mark on it. Everything else has to be earned.
+  summary: Jasper and Juniper's map has one mark on it. Everything else has to be
+    earned.
+  continuity_in: The four arrive in Malmont.
+  continuity_out: The map begins to fill in.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-n0
+  - amulet-map-arc-n1
+  slots: null
+amulet-map-arc-n0:
+  node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  order: 0
+  depth: 1
+  title: The Map and the Mystery
+  summary: Jasper and Juniper show the others the map with its single mark, hinting
+    at the adventures to come. The group discusses their next steps.
+  continuity_in: The four arrive in Malmont, eager to begin their quest.
+  continuity_out: The map begins to fill in with new locations as they set out from
+    Malmont.
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n0-1
+    kind: ambient
+    prompt: Jasper and Juniper show the others the map with its single mark, hinting
+      at the adventures to come. The group discusses their next steps.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-2
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+amulet-map-arc-n1:
+  node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  order: 1
+  depth: 1
+  title: Leaving Malmont
+  summary: The party sets out from Malmont, following the map's first mark. The landscape
+    shifts from the familiar to the strange as they journey onward.
+  continuity_in: The map begins to fill in with new locations as they set out from
+    Malmont.
+  continuity_out: The group encounters their first challenge on the road.
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

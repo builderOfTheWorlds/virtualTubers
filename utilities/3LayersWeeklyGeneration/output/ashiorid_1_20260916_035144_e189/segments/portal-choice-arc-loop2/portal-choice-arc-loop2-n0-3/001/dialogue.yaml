@@ -1,0 +1,35 @@
+id: portal-choice-arc-loop2-n0-3
+take: 1
+beats:
+- kind: narration
+  text: 'Here is the response:'
+  speaker: gm
+- kind: narration
+  text: 'Ashiorid: The decision weighs heavily on your minds, but it''s essential
+    that you understand the stakes - whatever path you choose, the fate of magic in
+    this world will be forever altered.'
+  speaker: gm
+- kind: narration
+  text: 'Chadwick: I still have trouble reconciling the oath with the events of the
+    past few days, Ashiorid. If I''m bound to protect the world, does that mean I
+    must preserve magic at all costs?'
+  speaker: gm
+- kind: dialogue
+  text: (pausing, eyes downcast) I...I think I understand why the Begene Sisters'
+    Program was created. But what about me, Leena? What am I supposed to do if magic
+    is truly lost?
+  speaker: Leena
+- kind: dialogue
+  text: I think we're forgetting the elephant in the room - the Bahadur. What if their
+    plan is to restore their own world, regardless of the cost to Ashiorid?
+  speaker: Vigil
+- kind: narration
+  text: 'Sodacan Bob: (scratching his chin) I''ve been thinking about this a lot,
+    and I''m not convinced that the Bahadur''s motivations are pure. What if their
+    ''harvesting'' magic is just a euphemism for something more sinister?'
+  speaker: gm
+- kind: narration
+  text: (Next line will depend on the direction of the conversation)
+  speaker: gm
+model: light
+generated_at: '2026-09-16T16:20:03.123428+00:00'

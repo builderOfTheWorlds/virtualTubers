@@ -1,0 +1,62 @@
+malvakar-riddle-arc-loop3:
+  node_id: malvakar-riddle-arc-loop3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The party must solve the riddle of the Malvakar monument to obtain the next
+    map '
+  summary: The party must solve the riddle of the Malvakar monument to obtain the
+    next map fragment, while also dealing with the potential consequences of their
+    actions in Malmont.
+  continuity_in: The party has made contact with potential allies in Malmont, but
+    the town is still unfamiliar and potentially dangerous.
+  continuity_out: The party has successfully solved the riddle and obtained the next
+    map fragment, but their actions have drawn unwanted attention.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-loop3-n0
+  - malvakar-riddle-arc-loop3-n1
+  slots: null
+malvakar-riddle-arc-loop3-n0:
+  node_id: malvakar-riddle-arc-loop3-n0
+  parent_id: malvakar-riddle-arc-loop3
+  order: 0
+  depth: 1
+  title: Deciphering the Monument
+  summary: The party examines the Malvakar monument and attempts to decipher its cryptic
+    riddle, while being cautious of drawing too much attention in the unfamiliar town
+    of Malmont.
+  continuity_in: The party arrives at the Malvakar monument, a strange and foreboding
+    structure, still unsure of their surroundings and potential allies in Malmont.
+  continuity_out: After intense examination and problem-solving, the party believes
+    they have deciphered the riddle and know what they must do to obtain the next
+    map fragment.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malvakar-riddle-arc-loop3-n1:
+  node_id: malvakar-riddle-arc-loop3-n1
+  parent_id: malvakar-riddle-arc-loop3
+  order: 1
+  depth: 1
+  title: Confrontation at the Monument
+  summary: As the party attempts to complete the conditions of the riddle, they are
+    confronted by hostile forces who have taken notice of their activities. The party
+    must fight or negotiate their way out of a dangerous situation.
+  continuity_in: Believing they have the solution, the party begins enacting the conditions
+    to obtain the map fragment, but are interrupted by hostile forces.
+  continuity_out: Through combat or diplomacy, the party has overcome the immediate
+    threat and secured the map fragment, but their actions have certainly drawn further
+    attention and complication.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

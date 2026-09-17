@@ -1,0 +1,55 @@
+malvakar-riddle-arc-loop2:
+  node_id: malvakar-riddle-arc-loop2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party solves the riddle of the Malvakar monument and gains the next map
+    frag
+  summary: The party solves the riddle of the Malvakar monument and gains the next
+    map fragment. Sodacan Bob reveals his knowledge of runes and offers to help decipher
+    the map.
+  continuity_in: The party sets out from Malmont to find the next dungeon.
+  continuity_out: The party emerges from the Malvakar dungeon with the next map piece.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-loop2-n0
+  - malvakar-riddle-arc-loop2-n1
+  slots: null
+malvakar-riddle-arc-loop2-n0:
+  node_id: malvakar-riddle-arc-loop2-n0
+  parent_id: malvakar-riddle-arc-loop2
+  order: 0
+  depth: 1
+  title: Riddle of the Monument
+  summary: The party arrives at the Malvakar monument and must solve a complex riddle
+    to gain access to the dungeon. Sodacan Bob's knowledge of runes proves invaluable
+    in deciphering the cryptic clues.
+  continuity_in: The party sets out from Malmont to find the next dungeon.
+  continuity_out: The party solves the riddle and opens the way into the Malvakar
+    dungeon.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malvakar-riddle-arc-loop2-n1:
+  node_id: malvakar-riddle-arc-loop2-n1
+  parent_id: malvakar-riddle-arc-loop2
+  order: 1
+  depth: 1
+  title: Exploring the Malvakar Dungeon
+  summary: Inside the dungeon, the party faces traps, puzzles, and monsters as they
+    search for the map fragment. Bob continues to assist with his knowledge of runes
+    and the dungeon's secrets.
+  continuity_in: The party solves the riddle and opens the way into the Malvakar dungeon.
+  continuity_out: The party emerges from the Malvakar dungeon with the next map piece.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

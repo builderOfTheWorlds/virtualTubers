@@ -1,0 +1,86 @@
+letos-manor-arc:
+  node_id: letos-manor-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four explore the manor and discover its secrets.
+  summary: The four explore the manor and discover its secrets.
+  continuity_in: The four strangers enter Leto's manor together.
+  continuity_out: The four strangers learn of the coming party attack.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-n0
+  - letos-manor-arc-n1
+  slots: null
+letos-manor-arc-n0:
+  node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  order: 0
+  depth: 1
+  title: They search the manor's main level
+  summary: The four cautiously explore the main floor of the manor, discovering dusty
+    rooms filled with arcane relics and ancient tomes. As they search, they begin
+    to piece together clues about Leto's mysterious past.
+  continuity_in: The four strangers enter Leto's manor together.
+  continuity_out: The four find a hidden door leading down to a basement level.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-n0-1
+    kind: ambient
+    prompt: The four cautiously explore the main floor of the manor, discovering dusty
+      rooms filled with arcane relics and ancient tomes. As they search, they begin
+      to piece together clues about Leto's mysterious past.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n0-2
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: letos-manor-arc-n0-3
+    kind: ambient
+    prompt: As they continue their search, the four find a hidden door leading down
+      to a basement level. They cautiously open it and peer into the darkness below.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+letos-manor-arc-n1:
+  node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  order: 1
+  depth: 1
+  title: The basement reveals Leto's dark purpose
+  summary: Descending into the manor's basement, the four explorers uncover a chamber
+    filled with unholy symbols and dark ritual paraphernalia. Evidence points to Leto
+    planning to attack the upcoming masquerade ball with a sinister goal.
+  continuity_in: The four find a hidden door leading down to a basement level.
+  continuity_out: The four strangers learn of the coming party attack and must decide
+    what to do.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

@@ -1,0 +1,117 @@
+malmont-arrival-arc-loop3:
+  node_id: malmont-arrival-arc-loop3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives in Malmont, the first real town since the manor burned.
+    They e
+  summary: The party arrives in Malmont, the first real town since the manor burned.
+    They explore the town, discovering its two power centers and the tension between
+    them. They learn more about the town's history and its relationship with magic.
+  continuity_in: The party has learned more about the history of the world and the
+    motivations of the Bahadur.
+  continuity_out: The party has gained information about Malmont and its power dynamics.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-loop3-n0
+  - malmont-arrival-arc-loop3-n1
+  slots: null
+malmont-arrival-arc-loop3-n0:
+  node_id: malmont-arrival-arc-loop3-n0
+  parent_id: malmont-arrival-arc-loop3
+  order: 0
+  depth: 1
+  title: Arrival in Malmont
+  summary: The party arrives in Malmont and gets their first glimpse of the town,
+    noticing the two distinct power centers. They start exploring and gathering initial
+    impressions.
+  continuity_in: The party has learned more about the history of the world and the
+    motivations of the Bahadur.
+  continuity_out: The party has begun exploring Malmont and sensing the town's dynamics.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop3-n0-1
+    kind: ambient
+    prompt: The party arrives in Malmont, the first real town since the manor burned.
+      They explore the town, discovering its two power centers and the tension between
+      them. What do they see and experience as they enter and begin exploring Malmont?
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop3-n0-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+malmont-arrival-arc-loop3-n1:
+  node_id: malmont-arrival-arc-loop3-n1
+  parent_id: malmont-arrival-arc-loop3
+  order: 1
+  depth: 1
+  title: Discovering Malmont's History and Power Struggle
+  summary: As the party continues exploring Malmont, they uncover more details about
+    the town's history, its relationship with magic, and the ongoing tension between
+    the two power centers.
+  continuity_in: The party has begun exploring Malmont and sensing the town's dynamics.
+  continuity_out: The party has gained key information about Malmont's power structure
+    and history.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop3-n1-slot1
+    kind: ambient
+    prompt: As the party continues exploring Malmont, what do they discover about
+      the town's history and its relationship with magic?
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop3-n1-slot2
+    kind: ambient
+    prompt: What additional details do the characters uncover about the two power
+      centers in Malmont and the tension between them?
+    lore:
+    - malmont
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop3-n1-slot3
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: malmont-arrival-arc-loop3-n1-slot4
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick

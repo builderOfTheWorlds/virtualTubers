@@ -1,0 +1,53 @@
+the-vault-arc-loop1:
+  node_id: the-vault-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party discovers a hidden vault beneath the ruins of Leto's manor. Inside,
+    th
+  summary: The party discovers a hidden vault beneath the ruins of Leto's manor. Inside,
+    they find clues about the Begene Sisters' program and the true nature of their
+    quest.
+  continuity_in: The party uncovers the entrance to the vault.
+  continuity_out: The party emerges from the vault with newfound knowledge and purpose.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-loop1-n0
+  - the-vault-arc-loop1-n1
+  slots: null
+the-vault-arc-loop1-n0:
+  node_id: the-vault-arc-loop1-n0
+  parent_id: the-vault-arc-loop1
+  order: 0
+  depth: 1
+  title: Uncovering the Vault
+  summary: The party uncovers the entrance to a hidden vault beneath the ruins of
+    Leto's manor. They discover a mechanism to open the vault doors.
+  continuity_in: The party searches the ruins of Leto's manor for clues.
+  continuity_out: The party opens the vault doors and steps inside.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+the-vault-arc-loop1-n1:
+  node_id: the-vault-arc-loop1-n1
+  parent_id: the-vault-arc-loop1
+  order: 1
+  depth: 1
+  title: Secrets of the Vault
+  summary: Inside the vault, the party finds clues about the Begene Sisters' program
+    and the true nature of their quest. They uncover information that will guide their
+    next steps.
+  continuity_in: The party opens the vault doors and steps inside.
+  continuity_out: The party emerges from the vault with newfound knowledge and purpose.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

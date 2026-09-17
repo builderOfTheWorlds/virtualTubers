@@ -1,0 +1,56 @@
+malmont-arrival-arc-loop2:
+  node_id: malmont-arrival-arc-loop2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The party, now aware of their true nature, must navigate the unfamiliar
+    town of '
+  summary: The party, now aware of their true nature, must navigate the unfamiliar
+    town of Malmont and find allies to help them on their quest.
+  continuity_in: The party emerges from the vault with newfound knowledge and purpose.
+  continuity_out: The party has made contact with potential allies in Malmont, but
+    the town is still unfamiliar and potentially dangerous.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-loop2-n0
+  - malmont-arrival-arc-loop2-n1
+  slots: null
+malmont-arrival-arc-loop2-n0:
+  node_id: malmont-arrival-arc-loop2-n0
+  parent_id: malmont-arrival-arc-loop2
+  order: 0
+  depth: 1
+  title: Emerging into Malmont
+  summary: The party cautiously makes their way out of the vault and into the unfamiliar
+    town of Malmont, taking in their new surroundings and trying to get their bearings.
+  continuity_in: The party emerges from the vault with newfound knowledge and purpose.
+  continuity_out: The party has reached the streets of Malmont and is determining
+    their next move.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+malmont-arrival-arc-loop2-n1:
+  node_id: malmont-arrival-arc-loop2-n1
+  parent_id: malmont-arrival-arc-loop2
+  order: 1
+  depth: 1
+  title: Seeking Allies in Malmont
+  summary: The party explores Malmont, seeking out potential allies who could aid
+    them in their quest, while also trying to avoid any dangers that the unfamiliar
+    town may hold.
+  continuity_in: The party has reached the streets of Malmont and is determining their
+    next move.
+  continuity_out: The party has made contact with potential allies in Malmont, but
+    the town is still unfamiliar and potentially dangerous.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

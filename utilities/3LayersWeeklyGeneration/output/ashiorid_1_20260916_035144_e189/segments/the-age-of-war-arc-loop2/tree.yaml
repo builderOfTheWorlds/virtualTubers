@@ -1,0 +1,122 @@
+the-age-of-war-arc-loop2:
+  node_id: the-age-of-war-arc-loop2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party rests around a campfire after their encounter at the Malvakar.
+    They di
+  summary: The party rests around a campfire after their encounter at the Malvakar.
+    They discuss the history of the Age of War and the impact it had on the world.
+    The conversation leads to questions about the Event and the role the Bahadur played
+    in it.
+  continuity_in: The party has successfully opened the door to the dungeon at the
+    Malvakar monument.
+  continuity_out: The party has learned more about the history of the world and the
+    motivations of the Bahadur.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-age-of-war-arc-loop2-n0
+  - the-age-of-war-arc-loop2-n1
+  slots: null
+the-age-of-war-arc-loop2-n0:
+  node_id: the-age-of-war-arc-loop2-n0
+  parent_id: the-age-of-war-arc-loop2
+  order: 0
+  depth: 1
+  title: Discussing the Age of War
+  summary: The party discusses the history of the Age of War and its impact on the
+    world.
+  continuity_in: The party has successfully opened the door to the dungeon at the
+    Malvakar monument.
+  continuity_out: The party has learned about the Age of War and its consequences.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-loop2-n0-1
+    kind: ambient
+    prompt: The party rests around a campfire after their encounter at the Malvakar.
+      They discuss the history of the Age of War and the impact it had on the world.
+      The conversation leads to questions about the Event and the role the Bahadur
+      played in it.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop2-n0-2
+    kind: ambient
+    prompt: The party discusses the Age of War and how it reshaped the world. They
+      wonder about the motivations behind the Bahadur and their connection to the
+      Event.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop2-n0-3
+    kind: ambient
+    prompt: The conversation shifts to the current state of the world and the lasting
+      impact of the Age of War. The party considers their own role in shaping the
+      future.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop2-n0-4
+    kind: ambient
+    prompt: As the night winds down, the party reflects on what they have learned
+      and the challenges that lie ahead. They wonder about the true nature of the
+      Event and the Bahadur's role in it.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+the-age-of-war-arc-loop2-n1:
+  node_id: the-age-of-war-arc-loop2-n1
+  parent_id: the-age-of-war-arc-loop2
+  order: 1
+  depth: 1
+  title: Questions about the Event
+  summary: The conversation turns to the Event and the role the Bahadur played in
+    it.
+  continuity_in: The party has learned about the Age of War and its consequences.
+  continuity_out: The party has learned more about the history of the world and the
+    motivations of the Bahadur.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

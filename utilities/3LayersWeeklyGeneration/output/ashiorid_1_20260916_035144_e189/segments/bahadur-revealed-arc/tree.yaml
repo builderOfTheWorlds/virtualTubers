@@ -1,0 +1,73 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The tear does not close. It answers back.
+  summary: The tear does not close. It answers back.
+  continuity_in: The map begins to fill in.
+  continuity_out: The Bahadur reveal themselves.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The tear remains open
+  summary: Despite the map filling in, the tear in reality does not close or heal.
+    It remains a disturbing anomaly.
+  continuity_in: The map begins to fill in, providing a sense of progress and completion.
+  continuity_out: The tear's continued presence hints at deeper mysteries and dangers
+    yet to be revealed.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n0-1
+    kind: ambient
+    prompt: The tear in reality remains, an unsettling anomaly as the map fills in.
+      What does this mean for the party and the world?
+    lore:
+    - the-event
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-2
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: The tear responds
+  summary: The tear actively answers back, demonstrating awareness and agency. This
+    shocking development raises profound questions.
+  continuity_in: The tear remains open despite the map filling in, defying expectations.
+  continuity_out: The Bahadur's reveal is now foreshadowed by the tear's unanticipated
+    response, hinting they may be connected.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

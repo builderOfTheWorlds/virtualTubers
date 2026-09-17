@@ -1,0 +1,54 @@
+portal-choice-arc:
+  node_id: portal-choice-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The tear in the air is wide enough now that the four of you have to decide,
+    and '
+  summary: The tear in the air is wide enough now that the four of you have to decide,
+    and the deciding cannot wait.
+  continuity_in: The four encounter the dying wizard.
+  continuity_out: The four make their choice at the portal.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-choice-arc-n0
+  - portal-choice-arc-n1
+  slots: null
+portal-choice-arc-n0:
+  node_id: portal-choice-arc-n0
+  parent_id: portal-choice-arc
+  order: 0
+  depth: 1
+  title: The Four Face a Momentous Choice
+  summary: The tear in the air has grown wide enough for the group to enter. But they
+    must choose - stay in their world, or step through to the unknown. The weight
+    of the moment hangs heavy as they consider the fates of countless lives in the
+    balance.
+  continuity_in: The four encounter the dying wizard, who reveals the portal's power.
+  continuity_out: The group discusses and debates what they must do.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+portal-choice-arc-n1:
+  node_id: portal-choice-arc-n1
+  parent_id: portal-choice-arc
+  order: 1
+  depth: 1
+  title: A Leap into Destiny
+  summary: Resolve hardens in their hearts. Arguments are made and dismissed. In the
+    end, they know what they must do. Together they step forward into the tear, leaving
+    their world behind, not knowing if they will ever return.
+  continuity_in: The group discusses and debates what they must do.
+  continuity_out: The four make their choice at the portal.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

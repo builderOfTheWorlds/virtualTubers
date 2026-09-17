@@ -1,0 +1,60 @@
+segment_id: invitation-arc
+order: 0
+loop: 0
+hours: 1
+synopsis: Ten thousand years to the day since the Event, four strangers each receive
+  the same mysterious card — an invitation to a party that never was, but that will
+  be, and that has already happened.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-1
+  kind: ambient
+  prompt: The mysterious card appears in each stranger's hand at the exact same moment
+    — ten thousand years to the day since the Event.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-2
+  kind: ambient
+  prompt: Each card bears identical symbols — a moonwell, a bahadur's eye, and an
+    amulet of wonder.
+  lore:
+  - moonwells
+  - the-bahadur
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-3
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: invitation-arc
+nodes:
+- node_id: invitation-arc
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

@@ -1,0 +1,56 @@
+amulet-map-arc-loop1:
+  node_id: amulet-map-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party returns to Malmont to rest and resupply. They study the completed
+    map,
+  summary: The party returns to Malmont to rest and resupply. They study the completed
+    map, trying to decipher the final location of the Amulet of Wonder.
+  continuity_in: The party arrives in Malmont, seeking answers.
+  continuity_out: The party sets out from Malmont, following the map to the amulet's
+    resting place.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-loop1-n0
+  - amulet-map-arc-loop1-n1
+  slots: null
+amulet-map-arc-loop1-n0:
+  node_id: amulet-map-arc-loop1-n0
+  parent_id: amulet-map-arc-loop1
+  order: 0
+  depth: 1
+  title: Rest and Resupply in Malmont
+  summary: The party arrives in Malmont and takes time to rest, recover, and resupply
+    for their next journey. They visit the market, purchase provisions, and share
+    stories with the locals at the tavern.
+  continuity_in: The party arrives in Malmont, seeking answers.
+  continuity_out: The party meets with the town's sage to study the completed map.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+amulet-map-arc-loop1-n1:
+  node_id: amulet-map-arc-loop1-n1
+  parent_id: amulet-map-arc-loop1
+  order: 1
+  depth: 1
+  title: Deciphering the Map's Final Clue
+  summary: The party consults with Malmont's sage, an expert in ancient lore. Together
+    they study the completed map, deciphering cryptic clues that point to the final
+    resting place of the Amulet of Wonder. The sage shares his knowledge of the legend
+    and offers insights.
+  continuity_in: The party meets with the town's sage to study the completed map.
+  continuity_out: The party sets out from Malmont, following the map to the amulet's
+    resting place.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

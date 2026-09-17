@@ -1,0 +1,53 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers receive the invitation and gather at Leto's manor.
+  summary: The four strangers receive the invitation and gather at Leto's manor.
+  continuity_in: ''
+  continuity_out: The four strangers meet and enter Leto's manor together.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: Receiving the Invitations
+  summary: The four strangers each receive a mysterious invitation from Leto, compelling
+    them to gather at his manor.
+  continuity_in: The four strangers are living their separate lives, unaware of each
+    other and the impending gathering.
+  continuity_out: The four strangers have all received Leto's invitation and are preparing
+    to journey to his manor.
+  target_words: 350
+  target_slots: 3
+  kind: null
+  forced: false
+  children: []
+  slots: null
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: Arriving at Leto's Manor
+  summary: The four strangers make their way to Leto's manor, arriving one by one
+    at the grand estate.
+  continuity_in: The four strangers are en route to Leto's manor, traveling from various
+    locations.
+  continuity_out: The four strangers have arrived at Leto's manor and are preparing
+    to meet each other.
+  target_words: 350
+  target_slots: 3
+  kind: null
+  forced: false
+  children: []
+  slots: null

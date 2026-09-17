@@ -1,0 +1,64 @@
+segment_id: portal-choice-arc-loop1
+order: 14
+loop: 1
+hours: 6
+synopsis: The party debates what to do about the portal. They decide to close it,
+  but not before a final confrontation with the Bahadur.
+continuity_in: The party confronts the Bahadur at the portal.
+continuity_out: The portal is sealed, but the Bahadur retreat, vowing to return.
+carry_in:
+  Alcinoe-wounded: true
+  moonwell-tainted: true
+carry_out:
+  Alcinoe-wounded: true
+  moonwell-tainted: false
+slots:
+- slot_id: portal-choice-arc-loop1-n0-1
+  kind: ambient
+  prompt: The party debates what to do about the portal. They decide to close it,
+    but not before a final confrontation with the Bahadur.
+  lore:
+  - the-bahadur
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n0
+- slot_id: portal-choice-arc-loop1-n0-2
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: portal-choice-arc-loop1-n0
+nodes:
+- node_id: portal-choice-arc-loop1
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: portal-choice-arc-loop1-n0
+  parent_id: portal-choice-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: portal-choice-arc-loop1-n1
+  parent_id: portal-choice-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+needs_rebrief: true

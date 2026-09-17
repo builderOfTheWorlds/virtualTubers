@@ -1,0 +1,42 @@
+id: invitation-arc-2
+take: 1
+beats:
+- kind: dialogue
+  text: The sun is setting over the desert horizon, casting a warm orange glow over
+    the sandstone formations.
+  speaker: gm
+- kind: dialogue
+  text: I'm looking for a moonwell, I've heard they can be found near old settlements.
+  speaker: chadwick
+- kind: dialogue
+  text: What's a Bahadur, someone mentioned it in the tavern but I didn't catch the
+    conversation.
+  speaker: Leena
+- kind: dialogue
+  text: I've seen the Bahadur's people, they're like nothing I've ever seen before
+    - they seem so...still.
+  speaker: Vigil
+- kind: dialogue
+  text: I've got a map, I think I can get us to the first monument, but we're going
+    to have to be careful.
+  speaker: sodacan_bob
+- kind: dialogue
+  text: As you approach the monument, you notice that the air grows thick with an
+    otherworldly energy, and the symbol on the pedestal begins to glow.
+  speaker: gm
+- kind: dialogue
+  text: I've got an idea, let's try to decipher the language on the pedestal.
+  speaker: chadwick
+- kind: dialogue
+  text: Wait, what language? I thought it was just some ancient script.
+  speaker: Leena
+- kind: dialogue
+  text: I think it's more than that, Leena - I've seen something like this before,
+    in an old book.
+  speaker: Vigil
+- kind: dialogue
+  text: Guys, I think I'm picking up something - a strange pulse, it's coming from
+    inside
+  speaker: sodacan_bob
+model: light
+generated_at: '2026-09-17T03:49:09.634993+00:00'

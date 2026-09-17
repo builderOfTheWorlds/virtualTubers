@@ -1,0 +1,87 @@
+malvakar-riddle-arc:
+  node_id: malvakar-riddle-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The northern monument stands alone on a plain of black glass, and the riddle
+    is '
+  summary: The northern monument stands alone on a plain of black glass, and the riddle
+    is already answering itself if you know where to look.
+  continuity_in: The Bahadur reveal themselves.
+  continuity_out: The riddle is solved.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-n0
+  - malvakar-riddle-arc-n1
+  slots: null
+malvakar-riddle-arc-n0:
+  node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  order: 0
+  depth: 1
+  title: The Northern Monument
+  summary: The adventurers approach the imposing northern monument, which looms alone
+    on a vast plain of glossy black glass.
+  continuity_in: The Bahadur reveal themselves.
+  continuity_out: The adventurers deduce the first part of the riddle from the monument's
+    inscriptions and architecture.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n0-1
+    kind: ambient
+    prompt: The adventurers approach the imposing northern monument, which looms alone
+      on a vast plain of glossy black glass. The Bahadur have revealed themselves.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n0-2
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: malvakar-riddle-arc-n0-3
+    kind: ambient
+    prompt: The adventurers examine the intricate inscriptions and architecture of
+      the northern monument, searching for clues to solve the riddle. The first part
+      of the riddle begins to reveal itself.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+malvakar-riddle-arc-n1:
+  node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  order: 1
+  depth: 1
+  title: Solving the Riddle
+  summary: As they study the monument, the adventurers realize the riddle is answering
+    itself if they know where to look, and they piece together the solution.
+  continuity_in: The adventurers deduce the first part of the riddle from the monument's
+    inscriptions and architecture.
+  continuity_out: The riddle is solved.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

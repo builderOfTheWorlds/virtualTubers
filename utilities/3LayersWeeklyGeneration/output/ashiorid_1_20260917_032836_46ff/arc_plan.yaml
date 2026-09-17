@@ -1,0 +1,140 @@
+segments:
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has left Leto's manor and is heading south.
+  continuity_out: The party continues south, pondering their next move.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-6
+  loop: 0
+  order: 6
+  spine_scenes:
+  - amulet-map
+  synopsis: The party discusses the amulet map and the potential dangers ahead.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is approaching Malmont, still discussing their plans.
+  continuity_out: The party has learned some valuable information and is preparing
+    to leave Malmont.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-7
+  loop: 0
+  order: 7
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and begins to gather information.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has left Malmont and is heading towards the Malvakar.
+  continuity_out: The party has solved the riddle and gained access to the next fragment.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-8
+  loop: 0
+  order: 8
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party encounters the Malvakar and must solve its riddle.
+- ambient_focus: Vigil-counts
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has obtained the next map fragment and is discussing their
+    findings.
+  continuity_out: The party is disturbed by the revelations about the Bahadur and
+    their plans.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-9
+  loop: 0
+  order: 9
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party learns more about the Bahadur and their involvement in the amulet's
+    history.
+- ambient_focus: Leena-almost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is approaching the portal, unaware of the encounter awaiting
+    them.
+  continuity_out: The party is left with important decisions to make regarding the
+    portal and the amulet.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-10
+  loop: 0
+  order: 10
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard at a portal, who reveals crucial information.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is discussing the dying wizard's revelations and their
+    potential actions.
+  continuity_out: The party has made a decision regarding the portal, which will shape
+    the next part of their journey.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: amulet-map-arc-11
+  loop: 0
+  order: 11
+  spine_scenes:
+  - portal-choice
+  synopsis: The party must decide what to do with the portal and its implications
+    for the amulet.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has made a decision regarding the portal.
+  continuity_out: The party arrives in Malmont, having decided to leave the portal
+    behind.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: portal-choice-arc-12
+  loop: 0
+  order: 12
+  spine_scenes:
+  - portal-choice
+  synopsis: The party discusses their decision regarding the portal as they travel
+    south.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party arrives in Malmont, having decided to leave the portal
+    behind.
+  continuity_out: The party learns more about Malmont and its inhabitants.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: malmont-arrival-arc-13
+  loop: 0
+  order: 13
+  spine_scenes:
+  - malmont-arrival
+  synopsis: The party arrives in Malmont and begins to explore the town.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party learns more about Malmont and its inhabitants.
+  continuity_out: The party has a deeper understanding of the Bahadur and their goals.
+  event_windows: []
+  fork: null
+  hours: 1
+  id: bahadur-revealed-arc-14
+  loop: 0
+  order: 14
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party encounters a group of Bahadur in Malmont, learning more about
+    their presence.

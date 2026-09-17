@@ -1,0 +1,116 @@
+segment_id: malmont-arrival-arc-loop1
+order: 12
+loop: 1
+hours: 6
+synopsis: The party arrives in Malmont under the cover of darkness. They split up
+  to gather information and supplies, learning about the town's power structure and
+  the presence of the Bahadur.
+continuity_in: The party leaves the burnt remains of Leto's manor.
+continuity_out: The party reconvenes in Malmont, comparing notes on what they've discovered.
+carry_in: {}
+carry_out:
+  Alcinoe-wounded: true
+slots:
+- slot_id: malmont-arrival-arc-loop1-n0-1
+  kind: ambient
+  prompt: The party splits up to explore Malmont and gather information. What do they
+    discover about the town's layout, notable locations, and power structure?
+  lore:
+  - malmont
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-n0
+- slot_id: malmont-arrival-arc-loop1-n0-2
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: malmont-arrival-arc-loop1-n0
+- slot_id: malmont-arrival-arc-loop1-n0-3
+  kind: ambient
+  prompt: The party reconvenes in Malmont to compare notes on what they've discovered.
+    What do they discuss and what plans do they make?
+  lore:
+  - the-bahadur
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-n0
+- slot_id: malmont-arrival-arc-loop1-n1-1
+  kind: ambient
+  prompt: The party arrives in Malmont under the cover of darkness. They split up
+    to gather information and supplies.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-n1
+- slot_id: malmont-arrival-arc-loop1-n1-2
+  kind: ambient
+  prompt: Leena and Vigil investigate the Bahadur's presence in Malmont, learning
+    more about their goals and activities in the area.
+  lore:
+  - the-bahadur
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-n1
+- slot_id: malmont-arrival-arc-loop1-n1-3
+  kind: ambient
+  prompt: Chadwick gathers supplies for the journey ahead, interacting with the townspeople
+    of Malmont.
+  lore:
+  - malmont
+  participants:
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-n1
+- slot_id: malmont-arrival-arc-loop1-n1-4
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: malmont-arrival-arc-loop1-n1
+nodes:
+- node_id: malmont-arrival-arc-loop1
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-n0
+  parent_id: malmont-arrival-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: malmont-arrival-arc-loop1-n1
+  parent_id: malmont-arrival-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

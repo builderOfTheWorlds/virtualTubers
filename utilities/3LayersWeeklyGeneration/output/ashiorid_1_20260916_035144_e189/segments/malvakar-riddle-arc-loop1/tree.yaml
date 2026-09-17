@@ -1,0 +1,80 @@
+malvakar-riddle-arc-loop1:
+  node_id: malvakar-riddle-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The riddle's answer leads to another clue, and another, each one a fork.
+  summary: The riddle's answer leads to another clue, and another, each one a fork.
+  continuity_in: The riddle is solved.
+  continuity_out: The forks converge on a single door.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-loop1-n0
+  - malvakar-riddle-arc-loop1-n1
+  slots: null
+malvakar-riddle-arc-loop1-n0:
+  node_id: malvakar-riddle-arc-loop1-n0
+  parent_id: malvakar-riddle-arc-loop1
+  order: 0
+  depth: 1
+  title: The first fork
+  summary: The answer to the riddle leads to a first clue, which is a fork in the
+    path.
+  continuity_in: The riddle is solved.
+  continuity_out: The first fork is reached.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-loop1-n0-1
+    kind: ambient
+    prompt: The riddle's answer leads to another clue, and another, each one a fork.
+    lore:
+    - amulet-of-wonder
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-loop1-n0-2
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+  - slot_id: malvakar-riddle-arc-loop1-n0-3
+    kind: ambient
+    prompt: The forks converge on a single door.
+    lore:
+    - amulet-of-wonder
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
+malvakar-riddle-arc-loop1-n1:
+  node_id: malvakar-riddle-arc-loop1-n1
+  parent_id: malvakar-riddle-arc-loop1
+  order: 1
+  depth: 1
+  title: The second fork
+  summary: Following the first fork leads to another clue and another fork in the
+    path.
+  continuity_in: The first fork is reached.
+  continuity_out: The second fork is reached.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
