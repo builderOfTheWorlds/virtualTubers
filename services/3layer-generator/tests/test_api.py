@@ -751,25 +751,32 @@ def test_editing_an_inactive_config_does_not_touch_the_live_config(client, store
 # GET /packs and GET /profiles — drive the campaign-manager GUI's dropdowns
 # ---------------------------------------------------------------------------
 
-def test_packs_lists_directories_under_pack_root(client, tmp_path):
-    (tmp_path / "packs" / "test_pack").mkdir(parents=True, exist_ok=True)
+def test_packs_lists_store_pack_names(client, store):
+    store.upsert_campaign("ashiorid", "name: ashiorid\nstart_scene: intro\ngm: gm\n")
+    store.upsert_campaign("test_pack", "name: test_pack\nstart_scene: intro\ngm: gm\n")
 
     body = client.get("/packs").json()
 
-    assert sorted(body) == ["ashiorid", "test_pack"]
+    assert body == ["ashiorid", "test_pack"]
 
 
-def test_packs_excludes_hidden_directories(client, tmp_path):
-    (tmp_path / "packs" / ".qwen_staging").mkdir(parents=True, exist_ok=True)
+def test_packs_does_not_leak_disk_entries(client, tmp_path):
+    """Postgres is the only source now (decision 5): a directory under
+    PACK_ROOT with no pack_campaigns row must not appear in /packs. This is
+    the whole point of cutting the endpoint over from a disk scan."""
+    (tmp_path / "packs" / "ghost_on_disk_only").mkdir(parents=True, exist_ok=True)
 
     body = client.get("/packs").json()
 
-    assert ".qwen_staging" not in body
+    assert body == []
+    assert "ghost_on_disk_only" not in body
 
 
-def test_packs_is_empty_list_when_pack_root_missing(client, monkeypatch, tmp_path):
-    monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "does-not-exist")
-    assert client.get("/packs").json() == []
+def test_packs_is_sorted(client, store):
+    seed_minimal_pack(store, "zebra")
+    store.upsert_campaign("alpha", "name: alpha\nstart_scene: intro\ngm: gm\n")
+    store.upsert_campaign("midpack", "name: midpack\nstart_scene: intro\ngm: gm\n")
+    assert client.get("/packs").json() == ["alpha", "midpack", "zebra"]
 
 
 def test_profiles_lists_configured_model_names_per_layer(client):
@@ -784,3 +791,86 @@ def test_profiles_degrades_to_empty_lists_when_config_is_none(client, monkeypatc
     monkeypatch.setattr(api, "CONFIG", None)
     body = client.get("/profiles").json()
     assert body == {"arc": [], "segment": [], "dialogue": []}
+# ---------------------------------------------------------------------------
+# Pack Viewer — the new DB-backed read endpoints (Phase 1, Task 1.3). These
+# exercise the REAL campaign.pack.load_pack (conftest puts app/ on
+# sys.path), the same function a generation job runs, against FakeStore's
+# materialize_pack — so "the browser sees what the pipeline consumes" is
+# asserted in exactly one place per surface.
+# ---------------------------------------------------------------------------
+
+from pack_fixtures import CAMPAIGN_YAML_FIXTURE, CAST_YAML_FIXTURE, seed_minimal_pack  # noqa: E402
+
+
+def test_get_pack_summary_reads_from_the_store(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.get("/packs/alpha")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["name"] == "alpha"
+    assert body["start_scene"] == "intro"
+    assert body["gm_id"] == "gm"
+    assert [s["id"] for s in body["scenes"]] == ["intro"]
+    assert [c["id"] for c in body["cast"]] == ["gm"]
+    assert body["lore_names"] == ["the-incident"]
+
+
+def test_get_pack_summary_for_unknown_pack_is_404(client, store):
+    assert client.get("/packs/nope").status_code == 404
+
+
+def test_get_pack_summary_for_stored_but_unloadable_pack_is_422(client, store):
+    """A pack whose rows do not satisfy load_pack (start_scene missing) is
+    an operator-fixable state, not a server crash: 422 with the reason."""
+    store.upsert_campaign("alpha", "name: alpha\nstart_scene: ghost\ngm: gm\n")
+    store.upsert_cast_member("alpha", "gm", CAST_YAML_FIXTURE)
+    resp = client.get("/packs/alpha")
+    assert resp.status_code == 422
+    assert "ghost" in resp.json()["detail"]
+
+
+def test_get_pack_scene_returns_the_raw_yaml(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.get("/packs/alpha/scenes/intro")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["scene_id"] == "intro"
+    assert "title: The Intro" in body["scene_yaml"]
+
+
+def test_get_pack_scene_404_on_unknown_scene(client, store):
+    seed_minimal_pack(store, "alpha")
+    assert client.get("/packs/alpha/scenes/ghost").status_code == 404
+
+
+def test_get_pack_cast_member_includes_worker_id(client, store):
+    seed_minimal_pack(store, "alpha")
+    store.upsert_cast_member("alpha", "gm", CAST_YAML_FIXTURE, "manager")
+    resp = client.get("/packs/alpha/cast/gm")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["member_id"] == "gm"
+    assert body["worker_id"] == "manager"
+
+
+def test_get_pack_cast_member_null_worker_id_is_the_narration_fallback(client, store):
+    seed_minimal_pack(store, "alpha")
+    body = client.get("/packs/alpha/cast/gm").json()
+    assert body["worker_id"] is None
+
+
+def test_get_pack_cast_member_404(client, store):
+    seed_minimal_pack(store, "alpha")
+    assert client.get("/packs/alpha/cast/ghost").status_code == 404
+
+
+def test_get_pack_lore_returns_raw_text(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.get("/packs/alpha/lore/the-incident")
+    assert resp.status_code == 200
+    assert "short lore note" in resp.json()["lore_text"].lower()
+
+
+def test_get_pack_lore_404(client, store):
+    seed_minimal_pack(store, "alpha")
+    assert client.get("/packs/alpha/lore/ghost").status_code == 404

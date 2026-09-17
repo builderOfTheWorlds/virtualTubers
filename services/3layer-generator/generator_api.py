@@ -25,7 +25,7 @@ import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.responses import JSONResponse
 
 import generation_store
@@ -514,18 +514,155 @@ def preview(body: dict):
 
 @app.get("/packs")
 def list_packs():
-    """Every campaign pack directory available under PACK_ROOT, sorted.
-    Drives the GUI's Pack dropdown so an operator picks from what actually
-    exists on disk instead of typing a name and finding out it's wrong only
-    after a 400 from /jobs. Hidden directories (leading '.') are excluded —
-    stray editor/state dirs under campaigns/ (e.g. .qwen_staging) are not
-    packs."""
-    if not PACK_ROOT.is_dir():
-        return []
-    return sorted(
-        p.name for p in PACK_ROOT.iterdir()
-        if p.is_dir() and not p.name.startswith(".")
-    )
+    """Every pack name, now sourced from the pack_campaigns table (decision 5:
+    Postgres is the source of truth for pack content) instead of scanning
+    PACK_ROOT under this container. Response shape UNCHANGED — a plain sorted
+    list — because the campaign-manager Pack dropdown and two existing tests
+    (and the plan itself, despite one wrong test snippet) all depend on it.
+    Packs appear here once a pack_campaigns row exists for them (see
+    scripts/import_packs_to_postgres.py). No available() gate, matching
+    /configs and /jobs: this container always has Postgres configured
+    (depends_on generator-postgres), and when it is unreachable a 500 is the
+    honest signal — campaign-manager already degrades its dropdown on any
+    non-2xx."""
+    return store.list_pack_names()
+
+
+# ---------------------------------------------------------------------------
+# Pack Viewer / Pack Editor — campaign pack content lives in Postgres now
+# (pack_* tables, 2026-09 unified manager GUI plan). These endpoints are the
+# ONLY way pack content is read or written: no container in this stack ever
+# mounts campaigns/:rw, and campaign-manager reaches this content purely as
+# an HTTP client of these endpoints (it holds no DB credentials of its own).
+#
+# Read endpoints (Phase 1): materialize the pack's rows into a container-local
+# temp dir and hand it to the real campaign.pack.load_pack() — the same
+# function the generation pipeline uses — so the browser sees exactly what a
+# job would consume, nothing approximated.
+#
+# Write endpoints (Phase 2, Task 2.1): validate-before-insert. Every write is
+# run through _validate_candidate_pack — materialize the CURRENT rows, apply
+# the one proposed change, run the real load_pack() against the mutated copy —
+# BEFORE anything reaches Postgres. A bad edit is a 422 and the store is left
+# byte-for-byte untouched.
+# ---------------------------------------------------------------------------
+
+
+@app.get("/packs/{pack_name}")
+def get_pack_summary(pack_name: str):
+    """Full pack summary for the viewer: campaign metadata plus every scene
+    and cast member's headline fields, and the lore-note names. Returns 404
+    for an unknown pack and 422 for a pack whose stored rows do not load —
+    the latter is actionable (it names the exact load_pack error), not a 500.
+
+    Materializes to a container-local temp dir and always cleans it up,
+    success or failure (materialize_pack's own contract).
+    """
+    import shutil
+    from campaign.pack import load_pack, PackError
+
+    try:
+        root = store.materialize_pack(pack_name)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail=f"pack {pack_name!r} not found")
+    try:
+        try:
+            pack = load_pack(root)
+        except PackError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=f"pack {pack_name!r} is stored but does not load: {exc}")
+        return {
+            "name": pack.name,
+            "title": pack.title,
+            "genre": pack.genre,
+            "start_scene": pack.start_scene,
+            "gm_id": pack.gm_id,
+            "player_ids": pack.player_ids,
+            "scenes": [
+                {"id": s.id, "title": s.title, "ambient": s.ambient,
+                 "default_next": s.default_next}
+                for s in sorted(pack.scenes.values(), key=lambda s: s.id)
+            ],
+            "cast": [
+                {"id": c.id, "name": c.name, "role": c.role,
+                 "archetype": c.archetype}
+                for c in sorted(pack.cast.values(), key=lambda c: c.id)
+            ],
+            "lore_names": sorted(pack.lore.keys()),
+        }
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
+
+
+@app.get("/packs/{pack_name}/scenes/{scene_id}")
+def get_pack_scene(pack_name: str, scene_id: str):
+    """One scene: its raw stored YAML (what an edit form pre-fills) plus a
+    404 when the scene does not exist in the pack."""
+    for row in store.list_scenes(pack_name):
+        if row["scene_id"] == scene_id:
+            return {"scene_id": scene_id, "scene_yaml": row["scene_yaml"]}
+    raise HTTPException(status_code=404,
+                        detail=f"scene {scene_id!r} not found in pack {pack_name!r}")
+
+
+@app.get("/packs/{pack_name}/cast/{member_id}")
+def get_pack_cast_member(pack_name: str, member_id: str):
+    """One cast member's raw YAML, with their worker_id (may be null — the
+    'falls through to GM narration' state) exposed so the Pack Editor can
+    show and edit it inline."""
+    for row in store.list_cast(pack_name):
+        if row["member_id"] == member_id:
+            return {"member_id": member_id,
+                    "member_yaml": row["member_yaml"],
+                    "worker_id": row.get("worker_id")}
+    raise HTTPException(status_code=404,
+                        detail=f"cast member {member_id!r} not found in pack {pack_name!r}")
+
+
+@app.get("/packs/{pack_name}/lore/{lore_name}")
+def get_pack_lore(pack_name: str, lore_name: str):
+    """One lore note's raw text."""
+    for row in store.list_lore(pack_name):
+        if row["lore_name"] == lore_name:
+            return {"lore_name": lore_name, "lore_text": row["lore_text"]}
+    raise HTTPException(status_code=404,
+                        detail=f"lore note {lore_name!r} not found in pack {pack_name!r}")
+
+
+def _validate_candidate_pack(pack_name: str, mutate) -> None:
+    """The shared pre-commit gate every pack write endpoint calls through
+    (decision 4: validate BEFORE the write ever reaches Postgres).
+
+    1. Materialize pack_name's CURRENT rows (before this edit) into a
+       container-local temp dir.
+    2. Apply mutate(root) — exactly the one filesystem change this edit
+       represents (write/overwrite one scene file, unlink one, etc.).
+    3. Run the real load_pack() against the MUTATED copy.
+    4. Success: return, and only then does the caller touch Postgres.
+       Failure: 422 with load_pack's own message; the store is left
+       byte-for-byte as it was (nothing was ever written to it).
+
+    Always cleans up the temp dir, success or failure.
+    """
+    import shutil
+    from campaign.pack import load_pack, PackError
+
+    try:
+        root = store.materialize_pack(pack_name)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404,
+                            detail=f"pack {pack_name!r} not found")
+    try:
+        mutate(root)
+        load_pack(root)
+    except PackError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=f"this edit would make pack {pack_name!r} invalid, "
+                   f"nothing was saved: {exc}")
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
 
 
 @app.get("/profiles")
