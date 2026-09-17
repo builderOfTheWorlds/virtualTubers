@@ -31,12 +31,31 @@ pytestmark = pytest.mark.skipif(
 
 @pytest.fixture(autouse=True)
 def clean_tables():
-    """Every test starts from empty pack tables and owns them for its run."""
+    """Every test starts from empty pack tables and owns them for its run.
+
+    SAFETY: these tests TRUNCATE the tables they use, so they must only run
+    against a scratch/empty database — never the production generator DB
+    (generation@127.0.0.1:5455), where the pack tables sit alongside 100+
+    real generation_jobs and TRUNCATE would be destructive. The project .env
+    points the test harness at the empty app DB by default, which is the safe
+    and intended target; if someone repoints it at production by hand, this
+    guard refuses to run the destructive half and tells them to.
+    """
     store.ensure_schema()
     conn = store._connect()
     try:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE pack_scenes, pack_cast, pack_lore, pack_campaigns CASCADE;")
+            cur.execute("SELECT count(*) FROM generation_jobs")
+            job_rows = cur.fetchone()[0]
+        if job_rows > 0:
+            pytest.skip(
+                f"refusing to TRUNCATE against a DB with {job_rows} "
+                "generation_jobs — looks like the PRODUCTION generator DB "
+                "(generation@127.0.0.1:5455). Point POSTGRES_* at a scratch "
+                "DB (the .env app DB is fine) and re-run.")
+        with conn.cursor() as cur:
+            cur.execute(
+                "TRUNCATE pack_scenes, pack_cast, pack_lore, pack_campaigns CASCADE;")
     finally:
         conn.close()
     yield

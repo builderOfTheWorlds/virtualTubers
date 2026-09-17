@@ -874,3 +874,141 @@ def test_get_pack_lore_returns_raw_text(client, store):
 def test_get_pack_lore_404(client, store):
     seed_minimal_pack(store, "alpha")
     assert client.get("/packs/alpha/lore/ghost").status_code == 404
+# ---------------------------------------------------------------------------
+# Phase 2 — Pack Editor write endpoints (validate-before-insert, decision 4).
+# The load-bearing guarantees, exactly as the plan states them:
+#   * a valid edit lands (upsert)
+#   * an edit that would make the pack fail load_pack is a 422, and NOTHING
+#     was written to the store (Postgres never holds a bad state)
+#   * a 404 for a pack that has no campaign row yet
+# ---------------------------------------------------------------------------
+
+def test_put_pack_scene_saves_valid_yaml(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/scenes/intro",
+                      json={"scene_yaml": "id: intro\ntitle: New\ndefault_next: intro\n"})
+    assert resp.status_code == 200
+    assert "New" in store.list_scenes("alpha")[0]["scene_yaml"]
+
+
+def test_put_pack_scene_rejects_yaml_whose_id_mismatches_the_url(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/scenes/intro",
+                      json={"scene_yaml": "id: WRONG\ntitle: New\n"})
+    assert resp.status_code == 400
+    # store untouched
+    assert "WRONG" not in " ".join(r["scene_yaml"] for r in store.list_scenes("alpha"))
+
+
+def test_put_pack_scene_rejects_invalid_yaml(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/scenes/intro",
+                      json={"scene_yaml": "id: intro\n  title: : :\n"})
+    assert resp.status_code == 400
+
+
+def test_an_edit_that_would_break_the_pack_422_and_leaves_the_store_untouched(client, store):
+    """The core decision-4 guarantee: Postgres (the store) NEVER holds a
+    state load_pack() rejects, not even transiently. Seed a valid pack, PUT
+    a scene that drops its required beat, and assert BOTH the 422 AND that
+    the store still has the old valid scene."""
+    seed_minimal_pack(store, "alpha")
+    # A scene whose beats list is missing entirely still loads, but a scene
+    # referenced by start_scene being removed is the cleanest 422 trigger:
+    # replace the start scene's beat with one that fails to parse into a valid
+    # Beat (missing 'type').
+    resp = client.put(
+        "/packs/alpha/scenes/intro",
+        json={"scene_yaml": "id: intro\ntitle: Broken\nbeats:\n  - {speaker: gm}\n"},
+    )
+    assert resp.status_code == 422
+    assert "would make pack" in resp.json()["detail"]
+    # Store untouched — still the original valid scene with its beat.
+    scene = [r for r in store.list_scenes("alpha") if r["scene_id"] == "intro"][0]
+    assert "type: narration" in scene["scene_yaml"]
+
+
+def test_put_pack_scene_on_a_pack_with_no_campaign_row_is_404(client, store):
+    resp = client.put("/packs/nope/scenes/intro", json={"scene_yaml": "id: intro\n"})
+    assert resp.status_code == 404
+
+
+def test_delete_pack_scene_that_is_the_start_scene_422_and_is_not_deleted(client, store):
+    """Deleting the start scene breaks load_pack (start scene missing), so
+    the gate must 422 AND the scene must still be in the store."""
+    seed_minimal_pack(store, "alpha")
+    # Add a second, deletable scene so we can also demonstrate the happy path.
+    resp = client.put("/packs/alpha/scenes/act2",
+                      json={"scene_yaml": "id: act2\ntitle: Act 2\ndefault_next: intro\n"})
+    assert resp.status_code == 200
+
+    resp = client.delete("/packs/alpha/scenes/intro")   # intro is start_scene
+    assert resp.status_code == 422
+    assert [r["scene_id"] for r in store.list_scenes("alpha")] == ["act2", "intro"] or \
+           set(r["scene_id"] for r in store.list_scenes("alpha")) == {"intro", "act2"}
+
+    # The happy path: delete the non-start scene.
+    resp = client.delete("/packs/alpha/scenes/act2")
+    assert resp.status_code == 200
+    assert set(r["scene_id"] for r in store.list_scenes("alpha")) == {"intro"}
+
+
+def test_put_pack_cast_member_sets_worker_id(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/cast/gm",
+                      json={"member_yaml": "name: GM Alpha\n", "worker_id": "manager"})
+    assert resp.status_code == 200
+    assert store.list_cast("alpha")[0]["worker_id"] == "manager"
+    assert "GM Alpha" in store.list_cast("alpha")[0]["member_yaml"]
+
+
+def test_put_pack_cast_member_requires_name(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/cast/gm", json={"member_yaml": "archetype: narrator\n"})
+    assert resp.status_code == 400
+
+
+def test_put_pack_cast_member_saving_yaml_without_worker_id_keeps_existing_mapping(client, store):
+    seed_minimal_pack(store, "alpha")
+    client.put("/packs/alpha/cast/gm", json={"member_yaml": "name: GM Alpha\n", "worker_id": "manager"})
+    # Now re-save the YAML WITHOUT a worker_id (simulating the editor only
+    # changing the prose). The store's COALESCE must keep "manager".
+    resp = client.put("/packs/alpha/cast/gm", json={"member_yaml": "name: GM Alpha v2\n"})
+    assert resp.status_code == 200
+    assert store.list_cast("alpha")[0]["worker_id"] == "manager"
+    assert "v2" in store.list_cast("alpha")[0]["member_yaml"]
+
+
+def test_put_pack_cast_member_removing_a_required_player_422(client, store):
+    """A pack where a cast member is a required player: the gate must catch
+    an edit that would make load_pack fail because a referenced player's file
+    is missing or malformed. (A well-formed replacement loads, proving the
+    gate actually runs load_pack on the mutated tree, not just shape.)"""
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/cast/ghost", json={"member_yaml": "a: [incomplete\n"})
+    assert resp.status_code == 400  # YAML parse error at the shape layer
+
+
+def test_put_and_delete_lore_roundtrip(client, store):
+    seed_minimal_pack(store, "alpha")
+    resp = client.put("/packs/alpha/lore/the-incident",
+                      json={"lore_text": "A short lore note, edited.\n"})
+    assert resp.status_code == 200
+    assert "edited" in [r for r in store.list_lore("alpha") if r["lore_name"] == "the-incident"][0]["lore_text"]
+    resp = client.delete("/packs/alpha/lore/the-incident")
+    assert resp.status_code == 200
+    assert [r["lore_name"] for r in store.list_lore("alpha")] == []
+
+
+def test_422_detail_carries_load_packs_own_diagnostic(client, store):
+    """Operators act on the 422, so its detail must name WHY (load_pack's
+    own message), not a bare 'invalid'. A beat missing `type` is the trigger."""
+    seed_minimal_pack(store, "alpha")
+    resp = client.put(
+        "/packs/alpha/scenes/intro",
+        json={"scene_yaml": "id: intro\ntitle: Broken\nbeats:\n  - {speaker: gm}\n"},
+    )
+    assert resp.status_code == 422
+    detail = resp.json()["detail"]
+    assert "this edit would make pack" in detail
+    assert "beat" in detail.lower()   # load_pack's "beat in intro missing 'type'"

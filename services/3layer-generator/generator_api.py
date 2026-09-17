@@ -572,6 +572,12 @@ def get_pack_summary(pack_name: str):
             raise HTTPException(
                 status_code=422,
                 detail=f"pack {pack_name!r} is stored but does not load: {exc}")
+        # worker_id is a store concern, not a load_pack field — join it onto
+        # the cast projection so the viewer's cast table can show/edit it.
+        worker_by_member = {
+            row["member_id"]: row.get("worker_id")
+            for row in store.list_cast(pack_name)
+        }
         return {
             "name": pack.name,
             "title": pack.title,
@@ -586,7 +592,8 @@ def get_pack_summary(pack_name: str):
             ],
             "cast": [
                 {"id": c.id, "name": c.name, "role": c.role,
-                 "archetype": c.archetype}
+                 "archetype": c.archetype,
+                 "worker_id": worker_by_member.get(c.id)}
                 for c in sorted(pack.cast.values(), key=lambda c: c.id)
             ],
             "lore_names": sorted(pack.lore.keys()),
@@ -663,6 +670,141 @@ def _validate_candidate_pack(pack_name: str, mutate) -> None:
                    f"nothing was saved: {exc}")
     finally:
         shutil.rmtree(root, ignore_errors=True)
+
+
+@app.put("/packs/{pack_name}/scenes/{scene_id}")
+def put_pack_scene(pack_name: str, scene_id: str, body: dict = Body(...)):
+    """Create or replace one scene. Validation is two-layered (both
+    load_pack-level, since a scene's YAML is the unit load_pack parses):
+
+      1. `scene_yaml` must be valid YAML and its `id:` must equal
+         `scene_id` — a mismatch would create/replace a DIFFERENT scene than
+         the route claims, which is a caller bug, so it's a 400.
+      2. The whole pack, WITH this scene mutated in place, must still pass
+         the real load_pack() (decision 4's gate, _validate_candidate_pack)
+         — this is what rejects e.g. dropping a required beat or breaking a
+         branch, returning a 422 with load_pack's own diagnostic instead of
+         letting a broken pack land in Postgres.
+
+    Only after both pass does the row ever reach the store.
+    """
+    import yaml
+    scene_yaml = body.get("scene_yaml")
+    if not isinstance(scene_yaml, str) or not scene_yaml.strip():
+        raise HTTPException(status_code=400, detail="scene_yaml is required")
+    try:
+        parsed = yaml.safe_load(scene_yaml)
+    except yaml.YAMLError as exc:
+        raise HTTPException(status_code=400, detail=f"scene_yaml is not valid YAML: {exc}")
+    if not isinstance(parsed, dict) or parsed.get("id") != scene_id:
+        raise HTTPException(status_code=400,
+                            detail=f"scene_yaml must have id: {scene_id!r} to match the URL")
+
+    def mutate(root):
+        (root / "scenes" / f"{scene_id}.yaml").write_text(scene_yaml, encoding="utf-8")
+
+    _validate_candidate_pack(pack_name, mutate)   # 422 before ANY DB write
+    store.upsert_scene(pack_name, scene_id, scene_yaml)   # only reached if valid
+    return {"status": "saved", "scene_id": scene_id}
+
+
+@app.delete("/packs/{pack_name}/scenes/{scene_id}")
+def delete_pack_scene(pack_name: str, scene_id: str):
+    """Delete one scene. The decision-4 gate (a real load_pack over the
+    pack-with-that-scene-removed) is what rejects a delete that would break
+    the pack — most commonly the start scene, or any scene another scene's
+    default_next/branches point at — with a 422, so Postgres never holds a
+    pack load_pack would reject."""
+    def mutate(root):
+        path = root / "scenes" / f"{scene_id}.yaml"
+        if not path.exists():
+            raise HTTPException(status_code=404,
+                                detail=f"scene {scene_id!r} not found in pack {pack_name!r}")
+        path.unlink()
+
+    _validate_candidate_pack(pack_name, mutate)   # 404/422 before ANY DB write
+    store.delete_scene(pack_name, scene_id)       # only reached if the pack still loads
+    return {"status": "deleted", "scene_id": scene_id}
+
+
+@app.put("/packs/{pack_name}/cast/{member_id}")
+def put_pack_cast_member(pack_name: str, member_id: str, body: dict = Body(...)):
+    """Create or replace one cast member. `member_yaml` must be valid YAML
+    with a `name:` (load_pack's minimum for a cast file). `worker_id` is
+    optional and may be null — a null mapping is the 'falls through to GM
+    narration' state, not an error. generation_store.upsert_cast_member
+    keeps any previously-stored worker_id unless a new one is explicitly
+    passed (COALESCE in the upsert), so saving just the YAML never wipes an
+    operator's mapping."""
+    import yaml
+    member_yaml = body.get("member_yaml")
+    if not isinstance(member_yaml, str) or not member_yaml.strip():
+        raise HTTPException(status_code=400, detail="member_yaml is required")
+    try:
+        parsed = yaml.safe_load(member_yaml)
+    except yaml.YAMLError as exc:
+        raise HTTPException(status_code=400, detail=f"member_yaml is not valid YAML: {exc}")
+    if not isinstance(parsed, dict) or not parsed.get("name"):
+        raise HTTPException(status_code=400, detail="member_yaml must have a name: field")
+
+    worker_id = body.get("worker_id")
+    if worker_id is not None and not isinstance(worker_id, str):
+        raise HTTPException(status_code=400, detail="worker_id must be a string or null")
+
+    def mutate(root):
+        (root / "cast" / f"{member_id}.yaml").write_text(member_yaml, encoding="utf-8")
+
+    _validate_candidate_pack(pack_name, mutate)   # 404/422 before ANY DB write
+    store.upsert_cast_member(pack_name, member_id, member_yaml,
+                             worker_id if isinstance(worker_id, str) and worker_id else None)
+    return {"status": "saved", "member_id": member_id, "worker_id": worker_id or None}
+
+
+@app.delete("/packs/{pack_name}/cast/{member_id}")
+def delete_pack_cast_member(pack_name: str, member_id: str):
+    def mutate(root):
+        path = root / "cast" / f"{member_id}.yaml"
+        if not path.exists():
+            raise HTTPException(status_code=404,
+                                detail=f"cast member {member_id!r} not found in pack {pack_name!r}")
+        path.unlink()
+
+    _validate_candidate_pack(pack_name, mutate)
+    store.delete_cast_member(pack_name, member_id)
+    return {"status": "deleted", "member_id": member_id}
+
+
+@app.put("/packs/{pack_name}/lore/{lore_name}")
+def put_pack_lore(pack_name: str, lore_name: str, body: dict = Body(...)):
+    """Create or replace one lore note (arbitrary text — load_pack stores it
+    verbatim, so the decision-4 gate here mostly guards against an empty
+    pack's first-write path rather than shape validation)."""
+    lore_text = body.get("lore_text")
+    if not isinstance(lore_text, str):
+        raise HTTPException(status_code=400, detail="lore_text is required")
+
+    def mutate(root):
+        lore_dir = root / "lore"
+        lore_dir.mkdir(exist_ok=True)
+        (lore_dir / f"{lore_name}.md").write_text(lore_text, encoding="utf-8")
+
+    _validate_candidate_pack(pack_name, mutate)
+    store.upsert_lore(pack_name, lore_name, lore_text)
+    return {"status": "saved", "lore_name": lore_name}
+
+
+@app.delete("/packs/{pack_name}/lore/{lore_name}")
+def delete_pack_lore(pack_name: str, lore_name: str):
+    def mutate(root):
+        path = root / "lore" / f"{lore_name}.md"
+        if not path.exists():
+            raise HTTPException(status_code=404,
+                                detail=f"lore note {lore_name!r} not found in pack {pack_name!r}")
+        path.unlink()
+
+    _validate_candidate_pack(pack_name, mutate)
+    store.delete_lore(pack_name, lore_name)
+    return {"status": "deleted", "lore_name": lore_name}
 
 
 @app.get("/profiles")
