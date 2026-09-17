@@ -809,3 +809,211 @@ def test_cli_state_file_override_wins(monkeypatch, tmp_path, relay):
 def test_cli_requires_a_slot():
     with pytest.raises(SystemExit):
         tile_pane.build_parser().parse_args([])
+
+
+# ── post-line fade (dim after speaking) ──────────────────────────────────────
+def test_render_tile_at_full_brightness_emits_no_extra_color_code():
+    """brightness=1.0 (the default) must be byte-identical to pre-fade-feature
+    output — no truecolor SGR wrap at all — so every existing caller/test
+    that doesn't know about fades is completely unaffected."""
+    sink = _Sink()
+    render_tile("tuber_1", out=sink, width=40, height=20)
+    assert "\x1b[38;2;" not in sink.text
+
+
+def test_render_tile_at_reduced_brightness_wraps_in_a_dimmed_color_and_resets():
+    sink = _Sink()
+    render_tile("tuber_1", out=sink, width=40, height=20, brightness=0.5)
+    assert "\x1b[38;2;" in sink.text
+    assert sink.text.rstrip().endswith("\x1b[0m")
+    # The returned rows (what tests/other callers introspect) stay plain —
+    # only what actually reached `out` carries the color wrap.
+    rows = render_tile("tuber_1", width=40, height=20, brightness=0.5, out=_Sink())
+    assert all("\x1b[38;2;" not in row for row in rows)
+
+
+def test_tile_color_code_clamps_to_the_fade_floor():
+    """A caller passing a brightness below TILE_FADE_FLOOR (shouldn't happen
+    given _current_brightness's own clamp, but the helper must not produce
+    black/garbage output if it ever does) is clamped up to the floor."""
+    floor_code = tile_pane._tile_color_code(tile_pane.TILE_FADE_FLOOR)
+    below_floor_code = tile_pane._tile_color_code(0.0)
+    assert below_floor_code == floor_code
+
+
+def test_tile_color_code_at_full_brightness_matches_the_active_rgb():
+    r, g, b = tile_pane.TILE_ACTIVE_RGB
+    assert tile_pane._tile_color_code(1.0) == f"\x1b[38;2;{r};{g};{b}m"
+
+
+def test_current_brightness_is_full_before_any_line_has_ever_finished(relay):
+    """A fresh tile that hasn't spoken yet (or is CURRENTLY speaking) must
+    render at full brightness — nothing has "just stopped" to fade from."""
+    r, _sink, _state = _renderer(relay)
+    r._fade_enabled = True
+    assert r._current_brightness() == 1.0
+
+
+def test_current_brightness_ramps_down_linearly_over_the_fade_duration(relay):
+    r, _sink, _state = _renderer(relay)
+    r._fade_enabled = True
+    r._faded_since = 100.0
+    # Immediately after the transition: still full brightness (the fade
+    # STARTS at 1.0 and ramps down, it doesn't jump straight to the floor).
+    assert r._current_brightness(now=100.0) == pytest.approx(1.0)
+    # Halfway through TILE_FADE_DURATION_S: halfway between 1.0 and the floor.
+    half_point = 100.0 + tile_pane.TILE_FADE_DURATION_S / 2
+    expected_half = 1.0 - 0.5 * (1.0 - tile_pane.TILE_FADE_FLOOR)
+    assert r._current_brightness(now=half_point) == pytest.approx(expected_half)
+    # At and beyond the full duration: pinned at the floor, never below it.
+    at_end = 100.0 + tile_pane.TILE_FADE_DURATION_S
+    assert r._current_brightness(now=at_end) == pytest.approx(tile_pane.TILE_FADE_FLOOR)
+    long_after = 100.0 + tile_pane.TILE_FADE_DURATION_S * 10
+    assert r._current_brightness(now=long_after) == pytest.approx(tile_pane.TILE_FADE_FLOOR)
+
+
+def test_current_brightness_ignores_fade_state_when_fade_disabled(relay):
+    """fade_enabled=False (every caller except perform_tile_request, and
+    every existing test) must always report full brightness regardless of
+    _faded_since — the exact pre-fade-feature behavior."""
+    r, _sink, _state = _renderer(relay)  # fade_enabled defaults to False
+    r._faded_since = 0.0  # simulate a transition having somehow been recorded
+    assert r._current_brightness(now=1000.0) == 1.0
+
+
+def test_absorb_starts_the_fade_the_instant_speaking_stops(relay):
+    """THE design ask: the fade must start IMMEDIATELY when a line ends, not
+    after any delay — _absorb records the transition timestamp the moment
+    the expression stops being "speaking", with no extra gap."""
+    state_path = tile_state_file(str(relay), "tuber_2")
+    r = tile_pane.TileRenderer("tuber_2", state_path, out=_Sink(), fade_enabled=True)
+    try:
+        r.expression = "speaking"  # simulate having just been the active speaker
+        assert r._faded_since is None
+        r._absorb({"expression": "idle"}, None)
+        assert r._faded_since is not None
+        # Brightness measured at the exact same instant is still ~1.0 (the
+        # fade ramps FROM full, it doesn't snap to dim) — but a fade IS now
+        # armed, unlike before the transition.
+        assert r._current_brightness(now=r._faded_since) == pytest.approx(1.0)
+    finally:
+        r.close()
+
+
+def test_absorb_snaps_back_to_full_brightness_when_speaking_resumes(relay):
+    state_path = tile_state_file(str(relay), "tuber_2")
+    r = tile_pane.TileRenderer("tuber_2", state_path, out=_Sink(), fade_enabled=True)
+    try:
+        r.expression = "speaking"
+        r._absorb({"expression": "idle"}, None)
+        assert r._faded_since is not None
+        r._absorb({"expression": "speaking"}, None)
+        assert r._faded_since is None
+        assert r._current_brightness() == 1.0
+    finally:
+        r.close()
+
+
+def test_fade_disabled_renderer_spawns_no_ticker_thread(relay):
+    """The default (fade_enabled=False, every existing caller) must not pay
+    any background-thread cost at all."""
+    r, _sink, _state = _renderer(relay)
+    assert r._ticker is None
+    assert r._stop_event is None
+    r.close()  # must be a safe no-op even with nothing to stop
+
+
+def test_fade_enabled_renderer_dims_during_a_silent_wait(relay):
+    """THE core behavior this feature exists for: a tile that stops speaking
+    must visibly dim over time even while nothing calls write()/flush() at
+    all — the exact shape of a Performer blocked in wait_extra() or the
+    inter-line line_gap_s pause. Drives the ticker's real background thread
+    (not just _current_brightness in isolation) so this also proves the
+    thread actually wakes up and calls draw()."""
+    state_path = tile_state_file(str(relay), "tuber_2")
+    sink = _Sink()
+    r = tile_pane.TileRenderer("tuber_2", state_path, out=sink,
+                               fade_enabled=True, history=5)
+    try:
+        r.expression = "speaking"
+        r._absorb({"expression": "idle"}, None)  # arms the fade, starting now
+        # Give the ticker thread (FADE_TICK_S wake interval) a couple of
+        # cycles to actually run and redraw at a dimmer brightness. This is
+        # a real-time wait, not mocked, so keep the budget generous relative
+        # to FADE_TICK_S to avoid flaking on a loaded CI box.
+        deadline = time.monotonic() + max(1.0, tile_pane.TileRenderer.FADE_TICK_S * 6)
+        saw_dim_frame = False
+        while time.monotonic() < deadline:
+            if "\x1b[38;2;" in sink.text:
+                saw_dim_frame = True
+                break
+            time.sleep(tile_pane.TileRenderer.FADE_TICK_S)
+        assert saw_dim_frame, (
+            "expected the background fade ticker to have painted at least one "
+            "dimmed frame while the renderer was otherwise idle"
+        )
+    finally:
+        r.close()
+
+
+def test_close_stops_the_ticker_thread_promptly(relay):
+    state_path = tile_state_file(str(relay), "tuber_2")
+    r = tile_pane.TileRenderer("tuber_2", state_path, out=_Sink(), fade_enabled=True)
+    assert r._ticker.is_alive()
+    r.close()
+    assert not r._ticker.is_alive()
+
+
+def test_perform_tile_request_enables_the_fade_and_closes_it_when_done(
+        tile_library, store, relay, monkeypatch, capsys):
+    """The one production call site (perform_tile_request) must actually turn
+    fade_enabled on, and must close() the renderer (stop its ticker thread)
+    once the show is over — including when the Performer raises, so a tile
+    process airing many shows over a long broadcast can't accumulate leaked
+    ticker threads."""
+    seen = {}
+    real_init = tile_pane.TileRenderer.__init__
+
+    def spy_init(self, *args, **kwargs):
+        seen["fade_enabled"] = kwargs.get("fade_enabled")
+        real_init(self, *args, **kwargs)
+        seen["renderer"] = self
+
+    monkeypatch.setattr(tile_pane.TileRenderer, "__init__", spy_init)
+    monkeypatch.setattr(tile_pane, "Performer", FakePerformer)
+    request = {"airing_id": "airing-1", "episode": "sample",
+              "cast": {"boss": "tuber_2"}, "worker_name": "Vigil"}
+    write_json(tile_request_file(str(relay), "tuber_2"), request)
+
+    assert handle_once("tuber_2", str(relay), state_path=tile_state_file(str(relay), "tuber_2")) is True
+    assert seen["fade_enabled"] is True
+    assert seen["renderer"]._ticker is not None
+    assert not seen["renderer"]._ticker.is_alive()  # closed after the show
+
+
+def test_perform_tile_request_closes_the_renderer_even_if_the_performer_raises(
+        tile_library, store, relay, monkeypatch, capsys):
+    class RaisingPerformer:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+
+        def perform(self, script, show=None, start=0, limit=None):
+            raise RuntimeError("boom")
+
+    seen = {}
+    real_init = tile_pane.TileRenderer.__init__
+
+    def spy_init(self, *args, **kwargs):
+        real_init(self, *args, **kwargs)
+        seen["renderer"] = self
+
+    monkeypatch.setattr(tile_pane.TileRenderer, "__init__", spy_init)
+    monkeypatch.setattr(tile_pane, "Performer", RaisingPerformer)
+    request = {"airing_id": "airing-1", "episode": "sample",
+              "cast": {"boss": "tuber_2"}, "worker_name": "Vigil"}
+    write_json(tile_request_file(str(relay), "tuber_2"), request)
+
+    # handle_once swallows the exception (§ "one bad show must never kill
+    # the tile"), but the renderer's ticker thread must STILL be stopped.
+    assert handle_once("tuber_2", str(relay), state_path=tile_state_file(str(relay), "tuber_2")) is False
+    assert not seen["renderer"]._ticker.is_alive()

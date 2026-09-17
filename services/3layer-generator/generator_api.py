@@ -246,6 +246,35 @@ async def lifespan(app: FastAPI):
         except Exception as exc:
             log.warning("lifespan: ensure_schema failed (continuing): %s", exc)
 
+        # The DB-active saved config (set via POST /configs/{id}/activate)
+        # is meant to be the single source of truth for what a job actually
+        # generates against — the dashboard's Saved Configurations card and
+        # every job submitted afterward assume it. Without this, a container
+        # recreate (image rebuild, `docker compose up -d`, host reboot)
+        # silently reverts to whatever GENERATOR_CONFIG_FILE says in .env,
+        # which can be a completely different pack/model tier than an
+        # operator believes is active — confirmed to cost real GPU-hours
+        # more than once. Loading the file first (above) and only then
+        # overlaying the DB-active row (if any) means: a fresh install with
+        # no saved configs yet still boots off the file exactly as before,
+        # and a DB that is down/unreachable at boot degrades to the same
+        # file-based behavior rather than blocking startup.
+        try:
+            active_row = store.get_active_config_row()
+        except Exception as exc:
+            active_row = None
+            log.warning("lifespan: could not read active saved config "
+                        "(continuing with file-based CONFIG): %s", exc)
+        if active_row is not None:
+            try:
+                _apply_config_yaml(active_row["config_yaml"])
+                log.info("lifespan: applied DB-active saved config %r "
+                         "(overriding GENERATOR_CONFIG file)", active_row["name"])
+            except Exception as exc:
+                log.warning("lifespan: DB-active saved config %r failed to "
+                            "apply (keeping file-based CONFIG): %s",
+                            active_row.get("name"), exc)
+
         # Build the runner context and start the dispatch loop on a daemon
         # thread. Guarded so a missing layer module cannot prevent the app
         # from existing.
@@ -481,6 +510,42 @@ def preview(body: dict):
         "expected_max_depth": expected_max_depth,
         "word_budget_per_level": word_budget_per_level,
     }
+
+
+@app.get("/packs")
+def list_packs():
+    """Every campaign pack directory available under PACK_ROOT, sorted.
+    Drives the GUI's Pack dropdown so an operator picks from what actually
+    exists on disk instead of typing a name and finding out it's wrong only
+    after a 400 from /jobs. Hidden directories (leading '.') are excluded —
+    stray editor/state dirs under campaigns/ (e.g. .qwen_staging) are not
+    packs."""
+    if not PACK_ROOT.is_dir():
+        return []
+    return sorted(
+        p.name for p in PACK_ROOT.iterdir()
+        if p.is_dir() and not p.name.startswith(".")
+    )
+
+
+@app.get("/profiles")
+def list_profiles():
+    """Configured model profile names per layer, e.g.
+    {"arc": ["light", "heavy"], "segment": [...], "dialogue": [...]}.
+    Drives the GUI's Profile dropdown so an operator picks a profile that
+    `validate_profile_for_stages` will actually accept, instead of typing a
+    free-text name and finding out it's wrong only after a 400 at submit
+    time. Returns empty lists for a layer that fails to resolve (e.g.
+    CONFIG not loaded yet) rather than raising — this is a GUI convenience
+    endpoint, not a validation gate."""
+    import config as config_module
+    result = {}
+    for layer in ("arc", "segment", "dialogue"):
+        try:
+            result[layer] = config_module.profile_names(CONFIG or {}, layer)
+        except Exception:
+            result[layer] = []
+    return result
 
 
 @app.get("/config")

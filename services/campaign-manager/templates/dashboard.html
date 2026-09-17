@@ -33,27 +33,71 @@
             <div class="card">
                 <div class="card-header">Submit New Generation Job</div>
                 <div class="card-body">
+                    {% if form_error %}
+                        <div class="alert alert-danger py-2">{{ form_error }}</div>
+                    {% endif %}
                     <form action="/jobs/submit" method="POST">
                         <div class="mb-3">
                             <label class="form-label">Pack Name</label>
-                            <input type="text" name="pack" class="form-control" value="ashiorid" required>
+                            {% if packs %}
+                            <select name="pack" class="form-select" required>
+                                {% for p in packs %}
+                                <option value="{{ p }}" {% if p == 'ashiorid_1' %}selected{% endif %}>{{ p }}</option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            <input type="text" name="pack" class="form-control" value="ashiorid_1" required>
+                            {% if packs_error %}<div class="form-text text-danger">{{ packs_error }}</div>{% endif %}
+                            {% endif %}
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Stage</label>
-                            <select name="stage" class="form-select">
+                            <select name="stage" class="form-select" id="stage-select">
                                 <option value="arc">Arc (Plan)</option>
                                 <option value="segment">Segment (Develop)</option>
                                 <option value="dialogue">Dialogue (Write)</option>
-                                <option value="all">All (Full Pipeline)</option>
                             </select>
+                            <div class="form-text">
+                                Arc starts a fresh run (leave Run blank).
+                                Segment/Dialogue continue an existing run — pick it below.
+                                Submit these as 3 separate jobs in order (see 3layer-generator-ops skill).
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Run (output namespace)</label>
+                            {% if runs %}
+                            <select name="run" class="form-select">
+                                <option value="">-- new run (arc stage only) --</option>
+                                {% for r in runs %}
+                                <option value="{{ r }}">{{ r }}</option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            <input type="text" name="run" class="form-control" placeholder="leave blank for a new arc run">
+                            {% if runs_error %}<div class="form-text text-danger">{{ runs_error }}</div>{% endif %}
+                            {% endif %}
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Profile</label>
-                            <input type="text" name="profile" class="form-control" placeholder="e.g. default">
+                            <select name="profile" class="form-select">
+                                <option value="">-- use stage's active_model default --</option>
+                                {% for layer, names in profiles.items() %}
+                                    {% for name in names %}
+                                    <option value="{{ name }}">{{ name }} ({{ layer }})</option>
+                                    {% endfor %}
+                                {% endfor %}
+                            </select>
+                            {% if profiles_error %}<div class="form-text text-danger">{{ profiles_error }}</div>{% endif %}
                         </div>
                         <div class="mb-3">
                             <label class="param-label">Segments (JSON Array)</label>
-                            <textarea name="segments_json" class="form-control" rows="3">["segment_1", "segment_2"]</textarea>
+                            <textarea name="segments_json" class="form-control" rows="3">[]</textarea>
+                            <div class="form-text">
+                                Required for the Dialogue stage (no default — omitting it
+                                processes zero segments). Segment stage ignores this and
+                                auto-selects every un-briefed segment. Get ids from the
+                                arc job's artifacts in the Data Viewer.
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Submit Job</button>
                     </form>
@@ -81,10 +125,22 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Active & Recent Jobs</span>
-                    <button class="btn btn-sm btn-outline-secondary" hx-get="/" hx-target="body">Refresh</button>
+                    <span>
+                        Active & Recent Jobs
+                        {% if run_filter %}
+                        <span class="badge bg-primary ms-2">run: {{ run_filter }}</span>
+                        <a href="/" class="small ms-1">(clear)</a>
+                        {% endif %}
+                    </span>
+                    <button class="btn btn-sm btn-outline-secondary" hx-get="/{% if run_filter %}?run={{ run_filter }}{% endif %}" hx-target="body">Refresh</button>
                 </div>
                 <div class="card-body p-0">
+                    {% if not run_filter %}
+                    <div class="px-3 pt-2 small text-muted">
+                        Jobs from the same campaign generation share a <strong>Run</strong> —
+                        click any Run value below to see just that campaign's arc/segment/dialogue jobs together.
+                    </div>
+                    {% endif %}
                     {% if jobs_error %}
                         <div class="alert alert-danger m-3">{{ jobs_error }}</div>
                     {% elif not jobs %}
@@ -95,6 +151,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Pack</th>
+                                    <th>Run</th>
                                     <th>Stage</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -105,6 +162,13 @@
                                 <tr>
                                     <td class="small text-monospace">{{ job.id }}</td>
                                     <td>{{ job.pack }}</td>
+                                    <td class="small text-monospace">
+                                        {% if job.run %}
+                                        <a href="/?run={{ job.run }}" title="Show every job sharing this run">{{ job.run }}</a>
+                                        {% else %}
+                                        <span class="text-muted">—</span>
+                                        {% endif %}
+                                    </td>
                                     <td><span class="badge bg-info text-dark">{{ job.stage }}</span></td>
                                     <td><span class="status-{{ job.status }}">{{ job.status }}</span></td>
                                     <td>

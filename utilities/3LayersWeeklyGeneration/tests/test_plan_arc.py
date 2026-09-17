@@ -37,6 +37,22 @@ def test_a_clean_run_uses_one_call_per_batch(tmp_path, pack, config, vocab):
     assert len(llm.calls) == math.ceil(28 / 6) == 5
 
 
+def test_batch_size_is_read_from_its_own_config_key_not_segment_hours(
+        tmp_path, pack, config, vocab):
+    """Regression: plan_arc once read config['arc']['segment_hours'] (hours
+    PER segment) where it meant config['arc']['batch_size'] (segments PER
+    LLM call) — invisible in every other test here because the shared
+    fixture happens to set both to 6. Segment_hours does not even bound
+    n_segments in a way that would make the two interchangeable; they are
+    unrelated numbers that occasionally coincide."""
+    config["arc"]["segment_hours"] = 6      # -> n_segments = 168/6 = 28
+    config["arc"]["batch_size"] = 28        # single-shot: one call, all 28
+    llm = FakeLLM([reply_for(list(range(0, 28)))])
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    assert len(llm.calls) == 1
+    assert len(plan["segments"]) == 28
+
+
 def test_the_plan_on_disk_matches_what_was_returned(tmp_path, pack, config, vocab):
     out = tmp_path / "arc_plan.yaml"
     plan = plan_arc.plan_arc(pack, config, perfect_llm(28, 6), vocab, out)

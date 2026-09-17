@@ -25,6 +25,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p><strong>Pack:</strong> {{ job.pack }}</p>
+                            <p><strong>Run:</strong>
+                                {% if job.run %}
+                                <a href="/?run={{ job.run }}" class="text-monospace">{{ job.run }}</a>
+                                <span class="text-muted small">(every job in this campaign generation)</span>
+                                {% else %}
+                                <span class="text-muted">—</span>
+                                {% endif %}
+                            </p>
                             <p><strong>Stage:</strong> {{ job.stage }}</p>
                             <p><strong>Status:</strong> <span class="badge bg-secondary">{{ job.status }}</span></p>
                         </div>

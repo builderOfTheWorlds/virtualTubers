@@ -506,6 +506,76 @@ def test_blank_lines_are_skipped():
     assert len(build(llm).generate_scene(AMBIENT)) == 2
 
 
+def test_a_numbered_list_prefix_is_stripped_before_speaker_matching():
+    # Without stripping "3. " first, the prefix compared against the cast
+    # list is "3. Leena" (never matches), so the whole line -- numbering
+    # included -- falls through to GM narration with the "3. Leena:" baked
+    # into the aired text. This is the exact defect
+    # build_generated_episode.py's ENUM_PREFIX_RE patches downstream.
+    llm = FakeLLM('3. Leena: "Wait, what? You\'re telling me..."')
+    beat = build(llm).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "dialogue"
+    assert beat.speaker == "Leena"
+    assert beat.text == "Wait, what? You're telling me..."
+
+
+@pytest.mark.parametrize("prefix", ["12) ", "- ", "* "])
+def test_other_enumeration_markers_are_also_stripped(prefix):
+    llm = FakeLLM(f"{prefix}chadwick: It will.")
+    beat = build(llm).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "dialogue"
+    assert beat.speaker == "chadwick"
+
+
+def test_speaker_matching_is_case_insensitive():
+    # Models are inconsistent about matching a cast id's exact casing
+    # ("Leena" vs "leena" vs "LEENA"); the id itself is what the roster and
+    # voice.speakers configs key off, so a case mismatch must still resolve.
+    llm = FakeLLM("leena: Rain.")
+    beat = build(llm).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "dialogue"
+    assert beat.speaker == "Leena"  # canonical cast id casing, not the raw line
+
+
+def test_a_line_prefixed_with_the_cast_members_display_name_resolves_to_their_id():
+    # The model is shown "gm: The Chronicler" in the roster and sometimes
+    # echoes back the display NAME ("The Chronicler: ...") instead of the id
+    # ("gm: ..."). Without a name alias this falls through to GM narration
+    # with the name baked into the aired text instead of resolving to the
+    # gm speaker/voice.
+    llm = FakeLLM('The Chronicler: The card appears on the doorstep.')
+    beat = build(llm).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "dialogue"
+    assert beat.speaker == "gm"
+    assert beat.text == "The card appears on the doorstep."
+
+
+def test_display_name_matching_is_also_case_insensitive():
+    llm = FakeLLM("the chronicler: Whispers in the dark.")
+    beat = build(llm).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "dialogue"
+    assert beat.speaker == "gm"
+
+
+@pytest.mark.parametrize("junk", [
+    "Here is the scene:",
+    "Here's the response:",
+    "Beat 3:",
+    "Beat 12",
+])
+def test_meta_filler_lines_are_dropped_not_aired_as_narration(junk):
+    llm = FakeLLM(f"{junk}\nLeena: Rain.")
+    beats = build(llm).generate_scene(AMBIENT)
+
+    assert len(beats) == 1
+    assert beats[0].speaker == "Leena"
+
+
 def test_generate_scene_is_capped_at_max_beats():
     llm = FakeLLM("\n".join(f"Leena: line {i}." for i in range(50)))
     beats = build(llm, max_beats=6).generate_scene(AMBIENT)

@@ -142,19 +142,13 @@ panes:
     with:
       slot: "tuber_6"
 
-  # ── Spare 8th grid cell (§6 / OPEN-4). ─────────────────────────────────────
-  # Without this, tuber_6 absorbs the unused cell and renders DOUBLE WIDTH
-  # (confirmed in real tmux during the §8.5 geometry spike).
-  #
-  # It is a TILE, not a status strip: anything else here read as a seventh
-  # "character" sitting in the character grid on the live broadcast, which
-  # looked like a layout bug. Pinning it to the (uncast) tuber_7 slot means it
-  # renders as a neutral idle tile, and promoting the roster to 8 characters
-  # later (OPEN-4) is then a no-op here.
+  # ── 8th grid cell: tuber_7, promoted from spare (OPEN-4, now resolved). ────
+  # Previously an idle grey placeholder pinned to the uncast tuber_7 slot
+  # (see ROSTER_SIZE history in app/episode_validator.py). Now a real active
+  # tile: same light-blue border as every other cast slot, title resolved
+  # from tuber_0.yaml's roster ("Iris") the same way tiles 0-6 already are.
   - use: tile
-    id: tile_spare
-    title: "—"
-    border_color: colour240
+    id: tile_tuber_7
     target: tile_tuber_6
     split: h
     size: 50

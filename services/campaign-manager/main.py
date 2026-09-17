@@ -32,7 +32,9 @@ MESSAGE_TYPE_EXAMPLES = ["operator_message", "status_update"]
 
 
 def _dashboard_context(request: Request, jobs=None, jobs_error=None, message_result=None,
-                        configs=None, configs_error=None):
+                        configs=None, configs_error=None, packs=None, packs_error=None,
+                        profiles=None, profiles_error=None, runs=None, runs_error=None,
+                        form_error=None, run_filter=""):
     """Shared context builder for every route that renders dashboard.html,
     so every render passes the same full set of variables the template
     expects (avoids Jinja2 UndefinedError on partial contexts)."""
@@ -50,7 +52,54 @@ def _dashboard_context(request: Request, jobs=None, jobs_error=None, message_res
         "message_type_examples": MESSAGE_TYPE_EXAMPLES,
         "configs": configs or [],
         "configs_error": configs_error,
+        "packs": packs or [],
+        "packs_error": packs_error,
+        "profiles": profiles or {"arc": [], "segment": [], "dialogue": []},
+        "profiles_error": profiles_error,
+        "runs": runs or [],
+        "runs_error": runs_error,
+        "form_error": form_error,
+        "run_filter": run_filter,
     }
+
+
+async def _fetch_packs():
+    """Best-effort fetch of every campaign pack for the Pack dropdown. Never
+    raises — a generator-api hiccup degrades to an empty list with an error
+    string, same pattern as _fetch_configs."""
+    try:
+        result = await http_client.get("/packs")
+    except httpx.RequestError as exc:
+        return [], f"generator-api unreachable: {exc}"
+    if not result.is_success:
+        return [], f"API error: {result.status_code}"
+    try:
+        packs = result.json()
+        if not isinstance(packs, list):
+            return [], "Failed to parse packs JSON"
+        return packs, None
+    except Exception:
+        return [], "Failed to parse packs JSON"
+
+
+async def _fetch_profiles():
+    """Best-effort fetch of per-layer model profile names for the Profile
+    dropdown. Never raises — degrades to empty lists with an error string,
+    same pattern as _fetch_configs."""
+    empty = {"arc": [], "segment": [], "dialogue": []}
+    try:
+        result = await http_client.get("/profiles")
+    except httpx.RequestError as exc:
+        return empty, f"generator-api unreachable: {exc}"
+    if not result.is_success:
+        return empty, f"API error: {result.status_code}"
+    try:
+        profiles = result.json()
+        if not isinstance(profiles, dict):
+            return empty, "Failed to parse profiles JSON"
+        return profiles, None
+    except Exception:
+        return empty, "Failed to parse profiles JSON"
 
 
 async def _fetch_configs():
@@ -73,18 +122,31 @@ async def _fetch_configs():
 
 
 @app.get("/", response_class=HTMLResponse)
-async def dashboard(request: Request):
-    """Main view: List all jobs and current generation status."""
+async def dashboard(request: Request, run: str = ""):
+    """Main view: list all jobs and current generation status.
+
+    `run` (optional query param) filters the job list down to just the jobs
+    sharing that output namespace — how an operator sees which arc/segment/
+    dialogue job ids belong to the same campaign generation, since the job
+    table's own id has no relation to the others beyond that shared `run`.
+    """
     jobs = []
     jobs_error = None
+    jobs_params = {"run": run} if run else None
     try:
-        jobs_result = await http_client.get("/jobs")
+        jobs_result = await http_client.get("/jobs", params=jobs_params)
     except httpx.RequestError as exc:
         configs, configs_error = await _fetch_configs()
+        packs, packs_error = await _fetch_packs()
+        profiles, profiles_error = await _fetch_profiles()
+        runs, runs_error = await _fetch_runs()
         return templates.TemplateResponse(
             request, "dashboard.html",
             _dashboard_context(request, jobs=[], jobs_error=f"generator-api unreachable: {exc}",
-                                configs=configs, configs_error=configs_error)
+                                configs=configs, configs_error=configs_error,
+                                packs=packs, packs_error=packs_error,
+                                profiles=profiles, profiles_error=profiles_error,
+                                runs=runs, runs_error=runs_error, run_filter=run)
         )
 
     if jobs_result.is_success:
@@ -100,10 +162,16 @@ async def dashboard(request: Request):
         jobs_error = f"API error: {jobs_result.status_code}"
 
     configs, configs_error = await _fetch_configs()
+    packs, packs_error = await _fetch_packs()
+    profiles, profiles_error = await _fetch_profiles()
+    runs, runs_error = await _fetch_runs()
     return templates.TemplateResponse(
         request, "dashboard.html",
         _dashboard_context(request, jobs=jobs, jobs_error=jobs_error,
-                            configs=configs, configs_error=configs_error)
+                            configs=configs, configs_error=configs_error,
+                            packs=packs, packs_error=packs_error,
+                            profiles=profiles, profiles_error=profiles_error,
+                            runs=runs, runs_error=runs_error, run_filter=run)
     )
 
 
@@ -198,36 +266,70 @@ async def submit_job_ui(
     pack: str = Form(...),
     stage: str = Form(...),
     profile: str = Form(""),
+    run: str = Form(""),
     segments_json: str = Form("[]")
 ):
-    """Handle form submission for a new generation job."""
+    """Handle form submission for a new generation job.
+
+    `run` continues an existing arc's output namespace (required for
+    segment/dialogue, per generator_api.submit_job) — left blank on an arc
+    submission to start a fresh run. Re-renders the dashboard with the
+    submitted values preserved and an inline error on any failure, rather
+    than losing the form to a bare error page.
+    """
     try:
         segments = json.loads(segments_json)
     except json.JSONDecodeError:
-        return templates.TemplateResponse(
-            request, "error.html", {"request": request, "error": "Invalid segments JSON"}
-        )
+        return await _render_dashboard_with_error(request, "Invalid segments JSON")
 
     payload = {
         "pack": pack,
         "stage": stage,
         "profile": profile,
-        "params": {
-            "segments": segments,
-            "dry_run": False,
-            "test_mode": False,
-            "rebrief": False
-        }
+        "segments": segments,
+        "dry_run": False,
+        "test_mode": False,
+        "rebrief": False,
     }
+    if run.strip():
+        payload["run"] = run.strip()
 
     result = await http_client.post("/jobs", json=payload)
 
     if result.is_success:
         return RedirectResponse(url="/", status_code=303)
-    else:
-        return templates.TemplateResponse(
-            request, "error.html", {"request": request, "error": result.text}
-        )
+    return await _render_dashboard_with_error(request, _extract_error_detail(result))
+
+
+async def _render_dashboard_with_error(request: Request, error: str):
+    """Re-render the full dashboard with `form_error` set, so a rejected
+    submission (bad segments JSON, missing run, unknown profile, ...) shows
+    the operator what went wrong instead of a bare error page that drops
+    the job list and every other card."""
+    jobs = []
+    jobs_error = None
+    try:
+        jobs_result = await http_client.get("/jobs")
+        if jobs_result.is_success:
+            jobs = jobs_result.json()
+            if not isinstance(jobs, list):
+                jobs = []
+    except httpx.RequestError as exc:
+        jobs_error = f"generator-api unreachable: {exc}"
+
+    configs, configs_error = await _fetch_configs()
+    packs, packs_error = await _fetch_packs()
+    profiles, profiles_error = await _fetch_profiles()
+    runs, runs_error = await _fetch_runs()
+    return templates.TemplateResponse(
+        request, "dashboard.html",
+        _dashboard_context(request, jobs=jobs, jobs_error=jobs_error,
+                            configs=configs, configs_error=configs_error,
+                            packs=packs, packs_error=packs_error,
+                            profiles=profiles, profiles_error=profiles_error,
+                            runs=runs, runs_error=runs_error,
+                            form_error=error)
+    )
 
 
 @app.post("/jobs/{job_id}/cancel", response_class=HTMLResponse)

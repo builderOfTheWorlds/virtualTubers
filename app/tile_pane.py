@@ -59,6 +59,7 @@ import re
 import sys
 import tempfile
 import textwrap
+import threading
 import time
 from collections import deque
 from pathlib import Path
@@ -172,6 +173,36 @@ TILE_DIALOGUE_LINES = MIN_DIALOGUE_LINES
 # the pane thousands of times a scene, so partial lines refresh on a timer and
 # every COMPLETED line redraws immediately.
 TILE_PARTIAL_REDRAW_S = 0.15
+
+# ── post-line fade (dim after speaking) ──────────────────────────────────────
+# Design ask: a tile's dialogue/frame reads at full brightness while its line
+# is being spoken, then fades DOWN to 50% brightness over the following 5
+# seconds once the line ends (starting immediately, not after a delay) — a
+# passive "who's not talking right now" cue so a viewer's eye is drawn to
+# whichever tile just lit up. Never fades below the floor (a tile that's been
+# quiet for a while stays legible, not black).
+TILE_FADE_DURATION_S = 5.0
+TILE_FADE_FLOOR = 0.5
+# The tile's own accent color, matching config/panels/tile.yaml's static
+# `border_color: colour117` (xterm 256-color cube index 117 = RGB
+# 135,215,255, a light sky-blue) — kept in sync by hand since tmux's palette
+# and this file's truecolor override are two different color systems with no
+# shared source of truth. Only used once a fade has actually started (see
+# render_tile's brightness param); at brightness==1.0 a tile emits NO SGR of
+# its own and the pane renders exactly as before (tmux's own default pane
+# color), so a tile that never speaks is completely unaffected by this
+# feature.
+TILE_ACTIVE_RGB = (135, 215, 255)
+
+
+def _tile_color_code(brightness):
+    """24-bit truecolor SGR foreground code for TILE_ACTIVE_RGB scaled to
+    `brightness` (1.0 = full color, TILE_FADE_FLOOR = dimmest). Clamped so a
+    caller can pass any raw elapsed-time-derived fraction without producing
+    negative/zero-black or over-bright output."""
+    brightness = max(TILE_FADE_FLOOR, min(1.0, brightness))
+    r, g, b = (max(0, min(255, int(round(c * brightness)))) for c in TILE_ACTIVE_RGB)
+    return f"\x1b[38;2;{r};{g};{b}m"
 
 # The Performer emits ANSI color even with a disabled palette upstream of us
 # (prefixes, the odd literal); a tile re-renders into a fixed-width box, so all
@@ -301,7 +332,7 @@ def _wrap_dialogue(lines, width):
 
 
 def render_tile(slot, expression="idle", line="", status="listening", out=None,
-                clear=True, width=None, height=None, lines=None):
+                clear=True, width=None, height=None, lines=None, brightness=1.0):
     """Draw the tile frame as three bordered SUBPANELS, top to bottom:
     AVATAR (fixed TILE_AVATAR_LINES rows), TEXT (the last spoken lines — grows
     to fill whatever vertical room is left), and STATUS (fixed
@@ -330,6 +361,18 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     resolve_tile_height) so the frame always fits its real tmux pane — see the
     comment on resolve_tile_width for why assuming a size put a broken-looking
     tile on a live broadcast. Tests pass explicit values for determinism.
+
+    `brightness` (1.0 = full, TILE_FADE_FLOOR..1.0 range — see TileRenderer's
+    fade math, which is where the TIME-based value actually comes from) wraps
+    the WRITTEN frame in a truecolor SGR color code scaled to that fraction,
+    then resets at the end — the post-line fade feature (dim after speaking,
+    fades back up to full the instant a new line starts). At brightness==1.0
+    (the default, and every non-tile caller) this emits NO extra SGR at all,
+    so the frame is byte-identical to before the feature existed — tmux's own
+    `select-pane -P fg=colour117` (config/panels/tile.yaml) is what colors an
+    unfaded tile, exactly as before. The RETURNED `rows` list is always the
+    plain, uncolored content (tests assert on rows' text, not raw escape
+    sequences) — only what actually reaches `out` carries the color wrap.
     """
     out = out or sys.stdout
     face = TILE_FACES.get(expression) or TILE_FACES["idle"]
@@ -350,7 +393,6 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     # spoken line ever made it to air — see _wrap_dialogue.)
     dialogue = _wrap_dialogue(lines, line_chars)[-dialogue_line_count:]
     dialogue = [""] * (dialogue_line_count - len(dialogue)) + dialogue
-
     rows = ["┌" + "─" * inner + "┐"]
     # ── AVATAR subpanel ──────────────────────────────────────────────────────
     # No name row here — tmux's pane-border-format (build_layout.py's
@@ -369,7 +411,14 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     rows.append("└" + "─" * inner + "┘")
     if clear:
         out.write("\x1b[2J\x1b[H")
-    out.write("\n".join(rows) + "\n")
+    frame = "\n".join(rows) + "\n"
+    if brightness < 1.0:
+        # \x1b[0m reset at the end so the dim doesn't bleed into whatever
+        # tmux/the next pane prints after this frame — the same discipline
+        # replay.py's Palette already follows for every other color it emits.
+        out.write(_tile_color_code(brightness) + frame + "\x1b[0m")
+    else:
+        out.write(frame)
     try:
         out.flush()
     except Exception:  # a StringIO in tests, a closed pipe in production
@@ -404,6 +453,25 @@ class TileRenderer:
     render_tile only ever displays the last `resolve_dialogue_line_count()` of
     them, which is derived from the pane's real height at draw time, not from
     this buffer size).
+
+    `fade_enabled` (design ask, post-line dim): once this tile stops being the
+    active speaker (expression transitions away from "speaking"), its frame
+    fades from full brightness down to TILE_FADE_FLOOR over TILE_FADE_DURATION_S
+    — starting the INSTANT the line ends, not after a delay — so a viewer's eye
+    is drawn to whichever tile just lit up. Brightness snaps straight back to
+    1.0 the moment this tile starts speaking again. Because a fading tile must
+    keep animating even while the Performer is BLOCKED in a silent wait (e.g.
+    `wait_extra` holding the scene until audio finishes, or the inter-line
+    `line_gap_s` pause) — periods where nothing calls `write()`/`flush()` at
+    all — a small background ticker thread drives `draw()` for the fade
+    window's duration on its own, independent of the Performer's own writes.
+    The ticker only runs DURING an active fade (roughly TILE_FADE_DURATION_S
+    per speaking->non-speaking transition), not continuously, so a tile that
+    has been quiet for the whole show does not spin a thread forever. Off by
+    default (tests / any caller not passing fade_enabled=True get the exact
+    pre-fade-feature behavior and spawn no thread at all); `perform_tile_request`
+    is the only production caller that turns it on. Call `close()` when done
+    with a fade-enabled renderer to stop the ticker thread.
     """
 
     # Comfortably larger than any real TEXT subpanel will ever display, so the
@@ -411,7 +479,14 @@ class TileRenderer:
     # is.
     DEFAULT_HISTORY = 50
 
-    def __init__(self, slot, state_path, out=None, history=DEFAULT_HISTORY):
+    # Ticker wake interval while a fade is in progress — matches
+    # TILE_PARTIAL_REDRAW_S's cadence philosophy (frequent enough to read as
+    # a smooth fade, cheap enough that it's not meaningfully more CPU/I/O
+    # than the typing-driven redraws already happening during active speech).
+    FADE_TICK_S = 0.15
+
+    def __init__(self, slot, state_path, out=None, history=DEFAULT_HISTORY,
+                fade_enabled=False):
         self.slot = slot
         self.state_path = state_path
         self.out = out or sys.stdout
@@ -420,6 +495,30 @@ class TileRenderer:
         self.status = "listening"
         self._last_bubble = None
         self._last_draw = 0.0
+        # Serializes draw() calls between the main thread (write/flush,
+        # driven by the Performer) and the fade ticker thread — without this
+        # a ticker wake landing mid-write to `out` could interleave a partial
+        # frame with the main thread's own render_tile() output, garbling
+        # what actually reaches the pane. Held only around the actual
+        # render_tile() call, not the state read/absorb bookkeeping, so it's
+        # never contended for longer than one frame write takes.
+        self._draw_lock = threading.Lock()
+        # Fade state: _faded_since is the monotonic timestamp this tile last
+        # stopped being the active speaker (None while currently speaking, or
+        # before the first line of the show has been spoken at all — a fresh
+        # tile starts at full brightness, nothing has "just stopped" yet).
+        # _fade_active_until bounds how long the background ticker keeps
+        # calling draw() after a transition — once now() passes it, the fade
+        # has visually finished (frame is already at TILE_FADE_FLOOR) and the
+        # ticker goes back to doing nothing until the next transition.
+        self._faded_since = None
+        self._fade_active_until = None
+        self._fade_enabled = fade_enabled
+        self._stop_event = threading.Event() if fade_enabled else None
+        self._ticker = None
+        if fade_enabled:
+            self._ticker = threading.Thread(target=self._fade_ticker_loop, daemon=True)
+            self._ticker.start()
 
     # ── the file-like contract the Performer uses ────────────────────────────
     def write(self, text):
@@ -447,14 +546,63 @@ class TileRenderer:
         changed = False
         expression = (state or {}).get("expression")
         if expression and expression != self.expression:
+            was_speaking = self.expression == "speaking"
+            now_speaking = expression == "speaking"
             self.expression = expression
             self.status = "speaking" if expression == "speaking" else "listening"
             changed = True
+            if self._fade_enabled:
+                if now_speaking:
+                    # Resuming as the active speaker snaps straight back to
+                    # full brightness — no lingering dim from before.
+                    self._faded_since = None
+                    self._fade_active_until = None
+                elif was_speaking:
+                    # Just stopped being the active speaker: the fade starts
+                    # THIS INSTANT, not after any delay.
+                    now = time.monotonic()
+                    self._faded_since = now
+                    self._fade_active_until = now + TILE_FADE_DURATION_S
         if bubble and bubble != self._last_bubble:
             self._last_bubble = bubble
             self.lines.append(bubble)
             changed = True
         return changed
+
+    def _current_brightness(self, now=None):
+        """1.0 while actively speaking or before any line has ever finished;
+        linearly ramps down to TILE_FADE_FLOOR over TILE_FADE_DURATION_S once
+        this tile stops speaking, and stays pinned at the floor after that —
+        never fades out entirely (§5: a tile must always stay legible)."""
+        if not self._fade_enabled or self._faded_since is None:
+            return 1.0
+        now = now if now is not None else time.monotonic()
+        elapsed = now - self._faded_since
+        if elapsed >= TILE_FADE_DURATION_S:
+            return TILE_FADE_FLOOR
+        fraction = elapsed / TILE_FADE_DURATION_S
+        return 1.0 - fraction * (1.0 - TILE_FADE_FLOOR)
+
+    def _fade_ticker_loop(self):
+        """Background thread: while a fade is in progress, keep calling
+        draw() so the frame visibly dims even during a Performer wait that
+        never calls write()/flush() (audio playback, the inter-line gap).
+        Sleeps between wakes rather than busy-polling; exits promptly once
+        close() sets the stop event."""
+        while not self._stop_event.is_set():
+            self._stop_event.wait(self.FADE_TICK_S)
+            if self._stop_event.is_set():
+                return
+            deadline = self._fade_active_until
+            if deadline is None:
+                continue
+            now = time.monotonic()
+            self.draw()
+            if now >= deadline:
+                # One final draw already landed at the floor brightness
+                # above; stop ticking until the next speaking transition
+                # re-arms _fade_active_until.
+                self._fade_active_until = None
 
     def refresh(self):
         """Repaint now, whatever the timer says — used to land the final frame
@@ -463,9 +611,18 @@ class TileRenderer:
 
     def draw(self):
         self._last_draw = time.monotonic()
-        return render_tile(self.slot, expression=self.expression,
-                           lines=list(self.lines), status=self.status,
-                           out=self.out)
+        with self._draw_lock:
+            return render_tile(self.slot, expression=self.expression,
+                               lines=list(self.lines), status=self.status,
+                               out=self.out, brightness=self._current_brightness())
+
+    def close(self):
+        """Stop the fade ticker thread, if one was started. Best-effort and
+        idempotent — safe to call even when fade_enabled was False."""
+        if self._stop_event is not None:
+            self._stop_event.set()
+        if self._ticker is not None:
+            self._ticker.join(timeout=1.0)
 
 
 def draw_idle_screen(slot, state_path=None, out=None):
@@ -648,32 +805,44 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
         # the tile showed a wall of text for the whole show. The renderer keeps
         # the avatar and the last TILE_DIALOGUE_LINES spoken lines on screen
         # from the first frame to the last.
-        renderer = TileRenderer(slot, state_path)
-        renderer.draw()
-        # Voice gate (docs/voice_gate.md): all seven tiles + the director in
-        # this container share one gate (the container's own /tmp), so a
-        # tile cannot start its line while a sibling tile's line is still
-        # sounding — the roundtable gets "one voice at a time" (default 1
-        # seat; show.audio.max_concurrent or VOICE_GATE_CONCURRENT allows
-        # deliberate overlap).
-        gate, line_gap_s = replay_pane.build_voice_gate(script, config, tag=f"tile:{slot}")
-        performer = Performer(
-            out=renderer,
-            pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
-            palette=Palette(enabled=True),
-            worker_name=name,
-            state_path=state_path,
-            wait_for_scene=wait_for_scene,
-            speaker_names=voice.get("speaker_names") or {},
-            boss_name=voice.get("boss_name"),
-            voice_gate=gate,
-            line_gap_s=line_gap_s,
-        )
-        performer.perform(script, show=show)
-        # Leave the final frame up (the caller holds it for
-        # TILE_HOLD_FINAL_FRAME_S) rather than whatever the last partial
-        # repaint happened to catch.
-        renderer.refresh()
+        #
+        # fade_enabled=True here (the only production call site): a live
+        # airing is exactly the case the post-line dim design ask targets —
+        # tiles between lines fade to TILE_FADE_FLOOR brightness so a
+        # viewer's eye is drawn to whoever is actively speaking. Wrapped in
+        # try/finally so the background fade ticker thread is always stopped
+        # (renderer.close()) even if the Performer raises mid-show — a tile
+        # process that leaks a ticker thread per show would eventually
+        # accumulate threads across a long broadcast.
+        renderer = TileRenderer(slot, state_path, fade_enabled=True)
+        try:
+            renderer.draw()
+            # Voice gate (docs/voice_gate.md): all seven tiles + the director in
+            # this container share one gate (the container's own /tmp), so a
+            # tile cannot start its line while a sibling tile's line is still
+            # sounding — the roundtable gets "one voice at a time" (default 1
+            # seat; show.audio.max_concurrent or VOICE_GATE_CONCURRENT allows
+            # deliberate overlap).
+            gate, line_gap_s = replay_pane.build_voice_gate(script, config, tag=f"tile:{slot}")
+            performer = Performer(
+                out=renderer,
+                pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
+                palette=Palette(enabled=True),
+                worker_name=name,
+                state_path=state_path,
+                wait_for_scene=wait_for_scene,
+                speaker_names=voice.get("speaker_names") or {},
+                boss_name=voice.get("boss_name"),
+                voice_gate=gate,
+                line_gap_s=line_gap_s,
+            )
+            performer.perform(script, show=show)
+            # Leave the final frame up (the caller holds it for
+            # TILE_HOLD_FINAL_FRAME_S) rather than whatever the last partial
+            # repaint happened to catch.
+            renderer.refresh()
+        finally:
+            renderer.close()
 
     # The cue file is this tile's alone; consume it so the NEXT show starts
     # from a clean slate too (the request file was already consumed by

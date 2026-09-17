@@ -468,6 +468,88 @@ def test_config_endpoint_works_after_a_real_lifespan(monkeypatch, tmp_path, stor
 
 
 # ---------------------------------------------------------------------------
+# Lifespan — the DB-active saved config must win over the boot-time file
+#
+# Regression: a container recreate (image rebuild, `docker compose up -d`,
+# host reboot) used to silently revert CONFIG to whatever GENERATOR_CONFIG
+# pointed at in .env, even when an operator had activated a different saved
+# config via POST /configs/{id}/activate moments before. The dashboard's
+# Saved Configurations card and every job submitted afterward assume the
+# DB-active row IS what's live — confirmed to burn real GPU-hours on the
+# wrong model tier more than once before this was fixed.
+# ---------------------------------------------------------------------------
+
+def test_the_db_active_saved_config_overrides_the_boot_time_file(
+        monkeypatch, tmp_path, store):
+    import yaml
+
+    file_config = dict(CONFIG)
+    file_config["segment"] = {**CONFIG["segment"], "target_slots": 170}
+    config_file = tmp_path / "generation.yaml"
+    config_file.write_text(yaml.safe_dump(file_config), encoding="utf-8")
+    (tmp_path / "packs" / "ashiorid").mkdir(parents=True)
+
+    db_active_yaml = yaml.safe_dump(
+        {**CONFIG, "segment": {**CONFIG["segment"], "target_slots": 5}})
+    store.create_config("db-active", "", db_active_yaml)
+    store.activate_config(1)
+
+    monkeypatch.setenv("GENERATOR_CONFIG", str(config_file))
+    monkeypatch.setenv("OUTPUT_DIR", str(tmp_path / "out"))
+    monkeypatch.setattr(api, "CONFIG", None)
+    monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "packs")
+
+    with TestClient(api.app):
+        # The DB-active row's target_slots (5), not the file's (170).
+        assert api.CONFIG["segment"]["target_slots"] == 5
+
+
+def test_with_no_saved_configs_at_all_the_file_config_is_used(
+        monkeypatch, tmp_path, store):
+    """A fresh install with an empty generator_configs table must boot
+    exactly as it always did — no saved config to prefer means no change
+    in behavior."""
+    import yaml
+
+    config_file = tmp_path / "generation.yaml"
+    config_file.write_text(yaml.safe_dump(CONFIG), encoding="utf-8")
+    (tmp_path / "packs" / "ashiorid").mkdir(parents=True)
+
+    monkeypatch.setenv("GENERATOR_CONFIG", str(config_file))
+    monkeypatch.setenv("OUTPUT_DIR", str(tmp_path / "out"))
+    monkeypatch.setattr(api, "CONFIG", None)
+    monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "packs")
+
+    with TestClient(api.app):
+        assert api.CONFIG["segment"]["target_slots"] == 170
+
+
+def test_an_unreadable_active_config_store_does_not_block_startup(
+        monkeypatch, tmp_path, store):
+    """A DB that is down/unreachable at boot must degrade to the
+    file-based CONFIG, not prevent the service from starting."""
+    import yaml
+
+    config_file = tmp_path / "generation.yaml"
+    config_file.write_text(yaml.safe_dump(CONFIG), encoding="utf-8")
+    (tmp_path / "packs" / "ashiorid").mkdir(parents=True)
+
+    def exploding_get_active_config_row():
+        raise RuntimeError("connection refused")
+
+    monkeypatch.setattr(store, "get_active_config_row",
+                        exploding_get_active_config_row)
+    monkeypatch.setenv("GENERATOR_CONFIG", str(config_file))
+    monkeypatch.setenv("OUTPUT_DIR", str(tmp_path / "out"))
+    monkeypatch.setattr(api, "CONFIG", None)
+    monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "packs")
+
+    with TestClient(api.app):
+        assert api.CONFIG is not None
+        assert api.CONFIG["segment"]["target_slots"] == 170
+
+
+# ---------------------------------------------------------------------------
 # Saved configs — /configs CRUD + /configs/{id}/activate
 # ---------------------------------------------------------------------------
 
@@ -663,3 +745,42 @@ def test_editing_an_inactive_config_does_not_touch_the_live_config(client, store
     client.put(f"/configs/{other_id}", json={"config_yaml": edited_yaml})
 
     assert api.CONFIG["segment"]["target_slots"] == before["segment"]["target_slots"]
+
+
+# ---------------------------------------------------------------------------
+# GET /packs and GET /profiles — drive the campaign-manager GUI's dropdowns
+# ---------------------------------------------------------------------------
+
+def test_packs_lists_directories_under_pack_root(client, tmp_path):
+    (tmp_path / "packs" / "test_pack").mkdir(parents=True, exist_ok=True)
+
+    body = client.get("/packs").json()
+
+    assert sorted(body) == ["ashiorid", "test_pack"]
+
+
+def test_packs_excludes_hidden_directories(client, tmp_path):
+    (tmp_path / "packs" / ".qwen_staging").mkdir(parents=True, exist_ok=True)
+
+    body = client.get("/packs").json()
+
+    assert ".qwen_staging" not in body
+
+
+def test_packs_is_empty_list_when_pack_root_missing(client, monkeypatch, tmp_path):
+    monkeypatch.setattr(api, "PACK_ROOT", tmp_path / "does-not-exist")
+    assert client.get("/packs").json() == []
+
+
+def test_profiles_lists_configured_model_names_per_layer(client):
+    body = client.get("/profiles").json()
+
+    assert body["arc"] == ["light", "heavy"]
+    assert body["segment"] == ["light", "heavy"]
+    assert body["dialogue"] == ["light", "heavy"]
+
+
+def test_profiles_degrades_to_empty_lists_when_config_is_none(client, monkeypatch):
+    monkeypatch.setattr(api, "CONFIG", None)
+    body = client.get("/profiles").json()
+    assert body == {"arc": [], "segment": [], "dialogue": []}

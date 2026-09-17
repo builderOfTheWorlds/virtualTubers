@@ -25,8 +25,66 @@
             <p><strong>Run:</strong> {{ artifact.pack }}</p>
             <p><strong>Job:</strong> {{ artifact.job_id or '—' }}</p>
             <p><strong>Updated:</strong> {{ artifact.updated_at }}</p>
+
+            {% if artifact.kind == 'brief' %}
             <hr>
-            <h6>Content</h6>
+            <h6>Synopsis</h6>
+            <p>{{ artifact.content.synopsis or '—' }}</p>
+            <div class="row small text-muted mb-3">
+                <div class="col-md-6"><strong>Continuity in:</strong> {{ artifact.content.continuity_in or '—' }}</div>
+                <div class="col-md-6"><strong>Continuity out:</strong> {{ artifact.content.continuity_out or '—' }}</div>
+            </div>
+
+            <h6>
+                Story Beats (slot prompts)
+                <span class="text-muted small fw-normal">
+                    — the high-level intent each slot was planned for, before Layer 3 wrote literal dialogue for it
+                </span>
+            </h6>
+            {% set slots = artifact.content.slots or [] %}
+            {% if not slots %}
+                <div class="text-muted">No slots on this brief.</div>
+            {% else %}
+                <table class="table table-sm table-bordered mb-4">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Slot</th>
+                            <th>Kind</th>
+                            <th>Participants</th>
+                            <th>Prompt / Scene</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for slot in slots %}
+                        <tr>
+                            <td class="small text-monospace">{{ slot.slot_id }}</td>
+                            <td>
+                                {% if slot.kind == 'spine' %}
+                                <span class="badge bg-secondary">spine (authored)</span>
+                                {% else %}
+                                <span class="badge bg-success">{{ slot.kind }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="small">{{ (slot.participants or []) | join(', ') }}</td>
+                            <td class="small">
+                                {% if slot.kind == 'spine' %}
+                                <span class="text-muted">scene_ref: {{ slot.scene_ref or '—' }}</span>
+                                {% else %}
+                                {{ slot.prompt or '—' }}
+                                {% if slot.lore %}
+                                <div class="text-muted">lore: {{ slot.lore | join(', ') }}</div>
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% endif %}
+
+            <hr>
+            <h6>Content <span class="text-muted small fw-normal">(raw JSON)</span></h6>
             <pre class="bg-dark text-white p-3 rounded" style="max-height: 70vh; overflow:auto;"><code>{{ artifact.content | tojson(indent=2) }}</code></pre>
         </div>
     </div>

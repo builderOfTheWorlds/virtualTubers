@@ -75,7 +75,12 @@ NAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
 # The global tuber roster size. A show may cast a subset of it; slots outside
 # it do not exist on any channel, so casting one is an authoring error. One
 # constant so widening the roster is a one-line change here.
-ROSTER_SIZE = 7
+#
+# 8 (tuber_0..tuber_7): tuber_7 was the roundtable layout's "spare 8th grid
+# cell" (config/layouts/roundtable.yaml tile_spare, OPEN-4) — a real tile
+# pane that rendered idle-only because nothing upstream would cast it. Wired
+# up as slot 8 alongside a voice.speakers entry (config/workers/tuber_0.yaml).
+ROSTER_SIZE = 8
 
 # Slot ids are positional, never persona names (§7.1): 'speaker' on an event
 # references the SLOT, and the persona name is display data only.

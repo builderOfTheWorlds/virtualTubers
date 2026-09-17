@@ -23,7 +23,7 @@ PANELS_DIR = str(ROOT / "config" / "panels")
 LAYOUTS_DIR = str(ROOT / "config" / "layouts")
 TUBER_0 = str(ROOT / "config" / "workers" / "tuber_0.yaml")
 
-SLOTS = [f"tuber_{i}" for i in range(7)]
+SLOTS = [f"tuber_{i}" for i in range(8)]
 
 
 @pytest.fixture
@@ -48,10 +48,11 @@ def test_tuber_0_selects_roundtable_preset():
 
 # ── Shape (v1.3: pure tile grid — no show log, no system strip) ──────────────
 def test_roundtable_resolves_to_eight_panes(built):
-    """8 tiles only: 7 cast + 1 grid-balancing spare. v1.2's left-side show-log
-    column was removed — it left the grid columns too narrow to read (the
-    tuber_1/tuber_5 regression) — and the htop "System" strip was removed
-    earlier still (operator telemetry that read as an extra character)."""
+    """8 tiles, one per cast slot (tuber_0..tuber_7 — ROSTER_SIZE=8). v1.2's
+    left-side show-log column was removed — it left the grid columns too
+    narrow to read (the tuber_1/tuber_5 regression) — and the htop "System"
+    strip was removed earlier still (operator telemetry that read as an
+    extra character)."""
     assert len(built["panes"]) == 8
 
 
@@ -66,31 +67,16 @@ def test_no_show_log_pane_on_the_broadcast(built):
 
 
 def _cast_tiles(panes):
-    """Tiles pinned to a CAST slot (tuber_0..tuber_6).
-
-    The preset also carries one spare tile pinned to the uncast `tuber_7`, which
-    exists purely to balance the 4x2 grid — without it tuber_6 absorbs the empty
-    cell and renders double width. It is deliberately NOT a cast slot, so every
-    roster assertion below filters it out.
-    """
+    """Tiles pinned to a CAST slot (tuber_0..tuber_7 — all 8 are cast now)."""
     return [t for t in _by_use(panes, "tile") if t.get("slot") in set(SLOTS)]
 
 
-def test_seven_tiles_pinned_to_each_slot_exactly_once(built):
+def test_eight_tiles_pinned_to_each_slot_exactly_once(built):
     tiles = _cast_tiles(built["panes"])
-    assert len(tiles) == 7
+    assert len(tiles) == 8
     slots = [t["slot"] for t in tiles]
     assert sorted(slots) == sorted(SLOTS)        # none missing
-    assert len(set(slots)) == 7                  # no duplicates
-
-
-def test_spare_tile_balances_the_grid_without_being_cast(built):
-    """The 8th tile must exist (grid balance) but never be a cast slot."""
-    all_tiles = _by_use(built["panes"], "tile")
-    spare = [t for t in all_tiles if t.get("slot") not in set(SLOTS)]
-    assert len(all_tiles) == 8
-    assert len(spare) == 1
-    assert spare[0]["slot"] == "tuber_7"
+    assert len(set(slots)) == 8                  # no duplicates
 
 
 def test_every_tile_has_a_distinct_id(built):
@@ -99,7 +85,7 @@ def test_every_tile_has_a_distinct_id(built):
     tiles = _by_use(built["panes"], "tile")
     ids = [t["id"] for t in tiles]
     assert len(set(ids)) == len(ids)
-    assert sorted(ids) == sorted([f"tile_{slot}" for slot in SLOTS] + ["tile_spare"])
+    assert sorted(ids) == sorted([f"tile_{slot}" for slot in SLOTS])
 
 
 def test_all_pane_ids_are_distinct(built):
@@ -135,7 +121,7 @@ def test_each_row_is_cut_into_four_equal_columns(built):
     always even, but of a base that used to be narrowed by a sidebar."""
     by_id = {p["id"]: p for p in built["panes"]}
     top_row = [by_id["tile_tuber_1"], by_id["tile_tuber_2"], by_id["tile_tuber_3"]]
-    bottom_row = [by_id["tile_tuber_5"], by_id["tile_tuber_6"], by_id["tile_spare"]]
+    bottom_row = [by_id["tile_tuber_5"], by_id["tile_tuber_6"], by_id["tile_tuber_7"]]
     for row, targets in (
         (top_row, ["tile_tuber_0", "tile_tuber_1", "tile_tuber_2"]),
         (bottom_row, ["tile_tuber_4", "tile_tuber_5", "tile_tuber_6"]),
@@ -174,11 +160,10 @@ def test_tuber_3_tile_command_is_pinned_to_tuber_3(built):
 
 def test_each_tile_gets_exactly_one_send_keys(built):
     tile_lines = [l for l in built["lines"] if "tile_pane.py" in l]
-    # 7 cast tiles + the spare grid-balancing tile (tuber_7).
+    # 8 cast tiles (tuber_0..tuber_7).
     assert len(tile_lines) == 8
     for slot in SLOTS:
         assert sum(1 for l in tile_lines if f"--slot {slot} " in l) == 1
-    assert sum(1 for l in tile_lines if "--slot tuber_7 " in l) == 1
 
 
 # ── Breadth-only: no depth panes (§6) ─────────────────────────────────────────
@@ -250,8 +235,6 @@ def test_uncast_tiles_render_grey_not_the_active_color(built):
     uncast_cast_slots = [s for s in SLOTS if s != "tuber_0" and s not in roster]
     for slot in uncast_cast_slots:
         assert by_id[f"tile_{slot}"]["border_color"] == "colour240"
-    # The spare grid-balancing tile is uncast by construction — same treatment.
-    assert by_id["tile_spare"]["border_color"] == "colour240"
 
 
 # ── Status bar label (v1.4) ────────────────────────────────────────────────────

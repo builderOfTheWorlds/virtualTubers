@@ -79,7 +79,7 @@ def plan_arc(pack, config, llm, vocab, out_path, on_llm_progress=None) -> dict:
     plan_segments = list(existing_segments)
     
     # Process batches
-    batch_size = config["arc"]["segment_hours"]
+    batch_size = config["arc"]["batch_size"]
     max_attempts = config["arc"]["max_attempts"]
     
     i = 0

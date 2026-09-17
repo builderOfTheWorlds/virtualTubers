@@ -79,6 +79,8 @@ voice:
       model_path: "/data/voices/en_US-ryan-high.onnx"
     tuber_6:
       model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_7:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
     # Recorded-session replays (boss/coder 2-speaker format) must keep working
     # unchanged — design §2 rule 5. Their speaker ids are not slots.
     boss:
@@ -136,6 +138,7 @@ voice:
     tuber_4: "tuber_4"
     tuber_5: "tuber_5"
     tuber_6: "tuber_6"
+    tuber_7: "tuber_7"
   boss_name: "Ashiorid"
   rate: 1.0
   verbosity: 0.9
@@ -182,6 +185,7 @@ roster:
   tuber_3: "Sodacan Bob"     # coder-opencode / OKO-2
   tuber_5: "Leena"           # tester / TESS-3
   tuber_6: "MAX-1"           # manager — active worker, no campaign character cast
+  tuber_7: "Iris"            # 8th slot — newly wired up (was the idle spare tile)
 
 stream:
   rtmp_url: "rtmp://localhost:1935/live"

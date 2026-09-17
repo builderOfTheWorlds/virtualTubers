@@ -1,10 +1,35 @@
 """Improvise campaign content with a local LLM."""
 
 import logging
+import re
 
 from campaign.pack import Beat, CampaignPack, CastMember, Scene
 
 log = logging.getLogger(__name__)
+
+# Strips a leading list/enumeration marker a model sometimes prepends to a
+# generated line ("3. Leena: ...", "12) chadwick: ...", "- Leena: ...").
+# Applied BEFORE speaker-prefix parsing in generate_scene: left in place, the
+# whole marker+name becomes the "prefix" (e.g. "3. Leena"), which never
+# matches a real cast id, so the line silently falls through to the
+# unprefixed/GM-narration branch with the numbering baked into the aired
+# text. This is the same defect build_generated_episode.py's ENUM_PREFIX_RE
+# has to clean up downstream — fixing it here means every future run
+# generates a clean line in the first place instead of relying on a
+# best-effort regex patch at conversion time.
+_LEADING_ENUM_RE = re.compile(r"^\s*(?:\d+[.)]|[-*])\s+")
+
+# Meta-commentary a model sometimes emits instead of (or before) a real beat
+# line — "Here is the scene:", "Beat 3:", or a bare empty-parens filler.
+# Mirrors build_generated_episode.py's FILLER_RE so a line that would have
+# been stripped downstream by the converter never gets emitted as a beat in
+# the first place.
+_FILLER_LINE_RE = re.compile(
+    r"^(here'?s?\s|here is\s).*(scene|beat|response|line)|"
+    r"^beat\s*\d+:?$|"
+    r"^\(?\s*$",
+    re.IGNORECASE,
+)
 
 
 class ImproviserError(RuntimeError):
@@ -216,7 +241,11 @@ class LLMImproviser:
 
         # Add instruction
         user_parts.append(
-            "Reply with one line per beat, formatted as '<speaker_id>: <what they say>'"
+            "Reply with one line per beat, formatted EXACTLY as "
+            "'<speaker_id>: <what they say>'. Use the speaker_id from the "
+            "Cast list above (not the display name). Do not number or bullet "
+            "the lines, do not add commentary before or after, and do not "
+            "wrap any line in quotation marks."
         )
 
         user_prompt = "\n\n".join(user_parts)
@@ -233,6 +262,17 @@ class LLMImproviser:
             return []
 
         beats = []
+        # Match on cast id OR display name, case-insensitively. The model is
+        # given both in the "Cast:" roster ("gm: Ashiorid") and is
+        # inconsistent about which one it echoes back as the line prefix
+        # (observed: "Ashiorid: ..." for the gm id, "Sodacan Bob: ..." for
+        # sodacan_bob) -- without the name alias, those lines fall through
+        # to GM narration with the name baked into the text instead of
+        # resolving to the right speaker/voice.
+        cast_lookup = {member_id.lower(): member_id for member_id in self.pack.cast}
+        for member_id, member in self.pack.cast.items():
+            if member.name:
+                cast_lookup.setdefault(member.name.lower(), member_id)
         for line in reply.splitlines():
             if len(beats) >= self.max_beats:
                 break
@@ -240,9 +280,19 @@ class LLMImproviser:
             if not line:
                 continue
 
-            prefix, _, rest = line.partition(":")
-            if _ and prefix.strip() in self.pack.cast:
-                kind, speaker, raw = "dialogue", prefix.strip(), rest
+            # Strip a leading "3. " / "12) " / "- " enumeration marker the
+            # model sometimes adds despite the instruction not to — without
+            # this, "3. Leena" is compared against the cast list instead of
+            # "Leena" and never matches, so the whole line (numbering
+            # included) falls through to the GM-narration branch below.
+            line = _LEADING_ENUM_RE.sub("", line)
+            if not line or _FILLER_LINE_RE.match(line):
+                continue  # meta-commentary ("Here is the scene:"), not a beat
+
+            prefix, sep, rest = line.partition(":")
+            matched_id = cast_lookup.get(prefix.strip().lower()) if sep else None
+            if matched_id is not None:
+                kind, speaker, raw = "dialogue", matched_id, rest
             else:
                 kind, speaker, raw = "narration", self.pack.gm_id, line
 
