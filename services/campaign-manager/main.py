@@ -94,6 +94,7 @@ def _dashboard_context(request: Request, jobs=None, jobs_error=None, message_res
         "jobs": jobs or [],
         "jobs_error": jobs_error,
         "generator_api_url": GENERATOR_API_URL,
+        "control_panel_url": CONTROL_PANEL_URL,
         "worker_ids": WORKER_IDS,
         "log_types": [],
         "replays": [],

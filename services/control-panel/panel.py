@@ -32,6 +32,11 @@ logging.basicConfig(level=logging.INFO, format="[control-panel] %(levelname)s %(
 
 BASE_DIR = Path(__file__).resolve().parent
 MESSAGE_API_URL = os.environ.get("MESSAGE_API_URL", "http://message-api:8000")
+# The campaign manager (job submission / pack editor / data viewer) — the
+# dashboard cross-links INTO it so an operator reaches either tool in one
+# click without having to remember three URLs (plan Phase 4). Port 8082
+# matches the docker-compose mapping already in place.
+CAMPAIGN_MANAGER_URL = os.environ.get("CAMPAIGN_MANAGER_URL", "http://localhost:8082")
 
 # Same hardcoded lists api.py's own WORKER_ID_EXAMPLES/MESSAGE_TYPE_EXAMPLES
 # use, for the same reason: message-api exposes no "list workers" or "list
@@ -149,6 +154,7 @@ async def dashboard(request: Request):
     replays = replays_result.data.get("episodes", []) if replays_result.ok else []
     return templates.TemplateResponse(request, "base.html", {
         "message_api_url": MESSAGE_API_URL,
+        "campaign_manager_url": CAMPAIGN_MANAGER_URL,
         "workers": workers,
         "message_type_examples": MESSAGE_TYPE_EXAMPLES,
         "worker_ids": WORKER_IDS,

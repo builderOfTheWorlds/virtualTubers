@@ -112,3 +112,7 @@ textarea { min-width: 260px; font-family: ui-monospace, monospace; }
   font-size: 0.8rem;
 }
 .view-header { margin: 0.5rem 0; }
+
+.link { color: var(--accent); text-decoration: none; }
+.link:hover { text-decoration: underline; }
+.subtle { color: var(--muted); }
