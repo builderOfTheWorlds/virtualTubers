@@ -18,9 +18,10 @@
       <select name="to" class="mono">
         {% for w in worker_ids %}<option value="{{ w }}">{{ w }}</option>{% endfor %}
         <option value="broadcast" selected>broadcast</option>
+        <option value="tuber_0">roundtable (tuber_0)</option>
       </select>
       <button class="btn ok" type="submit"
-        hx-confirm="Play {{ replay.name }} on this worker's Rerun Theater pane now?">Play</button>
+        hx-confirm="Play {{ replay.name }}? Picking &quot;roundtable&quot; airs it on the GM's tile grid (7th channel); any other target/broadcast only plays on that worker's own individual channel(s), never the roundtable grid.">Play</button>
     </form>
     <button class="btn danger"
       hx-post="/replays/{{ replay.name }}/delete" hx-target="closest tr" hx-swap="outerHTML"

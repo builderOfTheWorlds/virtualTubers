@@ -44,6 +44,28 @@ CAMPAIGN_MANAGER_URL = os.environ.get("CAMPAIGN_MANAGER_URL", "http://localhost:
 WORKER_IDS = ["coder", "coder-native", "coder-opencode", "coder-aider", "manager", "tester"]
 MESSAGE_TYPE_EXAMPLES = ["operator_message", "status_update", "coding_run_report"]
 
+# The 7th channel — the roundtable / GM container (docs/duet_replay.md,
+# config/layouts/roundtable.yaml). It is a SEPARATE audience from the six
+# character workers above: a plain replay_request (no payload.cast) addressed
+# to it plays solo on its OWN show-log pane and never touches its tile grid —
+# only app/replay_pane.py's perform_director_request does that, and it only
+# runs when payload.cast is present (docs/duet_replay.md, "Debugging: only
+# the director performs, nobody else joins" — the tile-grid analog of that
+# same gotcha). scripts/send_test_message.sh documents the fix as a
+# "roundtable companion request": address tuber_0 directly with an explicit
+# cast. WORKER_TO_TUBER_SLOT mirrors config/workers/tuber_0.yaml's `roster:`
+# map (reversed) so the Play button can build that cast automatically instead
+# of an operator having to hand-type it every time.
+ROUNDTABLE_WORKER_ID = "tuber_0"
+WORKER_TO_TUBER_SLOT = {
+    "coder": "tuber_1",
+    "coder-native": "tuber_2",
+    "coder-opencode": "tuber_3",
+    "coder-aider": "tuber_4",
+    "tester": "tuber_5",
+    "manager": "tuber_6",
+}
+
 # In-memory only (module-level, resets on restart) — message-api has no
 # "list filtered types" endpoint either, so the panel just tracks whichever
 # types an operator has looked at/added this process's lifetime, seeded with
@@ -312,12 +334,24 @@ async def play_replay(request: Request, name: str, to: str = Form("broadcast")):
     can already send (`replay_request` -> POST /messages) — this just
     saves re-typing the episode name and JSON payload by hand for the
     common case of "play what's already in the library". Anything beyond
-    a plain solo airing (voice off, narration reuse, duet cast) still
-    goes through the composer.
+    a plain solo/roundtable airing (voice off, narration reuse, a custom
+    duet cast) still goes through the composer.
+
+    `to == ROUNDTABLE_WORKER_ID` is a distinct case, not just another
+    worker id: tuber_0's tile grid only lights up via the duet DIRECTOR
+    path (app/replay_pane.py perform_director_request), which only runs
+    when payload.cast is present — a bare request plays solo on the GM's
+    own show-log pane and the grid never moves (see WORKER_TO_TUBER_SLOT's
+    comment). So a Play aimed at the roundtable auto-attaches the standard
+    worker->slot cast instead of sending the bare payload every other
+    target gets.
     """
+    payload = {"episode": name}
+    if to == ROUNDTABLE_WORKER_ID:
+        payload["cast"] = dict(WORKER_TO_TUBER_SLOT)
     result = await _mapi_request(
         "POST", "/messages",
-        json={"to": to, "type": "replay_request", "payload": {"episode": name}},
+        json={"to": to, "type": "replay_request", "payload": payload},
     )
     if result.ok:
         banner = {"ok": True, "name": name, "to": result.data.get("to", to)}

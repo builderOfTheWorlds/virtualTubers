@@ -86,6 +86,41 @@ def test_play_defaults_to_broadcast_when_no_worker_chosen(monkeypatch):
     assert resp.status_code == 200
     play_calls = [c for c in calls if c[1] == "/messages"]
     assert play_calls[0][2]["json"]["to"] == "broadcast"
+    # Solo/broadcast targets get the bare payload — no cast injected.
+    assert "cast" not in play_calls[0][2]["json"]["payload"]
+
+
+def test_play_to_roundtable_auto_attaches_the_worker_to_slot_cast(monkeypatch):
+    """The one case that isn't a bare replay_request: tuber_0's tile grid
+    only lights up via the duet director path, which requires payload.cast
+    (see panel.WORKER_TO_TUBER_SLOT's docstring). Every other `to` value
+    must NOT get a cast — it would turn an ordinary solo airing into an
+    (empty, ready-satisfied-trivially, still-solo-looking) duet directed
+    at itself, which is pointless indirection at best.
+    """
+    calls = []
+
+    async def _mapi_request(method, path, **kwargs):
+        calls.append((method, path, kwargs))
+
+        class _R:
+            ok = True
+            error = None
+            data = {"episodes": []} if path == "/replays" else {"to": kwargs.get("json", {}).get("to")}
+        return _R()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.post("/replays/ashiorid_smoke/play", data={"to": "tuber_0"})
+    assert resp.status_code == 200
+
+    play_calls = [c for c in calls if c[1] == "/messages"]
+    assert len(play_calls) == 1
+    sent = play_calls[0][2]["json"]
+    assert sent["to"] == "tuber_0"
+    assert sent["payload"]["episode"] == "ashiorid_smoke"
+    assert sent["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
+    assert sent["payload"]["cast"]["coder"] == "tuber_1"
+    assert sent["payload"]["cast"]["manager"] == "tuber_6"
 
 
 def test_play_failure_renders_error_banner_not_a_500(monkeypatch):
