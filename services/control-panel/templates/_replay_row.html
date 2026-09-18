@@ -13,6 +13,15 @@
   <td class="actions">
     <button class="btn"
       hx-get="/replays/{{ replay.name }}/view" hx-target="#replay-view" hx-swap="innerHTML">View</button>
+    <form class="inline-form" style="display:inline"
+          hx-post="/replays/{{ replay.name }}/play" hx-target="#replays-section" hx-swap="outerHTML">
+      <select name="to" class="mono">
+        {% for w in worker_ids %}<option value="{{ w }}">{{ w }}</option>{% endfor %}
+        <option value="broadcast" selected>broadcast</option>
+      </select>
+      <button class="btn ok" type="submit"
+        hx-confirm="Play {{ replay.name }} on this worker's Rerun Theater pane now?">Play</button>
+    </form>
     <button class="btn danger"
       hx-post="/replays/{{ replay.name }}/delete" hx-target="closest tr" hx-swap="outerHTML"
       hx-confirm="Delete replay {{ replay.name }}? This removes it from the Rerun Theater library.">Delete</button>

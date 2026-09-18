@@ -7,6 +7,14 @@
     {% endif %}
   {% endif %}
 
+  {% if play_result %}
+    {% if play_result.ok %}
+      <div class="banner ok">queued <span class="mono">{{ play_result.name }}</span> on <span class="mono">{{ play_result.to }}</span>'s Rerun Theater pane</div>
+    {% else %}
+      <div class="banner err">play {{ play_result.name }} failed: {{ play_result.error }}</div>
+    {% endif %}
+  {% endif %}
+
   <form class="inline-form" hx-post="/replays/upload" hx-target="#replays-section" hx-swap="outerHTML"
         hx-encoding="multipart/form-data">
     <input type="file" name="file" accept="application/json" required>

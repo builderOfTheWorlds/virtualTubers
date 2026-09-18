@@ -264,13 +264,15 @@ async def prune_logs(request: Request, after: str = Form(""), before: str = Form
 
 
 # ── Rerun Theater replays ───────────────────────────────────────────────
-async def _replays_section_context(banner: Optional[dict] = None) -> dict:
+async def _replays_section_context(banner: Optional[dict] = None, play_result: Optional[dict] = None) -> dict:
     result = await _mapi_request("GET", "/replays")
     replays = result.data.get("episodes", []) if result.ok else []
     return {
         "replays": replays,
         "replays_error": None if result.ok else result.error,
         "upload_result": banner,
+        "worker_ids": WORKER_IDS,
+        "play_result": play_result,
     }
 
 
@@ -300,6 +302,29 @@ async def upload_replay(
         banner = {"ok": False, "error": result.error}
     return templates.TemplateResponse(
         request, "_replays_section.html", await _replays_section_context(banner))
+
+
+@app.post("/replays/{name}/play", response_class=HTMLResponse)
+async def play_replay(request: Request, name: str, to: str = Form("broadcast")):
+    """Launch a Rerun Theater airing for an already-uploaded episode.
+
+    Thin wrapper over the same bus command the generic message composer
+    can already send (`replay_request` -> POST /messages) — this just
+    saves re-typing the episode name and JSON payload by hand for the
+    common case of "play what's already in the library". Anything beyond
+    a plain solo airing (voice off, narration reuse, duet cast) still
+    goes through the composer.
+    """
+    result = await _mapi_request(
+        "POST", "/messages",
+        json={"to": to, "type": "replay_request", "payload": {"episode": name}},
+    )
+    if result.ok:
+        banner = {"ok": True, "name": name, "to": result.data.get("to", to)}
+    else:
+        banner = {"ok": False, "name": name, "error": result.error}
+    return templates.TemplateResponse(
+        request, "_replays_section.html", await _replays_section_context(play_result=banner))
 
 
 @app.post("/replays/{name}/delete", response_class=HTMLResponse)
