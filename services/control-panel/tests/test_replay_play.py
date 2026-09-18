@@ -1,9 +1,11 @@
 """The Rerun Theater replay list has three actions per row: view, play,
-delete. `play` posts a `replay_request` bus message via message-api's
-generic /messages proxy, addressed to the worker chosen in that row's
-`to` select. Covers both the request shape sent upstream and the
-success/failure banner rendering — no LLM/bus/DB involved, /messages is
-mocked at the panel's own _mapi_request seam.
+delete. `play` now airs on EVERY stream in one click — the six character
+channels AND the roundtable — since a bare `to: "broadcast"` request left
+the roundtable playing audio-only with no tile text/status update (root
+cause: tuber_0's tile grid only updates via the duet director path, which
+requires payload.cast — see panel.py's play_replay docstring). No LLM/
+bus/DB involved; /messages is mocked at the panel's own _mapi_request
+seam.
 """
 import panel
 from fastapi.testclient import TestClient
@@ -39,7 +41,9 @@ def test_replay_row_has_view_play_and_delete_buttons(monkeypatch):
     assert 'hx-post="/replays/ashiorid_smoke/play"' in resp.text
 
 
-def test_play_sends_replay_request_to_the_chosen_worker(monkeypatch):
+def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtable(monkeypatch):
+    """One click must reach all 7 audiences — no operator has to know the
+    worker list or remember the roundtable needs a different payload."""
     calls = []
 
     async def _mapi_request(method, path, **kwargs):
@@ -48,56 +52,44 @@ def test_play_sends_replay_request_to_the_chosen_worker(monkeypatch):
         class _R:
             ok = True
             error = None
-            data = {"episodes": []} if path == "/replays" else {"to": kwargs.get("json", {}).get("to")}
-        return _R()
-
-    client = _client(monkeypatch, _mapi_request)
-    resp = client.post("/replays/ashiorid_smoke/play", data={"to": "coder"})
-    assert resp.status_code == 200
-
-    play_calls = [c for c in calls if c[1] == "/messages"]
-    assert len(play_calls) == 1
-    method, path, kwargs = play_calls[0]
-    assert method == "POST"
-    assert kwargs["json"] == {
-        "to": "coder",
-        "type": "replay_request",
-        "payload": {"episode": "ashiorid_smoke"},
-    }
-    assert "queued" in resp.text
-    assert "ashiorid_smoke" in resp.text
-    assert "coder" in resp.text
-
-
-def test_play_defaults_to_broadcast_when_no_worker_chosen(monkeypatch):
-    calls = []
-
-    async def _mapi_request(method, path, **kwargs):
-        calls.append((method, path, kwargs))
-
-        class _R:
-            ok = True
-            error = None
-            data = {"episodes": []} if path == "/replays" else {"to": kwargs.get("json", {}).get("to")}
+            data = {"episodes": []} if path == "/replays" else {}
         return _R()
 
     client = _client(monkeypatch, _mapi_request)
     resp = client.post("/replays/ashiorid_smoke/play")
     assert resp.status_code == 200
-    play_calls = [c for c in calls if c[1] == "/messages"]
-    assert play_calls[0][2]["json"]["to"] == "broadcast"
-    # Solo/broadcast targets get the bare payload — no cast injected.
-    assert "cast" not in play_calls[0][2]["json"]["payload"]
+
+    message_calls = [c for c in calls if c[1] == "/messages"]
+    assert len(message_calls) == len(panel.WORKER_IDS) + 1  # 6 characters + roundtable
+
+    sent_by_worker = {c[2]["json"]["to"]: c[2]["json"] for c in message_calls}
+    assert set(sent_by_worker) == set(panel.WORKER_IDS) | {panel.ROUNDTABLE_WORKER_ID}
+
+    # Every character channel gets the bare payload — no cast.
+    for worker_id in panel.WORKER_IDS:
+        msg = sent_by_worker[worker_id]
+        assert msg["type"] == "replay_request"
+        assert msg["payload"] == {"episode": "ashiorid_smoke"}
+
+    # The roundtable alone gets the worker->slot cast attached, or its tile
+    # grid never lights up (app/replay_pane.py perform_director_request
+    # only runs when payload.cast is present).
+    rt_msg = sent_by_worker[panel.ROUNDTABLE_WORKER_ID]
+    assert rt_msg["payload"]["episode"] == "ashiorid_smoke"
+    assert rt_msg["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
+    assert rt_msg["payload"]["cast"]["coder"] == "tuber_1"
+    assert rt_msg["payload"]["cast"]["manager"] == "tuber_6"
+
+    assert "all 7 streams" in resp.text or "all" in resp.text
 
 
-def test_play_to_roundtable_auto_attaches_the_worker_to_slot_cast(monkeypatch):
-    """The one case that isn't a bare replay_request: tuber_0's tile grid
-    only lights up via the duet director path, which requires payload.cast
-    (see panel.WORKER_TO_TUBER_SLOT's docstring). Every other `to` value
-    must NOT get a cast — it would turn an ordinary solo airing into an
-    (empty, ready-satisfied-trivially, still-solo-looking) duet directed
-    at itself, which is pointless indirection at best.
-    """
+def test_play_never_sends_a_bare_broadcast_message(monkeypatch):
+    """Regression guard for the actual production bug: a "to": "broadcast"
+    replay_request reaches tuber_0's agent too, racing its own cast-bearing
+    request (agent.py's request-file write has no de-dupe/clobber guard
+    for a plain replay_request the way handle_replay_invite does). Every
+    play must address workers BY NAME so nothing but the one call below
+    ever writes to tuber_0's request file."""
     calls = []
 
     async def _mapi_request(method, path, **kwargs):
@@ -106,33 +98,36 @@ def test_play_to_roundtable_auto_attaches_the_worker_to_slot_cast(monkeypatch):
         class _R:
             ok = True
             error = None
-            data = {"episodes": []} if path == "/replays" else {"to": kwargs.get("json", {}).get("to")}
-        return _R()
-
-    client = _client(monkeypatch, _mapi_request)
-    resp = client.post("/replays/ashiorid_smoke/play", data={"to": "tuber_0"})
-    assert resp.status_code == 200
-
-    play_calls = [c for c in calls if c[1] == "/messages"]
-    assert len(play_calls) == 1
-    sent = play_calls[0][2]["json"]
-    assert sent["to"] == "tuber_0"
-    assert sent["payload"]["episode"] == "ashiorid_smoke"
-    assert sent["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
-    assert sent["payload"]["cast"]["coder"] == "tuber_1"
-    assert sent["payload"]["cast"]["manager"] == "tuber_6"
-
-
-def test_play_failure_renders_error_banner_not_a_500(monkeypatch):
-    async def _mapi_request(method, path, **kwargs):
-        class _R:
-            ok = False
-            error = "worker unreachable"
             data = {"episodes": []} if path == "/replays" else {}
         return _R()
 
     client = _client(monkeypatch, _mapi_request)
-    resp = client.post("/replays/ashiorid_smoke/play", data={"to": "coder"})
+    client.post("/replays/ashiorid_smoke/play")
+
+    message_calls = [c for c in calls if c[1] == "/messages"]
+    assert all(c[2]["json"]["to"] != "broadcast" for c in message_calls)
+
+
+def test_play_partial_failure_still_reports_which_streams_failed(monkeypatch):
+    """One unreachable worker must not stop the episode airing on the
+    other six/seven, and the operator must be told exactly what failed."""
+    async def _mapi_request(method, path, **kwargs):
+        if path == "/messages" and kwargs.get("json", {}).get("to") == "tester":
+            class _Fail:
+                ok = False
+                error = "worker unreachable"
+                data = None
+            return _Fail()
+
+        class _Ok:
+            ok = True
+            error = None
+            data = {"episodes": []} if path == "/replays" else {}
+        return _Ok()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.post("/replays/ashiorid_smoke/play")
     assert resp.status_code == 200
+    assert "tester" in resp.text
     assert "worker unreachable" in resp.text
     assert "ashiorid_smoke" in resp.text

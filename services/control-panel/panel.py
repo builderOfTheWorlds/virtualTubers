@@ -327,36 +327,56 @@ async def upload_replay(
 
 
 @app.post("/replays/{name}/play", response_class=HTMLResponse)
-async def play_replay(request: Request, name: str, to: str = Form("broadcast")):
-    """Launch a Rerun Theater airing for an already-uploaded episode.
+async def play_replay(request: Request, name: str):
+    """Launch a Rerun Theater airing for an already-uploaded episode on
+    EVERY stream at once: the six character channels AND the roundtable's
+    tile grid.
 
-    Thin wrapper over the same bus command the generic message composer
-    can already send (`replay_request` -> POST /messages) — this just
-    saves re-typing the episode name and JSON payload by hand for the
-    common case of "play what's already in the library". Anything beyond
-    a plain solo/roundtable airing (voice off, narration reuse, a custom
-    duet cast) still goes through the composer.
+    Deliberately NOT one `to: "broadcast"` message. Two reasons:
 
-    `to == ROUNDTABLE_WORKER_ID` is a distinct case, not just another
-    worker id: tuber_0's tile grid only lights up via the duet DIRECTOR
-    path (app/replay_pane.py perform_director_request), which only runs
-    when payload.cast is present — a bare request plays solo on the GM's
-    own show-log pane and the grid never moves (see WORKER_TO_TUBER_SLOT's
-    comment). So a Play aimed at the roundtable auto-attaches the standard
-    worker->slot cast instead of sending the bare payload every other
-    target gets.
+    1. tuber_0's tile grid only lights up via the duet DIRECTOR path
+       (app/replay_pane.py perform_director_request), which only runs when
+       payload.cast is present — a bare request plays solo on the GM's own
+       show-log pane with audio but no tile text/status update (reported
+       live: "I can hear the voices on the roundtable but don't see any
+       text or the tubers' statuses updating"). So tuber_0 needs a
+       DIFFERENT payload (with cast) than the other six.
+    2. Addressing "broadcast" would ALSO reach tuber_0's agent with the
+       bare payload, racing its own request file against the cast-bearing
+       one below (both are unconditional file writes — see
+       app/agent.py's _write_replay_request / handle_replay_request,
+       which — unlike handle_replay_invite — has no "don't clobber a
+       pending request" guard). Addressing each of the 6 character
+       workers BY NAME instead of "broadcast" means nothing but this one
+       call ever writes to tuber_0's request file, so there is no race to
+       reason about.
+
+    Every failure is best-effort and independently reported — one
+    unreachable worker must not stop the episode airing on the other six.
     """
-    payload = {"episode": name}
-    if to == ROUNDTABLE_WORKER_ID:
-        payload["cast"] = dict(WORKER_TO_TUBER_SLOT)
-    result = await _mapi_request(
+    results = []
+    for worker_id in WORKER_IDS:
+        r = await _mapi_request(
+            "POST", "/messages",
+            json={"to": worker_id, "type": "replay_request", "payload": {"episode": name}},
+        )
+        results.append((worker_id, r))
+    roundtable_result = await _mapi_request(
         "POST", "/messages",
-        json={"to": to, "type": "replay_request", "payload": payload},
+        json={"to": ROUNDTABLE_WORKER_ID, "type": "replay_request",
+              "payload": {"episode": name, "cast": dict(WORKER_TO_TUBER_SLOT)}},
     )
-    if result.ok:
-        banner = {"ok": True, "name": name, "to": result.data.get("to", to)}
+    results.append((ROUNDTABLE_WORKER_ID, roundtable_result))
+
+    failed = [worker_id for worker_id, r in results if not r.ok]
+    if not failed:
+        banner = {"ok": True, "name": name,
+                  "to": f"all {len(results)} streams (6 channels + roundtable)"}
     else:
-        banner = {"ok": False, "name": name, "error": result.error}
+        errors = "; ".join(f"{w}: {r.error}" for w, r in results if not r.ok)
+        succeeded = len(results) - len(failed)
+        banner = {"ok": False, "name": name,
+                  "error": f"{succeeded}/{len(results)} streams queued — failed: {errors}"}
     return templates.TemplateResponse(
         request, "_replays_section.html", await _replays_section_context(play_result=banner))
 
