@@ -56,6 +56,22 @@ MESSAGE_TYPE_EXAMPLES = ["operator_message", "status_update", "coding_run_report
 # cast. WORKER_TO_TUBER_SLOT mirrors config/workers/tuber_0.yaml's `roster:`
 # map (reversed) so the Play button can build that cast automatically instead
 # of an operator having to hand-type it every time.
+#
+# manager -> tuber_0, NOT tuber_6, is deliberate and easy to get backwards:
+# every episode-building script in this repo overloads the "manager" WORKER
+# id to carry the GM/narrator's lines, not the MAX-1 character —
+# .claude/prompts/build_campaign_episode.py's SPEAKER_TO_WORKER: {"gm":
+# "manager"} and build_generated_episode.py's {"ashiorid": "manager"}
+# ("Ashiorid -> manager (GM)"). tuber_0.yaml's own roster comment confirms
+# the other side of this: "tuber_6: MAX-1 — active worker, no campaign
+# character cast" — nothing currently routes to MAX-1's tile for this kind
+# of content. Mapping manager -> tuber_6 here (the naive "6 workers, 6
+# non-GM slots" reading) sent every GM line to the wrong tile, so tuber_0
+# never owned a scene and rendered silent (audio still played correctly —
+# tuber_0.yaml's voice.speakers.manager is deliberately tuber_0's own voice
+# — but perform_director_request's ownership gate means only the tile the
+# CAST maps a speaker to gets the bubble/status update). Reported live:
+# "I can hear the voice but the Game Master shows no text."
 ROUNDTABLE_WORKER_ID = "tuber_0"
 WORKER_TO_TUBER_SLOT = {
     "coder": "tuber_1",
@@ -63,7 +79,7 @@ WORKER_TO_TUBER_SLOT = {
     "coder-opencode": "tuber_3",
     "coder-aider": "tuber_4",
     "tester": "tuber_5",
-    "manager": "tuber_6",
+    "manager": ROUNDTABLE_WORKER_ID,
 }
 
 # In-memory only (module-level, resets on restart) — message-api has no

@@ -78,7 +78,14 @@ def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtabl
     assert rt_msg["payload"]["episode"] == "ashiorid_smoke"
     assert rt_msg["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
     assert rt_msg["payload"]["cast"]["coder"] == "tuber_1"
-    assert rt_msg["payload"]["cast"]["manager"] == "tuber_6"
+    # manager carries the GM/narrator's lines in every episode-building
+    # script (build_campaign_episode.py's "gm": "manager", build_generated_
+    # episode.py's "ashiorid": "manager") — it must map to the GM's OWN
+    # tile (tuber_0), not MAX-1's (tuber_6), or the GM's lines get no
+    # bubble/status update even though the audio (correctly) plays as
+    # tuber_0's own voice. Regression guard for the real reported bug:
+    # "I can hear the voice but the Game Master shows no text."
+    assert rt_msg["payload"]["cast"]["manager"] == "tuber_0"
 
     assert "all 7 streams" in resp.text or "all" in resp.text
 
