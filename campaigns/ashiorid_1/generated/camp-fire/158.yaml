@@ -1,0 +1,40 @@
+id: camp-fire
+take: 158
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:49.181059+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but it's not going to last the night if we don't get more
+    wood.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle on a watch order, people. Sodacan Bob, what do you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should have the fire in the center, it's more stable that way.
+- kind: dialogue
+  speaker: Leena
+  text: Is it just me, or did the rain start coming down heavier just before the party
+    stopped?
+- kind: dialogue
+  speaker: Vigil
+  text: The moon's still full.
+- kind: dialogue
+  speaker: gm
+  text: We need to get more wood, anyone see any decent branches around?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the rain's just letting up, we should be able to get by tonight.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long a fire can burn without any maintenance?
+- kind: dialogue
+  speaker: chadwick
+  text: That's a good question, but we can't worry about that now.
+- kind: dialogue
+  speaker: gm
+  text: I think I see some decent wood over by the river.
+- kind: dialogue
+  speaker: Vigil
+  text: We're going to have to get up early tomorrow to get moving.

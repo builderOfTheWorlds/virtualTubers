@@ -1,0 +1,93 @@
+segment_id: malmont-arrival-arc-loop1-25
+order: 25
+loop: 0
+hours: 6
+synopsis: The party regroups in Malmont after their harrowing escape from Leto's manor,
+  each carrying the weight of what they've seen and the knowledge that their lives
+  have been irrevocably changed. They begin to piece together the implications of
+  Grovley's revelation, while the town's strange atmosphere starts to reveal its own
+  secrets.
+continuity_in: The party has escaped from Leto's manor after the attack, with the
+  manor now in ruins and the four of them alive but forever altered by what they've
+  experienced. The subbasement's revelations about their true nature linger heavily
+  on their minds.
+continuity_out: The party is beginning to understand that their connection to Leto's
+  legacy runs deeper than mere coincidence, and that Malmont may hold more answers
+  than they initially thought.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-loop1-25-n1-whispers-1
+  kind: ambient
+  prompt: The party begins to investigate Malmont's secrets, discovering that the
+    town's history is intertwined with Leto's legacy in ways they never imagined.
+  lore:
+  - malmont
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-25-n1
+- slot_id: malmont-arrival-arc-loop1-25-n1-whispers-2
+  kind: ambient
+  prompt: Ancient texts, hidden passages, and the townspeople's reluctance to speak
+    about certain topics all point toward a deeper conspiracy.
+  lore:
+  - malmont
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-25-n1
+- slot_id: malmont-arrival-arc-loop1-25-n1-whispers-3
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: malmont-arrival-arc-loop1-25-n1
+- slot_id: malmont-arrival-arc-loop1-25-n1-whispers-4
+  kind: ambient
+  prompt: The revelation of their true nature from the subbasement starts to make
+    sense within the context of Malmont's mysterious past.
+  lore:
+  - malmont
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-25-n1
+nodes:
+- node_id: malmont-arrival-arc-loop1-25
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-25-n0
+  parent_id: malmont-arrival-arc-loop1-25
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-25-n1
+  parent_id: malmont-arrival-arc-loop1-25
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+needs_rebrief: true

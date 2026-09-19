@@ -1,0 +1,24 @@
+id: the-meal
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:55.792808+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think someone would put some effort into cooking a decent meal for once.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, everyone, let's make the best of it, shall we? It's a lovely evening,
+    after all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with you people? Don't you know how to boil water?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come now, Bob, it's not that bad!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the pot's not been properly cleaned, I can see the stains for myself.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think it's quite tasty, don't you agree, everyone?

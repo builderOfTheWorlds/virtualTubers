@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:26.917066+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving then. We've got a decent lead on our quarry.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm taking the lead from here.
+- kind: dialogue
+  speaker: Leena
+  text: Are you sure you know where we are, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I do, of course.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) I think he's got it backwards, again.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is going to be good.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Okay, Chadwick, why don't you ask Vigil to give you a navigation
+    update?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: (waiting expectantly) Ah, right... I'm still waiting to be asked.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to keep moving, no time for questions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh boy...
+- kind: dialogue
+  speaker: Leena
+  text: (hesitantly) Chadwick, maybe we could... uh... take a short break?

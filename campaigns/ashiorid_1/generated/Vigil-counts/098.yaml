@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 98
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:38.352114+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Six people in the room, doors open to the left.
+- kind: dialogue
+  speaker: chadwick
+  text: You're counting people now?
+- kind: dialogue
+  speaker: Vigil
+  text: Someone replaced the shutter on the window.
+- kind: dialogue
+  speaker: Leena
+  text: New shutter, huh.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cares about shutters?
+- kind: dialogue
+  speaker: gm
+  text: Let's get back to the main topic.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by is the same one from earlier.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of all this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil just likes counting.

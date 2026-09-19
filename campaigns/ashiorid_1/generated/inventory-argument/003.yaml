@@ -1,0 +1,50 @@
+id: inventory-argument
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:13.764979+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, I swear, this was in the blue pack, not the green one.
+- kind: dialogue
+  speaker: chadwick
+  text: You can't be serious, Ash, I distinctly remember packing those goggles in
+    the green bag.
+- kind: dialogue
+  speaker: Leena
+  text: Neither of you are even looking in the right pack, it's probably in the yellow
+    one.
+- kind: dialogue
+  speaker: Vigil
+  text: Finally, some sense, Leena, I was just about to suggest that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're all wrong, I know I packed that weird rock in the green bag.
+- kind: dialogue
+  speaker: gm
+  text: Oh great, now Sodacan's acting like he's some kind of expert on bag-gorgon
+    navigation.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't even know why we bother labeling anything if nobody remembers what
+    they packed.
+- kind: dialogue
+  speaker: Leena
+  text: Labels are a waste of time, just take a moment to think before grabbing a
+    bag.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But if you're just gonna dump all your stuff on the ground, maybe it's not
+    such a waste.
+- kind: dialogue
+  speaker: Vigil
+  text: Anyway, I'm glad I was right about the rock, it's exactly what we needed for
+    the next leg.
+- kind: dialogue
+  speaker: gm
+  text: Whatever, let's just move on before one of you claims the wrong pack is missing
+    something vital.
+- kind: dialogue
+  speaker: chadwick
+  text: And if someone's already found what we were looking for, why are we still
+    arguing about whose bag it's in?

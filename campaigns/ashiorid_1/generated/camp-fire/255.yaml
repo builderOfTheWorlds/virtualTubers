@@ -1,0 +1,40 @@
+id: camp-fire
+take: 255
+model: llama3.1:8b
+generated_at: '2026-09-18T23:43:31.471153+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down steady since we arrived.
+- kind: dialogue
+  speaker: Leena
+  text: How much water can these wagons hold?
+- kind: dialogue
+  speaker: Vigil
+  text: We'll need a full day to dry out.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyone seen the spare ropes?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we could've used some more kindling, but it's holding.
+- kind: dialogue
+  speaker: gm
+  text: That's some quality lay, Sodacan Bob, I'll give you that.
+- kind: dialogue
+  speaker: Leena
+  text: Can anyone tell me what happens to the fire when it's been burning this long?
+- kind: dialogue
+  speaker: Vigil
+  text: Eventually, it'll burn itself out.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get the watch order settled, I don't want anyone sleeping on
+    duty.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Chadwick, I think you're getting ahead of yourself, we'll figure it out in
+    the morning.
+- kind: dialogue
+  speaker: gm
+  text: Morning's a long way off, let's just take this one hour at a time.

@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:41.130022+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a good strike is all about the angle of the die.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, what's got you so worked up about this Malvakar carving?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just thinking out loud, thinking about how anyone would go to the trouble
+    of carving runes that deep.
+- kind: dialogue
+  speaker: Leena
+  text: You think it was some kind of... warning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Warning? I think it was a signature, or a label, or something.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, can you explain what makes those runes so special?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What do you mean, what makes them special? They're just runes.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, don't you think it's relevant to the Malvakar's purpose?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, the purpose? Ha! You think we're getting close to the truth?

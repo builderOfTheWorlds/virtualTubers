@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:23.217423+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw a similar one in your village?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. You don't know what it is.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence, all.
+- kind: dialogue
+  speaker: Leena
+  text: What's the harm in a little curiosity?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just a coincidence, Leena. Don't worry about it.
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena. Some things are better left unexplored.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not worth it.

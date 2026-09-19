@@ -1,0 +1,41 @@
+id: the-meal
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T22:33:03.600960+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So it's clear not everyone is a fan of the meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, come on, it's like eating a plate of cardboard.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob, it's not so bad, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done better, I've cooked for my whole clan.
+- kind: dialogue
+  speaker: chadwick
+  text: This has nothing to do with me.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, you're not going to criticize every meal, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone has to speak up around here.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's drop it, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: finally.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, if I had my way...
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, really, no one wants to hear it.

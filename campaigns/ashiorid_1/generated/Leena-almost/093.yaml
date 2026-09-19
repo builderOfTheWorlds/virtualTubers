@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:28.663727+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what that is, but I feel like I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably from your village. We've seen those buildings before.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You'll get lost.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it. I just want to know why it feels familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village. You don't remember it.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think that's it. I've lived there my whole life.
+- kind: dialogue
+  speaker: chadwick
+  text: Whatever it is, just drop it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're right. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: It's just a feeling. I'm not worried.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let it go then.

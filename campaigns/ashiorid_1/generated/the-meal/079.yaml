@@ -1,0 +1,43 @@
+id: the-meal
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:49.758705+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food's a bit of a letdown, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's a lovely meal! We should be grateful for what we have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done better, believe me, I could've added some real seasoning to
+    this dish.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not hungry.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you're a guest, let's just enjoy the meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Enjoy the meal? You call this an enjoyable meal?
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat it, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, let's not be rude, Chadwick, we can have a nice conversation while we
+    eat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying this meal is subpar because I know what I'm talking about.
+- kind: dialogue
+  speaker: gm
+  text: I think we've all had enough to say about the meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I would've done it differently.

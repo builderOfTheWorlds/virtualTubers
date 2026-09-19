@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 137
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:35.268510+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil's got some thoughts on the setup here. What'd you notice?
+- kind: dialogue
+  speaker: Vigil
+  text: The south door's the one that's been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not exactly a surprise, is it? We've been through here a few times.
+- kind: dialogue
+  speaker: Leena
+  text: It's good to know, though. We should make a note of it.
+- kind: dialogue
+  speaker: Vigil
+  text: There's also the cart that's been passing by our window twice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What cart?
+- kind: dialogue
+  speaker: Vigil
+  text: The one with the crates on it. It just passed by again.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a delivery, Bob. Don't worry about it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the exact time it passed by, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: About an hour ago.

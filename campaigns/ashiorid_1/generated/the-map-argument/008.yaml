@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:04.459937+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's got the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I do. I'm the navigator.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I have it too.
+- kind: dialogue
+  speaker: chadwick
+  text: You can't have it, I drew it out.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on Chadwick, I marked the trails.
+- kind: dialogue
+  speaker: chadwick
+  text: My marking is far superior.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Uh, guys, it says we're all on the same page.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, Leena's way is easier to read.
+- kind: dialogue
+  speaker: gm
+  text: Let's just agree, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: No way, I'm sticking with my method.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not about your method, Chadwick, it's about being right.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm right, I'm the one with the map.

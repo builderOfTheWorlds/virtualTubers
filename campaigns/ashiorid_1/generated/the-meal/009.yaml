@@ -1,0 +1,43 @@
+id: the-meal
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:55.886181+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, how's the meal treating you all?
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I just love cooking for all of you! It's so much fun to see your faces
+    light up.
+- kind: dialogue
+  speaker: Vigil
+  text: (surreptitiously gives his portion to Chadwick)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, seriously, it's like they're trying to poison us! This is an abomination.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob! Don't be so harsh! It's just a little off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Off? Off is when you forget to add salt. This is a catastrophe.
+- kind: dialogue
+  speaker: chadwick
+  text: (sternly) Can we just eat in peace?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Chadwick, you're so grumpy!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (exasperated) Grumpy? I'm not grumpy! I'm just concerned about the well-being
+    of my companions.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly stands up) Excuse me.
+- kind: dialogue
+  speaker: gm
+  text: (awkwardly) Uh, is everything okay?

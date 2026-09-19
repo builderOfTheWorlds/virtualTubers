@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:44.308927+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, finally, some sense of direction around here.
+- kind: dialogue
+  speaker: Leena
+  text: Ugh, Chadwick, it's not even a hard route.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, come on, it's not that complicated.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should take the left path.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, why are we arguing about this?
+- kind: dialogue
+  speaker: chadwick
+  text: Because, clearly, someone here is completely incompetent.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, stop being ridiculous.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no, I'm just pointing out the obvious.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, spare us, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just saying, if you'd followed the map properly, we'd be there by now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, thanks for the unnecessary criticism, Chadwick.

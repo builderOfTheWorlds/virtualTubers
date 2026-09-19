@@ -1,0 +1,36 @@
+id: malmont-market
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:57.276648+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's high, and so is the crowd. Let's see what it has to offer.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think anyone recognizes me. It's... quite a relief.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your eyes open. A lot can happen in a crowd like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more interested in the smithwork over here. Hmm, some nice pieces.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, maps. I love old maps. Let me take a look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Most of this stuff's not even worth the metal it's made from.
+- kind: dialogue
+  speaker: Vigil
+  text: What's he talking about? Some of this looks like decent gear.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll stick with the vendor who doesn't know me, thanks.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, this one's from right before the war. I wonder what's around those mountains
+    now.
+- kind: dialogue
+  speaker: gm
+  text: You're getting a bit too close to the edge, Leena. Keep it to yourself.

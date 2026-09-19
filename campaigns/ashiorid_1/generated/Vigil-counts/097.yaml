@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:34.997483+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, what's that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I saw that the cart passed by the window again.
+- kind: dialogue
+  speaker: chadwick
+  text: And?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter was fixed recently.
+- kind: dialogue
+  speaker: Leena
+  text: How recent?
+- kind: dialogue
+  speaker: Vigil
+  text: A few days.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Doesn't change our plans.
+- kind: dialogue
+  speaker: Vigil
+  text: No, it doesn't.
+- kind: dialogue
+  speaker: gm
+  text: Carry on, then.

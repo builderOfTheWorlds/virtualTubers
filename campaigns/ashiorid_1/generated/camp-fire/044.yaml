@@ -1,0 +1,42 @@
+id: camp-fire
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:28.590300+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, I think we're all pretty soaked at this point.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm saying we need to settle the watch order before we all crash out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I know I laid the fire, but I think we should've used a windbreak to
+    keep the smoke off the rain.
+- kind: dialogue
+  speaker: Vigil
+  text: It's burning better than I thought it would.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will clear by morning?
+- kind: dialogue
+  speaker: gm
+  text: Unlikely, we're still getting a steady downpour.
+- kind: dialogue
+  speaker: chadwick
+  text: 'Alright, watch order: who''s first, who''s second?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I would've done the fire differently, if I'd had a choice.
+- kind: dialogue
+  speaker: Leena
+  text: What's the protocol for when the fire gets low?
+- kind: dialogue
+  speaker: Vigil
+  text: You need more wood.
+- kind: dialogue
+  speaker: gm
+  text: We'll get some in the morning, when the rain lets up.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, so we're clear on the watch order?

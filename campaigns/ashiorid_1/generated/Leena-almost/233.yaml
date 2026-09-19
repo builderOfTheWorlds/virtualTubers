@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 233
+model: llama3.1:8b
+generated_at: '2026-09-18T22:03:18.874403+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Leena says something's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not something I would have seen.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I bet it's something from the village, though. They have all sorts of...things
+    there.
+- kind: dialogue
+  speaker: Leena
+  text: Why won't anyone say what's bothering me?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's not worth it.
+- kind: dialogue
+  speaker: gm
+  text: The others offer ordinary explanations, but Leena remains uncertain.

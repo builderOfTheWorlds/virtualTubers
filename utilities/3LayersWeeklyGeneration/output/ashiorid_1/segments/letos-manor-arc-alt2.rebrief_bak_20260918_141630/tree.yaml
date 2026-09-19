@@ -1,0 +1,79 @@
+letos-manor-arc-alt2:
+  node_id: letos-manor-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four arrive at Duke Sorensen Leto the Third's manor for a party ten thousand
+  summary: The four arrive at Duke Sorensen Leto the Third's manor for a party ten
+    thousand years in the making, only to find it is not what they expected.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-alt2-n0
+  - letos-manor-arc-alt2-n1
+  slots: null
+letos-manor-arc-alt2-n0:
+  node_id: letos-manor-arc-alt2-n0
+  parent_id: letos-manor-arc-alt2
+  order: 0
+  depth: 1
+  title: Arrival and Initial Disappointment
+  summary: The four companions arrive at Duke Sorensen Leto the Third's manor expecting
+    a grand celebration after ten thousand years, but the reality proves dramatically
+    different from their expectations, with the atmosphere feeling cold and unwelcoming
+    despite the ostentatious preparations.
+  continuity_in: The four arrive at Duke Sorensen Leto the Third's manor for a party
+    ten thousand years in the making
+  continuity_out: The party is not what they expected, and the Duke's true intentions
+    remain hidden
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-alt2-n0-arrival-1
+    kind: ambient
+    prompt: The four companions step through the grand entrance of Duke Sorensen Leto
+      the Third's manor, their expectations shattered by the cold, unwelcoming atmosphere
+      despite the ostentatious preparations.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-alt2-n0-arrival-2
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+letos-manor-arc-alt2-n1:
+  node_id: letos-manor-arc-alt2-n1
+  parent_id: letos-manor-arc-alt2
+  order: 1
+  depth: 1
+  title: Unraveling the Deception
+  summary: As the companions navigate the manor's deceptive surface, they begin to
+    uncover the sinister truth behind this millennium-long celebration, realizing
+    that the party may be a trap designed to lure them into a deadly conspiracy.
+  continuity_in: The party is not what they expected, and the Duke's true intentions
+    remain hidden
+  continuity_out: The four must decide whether to expose the conspiracy or play along
+    with the deception
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

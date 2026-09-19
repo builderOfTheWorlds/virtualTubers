@@ -1,0 +1,29 @@
+id: sodacan_bob-on-runes
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-18T20:52:31.191711+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a die struck with intention like that will leave a mark that'll
+    outlast the stone itself.
+- kind: dialogue
+  speaker: chadwick
+  text: What's got you thinking about the Malvakar's inscription so much, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just wondering how it survived this long, is all. The craftsmanship is...
+    it's something.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think someone deliberately carved it to be hidden, or was it just a
+    style of the time?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Either way, it's a good sign they knew what they were doing.
+- kind: dialogue
+  speaker: Vigil
+  text: What if it's not just a style? What if it's a message?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what to say to that, Vigil.

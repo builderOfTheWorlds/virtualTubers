@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:26.290959+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're certain you know where we're going, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I can give you directions if you need them, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick lost, how ever will we survive?
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps you could just ask Vigil for clarification, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No need, we'll figure it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: I can take point if you'd like, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Chadwick's navigation skills are a thing of legend now.

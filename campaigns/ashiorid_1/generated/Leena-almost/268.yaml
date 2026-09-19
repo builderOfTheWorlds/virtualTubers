@@ -1,0 +1,34 @@
+id: Leena-almost
+take: 268
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:22.325742+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I think I know what you might be seeing.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. You'll only get confused.
+- kind: dialogue
+  speaker: Vigil
+  text: What is it that's familiar?
+- kind: dialogue
+  speaker: Leena
+  text: A turn of phrase. Somebody used it, a tune being hummed, the shape of a doorway,
+    a smell.
+- kind: dialogue
+  speaker: gm
+  text: It's probably something from your village. You must have seen it before.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think Ashiorid's right. Your village is probably full of familiar
+    things.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know... but it's not just that.

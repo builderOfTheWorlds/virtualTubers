@@ -1,0 +1,41 @@
+id: night-watch
+take: 66
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:56.154340+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I like the sky when it's like this.
+- kind: dialogue
+  speaker: Vigil
+  text: It's so big.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What time is it?
+- kind: dialogue
+  speaker: gm
+  text: Almost three.
+- kind: dialogue
+  speaker: Leena
+  text: Do you hear anything?
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Just the wind.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not loud enough to be wind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should wake the others.
+- kind: dialogue
+  speaker: gm
+  text: We're not going to hear anything at this hour.

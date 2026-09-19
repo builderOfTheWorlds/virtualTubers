@@ -1,0 +1,33 @@
+id: inventory-argument
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:03.469110+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, Chadwick, this is your bag, it's got your name on it.
+- kind: dialogue
+  speaker: chadwick
+  text: Not on this bag, it's a generic label, anyone could have labeled it like that.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, great, now we're all just assuming whose bag has what, because nobody
+    ever labels anything.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think it'd be simple to just write our names on our bags, but no.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could have sworn I had my spare lenses in this bag, but it's not here.
+- kind: dialogue
+  speaker: chadwick
+  text: Ha, look what's in here, I've got an extra set of keys to the inn room.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you were the one who lost those keys last week, how's that fair?
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Chadwick, you were right, this is your bag, and you should be happy.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what about my lenses, where are they?

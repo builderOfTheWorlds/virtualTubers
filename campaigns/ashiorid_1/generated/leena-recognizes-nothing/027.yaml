@@ -1,0 +1,32 @@
+id: leena-recognizes-nothing
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:52.001249+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen that hill somewhere before.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: What''s that, Leena?'
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It just looks familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you might have seen similar hills on a tour of the countryside.
+- kind: dialogue
+  speaker: Vigil
+  text: (no comment)
+- kind: dialogue
+  speaker: chadwick
+  text: We should focus on the road ahead, not daydream about hills we've seen before.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I wasn't daydreaming, I was trying to place it.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (smiling) Well, it's a lovely view, isn't it?

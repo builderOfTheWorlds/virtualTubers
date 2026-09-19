@@ -1,0 +1,35 @@
+id: after-the-choice
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:33.872925+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's done. We're moving forward.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) Guess we should be glad it's over.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: (low) It was worth it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, at least we get to eat breakfast now.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs briefly) Yeah, that's something.
+- kind: dialogue
+  speaker: gm
+  text: (no inflection) It's not a celebration, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, then speaks) I... I still miss it.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (awkwardly) Uh, so, breakfast?

@@ -1,0 +1,36 @@
+id: the-map-argument
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:50.808324+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, everyone. We've got a long day ahead of us.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, wait, wait. I think there's been a mistake on this route.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: This path is clearly marked as a shortcut. We can't be taking the long way.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think you'll find the map says we should take the long way.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no. I'm positive I saw this marked as a shortcut.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Uh, can someone tell me what's going on here?
+- kind: dialogue
+  speaker: chadwick
+  text: This guy, Vigil, is completely wrong. I know these maps like the back of my
+    hand.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just take a look at it again, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but I'm telling you, I'm right on this one.

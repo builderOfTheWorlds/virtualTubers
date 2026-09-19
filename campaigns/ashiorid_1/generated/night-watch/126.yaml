@@ -1,0 +1,38 @@
+id: night-watch
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:26.495972+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Look up, can you see the constellations?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I think it's Orion. The one with the belt.
+- kind: dialogue
+  speaker: Leena
+  text: I thought it was Andromeda.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, but the stars look different from down here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should be quiet, just in case.
+- kind: dialogue
+  speaker: gm
+  text: I'm not hearing anything.
+- kind: dialogue
+  speaker: chadwick
+  text: Neither am I. It's almost too quiet.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe that's a good thing.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't like it when it's too quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's just keep watching, okay?
+- kind: dialogue
+  speaker: gm
+  text: Fine.

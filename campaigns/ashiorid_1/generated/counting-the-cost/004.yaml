@@ -1,0 +1,42 @@
+id: counting-the-cost
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:44.358510+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's the tally?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Gear's got a few scuffs, cart's got a loose axle, Leena's got a bruised pride.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: Anything we can fix on the road?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That axle's gonna need some filing, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: You're not exactly getting us back on schedule, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: When you're trying to hammer something back into shape, sometimes you've got
+    to start over.
+- kind: dialogue
+  speaker: gm
+  text: We've got some downtime to make repairs. Let's use it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Then let's get to work.
+- kind: dialogue
+  speaker: Leena
+  text: I'll start on the gear. Vigil, you're with me.
+- kind: dialogue
+  speaker: Vigil
+  text: Sounds good.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll check the cart's framework.

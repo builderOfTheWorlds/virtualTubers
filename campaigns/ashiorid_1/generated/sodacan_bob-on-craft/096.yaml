@@ -1,0 +1,31 @@
+id: sodacan_bob-on-craft
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-19T00:01:46.549387+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, what have we got here?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just move on, Bob? This thing's just a hunk of metal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, it's a hunk of metal, all right, but it's a beautifully crafted hunk of
+    metal, made by the esteemed Smithson Forge in 1852.
+- kind: dialogue
+  speaker: gm
+  text: And what makes you so sure it's Smithson Forge?
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, is it just lying here by chance?
+- kind: dialogue
+  speaker: Leena
+  text: I love the way the grain of the metal runs across it, it's really...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, you can see the subtle way the maker has exploited the tension in
+    the metal to create this lovely...
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Beautiful metalwork, great, just what we need, more history...

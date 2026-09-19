@@ -1,0 +1,40 @@
+id: malmont-market
+take: 131
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:42.877622+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen finer work in half the time it takes to get here.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get distracted, let's just get what we need.
+- kind: dialogue
+  speaker: Leena
+  text: What's that map you've got there, you have any others?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, no, no, I'm just a humble traveler.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) This is the kind of smithwork that makes me think I'm too old
+    for this life.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) Easy, Bob, let's not draw attention.
+- kind: dialogue
+  speaker: Leena
+  text: (reaching out) May I see that map, the one with the forest on it?
+- kind: dialogue
+  speaker: chadwick
+  text: (relaxed) Ah, yes, please do go on, I'm all ears.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go ask that woman about the quality of her metal.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Chadwick) You're certainly... fitting in.
+- kind: dialogue
+  speaker: Leena
+  text: (studying the map) I think this one's from before the fire, look at the layout
+    of the forest.

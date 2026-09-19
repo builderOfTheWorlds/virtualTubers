@@ -1,0 +1,41 @@
+id: the-meal
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:43.774554+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, come on, who serves the same old stew every week?
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, it's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Bob's got a flair for cooking! Let him whip up something special for tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Vigil did a good job with the vegetables.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vegetables? You call that a medley of wilted lettuce and soggy carrots?
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's just enjoy our meal, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm enjoying my meal, can we move on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're not even criticizing the seasoning? This stew tastes like nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: I gave mine to the cat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob, you're a culinary disaster waiting to happen!
+- kind: dialogue
+  speaker: Leena
+  text: Who's cooking tomorrow, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take it, I'll show you all how it's done.

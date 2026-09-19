@@ -1,0 +1,41 @@
+id: night-watch
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:40.123930+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Stars are out tonight.
+- kind: dialogue
+  speaker: gm
+  text: Too bright, it's been cloudy all week.
+- kind: dialogue
+  speaker: Vigil
+  text: No, look, the pattern's still there.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) What are you two talking about?
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) The sky.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not just the sky, you're both getting excited about it.
+- kind: dialogue
+  speaker: gm
+  text: We are not.
+- kind: dialogue
+  speaker: Vigil
+  text: No, I'm just saying, if we're not moving, we should maybe wake them up.
+- kind: dialogue
+  speaker: Leena
+  text: No, I think we're good for a few more hours.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns again) Fine, keep watching the stars, I'll sleep.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Sometimes I think about what would happen if we got hurt.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What do you mean?

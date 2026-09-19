@@ -1,0 +1,29 @@
+id: after-the-choice
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:24.598903+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've got a window to make good on it now.
+- kind: narration
+  speaker: gm
+  text: Carry
+- kind: dialogue
+  speaker: Leena
+  text: It feels... heavier than I expected.
+- kind: narration
+  speaker: gm
+  text: Carry
+- kind: dialogue
+  speaker: chadwick
+  text: We did what needed doin', it's done.
+- kind: narration
+  speaker: gm
+  text: Carry
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, at least we got the rain out of the way now, right?
+- kind: narration
+  speaker: gm
+  text: Carry

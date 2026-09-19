@@ -1,0 +1,41 @@
+id: night-watch
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:34.036368+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: It''s a clear night, no cloud cover.'
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I can see stars.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I can see stars too.
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: (pauses) Do you hear anything?'
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) No, nothing.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I hear crickets, I guess.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) Yeah, crickets.
+- kind: dialogue
+  speaker: Leena
+  text: (mumbles) Should we wake the others early?
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: (pauses) No, let them sleep.'
+- kind: dialogue
+  speaker: chadwick
+  text: (agrees) Yeah, it's still a couple of hours.
+- kind: dialogue
+  speaker: Leena
+  text: (breaks silence) I've been having weird dreams.
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: (doesn''t respond, just continues watching).'

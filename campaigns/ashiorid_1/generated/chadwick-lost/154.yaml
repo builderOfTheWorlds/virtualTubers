@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 154
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:41.275153+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching a fork in the road. The path to the east looks treacherous.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's fine. We'll just head east.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, are you sure?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I'm sure. I've been thinking about the route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! He's lost, and he knows it!
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you give us your opinion on the best course of action?
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should head east. It'll be a bit longer, but safer.
+- kind: dialogue
+  speaker: chadwick
+  text: Nonsense. We'll just head east.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's head east then.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I told you it was the right way.
+- kind: dialogue
+  speaker: Vigil
+  text: You were just following your instincts, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and they led us on a merry chase!

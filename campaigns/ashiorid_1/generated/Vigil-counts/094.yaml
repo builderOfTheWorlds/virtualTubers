@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 94
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:25.248933+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, what did you notice this time, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like he's just observing the scene.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, he does that.
+- kind: dialogue
+  speaker: Vigil
+  text: There are six people in the room, including us. The doors open to the left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's useful to know.
+- kind: dialogue
+  speaker: Vigil
+  text: Also, the shutter on the window has been recently repaired.
+- kind: dialogue
+  speaker: gm
+  text: Good to know, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we didn't even notice that.
+- kind: dialogue
+  speaker: Leena
+  text: Thanks for pointing it out.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier is now parked outside.

@@ -1,0 +1,27 @@
+id: sodacan_bob-on-runes
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:20.977475+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen runes like that on the Malvakar, never thought I'd see 'em in the
+    wild.
+- kind: dialogue
+  speaker: chadwick
+  text: What's eating at you, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die's struck, that's all it is. A good die, a precise strike...
+- kind: dialogue
+  speaker: Vigil
+  text: You mean like the one you found on the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That one, yes. Who carves their name in the dark, like that?
+- kind: dialogue
+  speaker: Leena
+  text: Why do you think it was carved there, in the first place?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a name, a name and a date...

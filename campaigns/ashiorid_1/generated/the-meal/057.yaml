@@ -1,0 +1,41 @@
+id: the-meal
+take: 57
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:48.494751+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, who's had their fill?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: Everyone, gather 'round! A feast for the ages!
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers to Leena) I'm good, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now this, now this, is a crime against culinary art.
+- kind: dialogue
+  speaker: gm
+  text: Bob, what's wrong?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong? This mess?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, lighten up!
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is an insult to the cooking arts!
+- kind: dialogue
+  speaker: Vigil
+  text: (takes a piece of Sodacan Bob's food)
+- kind: dialogue
+  speaker: gm
+  text: Bob, did you make this?

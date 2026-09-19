@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 188
+model: llama3.1:8b
+generated_at: '2026-09-18T20:26:15.630566+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: A doorway that shouldn't be here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's possible you saw one like it back in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's not worth it.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what it is, but it feels familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We've all seen things like that, it's just your brain playing tricks.
+- kind: dialogue
+  speaker: gm
+  text: What do you smell, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: It's... I don't know, it's like something I used to smell all the time.
+- kind: dialogue
+  speaker: chadwick
+  text: Just focus on what's in front of you, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: I see nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we can help you figure out what it is.

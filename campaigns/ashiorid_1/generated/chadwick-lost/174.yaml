@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 174
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:47.426085+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the fork in the road. Chadwick, do you know which way to
+    go?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head that way.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, are you sure you're feeling okay? That looks like the forest, not
+    the trail.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I'm feeling okay. I'm just... conserving energy.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I think I'll just take a look at the map.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Would you like me to check the map, just to be sure?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling at Chadwick) I think we'll just head in that direction, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, you're killing me, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (grinning) Shut up, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughing) It's okay, Chadwick. I'm happy to lead.

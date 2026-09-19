@@ -1,0 +1,43 @@
+id: sodacan_bob-on-craft
+take: 66
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:30.642071+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now this is a particularly fine piece of work, if I do say so myself.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's get moving.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of metal is that, Bob?
+- kind: dialogue
+  speaker: Leena
+  text: I like the way the curve of the blade meets the guard.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent observation, Leena, that's a lovely bit of engineering.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd say it's a medieval German-made blade, likely from the 14th century.
+- kind: dialogue
+  speaker: Leena
+  text: Why do you think it was made?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the craftsmanship is exceptional, and it was probably made for a noble
+    or a knight.
+- kind: dialogue
+  speaker: chadwick
+  text: This is a waste of time.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it possible it's from later than you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Vigil, you're a skeptical one, aren't you? I think the style and the patina
+    confirm it's from the 14th century.
+- kind: dialogue
+  speaker: Leena
+  text: What makes you think it was made for someone noble or a knight?

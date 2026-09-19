@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:27.558416+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you've been walking for hours. What's caught your attention?
+- kind: dialogue
+  speaker: Leena
+  text: It's... I don't know. Something about that doorway ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: You've probably seen it in one of your... histories.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what it is, actually. We saw one in your village back home.
+- kind: dialogue
+  speaker: Vigil
+  text: Say nothing.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean, "your village"? I know where I'm from.
+- kind: dialogue
+  speaker: gm
+  text: Let's not jump to conclusions, Leena. Maybe we can ask you some questions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, maybe you saw a picture or something that stuck with you.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's more than that. I know what I'm looking at.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't...
+- kind: dialogue
+  speaker: Leena
+  text: What's going on here?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing's going on.

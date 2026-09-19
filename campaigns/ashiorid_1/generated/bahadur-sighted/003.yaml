@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:36.848836+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, keep moving forward.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, take point.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, cover me.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, eyes open.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing yet.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: We've been walking for hours.
+- kind: dialogue
+  speaker: Leena
+  text: What's that?
+- kind: dialogue
+  speaker: Vigil
+  text: Where?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: What did you see?

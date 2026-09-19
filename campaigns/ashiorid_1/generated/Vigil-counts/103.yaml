@@ -1,0 +1,23 @@
+id: Vigil-counts
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:00.356905+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The cart has stopped in front of the inn, it's been there for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go ask the driver if he's waiting for someone.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to get some rest, I'll join you in a minute.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do you need me to come with you?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's fine, I can talk to him on my own.
+- kind: dialogue
+  speaker: gm
+  text: Alright, wake us up if anything changes.

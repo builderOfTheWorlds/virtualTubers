@@ -1,0 +1,34 @@
+id: camp-fire
+take: 218
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:30.559376+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get this settled, who takes the first watch?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will let up before morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid out wrong, Bob, I told you to spread it wider.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames will be green by dawn.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the well would have lasted if the others hadn't been draining
+    it?
+- kind: dialogue
+  speaker: chadwick
+  text: We can talk about the well later, let's focus on the watch order.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The fire's holding, but it's not going to make it through the night if it's
+    not fed.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone should check the stakes.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think anyone's out there in this?

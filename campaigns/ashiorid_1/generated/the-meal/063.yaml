@@ -1,0 +1,43 @@
+id: the-meal
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T22:32:45.042428+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, pass the beans.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, I don't know how anyone can serve this. It's like they boiled the flavor
+    out.
+- kind: dialogue
+  speaker: Leena
+  text: Oh come on, Bob, it's not that bad. Let's make the best of it.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the beans.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If I were in charge of the cooking, it'd be a feast.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, I don't think you're qualified.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be such a critic, Bob. It's not like it's going to kill us.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think the beans could use a bit of seasoning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've told you all before, a good pot of beans requires a specific ratio of
+    salt to-
+- kind: dialogue
+  speaker: Leena
+  text: Bob, we get it. You're a chef.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, just eat the beans.

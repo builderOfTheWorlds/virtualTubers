@@ -1,0 +1,41 @@
+id: night-watch
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:20.672969+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. It's a good omen.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) What are we doing out here?
+- kind: dialogue
+  speaker: Vigil
+  text: Shh, Leena. Sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) It's weird, watching the sky.
+- kind: dialogue
+  speaker: chadwick
+  text: What's weird?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses again) Just the way the stars seem to move.
+- kind: dialogue
+  speaker: Leena
+  text: (stifles a yawn) What stars?
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) Leena, go back to sleep.
+- kind: dialogue
+  speaker: gm
+  text: (whispers) Did you see that, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: See what?
+- kind: dialogue
+  speaker: gm
+  text: (lowers voice) I didn't tell the others.

@@ -1,0 +1,33 @@
+id: chadwick-cooking
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:20:34.411216+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The aroma wafts through the camp, a pungent mix of burnt spices and charred
+    wood.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, I'm just adding a dash of paprika.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Vigil) Do you think he's noticed yet?
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering back) How can you tell?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (coughing) Uh, smells like someone's... experimenting.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, that's it, I'm finishing up.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick proudly presents the... dish.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, wow, looks... interesting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (making a valiant effort) Smells... almost... edible.

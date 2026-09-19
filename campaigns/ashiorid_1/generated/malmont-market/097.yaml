@@ -1,0 +1,38 @@
+id: malmont-market
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:08.120540+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a traveling merchant's pack.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) Not too crowded today.
+- kind: dialogue
+  speaker: Leena
+  text: These maps look old... from before the war?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, good morning to you all.
+- kind: dialogue
+  speaker: Leena
+  text: (picking up a map) These markings... what do they mean?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing Chadwick) I think we should keep our voices down.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (strolling off) I'm not buying any of this, anyway.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) Ah, come on, I'm buying lunch.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Look, there's the Leto River delta on this one!
+- kind: dialogue
+  speaker: Vigil
+  text: (nodding) Not bad, Leena.
+- kind: dialogue
+  speaker: gm
+  text: (offstage) Excuse me, is this a private gathering?

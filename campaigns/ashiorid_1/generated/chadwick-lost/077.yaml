@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:59.700194+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you think we should head east from here.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, east. We need to keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think Vigil might have a better idea about the layout of the terrain.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous, Leena. We know what we're doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is gonna be good.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should actually head west, from here.
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Vigil? We're fine.
+- kind: dialogue
+  speaker: Leena
+  text: 'Okay, Chadwick, how about this: I''ll take the lead for a bit, and if I''m
+    wrong, you can correct me?'
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.

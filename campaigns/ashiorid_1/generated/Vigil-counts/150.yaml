@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 150
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:44.926147+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old windmill stands abandoned, its stones worn by time.
+- kind: dialogue
+  speaker: chadwick
+  text: Not much to see from here, is there?
+- kind: dialogue
+  speaker: Leena
+  text: Let's just get out of the rain.
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the inn, four of them sleeping.
+- kind: dialogue
+  speaker: gm
+  text: (ignoring Vigil's comment) The windmill's been still for years.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone for a drink?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take one, Bob. Make it a whiskey.
+- kind: dialogue
+  speaker: Leena
+  text: What's with the smell in here?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window's been repaired recently.
+- kind: dialogue
+  speaker: gm
+  text: The fireplace is cold, no one's lit a fire tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Same old cart passed by twice while we were in.
+- kind: dialogue
+  speaker: gm
+  text: The innkeeper's been arguing with himself, so far.

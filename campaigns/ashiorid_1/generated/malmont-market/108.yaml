@@ -1,0 +1,42 @@
+id: malmont-market
+take: 108
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:13.730634+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What kind of work do you call that?
+- kind: dialogue
+  speaker: Leena
+  text: (muttering) Old roads...
+- kind: dialogue
+  speaker: Vigil
+  text: (examining a nearby stall) Not a high-rolling market, this.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Oh, I don't get recognized much.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not paying for scraps.
+- kind: dialogue
+  speaker: Leena
+  text: (bending to examine a map) This one shows the old Silver River route.
+- kind: dialogue
+  speaker: Vigil
+  text: (folding his arms) Don't need to spend money here.
+- kind: dialogue
+  speaker: chadwick
+  text: (watching a nearby crowd) I think I'll grab some food.
+- kind: dialogue
+  speaker: Leena
+  text: (unfolding the map) I remember stories about a map like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (looking at a nearby blacksmith's work) Still can't see anything worth my
+    time.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeballing the crowd) Not what I'd call a crowd.
+- kind: dialogue
+  speaker: chadwick
+  text: (coming back with food) Not bad for the prices.

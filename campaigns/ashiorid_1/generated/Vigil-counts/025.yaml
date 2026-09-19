@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:26.425396+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A shutter on the east wall has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Leena
+  text: Just that it's been fixed, I guess.
+- kind: dialogue
+  speaker: Vigil
+  text: The nails are new, the wood is stained.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, nice job on the repair.
+- kind: dialogue
+  speaker: gm
+  text: It's a small thing, but I thought I'd mention it.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the same cart passed by us twice on the way in.
+- kind: dialogue
+  speaker: Leena
+  text: Which is where, exactly?
+- kind: dialogue
+  speaker: chadwick
+  text: Just down the street, it was a big red wagon.
+- kind: dialogue
+  speaker: gm
+  text: The driver was new, I didn't recognize him.
+- kind: dialogue
+  speaker: Vigil
+  text: Six people are in the room, including myself.

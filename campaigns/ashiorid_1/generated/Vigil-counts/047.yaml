@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:12.756074+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what did you notice?
+- kind: dialogue
+  speaker: chadwick
+  text: He just said the cart passed by again, Ash.
+- kind: dialogue
+  speaker: Leena
+  text: And?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window was fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How did you notice that?
+- kind: dialogue
+  speaker: gm
+  text: Just a detail, nothing to it.
+- kind: dialogue
+  speaker: Leena
+  text: Are you going to stand there?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on?

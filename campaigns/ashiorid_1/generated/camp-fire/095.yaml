@@ -1,0 +1,39 @@
+id: camp-fire
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:07.053418+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but we should keep an eye on the wind.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, watch order. Who's taking first?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking, Ashiorid, and I think we should've laid the fire with
+    less wood, more twigs.
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are aligned with the trees.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens to a well when the moonwells all drain?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it's like a bucket with no bottom.
+- kind: dialogue
+  speaker: gm
+  text: We'll figure it out in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: Never mind, it's just something I thought of.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order before it's too late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But I think it's going to rain again soon, that's my gut.
+- kind: dialogue
+  speaker: Vigil
+  text: The wood will burn until dawn.

@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 68
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:32.256618+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so you've noticed some details about the inn, Vigil. What caught
+    your attention?
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the room has a slightly different lock from the one next to it.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, that's interesting. I hadn't noticed that.
+- kind: dialogue
+  speaker: Leena
+  text: What else have you seen, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a repaired shutter in the window, I think it was recently fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who fixed it, do you know?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't think it was specified, but it looks fairly new.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's just been a while since it was last mended.
+- kind: dialogue
+  speaker: Vigil
+  text: That's possible.
+- kind: dialogue
+  speaker: gm
+  text: Okay, anything else you've noticed?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart has passed the window twice.
+- kind: dialogue
+  speaker: Leena
+  text: Twice?

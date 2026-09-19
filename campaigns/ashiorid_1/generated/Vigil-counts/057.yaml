@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 57
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:50.642465+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, what've we got for the day?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing too out of the ordinary, just some market rumors.
+- kind: dialogue
+  speaker: Leena
+  text: I've heard some folks talking about a missing shipment.
+- kind: dialogue
+  speaker: Vigil
+  text: The east-facing door has a new hinge, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, yeah, I saw someone working on it yesterday.
+- kind: dialogue
+  speaker: gm
+  text: Good to know, we might need a way out in a hurry.
+- kind: dialogue
+  speaker: chadwick
+  text: Doubt it, but thanks for keeping an eye out, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by has a broken wheel, but it's been fixed now.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I saw it earlier, it looked fine.
+- kind: dialogue
+  speaker: gm
+  text: Alright, what else?

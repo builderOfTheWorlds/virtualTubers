@@ -1,0 +1,41 @@
+id: the-meal
+take: 94
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:54.123947+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks.
+- kind: dialogue
+  speaker: Leena
+  text: Isn't it lovely, everyone coming together like this?
+- kind: dialogue
+  speaker: Vigil
+  text: (passing his food to Chadwick) You take this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (shaking his head) This is a catastrophe, I swear to the gods...
+- kind: dialogue
+  speaker: chadwick
+  text: (eating in silence)
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, come on, it's just a little bland!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blan... it's not even cooked right.
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugging) It's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine? You'd feed this to our enemies?
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, someone did cook, and it's not going to kill us.
+- kind: dialogue
+  speaker: chadwick
+  text: (not looking up)

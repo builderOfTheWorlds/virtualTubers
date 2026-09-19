@@ -1,0 +1,44 @@
+id: the-meal
+take: 84
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:26.329906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I cooked the meal, Sodacan Bob was too busy telling us all how he'd do it
+    differently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's exactly my point, I would have added more seasoning, not just a pinch
+    of salt.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be grumpy, Sodacan Bob, it's just one meal, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm taking this part, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, be that way, see if I care, but mark my words, I'll cook a real meal
+    next time.
+- kind: dialogue
+  speaker: Leena
+  text: That's the spirit, Sodacan Bob, you're so enthusiastic!
+- kind: dialogue
+  speaker: gm
+  text: Someone needs to take the pot outside, it's been a while.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it, it's not that bad.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not that bad?! This is an insult to cooking!
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbling) I cleaned the pot yesterday.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look, we're all talking again!

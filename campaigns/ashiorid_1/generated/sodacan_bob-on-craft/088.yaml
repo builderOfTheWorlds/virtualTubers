@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T22:28:07.695172+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, this is a fine piece of craftsmanship, made right
+    here in the local foundry, circa 1875.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm glad you're enjoying it, Bob, but we need to keep moving, we've got a
+    long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I see the bracket on the door, Sodacan Bob, is it a standard design?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, it's a variant of the standard 1875 model, but see how the maker's
+    adjusted the design to accommodate the irregular shape of the door?
+- kind: dialogue
+  speaker: Vigil
+  text: Does anyone think this gate was made for the old manor house on the hill?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a good question, Vigil, but I think it was probably just a standard
+    issue gate for the local village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see how the maker's used a combination of wrought iron and wood to create
+    a sturdy yet flexible design?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, wow, I can totally see what you mean, Sodacan Bob, you're a regular expert!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Someone has to keep the culture of craftsmanship alive in this group,
+    Leena!

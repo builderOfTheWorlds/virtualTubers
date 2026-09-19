@@ -1,0 +1,38 @@
+id: malmont-market
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:26.403822+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome to Malmont, a town with more magic shops than it can afford.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a place where people know how to keep secrets.
+- kind: dialogue
+  speaker: Leena
+  text: I'm looking for a map, anything old.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) What are you looking for, exactly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) Don't mind her, just browsing.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, that's an unusual name. What brings you to Malmont?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just passing through. Looking for some quality work, preferably not here.
+- kind: dialogue
+  speaker: Leena
+  text: (to herself) Old maps, I feel like I'm looking for something in these.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) You think that's wise? We don't know what's on those maps.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I think Leena's just looking for a souvenir.
+- kind: dialogue
+  speaker: gm
+  text: There are a few things on those maps that might be worth a closer look.

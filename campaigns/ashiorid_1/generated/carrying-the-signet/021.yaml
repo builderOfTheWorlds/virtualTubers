@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:16:14.399589+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And the usual fare, innkeeper, I presume?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the same as always, yes.
+- kind: dialogue
+  speaker: Leena
+  text: We'll take a room for the night, please.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the cheapest option?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have a room with a view of the garden.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Ah, yes, of course. I''ll show you to your rooms.'
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (to himself) One half, and the other... not yet.'
+- kind: dialogue
+  speaker: gm
+  text: What can I get you to drink, friends?
+- kind: dialogue
+  speaker: chadwick
+  text: Just water, thank you.
+- kind: dialogue
+  speaker: Leena
+  text: Water for me as well.
+- kind: dialogue
+  speaker: Vigil
+  text: Same here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have a whiskey, neat.

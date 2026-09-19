@@ -1,0 +1,35 @@
+id: night-watch
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:51.221171+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I see no stars tonight.
+- kind: dialogue
+  speaker: gm
+  text: Just clouds.
+- kind: dialogue
+  speaker: chadwick
+  text: I hear nothing but crickets.
+- kind: dialogue
+  speaker: Leena
+  text: Same here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's not crickets.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just that it's a very quiet cricket.
+- kind: dialogue
+  speaker: Vigil
+  text: You think they're not making a sound?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe we're just too close.
+- kind: dialogue
+  speaker: Leena
+  text: It's fine.

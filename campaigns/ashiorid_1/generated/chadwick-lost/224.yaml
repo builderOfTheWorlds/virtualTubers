@@ -1,0 +1,45 @@
+id: chadwick-lost
+take: 224
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:34.328147+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. I think we need to head east to reach the next
+    settlement.
+- kind: dialogue
+  speaker: chadwick
+  text: I think that's right. We definitely need to head east.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, excuse me, Chadwick, but you don't actually know where we are, do you?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do, I just... uh...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich. Chadwick, do you know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are, I'm just... just choosing the most efficient
+    route.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's time someone with a map took over, don't you, Chadwick?
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Vigil, I think we could just ask Chadwick to describe what he sees
+    and we can figure it out from there.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, we're fine. Let's just keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick. You're not even going to admit it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, fine. We're going to head east. See if I care who knows where we
+    are.
+- kind: dialogue
+  speaker: Vigil
+  text: Finally, some sense of direction.

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 162
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:12.355671+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. Someone's got to keep an eye out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid that fire myself, and I know it'll burn till morning.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think happens to the fire when it runs out of wood?
+- kind: dialogue
+  speaker: Vigil
+  text: It goes out.
+- kind: dialogue
+  speaker: gm
+  text: That's not a very reassuring thought, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob's got some spare fuel stashed away. We can make do.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not the point. We need a rotation, not a free-for-all.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens if the fire gets out of control?
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen it happen before.

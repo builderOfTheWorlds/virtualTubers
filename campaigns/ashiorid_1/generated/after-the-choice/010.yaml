@@ -1,0 +1,35 @@
+id: after-the-choice
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:55.924311+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chad, you think a new ale would make up for... everything?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, Ash. Leena said it'd be nice to unwind.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and I stocked up on some decent stuff.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm good, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) Can't even muster a smile.
+- kind: dialogue
+  speaker: gm
+  text: Bob, come on, don't be like that.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles dryly) Yeah, Bob's got the right idea.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs weakly) I think we all do, Chad.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Silence's getting a bit... awkward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs)

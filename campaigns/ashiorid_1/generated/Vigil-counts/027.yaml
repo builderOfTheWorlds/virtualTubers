@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:38.425376+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the same cart has passed by twice outside the window.
+- kind: dialogue
+  speaker: gm
+  text: What seems to be the relevance of this observation?
+- kind: dialogue
+  speaker: Vigil
+  text: No relevance, I just thought it was an unusual coincidence.
+- kind: dialogue
+  speaker: chadwick
+  text: And I thought we were here for the local delicacies.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I didn't think anyone but us even knew what a local delicacy was.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) You'd be surprised what we can do in our line of work.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) And what line of work is that?
+- kind: dialogue
+  speaker: Vigil
+  text: (no change in tone) I'm just paying attention to the details.
+- kind: dialogue
+  speaker: chadwick
+  text: Details like the repaired shutter, right?
+- kind: dialogue
+  speaker: Vigil
+  text: ( matter-of-factly) Yes.

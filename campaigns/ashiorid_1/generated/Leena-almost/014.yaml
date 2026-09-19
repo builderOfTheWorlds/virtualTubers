@@ -1,0 +1,43 @@
+id: Leena-almost
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:56.222152+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Leena, what's caught your eye this time?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just something from the village you think is centuries old.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should focus on the task at hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that kind of doorway before, back in my village.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, it's not from the village. That's what I'm trying to say.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's try to be objective here. Does anyone have an idea what it might
+    be?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not getting anything.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it alone, Leena. It's not worth investigating.
+- kind: dialogue
+  speaker: Leena
+  text: I'll let it go, but I still think it's strange.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you're just remembering something from your... upbringing.
+- kind: dialogue
+  speaker: gm
+  text: I think we've established that we're not going to get any more information
+    out of this. Let's move on.

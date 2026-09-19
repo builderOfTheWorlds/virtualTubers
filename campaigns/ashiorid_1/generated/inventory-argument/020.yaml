@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:19.078878+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Can we just check the bags before we leave?
+- kind: dialogue
+  speaker: chadwick
+  text: Whose bag is that? I could've sworn it was mine.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's mine, but you're always putting your stuff in my bag.
+- kind: dialogue
+  speaker: Vigil
+  text: This is why we should label everything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Labeling is a waste of time.
+- kind: dialogue
+  speaker: gm
+  text: Someone found the extra socks, though.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I knew I packed those.
+- kind: dialogue
+  speaker: Leena
+  text: No, I could've used those socks.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just glad they showed up somewhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now you'll just lose the map.
+- kind: dialogue
+  speaker: gm
+  text: It's a good thing I kept the snacks in my bag.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, great, now you're being petty.

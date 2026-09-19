@@ -1,0 +1,35 @@
+id: malmont-market
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T20:23:27.407832+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something a bit more...substantial than these iron trinkets.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see the point of buying something that's just going to break.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, I couldn't help but notice those old maps over there.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, I'm a bit of a collector myself.
+- kind: dialogue
+  speaker: Leena
+  text: You think you can tell me about these?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) You're the one who gets recognised, not me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs) I swear, this town's blacksmithing has fallen off since...
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) What's this place?
+- kind: dialogue
+  speaker: Vigil
+  text: (murmurs) Don't get too close, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Oh, I think I'm safe.

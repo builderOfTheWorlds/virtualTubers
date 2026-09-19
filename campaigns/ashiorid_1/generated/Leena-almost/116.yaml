@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 116
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:17.828655+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Smells like the market in Begene.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just the wind.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) I know I've smelled it before, but where?
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've smelled it in Begene too. Maybe it's just that.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: Leena
+  text: (thinking aloud) It's like my grandmother used to make...

@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 206
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:51.345558+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick. How much further to the camp?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're close. Just up ahead.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps if we consult the map, Chadwick, we can clarify your plans.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, I'm sure it'll be fine.
+- kind: dialogue
+  speaker: Vigil
+  text: I can give you directions if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm surprised you don't know where you are, Chadwick. You usually do.
+- kind: dialogue
+  speaker: Leena
+  text: Would you like me to just point you in the right direction, then?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: It's okay, Chadwick. Let me show you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is great. You've got us all lost in the middle of nowhere.

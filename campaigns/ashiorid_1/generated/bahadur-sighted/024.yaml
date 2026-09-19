@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:16.948391+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's that.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see anything.
+- kind: dialogue
+  speaker: Leena
+  text: Shadow, maybe.
+- kind: dialogue
+  speaker: Vigil
+  text: Where?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: My eyes don't want to focus.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: It's gone.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing but trees now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Should we be worried?
+- kind: dialogue
+  speaker: chadwick
+  text: We need a plan, not worries.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't like it.
+- kind: dialogue
+  speaker: Vigil
+  text: We've been here before.

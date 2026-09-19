@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-19T00:03:48.919128+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, what've you got for us, Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, no, no, no, this is fantastic. It's a gate hinge, I'm pretty sure it's
+    from a workshop in El'goroth.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's it made of? Is it wood?
+- kind: dialogue
+  speaker: Vigil
+  text: How old do you think it is, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the style of the hinge suggests it's from the mid-century, maybe around
+    400 years ago.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighing) Can we go now?
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, look at the craftsmanship! The maker was thinking about durability
+    and ease of use.
+- kind: dialogue
+  speaker: Vigil
+  text: (practically) Does it give us any clues about what's ahead?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no clues, I'm afraid. Just a piece of everyday engineering.

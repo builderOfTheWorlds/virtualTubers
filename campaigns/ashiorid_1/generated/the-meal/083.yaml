@@ -1,0 +1,29 @@
+id: the-meal
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:19.530749+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The roast is a bit overcooked, isn't it, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's perfect! It's a classic comfort food.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Comfort food? This is an abomination.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's not be so critical. It's just a meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just saying that because you didn't cook it, Vigil!
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, that's not fair. It's not about who cooked it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd do it so much better, you'd all see what I mean.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just enjoy the meal and not make it a big deal, okay?

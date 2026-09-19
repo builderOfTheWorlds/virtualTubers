@@ -1,0 +1,40 @@
+id: Vigil-counts
+take: 155
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:11.134507+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's famous for its winding alleys and unmarked passageways. We're likely
+    not the first ones to stumble upon this place.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I'd call it stumbling. We've been here for a bit, haven't we?
+- kind: dialogue
+  speaker: Leena
+  text: I thought we were in a different city now. This one feels... smaller.
+- kind: dialogue
+  speaker: Vigil
+  text: Six people in the room, two doors, one of them's ajar. The one with the shutter,
+    it's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a nice touch, whoever did the repairs.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart outside, it's been here twice. Same driver, same horse.
+- kind: dialogue
+  speaker: chadwick
+  text: And what of it?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, I just thought it was worth noting.
+- kind: dialogue
+  speaker: Leena
+  text: Like what?
+- kind: dialogue
+  speaker: Vigil
+  text: Like the cart's been here twice, that's all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go get a drink.

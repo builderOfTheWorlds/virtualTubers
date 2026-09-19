@@ -1,0 +1,27 @@
+id: leena-recognizes-nothing
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:09.066743+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena almost-recognizes a landmark, her voice is low and curious.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have seen a picture or something, it doesn't look familiar to me.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not just that... I've never been here before, but it feels like I
+    have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just the layout, they all tend to be similar after a while.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: gm
+  text: The party falls quiet, all eyes on Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, how's the food here?

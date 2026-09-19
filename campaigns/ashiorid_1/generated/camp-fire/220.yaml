@@ -1,0 +1,42 @@
+id: camp-fire
+take: 220
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:44.105670+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down harder than I've ever seen it.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't like it. We should take turns keeping watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire like I was taught, but you can't expect it to burn in this
+    wet.
+- kind: dialogue
+  speaker: Vigil
+  text: The wood's damp, that's the problem.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll have enough food if the rain doesn't let up?
+- kind: dialogue
+  speaker: chadwick
+  text: Food's not my worry, it's the fire. If it goes out, we're in trouble.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nonsense, a fire can burn in the rain. It's just not doing it now.
+- kind: dialogue
+  speaker: Leena
+  text: What happens when the fire does go out?
+- kind: dialogue
+  speaker: gm
+  text: We'll find a way to keep warm, don't worry about it.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle on a watch order, tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: Two people at a time, every three hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not a bad idea, I'll volunteer for the first shift.

@@ -1,0 +1,42 @@
+id: the-meal
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:22:14.193106+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, why are you being so critical of the cooking?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, I could make this meal better, I've cooked for the guild
+    before.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in peace?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, it's not that bad! We should make the most of it.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) I'm not touching this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, it's like they didn't even bother to wash the pot.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think it's lovely that we're all together, enjoying a meal.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just drop it?
+- kind: dialogue
+  speaker: gm
+  text: Fine, let's just eat.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushing food away) I'm full.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to make breakfast tomorrow, it'll be a real feast.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Great, just what we need.

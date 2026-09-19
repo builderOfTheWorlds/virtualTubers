@@ -1,0 +1,37 @@
+id: the-meal
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:21.785980+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, everyone's eating.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, it's not like I'm a chef or anything, but this...this is an abomination.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, it's just a little something to fill our bellies. Let's
+    not be too hard on whoever cooked it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This was made by the same person who probably still thinks ketchup is a spice,
+    wasn't it?
+- kind: dialogue
+  speaker: Leena
+  text: Well, I'm sure it's not the worst meal we've ever had.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd eat a shoe if I thought it was prepared correctly.
+- kind: dialogue
+  speaker: gm
+  text: Alright...
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we can have a cook-off tomorrow? I'm sure we could all bring our A-game.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I challenge you, Bob, to a culinary showdown!
+- kind: dialogue
+  speaker: gm
+  text: Let's just eat...

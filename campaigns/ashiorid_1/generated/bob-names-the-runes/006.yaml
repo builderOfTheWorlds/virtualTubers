@@ -1,0 +1,27 @@
+id: bob-names-the-runes
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:12:50.308624+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, you see, this gatepost has a bind-rune for 'protectio' and 'tela'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, it's a bit rough, but it's meant to deflect negative energy
+- kind: dialogue
+  speaker: Leena
+  text: Wait, so it's not just for decoration?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, no, no, no! It's a working rune, it's like a force field around the estate
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just get moving?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, just one more thing, the 'tela' part is what keeps the negative energy
+    from seeping back in
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving then

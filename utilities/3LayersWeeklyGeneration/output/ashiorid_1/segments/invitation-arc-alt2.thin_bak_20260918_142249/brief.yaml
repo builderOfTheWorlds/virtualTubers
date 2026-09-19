@@ -1,0 +1,100 @@
+segment_id: invitation-arc-alt2
+order: 5
+loop: 0
+hours: 6
+synopsis: The four strangers each receive the same mysterious card, marking ten thousand
+  years since the Event. They are drawn together by fate and curiosity.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-alt2-n1-convergence-1
+  kind: ambient
+  prompt: The four strangers arrive at the crossroads, each drawn by the same mysterious
+    card. They pause, looking around with a mixture of recognition and unease.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-convergence-2
+  kind: ambient
+  prompt: A tense silence falls between them. Each stranger senses the weight of their
+    shared discovery, but also the secrets they carry from their own worlds.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-convergence-3
+  kind: ambient
+  prompt: Leena steps forward, her hand instinctively moving to the amulet around
+    her neck. She looks at the others with a mixture of curiosity and wariness.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-convergence-4
+  kind: ambient
+  prompt: Vigil's eyes flicker toward the moonwells, remembering stories of ancient
+    magic. He speaks softly, his voice carrying a weight of forgotten knowledge.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-convergence-5
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: invitation-arc-alt2-n1
+nodes:
+- node_id: invitation-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: invitation-arc-alt2-n0
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: invitation-arc-alt2-n1
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+needs_rebrief: true

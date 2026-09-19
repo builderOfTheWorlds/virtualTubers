@@ -1,0 +1,26 @@
+id: malmont-market
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:59.793552+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a traveling show.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down, we don't know what kind of ears are listening.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, the market's got a lot of character, don't you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: These people are selling scraps. Where's the master blacksmith?
+- kind: dialogue
+  speaker: Vigil
+  text: I think he's that one with the beard, near the town hall.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen this part of the country, have any of you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's so special about this map, anyway?

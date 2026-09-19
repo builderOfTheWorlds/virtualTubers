@@ -1,0 +1,26 @@
+id: Leena-almost
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:37.825840+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have seen one like it in your village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we all have places like that, don't we?
+- kind: dialogue
+  speaker: Leena
+  text: 'But this is the thing: I''m not scared, I''m just... curious.'
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, let it go.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to. I just... wonder what it is.

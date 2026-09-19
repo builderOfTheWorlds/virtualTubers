@@ -1,0 +1,38 @@
+id: camp-fire
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:59.533300+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain shows no signs of letting up, and I'll have you keep an eye out for
+    any changes in the wind.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we should be keeping a double watch, in case the fire
+    gets blown out.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder if anyone knows how to make a fire from scratch, without any... modern
+    tools.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, I can tell you it's been done right, there's no need
+    to worry.
+- kind: dialogue
+  speaker: Vigil
+  text: A fire that won't last the night will burn the cold right out of you.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, how did you learn that?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's any chance the Event might have left some kind of...
+    blueprint, or instruction?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blueprint? What are you talking about, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: We can settle the watch order in the morning, it's not worth arguing about
+    tonight.

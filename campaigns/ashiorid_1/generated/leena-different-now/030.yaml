@@ -1,0 +1,35 @@
+id: leena-different-now
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:26:46.502553+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how to describe it, but something's shifted.
+- kind: dialogue
+  speaker: chadwick
+  text: You're quiet, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: It's just... my magic feels different, that's all.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) Show us.
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) I don't know if I can.
+- kind: dialogue
+  speaker: gm
+  text: What's changed, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I just... feel it more, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: More of what?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs)
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's just something small.

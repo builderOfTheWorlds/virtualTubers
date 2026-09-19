@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 227
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:41.305960+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're at the entrance of the market district. It's a bit crowded.
+- kind: dialogue
+  speaker: chadwick
+  text: (looks around) I see what you mean. Lots of people.
+- kind: dialogue
+  speaker: Leena
+  text: (squints at Vigil) What's with you, just staring at the doors?
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open inwards. And they've been oiled recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) That's helpful to know.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugs) I'm sure it matters to someone.
+- kind: dialogue
+  speaker: gm
+  text: (glances around) Alright, shall we move on?
+- kind: dialogue
+  speaker: Vigil
+  text: (looks away) The cart with the red stripe has passed by twice.
+- kind: dialogue
+  speaker: Leena
+  text: (frowns) What's the point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a habit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (nods) Carry on.

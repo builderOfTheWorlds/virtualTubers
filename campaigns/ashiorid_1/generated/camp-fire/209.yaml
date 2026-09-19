@@ -1,0 +1,32 @@
+id: camp-fire
+take: 209
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:30.497173+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's been coming down steady for hours, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to worry the fire's not going to last the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it just fine, Bob. It's not my fault the wood's too wet.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's not as loud as the wind.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was just a coincidence?
+- kind: dialogue
+  speaker: gm
+  text: The Event... well, that's a story for another time.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's settle the watch order already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I say we do it alphabetically, but Vigil's always last.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will last until dawn.

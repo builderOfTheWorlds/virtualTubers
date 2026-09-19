@@ -1,0 +1,32 @@
+id: malmont-market
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:00.155448+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Morning mist's burning off fast, looks like a fine day for market.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something to get me back on my feet, a good blade or an anvil.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the stalls) Plenty of trash here.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's this one selling? Old maps and charts.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, nothing but the usual, I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Unimpressed, so far. Most of this is just... amateur hour.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching a nearby haggler) Don't spend too much.
+- kind: dialogue
+  speaker: Leena
+  text: I'll just take a look. (tucks a small map into her belt)
+- kind: dialogue
+  speaker: chadwick
+  text: It's nice to be a face in the crowd, for once.

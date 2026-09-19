@@ -1,0 +1,30 @@
+id: Vigil-counts
+take: 244
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:17.571181+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The shutters on the east wall, the one nearest the river, have been recently
+    repaired.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a good catch, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I just noticed the cart's been by twice today.
+- kind: dialogue
+  speaker: Leena
+  text: What cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that the one with the flowers?
+- kind: dialogue
+  speaker: Vigil
+  text: That's the one.
+- kind: dialogue
+  speaker: chadwick
+  text: Doesn't matter, we need to get moving.
+- kind: dialogue
+  speaker: gm
+  text: The doors open inward, if you need to leave in a hurry.

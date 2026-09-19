@@ -1,0 +1,41 @@
+id: the-meal
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:27.723881+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Ugh, what's the idea with this?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, isn't it nice to have such a big spread?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I could've done this way better myself.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, have you seen the state of the kitchen? Unsanitary.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be such a downer, Sodacan Bob!
+- kind: dialogue
+  speaker: gm
+  text: Who cooked, by the way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it wasn't me.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, that pot's been dirty since the last meal.
+- kind: dialogue
+  speaker: Leena
+  text: It's fine, really.

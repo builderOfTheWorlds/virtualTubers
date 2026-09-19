@@ -1,0 +1,35 @@
+id: the-meal
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:53.151701+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, why so much complaining?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, I could've done better, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be negative! It's a feast!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Feast? You call this a feast? I've seen better at a roadstop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Where's he off to? Can't even be bothered to eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't mind Vigil, he's always like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And what about you, Leena? Don't you think it's a bit... bland?
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just drop it, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I'm making dinner tomorrow and it's going to be a real feast.

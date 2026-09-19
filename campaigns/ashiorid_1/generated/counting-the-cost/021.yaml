@@ -1,0 +1,29 @@
+id: counting-the-cost
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:09.085131+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena's got a few splinters, and I don't just mean the ones on her hands.
+- kind: dialogue
+  speaker: chadwick
+  text: You're telling me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like a poorly fitted wheel on a cart, our wheels come off too soon.
+- kind: dialogue
+  speaker: gm
+  text: And the cart itself, that's just a rough chop, needs some re-shaping.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just fix it or what?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A crack in the stone, if you don't let it breathe, it'll spread.
+- kind: dialogue
+  speaker: Vigil
+  text: How bad is it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A joint rusted past use, we can still salvage what's left.

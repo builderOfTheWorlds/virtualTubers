@@ -1,0 +1,145 @@
+malmont-arrival-arc-loop1-25:
+  node_id: malmont-arrival-arc-loop1-25
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party regroups in Malmont after their harrowing escape from Leto's manor,
+    ea
+  summary: The party regroups in Malmont after their harrowing escape from Leto's
+    manor, each carrying the weight of what they've seen and the knowledge that their
+    lives have been irrevocably changed. They begin to piece together the implications
+    of Grovley's revelation, while the town's strange atmosphere starts to reveal
+    its own secrets.
+  continuity_in: The party has escaped from Leto's manor after the attack, with the
+    manor now in ruins and the four of them alive but forever altered by what they've
+    experienced. The subbasement's revelations about their true nature linger heavily
+    on their minds.
+  continuity_out: The party is beginning to understand that their connection to Leto's
+    legacy runs deeper than mere coincidence, and that Malmont may hold more answers
+    than they initially thought.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-loop1-25-n0
+  - malmont-arrival-arc-loop1-25-n1
+  slots: null
+malmont-arrival-arc-loop1-25-n0:
+  node_id: malmont-arrival-arc-loop1-25-n0
+  parent_id: malmont-arrival-arc-loop1-25
+  order: 0
+  depth: 1
+  title: After the Fire
+  summary: The party gathers in Malmont's relative safety, each member processing
+    their traumatic escape from Leto's manor. The ruins of the estate smolder in the
+    distance as they realize the full scope of what they've witnessed. Grovley's revelations
+    about their true nature continue to haunt them, while the town's peculiar energy
+    begins to shift subtly around them.
+  continuity_in: The party has escaped from Leto's manor after the attack, with the
+    manor now in ruins and the four of them alive but forever altered by what they've
+    experienced. The subbasement's revelations about their true nature linger heavily
+    on their minds.
+  continuity_out: The party is beginning to understand that their connection to Leto's
+    legacy runs deeper than mere coincidence, and that Malmont may hold more answers
+    than they initially thought.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-25-n0-after-the-fire-1
+    kind: ambient
+    prompt: The party gathers in Malmont's relative safety, each member processing
+      their traumatic escape from Leto's manor. The ruins of the estate smolder in
+      the distance as they realize the full scope of what they've witnessed.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-25-n0-after-the-fire-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+malmont-arrival-arc-loop1-25-n1:
+  node_id: malmont-arrival-arc-loop1-25-n1
+  parent_id: malmont-arrival-arc-loop1-25
+  order: 1
+  depth: 1
+  title: Whispers of the Town
+  summary: As the party settles into Malmont's strange atmosphere, they begin to notice
+    subtle changes in the town's behavior. Local residents act differently around
+    them, and the very air seems to pulse with ancient energy. The party starts to
+    investigate the town's secrets, realizing that their connection to Leto's legacy
+    is intertwined with Malmont's hidden history.
+  continuity_in: The party is beginning to understand that their connection to Leto's
+    legacy runs deeper than mere coincidence, and that Malmont may hold more answers
+    than they initially thought.
+  continuity_out: The party has begun to uncover the true nature of Malmont's secrets
+    and their own place within Leto's legacy, setting the stage for deeper revelations
+    about their destiny.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-25-n1-malmont-1
+    kind: ambient
+    prompt: The party settles into Malmont's strange atmosphere, noticing subtle changes
+      in the town's behavior and local residents' actions.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-25-n1-malmont-2
+    kind: ambient
+    prompt: The party begins to investigate the town's secrets, realizing their connection
+      to Leto's legacy is intertwined with Malmont's hidden history.
+    lore:
+    - malmont
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-25-n1-malmont-3
+    kind: ambient
+    prompt: The very air seems to pulse with ancient energy as the party delves deeper
+      into Malmont's mysteries, feeling the weight of their discovery.
+    lore:
+    - malmont
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-25-n1-malmont-4
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

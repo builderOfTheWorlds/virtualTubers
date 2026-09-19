@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:19.338039+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, it's in my pack.
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's in the other one.
+- kind: dialogue
+  speaker: Leena
+  text: Why didn't we just label them?
+- kind: dialogue
+  speaker: Vigil
+  text: Nobody ever labels anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And now it's just a mess.
+- kind: dialogue
+  speaker: gm
+  text: I'm looking in the blue one.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm looking in the black one.
+- kind: dialogue
+  speaker: Leena
+  text: This is why we can never find anything.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone should've labeled their pack by now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, wait, I think I found it.
+- kind: dialogue
+  speaker: gm
+  text: What are you talking about?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, what did you find?

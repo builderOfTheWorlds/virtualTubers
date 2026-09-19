@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 246
+model: llama3.1:8b
+generated_at: '2026-09-18T23:46:19.951881+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, let's get moving. We've got a long way to go yet.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we could take the eastern trail.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think the eastern trail would add at least an extra hour to our
+    journey.
+- kind: dialogue
+  speaker: chadwick
+  text: Nonsense, I've been over it before.
+- kind: dialogue
+  speaker: Vigil
+  text: I could give you directions if you'd like, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is priceless.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, do you want to take a shortcut through the woods instead?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm positive the eastern trail is the way to go.
+- kind: dialogue
+  speaker: Vigil
+  text: If you'd like, I can give you a map to help you decide.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to think Chadwick's trying to get us lost.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, knock it off.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we're going.

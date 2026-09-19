@@ -1,0 +1,43 @@
+id: Leena-almost
+take: 196
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:06.468464+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You find yourself standing in a long, dimly lit hallway with cobweb-covered
+    portraits on the walls.
+- kind: dialogue
+  speaker: Leena
+  text: 'Something in front of me is familiar and should not be: a turn of phrase.'
+- kind: dialogue
+  speaker: chadwick
+  text: Perhaps it's something from your village? You must have seen something like
+    it there.
+- kind: dialogue
+  speaker: Leena
+  text: That's not where I saw it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just something you remember from before, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I don't remember it from anywhere.
+- kind: dialogue
+  speaker: gm
+  text: A faint scent of old books and smoke wafts from a doorway to your left.
+- kind: dialogue
+  speaker: gm
+  text: A soft, lilting tune seems to be coming from further down the hallway.
+- kind: dialogue
+  speaker: gm
+  text: One of the portraits seems slightly out of place, as if it's been moved recently.
+- kind: dialogue
+  speaker: gm
+  text: The others seem to be waiting for something to happen, or for you to say something.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just leave it, Leena. We don't know anything about it.
+- kind: dialogue
+  speaker: Leena
+  text: I want to know what it is.

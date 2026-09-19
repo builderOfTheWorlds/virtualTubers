@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 216
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:55.900069+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, look to your left.
+- kind: dialogue
+  speaker: Leena
+  text: I know what that is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You've seen one like it in your village, haven't you?
+- kind: dialogue
+  speaker: Vigil
+  text: She's never been to a village.
+- kind: dialogue
+  speaker: chadwick
+  text: Just let it go, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But it's... it's where we are, but it shouldn't be.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: She's just spooked, GM. Probably something from her childhood.
+- kind: dialogue
+  speaker: Vigil
+  text: You're scaring her, Sodacan.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, no.
+- kind: dialogue
+  speaker: Leena
+  text: Don't chase it.

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 182
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:11.757176+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Still, we should decide who's on watch tonight. It's not a task to be left
+    to chance.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's laid too thin. We'll have to add more
+    wood by dawn or it'll die out.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain'll stop when it's done raining.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens to the firewood when it gets wet?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can dry it, but it's never the same. Not worth the trouble, if you ask
+    me.
+- kind: dialogue
+  speaker: chadwick
+  text: Well, we can't dry it now. We need to decide who's on watch.
+- kind: dialogue
+  speaker: gm
+  text: The rain's not going to stop anytime soon.

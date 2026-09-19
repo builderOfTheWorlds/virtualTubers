@@ -1,0 +1,37 @@
+id: chadwick-lost
+take: 278
+model: llama3.1:8b
+generated_at: '2026-09-18T23:50:12.697953+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As we make our way through the forest, Chadwick, how's your sense of direction
+    faring?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, we're good. Just need to keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, maybe we should keep going straight?
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) No, we're good. Just keep walking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh, this is great. Chadwick's lost again.
+- kind: dialogue
+  speaker: Vigil
+  text: (ignoring Sodacan Bob) You're sure we're on the right path, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) Yes, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Well, if you're sure, then let's just keep moving forward, shall
+    we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) You guys are adorable when you're lost.
+- kind: dialogue
+  speaker: gm
+  text: Wait, do we need to recheck the map?

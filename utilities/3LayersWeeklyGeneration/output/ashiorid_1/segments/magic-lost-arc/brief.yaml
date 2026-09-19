@@ -1,10 +1,11 @@
 segment_id: magic-lost-arc
-order: 3
+order: 18
 loop: 0
 hours: 6
-synopsis: The seal fails, and the world is stripped of magic. The group must confront
-  a harsh new reality where sorcery no longer exists and their knowledge of magic
-  becomes dangerous.
+synopsis: The party discovers that the seal on the last moonwell has failed, and the
+  world's magic is completely drained. This revelation changes everything they thought
+  they knew about their world, and they must now navigate a world without magic while
+  dealing with the consequences of their actions.
 continuity_in: ''
 continuity_out: ''
 carry_in: {}
@@ -29,9 +30,9 @@ slots:
 - slot_id: magic-lost-arc-n0-shattering-dawn-2
   kind: ambient
   prompt: The group begins to understand that their magical abilities are now not
-    just useless but potentially deadly in this new world order. Leena feels the
-    weight of her lost powers, while Vigil tries to process what has become of their
-    familiar tools.
+    just useless but potentially deadly in this new world order. Leena feels the weight
+    of her lost powers, while Vigil tries to process what has become of their familiar
+    tools.
   lore:
   - amulet-of-wonder
   - the-begene-program
@@ -92,8 +93,8 @@ slots:
   node_id: magic-lost-arc-n1
 - slot_id: magic-lost-arc-n1-dangerous-knowledge-4
   kind: ambient
-  prompt: Leena's hand trembles as she recalls the last time she used her powers
-    — the memory is haunting, a reminder of how quickly magic can become a death sentence.
+  prompt: Leena's hand trembles as she recalls the last time she used her powers —
+    the memory is haunting, a reminder of how quickly magic can become a death sentence.
   lore:
   - amulet-of-wonder
   participants:

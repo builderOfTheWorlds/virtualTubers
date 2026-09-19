@@ -1,0 +1,44 @@
+id: inventory-argument
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:38.446172+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, we've been over this before, why do we have to have this conversation
+    every time we pack up.
+- kind: dialogue
+  speaker: chadwick
+  text: Because you're the one who always seems to think my backpack's an extension
+    of your own, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: That's not fair, I just like having things where they're easy to find.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, and that's why we never know what's actually in whose pack anymore.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Speaking of which, I just found a spare first-aid kit in my bag.
+- kind: dialogue
+  speaker: gm
+  text: Great, now we know what was in whose bag.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, good, at least someone's happy.
+- kind: dialogue
+  speaker: Leena
+  text: I am not happy.
+- kind: dialogue
+  speaker: Vigil
+  text: Why should you be? You were the one who said the first-aid kit was in your
+    bag.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, lighten up, it's just a first-aid kit.
+- kind: dialogue
+  speaker: gm
+  text: That's not the point.
+- kind: dialogue
+  speaker: chadwick
+  text: The point is that now we know who's got their act together.

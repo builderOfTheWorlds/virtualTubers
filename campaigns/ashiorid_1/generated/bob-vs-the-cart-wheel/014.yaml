@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:50.266072+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the rest of the preparations for the party.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've got everything under control, Ashiorid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Under control? The cart wheel is all wrong, I'm telling you.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, we discussed this yesterday. You said it was fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said it was passable, not fine. And it's not fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, we need to focus on the menu and the schedule for the party.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart wheel is a safety hazard, I won't let it go.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you take care of the menu with Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll get started on that, Ashiorid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is ridiculous. We're going to have an accident.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, we've been over this. The cart is sturdy enough.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we at least discuss this in private for now?

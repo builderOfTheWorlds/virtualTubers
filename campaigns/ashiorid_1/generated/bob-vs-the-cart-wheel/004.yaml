@@ -1,0 +1,38 @@
+id: bob-vs-the-cart-wheel
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:33.858678+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's just a cart wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A cart wheel? It's a travesty!
+- kind: dialogue
+  speaker: Leena
+  text: Can we please just get going?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Going? How can we go with this monstrosity?
+- kind: dialogue
+  speaker: Vigil
+  text: What's the holdup, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The holdup? It's the entire reason we're having this expedition!
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, we've discussed this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Discussed it? You've all been too afraid to listen!
+- kind: dialogue
+  speaker: chadwick
+  text: We are listening, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Silence! You'll listen to me when I'm done speaking!

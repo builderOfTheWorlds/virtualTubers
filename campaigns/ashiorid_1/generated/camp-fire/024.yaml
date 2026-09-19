@@ -1,0 +1,39 @@
+id: camp-fire
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:02.989857+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've got the watch order up on the whiteboard, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think it's fair to put the newest members on the first watch, we should
+    rotate the veterans.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been studying the fire, I think we should've used some of that damp wood
+    from the last town to get it burning hotter.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's going to make the pit collapse.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible for magic to come back if we just... close the
+    moonwells again?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't even get the watch order settled, what makes you think we can close
+    the moonwells?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil's got a point, the rain does look like it's picking up.
+- kind: dialogue
+  speaker: gm
+  text: Bob, did you have a hand in laying the fire?
+- kind: dialogue
+  speaker: Vigil
+  text: We'll see the sun again.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire will hold through the night?

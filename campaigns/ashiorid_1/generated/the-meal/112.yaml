@@ -1,0 +1,39 @@
+id: the-meal
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:01.708949+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I made the meal, I'm happy to take the blame.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blame? You think this is blame-worthy? This is an abomination.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's make the most of it.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushing his food away) I'll have the leftovers.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Leftovers? There's nothing left but a bunch of soggy remnants.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, it's not the worst thing we've ever had.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not the worst? It's one of the worst meals I've ever had the misfortune of
+    eating.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not that bad.
+- kind: dialogue
+  speaker: Vigil
+  text: (getting up and walking away) Excuse me.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) I guess someone's cooking tomorrow...

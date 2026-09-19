@@ -1,0 +1,139 @@
+magic-lost-arc-loop1:
+  node_id: magic-lost-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal fails, and the last well runs dry. The players witness the consequences
+  summary: The seal fails, and the last well runs dry. The players witness the consequences
+    of magic's depletion.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-lost-arc-loop1-n0
+  - magic-lost-arc-loop1-n1
+  slots: null
+magic-lost-arc-loop1-n0:
+  node_id: magic-lost-arc-loop1-n0
+  parent_id: magic-lost-arc-loop1
+  order: 0
+  depth: 1
+  title: The Seal's Collapse
+  summary: The ancient magical seal that maintained the balance between the mortal
+    realm and the source of all magic begins to fail. Cracks form across its surface
+    as the protective barrier weakens, allowing a sudden surge of raw magical energy
+    to escape. The players witness this catastrophic failure firsthand, feeling the
+    ground tremble beneath their feet as the magical forces they've relied upon begin
+    to unravel.
+  continuity_in: The seal that held back the tide of magic begins to crack and fail.
+  continuity_out: The seal's collapse sends shockwaves through the land, causing immediate
+    magical disruptions in the surrounding area.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-lost-arc-loop1-n0-seal-collapse-1
+    kind: ambient
+    prompt: The ancient seal begins to crack, sending tremors through the ground as
+      magical energy surges outward
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-loop1-n0-seal-collapse-2
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+magic-lost-arc-loop1-n1:
+  node_id: magic-lost-arc-loop1-n1
+  parent_id: magic-lost-arc-loop1
+  order: 1
+  depth: 1
+  title: The Last Well's Final Drain
+  summary: As the seal gives way, the last remaining source of pure magical energy
+    - a sacred well that has sustained magic throughout the realm for centuries -
+    begins to run dry. The players observe the well's magical properties fading away,
+    its surface turning to stone as the lifeblood of magic is drawn from it. This
+    moment marks the beginning of the end for the magical world they've known, with
+    consequences rippling outward to affect all living things.
+  continuity_in: The seal's collapse causes the last well to begin draining of its
+    magical essence.
+  continuity_out: The well's depletion leaves behind a barren landscape where magic
+    once flourished, setting the stage for new challenges and dangers.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-lost-arc-loop1-n1-well-01
+    kind: ambient
+    prompt: The sacred well begins to fade, its surface cracking as magical energy
+      drains away
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-loop1-n1-well-02
+    kind: ambient
+    prompt: As the seal breaks, the last well's magical properties collapse in a cascade
+      of failing enchantments
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-loop1-n1-well-03
+    kind: ambient
+    prompt: The well's surface turns to stone, leaving behind only a hollow shell
+      where magic once flowed
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-loop1-n1-well-04
+    kind: ambient
+    prompt: The final drop of magical essence vanishes, and the realm feels the absence
+      of power in every corner
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-lost-arc-loop1-n1-well-05
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

@@ -1,0 +1,35 @@
+id: counting-the-cost
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:30.942887+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We've got some welds to repair, and a few loose threads that need tying down.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a job for our resident blacksmith.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) That's one way to put it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Axles, like limbs, sometimes need realigning.
+- kind: dialogue
+  speaker: Vigil
+  text: And what about our cart's injuries?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The frame's cracked, but not beyond repair.
+- kind: dialogue
+  speaker: gm
+  text: How long will it take to get her back on the road?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: As long as it takes to hammer out the kinks.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) That's reassuring, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: People get broken, gear gets bent. It's all the same.

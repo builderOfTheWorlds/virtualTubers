@@ -1,0 +1,42 @@
+id: night-watch
+take: 74
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:44.070925+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are really clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. It's weird we can see them so well.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah. It's like the sky is trying to make up for the fact that everything
+    else is so dark.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) We should wake the others soon.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm good for another hour. Let's just sit here.
+- kind: dialogue
+  speaker: gm
+  text: You think anyone's going to come for us tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I used to be afraid of the dark when I was a kid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) What's wrong, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing. Just...I don't know.
+- kind: dialogue
+  speaker: gm
+  text: We should keep watch.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine. We'll wake them in two hours then.

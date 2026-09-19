@@ -1,0 +1,38 @@
+id: local-rumor
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:59.644743+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Malmont's not exactly a hub of activity, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a place that's trying to be more than it is.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think we're going to find much to buy or sell here.
+- kind: dialogue
+  speaker: Vigil
+  text: It's still a town, so there's bound to be some trade.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see three or four places that might have some work for us.
+- kind: dialogue
+  speaker: gm
+  text: What kind of work, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blacksmithing, I reckon. They all seem to be struggling.
+- kind: dialogue
+  speaker: Leena
+  text: We'll need to see what their work is like before we decide.
+- kind: dialogue
+  speaker: Vigil
+  text: Alright, let's go talk to the blacksmiths.
+- kind: dialogue
+  speaker: chadwick
+  text: We can see what they have for sale.
+- kind: dialogue
+  speaker: gm
+  text: This way, then.

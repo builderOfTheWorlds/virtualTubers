@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:16:59.550694+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a trinket I picked up at a market.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Ah, nice find.'
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I love the style of it, don't you, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Yeah, I do.
+- kind: dialogue
+  speaker: Vigil
+  text: (stares at the ring)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not very big for a signet.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (chuckles) You''re right, it is small.'
+- kind: dialogue
+  speaker: gm
+  text: (pauses, looks at the ring) Well, I'm sure it has its story.
+- kind: dialogue
+  speaker: Leena
+  text: (nods, seems to agree) Yes, it does.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly turns away) Let's get some dinner.
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) Sounds good to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (gets up, heads towards the door)

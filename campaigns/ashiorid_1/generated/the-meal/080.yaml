@@ -1,0 +1,42 @@
+id: the-meal
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:00.579805+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We just got back from the raid, didn't expect you to already be cooking.
+- kind: dialogue
+  speaker: chadwick
+  text: Just got the job done, figured I'd make something simple.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's so nice of you, Chadwick! A big feast after a long day!
+- kind: dialogue
+  speaker: Vigil
+  text: I don't eat much, you can keep the leftover meat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is an insult, a travesty, an affront to culinary art! What's in the pot?
+- kind: dialogue
+  speaker: chadwick
+  text: Just a basic stew.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Basic stew? You call this a basic stew? I could make a better one with my
+    eyes closed!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob, don't be so hard on Chadwick!
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers to Sodacan Bob) I think it's better if you just ate something else.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is ridiculous, the way this party is run, no accountability, no standards!
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat, please?
+- kind: dialogue
+  speaker: gm
+  text: Everyone calm down, let's just eat.

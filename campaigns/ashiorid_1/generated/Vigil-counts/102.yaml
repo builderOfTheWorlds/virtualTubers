@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:56.825831+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party has arrived at the Red Griffin Inn.
+- kind: dialogue
+  speaker: chadwick
+  text: What a lovely place, I could get used to this sort of luxury.
+- kind: dialogue
+  speaker: Leena
+  text: I could use a hot meal, this travel has been exhausting.
+- kind: dialogue
+  speaker: Vigil
+  text: There are eight people in the dining hall, besides our own party.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And two waiters, I count two.
+- kind: dialogue
+  speaker: gm
+  text: We've been seated, let's peruse the menu.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll have the roasted boar, it looks delightful.
+- kind: dialogue
+  speaker: Leena
+  text: And I'll have the stew, it's a simple choice but filling.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to the dining hall open towards the kitchen.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see the common room is through the doors on our left.
+- kind: dialogue
+  speaker: gm
+  text: Shall we order or explore the inn further?

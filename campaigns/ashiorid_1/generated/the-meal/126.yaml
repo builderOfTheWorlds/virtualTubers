@@ -1,0 +1,43 @@
+id: the-meal
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-19T00:12:45.759746+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The meal is served, let's dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I've tasted better. It's been boiled to mush.
+- kind: dialogue
+  speaker: chadwick
+  text: Eat up, everyone.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, it's all so festive! We can have a little dinner party, just like we
+    do at the manor.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the worst of it, thank you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that, Vigil? You're not even going to complain about the cooking?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And why not? Don't you have an opinion on the subject?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look! A lovely view of the courtyard.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I think I'd have done it differently. Maybe added some herbs, seasoned
+    it better...
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, that's enough.

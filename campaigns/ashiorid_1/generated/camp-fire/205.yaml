@@ -1,0 +1,41 @@
+id: camp-fire
+take: 205
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:10.924749+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down hard, isn't it.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's really pouring. We need to settle the watch order before it gets
+    any worse.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's not laid right. We're gonna be up all
+    night fussing with it.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's been going for a week now.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the rain keeps coming?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sure, but I think it'll wash away our tracks. We should've taken shelter
+    sooner.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see how the rain's our problem. We need to worry about the fire.
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding for now. Let's not jump to conclusions.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not enough.
+- kind: dialogue
+  speaker: Leena
+  text: What does it take to make it enough?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: More wood, maybe.

@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:03.288777+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably something you saw in your village.
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think so.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't look at it, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen one like it, in one of the villages we've been through.
+- kind: dialogue
+  speaker: Leena
+  text: Really?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I'm sure of it.
+- kind: dialogue
+  speaker: chadwick
+  text: Just drop it, Leena.
+- kind: dialogue
+  speaker: gm
+  text: You all good?

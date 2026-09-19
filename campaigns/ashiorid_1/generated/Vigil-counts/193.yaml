@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 193
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:33.671355+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, let's take a closer look at the tavern's back room.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to search the bookshelf for any clues.
+- kind: dialogue
+  speaker: Leena
+  text: I'll check the floor for any signs of disturbance.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the storage room is the one to the north, by the way.
+- kind: dialogue
+  speaker: gm
+  text: That's good to know, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's going on back there?
+- kind: dialogue
+  speaker: chadwick
+  text: Just looking for some information, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: The window shutter was fixed yesterday, I noticed.
+- kind: dialogue
+  speaker: Leena
+  text: I found something.
+- kind: dialogue
+  speaker: chadwick
+  text: What is it, Leena?

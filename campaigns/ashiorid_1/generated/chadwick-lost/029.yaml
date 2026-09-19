@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:43.336090+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the old windmill on the hill.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure how much farther it is to the ridge.
+- kind: dialogue
+  speaker: Leena
+  text: You think you can just... um... take the lead and...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: We're about three miles past the last landmark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And Chadwick here thinks he's got it mapped out in his head.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's not that far.
+- kind: dialogue
+  speaker: Vigil
+  text: If you'd like, I can take a look at the map and give you a better estimate.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm good.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is ridiculous, Chadwick's navigation skills are on par with a drunken
+    compass.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's just... how about I take point and we go left up here?
+- kind: dialogue
+  speaker: chadwick
+  text: No, we're going straight.

@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:29.194480+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, team.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, the map says we need to take a left up ahead.
+- kind: dialogue
+  speaker: Leena
+  text: No, it says we need to go straight.
+- kind: dialogue
+  speaker: chadwick
+  text: How can you not see that? It's clearly a left.
+- kind: dialogue
+  speaker: Vigil
+  text: Guys, I think we're overcomplicating this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think Vigil's right.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Chadwick, it's not that hard.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous, I'm a great navigator, I know what I'm doing.
+- kind: dialogue
+  speaker: gm
+  text: Fine, let's just follow the map and see what happens.
+- kind: dialogue
+  speaker: chadwick
+  text: Ha! I told you it was a left, we should have taken the left.
+- kind: dialogue
+  speaker: Leena
+  text: Great, now you're gloating about being right.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, calm down, it's not a big deal.

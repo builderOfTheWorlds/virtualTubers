@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:06.905428+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The south door opens inward, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, good to know.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a recently repaired shutter on the east wall.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that got to do with anything?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, I just noticed.
+- kind: dialogue
+  speaker: gm
+  text: And how many people are in this room?
+- kind: dialogue
+  speaker: Vigil
+  text: Eight, including the three of you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not that we're counting.
+- kind: dialogue
+  speaker: Leena
+  text: It's nice to know the cart has been seen twice.

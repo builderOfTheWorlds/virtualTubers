@@ -1,0 +1,34 @@
+id: sodacan_bob-on-craft
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-19T00:03:42.719570+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm telling you, Chadwick, this is a genuine article, made by the Rotherham
+    Ironworks in 1852.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's keep moving, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what's that mark on the gate? Is it a maker's mark?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes! That's a Rotherham Ironworks "R" with the year stamped in, 1852.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I love the design on the bracket, it's so intricate!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, I know, it's a beautiful example of Victorian-era ornamentation.
+- kind: dialogue
+  speaker: Vigil
+  text: Does anyone know what kind of metal this is?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's iron, but look at the quality of the finish, it's been machined,
+    not just hammered out.
+- kind: dialogue
+  speaker: Leena
+  text: I feel like we're forgetting something, but I'm not sure what.

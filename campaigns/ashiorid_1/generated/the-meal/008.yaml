@@ -1,0 +1,41 @@
+id: the-meal
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:48.357153+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party falls into an uncomfortable silence, each person focused on their
+    plate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I've cooked for the best of them, and this is an affront
+    to culinary art.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, let's make the most of this meal. It's not like it's going
+    to kill us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Clean the pot, people, it's a travesty. I'd never serve this.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I thought Leona did the cooking today.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, someone's been doing a number on that pot.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd fire them. That's for sure.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob glares around the table.
+- kind: dialogue
+  speaker: Leena
+  text: Alright, alright. Can we just eat?
+- kind: dialogue
+  speaker: gm
+  text: The argument starts to dissipate as everyone continues eating.

@@ -1,0 +1,42 @@
+id: night-watch
+take: 84
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:36.706153+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: The sky''s a little lighter than I remember. It feels like it''s
+    getting closer to dawn.'
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think it is. It's the same as it's been all night.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we should wake the others up early? In case something happens?
+- kind: dialogue
+  speaker: Vigil
+  text: No, let's just keep watch for now. It's not like we're getting anything done.
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: The stars are pretty tonight. You can see a lot of constellations
+    if you know what to look for.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) I used to have a pet owl. I named it Nova. It would fly with me at
+    night and we'd talk about... things.
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: (laughs softly) What kind of things?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses again) Nothing. Just stuff.
+- kind: narration
+  speaker: gm
+  text: 'Aiorid: (awkwardly) Oh, okay. Well, it''s nice to have something to do at
+    night, I guess.'
+- kind: dialogue
+  speaker: Vigil
+  text: (yawns) I'm going to stand up and stretch for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) I'm not even tired.

@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 163
+model: llama3.1:8b
+generated_at: '2026-09-18T20:16:33.760354+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a good bit of trail to cover before we
+    reach the clearing.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Shouldn't be too hard, it's just a straight shot...
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you think it's east?
+- kind: dialogue
+  speaker: chadwick
+  text: (vaguely) Yeah, east or west, one of the two.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, here we go.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) You're not sure which direction we're headed, are you, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (defensive) Of course I am, we're going east.
+- kind: dialogue
+  speaker: Leena
+  text: (diplomatically) Okay, well, let's just make sure we don't... backtrack.
+- kind: dialogue
+  speaker: chadwick
+  text: (still defensive) I know what I'm doing, Leena.

@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:43.961780+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashaorid: We''re here, then.'
+- kind: dialogue
+  speaker: chadwick
+  text: I guess we are.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing) Nobody's... talking about it, yet.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) I know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (awkward chuckle) Well, someone has to break the ice.
+- kind: narration
+  speaker: gm
+  text: 'Ashaorid: (pausing) We should... be glad we made it.'
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitates) Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) What did we give up, though?
+- kind: dialogue
+  speaker: Vigil
+  text: (long pause) I'm trying to focus on what we gained.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (forced laugh) Come on, guys, it's done now. Let's move on.
+- kind: narration
+  speaker: gm
+  text: 'Ashaorid: (pausing) We can''t just... move on.'
+- kind: dialogue
+  speaker: chadwick
+  text: (shortly) Why not?

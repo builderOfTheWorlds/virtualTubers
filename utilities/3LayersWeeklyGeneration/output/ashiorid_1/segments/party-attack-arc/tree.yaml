@@ -3,15 +3,14 @@ party-attack-arc:
   parent_id: null
   order: 0
   depth: 0
-  title: As the party begins, unexpected guests arrive, and the manor's doors lock
-    from w
-  summary: As the party begins, unexpected guests arrive, and the manor's doors lock
-    from within. The group realizes they are not just guests but targets of a plot
-    that goes back ten thousand years.
+  title: The doors open on people who were not invited, and the room stops moving.
+    A viol
+  summary: The doors open on people who were not invited, and the room stops moving.
+    A violent intrusion changes everything.
   continuity_in: ''
   continuity_out: ''
-  target_words: 900
-  target_slots: 9
+  target_words: 700
+  target_slots: 7
   kind: branch
   forced: false
   children:
@@ -23,45 +22,107 @@ party-attack-arc-n0:
   parent_id: party-attack-arc
   order: 0
   depth: 1
-  title: The Gathering Storm
-  summary: The party awakens to find themselves trapped within the manor's walls as
-    unexpected guests arrive, their presence signaling that this is no ordinary gathering.
-    The doors lock from within, and the group begins to realize they are not merely
-    attendees but the intended targets of an ancient conspiracy.
-  continuity_in: As the party begins, unexpected guests arrive, and the manor's doors
-    lock from within. The group realizes they are not just guests but targets of a
-    plot that goes back ten thousand years.
-  continuity_out: The party finds themselves trapped within the manor's walls as unexpected
-    guests arrive, their presence signaling that this is no ordinary gathering. The
-    doors lock from within, and the group begins to realize they are not merely attendees
-    but the intended targets of an ancient conspiracy.
-  target_words: 270
+  title: The Intrusion Begins
+  summary: The unexpected arrival disrupts the carefully maintained rhythm of the
+    moving room, creating chaos and forcing everyone to confront the intrusion.
+  continuity_in: The doors open on people who were not invited, and the room stops
+    moving. A violent intrusion changes everything.
+  continuity_out: The room's movement halts abruptly as unfamiliar figures step into
+    the space, their presence unsettling the established order.
+  target_words: 350
   target_slots: 3
   kind: leaf
   forced: false
   children: []
-  slots: []
+  slots:
+  - slot_id: party-attack-arc-n0-1
+    kind: ambient
+    prompt: The doors swing open with a violent crash, sending everyone in the room
+      spinning. Uninvited figures step into the space, their presence unsettling the
+      established order.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-2
+    kind: ambient
+    prompt: Leena stumbles backward, clutching her side as a sharp pain shoots through
+      her body. Chadwick's axe lies forgotten on the floor, its blade now stained
+      with blood.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n0-3
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: flags
+    depends_on:
+    - Leena-wounded
+    - chadwick-lost-axe
 party-attack-arc-n1:
   node_id: party-attack-arc-n1
   parent_id: party-attack-arc
   order: 1
   depth: 1
-  title: Ancient Secrets Revealed
-  summary: As the trapped party members attempt to understand their predicament, they
-    uncover evidence that this manor has been a focal point for an ancient conflict
-    spanning millennia. The guests reveal themselves as participants in this age-old
-    struggle, and the group discovers their own roles in the unfolding cosmic drama.
-  continuity_in: The party finds themselves trapped within the manor's walls as unexpected
-    guests arrive, their presence signaling that this is no ordinary gathering. The
-    doors lock from within, and the group begins to realize they are not merely attendees
-    but the intended targets of an ancient conspiracy.
-  continuity_out: As the trapped party members attempt to understand their predicament,
-    they uncover evidence that this manor has been a focal point for an ancient conflict
-    spanning millennia. The guests reveal themselves as participants in this age-old
-    struggle, and the group discovers their own roles in the unfolding cosmic drama.
-  target_words: 630
-  target_slots: 6
+  title: Aftermath of the Disruption
+  summary: Following the violent intrusion, the group must navigate the new reality
+    where the original plan is shattered and everyone's role has shifted dramatically.
+  continuity_in: The room's movement halts abruptly as unfamiliar figures step into
+    the space, their presence unsettling the established order.
+  continuity_out: The room continues moving now, but with an altered dynamic, as the
+    intruders' presence has fundamentally changed everything.
+  target_words: 350
+  target_slots: 3
   kind: leaf
   forced: false
   children: []
-  slots: []
+  slots:
+  - slot_id: party-attack-arc-n1-aftermath-1
+    kind: ambient
+    prompt: The room stops moving, and unfamiliar figures step into the space, their
+      presence unsettling the established order.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n1-aftermath-2
+    kind: ambient
+    prompt: The group must navigate the new reality where the original plan is shattered
+      and everyone's role has shifted dramatically.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: party-attack-arc-n1-aftermath-3
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

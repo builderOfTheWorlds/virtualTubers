@@ -1,0 +1,46 @@
+id: night-watch
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:56.720185+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The sky is clear tonight. No clouds, no stars shining bright.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I can hear the wind rustling through the trees. It''s a gentle
+    hum.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: We should wake the others early. We don''t want to be caught unprepared.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I don''t think we need to. There''s nothing out there.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: You can see for miles in every direction. What''s there to be
+    worried about?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (pauses) I had a cousin once. He was a bit of a troublemaker.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: (pauses) What about him?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (pauses again) He had a thing for... well, not exactly the usual
+    things.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (pauses, then shrugs) Never mind.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: What about him, Ashiorid?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (pauses once more) He was... not exactly what you''d call a good
+    influence.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: (pauses, then changes subject) I''ve been thinking... maybe
+    we should get some rest while we can.'

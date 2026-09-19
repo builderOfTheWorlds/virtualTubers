@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 173
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:10.467635+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, we've arrived at the Red Griffin Inn, I see.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, it's...cozy in here.
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell?
+- kind: dialogue
+  speaker: Vigil
+  text: There's six people in the room, including ourselves.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, what's burning?
+- kind: dialogue
+  speaker: gm
+  text: Someone's cooking something at the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's just the common room's usual aroma.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the right leads outside, the one on the left doesn't.
+- kind: dialogue
+  speaker: Leena
+  text: And the one across from us has a shutter on it that's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I noticed the cart that just went by is the one with the two horses.

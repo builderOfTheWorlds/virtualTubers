@@ -1,0 +1,35 @@
+id: camp-fire
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:31.453315+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to get the watch order settled before it's too late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know why you're arguing, Bob laid the fire himself.
+- kind: dialogue
+  speaker: Vigil
+  text: He used pine needles.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the well is still draining?
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is a form of conservation.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just stand around all night, someone needs to take first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Pine needles are a bad choice for a fire that needs to last.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe the well isn't draining, maybe it's just... waiting.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, looks around)

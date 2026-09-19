@@ -1,0 +1,39 @@
+id: chadwick-lost
+take: 192
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:25.601887+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So where do you think we should head, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Um, let's see... how about that way.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, if you check your map, you'll see we need to head this way.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Maybe you could say it's a deliberate exploration
+    route?
+- kind: dialogue
+  speaker: chadwick
+  text: No, we're going this way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (sternly) Sodacan Bob, focus.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not going to ask him to tell me where we are.
+- kind: dialogue
+  speaker: gm
+  text: (amused) Very well, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: (to Vigil) I think we're all going to be here for a while.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is the best part of the trip so far.

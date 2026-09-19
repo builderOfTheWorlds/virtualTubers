@@ -1,0 +1,41 @@
+id: night-watch
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:32.222598+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The moon's up, Leena. It's a clear night.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I know. I was just looking at it.
+- kind: dialogue
+  speaker: chadwick
+  text: What can you hear?
+- kind: dialogue
+  speaker: Leena
+  text: Just the usual... crickets and wind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should wake the others. It's getting close to dawn.
+- kind: dialogue
+  speaker: gm
+  text: I don't know... it feels like we're wasting our time.
+- kind: dialogue
+  speaker: Vigil
+  text: What if something is coming? We can't just assume it's safe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not like it's been attacked in weeks, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: I have a confession to make. I've been having weird dreams lately.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of dreams?
+- kind: dialogue
+  speaker: Leena
+  text: Just... unsettling. Nothing specific, but they're always a bit off.
+- kind: dialogue
+  speaker: Vigil
+  text: You should talk to Grovley about it.

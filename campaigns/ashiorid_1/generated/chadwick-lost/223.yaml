@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 223
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:27.010189+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east from here.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil knows the route better than we do.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I do indeed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh boy, Chadwick's lost again!
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just suggesting an alternative route, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Vigil, could you clarify which way we should go?
+- kind: dialogue
+  speaker: Vigil
+  text: I was waiting for someone to ask. We need to head north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) North, finally.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking of heading north all along.

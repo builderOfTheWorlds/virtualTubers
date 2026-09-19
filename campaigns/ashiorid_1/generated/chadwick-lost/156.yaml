@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 156
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:52.649761+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Where are we headed, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thinking we should head east from here.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should head north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, Chadwick's got a plan.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't we just take a bearing with the compass, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm sure east is the way.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm pretty sure it's north, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick, you're lost again!
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's just take the high road and head north, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, we'll head north.

@@ -1,0 +1,42 @@
+id: sodacan-forge-envy
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:36:30.647139+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work out of a third-level apprentice.
+- kind: dialogue
+  speaker: gm
+  text: Ah, now, come on, Bob, it's not that bad.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not that bad? I've seen apprentices from the city do better work than
+    this.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe they used local materials, it's harder to work with.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't care about the materials, it's the craftsmanship that's lacking.
+- kind: dialogue
+  speaker: chadwick
+  text: Well, the blacksmith seems happy with it.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, and it's been holding up all right so far.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I suppose that's true, but that's not the point.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The point is that it's just... adequate.
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob, always the critic.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, let the blacksmith take some pride in his work.

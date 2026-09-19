@@ -1,0 +1,35 @@
+id: sodacan_bob-on-runes
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:38.827273+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a rune has to be at least a quarter inch deep to last a few
+    thousand years, or it'll just flake off in the rain.
+- kind: dialogue
+  speaker: chadwick
+  text: So you're saying it's a simple matter of craftsmanship?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying it's a matter of patience, and attention to detail, and a decent
+    amount of practice.
+- kind: dialogue
+  speaker: Leena
+  text: But, Sodacan Bob, you said the runes on the Malvakar were over 2,000 years
+    old...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's a different story altogether. I'm not talking about the runes on
+    the Malvakar, I'm talking about a decent, well-made carving.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptically) I see. And what's the minimum depth you'd expect for a rune
+    of that age to be, hmm?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pausing) Fine. A half inch, at least. But it's not just about the depth,
+    it's about the material, and the way it's struck...
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, do you think that's really what's going on here?

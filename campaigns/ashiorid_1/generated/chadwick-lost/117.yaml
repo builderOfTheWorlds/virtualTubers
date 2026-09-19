@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 117
+model: llama3.1:8b
+generated_at: '2026-09-18T20:11:22.228459+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, can you tell us where we are and where we're going?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've been over this, we're following the stream.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Vigil might know, but he's not saying anything.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) I'm waiting for someone to ask me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick, you've got no idea, do you?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do. We're following the stream.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, then maybe we should follow the stream for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive. It's the right way.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) I suppose we'll see soon enough.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Yeah, we'll see soon enough.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's keep moving, then.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) You know, I could swear I saw a trail marker back a ways.

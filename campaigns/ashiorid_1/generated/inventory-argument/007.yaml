@@ -1,0 +1,32 @@
+id: inventory-argument
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:44.551183+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear I had the snacks in my bag, not yours, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just check the other bag for once, Bob?
+- kind: dialogue
+  speaker: Leena
+  text: Who even labels their bags anymore, it's a lost cause.
+- kind: dialogue
+  speaker: Vigil
+  text: You're saying I'm responsible for your lack of organization?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, speaking of which, I found a first-aid kit in your bag, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Oh, great, now you're gloating.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, nice try, Bob, but I'm pretty sure that's Leena's stuff.
+- kind: dialogue
+  speaker: Leena
+  text: It's not a competition, you're all just as messy as each other.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, my bag's organized, it's just... misplaced items are its speciality.

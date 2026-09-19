@@ -1,0 +1,41 @@
+id: night-watch
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:01.042609+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Still nothing.
+- kind: dialogue
+  speaker: Leena
+  text: Must be too quiet for anything to come.
+- kind: dialogue
+  speaker: chadwick
+  text: The stars are really bright tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, the moon's not even visible.
+- kind: dialogue
+  speaker: gm
+  text: Do you think we should wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: Don't see the point, nothing's going to happen.
+- kind: dialogue
+  speaker: chadwick
+  text: You think it's safe to sleep here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we're clear.
+- kind: dialogue
+  speaker: Vigil
+  text: I had a weird dream last night.
+- kind: dialogue
+  speaker: Leena
+  text: What was it about?
+- kind: dialogue
+  speaker: Vigil
+  text: Never mind.
+- kind: dialogue
+  speaker: chadwick
+  text: We're all tired, let's just get some rest.

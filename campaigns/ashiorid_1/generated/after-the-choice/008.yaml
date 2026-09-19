@@ -1,0 +1,29 @@
+id: after-the-choice
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:45.807090+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, I suppose we can't stay in one place forever.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know why you're making jokes, Ash. It's not funny.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, let's try to focus on the positives. We made it out.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not about focusing on positives, Leena. It's about what we lost.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What do you mean, what we lost?
+- kind: dialogue
+  speaker: gm
+  text: The things we left behind. The people. The...
+- kind: dialogue
+  speaker: Vigil
+  text: '...the what-ifs.'
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses)

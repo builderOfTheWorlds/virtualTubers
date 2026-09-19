@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 49
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:46.566927+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I feel like I've seen that doorway before, but I'm not from here, am I?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure you saw something similar in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not like that at all. It's... it's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you mean, Leena. I've seen something like that before
+    too.
+- kind: dialogue
+  speaker: Leena
+  text: What is it, then? A dream?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get caught up in it, Leena. It's not worth chasing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I can help you figure it out, Leena.

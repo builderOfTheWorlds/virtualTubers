@@ -15,7 +15,7 @@ import logging
 from collections import deque
 from dataclasses import dataclass, field
 
-from campaign.pack import CampaignPack, Scene
+from campaign.pack import CampaignPack, MOODS, RING_TONES, Scene
 from campaign.scene_graph import WEIGHT_KEY
 
 log = logging.getLogger(__name__)
@@ -72,6 +72,8 @@ def validate_pack(pack: CampaignPack) -> ValidationReport:
         # Check for empty beats list
         if not scene.beats:
             report.warnings.append(f"scene {scene.id!r} has no beats")
+
+        _check_ring_tone_and_mood(scene, report)
     
     # Check cast usage
     spoken = set()
@@ -190,3 +192,21 @@ def _check_cast_usage(pack: CampaignPack, spoken: set[str], report: ValidationRe
     for member_id in pack.cast:
         if member_id not in spoken:
             report.warnings.append(f"cast member {member_id!r} never speaks")
+
+
+def _check_ring_tone_and_mood(scene: Scene, report: ValidationReport) -> None:
+    """Check ring_tone/mood values come from their closed vocabularies
+    (campaign.pack.RING_TONES / MOODS). Invalid values are errors, not
+    warnings: an unknown tag silently drops a scene out of every selection
+    filter that checks it, which is a scene going permanently unused, not a
+    cosmetic issue."""
+    for value in scene.ring_tone:
+        if value not in RING_TONES:
+            report.errors.append(
+                f"scene {scene.id!r}: unknown ring_tone {value!r} "
+                f"(expected one of {sorted(RING_TONES)})")
+    for value in scene.mood:
+        if value not in MOODS:
+            report.errors.append(
+                f"scene {scene.id!r}: unknown mood {value!r} "
+                f"(expected one of {sorted(MOODS)})")

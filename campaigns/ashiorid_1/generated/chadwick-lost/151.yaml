@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 151
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:22.632253+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, where are we headed next?
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we could head due east.
+- kind: dialogue
+  speaker: Vigil
+  text: Due east, Chadwick. Is that certain?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Oh man, you're lost.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, it's not exactly due east, but...
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are, thank you very much.
+- kind: dialogue
+  speaker: gm
+  text: Okay, so we're heading east then. Vigil, can you...
+- kind: dialogue
+  speaker: Vigil
+  text: We're actually a bit north of where we think we are.
+- kind: dialogue
+  speaker: chadwick
+  text: I said east, didn't I?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, come on, Chadwick!
+- kind: dialogue
+  speaker: Leena
+  text: Okay, well, it looks like a right turn would...
+- kind: dialogue
+  speaker: chadwick
+  text: No, I meant east from here.

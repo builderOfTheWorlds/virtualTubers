@@ -1,0 +1,26 @@
+id: Vigil-counts
+take: 166
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:08.643264+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil mentions a thing he's noticed about the room.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left has a latch on the inside, not the outside.
+- kind: dialogue
+  speaker: Leena
+  text: So what?
+- kind: dialogue
+  speaker: Vigil
+  text: I thought it was worth mentioning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just saying.

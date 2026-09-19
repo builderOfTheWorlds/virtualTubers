@@ -1,0 +1,35 @@
+id: camp-fire
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:42.879994+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think the rain's let up a bit, Chadwick. Maybe it'll stop soon.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not waiting. We need to settle the watch order tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the fire's not laid right. We'll be up all night.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop in time.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think anyone's still out there in this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with the lay? It's not like I'm some novice.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure it out in the morning. Get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: What if it doesn't stop until the Event?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't be ridiculous, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: '2.'

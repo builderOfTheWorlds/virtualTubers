@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:59.144105+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The treeline's a good two miles out, just a smear of trees against the skyline.
+- kind: dialogue
+  speaker: chadwick
+  text: Can't see any trail.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure it was moving, though.
+- kind: dialogue
+  speaker: Vigil
+  text: We should keep moving, see if we can pick up the trail.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not my decision.
+- kind: dialogue
+  speaker: Leena
+  text: Someone's got to make it.
+- kind: dialogue
+  speaker: gm
+  text: We're not in Bahadur territory yet.
+- kind: dialogue
+  speaker: chadwick
+  text: Yet?
+- kind: dialogue
+  speaker: gm
+  text: Silence is for the trees.
+- kind: dialogue
+  speaker: Vigil
+  text: Time to move.
+- kind: dialogue
+  speaker: Leena
+  text: Wait.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What is it?

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:12.743846+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but I don't think it'll keep us dry tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, we need to settle the watch order before morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, if we'd laid it like I showed, it'd be burning hot still.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's got a new low.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think will happen to the river when the rain stops?
+- kind: dialogue
+  speaker: gm
+  text: The river'll be swollen, that's what it'll do.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we've got the morning to figure out the watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it was the wrong kind of wood, that's the problem.
+- kind: dialogue
+  speaker: Vigil
+  text: It will not be dry until the spring.

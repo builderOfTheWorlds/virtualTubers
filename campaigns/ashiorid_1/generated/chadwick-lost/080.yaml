@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:19.714640+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're walking through a dense forest, the canopy overhead a deep green.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're headed in the right direction.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, because Chadwick's navigational skills are renowned.
+- kind: dialogue
+  speaker: gm
+  text: The trees seem to be thinning out up ahead.
+- kind: dialogue
+  speaker: Vigil
+  text: If you'd like to know where we are, I can tell you.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, if you're not sure, we could just ask Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive we're fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is great. Chadwick's being a hero, even when lost.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just stand here quietly then.
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time.
+- kind: dialogue
+  speaker: gm
+  text: The forest opens up into a small clearing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And Chadwick still can't admit he was lost.

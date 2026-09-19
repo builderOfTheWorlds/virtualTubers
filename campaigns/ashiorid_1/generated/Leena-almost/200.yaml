@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 200
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:28.102292+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This is a standard village, Leena. You've been here for years.
+- kind: dialogue
+  speaker: Leena
+  text: It's not. I don't know what it is, but it's not.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen a doorway just like that in your village back home.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's not worth the trouble.
+- kind: dialogue
+  speaker: Vigil
+  text: Say something.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm not going to say something. I'm going to stand here and look at it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright. You've made your point.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you just have a memory of a doorway like that.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it. I know what I see.
+- kind: dialogue
+  speaker: Vigil
+  text: I see it too.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not possible.

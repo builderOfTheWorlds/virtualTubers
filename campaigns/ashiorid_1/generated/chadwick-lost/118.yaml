@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-18T20:11:26.612216+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, the trees are getting thicker and it's harder to see.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head in that direction.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, isn't that the way we came?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure it's different.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is good.
+- kind: dialogue
+  speaker: Vigil
+  text: (deadpan) You know, Chadwick, I've been thinking.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Chadwick, why don't you ask Vigil for a compass reading?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it under control.
+- kind: dialogue
+  speaker: gm
+  text: (dryly) Of course you do.

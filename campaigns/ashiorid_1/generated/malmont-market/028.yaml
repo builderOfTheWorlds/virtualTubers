@@ -1,0 +1,43 @@
+id: malmont-market
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:30.766108+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome to Malmont, folks. The town's... lively.
+- kind: dialogue
+  speaker: gm
+  text: The market's just getting started. People are already haggling over the prices.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, this blacksmith's work is subpar. I could do better with my eyes closed.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Yes, and I'm sure I'll be the only one who has to leave
+    his mark on it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look at these old maps. I wonder what's so special about them.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling to himself) No one's looking at me. That's a nice feeling.
+- kind: dialogue
+  speaker: gm
+  text: The constable's watch is out in force today. Probably just a drill.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a close eye on the surrounding crowd) Too many new faces in town.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not impressed with this market. Where's the real craftsmanship?
+- kind: dialogue
+  speaker: Leena
+  text: (studying a map) This one's got a notation for an old river route. I wonder
+    where it goes.
+- kind: dialogue
+  speaker: chadwick
+  text: (relaxed) I could stand here all day. No one knows me here.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Let's keep moving. No sense sticking out.

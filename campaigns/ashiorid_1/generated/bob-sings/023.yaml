@@ -1,0 +1,43 @@
+id: bob-sings
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:12:56.211517+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A cacophony of clashing notes erupts from Sodacan Bob's direction
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rokkrin's mighty hammer falls, falls on the stone so bright, falls with a
+    rumble and a fright!
+- kind: dialogue
+  speaker: chadwick
+  text: (covering his ears) Ugh, what in the...?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Sodacan Bob, you're at it again!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deep beneath the earth we dig and delve, our axes swinging, our spirits give,
+    we work, we work, for the kingdom to...
+- kind: dialogue
+  speaker: Vigil
+  text: (clapping along) Well, I'll give him credit, he's enthusiastic!
+- kind: dialogue
+  speaker: gm
+  text: (winces) Sodacan Bob, I think you're off-key...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rock and stone, our toil and strife, we'll dig till darkness, till our lives!
+- kind: dialogue
+  speaker: chadwick
+  text: (uncovering his ears, shaking head) I think my eardrums are protesting...
+- kind: dialogue
+  speaker: Leena
+  text: (grinning) Come on, everyone, join in!
+- kind: dialogue
+  speaker: Vigil
+  text: (laughing) I think I'll just nod along, that's safest...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deep beneath, where shadows play, we'll dig our way to a brighter day!

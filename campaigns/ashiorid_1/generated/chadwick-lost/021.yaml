@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:53.867722+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, let's get moving, Chadwick. We've got a long day ahead of us.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got the map, I know where we're going.
+- kind: dialogue
+  speaker: Leena
+  text: Well, just to confirm, Chadwick, the map says we're heading east.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, that's right. East.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chad, you can't be serious. We're already going the wrong way.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Sodacan Bob might be right, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm positive we're on the right track.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, Chadwick... maybe Vigil could take a look at the map?
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I've got it.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, can you just take the lead for a bit and see if you can find
+    any landmarks?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but this is just ridiculous.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, I see, we're actually heading due north now.

@@ -1,0 +1,32 @@
+id: bahadur-sighted
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:42.660135+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're almost due for a rotation at the next ridge.
+- kind: dialogue
+  speaker: chadwick
+  text: Still haven't spotted any sign of those patrols.
+- kind: dialogue
+  speaker: Leena
+  text: If they're even out there, it's not like we'd see them.
+- kind: dialogue
+  speaker: Vigil
+  text: We've been quiet for weeks, it's a wonder we haven't been detected.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Weeks? You think it's been weeks?
+- kind: dialogue
+  speaker: chadwick
+  text: It's been weeks since we had contact, not since we arrived.
+- kind: dialogue
+  speaker: Leena
+  text: Weeks. Months. I don't even know what we're doing here.
+- kind: dialogue
+  speaker: Vigil
+  text: We're not here to make friends, we're here to make progress.
+- kind: dialogue
+  speaker: gm
+  text: We're here to make sure the Bahadur don't start moving again.

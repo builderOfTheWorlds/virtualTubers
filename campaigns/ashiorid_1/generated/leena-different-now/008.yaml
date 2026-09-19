@@ -1,0 +1,32 @@
+id: leena-different-now
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:29:24.059450+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I feel... changed.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just... my magic doesn't sit right.
+- kind: dialogue
+  speaker: Vigil
+  text: What's wrong with your magic?
+- kind: dialogue
+  speaker: Leena
+  text: It's just... different.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) I've noticed a lot of people feeling that way lately.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not a thing we talk about, Bob.
+- kind: dialogue
+  speaker: gm
+  text: Silence, Chadwick. What's Leena saying?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just... this feeling inside.

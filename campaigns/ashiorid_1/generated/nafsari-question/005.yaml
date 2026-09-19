@@ -1,0 +1,29 @@
+id: nafsari-question
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:23.014755+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what's this like, growing up with the wood elves of Nafsari?
+- kind: dialogue
+  speaker: chadwick
+  text: It was a thing.
+- kind: dialogue
+  speaker: Leena
+  text: No, really, what was it like?
+- kind: dialogue
+  speaker: Vigil
+  text: The trees were there.
+- kind: dialogue
+  speaker: Leena
+  text: Miss it? Do you miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not something I don't have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, Vigil, sometimes I wonder what it'd be like to have...
+- kind: dialogue
+  speaker: Vigil
+  text: The trees are still there.

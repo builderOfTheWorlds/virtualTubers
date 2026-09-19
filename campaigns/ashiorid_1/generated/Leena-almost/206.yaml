@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 206
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:59.231584+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you mean it's familiar and shouldn't be?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, did you see something unusual?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a similar doorway, yeah. Could've been in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not scared, just curious. What if it's connected to... something?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's not worth the risk.
+- kind: dialogue
+  speaker: gm
+  text: The others are trying to offer you explanations, but you're not convinced.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's probably just a coincidence.
+- kind: dialogue
+  speaker: gm
+  text: The others are starting to lose interest, but you're still stuck on this.

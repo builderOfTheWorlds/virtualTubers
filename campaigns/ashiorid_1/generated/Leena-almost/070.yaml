@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T19:27:37.537551+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village you were taken from, Leena, is centuries old.
+- kind: dialogue
+  speaker: Leena
+  text: It is. I remember it being there when I was a child.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't bother, Leena. It's nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I don't feel like it's just something. I feel like I know this place.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you're just homesick.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not homesick.
+- kind: dialogue
+  speaker: gm
+  text: The air seems to be getting thick.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, let's move on.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what's that smell?
+- kind: dialogue
+  speaker: gm
+  text: It's just the forest.

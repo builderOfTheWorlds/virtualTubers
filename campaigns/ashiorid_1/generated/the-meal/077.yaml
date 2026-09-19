@@ -1,0 +1,41 @@
+id: the-meal
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:30.246473+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, everyone's hungry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, this meal was an insult to the culinary arts. I'd do it so much better.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, let's not be so hard on the cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the story, Ash? Did you just throw some old leftovers together?
+- kind: dialogue
+  speaker: gm
+  text: I, uh, thought we had enough ingredients on hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Enough ingredients? This is an affront to the concept of cooking.
+- kind: dialogue
+  speaker: Leena
+  text: Hey, don't be so negative, Bob. It's just a meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You call this a meal? It's an embarrassment.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in peace?
+- kind: dialogue
+  speaker: Leena
+  text: Okay, who wants to talk about our plans for the trip?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This meal is a travesty, and I'm not going to let it go unaddressed.
+- kind: dialogue
+  speaker: Vigil
+  text: You should have used fresh herbs.

@@ -1,0 +1,41 @@
+id: the-meal
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:45.217904+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who cooked tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have you know, I'm a master chef and this meal is a disaster.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just eat and be done with it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! We can make it a fun dinner party.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not hungry for this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This meal is a crime against culinary art! I demand to know who prepared it.
+- kind: dialogue
+  speaker: chadwick
+  text: I said let's just eat and be done with it.
+- kind: dialogue
+  speaker: Leena
+  text: It's not about who cooked it, it's about the company we're in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do better than this, I'd put in some actual effort.
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, who wants to do dinner tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll do it, but I'm only cooking if I can do it my way.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, thank you, Sodacan Bob!

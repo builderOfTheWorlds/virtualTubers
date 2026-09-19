@@ -1,0 +1,38 @@
+id: bob-sings
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:54.717766+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm diggin' deep in the earth, me lad, me lad!
+- kind: dialogue
+  speaker: chadwick
+  text: What's this racket?!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm choppin' stone and I'm haulin' ore, it's a wondrous life I adore!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a dwarf of the finest sort, my beard is long and my spirit's stout!
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, perhaps you'd like to join in?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a warrior, a miner, a brewer, I'm a master of all I do!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a king of the mountains, my name is known so well!
+- kind: dialogue
+  speaker: chadwick
+  text: Ashiorid, seriously?!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm the greatest dwarf this side of the mountains, I'm the best!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a master of the pickaxe, my arms are strong and free!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a singer, a dancer, a wondrous sight to see!

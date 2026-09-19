@@ -1,0 +1,41 @@
+id: night-watch
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:42.802479+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's still dark.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, just a few stars.
+- kind: dialogue
+  speaker: Leena
+  text: I can see the moon a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not full, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I don't think so.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I thought you'd wake me up early, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Not yet, I don't think we need to.
+- kind: dialogue
+  speaker: chadwick
+  text: What can you hear?
+- kind: dialogue
+  speaker: Vigil
+  text: Just crickets.
+- kind: dialogue
+  speaker: Leena
+  text: And a wind somewhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can hear the wind too.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not loud, is it?

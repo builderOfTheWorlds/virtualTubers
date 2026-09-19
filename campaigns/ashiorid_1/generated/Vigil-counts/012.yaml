@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:31.711903+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left opens outwards.
+- kind: dialogue
+  speaker: Leena
+  text: What does that even mean?
+- kind: dialogue
+  speaker: Vigil
+  text: It means you can't close it from the other side.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that relevant?
+- kind: dialogue
+  speaker: Vigil
+  text: I was just noticing.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, yeah, I got it.
+- kind: dialogue
+  speaker: gm
+  text: We've been through this room before, haven't we?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter's been fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: So?
+- kind: dialogue
+  speaker: gm
+  text: Just making conversation.

@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:07.981446+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The shutter on the eastern wall, it's been fixed recently.
+- kind: dialogue
+  speaker: chadwick
+  text: Mhm, what's the point of mentioning that?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, just seems like a weird thing to notice.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just...a repair.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think someone's watching, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I just think he's being weird.
+- kind: dialogue
+  speaker: Leena
+  text: Is it a problem if it's just a repair?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

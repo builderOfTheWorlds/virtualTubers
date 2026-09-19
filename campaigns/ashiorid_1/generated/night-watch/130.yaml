@@ -1,0 +1,41 @@
+id: night-watch
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:47.870931+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Night's as quiet as I've ever seen.
+- kind: dialogue
+  speaker: chadwick
+  text: Not just the night, I think. The whole place.
+- kind: dialogue
+  speaker: Leena
+  text: You mean the Well? It's usually more... active.
+- kind: dialogue
+  speaker: Vigil
+  text: Active? Like what?
+- kind: dialogue
+  speaker: gm
+  text: Like, I don't know, like it's... breathing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I hear nothing but crickets. And wind. A bit.
+- kind: dialogue
+  speaker: Leena
+  text: Wind's picking up. Should we wake the others early?
+- kind: dialogue
+  speaker: chadwick
+  text: Nah, let 'em sleep. We can keep watch.
+- kind: dialogue
+  speaker: gm
+  text: I've been thinking, though... about that thing I found.
+- kind: dialogue
+  speaker: Vigil
+  text: What thing?
+- kind: dialogue
+  speaker: gm
+  text: Nothing. Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Crickets are really loud tonight.

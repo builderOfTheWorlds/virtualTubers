@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:53.732546+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle this, what's the next landmark we're looking for?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's the old windmill, but it's not on your map.
+- kind: dialogue
+  speaker: Vigil
+  text: I've got it right here, and it's clearly marked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think we're all reading the same map, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But I could swear I saw a map with a different route earlier.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe you saw a different map, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: This is all your fault, Ashiorid, you should have made a copy.
+- kind: dialogue
+  speaker: gm
+  text: What are you talking about, Chadwick, I made multiple copies.
+- kind: dialogue
+  speaker: chadwick
+  text: If I didn't have to babysit you people, we'd be lost by now.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, calm down, we're fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, let's just keep moving, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, Chadwick's being a jerk.

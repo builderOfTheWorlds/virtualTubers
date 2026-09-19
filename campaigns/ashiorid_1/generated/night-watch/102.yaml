@@ -1,0 +1,41 @@
+id: night-watch
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:54.829397+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I don't hear any crickets.
+- kind: dialogue
+  speaker: Vigil
+  text: I hear some far off. Probably just a small stream.
+- kind: dialogue
+  speaker: Leena
+  text: I used to go there as a kid. Catch fish in my grandfather's nets.
+- kind: dialogue
+  speaker: gm
+  text: You're quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: gm
+  text: Just watching the sky.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're early.
+- kind: dialogue
+  speaker: Leena
+  text: Should we wake the others?
+- kind: dialogue
+  speaker: gm
+  text: No. Let them sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not like there's anything coming.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 131
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:02.079356+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What did you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The eastern door opens outwards.
+- kind: dialogue
+  speaker: chadwick
+  text: Any other details?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart outside has the same cargo.
+- kind: dialogue
+  speaker: Leena
+  text: We're still waiting for the tea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It'll arrive when it arrives.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyone else think about the door?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just as I said.
+- kind: dialogue
+  speaker: gm
+  text: Alright, then.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a shutter on the west wall.
+- kind: dialogue
+  speaker: Leena
+  text: It was recently repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How do you know that?

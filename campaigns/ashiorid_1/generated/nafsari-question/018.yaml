@@ -1,0 +1,41 @@
+id: nafsari-question
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:37.423253+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You grew up surrounded by the wood elves of Nafsari, didn't you?
+- kind: dialogue
+  speaker: Vigil
+  text: I did.
+- kind: dialogue
+  speaker: chadwick
+  text: How was it, like?
+- kind: dialogue
+  speaker: Vigil
+  text: It was.
+- kind: dialogue
+  speaker: Leena
+  text: I can imagine it would be amazing.
+- kind: dialogue
+  speaker: Vigil
+  text: It was.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do you miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Sorry, I didn't mean to pry.
+- kind: dialogue
+  speaker: Vigil
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: We're just curious about your past.
+- kind: dialogue
+  speaker: Vigil
+  text: I understand.

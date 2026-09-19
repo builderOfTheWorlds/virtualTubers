@@ -1,0 +1,43 @@
+id: Vigil-counts
+take: 144
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:11.314273+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I counted six people in the room when we first came in.
+- kind: dialogue
+  speaker: chadwick
+  text: And?
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the kitchen is to our left, and the one to the garden is straight
+    ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What of it?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that window was repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: It was.
+- kind: dialogue
+  speaker: chadwick
+  text: What makes you think that?
+- kind: dialogue
+  speaker: Vigil
+  text: The way the wooden grain is exposed.
+- kind: dialogue
+  speaker: gm
+  text: What's this? A puzzle?
+- kind: dialogue
+  speaker: Vigil
+  text: Just an observation.
+- kind: dialogue
+  speaker: Leena
+  text: Don't mind him.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see what he means. The cart that's been leaving those deliveries...
+    it passed by our window again today.

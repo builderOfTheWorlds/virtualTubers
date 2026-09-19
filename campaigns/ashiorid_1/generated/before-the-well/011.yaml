@@ -1,0 +1,41 @@
+id: before-the-well
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:14.425795+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full, Leena. We should be able to see it clearly.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) We can try to get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I don't like being this close to the well at night.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take the first watch.
+- kind: dialogue
+  speaker: gm
+  text: (nods) I'll keep an eye on the perimeter.
+- kind: dialogue
+  speaker: Leena
+  text: (gets up to join Vigil)
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Do you feel it?
+- kind: dialogue
+  speaker: Leena
+  text: (shrugs) Feel what?
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs)
+- kind: dialogue
+  speaker: chadwick
+  text: (stirring, half-asleep) What's going on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (low voice) Nothing, just keeping watch.

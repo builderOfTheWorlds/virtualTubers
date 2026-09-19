@@ -1,0 +1,35 @@
+id: vigil-almost-jokes
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:37:43.879553+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so what do you think - was it a joke?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, I didn't laugh.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't think it was funny, but maybe that's just me.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe I'll just never be funny.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone explain what happened to us.
+- kind: dialogue
+  speaker: Vigil
+  text: I think he said something about cats having four noses.
+- kind: dialogue
+  speaker: gm
+  text: No, that's not it - Leena, can you recall what it was?
+- kind: dialogue
+  speaker: Leena
+  text: I thought he said something about cats... but that's not right either.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to bed.

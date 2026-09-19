@@ -1,0 +1,38 @@
+id: malmont-market
+take: 136
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:15.203476+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Morning, good people of Malmont.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Smithwork? Where's the smithwork?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, good morning, good folk. Just passing through.
+- kind: dialogue
+  speaker: Leena
+  text: Maps? You have old maps?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bah, these are all the same thing I've seen before.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your coin close, friend.
+- kind: dialogue
+  speaker: Leena
+  text: Let me see that. What's this one?
+- kind: dialogue
+  speaker: chadwick
+  text: Thank you, kind stranger, I think I'll just...browse.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll be at the smithwork, and don't expect a discount.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll be around. Just browsing too.
+- kind: dialogue
+  speaker: Leena
+  text: This one is so old...

@@ -1,0 +1,29 @@
+id: counting-the-cost
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:19.819470+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Worn planks, like a tired hand that's seen its best work.
+- kind: dialogue
+  speaker: chadwick
+  text: I can see the cart's frame is still sound, but...
+- kind: dialogue
+  speaker: Leena
+  text: The joints are loose, it'll need some re-forging.
+- kind: dialogue
+  speaker: Vigil
+  text: Re-forging. I like that.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, what's the verdict on the gear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A cracked tooth, like a flawed blade. It'll need to be reshaped.
+- kind: dialogue
+  speaker: chadwick
+  text: Reshaped? Not fixed?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, Chad, a crack runs deep. New stock, that's what we need.

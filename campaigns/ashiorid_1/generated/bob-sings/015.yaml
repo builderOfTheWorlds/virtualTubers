@@ -1,0 +1,42 @@
+id: bob-sings
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:05.394168+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A dark and misty cave, the sound of dripping water echoes through the air.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Aaaaah, kreee-kreee, kreee-kreee, graaaahh, graa-uhh!
+- kind: dialogue
+  speaker: chadwick
+  text: Ugh, is that... dwarven?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think it's supposed to be?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: GRAAAHHH, GRAAAH, GRAAAH, kreee-kreee!
+- kind: dialogue
+  speaker: gm
+  text: The sound of Sodacan Bob's singing grows louder, echoing off the cave walls.
+- kind: dialogue
+  speaker: Leena
+  text: I think I recognize that one! It's "The Pickaxe Boogie"!
+- kind: dialogue
+  speaker: chadwick
+  text: Not that one, Leena!
+- kind: dialogue
+  speaker: Vigil
+  text: Why must we suffer?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: GRAAAH, GRAAAH, GRAAAH, kreee-kreee-kreee!
+- kind: dialogue
+  speaker: gm
+  text: The sound of dripping water seems to be drowned out by Sodacan Bob's enthusiastic
+    singing.
+- kind: dialogue
+  speaker: Leena
+  text: He's singing even louder than usual!

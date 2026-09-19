@@ -1,0 +1,42 @@
+id: camp-fire
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:13.791721+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's been coming down like this for hours, it's a relief it finally
+    stopped.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle the watch order already, we need to get some rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better fire-laying, Bob, this thing's gonna die before morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Water's still seeping in around the edges.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if it goes out in the middle of the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think they'd know better than to lay a fire in the rain.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, Vigil, you're first watch.
+- kind: dialogue
+  speaker: Vigil
+  text: It's the wettest I've ever been.
+- kind: dialogue
+  speaker: Leena
+  text: Why does the fire need to be so big, anyway?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, was it your idea to build it this way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not my idea, but I'm not complaining.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, make sure someone's keeping an eye on the fire.

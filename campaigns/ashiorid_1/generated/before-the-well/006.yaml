@@ -1,0 +1,38 @@
+id: before-the-well
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:48.596383+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The well is still quiet. No signs of disturbance.
+- kind: dialogue
+  speaker: chadwick
+  text: Did you check the resonator?
+- kind: dialogue
+  speaker: Leena
+  text: No, not yet. I was thinking of going down tomorrow morning.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll join you. It's not like we have anything better to do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We have a party to get through first.
+- kind: dialogue
+  speaker: gm
+  text: And then we'll... figure things out.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah. Like, what we're doing here, really.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not think about that tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the moonwell doing to the resonator, anyway?
+- kind: dialogue
+  speaker: gm
+  text: That's what we're trying to find out.
+- kind: dialogue
+  speaker: Leena
+  text: Wake me up when it's morning.

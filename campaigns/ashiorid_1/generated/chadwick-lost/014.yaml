@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:02.725978+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got the ruins of the ancient city to our left, and the forest
+    stretching out in front of us.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, let's move forward.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing) If you'd like to consult the map, Vigil can help you...
+- kind: dialogue
+  speaker: chadwick
+  text: I know where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, really?
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: Leena
+  text: If you'd rather not admit it, Chadwick, we can just keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: We're on track.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Save it, Chad.
+- kind: dialogue
+  speaker: gm
+  text: I'm just going to mark our current position.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) About time...
+- kind: dialogue
+  speaker: chadwick
+  text: We should head this way.

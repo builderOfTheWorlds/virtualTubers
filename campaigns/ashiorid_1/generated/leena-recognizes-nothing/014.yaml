@@ -1,0 +1,30 @@
+id: leena-recognizes-nothing
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:20.940162+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The landscape stretches out before you, a mix of rolling hills and wooded
+    areas.
+- kind: dialogue
+  speaker: Leena
+  text: I think I recognize something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We've been driving for hours, it's probably just a familiar shape.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, how's the book going? Finished the last chapter yet?
+- kind: dialogue
+  speaker: Leena
+  text: No, I... I'm not sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're getting close to our destination, I think. I can smell it.
+- kind: dialogue
+  speaker: Leena
+  text: This looks like... somewhere I've seen before.
+- kind: dialogue
+  speaker: chadwick
+  text: We should be arriving soon, don't you think, Bob?

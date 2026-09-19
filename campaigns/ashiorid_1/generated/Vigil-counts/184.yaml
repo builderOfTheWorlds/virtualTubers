@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 184
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:53.691929+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old shutter on the eastern wall has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's nice, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: What else?
+- kind: dialogue
+  speaker: Vigil
+  text: The north door swings open inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's how it swings on the map.
+- kind: dialogue
+  speaker: Vigil
+  text: And I've seen that same cart pass twice this morning.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just the delivery schedule.
+- kind: dialogue
+  speaker: Leena
+  text: What else, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There are eleven people in this room.
+- kind: dialogue
+  speaker: gm
+  text: Including ourselves, that makes twelve.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the window on the west is open about two inches.

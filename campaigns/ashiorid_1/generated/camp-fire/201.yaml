@@ -1,0 +1,34 @@
+id: camp-fire
+take: 201
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:48.252158+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Morning's not till dawn, but I'd like to settle the watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, now, now, let's not rush. I think I saw how they laid the fire, and it's
+    a fine job.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's getting in.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the water's going to make the fire sputter?
+- kind: dialogue
+  speaker: chadwick
+  text: Not if we tend to it right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but the way they've got the embers banked, it'll take a lot more than
+    rain to put it out.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll still smolder.
+- kind: dialogue
+  speaker: Leena
+  text: How do you keep a fire going without magic?
+- kind: dialogue
+  speaker: gm
+  text: We just do.

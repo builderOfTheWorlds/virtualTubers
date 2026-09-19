@@ -1,0 +1,29 @@
+id: leena-recognizes-nothing
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:13.593356+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The air is filled with the sound of horses' hooves on the dusty road ahead.
+- kind: dialogue
+  speaker: gm
+  text: Leena almost-recognizes a landmark she's never been to before.
+- kind: dialogue
+  speaker: Leena
+  text: I almost knew that hill...
+- kind: dialogue
+  speaker: gm
+  text: The angle of a road and the way a building sits against the light.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a bend in the road, it happens in a lot of places.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching) Nothing to see here.
+- kind: dialogue
+  speaker: chadwick
+  text: So, has anyone thought about lunch?
+- kind: dialogue
+  speaker: Leena
+  text: But I'm sure I've seen it somewhere...

@@ -1,0 +1,28 @@
+id: sodacan_bob-on-runes
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T22:29:34.049669+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think the Malvakar is going to be a challenge for any of us?
+- kind: dialogue
+  speaker: chadwick
+  text: What makes you say that, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The carving, the runes, the way they're struck... it's all old-school craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: You're just talking about the door itself, not the riddle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Same difference, Leena. Good craftsmanship is good craftsmanship, whether
+    it's on a door or a work of art.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the real question, Bob? You're not thinking about the Malvakar's inscription.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe I am, Vigil. Maybe I'm just thinking about what it takes to make something
+    last.

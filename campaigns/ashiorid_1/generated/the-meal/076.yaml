@@ -1,0 +1,42 @@
+id: the-meal
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:19.124814+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: Not bad.
+- kind: dialogue
+  speaker: Leena
+  text: I made an extra effort to make this a special occasion, so I hope you all
+    enjoy it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Special occasion? You call this edible?
+- kind: dialogue
+  speaker: Leena
+  text: Well, I did try to make it a little fancier than usual.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I could have done this myself, and done it better.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just eat?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I'm telling you, I would have used less salt.
+- kind: dialogue
+  speaker: gm
+  text: Who wants the leftovers tomorrow?
+- kind: dialogue
+  speaker: chadwick
+  text: Just pass the bread.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, that pot's never been properly cleaned.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on Bob, don't be a grump.

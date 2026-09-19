@@ -1,0 +1,24 @@
+id: malmont-market
+take: 181
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:01.347585+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work at the last village we stopped in.
+- kind: dialogue
+  speaker: Vigil
+  text: That one's not bad, though. The hammering's clean.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, thanks. I'm just looking for a new place to grab a meal.
+- kind: dialogue
+  speaker: Vigil
+  text: What is this, a place to eat? I thought you were interested in the local goods.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I am, but I've got a thing for decent tools, and this town doesn't seem to
+    have much of that.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a small town, what can you expect?

@@ -1,0 +1,41 @@
+id: road-talk
+take: 84
+model: llama3.1:8b
+generated_at: '2026-09-18T22:23:31.945630+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's beating down on us, keep drinking water.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should take a break, get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: I know, I can barely keep my eyes open.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the first watch, don't want to sleep on duty.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos, it's a city of wonders. Canals, markets, the Grand Bazaar.
+- kind: dialogue
+  speaker: Leena
+  text: My village has canals too, but ours are for fishing.
+- kind: dialogue
+  speaker: gm
+  text: Time to move, don't want to lose the sun's light.
+- kind: dialogue
+  speaker: chadwick
+  text: You all have homes, places you'd rather be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos, the smell of spices in the air, the sound of...
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then) Nafsari's got a nice lake, lots of trees.
+- kind: dialogue
+  speaker: Leena
+  text: I grew up by the lake, my family's still there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (continues talking about Vabokedos)

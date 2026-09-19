@@ -1,0 +1,26 @@
+id: leena-recognizes-nothing
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:37.325660+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you said something about almost recognizing a landmark.
+- kind: dialogue
+  speaker: Leena
+  text: I did, I think. It was something about the way the buildings were arranged.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, what was it that reminded you of something?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just the time of day. Sometimes the light can play tricks on you.
+- kind: dialogue
+  speaker: Leena
+  text: No, it wasn't just that. It was the way the hill was shaped.
+- kind: dialogue
+  speaker: gm
+  text: So, can you tell us more about what you're thinking, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not even sure, but it felt... familiar.

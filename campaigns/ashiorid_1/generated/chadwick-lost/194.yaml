@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 194
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:38.335522+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, do you know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're in the right general area.
+- kind: dialogue
+  speaker: Vigil
+  text: That's not very specific, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick, you're not even sure which forest we're in.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you just ask Vigil for a location?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine, I was just... taking a scenic route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, this is good, this is great.
+- kind: dialogue
+  speaker: Vigil
+  text: (deadpan) I'm happy to help, Chadwick, if you just ask.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving then.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) This way...
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) That's a good idea, Chadwick.

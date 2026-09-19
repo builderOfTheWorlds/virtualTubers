@@ -1,0 +1,39 @@
+id: road-talk
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T22:21:23.660844+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: We'll be at the next watering hole by evening, don't worry.
+- kind: dialogue
+  speaker: Vigil
+  text: My family's farm was... near Nafsari's eastern hills.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Ah, you want to know about Vabokedos? It's the best place for a Sodacan
+    to live!
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) Oh, no one's asking about your place.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I mean, you're from the city, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then changes subject) What's for dinner tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I'm sure we'll find some decent berries along the road.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) This road never ends...
+- kind: dialogue
+  speaker: Leena
+  text: My village was famous for its woven baskets.
+- kind: dialogue
+  speaker: chadwick
+  text: (shifting his pack) Let's keep walking.

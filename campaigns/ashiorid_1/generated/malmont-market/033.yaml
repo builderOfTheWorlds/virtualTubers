@@ -1,0 +1,39 @@
+id: malmont-market
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:01.111626+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, half the stuff they've got here could be bought for scrap prices
+    back at the junkyard.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, is that an old map? I don't recognize the mountains at all.
+- kind: dialogue
+  speaker: chadwick
+  text: Finally, a place where people don't know me.
+- kind: dialogue
+  speaker: gm
+  text: (no response, just a gentle observation of the scene)
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what these maps are, if they're so old.
+- kind: dialogue
+  speaker: Vigil
+  text: Stay sharp, everyone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of a map if it's not marked on anything?
+- kind: dialogue
+  speaker: Leena
+  text: This one has a river, and a town... but it's not labeled.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying a sandwich.
+- kind: dialogue
+  speaker: gm
+  text: (still observing the scene, noting no conflicts)

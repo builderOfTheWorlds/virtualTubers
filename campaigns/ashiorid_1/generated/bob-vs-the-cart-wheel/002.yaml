@@ -1,0 +1,36 @@
+id: bob-vs-the-cart-wheel
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:20.760037+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the next item on the agenda.
+- kind: dialogue
+  speaker: chadwick
+  text: We've got a lot to discuss, can we please just-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're talking about the wheel, again! The spokes are too thin, it's going
+    to collapse!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, we've already discussed this, we can-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Collapse! I'm telling you, it's a disaster waiting to happen!
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, maybe we can compromise, use thicker spokes?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No compromise, it's either right or it's wrong!
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just focus on the road ahead?
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, the rest of us agree with Vigil, maybe we can find a middle ground?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not backing down, this is a critical safety issue!

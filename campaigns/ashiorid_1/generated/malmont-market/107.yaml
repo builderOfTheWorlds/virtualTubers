@@ -1,0 +1,38 @@
+id: malmont-market
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:06.748722+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not a bad selection of work, but I've seen better.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, do you have any maps from the south?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) Not impressed, are you?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm just looking. Nice day, isn't it?
+- kind: dialogue
+  speaker: gm
+  text: (narrating) Malmont's got a bit of a problem with night watch, though.
+- kind: dialogue
+  speaker: Leena
+  text: These maps are quite old. Where did you find them?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather see something new, something with some flair.
+- kind: dialogue
+  speaker: Vigil
+  text: (low) Keep your voice down, friend.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Do you have any idea where they came from?
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering to Vigil) Relax, I'm just browsing.
+- kind: dialogue
+  speaker: gm
+  text: (narrating) Nobody's really paying attention to the four of you.

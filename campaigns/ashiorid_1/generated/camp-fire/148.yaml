@@ -1,0 +1,42 @@
+id: camp-fire
+take: 148
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:52.413637+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle on the watch order for tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should rotate, so we can all get some rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, I think it'll be fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Fire needs more kindling.
+- kind: dialogue
+  speaker: Leena
+  text: What if the rain just keeps falling, and we're stuck here forever?
+- kind: dialogue
+  speaker: gm
+  text: We'll figure that out in the morning.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you think, Leena? Don't you worry about anything?
+- kind: dialogue
+  speaker: Leena
+  text: I just wonder sometimes what would happen if... never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can always add more kindling in the morning, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: 'Alright, watch order: Chadwick and Vigil for the first shift, then Leena
+    and I.'
+- kind: dialogue
+  speaker: Vigil
+  text: Don't put the fire too close to the edge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's a shame we didn't get to see that last town, Leena.

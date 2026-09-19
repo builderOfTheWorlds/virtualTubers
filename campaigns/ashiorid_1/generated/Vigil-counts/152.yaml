@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 152
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:54.141530+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the door on the left swings out into the alley, if that's any
+    use.
+- kind: dialogue
+  speaker: gm
+  text: What's that supposed to tell us, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Not much, just a habit of yours, I guess.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, you notice everything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like that shutter over there, looks like someone fixed it recently.
+- kind: dialogue
+  speaker: Vigil
+  text: Just something I noticed, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: We've got more important things to think about than door swings and repairs.
+- kind: dialogue
+  speaker: gm
+  text: Like what, exactly?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, never mind.

@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 134
+model: llama3.1:8b
+generated_at: '2026-09-18T20:13:15.845439+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, which way do we go?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil can help us find our way.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'd be happy to help.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, Chadwick's got a plan.
+- kind: dialogue
+  speaker: chadwick
+  text: What's so funny, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the way you do navigation.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Come on, Chadwick, why don't you let Vigil take the lead?
+- kind: dialogue
+  speaker: chadwick
+  text: I know where we're going. I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (nodding) Okay, let's just go this way then.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) This is ridiculous.

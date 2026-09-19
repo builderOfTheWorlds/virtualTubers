@@ -1,0 +1,33 @@
+id: camp-fire
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T19:53:07.726644+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's letting up a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: We should decide who takes the first watch, we can't stay up all night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, the fire needs to be coaxed, not just laid, to last the night.
+- kind: dialogue
+  speaker: Leena
+  text: What's the farthest point the rain's been falling from, anyone notice?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's going to smoke up the place.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a bit of sulfur powder would make all the difference.
+- kind: dialogue
+  speaker: chadwick
+  text: Someone needs to go check the rain, see if it's going to keep coming down
+    like this.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we don't get to the other side of this by morning?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't rain all night.

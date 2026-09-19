@@ -1,0 +1,32 @@
+id: bahadur-sighted
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:54.044004+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What is that?
+- kind: dialogue
+  speaker: chadwick
+  text: Can't say.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't see it.
+- kind: dialogue
+  speaker: Vigil
+  text: It moved.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the treeline.
+- kind: dialogue
+  speaker: gm
+  text: Nothing's making any sense.
+- kind: dialogue
+  speaker: Leena
+  text: We're running low on time.
+- kind: dialogue
+  speaker: Vigil
+  text: Not yet, keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: What if it was...

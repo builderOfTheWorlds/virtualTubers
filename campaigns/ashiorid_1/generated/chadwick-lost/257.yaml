@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 257
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:38.576509+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, where do we need to head?
+- kind: dialogue
+  speaker: chadwick
+  text: East.
+- kind: dialogue
+  speaker: Leena
+  text: Um, is that specific? Can you, uh, give us a little more detail?
+- kind: dialogue
+  speaker: chadwick
+  text: It's east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, Chadwick's got a map in his head and it's a real treasure
+    trove of specifics.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) I'm happy to help if you need it, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Chadwick, if you're not sure, just say so, okay?
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I know exactly where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, I'm sure you do, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Alright, Chadwick, let's go with east then.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighing) This should be interesting.

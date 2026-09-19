@@ -1,0 +1,42 @@
+id: road-talk
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:14:30.451142+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, who's getting tired?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm fine, just a bit thirsty, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: I'm used to walking, I used to walk for hours to the market every day.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari has... fertile land, good for crops.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, land.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I was thinking about Vabokedos, it's like a big valley with these two
+    rivers flowing out of it.
+- kind: dialogue
+  speaker: gm
+  text: What's it like, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's beautiful, green hills, orchards everywhere.
+- kind: dialogue
+  speaker: Leena
+  text: I loved playing in the river by my village.
+- kind: dialogue
+  speaker: Vigil
+  text: I liked the forest by Nafsari.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.

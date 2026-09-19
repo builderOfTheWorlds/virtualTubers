@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 258
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:47.112336+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Alright, let''s get moving, we''ve got a few hours of daylight
+    left.'
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I'm leading.
+- kind: dialogue
+  speaker: Vigil
+  text: (to herself) This way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm sure you are, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, do you want to take a glance at the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) Yes, you do have it. Literally.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh man, you're a regular lost traveler.
+- kind: dialogue
+  speaker: chadwick
+  text: I am not lost.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Okay, okay, let''s focus.'
+- kind: dialogue
+  speaker: chadwick
+  text: We're going this way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (teasingly) Oh, great, let's hope you know what you're doing.

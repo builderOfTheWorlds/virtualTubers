@@ -1,0 +1,36 @@
+id: road-talk
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T20:47:06.642714+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's getting high, we should take a short rest to avoid the heat.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I can take the lead, I know the layout of these roads.
+- kind: dialogue
+  speaker: Vigil
+  text: My village of Nafsari has a famous waterfall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos is a place where the rivers meet, they call it the "Jewel of the
+    Wastes".
+- kind: dialogue
+  speaker: Leena
+  text: My village had the best cooks in the region, they made the fluffiest bread.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of talking about where we're from?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just...nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're almost at the edge of the Wastes, I can see the dunes on the horizon.
+- kind: dialogue
+  speaker: gm
+  text: Alright, we'll stop at the next oasis.

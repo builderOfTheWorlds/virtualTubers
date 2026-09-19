@@ -1,0 +1,41 @@
+id: local-rumor
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:29:59.583309+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The constable's men seem busy, don't they?
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm-hmm.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just going to get some lunch, who's with me?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll pass.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I'm buying.
+- kind: dialogue
+  speaker: gm
+  text: There's that new shop that just opened up, what's that place called again?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, is it the Starlight Emporium?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, that's the one, want to go in with me?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not really in the market for anything, I'll catch up with you two.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll come in and browse, sounds like a good excuse to get out of the sun.
+- kind: dialogue
+  speaker: gm
+  text: Just be careful, I don't know what kind of place it is.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll be fine, don't worry about us.

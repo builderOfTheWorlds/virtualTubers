@@ -1,0 +1,58 @@
+segment_id: letos-manor-arc-alt2
+order: 8
+loop: 0
+hours: 6
+synopsis: The four arrive at Duke Sorensen Leto the Third's manor for a party ten
+  thousand years in the making, only to find it is not what they expected.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-alt2-n0-arrival-1
+  kind: ambient
+  prompt: The four companions step through the grand entrance of Duke Sorensen Leto
+    the Third's manor, their expectations shattered by the cold, unwelcoming atmosphere
+    despite the ostentatious preparations.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n0
+- slot_id: letos-manor-arc-alt2-n0-arrival-2
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: letos-manor-arc-alt2-n0
+nodes:
+- node_id: letos-manor-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: letos-manor-arc-alt2-n0
+  parent_id: letos-manor-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: letos-manor-arc-alt2-n1
+  parent_id: letos-manor-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 0
+needs_rebrief: true

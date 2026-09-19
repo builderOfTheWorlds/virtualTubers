@@ -1,0 +1,41 @@
+id: the-meal
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T22:33:33.844379+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, how was the meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ashiorid, this is an insult to the culinary arts. I'd have done it differently.
+- kind: dialogue
+  speaker: chadwick
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not so bad! Let's make the most of it!
+- kind: dialogue
+  speaker: Vigil
+  text: Here, Leena, take my portion. I'm not hungry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with this soup, Vigil? You're not even eating it.
+- kind: dialogue
+  speaker: Vigil
+  text: Not eating it? I'm giving it to Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Thanks, Vigil! You're so kind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done this without so much salt. And the vegetables are overcooked.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just drop it, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine. I'll just cook it myself tomorrow.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll cook it tomorrow.

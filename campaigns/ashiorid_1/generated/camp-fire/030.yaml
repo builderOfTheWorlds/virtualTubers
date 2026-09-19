@@ -1,0 +1,35 @@
+id: camp-fire
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:08.735510+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down pretty thick, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: We should settle the watch order before it gets any worse.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid that fire myself, you know. It's a good one.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll be fine till morning, don't you think?
+- kind: dialogue
+  speaker: Leena
+  text: What happens to the well when the rain gets in?
+- kind: dialogue
+  speaker: gm
+  text: It's not a well, it's a moonwell. It's not supposed to flood.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll deal with it when it happens, not while we're sitting here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If you laid it yourself, why's it smoking like that?
+- kind: dialogue
+  speaker: Leena
+  text: I just wonder if there's a way to stop it from getting wet in the first place.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs more kindling.

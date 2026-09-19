@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 243
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:14.315120+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A shutter on the second floor has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's nice to know, thanks Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't notice it.
+- kind: dialogue
+  speaker: Vigil
+  text: Just a detail I picked up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're really good at details.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure that's not why he's here.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, let's not assume.
+- kind: dialogue
+  speaker: gm
+  text: Okay, what's next then?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just take another look at the map.

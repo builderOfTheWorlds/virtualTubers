@@ -1,0 +1,33 @@
+id: camp-fire
+take: 188
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:43.347554+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, the rain's not going to let up until morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire just right, though. It'll last the night.
+- kind: dialogue
+  speaker: Vigil
+  text: The embers are too close to the tinder.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's true what they say about the Event? That a group went to
+    the last moonwell to close it?
+- kind: dialogue
+  speaker: gm
+  text: (no response)
+- kind: dialogue
+  speaker: chadwick
+  text: We need to decide who's watching first. I volunteer for the first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil should take the first watch. He's the quietest.
+- kind: dialogue
+  speaker: Vigil
+  text: My boots are not made for standing still.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what the Event felt like, really?

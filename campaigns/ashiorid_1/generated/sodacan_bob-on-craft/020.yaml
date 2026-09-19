@@ -1,0 +1,46 @@
+id: sodacan_bob-on-craft
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:16:39.286721+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm telling you, this gate was made in a village about a day's ride from
+    here, sometime around the middle of the century.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move. We can't afford to waste time.
+- kind: dialogue
+  speaker: Leena
+  text: What makes you so sure it's from that village?
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think it's a marker, something that was left behind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, I've studied the style of the bracket, it's clear it was made for
+    a specific door, not to mark a trail.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what kind of door it was meant for.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's a good question, Leena, I think it might have been for a storeroom
+    of some sort.
+- kind: dialogue
+  speaker: chadwick
+  text: Storeroom? Who cares?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it tells us something about the people who lived here, what kind of
+    needs they had.
+- kind: dialogue
+  speaker: Vigil
+  text: What about the blade? Is that something someone would carry for... self-defense?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, now that's an interesting question, Vigil, but I think it's more likely
+    it was used for cutting grain.
+- kind: dialogue
+  speaker: Leena
+  text: Grain? I didn't know this area was good for grain.

@@ -1,0 +1,29 @@
+id: chadwick-lost
+take: 221
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:17.073538+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're coming up on a fork in the road, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's the one on the left.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, sir, I believe it's the one on the right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is good. Chadwick, you're leading us astray.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe, Chadwick, we could just ask Vigil for a sec to make sure?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it. The left way is fine.
+- kind: dialogue
+  speaker: Vigil
+  text: If you're sure, sir.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy.

@@ -1,0 +1,24 @@
+id: counting-the-cost
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:49.056189+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The gear''s been forged in the fire of our journey, but some of
+    the joins are loose.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: We''ve been carrying each other, Ashiorid. Maybe we''re the ones
+    who need repairing.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I don''t need to be fixed. I just need a chance to get back on the
+    track.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: We all do, Leena. One way or another.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: A good hammer, a solid anvil – sometimes that''s all the healing
+    we need.'

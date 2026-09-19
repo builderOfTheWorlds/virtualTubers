@@ -1,0 +1,38 @@
+id: nafsari-question
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:41.627706+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: You grew up in the woods, didn't you?
+- kind: dialogue
+  speaker: Vigil
+  text: I did.
+- kind: dialogue
+  speaker: chadwick
+  text: What was it like, living among the elves?
+- kind: dialogue
+  speaker: Vigil
+  text: It was home.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can imagine, you must miss it.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, looks at Vigil) You have a unique perspective.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been my life.
+- kind: dialogue
+  speaker: chadwick
+  text: (awkwardly) I won't pry.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Sorry to have asked.
+- kind: dialogue
+  speaker: Vigil
+  text: It's fine.

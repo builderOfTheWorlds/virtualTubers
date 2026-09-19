@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 207
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:36.498741+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What caught your attention, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the little things, it's nothing.
+- kind: dialogue
+  speaker: Leena
+  text: What little things?
+- kind: dialogue
+  speaker: Vigil
+  text: There are six people in the room, and the doors open to our left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the shutter's been fixed, has it?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, it was hanging loose yesterday.
+- kind: dialogue
+  speaker: gm
+  text: That's good, a repair like that can make a big difference.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's nice to have some decent light in here.
+- kind: dialogue
+  speaker: Leena
+  text: I was going to ask, but I thought you might just be making conversation.
+- kind: dialogue
+  speaker: Vigil
+  text: No, just noting things.

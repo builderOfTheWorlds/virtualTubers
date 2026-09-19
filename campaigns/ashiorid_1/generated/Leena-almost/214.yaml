@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 214
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:46.346242+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I don't see anything out of the ordinary.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not that far from the village where you grew up, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: It looks like a doorway I've seen before, but I don't remember where.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You might have seen a similar one in your village, Leena. It's easy to get
+    buildings confused.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't go chasing after it. We don't know what it is.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, Chadwick. I just think it's familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're probably right, Leena. It's just a doorway.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I guess so. Nothing's wrong.

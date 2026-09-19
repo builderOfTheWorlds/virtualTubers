@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:41.832435+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Leena, what caught your attention out there?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village?
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think so. I've been there my whole life.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you're just remembering something from when you were a child.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, don't chase it. Whatever it is, it's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to do anything, I just... I want to know what it is.
+- kind: dialogue
+  speaker: gm
+  text: Very well. Keep your curiosity in check for now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We can discuss it later, maybe it'll come to you.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to take a walk. This conversation is boring me.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, what's wrong?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've discussed this enough for now.

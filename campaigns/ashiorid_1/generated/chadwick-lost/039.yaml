@@ -1,0 +1,44 @@
+id: chadwick-lost
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:45.200110+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high overhead, casting a warm glow over the rolling hills. A gentle
+    breeze stirs the grass, rustling the leaves of the few scattered trees.
+- kind: dialogue
+  speaker: chadwick
+  text: I say we head east.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps we should get our bearings first, Chadwick? I don't want to get us
+    lost.
+- kind: dialogue
+  speaker: chadwick
+  text: Lost? Don't be ridiculous, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently nods in agreement with Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! I bet Chadwick's the only person in the party who's never used a map.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers to Chadwick) Maybe we can just... um... pretend we're taking a shortcut?
+- kind: dialogue
+  speaker: chadwick
+  text: (shakes head firmly) We're heading east.
+- kind: dialogue
+  speaker: gm
+  text: As you continue on, you notice the hills begin to slope downward, and a small
+    copse of trees comes into view.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, there's the forest.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Well, at least we're going in the right direction now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Finally.

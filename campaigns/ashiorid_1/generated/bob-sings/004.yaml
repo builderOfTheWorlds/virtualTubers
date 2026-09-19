@@ -1,0 +1,41 @@
+id: bob-sings
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:38.859241+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob's singing again, isn't it a treat.
+- kind: dialogue
+  speaker: chadwick
+  text: Ugh, he's off-key on purpose, isn't he?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's just a little... rough around the edges.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, my dwarven friends, we mine the deep!
+- kind: dialogue
+  speaker: chadwick
+  text: I've got a headache.
+- kind: dialogue
+  speaker: Leena
+  text: He's really getting into it now!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We dig and we toil, we dig all day!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The darkness is cold, but our spirits are bright!
+- kind: dialogue
+  speaker: chadwick
+  text: Someone should really tell him to stop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll dig through the night, with our pickaxes shining!
+- kind: dialogue
+  speaker: Leena
+  text: It's actually kind of infectious, isn't it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Our beards are long, our beards are strong!

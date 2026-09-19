@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 216
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:52.305013+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village is quiet, but the atmosphere's still tense.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything out of the ordinary happen while we were out, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: We need to find out what's going on with the local authorities, I think.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the window shutters on this side of the room were recently repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take a look at the ones on the other side.
+- kind: dialogue
+  speaker: Vigil
+  text: They open outward.
+- kind: dialogue
+  speaker: chadwick
+  text: And the doors in this room?
+- kind: dialogue
+  speaker: Vigil
+  text: One of them opens into a hallway, the other into a storage room.
+- kind: dialogue
+  speaker: gm
+  text: Anyone notice anything else unusual?

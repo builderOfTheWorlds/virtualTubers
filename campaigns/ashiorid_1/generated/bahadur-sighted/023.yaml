@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:08.359399+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's that?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I thought I saw something.
+- kind: dialogue
+  speaker: Vigil
+  text: It was just a trick of the light.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Keep moving.
+- kind: dialogue
+  speaker: gm
+  text: There.
+- kind: dialogue
+  speaker: chadwick
+  text: It was a shadow.
+- kind: dialogue
+  speaker: Leena
+  text: But it moved.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't look back.

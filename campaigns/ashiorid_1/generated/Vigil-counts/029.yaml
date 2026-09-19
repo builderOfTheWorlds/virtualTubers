@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:49.496328+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashiroid: Alright, what did you notice, Vigil?'
+- kind: dialogue
+  speaker: chadwick
+  text: Anything, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that just passed by, it's the same one we saw earlier.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, no kidding.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a pretty common cart.
+- kind: narration
+  speaker: gm
+  text: 'Ashiroid: Moving on, what''s the layout of the room?'
+- kind: dialogue
+  speaker: chadwick
+  text: Doors are on our left and right, respectively.
+- kind: dialogue
+  speaker: Leena
+  text: Straight shot through the middle.
+- kind: dialogue
+  speaker: Vigil
+  text: Also, the shutter on that window's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's good to know.
+- kind: narration
+  speaker: gm
+  text: 'Ashiroid: And you noticed something else?'
+- kind: dialogue
+  speaker: Vigil
+  text: Just the number of people in the room, 12 including us.

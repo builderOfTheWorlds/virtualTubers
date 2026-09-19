@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 182
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:44.071629+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've noticed that the windows have been closed for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: What about it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart has passed by the inn twice since we arrived.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, I thought I saw it too, but I assumed it was just the driver's mistake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, no big deal.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on the east wall were repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's just what the innkeeper said, that he fixed 'em up.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) You're like a walking guidebook, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Vigil, it's okay, you can just relax.

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 157
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:42.753769+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle on watch order now that the rain's let up a bit?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should rotate every two hours, that way everyone gets some rest.
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen rain like this before.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long the fire will last without more fuel?
+- kind: dialogue
+  speaker: chadwick
+  text: I brought some spare wood, but we need to ration it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could try to find more twigs and dry leaves, might give us a bit more time.
+- kind: dialogue
+  speaker: Vigil
+  text: Five hours, if it stays this wet.
+- kind: dialogue
+  speaker: Leena
+  text: Is it really five hours or is that just a guess?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to decide what to do if the fire goes out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We can try to start a new one, but it'll be a lot harder in this rain.

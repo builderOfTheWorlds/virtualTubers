@@ -1,0 +1,38 @@
+id: bahadur-sighted
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:46.388410+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Stop.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Leena
+  text: It's gone.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with your neck?
+- kind: dialogue
+  speaker: chadwick
+  text: My neck is fine.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: You see anything?
+- kind: dialogue
+  speaker: Leena
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see nothing.
+- kind: dialogue
+  speaker: gm
+  text: Keep pace.

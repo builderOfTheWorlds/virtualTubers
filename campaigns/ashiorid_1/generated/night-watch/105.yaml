@@ -1,0 +1,35 @@
+id: night-watch
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:06.503683+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Look up.'
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I see the stars.
+- kind: dialogue
+  speaker: Leena
+  text: Beautiful, but so cold.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not cold.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine. Just the sky is a reminder of how small we are.
+- kind: dialogue
+  speaker: Leena
+  text: That's what keeps you up?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, a little.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I think I might have been up for longer than I thought.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) That's not possible. We both know when the others fell asleep.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I might have stayed up after that, then.

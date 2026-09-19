@@ -1,0 +1,36 @@
+id: camp-fire
+take: 217
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:25.934123+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle the watch order for tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I've got the schedule worked out, but we need to decide who's next.
+- kind: dialogue
+  speaker: Leena
+  text: What's the plan for the fire, is it going to last the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm pretty sure it was laid wrong, we should've had more kindling.
+- kind: dialogue
+  speaker: Vigil
+  text: Fire'll hold.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's just the rain or is something bigger going on with the weather?
+- kind: dialogue
+  speaker: gm
+  text: We've been through worse rain, I'm sure it's just a front moving through.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just concerned about the fire, if it dies out we're stuck in the dark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can get some more wood if we need it, but we should've started a bigger
+    fire to begin with.
+- kind: dialogue
+  speaker: Vigil
+  text: Still burning.

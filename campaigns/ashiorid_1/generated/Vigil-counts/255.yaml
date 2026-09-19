@@ -1,0 +1,23 @@
+id: Vigil-counts
+take: 255
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:58.598471+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart has passed by the window again, has it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I saw it. Guess it's just making its rounds.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) You're watching the cart, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just aware of it, yes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Aware of what, exactly?
+- kind: dialogue
+  speaker: Vigil
+  text: How many people are in the room right now.

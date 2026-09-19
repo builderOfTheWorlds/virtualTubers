@@ -1,0 +1,41 @@
+id: before-the-well
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:35.381203+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The moon is full, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of that?
+- kind: dialogue
+  speaker: gm
+  text: Just a fact.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm watching the door.
+- kind: dialogue
+  speaker: Leena
+  text: Again.
+- kind: dialogue
+  speaker: Vigil
+  text: Habit, I suppose.
+- kind: dialogue
+  speaker: chadwick
+  text: Try sleeping.
+- kind: dialogue
+  speaker: Leena
+  text: I'll try.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sleepy.
+- kind: dialogue
+  speaker: gm
+  text: Then keep watch.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not like we have much to worry about.

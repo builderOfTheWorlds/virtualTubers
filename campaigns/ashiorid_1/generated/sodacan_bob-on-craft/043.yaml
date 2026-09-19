@@ -1,0 +1,35 @@
+id: sodacan_bob-on-craft
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T20:49:59.874389+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, take a look at this, it's a wagon axle from a manufacturer in the Midlands,
+    probably 1820 or so.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move. We've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: I don't see anything special about it, Bob. It's just an old piece of metal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the point, Leena, it's a beautifully made piece of metal. Look at the
+    craftsmanship.
+- kind: dialogue
+  speaker: Vigil
+  text: How does it fit into the overall landscape of the region?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it suggests that the town was an important hub for trade, and that this
+    particular wagon was probably carrying goods from the coast.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I see what you mean. It's like a little piece of history.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just keep moving? We're wasting time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come on, Chadwick, you're not going to appreciate this.

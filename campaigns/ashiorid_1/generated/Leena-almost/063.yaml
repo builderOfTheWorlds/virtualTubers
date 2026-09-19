@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T19:27:01.112224+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a house, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: You saw one like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not like that. I mean... it's a tune being hummed, the shape of a
+    doorway, a smell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just a coincidence, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to.

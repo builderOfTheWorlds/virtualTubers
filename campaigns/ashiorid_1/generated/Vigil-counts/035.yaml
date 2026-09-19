@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:19.285278+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the kitchen opens out into the courtyard, not into the main hall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting some fresh air.
+- kind: dialogue
+  speaker: Leena
+  text: Be careful, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the hurry, Leena?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticed the cart that passed earlier is the same one from yesterday.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Vigil, you notice everything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like a broken shutter that's been fixed now.
+- kind: dialogue
+  speaker: Vigil
+  text: It was the wrong one to start with.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of telling us all this, Vigil?
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, just because Vigil notices doesn't mean it's important.
+- kind: dialogue
+  speaker: Vigil
+  text: I just thought I'd mention it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now it's mentioned, can we please carry on?

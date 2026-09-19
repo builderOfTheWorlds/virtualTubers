@@ -1,0 +1,44 @@
+id: weather-argument
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:42:00.703725+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''m telling you, I saw the clouds this morning, they were all
+    puffy and grey.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: No way, I took a picture of that sunbeam coming through the window,
+    it''s shining bright.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: You can''t fool me, Chadwick, you always think it''s going to be sunny.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Actually, the birds were singing, they''re always quieter before rain.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan_Bob: But what about the heat, isn''t it supposed to drop before the
+    storm?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Yeah, I was just thinking that, it''s been a pretty muggy day.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Muggy or not, I''m still going to wear my sunglasses.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: You''re not going to rainproof your glasses, Chadwick.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: You''d be surprised what water can damage, Leena.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan_Bob: True, but can you waterrepellent them now?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I don''t think so, they''re not exactly designed for that.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Whatever, I''m still going to wear them.'

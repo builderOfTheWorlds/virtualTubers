@@ -1,0 +1,24 @@
+id: Vigil-counts
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:42.459513+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got a basic plan for the day, let's stick to it.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about the guards than this place.
+- kind: dialogue
+  speaker: Leena
+  text: There's a market stall outside, can someone go get some information?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east window was recently repaired, but it's the normal
+    way the doors open.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just something I noticed.

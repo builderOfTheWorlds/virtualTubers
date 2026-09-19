@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 144
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:25.035175+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, we've been walking for a while now. Do you have any idea where we
+    are?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do. I'm not lost.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps, Chadwick, you could let Vigil take the lead for a bit. He's been
+    studying the maps.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm happy to help, but it's not necessary.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, here we go again.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, Leena. I know exactly where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm sure you do, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) If you're feeling confident, maybe we can take a shortcut.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need a shortcut. I know the way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is better than a map.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Alright, let's get moving then.
+- kind: dialogue
+  speaker: Vigil
+  text: (falling back) This way, everyone.

@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:59.472928+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar in front of me, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, probably saw something like it in your village, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I reckon I know what you mean, Leena, but it's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean, Sodacan Bob? You don't even know me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, I just meant it's probably a coincidence, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it, Leena, don't get worked up over nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not worked up, Chadwick, I'm just... curious.
+- kind: dialogue
+  speaker: Leena
+  text: What was that, Vigil?
+- kind: dialogue
+  speaker: gm
+  text: (GM) Let's move on, shall we?

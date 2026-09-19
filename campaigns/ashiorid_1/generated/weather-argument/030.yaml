@@ -1,0 +1,45 @@
+id: weather-argument
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:57.027810+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I could swear I saw dark clouds when we got up this morning
+- kind: dialogue
+  speaker: chadwick
+  text: That's because you're always looking out the window, you think you're some
+    kind of weather expert
+- kind: dialogue
+  speaker: Leena
+  text: I've been tracking the barometric pressure, and it's been dropping steadily
+    all day
+- kind: dialogue
+  speaker: Vigil
+  text: I was outside this morning, and the air felt thick with moisture
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That just means it's going to be a humid day, not necessarily rainy
+- kind: dialogue
+  speaker: gm
+  text: But the forecast said something about a low-pressure system moving in
+- kind: dialogue
+  speaker: chadwick
+  text: The forecast is always wrong, remember that time they said it was going to
+    be sunny?
+- kind: dialogue
+  speaker: Leena
+  text: That was because of the high-pressure system dominating the area, not the
+    low one
+- kind: dialogue
+  speaker: Vigil
+  text: But we have those clouds gathering on the horizon, you can't deny that
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just a bank of cumulus, not a sign of impending doom
+- kind: dialogue
+  speaker: gm
+  text: Cumulus can turn into cumulonimbus, you know, the storm clouds
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, great, now you're an expert on cloud formation too

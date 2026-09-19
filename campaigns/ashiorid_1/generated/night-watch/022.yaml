@@ -1,0 +1,41 @@
+id: night-watch
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:16.358741+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are clearer tonight, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, the air must be still.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know if that's a good sign.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean?
+- kind: dialogue
+  speaker: gm
+  text: Just that calm nights often bring... nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, or storms.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do we wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: I don't think so, let them sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: We're not even halfway through our watch.
+- kind: dialogue
+  speaker: gm
+  text: And what's the hurry? Morning's still a ways off.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, nothing's coming for us.
+- kind: dialogue
+  speaker: Leena
+  text: You can feel it, can't you? The emptiness?

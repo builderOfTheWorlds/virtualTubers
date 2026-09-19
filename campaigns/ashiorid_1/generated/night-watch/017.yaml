@@ -1,0 +1,41 @@
+id: night-watch
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:48.085489+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is still clear, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it is.
+- kind: dialogue
+  speaker: Leena
+  text: It's so... bright.
+- kind: dialogue
+  speaker: Vigil
+  text: Can you hear anything, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Just crickets, I think.
+- kind: dialogue
+  speaker: Leena
+  text: I hear crickets too.
+- kind: dialogue
+  speaker: gm
+  text: We should wake them up early, just in case.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point, though?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's just... habit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Habit?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah.

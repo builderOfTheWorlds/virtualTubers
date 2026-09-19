@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 98
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:13.806810+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''ve told you before, the trail is east of here.'
+- kind: dialogue
+  speaker: chadwick
+  text: I know where we are, I was just... admiring the view.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, if you want to stop and look around, we can take a break.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, let's keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) Fine, let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Someone's lost, again.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, come on, we're not lost.
+- kind: dialogue
+  speaker: chadwick
+  text: I was just... taking a shortcut.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (smirks) Alright, let''s see how long it takes you to realize which
+    way is the shortcut.'

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 210
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:25.599490+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what've you all got?
+- kind: dialogue
+  speaker: chadwick
+  text: Just heading to the inn to grab some food, anyone want to join?
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll pass, been eating at the tavern's kitchen.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the left swings outward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I've noticed that too.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, cool. Anyone up for some more exploration?
+- kind: dialogue
+  speaker: Leena
+  text: I'll tag along, but just for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that came by earlier has a broken wheel now.
+- kind: dialogue
+  speaker: gm
+  text: Okay, what have you all found out so far?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing, just a bunch of buildings.

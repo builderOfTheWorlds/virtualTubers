@@ -1,0 +1,33 @@
+id: malmont-market
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:58.547344+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of hammering on a lump of coal?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) I saw a map with a red 'X' on it once, I wonder what
+    it means.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering back) I don't know, but I think it's someone else's problem.
+- kind: dialogue
+  speaker: Vigil
+  text: (scanning the crowd) Don't look like the constable's here yet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Smithing's not a living in Malmont, not if they can't even be
+    bothered to...
+- kind: dialogue
+  speaker: Leena
+  text: (stepping away from Chadwick) Excuse me, I think I saw an interesting map
+    at that stall.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping an eye on his coin purse) Keep moving, let's not attract any attention.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (spotting a blacksmith) Maybe that one's got some sense, if he's not sold
+    out yet.

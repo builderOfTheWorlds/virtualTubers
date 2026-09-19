@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:57.432239+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, we've got a small inn to ourselves.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left opens outwards, I saw it.
+- kind: dialogue
+  speaker: chadwick
+  text: How's the shutters lookin', Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yeah, got 'em fixed last week.
+- kind: dialogue
+  speaker: Leena
+  text: I'm gonna grab some more firewood.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed by about an hour ago.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's focus on dinner.
+- kind: dialogue
+  speaker: chadwick
+  text: You think the chef's really that bad?
+- kind: dialogue
+  speaker: Leena
+  text: I think he's just...not very good at what he does.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, but the soup's not bad.

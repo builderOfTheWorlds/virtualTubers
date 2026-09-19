@@ -1,0 +1,36 @@
+id: camp-fire
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:50.596412+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to check on the fire again, make sure it's holding.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we get the watch order settled before I go to bed?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the fire was laid all wrong, it's a wonder it's burning at
+    all.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is still coming down.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible for a fire to keep burning underwater?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, but can we focus on the watch order for now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You want to talk about the watch order? I'm saying we need a rotation.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will hold.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how they managed to start it in the first place.
+- kind: dialogue
+  speaker: gm
+  text: I'm going to get some more wood, anyone need anything?

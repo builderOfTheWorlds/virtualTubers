@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 262
+model: llama3.1:8b
+generated_at: '2026-09-18T23:38:52.768612+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not scared, I just...it feels like something's missing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's a memory, or a dream.
+- kind: dialogue
+  speaker: gm
+  text: Is it something that's been said, or something that's been done?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's just...this feeling.

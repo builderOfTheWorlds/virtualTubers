@@ -1,0 +1,41 @@
+id: the-meal
+take: 37
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:22.043474+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, it's just a matter of knowing when to add the spices, Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: I added the spices, Sodacan Bob, just like I always do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but did you let them sit for long enough? That's the key.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat, please?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be so serious! It's just a meal.
+- kind: dialogue
+  speaker: Vigil
+  text: (passing food to someone else) Here, you take this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And what's with the potatoes? They're not even cooked through.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I've made this dish a dozen times, I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: It's not about the food, it's about being together.
+- kind: dialogue
+  speaker: chadwick
+  text: (eating in silence)
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I'm telling you, if I had to do it over...

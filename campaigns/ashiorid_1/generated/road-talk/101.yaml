@@ -1,0 +1,41 @@
+id: road-talk
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T23:58:35.235071+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vabokedos is the best place to get a good hot meal.
+- kind: dialogue
+  speaker: Leena
+  text: In Nafsari, we would fish for dinner.
+- kind: dialogue
+  speaker: Vigil
+  text: And my family would sell the catch at the market.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not hungry.
+- kind: dialogue
+  speaker: gm
+  text: We'll be stopping for the night soon.
+- kind: dialogue
+  speaker: Leena
+  text: My village is on the coast, the sea is just a walk away.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know what they say, "The best seafood comes from Nafsari".
+- kind: dialogue
+  speaker: Vigil
+  text: That's...not what I meant to say.
+- kind: dialogue
+  speaker: chadwick
+  text: Look, we're not going to get there by staring at the road.
+- kind: dialogue
+  speaker: gm
+  text: (no response)
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure my family's still out there, waiting for me.
+- kind: dialogue
+  speaker: chadwick
+  text: (no response)

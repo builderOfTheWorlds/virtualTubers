@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:13.722926+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What did you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me that shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw one like it in the village you're from, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I just know it doesn't belong here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm thinking I've seen something similar in one of the settlements we visited.
+- kind: dialogue
+  speaker: Leena
+  text: What's going on, you guys?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's probably nothing.
+- kind: dialogue
+  speaker: gm
+  text: What do you think it is, Bob?

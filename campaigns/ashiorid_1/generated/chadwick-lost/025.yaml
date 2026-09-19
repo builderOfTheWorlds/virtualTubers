@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:19.087094+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we're on schedule to reach the river by dawn.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're good, just stick with me, I've got this.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil might have a better idea of our position.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine, we're good.
+- kind: dialogue
+  speaker: Vigil
+  text: I can see the landmark in the distance, it's that big oak.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is great, Chadwick's leading us around in circles again.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Okay, Chadwick, why don't I just check the map for you?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need a map, I know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) If you're sure, Chadwick... (pauses) Ah, I see the landmark.
+- kind: dialogue
+  speaker: chadwick
+  text: See? Told you I had it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, come on, Chadwick, you're killing me!

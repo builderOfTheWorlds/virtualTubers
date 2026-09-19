@@ -1,0 +1,37 @@
+id: weather-argument
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:45:50.791506+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's going to pour, look at the clouds gathering.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, I was out fishing yesterday and it was sunny.
+- kind: dialogue
+  speaker: Leena
+  text: But didn't you guys just get back from the mountains, didn't it rain the whole
+    time?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, we got soaked on the way down, I'm pretty sure it's going to clear up
+    now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm calling it, it's going to be a beautiful day, the birds are singing.
+- kind: dialogue
+  speaker: gm
+  text: Birds singing doesn't mean anything, what about the wind direction?
+- kind: dialogue
+  speaker: chadwick
+  text: Wind direction? I've seen that windmill blowing for days, it's just lazy.
+- kind: dialogue
+  speaker: Leena
+  text: But don't you remember the storm from last week, it came out of the west?
+- kind: dialogue
+  speaker: Vigil
+  text: I thought it came from the south, but I'm not a meteorologist.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we just agree to disagree and get on with the barbecue?

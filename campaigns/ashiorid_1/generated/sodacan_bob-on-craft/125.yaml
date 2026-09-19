@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-19T00:05:03.686979+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, this is a well-made gate. The stile is solid, and
+    the hinge pins are precisely located.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's move, Bob. We're wasting daylight.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I see it from the other side? What makes you think it's well-made?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Because it's symmetrical, and the mortise and tenon join is flawless.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think whoever made it still lives around here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, no. The design and style suggest it was made at least a century ago.
+- kind: dialogue
+  speaker: Leena
+  text: Wow, you can really tell by the tools they used and the way the wood was finished.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the maker's pride shows in every detail.
+- kind: dialogue
+  speaker: chadwick
+  text: We're moving, Bob. Keep up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but just remember, this gate would have cost a small fortune back in
+    its day.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go ask around and see if anyone knows anything about it.

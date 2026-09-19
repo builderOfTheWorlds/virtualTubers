@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 151
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:49.914491+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, shall we proceed with our business in the town?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I need to get ahold of the local blacksmith.
+- kind: dialogue
+  speaker: Leena
+  text: I've got some errands to run as well.
+- kind: dialogue
+  speaker: Vigil
+  text: The eastern door opens out onto the main street, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: That's right, I saw some folk coming in that way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone seen the market's wares?
+- kind: dialogue
+  speaker: Leena
+  text: No, I was going to check it out now, actually.
+- kind: dialogue
+  speaker: Vigil
+  text: I saw a repair cart that passed by about an hour ago.
+- kind: dialogue
+  speaker: gm
+  text: Let's move along, shall we?

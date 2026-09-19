@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 37
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:29.039678+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've noticed something, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the east opens inward.
+- kind: dialogue
+  speaker: chadwick
+  text: Why does that matter?
+- kind: dialogue
+  speaker: Vigil
+  text: No reason, it's just what I've noticed.
+- kind: dialogue
+  speaker: Leena
+  text: Is there a point to this?
+- kind: dialogue
+  speaker: Vigil
+  text: None, I just thought I'd mention it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, so what's new?
+- kind: dialogue
+  speaker: gm
+  text: Just noting it, is all.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the west wall's been fixed.
+- kind: dialogue
+  speaker: chadwick
+  text: How do you know that?
+- kind: dialogue
+  speaker: Vigil
+  text: I saw the carpenter working on it.
+- kind: dialogue
+  speaker: Leena
+  text: That's not exactly a secret, Vigil.

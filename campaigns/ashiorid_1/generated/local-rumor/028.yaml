@@ -1,0 +1,34 @@
+id: local-rumor
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:11.220423+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: In a town this size, you'd expect one or two magic shops at best.
+- kind: dialogue
+  speaker: chadwick
+  text: It's weird that there's two, especially if one of them's as bad as the rumors
+    say.
+- kind: dialogue
+  speaker: Leena
+  text: I've heard they're both decent, but they charge a lot.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm more concerned about the... thing at night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, that's the real reason I don't like sleeping here.
+- kind: dialogue
+  speaker: chadwick
+  text: Whatever it is, it doesn't seem to be bothering us, has it?
+- kind: dialogue
+  speaker: Leena
+  text: We've been here for three days and haven't seen anything out of the ordinary.
+- kind: dialogue
+  speaker: Vigil
+  text: We should get moving soon, though. We've got a long way to go.
+- kind: dialogue
+  speaker: gm
+  text: The constable's watch should be able to tell you more about the nighttime
+    activities.

@@ -1,0 +1,39 @@
+id: the-ring-half
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:40:08.292274+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: What do you think it means, Chadwick? Does the oath make a difference?'
+- kind: dialogue
+  speaker: chadwick
+  text: No, I don't see how it would. If I'm honest, it just makes me think they knew
+    what they were getting into.
+- kind: dialogue
+  speaker: Leena
+  text: I don't understand what any of it means. What's a signet ring?
+- kind: dialogue
+  speaker: Vigil
+  text: You didn't ask your parents about it when you were a child?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I didn't ask, but my masters said it was just some fancy trinket.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: It''s more than that, I think. It''s... unfinished. There''s a
+    part missing.'
+- kind: dialogue
+  speaker: chadwick
+  text: And now that half is gone, and the other half is with... whoever burned the
+    manor.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's safe, staying here? Should we leave?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should talk to the others. There has to be something we can learn
+    from this.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: I''ll go get Ashen and see if he knows anything.'

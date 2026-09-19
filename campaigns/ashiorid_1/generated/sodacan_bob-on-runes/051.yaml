@@ -1,0 +1,37 @@
+id: sodacan_bob-on-runes
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:07.926177+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd need a good hammer and a sharp point, not too hard to find, but I've
+    never seen anything like the carving on the Malvakar.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of point would you use for something that's been sitting out for
+    who knows how long?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bronze, maybe, it's durable but not too hard to shape, or a good steel, if
+    you've got the skill to temper it right.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it was made by the same people who built the monument?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, I'm just a smith, I don't know anything about ancient cultures.
+- kind: dialogue
+  speaker: Vigil
+  text: How long do you think it would last, if someone tried to replicate it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not long, probably, it's a very specific style of engraving, and the tools
+    aren't exactly easy to come by.
+- kind: dialogue
+  speaker: gm
+  text: Would you be willing to try and recreate it, just for curiosity's sake?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what good it would do to know, it's not like it's going to help
+    us get to the Amulet of Wonder.

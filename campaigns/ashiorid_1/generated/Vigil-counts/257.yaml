@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 257
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:05.900563+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city is quiet today.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying some new gloves.
+- kind: dialogue
+  speaker: Leena
+  text: I saw a kid with a bird in a cage.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the left opens into a narrow corridor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone want to see my new book?
+- kind: dialogue
+  speaker: gm
+  text: It's a collection of city maps.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just stick with the glove.
+- kind: dialogue
+  speaker: Leena
+  text: I need to get some more water.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart with the empty barrels has passed by twice now.

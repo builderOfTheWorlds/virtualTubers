@@ -1,0 +1,45 @@
+id: counting-the-cost
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:20:51.795970+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got the broken gear, it's a case of a bad fusion, like a bad weld in
+    the forge.
+- kind: dialogue
+  speaker: chadwick
+  text: And the cart, how bad is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's a patchwork, like a repair job on a old ship's hull, but it'll
+    hold together.
+- kind: dialogue
+  speaker: Leena
+  text: What about Vigil?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vigil's got a loose joint, like a door that's come off its hinges, but it's
+    nothing a little WD-40 can't fix.
+- kind: dialogue
+  speaker: Vigil
+  text: (groans)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And what about you, Chadwick, you look like you've got a few splinters to
+    remove.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs)
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get to work, we've got a lot to fix.
+- kind: dialogue
+  speaker: Leena
+  text: I'll start by taking a closer look at Vigil's joint.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'll work on re-forging that gear, it's going to be a slow process.
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbles in agreement)

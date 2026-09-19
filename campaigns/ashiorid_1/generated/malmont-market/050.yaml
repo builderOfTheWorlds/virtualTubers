@@ -1,0 +1,38 @@
+id: malmont-market
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:42.369463+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't get what all the fuss is about here.
+- kind: dialogue
+  speaker: Vigil
+  text: Just keep your coins close, let's not draw attention.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just... uh... go take a look at the bakery.
+- kind: dialogue
+  speaker: Leena
+  text: What's the history behind the maps they're selling here?
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (gm): The old cartographer''s guild used to trade in these, I think.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather see some proper craftsmanship than a bunch of dusty maps.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's just focus on getting what we need and moving on.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, look. An old street performer's club. I didn't know those still existed.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) How much for this one? The one with the... river?
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (gm): I think that''s just the old trade route, actually.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not impressed with any of this. Let's get out of here.

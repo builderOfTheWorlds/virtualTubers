@@ -1,0 +1,35 @@
+id: camp-fire
+take: 164
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:23.207456+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you think, Chadwick, shall we take turns with the watch?
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's only fair, Vigil's been doing it all night.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, a fire pit with a raised lip is the only way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what would happen if we just... let it go?
+- kind: dialogue
+  speaker: Vigil
+  text: We'd run out of food.
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you take the next watch, I'll rouse you in four hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, that fire's been burning hotter than any I've seen.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Do you think we'd feel it?
+- kind: dialogue
+  speaker: gm
+  text: (ignoring her) Anyone have any thoughts on the firewood situation?

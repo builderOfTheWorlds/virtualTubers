@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:02.589088+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You gotta hit it with a solid iron die, not one of those fancy silversmiths'
+    tricks, or it'll bend and lose its edge.
+- kind: dialogue
+  speaker: chadwick
+  text: Not sure that's how the Malvakar was done, Bob, considering its age.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Age don't matter, it's the craftsmanship that holds up, and I'll tell you
+    how I'd do it.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, what if it was done by a master, someone who knew exactly what they were
+    doing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, looks away) Don't know, Vigil, never met one of those.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I think someone's trying to change the subject.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Indeed, perhaps someone is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: ( mutters) Patience... nobody has patience anymore...

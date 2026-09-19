@@ -1,0 +1,29 @@
+id: sodacan_bob-on-craft
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:10.629671+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now this is what I'm talking about, a genuine hand-forged axle, no machine
+    work here, see the way the metal's been shaped?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's get moving, we don't have all day.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what kind of metal is this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Vigil, you see, this is a nice piece of iron, not too expensive, not too
+    cheap, just right for a local farmer.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, I love the way the maker's stamped the maker's mark right
+    onto the axle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Ah, yes, Leena, you're really getting into this, isn't she, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (serious) So what's the significance of the mark?

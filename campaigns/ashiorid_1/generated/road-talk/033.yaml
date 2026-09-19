@@ -1,0 +1,41 @@
+id: road-talk
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T20:45:05.415145+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're making good time, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: We're still hours from the next town.
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, my village is the prettiest.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's a... lot of mountains.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos is a sight to behold, trust me.
+- kind: dialogue
+  speaker: Leena
+  text: You should've seen the sunsets, all fiery and whatnot.
+- kind: dialogue
+  speaker: chadwick
+  text: How's the canteen holding up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll make it, no worries, I've calculated our rations.
+- kind: dialogue
+  speaker: gm
+  text: We're seeing a few clouds on the horizon, looks like rain.
+- kind: dialogue
+  speaker: Leena
+  text: Just think, we'll be back in the villages before you know it.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, says nothing)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll need to find shelter if it pours, we can't afford to get wet.

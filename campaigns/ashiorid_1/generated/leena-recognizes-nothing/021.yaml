@@ -1,0 +1,39 @@
+id: leena-recognizes-nothing
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:21.145955+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road winds up the hill, the trees growing denser as you climb.
+- kind: dialogue
+  speaker: Leena
+  text: I've been here before, I'm almost sure of it.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Oh, Leena, you get those ideas from reading too much.
+- kind: dialogue
+  speaker: Vigil
+  text: (no comment)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's the light, it catches the buildings just so.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's more than that. I've seen this hill, this road.
+- kind: dialogue
+  speaker: gm
+  text: The sound of a bird echoes through the trees, a sweet, clear song.
+- kind: dialogue
+  speaker: chadwick
+  text: (tries to steer the conversation) So, have you heard from the others? How's
+    your family?
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chimes in) Oh, my family's fine. Just busy with work.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, studying the scenery) I'm sure I've walked this road before.

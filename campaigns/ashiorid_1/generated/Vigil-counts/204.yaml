@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 204
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:24.152584+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter on the east window has been repaired recently.
+- kind: dialogue
+  speaker: gm
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the shutters have been fixed.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, big deal.
+- kind: dialogue
+  speaker: Leena
+  text: Why mention it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No reason, I just did.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like someone's just making small talk.
+- kind: dialogue
+  speaker: gm
+  text: Let's not waste time on it, let's get going.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I'm getting hungry, where's the food?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, food, good thinking, Leena.

@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 270
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:31.384192+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Now, Leena, can you describe this thing that's caught your attention?
+- kind: dialogue
+  speaker: Leena
+  text: It's... a smell, I think. Like the bakery back home, but with something else.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like the bakery in my village, might be the same recipe they use.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, I think you're just nostalgic, focus on the task at hand.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm not sure, it's like... a tune, something familiar, but not from around
+    here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, I know what you mean, I've felt it too sometimes.
+- kind: dialogue
+  speaker: chadwick
+  text: (scoffs) Don't be silly, it's just your imagination.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: gm
+  text: (notes)

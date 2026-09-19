@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:54.637527+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, let's see where that alleyway leads.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll go take a look.
+- kind: dialogue
+  speaker: Leena
+  text: Careful, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The door's been fixed recently, I saw the signs.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, nice catch, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Yeah, the innkeeper mentioned that to me too.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noting it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're a regular fount of useless information, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving, Chadwick.

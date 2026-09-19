@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:53.125297+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Where would you like to head next, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, just... keep going in a generally north-ish direction.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs nervously) Well, there is a landmark about a mile that way.
+- kind: dialogue
+  speaker: chadwick
+  text: (gritting teeth) I was just getting a sense of the lay of the land.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I think I can help with that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, boy, this is gonna be good.
+- kind: dialogue
+  speaker: Leena
+  text: (awkwardly) Chadwick, if you just asked for directions...
+- kind: dialogue
+  speaker: chadwick
+  text: (brusquely) No, no, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: (dryly) You're certainly very... focused.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (guffawing) You're not even kidding.
+- kind: dialogue
+  speaker: Vigil
+  text: (helpfully) I can just take the lead, if you'd like.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Or I can help him navigate.

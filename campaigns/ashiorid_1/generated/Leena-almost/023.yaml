@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:23:34.317522+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what did you think of that place we walked through?
+- kind: dialogue
+  speaker: Leena
+  text: I couldn't shake the feeling that I'd seen it before, but I know I haven't.
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbles) nothing
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something similar in your village, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. It's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) easy for you to say, you're always chasing something.
+- kind: dialogue
+  speaker: Vigil
+  text: still nothing
+- kind: dialogue
+  speaker: gm
+  text: Well, it's been a long day. We'll continue this in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I'm just going to take a walk before bed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Be careful, Leena. It's not safe out there.

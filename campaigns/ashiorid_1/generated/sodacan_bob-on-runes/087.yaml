@@ -1,0 +1,42 @@
+id: sodacan_bob-on-runes
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T22:31:51.672105+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You've got to strike the die at just the right angle, or the rune won't take.
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die, a chisel, it's all about the strike. You can't just whack at it like
+    a barbarian.
+- kind: dialogue
+  speaker: Leena
+  text: Is this really about how you carve the runes, or are you just trying to distract
+    us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just explaining, that's all. It's an art, not a sword fight.
+- kind: dialogue
+  speaker: Vigil
+  text: Art? You're a blacksmith, not a sculptor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the point. Anyone can chisel away at stone. But to make it last, to
+    make it endure...
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Go on, Bob. You're a regular philosopher now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, it's the small things that matter. A good strike, a steady
+    hand.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) And what, exactly, does this have to do with our quest?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing. Just talking shop.

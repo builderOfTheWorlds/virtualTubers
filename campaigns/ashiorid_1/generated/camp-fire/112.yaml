@@ -1,0 +1,35 @@
+id: camp-fire
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:32.977182+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty hard, might be a while before we can see anything.
+- kind: dialogue
+  speaker: chadwick
+  text: I still think we should settle the watch order now, rather than in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was telling Leena, a good fire like this one needs a little extra care to
+    keep it burning.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs to be stoked every hour.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will ever stop completely? Will the rivers overflow?
+- kind: dialogue
+  speaker: gm
+  text: Not a chance to worry about that now, we've got a fire to keep alive.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vigil, this fire would still be burning if they'd laid it
+    a little better.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's just get some rest then, we can discuss the watch order in
+    the morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone has to keep it burning at midnight.

@@ -1,0 +1,41 @@
+id: night-watch
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:18.662270+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's so quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: I know.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not even used to this much quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the wind.
+- kind: dialogue
+  speaker: chadwick
+  text: And the crickets.
+- kind: dialogue
+  speaker: Vigil
+  text: Crickets?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, we have crickets.
+- kind: dialogue
+  speaker: Leena
+  text: You mean you have crickets, we have... other sounds.
+- kind: dialogue
+  speaker: chadwick
+  text: Like the distant... what was it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: River.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The river's a few miles away.
+- kind: dialogue
+  speaker: Leena
+  text: You can hear it?

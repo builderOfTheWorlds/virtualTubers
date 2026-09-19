@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 273
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:19.042137+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, it seems you've all had a good rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting hungry. Anyone know if there's food around here?
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw some cooking in the kitchen. Let's go check.
+- kind: dialogue
+  speaker: Vigil
+  text: The kitchen door opens to the east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, that's one way. What about the rest of the room?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a window with a shutter, just above the door. It's been repaired.
+- kind: dialogue
+  speaker: chadwick
+  text: That's good. We don't want any more trouble.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed by again, twice now.
+- kind: dialogue
+  speaker: Leena
+  text: It's probably just a delivery schedule.
+- kind: dialogue
+  speaker: Vigil
+  text: There are twelve people in the room, counting the guards.
+- kind: dialogue
+  speaker: gm
+  text: Good to know. Let's get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the plan?

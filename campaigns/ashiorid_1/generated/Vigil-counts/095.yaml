@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:28.483830+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The windows here all face north.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that they're all pointed in the same direction.
+- kind: dialogue
+  speaker: Leena
+  text: Like it's relevant.
+- kind: dialogue
+  speaker: Vigil
+  text: No particular reason, just a fact.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we get to the point?
+- kind: dialogue
+  speaker: Vigil
+  text: The point is that the windows are all facing north.
+- kind: dialogue
+  speaker: gm
+  text: What are you trying to say, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, really.

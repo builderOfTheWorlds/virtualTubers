@@ -1,0 +1,29 @@
+id: sodacan_bob-on-runes
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T20:54:31.150332+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You've gotta strike a die clean, no hesitation, or it'll wear off in a few
+    seasons.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) Still, if someone can remember how to carve a rune that'll last...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just the strike, it's the depth. Can't just scratch the surface,
+    or the weather'll eat it in a week.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) You think the ones on the Malvakar were done by someone local?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could've been, could've been imported. Don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: (asking) So, Sodacan, do you think anyone around here would know how to recreate
+    a mark like that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pausing) That's a question.

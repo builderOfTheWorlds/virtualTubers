@@ -1,0 +1,33 @@
+id: malmont-market
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:22.578697+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's bustling as always, four strangers blending in with the crowd.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, these blacksmiths need to get their act together. I've seen better work
+    in a village.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder why they're selling these. They must be quite old.
+- kind: dialogue
+  speaker: chadwick
+  text: Good morning, ma'am. I'm just browsing.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your wits about you in a place like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You call that a fine blade? It's got all the finesse of a hammer.
+- kind: dialogue
+  speaker: Leena
+  text: This one's a surveyor's map from before the Great Migration.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never been recognized here, it's quite liberating.
+- kind: dialogue
+  speaker: gm
+  text: And it seems nothing's stirring, just a quiet morning in Malmont.

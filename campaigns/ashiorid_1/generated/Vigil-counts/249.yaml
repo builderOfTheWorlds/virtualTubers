@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 249
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:36.244433+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so where were we?
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter on that window has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: Really? How do you know that?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been a bit cleaner since we got here.
+- kind: dialogue
+  speaker: Leena
+  text: What does that even matter?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a thing I noticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's been nice having a view.
+- kind: dialogue
+  speaker: chadwick
+  text: Is that the same cart we saw earlier?
+- kind: dialogue
+  speaker: Vigil
+  text: No, that's a different one.
+- kind: dialogue
+  speaker: gm
+  text: Okay, moving on.

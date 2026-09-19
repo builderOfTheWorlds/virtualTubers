@@ -1,0 +1,44 @@
+id: inventory-argument
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:28.247828+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You'd think after all these years we'd get a system going, but no
+- kind: dialogue
+  speaker: chadwick
+  text: I swear I put my water bottle in the green backpack
+- kind: dialogue
+  speaker: Leena
+  text: I distinctly remember you putting it in the blue one, Chadwick
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just check the contents before we all start arguing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah ha! My stash of emergency rations is in the green backpack, not a single
+    item out of place
+- kind: dialogue
+  speaker: chadwick
+  text: This is what I'm talking about, see? No labels, no organization
+- kind: dialogue
+  speaker: Leena
+  text: And now you've gone and found something useful, just to make yourself look
+    smart
+- kind: dialogue
+  speaker: Vigil
+  text: Seriously, can we just focus on where Chadwick's water bottle is? It's not
+    that important
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, why do you have to rub it in our faces?
+- kind: dialogue
+  speaker: chadwick
+  text: Because it's fun watching you all bicker, that's why
+- kind: dialogue
+  speaker: Leena
+  text: This is why we never travel with the same people twice
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it's a good thing we don't lose anything, then

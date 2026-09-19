@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:29.600462+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got a choice to make here, and I'm counting on one of you
+    to figure out which way we need to go.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should keep going straight.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure that's the best idea, Chadwick. We've been walking for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the alternative? Turn around and go back the way we came?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is just great. Chadwick's lost again.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think I can help with that.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Chadwick, just admit you don't know where you are.
+- kind: dialogue
+  speaker: chadwick
+  text: I do know where I am. I just need to... um... get my bearings.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bearings? You're a human compass, Chadwick!

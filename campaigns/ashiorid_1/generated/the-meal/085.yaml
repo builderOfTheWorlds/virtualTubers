@@ -1,0 +1,46 @@
+id: the-meal
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:39.815227+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, Sodacan Bob, this is one of the worst meals I've ever had the misfortune
+    of tasting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come now, Ashiorid, a bit of criticism never hurt anyone. It's obvious
+    they followed my recipe to the letter, which is to say they didn't.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be such a grump, everyone! It's a meal, after all. It's not about
+    the quality, it's about the company.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Leena) I think I'm going to go for a walk.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A walk? After eating this swill? You must be joking.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, look, Sodacan Bob's got his portion, isn't that what matters?
+- kind: dialogue
+  speaker: gm
+  text: Actually, Sodacan Bob, the kitchen is a disaster. I'm surprised you didn't
+    notice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's not the point. The point is, someone needs to take responsibility
+    for this culinary disaster.
+- kind: dialogue
+  speaker: chadwick
+  text: (mutters) Just eat.
+- kind: dialogue
+  speaker: Vigil
+  text: (walks out of the room)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yells after Vigil) You're just avoiding the issue, Vigil!

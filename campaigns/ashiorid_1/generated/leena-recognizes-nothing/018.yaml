@@ -1,0 +1,36 @@
+id: leena-recognizes-nothing
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:03.676728+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the crest of the hill, Leena. The village should be in sight
+    soon.
+- kind: dialogue
+  speaker: Leena
+  text: I think I know this place, though. The way the light hits that building...
+- kind: dialogue
+  speaker: chadwick
+  text: (clearing his throat) So, Leena, have you ever been to a festival in the countryside?
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a big old manor house. We're probably the only ones visiting it.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, looking around) I don't think I have. But... (trails off)
+- kind: dialogue
+  speaker: gm
+  text: Leena, are you alright? You seem a bit... distracted.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering to himself) Probably just the altitude...
+- kind: dialogue
+  speaker: Vigil
+  text: (still watching Leena)
+- kind: dialogue
+  speaker: Leena
+  text: (shaking her head) No, I'm fine. Just... (pauses again) Never mind.

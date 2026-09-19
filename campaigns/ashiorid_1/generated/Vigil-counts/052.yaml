@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:30.033826+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's still quiet, but that's changing fast.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the first thing you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There are nine people in the room, counting us.
+- kind: dialogue
+  speaker: Leena
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a detail. The doors on the left swing open.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And what's with the cart that's been passing by?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been coming and going from the east wing.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I think that's the one with the broken wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw it pass again a few minutes ago.

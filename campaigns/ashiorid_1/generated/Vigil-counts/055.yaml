@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:42.685189+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're in the market, and we've been here for a bit. It's getting late.
+- kind: dialogue
+  speaker: chadwick
+  text: What's there to get late for?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but I could eat a meal.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window over there's been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it was broken before we came in.
+- kind: dialogue
+  speaker: gm
+  text: Anyone notice anything else?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the same cart passing by again.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open towards the main street.
+- kind: dialogue
+  speaker: Leena
+  text: And there's a guard standing near the entrance.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a break then.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying dinner.

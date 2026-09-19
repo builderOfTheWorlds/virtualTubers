@@ -1,0 +1,32 @@
+id: chadwick-cooking
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:21:20.622709+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The evening sun casts a warm glow over the campsite.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright everyone, dinner's ready.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Do we have to eat it?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) It smells like...something burning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (trying to sound optimistic) Mmm, Chadwick's special sauce!
+- kind: dialogue
+  speaker: gm
+  text: (laughing awkwardly) Oh, I'm sure it's a new recipe!
+- kind: dialogue
+  speaker: Leena
+  text: (sarcastically) Yeah, "new recipe"...right.
+- kind: dialogue
+  speaker: Vigil
+  text: (resigned) I'll just eat around the...interesting bits.
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) I added some extra herbs to give it a...kick.

@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:17.969661+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's done.
+- kind: dialogue
+  speaker: chadwick
+  text: Just like that.
+- kind: dialogue
+  speaker: Leena
+  text: Doesn't feel right.
+- kind: dialogue
+  speaker: Vigil
+  text: What's wrong with how it feels?
+- kind: dialogue
+  speaker: Leena
+  text: It feels... wrong.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we not talk about this right now?
+- kind: dialogue
+  speaker: chadwick
+  text: We have to.
+- kind: dialogue
+  speaker: gm
+  text: Silence is just silence.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not just silence.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What do you want us to do, Chad?
+- kind: dialogue
+  speaker: Vigil
+  text: Stay here and be still.
+- kind: dialogue
+  speaker: Leena
+  text: I don't want to stay here.

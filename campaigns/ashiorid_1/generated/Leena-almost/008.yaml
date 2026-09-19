@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:22.952701+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Leena, what's going on? You look like you're about to get lost in
+    the scenery.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have seen something like it in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, Leena's village has all sorts of old buildings, it's no surprise she'd
+    think of that.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not that. And besides, Chadwick, why are you calling my village "my
+    village" like it's something I'm supposed to know about?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, just don't chase it, okay?
+- kind: dialogue
+  speaker: gm
+  text: Enough, let's focus on what we can observe. Vigil, what do you make of this?

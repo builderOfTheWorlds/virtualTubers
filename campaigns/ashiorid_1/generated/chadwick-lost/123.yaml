@@ -1,0 +1,36 @@
+id: chadwick-lost
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:00.361135+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road splits up ahead, Chadwick. Which way do you think we should go?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll go left. I'm sure of it.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil knows this area pretty well. Maybe we should
+    ask him?
+- kind: dialogue
+  speaker: Vigil
+  text: I do know the area, but I'm not sure I should be the one to decide.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on, Chadwick, admit it, you're lost.
+- kind: dialogue
+  speaker: chadwick
+  text: I am not lost, I just... have a very complex understanding of spatial geometry.
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we could try a different route, just to be sure?
+- kind: dialogue
+  speaker: chadwick
+  text: No, we'll stick with my plan. It's fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Alright, let's go left. But I'm not making any promises.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is gonna be good.

@@ -1,0 +1,32 @@
+id: after-the-choice
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:28.913386+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The silence is... palpable, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: It's a quiet that says a lot.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I don't want to talk about it yet.
+- kind: dialogue
+  speaker: Vigil
+  text: We should eat. We need to eat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can heat up the rations.
+- kind: dialogue
+  speaker: gm
+  text: Maybe some hot tea would help.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) Or maybe it wouldn't.
+- kind: dialogue
+  speaker: Leena
+  text: (no response)
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, can you get a fire going?

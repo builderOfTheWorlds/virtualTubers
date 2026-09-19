@@ -1,0 +1,17 @@
+id: bob-sings
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:15.763680+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is setting over the mountainside
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah-RAH-oo-ma-ga-DA-dum, Ah-ROO-ma-ga-DA-dum!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: GA-dum GA-dum GA-dum GA-dum GA-dum GA-dum GA-dum GA-dum
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A-ga-roo A-ga-roo A-ga-roo ROO-ma-ga-roo!

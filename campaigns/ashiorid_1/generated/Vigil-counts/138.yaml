@@ -1,0 +1,27 @@
+id: Vigil-counts
+take: 138
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:39.422778+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what'd you notice this time?
+- kind: dialogue
+  speaker: Vigil
+  text: There are two guards standing at the door, and the door opens towards the
+    hallway.
+- kind: dialogue
+  speaker: Leena
+  text: Is there something wrong with the door, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just the way it opens, I guess.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I know what you mean. It's a pretty standard setup.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) You guys and your noticing stuff.
+- kind: dialogue
+  speaker: gm
+  text: (smirks) Well, someone's gotta keep their eyes open.

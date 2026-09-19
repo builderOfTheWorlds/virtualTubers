@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:09.299773+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not seeing anything obvious about the Malvakar's inscription.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be a dialect, might need a linguist.
+- kind: dialogue
+  speaker: Leena
+  text: I've seen some of those markings in the mountains near my village.
+- kind: dialogue
+  speaker: Vigil
+  text: They might be a cipher.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If it's a cipher, I haven't cracked it.
+- kind: dialogue
+  speaker: chadwick
+  text: Do we have any idea what it says?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, we don't. That's why I'm saying it's a cipher.
+- kind: dialogue
+  speaker: gm
+  text: You think it's a challenge?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's one possibility.

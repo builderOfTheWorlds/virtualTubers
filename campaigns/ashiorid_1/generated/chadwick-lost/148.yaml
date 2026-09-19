@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 148
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:58.484190+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you think you know the way to the next landmark?
+- kind: dialogue
+  speaker: chadwick
+  text: I do.
+- kind: dialogue
+  speaker: Leena
+  text: Well, we're making good time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Yeah, good time to be lost, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighing) Anyone else notice we're heading into the thorn woods?
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Chadwick, why don't we take a shortcut through the thorn woods?
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, great, because nothing says 'shortcut' like a thorn-infested nightmare.
+- kind: dialogue
+  speaker: Vigil
+  text: (firmly) Leena, let's not give him an easy way out.
+- kind: dialogue
+  speaker: chadwick
+  text: I know where I'm going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Save it, Chadwick.

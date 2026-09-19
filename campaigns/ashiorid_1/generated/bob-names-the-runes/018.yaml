@@ -1,0 +1,33 @@
+id: bob-names-the-runes
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:10:23.704295+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starving, can we stop for lunch soon?
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Bob, what's that symbol on the gatepost?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes! That's a Glyph of Vigilance, designed to-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: -alert the user to potential threats, but it's only effective against magical
+    entities.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, yeah, I get it.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, isn't that glyph also supposed to affect non-magical creatures in some
+    way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, an astute observation, Leena! The glyph does indeed imbue the surrounding
+    area with a mild aura of deterrent, making it more difficult for ordinary animals
+    to cross.

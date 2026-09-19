@@ -1,0 +1,29 @@
+id: the-meal
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:38.634779+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's eat
+- kind: dialogue
+  speaker: chadwick
+  text: pass the gravy
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, the soup's been stewing in that pot since before I got here
+- kind: dialogue
+  speaker: Leena
+  text: oh come on, it's not that bad, let's make the most of it
+- kind: dialogue
+  speaker: chadwick
+  text: just eat, Bob
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know how to cook, I could've made something better in half the time
+- kind: dialogue
+  speaker: Leena
+  text: well maybe we can all help with dinner tomorrow, then
+- kind: dialogue
+  speaker: sodacan_bob
+  text: yeah, because I'm sure no one's cooked a decent meal in this group before

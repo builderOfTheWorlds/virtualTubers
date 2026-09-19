@@ -1,0 +1,33 @@
+id: malmont-market
+take: 154
+model: llama3.1:8b
+generated_at: '2026-09-18T23:51:10.101081+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something that'll make the dust not so dull on my clothes.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what I'm looking for, but I think I've seen this kind of paper
+    before.
+- kind: dialogue
+  speaker: Vigil
+  text: (tapping his coin pouch) Not much to look at, is there?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, good morning to you all.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Do you have anything from... further south?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could make better metal than this if I had half the time.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the market) Not my kind of town.
+- kind: dialogue
+  speaker: Leena
+  text: (running her fingers over a map) I feel like I should know this.
+- kind: dialogue
+  speaker: chadwick
+  text: (whistling softly) Just another market morning, then.

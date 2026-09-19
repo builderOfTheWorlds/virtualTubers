@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:41.196614+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The eastern door swings inwards, I noticed that.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm, that's the one we used to leave by, right?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it does.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What else did you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the shutter on the south side was fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's keep that in mind.
+- kind: dialogue
+  speaker: Leena
+  text: It might be useful later, who knows.
+- kind: dialogue
+  speaker: chadwick
+  text: Probably just a routine maintenance thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fair point, Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: Alright, moving on then.

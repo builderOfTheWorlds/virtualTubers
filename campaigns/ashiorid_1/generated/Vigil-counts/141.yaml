@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 141
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:54.613267+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: People are standing by the fire, five of them.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the big deal, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: I don't see what you're getting at, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors over here swing out, not in.
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Okay, that's true.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: So what's the point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I saw the same cart pass twice on the way in.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) That's a small town for you, I guess.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving, shall we?

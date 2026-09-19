@@ -1,0 +1,38 @@
+id: malmont-market
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:10.451775+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen finer work in a forgotten village.
+- kind: dialogue
+  speaker: Vigil
+  text: What's this one selling?
+- kind: dialogue
+  speaker: Leena
+  text: Are those ancient ones?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, just local craftsmen trying to make a name.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyone here know me?
+- kind: dialogue
+  speaker: Vigil
+  text: What's that supposed to be?
+- kind: dialogue
+  speaker: Leena
+  text: I'll take that one, please.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can do better than that, watch me.
+- kind: dialogue
+  speaker: Leena
+  text: What's this?
+- kind: dialogue
+  speaker: Vigil
+  text: Not my business.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe I'll just look around.

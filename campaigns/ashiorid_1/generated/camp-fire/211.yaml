@@ -1,0 +1,37 @@
+id: camp-fire
+take: 211
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:51.877559+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to settle on a watch order. We can't just let everyone
+    sleep in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but the fire's laid out proper, I made sure of it. Should last us till
+    morning.
+- kind: dialogue
+  speaker: Leena
+  text: What's the moon do to the rain, exactly?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain doesn't stop.
+- kind: dialogue
+  speaker: gm
+  text: Well, it's not like we can do anything about it now. Let's just get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: But someone's gotta keep watch. We can't just sit here in the dark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take first watch, I'm the most alert after a night's rest.
+- kind: dialogue
+  speaker: Leena
+  text: But what's to stop something from just... happening while we're all asleep?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.

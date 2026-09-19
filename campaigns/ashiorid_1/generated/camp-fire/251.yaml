@@ -1,0 +1,35 @@
+id: camp-fire
+take: 251
+model: llama3.1:8b
+generated_at: '2026-09-18T23:43:06.339844+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still thinking it's a good idea to take turns with the watch.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how the rain makes the fire burn less?
+- kind: dialogue
+  speaker: Vigil
+  text: The coals are too close to the wind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we'd used kindling, we'd be dry by now.
+- kind: dialogue
+  speaker: gm
+  text: That's not a bad point, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: What I'm saying is, we need a watch order. Now.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happened to the people who went to close the well?
+- kind: dialogue
+  speaker: Vigil
+  text: The moon was dark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could have laid that fire better, I swear.
+- kind: dialogue
+  speaker: gm
+  text: Let's settle the watch order for tonight.

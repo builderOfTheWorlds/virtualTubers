@@ -1,0 +1,26 @@
+id: Leena-almost
+take: 220
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:11.639423+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar in front of me, and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw one just like it in your village, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it be, Leena. Don't chase it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it. I just want to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's something you saw in a dream, or a story.
+- kind: dialogue
+  speaker: Leena
+  text: I don't dream in stories, Sodacan.
+- kind: dialogue
+  speaker: chadwick
+  text: Enough, Leena.

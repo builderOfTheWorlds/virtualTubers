@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 175
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:54.944607+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, people. We've got a long day ahead of us.
+- kind: dialogue
+  speaker: chadwick
+  text: I know the way, let's get going.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, really? You're sure?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is gonna be good.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, maybe we could, uh, check the map real quick?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to check the map.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm happy to lead if you'd like, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is like watching a cat try to find its way out of a sack.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe just take a moment to double-check...
+- kind: dialogue
+  speaker: chadwick
+  text: I said I know the way.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just get moving then.

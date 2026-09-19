@@ -1,0 +1,36 @@
+id: camp-fire
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:49.755662+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I still think we should alternate watches in twos, not just Vigil and me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking about the fire, and I reckon it'll hold till dawn if we
+    keep it fed.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain will wash away any sparks.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible for a fire to burn underwater?
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Leena?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Underwater? No, no, it won't do that.
+- kind: dialogue
+  speaker: Leena
+  text: I was just wondering.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyway, someone needs to stay up for the next watch.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll do it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good, I'll get some more wood then.

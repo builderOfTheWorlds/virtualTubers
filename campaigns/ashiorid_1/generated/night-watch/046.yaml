@@ -1,0 +1,41 @@
+id: night-watch
+take: 46
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:43.874532+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are clear tonight, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: They are. I've never seen so many.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) I hear crickets.
+- kind: dialogue
+  speaker: chadwick
+  text: What time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: Close to midnight.
+- kind: dialogue
+  speaker: Leena
+  text: (gently) Let's keep watch a bit longer.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing's coming.
+- kind: dialogue
+  speaker: gm
+  text: You think we can wake the others early?
+- kind: dialogue
+  speaker: Vigil
+  text: Not yet. They need their rest.
+- kind: dialogue
+  speaker: Leena
+  text: (hesitant) I don't know if I slept well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.

@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 249
+model: llama3.1:8b
+generated_at: '2026-09-18T23:46:44.897014+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's get moving, everyone. We've got a long way to go today.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure I know where we are. We just need to keep going this way.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, if I may point out, we've been walking for a few hours and I'm not sure
+    we're on the right path.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Look at Chadwick getting lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, I think Vigil might be trying to help, Chad.
+- kind: dialogue
+  speaker: chadwick
+  text: I am not lost. I just know we need to keep moving in this general direction.
+- kind: dialogue
+  speaker: Vigil
+  text: With all due respect, sir, if you'd like to know where we are, I can show
+    you on the map.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I don't need to see the map. I trust my instincts.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is good. Chadwick's instincts have led us astray before.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's just take a look at the map, Chad. We can figure it out together.
+- kind: dialogue
+  speaker: gm
+  text: Actually, let's take a break. We can use this opportunity to regroup and...
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine. We're fine. Let's just keep moving.

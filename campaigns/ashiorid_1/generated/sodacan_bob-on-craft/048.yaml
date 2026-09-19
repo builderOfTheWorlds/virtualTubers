@@ -1,0 +1,45 @@
+id: sodacan_bob-on-craft
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:50:34.777531+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on. What's the holdup?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just this piece I found. I think it's from a wagon axle, from the design
+    of the bracket.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move? We can't spend all day examining every piece of trash.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is no trash, Chadwick. It's a beautiful example of engineering from the
+    early era.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Ooh, can I see? What makes it special?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the maker used a combination of forged steel and wooden inserts to create
+    a durable yet lightweight axle.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it from the same era as the factories we're searching?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, roughly contemporaneous. I'd estimate it's from the mid-2100s.
+- kind: dialogue
+  speaker: chadwick
+  text: (exasperated) Come on, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (curiously) What was the maker thinking? Why did they design it this way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the best part! They were trying to create a system that would reduce
+    wear and tear on the wooden slats, which was a major problem at the time.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Alright, let's get moving.

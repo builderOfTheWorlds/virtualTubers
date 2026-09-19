@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:34.338534+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The familiar feeling is in the air again, but you're all in a courtyard this
+    time.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just the smell of the cookhouse.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not the smell. I've smelled that a thousand times.
+- kind: dialogue
+  speaker: Vigil
+  text: You're being paranoid, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen some similar doorways in my travels.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob shows you some sketches in his journal.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what I'm looking at. Why would I remember this?
+- kind: dialogue
+  speaker: chadwick
+  text: You might have seen it in a book or a painting.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe we should ask Grovley about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen it before, but it's been a while.
+- kind: dialogue
+  speaker: gm
+  text: Grovley is busy with some repairs, but you can ask him later.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'm just being silly. I'm not even sure what it is I remember.

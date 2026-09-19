@@ -1,0 +1,41 @@
+id: malmont-market
+take: 117
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:19.399429+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Looks like a decent stall, let's see what they're selling.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, old maps! I hadn't expected to see those here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Eh, you'd think there'd be some decent craftsmanship in this town.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we're a long way from anywhere interesting.
+- kind: dialogue
+  speaker: Vigil
+  text: You two keep an eye on the prices.
+- kind: dialogue
+  speaker: Leena
+  text: This one's marked... somewhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not impressed with the smithing here.
+- kind: dialogue
+  speaker: chadwick
+  text: You think they have any decent ale?
+- kind: dialogue
+  speaker: Vigil
+  text: Not on my budget.
+- kind: dialogue
+  speaker: Leena
+  text: I think this might be a copy of the old trade route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better metalwork in a beggar's forge.
+- kind: dialogue
+  speaker: chadwick
+  text: We're a long way from home, all right.

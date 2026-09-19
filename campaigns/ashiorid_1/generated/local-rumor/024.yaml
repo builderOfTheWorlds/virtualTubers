@@ -1,0 +1,38 @@
+id: local-rumor
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:49.440840+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashitroid: In the evening, Malmont''s blacksmiths seem to be closing up early.'
+- kind: dialogue
+  speaker: chadwick
+  text: I could have sworn I saw the one on the corner lighted until midnight last
+    night.
+- kind: dialogue
+  speaker: Leena
+  text: That's probably just rumor.
+- kind: dialogue
+  speaker: Vigil
+  text: Rumor or not, it's true that their forges are cold more often than they should
+    be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's a lot of talk about that place being cursed.
+- kind: narration
+  speaker: gm
+  text: 'Ashitroid: Cursed is a strong word, but it''s clear they''re struggling.'
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen it, but I've heard whispers about... something else moving
+    through the town at night.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure it's just a legend, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: Legend or not, it's not something we need to worry about right now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not like it's affecting us, anyway.

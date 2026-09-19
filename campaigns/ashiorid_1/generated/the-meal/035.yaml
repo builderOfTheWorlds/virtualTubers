@@ -1,0 +1,41 @@
+id: the-meal
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:09.652892+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The roasted mutton's a bit overdone, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Pass the bread, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, don't be too quick to criticize, Ashiorid. We're all in this together!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done it better, I swear. Less salt, more herbs.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat already?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the vegetables, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, you're just giving me your portion again, aren't you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a wonder we didn't poison ourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: Who cooked?
+- kind: dialogue
+  speaker: gm
+  text: I did, of course. It's not that bad.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come now, let's not pick at each other.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd wash that pot again if I were you.

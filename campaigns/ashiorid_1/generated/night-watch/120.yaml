@@ -1,0 +1,41 @@
+id: night-watch
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:46.579558+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are aligned wrong tonight, I think.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean?
+- kind: dialogue
+  speaker: gm
+  text: Just...the pattern's off. Never seen it like this.
+- kind: dialogue
+  speaker: chadwick
+  text: What's to say it's not just a different pattern?
+- kind: dialogue
+  speaker: gm
+  text: I don't know. It feels different.
+- kind: dialogue
+  speaker: Leena
+  text: What's the difference, then?
+- kind: dialogue
+  speaker: chadwick
+  text: Is it just me, or can you hear that faint humming?
+- kind: dialogue
+  speaker: Vigil
+  text: What humming?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I know it's just wind or something...never mind.
+- kind: dialogue
+  speaker: Leena
+  text: Morning's not due for another two hours. We should keep watch.
+- kind: dialogue
+  speaker: gm
+  text: Yeah...we can try to get some more rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) I had a weird dream about the Moonwells.

@@ -1,0 +1,32 @@
+id: malmont-market
+take: 74
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:59.457356+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a village fair.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, is this a genuine map from the 87 expedition?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too expensive.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering to Leena) I think it's just a collection of prints.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) This one looks like a real hand-drawn copy of the 91 terrain chart.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (walking away) Overpriced junk.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) What do you think of this place?
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) It's just a town.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) What's the story behind this map?

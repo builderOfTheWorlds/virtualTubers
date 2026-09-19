@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 234
+model: llama3.1:8b
+generated_at: '2026-09-18T22:03:24.163903+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you tell me more about what you're feeling?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just... that thing out there, it feels familiar.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I know what you're talking about. We have a similar setup at the manor.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, you probably saw one like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But that's the thing, I don't think I've ever seen it before.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's probably just a trick of the light.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should keep moving, we don't know what kind of territory we're in.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Stay close.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not scared, I just... I want to know what it is.

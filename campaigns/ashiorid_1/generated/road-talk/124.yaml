@@ -1,0 +1,41 @@
+id: road-talk
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-19T00:01:04.770891+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, it's a good thing we brought water.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting a bit thirsty, is that a mirage up ahead?
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, it's just a mirage. We've been walking for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We've been walking for days, actually. Time loses all meaning out here.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, looks away) Nafsari... the ocean. It's... it's different.
+- kind: dialogue
+  speaker: gm
+  text: What's different about it, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: I've lived in villages with canals that wind through the town. It's lovely.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've told you all about Vabokedos, but I know nobody remembers.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, what's your favorite food from your village?
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Sodacan Bob, I think we've all got it memorized by now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not the point. The point is, Vabokedos is a wonderful place.
+- kind: dialogue
+  speaker: Vigil
+  text: (trails off, lost in thought)

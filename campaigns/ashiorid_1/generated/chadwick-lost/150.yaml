@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 150
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:16.441687+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is setting over the forest, casting long shadows across the trees.
+- kind: dialogue
+  speaker: chadwick
+  text: How far is it to the next town?
+- kind: dialogue
+  speaker: Leena
+  text: Ah, I think it's about a day's journey, maybe a bit more.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) You don't know where we are, do you?
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I think Sodacan Bob is right, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, come on, Chadwick, you can't even find your way out of a paper
+    bag.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Well, why don't we just ask Vigil to show us the way?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: The forest is quiet, with only the occasional hoot of an owl breaking the
+    silence.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) I know exactly where we are.

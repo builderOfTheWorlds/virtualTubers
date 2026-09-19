@@ -1,0 +1,42 @@
+id: malmont-market
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:49.295129+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome to Malmont, a town that's a bit of a curiosity.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, thanks for the warm welcome, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: It's nice to be anonymous for a change.
+- kind: dialogue
+  speaker: Vigil
+  text: Just keep your wits about you, traveler.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm after a decent piece of work from a smith. Anyone know of one?
+- kind: dialogue
+  speaker: gm
+  text: There's a shop just down the street, they do fine work.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take a look, maybe I can learn something.
+- kind: dialogue
+  speaker: Leena
+  text: I'm more interested in that map stall. Old maps can be fascinating.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Too many eyes on us already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of all these fancy maps? Anyone got a compass?
+- kind: dialogue
+  speaker: gm
+  text: The map stall owner might be willing to let you take a look.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, I think I found something. This map looks like it's from the
+    old kingdom.

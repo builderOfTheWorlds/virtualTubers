@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 181
+model: llama3.1:8b
+generated_at: '2026-09-18T20:34:12.853596+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high, it's a clear day.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we could head that way.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, isn't that the direction we were just in?
+- kind: dialogue
+  speaker: Vigil
+  text: I can recalculate our position if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine, we're good.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe I could, uh, help you with that map?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: Very well, let's proceed as planned.
+- kind: dialogue
+  speaker: chadwick
+  text: We're going the right way now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course we were going the right way, Chadwick.

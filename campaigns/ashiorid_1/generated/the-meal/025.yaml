@@ -1,0 +1,35 @@
+id: the-meal
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:22:25.087771+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it seems like a generous spread.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'm good, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this abomination? Burnt offering to the culinary gods?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, it's not that bad!
+- kind: dialogue
+  speaker: Vigil
+  text: I think I'll just take a pass on the potatoes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The potatoes, the potatoes! A travesty, I say.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: It's okay, guys, it's just a meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cooked this catastrophe, anyway?
+- kind: dialogue
+  speaker: gm
+  text: I think it was... (pauses) Vigil?

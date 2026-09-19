@@ -1,0 +1,33 @@
+id: night-watch
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:01.512794+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The sky is very clear tonight.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Leena: I know. I''ve never seen so many stars.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: We''ve been watching for hours, Leena. You''d think something would
+    happen by now.'
+- kind: dialogue
+  speaker: Leena
+  text: Nothing ever happens in the middle of the night.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: That''s not true. I''ve seen some strange things at night.'
+- kind: dialogue
+  speaker: Vigil
+  text: It's different now. We're at Moonwells.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I know. But sometimes the quietest moments are the most... interesting.'
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob was telling me about his father's stories about Moonwells.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Which ones?'

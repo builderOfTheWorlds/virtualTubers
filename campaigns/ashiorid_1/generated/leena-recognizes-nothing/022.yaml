@@ -1,0 +1,35 @@
+id: leena-recognizes-nothing
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:27.247717+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We continue on the winding road, the trees growing closer together here.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen this hill before, or at least something like it.
+- kind: dialogue
+  speaker: chadwick
+  text: (making a gentle note on a piece of paper) Yes, the road does curve rather...
+    strangely here.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Leena with interest) Do you remember where you've seen it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (gesturing broadly) We're probably just seeing things. We've been on the road
+    for a while.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's... familiar. (trailing off, lost in thought)
+- kind: dialogue
+  speaker: Vigil
+  text: (still watching Leena) I think we're getting close to the coast.
+- kind: dialogue
+  speaker: chadwick
+  text: (consulting his map) Ah, yes. The sea should be just over that rise.
+- kind: dialogue
+  speaker: gm
+  text: As we top the rise, the sea stretches out before us, but... there's something
+    else.

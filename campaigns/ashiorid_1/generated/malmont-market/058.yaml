@@ -1,0 +1,34 @@
+id: malmont-market
+take: 58
+model: llama3.1:8b
+generated_at: '2026-09-18T20:21:27.643393+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, welcome to Malmont, I suppose. Not exactly a place of great renown.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, it's lovely to be somewhere no one knows our names.
+- kind: dialogue
+  speaker: Leena
+  text: (to the old map vendor) These maps are old, aren't they? How long ago were
+    they printed?
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around cautiously) Not that I'm getting the local flavor, but I'd
+    say be careful who you talk to.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grumbling) Blacksmiths around here could learn a thing or two from a real
+    smith.
+- kind: dialogue
+  speaker: gm
+  text: As it happens, there are several blacksmiths around here. More than the town's
+    economy would suggest it needs.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Don't know what kind of metal they're working with, but I'm not
+    impressed.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) Oh, come on, Sodacan. Lighten up.

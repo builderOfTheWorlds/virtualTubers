@@ -1,0 +1,43 @@
+id: the-meal
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:02.838877+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, dig in, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering to himself) Yeah...
+- kind: dialogue
+  speaker: Leena
+  text: Oh, isn't it lovely that we can all share this meal together.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm telling you, if I were in charge of the kitchen, this wouldn't
+    be a problem.
+- kind: dialogue
+  speaker: Vigil
+  text: (passing a chunk of meat to someone else) Try this.
+- kind: dialogue
+  speaker: chadwick
+  text: (eating in silence)
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, have you considered that maybe we just didn't have the right
+    ingredients?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No way, I know exactly what to do. (pauses to take a bite) Ugh, this is awful.
+- kind: dialogue
+  speaker: chadwick
+  text: (glaring at Sodacan Bob)
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbling to himself, pushing food around his plate)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone needs to get back in there and start over from scratch.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, come on, it's not that bad.

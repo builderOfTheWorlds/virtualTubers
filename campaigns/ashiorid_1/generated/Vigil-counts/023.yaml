@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:16.891585+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old warehouse is dimly lit, the air thick with the smell of dust and decay.
+- kind: dialogue
+  speaker: chadwick
+  text: (stirring the stew) What's got your attention, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: Is it something we should be concerned about?
+- kind: dialogue
+  speaker: Vigil
+  text: The south door opens inward, the hinges are well-oiled.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's useful to know.
+- kind: dialogue
+  speaker: chadwick
+  text: Why do you mention it?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart with the wooden slats has passed by twice, heading east.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) Routine supply run, probably.
+- kind: dialogue
+  speaker: Leena
+  text: What else have you noticed?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the western window has been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistling softly) That's all.

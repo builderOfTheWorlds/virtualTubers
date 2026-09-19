@@ -1,0 +1,41 @@
+id: the-meal
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:11.896478+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, let's dig in, it's not like it's going to get any better.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, folks, it's a feast! We're all together, food's not the point.
+- kind: dialogue
+  speaker: Vigil
+  text: (passing his food to Leena) Here, you take it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, what's the story behind this... whatever this is?
+- kind: dialogue
+  speaker: gm
+  text: I just heated up some leftovers, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Leftovers? This has been sitting in the pot for days, I can smell the bacteria.
+- kind: dialogue
+  speaker: chadwick
+  text: (talking over Bob) Who's cooking tomorrow?
+- kind: dialogue
+  speaker: Leena
+  text: I was thinking we could have a rotation, make it more fun.
+- kind: dialogue
+  speaker: Vigil
+  text: (taking the worst of the food) I'll take tomorrow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A rotation? You can't just give cooking responsibilities to a random person.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Bob, it's fine, just calm down.

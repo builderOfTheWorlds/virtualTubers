@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:43.173959+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you see?
+- kind: dialogue
+  speaker: chadwick
+  text: Something at the treeline.
+- kind: dialogue
+  speaker: Leena
+  text: What is it?
+- kind: dialogue
+  speaker: Vigil
+  text: Not moving right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hold up, I'm not seeing anything.
+- kind: dialogue
+  speaker: gm
+  text: It's gone now.
+- kind: dialogue
+  speaker: chadwick
+  text: Keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't get a good look.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it was just a trick of the light.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Keep moving, yes.

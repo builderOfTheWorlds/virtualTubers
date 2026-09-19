@@ -1,0 +1,41 @@
+id: chadwick-cooking
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:21:11.073135+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The smell is...pungent, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I added some extra seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Mmm, what's that on top?
+- kind: dialogue
+  speaker: chadwick
+  text: Just some...dried herbs.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles) You're a regular chef, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muffled) What's that burning smell?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, just a little...crispiness.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Yeah, it's definitely...crispy.
+- kind: dialogue
+  speaker: gm
+  text: (awkwardly) Maybe we should, uh, serve it hot.
+- kind: dialogue
+  speaker: chadwick
+  text: Too hot, no, it's fine, I'll get it.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers to Ashiorid) Maybe we can just...pretend it's a new dish.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sarcastically) Oh boy, new dish, sounds...delicious.

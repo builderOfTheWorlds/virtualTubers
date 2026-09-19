@@ -1,0 +1,34 @@
+id: leena-tries-slang
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:32:14.364166+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've got a question for you, Leena. What's the latest from the market?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, you know, it's been a wild day. The tibs are really coming at it.
+- kind: dialogue
+  speaker: chadwick
+  text: Tibs? I thought that was just a thing we said at the pub on Thursdays.
+- kind: dialogue
+  speaker: Leena
+  text: Nah, I'm pretty sure it's a general term. I overheard someone use it at the
+    bazaar yesterday.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Leena, I think you might be thinking of "tibb", which refers to
+    a type of traditional dish.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, that's so cool! I was way off, but I'm glad I got the vibe right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vibe? You mean you picked up the word wrong and it sounded good to you?
+- kind: dialogue
+  speaker: Leena
+  text: Exactly! It's all about the feeling, not the exact meaning.
+- kind: dialogue
+  speaker: gm
+  text: Well, we won't hold it against you. You're still learning the local lingo.

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:40.490080+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what do we have here?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, Vigil just mentions some small thing.
+- kind: dialogue
+  speaker: Leena
+  text: What was it again?
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the left opens towards the hall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, not that unusual, I guess.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've noticed that too.
+- kind: dialogue
+  speaker: Leena
+  text: Is that a thing?
+- kind: dialogue
+  speaker: gm
+  text: I don't think it's relevant, let's move on.
+- kind: dialogue
+  speaker: Vigil
+  text: I just thought I'd mention it.

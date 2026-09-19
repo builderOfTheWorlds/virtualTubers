@@ -1,0 +1,33 @@
+id: road-talk
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-19T00:01:10.053543+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting a little thirsty
+- kind: dialogue
+  speaker: Leena
+  text: I remember my grandmother used to make a tea with this type of grass that
+    grows near the river
+- kind: dialogue
+  speaker: Vigil
+  text: We're still a few days away from the last village we passed, aren't we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're getting close to the edge of Vabokedos, folks, I can tell you
+- kind: dialogue
+  speaker: Leena
+  text: Vabokedos is a lovely place, we have a big market there every spring
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The market's a riot, but the real magic's in the hills, trust me
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) We used to have a farm, near the sea
+- kind: dialogue
+  speaker: chadwick
+  text: How's the weather looking for tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like it'll be clear, so we should make good time

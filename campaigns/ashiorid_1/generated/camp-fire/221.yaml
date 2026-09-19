@@ -1,0 +1,38 @@
+id: camp-fire
+take: 221
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:50.349760+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it's been a miserable night, hasn't it.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't like the looks of those clouds, they're still dark.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we should try to keep the fire lit, or just let it die?
+- kind: dialogue
+  speaker: Vigil
+  text: If we ration the wood carefully, it should last us a few more hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you to lay it thicker, Bob, it's a wonder it's holding.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, alright, we'll get to the watch order soon, let's just settle down.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's still a way to stop the rain, or is it just too late?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, it's like the rain is trying to wash away our whole camp.
+- kind: dialogue
+  speaker: Vigil
+  text: We should check the gear, make sure it's all secure.
+- kind: dialogue
+  speaker: gm
+  text: Not tonight, Vigil, just rest. We can check the gear in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: Can a storm like this last for days, do you think?

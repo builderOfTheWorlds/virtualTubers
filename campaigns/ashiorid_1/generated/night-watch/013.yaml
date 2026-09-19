@@ -1,0 +1,41 @@
+id: night-watch
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:27.574878+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You see the stars are dimming.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, the moon's nearly full.
+- kind: dialogue
+  speaker: Leena
+  text: Can you hear anything? It's been quiet for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing but crickets and wind, like always.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think we should wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: No, they're probably getting a good rest.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not like we're expecting something.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) I had a nightmare last night.
+- kind: dialogue
+  speaker: Vigil
+  text: What was it?
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) What was what?
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick's nightmare.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Nothing.

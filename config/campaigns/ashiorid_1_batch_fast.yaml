@@ -1,0 +1,23 @@
+# Offline batch-generation config for the ashiorid_1 pack — FAST profile.
+#
+# Unlike config/campaigns/ashiorid_batch.yaml (hermes3:70b, ~4.8 tok/s,
+# confirmed too slow for volume — see session notes 2026-09-18), this uses
+# the live-path's own llama3.1:8b so a large batch of ambient takes finishes
+# in a practical amount of wall-clock time. batch_generate.py's per-take
+# call is a single flat generate_scene() (no tree expansion), so it does not
+# hit the same degradation the segment-tree pipeline showed at scale.
+
+campaign:
+  pack: campaigns/ashiorid_1
+
+llm:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  model: "llama3.1:8b"
+  temperature: 0.9
+  max_tokens: 512
+
+improv:
+  max_recent: 8
+  max_words: 45
+  max_beats: 12

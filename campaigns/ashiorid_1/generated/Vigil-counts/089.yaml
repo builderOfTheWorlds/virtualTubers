@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:05.432984+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the east opens into a long corridor.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I just noticed.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs softly)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we focus?
+- kind: dialogue
+  speaker: Vigil
+  text: A cart passed by again, carrying the same load.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Alright, what's the plan?
+- kind: dialogue
+  speaker: chadwick
+  text: Still nothing's changed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll go check the storeroom.
+- kind: dialogue
+  speaker: Leena
+  text: I'll wait here and keep watch.
+- kind: dialogue
+  speaker: Vigil
+  text: The windows are shut, but the shutter was recently fixed.
+- kind: dialogue
+  speaker: gm
+  text: (motions for Chadwick to proceed)

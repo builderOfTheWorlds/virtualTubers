@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:15.549096+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Come now, Leena, what's caught your eye?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get distracted, we've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: I know, I just...this doorway, it looks like the one from the old village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I think I've seen it too, maybe in the village of Goren.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, focus. We need to move.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and besides, it's probably just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's...I don't know what it is, but it feels familiar.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)

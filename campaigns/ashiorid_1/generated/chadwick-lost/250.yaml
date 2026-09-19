@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 250
+model: llama3.1:8b
+generated_at: '2026-09-18T23:46:49.425052+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got this.
+- kind: dialogue
+  speaker: Leena
+  text: We've actually been going in circles for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: You know, Chadwick, I've been studying the maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, then let's keep going.
+- kind: dialogue
+  speaker: Vigil
+  text: (sternly) Actually, I think we should ask Chadwick for directions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, poor Chadwick's lost again.

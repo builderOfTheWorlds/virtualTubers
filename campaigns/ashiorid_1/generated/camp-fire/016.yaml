@@ -1,0 +1,38 @@
+id: camp-fire
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:18.933154+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright then, let's get the watch order settled.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, a fire this size needs two people.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how to tell if the fire is stable?
+- kind: dialogue
+  speaker: Vigil
+  text: A flame will always find its way out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it myself, I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: I just worry we'll suffocate in our sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is making the fire harder to breathe.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, then two people watch until morning.
+- kind: dialogue
+  speaker: Leena
+  text: How will we know when morning comes?
+- kind: dialogue
+  speaker: gm
+  text: (pauses, then) We will know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This fire is going to last the night, don't worry.

@@ -1,0 +1,41 @@
+id: night-watch
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:05.890836+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: The sky''s a bit more grey than it was.'
+- kind: dialogue
+  speaker: chadwick
+  text: You think it's going to rain?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just a hush.
+- kind: dialogue
+  speaker: Vigil
+  text: I've never seen it this still.
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: What''s it like, Leena, if you were to just listen to it?'
+- kind: dialogue
+  speaker: Leena
+  text: Just the air moving, I guess.
+- kind: dialogue
+  speaker: Vigil
+  text: It's quiet, but you can still hear it.
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: Don''t wake the others yet.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't want to move, anyway.
+- kind: dialogue
+  speaker: chadwick
+  text: It's warm here.
+- kind: dialogue
+  speaker: Vigil
+  text: Not warm enough, if you ask me.
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: When was the last time we slept this long?'

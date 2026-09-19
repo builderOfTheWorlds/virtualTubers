@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T22:28:41.761465+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Carry on, then.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan, we've wasted enough time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no, you see, this is a remarkable example of—
+- kind: dialogue
+  speaker: Leena
+  text: What's remarkable about it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the metalwork, the design, it's clearly a—
+- kind: dialogue
+  speaker: Vigil
+  text: Was it made by someone local?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil, yes, I'd say it was made within the past century.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, we don't need to know this stuff.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, but it's fascinating, the way they used the grain of the wood—
+- kind: dialogue
+  speaker: Leena
+  text: Bob, what do you think the maker was thinking when they designed it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, well, I think they were trying to create something sturdy and practical.

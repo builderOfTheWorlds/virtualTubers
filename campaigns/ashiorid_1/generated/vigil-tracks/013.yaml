@@ -1,0 +1,41 @@
+id: vigil-tracks
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:44:10.932256+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: A group of travelers passed through about three days ago.
+- kind: dialogue
+  speaker: gm
+  text: What kind of travelers?
+- kind: dialogue
+  speaker: Vigil
+  text: Merchants, I think. Had a cart full of goods.
+- kind: dialogue
+  speaker: Leena
+  text: What were they carrying?
+- kind: dialogue
+  speaker: Vigil
+  text: Fruits and spices, if I had to guess.
+- kind: dialogue
+  speaker: chadwick
+  text: What else?
+- kind: dialogue
+  speaker: Vigil
+  text: A few crates of glassware, maybe some fine silks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can tell all that from a few tracks?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) It's not just the tracks...
+- kind: dialogue
+  speaker: Vigil
+  text: (to himself) They're still following the same route.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) That's a good eye, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: (grumbling) Don't get it in your head that I'm some sort of tracker...

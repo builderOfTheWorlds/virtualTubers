@@ -1,0 +1,29 @@
+id: carrying-the-signet
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:44.051090+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A bit of a souvenir from the manor, I see.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, yeah, just a little trinket I found lying around.
+- kind: dialogue
+  speaker: Leena
+  text: It's a pretty piece, though. Almost looks like it's from the old country.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think that, wouldn't you? But it's not.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're lucky to have such a fine collection of keepsakes.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: This is the half of a signet ring, the rest was left at the manor.'
+- kind: dialogue
+  speaker: gm
+  text: I'm sure we can return it to its rightful owner.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we can.

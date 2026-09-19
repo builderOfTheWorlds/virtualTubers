@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:18.718102+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're in here for a reason.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I know we are.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, alright, let's not be glum. We got a new path, new possibilities.
+- kind: dialogue
+  speaker: Vigil
+  text: (low, measured) Not everyone had a choice in this, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muted) I'm just happy to be out of the way, if you know what I mean.
+- kind: dialogue
+  speaker: gm
+  text: We all are.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) Do you think we made a mistake?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then says) I don't think we can know that yet.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's not think about that right now. We'll figure it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Figure it out?
+- kind: dialogue
+  speaker: Leena
+  text: (to Leena) Maybe we should just take it one step at a time.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) That's probably a good idea.

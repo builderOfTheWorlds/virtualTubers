@@ -1,0 +1,41 @@
+id: the-meal
+take: 56
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:41.573260+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I've tasted better at a street vendor.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's a lovely meal!
+- kind: dialogue
+  speaker: Vigil
+  text: (shaking head)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's lovely about it is the portion size.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't care what's lovely, I'm just hungry.
+- kind: dialogue
+  speaker: Leena
+  text: And the company!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd have served it with a sauce.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushes a piece of food away)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And used a better pan, that's for sure.
+- kind: dialogue
+  speaker: Leena
+  text: Who cooked, anyway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know I would have done better.

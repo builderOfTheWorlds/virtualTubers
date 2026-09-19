@@ -1,0 +1,30 @@
+id: sodacan_bob-on-runes
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T20:52:26.517063+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think the runes on the Malvakar were done by someone from around here.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I see the connection to the monument's language.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not about the language, it's about the craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: Does it really matter, Bob, if it was a local or not?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, if it was a local, it's a shame they didn't stick around
+    to see it work.
+- kind: dialogue
+  speaker: Vigil
+  text: Why are you so interested in the Malvakar's craftsmanship all of a sudden?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been looking at it wrong, that's all.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's really going on here?

@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:54.024731+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena's noticed something familiar about this place.
+- kind: dialogue
+  speaker: Leena
+  text: It's the phrase. I remember it from a song my mother used to sing.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, it's a common saying, I'm sure. We just haven't heard it before.
+- kind: dialogue
+  speaker: Vigil
+  text: I'd like to hear more about this song.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you mean. We have a similar saying in our village.
+- kind: dialogue
+  speaker: Leena
+  text: This isn't like anything in our village, though.
+- kind: dialogue
+  speaker: chadwick
+  text: Perhaps you saw it in a book or a movie.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think so. I remember the smell, too.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not worry about it. We have more pressing things to attend to.
+- kind: dialogue
+  speaker: gm
+  text: Like what?
+- kind: dialogue
+  speaker: Vigil
+  text: Like our current... situation.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we don't know what we're dealing with here.

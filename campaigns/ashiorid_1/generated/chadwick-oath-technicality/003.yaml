@@ -1,0 +1,42 @@
+id: chadwick-oath-technicality
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:21:54.111448+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what's the holdup?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine. I was just making a few adjustments to my oath.
+- kind: dialogue
+  speaker: Leena
+  text: Adjustments? You're not even clear on what it means.
+- kind: dialogue
+  speaker: Vigil
+  text: That's not true, Leena, I'm sure Chadwick understands it perfectly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Like he understands anything else in life.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, put your hand on the oathstone and reaffirm your oath.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) I am sworn to vengeance, as I have sworn before.
+- kind: dialogue
+  speaker: Leena
+  text: (skeptical) Sworn to vengeance, or sworn to get out of doing what you're told?
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, don't.
+- kind: dialogue
+  speaker: chadwick
+  text: (smirking) I do what I want, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) That's rich coming from the guy who's been arguing about his oath
+    for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: (yelling) Enough! I'll just do it already!

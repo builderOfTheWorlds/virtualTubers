@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:02.158839+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, do you have any idea which direction we should go?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should keep going straight.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should take a look at the map, just to make sure?
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I'm sure I know what I'm doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should head towards those trees.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, good thinking, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Finally, someone with a sense of direction.
+- kind: dialogue
+  speaker: chadwick
+  text: Silence, I'm navigating.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should keep going straight.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, but just in case, I'm marking our route.

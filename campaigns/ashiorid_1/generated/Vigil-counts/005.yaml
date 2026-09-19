@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:57.148909+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the plan for this place?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we search the upper floors.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not finding anything out of the ordinary.
+- kind: dialogue
+  speaker: Vigil
+  text: The north door opens inward, that's all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob's not picking up anything, just static.
+- kind: dialogue
+  speaker: gm
+  text: Very well, let's proceed with caution.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm checking the rooms to the east.
+- kind: dialogue
+  speaker: Leena
+  text: No signs of recent habitation.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the south window's been repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Same old, same old.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving, let's cover more ground.
+- kind: dialogue
+  speaker: chadwick
+  text: This looks like some sort of storage room.

@@ -1,0 +1,41 @@
+id: road-talk
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-18T23:58:06.452151+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's up for a break?
+- kind: dialogue
+  speaker: Leena
+  text: I'll keep moving, might as well get as far as we can.
+- kind: dialogue
+  speaker: chadwick
+  text: You're not even breaking a sweat, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Habit, I guess.
+- kind: dialogue
+  speaker: Vigil
+  text: I could use some water, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got some from my pack.
+- kind: dialogue
+  speaker: Vigil
+  text: Thanks, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're welcome, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Let's move again, then.
+- kind: dialogue
+  speaker: Leena
+  text: What's that over there?
+- kind: dialogue
+  speaker: chadwick
+  text: Just a sandstorm, can't see more than ten feet.
+- kind: dialogue
+  speaker: Leena
+  text: Sandstorms in the mountains are nothing new.

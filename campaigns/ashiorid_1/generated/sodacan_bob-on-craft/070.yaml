@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:55.585188+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a look at this thing Sodacan Bob's found.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This gate's from the Blacksmith's guild, I can tell by the symbol on the latch.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, can I see it? What's the symbol look like?
+- kind: dialogue
+  speaker: Vigil
+  text: Is this something we can use to bar a door?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, it's for a gate. You can see the reinforcing strips on the hinges.
+- kind: dialogue
+  speaker: Leena
+  text: Reinforcing strips? Why would they do that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's for heavy use. They expected it to be opened and closed a lot.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it still in good condition?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's worn, but it's not broken. It's still sturdy.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's keep moving.

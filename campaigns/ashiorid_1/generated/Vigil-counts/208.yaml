@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 208
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:14.579736+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're in a small inn, there's a fire crackling in the hearth.
+- kind: dialogue
+  speaker: chadwick
+  text: Smells like someone's cooking breakfast.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to go talk to the innkeeper.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our room has a small crack in it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take care of that.
+- kind: dialogue
+  speaker: gm
+  text: How's the room, folks?
+- kind: dialogue
+  speaker: Vigil
+  text: There are six of us in the room, not counting the innkeeper.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a lot of people.
+- kind: dialogue
+  speaker: Leena
+  text: It's a big room.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the hallway opens towards the stairs.
+- kind: dialogue
+  speaker: chadwick
+  text: Where's the shutters on the window?
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw the innkeeper repairing them yesterday.

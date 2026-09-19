@@ -1,0 +1,132 @@
+malvakar-riddle-arc:
+  node_id: malvakar-riddle-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party reaches the northern monument and solves the riddle of the Malvakar,
+    u
+  summary: The party reaches the northern monument and solves the riddle of the Malvakar,
+    uncovering another piece of the map.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-n0
+  - malvakar-riddle-arc-n1
+  slots: null
+malvakar-riddle-arc-n0:
+  node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  order: 0
+  depth: 1
+  title: Arrival at the Northern Monument
+  summary: The party arrives at the ancient northern monument, its weathered stones
+    bearing cryptic symbols that hint at the riddle of the Malvakar. The atmosphere
+    grows thick with anticipation as they prepare to solve the puzzle.
+  continuity_in: The party travels through the misty forest, following ancient markers
+    toward the northern monument.
+  continuity_out: The party examines the monument's intricate carvings and begins
+    to piece together the riddle's meaning.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n0-malmont-arrival-1
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: malvakar-riddle-arc-n0-malvakar-riddle-1
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+malvakar-riddle-arc-n1:
+  node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  order: 1
+  depth: 1
+  title: Solving the Malvakar Riddle
+  summary: Through careful analysis of the monument's symbols and ancient texts, the
+    party successfully solves the Malvakar riddle, revealing a crucial piece of the
+    map that leads them closer to their ultimate destination.
+  continuity_in: The party has examined the monument's carvings and begun to understand
+    the riddle's meaning.
+  continuity_out: The party discovers the next location on their map and prepares
+    to continue their journey toward the moonwell.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-n1-malvakar-riddle-1
+    kind: ambient
+    prompt: The party carefully examines the ancient symbols etched into the monument's
+      surface, searching for patterns that might unlock the riddle's meaning.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malvakar-riddle-2
+    kind: ambient
+    prompt: Leena traces her fingers along the carvings, her eyes narrowing as she
+      realizes a connection between the symbols and what she knows of the Bahadur's
+      history.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malvakar-riddle-3
+    kind: ambient
+    prompt: Chadwick, ever the practical one, begins to sketch the symbols in his
+      journal, trying to make sense of their arrangement and potential meanings.
+    lore:
+    - malmont
+    participants:
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malvakar-riddle-4
+    kind: ambient
+    prompt: Vigil's keen mind finally connects the dots, and a realization dawns on
+      her face as she speaks the solution aloud to the others.
+    lore:
+    - the-begene-program
+    participants:
+    - Vigil
+    - Leena
+    - chadwick
+    sensitivity: none
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-n1-malvakar-riddle-5
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

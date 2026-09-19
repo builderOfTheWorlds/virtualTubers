@@ -1,0 +1,31 @@
+id: malmont-market
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:04.333788+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of making nails if you can't even get the tempering right?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Just the kind of place I'd expect to find, no standards, no pride.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Excuse me, how long have you had those maps?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling at no one in particular) It's nice to be a stranger here.
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (gm): You''re certainly a sight for sore eyes, Chadwick.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) You think the constable's men have a hand in this, then?
+- kind: dialogue
+  speaker: Leena
+  text: (studying an old map) I've seen this style of cartography before, but I'm
+    not sure where.
+- kind: dialogue
+  speaker: Vigil
+  text: (still eyeing the blacksmith's work) This town's not built on industry, is
+    it?

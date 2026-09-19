@@ -1,0 +1,38 @@
+id: the-meal
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:21:19.669271+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm sure the chef did their best with what we had available.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Available? This is a travesty, I could've done better myself.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's just a meal, let's not be too hard on them.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your food, okay?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) Excuse me, I think I'll just take a pass on this one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Pass on what one? The flavors, the presentation, the entire culinary experience?
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we can make it a fun dinner party and forget about the food.
+- kind: dialogue
+  speaker: Vigil
+  text: (shaking head) No, I think I'll just go grab some fruit from the garden.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fruit? You're throwing away perfectly good protein!
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) Alright, that's enough, can we just eat in peace?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Peace? We can't have peace with a meal like this!

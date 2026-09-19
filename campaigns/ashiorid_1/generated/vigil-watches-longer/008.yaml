@@ -1,0 +1,14 @@
+id: vigil-watches-longer
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:44:54.906473+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are aligned, but I think a watch is running long.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take the next watch.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a quiet night.

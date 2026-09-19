@@ -1,0 +1,35 @@
+id: malmont-market
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:32.841596+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, good morning, travelers. Welcome to Malmont.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning, I'm looking for some decent smithwork. What've you got?
+- kind: dialogue
+  speaker: Vigil
+  text: Not sure if I want to be here.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, you have old maps. What's that one?
+- kind: dialogue
+  speaker: chadwick
+  text: Good morning, folks. Nice to be a stranger for a while.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: These blacksmiths... I've seen better work in a tavern.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't like it here.
+- kind: dialogue
+  speaker: Leena
+  text: This one... it looks like it's from before the war.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just browse, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What've you found there?

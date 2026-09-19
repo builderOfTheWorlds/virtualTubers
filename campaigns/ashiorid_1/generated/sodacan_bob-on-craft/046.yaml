@@ -1,0 +1,39 @@
+id: sodacan_bob-on-craft
+take: 46
+model: llama3.1:8b
+generated_at: '2026-09-18T20:50:19.537846+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob's found something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a gate hinge, made in Torenhaven, about fifty years ago.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we need to keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, listen, this is good craftsmanship, it's a sign of a well-established
+    trade guild.
+- kind: dialogue
+  speaker: Leena
+  text: Is it the same style as the ones in Arinthal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, that's a good question, Leena, now we can see that it's a variation
+    of the same design, but with some distinct differences.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the difference in the bracket?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the bracket's been reinforced, you can see the extra rivets, that suggests
+    the maker was anticipating heavy use.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's move, we can analyze it later.
+- kind: dialogue
+  speaker: gm
+  text: Vigil and Leena are taking a closer look, while Chadwick starts to distance
+    himself.

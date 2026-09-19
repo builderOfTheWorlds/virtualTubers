@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 185
+model: llama3.1:8b
+generated_at: '2026-09-18T20:34:40.436982+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a while, Chadwick. You think we should take a break?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're making good time. Keep moving, everyone.
+- kind: dialogue
+  speaker: Leena
+  text: If you're worried about the map, I can take a look and see if we're on track.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine. I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: I could take a glance, if it would help?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is priceless. Lost in the woods with the great Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing nervously) Well, let's just say you're... enthusiastic.
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) Shut up, Sodacan Bob.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's keep moving. We need to find that stream.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) I think it's that way, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I was thinking that.

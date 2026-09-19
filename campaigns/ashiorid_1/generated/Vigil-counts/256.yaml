@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 256
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:02.432139+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I saw the same cart pass by the window twice.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm.
+- kind: dialogue
+  speaker: Leena
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it passed by twice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, yeah, I saw that.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay.
+- kind: dialogue
+  speaker: gm
+  text: Is there something you're getting at, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just something I noticed.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just focus on the task at hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, what's the task?
+- kind: dialogue
+  speaker: gm
+  text: We need to find more information about the local guild.

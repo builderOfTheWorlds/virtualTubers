@@ -1,0 +1,42 @@
+id: the-map-argument
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:59.944695+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, people. We've got a good pace going.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, wait, wait. I'm telling you, we need to turn north here.
+- kind: dialogue
+  speaker: Leena
+  text: No, I've been studying the map and I think it says to keep going east.
+- kind: dialogue
+  speaker: Vigil
+  text: I agree with Leena, Chadwick. You're reading it wrong.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I don't think it's that complicated, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not complicated, it's just that you people don't know what you're looking
+    at.
+- kind: dialogue
+  speaker: Leena
+  text: I think Chadwick's just getting too big for his britches, if you ask me.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I'm right. I've studied the maps more than any of you.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Leena's got it. The map is pretty clear.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, great, another Chadwick tantrum.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not having a tantrum, I'm correcting you.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright, let's just keep moving. We've got a long way to go.

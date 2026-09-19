@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 135
+model: llama3.1:8b
+generated_at: '2026-09-18T20:13:20.956121+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's pick up where we left off. Carry.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're close to the old windmill.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you confirm that?
+- kind: dialogue
+  speaker: Vigil
+  text: We're actually a few miles off course, but it's not a huge detour.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Ah, good ol' Chadwick and his sense of direction.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Maybe, Chadwick, you could just say you're unsure?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know where we are. We just need to keep moving.
+- kind: dialogue
+  speaker: gm
+  text: (smirks) Alright, Vigil, give them the directions.
+- kind: dialogue
+  speaker: Vigil
+  text: (clears throat) Just head east for about a mile, then turn north.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) East, north... sure.

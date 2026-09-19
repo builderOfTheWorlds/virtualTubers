@@ -1,0 +1,35 @@
+id: night-watch
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:10.406477+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm starting to think the others might get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, I'm wide awake.
+- kind: dialogue
+  speaker: Leena
+  text: I'm listening for anything, but it's just silence.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, it's weird how quiet it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think that's a good thing, or a bad thing?
+- kind: dialogue
+  speaker: gm
+  text: I think it's a good thing. We can rest a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we should wake the others, just in case.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure, it's still pretty early.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep watch if you want, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's a lot of stars out tonight.

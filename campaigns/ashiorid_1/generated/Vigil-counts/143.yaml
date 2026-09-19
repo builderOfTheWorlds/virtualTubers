@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 143
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:05.758610+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, we've got the layout of the room, and we're all clear on the exit.
+- kind: dialogue
+  speaker: chadwick
+  text: You think we're done here, then?
+- kind: dialogue
+  speaker: Leena
+  text: I do. This is a small trade town. We should be able to gather what we need.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the shutter on that one building over there, the one with the
+    sign, it's been fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: Good eye, Vigil. Let's move on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the hurry? We're in no danger.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just something I noticed.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nothing to it then.
+- kind: dialogue
+  speaker: Leena
+  text: Shall we take a look at the goods in the market?
+- kind: dialogue
+  speaker: gm
+  text: Yes, let's move.

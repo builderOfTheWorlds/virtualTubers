@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 169
+model: llama3.1:8b
+generated_at: '2026-09-18T19:35:55.788673+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what is it that's caught your eye?
+- kind: dialogue
+  speaker: chadwick
+  text: One of those old village huts from where you're from, maybe.
+- kind: dialogue
+  speaker: Leena
+  text: No, that's not it. I don't know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen something like that in my village back home.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen something like it, but I just can't put my finger on what.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, stop thinking about it, okay?
+- kind: dialogue
+  speaker: gm
+  text: Anything familiar here that shouldn't be?
+- kind: dialogue
+  speaker: Leena
+  text: A phrase, a tune, the shape of a doorway...

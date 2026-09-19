@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:43.584621+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Gear's like a willow, needs some TLC to bounce back.
+- kind: dialogue
+  speaker: gm
+  text: We'll get to it, Bob. What's the state of the cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Axle's a bit loose, but the frame's intact.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we hot-bond the joint, or do we need to re-lay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather re-lay, while we're at it.
+- kind: dialogue
+  speaker: Leena
+  text: That's a waste of time, Bob. Let's just hot-bond.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You don't know the first thing about tempering steel.
+- kind: dialogue
+  speaker: Vigil
+  text: Enough, Leena. Let Bob do his thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, alright. The cart'll be good as new.
+- kind: dialogue
+  speaker: gm
+  text: That's reassuring. What about the team?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We've got some scuffed planks, but the crew's sound.

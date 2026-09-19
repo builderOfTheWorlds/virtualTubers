@@ -1,0 +1,36 @@
+id: the-meal
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T22:33:53.635157+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stew's been simmering for hours, I swear it's the best I've ever made.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hours? That's a lie! You just threw some scraps in a pot, I bet.
+- kind: dialogue
+  speaker: chadwick
+  text: Enough, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh come on, it's not that bad! We should be grateful for the effort.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Leena) Here, take this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know more about cooking than you do, Ashiorid. I'd do it better.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, I don't know about that, Bob!
+- kind: dialogue
+  speaker: gm
+  text: (defensive) I cooked it! You can't just criticize someone's cooking without
+    even trying.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (accusingly) You're just mad because it's not up to your standards.
+- kind: dialogue
+  speaker: chadwick
+  text: Shut up, Bob.

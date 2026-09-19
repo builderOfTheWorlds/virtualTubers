@@ -1,0 +1,32 @@
+id: counting-the-cost
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:36.326496+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, let's get the rig back in shape.
+- kind: dialogue
+  speaker: gm
+  text: What's the damage, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cart's been sawn in two.
+- kind: dialogue
+  speaker: Leena
+  text: And what about our gear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The hammer's handle's been snapped.
+- kind: dialogue
+  speaker: Vigil
+  text: Not to mention my sword.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a nasty notch.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just glad we made it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The joinery's been put to the test.

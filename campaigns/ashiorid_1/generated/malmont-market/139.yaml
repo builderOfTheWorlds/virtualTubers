@@ -1,0 +1,29 @@
+id: malmont-market
+take: 139
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:29.508437+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not seeing anything worth buying here.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, sorry. No offense meant.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, sir, do you have any maps from the old kingdom?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with all the old gear, anyway?
+- kind: dialogue
+  speaker: Vigil
+  text: We're just looking.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think I've been recognized all morning.
+- kind: dialogue
+  speaker: Leena
+  text: I know, it's like I'm invisible.

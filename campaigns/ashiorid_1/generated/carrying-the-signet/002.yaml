@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:09.277759+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Just a bit of family keepsake, meant for the estate.'
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing to speak of, really.
+- kind: dialogue
+  speaker: Leena
+  text: We were all given some little mementos when we left.
+- kind: dialogue
+  speaker: Vigil
+  text: Souvenirs, yes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing to concern yourselves with, I assure you.
+- kind: narration
+  speaker: gm
+  text: 'Innkeeper: Just the ring, then?'
+- kind: narration
+  speaker: gm
+  text: 'Grovley: A simple token.'
+- kind: dialogue
+  speaker: Leena
+  text: Goodnight, good sir.
+- kind: narration
+  speaker: gm
+  text: 'Innkeeper: Good rest to you.'
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Close the door on your way out.'
+- kind: dialogue
+  speaker: Vigil
+  text: You're not going to make a scene, are you?
+- kind: dialogue
+  speaker: chadwick
+  text: It's just the ring, Bob.

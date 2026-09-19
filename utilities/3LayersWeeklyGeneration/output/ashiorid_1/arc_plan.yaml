@@ -1,5 +1,5 @@
 segments:
-- ambient_focus: camp-fire
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -9,13 +9,22 @@ segments:
   hours: 6
   id: invitation-arc
   loop: 0
+  mirror_of:
+  - malmont-arrival-arc-loop1-27
+  mirror_transform: null
   order: 0
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: '1'
+    u_lo: 15/16
   spine_scenes:
   - invitation
   synopsis: Ten thousand years to the day since the Event, four strangers each receive
-    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
-    manor. The card bears no return address and contains no identifying marks.
-- ambient_focus: road-talk
+    the same mysterious card, marking the beginning of their journey.
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -23,15 +32,24 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: the-age-of-war-arc
-  loop: 0
+  id: the-age-of-war-arc-loop1
+  loop: 1
+  mirror_of:
+  - malmont-arrival-arc-loop1-27
+  mirror_transform: null
   order: 1
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 15/16
+    u_lo: 7/8
   spine_scenes:
   - the-age-of-war
-  synopsis: The four strangers gather at the manor, where they learn about the Age
-    of War and how the world's magic was burned for fuel. They debate whether to believe
-    the sealed history or the whispered truths of the past.
-- ambient_focus: the-meal
+  synopsis: The players explore the history of the Age of War and its devastating
+    consequences, learning how magic was used as fuel.
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -39,15 +57,24 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: magic-retained-arc
-  loop: 0
+  id: magic-retained-arc-loop1
+  loop: 1
+  mirror_of:
+  - malmont-arrival-arc-loop1-26
+  mirror_transform: null
   order: 2
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 7/8
+    u_lo: 13/16
   spine_scenes:
   - magic-retained
-  synopsis: The group discovers that the seal holds, and magic still survives in small,
-    controlled doses. They debate what this means for their future and how to navigate
-    a world where magic is scarce.
-- ambient_focus: night-watch
+  synopsis: The seal holds, and the last well remains intact. The players learn about
+    the importance of preserving magic in this world.
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -55,15 +82,24 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: magic-lost-arc
-  loop: 0
+  id: magic-lost-arc-loop1
+  loop: 1
+  mirror_of:
+  - malmont-arrival-arc-loop1-26
+  mirror_transform: null
   order: 3
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 13/16
+    u_lo: 3/4
   spine_scenes:
   - magic-lost
-  synopsis: The seal fails, and the world is stripped of magic. The group must confront
-    a harsh new reality where sorcery no longer exists and their knowledge of magic
-    becomes dangerous.
-- ambient_focus: malmont-market
+  synopsis: The seal fails, and the last well runs dry. The players witness the consequences
+    of magic's depletion.
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -71,15 +107,124 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: letos-manor-arc
-  loop: 0
+  id: letos-manor-arc-loop1
+  loop: 1
+  mirror_of:
+  - malmont-arrival-arc-loop1-25
+  mirror_transform: null
   order: 4
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/4
+    u_lo: 11/16
   spine_scenes:
   - letos-manor
-  synopsis: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
-    only to find it is not what they expected. They are greeted by a butler who reveals
-    secrets about their true nature.
-- ambient_focus: sodacan_bob-on-runes
+  synopsis: The players arrive at Leto's Manor for a party that has been planned for
+    ten thousand years, only to find it under attack.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc-alt2
+  loop: 0
+  mirror_of:
+  - malmont-arrival-arc-loop1-25
+  mirror_transform: null
+  order: 5
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 11/16
+    u_lo: 5/8
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers each receive the same mysterious card, marking ten
+    thousand years since the Event. They are drawn together by fate and curiosity.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-alt2
+  loop: 0
+  mirror_of:
+  - malmont-arrival-arc-loop1
+  mirror_transform: null
+  order: 6
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 5/8
+    u_lo: 9/16
+  spine_scenes:
+  - the-age-of-war
+  synopsis: A flashback to the Age of War, showing how the world's magic was consumed
+    as fuel and how a handful of people attempted to stop it.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc-alt2
+  loop: 0
+  mirror_of:
+  - malmont-arrival-arc-loop1
+  mirror_transform: null
+  order: 7
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 9/16
+    u_lo: 1/2
+  spine_scenes:
+  - magic-retained
+  synopsis: The seal holds, and the last well retains its magic. A sorcerer is possible
+    in this timeline, though rare. The four are drawn into this reality.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc-alt2
+  loop: 0
+  mirror_of:
+  - malvakar-riddle-arc-loop1
+  mirror_transform: null
+  order: 8
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/2
+    u_lo: 7/16
+  spine_scenes:
+  - letos-manor
+  synopsis: The four arrive at Duke Sorensen Leto the Third's manor for a party ten
+    thousand years in the making, only to find it is not what they expected.
+- ambient_focus: ''
   carry_in: {}
   carry_out: {}
   continuity_in: ''
@@ -89,12 +234,21 @@ segments:
   hours: 6
   id: party-attack-arc
   loop: 0
-  order: 5
+  mirror_of:
+  - malvakar-riddle-arc-loop1
+  mirror_transform: null
+  order: 9
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 7/16
+    u_lo: 3/8
   spine_scenes:
   - party-attack
-  synopsis: As the party begins, unexpected guests arrive, and the manor's doors lock
-    from within. The group realizes they are not just guests but targets of a plot
-    that goes back ten thousand years.
+  synopsis: The doors open on people who were not invited, and the room stops moving.
+    A violent intrusion changes everything.
 - ambient_focus: ''
   carry_in: {}
   carry_out: {}
@@ -103,14 +257,48 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: grovley-revelation-arc
+  id: bahadur-revealed-arc
   loop: 0
-  order: 6
+  mirror_of:
+  - bahadur-revealed-arc-loop1
+  mirror_transform: null
+  order: 10
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/8
+    u_lo: 5/16
   spine_scenes:
-  - grovley-revelation
-  synopsis: The four strangers uncover the truth about their origins in the subbasement
-    of Leto's manor, as Grovley reveals their true lineage and the purpose behind
-    the family's long-guarded secrets.
+  - bahadur-revealed
+  synopsis: The tear in space-time answers back, revealing the presence of the Bahadur
+    and their ancient plans.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  mirror_of:
+  - bahadur-revealed-arc-loop1
+  mirror_transform: null
+  order: 11
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 5/16
+    u_lo: 1/4
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party reaches the northern monument and solves the riddle of the Malvakar,
+    uncovering another piece of the map.
 - ambient_focus: ''
   carry_in: {}
   carry_out: {}
@@ -121,12 +309,21 @@ segments:
   hours: 6
   id: the-vault-arc
   loop: 0
-  order: 7
+  mirror_of:
+  - the-vault-arc-loop1
+  mirror_transform: null
+  order: 12
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/4
+    u_lo: 3/16
   spine_scenes:
   - the-vault
-  synopsis: Behind the subbasement wall lies the secret the Letos have protected for
-    ten thousand years, a vault that holds more than just artifacts — it contains
-    the truth of what happened during the Event.
+  synopsis: The party discovers what the Letos have been guarding in the subbasement,
+    and learns about the true nature of the seal.
 - ambient_focus: ''
   carry_in: {}
   carry_out: {}
@@ -137,12 +334,21 @@ segments:
   hours: 6
   id: portal-encounter-arc
   loop: 0
-  order: 8
+  mirror_of:
+  - the-vault-arc-loop1
+  mirror_transform: null
+  order: 13
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/16
+    u_lo: 1/8
   spine_scenes:
   - portal-encounter
-  synopsis: At the mouth of a tear in reality, a dying wizard reveals crucial information
-    about the Bahadur and the nature of the portals that have been opening across
-    Ashiorid.
+  synopsis: The party encounters a dying wizard at the portal's mouth who completes
+    his mission and provides crucial information.
 - ambient_focus: ''
   carry_in: {}
   carry_out: {}
@@ -153,12 +359,21 @@ segments:
   hours: 6
   id: portal-choice-arc
   loop: 0
-  order: 9
+  mirror_of:
+  - portal-choice-arc-loop1
+  mirror_transform: null
+  order: 14
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/8
+    u_lo: 1/16
   spine_scenes:
   - portal-choice
-  synopsis: The four must make a choice about whether to enter the open portal, knowing
-    that their decision will determine not only their fate but also the future of
-    magic in Ashiorid.
+  synopsis: With the portal wide enough, the party must make a crucial decision about
+    what comes through and how to proceed.
 - ambient_focus: ''
   carry_in: {}
   carry_out: {}
@@ -167,27 +382,363 @@ segments:
   event_windows: []
   fork: null
   hours: 6
-  id: malmont-arrival-arc
+  id: invitation-arc-alt3
   loop: 0
-  order: 10
+  mirror_of:
+  - portal-choice-arc-loop1
+  mirror_transform: null
+  order: 15
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/16
+    u_lo: '0'
+  spine_scenes:
+  - invitation
+  synopsis: The ten thousandth anniversary of the Event arrives with four strangers
+    each receiving identical cards, marking the beginning of a shared destiny.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 16
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party delves into the history of the Event, uncovering the truth about
+    the Age of War and the choices that led to the sealing of the last moonwell. They
+    confront the moral weight of their decisions and the consequences of the world's
+    magic being used as fuel.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 17
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - magic-retained
+  synopsis: The party discovers that the seal on the last moonwell holds, and the
+    world's magic is preserved. However, they realize this preservation comes at a
+    cost — the magic is now scarce and tightly controlled, and some of them must face
+    the consequences of their choices.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-lost-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 18
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - magic-lost
+  synopsis: The party discovers that the seal on the last moonwell has failed, and
+    the world's magic is completely drained. This revelation changes everything they
+    thought they knew about their world, and they must now navigate a world without
+    magic while dealing with the consequences of their actions.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 19
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - letos-manor
+  synopsis: The party arrives at Leto's Manor, where they are invited to a party celebrating
+    the Ten Thousandth Anniversary. However, they soon discover that not all guests
+    were meant to be there, and the manor itself holds secrets that will change their
+    lives forever.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just witnessed the opening of a portal that leads to
+    the world of the Bahadur, and they are faced with an impossible decision.
+  continuity_out: The party has made their choice about the portal, and the consequences
+    are beginning to unfold.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc-loop1
+  loop: 1
+  mirror_of:
+  - portal-choice-arc
+  - invitation-arc-alt3
+  mirror_transform: stakes_raised
+  order: 20
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/8
+    u_lo: '0'
+  spine_scenes:
+  - portal-choice
+  synopsis: The party must decide whether to let the Bahadur through the portal or
+    seal it forever, with dire consequences for either choice.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc-loop1
+  loop: 1
+  mirror_of:
+  - the-vault-arc
+  - portal-encounter-arc
+  mirror_transform: knowledge_gained
+  order: 21
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/4
+    u_lo: 1/8
+  spine_scenes:
+  - the-vault
+  synopsis: The party discovers what the Letos have been guarding in the subbasement,
+    and learns about the true nature of the seal.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just made a decision about the portal and is now traveling
+    toward Malmont.
+  continuity_out: The party has encountered the Bahadur for the first time, and they
+    are now aware of the threat they pose.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc-loop1
+  loop: 1
+  mirror_of:
+  - bahadur-revealed-arc
+  - malvakar-riddle-arc
+  mirror_transform: cost_revealed
+  order: 22
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 3/8
+    u_lo: 1/4
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The tear in space-time answers back, revealing the presence of the Bahadur
+    and their ancient plans.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just encountered the Bahadur and is now traveling toward
+    Malmont.
+  continuity_out: The party has solved another riddle and uncovered a new location
+    on their map, bringing them closer to the Amulet of Wonder.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-loop1
+  loop: 1
+  mirror_of:
+  - letos-manor-arc-alt2
+  - party-attack-arc
+  mirror_transform: bond_proven
+  order: 23
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/2
+    u_lo: 3/8
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party reaches the northern monument and solves the riddle of the Malvakar,
+    uncovering another piece of the map.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just solved another riddle and uncovered a new location
+    on their map.
+  continuity_out: The party has arrived in Malmont and is beginning to explore the
+    town and its secrets.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop1
+  loop: 1
+  mirror_of:
+  - the-age-of-war-arc-alt2
+  - magic-retained-arc-alt2
+  mirror_transform: role_reversed
+  order: 24
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 5/8
+    u_lo: 1/2
   spine_scenes:
   - malmont-arrival
-  synopsis: The party arrives in Malmont, a town that has never heard of them, and
-    they must navigate its dual power structures while uncovering the secrets of their
-    new surroundings.
-- ambient_focus: ''
+  synopsis: The party arrives in Malmont, the first real town since the manor burned
+    where they are complete strangers.
+- ambient_focus: camp-fire
   carry_in: {}
   carry_out: {}
-  continuity_in: ''
-  continuity_out: ''
+  continuity_in: The party has escaped from Leto's manor after the attack, with the
+    manor now in ruins and the four of them alive but forever altered by what they've
+    experienced. The subbasement's revelations about their true nature linger heavily
+    on their minds.
+  continuity_out: The party is beginning to understand that their connection to Leto's
+    legacy runs deeper than mere coincidence, and that Malmont may hold more answers
+    than they initially thought.
   event_windows: []
   fork: null
   hours: 6
-  id: amulet-map-arc
+  id: malmont-arrival-arc-loop1-25
   loop: 0
-  order: 11
+  mirror_of:
+  - letos-manor-arc-loop1
+  - invitation-arc-alt2
+  mirror_transform: knowledge_gained
+  order: 25
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 3/4
+    u_lo: 5/8
   spine_scenes:
-  - amulet-map
-  synopsis: Jasper and Juniper's map reveals the first location of a monument, setting
-    the stage for the party's quest to collect all nine fragments of the map and ultimately
-    find the Amulet of Wonder.
+  - letos-manor
+  synopsis: The party regroups in Malmont after their harrowing escape from Leto's
+    manor, each carrying the weight of what they've seen and the knowledge that their
+    lives have been irrevocably changed. They begin to piece together the implications
+    of Grovley's revelation, while the town's strange atmosphere starts to reveal
+    its own secrets.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is now settled in Malmont, having begun to investigate
+    the town's unique properties and the implications of their earlier discoveries.
+  continuity_out: The party has started to grasp that they are not just witnesses
+    to history but participants whose actions have real consequences for the world's
+    magical balance.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop1-26
+  loop: 0
+  mirror_of:
+  - magic-retained-arc-loop1
+  - magic-lost-arc-loop1
+  mirror_transform: stakes_raised
+  order: 26
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 7/8
+    u_lo: 3/4
+  spine_scenes:
+  - magic-retained
+  - magic-lost
+  synopsis: As the party explores Malmont, they encounter evidence of both the world's
+    preserved magic and its depleted state, depending on which path they took during
+    their journey. These contrasting signs lead them to understand how their choices
+    may have affected the fate of this realm.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has started to understand how their paths led them here,
+    and that their individual fates are intertwined with the grand narrative of Ashiorid's
+    history.
+  continuity_out: The party now knows that their journey was not random but part of
+    an ancient plan, one that may require all of them to make sacrifices or face dire
+    consequences.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc-loop1-27
+  loop: 0
+  mirror_of:
+  - invitation-arc
+  - the-age-of-war-arc-loop1
+  mirror_transform: role_reversed
+  order: 27
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: '1'
+    u_lo: 7/8
+  spine_scenes:
+  - invitation
+  - the-age-of-war
+  synopsis: The party delves into the history of their invitation and the Age of War,
+    uncovering connections between their mysterious arrival and the great catastrophe
+    that changed everything. They begin to realize they are part of a larger design
+    that spans millennia.

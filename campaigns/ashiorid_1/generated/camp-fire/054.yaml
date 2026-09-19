@@ -1,0 +1,39 @@
+id: camp-fire
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:24.114310+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't care about the rain, I care about the watch order. We need to settle
+    it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, Chadwick, the fire's laid to last the night. It'll burn till morning,
+    easy.
+- kind: dialogue
+  speaker: Vigil
+  text: It's still got a few hours left, then we'll have to tend to it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the last town we were in like, Sodacan Bob? Did we have any trouble?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Trouble? Nah, just the usual. A few pickpockets, some overpriced ale. Nothing
+    to write home about.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, what's your take on the watch order? We need to decide on rotations.
+- kind: dialogue
+  speaker: Vigil
+  text: You'll get tired.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what's been happening to the trees lately? They seem to be...
+    changing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Changing? I haven't noticed anything.

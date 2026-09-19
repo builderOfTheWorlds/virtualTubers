@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 236
+model: llama3.1:8b
+generated_at: '2026-09-18T22:12:56.120661+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so which way do we go from here?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head due east.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I've been paying attention to the landmarks, and I think we're at
+    least a mile off track.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe we can just, uh, say Vigil's the lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine, I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: I've got the map, I can take over.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is better than a comedy show.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, trust me, nobody minds helping out.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it, let's just go with my plan.
+- kind: dialogue
+  speaker: Vigil
+  text: If you say so, Chadwick, but I think I see a sign that says "Wrong Way".
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh man, this is priceless.

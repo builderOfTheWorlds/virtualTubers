@@ -1,0 +1,23 @@
+id: Leena-almost
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:49.525658+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What did you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me, and it shouldn't be here.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just a trick of the light, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not. It's something I know, and I shouldn't.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen something like that in the village where you're from, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean, Sodacan Bob? I don't know what you're talking about.

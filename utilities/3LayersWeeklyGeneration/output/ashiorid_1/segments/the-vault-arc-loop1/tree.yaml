@@ -1,0 +1,131 @@
+the-vault-arc-loop1:
+  node_id: the-vault-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party discovers what the Letos have been guarding in the subbasement,
+    and le
+  summary: The party discovers what the Letos have been guarding in the subbasement,
+    and learns about the true nature of the seal.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-loop1-n0
+  - the-vault-arc-loop1-n1
+  slots: null
+the-vault-arc-loop1-n0:
+  node_id: the-vault-arc-loop1-n0
+  parent_id: the-vault-arc-loop1
+  order: 0
+  depth: 1
+  title: The Hidden Vault Revealed
+  summary: The party descends into the subbasement and discovers the ancient vault
+    guarded by the Letos, where they find the true nature of the seal and its connection
+    to the amulet. They uncover the dark history of what has been protected beneath
+    Malmont.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has discovered the vault's secrets and understands how
+    the seal operates, setting them on the path to comprehend the amulet's true purpose.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-vault-arc-loop1-n0-hidden-vault-1
+    kind: ambient
+    prompt: The party descends into the subbasement and discovers the ancient vault
+      guarded by the Letos, where they find the true nature of the seal and its connection
+      to the amulet.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-loop1-n0-hidden-vault-2
+    kind: ambient
+    prompt: The party uncovers the dark history of what has been protected beneath
+      Malmont, learning how the seal operates and understanding the stakes involved
+      in the amulet quest.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-loop1-n0-hidden-vault-3
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+the-vault-arc-loop1-n1:
+  node_id: the-vault-arc-loop1-n1
+  parent_id: the-vault-arc-loop1
+  order: 1
+  depth: 1
+  title: The Weight of Knowledge
+  summary: With the vault's secrets revealed, the party learns about the stakes involved
+    in the amulet quest and how the seal connects to the larger threat. They grapple
+    with the implications of what they've found and prepare for their next move.
+  continuity_in: The party has discovered the vault's secrets and understands how
+    the seal operates, setting them on the path to comprehend the amulet's true purpose.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-vault-arc-loop1-n1-weight-1
+    kind: ambient
+    prompt: The party grapples with the implications of what they've found in the
+      vault, understanding how the seal connects to the larger threat.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-loop1-n1-weight-2
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+  - slot_id: the-vault-arc-loop1-n1-weight-3
+    kind: ambient
+    prompt: The party prepares for their next move, now aware of the stakes involved
+      in the amulet quest and how the seal operates.
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

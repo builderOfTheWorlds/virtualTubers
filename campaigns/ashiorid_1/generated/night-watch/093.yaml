@@ -1,0 +1,41 @@
+id: night-watch
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:41.070192+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are really out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I can see them clearly.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) What's the point of keeping watch if nothing's going to happen?
+- kind: dialogue
+  speaker: Vigil
+  text: Habit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) I think I see a shooting star.
+- kind: dialogue
+  speaker: gm
+  text: (whispers back) I saw one just now, too.
+- kind: dialogue
+  speaker: chadwick
+  text: Do you think we should wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not even halfway through the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we'll just wake up the others in a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then says softly) I've been thinking about leaving the group.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What do you mean?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs) Nothing. Just talking to myself.

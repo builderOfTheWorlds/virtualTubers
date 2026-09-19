@@ -1,0 +1,43 @@
+id: malmont-market
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:00.914914+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see anything here worth looking at.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Nothing to be trusted.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, the familiar scent of... mediocrity.
+- kind: dialogue
+  speaker: Leena
+  text: (tapping the map stall) Excuse me, have you any maps of the old mines?
+- kind: narration
+  speaker: gm
+  text: 'Stall Owner: Mines? No, I''m afraid I don''t have anything like that.'
+- kind: dialogue
+  speaker: Leena
+  text: (frowning) Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for quality metalwork. None of this rough stuff.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) I'm looking for nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: (approaching the map stall) Ah, maps, how quaint.
+- kind: narration
+  speaker: gm
+  text: 'Stall Owner: (to Chadwick) Can I help you, sir? You look like you''re from
+    out of town.'
+- kind: dialogue
+  speaker: Leena
+  text: (to the stall owner) Is this one of the original maps, the ones made before
+    the mines were closed?
+- kind: narration
+  speaker: gm
+  text: 'Stall Owner: (proudly) Yes, it is. A rare find, indeed.'

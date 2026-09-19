@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-18T20:11:54.691624+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, where do we go next?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we head east.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think you might want to double-check that.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I'm right.
+- kind: dialogue
+  speaker: Vigil
+  text: I can give you a map if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is great, Chadwick's going to lead us off a cliff.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, why don't you just give Chadwick the map and save some time?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need a map.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's move out then.

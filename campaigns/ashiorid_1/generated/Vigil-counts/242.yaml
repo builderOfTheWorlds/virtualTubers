@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 242
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:46.452571+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the lay of the land here?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see a door, a few paces down that way.
+- kind: dialogue
+  speaker: Leena
+  text: Yes, that's the way we came in.
+- kind: dialogue
+  speaker: Vigil
+  text: One of the windows has been fixed, looks like recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see anything out of the ordinary.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean, Vigil, about the window?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the shutter was loose, now it's tight.
+- kind: dialogue
+  speaker: chadwick
+  text: Not exactly the most secure town we've been in.
+- kind: dialogue
+  speaker: Leena
+  text: I think we can all agree on that.

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 152
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:13.773900+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I swear, I've never seen a storm like this in autumn.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire will burn all night, or just till dawn?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Laid it good and tight, that one. Ashes'll be cold by morning.
+- kind: dialogue
+  speaker: Vigil
+  text: No smoke carried.
+- kind: dialogue
+  speaker: Leena
+  text: If we don't have a sorcerer, how do the moonwells even work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't know, but they do.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, who's on watch first? We need a rotation.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take second watch.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you're first.

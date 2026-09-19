@@ -1,0 +1,41 @@
+id: weather-argument
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:40.625133+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're approaching the intersection.
+- kind: dialogue
+  speaker: chadwick
+  text: I swear, it smells like rain.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, that's just the trees releasing their scent.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, I think it looks overcast.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been getting static on my phone all day.
+- kind: dialogue
+  speaker: gm
+  text: Okay, and the wind is picking up a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a sign, right?
+- kind: dialogue
+  speaker: Leena
+  text: Actually, that's just a side effect of the breeze.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm still saying it's going to rain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should just play it safe.
+- kind: dialogue
+  speaker: gm
+  text: Alright, we're coming up on the next intersection.
+- kind: dialogue
+  speaker: Leena
+  text: I'm starting to think Chadwick might be right.

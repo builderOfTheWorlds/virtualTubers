@@ -1,0 +1,40 @@
+id: malmont-market
+take: 179
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:50.671475+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a village twice this size.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes narrowing at a nearby stall) Not much for a good price, I'd wager.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering to Vigil) I think I'm getting used to being anonymous for once.
+- kind: dialogue
+  speaker: Leena
+  text: (fascinated by the map stall) Tell me about the ones you have back.
+- kind: narration
+  speaker: gm
+  text: 'Stallholder: (smiling) Ah, those are just scraps – maps from who-knows-when,
+    maybe even from the old empire.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) I've got no use for old maps. Show me something worth my time.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching the exchange) I'll have a look. (starts browsing the stall)
+- kind: dialogue
+  speaker: chadwick
+  text: (relaxed) I think I'll just enjoy the morning.
+- kind: dialogue
+  speaker: Leena
+  text: (intrigued) These are from a journey east, I think – the mountains of... somewhere.
+- kind: narration
+  speaker: gm
+  text: 'Stallholder: (smiling knowingly) That''s right – the mountains of Kalthok.
+    Few people make it through unscathed.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (unimpressed) Unscathed? I'd say unremarked is more like it.

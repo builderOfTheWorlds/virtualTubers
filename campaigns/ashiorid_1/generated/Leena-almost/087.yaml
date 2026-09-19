@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:03.510948+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena's been staring at that doorway for a minute.
+- kind: dialogue
+  speaker: Leena
+  text: I know it. Something about it doesn't feel right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen one like it in your village, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't go chasing it.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with it?
+- kind: dialogue
+  speaker: gm
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just something you forgot from your village.
+- kind: dialogue
+  speaker: Leena
+  text: No, I remember this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The village you're thinking of must have been a lot like this one, then.
+- kind: dialogue
+  speaker: Leena
+  text: It's not a village, it's...

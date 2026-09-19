@@ -1,0 +1,43 @@
+id: night-watch
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:57.053634+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky's pretty clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I like the stars when they're not obscured by clouds.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll get attacked while we're standing around staring at the
+    sky?
+- kind: dialogue
+  speaker: gm
+  text: Doubtful. We're in a Moonwell.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to keep watch anyway.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good call. I'm right behind you.
+- kind: dialogue
+  speaker: gm
+  text: I feel like we should wake the others a bit early. It's getting on towards
+    dawn.
+- kind: dialogue
+  speaker: chadwick
+  text: You think we'll be moving soon?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No idea. Still waiting on Grovley's response.
+- kind: dialogue
+  speaker: Leena
+  text: I just...I don't know how to get used to sleeping near a Moonwell.
+- kind: dialogue
+  speaker: Vigil
+  text: It's a bit unsettling, I won't lie.
+- kind: dialogue
+  speaker: gm
+  text: It's not like we can leave or anything.

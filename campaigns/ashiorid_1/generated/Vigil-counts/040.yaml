@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:42.301741+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the cart has passed us twice already this morning.
+- kind: dialogue
+  speaker: Leena
+  text: That's a new cart. We should ask the vendor about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more concerned about the quality of the pastries.
+- kind: dialogue
+  speaker: chadwick
+  text: I've already eaten two of them. They're fine.
+- kind: dialogue
+  speaker: gm
+  text: Very well, let's proceed with our plans.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the right leads out to the market square.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the way we came in.
+- kind: dialogue
+  speaker: Leena
+  text: And the shutters on the second floor have been recently repaired.
+- kind: dialogue
+  speaker: chadwick
+  text: I think that's a good sign for the neighborhood.
+- kind: dialogue
+  speaker: Vigil
+  text: There are nine people in the room, counting us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see eight.

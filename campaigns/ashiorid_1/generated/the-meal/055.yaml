@@ -1,0 +1,39 @@
+id: the-meal
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:35.806479+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party is seated, plates in front of them, and the silence is starting
+    to grow uncomfortable.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, come on, if I was cooking, I'd at least make sure the seasoning's
+    right.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think it's a lovely idea to have a picnic in the field, don't you all?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And don't even get me started on the state of the kitchen. I swear, I saw
+    a mouse scurrying across the counter this morning.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I for one think it's been a lovely effort, and I'm so grateful for everyone's
+    hard work.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done better, that's for sure. I'd have added more herbs, for one.
+- kind: dialogue
+  speaker: Leena
+  text: And I'm sure it's just a matter of time before we all get a taste of Sodacan
+    Bob's famous cooking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Famous cooking? You think I'm just going to whip up some mediocre meal?
+- kind: dialogue
+  speaker: gm
+  text: The conversation devolves into a heated discussion about who cooked the meal
+    and who's cooking tomorrow, and where the pot was stored, but Chadwick stands
+    up and starts clearing the table.

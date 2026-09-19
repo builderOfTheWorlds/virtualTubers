@@ -1,0 +1,41 @@
+id: night-watch
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:39.597199+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I saw something like that in the night sky before.
+- kind: dialogue
+  speaker: Vigil
+  text: What, a moon?
+- kind: dialogue
+  speaker: chadwick
+  text: No, something smaller. Like a—
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Just talking about the sky, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Okay.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) I saw a tiny star.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (jumps) Did you see a portent?
+- kind: dialogue
+  speaker: Vigil
+  text: No, just a tiny star. Like a dot.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe we should wake the others.
+- kind: dialogue
+  speaker: Leena
+  text: (stretches) It's still dark, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not even close to dawn yet.

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:50.318438+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what've you noticed, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the room, not counting us.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a lot of people.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors swing inward, if you're standing on that side.
+- kind: dialogue
+  speaker: Leena
+  text: Which side is that?
+- kind: dialogue
+  speaker: Vigil
+  text: The left side, if you're facing the door.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the big deal about the doors?
+- kind: dialogue
+  speaker: Vigil
+  text: Just saying.
+- kind: dialogue
+  speaker: gm
+  text: Carry.

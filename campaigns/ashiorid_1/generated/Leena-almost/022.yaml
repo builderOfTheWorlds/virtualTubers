@@ -1,0 +1,40 @@
+id: Leena-almost
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:41.085933+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: chadwick
+  text: That old stone doorway, you've seen something like it before, haven't you?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, something like it... I don't know, it feels... familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what it is, Leena. I've seen pictures of those doorways in
+    your village.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Forget it, Leena. It's just a doorway.
+- kind: dialogue
+  speaker: Leena
+  text: No, I mean... it's not just the doorway. It's this whole place.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you're just remembering something from your village, Leena. You were
+    taken from there, after all.
+- kind: dialogue
+  speaker: Leena
+  text: I know I was. But this doesn't feel like the village.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena. We've got bigger things to worry about.

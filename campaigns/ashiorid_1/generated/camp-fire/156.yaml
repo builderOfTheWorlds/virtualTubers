@@ -1,0 +1,36 @@
+id: camp-fire
+take: 156
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:37.464123+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's time we settled the watch order for tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will be fine as long as we don't let it get too low.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens to a well when the magic's really gone?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire in a way that should keep it smoldering for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think we can just leave it, Vigil. We need to be sure.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll be fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a little wind and it's gone. We need to secure it.
+- kind: dialogue
+  speaker: Leena
+  text: What even is it like when there's no magic left? Does anyone know?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just guess. We need a plan.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) I think we'll just have to survive like everyone else has for ten
+    thousand years.

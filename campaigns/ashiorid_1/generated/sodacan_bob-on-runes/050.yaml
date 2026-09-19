@@ -1,0 +1,31 @@
+id: sodacan_bob-on-runes
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:00.852442+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: You think it was a rite, some sort of ancient ritual.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A rite, a ceremony, a funeral procession... it's all the same when you're
+    trying to carve a message that'll last.
+- kind: dialogue
+  speaker: chadwick
+  text: And how do you know this, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Know it? I'm guessing. It's just... the way it's cut. Not a beginner's work.
+- kind: dialogue
+  speaker: Leena
+  text: Is that what the Malvakar is, then? A beginner's work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no. Just... I don't know. It looks like someone took a lot of care with
+    it.
+- kind: dialogue
+  speaker: gm
+  text: What's this obsession with the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just... trying to figure it out.

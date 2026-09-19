@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:31.752655+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Hold up, we're all stopping here.
+- kind: dialogue
+  speaker: chadwick
+  text: What's going on?
+- kind: dialogue
+  speaker: Leena
+  text: Look.
+- kind: dialogue
+  speaker: Vigil
+  text: It was just a shadow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see it?
+- kind: dialogue
+  speaker: gm
+  text: I don't know what I saw.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing's moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Wait.
+- kind: dialogue
+  speaker: chadwick
+  text: What are we waiting for?
+- kind: dialogue
+  speaker: Leena
+  text: Silence.
+- kind: dialogue
+  speaker: Vigil
+  text: You think it was really something?

@@ -1,0 +1,38 @@
+id: malmont-market
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:44.900681+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not impressed, this blacksmith's work is no better than the one back at the
+    manor.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Still too much risk walking around with so much gold
+    in my pocket.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to herself) Old maps...I've never really seen these before, but
+    there's something...
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, good morning to you, friend. No need to recognize me, I'm just
+    passing through.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of all these fancy designs? Give me a hammer and anvil any
+    day.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map vendor) Excuse me, how much for the one with the sea route marked?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) I think I've seen him before, but I could be wrong.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) Don't mind me, just a wanderer with too many miles on his boots.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (walking towards the map stall) Now, let's see some of these so-called "rare"
+    maps.

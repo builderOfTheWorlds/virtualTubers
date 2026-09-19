@@ -1,0 +1,41 @@
+id: sodacan-forge-envy
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:37:41.033748+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what do you think of the new gate?
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's a bit too ornate.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's nice, it matches the house.
+- kind: dialogue
+  speaker: Vigil
+  text: I like the ironwork, it's well done.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I... think it's fine.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) That's it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What?
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, just be honest, do you like it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying it's fine, that's a honest answer.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine is not a good enough answer for the price of iron.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I didn't pay for it.
+- kind: dialogue
+  speaker: Vigil
+  text: Yet.

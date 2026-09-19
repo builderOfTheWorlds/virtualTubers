@@ -1,0 +1,23 @@
+id: chadwick-lost
+take: 197
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:53.207015+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out. We've got a ways to go before we reach the next landmark.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it from here.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, I'm sure you do, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) He doesn't know which way to go.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering back) Shh, let him save face.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Famous Chadwick navigation...

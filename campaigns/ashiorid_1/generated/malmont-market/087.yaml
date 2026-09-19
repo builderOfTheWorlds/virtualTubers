@@ -1,0 +1,35 @@
+id: malmont-market
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:09.236691+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a village.
+- kind: dialogue
+  speaker: Vigil
+  text: (low and even) Just looking.
+- kind: dialogue
+  speaker: chadwick
+  text: Morning, fine folks.
+- kind: dialogue
+  speaker: Leena
+  text: (browsing the maps) Is this...an old one?
+- kind: dialogue
+  speaker: chadwick
+  text: (to the vendor) I'm just a visitor.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) You wouldn't know these roads.
+- kind: dialogue
+  speaker: Vigil
+  text: (to the vendor) What's the price for that map?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (at a nearby blacksmith) Not my business, but how many pieces a week?
+- kind: narration
+  speaker: gm
+  text: 'Vendor: (counting coins) You''d be the fifth customer in two weeks.'
+- kind: dialogue
+  speaker: gm
+  text: (no one seems to be in a hurry, what do you want to do next)

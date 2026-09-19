@@ -1,0 +1,32 @@
+id: bahadur-sighted
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:23.745783+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What in the name of—
+- kind: dialogue
+  speaker: Leena
+  text: Shh, quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: Something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What something?
+- kind: dialogue
+  speaker: gm
+  text: A shape.
+- kind: dialogue
+  speaker: chadwick
+  text: Where?
+- kind: dialogue
+  speaker: gm
+  text: There. Treeline.
+- kind: dialogue
+  speaker: Leena
+  text: Let's keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait.

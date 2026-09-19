@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 269
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:00.014506+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's been doing well, I can see that from the stalls still open.
+- kind: dialogue
+  speaker: chadwick
+  text: What's your point, Vigil? We've got coin to spend.
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticed the shutter on that stall's been fixed recently.
+- kind: dialogue
+  speaker: Leena
+  text: What's it to us, Vigil? The shutters don't concern us.
+- kind: dialogue
+  speaker: Vigil
+  text: No, nothing. Just observed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're quiet today, Vigil. What's on your mind?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing. Just noting details.
+- kind: dialogue
+  speaker: chadwick
+  text: Details, like what?
+- kind: dialogue
+  speaker: Vigil
+  text: Doors open to the right, from what I've seen.

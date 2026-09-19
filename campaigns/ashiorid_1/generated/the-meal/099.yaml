@@ -1,0 +1,37 @@
+id: the-meal
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:24.727080+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm surprised you didn't notice, Bob, but you're not exactly a culinary expert
+    in the group.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but I have a refined palate and I can tell you, this meal is a disaster.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your food.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be too hard on Bob's mom. She's only trying her best.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his food to someone else)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The worst part is, I think I know exactly what went wrong in the kitchen.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Bob, it's not about what went wrong, it's about what's going to happen
+    tomorrow.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Can we please just eat already?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Alright, alright. Let's not make too much of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (getting louder) I'm telling you, it's a matter of technique and—

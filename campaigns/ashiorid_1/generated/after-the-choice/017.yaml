@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:24.233895+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We should be proud of ourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Ash?
+- kind: dialogue
+  speaker: Leena
+  text: We gave up something important, didn't we?
+- kind: dialogue
+  speaker: Vigil
+  text: That's why we're not celebrating, I guess.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Guess?
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) Yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just... it's over now.
+- kind: dialogue
+  speaker: chadwick
+  text: (long pause) And that's something.
+- kind: dialogue
+  speaker: gm
+  text: (forced laugh) Well, at least we're in one piece.
+- kind: dialogue
+  speaker: chadwick
+  text: (deadpan) Barely.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (awkward silence)
+- kind: dialogue
+  speaker: Leena
+  text: (breaks the silence) Do you think it'll be okay?

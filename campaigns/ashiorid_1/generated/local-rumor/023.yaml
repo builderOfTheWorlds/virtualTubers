@@ -1,0 +1,36 @@
+id: local-rumor
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:43.520830+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The local news is always good for a story, but I'm not sure it's our concern
+    right now.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know what to make of these rumors, but I'm not losing any sleep over
+    it.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) I've heard similar things about other towns. Probably just rats
+    and stray dogs.
+- kind: dialogue
+  speaker: Vigil
+  text: (nonchalant) We should focus on getting some decent rest. We've got a long
+    road ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the worst that's supposed to happen to us in our sleep?
+- kind: dialogue
+  speaker: gm
+  text: (laughs) I'm sure it's nothing that can't be handled by the watch.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just glad to be among people who don't already know our business.
+- kind: dialogue
+  speaker: Leena
+  text: (curious) What do the locals call it, when it... moves through the town?
+- kind: dialogue
+  speaker: Vigil
+  text: Don't encourage the whispers, Leena.

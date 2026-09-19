@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 237
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:26.779353+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: There are eight people in this room.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we've got a good number of witnesses.
+- kind: dialogue
+  speaker: Leena
+  text: If we get into trouble, at least we can point fingers.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) That's a good way to look at it.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on the task at hand.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left opens inward.
+- kind: dialogue
+  speaker: chadwick
+  text: That's good to know.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe it's a fire hazard or something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Just a regular old door.

@@ -1,0 +1,36 @@
+id: sodacan-forge-envy
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:32:47.547999+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen some passable work come out of this forge, but this is something
+    else.
+- kind: dialogue
+  speaker: Leena
+  text: You're not exactly beaming with praise.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, it's... well-crafted.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a backhanded compliment to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not like I'm going to go around telling people to hire this smith.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe you should, he seems like a decent kid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not going to say it was a mistake to apprentice him, but...
+- kind: dialogue
+  speaker: Leena
+  text: That's a long way of saying it was a mistake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Shut up, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob, always so eager to give credit where it's due.

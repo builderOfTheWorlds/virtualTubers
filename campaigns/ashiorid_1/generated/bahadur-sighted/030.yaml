@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:42.461226+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I saw something.
+- kind: dialogue
+  speaker: Leena
+  text: What?
+- kind: dialogue
+  speaker: Vigil
+  text: A shape.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Shadow.
+- kind: dialogue
+  speaker: gm
+  text: (pause)
+- kind: dialogue
+  speaker: chadwick
+  text: Could've been nothing.
+- kind: dialogue
+  speaker: Leena
+  text: We should keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Yes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What was it, anyway?
+- kind: dialogue
+  speaker: gm
+  text: We'll see.
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing's going to happen.
+- kind: dialogue
+  speaker: Leena
+  text: (pause)

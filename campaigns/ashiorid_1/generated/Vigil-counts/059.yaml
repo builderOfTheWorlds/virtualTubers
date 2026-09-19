@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 59
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:57.670690+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The town is quiet, isn't it.
+- kind: dialogue
+  speaker: chadwick
+  text: I've noticed that the doors all open inward.
+- kind: dialogue
+  speaker: Leena
+  text: Why would you care about that?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just easier to notice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I like being able to see everyone.
+- kind: dialogue
+  speaker: gm
+  text: Yes, the town is very laid-back.
+- kind: dialogue
+  speaker: chadwick
+  text: The same cart has come by twice today.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's just the vendor's schedule.
+- kind: dialogue
+  speaker: Vigil
+  text: It's probably not worth worrying about.
+- kind: dialogue
+  speaker: gm
+  text: Let's get back to our search.

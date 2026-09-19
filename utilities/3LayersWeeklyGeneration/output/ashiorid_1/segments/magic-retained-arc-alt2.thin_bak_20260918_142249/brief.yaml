@@ -1,0 +1,100 @@
+segment_id: magic-retained-arc-alt2
+order: 7
+loop: 0
+hours: 6
+synopsis: The seal holds, and the last well retains its magic. A sorcerer is possible
+  in this timeline, though rare. The four are drawn into this reality.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-retained-arc-alt2-n1-awakening-1
+  kind: ambient
+  prompt: The four stand at the threshold of a magical realm where ancient powers
+    still stir, their fates intertwined with forces they barely comprehend.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-alt2-n1
+- slot_id: magic-retained-arc-alt2-n1-awakening-2
+  kind: ambient
+  prompt: As the four adapt to their new reality, they begin to sense the residual
+    magic that permeates this world.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-alt2-n1
+- slot_id: magic-retained-arc-alt2-n1-awakening-3
+  kind: ambient
+  prompt: The seal's strength provides a fragile protection while the last well's
+    power creates subtle disturbances in the air around them.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-alt2-n1
+- slot_id: magic-retained-arc-alt2-n1-awakening-4
+  kind: ambient
+  prompt: Each person discovers they possess some latent magical ability, though the
+    path forward remains unclear and potentially perilous.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-alt2-n1
+- slot_id: magic-retained-arc-alt2-n1-awakening-5
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: magic-retained-arc-alt2-n1
+nodes:
+- node_id: magic-retained-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: magic-retained-arc-alt2-n0
+  parent_id: magic-retained-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: magic-retained-arc-alt2-n1
+  parent_id: magic-retained-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5
+needs_rebrief: true

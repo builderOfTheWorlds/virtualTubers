@@ -1,0 +1,35 @@
+id: leena-recognizes-nothing
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:28:08.684779+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We find ourselves on a narrow road, surrounded by hills that slope up to the
+    left and right.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen this hill somewhere before.
+- kind: dialogue
+  speaker: gm
+  text: The road curves around a bend ahead, and the building on the left comes into
+    view.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's just the Jenkins' estate. They've got a small vineyard up here.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not the Jenkins', I could swear I've seen that building before.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Leena's face) You think you recognize something?
+- kind: dialogue
+  speaker: chadwick
+  text: (distracting) Ah, look, a hawk is up in the sky.
+- kind: dialogue
+  speaker: gm
+  text: The hawk soars overhead, and the party continues on the road, silent for a
+    moment.
+- kind: dialogue
+  speaker: Leena
+  text: I'm trying to place it... (to herself)

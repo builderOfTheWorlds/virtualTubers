@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:05.395558+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left opens towards the hallway.
+- kind: dialogue
+  speaker: chadwick
+  text: We've got a bit of a situation to deal with, let's focus.
+- kind: dialogue
+  speaker: Leena
+  text: (muttering) Yeah, we can't just sit around all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone order a drink yet?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Chadwick, get on with it.
+- kind: dialogue
+  speaker: Vigil
+  text: That cart has passed by the window twice now.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just get some more information first?

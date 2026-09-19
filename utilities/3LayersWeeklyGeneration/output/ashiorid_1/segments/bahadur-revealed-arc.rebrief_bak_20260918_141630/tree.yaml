@@ -1,0 +1,98 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The tear in space-time answers back, revealing the presence of the Bahadur
+    and t
+  summary: The tear in space-time answers back, revealing the presence of the Bahadur
+    and their ancient plans.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The Rift Awakens
+  summary: The tear in space-time violently responds to the intrusion, creating a
+    cascade of temporal distortions that reveal the Bahadur's hidden presence. Ancient
+    energy pulses ripple through reality as the cosmic beings manifest their awareness
+    of the breach.
+  continuity_in: The tear in space-time answers back, revealing the presence of the
+    Bahadur and their ancient plans.
+  continuity_out: The dimensional rift begins to expand, pulling everything toward
+    its center while the Bahadur's influence spreads across multiple timelines.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: Ancient Designs Revealed
+  summary: As the Bahadur make their presence known, their ancient plans unfold through
+    the tear in space-time. The cosmic beings reveal their long-term strategies that
+    have been shaping reality itself, manipulating events across centuries and dimensions.
+  continuity_in: The dimensional rift begins to expand, pulling everything toward
+    its center while the Bahadur's influence spreads across multiple timelines.
+  continuity_out: The cosmic entities prepare to initiate their grand design, beginning
+    a series of temporal manipulations that will reshape the very fabric of existence.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n1-ancient-designs-1
+    kind: ambient
+    prompt: The tear in space-time answers back, revealing the presence of the Bahadur
+      and their ancient plans
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-ancient-designs-2
+    kind: ambient
+    prompt: The cosmic beings reveal their long-term strategies that have been shaping
+      reality itself, manipulating events across centuries and dimensions
+    lore:
+    - the-bahadur
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-ancient-designs-3
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: none

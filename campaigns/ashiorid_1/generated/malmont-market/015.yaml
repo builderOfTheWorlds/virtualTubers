@@ -1,0 +1,41 @@
+id: malmont-market
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:47.600337+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a traveling blacksmith's tent.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's move on.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, this one looks old, see the tears in the parchment?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just browsing.
+- kind: dialogue
+  speaker: Vigil
+  text: We should get some information about the town.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Information? We have all we need on the road.
+- kind: dialogue
+  speaker: Leena
+  text: This map, is it a local one?
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a map, no need to get excited.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, we can't afford to get too comfortable.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A little comfort never hurt anyone.
+- kind: dialogue
+  speaker: Leena
+  text: This one has the old rivers marked.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll have some of those sweet pastries.

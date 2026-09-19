@@ -1,0 +1,48 @@
+id: malmont-market
+take: 177
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:37.563019+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This isn't what I'm looking for, some kid with a hammer trying to make a name
+    for himself.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around cautiously) You want to be careful with your words, friend.
+    People in this town... appreciate their craft.
+- kind: dialogue
+  speaker: Leena
+  text: (browsing the old maps) Oh, look at this one - it's an old route from here
+    to the south coast, marked by hand.
+- kind: dialogue
+  speaker: chadwick
+  text: (relaxing, smiling) Finally, a place where I can walk without being recognized.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) You're not even a merchant, are you? Just some vagabond with a
+    taste for trouble.
+- kind: dialogue
+  speaker: Vigil
+  text: (pocketing his hand) If I'm not buying, then I'm not interested. Let's move
+    on.
+- kind: dialogue
+  speaker: Leena
+  text: (showing a tattered map to the vendor) Do you know what this is? I've never
+    seen it before.
+- kind: dialogue
+  speaker: chadwick
+  text: (watching the people) I think I'll just have a cup of coffee and enjoy the
+    morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (spotting the smithy's work) Now that's what I'm talking about - a proper
+    forge.
+- kind: dialogue
+  speaker: Leena
+  text: (leaning in, voice low) I think I'll buy this one. The route might be useful
+    someday.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around the market, eyes scanning the crowd) I think it's time for
+    us to find our accommodations.

@@ -3,15 +3,15 @@ letos-manor-arc:
   parent_id: null
   order: 0
   depth: 0
-  title: 'The four strangers arrive at Duke Sorensen Leto III''s manor for the party,
-    only '
-  summary: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
-    only to find it is not what they expected. They are greeted by a butler who reveals
-    secrets about their true nature.
+  title: The party arrives at Leto's Manor, where they are invited to a party celebrating
+  summary: The party arrives at Leto's Manor, where they are invited to a party celebrating
+    the Ten Thousandth Anniversary. However, they soon discover that not all guests
+    were meant to be there, and the manor itself holds secrets that will change their
+    lives forever.
   continuity_in: ''
   continuity_out: ''
-  target_words: 900
-  target_slots: 9
+  target_words: 700
+  target_slots: 7
   kind: branch
   forced: false
   children:
@@ -23,29 +23,30 @@ letos-manor-arc-n0:
   parent_id: letos-manor-arc
   order: 0
   depth: 1
-  title: Arrival at the Manor
-  summary: The four strangers arrive at Duke Sorensen Leto III's manor for what they
-    believe is a social gathering, but the atmosphere feels wrong from the moment
-    they step through the gates. Strange whispers seem to follow them, and the architecture
-    appears both grand and unsettling.
-  continuity_in: The four strangers arrive at Duke Sorensen Leto III's manor for the
-    party, only
-  continuity_out: The strangers approach the imposing entrance where a formal butler
-    awaits with an unsettling smile.
-  target_words: 270
-  target_slots: 3
+  title: Arrival at Leto's Manor
+  summary: The party arrives at the grand manor for the Ten Thousandth Anniversary
+    celebration, where they are warmly greeted by the host and introduced to various
+    guests. Initial impressions are pleasant as the festivities begin, but subtle
+    tensions start to emerge among the attendees.
+  continuity_in: The party arrives at Leto's Manor, where they are invited to a party
+    celebrating
+  continuity_out: As the evening progresses, strange occurrences begin to unsettle
+    the guests, and the true nature of this celebration starts to reveal itself through
+    mysterious whispers and unexplained phenomena.
+  target_words: 210
+  target_slots: 2
   kind: leaf
   forced: false
   children: []
   slots:
   - slot_id: letos-manor-arc-n0-arrival-1
     kind: ambient
-    prompt: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
-      only to find it is not what they expected. They are greeted by a butler who
-      reveals secrets about their true nature.
+    prompt: The party arrives at Leto's Manor, where they are invited to a party celebrating
+      the Ten Thousandth Anniversary. However, they soon discover that not all guests
+      were meant to be there, and the manor itself holds secrets that will change
+      their lives forever.
     lore:
-    - amulet-of-wonder
-    - malmont
+    - the-event
     participants:
     - Leena
     - Vigil
@@ -60,37 +61,86 @@ letos-manor-arc-n0:
     - Leena
     - Vigil
     - chadwick
+    - gm
     - sodacan_bob
-  - slot_id: letos-manor-arc-n0-arrival-3
-    kind: ambient
-    prompt: The strangers approach the imposing entrance where a formal butler awaits
-      with an unsettling smile.
-    lore:
-    - moonwells
-    - the-bahadur
-    participants:
-    - Leena
-    - Vigil
-    - chadwick
-    - sodacan_bob
-    sensitivity: tone
-    depends_on: []
 letos-manor-arc-n1:
   node_id: letos-manor-arc-n1
   parent_id: letos-manor-arc
   order: 1
   depth: 1
-  title: The Butler's Revelation
-  summary: A butler who appears to know their true nature greets them at the door,
-    revealing that they are not who they think they are. He speaks of their past lives
-    and duties, exposing secrets that will change everything they believed about themselves.
-  continuity_in: The strangers approach the imposing entrance where a formal butler
-    awaits with an unsettling smile.
-  continuity_out: The revelation shatters their understanding of who they are, leaving
-    them to grapple with their true identities.
-  target_words: 630
-  target_slots: 6
+  title: Unraveling the Manor's Secrets
+  summary: The party discovers that the manor holds dark secrets beyond the celebratory
+    facade. Strange events escalate as they uncover hidden passages, cryptic warnings,
+    and evidence that not all guests were meant to be there. The celebration transforms
+    into a hunt for truth as the party realizes they must navigate the manor's mysteries
+    to survive.
+  continuity_in: As the evening progresses, strange occurrences begin to unsettle
+    the guests, and the true nature of this celebration starts to reveal itself through
+    mysterious whispers and unexplained phenomena.
+  continuity_out: The party has uncovered the manor's dark secrets and must now decide
+    their next move, knowing that some guests may be more than they appear and that
+    the celebration's true purpose is far more sinister than initially thought.
+  target_words: 490
+  target_slots: 5
   kind: leaf
   forced: false
   children: []
-  slots: []
+  slots:
+  - slot_id: letos-manor-arc-n1-manor-arrival-1
+    kind: ambient
+    prompt: The party steps through the grand entrance of Leto's Manor, where the
+      air feels thick with unspoken secrets and the chandeliers cast eerie shadows.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-manor-arrival-2
+    kind: ambient
+    prompt: As the guests mingle, whispers begin to circulate about the Ten Thousandth
+      Anniversary and what it truly represents for the family that owns this estate.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-manor-arrival-3
+    kind: ambient
+    prompt: Leena notices something odd about the manor's layout, as if certain corridors
+      have shifted since her last visit, and she feels a chill run down her spine.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-manor-arrival-4
+    kind: ambient
+    prompt: Chadwick's axe catches the light as he scans the room, but his expression
+      darkens when he realizes that some of the guests seem to be watching him with
+      unsettling intensity.
+    lore:
+    - the-bahadur
+    participants:
+    - chadwick
+    - Leena
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-n1-manor-arrival-5
+    kind: spine
+    scene_ref: letos-manor
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

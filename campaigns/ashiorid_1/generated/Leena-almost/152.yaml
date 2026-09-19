@@ -1,0 +1,24 @@
+id: Leena-almost
+take: 152
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:20.938843+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's caught your attention?
+- kind: dialogue
+  speaker: Leena
+  text: There's something... familiar. Not supposed to be familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, back home?
+- kind: dialogue
+  speaker: Leena
+  text: That's what I keep thinking, but I don't remember it being there.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's not worth it.
+- kind: dialogue
+  speaker: gm
+  text: What do you think about this, Chadwick? You're not being entirely cryptic,
+    are you?

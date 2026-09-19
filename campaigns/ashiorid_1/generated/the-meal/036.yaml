@@ -1,0 +1,33 @@
+id: the-meal
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:15.147698+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, who's up first?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I've tasted better scraps from the village dump.
+- kind: dialogue
+  speaker: chadwick
+  text: Pass the gravy, please.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, it's not that bad! We can make it fun, right?
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, don't be silly, there's plenty to go around!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know what would've made a difference? If someone had actually boiled the
+    potatoes instead of just sticking them in the pot.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's not argue, it's just dinner!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Easy for you to say, you're not the one who cooked it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright, let's just eat.

@@ -1,0 +1,39 @@
+id: malmont-market
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:31.457791+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A warm morning sun casts a pleasant glow over the bustling market.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this, copperwork on a tin plate? You call that a masterpiece?
+- kind: dialogue
+  speaker: Vigil
+  text: (low, smooth voice) Twenty coppers for a decent dagger, but not that one.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's that one? The old map with the ink that's faded like a sunset?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, just enjoying the sights. (smiling, looking around) Lovely place.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing a nearby stall) You sell anything worth buying, friend?
+- kind: dialogue
+  speaker: gm
+  text: The aroma of freshly baked bread wafts from a nearby stall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Anyone with an anvil's got a hammer; what's your claim to fame?
+- kind: dialogue
+  speaker: Leena
+  text: (leaning over the map stall) I've seen something like this before... (trails
+    off)
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckling) It's like the whole town is waiting for us to make a decision.
+- kind: dialogue
+  speaker: Vigil
+  text: (still scanning the market) Someone's looking for trouble, but it's not us.

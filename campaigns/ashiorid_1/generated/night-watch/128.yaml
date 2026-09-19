@@ -1,0 +1,41 @@
+id: night-watch
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:36.925636+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The stars are still out.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Can you see the constellations?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: No, it''s too cloudy.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Just the moon then.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Just the moon.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I wish I could sleep.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Maybe you should try.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Yeah, it''s not like anything''s coming.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil:'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: You can hear the wind, right?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Yeah, it''s really quiet.'

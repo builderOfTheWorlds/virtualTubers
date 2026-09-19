@@ -1,0 +1,41 @@
+id: camp-fire
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:13.934181+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I said we should've waited for the storm to pass.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how the Event happened, really?
+- kind: dialogue
+  speaker: Vigil
+  text: They say it started with a storm, not unlike this one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid this fire proper, should hold till morning.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what's your take on the magic's role in the Event?
+- kind: dialogue
+  speaker: Vigil
+  text: The world's memories are written in ash.
+- kind: dialogue
+  speaker: Leena
+  text: What's the significance of ash, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: This is pointless, we won't know till morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fire's going, needs more fuel, anyone have more wood?
+- kind: dialogue
+  speaker: gm
+  text: It's been hours, and the rain keeps coming down.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is a reminder.

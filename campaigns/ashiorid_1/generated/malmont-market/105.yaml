@@ -1,0 +1,35 @@
+id: malmont-market
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:54.499868+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for a decent plow, but these forges are sloppy.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not interested in the local crafts, thank you.
+- kind: dialogue
+  speaker: Leena
+  text: What's this one say?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice to finally be incognito for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: How much for this one, old man?
+- kind: dialogue
+  speaker: Leena
+  text: It looks like a border...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, not that smithing. Can't even get the shape right.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the best way to get a room in town?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll pay what's fair, but I don't want to overpay.
+- kind: dialogue
+  speaker: Leena
+  text: Is this a map of a real place?

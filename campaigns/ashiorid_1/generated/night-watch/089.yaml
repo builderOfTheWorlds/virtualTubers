@@ -1,0 +1,41 @@
+id: night-watch
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:12.116152+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The stars are quite visible tonight.'
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've never seen it so clear.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Do you think we'll make it back?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) What's that noise?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Noise? What noise?
+- kind: dialogue
+  speaker: chadwick
+  text: (stretches) I thought I heard something too.
+- kind: dialogue
+  speaker: Leena
+  text: (sits up) Wait, what time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: (squints at watch) Just after three.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) We can let the others sleep a bit longer.
+- kind: dialogue
+  speaker: Leena
+  text: (looks at Vigil) Should we wake them up?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs) It's up to you.
+- kind: dialogue
+  speaker: chadwick
+  text: (leans back) I don't know... it's so quiet.

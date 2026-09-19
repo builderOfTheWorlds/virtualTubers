@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 58
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:03.314350+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We need to get moving if we want to make it to the forest by nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm trying, okay? It's not exactly easy to navigate.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe I can help you, Chadwick, and we can take the lead.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, I believe I could provide a more accurate direction.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is good. The great Chadwick lost.
+- kind: dialogue
+  speaker: chadwick
+  text: Shut up, Bob.
+- kind: dialogue
+  speaker: gm
+  text: Everyone keep moving, we'll figure it out as we go.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, if you want to maintain face, I can just say I had a... insight.
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's try to stay together.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's this way.

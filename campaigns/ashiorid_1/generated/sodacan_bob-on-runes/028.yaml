@@ -1,0 +1,35 @@
+id: sodacan_bob-on-runes
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-18T20:52:42.106104+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die struck at an angle, with the weight behind it, will always give a deeper
+    cut than one struck straight down.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the angle you use for a rune that's supposed to last a few thousand
+    years?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I don't know, I just did what my master taught me, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, can you show us what you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, no, I'm not drawing on the walls of your workshop, child.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think anyone's still making artifacts that can survive that long?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the only ones who still have the patience are the ones who sell their
+    time to others.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Ah, Sodacan Bob, you're still as gruff as ever.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) And what's with the sudden interest in my work, anyway?

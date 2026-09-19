@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 192
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:29.657584+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's get moving. We've got a few more places to check out before we
+    can head back to the manor.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, where's the next stop?
+- kind: dialogue
+  speaker: Leena
+  text: I think we can ask the locals for directions.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by, it was the same one that went by an hour ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the cart passed by again.
+- kind: dialogue
+  speaker: gm
+  text: Let's move, we've got a map to follow.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, come on, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Alright, lead the way.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, can you cover the rear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Got it.

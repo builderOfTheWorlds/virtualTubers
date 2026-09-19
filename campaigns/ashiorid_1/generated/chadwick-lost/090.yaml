@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:21.039172+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to check the map and see if we're on the right track.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I remember the way, yes, I'm certain.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, Chadwick, I'm happy to follow your lead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (staying silent and waiting for Chadwick to ask for directions)
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we were just going the wrong way to begin with.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we can take a short cut, if you think that's the way to go.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, we're fine, let's just keep moving.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep going, then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, Chadwick, you're a treasure.

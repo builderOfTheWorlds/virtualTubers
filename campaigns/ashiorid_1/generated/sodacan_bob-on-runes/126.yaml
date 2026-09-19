@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:54.474287+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die struck flat, the metal would flow like water, but with enough force...
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just how a die's struck, that's all. Anyone can do it, really.
+- kind: dialogue
+  speaker: Leena
+  text: You're thinking about the runes on the Malvakar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm not thinking about them. Not really.
+- kind: dialogue
+  speaker: Vigil
+  text: What's it mean, though? You said it was some kind of code.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a code. An ancient code. Not that I've ever been able to decipher it.
+- kind: dialogue
+  speaker: chadwick
+  text: And now it's just a curiosity.
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Sodacan Bob, lost in thought as usual.

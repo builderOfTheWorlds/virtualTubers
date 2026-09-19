@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:03.566266+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what did you notice, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, what's that about?
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the room, and the north door opens inward.
+- kind: dialogue
+  speaker: Leena
+  text: That's all?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the eastern window was fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's nice work, someone.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed by twice on the street outside.
+- kind: dialogue
+  speaker: gm
+  text: And...?
+- kind: dialogue
+  speaker: Vigil
+  text: That's all I noticed.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, good to know.

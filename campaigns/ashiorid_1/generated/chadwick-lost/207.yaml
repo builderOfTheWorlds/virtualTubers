@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 207
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:55.125791+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, where are we headed today?
+- kind: dialogue
+  speaker: chadwick
+  text: Somewhere east, I think.
+- kind: dialogue
+  speaker: Leena
+  text: You're sure it's east, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Well, that's what the map said.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) He has no idea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just ask Chadwick for directions then.
+- kind: dialogue
+  speaker: chadwick
+  text: I did ask the map, Leena.
+- kind: dialogue
+  speaker: gm
+  text: What do you think, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: We should head east.

@@ -1,0 +1,36 @@
+id: chadwick-cooking
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:20:59.799045+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The smell of burning has finally given way to something else, but it's not
+    quite clear what.
+- kind: dialogue
+  speaker: chadwick
+  text: It's done, I think.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should give it a try, for the sake of morale.
+- kind: dialogue
+  speaker: Vigil
+  text: (nervously chuckling) Oh, I'm sure it's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) I'm gonna need a lot of water.
+- kind: dialogue
+  speaker: gm
+  text: Everyone takes a plate, trying to hide their faces.
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) I added extra seasoning, I hope you like it.
+- kind: dialogue
+  speaker: Leena
+  text: (forced enthusiasm) It's... quite... flavorful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) I think I might be sick.
+- kind: dialogue
+  speaker: Vigil
+  text: (awkward laugh) Well, at least it's... interesting.

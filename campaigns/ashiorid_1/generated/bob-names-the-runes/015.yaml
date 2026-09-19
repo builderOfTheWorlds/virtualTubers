@@ -1,0 +1,37 @@
+id: bob-names-the-runes
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:09.008866+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this rune's a Transmuter's Mark, alters the probability of
+    successful repairs to adjacent mechanical devices.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Bob, nobody asked, just let us pass through.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Please...
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what's the range on this mark? Does it only affect the tool it's on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Leena! The Transmuter's Mark amplifies the effects
+    of any adjacent repairs, up to a 5-foot radius.
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) We don't have time for this, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just trying to educate, Chadwick. Can't have you folks stumbling through
+    the world without a basic understanding of the arcane.
+- kind: dialogue
+  speaker: Leena
+  text: That's actually really useful to know, thank you, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anytime, Leena! Now, if you'll excuse me, I have to explain the significance
+    of the subtle variations in this particular font. (excitedly gestures at a nearby
+    sign)

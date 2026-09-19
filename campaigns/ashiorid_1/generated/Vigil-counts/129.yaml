@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:53.292063+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the cart's passed by twice now.
+- kind: dialogue
+  speaker: chadwick
+  text: So it's a regular route.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, probably has a schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Guess we're not so hard to predict.
+- kind: dialogue
+  speaker: gm
+  text: (skeptical) That's...not really a thing.
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs) Just an observation.
+- kind: dialogue
+  speaker: chadwick
+  text: What's there to observe?
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Maybe Vigil's just bored.
+- kind: dialogue
+  speaker: Vigil
+  text: Not particularly.

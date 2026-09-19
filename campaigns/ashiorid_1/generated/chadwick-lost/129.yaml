@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:47.603815+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, Chadwick, where's the exit?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure.
+- kind: dialogue
+  speaker: Leena
+  text: Do you want me to check the map, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick's lost again.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) Uh-huh.
+- kind: dialogue
+  speaker: Leena
+  text: (helpfully) Maybe if you told us where you think we are...
+- kind: dialogue
+  speaker: chadwick
+  text: I do know where we are. We just need to keep walking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, great, this should be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: (amused) You're enjoying this, aren't you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grinning) Yeah, it's hilarious.
+- kind: dialogue
+  speaker: gm
+  text: (patiently) Alright, let's keep moving, then.

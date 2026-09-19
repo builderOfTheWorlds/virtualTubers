@@ -1,0 +1,41 @@
+id: night-watch
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:16.663770+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm seeing more stars than I am clouds.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the wind doing tonight?
+- kind: dialogue
+  speaker: Leena
+  text: It's still.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know what you two are looking for.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're quiet.
+- kind: dialogue
+  speaker: gm
+  text: There's nothing to see.
+- kind: dialogue
+  speaker: Leena
+  text: You're just saying that to keep us up.
+- kind: dialogue
+  speaker: chadwick
+  text: I wish I could see more.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I heard something.
+- kind: dialogue
+  speaker: gm
+  text: What was it?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: You're both just tired.

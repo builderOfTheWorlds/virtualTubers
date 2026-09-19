@@ -1,0 +1,32 @@
+id: malmont-market
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:27.739391+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not impressed by much of what I see here.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe I'll take a look at that map stall over there.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep an eye on our belongings.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally a place where nobody recognizes me.
+- kind: dialogue
+  speaker: Leena
+  text: These old maps, they're... pretty.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on, Bob, you're not going to spend your day browsing maps.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd be surprised what people will do when no one's looking.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just enjoy the anonymity for now.
+- kind: dialogue
+  speaker: Leena
+  text: I'll just take this one, and this one, and... this one too.

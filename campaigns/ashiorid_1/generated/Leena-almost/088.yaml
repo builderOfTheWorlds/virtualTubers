@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:07.167134+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I know this smell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could it be something you smelled in your village?
+- kind: dialogue
+  speaker: Vigil
+  text: Silence, please.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's just your mind.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing anything, I just want to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You saw something like it in Begene Square, didn't you?
+- kind: dialogue
+  speaker: Leena
+  text: No, I've never been to Begene Square.
+- kind: dialogue
+  speaker: Vigil
+  text: It's nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go find some dinner.

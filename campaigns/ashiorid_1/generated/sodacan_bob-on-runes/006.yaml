@@ -1,0 +1,31 @@
+id: sodacan_bob-on-runes
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:31.486950+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a die struck with the weight of a fist, not a tap with a feather.
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A rune to survive a thousand years, you gotta cut deep, through the patina,
+    into the metal itself.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, how does that relate to the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Relate? I'm just thinking about what kind of die someone would use to carve
+    a message that lasts that long.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of message are we talking about here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just... something that's stuck with me, since I saw it.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) Bob, what did it say?

@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 202
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:35.552267+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen that before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village, yeah?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it's a doorway? Maybe it leads somewhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It doesn't look like any doorway I've ever seen.
+- kind: dialogue
+  speaker: Leena
+  text: You're not helping.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've never seen anything like it.

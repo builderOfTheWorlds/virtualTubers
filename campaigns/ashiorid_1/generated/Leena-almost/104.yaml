@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:19.975783+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the usual, I think. Maybe you saw something from home.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's just... familiar, and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village? You said it was old, right?
+- kind: dialogue
+  speaker: Leena
+  text: It's not like that. I'm not scared or anything, I just... I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. It's not worth it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we've got more important things to worry about.
+- kind: dialogue
+  speaker: Leena
+  text: Like what? What's going on?

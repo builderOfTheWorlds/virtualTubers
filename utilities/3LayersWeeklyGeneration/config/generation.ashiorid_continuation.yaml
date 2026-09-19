@@ -45,7 +45,15 @@ arc:
   hours_total: 168           # -> n_segments = ceil(168/6) = 28 segments
   segment_hours: 6
   batch_size: 5
-  max_attempts: 2
+  max_attempts: 4
+
+# Ring composition (ring_composition_spec.md v3.3). MVP scope: plot_0 only —
+# one ring [descent | keystone | ascent] covering the whole 28-segment loop.
+# 16/4/8 is the spec's own worked example (long approach, hard turn, brisk
+# consequence) and matches the arc's segment count exactly (16+4+8=28).
+ring:
+  enabled: true
+  parts: [16, 4, 8]
 
 segment:
   models:

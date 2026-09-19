@@ -1,0 +1,41 @@
+id: malmont-market
+take: 174
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:18.564506+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something to get some work done, but this is all just fancy
+    trinketry.
+- kind: dialogue
+  speaker: Vigil
+  text: Save your coin, friend. There's more to a town than just its appearance.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Do you know anything about old maps? They have a
+    whole stall full of them.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I don't know, but I'm happy to look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think after a week on the road, I'd know how to spot decent craftsmanship.
+    But no.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the market stalls) You'd be surprised what people will do for a coin
+    in this town.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map vendor) What's the oldest one you have?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the smith) What's your name? You're not the one who's supposed to be making
+    the good stuff.
+- kind: narration
+  speaker: gm
+  text: 'Vendor: (smiling) Ah, that would be Old Thorgrim. He''s...indisposed.'
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering back to Leena) No, I don't know anything about maps. But I'm curious
+    now.

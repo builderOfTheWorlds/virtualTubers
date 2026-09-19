@@ -1,0 +1,30 @@
+id: leena-recognizes-nothing
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:32.262590+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trees grow denser here, the air thick with the scent of damp earth.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's keep moving, don't want to lose the daylight.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, this looks familiar... isn't that the shape of the hill from the maps?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm pretty sure we're in the north slope of the Eldrid range, just a different
+    angle on the land.
+- kind: dialogue
+  speaker: Vigil
+  text: Watching.
+- kind: dialogue
+  speaker: Leena
+  text: I've never been to the Eldrid range before, have we taken a different route?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We did, I told you, it's a detour around the ravines.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, focus on the path.

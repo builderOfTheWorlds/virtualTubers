@@ -1,0 +1,35 @@
+id: after-the-choice
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:36.373025+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you're staring at the wall.
+- kind: dialogue
+  speaker: chadwick
+  text: Just thinking.
+- kind: dialogue
+  speaker: Leena
+  text: You okay?
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're a bit... out of sync. Anyone up for some tea?
+- kind: dialogue
+  speaker: gm
+  text: (skeptical) Really, Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: (not looking up) I think that sounds good.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) Me too.
+- kind: dialogue
+  speaker: Vigil
+  text: (still not responding) Okay.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, then. (pauses again)

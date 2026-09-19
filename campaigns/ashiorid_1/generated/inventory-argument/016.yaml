@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:23:42.555385+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's bag has the spare socks?
+- kind: dialogue
+  speaker: chadwick
+  text: Mine, obviously.
+- kind: dialogue
+  speaker: Leena
+  text: You've been saying that for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen them in Chadwick's pack, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but who's got the sandwich?
+- kind: dialogue
+  speaker: chadwick
+  text: That's mine too.
+- kind: dialogue
+  speaker: Leena
+  text: You know, if we labeled our stuff, this wouldn't be an issue.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Labels, labels, always labels.
+- kind: dialogue
+  speaker: gm
+  text: Yeah, it's just laziness.
+- kind: dialogue
+  speaker: Vigil
+  text: Look at that, though.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Vigil
+  text: Your spare socks are in my pack.

@@ -1,0 +1,38 @@
+id: night-watch
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:56.872646+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is a deep shade of indigo.
+- kind: dialogue
+  speaker: chadwick
+  text: I can see the outline of the trees in the distance.
+- kind: dialogue
+  speaker: Vigil
+  text: Wake them early? We've been over this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I like being up.
+- kind: dialogue
+  speaker: gm
+  text: I think there's a faint breeze.
+- kind: dialogue
+  speaker: chadwick
+  text: Not enough to rustle the leaves, but... yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I sometimes think about what I'd do if I couldn't live in this world.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Did you hear that? Something moved.
+- kind: dialogue
+  speaker: gm
+  text: I didn't hear anything.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just the wind, Bob.

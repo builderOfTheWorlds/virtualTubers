@@ -1,0 +1,41 @@
+id: the-meal
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:13.541184+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I thought we were going to have a nice dinner.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a disaster, Bob should have done it.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, everyone, it's not that bad, let's make the best of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I could have done it so much better, if anyone had let me.
+- kind: dialogue
+  speaker: Leena
+  text: But we did decide to take turns, didn't we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, but that was a stupid decision, obviously.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just eat, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is ridiculous, I'm not even going to eat this.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Bob, don't be so proud.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not being proud, I'm just being honest.
+- kind: dialogue
+  speaker: gm
+  text: It's just food, guys.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, thank you, Vigil.

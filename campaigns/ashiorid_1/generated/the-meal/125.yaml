@@ -1,0 +1,32 @@
+id: the-meal
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-19T00:12:40.064856+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food is edible, let's just be grateful it's here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Edible? Edible is not the point! This is a travesty!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone! Let's not be so serious!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've cooked this in my sleep! It's an insult to the culinary arts!
+- kind: dialogue
+  speaker: Leena
+  text: There's plenty for everyone, let's not worry about it!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cooked this, anyway? I demand to know!
+- kind: dialogue
+  speaker: Leena
+  text: I think it was Chadwick's turn... wasn't it, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: It was.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I know I could've done better!

@@ -1,0 +1,42 @@
+id: local-rumor
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:56.475068+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road is well-traveled, and the townsfolk seem friendly enough.
+- kind: dialogue
+  speaker: chadwick
+  text: That's what they said in the last town too.
+- kind: dialogue
+  speaker: Leena
+  text: Aye, but the locals seem to know more than they let on.
+- kind: dialogue
+  speaker: Vigil
+  text: We should ask around, see if anyone knows anything about the manor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we've got enough to worry about without getting involved in local
+    politics.
+- kind: dialogue
+  speaker: gm
+  text: Fair enough, let's just enjoy the hospitality for now.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, a hot meal and a warm bed sound like a fine way to spend the evening.
+- kind: dialogue
+  speaker: Leena
+  text: I could do with a hot bath too, we've been on the road for days.
+- kind: dialogue
+  speaker: Vigil
+  text: Me too, a bit of civilization would be nice.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle in for the night and see what the morrow brings.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like a plan to me, I'm going to go grab some dinner.
+- kind: dialogue
+  speaker: chadwick
+  text: Mind if I tag along, Bob?

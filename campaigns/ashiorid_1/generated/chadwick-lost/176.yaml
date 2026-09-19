@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 176
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:40.303467+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching a fork in the path, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the question, exactly?
+- kind: dialogue
+  speaker: Leena
+  text: I mean, do you want to take the left or right fork?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should take the right fork.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, wonderful. Let's all hold our breaths and follow the Great Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Sodacan, shut up.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Chadwick, just ask Vigil if you're not sure.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm perfectly sure.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, where would you recommend we go?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should take the left fork.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's head down the left fork.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Finally, some competent leadership.

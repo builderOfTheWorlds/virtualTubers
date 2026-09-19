@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:04.539122+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the damage, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cart's axle's sawn in two, like a bad marriage.
+- kind: dialogue
+  speaker: chadwick
+  text: And the gear? Can we salvage it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Forge it anew, then. It's a hammer's task.
+- kind: dialogue
+  speaker: Leena
+  text: What about us? We're not exactly whole.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll weld ourselves together, time and toil.
+- kind: dialogue
+  speaker: Vigil
+  text: And how long'll that take?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A day, a night, the length of a slow flame.
+- kind: dialogue
+  speaker: gm
+  text: And what about the road ahead?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll forge it, one step at a time, as we go.
+- kind: dialogue
+  speaker: chadwick
+  text: And what about... us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a joinery problem, not mine to solve.

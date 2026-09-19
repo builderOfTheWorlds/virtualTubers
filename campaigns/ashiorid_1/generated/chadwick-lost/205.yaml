@@ -1,0 +1,36 @@
+id: chadwick-lost
+take: 205
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:46.265737+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road stretches out before you, a straight line that disappears into the
+    trees.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's left.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I'm not sure, but we could try checking the map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is going to be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: We're on Loop 205.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not what I asked.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, well, let's see... Loop 205 is...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling)
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Just ask, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I am.

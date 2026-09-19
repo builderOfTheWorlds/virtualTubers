@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 179
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:28.211084+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you see?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, and it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw it in your village?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think I know what you mean.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not that. It's something I know, but I shouldn't know it here.
+- kind: dialogue
+  speaker: Vigil
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't worry, Leena, it's just a trick of the light.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what do you think is going on?
+- kind: dialogue
+  speaker: chadwick
+  text: I think Leena's just getting spooked again.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not spooked. I just... I feel like I've been here before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We all have our own experiences, Leena. It doesn't mean anything.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what do you make of it?

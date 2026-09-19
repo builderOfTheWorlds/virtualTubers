@@ -1,0 +1,41 @@
+id: the-meal
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:20.234134+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, everyone, who's cooking tomorrow?
+- kind: dialogue
+  speaker: chadwick
+  text: Me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, no, no, no, it can't be. Chadwick's got no taste for it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob! Let's make it a nice dinner!
+- kind: dialogue
+  speaker: Vigil
+  text: (handing his portion to someone) You want this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a disaster, I'm telling you. No seasoning, no flair.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Sodacan Bob's just joking around!
+- kind: dialogue
+  speaker: Vigil
+  text: I think I'll go cook some real food outside.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm dead serious, Ashiorid. This is a crime against culinary art.
+- kind: dialogue
+  speaker: chadwick
+  text: (exasperated) Can we just...
+- kind: dialogue
+  speaker: gm
+  text: Fine. We'll figure it out later.

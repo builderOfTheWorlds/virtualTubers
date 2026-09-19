@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:15.982575+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. We've got a decent route planned out.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should take the shortcut.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, here we go again.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, I was thinking we could just stick to the map for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I know where I'm going.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is going to be fun.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Let's just keep moving, then.
+- kind: dialogue
+  speaker: Vigil
+  text: If you'd like to know the route, Chadwick, I can tell you.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, thank you, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles)

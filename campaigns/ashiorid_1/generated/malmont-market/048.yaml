@@ -1,0 +1,41 @@
+id: malmont-market
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:29.115475+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This town's smithwork's not exactly burning down the road, is it?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm looking at prices, not quality.
+- kind: dialogue
+  speaker: chadwick
+  text: Just trying to blend in, don't mind me.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) What's this map, where's it from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something to make a dent in the road dust.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too many faces, too many hands.
+- kind: dialogue
+  speaker: Leena
+  text: (to a vendor) This map, how old is it?
+- kind: dialogue
+  speaker: chadwick
+  text: (to a vendor) Sorry, didn't catch your name.
+- kind: dialogue
+  speaker: Vigil
+  text: (pocketing a small pouch) It's enough.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not worth the gold.
+- kind: dialogue
+  speaker: Leena
+  text: (leaning in) Is this a rare find?
+- kind: dialogue
+  speaker: chadwick
+  text: Just a name, that's all.

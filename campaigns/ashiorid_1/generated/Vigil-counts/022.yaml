@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:18.943291+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old windmill's been quiet for a week now, not a single creak.
+- kind: dialogue
+  speaker: chadwick
+  text: (whistles)
+- kind: dialogue
+  speaker: Leena
+  text: What's that got to do with anything?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by our window was carrying empty barrels, at least the
+    second time it passed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm trying to sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left, it swings outward.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Anyone need a light?
+- kind: dialogue
+  speaker: Leena
+  text: Not me, I'm good.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been fixed.
+- kind: dialogue
+  speaker: chadwick
+  text: (mumbles incoherently)
+- kind: dialogue
+  speaker: gm
+  text: Just get some rest.

@@ -1,0 +1,35 @@
+id: night-watch
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:15.990444+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The sky is still clear. No clouds at all.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I wish it would get cloudy. It''s so... exposed.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I know. But at least it''s cold. The stars are sharp tonight.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I can hear the sound of wind. Far off.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Do you think we should wake the others?'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I don''t know. We''re not due to wake up for a few hours.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I''m tired. But I don''t want to sleep on watch.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: It''s not like anything is coming, though.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (pauses) I''ve been having these dreams...'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: What about?'

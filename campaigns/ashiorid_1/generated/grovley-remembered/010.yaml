@@ -1,0 +1,41 @@
+id: grovley-remembered
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:26:10.220447+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's discuss what Grovley didn't tell us. What are your thoughts
+    on it?
+- kind: dialogue
+  speaker: chadwick
+  text: I think he was just trying to protect us. He didn't want to overwhelm us with
+    information.
+- kind: dialogue
+  speaker: Leena
+  text: Overwhelm us? He withheld information on purpose. I don't trust him anymore.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're reading too much into this. Maybe he just didn't want to scare
+    us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Scare us? You're not kidding. He did a great job of that. Still does.
+- kind: dialogue
+  speaker: Leena
+  text: This is not about being scared. It's about being lied to.
+- kind: dialogue
+  speaker: chadwick
+  text: We don't know that he lied. We just know he didn't tell us everything.
+- kind: dialogue
+  speaker: Vigil
+  text: That's a distinction without a difference.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep it civil. What do we know for certain?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We know Grovley is still missing, and we're still stuck in this manor.
+- kind: dialogue
+  speaker: chadwick
+  text: And we have a mysterious subbasement to investigate.

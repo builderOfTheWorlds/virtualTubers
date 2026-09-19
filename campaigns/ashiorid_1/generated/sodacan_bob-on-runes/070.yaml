@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T22:30:06.796803+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you've been muttering about that Malvakar carving for days. Can
+    you finally tell me what's got you so worked up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The way it was struck, the depth of the rune... it's just not done anymore.
+    Nobody has the patience for it.
+- kind: dialogue
+  speaker: chadwick
+  text: Patience for what? Carving some ancient monument?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: For making something that lasts. For making something that's supposed to last.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, are you saying you think the Malvakar was made recently?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not recently... but not ancient either. The kind of work that used to be done,
+    the kind of craftsmanship... it's just not seen anymore.
+- kind: dialogue
+  speaker: Vigil
+  text: You're saying it's a fake?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A fake? No... it's just...

@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:15.702979+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving, we've got a lot of ground to cover.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, wait, wait, I'm telling you, we need to take this path.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with the path we're on?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing's wrong with it, it's just not the most efficient route.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see why this is such a big deal, it's just a map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, come on Chadwick, let's just move already.
+- kind: dialogue
+  speaker: chadwick
+  text: No, you don't understand, this is a critical error.
+- kind: dialogue
+  speaker: Leena
+  text: I think we're just making a bigger deal out of it than it needs to be.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know what I'm doing, I've studied the maps.
+- kind: dialogue
+  speaker: Vigil
+  text: Studied the maps? You've just memorized the route to get to the tavern.
+- kind: dialogue
+  speaker: chadwick
+  text: That's it, you're just jealous of my superior navigation skills.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, come on, we're all tired of your map-reading drama.

@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 252
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:48.358175+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a lead on the merchant's guild.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good to me, what's the plan?
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to scope out the guild, see if I can get any info on the missing
+    shipment.
+- kind: dialogue
+  speaker: Vigil
+  text: There's two people at the entrance, both wearing guild badges.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, cool, I'll go distract them while Leena gets to work.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, what's the point of telling us that?
+- kind: dialogue
+  speaker: Vigil
+  text: Just thought I'd mention it.
+- kind: dialogue
+  speaker: Leena
+  text: I've got the layout, there's a side room with a window.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's move out, we don't have much time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take the lead, try to blend in.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the side window looks new.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, stop noticing things, we're trying to sneak in.

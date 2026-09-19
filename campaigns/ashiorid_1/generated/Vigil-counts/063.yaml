@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:12.743897+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: There's a cart passing by the window, it's making the usual clatter.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm-hmm, okay.
+- kind: dialogue
+  speaker: Leena
+  text: What's that, Ashiorid?
+- kind: dialogue
+  speaker: gm
+  text: Just the cart, nothing to do with us.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed that the cart's passed by twice already this morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Twice? That's nothing, I've seen it pass by at least five times.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's just doing its rounds.
+- kind: dialogue
+  speaker: Leena
+  text: Is this relevant, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: Alright, moving on.

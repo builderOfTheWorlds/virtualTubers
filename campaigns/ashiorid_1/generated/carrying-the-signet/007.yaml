@@ -1,0 +1,38 @@
+id: carrying-the-signet
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:34.602774+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, you must be new around here. How do you like the food?
+- kind: dialogue
+  speaker: chadwick
+  text: It's... fine.
+- kind: dialogue
+  speaker: Leena
+  text: I've had worse.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not the food I'm concerned about.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We just got in yesterday.
+- kind: dialogue
+  speaker: gm
+  text: Well, you'll get used to it. We get a lot of travelers through here.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Ah, speaking of which, I think I''ll go see to the fire.'
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to be?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Oh, just a little something. A token of appreciation, you know?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, from whom?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Oh, uh, from... a friend.'

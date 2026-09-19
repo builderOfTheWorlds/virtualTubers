@@ -1,0 +1,33 @@
+id: malmont-market
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:02.747558+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As you walk into town, the sound of hammering and chatter fills the air.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally, a place to blend in.
+- kind: dialogue
+  speaker: Vigil
+  text: Stay alert, we don't know what kind of trouble this place might hold.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on, come see the market, it's not every day we get to haggle over prices.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I'm going to that stall over there, the one with the old maps.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Leena, you can't just wander off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) What's got into you, friend? It's just a market.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map stall owner) How much for this one?
+- kind: narration
+  speaker: gm
+  text: 'Map Stool Owner: Ah, this one? Old, but beautiful. I''ll let you have it
+    for...'

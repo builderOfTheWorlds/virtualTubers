@@ -1,0 +1,12 @@
+id: Leena-almost
+take: 256
+model: llama3.1:8b
+generated_at: '2026-09-18T23:38:23.682684+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll just describe the scene and you respond.
+- kind: dialogue
+  speaker: gm
+  text: Leena walks through the manor, looking around at the familiar yet unsettling
+    layout.

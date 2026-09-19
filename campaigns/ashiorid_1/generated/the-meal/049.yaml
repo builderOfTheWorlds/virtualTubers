@@ -1,0 +1,41 @@
+id: the-meal
+take: 49
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:51.210296+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This stew is a travesty, a catastrophe, a—
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think it's quite festive, don't you, everyone?
+- kind: dialogue
+  speaker: Vigil
+  text: (pushes food away)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just serve this swill without any explanation!
+- kind: dialogue
+  speaker: chadwick
+  text: It's not that bad.
+- kind: dialogue
+  speaker: Leena
+  text: And I made the bread, so there's that.
+- kind: dialogue
+  speaker: Vigil
+  text: (gives his portion to Vigil) Here, take it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You expect us to eat this? Unbelievable!
+- kind: dialogue
+  speaker: Leena
+  text: I made an effort, and I think it's lovely.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just...?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do better in an hour, no problem.

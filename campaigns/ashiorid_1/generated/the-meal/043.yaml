@@ -1,0 +1,43 @@
+id: the-meal
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:10.255571+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I made the meal, what do you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honestly, Ashiorid, it's like you took a few leftovers and mashed them together.
+- kind: dialogue
+  speaker: chadwick
+  text: (silent)
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's be grateful for a warm meal on a cold night.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm good, thanks, I'll just take the vegetables.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ashiorid, don't you remember that time we went to the village and they showed
+    us how to make real stew?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, it's just a simple meal.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Tomorrow I'm cooking.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love helping in the kitchen, let me take a look at the recipe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This recipe is an abomination, I swear it's just a mishmash of whatever was
+    in the pantry.
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugging) I think it's fine.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, do you really think you could do better?

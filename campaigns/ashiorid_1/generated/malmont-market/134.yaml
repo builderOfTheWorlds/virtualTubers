@@ -1,0 +1,40 @@
+id: malmont-market
+take: 134
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:03.994869+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like that blacksmith's work is all for show, if you ask me.
+- kind: dialogue
+  speaker: Vigil
+  text: (no comment)
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, good morning, fine people. Beautiful day, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) What do you make of these old maps?
+- kind: dialogue
+  speaker: Vigil
+  text: (low, gruff) Just looking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of selling old maps? They're just dusty relics.
+- kind: dialogue
+  speaker: Leena
+  text: (to Vigil) Maybe someone's looking for a certain place...
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just... (pauses, smiling) ...browse.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) You think that's a good idea, putting your money down on anything
+    here?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs) Not my business.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) Let's take a look at that stall over there. The one with the
+    old charts.

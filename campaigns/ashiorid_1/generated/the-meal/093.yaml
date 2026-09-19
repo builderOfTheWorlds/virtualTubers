@@ -1,0 +1,41 @@
+id: the-meal
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:43.854819+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, everyone dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, isn't it lovely that we're all eating together!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what kind of technique you were using, but it's a shame.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan, it's not that bad.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not that bad? I'd rather eat from a can, that's for sure.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, stop being so dramatic, it's just a meal.
+- kind: dialogue
+  speaker: gm
+  text: Alright, okay, let's just calm down.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, I could do it better myself.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan, that's not helping.
+- kind: dialogue
+  speaker: gm
+  text: We're just arguing for the sake of arguing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not arguing, I'm stating facts.

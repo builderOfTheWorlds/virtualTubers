@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-19T00:06:35.327619+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been over this, Sodacan Bob, what's got you stuck on the Malvakar's
+    markings?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not stuck, I'm just thinking about the craftsmanship, the way a die's
+    struck, the depth of the cut to survive the weather.
+- kind: dialogue
+  speaker: chadwick
+  text: You're still thinking about the runes on the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone's got to, not many are left who can even read the old languages, let
+    alone cut a seal that'll last.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, did you ever learn what the markings were trying to say?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Learn? Oh, I think I know, but it's not the same as knowing, is it?
+- kind: dialogue
+  speaker: Vigil
+  text: What do you think they were trying to say, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing, I suppose. Just the sound of the wind and the weight of history.

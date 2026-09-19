@@ -1,0 +1,32 @@
+id: chadwick-cooking
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:18:27.229556+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's your turn to cook, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I've made a stew.
+- kind: dialogue
+  speaker: Leena
+  text: It smells... interesting.
+- kind: dialogue
+  speaker: Vigil
+  text: What's in it?
+- kind: dialogue
+  speaker: chadwick
+  text: Just some stuff I found.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that a chunk of leather?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's a type of mushroom.
+- kind: dialogue
+  speaker: gm
+  text: Let's just eat it already.
+- kind: dialogue
+  speaker: Leena
+  text: Pass me that bread.

@@ -1,0 +1,45 @@
+id: the-meal
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:14.596268+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's my turn to cook tomorrow, but maybe Sodacan Bob can show me some techniques.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more than happy to share my expertise, but first, let's get one thing
+    straight, the potatoes were not properly peeled.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's not be too hard on ourselves. It's just a meal,
+    let's enjoy each other's company.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) enjoy each other's company...
+- kind: dialogue
+  speaker: Vigil
+  text: (pushing the worst of his portion away) I don't think there's any need for
+    seconds.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Seconds? This is a travesty. The sauce is too salty, the meat is overcooked...
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think it's not so bad. There's enough to go around.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's exactly my point, there's enough, but not a speck of creativity or
+    care in the preparation.
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) Can we just eat?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, eat, but don't say I didn't warn you.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) I don't think it's just the cooking that's the problem...
+- kind: dialogue
+  speaker: gm
+  text: (laughing awkwardly) Oh, let's just enjoy our meal, shall we?

@@ -1,0 +1,41 @@
+id: the-meal
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:09.047207+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, seriously, a little olive oil and some thyme, it's not that hard.
+- kind: dialogue
+  speaker: chadwick
+  text: Pass the meat.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I love the theme we're going for tonight, rustic elegance!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And don't even get me started on the seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's not focus on the cooking, let's enjoy the company.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had to cook this meal, it'd be five stars.
+- kind: dialogue
+  speaker: gm
+  text: Who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll do it, I'll show you how it's done.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, where are you going?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the pot's never been properly cleaned.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, how was your day?

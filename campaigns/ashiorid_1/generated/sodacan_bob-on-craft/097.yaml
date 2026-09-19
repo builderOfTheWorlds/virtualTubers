@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-19T00:01:53.666856+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at this gate, folks, it's an excellent example of 19th century industrial
+    design, likely made by a small workshop in the northeastern states.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we've got miles to cover before nightfall.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what's the story behind the wagon axle? Is it original to the gate?
+- kind: dialogue
+  speaker: Leena
+  text: I love the bracket on the door, it's so... straightforward, you know?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, it's a great example of how the maker prioritized functionality over
+    aesthetics, probably a working-class craftsman who just wanted to get the job
+    done.
+- kind: dialogue
+  speaker: Leena
+  text: But isn't it interesting that it's still holding up, even after all these
+    years?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Indeed it is, Leena, a testament to the quality of the materials and the craftsmanship,
+    not to mention the care it's received over the years.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, can you tell us if there's any significance to the location where we
+    found it?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've wasted enough time, let's keep moving.

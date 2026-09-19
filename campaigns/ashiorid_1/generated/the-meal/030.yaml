@@ -1,0 +1,26 @@
+id: the-meal
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:25.194173+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: Pass the salt.
+- kind: dialogue
+  speaker: Leena
+  text: Isn't it lovely we have such a spread?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If I were cooking, I'd do this all differently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, who prepared this? Was it you, Chadwick?
+- kind: dialogue
+  speaker: Leena
+  text: It was just a suggestion, let's focus on the positives!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know I could do better, I've cooked for my whole family!

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 188
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:10.688265+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying the map from the trader, it's gonna take me all day.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go find some lunch, what do you want me to bring back?
+- kind: dialogue
+  speaker: Vigil
+  text: The north door swings inwards, I saw it when I came in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds good, I'm starving.
+- kind: dialogue
+  speaker: gm
+  text: Alright, I'll be in the market, don't take too long.
+- kind: dialogue
+  speaker: Leena
+  text: Got it, I'll meet you guys back here in a few.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we get some of those flat breads, I like 'em.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, me too, they're not that great but...
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed us, it had a broken wheel last time.

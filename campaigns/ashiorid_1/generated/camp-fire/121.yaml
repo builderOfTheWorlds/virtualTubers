@@ -1,0 +1,34 @@
+id: camp-fire
+take: 121
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:20.128976+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's been raining for hours, I think we've given up on going anywhere tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should take turns keeping watch. Vigil, you're up first.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to rain some more.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think would happen if the rain kept falling like this for a whole
+    year?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The fire's holding, it's laid with good tinder, I'm not worried about it.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, you're not going to start the watch without making sure the fire's
+    safe, are you?
+- kind: dialogue
+  speaker: Vigil
+  text: It'll stay.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think anyone's ever seen a place where it rains like this all the time?
+- kind: dialogue
+  speaker: gm
+  text: The rain's not going to stop, it's going to be a long night.

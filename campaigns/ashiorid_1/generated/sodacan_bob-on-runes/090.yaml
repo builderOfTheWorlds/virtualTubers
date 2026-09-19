@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T22:32:10.565881+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd have to strike a die with some force, just enough to leave a mark, but
+    not so hard it'd wear down over time.
+- kind: dialogue
+  speaker: chadwick
+  text: I've seen some of the carvings on the Malvakar, Bob. They're pretty rough.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rough, yeah, but that's the thing - they're not meant to last forever. Just
+    until the right person comes along.
+- kind: dialogue
+  speaker: Leena
+  text: What if the right person never comes?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not my problem. I just make what's asked of me.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think anyone's still got the patience for that kind of work? I mean,
+    actual carving, not just scratching into stone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd be surprised what people still do, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what do you think is the most important thing about the Malvakar?

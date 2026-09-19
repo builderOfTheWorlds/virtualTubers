@@ -1,0 +1,27 @@
+id: Vigil-counts
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:17.592138+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've noticed something, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: What is it?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that's been passing by the window has a broken wheel on the right
+    side.
+- kind: dialogue
+  speaker: Leena
+  text: What does that have to do with anything?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing. I just noticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You always notice things like this.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just habit.

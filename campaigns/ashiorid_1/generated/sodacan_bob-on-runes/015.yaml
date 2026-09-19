@@ -1,0 +1,30 @@
+id: sodacan_bob-on-runes
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:28.823774+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You don't need to strike a die like that, Vigil, it's a blunt instrument,
+    it's supposed to be hit with some finesse.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just trying to get it right, Bob, I'm not going for finesse, I'm going
+    for depth.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Finesse is what gets you the depth, Vigil, or it's just a surface scratch
+    that won't last.
+- kind: dialogue
+  speaker: chadwick
+  text: I thought you said it was the material that mattered, Bob, not the technique.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Material matters, yes, but technique is what brings out the character in the
+    material.
+- kind: dialogue
+  speaker: Leena
+  text: Is that what the runes on the Malvakar were, just character?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Leena, you don't understand, those runes...

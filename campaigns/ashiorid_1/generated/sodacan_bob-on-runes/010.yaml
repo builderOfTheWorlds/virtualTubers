@@ -1,0 +1,35 @@
+id: sodacan_bob-on-runes
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:00.212654+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, it's not just the weight of the Malvakar that makes me think about
+    the craftsmanship.
+- kind: dialogue
+  speaker: chadwick
+  text: What's on your mind, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How a die is struck, that's what. The angle, the force... it's an art.
+- kind: dialogue
+  speaker: Leena
+  text: I thought you were just talking about the runes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, no. The runes are just a symptom. The real problem is who still has the
+    patience for this kind of work.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, who still cares about putting their name to it, about leaving something
+    behind that'll outlast them?
+- kind: dialogue
+  speaker: gm
+  text: Bob, are you thinking about the Malvakar's inscription?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) No, I was just... wondering.

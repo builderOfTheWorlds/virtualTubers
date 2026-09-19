@@ -1,0 +1,42 @@
+id: bob-names-the-runes
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:13:49.912230+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're walking back from the last village, a mix of stone buildings and wooden
+    homes in the hills.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll tell you what this little doohickey is.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This, uh, lock. It's a lock.
+- kind: dialogue
+  speaker: Leena
+  text: Is it... anti-theft?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, not exactly. See, the rune on the lock is a suppressor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It suppresses the resonance, prevents the lock from announcing its presence
+    to... interested parties.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, I see.
+- kind: dialogue
+  speaker: Leena
+  text: And how does it work, exactly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the clever part! It's tuned to resonate with the lock's own internal
+    harmonics, creating a kind of... sympathetic silence.
+- kind: dialogue
+  speaker: gm
+  text: The group continues on, the sound of crunching gravel beneath their feet filling
+    the silence.

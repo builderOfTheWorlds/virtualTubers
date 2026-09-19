@@ -1,0 +1,30 @@
+id: bob-names-the-runes
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:12:34.878552+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, that's a nexus rune, shifts the local gravity to make the
+    gate easier to swing open.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Okay, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what kind of nexus rune? Is it a static anchor or a dynamic resonance?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, see, you're thinking about it in the wrong terms, Leena. It's a sympathetic
+    anchor, so when the gate's in motion, the magic reinforces the swing, reducing
+    friction.
+- kind: dialogue
+  speaker: Vigil
+  text: (tuning it out) Yeah, yeah...
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Great, Bob's explaining magic to the door again...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, this is the kind of thing that can make or break
+    an expedition. If you don't understand the local ley lines...

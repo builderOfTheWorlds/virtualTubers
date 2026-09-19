@@ -1,0 +1,41 @@
+id: night-watch
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:00.586123+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's a good view.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm-hmm.
+- kind: dialogue
+  speaker: Leena
+  text: What do you see?
+- kind: dialogue
+  speaker: Vigil
+  text: Stars.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see the trees swaying.
+- kind: dialogue
+  speaker: Leena
+  text: Is that a moon?
+- kind: dialogue
+  speaker: chadwick
+  text: It's not high.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sure.
+- kind: dialogue
+  speaker: Leena
+  text: We should wake the others soon.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not tired.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't feel it.

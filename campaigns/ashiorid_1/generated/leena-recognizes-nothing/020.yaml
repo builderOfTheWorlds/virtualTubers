@@ -1,0 +1,42 @@
+id: leena-recognizes-nothing
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:14.849326+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's proceed.
+- kind: dialogue
+  speaker: gm
+  text: Leena almost-recognizes a landmark she's never been to before.
+- kind: dialogue
+  speaker: gm
+  text: The shape of a hill, the angle of a road, the way a building sits against
+    the light.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen this before, but I've never been here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just a similar landscape.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, how's the village been treating you?
+- kind: dialogue
+  speaker: Leena
+  text: It's...fine, I suppose.
+- kind: dialogue
+  speaker: gm
+  text: Leena's gaze lingers on the landmark.
+- kind: dialogue
+  speaker: gm
+  text: A mixture of curiosity and unease flickers across her face.
+- kind: dialogue
+  speaker: gm
+  text: The others in the party subtly shift their attention.
+- kind: dialogue
+  speaker: Leena
+  text: I just...I feel like I've seen this somewhere before.

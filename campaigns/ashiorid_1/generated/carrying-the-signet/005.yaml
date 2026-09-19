@@ -1,0 +1,23 @@
+id: carrying-the-signet
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:23.001329+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, that's just an old trinket, nothing to it.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Just a family heirloom, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: (shrugs) I don't even know where it came from.
+- kind: dialogue
+  speaker: Vigil
+  text: (expressionless) Not my business.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistles low) Looks like something out of a storybook.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (leaning in) I just thought you might be interested in knowing...'

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 246
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:26.308672+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. The cart will be back in about an hour.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good, I'm going to go grab some supplies.
+- kind: dialogue
+  speaker: Leena
+  text: I'll come with you, we can check out the market while we're at it.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart has been going in the same route for a few days now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the big deal, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: It just means we know where to find what we need.
+- kind: dialogue
+  speaker: chadwick
+  text: (whistling) Yeah, let's just get what we need and go.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw some decent rope at that stall.
+- kind: dialogue
+  speaker: gm
+  text: Alright, two of you go grab the rope, I'll scout ahead.

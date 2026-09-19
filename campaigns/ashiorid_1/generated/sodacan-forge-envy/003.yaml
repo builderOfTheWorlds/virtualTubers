@@ -1,0 +1,38 @@
+id: sodacan-forge-envy
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:36:38.155931+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a decent piece of work, if not a bit too flashy for the local style.
+- kind: dialogue
+  speaker: gm
+  text: Ah, you're finally admitting it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said it's decent, not that it's the best thing I've ever seen.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Bob, don't be shy about praising the smith.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen worse, that's all I'm saying.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering to Vigil) I think he's still trying to convince himself.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering back) I think he's succeeding.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, the hinge is well-made. Are we done with the tour?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, not yet, Bob. We still have to see the new forge.
+- kind: dialogue
+  speaker: gm
+  text: Yes, and I'm sure you'll find plenty to criticize there as well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) I doubt it.

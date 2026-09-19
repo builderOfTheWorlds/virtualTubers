@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:29.494729+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong? You've been staring at that doorway for a minute.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it just feels... off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You probably saw something like it back in your village, yeah?
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think so. It's just... a smell, a phrase, a tune. I've heard all
+    these things before, but it's not just that they're familiar. It's like they're
+    supposed to be here.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's just your brain trying to make sense of things, Leena. Don't chase
+    it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing anything, I just... what is this place, exactly?
+- kind: dialogue
+  speaker: gm
+  text: We're not at liberty to discuss that, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick might be right. It's probably just your imagination playing
+    tricks on you.
+- kind: dialogue
+  speaker: Leena
+  text: I hope so.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 121
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:18.624695+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's continue where we left off. You find yourselves in the inn's
+    common room.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go ask the innkeeper about the local guard patrol schedule.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good, I could use some information on the local area.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the common room opens out into the courtyard, just as it did last
+    time I was here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go take a look at the courtyard, see if I can find anything interesting.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, I'll go talk to the innkeeper, meet you all back here in a bit.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to sit down at the bar and see if I can get any information out
+    of the bartender.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window to my left has been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That cart that passed by the window earlier just passed by again.
+- kind: dialogue
+  speaker: gm
+  text: It seems like we've got a few options, what would you like to do?

@@ -1,0 +1,41 @@
+id: the-meal
+take: 108
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:34.249261+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, this was not a good choice, was it?
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's make the best of it! It's a meal together!
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not hungry anymore.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of even cooking if you're just going to serve it cold?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just finish up?
+- kind: dialogue
+  speaker: Leena
+  text: Fine, but I'm making it up to you, Sodacan Bob, tomorrow!
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go get some more.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cooked this, anyway?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob did.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, maybe if Leena helped, it would've been better.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, no, no, no, I didn't help this time.

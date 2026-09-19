@@ -1,0 +1,29 @@
+id: bob-sings
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:01.123012+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what in the name of the Dwarven Ancestors is that racket?
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I think he's trying to sing a dwarven work-song!
+- kind: dialogue
+  speaker: Leena
+  text: (winces) Please, for the love of all things sane...
+- kind: dialogue
+  speaker: Vigil
+  text: (grinning) Ah, Sodacan Bob, you bring joy to our ears!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'M A MINER, I'M A DELVER, I'M A DWARF OF THE DEPTHS!
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) He's really getting into it now!
+- kind: dialogue
+  speaker: Leena
+  text: (covers her ears) Stop, stop, you're hurting my eardrums!
+- kind: dialogue
+  speaker: Vigil
+  text: (clapping) Bravissimo, Sodacan Bob! You bring the house down!

@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:26.916001+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick's still leading the way.
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time, I think.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: Maybe, Chadwick, we could stop for a bit and get our bearings?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling)
+- kind: dialogue
+  speaker: Vigil
+  text: You know, I think I see a landmark.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, that's where we're headed, good!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is so much fun, watching you flail, Chadwick.

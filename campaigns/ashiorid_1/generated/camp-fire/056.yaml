@@ -1,0 +1,42 @@
+id: camp-fire
+take: 56
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:35.640104+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I say we take turns keeping the fire going, like we do with the watches.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now that you mention it, I think I saw you lay the fire, Chadwick. It looked
+    like a mess.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood will last longer if we leave a few coals in the ashes.
+- kind: dialogue
+  speaker: Leena
+  text: If we don't get more dry wood, will the fire die out tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure that out in the morning. For now, who's on watch?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil was supposed to be next, but—
+- kind: dialogue
+  speaker: Vigil
+  text: Yes, I'll take it.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we lose the well at the center of the world?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Leena, there's no well at the center of the world. There's the Seal.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's not speculate, it's getting on everyone's nerves.
+- kind: dialogue
+  speaker: Leena
+  text: Is that a rain cloud?
+- kind: dialogue
+  speaker: Vigil
+  text: Water will keep falling until the clouds empty.

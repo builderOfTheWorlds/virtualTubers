@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 195
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:45.903775+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a while now, Chadwick. Can I ask, do you have a sense
+    of where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I do, of course. I'm just choosing not to share it with you right now.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure you know the way, then maybe we can just...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no. I'm good. I don't need your help.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently nodding in agreement with Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! You two are a pair. Vigil knows exactly where we are, and Chadwick here
+    thinks he's some kind of cartographer.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing nervously) Well, actually, Chadwick, I was just going to suggest
+    that you tell Vigil the route, so...
+- kind: dialogue
+  speaker: chadwick
+  text: No, I don't need to do that. I'm perfectly capable of finding my way.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just keep moving then. Maybe we'll hit the right trail soon.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) If Chadwick doesn't mess it up again...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (snickering) Oh, this is great. We're following a human compass, and he refuses
+    to admit it.

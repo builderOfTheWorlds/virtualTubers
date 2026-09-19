@@ -1,0 +1,38 @@
+id: camp-fire
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:38.115563+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but we can't stay here till morning without a dry place
+    to stand.
+- kind: dialogue
+  speaker: chadwick
+  text: I say we take turns keeping watch, two hours on, two hours off. Who's willing
+    to start?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know why they call it the Event? I've heard it's what changed
+    the world, but nobody knows what really happened.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see why we're so worried about the watch order. We've survived this
+    long, haven't we?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's going to stop when the moon reaches its zenith.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, Vigil, you think the rain will stop at midnight? That's when I'll
+    take my turn.
+- kind: dialogue
+  speaker: Leena
+  text: I wish I knew why the Event happened. Was it something the sorcerers did?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, how did you lay the fire to last so long? You're always good
+    at that sort of thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a bit of kindling and some flint, nothing to it.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 220
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:06.515660+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're at the inn. Room's quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm trying to get some rest, can we not talk?
+- kind: dialogue
+  speaker: Leena
+  text: No, it's fine. What is it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that there are five people in the room right now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's what, three more than last night?
+- kind: dialogue
+  speaker: gm
+  text: Okay, so the doors swing out to our left.
+- kind: dialogue
+  speaker: Leena
+  text: I see. That's a thing to know.
+- kind: dialogue
+  speaker: Vigil
+  text: And the shutter by the window was just repaired.
+- kind: dialogue
+  speaker: chadwick
+  text: So what? It's been broken for weeks.
+- kind: dialogue
+  speaker: Vigil
+  text: Same cart passed by again, just now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and same old horse too.

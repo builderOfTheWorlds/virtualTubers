@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:19.144648+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. The market is just a few streets away.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, and I could really go for a decent meal after this mess.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I'm just glad we didn't have to deal with any more traps.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed that the shutter on the building to our right was repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Good, now we can get some sleep without freezing our butts off.
+- kind: dialogue
+  speaker: chadwick
+  text: What was that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the shutter's repair was... neat.
+- kind: dialogue
+  speaker: Leena
+  text: (distracted) Mmm, what's that smell?
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Ah, probably the food cart we're about to pass.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grumbling) Great, another one...

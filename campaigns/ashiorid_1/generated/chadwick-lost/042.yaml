@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:05.257095+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And so you find yourselves on a dirt path, surrounded by tall trees.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's move out. Vigil, do you have a sense of where we're headed?
+- kind: dialogue
+  speaker: Vigil
+  text: I think so, Chadwick. I've been studying the maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Sodacan Bob, shut it.
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) Come on, let's go.
+- kind: dialogue
+  speaker: gm
+  text: (smirking) Ah, the fearless leader, leading the way into the unknown.
+- kind: dialogue
+  speaker: Vigil
+  text: (trying to help) Actually, Chadwick, if we take the path to the left...
+- kind: dialogue
+  speaker: chadwick
+  text: (dismissively) No, no, no. We're fine. Just keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (guffawing) Oh, this is priceless!

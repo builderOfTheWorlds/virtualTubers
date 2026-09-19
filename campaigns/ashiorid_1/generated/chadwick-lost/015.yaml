@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:09.807860+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, I think we're getting close to the river.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, of course we are.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, actually, if you think we might be turned around, it's okay to say so.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick, you're lost, aren't you?
+- kind: dialogue
+  speaker: chadwick
+  text: I am not lost.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, I can just check the map again.
+- kind: dialogue
+  speaker: chadwick
+  text: No need for that.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is great, guys are stuck in the woods and Chadwick's still
+    denying it.
+- kind: dialogue
+  speaker: gm
+  text: Let's just keep moving, shall we?

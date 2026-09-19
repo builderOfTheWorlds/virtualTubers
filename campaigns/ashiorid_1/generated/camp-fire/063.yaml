@@ -1,0 +1,32 @@
+id: camp-fire
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:14.618427+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle the watch order for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should keep it the same as last night, I'm first, then Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know why we're taking turns watching?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick's right, Vigil's got the best eyes.
+- kind: dialogue
+  speaker: Vigil
+  text: We should switch to a two-watch system, it's more efficient.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, Vigil, we've always done it this way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, but it's not like we're in any immediate danger.
+- kind: dialogue
+  speaker: Leena
+  text: What's the worst that could happen if we're all asleep at once?
+- kind: dialogue
+  speaker: Vigil
+  text: Magic doesn't work without a moonwell.

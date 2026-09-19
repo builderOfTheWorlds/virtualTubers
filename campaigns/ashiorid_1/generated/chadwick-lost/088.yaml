@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:11.428229+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, folks. How are you all doing?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, thanks. A bit thirsty, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Well, Chadwick, if you're not sure where we are, maybe you could
+    just ask Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) No, no, I know exactly where we are. It's just... uh...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, come on, Chadwick! You can't even admit when you're lost!
+- kind: dialogue
+  speaker: Vigil
+  text: (quietly) I can give you a bearing, if you'd like, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) I don't need it. I've got a great sense of direction.
+- kind: dialogue
+  speaker: Leena
+  text: (helpfully) Well, if you're sure...
+- kind: dialogue
+  speaker: gm
+  text: (to the party) Okay, let's keep moving then. I see some landmarks up ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: (smugly) See, I told you I knew where we were.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (teasingly) Yeah, yeah, you're a regular Sherpa, Chadwick!
+- kind: dialogue
+  speaker: gm
+  text: (calmly) Okay, let's just head in that direction. We'll be fine.

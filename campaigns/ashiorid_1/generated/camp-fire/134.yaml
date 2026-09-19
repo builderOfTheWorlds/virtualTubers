@@ -1,0 +1,35 @@
+id: camp-fire
+take: 134
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:30.587389+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order. Who's next?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm good for another hour.
+- kind: dialogue
+  speaker: Leena
+  text: What if the rain makes the river flood? Could we be swept away?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid that fire myself, didn't do too shabby.
+- kind: dialogue
+  speaker: gm
+  text: Someone needs to keep watch, Vigil can do it.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not what I asked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying the fire's got a good chance to last the night.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the seal doesn't hold?
+- kind: dialogue
+  speaker: Vigil
+  text: The moonwell's a kilometer away, don't worry.
+- kind: dialogue
+  speaker: gm
+  text: The rain doesn't seem to be letting up.

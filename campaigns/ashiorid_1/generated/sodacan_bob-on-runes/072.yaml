@@ -1,0 +1,42 @@
+id: sodacan_bob-on-runes
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T22:30:17.011607+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Bob, what's eating at you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This inscription on the Malvakar, I've been thinking about it nonstop...
+- kind: dialogue
+  speaker: chadwick
+  text: What's it say, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a rune, but not just any rune - it's a warning, a marker...
+- kind: dialogue
+  speaker: Leena
+  text: Is it about the trial we found?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Trial? No, it's not about the trials - it's about something deeper...
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean, something deeper?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The way it's carved, the way the runes intersect... it's like a map to something.
+- kind: dialogue
+  speaker: chadwick
+  text: A map to what, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, that's what's got me stuck - I feel like I've seen it before,
+    but I can't quite place it.
+- kind: dialogue
+  speaker: gm
+  text: Well, we'll figure it out, but for now, let's focus on the next monument.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Right, of course. The trials come first.

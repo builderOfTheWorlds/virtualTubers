@@ -1,0 +1,139 @@
+malmont-arrival-arc-loop1:
+  node_id: malmont-arrival-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party arrives in Malmont, the first real town since the manor burned
+    where t
+  summary: The party arrives in Malmont, the first real town since the manor burned
+    where they are complete strangers.
+  continuity_in: The party has just solved another riddle and uncovered a new location
+    on their map.
+  continuity_out: The party has arrived in Malmont and is beginning to explore the
+    town and its secrets.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-loop1-n0
+  - malmont-arrival-arc-loop1-n1
+  slots: null
+malmont-arrival-arc-loop1-n0:
+  node_id: malmont-arrival-arc-loop1-n0
+  parent_id: malmont-arrival-arc-loop1
+  order: 0
+  depth: 1
+  title: Arrival in Malmont
+  summary: The party steps into Malmont, the first proper town since their ordeal
+    began. They are complete strangers here, with no local connections or familiarity
+    to rely on. The town's atmosphere feels different from the manor - more lived-in,
+    more dangerous, and more uncertain.
+  continuity_in: The party has just solved another riddle and uncovered a new location
+    on their map.
+  continuity_out: The party has arrived in Malmont and is beginning to explore the
+    town and its secrets.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-n0-malmont-arrival-1
+    kind: ambient
+    prompt: The party steps into Malmont, the first proper town since their ordeal
+      began. They are complete strangers here, with no local connections or familiarity
+      to rely on. The town's atmosphere feels different from the manor - more lived-in,
+      more dangerous, and more uncertain.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-n0-malmont-arrival-2
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+malmont-arrival-arc-loop1-n1:
+  node_id: malmont-arrival-arc-loop1-n1
+  parent_id: malmont-arrival-arc-loop1
+  order: 1
+  depth: 1
+  title: First Encounters
+  summary: As they begin exploring Malmont, the party encounters local residents who
+    offer cryptic warnings about their recent activities. They discover that the town's
+    people are watching them closely, suspecting their connection to events at the
+    manor and the riddles they've been solving.
+  continuity_in: The party has arrived in Malmont and is beginning to explore the
+    town and its secrets.
+  continuity_out: The party has begun investigating local rumors and clues about the
+    manor's destruction.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-n1-malmont-arrival-1
+    kind: ambient
+    prompt: The party steps into Malmont's cobblestone streets, the weight of unfamiliar
+      eyes upon them.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-n1-malmont-arrival-2
+    kind: ambient
+    prompt: A child whispers something in the shadows, then disappears into the crowd.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-n1-malmont-arrival-3
+    kind: ambient
+    prompt: An elderly woman watches them from her window, her expression unreadable.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-n1-malmont-arrival-4
+    kind: ambient
+    prompt: The scent of herbs and wood smoke fills the air as they pass a shopkeeper
+      who glances nervously at their map.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-n1-malmont-arrival-5
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

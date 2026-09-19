@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 141
+model: llama3.1:8b
+generated_at: '2026-09-18T19:33:22.035359+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: Leena
+  text: There's something... familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you might be thinking of, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, just leave it alone.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean, Sodacan Bob? What could I be thinking of?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen a similar... shape, maybe, in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a coincidence, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Still silence.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's not speculate any more, shall we?

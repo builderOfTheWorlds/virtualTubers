@@ -1,0 +1,32 @@
+id: camp-fire
+take: 208
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:26.233959+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight. Someone needs to stay up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's not laid right. It's too high.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will hold if the wind stays light.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain'll let up by morning? It's still coming down.
+- kind: dialogue
+  speaker: gm
+  text: Not according to the forecast, no.
+- kind: dialogue
+  speaker: Leena
+  text: What does the forecast say exactly?
+- kind: dialogue
+  speaker: chadwick
+  text: This is the part where we settle who's staying up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm staying up, but only if someone can help keep the fire going.

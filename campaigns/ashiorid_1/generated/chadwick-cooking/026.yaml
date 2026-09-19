@@ -1,0 +1,35 @@
+id: chadwick-cooking
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:18:23.977222+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Dinner's ready, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: Help yourself, don't be shy.
+- kind: dialogue
+  speaker: Leena
+  text: Thanks, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: Smells like...um, chicken.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, that's chicken.
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, how was your day?
+- kind: dialogue
+  speaker: chadwick
+  text: Just, uh, experimented with some new flavors.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, you're really branching out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Mmm, yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: You're a regular chef now.

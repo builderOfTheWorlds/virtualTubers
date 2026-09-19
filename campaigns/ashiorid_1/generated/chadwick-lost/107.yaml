@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:03.006387+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the edge of the forest.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, I think you should take the lead.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, Vigil, you're with the maps, you're in charge.
+- kind: dialogue
+  speaker: Vigil
+  text: I think Chadwick's got a point, Ashiorid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is priceless. Lost in the forest with Chadwick leading.
+- kind: dialogue
+  speaker: Leena
+  text: Seriously, Chadwick, let Vigil take the reins for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it, I've got it, I just need a minute.
+- kind: dialogue
+  speaker: Vigil
+  text: Fine, let me check the map real quick.
+- kind: dialogue
+  speaker: gm
+  text: Ah, yes, I think I see the problem.

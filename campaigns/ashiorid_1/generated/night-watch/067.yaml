@@ -1,0 +1,41 @@
+id: night-watch
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:01.637287+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky's a deep shade of blue. Almost black, really.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's not even midnight yet. We're used to sleeping.
+- kind: dialogue
+  speaker: chadwick
+  text: I mean, what's the point of having a watch if we're not going to use it?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not that we don't trust the others to be safe.
+- kind: dialogue
+  speaker: chadwick
+  text: I guess not. No, we do trust them.
+- kind: dialogue
+  speaker: Vigil
+  text: I just like to keep an eye out. You know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay.
+- kind: dialogue
+  speaker: Leena
+  text: I think I hear a cricket.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I hear it too.
+- kind: dialogue
+  speaker: Leena
+  text: That's always nice. Some life in the middle of the night.

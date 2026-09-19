@@ -1,0 +1,37 @@
+id: sodacan_bob-on-runes
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:38.599718+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The Malvakar was done by someone who knew their work, no question about it.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more curious about the riddle than the craftsmanship.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die struck with that much precision, it's a wonder it's still readable after
+    all these years.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the riddle is meant to be solved, or is it just a record of the
+    past?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, look at the runes, they're not just decorative, they're a map of some
+    sort.
+- kind: dialogue
+  speaker: Vigil
+  text: You said the die was struck with precision, but the map on the wall was drawn
+    by a drunk.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patience, that's what it takes. The kind of patience that's hard to find these
+    days.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you're not even thinking about the riddle, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What makes you think that, Ashiorid?

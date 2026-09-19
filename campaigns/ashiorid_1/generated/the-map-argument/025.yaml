@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:23.481957+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a look at this route.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's a simple straight shot.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think we should take that left turn up ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, that's not what the map says.
+- kind: dialogue
+  speaker: Vigil
+  text: I think Leena's right, let's take a closer look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I agree with Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: You're both wrong, I've studied this route.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, calm down.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous, you're both just arguing for the sake of arguing.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, it's just a map.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no, this is a matter of pride.
+- kind: dialogue
+  speaker: Vigil
+  text: Guys, it's just a straight shot up ahead.

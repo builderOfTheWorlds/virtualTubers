@@ -1,0 +1,48 @@
+id: sodacan_bob-on-craft
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:15:47.863388+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm telling you, this gate was made in the Western Marches, late 20th
+    century, probably by a local craftsman who was trying to meet a cheap deadline.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on, Sodacan? We've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, wait, what's that symbol on the bracket? Is that a mark from the craftsmen's
+    guild?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes! That's a guild mark, all right. It means the maker was a member of
+    the Northern District Guild of Makers.
+- kind: dialogue
+  speaker: Vigil
+  text: How would you know where it was made and how it was made, exactly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I've studied the styles of the different regions, and the materials
+    they used, and I've got a bit of an eye for it, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love the patina on this thing. It's just beautiful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, it's lovely. The maker was clearly proud of his work.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighing) We're not going to get to camp before nightfall if we keep stopping
+    for this kind of thing.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) It's okay, Bob. We're not in any rush.
+- kind: dialogue
+  speaker: Leena
+  text: Can I ask, Sodacan, do you think the maker knew what this gate was going to
+    be used for?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, probably not. These things were usually made on spec, just
+    in case a customer came along.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 164
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:58.840898+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Vigil mentions that he's seen the same cart pass by twice on the way here.
+- kind: dialogue
+  speaker: chadwick
+  text: What, just that one cart?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that one cart, yes.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) Does anyone have any other observations?
+- kind: dialogue
+  speaker: Leena
+  text: (shrugs) No, I don't see anything out of the ordinary.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I just want to know if we're going to get some food.
+- kind: dialogue
+  speaker: Vigil
+  text: ( matter-of-factly) The doors to our left open inward.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) That's the only door that doesn't.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs softly) Yeah, I remember that from last time.
+- kind: dialogue
+  speaker: gm
+  text: (leaning forward) Alright, let's get to it.
+- kind: dialogue
+  speaker: Vigil
+  text: (gets up, starts to move) I'll take point.

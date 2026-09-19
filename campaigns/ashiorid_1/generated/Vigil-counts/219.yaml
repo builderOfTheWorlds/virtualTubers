@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 219
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:01.739024+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, Vigil, you've been paying attention.
+- kind: dialogue
+  speaker: chadwick
+  text: What is it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the room, counting us.
+- kind: dialogue
+  speaker: Leena
+  text: I count six.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the hallway is on your right, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the one to the kitchen is on your left.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of all this, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I just noticed it.

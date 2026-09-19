@@ -1,0 +1,38 @@
+id: bob-vs-the-cart-wheel
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:49.117197+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move along. We have a party to prepare.
+- kind: dialogue
+  speaker: chadwick
+  text: I agree, Sodacan Bob, but we've been over this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Over it?! No, we have not!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, the cart is a sturdy one, but it needs some... refinements.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Refinements?! This is a disaster waiting to happen!
+- kind: dialogue
+  speaker: Vigil
+  text: Can we at least take a look at the design?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's no design, Vigil! It's a catastrophe!
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, do you think you can placate Sodacan Bob for just a minute?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll try, but I'm not making any promises.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, listen...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, Leena! You just don't see it!

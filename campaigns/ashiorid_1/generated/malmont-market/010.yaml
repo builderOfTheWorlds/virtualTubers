@@ -1,0 +1,39 @@
+id: malmont-market
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:08.313290+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's getting lively, I see. Good morning, everyone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning. I'm looking for some quality smithwork. Show me what you've got.
+- kind: dialogue
+  speaker: Vigil
+  text: (low voice) Mind the crowd. Easy to lose a hand in a moment of distraction.
+- kind: dialogue
+  speaker: Leena
+  text: (to a map seller) Excuse me, do you have any maps of the region? Old ones,
+    preferably.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Oh, just looking for a nice pastry. What do you recommend?
+- kind: dialogue
+  speaker: gm
+  text: The constable's watch is starting to stir. Don't want to draw attention.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) These hammers? Made from what, scraps?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Just a few copper pieces. I think that's all I need.
+- kind: dialogue
+  speaker: Leena
+  text: (running her finger over a map) This one. Where's this one from?
+- kind: dialogue
+  speaker: chadwick
+  text: (unremarked by passersby) Ah, just another face in the crowd. Nice.
+- kind: dialogue
+  speaker: gm
+  text: (watching from a distance) Nothing to report. Yet.

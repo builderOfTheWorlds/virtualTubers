@@ -1,0 +1,36 @@
+id: the-ring-half
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:36:59.665010+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: What do you make of this, Chadwick?'
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know. It's just a piece of metal.
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: A half-piece. The other half...'
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Do you think it's like a map, or something?
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: A map to what?'
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. A place, maybe. Or a person.
+- kind: dialogue
+  speaker: Vigil
+  text: (softly) It feels... wrong. Like it's missing something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a ring, guys. We should focus on finding the other half.
+- kind: narration
+  speaker: gm
+  text: 'Achiorid: You don''t think it means anything?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should worry about the people who burned down the manor, not some
+    half-ring.

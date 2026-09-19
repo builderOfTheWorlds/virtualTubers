@@ -1,0 +1,35 @@
+id: before-the-well
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:29.928079+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the first watch.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not tired, I'll join you.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep an eye on the doors.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll make sure the fire's still lit.
+- kind: dialogue
+  speaker: gm
+  text: Try to get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: Hard to sleep with the moon shining.
+- kind: dialogue
+  speaker: Leena
+  text: I've never seen it so bright.
+- kind: dialogue
+  speaker: Vigil
+  text: We should have stayed in the city.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not the first time we've camped here.

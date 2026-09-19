@@ -1,0 +1,33 @@
+id: camp-fire
+take: 143
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:22.093366+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's going to be a long night.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. Who's on first shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we can make it last the night with what we've got.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood's too wet, we'll need more kindling.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain's going to clear before morning?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the first shift, who's with me?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire wrong, but it's still holding.
+- kind: dialogue
+  speaker: Vigil
+  text: Three hours, that's how long it'll last.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of keeping a fire going if it's just going to get soaked
+    again?

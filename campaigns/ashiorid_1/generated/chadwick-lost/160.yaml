@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 160
+model: llama3.1:8b
+generated_at: '2026-09-18T20:16:14.019822+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got the coordinates and I'll start navigating.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, you don't need to bother with that, I've got it.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, maybe I could take a look at the map for a sec.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick's got it!
+- kind: dialogue
+  speaker: Vigil
+  text: Um, excuse me, but I think I can help with the navigation.
+- kind: dialogue
+  speaker: chadwick
+  text: I said I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just get moving then.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Chadwick, maybe just...
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm happy to help, Chadwick.

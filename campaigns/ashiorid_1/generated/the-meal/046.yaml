@@ -1,0 +1,43 @@
+id: the-meal
+take: 46
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:33.544731+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I've tasted better gruel at the docks.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not so bad! We should make a game out of finding the least
+    unappetizing thing on our plates.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands over half his portion to Leena) Here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, are you sharing now? You were the one who insisted we all do our own
+    cooking.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Thanks, Vigil!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This pot's been used once too often, if you ask me.
+- kind: dialogue
+  speaker: Vigil
+  text: I didn't say it was clean.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Well, at least it's not boring!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll show you boring. I'll cook it right.
+- kind: dialogue
+  speaker: chadwick
+  text: (lowers voice) Bob, just shut up.

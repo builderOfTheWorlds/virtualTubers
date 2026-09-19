@@ -1,0 +1,30 @@
+id: Leena-almost
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:36.245640+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What is that smell?
+- kind: dialogue
+  speaker: chadwick
+  text: It's the cookfire from last night, Leena. Don't worry about it.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not that. It smells like...I don't know. Something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen something like that in your village, Leena. Maybe it's from
+    around there.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean it's probably from around there, Sodacan Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: But it's familiar. I'm sure of it.

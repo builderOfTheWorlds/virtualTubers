@@ -1,0 +1,17 @@
+id: malmont-market
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:26.918401+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see anything that's going to get my attention.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, do you have any older maps?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That one's got some skill, I suppose, but it's nothing new.
+- kind: dialogue
+  speaker: Leena
+  text: I'm looking for something specific, but I'm not sure what it is.

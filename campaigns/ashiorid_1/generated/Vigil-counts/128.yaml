@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:49.282454+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village elder approaches you with a basket of freshly baked bread.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks, Elder.
+- kind: dialogue
+  speaker: Leena
+  text: How's business been lately?
+- kind: dialogue
+  speaker: Vigil
+  text: There's been two carts pass by the windows this morning, same one, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the hold up?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter to the north was fixed recently, I saw it.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't worry about it, Bob.
+- kind: dialogue
+  speaker: gm
+  text: This is the way it usually goes, the north wind blows.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, alright.
+- kind: dialogue
+  speaker: Leena
+  text: What's with the bread, Elder?

@@ -1,0 +1,41 @@
+id: road-talk
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-19T00:00:39.723499+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, how's everyone holding up?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good, just keeping to myself.
+- kind: dialogue
+  speaker: Leena
+  text: I'm fine, but I wish we could walk a bit faster.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then says) Nafsari's... beautiful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it like, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (cuts himself off) No, no, it's nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I swear, my village is the prettiest place in the world.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs dryly) I'm sure it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: So, Leena, what's the food like in your village?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's the best! We have the most wonderful feasts after harvests.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly interested) What kind of feasts?
+- kind: dialogue
+  speaker: Leena
+  text: We have music and dancing, and all sorts of delicious dishes.

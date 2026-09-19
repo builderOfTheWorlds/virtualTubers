@@ -1,0 +1,38 @@
+id: malmont-market
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:57.763995+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not seeing anything here that would interest a man of my craft.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look at these old maps. I've never seen such a variety in one place.
+- kind: dialogue
+  speaker: chadwick
+  text: To me, that's a beautiful collection. I used to collect them myself.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Nothing's free, not even a map.
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (GM): The vendor is a stout woman with a thick accent, eyeing you
+    with interest.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this? A blacksmith's hammer made from some kind of unusual metal.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think I've ever seen that style of hammer before.
+- kind: dialogue
+  speaker: Leena
+  text: (reading from a map) This is the old trade route that used to go through Leto's
+    manor.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) Don't draw attention to yourself, Leena.
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (GM): The sun is climbing higher in the sky, and the market is starting
+    to fill with more people.'

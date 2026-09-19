@@ -1,0 +1,41 @@
+id: malmont-market
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-18T18:59:19.622962+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a village near the Red River.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look, they have old maps from the Silverwood range.
+- kind: dialogue
+  speaker: chadwick
+  text: Finally, some faces that don't know me.
+- kind: dialogue
+  speaker: Vigil
+  text: Just buying a few trinkets, I don't want trouble.
+- kind: dialogue
+  speaker: gm
+  text: (no line, GM doesn't speak)
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what kind of stories these maps hold.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take a look at this wooden flute.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's all just decorations, no real craftsmanship.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your eyes open, in case something... changes.
+- kind: dialogue
+  speaker: gm
+  text: (no line, GM doesn't speak)
+- kind: dialogue
+  speaker: Leena
+  text: This one shows a path through the Shadowfen that's been lost for years.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just blend in for a bit longer.

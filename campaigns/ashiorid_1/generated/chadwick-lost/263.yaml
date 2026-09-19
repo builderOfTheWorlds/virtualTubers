@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 263
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:19.314510+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I don't know where we are, Chadwick. Can you figure it out?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thinking, yes, I'm thinking.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Maybe you should ask Vigil, Chadwick. He's been quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick's lost. Oh, this is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) You want to know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I was just, uh, admiring the view.
+- kind: dialogue
+  speaker: Leena
+  text: Well, the view is lovely, but you might want to consider our...
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Shall we try to find a landmark or a sign?
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, that's what I was thinking.

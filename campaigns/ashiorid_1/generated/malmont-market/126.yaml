@@ -1,0 +1,41 @@
+id: malmont-market
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:10.249493+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not seeing anything here that'd hold its price.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll be keeping a close eye on our coin.
+- kind: dialogue
+  speaker: Leena
+  text: These old maps... I feel like I've seen them somewhere before.
+- kind: dialogue
+  speaker: chadwick
+  text: Finally, a place where no one knows my name.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of even having a market if it's just going to be like this?
+- kind: dialogue
+  speaker: Vigil
+  text: Perhaps we should be more discreet.
+- kind: dialogue
+  speaker: Leena
+  text: These maps could be useful, but I don't know what they're for yet.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just wander and see what I find.
+- kind: dialogue
+  speaker: Vigil
+  text: We need to keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This one looks like it might be worth a closer look.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think I know what that symbol means.
+- kind: dialogue
+  speaker: chadwick
+  text: What is it, then?

@@ -1,0 +1,41 @@
+id: night-watch
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:44.563047+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I see nothing out here.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) You're not supposed to be on watch right now.
+- kind: dialogue
+  speaker: Vigil
+  text: Just keeping an eye out for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm awake anyway. What's to stop me?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbles) Wake me up when it's time...
+- kind: dialogue
+  speaker: Leena
+  text: (stifles a yawn) The sky looks...different tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I know what you mean. It's all sorts of weird.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses again) Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Do you think we should wake the others? It's not that early.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) Why would we do that?
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) Because we can't see anything.

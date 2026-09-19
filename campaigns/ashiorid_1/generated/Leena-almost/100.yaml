@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:03.295602+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar and it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't think that was possible, even in a pocket universe.
+- kind: dialogue
+  speaker: Vigil
+  text: What's familiar?
+- kind: dialogue
+  speaker: Leena
+  text: This smell, this shape of a doorway, it's just... off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You probably saw something similar in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, I didn't see anything like this.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't worry about it, let it go.
+- kind: dialogue
+  speaker: Leena
+  text: What's going on here?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing. Just the usual.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase this. Let it be.

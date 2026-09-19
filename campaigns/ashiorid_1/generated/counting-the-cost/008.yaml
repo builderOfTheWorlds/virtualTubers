@@ -1,0 +1,32 @@
+id: counting-the-cost
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:06.265736+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart's wheel's seen some use, Chadwick. Time to heat up the forge.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, and what about my gear? I was using that fine-edged axe.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) I've got a bruise. (looks at Leena) Don't mind me.
+- kind: dialogue
+  speaker: Vigil
+  text: (low) I'm fine. Just... fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The plow's blade's bent like a broken reed. Needs straightening.
+- kind: dialogue
+  speaker: chadwick
+  text: How's that going to happen?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like splitting a piece of charred wood, Chadwick. Out comes the sap.
+- kind: dialogue
+  speaker: gm
+  text: The cart's wheels are going to be a challenge, though.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grinning) Then we break them out, like a stubborn knot in a piece of yew.

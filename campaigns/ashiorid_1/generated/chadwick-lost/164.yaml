@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 164
+model: llama3.1:8b
+generated_at: '2026-09-18T20:16:40.961717+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Alright, Chadwick''s leading. He says we''re heading east, but...'
+- kind: dialogue
+  speaker: chadwick
+  text: East it is, then.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, can you tell me if he's right?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're heading north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is great. The great navigator, leading us astray.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course we're heading east. It's obvious.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, Chadwick...
+- kind: dialogue
+  speaker: chadwick
+  text: I am sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is going to be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs)
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Alright, let''s see... (pauses) I think I see some landmarks over
+    there...'
+- kind: dialogue
+  speaker: chadwick
+  text: (smugly) Told you I knew where I was going.

@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:52.808675+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, we're not even close, are we?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course we are. We've been walking for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, sir, I think we're in a different valley.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Ah, nice try, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, it's okay to ask for directions sometimes.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need directions. I know exactly where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm happy to help if you need it, sir.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Poor Chadwick. He's all lost and won't admit it.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Just look at the map, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm looking at it. We're fine.

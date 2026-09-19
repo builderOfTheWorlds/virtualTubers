@@ -1,0 +1,43 @@
+id: sodacan_bob-on-runes
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:53:36.948161+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking about how you strike a die, and the force you need to apply
+    to make the runes cut deep.
+- kind: dialogue
+  speaker: chadwick
+  text: You think that's relevant?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's how you get a mark that'll last. Not many people care about that kind
+    of work anymore.
+- kind: dialogue
+  speaker: Leena
+  text: Is it true that the Malvakar was a test?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about?
+- kind: dialogue
+  speaker: Vigil
+  text: We were just speculating about the riddle. You were muttering to yourself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that. No, no, I was just... thinking about how the runes were cut.
+- kind: dialogue
+  speaker: chadwick
+  text: On the Malvakar, you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, not that. Just... the way you strike a die.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, are you okay? You seem a bit... distant.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm fine, fine. Just thinking out loud.
+- kind: dialogue
+  speaker: Leena
+  text: About what?

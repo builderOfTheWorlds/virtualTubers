@@ -1,0 +1,38 @@
+id: malmont-market
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:16.658135+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a child's playroom.
+- kind: dialogue
+  speaker: Leena
+  text: These old maps are incredible, do you have any from the old empire?
+- kind: dialogue
+  speaker: Vigil
+  text: (hands in his pocket) Too many strangers in one place makes me uneasy.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, just a humble traveler, I think I've made myself too well-known.
+- kind: dialogue
+  speaker: gm
+  text: The town's constable, watching from across the square, eyeing your... eclectic
+    group.
+- kind: dialogue
+  speaker: Leena
+  text: (running her fingers over an old map) I don't know why, but these draw me
+    in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of a map if it's just going to tell you the same thing every
+    time?
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a close eye on Sodacan Bob) I think I'll stick to my tea.
+- kind: dialogue
+  speaker: chadwick
+  text: (noticing the constable) Ah, good morning, officer.
+- kind: dialogue
+  speaker: gm
+  text: The constable nods curtly, returns to his duties, eyes lingering on Chadwick.

@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 138
+model: llama3.1:8b
+generated_at: '2026-09-18T19:33:11.618725+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: This thing in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like something from your village, I've seen pictures.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've sworn I've seen it before, but I don't remember where.
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen it, but I don't know where.
+- kind: dialogue
+  speaker: gm
+  text: What do you think it is?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but it feels important.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should investigate.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's something from our past.
+- kind: dialogue
+  speaker: chadwick
+  text: No, let's just leave it alone.

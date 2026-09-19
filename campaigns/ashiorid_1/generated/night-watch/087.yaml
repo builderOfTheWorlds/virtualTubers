@@ -1,0 +1,41 @@
+id: night-watch
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:58.986009+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: You can see the Scythe constellation pretty clearly.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's just a bunch of stars that look like a scythe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I used to think that about my grandma's cooking.
+- kind: dialogue
+  speaker: gm
+  text: Silence.
+- kind: dialogue
+  speaker: chadwick
+  text: Sorry.
+- kind: dialogue
+  speaker: Leena
+  text: What was that, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing.
+- kind: dialogue
+  speaker: gm
+  text: It's quiet tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we can stand down watch a bit early.

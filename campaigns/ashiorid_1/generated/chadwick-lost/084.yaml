@@ -1,0 +1,31 @@
+id: chadwick-lost
+take: 84
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:43.888394+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so where's the nearest landmark, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: If you want to know, we're just south of the old windmill.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick, you don't know where we are? This is like old times.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) I can ask Vigil to give us directions, if you'd rather
+    not admit...
+- kind: dialogue
+  speaker: chadwick
+  text: No need for that, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Yeah, sure you do.
+- kind: dialogue
+  speaker: gm
+  text: Okay, so let's keep moving, and Vigil can give us directions when we need
+    them.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) That's right.

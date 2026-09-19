@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:56.212770+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Alright, what''s our plan for the night?'
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've had enough rest, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: What's the hurry, we haven't found anything yet.
+- kind: dialogue
+  speaker: Vigil
+  text: The window on the north wall has a shutter, it was recently fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's nice to know, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not like it's a clue or anything.
+- kind: dialogue
+  speaker: Vigil
+  text: No, just something I noticed.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: What else have you noticed?'
+- kind: dialogue
+  speaker: Leena
+  text: Oh, the door on the left opens inward.
+- kind: dialogue
+  speaker: Vigil
+  text: And the cart outside has been here twice already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it has, I saw it.
+- kind: dialogue
+  speaker: chadwick
+  text: Whatever, let's just keep moving.

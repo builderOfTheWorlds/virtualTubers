@@ -1,0 +1,44 @@
+id: the-meal
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:59.042389+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I would've seasoned the vegetables at least an hour before
+    serving.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's a nice effort, don't be too hard on them.
+- kind: dialogue
+  speaker: Vigil
+  text: (handing his portion to Chadwick) Take this, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, have you even tasted the gravy? It's like someone just poured water
+    into the pan.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugs and takes Vigil's portion) Thanks.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's focus on the positives, shall we? It's not about who cooked, it's
+    about us eating together.
+- kind: dialogue
+  speaker: Vigil
+  text: (looks at his empty plate) Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But I'm just saying, I would've used twice as much garlic, and—
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) Leena's right, let's just enjoy the meal.
+- kind: dialogue
+  speaker: Leena
+  text: See, it's all about perspective!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Perspective, yeah right.

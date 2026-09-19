@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:06.887236+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, the wheel is fine.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's not like it's going to fall apart.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the axles are too far apart, it'll break.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, we've been over this, it's been tested, it's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Tested? Ha! You think a few tests are enough?
+- kind: dialogue
+  speaker: gm
+  text: Bob, we've run these tests for hours, it's time to move.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just get on with it, we're wasting daylight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just not listening, the design is fundamentally flawed.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, we appreciate your expertise, but we've made our decision.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not about listening, it's about getting the job done.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The job won't get done if the cart falls apart on the road!

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 108
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:20.483369+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window is new, it was repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just something I noticed.
+- kind: dialogue
+  speaker: Leena
+  text: Does it matter?
+- kind: dialogue
+  speaker: Vigil
+  text: Not really.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we see it?
+- kind: dialogue
+  speaker: Vigil
+  text: It's right over there.
+- kind: dialogue
+  speaker: gm
+  text: Alright then.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, just...just a new shutter.

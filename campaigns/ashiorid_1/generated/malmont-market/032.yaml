@@ -1,0 +1,42 @@
+id: malmont-market
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:55.933960+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sound of morning chatter and clinking metal greets you as you enter Malmont's
+    market square.
+- kind: dialogue
+  speaker: Vigil
+  text: Too many people for a town this size.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's lovely. Everyone knows each other here.
+- kind: dialogue
+  speaker: Leena
+  text: What's this one say?
+- kind: dialogue
+  speaker: gm
+  text: The vendor, a gruff old man, leans in to explain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Show me your best work.
+- kind: dialogue
+  speaker: gm
+  text: The blacksmith, a burly man with a thick beard, grins proudly.
+- kind: dialogue
+  speaker: Vigil
+  text: Not much of interest, I think.
+- kind: dialogue
+  speaker: gm
+  text: Leena looks up, intrigued, but doesn't say anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not quite what I'd call craftsmanship.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick wanders over to a nearby stall, admiring the wares.
+- kind: dialogue
+  speaker: Leena
+  text: What's the oldest one you have?

@@ -1,0 +1,39 @@
+id: malmont-market
+take: 167
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:31.666349+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Morning to you all, fine people of Malmont.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Fine people, indeed. This is what passes for art in this town?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Chadwick, what do you think of these old maps?
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering back) I think we should buy a few, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (shaking head) I'll take a look at the blacksmithing. See if it's worth bothering.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes on Sodacan Bob) You're not thinking of staying, are you?
+- kind: dialogue
+  speaker: Leena
+  text: (excited) Oh, look! This one's a map of the old river route!
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I think that one's from before the great flood.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) It's a crude draft, at best. Anybody can make a rough map.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) We should get moving. We don't want to be here when the
+    sun starts to set.
+- kind: dialogue
+  speaker: Leena
+  text: (picking up a map) I'll just hold onto this one, please.

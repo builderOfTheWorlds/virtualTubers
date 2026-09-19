@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:06.351687+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city is still a mess from the storm, but the repair teams seem to be doing
+    a decent job.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, at least the streets aren't flooded anymore.
+- kind: dialogue
+  speaker: Leena
+  text: That's good. I don't want to get stuck in this rain.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that building just outside the window was fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with the shutter, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticed the new screws and a fresh coat of paint.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't see what the big deal is, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I thought you were just being your usual quiet self.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, nothing out of the ordinary.
+- kind: dialogue
+  speaker: gm
+  text: Moving on, let's get some food and rest. We've got a long night ahead of us.

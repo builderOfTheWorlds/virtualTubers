@@ -1,0 +1,36 @@
+id: leena-recognizes-nothing
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:28:03.097476+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what did you see that made you say that?
+- kind: dialogue
+  speaker: Leena
+  text: The hill, and the way the building sits on it - it looks familiar somehow.
+- kind: dialogue
+  speaker: chadwick
+  text: So, did you take a wrong turn on the hike, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm sure I didn't - it's just... I don't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just the light, or the angle of the hill. Happens to me all the
+    time.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, looking at Vigil) You notice it too, don't you?
+- kind: dialogue
+  speaker: gm
+  text: (no response)
+- kind: dialogue
+  speaker: chadwick
+  text: (changing subject) We're almost there, I think. I see a clearing up ahead.
+- kind: dialogue
+  speaker: Leena
+  text: (still looking at Vigil) Vigil, what is it?

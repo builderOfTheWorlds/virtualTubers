@@ -1,0 +1,35 @@
+id: camp-fire
+take: 266
+model: llama3.1:8b
+generated_at: '2026-09-18T23:44:44.157194+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's taking the first watch?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the first, I'm already awake.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know when the rain will let up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire was laid pretty poorly, I'd have done it differently.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to rain all night.
+- kind: dialogue
+  speaker: gm
+  text: Anyone have any idea how long the wood will last?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll be okay with just the one fire?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This rain is relentless, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, I'll take the next watch, but someone needs to get some sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: Four hours.

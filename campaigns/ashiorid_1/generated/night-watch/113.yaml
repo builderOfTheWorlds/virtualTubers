@@ -1,0 +1,41 @@
+id: night-watch
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:57.383098+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is a deep purple now.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see some stars.
+- kind: dialogue
+  speaker: Leena
+  text: It's so quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: I like it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Me too.
+- kind: dialogue
+  speaker: gm
+  text: What's that noise?
+- kind: dialogue
+  speaker: Leena
+  text: Sounds like... nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: You think we should wake the others?
+- kind: dialogue
+  speaker: Vigil
+  text: No need to rush.
+- kind: dialogue
+  speaker: gm
+  text: Yeah, they're not going to miss it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told Grovley that, but he said it was fine.
+- kind: dialogue
+  speaker: Leena
+  text: What'd he say that for?

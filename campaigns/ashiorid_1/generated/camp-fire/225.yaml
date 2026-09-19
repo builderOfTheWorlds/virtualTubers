@@ -1,0 +1,35 @@
+id: camp-fire
+take: 225
+model: llama3.1:8b
+generated_at: '2026-09-18T22:08:13.859395+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty good, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle the watch order for tonight? We need to get to bed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid a bit too deep, might be hard to keep it going.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll hold.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain's going to let up before morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Bob's got the touch with fire, it'll be fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just focus on the watch order?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what time it is outside?
+- kind: dialogue
+  speaker: Vigil
+  text: Two hours.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle this, Chadwick's going to take the first watch.

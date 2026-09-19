@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:46.333058+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What was that?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I didn't see anything.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Moving where?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should be careful.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just be quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: What's going on?
+- kind: dialogue
+  speaker: gm
+  text: Silence.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering) Do you guys see anything?

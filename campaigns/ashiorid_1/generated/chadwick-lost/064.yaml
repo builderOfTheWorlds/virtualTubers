@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:42.718260+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get started. Chadwick's been leading the group for a bit now.
+- kind: dialogue
+  speaker: chadwick
+  text: We should be getting close to the forest.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think we might be heading in the opposite direction.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I'm right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, here we go again.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) If you're not sure, Chadwick, I could give you a hint.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need a hint, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Chadwick, it's okay to ask for help sometimes.
+- kind: dialogue
+  speaker: chadwick
+  text: (sternly) I don't need help.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughing) Okay, no help then.

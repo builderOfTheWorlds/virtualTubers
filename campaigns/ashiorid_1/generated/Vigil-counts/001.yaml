@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:38.528593+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter on the east wall has a fresh coat of paint.
+- kind: dialogue
+  speaker: chadwick
+  text: What of it?
+- kind: dialogue
+  speaker: Vigil
+  text: It was probably just repainted recently, I've seen the same color used before.
+- kind: dialogue
+  speaker: Leena
+  text: Can we discuss something more interesting?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the view like outside, then?
+- kind: dialogue
+  speaker: Vigil
+  text: The east side faces a narrow alley, the other side looks over the market.
+- kind: dialogue
+  speaker: gm
+  text: And does this have any bearing on our current situation?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it doesn't.
+- kind: dialogue
+  speaker: chadwick
+  text: Good, let's focus on finding the local guildmaster.

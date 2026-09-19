@@ -1,0 +1,32 @@
+id: counting-the-cost
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:36.587992+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hammer and anvil, that's how we mend what's broken.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you help Leena with the inventory?
+- kind: dialogue
+  speaker: chadwick
+  text: Already on it, Ashiorid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: An engine's gotta be rebalanced, not just slapped back together.
+- kind: dialogue
+  speaker: Leena
+  text: (groans)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't give me that look, child, a well-crafted thing takes its time.
+- kind: dialogue
+  speaker: Vigil
+  text: We've got a schedule to keep, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A schedule's like a set of blueprints – they're just a starting point.
+- kind: dialogue
+  speaker: gm
+  text: Let's move, people, we need to get rolling again.

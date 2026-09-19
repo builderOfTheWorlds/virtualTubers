@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:18.957292+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, where are we headed today, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking of cutting through the forest.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, good choice, Chadwick. The new trail might be a bit rough, though.
+- kind: dialogue
+  speaker: Vigil
+  text: I can give you directions if you need them.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, poor Chadwick, lost again.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Come on, let's just head that way.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, if you head due east from the tree with the carved initials...
+- kind: dialogue
+  speaker: chadwick
+  text: I know the tree you're talking about. I know what I'm doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Sure you do, Chad.
+- kind: dialogue
+  speaker: Leena
+  text: We're almost there, Chadwick. Just a little further.
+- kind: dialogue
+  speaker: Vigil
+  text: You're going the right way now.
+- kind: dialogue
+  speaker: gm
+  text: See, I told you it wasn't hard.

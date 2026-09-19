@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:07.380816+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You probably saw something like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not something I've seen before.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Don't go chasing after it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll let it go for now.
+- kind: dialogue
+  speaker: gm
+  text: The others are all still looking at you.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs softly)
+- kind: dialogue
+  speaker: gm
+  text: The doorway you were looking at is just a doorway.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a familiar shape, Leena.

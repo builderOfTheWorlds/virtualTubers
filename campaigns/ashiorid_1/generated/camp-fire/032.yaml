@@ -1,0 +1,35 @@
+id: camp-fire
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:19.310280+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain shows no signs of letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't like that. We should figure out the watch order now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick's got a point. We should get settled in for the night.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's burning low.
+- kind: dialogue
+  speaker: Leena
+  text: What's the protocol for keeping it going through the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I think we laid it wrong. It's not burning like it should.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous. We're standing here arguing about a fire.
+- kind: dialogue
+  speaker: Vigil
+  text: It needs more tinder.
+- kind: dialogue
+  speaker: Leena
+  text: What's the earliest we think the rain will clear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's been clearing all night.

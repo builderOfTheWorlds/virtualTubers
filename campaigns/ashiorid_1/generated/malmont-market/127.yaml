@@ -1,0 +1,43 @@
+id: malmont-market
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:18.533292+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning, can you show me something with a bit more flair?
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around) What a place.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, look! Maps! Old maps!
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I like it here. Nobody knows me.
+- kind: dialogue
+  speaker: gm
+  text: (narrating) The air is thick with the smell of baking bread and fresh metal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disappointed) This isn't what I'm looking for. Where's the good stuff?
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a close eye on his coin purse) You don't want to show him your best
+    work.
+- kind: dialogue
+  speaker: Leena
+  text: (picking up a map) What's this one? A river delta?
+- kind: dialogue
+  speaker: chadwick
+  text: (relaxing) It's nice to be a face in the crowd.
+- kind: dialogue
+  speaker: gm
+  text: (narrating) The sound of hammering and haggling fills the air, mingling with
+    the smells of the town.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (moving on) Next stall, please.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping his hand near his coin) I'm not buying anything today.

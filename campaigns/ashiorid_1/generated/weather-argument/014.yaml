@@ -1,0 +1,42 @@
+id: weather-argument
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:47:18.267117+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's gonna rain, the clouds are all dark and puffy.
+- kind: dialogue
+  speaker: chadwick
+  text: But it's not even that low, I saw the forecast this morning.
+- kind: dialogue
+  speaker: Leena
+  text: Forecast? You can't trust those guys, I know a guy who's always wrong.
+- kind: dialogue
+  speaker: Vigil
+  text: What's that got to do with it? The air feels humid to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Humid? You mean because it's all soggy down by the river?
+- kind: dialogue
+  speaker: chadwick
+  text: That's just a flood, not related to the forecast at all.
+- kind: dialogue
+  speaker: Leena
+  text: Flood? There's no water anywhere else, it's just the river being dramatic.
+- kind: dialogue
+  speaker: gm
+  text: We're getting off track here, does anyone see any actual rain clouds?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, those ones over by the park, they're all dark and stuff.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But I saw a bird flying around with a worm, that means clear skies.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a myth, I'm pretty sure birds don't predict the weather.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I saw a bird flying around with a worm once and it rained an
+    hour later.

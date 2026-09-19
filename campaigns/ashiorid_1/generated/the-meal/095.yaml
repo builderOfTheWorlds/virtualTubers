@@ -1,0 +1,41 @@
+id: the-meal
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T22:37:02.650743+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, enjoy your meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a travesty, I could've cooked a hundred times better.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, let's not be too hard on Ashiorid, he's just trying to feed us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The seasoning, the presentation, the whole thing is subpar.
+- kind: dialogue
+  speaker: Leena
+  text: But it's the thought that counts, right?
+- kind: dialogue
+  speaker: gm
+  text: I'm just trying to make do with what I have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If I had my way, I'd be cooking for this party, not some amateur like you.
+- kind: dialogue
+  speaker: gm
+  text: Look, let's just eat and be done with it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You call that a serving of vegetables? It's an insult.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, come on, it's okay.
+- kind: dialogue
+  speaker: gm
+  text: We'll figure out who cooks tomorrow, alright?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If I don't get a better meal, I'm out of here.

@@ -1,0 +1,42 @@
+id: malmont-market
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:02.639885+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better hammerwork on a village well.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Still no guarantee it's safe.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Excuse me, do you have any of these that show the road
+    to... (hesitates) the other side of the mountains?
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) Oh, I think you'll find the maps here are quite accurate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I doubt it. (walks away from the smithwork)
+- kind: dialogue
+  speaker: Vigil
+  text: (to the market-goers) I'll have a word with the constable later.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) How much for this one? (points to a worn map)
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I think it's nice to blend in for a change, don't you, Leena?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) You think the blacksmiths are a problem?
+- kind: dialogue
+  speaker: Vigil
+  text: (looks at Sodacan Bob) I think they're a symptom.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, I found one! (holds up a map)
+- kind: dialogue
+  speaker: chadwick
+  text: (to Sodacan Bob) You're not exactly in a position to judge anyone's work.

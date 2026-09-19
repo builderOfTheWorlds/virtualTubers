@@ -1,22 +1,100 @@
 segment_id: party-attack-arc
-order: 5
+order: 9
 loop: 0
 hours: 6
-synopsis: As the party begins, unexpected guests arrive, and the manor's doors lock
-  from within. The group realizes they are not just guests but targets of a plot that
-  goes back ten thousand years.
+synopsis: The doors open on people who were not invited, and the room stops moving.
+  A violent intrusion changes everything.
 continuity_in: ''
 continuity_out: ''
 carry_in: {}
 carry_out: {}
-slots: []
+slots:
+- slot_id: party-attack-arc-n0-1
+  kind: ambient
+  prompt: The doors swing open with a violent crash, sending everyone in the room
+    spinning. Uninvited figures step into the space, their presence unsettling the
+    established order.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: party-attack-arc-n0
+- slot_id: party-attack-arc-n0-2
+  kind: ambient
+  prompt: Leena stumbles backward, clutching her side as a sharp pain shoots through
+    her body. Chadwick's axe lies forgotten on the floor, its blade now stained with
+    blood.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: party-attack-arc-n0
+- slot_id: party-attack-arc-n0-3
+  kind: spine
+  scene_ref: party-attack
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: flags
+  depends_on:
+  - Leena-wounded
+  - chadwick-lost-axe
+  node_id: party-attack-arc-n0
+- slot_id: party-attack-arc-n1-aftermath-1
+  kind: ambient
+  prompt: The room stops moving, and unfamiliar figures step into the space, their
+    presence unsettling the established order.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: party-attack-arc-n1
+- slot_id: party-attack-arc-n1-aftermath-2
+  kind: ambient
+  prompt: The group must navigate the new reality where the original plan is shattered
+    and everyone's role has shifted dramatically.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: party-attack-arc-n1
+- slot_id: party-attack-arc-n1-aftermath-3
+  kind: spine
+  scene_ref: party-attack
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: party-attack-arc-n1
 nodes:
 - node_id: party-attack-arc
   parent_id: null
   depth: 0
   kind: branch
   forced: false
-  target_slots: 9
+  target_slots: 7
   slots: 0
 - node_id: party-attack-arc-n0
   parent_id: party-attack-arc
@@ -24,12 +102,11 @@ nodes:
   kind: leaf
   forced: false
   target_slots: 3
-  slots: 0
+  slots: 3
 - node_id: party-attack-arc-n1
   parent_id: party-attack-arc
   depth: 1
   kind: leaf
   forced: false
-  target_slots: 6
-  slots: 0
-needs_rebrief: true
+  target_slots: 3
+  slots: 3

@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:18.440814+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, I swear your pack has all the food again.
+- kind: dialogue
+  speaker: chadwick
+  text: What's it to you, Ashiorid?
+- kind: dialogue
+  speaker: Leena
+  text: Labels, labels, can't anyone just label something?
+- kind: dialogue
+  speaker: Vigil
+  text: I labeled my pack, Leena, it got lost in the chaos.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah ha, look what's in Vigil's pack.
+- kind: dialogue
+  speaker: gm
+  text: That's mine, I had it.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, well, maybe if you'd labeled it, it'd still be yours.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, we're not even going to make it.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone's got a lot of spare tools in their pack.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone's also got a lot of pride.
+- kind: dialogue
+  speaker: gm
+  text: Give me that, it's clearly mine.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, I think it's more clearly mine, now.

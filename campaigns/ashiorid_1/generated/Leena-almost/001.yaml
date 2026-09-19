@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:28.126842+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw one like it in your village, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. Just leave it alone.
+- kind: dialogue
+  speaker: Leena
+  text: Why shouldn't I chase it? It's... it's like a doorway I used to know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That sounds like the old manor in your village. The doorway's the same, at
+    least.
+- kind: dialogue
+  speaker: Vigil
+  text: (low, almost inaudible) The doorway is not the same.
+- kind: dialogue
+  speaker: chadwick
+  text: Just drop it, Leena. It's not worth worrying about.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not worried. I just... I think I'm remembering something I shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should just be glad you're remembering something, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, we need to focus on the task at hand.

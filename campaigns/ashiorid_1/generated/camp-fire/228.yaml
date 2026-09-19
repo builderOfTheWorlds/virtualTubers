@@ -1,0 +1,33 @@
+id: camp-fire
+take: 228
+model: llama3.1:8b
+generated_at: '2026-09-18T22:08:32.750416+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Looks like the rain's not letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: Someone's got to keep watch. I'm open to suggestions.
+- kind: dialogue
+  speaker: Leena
+  text: What's the deal with the last town? Was it really infested?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's not laid right. We'll be out of luck
+    if it dies on us.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain'll soak the firewood, not the coals.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know why the fire's so slow to build?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the problem's not with the wood, but with Bob's laying.
+- kind: dialogue
+  speaker: gm
+  text: I'll take the watch. Someone else can spell me when it's my turn.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, but someone needs to come up with a schedule before we get any farther.

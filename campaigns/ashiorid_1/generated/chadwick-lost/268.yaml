@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 268
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:48.561440+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, the party presses on, the sun beating down on them.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east from here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this should be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: If I recall correctly, we're actually heading south.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps we could, uh, take a brief detour and...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I know where I'm going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Save it, Chaddy.
+- kind: dialogue
+  speaker: Vigil
+  text: Fine, I'll just wait to be asked for directions.
+- kind: dialogue
+  speaker: gm
+  text: The party continues on, the landscape stretching out before them.

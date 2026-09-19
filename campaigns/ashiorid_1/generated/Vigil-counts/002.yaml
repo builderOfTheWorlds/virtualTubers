@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:43.819489+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, let's proceed with the plan. We'll move to the upper levels,
+    gather more intel on the situation.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good to me, I've got a few leads on some potential allies up there.
+- kind: dialogue
+  speaker: Leena
+  text: I'll stick with you, Vigil, we don't know what kind of traps or puzzles are
+    waiting for us.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the door on your right opens outwards, by the way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw that too, Vigil, thanks for the heads up.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's move out.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, did you see any other details?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the cart that passed by earlier had a basket of fresh bread in the
+    back.
+- kind: dialogue
+  speaker: gm
+  text: Alright, that's... interesting.

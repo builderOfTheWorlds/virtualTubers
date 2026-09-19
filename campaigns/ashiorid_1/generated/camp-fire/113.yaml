@@ -1,0 +1,33 @@
+id: camp-fire
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:38.213536+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I've had enough of this waiting. We need to decide on watch orders.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, Chadwick, we should've laid the fire in a pit, not just a depression.
+- kind: dialogue
+  speaker: Vigil
+  text: We have enough tinder to last the night.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was just a day, or was it more like... a moment in
+    time?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, we don't have time for that. Vigil, can you confirm our fire is stable?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the fire's a risk, just like it was in the last town.
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but the rain's seeping into the fire pit.
+- kind: dialogue
+  speaker: Vigil
+  text: It will last.

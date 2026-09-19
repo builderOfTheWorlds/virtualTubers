@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:11.862931+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old windmill is impressive, but I'm not sure it's still operational.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about the state of the local militia.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know where the nearest blacksmith is?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that just passed was the third one in the past hour.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking, maybe we should try to get a room at the inn.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, I think we can afford better than the inn.
+- kind: dialogue
+  speaker: Vigil
+  text: The windows are shuttered, but I did notice one was recently repaired.
+- kind: dialogue
+  speaker: Leena
+  text: That's good, at least the place is well-maintained.
+- kind: dialogue
+  speaker: gm
+  text: We should focus on finding out what's going on in this town.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we're going to stay here, we might as well get a good night's rest.

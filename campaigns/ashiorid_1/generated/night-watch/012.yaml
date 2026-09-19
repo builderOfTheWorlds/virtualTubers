@@ -1,0 +1,41 @@
+id: night-watch
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:22.109432+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Aidiorid: Look, the stars are very clear tonight.'
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see a few more constellations than usual.
+- kind: dialogue
+  speaker: Leena
+  text: What constellations are those?
+- kind: dialogue
+  speaker: Vigil
+  text: Doesn't matter. We're here to watch, not stargaze.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I hear something.
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's just the wind.
+- kind: dialogue
+  speaker: Leena
+  text: We should wake the others early, just in case.
+- kind: narration
+  speaker: gm
+  text: 'Aidiorid: I think you''re right. But what''s the point? Nothing''s coming.'
+- kind: dialogue
+  speaker: Vigil
+  text: Better safe than sorry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I... I sometimes have nightmares about the Event.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that got to do with anything?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing. Just... never mind.

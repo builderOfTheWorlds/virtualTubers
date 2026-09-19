@@ -1,0 +1,35 @@
+id: road-talk
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:14:20.495423+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high, we should take a break soon.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thirsty, anyone else need a drink?
+- kind: dialogue
+  speaker: Leena
+  text: I know we can find shade under that big tree up ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, it's just like the markets in Vabokedos.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's got a lot of... old buildings.
+- kind: dialogue
+  speaker: Leena
+  text: My village, you know, is known for its beautiful gardens.
+- kind: dialogue
+  speaker: chadwick
+  text: Nice weather we're having, isn't it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can see the grand bazaar from the palace in Vabokedos.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing more to say about Nafsari.
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, let's keep moving.

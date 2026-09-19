@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:53.324898+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Leena
+  text: It moved.
+- kind: dialogue
+  speaker: Vigil
+  text: Not sure if I saw it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like a branch.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Something's not right.
+- kind: dialogue
+  speaker: chadwick
+  text: Keep your eyes open.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw it too, didn't I?
+- kind: dialogue
+  speaker: Leena
+  text: What were you seeing?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.

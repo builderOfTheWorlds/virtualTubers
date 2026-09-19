@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 162
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:47.911375+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So we're in the inn's common room. Looks like a dozen folk in here, plus the
+    staff.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright then. Anything on the board about food and lodging?
+- kind: dialogue
+  speaker: Leena
+  text: Looks like they've got a fire going, must be nice for a warm spot.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the door to the outside opens that way, left of the hearth.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll go get a room, you lot can figure out dinner.
+- kind: dialogue
+  speaker: gm
+  text: Sounds good, Sodacan Bob. Make sure you ask for a place near the back.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east window has been fixed recently, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: What, how do you know that?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just that the wood's smooth, not sanded down like usual.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, you mean you can tell by the wood?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just... it's just a small thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't mind him, Chadwick, he's just making conversation.

@@ -1,0 +1,41 @@
+id: sodacan_bob-on-craft
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T22:26:12.086500+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's caught your eye?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A gate, actually, and look at the hinges, they're...
+- kind: dialogue
+  speaker: chadwick
+  text: We can look at it on the way, let's move.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, does it have a maker's mark?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can you show me the design on the gate?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, this is a variant of the Linder pattern, typical...
+- kind: dialogue
+  speaker: Leena
+  text: What do you think they were thinking when they made it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, they were likely going for durability, and maybe a touch of...
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob, what do you think it's from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, I'd say it's from the third or fourth year of the Withering War.
+- kind: dialogue
+  speaker: Vigil
+  text: And what about the wagon axle, is that from the same place?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, definitely from the same foundry, same batch.

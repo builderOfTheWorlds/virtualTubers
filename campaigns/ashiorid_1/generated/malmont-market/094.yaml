@@ -1,0 +1,30 @@
+id: malmont-market
+take: 94
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:51.455606+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, morning in Malmont. Streets are quiet, market's just starting to
+    fill in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of hammering copper onto tin? Waste of metal.
+- kind: dialogue
+  speaker: gm
+  text: A blacksmith overheard, smiling wryly, "Art, sir, not function."
+- kind: dialogue
+  speaker: gm
+  text: 'Chadwick: looks around, doesn''t recognize anyone staring back.'
+- kind: dialogue
+  speaker: Leena
+  text: Oh, maps. Old ones. I'd love to see those.
+- kind: dialogue
+  speaker: gm
+  text: The map seller, an old man with a bushy white beard, eyes Leena's interest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How's the quality here? None of this is what I'm used to.
+- kind: dialogue
+  speaker: gm
+  text: A young apprentice, proud of his work, says "We keep the fire hot, sir!"

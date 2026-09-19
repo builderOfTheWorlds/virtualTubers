@@ -1,0 +1,41 @@
+id: malmont-market
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:39.258351+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's not even warm yet, and already the market's a bustle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Where's the good metalwork? I don't see anything worth looking at.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too excited, Bob. Most of this is probably worthless.
+- kind: dialogue
+  speaker: chadwick
+  text: I've been walking for hours, and nobody's even given me a second glance.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look, old maps. I've never seen these before.
+- kind: dialogue
+  speaker: Vigil
+  text: What's this got to do with you?
+- kind: dialogue
+  speaker: Leena
+  text: I just... I like old things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maps, eh? That's something, at least.
+- kind: dialogue
+  speaker: gm
+  text: The constable's men are patrolling, as usual.
+- kind: dialogue
+  speaker: chadwick
+  text: You'd think they'd be more interested in the night watch.
+- kind: dialogue
+  speaker: Vigil
+  text: The night watch? No one talks about that around here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good riddance, if you ask me.

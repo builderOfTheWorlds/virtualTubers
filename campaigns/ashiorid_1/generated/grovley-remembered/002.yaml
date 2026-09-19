@@ -1,0 +1,39 @@
+id: grovley-remembered
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:25:09.062451+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Asha: We can''t just assume Grovley''s holding something back without proof.'
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, Asha, he's a good man. He'd never intentionally leave us
+    in the dark.
+- kind: dialogue
+  speaker: Leena
+  text: That's easy for you to say, Chadwick, but what if he genuinely doesn't know
+    what's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't think he's entirely trustworthy. There's something he's not telling
+    us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm with Vigil. If he was more open with us, we'd have a better idea what's
+    going on.
+- kind: narration
+  speaker: gm
+  text: 'Asha: I still think we''re jumping to conclusions. There''s nothing concrete
+    to back up these accusations.'
+- kind: dialogue
+  speaker: Leena
+  text: Except for that whole not-answering-the-question thing when we asked him about
+    the subbasement.
+- kind: dialogue
+  speaker: Vigil
+  text: And what about his story about the Moonwells? That's still got a lot of holes
+    in it.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not a lie, Vigil. It's just... complicated.

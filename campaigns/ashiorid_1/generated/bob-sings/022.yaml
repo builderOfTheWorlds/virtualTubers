@@ -1,0 +1,30 @@
+id: bob-sings
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:12:47.123140+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob starts belting out "Korvus, kragnir, deep below..."
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We digs and we mines, with pickaxe and with stone...
+- kind: dialogue
+  speaker: Leena
+  text: Go, Sodacan Bob, go!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Kragnir, kragnir, our bellies we do fill...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Aye, and our beards, they do grow long and still...
+- kind: dialogue
+  speaker: gm
+  text: The patrons in the tavern seem divided in their reaction to Sodacan Bob's
+    off-key singing...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Kragnir, kragnir, we digs all day...
+- kind: dialogue
+  speaker: Leena
+  text: Kragnir, kragnir, all the way!

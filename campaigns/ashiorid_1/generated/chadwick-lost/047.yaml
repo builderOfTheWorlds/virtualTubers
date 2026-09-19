@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:38.054233+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We find ourselves standing at a fork in the road, Chadwick. Which path do
+    you think we should take?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, it's clear that we should head... that way.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) If you're not sure, we could always...
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) No, I'm sure. We should head that way.
+- kind: dialogue
+  speaker: Vigil
+  text: (quietly) I think we should head to the right, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: gm
+  text: And why do you think we should head left, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (confidently) Because the trees are taller on that side.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) I think the trees are actually taller on the right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh man, you're doing it again!
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Chadwick, if you're not sure...
+- kind: dialogue
+  speaker: chadwick
+  text: (forcefully) I'm sure. We're going left.

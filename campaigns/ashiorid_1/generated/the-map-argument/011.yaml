@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:25.392419+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the holdup?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's a simple matter of triangulation!
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, just look at the compass rose, it's clear we need to head north.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, but the key is understanding how the cardinal directions intersect with
+    the grid.
+- kind: dialogue
+  speaker: Vigil
+  text: Guys, can we just move? We're wasting daylight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we're all overcomplicating things, let's just follow the trail.
+- kind: dialogue
+  speaker: chadwick
+  text: That's exactly my point, Sodacan Bob! You're not thinking about the underlying
+    geometry.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, we're not going to get lost, just calm down.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not going to calm down, I'm going to prove my point and show you all how
+    it's done!
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, stop, you're making a scene.
+- kind: dialogue
+  speaker: chadwick
+  text: I am not making a scene, I am making a masterpiece of cartography!

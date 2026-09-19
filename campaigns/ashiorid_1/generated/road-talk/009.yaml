@@ -1,0 +1,34 @@
+id: road-talk
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:57.786537+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's beating down on us today, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: At least it's not as hot as it was yesterday.
+- kind: dialogue
+  speaker: Leena
+  text: I miss the river that runs through my village. It's so peaceful.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's mountains are rugged, but there's something about them that calls
+    to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And then there's Vabokedos, the city of lights. We have a saying, "A Vabokedos
+    night is a thousand suns."
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob's telling us about Vabokedos again, isn't he?
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Yes, he's a proud man. We should be lucky to see it one day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We will, we will. The road will take us there.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see a landmark up ahead.

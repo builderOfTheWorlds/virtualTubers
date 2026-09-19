@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 261
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:23.503606+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got our situation assessment, let's see what we've got to
+    work with.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got a window, but it's barricaded. No way in or out that way.
+- kind: dialogue
+  speaker: Leena
+  text: I'll take a look at the barricade, see if we can get that open.
+- kind: dialogue
+  speaker: Vigil
+  text: There's been a recent repair on the shutter on that window.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll check the lock on the door.
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil, what made you notice the shutter?
+- kind: dialogue
+  speaker: Vigil
+  text: It was a small thing, just that it looked recently done.
+- kind: dialogue
+  speaker: chadwick
+  text: Like, they used new hinges or something?
+- kind: dialogue
+  speaker: Vigil
+  text: Exactly.
+- kind: dialogue
+  speaker: gm
+  text: Not sure how that's relevant, but I suppose we'll look into it.

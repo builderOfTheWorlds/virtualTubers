@@ -1,0 +1,26 @@
+id: the-meal
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:57.463486+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I could've cooked this meal better in half the time!
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your food, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not so bad! We can make a game out of it!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This was a lazy effort, and it shows.
+- kind: dialogue
+  speaker: Leena
+  text: Well, at least we have a lot of it, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who even cooked this, anyway?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena made it.

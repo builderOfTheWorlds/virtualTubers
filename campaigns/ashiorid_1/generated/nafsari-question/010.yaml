@@ -1,0 +1,41 @@
+id: nafsari-question
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:44.208065+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trees grew taller than the houses, didn't they?
+- kind: dialogue
+  speaker: chadwick
+  text: 'Yes'
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, what was it like, growing up among them?
+- kind: dialogue
+  speaker: Vigil
+  text: We had a lot of space
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You didn't have to worry about finding room to live
+- kind: dialogue
+  speaker: gm
+  text: That sounds nice
+- kind: dialogue
+  speaker: chadwick
+  text: Not everyone would think so
+- kind: dialogue
+  speaker: Leena
+  text: Did you ever miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: I still go back
+- kind: dialogue
+  speaker: sodacan_bob
+  text: When you need some... solitude
+- kind: dialogue
+  speaker: gm
+  text: I'm sure you find it
+- kind: dialogue
+  speaker: chadwick
+  text: It's not the same

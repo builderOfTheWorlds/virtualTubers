@@ -1,0 +1,44 @@
+id: sodacan_bob-on-runes
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-18T19:00:14.779368+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a die struck, not etched. Anybody can etch, but only a master can strike
+    it deep enough.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the difference, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The difference is a thousand years.
+- kind: dialogue
+  speaker: Leena
+  text: Can I ask, have you ever struck a rune yourself?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, but I've seen some of Kaelin's work. She's the last one I know of who
+    still does it by hand.
+- kind: dialogue
+  speaker: Vigil
+  text: Kaelin? Is she the one who did the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know. Maybe.
+- kind: dialogue
+  speaker: gm
+  text: 'ashiorid: It''s not the work itself that matters, it''s the intention.'
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: gm
+  text: 'ashiorid: The Malvakar was not built to last a thousand years, it was built
+    to last until someone said the words.'
+- kind: dialogue
+  speaker: Leena
+  text: What words?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know.

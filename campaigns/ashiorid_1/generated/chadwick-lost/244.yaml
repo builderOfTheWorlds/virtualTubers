@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 244
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:46.339698+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out, we've got a ways to go before we reach the next landmark.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head that way.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, I think that's south, and our destination is due east.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, no, I'm sure that's right. We just need to head in that general direction.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, here we go again.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Chadwick, if I may say so, I think Leena's right.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe, Chadwick, if you're not sure, I could just lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine. I know exactly where I'm going.
+- kind: dialogue
+  speaker: gm
+  text: Alright, okay, let's just keep moving.

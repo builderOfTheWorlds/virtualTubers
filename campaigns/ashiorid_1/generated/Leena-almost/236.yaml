@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 236
+model: llama3.1:8b
+generated_at: '2026-09-18T22:03:35.698486+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What did you see, Leena, that made you say that?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's see it.
+- kind: dialogue
+  speaker: Leena
+  text: It's... the smell, I think. It's the smell from our village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's it, I know that smell. I've smelled it before too.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't go chasing after it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to. I just... I feel like I know this already.
+- kind: dialogue
+  speaker: Vigil
+  text: Sometimes our memories don't come from anywhere real.
+- kind: dialogue
+  speaker: Leena
+  text: But what if they do? What if this is real?

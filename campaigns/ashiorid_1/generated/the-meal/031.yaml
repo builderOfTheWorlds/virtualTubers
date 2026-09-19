@@ -1,0 +1,41 @@
+id: the-meal
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:32.043846+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's your critique of the meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honestly, it's been done worse, but we can do better.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just eat and be done with it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad, let's make the best of it.
+- kind: dialogue
+  speaker: Vigil
+  text: I think the meat's been sitting out a bit too long.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A bit too long? I'd say a good three days, at least.
+- kind: dialogue
+  speaker: Leena
+  text: Now, now, don't be too harsh.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Harsh? This is cooking 101.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat the food.
+- kind: dialogue
+  speaker: Leena
+  text: I'm trying to make conversation here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you're just too picky, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just finish eating?

@@ -1,0 +1,43 @@
+id: the-meal
+take: 117
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:36.992780+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, I thought I'd let someone else do the cooking for a change.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, this is a disaster. Whoever made this doesn't know the first thing about
+    cooking.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! We can make it fun.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll have my share, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fun? This is an insult to the culinary arts. I could have made a far superior
+    meal.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not about being perfect, it's about enjoying each other's company.
+- kind: dialogue
+  speaker: chadwick
+  text: Enjoying each other's company? This is about the food, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: Someone needs to clean the pot.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll clean the pot, but first I'll clean up this mess with my expertise.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you're not cooking tomorrow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'll have you know I've been practicing my recipes.

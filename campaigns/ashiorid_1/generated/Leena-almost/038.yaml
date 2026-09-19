@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:51.193234+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not sure where you are from, Leena, but this place seems familiar.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you mean, it's like that one doorway in the village I
+    visited last week.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's probably just a coincidence.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what it is, but it feels like something I should know.
+- kind: dialogue
+  speaker: gm
+  text: Well, we can investigate further if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just a trick of the light, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it's a trick of the light, Sodacan Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just leave it, shall we?
+- kind: dialogue
+  speaker: gm
+  text: The choice is yours, Leena.

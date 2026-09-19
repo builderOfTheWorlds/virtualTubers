@@ -1,0 +1,35 @@
+id: camp-fire
+take: 174
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:13.237482+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle the watch order, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should divide it evenly, two at a time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking, maybe we should've used more kindling.
+- kind: dialogue
+  speaker: Leena
+  text: Is there any way to...to fix the moonwells?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will burn until it runs out of wood.
+- kind: dialogue
+  speaker: chadwick
+  text: But we've got plenty of wood, we just need to conserve it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, it's been burning steady.
+- kind: dialogue
+  speaker: Leena
+  text: Then why is it so cold?
+- kind: dialogue
+  speaker: gm
+  text: Anyone have a suggestion for the watch order?
+- kind: dialogue
+  speaker: Vigil
+  text: Rain.

@@ -1,0 +1,42 @@
+id: night-watch
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:13.779791+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I can see the stars.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) They're very clear tonight.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I like the way the light reflects off the mist.
+- kind: dialogue
+  speaker: chadwick
+  text: (stirring) Not much wind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) We could wake the others early.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the point? We've got another few hours.
+- kind: dialogue
+  speaker: gm
+  text: (trails off)
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what the world would be like if we didn't have the Moonwells.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) You'd have to ask Grovley about that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (starts to doze off)
+- kind: dialogue
+  speaker: gm
+  text: I had a bit of a... problem, a while back. I was trying to... withdraw a bit
+    more than I should have.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, doesn't respond)

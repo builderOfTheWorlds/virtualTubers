@@ -1,0 +1,35 @@
+id: the-meal
+take: 116
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:29.243903+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This looks... interesting.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Great.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, let's make the most of it!
+- kind: dialogue
+  speaker: Vigil
+  text: (offering his portion to someone else) Take this, you can have it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done this a lot better, let me tell you what I'd do different.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I'm sure it's fine, Bob, don't be hard on them.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat already?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but next time, do it my way, okay?
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Okay, let's not argue about this, Bob, it's just food.
+- kind: dialogue
+  speaker: Vigil
+  text: (passing the conversation with a shrug) Whatever.

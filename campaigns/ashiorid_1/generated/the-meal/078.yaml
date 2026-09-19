@@ -1,0 +1,30 @@
+id: the-meal
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:35.882455+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's all about the seasoning, and I'm not seeing any effort
+    in that department.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your food.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's make a toast to our lovely meal!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to be, a congealed brick?
+- kind: dialogue
+  speaker: Leena
+  text: Well, at least we're all together.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I could do better in a dormitory kitchen.
+- kind: dialogue
+  speaker: Leena
+  text: So, who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I am, obviously.

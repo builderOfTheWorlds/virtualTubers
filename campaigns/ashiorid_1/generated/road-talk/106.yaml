@@ -1,0 +1,32 @@
+id: road-talk
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T23:59:04.971849+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's getting high, folks.
+- kind: dialogue
+  speaker: Leena
+  text: I miss the smell of fresh-baked bread from my village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: My city, Vabokedos, has the most beautiful canals, lined with shops and...
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's hills are covered in wildflowers this time of year, I remember.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: '...and the sound of gondolas plying the water, it''s like music.'
+- kind: dialogue
+  speaker: Leena
+  text: My village's annual harvest festival is the best, we make our own instruments.
+- kind: dialogue
+  speaker: gm
+  text: We've got a few more hours of walking before we find some shade.
+- kind: dialogue
+  speaker: chadwick
+  text: The dust on these roads is something else.
+- kind: dialogue
+  speaker: Leena
+  text: And the way the villagers dance through the night, under the stars.

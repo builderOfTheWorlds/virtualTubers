@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:45.308201+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city is quiet this evening.
+- kind: dialogue
+  speaker: chadwick
+  text: I could use a hot meal.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw a cook shop around the corner.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the alley is to our left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Does anyone know where we're going?
+- kind: dialogue
+  speaker: gm
+  text: We'll need to decide on a plan of action.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm for visiting the local guild hall first.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think that's such a good idea.
+- kind: dialogue
+  speaker: Vigil
+  text: The last cart that passed this way had one more passenger than usual.
+- kind: dialogue
+  speaker: gm
+  text: Let's move on and we'll reassess.

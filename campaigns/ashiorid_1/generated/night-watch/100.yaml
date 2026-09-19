@@ -1,0 +1,41 @@
+id: night-watch
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:44.041161+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: The sky is really clear tonight, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, I've never seen it so... still.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I don't like the stillness.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (after a long gap) What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: (softly) I mean, it's like something's holding its breath.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles) It's just the middle of the night, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing's going on, Chad.
+- kind: dialogue
+  speaker: chadwick
+  text: (groggily) Alright.
+- kind: dialogue
+  speaker: Leena
+  text: (after a pause) Can we wake the others early?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, do you want to start the day so early?
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) No, I guess not.

@@ -6,57 +6,91 @@ invitation-arc:
   title: Ten thousand years to the day since the Event, four strangers each receive
     the s
   summary: Ten thousand years to the day since the Event, four strangers each receive
-    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
-    manor. The card bears no return address and contains no identifying marks.
+    the same mysterious card, marking the beginning of their journey.
   continuity_in: ''
   continuity_out: ''
-  target_words: 900
-  target_slots: 9
-  kind: branch
-  forced: false
-  children:
-  - invitation-arc-n0
-  - invitation-arc-n1
-  slots: null
-invitation-arc-n0:
-  node_id: invitation-arc-n0
-  parent_id: invitation-arc
-  order: 0
-  depth: 1
-  title: The Mysterious Cards
-  summary: Ten thousand years to the day since the Event, four strangers each receive
-    the same mysterious card inviting them to a party at Duke Sorensen Leto III's
-    manor. The card bears no return address and contains no identifying marks.
-  continuity_in: Ten thousand years to the day since the Event, four strangers each
-    receive the same mysterious card inviting them to a party at Duke Sorensen Leto
-    III's manor. The card bears no return address and contains no identifying marks.
-  continuity_out: As the four strangers simultaneously receive identical cards, each
-    feels an inexplicable pull toward the same destination - the manor of Duke Sorensen
-    Leto III.
-  target_words: 270
-  target_slots: 3
+  target_words: 700
+  target_slots: 7
   kind: leaf
-  forced: false
+  forced: true
   children: []
-  slots: []
-invitation-arc-n1:
-  node_id: invitation-arc-n1
-  parent_id: invitation-arc
-  order: 1
-  depth: 1
-  title: The Gathering at the Manor
-  summary: The four strangers arrive at Duke Sorensen Leto III's manor, where they
-    discover that the mysterious party is connected to the Event and that they have
-    been chosen for a purpose beyond their understanding.
-  continuity_in: As the four strangers simultaneously receive identical cards, each
-    feels an inexplicable pull toward the same destination - the manor of Duke Sorensen
-    Leto III.
-  continuity_out: The four strangers stand in the grand hall of the manor, each carrying
-    the weight of their mysterious invitation and the realization that they are not
-    alone in their quest for answers.
-  target_words: 630
-  target_slots: 6
-  kind: leaf
-  forced: false
-  children: []
-  slots: []
+  slots:
+  - slot_id: invitation-arc-1
+    kind: ambient
+    prompt: The air grows thick with anticipation as four strangers across the realm
+      each receive identical cards, their fates now intertwined.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-2
+    kind: ambient
+    prompt: Each card pulses with a strange energy, marking the beginning of something
+      ancient and ominous.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-3
+    kind: ambient
+    prompt: As the cards are received, the world around them seems to shift, as if
+      the very fabric of reality is unraveling.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-4
+    kind: ambient
+    prompt: The strangers feel an inexplicable pull, drawn toward a destiny they never
+      knew they carried.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-5
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: invitation-arc-6
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: invitation-arc-7
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

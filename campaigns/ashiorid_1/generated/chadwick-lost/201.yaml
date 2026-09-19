@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 201
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:22.602738+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. The sun is high overhead, beating down on your
+    skin.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head due east.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) If you're feeling a little uncertain, we can always
+    take a vote.
+- kind: dialogue
+  speaker: chadwick
+  text: (loudly) No need for that, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling to himself) If anyone needs a reminder, I'm happy to help.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is rich. Chadwick lost again.
+- kind: dialogue
+  speaker: gm
+  text: Wait, what was that?
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) Nothing, I just think we should keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Actually, let's take that little stream over there. It looks
+    like it might lead us...
+- kind: dialogue
+  speaker: chadwick
+  text: (talking over her) No, no, this way is fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling to himself) Ah, good choice, Chadwick.

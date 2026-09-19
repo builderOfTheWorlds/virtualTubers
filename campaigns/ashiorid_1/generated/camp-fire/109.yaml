@@ -1,0 +1,38 @@
+id: camp-fire
+take: 109
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:18.854544+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. It's getting late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid decently, but we should check the logs again.
+- kind: dialogue
+  speaker: Vigil
+  text: The wood's still green.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what would happen if we ran out of firewood?
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on the fire for now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I reckon we've got enough to last the night, but it's a good question.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a chance the rain could make the pit collapse.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of having a pit if it's going to collapse?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The previous owners might've known something we don't.
+- kind: dialogue
+  speaker: gm
+  text: We'll figure it out in the morning.

@@ -1,0 +1,37 @@
+id: malmont-market
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:12.917629+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is out, the air is clear. A nice morning for a stroll through the
+    market.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Finally, some anonymity.
+- kind: dialogue
+  speaker: Leena
+  text: (bends to examine an old map on a stall) Look at this one, it's from before
+    the Great Reckoning.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes the map vendor warily) How much for that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Meh, I'm not impressed by your smithwork, mate. Where's the art in this?
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Oh, you're a critic, Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) Someone's got to keep them on their toes.
+- kind: dialogue
+  speaker: Leena
+  text: ( pulls out a coin and hands it over) I'll take the map, thank you.
+- kind: dialogue
+  speaker: Vigil
+  text: (grunts, puts hand back in pocket) Good choice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mutters) Should've brought my own hammer...

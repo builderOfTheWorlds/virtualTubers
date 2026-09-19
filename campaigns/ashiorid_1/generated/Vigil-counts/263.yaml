@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 263
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:32.642605+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The shutter on that window has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it's been fixed.
+- kind: dialogue
+  speaker: Leena
+  text: How does that help us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, what's the big deal about a shutter?
+- kind: dialogue
+  speaker: gm
+  text: It's just an observation.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left swings open inward.
+- kind: dialogue
+  speaker: chadwick
+  text: We're going to stand there and talk about doors?
+- kind: dialogue
+  speaker: Leena
+  text: No, let's just take it in.
+- kind: dialogue
+  speaker: gm
+  text: There are three other people in the room besides us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: One of them's just standing there staring.
+- kind: dialogue
+  speaker: Vigil
+  text: He seems to be waiting for something.

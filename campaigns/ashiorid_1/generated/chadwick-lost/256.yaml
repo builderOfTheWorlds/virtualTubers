@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 256
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:29.143205+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the old windmill. It's been abandoned for years.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Chadwick, always so full of surprises.
+- kind: dialogue
+  speaker: Leena
+  text: Um, I think it's actually just a pretty common landmark, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I didn't know that.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I could have told you that if you'd asked.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just that Chadwick, you're not exactly the greatest navigator.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not true.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't I just take the lead for a bit and-
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Just to clarify, I think we're going the right way now.

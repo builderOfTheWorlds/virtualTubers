@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T22:28:53.210437+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's a 19th-century wagon axle, made by some decent craftsman
+    in the East Midlands.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Chadwick, what do you think about Sodacan''s find?'
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on, I don't see why we had to stop.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I ask, what made you decide it was from the East Midlands?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it's the style of the rivets, and the weight of the metal suggests a
+    certain type of forge.
+- kind: dialogue
+  speaker: Vigil
+  text: What would it have been used for, do you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I would say it was part of a wagon that hauled heavy loads, perhaps on the
+    roads to Liverpool or Manchester.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''m getting a bit worried about the time, we need to be in town
+    before dark.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a minute, I want to show you all the design of the axle, it's quite clever.

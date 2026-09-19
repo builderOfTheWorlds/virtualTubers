@@ -1,0 +1,38 @@
+id: malmont-market
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:36.410077+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better hammerwork at a traveling fair.
+- kind: dialogue
+  speaker: Vigil
+  text: Not that I'm impressed, but there's some decent silverwork across the way.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, a market. Always a treat to be among so many faces.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, where did you get these old maps?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take a look at that stall, but I've got my eye on the blacksmith.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd be wise to keep your coin close, friend. We don't know these people.
+- kind: dialogue
+  speaker: Leena
+  text: I know, it's just... there's something about these maps that... never mind.
+- kind: dialogue
+  speaker: chadwick
+  text: It's all right, I like being anonymous. It's a change of pace.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The blacksmith's son's work is passable, but the father's been slacking.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll decide for myself when to show my coin, thank you.
+- kind: dialogue
+  speaker: Leena
+  text: These maps are from... I think it's the old road to Kaelin?

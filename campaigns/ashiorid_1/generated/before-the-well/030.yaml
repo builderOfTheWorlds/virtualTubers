@@ -1,0 +1,41 @@
+id: before-the-well
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:10:06.328994+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you're still keeping watch.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'm fine with it.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Trying to get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: (stifles a yawn) I don't think anyone will.
+- kind: dialogue
+  speaker: chadwick
+  text: Wake me if anything happens.
+- kind: dialogue
+  speaker: Vigil
+  text: I will.
+- kind: dialogue
+  speaker: gm
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: (shifts in seat) Can't sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: (glances at her, then back at the moonwell)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Long night ahead.

@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 158
+model: llama3.1:8b
+generated_at: '2026-09-18T20:16:02.469592+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: We''ll be coming up on a fork in the road, Chadwick.'
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure which one is the right way.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't we just consult the map, then?
+- kind: dialogue
+  speaker: chadwick
+  text: I have the map. I know what I'm doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not sure which way to go?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure it out.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe Vigil could show us the right path.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.

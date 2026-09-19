@@ -1,0 +1,27 @@
+id: Vigil-counts
+take: 254
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:55.939299+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're still at the crossroads inn, by the way. It's been a few days since
+    we've been here.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed by the window again.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Is that a thing now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're always noticing something.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving.
+- kind: dialogue
+  speaker: Vigil
+  text: It just means the repair on that shutter is fairly recent.

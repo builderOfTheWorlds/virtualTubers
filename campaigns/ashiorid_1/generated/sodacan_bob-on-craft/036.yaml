@@ -1,0 +1,34 @@
+id: sodacan_bob-on-craft
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T20:49:07.582424+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This blade is from the Eastern Forge, must be from the early 40s, look at
+    the temper marks.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, we're never going to find what we're looking for if we keep stopping
+    at every old piece of junk.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what's the significance of the temper marks?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the best part, they're from a new process they were trying out
+    at the time, the maker was really pushing the limits of what was possible.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Ooh, and look at the patina on it, it's so... textured.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (smiling) Yes, it's a real beauty, isn't it? And I can tell you exactly where
+    it was made, on the 17th of March, 42 GD.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptically) And why is that relevant?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Because it gives us a sense of what life was like for the people who made
+    it, don't you think? The daily rhythms, the concerns, the –

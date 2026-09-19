@@ -1,0 +1,136 @@
+magic-retained-arc-loop1:
+  node_id: magic-retained-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal holds, and the last well remains intact. The players learn about
+    the im
+  summary: The seal holds, and the last well remains intact. The players learn about
+    the importance of preserving magic in this world.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-retained-arc-loop1-n0
+  - magic-retained-arc-loop1-n1
+  slots: null
+magic-retained-arc-loop1-n0:
+  node_id: magic-retained-arc-loop1-n0
+  parent_id: magic-retained-arc-loop1
+  order: 0
+  depth: 1
+  title: The Weight of Preservation
+  summary: The players discover the true cost of maintaining the magical seal and
+    understand that the last well's integrity directly affects their world's balance.
+    They learn about the ancient magic that binds their realm together and the responsibility
+    that comes with protecting it.
+  continuity_in: The seal holds, and the last well remains intact. The players learn
+    about the importance of preserving magic in this world.
+  continuity_out: The players have gained knowledge about the magical preservation
+    system, now they must decide how to proceed with their understanding.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-loop1-n0-1
+    kind: ambient
+    prompt: The weight of preservation settles on the players as they witness the
+      last well's strength holding firm against the encroaching darkness.
+    lore:
+    - moonwells
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-loop1-n0-2
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: magic-retained-arc-loop1-n0-3
+    kind: ambient
+    prompt: As the players contemplate their role in maintaining the seal, they realize
+      that the cost of preserving magic is greater than they imagined.
+    lore:
+    - moonwells
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+magic-retained-arc-loop1-n1:
+  node_id: magic-retained-arc-loop1-n1
+  parent_id: magic-retained-arc-loop1
+  order: 1
+  depth: 1
+  title: The Choice Before Them
+  summary: With newfound awareness of the magical balance, the players face a critical
+    decision point. They must choose whether to actively protect the seal, seek out
+    other magical sources, or investigate the origins of the well's power that has
+    kept their world safe for so long.
+  continuity_in: The players have gained knowledge about the magical preservation
+    system, now they must decide how to proceed with their understanding.
+  continuity_out: The players make their choice and begin implementing their plan
+    to preserve or alter the magical balance of their world.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-loop1-n1-choice-1
+    kind: ambient
+    prompt: The players stand at a crossroads, weighing their options for preserving
+      the magical balance. What path do they choose?
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-loop1-n1-choice-2
+    kind: ambient
+    prompt: The players must decide whether to protect the seal, seek new magical
+      sources, or investigate the well's origins.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-loop1-n1-choice-3
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+  - slot_id: magic-retained-arc-loop1-n1-choice-4
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm

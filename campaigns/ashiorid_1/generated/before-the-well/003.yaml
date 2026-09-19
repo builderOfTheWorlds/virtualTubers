@@ -1,0 +1,35 @@
+id: before-the-well
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:47.842768+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The watch is kept quietly. I'm checking the lock on the eastern door.
+- kind: dialogue
+  speaker: chadwick
+  text: What's wrong with the lock?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing's wrong, it's just... habit.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) I saw a shadow by the well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What well?
+- kind: dialogue
+  speaker: gm
+  text: The one in the east garden.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take a walk around. Make sure everything's secure.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) I think I'll join you.
+- kind: dialogue
+  speaker: Leena
+  text: (sighs) I'll stay here and keep the fire burning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pours a cup of tea) Anyone want some?

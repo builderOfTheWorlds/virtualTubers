@@ -1,0 +1,64 @@
+invitation-arc:
+  node_id: invitation-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Ten thousand years to the day since the Event, four strangers each receive
+    the s
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card, marking the beginning of their journey.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-n0
+  - invitation-arc-n1
+  slots: null
+invitation-arc-n0:
+  node_id: invitation-arc-n0
+  parent_id: invitation-arc
+  order: 0
+  depth: 1
+  title: The Cards Arrive
+  summary: Ten thousand years to the day since the Event, four strangers each receive
+    the same mysterious card, marking the beginning of their journey. Each person
+    finds the card in their pocket, on their doorstep, or delivered by an unknown
+    hand. The cards are identical - a single symbol etched into silver that seems
+    to pulse with its own inner light.
+  continuity_in: Ten thousand years to the day since the Event, four strangers each
+    receive the same mysterious card, marking the beginning of their journey.
+  continuity_out: The cards arrive simultaneously across the world, each stranger
+    receiving theirs at exactly the same moment, though they live thousands of miles
+    apart in different cities and cultures.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+invitation-arc-n1:
+  node_id: invitation-arc-n1
+  parent_id: invitation-arc
+  order: 1
+  depth: 1
+  title: First Steps
+  summary: Each stranger begins to investigate their card's meaning. Some research
+    ancient texts, others seek out experts, while a few simply feel compelled to follow
+    an instinct that the card has awakened within them. The first signs of the journey
+    begin as each person starts to notice changes in their world - subtle shifts in
+    weather, strange dreams, or an inexplicable pull toward distant places.
+  continuity_in: The cards arrive simultaneously across the world, each stranger receiving
+    theirs at exactly the same moment, though they live thousands of miles apart in
+    different cities and cultures.
+  continuity_out: As each person begins to act on their card's influence, they unknowingly
+    start moving toward a common destination, though they have no idea that others
+    share their experience or are destined for the same place.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

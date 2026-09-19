@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:09.124728+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, We find ourselves standing at the base of a small hill, with a dense
+    forest stretching out before us.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, this is the way to get to the lake.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, if you're not sure, we could always ask Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I've got a good sense of direction.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this should be good.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I could help, if you'd like.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, but if we get lost, just admit it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Yeah, that's gonna happen.
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to be... shifting.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a trick of the light.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I see the path ahead.

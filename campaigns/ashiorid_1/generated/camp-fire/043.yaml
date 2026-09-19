@@ -1,0 +1,44 @@
+id: camp-fire
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:21.122359+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it's been a long day, and I'm sure we're all grateful for the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: Aye, but we can't just sit here all night. We need to decide who takes the
+    first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should let me and Leena take the first watch, we're the most rested.
+- kind: dialogue
+  speaker: Leena
+  text: But who's going to get the fire going again in the morning? We can't just
+    leave it unattended.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll just have to get up early.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm telling you, Chadwick, the fire was laid wrong. We're lucky it's holding
+    this long.
+- kind: dialogue
+  speaker: chadwick
+  text: Well, what do you suggest we do about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rebuild it from the ground up, that's what.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will stop by morning?
+- kind: dialogue
+  speaker: gm
+  text: I wouldn't count on it.
+- kind: dialogue
+  speaker: Vigil
+  text: The trees will still be wet.
+- kind: dialogue
+  speaker: chadwick
+  text: And what about the watch order? Who's going to take it after we're done?

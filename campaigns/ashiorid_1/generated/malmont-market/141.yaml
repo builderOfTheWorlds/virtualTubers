@@ -1,0 +1,33 @@
+id: malmont-market
+take: 141
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:40.661730+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What a waste of good metal, some of this stuff's been sat out here for months.
+- kind: dialogue
+  speaker: Vigil
+  text: A fair point, but I'm not here to critique the local trade.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no, I'm just... just happy to see so many people about.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, look, this stall has maps!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disinterested) Maps? For what, cartography enthusiasts?
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) I don't think we're here for the local charm, are we, Chadwick?
+- kind: dialogue
+  speaker: Leena
+  text: (hushed) I think it's the maps, though. There's something... something I've
+    been looking for.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Oh, Leena, what's got you so... so...
+- kind: dialogue
+  speaker: Vigil
+  text: (cutting in) Let's just enjoy the market, shall we?

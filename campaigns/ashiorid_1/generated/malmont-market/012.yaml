@@ -1,0 +1,44 @@
+id: malmont-market
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:27.556129+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Morning, Malmont. Quiet enough for a town its size.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I'd say it's a little too quiet, if you ask me.
+- kind: dialogue
+  speaker: Leena
+  text: I think I see what he means. It feels... empty.
+- kind: dialogue
+  speaker: Vigil
+  text: (grumbles) Don't get too comfortable. There's no such thing as a free meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Oh, come now, Vigil. Lighten up. I'm just here for the sights.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. Which stall draws your attention, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I was thinking about checking out the smithwork. See what kind of
+    quality we're looking at.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) Excuse me, friend? What kind of metalwork are we talking about?
+- kind: dialogue
+  speaker: Leena
+  text: (excited) Ooh, is that a map stall? I love old maps.
+- kind: dialogue
+  speaker: Vigil
+  text: (glances at the map stall) What's so interesting about old maps?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's just... something about them. (pauses) Maybe it's the stories
+    they hold.
+- kind: dialogue
+  speaker: gm
+  text: Malmont's a town of... (pauses, collecting thoughts) ...interesting contrasts.
+    Four blacksmiths, but none of them seem to be working.

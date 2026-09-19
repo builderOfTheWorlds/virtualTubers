@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:28.806713+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your eye, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the usual, I'm sure.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier just came back, same people driving it.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds like a regular route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we can flag them down.
+- kind: dialogue
+  speaker: Vigil
+  text: It was the way the doors swing that I noticed, and how many people are in
+    the room.
+- kind: dialogue
+  speaker: chadwick
+  text: So, you think someone's hiding or something?
+- kind: dialogue
+  speaker: Vigil
+  text: No, just an observation.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's not jump to conclusions.

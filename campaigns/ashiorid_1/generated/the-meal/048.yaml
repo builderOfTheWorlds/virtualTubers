@@ -1,0 +1,29 @@
+id: the-meal
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:44.972275+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had cooked it, it would've been a feast fit for kings.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! Let's make the most of it, shall we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The flavors are off, the textures are wrong...
+- kind: dialogue
+  speaker: Leena
+  text: It's just a little bland, is all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I would've added more herbs, less salt...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: '...and for goodness'' sake, the pot was never properly cleaned.'
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, you're being a bit dramatic.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm being serious, it's a health hazard!

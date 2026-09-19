@@ -1,0 +1,42 @@
+id: carrying-the-signet
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:19:30.381418+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Oh, you''ve all been looking for a place to rest for a while now,
+    have you?'
+- kind: dialogue
+  speaker: chadwick
+  text: We have. This looks like the perfect spot.
+- kind: dialogue
+  speaker: Leena
+  text: I'm famished. Is there food available?
+- kind: dialogue
+  speaker: Vigil
+  text: What's that I see there, a garden?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Yes, we have a lovely garden. Help yourselves to whatever you like.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the name of this place?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: This is Grovley Manor, been in my family for generations.'
+- kind: dialogue
+  speaker: chadwick
+  text: It's a lovely estate. We'll be happy to pay for our stay.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: No need to pay, you''re welcome to stay as long as you like.'
+- kind: dialogue
+  speaker: Leena
+  text: I'll just go take a look at the garden then.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll join her.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about that fellow who just left? What was his business here?

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 175
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:17.981282+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we'll be here till morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think a storm this bad would knock out the fire, but it's still holding.
+- kind: dialogue
+  speaker: Vigil
+  text: The lay is uneven, but it'll last.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's magic in the rain?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Course there is, but I'm not sure what kind.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you still need to settle that watch order.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, but nobody's willing to take the first shift.
+- kind: dialogue
+  speaker: Leena
+  text: Is it true there was a town near the last well where nobody got out?
+- kind: dialogue
+  speaker: Vigil
+  text: No survivors were found at the town of Elysium.

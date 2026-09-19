@@ -1,0 +1,42 @@
+id: before-the-well
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:45.842681+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon's almost full, so we can expect the magic to be... potent.
+- kind: dialogue
+  speaker: chadwick
+  text: What's your take on the readings, Ashiorid?
+- kind: dialogue
+  speaker: gm
+  text: I've been checking the resonance. It's off, but I'm not sure what to make
+    of it.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's just a natural fluctuation?
+- kind: dialogue
+  speaker: Vigil
+  text: We should have Grovley run some diagnostics.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll go fetch him.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, have you noticed anything... unusual around the well?
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it feels... heavier.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) There's no reason to believe it's not just the usual tension.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (returns) Grovley's on his way.
+- kind: dialogue
+  speaker: chadwick
+  text: (stares at the well) I don't like this.

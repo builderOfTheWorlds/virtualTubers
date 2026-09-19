@@ -1,0 +1,41 @@
+id: night-watch
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:36.626390+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm just going to watch the sky for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: It's so... grey.
+- kind: dialogue
+  speaker: Leena
+  text: (yawn) Sorry, I couldn't sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: Not my fault, Leena. You're just tired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I'm a bit tired too.
+- kind: dialogue
+  speaker: gm
+  text: We can swap shifts if you want, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, it's fine. I can stay.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I think I see a star.
+- kind: dialogue
+  speaker: chadwick
+  text: Where?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses again) Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbles) I had a weird dream.
+- kind: dialogue
+  speaker: gm
+  text: (ignoring Bob) Chad, what's that sound?

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 248
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:32.658232+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The eastern door opens outward, Ashiorid.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, what's the next thing?
+- kind: dialogue
+  speaker: Leena
+  text: Is it locked or something?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's unlocked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, what's our plan?
+- kind: dialogue
+  speaker: gm
+  text: We need to discuss the job.
+- kind: dialogue
+  speaker: chadwick
+  text: Job's not the problem, the client is.
+- kind: dialogue
+  speaker: Vigil
+  text: The client has a small cart, the same one.
+- kind: dialogue
+  speaker: Leena
+  text: What about it?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been here twice already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Twice?

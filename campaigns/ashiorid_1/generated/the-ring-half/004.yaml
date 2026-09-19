@@ -1,0 +1,36 @@
+id: the-ring-half
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:40:26.330222+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the significance of the ring, do you think?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, but I feel like I should be thinking about this more than I
+    am.
+- kind: dialogue
+  speaker: Leena
+  text: It's... pretty. You can see the craftsmanship.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) The Begene Sisters... they created us. This ring, it's a piece of
+    that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I never thought about it before, but maybe this is why we're here. To figure
+    it out.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't want to figure it out. I want to pretend I never knew.
+- kind: dialogue
+  speaker: Leena
+  text: But what if this is the reason we were created in the first place?
+- kind: dialogue
+  speaker: Vigil
+  text: (hesitates) I don't know what it means, but I think we're supposed to find
+    out.
+- kind: dialogue
+  speaker: gm
+  text: (softly) Perhaps.

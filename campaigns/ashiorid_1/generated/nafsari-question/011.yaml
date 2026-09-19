@@ -1,0 +1,38 @@
+id: nafsari-question
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:50.371528+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I was just wondering, Vigil, what it was like growing up in Nafsari.
+- kind: dialogue
+  speaker: Vigil
+  text: It was... a home.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs slightly) That's... quite a description.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (nervously chuckles) I guess it's nice to have a home.
+- kind: dialogue
+  speaker: gm
+  text: (no comment)
+- kind: dialogue
+  speaker: chadwick
+  text: (awkwardly) Sorry if that was too personal.
+- kind: dialogue
+  speaker: Vigil
+  text: No need to apologize.
+- kind: dialogue
+  speaker: Leena
+  text: (tries to change subject) So, has anyone seen the new herbalist?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) Oh, yeah! I heard she's amazing with the local plants.
+- kind: dialogue
+  speaker: Vigil
+  text: (stays silent)
+- kind: dialogue
+  speaker: gm
+  text: (ends the discussion) Well, that's all for now.

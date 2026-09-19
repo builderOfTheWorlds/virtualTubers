@@ -1,0 +1,38 @@
+id: night-watch
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:23.825511+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Look up, the sky's still clear.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's been like that all night.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure I've ever seen the stars this bright.
+- kind: dialogue
+  speaker: Vigil
+  text: We should wake the others early, it's going to be a long day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, they're probably exhausted.
+- kind: dialogue
+  speaker: chadwick
+  text: I think you're right, let's keep quiet for now.
+- kind: dialogue
+  speaker: gm
+  text: There's a small bird making noise over by the trees.
+- kind: dialogue
+  speaker: Vigil
+  text: I hadn't heard that.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's just a cricket, but I'm glad you told me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I had a similar experience in the army, but it's not relevant.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, no, it's not.

@@ -1,0 +1,41 @@
+id: weather-argument
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:42:51.068041+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's going to rain, look at the clouds.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh no, I don't see any clouds, it's clear.
+- kind: dialogue
+  speaker: Leena
+  text: But don't you notice that the wind is picking up?
+- kind: dialogue
+  speaker: Vigil
+  text: Wind always picks up before a storm, I'm telling you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a bird flying south, that's a sign of bad weather.
+- kind: dialogue
+  speaker: chadwick
+  text: Birds fly south in the winter, it's just a coincidence.
+- kind: dialogue
+  speaker: gm
+  text: But the sky is getting darker, I can feel it in my bones.
+- kind: dialogue
+  speaker: Leena
+  text: It's just a typical summer evening, don't be dramatic.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't trust your bones, trust the signs of nature.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with trusting your gut, it's served me well.
+- kind: dialogue
+  speaker: chadwick
+  text: I trust my gut, and it's telling me it's going to be fine.
+- kind: dialogue
+  speaker: gm
+  text: Well, I'm going to grab my umbrella just in case.

@@ -1,0 +1,37 @@
+id: local-rumor
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:41.936403+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Local rumor is that some nights you can hear a... a scuttling in the walls,
+    like a big rat with claws.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've heard that too. Sounds like old boots, but not boots, you know?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure what's more disturbing, the idea of something living in the walls
+    or the fact that nobody says anything about it.
+- kind: dialogue
+  speaker: Vigil
+  text: I've been too tired to pay attention to the sounds at night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just sounds like the pipes are shifting, maybe.
+- kind: dialogue
+  speaker: gm
+  text: You'd think the watch would be all over something like that, but no.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe they just don't know what to do about it.
+- kind: dialogue
+  speaker: Leena
+  text: Or maybe they're too scared.
+- kind: dialogue
+  speaker: Vigil
+  text: Scared of what?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Whatever it is, it's just... background noise.

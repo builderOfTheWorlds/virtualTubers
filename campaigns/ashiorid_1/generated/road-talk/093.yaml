@@ -1,0 +1,33 @@
+id: road-talk
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T22:24:36.558148+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, folks. Who's up for a break?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll keep walking.
+- kind: dialogue
+  speaker: Leena
+  text: I'll keep going too. My village has the best berries in the summer.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos has some great berries too, folks. The kind that grow on trees that
+    only bloom once a year.
+- kind: dialogue
+  speaker: Vigil
+  text: I've never seen a tree like that.
+- kind: dialogue
+  speaker: gm
+  text: That's what makes it special. Okay, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: We should be getting close to Nafsari by now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think we've even left the grasslands yet.
+- kind: dialogue
+  speaker: Vigil
+  text: I... I grew up near a lake there.

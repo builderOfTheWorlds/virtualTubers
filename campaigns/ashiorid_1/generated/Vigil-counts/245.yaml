@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 245
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:21.627190+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So what's the plan for getting more supplies, then?
+- kind: dialogue
+  speaker: chadwick
+  text: I thought we could just ask them if they have any extras.
+- kind: dialogue
+  speaker: Leena
+  text: But they said they were low on stock already.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart has passed twice, carrying the same load.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, maybe we should just get moving ourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get going then.
+- kind: dialogue
+  speaker: Leena
+  text: I'm starving, how long till we get to the next place?
+- kind: dialogue
+  speaker: gm
+  text: Not long, just a few more miles down the road.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good, I could use a decent meal.

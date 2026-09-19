@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 239
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:35.283841+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, what's next?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go talk to the innkeeper.
+- kind: dialogue
+  speaker: Leena
+  text: About what?
+- kind: dialogue
+  speaker: chadwick
+  text: Just about the repair on the shutter.
+- kind: dialogue
+  speaker: Vigil
+  text: The one on the left, just outside the common room.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about the cart?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been here twice in a row, going down the road.
+- kind: dialogue
+  speaker: gm
+  text: That's the delivery schedule, I think.
+- kind: dialogue
+  speaker: Leena
+  text: It's not unusual for them to be on time.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go ask.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the common room is off the hallway to your left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Which way do the doors in the hallway open?

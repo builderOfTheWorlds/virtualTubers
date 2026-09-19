@@ -1,0 +1,37 @@
+id: inventory-argument
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:56.486056+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, for the love of all things sane, your pack is still the messiest.
+- kind: dialogue
+  speaker: chadwick
+  text: What's wrong now? I'm sure it's not like anything's missing.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think Vigil just found my camera in your bag, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, and it's in perfect condition, so don't even think about playing dumb.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, if Vigil found Leena's camera, that means it was in my pack the whole
+    time.
+- kind: dialogue
+  speaker: gm
+  text: See, Bob, if we just labeled everything, we wouldn't have this problem.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not the only one who's ever forgotten what's in their bag, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, like that one time Ashiorid 'accidentally' took our snacks.
+- kind: dialogue
+  speaker: Vigil
+  text: You know what, let's just be grateful Sodacan Bob's pack is so cluttered we
+    found it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, my pack is not cluttered, it's just... efficiently packed.

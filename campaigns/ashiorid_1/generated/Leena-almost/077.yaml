@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:14.022837+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Something in front of Leena is familiar and should not be: a turn of phrase,
+    somebody used, a tune being hummed, the shape of a doorway, a smell.'
+- kind: dialogue
+  speaker: Leena
+  text: She says so out loud, because she always says so out loud.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a weird coincidence, forget about it.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe you just saw it before somewhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure I've seen a doorway like that in Leena's village.
+- kind: dialogue
+  speaker: gm
+  text: And you're sure about that, Sodacan Bob?
+- kind: dialogue
+  speaker: Leena
+  text: What about the smell, though?

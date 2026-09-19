@@ -1,0 +1,41 @@
+id: night-watch
+take: 121
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:54.733132+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The stars are clear tonight.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I don''t see any clouds.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: That''s good, I hate it when it''s cloudy.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: It''s a clear night for a reason.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: What do you mean?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Just that it''s quiet. Usually when it''s quiet...'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: (pauses) ...something happens.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I don''t think so tonight.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (yawns) You think we should wake the others early?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: No, let them sleep.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I think we can afford to be lazy.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (whispers) I''m not sure I''m good at this.'

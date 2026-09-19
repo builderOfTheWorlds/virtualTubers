@@ -1,0 +1,41 @@
+id: road-talk
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-19T00:01:34.299925+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, we've been walking for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I remember the crops in my village, they were always so green.
+- kind: dialogue
+  speaker: Vigil
+  text: I've heard Nafsari's rivers are the cleanest in the world.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos, have I told you about the market?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, you've told us about Vabokedos every day.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's focus on the road ahead.
+- kind: dialogue
+  speaker: Leena
+  text: We'll be there by nightfall, I'm sure of it.
+- kind: dialogue
+  speaker: Vigil
+  text: I... I've been there, briefly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, really, Vigil?
+- kind: dialogue
+  speaker: gm
+  text: The road just keeps going, it's like it has no end.
+- kind: dialogue
+  speaker: chadwick
+  text: I need to take a break.

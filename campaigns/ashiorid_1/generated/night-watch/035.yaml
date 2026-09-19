@@ -1,0 +1,41 @@
+id: night-watch
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:38.319652+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky's a deep shade of indigo.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know if I've ever seen it this dark.
+- kind: dialogue
+  speaker: Leena
+  text: Morning's not coming soon enough.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm trying to stay awake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're not fooling anyone, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: No, I guess not.
+- kind: dialogue
+  speaker: Leena
+  text: What can we even hear out here?
+- kind: dialogue
+  speaker: chadwick
+  text: Wind, I think. And maybe something... small.
+- kind: dialogue
+  speaker: Vigil
+  text: A mouse, maybe?
+- kind: dialogue
+  speaker: gm
+  text: No, I don't think so.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't think so, but...
+- kind: dialogue
+  speaker: Leena
+  text: Do we wake the others?

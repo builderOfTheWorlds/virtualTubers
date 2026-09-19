@@ -1,0 +1,32 @@
+id: malmont-market
+take: 142
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:45.380586+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Guess I was expecting a bit more fire in the forges.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think with four smiths they'd be more...
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look, they have old maps.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know what people see in this place, it's not that exciting.
+- kind: dialogue
+  speaker: Leena
+  text: These ones are from the old kingdom, I've seen that symbol before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it say, the kingdom of what?
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too close, we don't know what's here.
+- kind: dialogue
+  speaker: Leena
+  text: This one's a hand-drawn map, it's got some kind of writing on it.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just stick to looking at maps, not buying them.

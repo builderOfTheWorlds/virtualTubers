@@ -1,0 +1,39 @@
+id: malmont-market
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:51.177890+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A market morning, then. What would you like to do first?
+- kind: dialogue
+  speaker: chadwick
+  text: Just...take it easy, I think. I'm happy to just blend in.
+- kind: dialogue
+  speaker: Leena
+  text: I'm actually interested in that old map stall over there. The one with the
+    worn leather case.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep an eye on things while we're here. No need for trouble.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, smithwork. This town's smithwork is a joke. Where's the artistry?
+- kind: dialogue
+  speaker: gm
+  text: I see you're unimpressed, Bob. Shall I show you something else?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think those maps are...original? Or are they just reproductions?
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too close, Leena. We don't know what we're dealing with.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just go get a drink. Anyone want one?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take a look at those maps. Maybe there's something worth salvaging.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on then. What else would you like to see, Bob?

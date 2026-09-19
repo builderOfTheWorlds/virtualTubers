@@ -1,0 +1,35 @@
+id: bob-sings
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:24.737151+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob's got a tune, let's hear it then!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, this should be interesting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deeper than the mountains, richer than the mines!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We dig and we dig, with pick and with stone!
+- kind: dialogue
+  speaker: gm
+  text: I think I see what he's going for...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Dwarves of old, their names we recall!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Khazad, Kragnir, Balin's proud call!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We sing of our heritage, and our strength!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Kragnir, Kragnir, our hearts we'll not break!
+- kind: dialogue
+  speaker: gm
+  text: I think he's getting into his stride...

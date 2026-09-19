@@ -1,0 +1,41 @@
+id: malmont-market
+take: 169
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:47.657449+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What kind of hammer is this supposed to be?
+- kind: dialogue
+  speaker: Vigil
+  text: Not interested in your wares, friend.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Oh, what's this? Old maps?
+- kind: dialogue
+  speaker: chadwick
+  text: (nervously chuckling) Ah, not many folks around here know my name, I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll give you two coppers for this piece of rubbish.
+- kind: dialogue
+  speaker: Leena
+  text: (picking up an old map) This one shows the mountains east of here.
+- kind: dialogue
+  speaker: Vigil
+  text: (counting coins in his pouch) Not that I'm counting or anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (looking at a nearby stall) Now this, this is something.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I think I'll just take a walk and enjoy the air.
+- kind: dialogue
+  speaker: Leena
+  text: (unfolding the map) What's this? A trade route?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Just a regular day in Malmont.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) I've seen better work from a traveling forge.

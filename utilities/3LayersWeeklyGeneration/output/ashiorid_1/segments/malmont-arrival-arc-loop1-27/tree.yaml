@@ -1,0 +1,151 @@
+malmont-arrival-arc-loop1-27:
+  node_id: malmont-arrival-arc-loop1-27
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party delves into the history of their invitation and the Age of War,
+    uncove
+  summary: The party delves into the history of their invitation and the Age of War,
+    uncovering connections between their mysterious arrival and the great catastrophe
+    that changed everything. They begin to realize they are part of a larger design
+    that spans millennia.
+  continuity_in: The party has started to understand how their paths led them here,
+    and that their individual fates are intertwined with the grand narrative of Ashiorid's
+    history.
+  continuity_out: The party now knows that their journey was not random but part of
+    an ancient plan, one that may require all of them to make sacrifices or face dire
+    consequences.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malmont-arrival-arc-loop1-27-n0
+  - malmont-arrival-arc-loop1-27-n1
+  slots: null
+malmont-arrival-arc-loop1-27-n0:
+  node_id: malmont-arrival-arc-loop1-27-n0
+  parent_id: malmont-arrival-arc-loop1-27
+  order: 0
+  depth: 1
+  title: The Weight of Origins
+  summary: The party uncovers the ancient origins of their invitation, tracing the
+    threads that connect their individual histories to the great catastrophe that
+    reshaped Ashiorid. They discover that their arrival was not chance but part of
+    a carefully orchestrated plan that spans centuries.
+  continuity_in: The party has started to understand how their paths led them here,
+    and that their individual fates are intertwined with the grand narrative of Ashiorid's
+    history.
+  continuity_out: The party now knows that their journey was not random but part of
+    an ancient plan, one that may require all of them to make sacrifices or face dire
+    consequences.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-27-n0-w1
+    kind: ambient
+    prompt: The party discovers that their invitation was part of a larger program
+      designed to gather specific individuals before the great catastrophe.
+    lore:
+    - the-begene-program
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-27-n0-w2
+    kind: ambient
+    prompt: As they trace the origins of their arrival, the party realizes that their
+      fates were woven into a grand design that spans centuries.
+    lore:
+    - the-event
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-27-n0-w3
+    kind: ambient
+    prompt: The party begins to understand that their individual histories are connected
+      to the great catastrophe, and that they may be key players in an ancient plan.
+    lore:
+    - the-bahadur
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-27-n0-w4
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+malmont-arrival-arc-loop1-27-n1:
+  node_id: malmont-arrival-arc-loop1-27-n1
+  parent_id: malmont-arrival-arc-loop1-27
+  order: 1
+  depth: 1
+  title: Echoes of the Age of War
+  summary: Through deep investigation into the Age of War, the party learns how their
+    individual destinies are woven into the larger tapestry of Ashiorid's greatest
+    conflict. They discover that the catastrophe they've been sent to prevent was
+    merely one chapter in an ongoing struggle that demands their sacrifice.
+  continuity_in: The party now knows that their journey was not random but part of
+    an ancient plan, one that may require all of them to make sacrifices or face dire
+    consequences.
+  continuity_out: The party understands they are part of a grand design that spans
+    millennia and must prepare for the ultimate test of their combined destinies.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malmont-arrival-arc-loop1-27-n1-echo-1
+    kind: ambient
+    prompt: The party discovers how their individual destinies are woven into the
+      larger tapestry of Ashiorid's greatest conflict
+    lore:
+    - the-event
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-27-n1-echo-2
+    kind: ambient
+    prompt: They learn how their mysterious arrival connects to the great catastrophe
+      that changed everything
+    lore:
+    - amulet-of-wonder
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malmont-arrival-arc-loop1-27-n1-echo-3
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

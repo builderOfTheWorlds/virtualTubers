@@ -1,0 +1,38 @@
+id: night-watch
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:15.915640+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The stars are still visible, I think.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Vigil: Yeah, they''re pretty clear.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I don''t know how we''re not bored out of our minds yet.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: What do you mean?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I mean, this is just sitting here, right? Nothing''s happening.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Vigil: We know that, but...'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Oh, I hear crickets. They''re really loud.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: That''s weird, I don''t hear anything.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Just wind, I think.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Vigil: I was thinking we could wake the others up early.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I don''t know, it''s pretty quiet.'

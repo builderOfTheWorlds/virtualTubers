@@ -1,0 +1,64 @@
+the-vault-arc-loop1:
+  node_id: the-vault-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party discovers what the Letos have been guarding in the subbasement,
+    and le
+  summary: The party discovers what the Letos have been guarding in the subbasement,
+    and learns about the true nature of the seal.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-loop1-n0
+  - the-vault-arc-loop1-n1
+  slots: null
+the-vault-arc-loop1-n0:
+  node_id: the-vault-arc-loop1-n0
+  parent_id: the-vault-arc-loop1
+  order: 0
+  depth: 1
+  title: The Hidden Vault Revealed
+  summary: The party descends into the subbasement and discovers the ancient vault
+    guarded by the Letos, where they find artifacts and records that reveal the true
+    nature of the seal and its connection to the amulet's power. They uncover the
+    history of the seal's creation and understand why it was so carefully protected.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has discovered the vault's contents and learned about
+    the seal's true nature, but they are still uncertain about how to proceed with
+    the amulet quest.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+the-vault-arc-loop1-n1:
+  node_id: the-vault-arc-loop1-n1
+  parent_id: the-vault-arc-loop1
+  order: 1
+  depth: 1
+  title: The Seal's True Purpose
+  summary: Through careful examination of the ancient texts and artifacts in the vault,
+    the party learns that the seal was created not merely to contain evil, but to
+    prevent a catastrophic event that could destroy the realm itself. They discover
+    the amulet's role as both key and shield, understanding the immense stakes involved
+    in their quest.
+  continuity_in: The party has discovered the vault's contents and learned about the
+    seal's true nature, but they are still uncertain about how to proceed with the
+    amulet quest.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

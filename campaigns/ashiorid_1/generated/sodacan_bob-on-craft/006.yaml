@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:14:48.861261+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this is a perfect example of a late 19th century carriage
+    axle.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no, just listen to me for one minute, I've been studying these things.
+- kind: dialogue
+  speaker: Vigil
+  text: Is that the kind of metal they used to make them durable?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I hold it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, yes, now you're showing some real interest, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The maker was likely a small shop in the Midwest, not one of the big factories.
+- kind: dialogue
+  speaker: chadwick
+  text: We're never going to make it to camp at this pace.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's the detailing that really sets this one apart, the way the bracket is
+    attached.
+- kind: dialogue
+  speaker: Vigil
+  text: Is that a rivet or a bolt?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rivet, yes, and see how it's countersunk to avoid cracking the wood.

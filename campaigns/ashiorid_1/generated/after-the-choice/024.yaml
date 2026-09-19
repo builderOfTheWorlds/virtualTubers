@@ -1,0 +1,35 @@
+id: after-the-choice
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:03.440838+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're standing in the middle of it now
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) I know
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I miss it
+- kind: dialogue
+  speaker: Vigil
+  text: (softly) We can't go back
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs) At least we're... (pauses)
+- kind: dialogue
+  speaker: gm
+  text: '...safe'
+- kind: dialogue
+  speaker: chadwick
+  text: (after a long pause) For now
+- kind: dialogue
+  speaker: Leena
+  text: (barely above a whisper) It's not over
+- kind: dialogue
+  speaker: Vigil
+  text: (slowly) Nothing's ever over
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (low, barely audible) Maybe we'll find a way to make peace with that

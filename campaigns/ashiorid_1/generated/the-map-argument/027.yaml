@@ -1,0 +1,32 @@
+id: the-map-argument
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:36.604660+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, team.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, wait, wait. I think Leena misread the map.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't misread it, Chadwick. I just didn't agree with your interpretation.
+- kind: dialogue
+  speaker: chadwick
+  text: My interpretation? I'm the one who knows how to read a map.
+- kind: dialogue
+  speaker: Leena
+  text: That's not true and you know it.
+- kind: dialogue
+  speaker: chadwick
+  text: I do too know it! I'm a skilled navigator, unlike some people.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, come on. It's just a disagreement.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no. This is a travesty. A travesty, I tell you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we please just keep moving?

@@ -1,0 +1,39 @@
+id: sodacan_bob-on-runes
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:22.348592+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A good strike, that's what I'm thinking about, how a die is struck, the weight
+    of the hammer, the angle of the blade.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Like anyone's got the time for that sort of thing anymore.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deep enough to withstand the elements, that's the key. I've seen runes carved
+    into stone that'll outlast empires.
+- kind: dialogue
+  speaker: Leena
+  text: (curious) Sodacan Bob, who do you think would still have the patience for
+    that kind of work?
+- kind: dialogue
+  speaker: Vigil
+  text: (joking) Oh, maybe the same people who think it's a good idea to talk shop
+    in the middle of the day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (irritated) What's it to you, Vigil? I'm just thinking out loud.
+- kind: dialogue
+  speaker: chadwick
+  text: (serious) Actually, Bob, I've been wondering the same thing. If the Malvakar's
+    runes are that old, who could have carved them?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (defensive) I said I was thinking out loud! Nobody asked me to answer any
+    questions!
+- kind: dialogue
+  speaker: gm
+  text: (amused) It seems we've all been struck by the mystery of the Malvakar. For
+    now, it remains a puzzle.

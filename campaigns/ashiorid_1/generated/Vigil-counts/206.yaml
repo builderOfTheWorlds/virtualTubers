@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 206
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:32.296424+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The room is small, we've got three people on the other side of the fire, and
+    one of them's stirring the stew.
+- kind: dialogue
+  speaker: chadwick
+  text: What's to stir?
+- kind: dialogue
+  speaker: Leena
+  text: Just getting it hot for us.
+- kind: dialogue
+  speaker: Vigil
+  text: The door's to our left, it swings open inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should get it fixed before we leave, maybe it's been like that for ages.
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine, it's not going anywhere.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and look, the shutter's been patched up recently.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart went by twice, maybe someone forgot something.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's not get worked up about it, let's eat.

@@ -1,0 +1,38 @@
+id: road-talk
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T18:59:40.714566+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vabokedos is like a city of spires, with streets that wind
+    on forever and markets that smell of spices.
+- kind: dialogue
+  speaker: Leena
+  text: I grew up in a village surrounded by the great forest of Eridu, where the
+    trees are taller than any building and the air is sweet with the scent of blooming
+    flowers.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) Nafsari... it's a place of sand and rock, where the sun beats down
+    and the wind whips at your clothes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Ah, but Vabokedos has its own kind of wind, one that carries the
+    whispers of the ancients.
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitates) We're getting close to sunset. We should find a place to rest.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure we'll find a nice spot to camp, like the one I used to sleep under
+    when I was a child.
+- kind: dialogue
+  speaker: Vigil
+  text: (quickly) Yes, plenty of places to rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can tell you about the markets in Vabokedos, if you'd like.
+- kind: dialogue
+  speaker: gm
+  text: We need to keep moving, though.

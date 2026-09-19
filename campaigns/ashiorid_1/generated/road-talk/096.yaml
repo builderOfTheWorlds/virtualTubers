@@ -1,0 +1,32 @@
+id: road-talk
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:51.692523+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, not much to see.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I told you, there's a spring about a mile back.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's coast is... rocky.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos, it's a small place, plenty of markets.
+- kind: dialogue
+  speaker: Leena
+  text: I used to climb those hills every day.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about dinner.
+- kind: dialogue
+  speaker: Vigil
+  text: Sorry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should try the fresh fish we caught yesterday.

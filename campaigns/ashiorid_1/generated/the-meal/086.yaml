@@ -1,0 +1,44 @@
+id: the-meal
+take: 86
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:47.044608+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm tellin' ya, Bob's got some issues with presentation, let alone seasoning,
+    if you ask me.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be too hard on Bob! It's not like it's the worst meal
+    we've ever had!
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Chadwick) Here, you can have it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done this way better, no offense to Bob, of course.
+- kind: dialogue
+  speaker: Leena
+  text: I think Bob was trying to make it special, let's just...
+- kind: dialogue
+  speaker: chadwick
+  text: (takes Vigil's portion) Thanks, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, that pot's been used for, what, three weeks now? You'd think we'd
+    get a new one.
+- kind: dialogue
+  speaker: Leena
+  text: That's not really Bob's fault, it's just...
+- kind: dialogue
+  speaker: Vigil
+  text: (hands a piece of food back to Leena) Here, take this.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) Just drop it, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've scrubbed that pot a thousand times better, for sure.

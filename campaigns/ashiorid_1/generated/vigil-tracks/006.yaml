@@ -1,0 +1,35 @@
+id: vigil-tracks
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:43:30.740257+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're getting close to the border.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I can smell the spices from the vendors.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Spices? What spices?
+- kind: dialogue
+  speaker: Leena
+  text: Smoked fish, mostly.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move in quietly.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't like the looks of that tree.
+- kind: dialogue
+  speaker: Leena
+  text: It's dead, don't worry.
+- kind: dialogue
+  speaker: Vigil
+  text: See how the branches are all snapped off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What happened to it?
+- kind: dialogue
+  speaker: Vigil
+  text: I think it got struck by lightning.

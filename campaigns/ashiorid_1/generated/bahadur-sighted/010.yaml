@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:07.956897+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Did you see that?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: I saw it.
+- kind: dialogue
+  speaker: Vigil
+  text: Which way did it go?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can't say.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: My eyes are fine, I'm telling you.
+- kind: dialogue
+  speaker: Leena
+  text: I'll check for tracks.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't waste your time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's take a short rest.
+- kind: dialogue
+  speaker: gm
+  text: We can't afford to linger.
+- kind: dialogue
+  speaker: chadwick
+  text: Too exposed here.

@@ -1,0 +1,41 @@
+id: night-watch
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:57.115019+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I'm thinking we can wake Leena and Chadwick early.
+- kind: dialogue
+  speaker: gm
+  text: No, let them sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: I know they're tired.
+- kind: dialogue
+  speaker: gm
+  text: I've been watching the sky.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, it's a nice view.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What time is it?
+- kind: dialogue
+  speaker: chadwick
+  text: (groggily) I don't know.
+- kind: dialogue
+  speaker: Vigil
+  text: I was thinking we could... (pauses)
+- kind: dialogue
+  speaker: gm
+  text: What were you thinking?
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs quietly) Never mind.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Do you hear that?
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) Hear what?

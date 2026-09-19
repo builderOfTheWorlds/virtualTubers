@@ -1,0 +1,35 @@
+id: the-meal
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:04.937775+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not sure who cooked dinner tonight, but it's... a meal.
+- kind: dialogue
+  speaker: chadwick
+  text: Doesn't matter who cooked it, let's just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Oh come on, it's not that bad! Let's make the best of it, shall we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if I had done it, it would've been better, I've got my methods.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks.
+- kind: dialogue
+  speaker: Leena
+  text: So, who's cooking tomorrow? Someone please volunteer.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not cooking, I'm not wasting my time on this mess.
+- kind: dialogue
+  speaker: gm
+  text: I think Sodacan Bob is volunteering, actually.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This pot hasn't been cleaned in weeks, I'm surprised it's still edible.

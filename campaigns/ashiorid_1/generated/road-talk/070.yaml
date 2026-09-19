@@ -1,0 +1,35 @@
+id: road-talk
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T22:22:03.428990+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, and we still have hours to go.
+- kind: dialogue
+  speaker: chadwick
+  text: At least it's not raining.
+- kind: dialogue
+  speaker: Leena
+  text: I remember my village, the river runs right through it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Leena) Vabokedos is like that, but with mountains.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's a place where the air is always thick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) Yeah, and the food! The bread is incredible!
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) My village has the best bread in all the lands.
+- kind: dialogue
+  speaker: chadwick
+  text: (suddenly serious) Enough about bread.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing, then changing subject) How much farther do we have to go?
+- kind: dialogue
+  speaker: gm
+  text: (gesturing ahead) I don't know, but it looks like the road just keeps going.

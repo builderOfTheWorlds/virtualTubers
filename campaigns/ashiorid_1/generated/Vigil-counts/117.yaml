@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 117
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:59.397020+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the scene look like in here, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I notice the door to our left opens outward, and the one to the right swings
+    inward.
+- kind: dialogue
+  speaker: chadwick
+  text: That's... pretty normal, I guess.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I didn't even notice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anything else, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I did see that someone's fixed the shutter on the window over there recently.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: What was the last thing that cart was carrying, do we remember?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just some crates, I think.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it just looked like random stuff.
+- kind: dialogue
+  speaker: Vigil
+  text: I saw it pass by again a little while ago.

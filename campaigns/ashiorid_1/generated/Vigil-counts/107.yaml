@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:17.653772+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, carry on from where we left off.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just going to take a look around this place.
+- kind: dialogue
+  speaker: Leena
+  text: What's that, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing, I'm just... making sure we're alone.
+- kind: dialogue
+  speaker: Vigil
+  text: I notice the door on the far wall opens inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's one of those fancy hinges.
+- kind: dialogue
+  speaker: Vigil
+  text: The people in the room, there are nine of them.
+- kind: dialogue
+  speaker: gm
+  text: Okay, that's a lot of people. Anything else?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that window was just repaired, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not our problem, let's move on.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, who repairs shutters around here?
+- kind: dialogue
+  speaker: gm
+  text: Does anyone remember which direction the second cart came from?

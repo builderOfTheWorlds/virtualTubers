@@ -1,0 +1,42 @@
+id: sodacan_bob-on-craft
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:43.729311+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This gate, I'm pretty sure it's a local design, made right here in the region.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move. We've got miles to cover.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what's the significance of the bracket on the door?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's a reinforcement for the hinges, makes it easier to open and close.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love the craftsmanship on the wagon axle. It's so... intricate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, it's a wonderful example of the artisan's attention to detail.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it sturdy enough to withstand heavy loads?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Absolutely, this wagon was designed for hauling goods over long distances.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see why we're stopping for this. We'll just have to carry the gear.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but that's not the point, Chadwick. The point is to appreciate the craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I think I see some tool marks on the blade. What do you think, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, excellent observation, Leena. It looks like this was forged on a
+    local anvil.

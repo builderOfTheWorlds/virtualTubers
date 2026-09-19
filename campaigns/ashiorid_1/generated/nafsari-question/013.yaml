@@ -1,0 +1,38 @@
+id: nafsari-question
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:59.815096+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Growing up with the wood elves of Nafsari was...different.
+- kind: dialogue
+  speaker: chadwick
+  text: Different?
+- kind: dialogue
+  speaker: Vigil
+  text: Yes.
+- kind: dialogue
+  speaker: Leena
+  text: Do you miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: Sometimes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it like sometimes?
+- kind: dialogue
+  speaker: Vigil
+  text: Quiet.
+- kind: dialogue
+  speaker: gm
+  text: Quiet?
+- kind: dialogue
+  speaker: Vigil
+  text: It's a sound.
+- kind: dialogue
+  speaker: chadwick
+  text: A sound, not a silence?
+- kind: dialogue
+  speaker: Vigil
+  text: It's a difference.

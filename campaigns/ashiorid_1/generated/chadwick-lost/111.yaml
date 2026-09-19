@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:32.283646+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. I think the next village is due east.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I know. I'm just... taking my time to get my bearings.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I can help you with that. Why don't I take the lead for
+    a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, it's fine. I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) I think you're heading in the wrong direction, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is great. Chadwick, you're lost again, aren't you?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing softly) Sodacan Bob, please.
+- kind: dialogue
+  speaker: chadwick
+  text: I am not lost. I'm just... reconnoitering.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Right. Let's move.

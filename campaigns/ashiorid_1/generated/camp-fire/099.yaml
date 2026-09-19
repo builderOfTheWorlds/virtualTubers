@@ -1,0 +1,35 @@
+id: camp-fire
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:28.747458+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to decide on the watch order for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should take turns, Bob can go first then Leena, then Vigil...
+- kind: dialogue
+  speaker: Vigil
+  text: I can see the embers.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long it takes for a fire to burn out of fuel?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It depends on how well it's laid, Bob's got a system...
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, what exactly is your system?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I call it the Bob-Method, it's a series of layered...
+- kind: dialogue
+  speaker: gm
+  text: That's enough, we've got time for the watch order.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to be there when the sun comes up.

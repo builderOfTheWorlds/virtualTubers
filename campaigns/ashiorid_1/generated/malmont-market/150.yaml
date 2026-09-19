@@ -1,0 +1,35 @@
+id: malmont-market
+take: 150
+model: llama3.1:8b
+generated_at: '2026-09-18T23:50:47.186169+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Mornings in Malmont can be... dull, but they're not usually this dull.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think that's a good thing.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, I couldn't help but notice your maps. What's this one?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, I was hoping to find some decent work here. This smithwork's a joke.
+- kind: dialogue
+  speaker: Vigil
+  text: (low voice) Just looking. Don't mind me.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, it seems you're... not well known here.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) That's just fine by me.
+- kind: dialogue
+  speaker: Leena
+  text: These maps... they feel old. Like they're from another life.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better metalwork at a traveling blacksmith's tent.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing a nearby vendor) Anything I should know about this place?

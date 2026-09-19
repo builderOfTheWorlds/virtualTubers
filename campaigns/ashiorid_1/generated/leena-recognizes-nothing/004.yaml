@@ -1,0 +1,29 @@
+id: leena-recognizes-nothing
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:22.588879+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've been quiet for a while, Leena. What caught your eye?
+- kind: dialogue
+  speaker: Leena
+  text: This hill, the way it slopes - I almost recognized it.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing to see here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just a familiar shape from a book or a painting.
+- kind: dialogue
+  speaker: chadwick
+  text: How's the walking? Are you ready for a break?
+- kind: dialogue
+  speaker: Leena
+  text: It feels like I've seen it before, but I know I haven't.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll take a break soon, I promise.

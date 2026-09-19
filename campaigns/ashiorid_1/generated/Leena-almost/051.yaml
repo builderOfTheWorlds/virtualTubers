@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:56.829123+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you notice something familiar in front of you, but you can't quite
+    put your finger on what it is.
+- kind: dialogue
+  speaker: Leena
+  text: I say it out loud because I always do.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw one like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I think I did, but... I don't know, it's just not right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's nothing, Leena. It's just your memory playing tricks on you.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, don't tell me what to do. I can handle myself.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not telling you what to do, Leena. I'm just saying be careful.
+- kind: dialogue
+  speaker: Leena
+  text: I'll be fine. Thanks for the advice, though.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should get going, Leena. We don't want to be late for dinner.
+- kind: dialogue
+  speaker: gm
+  text: The conversation dies down as you all continue on your way.

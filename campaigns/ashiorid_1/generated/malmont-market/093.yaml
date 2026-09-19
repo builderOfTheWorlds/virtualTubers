@@ -1,0 +1,45 @@
+id: malmont-market
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:46.416384+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Morning, folks. Welcome to Malmont. What can I do for you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Show me your best work. I've seen some decent smithing in my day.
+- kind: dialogue
+  speaker: gm
+  text: Ah, you're looking at Gorm's shop. He's a... creative fellow.
+- kind: narration
+  speaker: gm
+  text: 'vigi: (eyeing a nearby stall) I''ll take a look around.'
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling at a passing townsman) Morning.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, what's the history of this town like? I see a lot of old buildings.
+- kind: dialogue
+  speaker: gm
+  text: Malmont's been around a long time. A few generations of a single family owned
+    most of the land, but... (lowering voice) There's been some trouble.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Trouble? I'm not seeing any trouble. (looking at a nearby stall) This fellow's
+    work is passable at best.
+- kind: narration
+  speaker: gm
+  text: 'vigi: (spotting a shady character lurking in an alley) Yeah, I''m not seeing
+    any trouble either.'
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) I think we're just getting a warm welcome.
+- kind: dialogue
+  speaker: Leena
+  text: (browsing through a stall) Do you know anything about these old maps?
+- kind: dialogue
+  speaker: gm
+  text: (watching Chadwick with interest) You're a long way from home, friend. What
+    brings you to Malmont?

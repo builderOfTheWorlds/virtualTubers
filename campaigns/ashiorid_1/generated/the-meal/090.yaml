@@ -1,0 +1,41 @@
+id: the-meal
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:20.530870+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, who's going to start with the blessing?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, isn't it lovely that we're all gathered together like this? It feels like
+    a real celebration.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if I were cooking, this would be a feast. I'd use a marinade,
+    and a nice glaze...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: '...and I''d make sure the seasoning is just right, not too much salt, not
+    too much pepper...'
+- kind: dialogue
+  speaker: gm
+  text: Hold up, who cooked today?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm the one who knows how to cook, if you want a good meal...
+- kind: dialogue
+  speaker: chadwick
+  text: I'm cooking tomorrow.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I thought I was cooking tomorrow!
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's just calm down...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying, if you just follow the recipe, it's not that hard...
+- kind: dialogue
+  speaker: chadwick
+  text: Just stop...

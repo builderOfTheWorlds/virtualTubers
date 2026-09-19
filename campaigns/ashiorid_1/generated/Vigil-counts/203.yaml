@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 203
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:20.008039+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Vigil mentions it once, plainly, without making a case out of it.
+- kind: dialogue
+  speaker: gm
+  text: Ah, yeah? What'd you notice?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, that the cart's going back by the market stalls again?
+- kind: dialogue
+  speaker: Leena
+  text: I saw it too, it's just the market schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Does that mean something?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Alright then, let's get back to the task at hand.
+- kind: dialogue
+  speaker: Leena
+  text: We can't even remember what we were doing before we got distracted.
+- kind: dialogue
+  speaker: chadwick
+  text: I thought we were talking to that merchant?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: He said he needed to consult with his accountant.
+- kind: dialogue
+  speaker: Vigil
+  text: That's still what he said.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on.

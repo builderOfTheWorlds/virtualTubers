@@ -1,0 +1,38 @@
+id: camp-fire
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:34.532144+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. It's not safe to just sit here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid a mite too loosely. Might be a problem come morning.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames are six inches high.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even having a plan if the rain just keeps coming?
+- kind: dialogue
+  speaker: chadwick
+  text: That's not the point! We have to be prepared.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Bob, the problem's not the rain, it's the fire.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens to the world when the magic runs out?
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is not an answer.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous. We're just going to sit here all night?
+- kind: dialogue
+  speaker: gm
+  text: We can't do anything until morning, I suppose.

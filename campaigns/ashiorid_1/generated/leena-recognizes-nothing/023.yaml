@@ -1,0 +1,41 @@
+id: leena-recognizes-nothing
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:32.639164+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road winds ahead, the hill rises up to your left.
+- kind: dialogue
+  speaker: Leena
+  text: I almost remembered something.
+- kind: dialogue
+  speaker: chadwick
+  text: So, have you ever been to a place that felt... familiar?
+- kind: dialogue
+  speaker: Leena
+  text: No, not exactly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just the way the light hits the buildings.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing to concern yourselves with.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it just... feels like somewhere I've been.
+- kind: dialogue
+  speaker: gm
+  text: A bird calls out from a nearby tree.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, have you ever thought about taking a trip?
+- kind: dialogue
+  speaker: Leena
+  text: What for?
+- kind: dialogue
+  speaker: gm
+  text: The trees are starting to change color.
+- kind: dialogue
+  speaker: Vigil
+  text: We should keep moving.

@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:50.942144+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trees seem to close in a little more after that.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got my crossbow ready.
+- kind: dialogue
+  speaker: Leena
+  text: Ashiorid, what did you see?
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hold up, I saw something.
+- kind: dialogue
+  speaker: gm
+  text: It was just a shadow.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't afford to stop.
+- kind: dialogue
+  speaker: Leena
+  text: But I think Sodacan Bob is right.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving, keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw something that moved wrong.

@@ -1,0 +1,36 @@
+id: inventory-argument
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:24.634292+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, I had that spare water bottle in my pack this morning.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it's in Leena's bag, I saw it when we stopped for lunch.
+- kind: dialogue
+  speaker: Leena
+  text: I do not have your water bottle, Chadwick, I have my own.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we please just label our bags for once?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Labels are so last season, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Anyway, I'm glad we're arguing about this because...
+- kind: dialogue
+  speaker: chadwick
+  text: because the water bottle showed up in my bag and I found this nice new dagger
+    instead.
+- kind: dialogue
+  speaker: Leena
+  text: That's not mine either, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone's just happy to have a shiny new toy, aren't you, Chadwick?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ooh, nice dagger, Chadwick.

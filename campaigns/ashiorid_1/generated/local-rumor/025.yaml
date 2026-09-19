@@ -1,0 +1,33 @@
+id: local-rumor
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:54.815806+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Folks are worried about something moving through the town at night, but nobody
+    talks about it in public.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like every town we've passed through.
+- kind: dialogue
+  speaker: Leena
+  text: I've been trying to catch a few words, but I think it's just a local legend.
+- kind: dialogue
+  speaker: Vigil
+  text: No need to worry about it, we're just passing through.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's what I like about it, not being a major concern.
+- kind: dialogue
+  speaker: gm
+  text: Still, some folks seem nervous about leaving their homes after dark.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe it's just the constable's watch that makes them feel secure.
+- kind: dialogue
+  speaker: chadwick
+  text: That and the magic shops being so close together.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blacksmiths being cold seems like a bigger concern to me.

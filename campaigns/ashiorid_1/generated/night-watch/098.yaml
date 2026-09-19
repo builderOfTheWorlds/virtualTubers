@@ -1,0 +1,43 @@
+id: night-watch
+take: 98
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:29.300146+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are so bright tonight, they're like a thousand tiny lanterns.
+- kind: dialogue
+  speaker: chadwick
+  text: I know what you mean. I saw a shooting star just now.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: About two in the morning, Leena. You were having a good dream, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) What's going on?
+- kind: dialogue
+  speaker: gm
+  text: Nothing, just keeping watch. Go back to sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I like the way the stars are spread out. It's like a map of the world.
+- kind: dialogue
+  speaker: Leena
+  text: (sits up) A map of what world? We've never seen any stars like that before.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Just a figure of speech, Leena. Don't worry about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns again) I'm worried about when we wake up the others. We should wake
+    them early, in case something happens.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses again) I don't know... it's not like we're expecting anything, are
+    we?
+- kind: dialogue
+  speaker: gm
+  text: (pauses) No, I guess not. But better safe than sorry.

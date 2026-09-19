@@ -1,0 +1,38 @@
+id: camp-fire
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:45.070215+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We'll need to take turns keeping watch, just in case.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle on a rotation. Leena, can you take first watch?
+- kind: dialogue
+  speaker: Leena
+  text: What's the point? It's not like we can do anything if something happens.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's burning well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I laid it just so, it's a good spot.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you take notes on the watch order?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but someone needs to get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain'll let up by morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, it's been coming down like this for days.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will last.
+- kind: dialogue
+  speaker: gm
+  text: Alright, then. Let's get some rest.

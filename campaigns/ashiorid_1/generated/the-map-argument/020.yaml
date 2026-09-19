@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:46.785742+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've got the map out, let's get moving.
+- kind: dialogue
+  speaker: Leena
+  text: I thought we were taking the shortcut.
+- kind: dialogue
+  speaker: Vigil
+  text: I thought you were the one who brought the map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, yeah, I thought that was my job.
+- kind: dialogue
+  speaker: gm
+  text: No, no, it's just a matter of interpreting the symbols.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it, I've got it, it's all about the compass roses.
+- kind: dialogue
+  speaker: Leena
+  text: That's not even relevant, we're taking a road.
+- kind: dialogue
+  speaker: chadwick
+  text: But it's about the principles of navigation, it's art.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we please just move, we've wasted enough time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm getting a cramp from standing here.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright, let's try this another way.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it, I'm the map master.

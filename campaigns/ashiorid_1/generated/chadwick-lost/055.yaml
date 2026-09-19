@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T20:04:38.892951+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so Chadwick is leading the party and they're not entirely sure where
+    they are.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we're going.
+- kind: dialogue
+  speaker: gm
+  text: Okay, well let's just confirm that, Chadwick. Vigil, do you know where we
+    are?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I can take a look at the map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Maybe, Chadwick, if you just admit you're not sure...
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I do know where we're going.
+- kind: dialogue
+  speaker: gm
+  text: Alright, well let's just keep moving and see how things go.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Stupid map, this is going to be a disaster...
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Chadwick, are you okay?
+- kind: dialogue
+  speaker: chadwick
+  text: (gritting teeth) Yeah, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: (smirks) Alright, well let's just keep moving, then.

@@ -1,0 +1,38 @@
+id: camp-fire
+take: 231
+model: llama3.1:8b
+generated_at: '2026-09-18T22:08:50.175897+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should let the fire go out, it's using up too much wood.
+- kind: dialogue
+  speaker: gm
+  text: But it's holding, and we need the warmth.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible to make a fire without any magic at all?
+- kind: dialogue
+  speaker: Vigil
+  text: The embers will keep burning for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it just right, I'm telling you.
+- kind: dialogue
+  speaker: chadwick
+  text: We need a schedule, let's get it over with.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you take the first watch?
+- kind: dialogue
+  speaker: Vigil
+  text: Two hours, then I'll wake you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think it's going to last the night.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we run out of food?

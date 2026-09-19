@@ -1,0 +1,34 @@
+id: camp-fire
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:53.716113+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, this rain isn't showing any signs of letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to settle on a watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid out pretty poorly, to be honest. It's a miracle it's
+    holding.
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke's got a funny smell to it.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible for the fire to burn through the night without
+    us tending it?
+- kind: dialogue
+  speaker: gm
+  text: It's possible, but unlikely.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we should've split the wood into smaller pieces before laying the fire.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is not the absence of sound.
+- kind: dialogue
+  speaker: Leena
+  text: What's the longest you've ever gone without sleep, Chadwick?

@@ -1,0 +1,36 @@
+id: night-watch
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:29.595740+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are really out tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: I know. I was looking at them a bit ago.
+- kind: dialogue
+  speaker: Leena
+  text: Quiet too.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. No crickets.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I love the sound of crickets.
+- kind: dialogue
+  speaker: gm
+  text: Sometimes I think that's what I miss most about being in the city.
+- kind: dialogue
+  speaker: Vigil
+  text: The city's got its own noise.
+- kind: dialogue
+  speaker: chadwick
+  text: Less stars, though.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, then whispers) I used to get up sometimes and watch the moon when
+    I was a kid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (ignoring Leena's admission, still looking at the sky)

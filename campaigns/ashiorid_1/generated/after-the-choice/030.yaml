@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:39.037794+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you okay?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'm fine
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I don't know how you're fine
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: You know exactly what I mean
+- kind: dialogue
+  speaker: Vigil
+  text: (awkwardly) Hey, let's get some water, yeah?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (hesitates) If we want
+- kind: dialogue
+  speaker: chadwick
+  text: (forced laugh) Oh, come on, guys, it's over
+- kind: dialogue
+  speaker: Leena
+  text: (still) It's not over
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's going on?
+- kind: dialogue
+  speaker: Leena
+  text: (long pause) We can't go back
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) Don't talk like that

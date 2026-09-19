@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 231
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:57.990831+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is setting over the city, casting long shadows across the floor.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to grab a room key and get us settled in for the night.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good, I'm starving.
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the lobby right now, counting us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a cart pass by earlier, but I didn't think much of it.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that there are five people in the lobby.
+- kind: dialogue
+  speaker: gm
+  text: The doors to the lobby open inwards, if it matters.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No point, just something I noticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is everything okay?

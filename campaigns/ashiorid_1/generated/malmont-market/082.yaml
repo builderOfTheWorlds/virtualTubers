@@ -1,0 +1,38 @@
+id: malmont-market
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:38.310470+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The town's not very large, but it does have a distinct smell.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I think I recognize the bakery on the corner.
+- kind: dialogue
+  speaker: Leena
+  text: Is that a scone in the window, Mr. Chadwick?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Too many people, too much noise.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take a look at that hammer on the stall, see if it's any good.
+- kind: dialogue
+  speaker: gm
+  text: (gesturing to the market) You can haggle here, but be careful.
+- kind: dialogue
+  speaker: Leena
+  text: I'm looking for maps, old ones. Do you think I'll find any?
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen so many stalls, I'm not sure where to start.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is no better than what we got from the blacksmith back home.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeballing the goods) I'll wait until the prices come down.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, is that a map of the old river routes?

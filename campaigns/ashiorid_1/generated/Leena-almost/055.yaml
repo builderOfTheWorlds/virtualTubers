@@ -1,0 +1,33 @@
+id: Leena-almost
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T19:26:17.319570+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's caught your attention?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw it in your village, it's just a common doorframe.
+- kind: dialogue
+  speaker: Leena
+  text: It's not just that, I've been here before, I don't know why, but...
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sodacan Bob suggests you might have seen a similar doorway in your village,
+    Leena.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, do you have anything to add?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs)
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's not worth the trouble.
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you want to do?

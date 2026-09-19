@@ -1,0 +1,41 @@
+id: malmont-market
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:23.422913+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not paying for a sword that's just going to rust in this damp.
+- kind: dialogue
+  speaker: Vigil
+  text: You don't make the rules here, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Morning, everyone! Lovely day for a stroll.
+- kind: dialogue
+  speaker: Leena
+  text: Do you have any maps of the surrounding countryside?
+- kind: dialogue
+  speaker: Vigil
+  text: What are you looking for, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, nothing. Just curious, I guess.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A blacksmith should know his business, but I've seen some shoddy work here.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll have that apple pastry, thank you.
+- kind: dialogue
+  speaker: Leena
+  text: What's the route like from here to the next town?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Next town's Elmvale, but I wouldn't count on much help there.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's just enjoy the morning, shall we?

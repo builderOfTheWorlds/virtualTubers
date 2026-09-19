@@ -1,0 +1,39 @@
+id: camp-fire
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T19:52:42.374684+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to need you all to get some rest, it's been a long day.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't settle on the watch order yet, who's going to take the first shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire pretty well, it's been burning steady.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, do you think you could just give us a nod if you're going to be okay
+    out there?
+- kind: dialogue
+  speaker: Vigil
+  text: I've been doing this for a long time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, you need to rotate the firewood every hour or so.
+- kind: dialogue
+  speaker: Leena
+  text: What if the rain didn't just stop, what if it's getting worse?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't worry about the rain, we have to focus on the fire.
+- kind: dialogue
+  speaker: gm
+  text: Someone, please, just check the fire every hour or so.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's fine, I've got an eye on it.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to be a long night.

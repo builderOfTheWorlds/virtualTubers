@@ -1,0 +1,36 @@
+id: the-ring-half
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:40:33.306183+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's take a moment here, just the two of you.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses, looks at the signet ring) I never thought it would feel this way.
+- kind: dialogue
+  speaker: Leena
+  text: (leans in) What do you think it means, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugs) I don't know. I just...I feel like I've been lying to myself.
+- kind: dialogue
+  speaker: Vigil
+  text: (speaks up from a short distance away) Is it true that we're the product of
+    some breeding program?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) I thought that was just a rumor, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Oh, it's a rumor that's turned out to be true.
+- kind: dialogue
+  speaker: chadwick
+  text: (looks at the ring again) This is the proof, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) But what does it prove, really?
+- kind: dialogue
+  speaker: gm
+  text: (pauses) I suppose that's what you need to figure out.

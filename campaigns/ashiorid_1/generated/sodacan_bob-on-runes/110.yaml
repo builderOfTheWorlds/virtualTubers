@@ -1,0 +1,41 @@
+id: sodacan_bob-on-runes
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-19T00:07:26.528132+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A rune that's too shallow won't last, not a chance. Weather's got no mercy,
+    even in this climate.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the minimum depth, Bob, if it's supposed to last?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Depends on the stone, but I'd say at least a tenth of an inch.
+- kind: dialogue
+  speaker: Leena
+  text: And what about the material? Different materials have different...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you want to get into metallurgy now? Fine. You get a good granite, you
+    can carve deeper.
+- kind: dialogue
+  speaker: Vigil
+  text: I thought the Malvakar was a temple, not a tombstone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Temple, tombstone, it's all just stone to me.
+- kind: dialogue
+  speaker: gm
+  text: Bob, how do you think someone would even...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How do I think someone would... what, go to all this trouble?
+- kind: dialogue
+  speaker: Leena
+  text: I was going to ask how someone managed to keep the runes legible after all
+    these years.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, you want to know the secret to making runes last? Patience.

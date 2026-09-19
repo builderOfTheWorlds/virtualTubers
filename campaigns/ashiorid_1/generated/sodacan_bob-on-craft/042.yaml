@@ -1,0 +1,43 @@
+id: sodacan_bob-on-craft
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:49:53.746988+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Now we're approaching a bit of a clearing.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, now, Chadwick, just look at this. It's a gate hinge.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's been here for a while, hasn't it, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's right, Leena. This is definitely hand-forged, and I'd say late 19th
+    century at the earliest.
+- kind: dialogue
+  speaker: Vigil
+  text: How much do you think it weighs?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let me see... it's a good sturdy piece of metal, but I think it's actually
+    a bit lighter than you'd expect for something like that.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Bob, this is just a bit of scrap metal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but that's where you're wrong, Chadwick! This is a fine example of...
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Actually, I think we can leave that right there for now.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just wondering, does it look like it's been tampered with at all?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Sodacan Bob's face is getting all red again.

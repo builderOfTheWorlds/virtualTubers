@@ -1,0 +1,41 @@
+id: camp-fire
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:39.820780+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the damage from tonight's rain?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll need to clear the shelter before we can think about moving on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire was laid a bit too low, it's got a poor draft.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire'll last till dawn if we keep it fed.
+- kind: dialogue
+  speaker: Leena
+  text: Can magic influence the weather?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, what are you talking about?
+- kind: dialogue
+  speaker: Leena
+  text: Just wondering.
+- kind: dialogue
+  speaker: gm
+  text: We need to decide who takes the next watch.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, Vigil's on second.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not how I'd do it, I'd put Leena on second.
+- kind: dialogue
+  speaker: Vigil
+  text: It doesn't matter.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean it doesn't matter?

@@ -1,0 +1,26 @@
+id: Vigil-counts
+take: 258
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:08.875435+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashaorid: The shutter on the east wall has been repaired recently.'
+- kind: dialogue
+  speaker: chadwick
+  text: What's the big deal about a shutter?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just that it was new, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't notice anything out of the ordinary.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just being a worrier, Vigil.
+- kind: narration
+  speaker: gm
+  text: 'Ashaorid: There''s been no issue with the shutter''s condition.'
+- kind: dialogue
+  speaker: Vigil
+  text: I was just observing.

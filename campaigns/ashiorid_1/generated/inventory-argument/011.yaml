@@ -1,0 +1,42 @@
+id: inventory-argument
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:11.599965+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, Chadwick, you're not even trying to keep track of what's what.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just as tired of this constant arguing, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, I had the map in my pack last I remember.
+- kind: dialogue
+  speaker: Vigil
+  text: I thought it was in the other bag, the one Sodacan Bob took from the lodge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but I also have the coffee thermos, which was somehow magically in my
+    pack.
+- kind: dialogue
+  speaker: chadwick
+  text: You know, Sodacan Bob, that's exactly what I'm talking about.
+- kind: dialogue
+  speaker: Leena
+  text: If we just labeled everything, we wouldn't be having this conversation.
+- kind: dialogue
+  speaker: gm
+  text: Labels wouldn't make a difference, Leena, Chadwick's just a slob.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, the coffee thermos is a nice find, Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, someone's always finding stuff in the wrong pack.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and nobody ever loses anything, it's just a big mess.
+- kind: dialogue
+  speaker: chadwick
+  text: This is not a big mess, it's just a symptom of our lack of labels.

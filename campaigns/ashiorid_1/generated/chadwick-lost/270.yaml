@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 270
+model: llama3.1:8b
+generated_at: '2026-09-18T23:49:07.287884+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we need to head east to reach the next settlement.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we'd go due south, I think that's the most direct route.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I was thinking we could cut through the forest, it might
+    be faster.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure due south is the way to go.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighing) I think I know the area, if you'd like a suggestion, I can give
+    you one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is great, they're arguing over the route.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, it's okay if you're not sure, we can work it out together.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive due south is the way, trust me.
+- kind: dialogue
+  speaker: Vigil
+  text: (patiently) If you'd like, I can just show you on the map.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Let's just take a look at the map, and we'll go from there.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling at Chadwick) You can always ask for help, you know.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need help, I just need to see the trail.

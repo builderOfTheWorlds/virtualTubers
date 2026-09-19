@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-19T00:05:57.166775+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You've got to strike a die like it's a letter, firm but not too hard, or the
+    mark won't last.
+- kind: dialogue
+  speaker: chadwick
+  text: I've seen Sodacan's work on the guild hall doors, it's like nothing else in
+    the city.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Weather's the real killer, not the people, it's a matter of how deep you cut.
+- kind: dialogue
+  speaker: Leena
+  text: Can you do it, Sodacan? Carve a mark that'll last a thousand years?
+- kind: dialogue
+  speaker: Vigil
+  text: I thought you were just messing with us, Sodacan, you don't actually think
+    you can—
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not a matter of thinking, it's a matter of technique.
+- kind: dialogue
+  speaker: gm
+  text: Anyone know where we might find someone who still knows how to do that kind
+    of work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The master of the old smithy in Brindlemark might know someone, but I don't
+    know if it's worth the journey.

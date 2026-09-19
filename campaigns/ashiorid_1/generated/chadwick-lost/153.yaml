@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 153
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:35.669927+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, and I'm starting to get a bit concerned about
+    our progress.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, I know where we are.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Chadwick, you have no idea where we are, do you?
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) I do too know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (patiently) Actually, I do know where we are, Chadwick. I was just waiting
+    for you to ask.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Yeah, good one, Vigil! Chadwick's just winging it as usual!
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) Shut up, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (offering a compromise) Look, Chadwick, why don't we just ask Vigil to confirm,
+    and then we can be sure we're on the right track?
+- kind: dialogue
+  speaker: chadwick
+  text: (refusing) No, no, I'm fine. We're going the right way.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Alright, well, let's just keep moving then.

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 145
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:32.635267+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down in sheets, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we should get the watch order settled.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, that's a proper fire they laid. I could give those boys a lesson or two.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to be dark soon.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire's going to last the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we keep it fed, it should burn till morning.
+- kind: dialogue
+  speaker: gm
+  text: Anyone got an opinion on how much wood we've got left?
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the rain gets in and soaks the fire?
+- kind: dialogue
+  speaker: gm
+  text: We'll figure it out in the morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Wind's picking up.

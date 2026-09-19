@@ -1,0 +1,33 @@
+id: camp-fire
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:49.539114+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not going to let up tonight, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't stay up all night. Someone needs to take the first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's got a good chance of lasting, but we should be prepared
+    to move.
+- kind: dialogue
+  speaker: Vigil
+  text: This fire's too close to the edge of the clearing.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the moonwells run dry?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a theoretical problem, Leena. We've got plenty of magic to spare.
+- kind: dialogue
+  speaker: gm
+  text: We're not running out of magic.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's on first watch?
+- kind: dialogue
+  speaker: Vigil
+  text: The wind's changing.

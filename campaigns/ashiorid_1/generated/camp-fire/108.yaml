@@ -1,0 +1,35 @@
+id: camp-fire
+take: 108
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:13.643882+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't keep this fire burning all night, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, a fire like this needs a good bed of coals, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The embers will hold if we let them.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will change the course of the stream?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Course of the stream? It's just a trickle, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, how was the fire laid?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it the same way I've always laid it, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we can't see to start a fire in the morning?
+- kind: dialogue
+  speaker: Vigil
+  text: The sun will come up.

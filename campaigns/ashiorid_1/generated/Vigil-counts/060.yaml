@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:00.772587+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the cart passed by again.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it's the second time I've seen it.
+- kind: dialogue
+  speaker: Leena
+  text: Are we going somewhere?
+- kind: dialogue
+  speaker: Vigil
+  text: No, I was just noting that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is everything okay, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Fine, just... habit.
+- kind: dialogue
+  speaker: gm
+  text: Anything we should be concerned about?
+- kind: dialogue
+  speaker: Vigil
+  text: Not this, no.

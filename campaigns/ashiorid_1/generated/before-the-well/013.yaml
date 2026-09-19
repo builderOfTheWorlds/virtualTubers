@@ -1,0 +1,32 @@
+id: before-the-well
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:25.539158+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll keep watch tonight, if you need me to.
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's not necessary. We all know what's at stake.
+- kind: dialogue
+  speaker: Leena
+  text: I'll stay up too, then. I'd rather not be alone.
+- kind: dialogue
+  speaker: Vigil
+  text: If you're sure, Chadwick, I can take a turn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been trying to get some rest, but...
+- kind: dialogue
+  speaker: gm
+  text: (whispering) I think I see something outside.
+- kind: dialogue
+  speaker: chadwick
+  text: What is it?
+- kind: dialogue
+  speaker: Leena
+  text: (calmly) What does it look like?
+- kind: dialogue
+  speaker: Vigil
+  text: ( softly) No, wait, I see it too...

@@ -1,0 +1,41 @@
+id: weather-argument
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:28.230065+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, the sky's too grey for it to be sunny.
+- kind: dialogue
+  speaker: chadwick
+  text: But the sun's coming up, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: That's just a tease, it's going to cloud over.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's a heat haze, we've had weird weather lately.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a bird acting all funny, it knows something we don't.
+- kind: dialogue
+  speaker: gm
+  text: That's just a silly bird, it's not a weather expert.
+- kind: dialogue
+  speaker: chadwick
+  text: But have you seen how still the air is? It's like a warning.
+- kind: dialogue
+  speaker: Leena
+  text: Or maybe it's just the morning calm before the storm.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, but I hate it when we can't trust our instincts.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's going to storm, I'm already getting anxious.
+- kind: dialogue
+  speaker: gm
+  text: Well, I still think it's going to clear up.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll see, I hope we're not stuck in this traffic.

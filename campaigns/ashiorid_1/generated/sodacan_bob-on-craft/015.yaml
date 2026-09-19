@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:16:01.921755+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this axle is from the Wulfgar forge, I can see the mark of
+    the third son's apprentice right here.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we've got a long way to go yet.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, how old is it? It looks like it's seen some use.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the thing, Vigil, it's probably from the late migration period,
+    the Wulfgar forge was still producing decent work then.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I see the way the metal's been shaped here, it's really quite elegant.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Elegant? Elegant is when it's made for display, this is utilitarian, practical
+    craftsmanship.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Like I haven't seen enough of this kind of thing already.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it...useful? We can take it with us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Useful? It's a wagon axle, it's not like it's going to get us to our destination
+    any faster or slower.

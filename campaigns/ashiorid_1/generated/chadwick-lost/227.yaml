@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 227
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:52.068253+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, Alright, Chadwick, we've been walking for a while. Where do you
+    think we are?
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, do you have any idea where we are?
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, Vigil's trying to get a read on the area.
+- kind: dialogue
+  speaker: Vigil
+  text: Vigil, We're about three kilometers due east of the old ruin.
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, And Chadwick, I'm looking at you. Do you remember the way back?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sodacan Bob,
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, Leena, do you have a suggestion?
+- kind: dialogue
+  speaker: Leena
+  text: Leena, Maybe we should just follow the road until we hit a landmark?
+- kind: dialogue
+  speaker: chadwick
+  text: Chadwick, No, I know what I'm doing.

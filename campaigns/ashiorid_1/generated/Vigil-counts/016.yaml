@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:50.655798+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So what's the plan for our next move?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we head to the market, see if we can find any information.
+- kind: dialogue
+  speaker: Leena
+  text: I've got some leads to follow up on, but I need to get out of here first.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the north side opens inward, it's worth noting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it to you?
+- kind: dialogue
+  speaker: gm
+  text: Just making a note of the layout.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we should be aware of the exits.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take the east door, try to lose any tails.
+- kind: dialogue
+  speaker: Vigil
+  text: The window on the west side hasn't been opened in a while.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't see why that's relevant.
+- kind: dialogue
+  speaker: gm
+  text: Just observing the environment.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, I'm out. You guys keep moving, I'll catch up.

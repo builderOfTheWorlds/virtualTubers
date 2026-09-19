@@ -1,0 +1,41 @@
+id: night-watch
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:07.906509+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: It's hard to tell in the dark.
+- kind: dialogue
+  speaker: gm
+  text: No, it's really clear.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) Do you think we should wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I don't know, what's the point?
+- kind: dialogue
+  speaker: Vigil
+  text: Just in case, maybe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) I've been thinking...
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Never mind.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) You're not asleep.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm not. What's on your mind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (briefly) Just a story, from before. Nothing.

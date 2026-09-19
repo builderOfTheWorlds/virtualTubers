@@ -1,0 +1,42 @@
+id: camp-fire
+take: 202
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:54.215546+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down hard, might be a while before we can get moving again.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we need to settle the watch order. Who's first?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fire's laid out pretty well, but I think we should add some more tinder just
+    in case.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain smells different today.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the seal is holding?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, that's not a decision for us to make. We just have to follow procedure.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, can you give me your take on the fire's stability?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think it'll burn till morning, easy.
+- kind: dialogue
+  speaker: Leena
+  text: What if the magic is still there, but just really hard to find?
+- kind: dialogue
+  speaker: Vigil
+  text: That's a big assumption.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, Vigil, what do you think?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's making the rain smell like it's trying to get out.

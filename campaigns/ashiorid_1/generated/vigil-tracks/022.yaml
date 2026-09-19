@@ -1,0 +1,29 @@
+id: vigil-tracks
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:39:35.401775+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What caught your eye, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Animal tracks, a small one, heading east. About dawn.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of animal?
+- kind: dialogue
+  speaker: Vigil
+  text: Too small to tell, but it was eating something.
+- kind: dialogue
+  speaker: Leena
+  text: Eating something? Like what?
+- kind: dialogue
+  speaker: Vigil
+  text: Leaves, maybe some berries. It's not important.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What else do you see?
+- kind: dialogue
+  speaker: Vigil
+  text: Just the one set of tracks, but there was a cart yesterday.

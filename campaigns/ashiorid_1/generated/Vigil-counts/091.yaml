@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:14.966187+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, where were we?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we keep moving. We don't know how much longer we can afford to dawdle.
+- kind: dialogue
+  speaker: Leena
+  text: I'm still not sure that's the right decision, but I suppose it's better than
+    nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the shutter on that building across the way was recently repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it's been fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: And why is that noteworthy, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No particular reason, just observed it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and what's with all these side alleys?
+- kind: dialogue
+  speaker: gm
+  text: Which way do you think the doors lead out of here?
+- kind: dialogue
+  speaker: Leena
+  text: I think they open that way.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's not like we have much of a choice at this point.

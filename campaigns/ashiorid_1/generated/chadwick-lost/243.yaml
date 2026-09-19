@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 243
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:41.342249+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a dense forest. The trees are thick and the underbrush is overgrown.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm pretty sure we're close to the river.
+- kind: dialogue
+  speaker: Leena
+  text: Um, I think you mean, we're pretty sure we're close to the river?
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, that's what I said.
+- kind: dialogue
+  speaker: Vigil
+  text: We need to head east to reach it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, do you want me to ask Vigil for directions so you can... uh...
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: We need to head east to reach the river.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) You know, Chadwick, I think you're enjoying this.
+- kind: dialogue
+  speaker: gm
+  text: A narrow stream crosses the path ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: This is it, I'm sure of it.

@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:16:32.119785+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: An heirloom from my family, passed down through the years.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Ah, beautiful craftsmanship. I''m sure it holds sentimental value.'
+- kind: dialogue
+  speaker: Leena
+  text: We've had it for... a long time. It's a reminder of our heritage.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, it's a lovely piece. We've grown quite attached to it.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: I''m sure you have. I''ll let you enjoy it then.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (silently) Thanks.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: I''ll be going now. It was nice chatting with you all.'
+- kind: dialogue
+  speaker: Vigil
+  text: Likewise, sir.
+- kind: dialogue
+  speaker: chadwick
+  text: (as Grovley leaves) Let's get back to our drinks.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) It's not like we're in a hurry or anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering to himself) No rush.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles) That's the spirit, Leena.

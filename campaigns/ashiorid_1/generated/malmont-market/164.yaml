@@ -1,0 +1,36 @@
+id: malmont-market
+take: 164
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:12.380169+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, a place where the forges are cold more often than not.
+- kind: dialogue
+  speaker: Vigil
+  text: ( muttering to himself ) That's not a good sign.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I've never been recognized here. It's... nice.
+- kind: dialogue
+  speaker: Leena
+  text: (browsing maps) These are lovely, but where did they all come from?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the maps) None of this looks familiar.
+- kind: dialogue
+  speaker: Leena
+  text: (picking up a map) I think I've seen this one before, but I'm not sure why
+    it matters.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disappointed) Not much to look at here, I'm afraid.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) It's not about the quality of the work, is it?
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) I'm not seeing anyone I know.
+- kind: dialogue
+  speaker: Leena
+  text: (studying a map) I feel like I've been here before, but it's not a memory.

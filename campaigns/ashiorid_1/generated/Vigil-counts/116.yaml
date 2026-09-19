@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 116
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:54.515522+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's changed so much since we got here, it's easy to miss something
+    like that.
+- kind: dialogue
+  speaker: chadwick
+  text: What's he talking about?
+- kind: dialogue
+  speaker: Leena
+  text: He said the cart passed twice.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just that, yes. The cart passed twice, and the shutter's been fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the big deal?
+- kind: dialogue
+  speaker: gm
+  text: Vigil's just being Vigil, let's not make a thing of it.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see how that helps us.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just a small thing, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: He's not making a case, let's move on.

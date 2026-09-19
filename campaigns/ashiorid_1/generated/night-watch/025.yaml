@@ -1,0 +1,32 @@
+id: night-watch
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:34.520742+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Look out at the sky.
+- kind: dialogue
+  speaker: chadwick
+  text: It's so clear tonight.
+- kind: dialogue
+  speaker: Leena
+  text: We've been up for a while now.
+- kind: dialogue
+  speaker: Vigil
+  text: Still nothing's moved.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't like this quiet.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean, Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: Can we wake the others now?
+- kind: dialogue
+  speaker: Leena
+  text: Should we, do you think?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I think we're fine.

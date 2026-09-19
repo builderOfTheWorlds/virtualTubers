@@ -1,0 +1,41 @@
+id: camp-fire
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:14.862558+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm thinking we should keep someone awake at all times to watch for any changes
+    in the weather.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed, we need to settle on a watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire could've been laid better. It's not burning
+    as hot as it should be.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop until the sun comes up.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will affect the fire's ability to keep going through
+    the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen fires last in worse conditions, but it's not ideal.
+- kind: dialogue
+  speaker: gm
+  text: We can try to add more fuel, but I don't want to risk it getting out of control.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's on watch first?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs to be tended to more often.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll be able to see any stars tonight?
+- kind: dialogue
+  speaker: gm
+  text: We'll just have to wait and see, for now let's just keep the fire going.

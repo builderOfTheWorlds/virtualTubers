@@ -1,0 +1,35 @@
+id: camp-fire
+take: 276
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:44.843713+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What's the watch order for tonight?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the fire will keep burning through the night?
+- kind: dialogue
+  speaker: Vigil
+  text: It's laid to catch the drips from the awning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Bob's method of laying the fire was the key to its survival so far.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just rely on chance, we need to make a schedule.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will clear before morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen it clear up in as little as three hours, but not in this storm.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is a good sign.
+- kind: dialogue
+  speaker: gm
+  text: What does that mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It means the well's not running dry.

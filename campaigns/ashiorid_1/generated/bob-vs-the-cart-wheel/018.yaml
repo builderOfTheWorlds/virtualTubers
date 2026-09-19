@@ -1,0 +1,38 @@
+id: bob-vs-the-cart-wheel
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:13.763573+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, I think we've heard your opinion on the cart wheel enough.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not enough, I haven't had my say on the axle yet.
+- kind: dialogue
+  speaker: Leena
+  text: We've discussed that to death, Bob, it's time to focus on the journey.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just going to gloss over it, ignore the safety issues.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Bob might be onto something, we should rethink the design.
+- kind: dialogue
+  speaker: chadwick
+  text: This is precisely what I'm talking about, we're getting sidetracked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sidetracked? You're the one who's not listening, Vigil!
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you please intervene here?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've had it, Sodacan Bob, we're moving on.
+- kind: dialogue
+  speaker: Leena
+  text: Fine, but someone's going to have to carry the extra weight now.

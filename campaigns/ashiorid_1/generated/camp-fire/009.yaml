@@ -1,0 +1,38 @@
+id: camp-fire
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:39.435128+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Looks like we're stuck here till morning.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order, people.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, I laid that fire to perfection.
+- kind: dialogue
+  speaker: Vigil
+  text: Rain's getting heavier.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think happens when the last well is really empty?
+- kind: dialogue
+  speaker: gm
+  text: Not something I can answer, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This rain's going to put out our fire if we're not careful.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll be fine for a few more hours.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's decide on the watch rotation.
+- kind: dialogue
+  speaker: Leena
+  text: Can a sorcerer... exist... without a well?
+- kind: dialogue
+  speaker: gm
+  text: That's a question for another time, Leena.

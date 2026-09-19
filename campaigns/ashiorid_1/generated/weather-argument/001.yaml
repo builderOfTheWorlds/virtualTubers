@@ -1,0 +1,36 @@
+id: weather-argument
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:45:37.866361+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's going to rain, look at those dark clouds over the hills.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no way, I've been keeping track of the weather apps and it says there's
+    a 20% chance of precipitation.
+- kind: dialogue
+  speaker: Leena
+  text: But what about the smell of the air, doesn't that usually mean it's going
+    to rain?
+- kind: dialogue
+  speaker: Vigil
+  text: Smell of the air? You're talking about the BBQ from last night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I think it's the type of trees they planted on that new development
+    nearby.
+- kind: dialogue
+  speaker: gm
+  text: Oh, come on, don't be obtuse, it's clearly the clouds that are the giveaway.
+- kind: dialogue
+  speaker: chadwick
+  text: I still say my phone app knows more about the weather than all of you put
+    together.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it doesn't rain, and we forget our umbrellas?
+- kind: dialogue
+  speaker: Vigil
+  text: Fine, but if it does rain, we'll all blame Chadwick for not trusting his instincts.

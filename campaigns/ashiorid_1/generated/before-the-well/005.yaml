@@ -1,0 +1,41 @@
+id: before-the-well
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:02.349933+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: The moon is full, isn''t it?'
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, it is.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to check the well.
+- kind: dialogue
+  speaker: Vigil
+  text: You don't have to do that.
+- kind: dialogue
+  speaker: Leena
+  text: I want to make sure it's still fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll come with you.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: It''s not like anything''s going to happen tonight.'
+- kind: dialogue
+  speaker: Vigil
+  text: That's not what I said.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, then moves towards the moonwell)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (follows Leena)
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: (watching them go)'
+- kind: dialogue
+  speaker: chadwick
+  text: (nervously fidgets)

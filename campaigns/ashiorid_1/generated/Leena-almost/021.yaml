@@ -1,0 +1,45 @@
+id: Leena-almost
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:35.205615+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you're staring at something. What's got your attention?
+- kind: dialogue
+  speaker: Leena
+  text: That thing, I've seen it before. I don't know how, but it feels like something
+    I shouldn't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be you saw one like it in your village, Leena. They've got some weird
+    architecture out there.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, let it go. Don't chase what you can't have.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, I just want to know what it is. But no one knows, do they?
+- kind: dialogue
+  speaker: gm
+  text: The others don't seem to know anything specific, but that doesn't mean you'll
+    ever know. It's probably just your imagination playing tricks on you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Your imagination's pretty vivid, Leena. You've got a good memory.
+- kind: dialogue
+  speaker: Leena
+  text: That's not the point. The point is, it feels like something I should recognize.
+- kind: dialogue
+  speaker: chadwick
+  text: You should be focusing on the tasks at hand, not trying to solve some mystery
+    that's not even a mystery.
+- kind: dialogue
+  speaker: gm
+  text: What do you think, Vigil? Do you see anything out of the ordinary?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

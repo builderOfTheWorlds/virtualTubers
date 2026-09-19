@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 276
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:32.916937+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A small tavern in a quiet part of town, just off the main road.
+- kind: dialogue
+  speaker: chadwick
+  text: What can I get you folks to drink?
+- kind: dialogue
+  speaker: Leena
+  text: Just water, thank you.
+- kind: dialogue
+  speaker: Vigil
+  text: The water's from the well out back, repaired last week I think.
+- kind: dialogue
+  speaker: gm
+  text: Repair job was done by the same man who's been fixing roofs in the area.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's great, I'm sure it's perfectly fine.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) You think I'd serve you guys bad water, Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the cart that just went by, same one we saw on the way here.

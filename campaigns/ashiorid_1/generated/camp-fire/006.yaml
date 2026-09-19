@@ -1,0 +1,31 @@
+id: camp-fire
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:23.214806+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down pretty heavy, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle the watch order for the night? I'm not in the mood for arguing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was saying that a good fire like this one requires a bit of artistry. Whoever
+    laid it out knew their business.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames are reflecting off the trees.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the trees in this area are magical? I've been thinking
+    about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No magic I can detect, but I'm no expert.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we focus on the matter at hand, please?
+- kind: dialogue
+  speaker: Leena
+  text: Never mind.

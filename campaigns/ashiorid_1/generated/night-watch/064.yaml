@@ -1,0 +1,41 @@
+id: night-watch
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:45.852294+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's still night.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I love nights like this.
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are bright.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can hear crickets.
+- kind: dialogue
+  speaker: Leena
+  text: We should wake the others early.
+- kind: dialogue
+  speaker: chadwick
+  text: Do we need to?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't think so.
+- kind: dialogue
+  speaker: gm
+  text: I have a feeling we'll get some rain tomorrow.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, I've been having this weird feeling.
+- kind: dialogue
+  speaker: Leena
+  text: What's that?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, it's just... I miss it.

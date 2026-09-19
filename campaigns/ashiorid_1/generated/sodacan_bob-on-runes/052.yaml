@@ -1,0 +1,39 @@
+id: sodacan_bob-on-runes
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:14.361888+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just hit a rune like that, it's not just about striking deep.
+- kind: dialogue
+  speaker: chadwick
+  text: What's wrong with how he did it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, it's just lazy. You can't even tell what's on it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the big deal, Bob? It's just some old graffiti.
+- kind: narration
+  speaker: gm
+  text: 'vigli: Actually, I think it''s more than that. It''s a specific symbol.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Which one of you has ever spent days pouring over a pattern, making sure it's
+    right?
+- kind: dialogue
+  speaker: chadwick
+  text: What's with the sudden interest in ancient graffiti, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got no interest. I just know it's not something to be taken lightly.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I saw the symbol on one of the other monuments, if I recall.
+- kind: dialogue
+  speaker: Leena
+  text: So what, you think the monuments are connected in some way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course they are. Don't you ever read your own notes?

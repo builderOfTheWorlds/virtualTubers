@@ -1,0 +1,42 @@
+id: weather-argument
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:03.866623+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's supposed to rain, I saw the forecast on my phone this morning
+- kind: dialogue
+  speaker: chadwick
+  text: No way, it's a beautiful day out, what's with the rain talk?
+- kind: dialogue
+  speaker: Leena
+  text: But I just got back from running errands and it was pouring down
+- kind: dialogue
+  speaker: Vigil
+  text: That's just a patch of rain, it'll clear up by the time we're done here
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I saw a bunch of clouds gathering over by the hills
+- kind: dialogue
+  speaker: gm
+  text: Yeah, but they were just wispy, I don't think it'll amount to much
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, I've seen some pretty intense storms roll in on days like this
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think it's going to be a long day if we're all just going to argue
+    about it
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just saying, it's probably going to pass us by, we'll be fine
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what if it doesn't, and we get caught in it?
+- kind: dialogue
+  speaker: gm
+  text: We'll just have to take our chances, it's not like we can control the weather
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, and even if it does rain, it's just a little water, what's the big deal?

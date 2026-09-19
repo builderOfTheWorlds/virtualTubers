@@ -1,0 +1,39 @@
+id: camp-fire
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:56.753763+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's been raining since we set up camp. I don't think we're going to get a
+    clear night anytime soon.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still waiting for someone to take the first watch. Who's on first?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying we should've laid the fire differently. We need to get the sparks
+    to draw up the chimney.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's burning low.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long the embers will hold? I've never been in a situation
+    like this.
+- kind: dialogue
+  speaker: gm
+  text: Not sure, Leena. The fire's been burning all day. Maybe it'll last the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should've added more tinder. It'll be a miracle if it makes it through
+    the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get this settled. Who's on second watch?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain doesn't care about our schedules.
+- kind: dialogue
+  speaker: Leena
+  text: What happens when the fire goes out?

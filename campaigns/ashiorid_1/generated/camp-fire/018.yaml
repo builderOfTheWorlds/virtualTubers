@@ -1,0 +1,35 @@
+id: camp-fire
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:28.525361+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's even possible for the fire to last till morning?
+- kind: dialogue
+  speaker: Vigil
+  text: It'll hold.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Laid it just right, too. Good job, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's going to take the first watch?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I say Leena or Vigil, they're both used to the dark.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it's still raining in the morning?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure that out when it's time.
+- kind: dialogue
+  speaker: Vigil
+  text: Smoke's still rising.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll be fine, don't you worry.

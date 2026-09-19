@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:42.083529+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get back to the itinerary, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we've got a lot to cover.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, guys, Sodacan Bob has a point about the wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A point? My point is we can't just slap some sticks together and call it a
+    cart!
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan Bob, I think the problem is we've been at this for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hours? You think four hours is a long time? I've been building carts for longer
+    than you've been alive, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan Bob, let's focus.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, we appreciate your expertise, but we have to get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not moving until that wheel is fixed, and I'm not fixing it until it's
+    done right.

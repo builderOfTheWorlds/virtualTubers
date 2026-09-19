@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 219
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:08.100672+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Come back to the common area, Leena. There's something you should see.
+- kind: dialogue
+  speaker: Leena
+  text: What is it?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something that reminds you of home.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what I'm looking for.
+- kind: dialogue
+  speaker: Vigil
+  text: Just look around, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm pretty sure I've seen that doorway in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I don't remember it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's possible you just forgot.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing anything. I just... I feel like I've seen this before.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah?
+- kind: dialogue
+  speaker: Leena
+  text: No, never mind.

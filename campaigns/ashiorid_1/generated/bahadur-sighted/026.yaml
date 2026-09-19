@@ -1,0 +1,41 @@
+id: bahadur-sighted
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:25.155160+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The treeline's still there, but I'm not sure if it was really moving.
+- kind: dialogue
+  speaker: chadwick
+  text: It was just a shadow.
+- kind: dialogue
+  speaker: Leena
+  text: Could've been a trick of the light.
+- kind: dialogue
+  speaker: Vigil
+  text: We can't afford to get complacent.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong?
+- kind: dialogue
+  speaker: gm
+  text: Nothing, just...pay attention.
+- kind: dialogue
+  speaker: Leena
+  text: We keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Stay sharp, people.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not seeing anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Me neither.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Stay quiet.

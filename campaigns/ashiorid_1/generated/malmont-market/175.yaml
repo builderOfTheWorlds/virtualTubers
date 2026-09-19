@@ -1,0 +1,32 @@
+id: malmont-market
+take: 175
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:23.803829+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, half these smiths don't even know what a hammer is for.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep an eye on the purse, in case we need to make a quick exit.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, do you have any maps from the south?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, just a moment, I think I'll take a look at this stall too.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not going to spend too much, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Smithwork this poor? I've seen better work on a traveling forge.
+- kind: dialogue
+  speaker: Leena
+  text: These maps are very old... I wonder where they're from.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just buy one, just in case.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A whole map collection, and none of them are worth the ink.

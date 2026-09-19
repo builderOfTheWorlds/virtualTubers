@@ -1,0 +1,41 @@
+id: sodacan_bob-on-runes
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T22:29:51.079719+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die's got to be struck true, of course, to cut deep enough...
+- kind: dialogue
+  speaker: chadwick
+  text: What's this got to do with the Malvakar, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, just thinking on the craftsmanship that went into it...
+- kind: dialogue
+  speaker: Leena
+  text: Did someone carve it with magic, then?
+- kind: narration
+  speaker: gm
+  text: 'vigor: (no response)'
+- kind: dialogue
+  speaker: gm
+  text: Bob, you seem troubled. Want to talk about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, just the art of it. How it would last...
+- kind: narration
+  speaker: gm
+  text: 'vigor: What''s the lifespan of one of your fine runes, Bob?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs) Ten... twenty... twenty-five years, if you're lucky.
+- kind: narration
+  speaker: gm
+  text: 'vigor: And what about the Malvakar?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) That's a different story, Vigor.
+- kind: dialogue
+  speaker: chadwick
+  text: (to the others) Anyone need a new axe head?

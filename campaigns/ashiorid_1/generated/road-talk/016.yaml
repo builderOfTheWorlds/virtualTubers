@@ -1,0 +1,41 @@
+id: road-talk
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:43.796383+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is beating down on us, let's take a break.
+- kind: dialogue
+  speaker: chadwick
+  text: No, we should keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: We've been walking for hours, I think it's okay to rest.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep watch while you all eat and drink.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking of telling you all about Vabokedos...
+- kind: dialogue
+  speaker: Leena
+  text: Oh, please do, I'd love to hear about it.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more interested in where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: We're on schedule, according to the map.
+- kind: dialogue
+  speaker: Leena
+  text: And when we get there, I'll show you all around.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's move out. Stay hydrated.
+- kind: dialogue
+  speaker: chadwick
+  text: How's your canteen holding up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Vabokedos... well, it's a city, really.

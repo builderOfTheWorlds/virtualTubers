@@ -1,0 +1,30 @@
+id: Leena-almost
+take: 147
+model: llama3.1:8b
+generated_at: '2026-09-18T19:33:57.365539+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen something like that before.
+- kind: dialogue
+  speaker: chadwick
+  text: You probably saw it in your village, it's not uncommon to see doorways like
+    that in old architecture.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's just a familiar design, it doesn't mean anything.
+- kind: dialogue
+  speaker: Leena
+  text: But what's that smell? It's not from our village.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't get distracted by trivial things, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not getting distracted, I just want to know what that smell is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just the way the wind is blowing, it's not a big deal.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving, we have a long way to go before nightfall.

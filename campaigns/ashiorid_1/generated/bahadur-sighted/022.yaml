@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:05.220558+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: What was that?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: Could've been a trick of the light.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw something.
+- kind: dialogue
+  speaker: Leena
+  text: Don't be ridiculous.
+- kind: dialogue
+  speaker: Vigil
+  text: I saw it too.
+- kind: dialogue
+  speaker: chadwick
+  text: What was it?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.

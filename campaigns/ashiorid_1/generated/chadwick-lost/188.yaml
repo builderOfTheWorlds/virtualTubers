@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 188
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:02.142794+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're moving on. What's the plan, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's this way, but I'll wait for Chadwick to confirm.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Poor Chadwick, lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, I think Vigil is trying to give you a hint.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I know exactly what I'm doing.
+- kind: dialogue
+  speaker: gm
+  text: Okay, so which way are we heading, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: We're going straight, that's what we're doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is glorious.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you let Vigil lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.

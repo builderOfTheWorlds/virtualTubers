@@ -1,0 +1,47 @@
+id: malmont-market
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:24.720093+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see the point in most of these pieces, can someone show me something
+    worth a copper?
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too distracted, Bob. We're here for a reason, not to admire the
+    local wares.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I've been here before, but no one seems to remember me. It's kind
+    of... nice.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, is that an old map? I've never seen it before. How much for the one with
+    the worn edge?
+- kind: dialogue
+  speaker: Vigil
+  text: Stay close, Leena. We don't know what's being sold here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on, Vigil, let her look. It's just a map.
+- kind: dialogue
+  speaker: gm
+  text: Malmont's got a bit of a reputation, folks. Don't let your guard down just
+    yet.
+- kind: dialogue
+  speaker: Leena
+  text: What's this, a river map? I could swear that's the Glimmer River...
+- kind: dialogue
+  speaker: chadwick
+  text: Is that a clock tower? I could swear it's got a clock tower... but I'm not
+    sure.
+- kind: dialogue
+  speaker: Vigil
+  text: We're not buying anything today, we're just... browsing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm browsing for a decent hammer, but I'm not finding it here.
+- kind: dialogue
+  speaker: gm
+  text: Time to move on, friends. The morning's getting old.

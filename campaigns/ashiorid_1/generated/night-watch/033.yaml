@@ -1,0 +1,41 @@
+id: night-watch
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:26.027340+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky is still clear.
+- kind: dialogue
+  speaker: chadwick
+  text: No clouds in sight.
+- kind: dialogue
+  speaker: Leena
+  text: I don't remember the last time we had a clear night like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's so quiet.
+- kind: dialogue
+  speaker: gm
+  text: You'd think that was a good thing.
+- kind: dialogue
+  speaker: chadwick
+  text: It is, but it's also... unsettling.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean?
+- kind: dialogue
+  speaker: Vigil
+  text: I mean, we're waiting for something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's nothing to wait for.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I've been having dreams.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) What kind of dreams?
+- kind: dialogue
+  speaker: Leena
+  text: (pauses again) Nothing. Never mind.

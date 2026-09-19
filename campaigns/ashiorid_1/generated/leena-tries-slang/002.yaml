@@ -1,0 +1,35 @@
+id: leena-tries-slang
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:43.362298+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: You got ghosted by your date, huh? That's a sick move.
+- kind: dialogue
+  speaker: chadwick
+  text: What's "sick" mean in this context, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: It means they're being super mean.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it means something else entirely.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's like, super cool, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think you might be mistaken, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I was just messing with him.
+- kind: dialogue
+  speaker: gm
+  text: Actually, I think Leena was close.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what? What's the real definition?
+- kind: dialogue
+  speaker: chadwick
+  text: It's an idiomatic expression, Leena. Let me explain...

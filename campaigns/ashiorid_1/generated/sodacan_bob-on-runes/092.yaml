@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T22:32:24.253824+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die struck with force, but not too much, just to impress the weather, that's
+    the trick.
+- kind: dialogue
+  speaker: Vigil
+  text: That's not a trick, Bob, it's just craftsmanship.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patience, Vigil, that's what it takes. Not just anyone can craft runes that
+    last.
+- kind: dialogue
+  speaker: Leena
+  text: How do you know it's runes?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone can see the carvings on the Malvakar.
+- kind: dialogue
+  speaker: gm
+  text: Bob, are you saying you think the Malvakar's carvings are...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, it's not that. It's just... craftsmanship.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the depth requirement for runes to last?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deep enough that they won't wear off in a few centuries.

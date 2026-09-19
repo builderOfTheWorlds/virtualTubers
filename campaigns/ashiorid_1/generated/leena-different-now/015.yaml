@@ -1,0 +1,37 @@
+id: leena-different-now
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:04.083605+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how to explain it, but something's different.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: It's like... my magic feels off, like it's not sitting right in my chest.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) You've been having a lot of stress lately, maybe that's what's causing
+    it.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it, Vigil. It's not something I can fix by sleeping more or meditating.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (nervously) Maybe you just need a break, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: (frustrated) No, it's not a break I need. It's... (pauses, struggling to find
+    the words)
+- kind: dialogue
+  speaker: gm
+  text: (silently observing the group) This is a good time to take a walk, perhaps?
+- kind: dialogue
+  speaker: chadwick
+  text: (gets up) Yeah, I could use some fresh air.
+- kind: dialogue
+  speaker: Vigil
+  text: (hesitantly) I'll come with you, Chadwick.

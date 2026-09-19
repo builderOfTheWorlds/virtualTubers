@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 146
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:46.624723+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We need to find the next settlement before nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see a landmark. We should head that way.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure, Chadwick. That looks like a rocky outcropping.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a landmark, I'm sure of it.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Leena might be right. That's just a rocky outcropping.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick's got us lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't we just take a look at the map and make sure?
+- kind: dialogue
+  speaker: chadwick
+  text: No need for the map. I know where I'm going.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm happy to help, Chadwick, but I think a look at the map wouldn't
+    hurt.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help, Vigil. I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is great. Chadwick, you're a real leader.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Hey, come on, Chadwick. We're just trying to help.

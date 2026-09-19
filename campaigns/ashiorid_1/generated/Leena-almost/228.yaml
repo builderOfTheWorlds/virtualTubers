@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 228
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:49.312722+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught Leena's attention this time?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but it's familiar and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it. It's like... I've heard this phrase before. Or sung it.
+- kind: dialogue
+  speaker: gm
+  text: What's the phrase?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know yet. But I feel like I should.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We can ask the villagers, see if they've heard anything like it.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just leave it be, Leena. You're not going to learn anything.
+- kind: dialogue
+  speaker: gm
+  text: What do you think, Leena?

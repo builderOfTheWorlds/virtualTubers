@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:25:03.379595+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: So whose bag has the spare oil, then?'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Mine, obviously.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I could''ve sworn I packed it in mine.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: You never know, it could be in mine too.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Just check the bags, people.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Labels would help, by the way.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Labels are a waste of time.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: They''re not that hard to make.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Oh look, the spare oil''s in Chadwick''s bag.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Nice job, Chadwick.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: You could''ve checked your own bag.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: At least I don''t have a mess like yours.'

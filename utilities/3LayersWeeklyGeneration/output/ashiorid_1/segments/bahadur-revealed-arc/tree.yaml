@@ -1,0 +1,129 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The tear in space-time answers back, revealing the presence of the Bahadur
+    and t
+  summary: The tear in space-time answers back, revealing the presence of the Bahadur
+    and their ancient plans.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The Tear Responds
+  summary: The space-time rupture reacts to the protagonist's presence, unleashing
+    a cascade of temporal echoes that reveal the Bahadur's hidden agenda. Ancient
+    prophecies begin to manifest as the tear pulses with otherworldly energy, drawing
+    forth visions of past and future events that interconnect with the current timeline.
+  continuity_in: The protagonist stands at the threshold of the space-time rupture,
+    feeling its pull.
+  continuity_out: The tear's response sends a shockwave through the dimensional fabric,
+    alerting the Bahadur to the intruder's presence.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n0-tear-responds-1
+    kind: ambient
+    prompt: The space-time rupture pulses with otherworldly energy, sending temporal
+      echoes that reveal fragments of ancient prophecies and visions of past and future
+      events interconnecting with the current timeline.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-tear-responds-2
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: Ancient Plans Revealed
+  summary: As the tear's energy stabilizes, it projects holographic visions of the
+    Bahadur's millennial designs. These projections show their strategic manipulation
+    of cosmic events, revealing how they've been orchestrating pivotal moments throughout
+    history to advance their ultimate objective of dimensional conquest.
+  continuity_in: The shockwave from the tear's response begins to subside, leaving
+    behind a lingering temporal distortion.
+  continuity_out: The visions fade but leave behind residual energy that will manifest
+    in future encounters with the Bahadur's agents.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n1-ancient-plans-1
+    kind: ambient
+    prompt: The tear's energy stabilizes, projecting holographic visions of the Bahadur's
+      millennial designs.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-ancient-plans-2
+    kind: ambient
+    prompt: These projections show strategic manipulation of cosmic events, revealing
+      how they've orchestrated pivotal moments throughout history.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-ancient-plans-3
+    kind: ambient
+    prompt: The visions reveal how they've been orchestrating pivotal moments to advance
+      their ultimate objective of dimensional conquest.
+    lore:
+    - the-bahadur
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-ancient-plans-4
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

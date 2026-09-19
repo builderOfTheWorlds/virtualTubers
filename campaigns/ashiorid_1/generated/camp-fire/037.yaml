@@ -1,0 +1,35 @@
+id: camp-fire
+take: 37
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:45.079849+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down harder than I expected.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't stay out here, not in this wet. We need to decide who's on watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire right, I can tell you that. It'll hold till morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood's not dry enough.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we could use the rainwater to wash the gear?
+- kind: dialogue
+  speaker: gm
+  text: It's not worth the trouble.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, you're not making sense. What do you mean about the wood?
+- kind: dialogue
+  speaker: Vigil
+  text: It'll take too long to burn.
+- kind: dialogue
+  speaker: Leena
+  text: Can anyone guess why the fire started in the first place?
+- kind: dialogue
+  speaker: gm
+  text: Not here, not now.

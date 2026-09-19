@@ -1,0 +1,26 @@
+id: the-meal
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:35.999953+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, who cooked today?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Clearly, it was done by someone with no culinary skill.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's just one meal, it's fine.
+- kind: dialogue
+  speaker: Leena
+  text: We should have a rotation, so everyone gets a chance to cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm telling you, if I were in charge, we'd be having a feast.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The pot was never properly cleaned, I can smell the residual grease.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, come on, let's just eat.

@@ -1,0 +1,32 @@
+id: carrying-the-signet
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:49.390554+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, you've noticed our... friend's ring, have you?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Yeah, I gave it to him, thought he''d be interested in the history.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: History, eh?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Yeah, it''s a piece of the Begene Sisters'' Program.'
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, really?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Just a bit of trivia, but...'
+- kind: dialogue
+  speaker: Leena
+  text: We're not much for history, actually.
+- kind: dialogue
+  speaker: Vigil
+  text: Never been interested in it myself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: History's not exactly our thing, I suppose.

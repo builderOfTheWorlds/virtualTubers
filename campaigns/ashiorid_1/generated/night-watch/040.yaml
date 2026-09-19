@@ -1,0 +1,26 @@
+id: night-watch
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:59.038419+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is...different tonight. Darker, somehow.
+- kind: dialogue
+  speaker: chadwick
+  text: I know what you mean. I've been noticing that too.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: Almost three, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I could've sworn it was later.
+- kind: dialogue
+  speaker: gm
+  text: (laughs softly) You're just used to being asleep, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's not wake the others yet.

@@ -1,0 +1,39 @@
+id: chadwick-lost
+take: 259
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:53.302960+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trail splits off to the left, Chadwick. We're getting close to the pass.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head straight.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should go left, if you want to get through the pass quickly.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't we just ask Vigil to lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, great, let's follow the guy who can't tell the difference between left
+    and right.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Well, I'm happy to help if you'd like.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) I'll just let Chadwick do his thing.
+- kind: dialogue
+  speaker: chadwick
+  text: This way. We'll be fine.
+- kind: dialogue
+  speaker: gm
+  text: (skeptical) Alright...
+- kind: dialogue
+  speaker: gm
+  text: (pausing) I think that's the right choice.

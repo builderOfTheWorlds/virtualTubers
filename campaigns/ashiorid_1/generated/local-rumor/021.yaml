@@ -1,0 +1,27 @@
+id: local-rumor
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:30.401691+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: They've got two magic shops, which is more than I'd expect for a town this
+    size.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, right? And I've been noticing a lot of signs on doors that say "cold
+    forge".
+- kind: dialogue
+  speaker: Leena
+  text: Mmm, I'm getting hungry. Where's a good place to eat around here?
+- kind: dialogue
+  speaker: Vigil
+  text: I've been thinking, maybe we should check out the local constable's watch.
+    They might know something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, Vigil. We've been on our own for a while. It's nice to be just
+    ordinary travelers again.
+- kind: dialogue
+  speaker: gm
+  text: Just ordinary travelers, yeah. Let's keep it that way.

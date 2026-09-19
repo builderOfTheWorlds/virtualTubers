@@ -1,0 +1,26 @@
+id: after-the-choice
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:00.513470+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you're making tea. Again.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. It seemed like something we should do.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you okay? You've been quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm fine. Just...lost my appetite.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm still trying to process it all.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, I think we need a break from this.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll get the fire going.

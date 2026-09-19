@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:51.698124+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's frame's been dented like a poorly struck anvil.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the wheels, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: They're rusted like a well-used axe, time for a re-sharpen.
+- kind: dialogue
+  speaker: Leena
+  text: And what about us? Any damage?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fatigue's a chipped plane blade, Leena – we all need a tune.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I've found the problem. It's just a loose screw.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a weak rivet, Vigil – but it'll hold for now.
+- kind: dialogue
+  speaker: gm
+  text: And what about our equipment?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Some of the tools are as dull as a poorly quenched blade.
+- kind: dialogue
+  speaker: chadwick
+  text: What can we do about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll need to forge some new ones – or find a good whetstone.
+- kind: dialogue
+  speaker: Leena
+  text: And how long will that take?

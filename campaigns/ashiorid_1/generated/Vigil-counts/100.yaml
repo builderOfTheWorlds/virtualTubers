@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:45.670626+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's get moving, we've got an appointment at the market.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not going anywhere till I find what I'm looking for.
+- kind: dialogue
+  speaker: Leena
+  text: That's what you said yesterday, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a cart outside that passed by twice today already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll go grab some food from the stall then.
+- kind: dialogue
+  speaker: gm
+  text: Alright, see you all in a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't trust anything in this town.
+- kind: dialogue
+  speaker: Leena
+  text: You're starting to sound like Vigil now.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window over there was recently fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like someone's trying to keep the rain out.

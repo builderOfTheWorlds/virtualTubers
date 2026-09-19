@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 157
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:45.907844+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Leena, what's this thing you're looking at?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen doors like that in Begene village.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: But it feels... like it's trying to tell me something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You probably just forgot something from your village.
+- kind: dialogue
+  speaker: Vigil
+  text: (shakes head)
+- kind: dialogue
+  speaker: Leena
+  text: I didn't forget it. I'm sure I didn't.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's focus on what we do know.

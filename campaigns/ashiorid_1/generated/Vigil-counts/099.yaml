@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:41.201645+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what is it?
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to the east open inward, not outward.
+- kind: dialogue
+  speaker: chadwick
+  text: Why does it matter?
+- kind: dialogue
+  speaker: Vigil
+  text: No reason, just noticed.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Like you always do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, that's just Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Alright, moving on.
+- kind: dialogue
+  speaker: Vigil
+  text: The windows on the south wall have shutters.

@@ -1,0 +1,42 @@
+id: road-talk
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T20:47:52.714720+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down relentlessly, it's a wonder you all can keep going.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we'll see the end of this road before we get our dinner.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure the village elder will have some stew ready for us when we arrive.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, Vabokedos! The capital city of Gorgin, surrounded by the crystal
+    caves.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's a place with a lot of... water.
+- kind: dialogue
+  speaker: Leena
+  text: My village has the most beautiful waterfall, and the freshest air you've ever
+    smelled.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see, Vabokedos is famous for its spice markets, they're said to be one
+    of the best in the world.
+- kind: dialogue
+  speaker: gm
+  text: I think it's time we all took a break, we've been walking for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about what's waiting for us at the end of this road than
+    what we left behind.
+- kind: dialogue
+  speaker: Leena
+  text: Don't worry, I'm sure the village elder will have a room ready for you, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena...

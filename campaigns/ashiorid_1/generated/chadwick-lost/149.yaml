@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 149
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:02.516114+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We need to head east to reach the next settlement.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, can I help you with the map for a sec?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Poor guy's lost again!
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you just ask Vigil for directions?
+- kind: dialogue
+  speaker: chadwick
+  text: I can handle it.
+- kind: dialogue
+  speaker: gm
+  text: It's okay, Chadwick, just ask Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Chadwick's got us navigating through the swamp.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silence)

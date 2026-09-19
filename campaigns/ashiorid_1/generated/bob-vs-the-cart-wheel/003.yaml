@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:27.849086+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've made some good progress, don't you, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Progress? You call that progress? The axle's still crooked!
+- kind: dialogue
+  speaker: Leena
+  text: I think it looks fine, Bob. We can always tweak it later.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Later? Are you kidding me? We can't be driving around with that thing wobbling.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, we've been over this. It's just a few more turns to get it right.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, and we can always make adjustments on the fly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I won't let it go, Chadwick. This is the fifth time we've tried this.
+- kind: dialogue
+  speaker: Leena
+  text: Can we at least try the other configuration?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no! That's just going to make it worse!

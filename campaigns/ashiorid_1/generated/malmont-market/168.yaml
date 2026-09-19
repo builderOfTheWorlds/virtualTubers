@@ -1,0 +1,44 @@
+id: malmont-market
+take: 168
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:40.055449+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, not a bad selection of wares here, let's see what the blacksmith
+    has to show us.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, what's this? Old maps, I've never seen anyone selling those around here
+    before.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your hands in your pockets, Leena, you don't know what kind of business
+    that is.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no need to be cautious, Vigil, it's just a few old maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This blacksmith's work looks like it's been sitting around for years.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take a look at those maps, the vendor seems friendly.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't go getting too interested in whatever it is, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe we should get some breakfast before we do anything else.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm good, I ate at the last town, no need for another meal yet.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, what's this? A map of the old forest, it's said to be cursed.
+- kind: dialogue
+  speaker: Vigil
+  text: That's the kind of thing you don't want to get mixed up in, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll take a look at that map, yes, the old forest.

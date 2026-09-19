@@ -1,0 +1,41 @@
+id: sodacan-forge-envy
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:33:21.196667+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at that, a nice enough bit of work if I do say so.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, don't be such a skeptic, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not being a skeptic, I'm just keeping expectations in check.
+- kind: dialogue
+  speaker: Leena
+  text: You're as grumpy as a storm cloud, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's because I've seen my fair share of storm clouds.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles) Let the man sulk.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) What's wrong, Bob, not impressed?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying it's not half bad, is all.
+- kind: dialogue
+  speaker: chadwick
+  text: See, I told you it was a good piece of work.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't rub it in, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (giggling) Oh, Bob, you're so cute when you're mad.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) That's not helping, Leena.

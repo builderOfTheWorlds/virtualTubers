@@ -1,0 +1,41 @@
+id: the-meal
+take: 74
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:00.878502+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, it's just not cooked right, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: But think of it as a challenge, a chance to show our culinary skills!
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his food to Leena) Here, take this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Challenge? Are you kidding me? I can cook a better meal than this in my sleep.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's just a little dry.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat already?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had to cook this, I'd do it differently.
+- kind: dialogue
+  speaker: Leena
+  text: (handing Vigil's food back) Who cooked, anyway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to think it was an accident.
+- kind: dialogue
+  speaker: Leena
+  text: I cooked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (outraged) You did? Then why did you leave the pot on the stove?

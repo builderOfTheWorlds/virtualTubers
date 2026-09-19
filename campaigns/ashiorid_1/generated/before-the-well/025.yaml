@@ -1,0 +1,35 @@
+id: before-the-well
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:39.356266+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Can I refill my flask from the moonwell?
+- kind: dialogue
+  speaker: chadwick
+  text: No, not again.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of drinking the water if it doesn't even work?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just trying to be prepared.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We all know what happened last time.
+- kind: dialogue
+  speaker: gm
+  text: We've discussed this.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just get some sleep.
+- kind: dialogue
+  speaker: Leena
+  text: I'm watching the stars.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Try to get some rest.

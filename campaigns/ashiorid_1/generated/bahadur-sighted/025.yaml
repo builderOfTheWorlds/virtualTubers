@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:19.917755+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Hold.
+- kind: dialogue
+  speaker: chadwick
+  text: What did you see?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: Shh.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, what was that?
+- kind: dialogue
+  speaker: gm
+  text: Wait.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: We should keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think that's safe?
+- kind: dialogue
+  speaker: Vigil
+  text: Silent.

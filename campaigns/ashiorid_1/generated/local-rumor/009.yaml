@@ -1,0 +1,36 @@
+id: local-rumor
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:20.072350+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The wind is picking up, isn't it, folks?
+- kind: dialogue
+  speaker: chadwick
+  text: I swear, it's colder than I expected for the time of year.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and I could've sworn I saw some smoke rising from the direction of the
+    constable's station.
+- kind: dialogue
+  speaker: Vigil
+  text: That's probably just the blacksmiths' kilns. They're always having fires.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I've heard rumors about... stuff that moves through Malmont at night.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of stuff?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just... local legend, nothing to worry about.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds like just the usual small-town gossip to me.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm more interested in getting some hot food and a warm bed for the night.
+- kind: dialogue
+  speaker: gm
+  text: That sounds like a plan, let's get moving on that.

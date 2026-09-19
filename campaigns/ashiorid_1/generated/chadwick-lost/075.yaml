@@ -1,0 +1,34 @@
+id: chadwick-lost
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:49.782468+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a while, Chadwick, can you give us an idea of where
+    we're headed?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure why you're asking me, I thought you were leading.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, it might be easier if you just admit you're not sure.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know exactly where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, really, Chadwick? Because I think you've been following me this whole
+    time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Yeah, buddy, I think Vigil's got it right.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Alright, let's just keep moving then.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers to Chadwick) Just nod and we'll keep going, it's okay.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I know exactly where we're going.

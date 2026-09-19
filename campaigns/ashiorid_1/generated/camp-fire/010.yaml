@@ -1,0 +1,38 @@
+id: camp-fire
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:45.241829+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, that rain's going to make the river swell, won't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't want to discuss the river, Bob, what's the watch order?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire could've been laid better, got a lot of smoke in the air.
+- kind: dialogue
+  speaker: Vigil
+  text: It's still burning.
+- kind: dialogue
+  speaker: Leena
+  text: What's the most you could possibly fit inside a moonwell, do you think?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle this, Bob, you're the most experienced.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not experienced, I just know how to lay a fire.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what would happen if someone tried to close a moonwell now.
+- kind: dialogue
+  speaker: Vigil
+  text: It would not be a good idea.
+- kind: dialogue
+  speaker: gm
+  text: The rain's not showing any signs of letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: This isn't productive, let's just rest.

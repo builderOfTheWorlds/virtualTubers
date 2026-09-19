@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:48:38.511761+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's see what Sodacan Bob's found.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a wagon axle, and I'd say it was made in the same foundry as the one
+    we passed last week.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, come on, we're wasting time.
+- kind: dialogue
+  speaker: Leena
+  text: What kind of steel is that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a high-carbon alloy, similar to what they used in the early 300s.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the significance of the rivets?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the rivets are a clever touch, they're meant to distribute the stress
+    across the axle.
+- kind: dialogue
+  speaker: Leena
+  text: I like it, it's nice to see attention to detail like that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly! It shows the maker was thinking about durability and longevity.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, we really should be moving.
+- kind: dialogue
+  speaker: gm
+  text: Let's give him a few more minutes, he's just getting started.

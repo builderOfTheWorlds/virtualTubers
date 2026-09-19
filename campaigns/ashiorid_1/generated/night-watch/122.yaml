@@ -1,0 +1,41 @@
+id: night-watch
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:06.102843+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Look up.
+- kind: dialogue
+  speaker: Leena
+  text: What's that?
+- kind: dialogue
+  speaker: chadwick
+  text: The sky.
+- kind: dialogue
+  speaker: Leena
+  text: It's still dark.
+- kind: dialogue
+  speaker: Vigil
+  text: Not quite.
+- kind: dialogue
+  speaker: Leena
+  text: What time do you think it is?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know.
+- kind: dialogue
+  speaker: Vigil
+  text: Not time to wake them yet.
+- kind: dialogue
+  speaker: Leena
+  text: You think it's too early.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I heard something move.
+- kind: dialogue
+  speaker: chadwick
+  text: What was it?

@@ -1,0 +1,102 @@
+segments:
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  order: 0
+  spine_scenes:
+  - invitation
+  synopsis: The ten thousandth anniversary of the Event arrives with four strangers
+    receiving identical mysterious cards, each card bearing a map fragment and a cryptic
+    invitation to a manor in the ash. The party must decide whether to accept or ignore
+    these strange invitations.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: invitation-arc
+  continuity_out: letos-manor-arc
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  order: 1
+  spine_scenes:
+  - letos-manor
+  synopsis: The party arrives at Duke Sorensen Leto III's manor, now a burned ruin.
+    They discover it is not just an empty shell but a place where time seems to have
+    stopped and the very air pulses with ancient magic. A hidden passage leads them
+    into the subbasement.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: letos-manor-arc
+  continuity_out: grovley-revelation-arc
+  event_windows: []
+  fork: null
+  hours: 6
+  id: grovley-revelation-arc
+  loop: 0
+  order: 2
+  spine_scenes:
+  - grovley-revelation
+  synopsis: In the subbasement, a butler named Grovley reveals the truth about the
+    party's purpose and their connection to the Leto family. He also tells them about
+    the moonwell at the center of the manor and its connection to the Event.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: grovley-revelation-arc
+  continuity_out: the-vault-arc
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  order: 3
+  spine_scenes:
+  - the-vault
+  synopsis: Behind the subbasement wall lies a vault containing ancient artifacts
+    and records. Grovley reveals that the Letos have been guarding something vital
+    for ten thousand years, related to the moonwell and the Event. The party discovers
+    the signet ring and begins to piece together their family history.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: the-vault-arc
+  continuity_out: bahadur-revealed-arc
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  order: 4
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party encounters a Bahadur, a being from another timeline who has
+    been trapped in Ashiorid. This encounter reveals more about the Bahadur's breeding
+    programs and their role in the Event. The party learns that they have been hunted
+    by these immortal beings for years.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: bahadur-revealed-arc
+  continuity_out: burn-it-down-arc
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  order: 5
+  spine_scenes:
+  - burn-it-down
+  synopsis: The manor begins to collapse around them as the party discovers that their
+    presence has triggered ancient defenses. They must escape before the building
+    is destroyed, but the way out leads them into a larger mystery involving the Bahadur
+    and a hidden plan.

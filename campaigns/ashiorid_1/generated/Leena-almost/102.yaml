@@ -1,0 +1,25 @@
+id: Leena-almost
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-18T19:30:11.171481+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And you, Leena, are standing in the middle of what appears to be a small village.
+- kind: dialogue
+  speaker: Leena
+  text: That's funny, I could've sworn that was the same doorframe I've seen in my
+    village.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have seen something like it, Leena, it's probably just a common design.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that kind of doorway before, it's like the ones in my family's old
+    manor.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not... (pauses, searching for words) it's not the same.

@@ -1,0 +1,35 @@
+id: chadwick-cooking
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:17:21.954969+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, well done, Chadwick. I must say, it smells... interesting.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks, guys. I tried something new.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) Yeah, it's... um, unique.
+- kind: dialogue
+  speaker: Vigil
+  text: (polite laugh) Unique is one way to put it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbling) Sounds like someone poured ketchup on a brick.
+- kind: dialogue
+  speaker: gm
+  text: (awkward chuckle) Well, let's dig in, shall we?
+- kind: dialogue
+  speaker: Leena
+  text: (disguising disgust) Mmm, delicious!
+- kind: dialogue
+  speaker: chadwick
+  text: (knowingly) Yeah, I'm thinking of calling it "Brick Soup".
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (half-joking) Good luck with that.
+- kind: dialogue
+  speaker: gm
+  text: (forced enthusiasm) It's... quite a flavor experience.

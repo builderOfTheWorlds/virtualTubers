@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 274
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:24.477548+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're back in this town. Anyone seen the market yet?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I was thinking of heading out to see what's for sale.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good, I could use some more supplies.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the north wall has been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good to know, thanks Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, go take a look.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright.
+- kind: dialogue
+  speaker: Vigil
+  text: There are four people in the room with us, including the innkeeper.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't think anyone's listening, but that's not much of a crowd.
+- kind: dialogue
+  speaker: gm
+  text: Just trying to get a feel for the place, Sodacan.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on our left opens inward, but the one on the right swings out.
+- kind: dialogue
+  speaker: Leena
+  text: So which one are we using?

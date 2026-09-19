@@ -1,0 +1,31 @@
+id: Leena-almost
+take: 184
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:52.669428+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village you were taken from is one of the villages we've been to, isn't
+    it?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it looked familiar. Maybe I've just seen that phrase before.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a common saying, don't worry about it, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen something like that before, too. It's probably just a coincidence.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but it's strange. I feel like I've seen it somewhere before.
+- kind: dialogue
+  speaker: chadwick
+  text: We should focus on the present, Leena. Whatever it is, it's not important
+    right now.
+- kind: dialogue
+  speaker: gm
+  text: I think we've talked enough about this for now. Let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Alright, but I think I'm going to remember this...

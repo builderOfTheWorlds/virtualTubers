@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 180
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:36.089521+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil, what did you notice this time?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a cart that's passed by the window twice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the big deal, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just something I noticed.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, so what's the significance?
+- kind: dialogue
+  speaker: Vigil
+  text: There isn't any, I just thought I'd mention it.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, that's just normal cart traffic.
+- kind: dialogue
+  speaker: Vigil
+  text: No, I'm just stating facts.
+- kind: dialogue
+  speaker: gm
+  text: That's fine, Vigil. You can just let us know if you see anything unusual.

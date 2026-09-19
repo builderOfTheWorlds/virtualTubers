@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:26.369559+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We need to re-weld the axle's weak point.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a job for the fire-pit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no. We need precision, not brute force.
+- kind: dialogue
+  speaker: Leena
+  text: But that's what the fire-pit is for, isn't it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's for shaping, not repairing.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll fetch the anvil.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's the problem with Chadwick's cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A weld won't hold, like a faulty joint in a sword's hilt.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should let the fire-pit fix it then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't hammer out every problem with a sledge.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see what you're getting at, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: See it? I'm just saying some things need fine-tuning.

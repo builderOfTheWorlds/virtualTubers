@@ -1,0 +1,37 @@
+id: local-rumor
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:01.011244+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: People always talk about what they don't know, don't they?
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Yeah, like that thing that moves through town at night...
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Don't be silly, Chadwick, you know the constables handle all
+    that.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughing) Oh, so we're back to the official story, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm just here for the ale, you know.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Enjoy it while it lasts, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) You're one to talk, Ashiorid.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) Yeah, because nothing says "good time" like a town with four magic
+    shops.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) At least the food's good.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grinning) That it is, my friend.

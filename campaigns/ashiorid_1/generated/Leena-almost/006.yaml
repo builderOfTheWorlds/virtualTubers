@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:12.182109+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's off here, but I don't know what.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, you don't know what you're dealing with.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen it before, but I don't know when or where.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't push it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's just focus on the task at hand, like Vigil said.
+- kind: dialogue
+  speaker: Leena
+  text: But... something's familiar.

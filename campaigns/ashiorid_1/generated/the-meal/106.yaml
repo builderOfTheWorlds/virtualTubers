@@ -1,0 +1,41 @@
+id: the-meal
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:19.435231+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, everyone, dig in.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, isn't it lovely we have so much food to share?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, seriously, whoever cooked this... I could've done better, no offense.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, don't be too hard on the cook!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, have you seen the state of the pot? It's a breeding ground for bacteria!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't take it personally, Bob, it's just a meal!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a meal? This is a disaster waiting to happen!
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, let's just...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should be ashamed of yourself, not knowing how to cook a simple meal!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think we can find a way to make do!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I demand to know who's cooking tomorrow!
+- kind: dialogue
+  speaker: gm
+  text: Alright, that's it, let's just...

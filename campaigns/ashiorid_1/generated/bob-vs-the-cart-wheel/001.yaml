@@ -1,0 +1,34 @@
+id: bob-vs-the-cart-wheel
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:13.872465+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but we can't just slap some nails on a piece of wood and call it a cart
+    wheel, it's a catastrophe waiting to happen!
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan Bob, it'll work fine, we've done it before.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it doesn't, what if it breaks down on the way to the party?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Then we'll all be standing there, useless, because of some half-baked design.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's just try it, it's not like we have a better idea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think you have a better idea, Vigil? You're the one who thought the party
+    should be on a Tuesday.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's not fight about this, we can work it out.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we'll figure something out, Bob, just calm down.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I won't calm down, I won't be part of some haphazard, disastrous scheme!

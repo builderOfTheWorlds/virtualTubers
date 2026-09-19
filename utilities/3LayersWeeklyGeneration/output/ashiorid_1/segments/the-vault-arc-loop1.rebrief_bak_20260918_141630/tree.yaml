@@ -1,0 +1,82 @@
+the-vault-arc-loop1:
+  node_id: the-vault-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party discovers what the Letos have been guarding in the subbasement,
+    and le
+  summary: The party discovers what the Letos have been guarding in the subbasement,
+    and learns about the true nature of the seal.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-vault-arc-loop1-n0
+  - the-vault-arc-loop1-n1
+  slots: null
+the-vault-arc-loop1-n0:
+  node_id: the-vault-arc-loop1-n0
+  parent_id: the-vault-arc-loop1
+  order: 0
+  depth: 1
+  title: The Hidden Vault Revealed
+  summary: The party descends into the subbasement and discovers the ancient vault
+    where the Letos have been guarding the true nature of the seal. They uncover artifacts
+    that reveal the seal's purpose and the terrible truth about what it was protecting.
+  continuity_in: The party has just escaped the burning manor and is now making their
+    way toward Malmont.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 450
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+the-vault-arc-loop1-n1:
+  node_id: the-vault-arc-loop1-n1
+  parent_id: the-vault-arc-loop1
+  order: 1
+  depth: 1
+  title: The Weight of Knowledge
+  summary: With the vault's secrets revealed, the party grapples with the implications
+    of what they've discovered. They must decide how to proceed with their knowledge
+    of the seal's true nature and the dangerous power that lies within the amulet
+    quest.
+  continuity_in: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  continuity_out: The party has learned the truth about the seal and the vault's contents,
+    and they are now aware of the stakes involved in the amulet quest.
+  target_words: 250
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-vault-arc-loop1-n1-weight-knowledge-1
+    kind: ambient
+    prompt: The party sits in contemplation, each member processing the weight of
+      their discovery about the seal's true nature and the amulet's power.
+    lore:
+    - amulet-of-wonder
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-vault-arc-loop1-n1-weight-knowledge-2
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

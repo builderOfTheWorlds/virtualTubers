@@ -1,0 +1,42 @@
+id: the-meal
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-19T00:12:33.555762+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I could do better than this. Anybody who cooks this should be ashamed.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys! Let's just enjoy the meal together. We can make it a fun
+    evening!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The flavors are completely wrong. You can't just throw some seasonings in
+    a pot and expect a good meal.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's start fresh. Who wants to cook tomorrow? I'm happy to take a turn!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cooking tomorrow? Are you kidding me? I'm the only one who can cook around
+    here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, I'll cook tomorrow. But I'm not using any of the pots in this kitchen.
+    They're disgusting.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad. A little soap and water would do wonders.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Soap and water? You think that's enough to fix this place? I doubt it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, a clean pot is a happy pot.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think we can work with what we have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, you want to eat that? Fine, don't come crying to me when you get sick.

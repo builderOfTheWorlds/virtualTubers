@@ -1,0 +1,42 @@
+id: bob-vs-the-cart-wheel
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:54.571068+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move along. We have a schedule to keep.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, trust us, we know what we're doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't trust you, Chadwick. You don't know what you're doing.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Bob, it's just a cart wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just a cart wheel, it's a critical component of our transportation
+    plan.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, we appreciate your input, but we really need to get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Moving? We're not moving until this cart wheel is perfect.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, you're being stubborn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Stubborn? I'm being meticulous.
+- kind: dialogue
+  speaker: chadwick
+  text: Meticulous? You're being unreasonable.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, just let it go, we can fix it on the road.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, we can't fix it on the road. We have to get it right now.

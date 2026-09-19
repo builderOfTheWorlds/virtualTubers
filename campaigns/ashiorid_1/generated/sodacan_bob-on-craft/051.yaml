@@ -1,0 +1,42 @@
+id: sodacan_bob-on-craft
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T20:51:01.420690+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what have we got here?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on? We don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh no, no, this is fascinating. This blade was likely made in the western
+    provinces, sometime between 200 and 250 years ago. The maker was a skilled craftsman,
+    likely a member of the blacksmiths' guild.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I like the way the metal's been folded in the blade.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of steel is this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question. This is a high-carbon steel, likely obtained from the mines
+    in the eastern mountains. It's a good quality, but not the finest available at
+    the time.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, can you just tell me where it was made?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, yes. I was just explaining. The maker's guild stamp is here, see?
+    It's a small guild, but a well-respected one.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, what's this other thing? Is that a gate hinge?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, no, no, that's a wagon axle. Completely different craft. But see how the
+    axle is mounted on the bracket? That's a clever design, it distributes the weight
+    evenly...

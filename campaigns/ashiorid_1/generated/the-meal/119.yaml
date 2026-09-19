@@ -1,0 +1,29 @@
+id: the-meal
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:49.422486+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I cooked the meal tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the kitchen is a science, not an art. You've botched the seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad. It's a meal together, that's what counts.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're giving that away? That's... interesting.
+- kind: dialogue
+  speaker: Leena
+  text: Why, Vigil? What's wrong with it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I bet it's just a matter of technique. I could cook this better in my sleep.
+- kind: dialogue
+  speaker: gm
+  text: You know, I've been thinking, we should take turns cooking. Who's up for it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I am. I will do it justice.

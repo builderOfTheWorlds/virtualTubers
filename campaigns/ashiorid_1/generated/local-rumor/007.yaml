@@ -1,0 +1,37 @@
+id: local-rumor
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:06.702318+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think we'll want to stop for the night, the constable's watch will be on
+    the streets soon.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's find a place to stay and get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: I'm looking for a sign that says "Moonlit's Rest", it's supposed to be one
+    of the better inns.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see it, are you sure that's the right name?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, it says "Black Swan Inn" on the sign.
+- kind: dialogue
+  speaker: chadwick
+  text: Same difference, it's an inn.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just glad to be in a real town again, it's been a while.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, it's nice to have people around who don't know our business.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's a rumor going around about something moving through the town at night.
+- kind: dialogue
+  speaker: gm
+  text: Oh, just the usual superstitious nonsense.

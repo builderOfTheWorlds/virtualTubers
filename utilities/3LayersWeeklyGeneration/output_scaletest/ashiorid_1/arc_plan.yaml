@@ -1,0 +1,764 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc
+  loop: 0
+  mirror_of:
+  - invitation-arc-alt4
+  mirror_transform: null
+  order: 0
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: '1'
+    u_lo: 15/16
+  spine_scenes:
+  - invitation
+  synopsis: Ten thousand years to the day since the Event, four strangers each receive
+    a mysterious card inviting them to a party that has never been held. The cards
+    appear in unexpected places, each bearing a different name but all pointing to
+    the same location.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  mirror_of:
+  - invitation-arc-alt4
+  mirror_transform: null
+  order: 1
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 15/16
+    u_lo: 7/8
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The players learn about the Age of War, when magic was consumed as fuel
+    and the world nearly burned itself out. They discover that the Event—the moment
+    when everything changed—was a desperate attempt to save what remained of the world's
+    magic.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc
+  loop: 0
+  mirror_of:
+  - burn-it-down-arc-alt2
+  mirror_transform: null
+  order: 2
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 7/8
+    u_lo: 13/16
+  spine_scenes:
+  - magic-retained
+  synopsis: The seal holds, and magic survives into the present day. The players learn
+    that the world is now thin and rationed, where a sorcerer is rare but possible.
+    They also begin to understand how this preservation affects their own abilities
+    and the world around them.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc
+  loop: 0
+  mirror_of:
+  - burn-it-down-arc-alt2
+  mirror_transform: null
+  order: 3
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 13/16
+    u_lo: 3/4
+  spine_scenes:
+  - letos-manor
+  synopsis: The players arrive at Duke Sorensen Leto III's manor, now lit for a party
+    ten thousand years in the making. They find themselves surrounded by familiar
+    names and faces from their pasts, and begin to realize that something is very
+    wrong with this gathering.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc
+  loop: 0
+  mirror_of:
+  - bahadur-revealed-arc-alt2
+  mirror_transform: null
+  order: 4
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/4
+    u_lo: 11/16
+  spine_scenes:
+  - party-attack
+  synopsis: The doors open to people who were not invited, and the room stops moving.
+    The players must defend themselves against intruders while uncovering the truth
+    behind the party's purpose and their own connection to the Leto family.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc-alt2
+  loop: 0
+  mirror_of:
+  - bahadur-revealed-arc-alt2
+  mirror_transform: null
+  order: 5
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 11/16
+    u_lo: 5/8
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers receive identical invitations to Duke Leto's anniversary
+    party, each bearing a unique symbol that hints at their connection to the ancient
+    magic.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-alt2
+  loop: 0
+  mirror_of:
+  - the-age-of-war-arc-alt2-arc
+  mirror_transform: null
+  order: 6
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 5/8
+    u_lo: 9/16
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party guests are introduced to the dark history of the Age of War,
+    and how the world's magic was consumed in a desperate attempt to stop the end
+    of all things.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: letos-manor-arc-alt2
+  loop: 0
+  mirror_of:
+  - the-age-of-war-arc-alt2-arc
+  mirror_transform: null
+  order: 7
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 9/16
+    u_lo: 1/2
+  spine_scenes:
+  - letos-manor
+  synopsis: The four arrive at Leto's manor for the anniversary celebration, only
+    to find it has been infiltrated by unknown forces.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc-alt2
+  loop: 0
+  mirror_of:
+  - party-attack-arc-alt2-arc
+  mirror_transform: null
+  order: 8
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/2
+    u_lo: 7/16
+  spine_scenes:
+  - party-attack
+  synopsis: The manor is attacked by mysterious forces, and the four must fight their
+    way through to safety while uncovering the secrets of the Leto family.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc
+  loop: 0
+  mirror_of:
+  - party-attack-arc-alt2-arc
+  mirror_transform: null
+  order: 9
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 7/16
+    u_lo: 3/8
+  spine_scenes:
+  - burn-it-down
+  synopsis: As the manor burns around them, the four discover that the attack was
+    not random and that they must escape before the building collapses completely.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-alt2
+  loop: 0
+  mirror_of:
+  - malvakar-riddle-arc-alt2-arc
+  mirror_transform: null
+  order: 10
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/8
+    u_lo: 5/16
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party arrives at the Malvakar riddle monument, where they must solve
+    an ancient puzzle to open the next door on their map. As they work through the
+    riddle, tensions rise between them.
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc-alt2
+  loop: 0
+  mirror_of:
+  - malvakar-riddle-arc-alt2-arc
+  mirror_transform: null
+  order: 11
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 5/16
+    u_lo: 1/4
+  spine_scenes:
+  - the-vault
+  synopsis: The party discovers the hidden vault beneath Leto's manor, where they
+    find crucial information about the Bahadur and the true nature of their quest.
+    They uncover a secret that changes everything.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  mirror_of:
+  - portal-encounter-arc-arc
+  mirror_transform: null
+  order: 12
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/4
+    u_lo: 3/16
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard at the portal, who gives them vital
+    information about the Bahadur and their plans. The wizard's final act is to open
+    a passage for them to follow.
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-alt3
+  loop: 0
+  mirror_of:
+  - portal-encounter-arc-arc
+  mirror_transform: null
+  order: 13
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 3/16
+    u_lo: 1/8
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party explores the history of the Age of War and its consequences,
+    learning how magic was drained from the world. They discover that their actions
+    may have already changed the course of events.
+- ambient_focus: chadwick-lost
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc-alt2
+  loop: 0
+  mirror_of:
+  - magic-retained-arc-alt2-arc
+  mirror_transform: null
+  order: 14
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/8
+    u_lo: 1/16
+  spine_scenes:
+  - magic-retained
+  synopsis: The party faces the consequences of the seal holding, discovering that
+    magic has survived but in a diminished state. They must decide whether to continue
+    their quest or accept the world as it is.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc-alt3
+  loop: 0
+  mirror_of:
+  - magic-retained-arc-alt2-arc
+  mirror_transform: null
+  order: 15
+  plot_path:
+  - plot: plot_0
+    polarity: forward
+    ring: plot_0.0
+    role: descent
+    u_hi: 1/16
+    u_lo: '0'
+  spine_scenes:
+  - invitation
+  synopsis: The four strangers each receive the same mysterious card, marking the
+    beginning of their journey toward the Ten Thousandth Anniversary.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 16
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The tear in space-time answers back, revealing the Bahadur's presence
+    and their true agenda. The party discovers that the Bahadur are not merely a relic
+    of the past but an active threat that has been watching them all along.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 17
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party arrives at the northern monument, where they must solve the
+    Malvakar riddle. The answer reveals crucial information about the Amulet of Wonder
+    and sets them on a path toward its final location.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-vault-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 18
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - the-vault
+  synopsis: Behind the subbasement wall lies a secret that changes everything. The
+    party uncovers what has been guarded in Leto's manor for ten thousand years, revealing
+    how the past connects to the present.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: ''
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 19
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: keystone
+    u_hi: '0'
+    u_lo: '0'
+  spine_scenes:
+  - portal-choice
+  synopsis: The tear in the air grows wider, forcing the party to make a life-altering
+    decision. They must choose between different paths forward, knowing that one wrong
+    choice could doom them all.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just witnessed the seal holding and the world's magic
+    being saved.
+  continuity_out: The party grapples with the implications of magic surviving, realizing
+    they may have changed history by saving it.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: magic-retained-arc-alt2-arc
+  loop: 0
+  mirror_of:
+  - magic-retained-arc-alt2
+  - invitation-arc-alt3
+  mirror_transform: knowledge_gained
+  order: 20
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/8
+    u_lo: '0'
+  spine_scenes:
+  - magic-retained
+  synopsis: The party confronts the reality that the seal holds, discovering magic's
+    survival in a diminished form. They must decide whether to continue their quest
+    or accept the world as it is, with consequences for their choices.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just made contact with the portal and its mysterious
+    guardian.
+  continuity_out: The party now understands the Bahadur's true nature and their threat
+    to the world.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc-arc
+  loop: 0
+  mirror_of:
+  - portal-encounter-arc
+  - the-age-of-war-arc-alt3
+  mirror_transform: stakes_raised
+  order: 21
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/4
+    u_lo: 1/8
+  spine_scenes:
+  - portal-encounter
+  synopsis: The party encounters a dying wizard at the portal who provides crucial
+    information about the Bahadur and their plans, before opening a passage for them
+    to follow. His final act is a sacrifice that changes everything.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just discovered the Bahadur's plan and is now seeking
+    the next riddle.
+  continuity_out: The party successfully solves the riddle but at a cost that fractures
+    their unity.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc-alt2-arc
+  loop: 0
+  mirror_of:
+  - malvakar-riddle-arc-alt2
+  - the-vault-arc-alt2
+  mirror_transform: role_reversed
+  order: 22
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 3/8
+    u_lo: 1/4
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The party arrives at the Malvakar riddle monument and must solve an ancient
+    puzzle to open the next door on their map, while tensions rise between them as
+    they struggle with the riddle's meaning.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just escaped the riddle monument and is now traveling
+    toward Malmont.
+  continuity_out: The party discovers they are being hunted by forces tied to the
+    Leto family's dark legacy.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: party-attack-arc-alt2-arc
+  loop: 0
+  mirror_of:
+  - party-attack-arc-alt2
+  - burn-it-down-arc
+  mirror_transform: bond_proven
+  order: 23
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 1/2
+    u_lo: 3/8
+  spine_scenes:
+  - party-attack
+  synopsis: The manor is attacked by mysterious forces, and the four must fight their
+    way through to safety while uncovering the secrets of the Leto family, realizing
+    that someone has been watching them.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has just discovered the Leto family's involvement in the
+    attack on the manor.
+  continuity_out: The party now understands the true scope of the Event and its impact
+    on the world they inhabit.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc-alt2-arc
+  loop: 0
+  mirror_of:
+  - the-age-of-war-arc-alt2
+  - letos-manor-arc-alt2
+  mirror_transform: debt_paid
+  order: 24
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 5/8
+    u_lo: 1/2
+  spine_scenes:
+  - the-age-of-war
+  synopsis: The party is introduced to the dark history of the Age of War, learning
+    how magic was consumed in a desperate attempt to stop the end of all things, and
+    realizing that their actions may have already altered this timeline.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has learned that the Event was not just a single moment,
+    but a series of decisions made by those who understood the true cost of magic's
+    preservation. They now know that their own abilities are tied to the very survival
+    of their world.
+  continuity_out: The party is left with a deeper understanding of how their world
+    was saved, but also realizes that the price of that salvation has created new
+    threats and responsibilities. Their connection to the Bahadur is revealed as more
+    complex than they imagined.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc-alt2
+  loop: 0
+  mirror_of:
+  - party-attack-arc
+  - invitation-arc-alt2
+  mirror_transform: knowledge_gained
+  order: 25
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 3/4
+    u_lo: 5/8
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The party discovers that the Bahadur are not just a distant threat, but
+    a presence that has been subtly manipulating events in their world for millennia.
+    As they confront the truth about their own origins and the cost of magic's survival,
+    they must decide whether to trust the answers they've found or risk everything
+    to forge a new path.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party has begun to understand the scope of what happened during
+    the Event and how their actions now affect the world's future. They know they
+    must find the Amulet of Wonder to prevent a similar catastrophe from occurring
+    again.
+  continuity_out: The party realizes that some truths come at a price, and their decision
+    to stay or leave has created new challenges that will define their journey forward.
+    They have begun to see how their own choices shape not just their fate, but the
+    fate of all who follow.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: burn-it-down-arc-alt2
+  loop: 0
+  mirror_of:
+  - magic-retained-arc
+  - letos-manor-arc
+  mirror_transform: stakes_raised
+  order: 26
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: 7/8
+    u_lo: 3/4
+  spine_scenes:
+  - burn-it-down
+  synopsis: The party must navigate a collapsing manor as they uncover the truth about
+    their own roles in the Event. As the structure begins to fall, they are forced
+    to make a choice between fleeing or staying to protect what they've learned, knowing
+    that their decision will have consequences that ripple through time.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The party is now fully aware of the historical significance of their
+    world and how the Event changed everything. They have begun to piece together
+    the truth about the Bahadur and their connection to the Amulet of Wonder.
+  continuity_out: The party realizes that their individual paths were guided by forces
+    beyond their understanding, and they must now prepare for a journey that will
+    test not just their abilities, but their very identities. The invitation has become
+    a call to action, one that changes everything they thought they knew.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: invitation-arc-alt4
+  loop: 0
+  mirror_of:
+  - invitation-arc
+  - the-age-of-war-arc
+  mirror_transform: role_reversed
+  order: 27
+  plot_path:
+  - plot: plot_0
+    polarity: reflected
+    ring: plot_0.0
+    role: ascent
+    u_hi: '1'
+    u_lo: 7/8
+  spine_scenes:
+  - invitation
+  synopsis: The party is drawn together by mysterious cards that invite them to a
+    party they never knew existed. As they arrive at the manor, they begin to understand
+    that their presence here was not accidental. Each stranger holds a piece of a
+    larger puzzle, and the invitation has been orchestrated with precision.

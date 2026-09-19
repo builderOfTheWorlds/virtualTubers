@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 265
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:31.867345+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out, people. We've got a route to follow.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, let's get going. We've got a lot of ground to cover.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you take point and I'll bring up the rear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, oh, this is going to be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) You think he knows where we are?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering back) He does, but he's not saying.
+- kind: dialogue
+  speaker: chadwick
+  text: (stopping suddenly) What's wrong?
+- kind: dialogue
+  speaker: gm
+  text: We need to head left up ahead. The map shows a stream crossing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Chadwick, you've got that look on your face.
+- kind: dialogue
+  speaker: chadwick
+  text: What look?
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) I think we should just keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) Yeah, before Chadwick gets lost.

@@ -1,0 +1,43 @@
+id: camp-fire
+take: 215
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:14.470587+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down for hours, I'm starting to think it's not going to
+    let up.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we at least settle the watch order? We can't just go to sleep without
+    knowing who's covering.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking about the fire, and I'm not convinced it's stable. We might
+    need to make some adjustments before nightfall.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind is wrong.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the fire goes out? Do we have a backup plan?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll just have to make do, I suppose. Sodacan Bob, can you show me how you
+    laid the fire?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not that complicated, Chadwick. You just... (trails off)
+- kind: dialogue
+  speaker: gm
+  text: We're not going to get anything else done tonight, folks. Why don't we just
+    call it a day?
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Do you think the rain will wash away the scent of the wildflowers?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Good night, everyone. Try to get some rest.

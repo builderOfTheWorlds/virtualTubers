@@ -1,0 +1,42 @@
+id: camp-fire
+take: 230
+model: llama3.1:8b
+generated_at: '2026-09-18T22:08:44.821602+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's been burning steady, I think we'll make it through the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order for tonight. Sodacan Bob, you're up
+    first.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire was laid wrong. It's a miracle it's holding.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long the rain's been going on?
+- kind: dialogue
+  speaker: Vigil
+  text: It started before we arrived in town.
+- kind: dialogue
+  speaker: Leena
+  text: So it's been raining since the last town then?
+- kind: dialogue
+  speaker: gm
+  text: As far as I can tell, yes.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain smells like the river by the last well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The river by the last well.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, watch order's settled, then. We'll reassess in the morning.
+- kind: dialogue
+  speaker: gm
+  text: Rain's letting up a bit, I think.

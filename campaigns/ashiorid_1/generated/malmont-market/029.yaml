@@ -1,0 +1,38 @@
+id: malmont-market
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:36.335968+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better hammerwork on a beggar's door.
+- kind: dialogue
+  speaker: Leena
+  text: Fascinating, but what's this one supposed to be, a continent?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) You might want to be careful, they're not cheap.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) Relax, it's just an old map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the blacksmith) You call that a sword?
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Where did these come from?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) Don't get too comfortable.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) I'm just enjoying the lack of recognition.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to himself) This town is full of pretenders.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Can I see that one, with the mountains?
+- kind: dialogue
+  speaker: Vigil
+  text: (to the map seller) How much for the lot?

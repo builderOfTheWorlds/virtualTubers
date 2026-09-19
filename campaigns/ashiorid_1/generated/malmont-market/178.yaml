@@ -1,0 +1,32 @@
+id: malmont-market
+take: 178
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:42.851882+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Good morning, folks. Malmont market's in full swing.
+- kind: dialogue
+  speaker: Leena
+  text: I love the smell of freshly brewed coffee.
+- kind: dialogue
+  speaker: Vigil
+  text: Just a standard cup for me, please.
+- kind: dialogue
+  speaker: chadwick
+  text: You folks know I'm not from around here, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to a nearby blacksmith) How long you been working on that sword?
+- kind: dialogue
+  speaker: Vigil
+  text: (watching the smith work) Looks like it could use a few more coats of polish.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Ooh, maps! Can I take a look?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) That's some fine work, but I think I can do better.
+- kind: dialogue
+  speaker: gm
+  text: Malmont's got a lot to offer, even if it's not the biggest town.

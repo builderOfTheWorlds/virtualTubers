@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T20:54:19.297521+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You don't strike the die, you tap it, a gentle blow, and the pattern of the
+    runes is what makes the difference.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the pattern of these runes on the Malvakar, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, you mean the Malvakar's runes? It's a dialect I don't recognize. Looks
+    like the old tongue, but it's been a thousand years since anyone's spoken that
+    way.
+- kind: dialogue
+  speaker: Leena
+  text: A dialect from the old tongue? Can you tell us more about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm no expert, Leena. I'm just trying to figure out how they managed to carve
+    it so deep it'll still be readable in a few thousand years.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's a clue to how they made the Amulet of Wonder itself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I doubt it. The amulet's craftsmanship is far beyond anything we've seen.
+- kind: dialogue
+  speaker: gm
+  text: We'll have to see what we can learn from the Malvakar.

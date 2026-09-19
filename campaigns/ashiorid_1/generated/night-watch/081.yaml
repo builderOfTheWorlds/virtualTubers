@@ -1,0 +1,41 @@
+id: night-watch
+take: 81
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:22.982815+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are really something tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a clear sky.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not seeing any clouds.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can hear the crickets, can't you?
+- kind: dialogue
+  speaker: gm
+  text: I thought you were watching for that?
+- kind: dialogue
+  speaker: chadwick
+  text: I am, I just... sometimes you hear things when you're not listening.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just the wind, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we should wake the others early?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not tired, I don't think.
+- kind: dialogue
+  speaker: gm
+  text: I could use some more sleep.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we've got a while before dawn.
+- kind: dialogue
+  speaker: Leena
+  text: What if it's... really close? And we sleep through it?

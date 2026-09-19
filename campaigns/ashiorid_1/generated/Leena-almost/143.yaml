@@ -1,0 +1,33 @@
+id: Leena-almost
+take: 143
+model: llama3.1:8b
+generated_at: '2026-09-18T19:33:35.032461+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not going to tell you what it is, but you've definitely seen it before,
+    Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Just ignore it, Leena. It's not worth your time.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not ignoring it. I want to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen something like it in your village, Leena. Maybe it's a...
+    a marker or something?
+- kind: dialogue
+  speaker: gm
+  text: That's a possibility, but it's not a very convincing one. What do you think,
+    Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's just something we don't know about, and we should leave it alone.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it's something we don't know about. I think it's something we're
+    not supposed to know about.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Leena. Don't get worked up about it.

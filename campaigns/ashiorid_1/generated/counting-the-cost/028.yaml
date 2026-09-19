@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:49.864726+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A gear's gone bad on the cart, looks like a bearing's seized.
+- kind: dialogue
+  speaker: chadwick
+  text: That's gonna take some work to fix.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll need some new stock, and a bit of time to temper the metal.
+- kind: dialogue
+  speaker: Leena
+  text: How long you think it'll take?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Long enough to let a piece of wood settle, dry out its sap.
+- kind: dialogue
+  speaker: Vigil
+  text: How's that supposed to help us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We can't rush a piece of work, it'll just come back to haunt us.
+- kind: dialogue
+  speaker: gm
+  text: What's the holdup, Sodacan?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The holdup's in the metal, trying to coax it back into shape.
+- kind: dialogue
+  speaker: chadwick
+  text: And how's Chadwick doing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like a tree that's been split, Chadwick's got some rough edges.

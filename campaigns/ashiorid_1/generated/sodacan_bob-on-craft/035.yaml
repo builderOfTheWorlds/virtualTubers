@@ -1,0 +1,45 @@
+id: sodacan_bob-on-craft
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:49:00.830649+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. Sodacan Bob, can you tell us what you found here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a gate hinge, made by the Forge of Easthaven, circa 875 GD.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's go.
+- kind: dialogue
+  speaker: Leena
+  text: What's the significance of the Forge of Easthaven?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Leena! The Forges were known for their high-quality
+    hinges, which is exactly what we see here.
+- kind: dialogue
+  speaker: Vigil
+  text: Was it made for a specific gate, or was it a mass-produced item?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good question, Vigil! Based on the design and materials, I'd say it was a
+    high-end gate, likely made for a wealthy merchant or noble.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a closer look at that gate. See if we can find any other
+    clues.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I think that's just a regular gate. No markings or symbols of note.
+- kind: dialogue
+  speaker: Leena
+  text: But it's so... sturdy.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, that's the workmanship of the Forges, Leena. They were renowned for their
+    attention to detail and quality control.
+- kind: dialogue
+  speaker: chadwick
+  text: We've wasted enough time. Let's move on.

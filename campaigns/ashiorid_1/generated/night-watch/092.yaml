@@ -1,0 +1,41 @@
+id: night-watch
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:35.897207+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's so quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. I've never heard it like this before.
+- kind: dialogue
+  speaker: Leena
+  text: (snoring)
+- kind: dialogue
+  speaker: Vigil
+  text: (stifling a yawn)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see a star.
+- kind: dialogue
+  speaker: gm
+  text: Which one?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Uh, the one that's... (pauses)
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) Just pick one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The one with the... (stops)
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Just Sodacan Bob trying to describe a star.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Sorry, I fell asleep.

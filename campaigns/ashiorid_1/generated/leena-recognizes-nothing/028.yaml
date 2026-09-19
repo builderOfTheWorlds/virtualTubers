@@ -1,0 +1,35 @@
+id: leena-recognizes-nothing
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:57.289967+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you tell me what it is about this place that's familiar?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's the way the hill slopes, and the building on the right.
+- kind: dialogue
+  speaker: chadwick
+  text: So, has anyone heard of any local landmarks around here?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, says nothing)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Must be a famous view or something, yeah?
+- kind: dialogue
+  speaker: gm
+  text: (pauses, then asks) Do any of you notice anything unusual?
+- kind: dialogue
+  speaker: Leena
+  text: I just keep thinking I've seen it somewhere before.
+- kind: dialogue
+  speaker: Vigil
+  text: (remains silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Well, let's keep moving. We don't want to keep the locals waiting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbles under his breath) Famous view, right...

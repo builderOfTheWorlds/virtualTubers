@@ -1,0 +1,32 @@
+id: after-the-choice
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:18.718223+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We'll get settled in here soon, I promise.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) Is this really where we're meant to be?
+- kind: dialogue
+  speaker: Vigil
+  text: We didn't have a choice, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) That's true, but we're here now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (hesitates) I miss the fire pit.
+- kind: dialogue
+  speaker: gm
+  text: It's not the same, I know.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then speaks) It's done.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) I just wish...
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupts) Hey, let's make some tea.

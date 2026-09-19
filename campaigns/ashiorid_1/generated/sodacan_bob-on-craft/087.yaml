@@ -1,0 +1,35 @@
+id: sodacan_bob-on-craft
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T22:28:00.156995+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, this bracket's a great example of the design trade-off between strength
+    and weight, and I'm willing to bet it's a late 18th century piece, possibly from
+    the Midlands.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we can't stand here all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but you see, the maker was thinking about the kind of load this cart would
+    be carrying and made this adjustment to—
+- kind: dialogue
+  speaker: Vigil
+  text: Does anyone know if it's been taken apart before or is it still in its original
+    configuration?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can you show me the other side, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, as I was saying, the design is actually a bit ahead of its time,
+    anticipating the need for lighter construction materials.
+- kind: dialogue
+  speaker: chadwick
+  text: Seriously, let's go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm getting to the good part, trust me, this is where the real innovation
+    happens.

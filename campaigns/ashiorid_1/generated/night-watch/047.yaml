@@ -1,0 +1,41 @@
+id: night-watch
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:51.371230+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, I can see them.
+- kind: dialogue
+  speaker: Leena
+  text: So quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know what you mean.
+- kind: dialogue
+  speaker: Vigil
+  text: I wish I could see more, but the trees block most of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're looking north, I'm looking south. Maybe we can get a different view.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) You know, I don't think I've ever seen a night this still before.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) I mean, I think we've been lucky, you know?
+- kind: dialogue
+  speaker: chadwick
+  text: (awkwardly) Lucky?
+- kind: dialogue
+  speaker: Leena
+  text: (stops, looks away) Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (clears throat) So, should we wake the others early?

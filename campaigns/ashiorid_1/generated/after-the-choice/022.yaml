@@ -1,0 +1,29 @@
+id: after-the-choice
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:53.231460+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, we've finally made a decision.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just glad we didn't have to... argue about it.
+- kind: dialogue
+  speaker: chadwick
+  text: We had to give something up to get here.
+- kind: dialogue
+  speaker: Vigil
+  text: It was the right choice, but...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, who's up for some hot cocoa?
+- kind: dialogue
+  speaker: gm
+  text: Not me.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you were really looking forward to that.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not about that.

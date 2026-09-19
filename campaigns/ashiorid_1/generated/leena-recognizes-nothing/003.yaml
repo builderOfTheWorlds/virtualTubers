@@ -1,0 +1,32 @@
+id: leena-recognizes-nothing
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:18.276630+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The carriage slows to a stop, and Leena's gaze drifts out the window.
+- kind: dialogue
+  speaker: Leena
+  text: I think I know that hill.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Must be the one near the old windmill.
+- kind: dialogue
+  speaker: Vigil
+  text: Watches the hill, his eyes narrowing slightly.
+- kind: dialogue
+  speaker: Leena
+  text: No, not the windmill. I don't know what it is.
+- kind: dialogue
+  speaker: chadwick
+  text: Shall we take a break and stretch our legs?
+- kind: dialogue
+  speaker: Vigil
+  text: Nods, his expression unchanged.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Offers Leena a flask of water.
+- kind: dialogue
+  speaker: Leena
+  text: Tastes it, her brow furrowed in concentration.

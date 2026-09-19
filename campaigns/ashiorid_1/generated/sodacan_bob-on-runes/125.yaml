@@ -1,0 +1,38 @@
+id: sodacan_bob-on-runes
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:49.523952+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a die is struck with force, not finesse.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see what this has to do with the Malvakar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Everything has to do with the Malvakar if you're paying attention.
+- kind: dialogue
+  speaker: Leena
+  text: I think the runes were meant to be read, not just cut into the stone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cut into the stone is exactly what they are, if you look closely.
+- kind: dialogue
+  speaker: Vigil
+  text: Are you implying that someone might have actually understood the text?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, I'm saying it's a miracle the thing hasn't been lost to time yet.
+- kind: dialogue
+  speaker: chadwick
+  text: And what would you do if you found the Amulet of Wonder?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I wouldn't find it, that's what.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Ah, Sodacan Bob, ever the optimist.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone has to keep the others grounded.

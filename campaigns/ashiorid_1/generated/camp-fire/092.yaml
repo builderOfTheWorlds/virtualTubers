@@ -1,0 +1,35 @@
+id: camp-fire
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T19:53:49.339591+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle the watch order for tonight.
+- kind: dialogue
+  speaker: Leena
+  text: I was thinking we could use Vigil and Sodacan Bob on first watch.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I was thinking Chadwick and Ashiorid.
+- kind: dialogue
+  speaker: Vigil
+  text: Three hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, now, now, that's not how you lay a fire. You gotta have some airflow.
+- kind: dialogue
+  speaker: Leena
+  text: How do you make it burn so long?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Need to add some green wood...
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, are you done debating the watch order?
+- kind: dialogue
+  speaker: chadwick
+  text: No, we need to get this settled.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly) Rain will stop by morning.

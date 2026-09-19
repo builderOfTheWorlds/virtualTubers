@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 49
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:19.251784+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on that house were just fixed, Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: Mm?
+- kind: dialogue
+  speaker: Leena
+  text: What's he saying?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Same cart passed by twice, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't think it's a big deal.
+- kind: dialogue
+  speaker: Leena
+  text: Is it a pattern or just...?
+- kind: dialogue
+  speaker: Vigil
+  text: Just.
+- kind: dialogue
+  speaker: gm
+  text: All right.
+- kind: dialogue
+  speaker: Leena
+  text: Let's focus on the map.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah.

@@ -1,0 +1,36 @@
+id: camp-fire
+take: 237
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:25.146812+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, that fire should last the night, but we need to make sure it's tended
+    to.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order then. I'll take the first shift.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we laid the fire too high, it's going to burn hot but not long.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's still coming down.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will let up tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, a low bed of coals would've given us a longer burn.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't stay up all night arguing about it.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what it's like to wake up to no rain at all?
+- kind: dialogue
+  speaker: gm
+  text: Not on this trip, at any rate.
+- kind: dialogue
+  speaker: Vigil
+  text: The moon's still there.

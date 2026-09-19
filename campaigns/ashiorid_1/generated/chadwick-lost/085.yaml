@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:49.374824+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, Chadwick, you think you know the way.
+- kind: dialogue
+  speaker: chadwick
+  text: I do know the way.
+- kind: dialogue
+  speaker: Leena
+  text: Well, just to confirm, Chadwick, can you tell us the name of the next village?
+- kind: dialogue
+  speaker: chadwick
+  text: It's... uh... (pauses) I'm sure we'll get there.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) I think it's about a mile east, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, I see, Chadwick's got the sense of direction of a...
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Sodacan Bob, I think you should ask Chadwick politely.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I know the way.
+- kind: dialogue
+  speaker: gm
+  text: (smirking) Okay, then, lead on, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: (resigned) I'm sure we'll get there eventually.

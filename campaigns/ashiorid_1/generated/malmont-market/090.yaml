@@ -1,0 +1,35 @@
+id: malmont-market
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:28.446753+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a scrapheap.
+- kind: dialogue
+  speaker: Vigil
+  text: Not impressed.
+- kind: dialogue
+  speaker: Leena
+  text: What's that one map show?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, no, that's not mine.
+- kind: dialogue
+  speaker: gm
+  text: The maps appear to be from several different eras.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Era? It's all just someone's notes to themselves.
+- kind: dialogue
+  speaker: Leena
+  text: These symbols look familiar, though.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I've seen that mountain range before.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't spend too much, love.
+- kind: dialogue
+  speaker: gm
+  text: Shall we take a walk?

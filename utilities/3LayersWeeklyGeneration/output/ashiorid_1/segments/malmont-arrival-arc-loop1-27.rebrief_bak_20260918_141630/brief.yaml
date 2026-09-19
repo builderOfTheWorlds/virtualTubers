@@ -1,0 +1,91 @@
+segment_id: malmont-arrival-arc-loop1-27
+order: 27
+loop: 0
+hours: 6
+synopsis: The party delves into the history of their invitation and the Age of War,
+  uncovering connections between their mysterious arrival and the great catastrophe
+  that changed everything. They begin to realize they are part of a larger design
+  that spans millennia.
+continuity_in: The party has started to understand how their paths led them here,
+  and that their individual fates are intertwined with the grand narrative of Ashiorid's
+  history.
+continuity_out: The party now knows that their journey was not random but part of
+  an ancient plan, one that may require all of them to make sacrifices or face dire
+  consequences.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-loop1-27-n1-echo-1
+  kind: ambient
+  prompt: The party discovers ancient texts revealing how the Age of War began
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-27-n1
+- slot_id: malmont-arrival-arc-loop1-27-n1-echo-2
+  kind: ambient
+  prompt: Through forgotten records, the party learns how their arrival connects to
+    the great catastrophe
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-27-n1
+- slot_id: malmont-arrival-arc-loop1-27-n1-echo-3
+  kind: ambient
+  prompt: The party begins to understand they are part of an ancient plan spanning
+    millennia
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-27-n1
+- slot_id: malmont-arrival-arc-loop1-27-n1-echo-4
+  kind: ambient
+  prompt: As they uncover more, the party realizes their individual fates are intertwined
+    with Ashiorid's grand narrative
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-27-n1
+nodes:
+- node_id: malmont-arrival-arc-loop1-27
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-27-n0
+  parent_id: malmont-arrival-arc-loop1-27
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-27-n1
+  parent_id: malmont-arrival-arc-loop1-27
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+needs_rebrief: true

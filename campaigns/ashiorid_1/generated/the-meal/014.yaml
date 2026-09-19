@@ -1,0 +1,41 @@
+id: the-meal
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:43.493760+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, everyone, dig in.
+- kind: dialogue
+  speaker: Leena
+  text: Isn't this just a lovely meal we're having?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Lovely? Are you kidding me? This is an affront to culinary decency.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I just love the presentation!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's going on here? You're just giving that away like it's trash?
+- kind: dialogue
+  speaker: gm
+  text: Hey, hey, it's fine, Bob, don't be so...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd cook it myself if I had to, it's that bad.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's just a meal...
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just calm down...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Calm down? This is a travesty!
+- kind: dialogue
+  speaker: Leena
+  text: I think it's nice that we have so much food...
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, that's it.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:05.802691+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The room's in order, let's get moving on the meeting.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good, I'm starved. Where's the food?
+- kind: dialogue
+  speaker: Leena
+  text: It's in the other room, I'll get the servant.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open outwards, by the way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, thanks Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Alright, meeting in an hour. Go eat.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's go.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to get the food, back soon.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed twice was from the north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Which way's the market?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's east of here, follow the smell.
+- kind: dialogue
+  speaker: gm
+  text: Yes, east, follow your nose.

@@ -1,0 +1,42 @@
+id: bob-vs-the-cart-wheel
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:13:57.623569+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get going, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan Bob, the wheel's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine? You call that fine? It's an affront to the very concept of engineering!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, we've talked about this. The design's sound.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sound? Sound?! I've seen the blueprints, Leena, and let me tell you, it's
+    a disaster waiting to happen.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we move on, folks? We've got a long way to go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Move on? You want to move on without fixing the catastrophic flaws in this...
+    this... monstrosity?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, we appreciate your input, but we need to get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Input? My input is what's going to save your bacon when this thing breaks
+    down in the middle of nowhere!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, we're listening, but we really need to—
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, you're not listening! You're just humoring me while secretly planning
+    to ignore everything I say!

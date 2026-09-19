@@ -1,0 +1,32 @@
+id: malmont-market
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:15.821967+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Mmm, not a single forge I've seen is burning bright.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) I'm looking for maps from before... the war, I think.
+- kind: dialogue
+  speaker: Vigil
+  text: (tapping his coin) You're sure these are originals?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Nobody seems to know me here, do they?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeballing Chadwick) You're from around here, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this? The craftsmanship in this town is... lacking.
+- kind: dialogue
+  speaker: Leena
+  text: (unfolding a map) These lines... they look familiar somehow.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) I've been on the road a long time.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Chadwick) Long enough to forget your face, I reckon.

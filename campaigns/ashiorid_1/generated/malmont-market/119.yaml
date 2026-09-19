@@ -1,0 +1,41 @@
+id: malmont-market
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:29.990331+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a fine anvil, but is that really the best they can do?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll be looking for a place to eat, want to join me?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good, I think I'll just wander around for a bit.
+- kind: dialogue
+  speaker: Leena
+  text: Do you know what this map is supposed to be? It looks old.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work from a village blacksmith.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't be too careful in a place like this.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know anyone here, is that a good thing?
+- kind: dialogue
+  speaker: Leena
+  text: I want this map.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not sure that's such a good idea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The constables seem a bit...restless.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll try the tavern.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what's that over there?

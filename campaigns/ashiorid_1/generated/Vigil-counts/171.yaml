@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 171
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:31.263537+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil has some observations about the place.
+- kind: dialogue
+  speaker: chadwick
+  text: What's he got?
+- kind: dialogue
+  speaker: Vigil
+  text: There's six people in the room including us.
+- kind: dialogue
+  speaker: Leena
+  text: That's a normal number for a gathering.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we're not causing a stir or anything.
+- kind: dialogue
+  speaker: chadwick
+  text: What else you got, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The doors swing out, just in case you were wondering.
+- kind: dialogue
+  speaker: gm
+  text: Anything else?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window was recently repaired.
+- kind: dialogue
+  speaker: Leena
+  text: That's good to know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should ask the owner about that.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the big deal?

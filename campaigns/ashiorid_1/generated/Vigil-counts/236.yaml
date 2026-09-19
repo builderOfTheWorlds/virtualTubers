@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 236
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:23.086081+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As you settle in for the night, you notice the soft hum of the lantern outside
+    your room, a gentle reminder that the city is still awake.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) Alright, I'm going to bed. Wake me up if anything happens.
+- kind: dialogue
+  speaker: Leena
+  text: (gets up to inspect the shutter) Yeah, it does look like it was fixed recently.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been a few days since I noticed it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Goodnight, all.
+- kind: dialogue
+  speaker: chadwick
+  text: (gets up to use the washbasin) Where's the soap?
+- kind: dialogue
+  speaker: Leena
+  text: (points) On the table.
+- kind: dialogue
+  speaker: gm
+  text: The water's still warm from earlier.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart went by again a few hours ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbles in his sleep) ...carriage...
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) Good, I'm glad I'm close to the bathroom.
+- kind: dialogue
+  speaker: Leena
+  text: (gets into bed) I'm going to sleep.

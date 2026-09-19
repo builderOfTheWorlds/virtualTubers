@@ -1,0 +1,41 @@
+id: sodacan_bob-on-runes
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T20:55:26.567068+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A fine morning for work, Sodacan Bob, what's on your mind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just thinking about the Malvakar, the runes they carved into it, must've been
+    a master's touch.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we've been over the language, Sodacan Bob, what are you thinking?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, not the language, just the craftsmanship, how a die's struck, that
+    kind of thing.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan Bob, you're not suggesting someone actually knew what they were doing
+    back then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone had to, Vigil, or those runes wouldn't be there after all these years.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, do you think anyone still has the skill to do that kind of work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patience, Leena, that's the real question, not skill.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Sodacan Bob, what's eating at you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing, just... nothing, never mind.
+- kind: dialogue
+  speaker: chadwick
+  text: (awkwardly) We're not getting anywhere, are we?

@@ -1,0 +1,128 @@
+segment_id: invitation-arc-alt2
+order: 5
+loop: 0
+hours: 6
+synopsis: The four strangers each receive the same mysterious card, marking ten thousand
+  years since the Event. They are drawn together by fate and curiosity.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-alt2-n0-1
+  kind: ambient
+  prompt: The first stranger feels a strange pull, as if the card in their hand is
+    calling them toward something vast and unknowable. The symbol burns faintly, pulsing
+    with a rhythm that matches their heartbeat.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n0
+- slot_id: invitation-arc-alt2-n0-2
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  - gm
+  node_id: invitation-arc-alt2-n0
+- slot_id: invitation-arc-alt2-n1-gathering-1
+  kind: ambient
+  prompt: The four strangers arrive at a place where the fabric of reality seems to
+    shimmer and bend, each carrying the same mysterious card that marks ten thousand
+    years since the Event.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-gathering-2
+  kind: ambient
+  prompt: Ancient markings align with their cards' symbols, and the air hums with
+    anticipation as they realize they are not merely curious observers, but participants
+    in something far greater.
+  lore:
+  - the-event
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-gathering-3
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-gathering-4
+  kind: ambient
+  prompt: As they stand at the threshold, each stranger feels a pull toward the others—some
+    invisible force drawing them together, as if the cards themselves are guiding
+    their steps.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+- slot_id: invitation-arc-alt2-n1-gathering-5
+  kind: ambient
+  prompt: The symbols on their cards glow faintly, resonating with the ancient markings
+    around them. They recognize they are not alone in this moment—fate has brought
+    them here for a reason.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n1
+nodes:
+- node_id: invitation-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: invitation-arc-alt2-n0
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: invitation-arc-alt2-n1
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

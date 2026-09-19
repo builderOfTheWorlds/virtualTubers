@@ -1,0 +1,41 @@
+id: the-meal
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T22:33:48.103295+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can tell the cook hasn't been doing this for long, sloppy seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, Sodacan Bob, help me set the mood with your culinary expertise.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This stew's been sitting out for hours, it's a breeding ground for bacteria.
+- kind: dialogue
+  speaker: Leena
+  text: Who's being dramatic, it's just a little food.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, anyone can do better than this.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, who cooked?
+- kind: dialogue
+  speaker: Leena
+  text: I thought Chadwick said he was in charge of meals today.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, so now you're blaming Chadwick?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not blaming, I'm just clarifying.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Clean the pot after you cook, people.

@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 131
+model: llama3.1:8b
+generated_at: '2026-09-18T20:13:00.131867+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village of Brindlemark lies due east of us, and the river runs directly
+    to the south.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, if I may be so bold, perhaps you could let us all take a look
+    at the map to be sure we're on track?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to look at the map, Leena. I've been here before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, you've been here before, have you? That's reassuring.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently nodding towards the map)
+- kind: dialogue
+  speaker: chadwick
+  text: What are you looking at, Vigil? I'm perfectly sure we're headed the right
+    way.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) Very well, let's proceed. (pausing again) And Vigil, I think it's
+    safe to say we're on the right path now.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Ah, I was afraid of that, Chadwick. But I'm glad we could all...
+    um... confirm the route together.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Yeah, yeah, we're all good. Let's just keep moving before anyone
+    else gets lost.

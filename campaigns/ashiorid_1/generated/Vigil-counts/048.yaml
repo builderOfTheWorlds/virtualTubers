@@ -1,0 +1,29 @@
+id: Vigil-counts
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:15.704622+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Vigil notices the cart has passed by twice.
+- kind: dialogue
+  speaker: Leena
+  text: Is it a delivery route then?
+- kind: dialogue
+  speaker: Vigil
+  text: No, not just that.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a matter for the local guild of carters.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Guilds don't concern me.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Fair enough.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just something I noticed.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Alright, let's move on.

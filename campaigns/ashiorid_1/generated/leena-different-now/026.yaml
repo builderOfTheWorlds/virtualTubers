@@ -1,0 +1,32 @@
+id: leena-different-now
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:26:29.480761+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's wrong, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I... I don't know. Something feels off, but I don't have the words.
+- kind: dialogue
+  speaker: chadwick
+  text: You're not the only one who's felt it, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Felt what?
+- kind: dialogue
+  speaker: Leena
+  text: A change, like... my magic is shifted. I don't like it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Shifted how?
+- kind: dialogue
+  speaker: Vigil
+  text: Let her say.
+- kind: dialogue
+  speaker: chadwick
+  text: She'll figure it out, don't worry.
+- kind: dialogue
+  speaker: gm
+  text: Maybe we should sit back and let her work it out.

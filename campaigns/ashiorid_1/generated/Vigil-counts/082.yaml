@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:37.034432+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The doors on the north wall open inward, don't they?
+- kind: dialogue
+  speaker: chadwick
+  text: I didn't notice that.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and they're pretty heavy.
+- kind: dialogue
+  speaker: Vigil
+  text: Just noting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone want more bread?
+- kind: dialogue
+  speaker: gm
+  text: The baker said he'd bring some more by noon.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good to me.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I could eat more.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just going to go find a spot to sit.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to check on the cart.

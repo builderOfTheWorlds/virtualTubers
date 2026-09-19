@@ -1,0 +1,36 @@
+id: leena-recognizes-nothing
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:09.454742+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is beginning to set, casting long shadows across the landscape.
+- kind: dialogue
+  speaker: gm
+  text: As you walk, the buildings and landmarks grow more familiar.
+- kind: dialogue
+  speaker: Leena
+  text: I almost recognize that hill over there, don't I?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, look at that view over there, the way the light catches the stone wall.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, eyes narrowing) It's... something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yeah, I think I know what you mean. That's a common design element in
+    the region.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not just that – it's the way the road curves, the shape of the hill...
+- kind: dialogue
+  speaker: gm
+  text: A faint breeze stirs the leaves of the nearby trees.
+- kind: dialogue
+  speaker: Vigil
+  text: (voice low) Keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, let's not linger. We don't know who might be watching.

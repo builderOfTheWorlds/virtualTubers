@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T19:26:44.669792+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village Leena thinks is centuries old has no signs of magic, only the
+    faintest hum of the moonwells.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what it is, but it's familiar.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure you've seen something like it before, Leena. You're a clever girl.
+- kind: dialogue
+  speaker: Leena
+  text: But that's just it – I don't know what it is.
+- kind: dialogue
+  speaker: gm
+  text: Leena, don't chase it. You don't know what it is or what it wants.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) It's not you.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan's right, Leena. Let it go.
+- kind: dialogue
+  speaker: Leena
+  text: I will. But I'd like to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sometimes things just are, Leena. No explanation needed.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) That's enough about that.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:39.014139+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window to the east has been repaired recently.
+- kind: dialogue
+  speaker: gm
+  text: Carry on as before, the local craftsmen do good work.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm checking the latch to make sure it's properly secured.
+- kind: dialogue
+  speaker: Leena
+  text: There's a cart parked outside, I saw it pass by earlier.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm taking a look at the cart, it seems to be just a delivery.
+- kind: dialogue
+  speaker: gm
+  text: The delivery should be finished soon, then we can speak with the merchant.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to the north are ajar, I can hear voices coming from the next room.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just the merchant's family, they're not a concern.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go talk to them, see if they have any news on the road conditions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll stay here and keep an eye on things.
+- kind: dialogue
+  speaker: gm
+  text: Very well, proceed with your business as usual.

@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 190
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:20.871761+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As you sit in the tavern, Vigil mentions that there are five patrons in the
+    common room besides yourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the view from the window, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter's been fixed, but it's not closed all the way.
+- kind: dialogue
+  speaker: Leena
+  text: What's that mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it was recently repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that important?
+- kind: dialogue
+  speaker: Vigil
+  text: Not particularly.
+- kind: dialogue
+  speaker: chadwick
+  text: What else have you noticed, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that was here earlier is passing by again.
+- kind: dialogue
+  speaker: gm
+  text: The doors here are to the north, by the way.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think is going on, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, really.

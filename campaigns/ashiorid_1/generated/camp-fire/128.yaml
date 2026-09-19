@@ -1,0 +1,34 @@
+id: camp-fire
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:00.899491+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a good thing we've got a fire going, or we'd be stuck out here in the
+    dark.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to settle the watch order now, before it gets too
+    late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's been laid a bit too close to the edge of the clearing.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been burning for two hours.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the rain will stop before morning?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just sit around all night, we have to figure out who's on watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm happy to take the first shift, I'm feeling pretty awake.
+- kind: dialogue
+  speaker: gm
+  text: It's not about how you're feeling, Bob, it's about who's been up the longest.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain will be here when we wake up.

@@ -1,0 +1,35 @@
+id: bob-sings
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:48.099163+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, good morrow, travelers! 'Tis a grand day for singing!
+- kind: dialogue
+  speaker: chadwick
+  text: I do believe I'll join in, if you don't mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: HO, HEY, HEH, EY, OH, OHH, EE, HAH! KRAK KRAK KROK!
+- kind: dialogue
+  speaker: Leena
+  text: Oh dear, Sodacan, I think you might want to...ah...
+- kind: dialogue
+  speaker: Vigil
+  text: I'm trying to meditate, you know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: WOOHOO, KROK KRAK KROO, EEH, EY, OH, OHH, HAH!
+- kind: dialogue
+  speaker: chadwick
+  text: HO, HEY, HEH, EY, OH, OHH...
+- kind: dialogue
+  speaker: gm
+  text: Ah, it seems we have a...spirited performance underway.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll join in, just to see if we can drown him out!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: WOOHOO, KRAK KROK KROO, EEH, EY, OH, OHH, EE, HAH!

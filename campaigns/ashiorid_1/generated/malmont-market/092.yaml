@@ -1,0 +1,29 @@
+id: malmont-market
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:38.665175+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to think I should've stayed on the road.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look at this one, the coast of Torenveld.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the mapmaker's name, I'd like to ask him about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with all the blank spaces, can't they tell us where it's from?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's the original, or at least an old edition.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll go check the prices, see what I can get for my coin.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to get some coffee, anyone want to join me?

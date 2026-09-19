@@ -1,0 +1,33 @@
+id: camp-fire
+take: 207
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:21.720612+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, what's the watch order for tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: Well, I was thinking we could do two-hour shifts, starting with Vigil and
+    Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, I think I'd rather start the night, get the fire settled in.
+- kind: dialogue
+  speaker: Vigil
+  text: You can sleep on the far side of the fire, it's more sheltered.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even having a watch if the rain doesn't stop?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just leave the fire unattended, it's not safe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the problem is the way the fire's laid out, it's not draining properly.
+- kind: dialogue
+  speaker: Vigil
+  text: It's the rain, not the fire, that's the problem.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long it's been raining since the last town?

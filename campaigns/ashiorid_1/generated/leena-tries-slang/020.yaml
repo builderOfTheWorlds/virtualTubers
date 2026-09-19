@@ -1,0 +1,41 @@
+id: leena-tries-slang
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:28:46.151228+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so what's the plan for tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: We should grab some dinner first, I'm starving.
+- kind: dialogue
+  speaker: Leena
+  text: Don't be a grom, Chad, I know this great new place.
+- kind: dialogue
+  speaker: Vigil
+  text: Grom? I didn't know that was a thing.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's like, the best thing since sliced bread, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Huh, I don't think that's how you use it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, really? I'm pretty sure I heard someone use it like that yesterday.
+- kind: dialogue
+  speaker: chadwick
+  text: Actually, I think Sodacan Bob might be right.
+- kind: dialogue
+  speaker: Leena
+  text: No way, I've been using it wrong on purpose and it's really fun.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, I think you might want to ask Ashiorid what it means.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright, let's just get some dinner and I'll explain later.
+- kind: dialogue
+  speaker: Leena
+  text: Grom, grom, grom! I'm so excited to be using it correctly now.

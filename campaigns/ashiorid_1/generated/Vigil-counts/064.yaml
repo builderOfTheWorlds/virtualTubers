@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:16.296185+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the cart with the broken wheel has passed us twice now.
+- kind: dialogue
+  speaker: chadwick
+  text: What of it?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a thought, the owner might want it fixed.
+- kind: dialogue
+  speaker: Leena
+  text: What makes you think that's a priority for them?
+- kind: dialogue
+  speaker: Vigil
+  text: I just saw a worker patching a shutter yesterday.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) You're a wealth of trivia, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that relevant to our conversation?
+- kind: dialogue
+  speaker: Vigil
+  text: Not really, just something I've been noticing.
+- kind: dialogue
+  speaker: gm
+  text: Carry.

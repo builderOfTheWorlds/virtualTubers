@@ -1,0 +1,32 @@
+id: counting-the-cost
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:22:01.733132+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Gear's worn down to its teeth, time to re-forge some character.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll help with that, Bob. What needs fixing first?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good for a hand, Bob. What's the plan?
+- kind: dialogue
+  speaker: Leena
+  text: How bad's the cart? Can we get it back on the road?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's like a table with loose joints, needs some re-glue.
+- kind: dialogue
+  speaker: gm
+  text: Sounds like a good day for a workshop session, then.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll get some fire going, start heating up the tools.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'll start gathering what we need, like selecting the right wood.
+- kind: dialogue
+  speaker: Leena
+  text: What about the team? Any of them need a little... re-shaping?

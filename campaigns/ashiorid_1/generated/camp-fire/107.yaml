@@ -1,0 +1,32 @@
+id: camp-fire
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:08.575446+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain shows no signs of letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: We should settle the watch order now, before it's too late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire needs more kindling.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind is changing.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will wash away the tracks to the next town?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Tracks don't matter if we don't make it through the night.
+- kind: dialogue
+  speaker: chadwick
+  text: The watch order can wait till morning, let's focus on the fire.
+- kind: dialogue
+  speaker: Leena
+  text: Is it possible the rain will bring a change in the magic?
+- kind: dialogue
+  speaker: Vigil
+  text: Not unless it's been 10,000 years since the Event.

@@ -1,0 +1,38 @@
+id: bob-sings
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:08.140191+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cavern echoes with Sodacan Bob's warbled tune!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Deep in the earth, we dig and we delve!
+- kind: dialogue
+  speaker: chadwick
+  text: What in the...?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: With pick and with axe, we toil and we labor!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob, show us your moves!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Through tunnels so narrow, we crawl and we creep!
+- kind: dialogue
+  speaker: Vigil
+  text: Someone, please, for the love of...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: In darkness and silence, we sing and we shout!
+- kind: dialogue
+  speaker: chadwick
+  text: You're killing me, Bob!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The mountain is proud, and our spirits are bright!
+- kind: dialogue
+  speaker: Leena
+  text: This is the best dwarven song ever!

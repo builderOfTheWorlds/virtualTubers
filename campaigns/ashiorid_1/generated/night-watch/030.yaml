@@ -1,0 +1,41 @@
+id: night-watch
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:08.327486+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky's really something, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. Hard to believe it's the same sky as the rest of the world.
+- kind: dialogue
+  speaker: Leena
+  text: I mean, look at those stars.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're a long way from anywhere.
+- kind: dialogue
+  speaker: gm
+  text: I think the silence is louder than any noise we can make.
+- kind: dialogue
+  speaker: chadwick
+  text: You're right. It's weird.
+- kind: dialogue
+  speaker: Leena
+  text: I think I can hear a bird somewhere.
+- kind: dialogue
+  speaker: Vigil
+  text: Where?
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I don't know. It's really quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's get a move on at dawn.
+- kind: dialogue
+  speaker: gm
+  text: Do you think we should wake the others?
+- kind: dialogue
+  speaker: chadwick
+  text: Not yet. It's still early.

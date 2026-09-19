@@ -1,0 +1,39 @@
+id: sodacan_bob-on-craft
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:27.453433+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this is a beautifully made gate, from the 1850s, probably
+    made in Pennsylvania.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, no, no, you see, the maker would've used a mortise and tenon joint for
+    the frame, and then...
+- kind: dialogue
+  speaker: Vigil
+  text: Does it look like it's been taken apart recently?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, now that you mention it, it does look like the hinges were just... removed,
+    rather than broken off.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, wow, the maker must've really cared about the joinery.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know, I know, it's just... this level of craftsmanship is really rare today,
+    you know?
+- kind: dialogue
+  speaker: Vigil
+  text: Can you tell if it's been used at all?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not that I can see, no, it looks like it's been just... stored away.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's almost like it's been waiting for someone to appreciate it again.

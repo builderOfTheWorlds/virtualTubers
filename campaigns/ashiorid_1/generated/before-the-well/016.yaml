@@ -1,0 +1,35 @@
+id: before-the-well
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:38.679181+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll take first watch.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't think we need it.
+- kind: dialogue
+  speaker: Leena
+  text: We do.
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen nothing unusual.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been up for hours already.
+- kind: dialogue
+  speaker: gm
+  text: Get some rest, we'll be moving soon.
+- kind: dialogue
+  speaker: Leena
+  text: You too.
+- kind: dialogue
+  speaker: chadwick
+  text: This is a waste of time.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep watch with Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point?

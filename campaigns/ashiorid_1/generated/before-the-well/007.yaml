@@ -1,0 +1,38 @@
+id: before-the-well
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:53.764297+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I can feel it.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) We shouldn't be here.
+- kind: dialogue
+  speaker: Vigil
+  text: This is a good place to watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think something's going to happen tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know.
+- kind: dialogue
+  speaker: Leena
+  text: (lowers her voice) It's been quiet too long.
+- kind: dialogue
+  speaker: Vigil
+  text: That's what they said last time.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, looking up at the moon)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see the mist?
+- kind: dialogue
+  speaker: chadwick
+  text: Where?

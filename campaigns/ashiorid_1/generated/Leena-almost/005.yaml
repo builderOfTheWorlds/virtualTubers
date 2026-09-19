@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:08.532895+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a village, isn't it? A village you know.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's familiar. I've been here before.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a village. You've seen lots of villages.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not. There's something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in Begene Village?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know.
+- kind: dialogue
+  speaker: gm
+  text: What are you talking about?
+- kind: dialogue
+  speaker: Leena
+  text: This, what I'm standing in front of. It's familiar.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's just a trick of the light.
+- kind: dialogue
+  speaker: gm
+  text: Or a trick of your memory.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just a regular old village. Nothing to worry about.

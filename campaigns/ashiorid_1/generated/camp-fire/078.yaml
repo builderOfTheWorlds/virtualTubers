@@ -1,0 +1,34 @@
+id: camp-fire
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T19:52:30.860949+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, folks. Best we get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I can sleep with this watch order unsettled. We need to sort
+    it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid a bit too close to the rain. We should've put it back
+    a ways.
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke's carrying the scent of wet stone.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would still burn if it was soaked through entirely?
+- kind: dialogue
+  speaker: gm
+  text: We'll worry about that when it happens.
+- kind: dialogue
+  speaker: chadwick
+  text: I still think we should rotate the watch every hour, just in case.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see the point in running around in the rain. We're not in any danger.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will hold.

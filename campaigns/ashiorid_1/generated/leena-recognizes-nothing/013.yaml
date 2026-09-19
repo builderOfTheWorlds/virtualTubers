@@ -1,0 +1,37 @@
+id: leena-recognizes-nothing
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:15.663384+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're approaching a bend in the road, and the landscape shifts. You see a
+    hill rising up to your left, with a small copse of trees on its peak.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, I think I know that hill.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yeah, I think I see what you mean. It's a pretty standard geological formation
+    around here.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, what's the view from the top of that hill like?
+- kind: dialogue
+  speaker: Leena
+  text: I... I don't know. I've never seen it before, but something about it feels
+    familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, well, you know how the roads around here can be a bit confusing. It's
+    easy to get turned around.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, have you ever been on a hike before?
+- kind: dialogue
+  speaker: gm
+  text: The road bends around the hill, and you see the copse of trees up close. They're
+    mostly birch, with a few spruces scattered in.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, do you know what this place is?

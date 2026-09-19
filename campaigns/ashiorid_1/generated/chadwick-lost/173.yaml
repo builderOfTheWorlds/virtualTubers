@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 173
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:40.385559+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the fork in the road, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll take the left path.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil's knowledge of the terrain would be more
+    reliable.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, we'll stick with my instincts.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Poor Chadwick and his instincts.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Maybe we can rephrase it as " trusting our group's collective experience"?
+- kind: dialogue
+  speaker: chadwick
+  text: No need to rephrase anything.
+- kind: dialogue
+  speaker: gm
+  text: Very well, let's proceed down the left path.
+- kind: dialogue
+  speaker: Vigil
+  text: (under his breath) This way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, come on, Chadwick, admit it! You got lost!
+- kind: dialogue
+  speaker: chadwick
+  text: I did not get lost.

@@ -1,0 +1,41 @@
+id: camp-fire
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:01.676356+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, that rain's not letting up anytime soon.
+- kind: dialogue
+  speaker: chadwick
+  text: We should settle the watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Bob laid the fire pretty well, don't you all agree?
+- kind: dialogue
+  speaker: Vigil
+  text: The embers are too spread out.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would last longer if we moved it under the overhang?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It might, but it'd be harder to tend to.
+- kind: dialogue
+  speaker: gm
+  text: Anyone have any other suggestions?
+- kind: dialogue
+  speaker: Leena
+  text: 'I''m just curious, though: do you think the rain would be louder if...'
+- kind: narration
+  speaker: gm
+  text: (Trails off)
+- kind: dialogue
+  speaker: Vigil
+  text: It's still burning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: At least the wind's died down some.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we'll settle the watch order in the morning.

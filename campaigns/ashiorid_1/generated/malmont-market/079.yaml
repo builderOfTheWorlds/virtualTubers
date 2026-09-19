@@ -1,0 +1,35 @@
+id: malmont-market
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:21.099376+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had a talent for smithing, I'd be a lot richer by now.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, maps! I had no idea you still had these in stock.
+- kind: dialogue
+  speaker: Vigil
+  text: ( muttering ) Not expensive. That's what I like to hear.
+- kind: dialogue
+  speaker: chadwick
+  text: You know, I get a lot of strange looks when I walk around. (laughs)
+- kind: dialogue
+  speaker: Leena
+  text: Oh, this one's from... twenty years ago, I think. (excitedly)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disinterested) Twenty years, yeah, that's no big deal.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the surrounding stalls) You folks got anything of value here?
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Just trying to get a feel for the place, I suppose.
+- kind: dialogue
+  speaker: Leena
+  text: ( studying a map ) I wonder if this is the old trade route to Valtoria.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (unimpressed) Valtoria? Been there. Seen it. No big deal.

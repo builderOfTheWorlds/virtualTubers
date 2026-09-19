@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:09.495600+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're going to take a break, gather our gear, and head back out.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get moving.
+- kind: dialogue
+  speaker: Leena
+  text: I'll scout ahead, make sure it's clear.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the inn just now had two crates on it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: That's all, just noting it.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, you good to move out?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, what's holding us up?
+- kind: dialogue
+  speaker: gm
+  text: Just get moving, let's keep the pace.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about the shutter on the inn?
+- kind: dialogue
+  speaker: Vigil
+  text: It was repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't worry about it, Bob.

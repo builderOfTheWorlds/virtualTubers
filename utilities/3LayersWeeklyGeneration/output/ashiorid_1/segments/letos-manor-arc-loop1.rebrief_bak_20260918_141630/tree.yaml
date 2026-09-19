@@ -1,0 +1,84 @@
+letos-manor-arc-loop1:
+  node_id: letos-manor-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The players arrive at Leto's Manor for a party that has been planned for
+    ten tho
+  summary: The players arrive at Leto's Manor for a party that has been planned for
+    ten thousand years, only to find it under attack.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-loop1-n0
+  - letos-manor-arc-loop1-n1
+  slots: null
+letos-manor-arc-loop1-n0:
+  node_id: letos-manor-arc-loop1-n0
+  parent_id: letos-manor-arc-loop1
+  order: 0
+  depth: 1
+  title: Arrival at the Manor
+  summary: The players arrive at Leto's Manor for a party that has been planned for
+    ten thousand years, only to find it under attack. They witness the initial chaos
+    as guests flee and guards fight off attackers. The manor's grand entrance hall
+    is filled with smoke from burning torches and the sounds of combat echoing through
+    the corridors.
+  continuity_in: The players arrive at Leto's Manor for a party that has been planned
+    for ten thousand years, only to find it under attack.
+  continuity_out: The players arrive at Leto's Manor for a party that has been planned
+    for ten thousand years, only to find it under attack.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-loop1-n0-arrival-1
+    kind: ambient
+    prompt: The players arrive at Leto's Manor for a party that has been planned for
+      ten thousand years, only to find it under attack. They witness the initial chaos
+      as guests flee and guards fight off attackers.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-loop1-n0-arrival-2
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+letos-manor-arc-loop1-n1:
+  node_id: letos-manor-arc-loop1-n1
+  parent_id: letos-manor-arc-loop1
+  order: 1
+  depth: 1
+  title: Escape and Recovery
+  summary: After the initial assault, the players must navigate through the manor's
+    corridors to reach safety. They encounter wounded guests, discover clues about
+    the attackers' motives, and locate a hidden passage that leads to the manor's
+    underground vaults. The party must decide whether to help others or focus on their
+    own survival.
+  continuity_in: The players arrive at Leto's Manor for a party that has been planned
+    for ten thousand years, only to find it under attack.
+  continuity_out: The players arrive at Leto's Manor for a party that has been planned
+    for ten thousand years, only to find it under attack.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

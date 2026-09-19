@@ -1,0 +1,41 @@
+id: weather-argument
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:34.630239+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it'll rain, the sky's been all gray and stuffy all day.
+- kind: dialogue
+  speaker: chadwick
+  text: Gray? It's been blue, Ash, with like, clouds.
+- kind: dialogue
+  speaker: Leena
+  text: No way, I saw that weather app on my phone, it said high chance of showers.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, I just feel it. It's got that vibe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The vibe? What vibe?
+- kind: dialogue
+  speaker: gm
+  text: You know, like when you can tell the air's electric.
+- kind: dialogue
+  speaker: chadwick
+  text: Electrified? That just means there's a storm coming, but it's not gonna rain.
+- kind: dialogue
+  speaker: Leena
+  text: I don't trust that app, I think it's a conspiracy.
+- kind: dialogue
+  speaker: Vigil
+  text: Conspiracy? That's a bit far, don't you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, the app's probably wrong.
+- kind: dialogue
+  speaker: gm
+  text: It's not like it's a big deal, we can just bring umbrellas.
+- kind: dialogue
+  speaker: chadwick
+  text: Umbrellas? Come on, that's not the point.

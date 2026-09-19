@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 225
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:39.567884+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you find yourselves in a dense thicket of trees.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we're close to the river.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Yeah, because we've been following the same bird for hours.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, it's possible we've taken a slight detour.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm positive it's this way.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I know exactly where we are, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, great, a navigator!
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, I just... need to reorient myself.
+- kind: dialogue
+  speaker: Leena
+  text: Well, when we get to the river, I'm sure it'll be perfectly clear.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just wait for someone to ask for directions then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is why I love adventuring with you guys.

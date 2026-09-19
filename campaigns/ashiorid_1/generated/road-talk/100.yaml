@@ -1,0 +1,41 @@
+id: road-talk
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T23:58:25.504175+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, it feels like days.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to take a drink from my canteen.
+- kind: dialogue
+  speaker: Leena
+  text: My village, Vahlos, was surrounded by mountains.
+- kind: dialogue
+  speaker: Vigil
+  text: It was...green there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vabokedos has the best baked goods.
+- kind: dialogue
+  speaker: Leena
+  text: They harvested our crops three times a season.
+- kind: dialogue
+  speaker: Vigil
+  text: I grew up on Nafsari, a lot of sand and sun.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And their pastries were still warm from the oven.
+- kind: dialogue
+  speaker: chadwick
+  text: How's the water tasting?
+- kind: dialogue
+  speaker: Leena
+  text: We had a market every week.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should try their sweet bread.
+- kind: dialogue
+  speaker: Vigil
+  text: I...never mind.

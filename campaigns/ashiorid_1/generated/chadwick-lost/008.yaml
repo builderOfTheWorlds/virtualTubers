@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:29.147564+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're walking through a dense forest, the canopy overhead blocking most of
+    the sunlight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive we're going the right way.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe we could use the map to double-check.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to check the map, I know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) Perhaps I could help, Chadwick, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! I'm sure you do know, Chadwick, you're always so confident.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing nervously) Yes, maybe we should just keep moving, for now.
+- kind: dialogue
+  speaker: chadwick
+  text: (gritting his teeth) I'm fine, just keep walking.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling a little more) Very well, let's keep moving then.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) I swear, this is a perfectly normal route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) You're a regular navigation expert, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Chadwick, maybe if we just take a minute to—

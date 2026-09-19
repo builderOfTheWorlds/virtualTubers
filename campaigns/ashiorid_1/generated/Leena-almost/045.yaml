@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:26.491405+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The world's gone quiet, Leena. What's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be. A turn of phrase, somebody
+    used, a tune being hummed, the shape of a doorway, a smell.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just spooked, girl. It's the forest. It gets under your skin.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that smell before, in the village where I grew up. Could be it's
+    just something familiar.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's not just the smell. I've seen that doorway before, and
+    I know that tune. But it doesn't make sense.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's not worth the trouble.
+- kind: dialogue
+  speaker: gm
+  text: The others have a point, Leena. Maybe it's just a trick of the light.

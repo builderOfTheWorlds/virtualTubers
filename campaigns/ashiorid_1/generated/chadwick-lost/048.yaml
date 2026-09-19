@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:42.437408+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Come on, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm leading, I know where I'm going.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think we've been walking for a while...
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, I believe you'll find that we're not actually sure where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is priceless, Vigil, you're just keeping him in suspense.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm doing just fine.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, if you're not sure, we could ask Vigil to show us the map.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.

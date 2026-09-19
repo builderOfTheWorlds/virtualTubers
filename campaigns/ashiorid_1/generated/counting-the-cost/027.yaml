@@ -1,0 +1,37 @@
+id: counting-the-cost
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:43.629919+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright then, let's take stock of the damage, like checking for any twisted
+    metal that's gonna need re-bending.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I saw a piece of the cargo net snagged on that rock.
+- kind: dialogue
+  speaker: chadwick
+  text: And I'm pretty sure the cart's axle is bent.
+- kind: dialogue
+  speaker: Leena
+  text: I can take a look.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you help me assess the load's stability?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're not going to be able to just hammer this back into shape, not like hammering
+    a piece of warped wood into submission.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think some of the gear is salvageable.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the cart's wheel? Is it just the axle or the whole thing?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, can you work your magic with the cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is going to take more than just a few whacks of the hammer.

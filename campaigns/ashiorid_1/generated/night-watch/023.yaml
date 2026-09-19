@@ -1,0 +1,41 @@
+id: night-watch
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:25.190470+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Another night.
+- kind: dialogue
+  speaker: Leena
+  text: Still quiet, then.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, been quiet for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to take a walk, see if anything's out there.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, no, stay here.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep watch, we don't need to wake the others.
+- kind: dialogue
+  speaker: Leena
+  text: You think there's really anything out there, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No idea, but we should be ready.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking... about my mum.
+- kind: dialogue
+  speaker: chadwick
+  text: What's on your mind, Sodacan?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking about the way she used to make that soup... the one with the...
+- kind: dialogue
+  speaker: Leena
+  text: What kind of soup?

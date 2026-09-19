@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T20:04:25.122077+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road splits up ahead, Chadwick, which way do you think we should go?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should go... left.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think it might be a good idea to check the map, just to make sure.
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I'm sure I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) I'm sure you do, sir.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (snickering) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: chadwick
+  text: What's so funny, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just your navigational skills, Chadwick. You're a regular Einstein.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't we just take a look at the map and be safe?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine. Let's just keep moving.
+- kind: dialogue
+  speaker: gm
+  text: Very well, let's keep moving. (pausing) Vigil, can you confirm our position?
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) Of course, sir. We're about two miles outside of town.

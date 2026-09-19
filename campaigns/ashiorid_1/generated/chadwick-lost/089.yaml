@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:15.578188+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, so we should head east from here.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should go south.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, if you take the eastern fork, we'll be on the right path.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is the most confused I've ever seen Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: Chad, maybe you're just... uh... following a different map.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm sure I've got it right.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Okay, okay, let's just head east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Finally, a decision.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out.

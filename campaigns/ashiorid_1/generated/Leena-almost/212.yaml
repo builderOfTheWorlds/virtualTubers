@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 212
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:37.424498+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you see?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw it in your village, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I don't think so, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It looks like something from your village to me, though.
+- kind: dialogue
+  speaker: Leena
+  text: What's that supposed to mean, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think I can.

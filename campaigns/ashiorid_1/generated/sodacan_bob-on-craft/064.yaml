@@ -1,0 +1,42 @@
+id: sodacan_bob-on-craft
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:17.091612+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, what've you found, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, this is a fine piece of work, this wagon axle. I can see the maker's been
+    careful about the tolerances.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on? We don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, it's clear this was made in the northern districts, probably
+    around 30 years ago.
+- kind: dialogue
+  speaker: Leena
+  text: Is it from a local wagon?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not just local, no – look at the joinery, it's been done by someone with a
+    very specific style.
+- kind: dialogue
+  speaker: Vigil
+  text: Was it used for heavy loads?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, definitely – the wear on the bearings is quite pronounced, and there's
+    some rust on the axle itself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can tell you exactly which foundry it came from, too.
+- kind: dialogue
+  speaker: Leena
+  text: That's really interesting, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just...

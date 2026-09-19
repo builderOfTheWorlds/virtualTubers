@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 204
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:42.451917+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to be thinning out ahead of us, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I think that's a good sign, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I was thinking maybe we should ask Vigil to get his bearings, just
+    to be sure?
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) I'm happy to help, but I need to be asked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, come on Chadwick, don't be a proud map.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got this, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Alright, no problem.
+- kind: dialogue
+  speaker: Vigil
+  text: (still waiting to be asked)
+- kind: dialogue
+  speaker: chadwick
+  text: We're not lost, we're just... exploring.

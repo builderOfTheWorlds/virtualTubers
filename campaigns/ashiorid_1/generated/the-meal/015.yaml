@@ -1,0 +1,44 @@
+id: the-meal
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:58.167564+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not sure why we're making such a fuss, it's just a meal.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just not that great.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's make the best of it! It's a chance to bond over mediocre
+    food!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I could have done it so much better. I know a few tricks
+    about cooking.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's just focus on the positives! Who cooked tonight, was it
+    me?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It was you, Leena. And let me tell you, it's a wonder it's edible.
+- kind: dialogue
+  speaker: Leena
+  text: Hey, it's not that bad! I followed the recipe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You didn't even clean the pot right!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob, it's not a big deal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a big deal when it comes to cooking, trust me.
+- kind: dialogue
+  speaker: gm
+  text: Let's just eat, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I'm telling you, I could have done it better.

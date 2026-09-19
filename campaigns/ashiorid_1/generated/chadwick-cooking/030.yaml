@@ -1,0 +1,41 @@
+id: chadwick-cooking
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:18:44.426338+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun sets over the makeshift camp, casting long shadows.
+- kind: dialogue
+  speaker: chadwick
+  text: What's for dinner?
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick's cooking, of course.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I brought some decent rations, don't worry.
+- kind: dialogue
+  speaker: chadwick
+  text: ( muttering ) I'm fine, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: The air is thick with the smell of overcooked meat.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers to vigil) Try to be kind, it's not his fault.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers back) I'll try, but...
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) Who's ready for dinner?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (polite laugh) Oh, I think we all are.
+- kind: dialogue
+  speaker: gm
+  text: The silence before the meal is oppressive.

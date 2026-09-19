@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:34.610421+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm starting to think we're not headed in the right direction.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, I know where we're going.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps we could, uh, consult the map again, just to be sure?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't need a map, I've got it memorized.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) If you're sure, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: chadwick
+  text: What's so funny?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You, and your sense of direction.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Let's just keep moving, shall we?
+- kind: dialogue
+  speaker: gm
+  text: I think Vigil's right, Chadwick, why don't you check the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to, I'm positive I'm right.

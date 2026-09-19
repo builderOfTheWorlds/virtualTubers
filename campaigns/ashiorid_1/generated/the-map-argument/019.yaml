@@ -1,0 +1,38 @@
+id: the-map-argument
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:36.652823+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we're approaching the fork in the road.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to take the left path.
+- kind: dialogue
+  speaker: Leena
+  text: No, I think Vigil said we should take the right.
+- kind: dialogue
+  speaker: Vigil
+  text: That's right, I said the right path.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh please, don't start this again.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hold up, let's take a look at the map.
+- kind: dialogue
+  speaker: chadwick
+  text: See, it clearly says left.
+- kind: dialogue
+  speaker: Leena
+  text: It's not that clear, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I'm right on this one.
+- kind: dialogue
+  speaker: Vigil
+  text: Fine, let's just take the right path and be done with it.
+- kind: dialogue
+  speaker: chadwick
+  text: But... no... this is ridiculous.

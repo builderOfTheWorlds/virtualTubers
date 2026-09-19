@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:12.383112+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's setting over the hills, and I'm getting a bit hungry.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I was thinking we should find a place to set up camp soon.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think Vigil might know of a spot not too far from here.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) That's true, I was thinking the same thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Sodacan Bob, what's so funny?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (grinning) Chadwick's navigation skills, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) Hey, I'm doing fine.
+- kind: dialogue
+  speaker: gm
+  text: (mildly) Alright, let's keep moving then.
+- kind: dialogue
+  speaker: Vigil
+  text: (helpfully) I think we should head towards those trees over there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (teasingly) Yeah, because Chadwick's been doing such a great job so far.
+- kind: dialogue
+  speaker: Leena
+  text: (soothingly) Chadwick, maybe we could use Vigil's guidance?

@@ -1,0 +1,38 @@
+id: camp-fire
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:34.645595+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to settle the watch order before nightfall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sure it was laid the right way, the flames are too low.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is making the embers smoke too much.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would still burn if we just let it alone?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course not, we need to tend to it, that's why we have a watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil's point is the real issue, though.
+- kind: dialogue
+  speaker: Vigil
+  text: It will still burn, because fire likes to keep itself warm.
+- kind: dialogue
+  speaker: Leena
+  text: What if the last town was destroyed by something other than the Event?
+- kind: dialogue
+  speaker: chadwick
+  text: What are you even talking about, the Event's the only thing we know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it was the drought that got them, not the Event.
+- kind: dialogue
+  speaker: Vigil
+  text: It doesn't matter what destroyed the last town.

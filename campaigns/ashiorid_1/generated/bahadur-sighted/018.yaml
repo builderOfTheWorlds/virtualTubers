@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:49.965001+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know.
+- kind: dialogue
+  speaker: Vigil
+  text: Too far to tell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe a trick of light.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Still walking?
+- kind: dialogue
+  speaker: Leena
+  text: My heart's still beating.
+- kind: dialogue
+  speaker: chadwick
+  text: Something's not right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not seeing it.
+- kind: dialogue
+  speaker: gm
+  text: We should be out of this valley soon.

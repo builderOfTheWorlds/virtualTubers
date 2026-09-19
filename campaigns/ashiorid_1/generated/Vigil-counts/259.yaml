@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 259
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:14.275783+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a lead on a potential buyer for the goods.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still not sure I trust this guy.
+- kind: dialogue
+  speaker: Leena
+  text: What's the harm in meeting him, Chadwick?
+- kind: dialogue
+  speaker: Vigil
+  text: There's three people in the room, the doors open to the left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's useful to know, Vigil. Let's keep moving.
+- kind: dialogue
+  speaker: gm
+  text: We're approaching the entrance now. Stay sharp.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that window has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a bit unusual, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: It's probably just a maintenance thing.
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed us on the street twice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I didn't notice that.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. We've got a meeting to get to.

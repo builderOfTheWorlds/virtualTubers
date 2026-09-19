@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 275
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:28.760019+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart is coming down the street again.
+- kind: dialogue
+  speaker: chadwick
+  text: I wonder if they're carrying anything worth looking at.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to go take a closer look.
+- kind: dialogue
+  speaker: Vigil
+  text: The door handles are on the left side, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think the repairman would've gotten it right the first time.
+- kind: dialogue
+  speaker: Vigil
+  text: The new shutter's looking sturdy, at least.
+- kind: dialogue
+  speaker: chadwick
+  text: You've noticed a lot of details, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just what's there.
+- kind: dialogue
+  speaker: Leena
+  text: Let's not get too sidetracked.
+- kind: dialogue
+  speaker: gm
+  text: The cart is slowing down, looks like it's stopping.

@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:17.809068+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Metal fatigue shows its true face, always sooner rather than later.
+- kind: dialogue
+  speaker: chadwick
+  text: So what's the damage?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's wheel bearing's gone, but I can salvage it.
+- kind: dialogue
+  speaker: Leena
+  text: And the gear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Needs rewelding. Not the most elegant fix, but it'll hold.
+- kind: dialogue
+  speaker: Vigil
+  text: And what about us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The frame's bent, but nothing that can't be hammered out.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering) Hammered out...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let it alone, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Is everyone all right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The edges are a bit rough, but no more than that.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Ridges...

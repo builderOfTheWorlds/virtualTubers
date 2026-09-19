@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 272
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:13.672538+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: So we''re at the Red Griffin Inn.'
+- kind: dialogue
+  speaker: chadwick
+  text: What's the plan, Ash?
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: I thought we could get a room and gather our bearings.'
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good to me.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: Nice to know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the view from the window?
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Not a lot, but we''re on the second floor.'
+- kind: dialogue
+  speaker: Leena
+  text: And the doors?
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: The ones we came in are to our left.'
+- kind: dialogue
+  speaker: Vigil
+  text: There's only three people in the common area.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get some rest.

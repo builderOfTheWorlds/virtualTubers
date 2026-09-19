@@ -1,0 +1,45 @@
+id: malmont-market
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:07.594751+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see what all the fuss is about, some half-finished hammers and a few
+    overpriced trinkets.
+- kind: dialogue
+  speaker: Leena
+  text: Hmm, is that a 19th-century chart of the Silverstream?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a map, don't know why you'd want it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: It's just... the way the rivers flow, it's not right.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, is that the new baker's stall? I could use a fresh loaf.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too comfortable, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: What's this? An old trade route map, the one that runs from here to—
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know why anyone would bother with those, they're all just rumors and
+    forgotten roads.
+- kind: dialogue
+  speaker: Leena
+  text: That's exactly what I think, but there's something here...
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, come on, we need to keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: You know, I think I'll just take a seat at that café over there, get some
+    rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go check out that swordsmith, maybe they've got something worth
+    looking at.

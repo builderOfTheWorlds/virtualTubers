@@ -1,0 +1,35 @@
+id: nafsari-question
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:06.114163+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I grew up with the wood elves of Nafsari.
+- kind: dialogue
+  speaker: Leena
+  text: Really, was it very different from growing up here?
+- kind: dialogue
+  speaker: Vigil
+  text: We had more trees.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Ah, I see.
+- kind: dialogue
+  speaker: chadwick
+  text: It was quiet.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) I bet it was.
+- kind: dialogue
+  speaker: Vigil
+  text: We slept under the same sky.
+- kind: dialogue
+  speaker: chadwick
+  text: And the same stars.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) I'm sorry, I just... never mind.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't be sorry.

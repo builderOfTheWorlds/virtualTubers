@@ -1,0 +1,39 @@
+id: bob-vs-the-cart-wheel
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:47.365606+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a travesty, a catastrophe, a -
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, it's just a cart wheel, we can fix it later-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fix it later? No, no, no, this is a fundamental design flaw, a mistake-
+- kind: dialogue
+  speaker: Leena
+  text: Bob, we really need to get moving, we're going to be late-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Late? You're worried about being late? What about the integrity of this vehicle?
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Bob, I think you might be right, the spoke pattern is off-
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm right? Of course I'm right! I've been saying this from the start!
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, okay, we'll replace the wheel, but can we please just get going now?
+- kind: dialogue
+  speaker: Leena
+  text: Ashiorid, can you please tell them we really can't afford to be late?
+- kind: dialogue
+  speaker: gm
+  text: Sorry, I've tried to steer the conversation, but Sodacan Bob is having his
+    say.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'll keep saying it until it's done right!

@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:12.082829+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A familiar smell is carried on the breeze, is it something from your village?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen doorways like that before, they're not uncommon.
+- kind: dialogue
+  speaker: Leena
+  text: But I've never seen it before, and I should remember it.
+- kind: dialogue
+  speaker: Vigil
+  text: It's probably just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not just the light, it's something I've seen before.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it, you'll only get lost.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, I just want to know what it is.

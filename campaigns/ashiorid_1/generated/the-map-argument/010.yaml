@@ -1,0 +1,40 @@
+id: the-map-argument
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:17.823916+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a look at the map. What do you all think it says?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, it says we need to take the forest path to reach the village.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, Chadwick, I think it says to take the road.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no, you're misreading it, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Chadwick might be right. The forest path does seem to be
+    the shortest route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what about the notation for the river crossing? It says 'dangerous' on
+    this map.
+- kind: dialogue
+  speaker: gm
+  text: Ah, good point. That might be a concern.
+- kind: dialogue
+  speaker: chadwick
+  text: Ha! I knew you'd see it my way, Vigil. You're finally starting to learn.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, calm down.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm not going to calm down. I've been saying this all along.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Guys, let's just take the forest path already. It's not that big of a deal.

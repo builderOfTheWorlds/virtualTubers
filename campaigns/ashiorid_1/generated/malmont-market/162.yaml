@@ -1,0 +1,33 @@
+id: malmont-market
+take: 162
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:00.176942+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just stick to the market stalls, see what I can find.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This town's smithwork is an embarrassment. Where's the quality?
+- kind: dialogue
+  speaker: Leena
+  text: Ah, maps from the other side of the mountains...
+- kind: dialogue
+  speaker: chadwick
+  text: No one's giving me the "you again" look, I'll take that as a good omen.
+- kind: dialogue
+  speaker: Vigil
+  text: Anyone suspicious in this crowd?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How much for this... thing?
+- kind: dialogue
+  speaker: Leena
+  text: Is this a map of the old forest?
+- kind: dialogue
+  speaker: chadwick
+  text: That's an old one, I think I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not paying that much for something that's clearly been used for a fire
+    pit.

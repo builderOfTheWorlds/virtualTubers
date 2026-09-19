@@ -1,0 +1,35 @@
+id: camp-fire
+take: 81
+model: llama3.1:8b
+generated_at: '2026-09-18T19:52:46.849442+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I remember you saying we could just alternate shifts, Ashiorid.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is golden.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would be safer if we banked it more?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it like I was taught by my great-granddad.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, we'll alternate. I'll take first watch.
+- kind: dialogue
+  speaker: gm
+  text: Good, get some rest then. The rain's letting up a bit.
+- kind: dialogue
+  speaker: Leena
+  text: Is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, it's still coming down pretty good.
+- kind: dialogue
+  speaker: Vigil
+  text: We should conserve wood.

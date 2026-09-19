@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:12.578530+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, Leena's noticed something familiar about this place.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen it before, but I don't know where.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But this is...this is not my village.
+- kind: dialogue
+  speaker: Vigil
+  text: What's going on?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's just something about this doorway.
+- kind: dialogue
+  speaker: chadwick
+  text: Just let it go, Leena. It's not worth chasing.
+- kind: dialogue
+  speaker: gm
+  text: Vigil gets up and walks past the doorway, as if trying to put some distance
+    between it and the rest of the group.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think Chadwick's right. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not convinced. There's something...familiar about it.
+- kind: dialogue
+  speaker: gm
+  text: The group continues on, leaving the doorway behind.

@@ -1,0 +1,41 @@
+id: road-talk
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-19T00:00:31.348886+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, I think it's time for a rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the first watch.
+- kind: dialogue
+  speaker: Leena
+  text: I'm getting a cramp in my leg, can I sit down?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take a break too.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this, the seventh hour or the eighth?
+- kind: dialogue
+  speaker: gm
+  text: I'm not sure, but the sun's still high.
+- kind: dialogue
+  speaker: Leena
+  text: We'll be in Vabokedos by tomorrow afternoon, won't we?
+- kind: dialogue
+  speaker: chadwick
+  text: You think so?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's as beautiful as a crystal in the morning, that's Vabokedos.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's... its people are very skilled.
+- kind: dialogue
+  speaker: Leena
+  text: I'm from a village surrounded by the Redwater River, it's a place of plenty.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And in Vabokedos, the streets are paved with silver dust.

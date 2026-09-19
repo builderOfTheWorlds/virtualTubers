@@ -1,0 +1,38 @@
+id: camp-fire
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:24.911594+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's been coming down for hours, I swear I've never seen anything like it.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll stop before morning?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't snow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's the real problem, not the rain. We need
+    to get it properly stoked.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order, it's not like it's going to sort itself
+    out.
+- kind: dialogue
+  speaker: Leena
+  text: What's the worst that could happen if we don't get it right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, it's not my fault it's not burning hot enough.
+- kind: dialogue
+  speaker: Vigil
+  text: We can rebuild it.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but someone needs to take the first watch, I'm not going to stay up
+    all night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How about I take it? I've been keeping an eye on things all day.

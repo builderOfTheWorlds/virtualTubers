@@ -1,0 +1,41 @@
+id: malmont-market
+take: 176
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:28.589328+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work from a travelling blacksmith, no question.
+- kind: dialogue
+  speaker: Leena
+  text: What's that? Where did it come from?
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.
+- kind: dialogue
+  speaker: chadwick
+  text: Just looking.
+- kind: dialogue
+  speaker: gm
+  text: The constable's watch is patrolling the market.
+- kind: dialogue
+  speaker: Vigil
+  text: Good.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not impressed with the quality of the work here.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think those maps are authentic?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe they're just old.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I wouldn't buy that hammer for twice the price.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) What kind of maps are these?
+- kind: dialogue
+  speaker: gm
+  text: (to himself) Time to get out of here.

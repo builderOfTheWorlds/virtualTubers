@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-19T00:04:41.700882+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, so the way the mortise is cut suggests it was made on a lathe with a
+    fixed stop.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on, please?
+- kind: dialogue
+  speaker: Vigil
+  text: How likely is it that this was made locally?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Vigil! The ironwork's style is consistent with a regional
+    pattern from about a hundred and fifty years ago.
+- kind: dialogue
+  speaker: Leena
+  text: I like it when you get like this, Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, it's not just a matter of liking it, Leena, it's a fascinating example
+    of how—
+- kind: dialogue
+  speaker: Vigil
+  text: I think I see what he's getting at. This thing might be worth selling.
+- kind: dialogue
+  speaker: chadwick
+  text: Worth selling? It's a wagon axle, for goodness' sake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But that's the point, it's not just a wagon axle, it's a beautifully crafted
+    wagon axle with...

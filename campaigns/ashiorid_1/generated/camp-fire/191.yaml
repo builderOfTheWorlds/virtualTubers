@@ -1,0 +1,29 @@
+id: camp-fire
+take: 191
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:58.342915+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's still coming down. We need to figure out who's keeping watch.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even having a watch if we can just huddle around the fire?
+- kind: dialogue
+  speaker: Vigil
+  text: The flames need to be banked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, a good fire needs space to breathe, and you've got it too tight.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, we need to settle this watch order tonight.
+- kind: dialogue
+  speaker: Leena
+  text: Do we have to decide now? Can't we just go to sleep?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop.

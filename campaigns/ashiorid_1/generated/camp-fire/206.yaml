@@ -1,0 +1,36 @@
+id: camp-fire
+take: 206
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:16.439469+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty hard, folks. Not ideal conditions for a fire.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. Someone's got to keep an eye out for any
+    more rain-related hazards.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, Chadwick, maybe we should just let the storm pass. It's not
+    like we're in immediate danger.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder if the firewood is getting saturated. Would that affect its burn
+    rate?
+- kind: dialogue
+  speaker: Vigil
+  text: We'll have to adjust the fire pit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, Vigil. It's been doing just fine.
+- kind: dialogue
+  speaker: chadwick
+  text: The watch order. Who's going first?
+- kind: dialogue
+  speaker: Leena
+  text: Is anyone else concerned about the smoke from this rain? Might make things
+    worse in the long run.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen fires like this hold through worse conditions than this.

@@ -1,0 +1,35 @@
+id: malmont-market
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T20:23:22.098674+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see why we need to stay here so long.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a market, Vigil. Let's see what it has.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) This stall has some old maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the smith) What's the point of these designs? Just a bunch of loops.
+- kind: dialogue
+  speaker: Leena
+  text: (to herself) I've seen these symbols before, but where...
+- kind: dialogue
+  speaker: Vigil
+  text: (to a passing merchant) How much for that small satchel?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs) Nothing I want to see here, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Sodacan Bob) You're welcome to go look elsewhere, then.
+- kind: dialogue
+  speaker: gm
+  text: (to the group) Anyone want to try some of the local food?
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Yes, I want to see those maps again.

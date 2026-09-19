@@ -1,0 +1,38 @@
+id: road-talk
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T22:23:24.941527+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We'll need to find a place to rest for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: I've seen some bushes up ahead, might make a decent spot.
+- kind: dialogue
+  speaker: Leena
+  text: I know this road, there's a small river up ahead, we can camp by it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could use a drink, been walking for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's sunsets are like nothing I've ever seen.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, looking at Vigil) What else can you tell us about Nafsari?
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) My village, it's like a garden, surrounded by a river.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) Oh, I can describe Vabokedos to you, I've lived there!
+- kind: dialogue
+  speaker: chadwick
+  text: (silence, then) I've heard it's a lot of sand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) No, no, it's mountains, and lakes, and waterfalls!
+- kind: dialogue
+  speaker: Leena
+  text: (convinced) And the people, so welcoming, we always share our food.

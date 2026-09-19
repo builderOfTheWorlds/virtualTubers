@@ -1,0 +1,28 @@
+id: Leena-almost
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:43.674018+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you tell me what's bothering you?
+- kind: dialogue
+  speaker: chadwick
+  text: You're just spooked from that place we were in earlier, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's something else. I don't know what it is, but it feels like I've seen
+    it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like it might've been from your village, Leena. I've heard stories
+    about their architecture.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's not worth getting worked up over.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) So, what do you think it was?

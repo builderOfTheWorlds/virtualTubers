@@ -1,0 +1,33 @@
+id: bob-vs-the-cart-wheel
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:15:00.524398+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. What's the plan for the day?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we stick with the old wheel design. It's worked for us so far.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about, Chadwick? That wheel's a deathtrap!
+- kind: dialogue
+  speaker: Leena
+  text: Can we please just agree on something? We've been discussing this for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm with Chadwick, it's proven itself. Let's not fix what ain't broke.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Proven itself? Are you kidding me? It's held together with twine and prayers!
+- kind: dialogue
+  speaker: chadwick
+  text: It's sturdy, it's served us well. What's the alternative?
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, just calm down. We'll work something out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think I'm just going to calm down and accept a wheel that's going to kill
+    us? No.

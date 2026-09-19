@@ -212,6 +212,30 @@ def test_an_llm_that_raises_is_retried_and_then_skipped(tmp_path, pack, config, 
     assert [s["order"] for s in plan["segments"]] == list(range(6, 28))
 
 
+def test_continuity_after_a_gap_is_keyed_by_order_not_append_position(
+        tmp_path, pack, config, vocab):
+    """Regression for ring_composition_spec.md section 0.1 bug 2. Batch 1
+    (orders 6-11) is skipped entirely (never validates), so `plan_segments`
+    has no entry appended for it. The next batch (12-17) must see NO
+    immediate predecessor (order 11 was never planned) rather than silently
+    inheriting order 5's `continuity_out` via `plan_segments[-1]` — the
+    diagnosed failure mode where a gap made a later batch replay a much
+    earlier state instead of admitting the chain was broken."""
+    config["arc"]["batch_size"] = 6
+    llm = FakeLLM([
+        reply_for(list(range(0, 6)), continuity_out="They bury Leena's axe."),
+        "garbage", "still garbage",                    # orders 6-11: skipped
+        reply_for(list(range(12, 18))),                # orders 12-17
+        reply_for(list(range(18, 24))),
+        reply_for(list(range(24, 28))),
+    ])
+    plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    # prompts[0] = orders 0-5, prompts[1]/[2] = the two failed 6-11 attempts,
+    # prompts[3] = orders 12-17 — must NOT carry order 5's continuity_out.
+    assert "They bury Leena's axe." not in llm.prompts[3]
+    assert "Start of the arc." in llm.prompts[3]
+
+
 def test_a_skipped_batch_does_not_shift_later_orders(tmp_path, pack, config, vocab):
     """The hole stays a hole. Renumbering to close it would make the missing
     six hours unrecoverable — a resume compares against the orders that should
@@ -369,3 +393,120 @@ def test_the_written_plan_stays_human_readable(tmp_path, pack, config, vocab):
     written = out.read_text(encoding="utf-8")
     assert "—" in written
     assert "\\u2014" not in written
+
+
+# --------------------------------------------------------------------------
+# ring composition (ring_composition_spec.md v3.3, plot_0 only)
+# --------------------------------------------------------------------------
+
+def _ring_config(config, parts=(4, 2, 4)):
+    config["arc"]["hours_total"] = sum(parts) * 6
+    config["arc"]["batch_size"] = 10          # single batch per phase
+    config["ring"] = {"enabled": True, "parts": list(parts)}
+    return config
+
+
+def test_keystones_are_generated_before_descent_or_ascent(tmp_path, pack, config, vocab):
+    """Spec section 8.3 phase 1: all keystones first, shallowest layer
+    outward. With parts (4,2,4) the keystone orders are 4-5; the first LLM
+    call must ask for those, not order 0."""
+    config = _ring_config(config)
+    llm = FakeLLM([
+        reply_for([4, 5]),
+        reply_for([0, 1, 2, 3]),
+        reply_for([6, 7, 8, 9], mirror_transform="knowledge_gained"),
+    ])
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    assert "4" in llm.prompts[0] and "5" in llm.prompts[0]
+    assert len(plan["segments"]) == 10
+
+
+def test_a_skipped_plot0_keystone_is_fatal(tmp_path, pack, config, vocab):
+    """Spec section 8.3: 'A skipped plot_0 keystone is fatal: raise rather
+    than continue.' Every attempt at the keystone batch fails to validate."""
+    config = _ring_config(config)
+    config["arc"]["max_attempts"] = 1
+    llm = FakeLLM(["garbage"])
+    with pytest.raises(plan_arc.ArcPlanError, match="keystone"):
+        plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+
+
+def test_ascent_segments_require_a_mirror_transform(tmp_path, pack, config, vocab):
+    """An ascent segment reply missing mirror_transform must fail validation
+    and retry, per arc_schema.validate_batch's ring_roles check."""
+    config = _ring_config(config)
+    llm = FakeLLM([
+        reply_for([4, 5]),
+        reply_for([0, 1, 2, 3]),
+        reply_for([6, 7, 8, 9]),                      # no mirror_transform: fails
+        reply_for([6, 7, 8, 9], mirror_transform="bond_proven"),
+    ])
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    ascent = [s for s in plan["segments"] if s["order"] >= 6]
+    assert all(s["mirror_transform"] == "bond_proven" for s in ascent)
+
+
+def test_plot_path_and_mirror_of_are_stamped_onto_segments(tmp_path, pack, config, vocab):
+    config = _ring_config(config)
+    llm = FakeLLM([
+        reply_for([4, 5]),
+        reply_for([0, 1, 2, 3]),
+        reply_for([6, 7, 8, 9], mirror_transform="knowledge_gained"),
+    ])
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    by_order = {s["order"]: s for s in plan["segments"]}
+    assert by_order[4]["plot_path"][0]["role"] == "keystone"
+    assert by_order[0]["plot_path"][0]["role"] == "descent"
+    assert by_order[9]["plot_path"][0]["role"] == "ascent"
+    # order 0 (descent, u in [3/4,1)) mirrors order 9 (ascent, u in [3/4,1))
+    assert by_order[0]["mirror_of"] == ["seg-010"]
+    assert by_order[9]["mirror_of"] == ["seg-001"]
+    # a keystone has no mirror (spec section 2)
+    assert by_order[4]["mirror_of"] == []
+
+
+def test_mirror_brief_is_sent_for_an_ascent_segment(tmp_path, pack, config, vocab):
+    """Spec section 6.4: the ascent's prompt must state what its mirror
+    partner established, and instruct continuity_in to continue from the
+    PRECEDING segment rather than the mirror."""
+    config = _ring_config(config)
+    llm = FakeLLM([
+        reply_for([4, 5]),
+        reply_for([0, 1, 2, 3], synopsis="They lose the axe at the ford."),
+        reply_for([6, 7, 8, 9], mirror_transform="knowledge_gained"),
+    ])
+    plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    ascent_prompt = llm.prompts[2]
+    assert "They lose the axe at the ford." in ascent_prompt
+    assert "PRECEDING segment, not from the mirror" in ascent_prompt
+
+
+def test_ring_disabled_by_default_keeps_old_single_phase_behavior(tmp_path, pack,
+                                                                   config, vocab):
+    """No `ring` key in config at all — the common case for every existing
+    caller — must reproduce byte-identical batching: ascending order, one
+    phase, no ring vocabulary in the prompt."""
+    assert "ring" not in config
+    llm = perfect_llm(28, 6)
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    assert [s["order"] for s in plan["segments"]] == list(range(28))
+    assert "RING STRUCTURE" not in llm.prompts[0]
+
+
+def test_a_reused_id_is_renamed_instead_of_discarding_the_whole_batch(
+        tmp_path, pack, config, vocab):
+    """Regression: a real run against qwen3-coder:30b showed the model
+    reusing an already-planned id verbatim despite build_prompt's explicit
+    'suffix a repeat visit' instruction, discarding an otherwise well-formed
+    batch on every retry. The id is an arbitrary label; renaming it on
+    collision recovers the batch's actual content instead of burning all
+    max_attempts on a non-content problem."""
+    config["arc"]["hours_total"] = 72     # two batches of 6
+    llm = FakeLLM([
+        reply_for(list(range(0, 6))),
+        reply_for(list(range(6, 12)), id="seg-001"),   # reuses order 0's id
+    ])
+    plan = plan_arc.plan_arc(pack, config, llm, vocab, tmp_path / "arc_plan.yaml")
+    assert len(plan["segments"]) == 12
+    ids = [s["id"] for s in plan["segments"]]
+    assert len(ids) == len(set(ids)), f"duplicate ids survived: {ids}"

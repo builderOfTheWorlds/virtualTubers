@@ -1,0 +1,43 @@
+id: road-talk
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T22:22:52.638873+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, who wants to hear about home?
+- kind: dialogue
+  speaker: chadwick
+  text: Not me.
+- kind: dialogue
+  speaker: Leena
+  text: I'll talk about mine. My village is right on the lake, and we have the best
+    fishing in the world.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos is the most beautiful place I've ever been, with mountains that
+    touch the sky.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... my mother was from there.
+- kind: dialogue
+  speaker: Leena
+  text: You've never been, have you? I'm surprised.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's so bad about Nafsari, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I wish I was there, right now.
+- kind: dialogue
+  speaker: Vigil
+  text: No use wishing.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, don't be shy. Tell us about your home.

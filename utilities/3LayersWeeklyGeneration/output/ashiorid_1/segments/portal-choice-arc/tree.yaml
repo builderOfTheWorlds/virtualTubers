@@ -3,15 +3,14 @@ portal-choice-arc:
   parent_id: null
   order: 0
   depth: 0
-  title: The four must make a choice about whether to enter the open portal, knowing
-    that
-  summary: The four must make a choice about whether to enter the open portal, knowing
-    that their decision will determine not only their fate but also the future of
-    magic in Ashiorid.
+  title: With the portal wide enough, the party must make a crucial decision about
+    what c
+  summary: With the portal wide enough, the party must make a crucial decision about
+    what comes through and how to proceed.
   continuity_in: ''
   continuity_out: ''
-  target_words: 900
-  target_slots: 9
+  target_words: 700
+  target_slots: 7
   kind: branch
   forced: false
   children:
@@ -24,78 +23,125 @@ portal-choice-arc-n0:
   order: 0
   depth: 1
   title: The Weight of Choice
-  summary: The four companions gather around the open portal, each grappling with
-    the immense responsibility of their decision. They weigh the potential consequences
-    for themselves and the magical realm of Ashiorid, considering the possibility
-    of salvation versus destruction.
-  continuity_in: The four must make a choice about whether to enter the open portal,
-    knowing that their decision will determine not only their fate but also the future
-    of magic in Ashiorid.
-  continuity_out: The weight of their decision begins to shift as each companion makes
-    their choice, setting the stage for what comes next.
-  target_words: 270
-  target_slots: 3
+  summary: The party stands at the threshold of the portal, facing a momentous decision
+    about what entity or force to let through and how to prepare for their arrival.
+    Every second of hesitation could mean the difference between salvation and catastrophe.
+  continuity_in: The portal stands wide open, its edges shimmering with otherworldly
+    energy as the party witnesses the first signs of what might emerge from beyond.
+  continuity_out: As the decision is made, the portal's surface begins to shift and
+    flow, preparing to receive whatever has been chosen to pass through.
+  target_words: 420
+  target_slots: 4
   kind: leaf
   forced: false
   children: []
   slots:
-  - slot_id: portal-choice-arc-n0-choice-1
+  - slot_id: portal-choice-arc-n0-portal-choice-1
     kind: ambient
-    prompt: The four companions gather around the open portal, each grappling with
-      the immense responsibility of their decision. They weigh the potential consequences
-      for themselves and the magical realm of Ashiorid, considering the possibility
-      of salvation versus destruction.
+    prompt: The party stands at the threshold of the portal, facing a momentous decision
+      about what entity or force to let through and how to prepare for their arrival.
     lore:
-    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n0-portal-choice-2
+    kind: ambient
+    prompt: Every second of hesitation could mean the difference between salvation
+      and catastrophe as the party weighs their options.
+    lore:
     - moonwells
     participants:
     - Leena
     - Vigil
     - chadwick
-    - sodacan_bob
+    - gm
     sensitivity: tone
     depends_on: []
-  - slot_id: portal-choice-arc-n0-choice-2
-    kind: ambient
-    prompt: Leena's wound throbs as she considers the portal's call, while Vigil
-      weighs the cost of turning back. The chadwick's axe lies forgotten beside them,
-      and Sodacan Bob's ancient eyes hold the weight of countless choices.
-    lore:
-    - amulet-of-wonder
-    - the-bahadur
-    participants:
-    - Leena
-    - Vigil
-    - chadwick
-    - sodacan_bob
-    sensitivity: tone
-    depends_on: []
-  - slot_id: portal-choice-arc-n0-choice-3
+  - slot_id: portal-choice-arc-n0-portal-choice-3
     kind: spine
     scene_ref: portal-choice
     participants:
     - Leena
     - Vigil
     - chadwick
-    - sodacan_bob
     - gm
+    - sodacan_bob
+  - slot_id: portal-choice-arc-n0-portal-choice-4
+    kind: ambient
+    prompt: As the decision is made, the portal's surface begins to shift and flow,
+      preparing to receive whatever has been chosen to pass through.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
 portal-choice-arc-n1:
   node_id: portal-choice-arc-n1
   parent_id: portal-choice-arc
   order: 1
   depth: 1
-  title: The Portal's Call
-  summary: As the companions deliberate, the portal's energy intensifies, creating
-    a palpable tension that affects not just their individual choices but the very
-    fabric of magic in Ashiorid. Each character's internal struggle reflects the broader
-    stakes of their decision.
-  continuity_in: The weight of their decision begins to shift as each companion makes
-    their choice, setting the stage for what comes next.
-  continuity_out: The portal's energy surges forward as the companions make their
-    final decisions, propelling them into the unknown.
-  target_words: 630
-  target_slots: 6
+  title: Preparing for Passage
+  summary: With their choice made, the party must now focus on preparation and protection
+    as they await the entity or force that will emerge from the portal. This involves
+    setting up defenses, positioning themselves strategically, and ensuring all contingencies
+    are considered.
+  continuity_in: The decision has been made and the party begins to move into their
+    prepared positions, knowing exactly what they're about to face.
+  continuity_out: As the chosen entity begins to manifest through the portal's surface,
+    the party stands ready with their weapons drawn and defenses in place.
+  target_words: 280
+  target_slots: 3
   kind: leaf
   forced: false
   children: []
-  slots: []
+  slots:
+  - slot_id: portal-choice-arc-n1-1
+    kind: ambient
+    prompt: The party gathers around the portal, their weapons ready and defenses
+      set. Leena examines the swirling energies with a mix of awe and apprehension,
+      while Chadwick checks his axe one last time. Vigil positions himself strategically,
+      watching for any signs of what's coming through.
+    lore:
+    - moonwells
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-choice-arc-n1-2
+    kind: spine
+    scene_ref: portal-choice
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: portal-choice-arc-n1-3
+    kind: ambient
+    prompt: As the portal's surface begins to shimmer and shift, the party braces
+      themselves. The air grows thick with anticipation. Leena's hand tightens on
+      her weapon, Chadwick's axe gleams in the dim light, and Vigil's eyes remain
+      fixed on the opening. The moment of truth is at hand.
+    lore:
+    - moonwells
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

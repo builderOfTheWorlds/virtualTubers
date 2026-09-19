@@ -1,0 +1,38 @@
+id: local-rumor
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:14.649259+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The local watch should have something to say about that...unfriendly thing.
+- kind: dialogue
+  speaker: Leena
+  text: I'd rather not think about it, to be honest.
+- kind: dialogue
+  speaker: Vigil
+  text: Agreed, let's focus on getting supplies.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, maybe they just mean a stray animal or something.
+- kind: dialogue
+  speaker: chadwick
+  text: I've heard towns like this have their own rumors and legends.
+- kind: dialogue
+  speaker: Leena
+  text: Just a silly old wives' tale, I'm sure.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving, we don't want to get stuck in town gossip.
+- kind: dialogue
+  speaker: Vigil
+  text: We can't ignore the watch, though. They'll be interested in us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure they'll be fine, no reason to worry.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go talk to the watch, see what they know about the road ahead.
+- kind: dialogue
+  speaker: Leena
+  text: And I'll go grab some food, I'm starving.

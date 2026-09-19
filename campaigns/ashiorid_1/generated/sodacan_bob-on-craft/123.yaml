@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-19T00:04:48.091282+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And then, of course, you see it's a gate hinge, which means it was attached
+    to a gate and—
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan, let's move.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, is it from the same maker as the wagon axle?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, excellent question, Vigil, and I'd say yes, they're from the same
+    works.
+- kind: dialogue
+  speaker: Leena
+  text: Can you tell us more about the maker?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, well, the maker's mark here indicates it's from the Smithson Foundry in
+    Easthaven.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: They were known for their durable goods, Leena, and this piece is no exception.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) You should see the attention to detail on the bracket on that
+    door over there.
+- kind: dialogue
+  speaker: Vigil
+  text: And roughly how old would this be?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, well, I'd say it's from the early middle period, maybe 150 to 170 years
+    ago.

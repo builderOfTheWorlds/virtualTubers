@@ -1,0 +1,38 @@
+id: the-meal
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:27.339584+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what's in this stew, but it's a travesty.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's a rustic dish, a little...adventurous.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do this better, I've cooked for the entire caravan.
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we should try it with some honey, that's always nice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I could have made it edible.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And what's that smell, was the pot ever properly cleaned?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I'm sure it's fine, don't worry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go ask the cook about this.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just eat.

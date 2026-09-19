@@ -1,0 +1,35 @@
+id: after-the-choice
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T02:08:47.964419+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chad, you okay?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know.
+- kind: dialogue
+  speaker: Leena
+  text: We made the right call.
+- kind: dialogue
+  speaker: Vigil
+  text: It doesn't feel like it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We did what needed doing.
+- kind: dialogue
+  speaker: gm
+  text: You're thinking about...?
+- kind: dialogue
+  speaker: chadwick
+  text: What I had to give up.
+- kind: dialogue
+  speaker: Leena
+  text: We'll get through this.
+- kind: dialogue
+  speaker: Vigil
+  text: Time won't heal the cuts.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can I get you a drink?

@@ -1,0 +1,41 @@
+id: before-the-well
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:42.547503+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear tonight, at least.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take first watch.
+- kind: dialogue
+  speaker: Leena
+  text: I'll join you, it's not like we have much to do.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep an eye on the well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think that's what this is about?
+- kind: dialogue
+  speaker: Leena
+  text: What?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The well.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous, it's just a coincidence.
+- kind: dialogue
+  speaker: gm
+  text: We've been over this. It has nothing to do with the moonwell.
+- kind: dialogue
+  speaker: Vigil
+  text: I still think we should be careful.
+- kind: dialogue
+  speaker: Leena
+  text: Careful about what?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing. Never mind.

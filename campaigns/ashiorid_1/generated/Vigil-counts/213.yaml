@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 213
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:39.286540+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, let's proceed with the meeting.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go over the market reports, should we expect any fluctuations in price.
+- kind: dialogue
+  speaker: Leena
+  text: Before you do, I just want to confirm that our contact is still available.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the east is open, I noticed that while I was setting up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering to himself) Which way do I usually sit, again?
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you summarize the reports for the group?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart that passed by earlier is now parked outside.
+- kind: dialogue
+  speaker: Leena
+  text: (skeptical) Is that a relevant observation, Vigil?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to no one in particular) I think I left my book in the other room.

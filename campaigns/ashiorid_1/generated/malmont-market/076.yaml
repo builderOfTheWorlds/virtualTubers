@@ -1,0 +1,41 @@
+id: malmont-market
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T20:23:16.687630+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Morning to all, welcome to Malmont.
+- kind: dialogue
+  speaker: chadwick
+  text: Thank you, good people, it's a pleasure to be here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for some quality work, not just a fancy sign on a shop.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, do you have any old maps or charts for sale?
+- kind: dialogue
+  speaker: Vigil
+  text: Just browsing, for now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not impressed, I've seen better work at a third of the price.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Vigil) I'm not sure why, but these maps are drawing me in.
+- kind: dialogue
+  speaker: Vigil
+  text: (grunting) Keep shopping.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, I think I'll just browse as well, thank you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to be? A bird on the gate?
+- kind: dialogue
+  speaker: gm
+  text: That's the crest of the town, Sodacan Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Tell me, what's this place?

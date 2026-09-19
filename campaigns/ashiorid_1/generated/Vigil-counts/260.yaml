@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 260
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:18.571419+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A few days have passed since we last rested.
+- kind: dialogue
+  speaker: chadwick
+  text: We should get moving, then.
+- kind: dialogue
+  speaker: Leena
+  text: Not yet, let's take a moment to gather ourselves.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a door, it swings open from the right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think that's how it swings, Vigil, yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: Also, the cart that passed by earlier is now by the gate.
+- kind: dialogue
+  speaker: chadwick
+  text: Why are you pointing this out?
+- kind: dialogue
+  speaker: Vigil
+  text: Someone must have repaired that shutter recently.
+- kind: dialogue
+  speaker: Leena
+  text: It looks sturdy now, at least.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a look around, see what we can find.

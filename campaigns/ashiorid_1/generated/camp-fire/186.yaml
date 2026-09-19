@@ -1,0 +1,37 @@
+id: camp-fire
+take: 186
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:34.195528+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it's stopped raining for now, but I wouldn't count on it staying that
+    way.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order for tonight. I volunteer for first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got a better way of laying a fire, if anyone wants to learn. It's all
+    about airflow.
+- kind: dialogue
+  speaker: Leena
+  text: What if the rain seeps into the fire pit and puts it out?
+- kind: dialogue
+  speaker: Vigil
+  text: It will hold.
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob, you're up next to keep an eye on the fire.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got my eye on it, don't worry.
+- kind: dialogue
+  speaker: chadwick
+  text: Next thing on the agenda, what's our food situation? Leena, how much is left?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I haven't counted it yet.
+- kind: dialogue
+  speaker: gm
+  text: Just get some rest for now, we'll worry about it in the morning.

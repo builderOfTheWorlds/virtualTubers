@@ -1,0 +1,41 @@
+id: night-watch
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:20.480559+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The night is clear.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, the stars are out.
+- kind: dialogue
+  speaker: Leena
+  text: I like this kind of quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: Too quiet. I don't like it.
+- kind: dialogue
+  speaker: gm
+  text: The sky is darker than it should be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about?
+- kind: dialogue
+  speaker: gm
+  text: I don't know. It just feels darker.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should wake the others early.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point? Nothing's coming.
+- kind: dialogue
+  speaker: Vigil
+  text: We should be prepared.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll be prepared when I see something to prepare for.
+- kind: dialogue
+  speaker: Leena
+  text: I could hear a bird sometime back.

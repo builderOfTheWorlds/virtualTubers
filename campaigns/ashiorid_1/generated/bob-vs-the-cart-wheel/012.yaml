@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:34.870309+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a lot to cover.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, we really need to get going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Are you kidding me, you're going to ruin the whole wheel!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, it's just a minor adjustment.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Minor adjustment?! This is going to collapse!
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, we appreciate your expertise, but we need to move on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Expertise? You call this expertise?!
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's just take a look at the wheel, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're not even seeing it, you're just rushing!
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, trust us, it'll be fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine?! You think this is fine?!
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, we value your input, but we need to decide.

@@ -1,0 +1,42 @@
+id: camp-fire
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T19:53:38.934312+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, well. I suppose we've got a bit of a wait on our hands. The rain doesn't
+    seem to be letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should settle the watch order for tonight. We can't just leave
+    it to whoever's free.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I was wondering when someone would bring that up. I think I can take first
+    watch, but we'll need to make sure the fire's kept going.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't hurt the fire if we keep it covered.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the moonwells are affected by the rain?
+- kind: dialogue
+  speaker: gm
+  text: As far as I know, the moonwells are sealed up tight. The rain won't get in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I'm pretty sure they're waterproof. But it's not like we can check or
+    anything.
+- kind: dialogue
+  speaker: gm
+  text: Not tonight, we can't. We'll just have to wait until morning.
+- kind: dialogue
+  speaker: chadwick
+  text: I still think we should decide on the watch order.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just going to go sit by the fire then.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll hold.

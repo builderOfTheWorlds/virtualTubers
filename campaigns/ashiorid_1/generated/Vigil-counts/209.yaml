@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 209
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:21.345145+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party has arrived at the local tavern, The Rusty Jug.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying the first round, who's with me?
+- kind: dialogue
+  speaker: Leena
+  text: I'll have a room with a view of the market square, if it's available.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the door to the kitchen opens to the right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a useful thing to know, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: The kitchen staff seem to be busy prepping for the evening.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone want to place bets on the local tavern competition?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take you up on that, Ashiorid, I'll have a room with a balcony.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passes in front of the tavern appears to be making multiple
+    trips.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just delivering goods to the local shops.
+- kind: dialogue
+  speaker: gm
+  text: The tavernkeeper, Gorm, seems to be in a good mood tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's get some drinks and make some noise, we're in town!

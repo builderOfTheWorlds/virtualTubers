@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 182
+model: llama3.1:8b
+generated_at: '2026-09-18T20:34:19.690508+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you're all in a dense forest, can't see anything but trees.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: I think we might be a bit turned around, Chad.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) You're sure of that?
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is good.
+- kind: dialogue
+  speaker: gm
+  text: What's that supposed to be?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Your navigation skills.
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) I've got them fine.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Why don't we just ask Vigil for directions?
+- kind: dialogue
+  speaker: chadwick
+  text: (disgusted) No, I'll figure it out.

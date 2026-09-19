@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:18.666693+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick. Can you give us an estimate on how
+    much longer?
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time, don't worry about it.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we could take a break and reassess our route?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see the point in that, we're fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) I think he's being a bit stubborn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, Chadwick's just trying to save face!
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) I am not.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Okay, Chadwick, let's just say... uh... you're conserving
+    your energy for the next leg?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Alright, let's keep moving then.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Still not sure which way we're going...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is better than a tavern's entertainment!

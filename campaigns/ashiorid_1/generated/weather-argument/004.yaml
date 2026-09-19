@@ -1,0 +1,35 @@
+id: weather-argument
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:45:57.016172+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm pretty sure it's going to rain, I saw the clouds this morning
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think so, it was too sunny when we were leaving
+- kind: dialogue
+  speaker: Leena
+  text: But didn't we just come through that stormy area, there's always more coming
+- kind: dialogue
+  speaker: Vigil
+  text: You're both right, it's always something with the weather in this place
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I bet it's a dry day, I saw a lot of birds flying around
+- kind: dialogue
+  speaker: gm
+  text: Birds don't mean anything, they fly in all kinds of weather
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, but they do seem to know when the rain is coming
+- kind: dialogue
+  speaker: Leena
+  text: I don't think we should be listening to birds, we have radar and stuff
+- kind: dialogue
+  speaker: Vigil
+  text: I think radar is only good for big storms, not little ones
+- kind: dialogue
+  speaker: sodacan_bob
+  text: My mom used to say that when the trees sway, it means rain's coming

@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:38.444704+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a long way to go yet.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head that way.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) I don't think so, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you ask Vigil to confirm the route?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I know what I'm doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) You want to know, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) No.
+- kind: dialogue
+  speaker: gm
+  text: Come on, Chadwick, ask him.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is good.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) Fine, yes or no, are we on the right track?
+- kind: dialogue
+  speaker: Vigil
+  text: Yes.

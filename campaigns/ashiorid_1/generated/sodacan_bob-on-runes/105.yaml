@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-19T00:06:59.345153+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die is struck with just the right amount of force, or the rune's too shallow
+    and it won't last a season.
+- kind: dialogue
+  speaker: chadwick
+  text: What's got you so worked up, Bob? You've seen some of the monuments.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Some. The Malvakar, though... it's one of the oldest. I was just thinking
+    about how it's still readable.
+- kind: dialogue
+  speaker: Leena
+  text: What's readable, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The language. It's an old dialect. Not many people know it anymore.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think that's why you're so... concerned about the Malvakar, then? Because
+    you can read it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No. It's just... craftsmanship, Vigil. That's all.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Careful, Bob. You're not like the others. You're always thinking
+    about the work, not the treasure.

@@ -1,0 +1,44 @@
+id: the-meal
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:21:04.486543+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you're all eating.
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, guys, it's not that bad! Let's make the best of it!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done a lot better than this, I guarantee it. My mom was a great
+    cook.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not eating this.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be like that, Vigil! It's just a little bland, that's all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bland? This is a catastrophe! Someone's gotta step up and do some real cooking
+    around here.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just drop it?
+- kind: dialogue
+  speaker: Leena
+  text: No way, I'm making a game out of it! Who brought home the meal that's being
+    roasted as the worst?
+- kind: dialogue
+  speaker: gm
+  text: Alright, settle down.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, my mom's chili recipe would fix this whole mess.
+- kind: dialogue
+  speaker: Vigil
+  text: (takes a piece of bread and starts eating with it)

@@ -1,0 +1,38 @@
+id: local-rumor
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:05.622684+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Folks seem friendly here, don't they?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, they're all smiles
+- kind: dialogue
+  speaker: chadwick
+  text: Too many magic shops, if you ask me
+- kind: dialogue
+  speaker: Vigil
+  text: I could do with a warm meal
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking at the local cuisine
+- kind: dialogue
+  speaker: gm
+  text: Blacksmiths keeping their forges cold
+- kind: dialogue
+  speaker: Vigil
+  text: Something doesn't feel quite right
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we're just tired
+- kind: dialogue
+  speaker: chadwick
+  text: No, something's off here, I can feel it
+- kind: dialogue
+  speaker: gm
+  text: A week of people knowing our names
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a relief to be just faces now

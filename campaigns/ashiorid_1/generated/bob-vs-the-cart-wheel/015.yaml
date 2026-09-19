@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:56.087933+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the itinerary for tomorrow.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no, you can't just ignore the wheel design.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Bob, it's not that important.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just about the design, it's about the structural integrity.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we've discussed this enough, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Structural integrity? You call that a wheel?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, I think Vigil is right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vigil doesn't know what he's talking about.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, can we please just move on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just trying to rush through this without proper consideration.

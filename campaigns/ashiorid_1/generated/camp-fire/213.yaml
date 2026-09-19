@@ -1,0 +1,39 @@
+id: camp-fire
+take: 213
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:03.015514+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to try and get some more wood for the fire, see if I can find any
+    dry stuff.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't let it die out now, not with the rain coming down like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was telling Leena, the way we laid the fire was all wrong, we should've
+    used more kindling.
+- kind: dialogue
+  speaker: Leena
+  text: What happens when a fire just... goes out? Does it just disappear?
+- kind: dialogue
+  speaker: Vigil
+  text: Wood burns.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Vigil, you can't just say that and expect it to settle the watch
+    order.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we get a good flame going, maybe we can dry out some of these wet logs.
+- kind: dialogue
+  speaker: Leena
+  text: I think we should have taken shelter in that old barn instead of trying to
+    make camp out here.
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, folks, we'll be lucky to make it through the night.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll be all right.

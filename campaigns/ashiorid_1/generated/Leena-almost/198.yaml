@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 198
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:18.536426+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you're saying something's familiar about this place?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village, before you were taken.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it, I don't know what it is, but it feels like I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen one just like it in your village, or a picture of one.
+- kind: dialogue
+  speaker: Vigil
+  text: This is what I want to know, what you're feeling.
+- kind: dialogue
+  speaker: Leena
+  text: I'm feeling like I've seen a doorway like that before, but I haven't.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, you don't know what you're looking for.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't tell her what to do, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What if she's right, though? What if it's something important?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but I think I'll go look for the others and see if they've seen
+    it too.
+- kind: dialogue
+  speaker: gm
+  text: That's a good idea, Leena.

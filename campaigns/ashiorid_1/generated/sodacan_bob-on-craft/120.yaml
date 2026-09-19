@@ -1,0 +1,29 @@
+id: sodacan_bob-on-craft
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-19T00:04:29.922235+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what have you found now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's a gate, look at the hinges, they're a type of...
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, come on, we're wasting daylight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, you see the way the maker tried to reduce friction...
+- kind: dialogue
+  speaker: Leena
+  text: Is it a recent thing, do you think it's been here for ages?
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of wood is that, is it a fast-growing species?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, that's a good question, Vigil, I think it's...
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you ask Vigil to help you gather some samples while Sodacan Bob...

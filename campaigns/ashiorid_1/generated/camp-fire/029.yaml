@@ -1,0 +1,41 @@
+id: camp-fire
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:03.693576+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle the watch order for tonight already?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid out wrong, it's not going to last.
+- kind: dialogue
+  speaker: Vigil
+  text: Just get some more wood on it.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we're the last ones left and nobody's watching us?
+- kind: dialogue
+  speaker: chadwick
+  text: Someone will watch us, just get some sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs to be higher.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think I've ever seen rain like this before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should've lit some more fires to warm up the water.
+- kind: dialogue
+  speaker: gm
+  text: The watch will be settled, but not tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, we'll sort it out in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should at least add some more wood to the fire.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll be fine.

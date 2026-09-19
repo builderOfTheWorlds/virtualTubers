@@ -1,0 +1,36 @@
+id: sodacan_bob-on-runes
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:35.408880+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're still thinking about the Malvakar, aren't you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Thinking out loud, yeah. Just wondering how it was done, is all.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan, I've seen you make runes last a thousand years with a single strike.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just the strike, though. The depth, the weight...
+- kind: dialogue
+  speaker: Leena
+  text: I've always been curious, Sodacan, what kind of tools would you need for a
+    job like that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Tools? Ha! Just a chisel and an anvil. And someone willing to do it by hand.
+- kind: dialogue
+  speaker: Vigil
+  text: But what about the language of the runes? Can you read it, Sodacan?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Read it? No, I can barely make out what's left of it. But I know what's important.
+- kind: dialogue
+  speaker: gm
+  text: What's important?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The intent. Who carved it, and why they carved it.

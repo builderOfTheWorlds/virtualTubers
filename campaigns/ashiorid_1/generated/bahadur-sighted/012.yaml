@@ -1,0 +1,38 @@
+id: bahadur-sighted
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:17.738388+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Wait.
+- kind: dialogue
+  speaker: Leena
+  text: Hold.
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the delay.
+- kind: dialogue
+  speaker: gm
+  text: Just a moment.
+- kind: dialogue
+  speaker: Leena
+  text: We keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No signs of trouble.
+- kind: dialogue
+  speaker: gm
+  text: Keep your eyes open.
+- kind: dialogue
+  speaker: Vigil
+  text: Moving.
+- kind: dialogue
+  speaker: chadwick
+  text: Stay sharp.

@@ -1,0 +1,39 @@
+id: sodacan_bob-on-craft
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:13.122726+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, this gate was made in some small town in the countryside about twenty
+    years ago, by a blacksmith who's now long dead.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move now?
+- kind: dialogue
+  speaker: Vigil
+  text: Does it look like it's been well-maintained?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, no, it looks like it's been here for a while, maybe even since it
+    was first installed.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what the design choice was behind the hinge brackets.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's a great question, Leena, and I think it's because the maker wanted
+    to make sure the gate could be easily taken apart and repaired.
+- kind: dialogue
+  speaker: Vigil
+  text: That makes sense, but why is it still in one piece then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, well, that's because it's been sitting here in the mud, probably hasn't
+    moved in years.
+- kind: dialogue
+  speaker: Leena
+  text: I like the way the metal's patina is forming on the brackets.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, it's really quite beautiful, isn't it?

@@ -1,0 +1,32 @@
+id: sodacan_bob-on-craft
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-19T00:03:54.165612+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. This is taking too long already.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we don't have all day to stand around looking at some old piece
+    of junk.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is not just any old piece of junk, Chad. This is a wagon axle, beautifully
+    crafted, with a maker's mark on the yoke that says...
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's a maker's mark?
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of metal is this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil! It's a fine grade of iron, with a high carbon content
+    that would've made it suitable for...
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just leave it here and keep moving?
+- kind: dialogue
+  speaker: gm
+  text: You know, that's actually a good idea, Chadwick.

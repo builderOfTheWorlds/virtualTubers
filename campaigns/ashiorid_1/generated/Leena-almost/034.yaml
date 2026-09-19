@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:26.344269+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'd like to describe the scene. You find yourselves standing in a small, dimly
+    lit courtyard, surrounded by overgrown gardens.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: gm
+  text: A turn of phrase is being used, a tune is being hummed, the shape of a doorway
+    is eerily familiar, and a scent wafts through the air that seems to match nothing
+    you've ever smelled before.
+- kind: dialogue
+  speaker: gm
+  text: As you stand there, Chadwick speaks up.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is, it's not worth the risk.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know why you're feeling that way, Leena. I've seen something like
+    it in your village before.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: I don't need an explanation. I just want to know what it is.
+- kind: dialogue
+  speaker: gm
+  text: Vigil still hasn't spoken, but Chadwick seems firm in his warning.
+- kind: dialogue
+  speaker: chadwick
+  text: Forget it, Leena. Some things are better left alone.

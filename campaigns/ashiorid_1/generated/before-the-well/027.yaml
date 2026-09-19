@@ -1,0 +1,41 @@
+id: before-the-well
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:51.216122+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full. We should be able to see its light from here.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) Yes.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to take a walk around the perimeter.
+- kind: dialogue
+  speaker: Vigil
+  text: (grunts) Be careful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you looking for?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.
+- kind: dialogue
+  speaker: gm
+  text: You're not on watch. You can get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think I'll be sleeping.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Must be the altitude.
+- kind: dialogue
+  speaker: Vigil
+  text: (stays silent)
+- kind: dialogue
+  speaker: gm
+  text: Vigil, did you see anything out of the ordinary?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

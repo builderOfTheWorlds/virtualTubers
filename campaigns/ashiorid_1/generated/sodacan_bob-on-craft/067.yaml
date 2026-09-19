@@ -1,0 +1,43 @@
+id: sodacan_bob-on-craft
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:37.072971+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what have you found?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A gate, look at the hinges, they're beautifully made, must have been crafted
+    by the Smithson family, probably around 1850.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we're on a schedule.
+- kind: dialogue
+  speaker: Vigil
+  text: Does it have a maker's mark?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, see this small inscription? It says "R. Smithson, 1848".
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love the way the ironwork is shaped like leaves.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, the Smithsons were masters of decorative metalwork, they were influenced
+    by the Arts and Crafts movement.
+- kind: dialogue
+  speaker: gm
+  text: And does it have any significance to our journey?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: None at all, just a lovely piece of history, but fascinating nonetheless.
+- kind: dialogue
+  speaker: Vigil
+  text: Well, we should be off then.
+- kind: dialogue
+  speaker: Leena
+  text: I'll carry it for a bit, Sodacan Bob, you can tell me more.
+- kind: dialogue
+  speaker: chadwick
+  text: This is taking all day.

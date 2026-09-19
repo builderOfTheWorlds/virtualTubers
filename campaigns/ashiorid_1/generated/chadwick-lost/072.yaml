@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:30.751611+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We need to get moving, we've been walking for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're making good time.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think you might be a bit turned around.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (calmly) Excuse me, Chadwick, but could you tell me our current location?
+- kind: dialogue
+  speaker: chadwick
+  text: Uh, I think it's... um...
+- kind: dialogue
+  speaker: Leena
+  text: (helpfully) I could take the lead for a bit, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I can handle it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is like watching a cat try to find its way out of a maze.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Sodacan Bob, please.
+- kind: dialogue
+  speaker: Vigil
+  text: (still calm) Chadwick, I think I know where we are.

@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:15:25.635856+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the next topic.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've covered the wheel sufficiently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I haven't even begun to cover it!
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Bob, we know you think the axle should be made of steel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Made of steel? That's just it – no one's listening!
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, we're trying to make progress here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Progress? You call this progress?!
+- kind: dialogue
+  speaker: chadwick
+  text: We'll get to your ideas, Bob, but we need to move on.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, can you summarize what we've agreed on so far?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, what have we agreed on exactly?
+- kind: dialogue
+  speaker: Vigil
+  text: We haven't agreed on anything if Bob's not happy.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not happy because you're not listening!

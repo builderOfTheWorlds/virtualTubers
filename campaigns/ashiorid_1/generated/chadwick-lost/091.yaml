@@ -1,0 +1,34 @@
+id: chadwick-lost
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:26.250178+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you're all standing in a dense forest. You've been walking for a
+    while.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm pretty sure we're heading in the right direction.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) If you're feeling uncertain, we can take a moment
+    to review our maps.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm ready to give directions whenever anyone needs them.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is the most entertaining forest walk ever.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) I think Sodacan Bob has a point, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: (to Chadwick) You're still leading the group, so you make the next decision.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure I know what I'm doing.

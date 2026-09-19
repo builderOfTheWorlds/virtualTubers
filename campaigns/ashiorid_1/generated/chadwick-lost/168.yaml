@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 168
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:16.180146+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trees are closing in, and the underbrush is growing thicker.
+- kind: dialogue
+  speaker: chadwick
+  text: Keep moving, we're almost there.
+- kind: dialogue
+  speaker: Leena
+  text: Almost there, huh? Can you even see the trail, Chad?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh boy, here we go.
+- kind: dialogue
+  speaker: gm
+  text: You've been walking for hours, Chadwick. It's starting to get dark.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are. We've been over this route before.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) Well, if you're so sure, then why don't you-
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) I do know, I'm telling you. We just need to keep going.
+- kind: dialogue
+  speaker: Vigil
+  text: (nonchalantly) I'm starting to think you really don't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (guffawing) This is great! We're lost and Chadwick's leading the way!
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Sodacan Bob, knock it off.

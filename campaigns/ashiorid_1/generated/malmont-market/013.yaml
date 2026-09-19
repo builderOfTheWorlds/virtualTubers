@@ -1,0 +1,42 @@
+id: malmont-market
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:34.189903+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I'll be back at the inn before nightfall, I expect.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This blacksmith's work looks like it's been done by a beginner.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers to Chadwick) Oh, look at these old maps. I've never seen anything
+    like them.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I know, I love old maps too.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around) Anyone from around here know us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work at a traveling fair.
+- kind: dialogue
+  speaker: Leena
+  text: (examining a map) I wonder where this road leads.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no one's paid much attention to us.
+- kind: dialogue
+  speaker: Vigil
+  text: We should be gone before nightfall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This town's got more magic shops than sense.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, I'm going to buy this map.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just enjoy the morning, shall we?

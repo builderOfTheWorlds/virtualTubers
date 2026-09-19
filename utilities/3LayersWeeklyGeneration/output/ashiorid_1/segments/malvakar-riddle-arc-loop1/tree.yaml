@@ -1,0 +1,127 @@
+malvakar-riddle-arc-loop1:
+  node_id: malvakar-riddle-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The party reaches the northern monument and solves the riddle of the Malvakar,
+    u
+  summary: The party reaches the northern monument and solves the riddle of the Malvakar,
+    uncovering another piece of the map.
+  continuity_in: The party has just encountered the Bahadur and is now traveling toward
+    Malmont.
+  continuity_out: The party has solved another riddle and uncovered a new location
+    on their map, bringing them closer to the Amulet of Wonder.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - malvakar-riddle-arc-loop1-n0
+  - malvakar-riddle-arc-loop1-n1
+  slots: null
+malvakar-riddle-arc-loop1-n0:
+  node_id: malvakar-riddle-arc-loop1-n0
+  parent_id: malvakar-riddle-arc-loop1
+  order: 0
+  depth: 1
+  title: Arrival at the Northern Monument
+  summary: The party arrives at the ancient northern monument where they must solve
+    the riddle of the Malvakar to proceed
+  continuity_in: The party has just encountered the Bahadur and is now traveling toward
+    Malmont.
+  continuity_out: The party has solved the riddle of the Malvakar and uncovered a
+    new location on their map
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-loop1-n0-malvakar-1
+    kind: ambient
+    prompt: The party arrives at the ancient northern monument and must solve the
+      riddle of the Malvakar to proceed
+    lore:
+    - the-bahadur
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-loop1-n0-malvakar-2
+    kind: spine
+    scene_ref: malvakar-riddle
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: malvakar-riddle-arc-loop1-n0-malvakar-3
+    kind: ambient
+    prompt: The party has solved the riddle of the Malvakar and uncovered a new location
+      on their map, bringing them closer to the Amulet of Wonder
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+malvakar-riddle-arc-loop1-n1:
+  node_id: malvakar-riddle-arc-loop1-n1
+  parent_id: malvakar-riddle-arc-loop1
+  order: 1
+  depth: 1
+  title: Uncovering the Map Piece
+  summary: After solving the riddle, the party discovers another piece of the ancient
+    map that reveals the location of the next landmark
+  continuity_in: The party has solved the riddle of the Malvakar and uncovered a new
+    location on their map
+  continuity_out: The party has solved another riddle and uncovered a new location
+    on their map, bringing them closer to the Amulet of Wonder.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: malvakar-riddle-arc-loop1-n1-uncovering-1
+    kind: ambient
+    prompt: The party examines the ancient map piece they've uncovered, noting its
+      strange symbols and markings.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: malvakar-riddle-arc-loop1-n1-uncovering-2
+    kind: spine
+    scene_ref: amulet-map
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: malvakar-riddle-arc-loop1-n1-uncovering-3
+    kind: ambient
+    prompt: Leena points out a specific landmark on the map piece, explaining its
+      significance to the others.
+    lore:
+    - amulet-of-wonder
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

@@ -1,0 +1,43 @@
+id: weather-argument
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:26.101101+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's supposed to rain, the sky looks all grey and stuff.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, I saw the weather report this morning and it said sunny.
+- kind: dialogue
+  speaker: Leena
+  text: But I was just walking to the car and it felt really humid, doesn't that usually
+    mean rain?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, but it's been humid all week, doesn't mean anything.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear I saw a bunch of clouds gathering on the horizon, definitely gonna
+    rain.
+- kind: dialogue
+  speaker: gm
+  text: Clouds on the horizon don't necessarily mean rain, I've seen them clear up
+    before.
+- kind: dialogue
+  speaker: chadwick
+  text: But I was at the park yesterday and there was a big storm warning sign.
+- kind: dialogue
+  speaker: Leena
+  text: Storm warning sign? That's just to cover the city's behind, doesn't mean anything's
+    actually going to happen.
+- kind: dialogue
+  speaker: Vigil
+  text: I've lived here my whole life, trust me, when the trees start swaying like
+    that it's gonna rain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The trees aren't swaying, are they?
+- kind: dialogue
+  speaker: gm
+  text: Actually, now that I think about it, they kind of are.

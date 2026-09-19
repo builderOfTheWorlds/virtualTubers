@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:59.349686+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick's leading the way through this dense forest.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm pretty sure this is right.
+- kind: dialogue
+  speaker: Vigil
+  text: If you're not sure, you can just ask, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Yeah, let's see him admit it.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, actually, why don't we just check the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I've got a feel for this place, I'm sure it's fine.
+- kind: dialogue
+  speaker: gm
+  text: But the trees all look the same to you, don't they, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm leading, aren't I? That means I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: Well, why don't we just follow the stream, then? It'll take us somewhere.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, let's follow the stream.

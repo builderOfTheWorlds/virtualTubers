@@ -1,0 +1,45 @@
+id: chadwick-lost
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:22.033888+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a ways to go before we reach the next
+    settlement.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's this way, at least.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) I can give you a direction if you'd like, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, come on, Chadwick, you're not even trying.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) You know, Chadwick, I'm sure you'll figure it out. It's just a few
+    landmarks back.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need landmarks. I've got a good sense of direction.
+- kind: dialogue
+  speaker: Vigil
+  text: (still waiting) If you'd like, I can give you a compass reading.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Fine, let's just keep moving. We'll see if we can't get back on
+    track.
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) I am on track.
+- kind: dialogue
+  speaker: Vigil
+  text: (after a moment) Actually, I think I see a landmark we should have passed
+    a few minutes ago.
+- kind: dialogue
+  speaker: chadwick
+  text: (reluctantly) Ah, maybe we should turn back.

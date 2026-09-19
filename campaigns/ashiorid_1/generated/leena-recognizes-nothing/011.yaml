@@ -1,0 +1,29 @@
+id: leena-recognizes-nothing
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:01.619671+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on the dusty road, the only sound the gentle hum of insects.
+- kind: dialogue
+  speaker: gm
+  text: Leena squints, her eyes narrowing as she tries to place the landmark.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen this before... somewhere.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob ambles over, wiping the sweat from his brow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's probably just the same old trick of the light, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: (staying quiet, observing Leena)
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, have you tried that new drink from the market yet?
+- kind: dialogue
+  speaker: gm
+  text: The party continues on, none of them making a fuss about Leena's comment.

@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 242
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:08.491789+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you see?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get too close to it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: This is the doorway to the kitchen, but it feels... wrong.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw one like it in your village, back home.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go get some tea.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, I'm serious, don't chase it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's probably just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what it is, but I want to know.
+- kind: dialogue
+  speaker: Vigil
+  text: (returning with tea) Here, let's talk about something else.
+- kind: dialogue
+  speaker: gm
+  text: What do you think it is, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: (to the others) I think we should just move on.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going anywhere until I figure this out.

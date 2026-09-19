@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 210
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:14.979920+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back to Loop 210, we're heading east.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, great, I thought we were going to have to take a detour.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure we're fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles)
+- kind: dialogue
+  speaker: chadwick
+  text: I mean, we've been on this road before, haven't we?
+- kind: dialogue
+  speaker: Leena
+  text: Well, actually, Chadwick, we were talking about taking a different route.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm positive we know where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirks)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs again)
+- kind: dialogue
+  speaker: gm
+  text: The road splits up ahead, which way do we go?
+- kind: dialogue
+  speaker: chadwick
+  text: We go left.

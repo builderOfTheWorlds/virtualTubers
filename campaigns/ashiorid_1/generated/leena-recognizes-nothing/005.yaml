@@ -1,0 +1,32 @@
+id: leena-recognizes-nothing
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:26.982817+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The party rides on, the scenery unfolding like a map.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen that hill before.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that, Leena?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We must be near the Eldrida foothills.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think it's just the hills. The road, the building...
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a road, love.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silence)

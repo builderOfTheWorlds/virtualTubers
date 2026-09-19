@@ -1,0 +1,32 @@
+id: camp-fire
+take: 116
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:53.672715+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just sit around all night, someone needs to take the watch.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire will last till morning, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire with dry wood, we should be good till dawn.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's too heavy, it's going to be a long night.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of having a fire if we can't even see it?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, someone needs to take the watch, now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm happy to take the first watch, but we need to settle on the order.
+- kind: dialogue
+  speaker: Vigil
+  text: It doesn't matter who watches first, it's going to be a long night.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous, we can't just argue all night.

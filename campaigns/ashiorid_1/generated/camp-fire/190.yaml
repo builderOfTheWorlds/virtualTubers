@@ -1,0 +1,37 @@
+id: camp-fire
+take: 190
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:54.364797+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We'll keep the fire going as long as it can, but let's not waste too much
+    wood.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think it's a good idea to split the watch into two shifts. We can't
+    afford to lose anyone.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the seal fails again?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, I know it's a good one, it'll hold till morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Rain's supposed to clear in a few days.
+- kind: dialogue
+  speaker: gm
+  text: I'll take the first watch, anyone have any objections?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no objections, but someone should stay awake in case the fire goes out.
+- kind: dialogue
+  speaker: Leena
+  text: What's the worst that could happen if it does?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're not going to freeze to death out here, that's for sure.
+- kind: dialogue
+  speaker: Vigil
+  text: Water.

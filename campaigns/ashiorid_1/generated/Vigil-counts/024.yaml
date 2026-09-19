@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:21.923937+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still trying to decide what to do next.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I know what you mean.
+- kind: dialogue
+  speaker: Vigil
+  text: There's four people in the room with us now.
+- kind: dialogue
+  speaker: gm
+  text: That's right, including the two guards at the door.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the door is supposed to open that way.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it does.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyone notice anything else?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window was fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: That's good to know, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that cart doing parked there?
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw it come by here twice already.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe they need a new route.

@@ -1,0 +1,39 @@
+id: bob-names-the-runes
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:12:43.970603+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see, the crescent symbol above the latch indicates a lock that's keyed
+    to the lunar cycle, and only opens during a waxing crescent moon.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Of course it does.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the intricate patterns on the frame suggest a ward against uninvited guests,
+    although I'm not sure if it's still active.
+- kind: dialogue
+  speaker: Leena
+  text: Does that mean we can't just, uh, cut through it if we need to?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, an excellent question, Leena! Yes, the ward is tied to the lock's magical
+    signature, so tampering with it would indeed trigger a response.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Ignore the old fool.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But don't worry, the ward is a gentle one – more of a deterrent than a barrier.
+- kind: dialogue
+  speaker: chadwick
+  text: (to himself) We're never getting out of here...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) And the runes on the gatepost are a variant of the ancient "Pathfinder's
+    Mark"!
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I had no idea this door had such a rich history.

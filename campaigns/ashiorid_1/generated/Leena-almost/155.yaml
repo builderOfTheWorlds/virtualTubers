@@ -1,0 +1,31 @@
+id: Leena-almost
+take: 155
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:36.303911+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's caught your attention?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but it shouldn't be. A turn of phrase, I think, or a
+    tune being hummed, the shape of a doorway...
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, or maybe it's just a common phrase or tune that you're not thinking
+    of.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: It's not just that. The smell, too. It's like...I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it, Leena. Don't chase it.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) Anything else you'd like to add?

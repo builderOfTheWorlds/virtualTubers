@@ -1,0 +1,35 @@
+id: weather-argument
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:11.355434+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's going to rain, I saw those dark clouds rolling in
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, but the sun was shining just 10 minutes ago, that's a good sign
+- kind: dialogue
+  speaker: Leena
+  text: Don't be fooled, dark clouds always come with rain, it's a fact
+- kind: dialogue
+  speaker: Vigil
+  text: But the wind is picking up, that usually means the storm is passing
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we're at the peak of the temperature, it's supposed to drop now
+- kind: dialogue
+  speaker: gm
+  text: Yeah, but have you noticed how still the air is? that's a sign
+- kind: dialogue
+  speaker: chadwick
+  text: Still air can mean anything, I'm sticking to my "no rain" call
+- kind: dialogue
+  speaker: Leena
+  text: You're just hoping it's not raining so you don't have to change your plans
+- kind: dialogue
+  speaker: Vigil
+  text: Plans? I thought we were just going for a walk, it's not that far
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly, a little rain won't hurt anyone, come on Ashiorid

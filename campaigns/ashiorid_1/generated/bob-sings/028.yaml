@@ -1,0 +1,17 @@
+id: bob-sings
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:13:28.105492+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob, I was just about to start our expedition briefing...
+- kind: dialogue
+  speaker: chadwick
+  text: Is he going to warble the entire way, then?
+- kind: dialogue
+  speaker: Vigil
+  text: I have no comment.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: KLEIN ZWIHN DRAH, TROH DRAH, DRAH DRAH KLOH!

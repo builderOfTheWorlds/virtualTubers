@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:14:56.634162+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob's found something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is fantastic, it's a gate hinge, and look at the quality of the craftsmanship,
+    it's from the Western provinces, made by a smith in one of the larger towns, I'd
+    say it's about 20 years old.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's keep moving, time's wasting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, but just look at this, the way the metal's been tempered, it's exquisite,
+    I'm going to write this down in my notebook.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, is it rare?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not rare, but it's a great example of its type, and the maker was trying to
+    balance durability with elegance, you can see that.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of tree is this made from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil, it's not actually made from a tree, it's wrought
+    iron, but I see what you're getting at, it's a sturdy piece of work, yes.
+- kind: dialogue
+  speaker: Leena
+  text: It's beautiful, can I hold it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course, Leena, go ahead, but be careful, it's a bit delicate.

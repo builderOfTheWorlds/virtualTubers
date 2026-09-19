@@ -1,0 +1,41 @@
+id: malmont-market
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T20:21:03.525648+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Malmont's not exactly what I'd call a hub of industry.
+- kind: dialogue
+  speaker: Vigil
+  text: The work here is... adequate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Adequate? That's not exactly what I'm looking for.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think I see something that catches my eye.
+- kind: dialogue
+  speaker: gm
+  text: What is it, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: That stall over there, the one with the old maps.
+- kind: dialogue
+  speaker: chadwick
+  text: What's so interesting about those?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure, but I feel like I've seen them somewhere before.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) I don't like this.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, want to take a closer look at the local smithwork?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disapprovingly) Not particularly.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we've seen enough for today.

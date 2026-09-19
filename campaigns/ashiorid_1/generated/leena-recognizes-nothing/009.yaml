@@ -1,0 +1,39 @@
+id: leena-recognizes-nothing
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:50.019119+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The air is thick with the scent of blooming wildflowers and the sound of crickets
+    provides a soothing background hum.
+- kind: dialogue
+  speaker: gm
+  text: Leena's eyes narrow slightly as she looks out at the landscape.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen this before.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob fiddles with the hem of his pants, attempting to appear nonchalant.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you probably have, Leena. We've been on a lot of walks, after all.
+- kind: dialogue
+  speaker: Vigil
+  text: His eyes are fixed on the horizon, his expression unreadable.
+- kind: dialogue
+  speaker: chadwick
+  text: (Changing the subject) I'm getting a bit peckish, have we stopped for lunch
+    yet?
+- kind: dialogue
+  speaker: gm
+  text: The party continues in silence for a moment, each member lost in their own
+    thoughts.
+- kind: dialogue
+  speaker: Leena
+  text: (Gently) I don't mean just any walk, Bob. I mean... (pauses) ...something
+    specific.
+- kind: dialogue
+  speaker: gm
+  text: Vigil's gaze flicks to Leena, his eyes narrowing slightly.

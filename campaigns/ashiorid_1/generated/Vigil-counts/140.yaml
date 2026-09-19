@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 140
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:50.403957+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Looks like we've got a few minutes before the caravan leaves again.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to take a short walk around the courtyard, get some fresh air.
+- kind: dialogue
+  speaker: Vigil
+  text: The east door doesn't open very smoothly, it's been sticking lately.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I noticed that, I've been thinking of lubricating it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, be back before we depart.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go talk to the caravan leader about our route.
+- kind: dialogue
+  speaker: Leena
+  text: (returns) Vigil, I saw you looking at that small chest, is it locked?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been locked for a while now, but I'm sure it's just for security.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I think I'm going to grab some rest, it's been a long day.

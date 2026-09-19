@@ -1,0 +1,43 @@
+id: the-meal
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T20:59:12.894940+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, so, who made dinner tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, I didn't see the cookbook, but it's clear they didn't follow
+    the recipe.
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan Bob, can't we make an effort to appreciate the meal?
+- kind: dialogue
+  speaker: Vigil
+  text: (hands food to Chadwick)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Appreciate the meal? I'd rather not, personally.
+- kind: dialogue
+  speaker: Leena
+  text: I brought some fresh fruit to make up for it!
+- kind: dialogue
+  speaker: gm
+  text: That's... nice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I've found that a good bouillabaisse can turn a mediocre meal into
+    something special.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just eat?
+- kind: dialogue
+  speaker: Vigil
+  text: (gives food to Sodacan Bob)
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, don't be so hard on our chef!

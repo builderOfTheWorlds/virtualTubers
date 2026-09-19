@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 250
+model: llama3.1:8b
+generated_at: '2026-09-18T23:37:53.944448+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, we're approaching the great hall. There's a doorway you should be familiar
+    with.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know it.
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like something from your village, doesn't it, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: But I've never seen that exact... doorway before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that shape before, in a dream. Does that count?
+- kind: dialogue
+  speaker: Vigil
+  text: Does it matter?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's the smell you're getting?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It smells like wet stone.
+- kind: dialogue
+  speaker: gm
+  text: And what's that phrase you were humming?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The one I used to tell my brother when we were kids?

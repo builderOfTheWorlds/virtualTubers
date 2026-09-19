@@ -1,0 +1,36 @@
+id: malmont-market
+take: 180
+model: llama3.1:8b
+generated_at: '2026-09-18T23:53:56.210359+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at the workmanship on that hammer, and what's that supposed to be, a
+    sword?
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) Nothing's very good here.
+- kind: dialogue
+  speaker: Leena
+  text: (rummaging through an old map) These are really old. From before the war.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Finally, a place where I don't know anyone.
+- kind: dialogue
+  speaker: Vigil
+  text: (patting his pouch) Don't like it here.
+- kind: dialogue
+  speaker: Leena
+  text: (unfolding a map) This one's marked with... rivers.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the kind of thing I could look at for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too many strangers.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) Oh, the look on their faces.
+- kind: dialogue
+  speaker: Leena
+  text: (reading the map) 'The lost waters'... sounds like a story.

@@ -1,0 +1,32 @@
+id: the-ring-half
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:41:10.358435+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We don't know what to make of it, not really.
+- kind: dialogue
+  speaker: chadwick
+  text: I've seen those markings before, though I don't know where.
+- kind: dialogue
+  speaker: Leena
+  text: (gentle) What if it's from our mother?
+- kind: dialogue
+  speaker: Vigil
+  text: Our mother? Ashiorid, I don't think we can assume that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about the symbol on the ring, though?
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like a cipher, or part of one.
+- kind: dialogue
+  speaker: Leena
+  text: It looks like a language to me.
+- kind: dialogue
+  speaker: Vigil
+  text: The Leto crest, but twisted.
+- kind: dialogue
+  speaker: gm
+  text: That's something.

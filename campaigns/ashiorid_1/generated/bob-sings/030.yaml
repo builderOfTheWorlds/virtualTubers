@@ -1,0 +1,43 @@
+id: bob-sings
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:13:49.188203+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I've never heard you tackle the classics like this!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hear me, hear me, I sing of deep Kragnir's delight!
+- kind: dialogue
+  speaker: chadwick
+  text: What... is this, Bob? "Digging deep, we dig with care..."?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Our pickaxes shine, our bellies full, we dine and we declare!
+- kind: dialogue
+  speaker: Leena
+  text: Ah, mercy...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Our clan's strong, our hearts ablaze, we forge and we make it so, in Kragnir's
+    praise!
+- kind: dialogue
+  speaker: Vigil
+  text: What are you doing, Bob? This is a tavern, not a dwarven alehouse!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Our tunnels stretch, our treasures gleam, we sing and we work and we live
+    in Kragnir's beam!
+- kind: dialogue
+  speaker: gm
+  text: Oh, Bob, you're in fine voice today!
+- kind: dialogue
+  speaker: chadwick
+  text: This is... a sight to behold...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hear me, Kragnir, hear our song, and grant us riches all day long!
+- kind: dialogue
+  speaker: Leena
+  text: Bravo, Bob, bravo!

@@ -1,0 +1,122 @@
+segment_id: malmont-arrival-arc-loop1-26
+order: 26
+loop: 0
+hours: 6
+synopsis: As the party explores Malmont, they encounter evidence of both the world's
+  preserved magic and its depleted state, depending on which path they took during
+  their journey. These contrasting signs lead them to understand how their choices
+  may have affected the fate of this realm.
+continuity_in: The party is now settled in Malmont, having begun to investigate the
+  town's unique properties and the implications of their earlier discoveries.
+continuity_out: The party has started to grasp that they are not just witnesses to
+  history but participants whose actions have real consequences for the world's magical
+  balance.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malmont-arrival-arc-loop1-26-n0-malmont-1
+  kind: ambient
+  prompt: The party discovers a crystalline formation that pulses with residual magical
+    energy, its light flickering in rhythm with their footsteps.
+  lore:
+  - malmont
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-26-n0
+- slot_id: malmont-arrival-arc-loop1-26-n0-malmont-2
+  kind: ambient
+  prompt: A section of the town's ancient wall crumbles to reveal a hidden chamber,
+    its contents untouched by time but marked with strange runes.
+  lore:
+  - malmont
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-26-n0
+- slot_id: malmont-arrival-arc-loop1-26-n0-malmont-3
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: malmont-arrival-arc-loop1-26-n0
+- slot_id: malmont-arrival-arc-loop1-26-n0-malmont-4
+  kind: spine
+  scene_ref: magic-lost
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: malmont-arrival-arc-loop1-26-n0
+- slot_id: malmont-arrival-arc-loop1-26-n1-malmont-echoes-1
+  kind: ambient
+  prompt: The party discovers a crystalline shard embedded in a tree trunk, its surface
+    showing faint reflections of their recent choices
+  lore:
+  - malmont
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-26-n1
+- slot_id: malmont-arrival-arc-loop1-26-n1-malmont-echoes-2
+  kind: ambient
+  prompt: A weathered journal page lies half-buried in the dirt, its ink faded but
+    still readable, describing the town's magical decline
+  lore:
+  - malmont
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malmont-arrival-arc-loop1-26-n1
+- slot_id: malmont-arrival-arc-loop1-26-n1-malmont-echoes-3
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malmont-arrival-arc-loop1-26-n1
+nodes:
+- node_id: malmont-arrival-arc-loop1-26
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malmont-arrival-arc-loop1-26-n0
+  parent_id: malmont-arrival-arc-loop1-26
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: malmont-arrival-arc-loop1-26-n1
+  parent_id: malmont-arrival-arc-loop1-26
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

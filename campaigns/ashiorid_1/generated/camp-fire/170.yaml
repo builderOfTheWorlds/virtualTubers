@@ -1,0 +1,35 @@
+id: camp-fire
+take: 170
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:54.272259+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty hard, isn't it.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to figure out who's on watch tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we laid the fire pretty good, but it's gonna need some more wood to
+    last.
+- kind: dialogue
+  speaker: Vigil
+  text: The embers will hold.
+- kind: dialogue
+  speaker: Leena
+  text: What happens when the fire burns out entirely?
+- kind: dialogue
+  speaker: gm
+  text: We'll use a lantern, like we always do.
+- kind: dialogue
+  speaker: Leena
+  text: But what if we can't find any more fuel for it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fuel's not the problem, it's the rain. If it keeps up like this, the whole
+    camp'll be waterlogged.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, fine. Bob, you're on watch first. Vigil, you're second. Leena, you're
+    third.

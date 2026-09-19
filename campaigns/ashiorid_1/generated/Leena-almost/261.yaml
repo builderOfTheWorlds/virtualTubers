@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 261
+model: llama3.1:8b
+generated_at: '2026-09-18T23:38:48.650369+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's been a few days since we last spoke, and nothing's changed with the village.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, can I have a word with you?
+- kind: dialogue
+  speaker: Leena
+  text: I said something familiar was in front of me, but I don't know what it was.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You might've seen something like it in your village, Leena, it's possible.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going for a walk.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it, okay? We don't know what it is.
+- kind: dialogue
+  speaker: Leena
+  text: I know, I just...I don't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Your village is old, Leena, it's possible it's just something you've seen
+    before.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: It's not like anyone's going to get in trouble for it. It's just...a thing.

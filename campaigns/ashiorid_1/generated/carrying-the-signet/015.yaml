@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:19:42.350850+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Good to see you''ve made it, I have something for you.'
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks, what is it?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: One half of the signet ring from the manor.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What about the other half?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: Ah, that''s...complicated.'
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) What's complicated about it?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (pauses) You''ll find out in time.'
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) We don't get paid to wait for the punchline.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (smirks) I''m sure you''ll be paid for this one.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the party) Anyone see our new friend eyeing the ring?
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around) Nope.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the party) Just thought I'd ask.

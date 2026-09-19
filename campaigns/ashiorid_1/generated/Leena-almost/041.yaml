@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:05.065538+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably from your village. I've seen that style before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I've seen it before too. We've talked about those doorways.
+- kind: dialogue
+  speaker: Leena
+  text: But why would I remember it? I don't even know how I got here.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: What if it is worth it?
+- kind: dialogue
+  speaker: gm
+  text: Anyway, the manor's being locked down.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go check on something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's going on?
+- kind: dialogue
+  speaker: gm
+  text: Nothing's confirmed yet, but someone's been asking questions.

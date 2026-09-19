@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 232
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:01.888996+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's been quiet, hasn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Oh, it's been very quiet.
+- kind: dialogue
+  speaker: Leena
+  text: What's that mean?
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the windows in the alleyway have been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I noticed that too, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: I didn't, but I'm glad they are.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I'm hungry.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier came from the east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Twice.
+- kind: dialogue
+  speaker: gm
+  text: There are seven people in the room, counting us.

@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:17:16.282142+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're a curious one, aren't you?
+- kind: dialogue
+  speaker: chadwick
+  text: We were just discussing the weather.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Yes, it's been quite dry lately.
+- kind: dialogue
+  speaker: Vigil
+  text: (checks his gear) I think I'll go fetch us some fresh air.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: More like some fresh ale, I'd say.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (hands half a ring to Chadwick) Here, keep this safe.'
+- kind: dialogue
+  speaker: gm
+  text: What's all this, then?
+- kind: dialogue
+  speaker: Leena
+  text: Just a little trinket our host gave us.
+- kind: dialogue
+  speaker: Vigil
+  text: (studies the room) Nice inn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pours himself a drink) To new friends.
+- kind: dialogue
+  speaker: gm
+  text: Indeed, new friends, always a welcome thing.
+- kind: dialogue
+  speaker: chadwick
+  text: (sets the ring on his finger) Just a keepsake, really.

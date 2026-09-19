@@ -1,0 +1,32 @@
+id: leena-recognizes-nothing
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:42.586635+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The hill comes into view as you round the bend, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I think I've seen that hill before.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a coincidence, Leena, you've traveled a lot.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're not far from the next village now, I'm sure of it.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think I've ever been to a village that looks like this.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Well, there's always a first time.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: Leena
+  text: I wonder where the light is coming from, it's so... soft.

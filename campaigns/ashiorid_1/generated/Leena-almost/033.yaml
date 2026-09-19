@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:19.763555+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just... this phrase, I've heard it before, but it's not
+    supposed to be here.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase after things you can't explain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what she's talking about, it's probably from the village she
+    grew up in.
+- kind: dialogue
+  speaker: Vigil
+  text: (saying nothing)
+- kind: dialogue
+  speaker: Leena
+  text: That's what I'm trying to figure out, if it's something I learned in the village
+    or if I'm just imagining it.
+- kind: dialogue
+  speaker: gm
+  text: Does anyone else feel like something is off?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Off? No, I just think Leena might be getting her memories mixed up.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not getting my memories mixed up, I know this smell, this phrase... it's
+    not supposed to be here.

@@ -1,0 +1,30 @@
+id: the-map-argument
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:09.668540+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. Vigil, can you tell me which direction we need
+    to head?
+- kind: dialogue
+  speaker: Vigil
+  text: We're heading north, I think. Leena, what do you have on the map?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not entirely sure. The symbols are unfamiliar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see a landmark in the distance. Does that help?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no, no, no, you're all wrong. I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: No, Chadwick, I think you're misreading it.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's take a closer look.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just not seeing it, that's all.

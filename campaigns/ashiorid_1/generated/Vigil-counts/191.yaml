@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 191
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:25.036303+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the shutter on the east window has been fixed recently, Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: What seems to be the point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No point, I just noticed.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's been a few days since we got here.
+- kind: dialogue
+  speaker: Leena
+  text: Anyone hungry?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could eat.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the window earlier has passed again.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's eat.
+- kind: dialogue
+  speaker: Vigil
+  text: There are eight people in the room with us.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a lot of people.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The doors are unlocked.

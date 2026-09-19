@@ -1,0 +1,39 @@
+id: chadwick-lost
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:40.061482+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So we're going north from the last landmark, right Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course we are.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) Well, we are, for what it's worth.
+- kind: dialogue
+  speaker: chadwick
+  text: (dismissing) Don't bother, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I think we're going to need a bit more than "for what it's worth".
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh man, this is like watching a blind squirrel find a nut.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Chadwick, why don't you just let us set the course for now?
+- kind: dialogue
+  speaker: chadwick
+  text: (defiantly) I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (waiting patiently) That's okay, Chadwick. We'll just wait for you to figure
+    it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is better than a comedy show.
+- kind: dialogue
+  speaker: gm
+  text: Alright, I think we're good to keep moving.

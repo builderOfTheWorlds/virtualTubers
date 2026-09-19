@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:59.031469+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick, do you know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, I think we're heading in the wrong direction.
+- kind: dialogue
+  speaker: chadwick
+  text: I was just testing you, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we're a bit off course.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is priceless.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe you should just admit it, you don't know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: I do know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: Okay, let me recheck the map then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is just too funny.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, yes, I knew that. Let's turn around.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, are you willing to listen to some advice?

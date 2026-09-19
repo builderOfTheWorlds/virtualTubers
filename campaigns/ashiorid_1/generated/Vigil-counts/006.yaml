@@ -1,0 +1,44 @@
+id: Vigil-counts
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:04.575083+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the next room. Vigil, can you tell me what you notice
+    about this space?
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in this room, and the door to our left opens inward.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that mean, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that if you wanted to close the door, you'd have to push it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of noticing that?
+- kind: dialogue
+  speaker: Vigil
+  text: No point, really. I just do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we get on with it?
+- kind: dialogue
+  speaker: gm
+  text: We're going to check the east wing, see if we can find any information about
+    the missing merchant. Chadwick, you're with me. Vigil, Leena, you're checking
+    the west wing. Sodacan Bob, you're with me.
+- kind: dialogue
+  speaker: Vigil
+  text: A cart has passed the window outside twice in the past hour.
+- kind: dialogue
+  speaker: gm
+  text: That's interesting, Vigil. Let's take a look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just the same driver making deliveries.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, probably.

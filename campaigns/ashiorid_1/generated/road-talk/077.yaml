@@ -1,0 +1,42 @@
+id: road-talk
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T22:22:46.687858+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, relentless as the road stretches out.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I know a place not far from here with a stream, we can rest there for the
+    night.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm thinking we might make it to Nafsari by sunset.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You've got to be kidding, we've been walking for hours.
+- kind: dialogue
+  speaker: Leena
+  text: We just need to push through, the trees are starting to thin.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, can you tell us more about your village?
+- kind: dialogue
+  speaker: Leena
+  text: It's... a few days' walk north, nestled between the mountains.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it like, Leena, what's it like in Vabokedos?
+- kind: dialogue
+  speaker: gm
+  text: The dust is getting thick, we need to be careful not to lose our footing.
+- kind: dialogue
+  speaker: chadwick
+  text: This is going to be a long day.

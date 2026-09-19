@@ -1,0 +1,38 @@
+id: camp-fire
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:55.131524+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding up well, at least.
+- kind: dialogue
+  speaker: chadwick
+  text: We should decide on the watch order before it gets too dark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I laid that fire with precision, it's a real beauty.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been burning for three hours now.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we can't find a moonwell to refill our supplies?
+- kind: dialogue
+  speaker: gm
+  text: (laughs) That's a worry for another day, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Precision's the key, I've said it before, precision's what gets you through.
+- kind: dialogue
+  speaker: Vigil
+  text: It will not burn itself out.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, alright, watch order's decided, Leena and I will take the first shift.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how we'll sleep with this rain pounding against the tent.
+- kind: dialogue
+  speaker: gm
+  text: We'll manage, it's not the first time we've camped in the rain.

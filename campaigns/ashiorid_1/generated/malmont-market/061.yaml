@@ -1,0 +1,36 @@
+id: malmont-market
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T20:21:46.808094+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like they're only selling trash, nothing worth the space.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Can't trust anyone with a market stall.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, look! An old map of the region! From before the roads were
+    built.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckling) Finally, a place where nobody knows my face.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) That's not a sword, that's a glorified stick.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) How much for the one with the worn edges?
+- kind: dialogue
+  speaker: Vigil
+  text: (to himself) Keep a safe distance, don't attract attention.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (walking away) Not impressed by the local craftsmanship.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) You seem a bit on edge, friend. Everything alright?
+- kind: dialogue
+  speaker: Leena
+  text: (studying the map) This route looks different...

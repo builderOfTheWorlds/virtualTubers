@@ -1,0 +1,30 @@
+id: Leena-almost
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:03.577706+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something's bothering you, Leena. What is it?
+- kind: dialogue
+  speaker: chadwick
+  text: You saw something familiar. It's probably from back home.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what I saw. That's what's bothering me. It's just... it shouldn't
+    be here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen similar things in the village. Maybe it's a common design?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not like that. I don't feel it, like I know it's real.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't go chasing after it, Leena. You don't know what it is.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I suppose you're right.

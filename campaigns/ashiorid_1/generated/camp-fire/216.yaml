@@ -1,0 +1,39 @@
+id: camp-fire
+take: 216
+model: llama3.1:8b
+generated_at: '2026-09-18T22:07:20.566203+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down for hours, it's hard to keep the fire going.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's settle the watch order, we need to make sure someone's up all
+    night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, the fire needs to be relit every hour or so, or it'll die out.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's not going to stop until morning.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the moonwells are still draining?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the well's been closed for ten thousand years, Leena, what's the point
+    of wondering?
+- kind: dialogue
+  speaker: Vigil
+  text: It would have taken three people to drain the last well.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, fine, Vigil, you think three people could drain the last well, what's
+    the plan for keeping the fire lit?
+- kind: dialogue
+  speaker: Leena
+  text: I was just curious, sorry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You need to re-lay the fire, Chadwick, it's not just a matter of keeping it
+    lit.

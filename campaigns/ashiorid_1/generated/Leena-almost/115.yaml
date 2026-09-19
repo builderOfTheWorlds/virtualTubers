@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:14.345225+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village, right?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it.
+- kind: dialogue
+  speaker: Leena
+  text: I won't. I just... I don't know what it is.
+- kind: dialogue
+  speaker: gm
+  text: Maybe you're just remembering something from before the Event.
+- kind: dialogue
+  speaker: Leena
+  text: Before the Event? What's that?
+- kind: dialogue
+  speaker: chadwick
+  text: Never mind, Leena.

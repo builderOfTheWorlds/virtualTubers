@@ -1,0 +1,41 @@
+id: the-meal
+take: 109
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:41.123124+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think the cook had a rough day, let's just say.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in silence?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's make a game out of it, who can guess the recipe?
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Chadwick) Take it, I'm full.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done it better, I've cooked for a dozen at a time.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, really? What's the secret ingredient?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just basic seasoning and attention to detail, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: (gritting his teeth) Can we please just finish eating?
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Chadwick's in a bad mood, let's leave him be.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) You think you're so perfect, try cooking for a week straight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not the point, it's about presentation and cleanliness.
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Alright, alright, let's just eat, okay?

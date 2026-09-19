@@ -1,0 +1,33 @@
+id: bob-names-the-runes
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:13:32.046511+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old gatepost creaks in the wind, its stone worn smooth by time and weather.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but notice the rune etched into the stone, just above the hinges.
+- kind: dialogue
+  speaker: chadwick
+  text: What's it do, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a stabilizing rune, of course. Prevents structural damage from seismic
+    activity.
+- kind: dialogue
+  speaker: Leena
+  text: But doesn't the gatepost look like it's been here for ages? Hasn't it weathered
+    any seismic activity?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, an excellent question, Leena! The rune's effects are cumulative, building
+    up over time to reinforce the stone.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, because nothing says "fun" like a bunch of arcane symbols on a gatepost.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd be surprised what's hiding in plain sight, Chadwick! This rune's a testament
+    to the ingenuity of our ancestors.

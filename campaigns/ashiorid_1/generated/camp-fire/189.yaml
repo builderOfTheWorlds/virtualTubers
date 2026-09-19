@@ -1,0 +1,35 @@
+id: camp-fire
+take: 189
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:49.078785+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down hard, might be a good idea to move the fire under the lean-to.
+- kind: dialogue
+  speaker: chadwick
+  text: Aye, let's get the fire secured. Who's on watch?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing to say about the fire, but I'll take the first watch if nobody objects.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm no expert, but I think Chadwick laid it wrong. Should've used more tinder.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the moonwell that's still open is...stable?
+- kind: dialogue
+  speaker: gm
+  text: What's the question, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Never mind. Can we just wait for morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Bob''s got a better idea: add more fuel and let it burn brighter.'
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will last the night, as long as the wood holds.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, Sodacan Bob, you take the next watch. Vigil, you're up in two hours.

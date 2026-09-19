@@ -1,0 +1,32 @@
+id: nafsari-question
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:32:10.790884+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, what was it like growing up with the wood elves of Nafsari?
+- kind: dialogue
+  speaker: Vigil
+  text: The forest was where I spent most of my time.
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) That's enough, Leena. Let's not pry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Guess we got a little too curious.
+- kind: dialogue
+  speaker: Leena
+  text: Sorry, Vigil. I just wondered...
+- kind: dialogue
+  speaker: chadwick
+  text: (leaning in) No need to apologize, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: It's fine. The forest was... home.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Leena) It's just not every day we get to ask about someone's childhood.
+- kind: dialogue
+  speaker: Leena
+  text: I know.

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:35.725579+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The repair on the shutter seems to be recent.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we were here a few days ago.
+- kind: dialogue
+  speaker: Leena
+  text: That's probably just normal maintenance.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by, it had three wheels.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: So what, it's a cart.
+- kind: dialogue
+  speaker: gm
+  text: Just noting it for my own sake.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left opens to the main hall.
+- kind: dialogue
+  speaker: chadwick
+  text: We should probably check that out.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe later, we've got our routine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're good here, let's just keep working.

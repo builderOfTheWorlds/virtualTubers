@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 180
+model: llama3.1:8b
+generated_at: '2026-09-18T20:34:08.034149+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a while now, Chadwick. You think we're close to the
+    inn?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure, but we've seen the sign twice.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) Ah, maybe we can ask Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (quietly) I can help with that if you'd like, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, come on Chadwick, just ask him.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got a good sense of direction. I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: (soothingly) Well, if you're sure, Chadwick, then maybe we should just keep
+    going.
+- kind: dialogue
+  speaker: Vigil
+  text: (helpfully) I can give you directions if you'd like, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh boy, this is rich.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, maybe you should just ask Vigil where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to ask him. I know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm happy to help, Chadwick, whenever you're ready.

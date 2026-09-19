@@ -1,0 +1,35 @@
+id: the-meal
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:21:50.205315+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Sodacan Bob, what did you think of the meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honestly, it was a catastrophe. The seasoning was all off.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! It's a nice change of pace.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done better, and I would've, if I were cooking.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Sodacan Bob, why don't you cook tomorrow then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, why don't you think I'd be good at it?
+- kind: dialogue
+  speaker: gm
+  text: Well, I think we can all take turns cooking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just it, the pot hasn't been cleaned right since I was last here.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, it's not that big of a deal.
+- kind: dialogue
+  speaker: gm
+  text: Who's up for dessert?

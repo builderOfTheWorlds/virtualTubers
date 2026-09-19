@@ -1,0 +1,41 @@
+id: malmont-market
+take: 163
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:06.097320+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work at the market back home.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around) Not too crowded for my taste.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice to be a face that doesn't spark recognition.
+- kind: dialogue
+  speaker: Leena
+  text: What's this one show? (points to a map)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's he selling, old maps?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes on the map) Any you know about it?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it just... draws me in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the vendor) What's the story behind this one?
+- kind: dialogue
+  speaker: Vigil
+  text: (keeps his hand near his coin)
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Good to be anonymous.
+- kind: dialogue
+  speaker: Leena
+  text: (to Sodacan Bob) Maybe it's the mountains.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Mountains? You've been looking at a map of the mountains?

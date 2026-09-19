@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:03.367576+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've been walking for hours, and I'm starting
+    to get a bit concerned.
+- kind: dialogue
+  speaker: chadwick
+  text: I know the way, don't worry about it.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, if you're not sure, we could just ask Vigil to lead for
+    a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently gestures that he's ready to lead)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! You're lost, Chadwick! Admit it!
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, why don't you just ask Vigil to scout ahead and we'll follow
+    him?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm positive I know the way.
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugs and waits)
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just keep moving and see if we can't get some landmarks in
+    sight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I know the way.

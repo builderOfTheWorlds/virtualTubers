@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 59
+model: llama3.1:8b
+generated_at: '2026-09-18T22:29:05.978215+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what seems to be on your mind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just thinking about the craftsmanship on the Malvakar, the way that die
+    was struck...
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, you're saying the runes on the Malvakar were carved by a die?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the only way it could be that precise, that consistent. Unless... unless
+    it was a very patient craftsman.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Who do you think could have done something like that?
+- kind: dialogue
+  speaker: Vigil
+  text: (laughing) You're still thinking about the craftsmanship, Bob? After what
+    we saw there?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone has to think about the craftsmanship, Vigil. It's not all about charging
+    in and solving riddles.
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Actually, Bob, can you tell me more about what you're seeing?
+    I think you might be onto something.

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 267
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:51.499844+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We find ourselves in a small, quiet inn.
+- kind: dialogue
+  speaker: chadwick
+  text: Looks like they've got a fire going.
+- kind: dialogue
+  speaker: Leena
+  text: I could use a warm meal, if they've got one.
+- kind: dialogue
+  speaker: Vigil
+  text: There are five people in the common room, including the bard.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, now that's what I'm talking about.
+- kind: dialogue
+  speaker: gm
+  text: The fire crackles in the hearth.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll go ask about a room.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, let's hear the bard play.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the common room opens inward, toward the hallway.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think he's any good?

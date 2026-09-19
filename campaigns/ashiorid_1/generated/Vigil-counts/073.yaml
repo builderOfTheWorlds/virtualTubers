@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:56.884978+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a lead to follow.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, what's the plan, Ash?
+- kind: dialogue
+  speaker: Leena
+  text: Still trying to get a feel for this place, I think I saw something.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to the left open out into the alley.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that what we're headed for?
+- kind: dialogue
+  speaker: Vigil
+  text: A new shutter was put up on that building across the way.
+- kind: dialogue
+  speaker: gm
+  text: Anyone else see anything worth mentioning?
+- kind: dialogue
+  speaker: chadwick
+  text: Just a bunch of trash on the ground.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) That cart over there, though, I saw it pass by earlier.

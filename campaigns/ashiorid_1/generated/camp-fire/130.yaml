@@ -1,0 +1,30 @@
+id: camp-fire
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:09.433758+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think we should all take turns with the watch, it's too much work.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if we'd laid the fire like I said, we'd have more heat by
+    now.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's not showing any signs of letting up, is it?
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we could make a way to catch some of that rainwater, to drink?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, can you even do that?
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm just wondering.
+- kind: dialogue
+  speaker: Vigil
+  text: The rainwater's not the problem.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the problem's the fire's been laid wrong.

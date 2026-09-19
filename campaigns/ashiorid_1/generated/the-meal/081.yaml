@@ -1,0 +1,36 @@
+id: the-meal
+take: 81
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:05.418556+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get started. What's going on with the food?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what happened, but this is an insult to the culinary arts.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be too hard on whoever cooked it. It's just a little
+    bland.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not eating this.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not bad, it's just... understated.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Understated? It's a travesty. I could do better than this.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just drop it?
+- kind: dialogue
+  speaker: Leena
+  text: Okay, fine. Sodacan Bob, do you want to help with cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take that as a challenge.

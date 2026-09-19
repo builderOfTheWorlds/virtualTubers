@@ -1,0 +1,31 @@
+id: chadwick-lost
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:03.981925+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. What's the plan, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll head east, through the pass.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think you mean the valley, right? You're not sure which way the
+    pass is.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive it's east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this should be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) Yes, because east is always the right direction.
+- kind: dialogue
+  speaker: Leena
+  text: (helpfully) Why don't we just ask Vigil, Chadwick? He's been over this route
+    before.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I can handle it.

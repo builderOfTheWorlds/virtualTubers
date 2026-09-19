@@ -1,0 +1,35 @@
+id: leena-recognizes-nothing
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:37.482630+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you seem to know that place.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just the way the hill looks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just the way it is, the roads curve like that sometimes.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Did you have a good breakfast, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not hungry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should eat something before we move out.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Leena with a raised eyebrow)
+- kind: dialogue
+  speaker: Leena
+  text: I just... what is this place?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, it's the edge of a national park.

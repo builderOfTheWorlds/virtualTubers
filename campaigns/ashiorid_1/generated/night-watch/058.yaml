@@ -1,0 +1,41 @@
+id: night-watch
+take: 58
+model: llama3.1:8b
+generated_at: '2026-09-18T20:44:05.225906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's quiet tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. Too quiet.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Look at the sky.
+- kind: dialogue
+  speaker: Vigil
+  text: What's wrong with it?
+- kind: dialogue
+  speaker: Leena
+  text: There's no stars. Just the moon.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I'm not getting used to this.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) I heard a bird once.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of bird?
+- kind: dialogue
+  speaker: gm
+  text: I don't know. A long time ago.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) You really think you heard a bird?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs softly) Shut up, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Do we wake the others?

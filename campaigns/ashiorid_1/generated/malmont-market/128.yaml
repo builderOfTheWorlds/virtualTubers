@@ -1,0 +1,35 @@
+id: malmont-market
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T22:15:23.997590+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, anyone can hammer a piece of metal into a bucket.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't like the look of this street. Too open.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look, a map stall. I wonder what's in the ones in the back.
+- kind: dialogue
+  speaker: chadwick
+  text: Nobody's looking at me, that's for sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This blacksmith's work is passable, but...
+- kind: dialogue
+  speaker: Vigil
+  text: (pats coin purse) I'm not in a rush to part with any of these.
+- kind: dialogue
+  speaker: Leena
+  text: (runs fingers over a stack of old maps) This one's from the old kingdom.
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) Yeah, I'm a total nobody here. That's nice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work from the traveling smith who came through our village.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes the crowd) We shouldn't stay here too long.

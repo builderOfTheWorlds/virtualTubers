@@ -1,0 +1,41 @@
+id: night-watch
+take: 107
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:20.764348+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky's clear. No stars.
+- kind: dialogue
+  speaker: Vigil
+  text: I see them. They're just not shining through the clouds.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) You can see clouds?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, I've been looking for hours.
+- kind: dialogue
+  speaker: Leena
+  text: (mumbles in her sleep) Mmm, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (low tone) Still quiet, Leena. You can sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) Ashiorid, do you think we should wake them early?
+- kind: dialogue
+  speaker: gm
+  text: (low tone) I don't know. It's not like we're expecting anything.
+- kind: dialogue
+  speaker: Vigil
+  text: (hesitates) Maybe it's just... (pauses) No, I'm not thinking that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (confused) Thinking what?
+- kind: dialogue
+  speaker: gm
+  text: (interrupts) Sodacan Bob, did you hear that weird noise last night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses) No, what noise?

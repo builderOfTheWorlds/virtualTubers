@@ -1,0 +1,38 @@
+id: sodacan-forge-envy
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:37:01.552289+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was not expecting it to be so... well-made.
+- kind: dialogue
+  speaker: chadwick
+  text: You're not exactly known for your enthusiasm for local craftsmanship, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's wrong with appreciating a good piece of work?
+- kind: dialogue
+  speaker: Leena
+  text: I think Chadwick's just trying to get a rise out of you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, it's just a bit of metalwork.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's interesting, Bob, that you're finding fault with it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not finding fault, I'm just... examining it critically.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Critical examination, eh?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighs) Fine, it's a good piece of work.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) See, Bob, I told you it was a good one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't gloat, Leena.

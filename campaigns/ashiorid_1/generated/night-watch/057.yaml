@@ -1,0 +1,32 @@
+id: night-watch
+take: 57
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:56.010683+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: What's that cloud, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: It's just a bit of cirrus. Nothing special.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've sworn it was a ship.
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's just the moon's reflection.
+- kind: dialogue
+  speaker: Leena
+  text: Can't sleep?
+- kind: dialogue
+  speaker: chadwick
+  text: Not really. Just listening to the night.
+- kind: dialogue
+  speaker: Leena
+  text: Me too.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should wake the others early. Get an extra hour in.
+- kind: dialogue
+  speaker: Vigil
+  text: No, let's keep watch. In case.

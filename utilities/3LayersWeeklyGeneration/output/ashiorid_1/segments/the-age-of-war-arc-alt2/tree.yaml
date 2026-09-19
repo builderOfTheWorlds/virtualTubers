@@ -1,0 +1,131 @@
+the-age-of-war-arc-alt2:
+  node_id: the-age-of-war-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A flashback to the Age of War, showing how the world's magic was consumed
+    as fue
+  summary: A flashback to the Age of War, showing how the world's magic was consumed
+    as fuel and how a handful of people attempted to stop it.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-age-of-war-arc-alt2-n0
+  - the-age-of-war-arc-alt2-n1
+  slots: null
+the-age-of-war-arc-alt2-n0:
+  node_id: the-age-of-war-arc-alt2-n0
+  parent_id: the-age-of-war-arc-alt2
+  order: 0
+  depth: 1
+  title: The Great Convergence
+  summary: The catastrophic moment when magic began to be consumed as fuel across
+    the world, triggering massive magical disturbances and the first signs of the
+    Age of War's devastating impact on reality itself.
+  continuity_in: The world's magic begins to be consumed as fuel during the Age of
+    War
+  continuity_out: The initial magical consumption triggers widespread reality distortions
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-alt2-n0-convergence-1
+    kind: ambient
+    prompt: The moment when magic began to be consumed as fuel across the world, triggering
+      massive magical disturbances and the first signs of the Age of War's devastating
+      impact on reality itself
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-alt2-n0-convergence-2
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+the-age-of-war-arc-alt2-n1:
+  node_id: the-age-of-war-arc-alt2-n1
+  parent_id: the-age-of-war-arc-alt2
+  order: 1
+  depth: 1
+  title: The Resistance Emerges
+  summary: A small group of magical practitioners and scholars organize to oppose
+    the rampant exploitation of magic, forming the first resistance movement that
+    will eventually become the foundation for stopping the war's magical consumption.
+  continuity_in: Magical reality distortions spread across the world
+  continuity_out: The organized resistance movement begins its fight against the magical
+    consumption
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-alt2-n1-flashback-1
+    kind: ambient
+    prompt: A small group of magical practitioners and scholars gather in secret,
+      discussing the catastrophic spread of magical reality distortions across the
+      world.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-alt2-n1-flashback-2
+    kind: ambient
+    prompt: Leena, wounded and determined, argues with Chadwick about the ethics of
+      using magic as fuel for war, while Vigil listens silently.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - chadwick
+    - Vigil
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-alt2-n1-flashback-3
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: the-age-of-war-arc-alt2-n1-flashback-4
+    kind: ambient
+    prompt: The group discovers a hidden moonwell that holds memories of the ancient
+      magical world, revealing how magic was first consumed.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-alt2-n1-flashback-5
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob

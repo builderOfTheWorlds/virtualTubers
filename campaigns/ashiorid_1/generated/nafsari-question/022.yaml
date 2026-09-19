@@ -1,0 +1,35 @@
+id: nafsari-question
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:53.324415+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, tell us, what was it like growing up among the wood elves of Nafsari?
+- kind: dialogue
+  speaker: Vigil
+  text: The forest is still quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: Did you...did you miss it when you left?
+- kind: dialogue
+  speaker: Vigil
+  text: The trees remember.
+- kind: dialogue
+  speaker: Leena
+  text: But what was it like, really? The daily life?
+- kind: dialogue
+  speaker: Vigil
+  text: I learned to listen.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sorry, Vigil, we didn't mean to pry...
+- kind: dialogue
+  speaker: Vigil
+  text: There's nothing to explain.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, it's fine, really...
+- kind: dialogue
+  speaker: Vigil
+  text: The forest stays the same.

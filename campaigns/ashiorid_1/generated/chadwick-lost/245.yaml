@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 245
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:53.355317+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, where do we go from here?
+- kind: dialogue
+  speaker: chadwick
+  text: Well, I think we head... north.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, the river is flowing west.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, well, that's just a minor detail.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is gonna be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, are you sure you want to go north?
+- kind: dialogue
+  speaker: Leena
+  text: Maybe if you said it was west, it would be okay?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm positive it's north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: North, of course, because that's totally logical.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's head north then.
+- kind: dialogue
+  speaker: chadwick
+  text: There, see? That was easy.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're going the right way.

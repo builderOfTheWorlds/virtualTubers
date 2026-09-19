@@ -1,0 +1,34 @@
+id: the-ring-half
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:37:16.193721+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you think it means, Leena? You were the one who found it in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. I've been trying to remember if anything's different, but...
+    nothing feels different.
+- kind: dialogue
+  speaker: chadwick
+  text: We don't even know if it's real. It's just a symbol.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should be looking at the big picture. What's the end goal of the
+    program?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what if the program isn't the end goal? What if this is just the beginning?
+- kind: dialogue
+  speaker: gm
+  text: Do you think it means anything that one half of the ring is with... someone
+    who didn't just let a manor burn?
+- kind: dialogue
+  speaker: Leena
+  text: I think we're all missing the point. We're so used to following the program
+    that we don't know how to question it.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not true. I've been questioning it since the moment I found out what
+    I was.

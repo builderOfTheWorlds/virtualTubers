@@ -1,0 +1,35 @@
+id: the-map-argument
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:08.169744+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's got the compass and can we take a look at the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I do, and I've already told you, we're on track to reach the next town by
+    nightfall.
+- kind: dialogue
+  speaker: Leena
+  text: I think you're wrong, Chadwick, I saw a different path that would get us there
+    faster.
+- kind: dialogue
+  speaker: chadwick
+  text: What, the one that goes through the swamp? Don't be ridiculous, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Leena's path is a better idea, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, I'm not trekking through a swamp with all our gear.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, hey, let's not forget we're all in this together, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, spare me the "teamwork" speech, Sodacan Bob, I know what I'm doing.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, we take Leena's path, but I'm still right about the original plan being
+    best.

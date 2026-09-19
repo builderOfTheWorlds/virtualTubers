@@ -1,0 +1,41 @@
+id: night-watch
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:41.458103+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's so quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, it's weird.
+- kind: dialogue
+  speaker: Leena
+  text: I could sleep for a few more hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should wake the others early.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, it feels like we should stay alert.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: Leena
+  text: What's what?
+- kind: dialogue
+  speaker: Vigil
+  text: That cloud, it looks like a dragon.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see shapes in the clouds.
+- kind: dialogue
+  speaker: Leena
+  text: What's the most ridiculous thing you've ever seen in the clouds?
+- kind: dialogue
+  speaker: chadwick
+  text: I once saw a giant chicken.
+- kind: dialogue
+  speaker: Leena
+  text: What were you doing, eating a lot of chicken parmesan?

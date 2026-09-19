@@ -1,0 +1,38 @@
+id: road-talk
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T20:46:42.961474+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a while now, folks.
+- kind: dialogue
+  speaker: Leena
+  text: I know, I've been thinking about my village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, Vabokedos is a great place, lots of open sky.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's got some nice sunsets.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we used to have these big festivals.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure Vabokedos has some great food, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: How's the soil in Vabokedos?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's good, we grow all sorts of crops.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what about where you're from?
+- kind: dialogue
+  speaker: Leena
+  text: I miss the smell of the flowers in my village.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari...

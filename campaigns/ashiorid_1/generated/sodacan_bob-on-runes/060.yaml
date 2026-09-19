@@ -1,0 +1,41 @@
+id: sodacan_bob-on-runes
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T22:29:12.652999+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was trying to think if the symbol on the Malvakar was a die struck into
+    the stone or carved with a chisel.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the difference?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, a die struck into the stone is just going to be a surface impression.
+- kind: dialogue
+  speaker: Leena
+  text: And carved with a chisel, it would have some depth.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly, but a deep carve is harder to read and it's easier to misinterpret
+    the symbol.
+- kind: dialogue
+  speaker: Vigil
+  text: Who still uses chisels for runes, anyway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not many, anymore. It's all about surface impressions and stamps now.
+- kind: dialogue
+  speaker: gm
+  text: I think it's a good question, though - if the Malvakar was indeed carved with
+    a chisel, does it change the meaning of the symbol?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, no, no, it doesn't. I was just... (pauses)
+- kind: dialogue
+  speaker: chadwick
+  text: You were thinking about something else.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: ( muttering to himself ) Nothing. Just the craftsmanship...

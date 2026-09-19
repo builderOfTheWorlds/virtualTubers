@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T22:27:25.877563+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this is a very well-made axle, probably from the Northridge
+    Foundry, 1850s.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's not stand around all day, we've got a long way to go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see how the metal's been folded to strengthen it, and the way it's been
+    balanced for smooth rotation?
+- kind: dialogue
+  speaker: Vigil
+  text: Is this something we should be carrying with us, or can we just leave it here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Leave it, definitely, we don't want to weigh ourselves down with unnecessary
+    equipment.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I like the way the makers have signed their mark on the side, a nice touch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, that's the mark of Edwin Havers, a good man and a skilled craftsman.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think he'd be proud to see how well his work has held up over the years?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course he would, his attention to detail is still evident even after all
+    this time.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not going to be able to make good time if we stand around admiring old
+    equipment all day.

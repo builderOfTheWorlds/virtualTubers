@@ -1,0 +1,35 @@
+id: camp-fire
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:48.669374+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down hard, don't think the fire's going to last much longer.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't let it burn itself out, Sodacan Bob, we need a plan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it well, Chadwick, it's not the fault of my firelaying.
+- kind: dialogue
+  speaker: Vigil
+  text: We can't save it if we don't have a way to keep the rain off.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even trying to save it if it's just going to get washed
+    away?
+- kind: dialogue
+  speaker: gm
+  text: Morning will come, and we'll start over. But for now...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if we had a better spot, the fire wouldn't be having these
+    problems.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch. We need two people to stay up and keep the
+    fire going.
+- kind: dialogue
+  speaker: Vigil
+  text: It will burn until the rain stops.

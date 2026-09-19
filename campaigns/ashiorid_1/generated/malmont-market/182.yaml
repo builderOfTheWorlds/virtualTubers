@@ -1,0 +1,32 @@
+id: malmont-market
+take: 182
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:06.826100+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's bustling, as it should be.
+- kind: dialogue
+  speaker: Leena
+  text: I'm drawn to that old map stall, the one with the yellow awning.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) A bit too lively for my taste.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) Come on, it's just a market. Lighten up.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Sodacan Bob) Ah, I think he's just... appreciating the atmosphere.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, look! They have maps from the old empire.
+- kind: dialogue
+  speaker: Vigil
+  text: (cautious) How much are those?
+- kind: dialogue
+  speaker: gm
+  text: The constables are making their rounds, keeping an eye on things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) What's the point of buying a map you don't know how to read?

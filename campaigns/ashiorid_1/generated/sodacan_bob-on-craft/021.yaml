@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:16:46.172263+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, now this is what I call a well-made axle, good solid cast, probably
+    made by someone in the Blacksmith's Guild in Redhaven, circa 1850.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, can't you see we're wasting time here?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, look at the way the metal's been polished, does that mean it's been used
+    a lot?
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of load would this axle have been designed for?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil, I'd say it was made for a medium-sized wagon, probably
+    carrying goods or supplies rather than heavy machinery.
+- kind: dialogue
+  speaker: Leena
+  text: And look at the way the bracket on the door is attached, it's so sturdy!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, yes, the maker was definitely thinking about long-term durability
+    here, not just a quick fix.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just stand around admiring this all day, we have to keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, can you tell us where you think this came from?

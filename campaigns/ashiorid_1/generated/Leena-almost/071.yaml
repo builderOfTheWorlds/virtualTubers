@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 71
+model: llama3.1:8b
+generated_at: '2026-09-18T19:27:42.622522+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you tell me more about what you're feeling?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you just saw something that reminded you of your village, that's all.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not that. Something's off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure you just saw something that looked similar to what you know.
+- kind: dialogue
+  speaker: Leena
+  text: But that's not it. I know I didn't see it in my village.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what do you think it is?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like I said, maybe you just saw something that reminded you of home.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it, okay?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, I just want to know what it is.

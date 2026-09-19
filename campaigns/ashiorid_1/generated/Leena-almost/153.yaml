@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 153
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:27.428184+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, I think you know why you're here.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what you're talking about.
+- kind: dialogue
+  speaker: gm
+  text: You don't remember anything?
+- kind: dialogue
+  speaker: Leena
+  text: No. I remember my village. I remember the market. I remember...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Your village is not that old, Leena. I've seen places like it in the Empire.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm telling you, it's old. We're old.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, focus. You're here now. We have work to do.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: Leena
+  text: What work? What's going on?
+- kind: dialogue
+  speaker: gm
+  text: We'll get to that in a minute. First, let's get you settled.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're a long way from home, Leena. You should see some of the Empire. It's
+    not so bad.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't let him distract you. You have a role to play.

@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:24.423722+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, what's the holdup?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob's got some concerns about the wheel.
+- kind: dialogue
+  speaker: Leena
+  text: It's not like we're going to leave it behind, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just focus on the route for now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think I'm just being finicky, don't you?
+- kind: dialogue
+  speaker: gm
+  text: No, Bob, we want to make sure it's right.
+- kind: dialogue
+  speaker: chadwick
+  text: And honestly, your concerns might be valid.
+- kind: dialogue
+  speaker: Leena
+  text: But can we please just move along a bit?
+- kind: dialogue
+  speaker: Vigil
+  text: We're starting to get a bit worried about time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Valid? You think this is some minor issue?

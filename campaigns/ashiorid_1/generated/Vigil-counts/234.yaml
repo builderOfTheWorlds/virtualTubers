@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 234
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:12.668279+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the situation at the crossroads?
+- kind: dialogue
+  speaker: chadwick
+  text: It's a bust, no leads.
+- kind: dialogue
+  speaker: Leena
+  text: What about the shops? Have we canvassed them?
+- kind: dialogue
+  speaker: Vigil
+  text: The one next to the blacksmith's has a new shutter.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw that. Looks sturdy.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's check it out.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go in, see if anyone's willing to talk.
+- kind: dialogue
+  speaker: Leena
+  text: I'll cover the alleyway.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed twice is headed back that way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll keep an eye out for it.
+- kind: dialogue
+  speaker: gm
+  text: Keep your wits about you.
+- kind: dialogue
+  speaker: chadwick
+  text: Got it.

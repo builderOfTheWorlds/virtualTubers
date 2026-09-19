@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:20:37.904303+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's a creaking joint, Chadwick, needs some mending.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the worst of it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: An axe blow to the wheel, might've splintered the hub.
+- kind: dialogue
+  speaker: Vigil
+  text: How bad?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like a splinter in the mind, Vigil, hard to shake.
+- kind: dialogue
+  speaker: Leena
+  text: You can fix it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Weld it back together, join the cracks.
+- kind: dialogue
+  speaker: gm
+  text: What about you, Bob? How're you doing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The forge's been hot, I'm just tempering the metal.
+- kind: dialogue
+  speaker: chadwick
+  text: That's it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Forged from the fire, Chadwick, we're tempered too.
+- kind: dialogue
+  speaker: Leena
+  text: We'll get back on the move.

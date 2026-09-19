@@ -1,0 +1,35 @@
+id: malmont-market
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:48.447037+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, no one in this town knows the first thing about tempering steel.
+- kind: dialogue
+  speaker: Vigil
+  text: Careful, Bob. I don't like the look of that.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with the steel?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a bunch of soft metal with a lot of flash. Won't hold a blade true.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, look, a map stall. Fancy that.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I wonder what kind of maps they have.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you need maps for, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I saw this one before. Isn't this the old trade route to Brindlemark?
+- kind: dialogue
+  speaker: Leena
+  text: Yes, that's it. I've seen it before too.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's so interesting about a trade route, Chadwick?

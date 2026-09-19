@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 189
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:07.456911+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick's been leading the group for a while now.
+- kind: dialogue
+  speaker: chadwick
+  text: We should be there soon.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! I love this part of the trip.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, do you want me to check the map?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's just head in that general direction then.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on Chadwick, let us help!
+- kind: dialogue
+  speaker: gm
+  text: Alright, the map says we're actually going the other way.
+- kind: dialogue
+  speaker: chadwick
+  text: I was just, uh, testing your navigational skills.

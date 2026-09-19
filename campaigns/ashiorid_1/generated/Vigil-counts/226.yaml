@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 226
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:36.014561+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: People in the room, count is twelve.
+- kind: dialogue
+  speaker: chadwick
+  text: What's your point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The north door swings inward.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I knew that.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east window's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just maintenance, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: That cart that passed by, it's got a dent on the side.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not what's important right now.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just making observations.
+- kind: dialogue
+  speaker: Leena
+  text: Ashiorid, can we get back on track?

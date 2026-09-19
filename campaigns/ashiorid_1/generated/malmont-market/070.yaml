@@ -1,0 +1,37 @@
+id: malmont-market
+take: 70
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:36.131854+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just have a look at these wares, see if I like what I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more interested in the smithwork. Can we move on to that?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I think I'll just browse for a bit.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, is this where you find the maps? I've seen some interesting ones in the
+    manor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (sighing) These people have no idea what real craftsmanship looks like.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Don't spend too much, don't draw attention.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Are these really from that far south? I've never seen
+    them before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disapprovingly) That forge over there hasn't been lit in weeks. Pathetic.
+- kind: dialogue
+  speaker: chadwick
+  text: (to himself) Nice to be just another face in the crowd for once.
+- kind: dialogue
+  speaker: Vigil
+  text: (cautiously) Anyone else looking for a nice piece of silverware?

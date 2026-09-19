@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:33.622404+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the rest of the market.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, see what else is going on.
+- kind: dialogue
+  speaker: Leena
+  text: There's a food stall with some decent pastries.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that one stall, near the entrance, looks newer than the others.
+- kind: dialogue
+  speaker: gm
+  text: Okay, moving on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone want to try those pastries?
+- kind: dialogue
+  speaker: Leena
+  text: I'm in.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'll take a few.
+- kind: dialogue
+  speaker: gm
+  text: Alright, go for it.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that just passed by is the same one we saw earlier.

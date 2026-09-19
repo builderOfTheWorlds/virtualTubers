@@ -1,0 +1,38 @@
+id: malmont-market
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:51.751569+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better metalwork on the side of the road.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.
+- kind: dialogue
+  speaker: chadwick
+  text: Thank you for the warning, I think.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, I'm looking for a particular type of map.
+- kind: narration
+  speaker: gm
+  text: 'Stall owner: Ah, maps, you say? Old ones, new ones?'
+- kind: dialogue
+  speaker: Leena
+  text: The kind that shows places that don't exist on most maps.
+- kind: narration
+  speaker: gm
+  text: 'Stall owner: I might have something like that. Let me see...'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's this place even doing with two magic shops?
+- kind: dialogue
+  speaker: Vigil
+  text: We're here for a reason, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Indeed we are, I'm just enjoying the... relaxed atmosphere.
+- kind: dialogue
+  speaker: Leena
+  text: I think I found something. Can I take a look at this?

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:28.307916+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The doors here open towards the square.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go take a look outside.
+- kind: dialogue
+  speaker: Leena
+  text: I'll come with you, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to start looking for a map.
+- kind: dialogue
+  speaker: gm
+  text: There's a map of the area on the wall.
+- kind: dialogue
+  speaker: Vigil
+  text: It's the same cart we saw earlier, parked by the market stall.
+- kind: dialogue
+  speaker: chadwick
+  text: Outside looks normal.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we can get some food from the market.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see a small inn across the square.
+- kind: dialogue
+  speaker: gm
+  text: It looks like the inn might have some rooms available.

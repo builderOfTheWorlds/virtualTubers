@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 210
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:29.402006+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's get moving. We don't have much daylight left.
+- kind: dialogue
+  speaker: Leena
+  text: Something's not right here. It's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: Vigil
+  text: What are you talking about, Leena?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, back in Begene?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but I've been thinking about this place a lot lately.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You don't need to know everything.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should get some rest. We can talk about this in the morning.

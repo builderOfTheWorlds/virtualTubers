@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 250
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:41.379042+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east wall has been repaired recently, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I noticed that too.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it's a big deal, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not that I've seen, no.
+- kind: dialogue
+  speaker: Vigil
+  text: There's been a cart going by this window a few times now.
+- kind: dialogue
+  speaker: gm
+  text: What's the cart carrying?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just a crate, doesn't seem to be in any hurry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just delivering supplies.
+- kind: dialogue
+  speaker: chadwick
+  text: We should probably get back to work.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, we have a lot to do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not me, I'm taking a break.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go get some tea.

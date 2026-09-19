@@ -1,0 +1,30 @@
+id: chadwick-lost
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:48.353099+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick is leading the party through the dense foliage.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not that difficult, we've been walking for hours.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Maybe we've been walking in circles, Chadwick?
+- kind: narration
+  speaker: gm
+  text: 'vigel: (smirking) I''m sure we''ll get there eventually.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm sure you're right, Chadwick. Because you know exactly where
+    you're going.
+- kind: dialogue
+  speaker: chadwick
+  text: I do! We're making good time, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: (diplomatically) Perhaps Vigil could give us a general direction, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.

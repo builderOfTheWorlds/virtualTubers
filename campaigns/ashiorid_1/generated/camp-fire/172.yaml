@@ -1,0 +1,32 @@
+id: camp-fire
+take: 172
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:04.179480+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down pretty thick, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still not sure we should've stopped the fire. What if it doesn't hold?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Laid it just right, mate. Should be good for the night.
+- kind: dialogue
+  speaker: Vigil
+  text: Fire's got a good spark.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think will happen if the rain doesn't let up?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order before we sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vigil, the coals should be banked.
+- kind: dialogue
+  speaker: gm
+  text: Anyone else want to weigh in on the watch?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long a fire can keep burning in rain?

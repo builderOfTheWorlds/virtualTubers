@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:33.131375+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, which way do you think we should go?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head north.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think I remember the map saying there's a trail that heads east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: Vigil
+  text: Can I just tell you that the trail is east?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I think I've got it.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, it's okay to ask for help sometimes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, come on Chadwick, don't be a stranger to the truth.
+- kind: dialogue
+  speaker: gm
+  text: Okay, fine, let's head east then.
+- kind: dialogue
+  speaker: Vigil
+  text: Good, I'm glad that was decided.

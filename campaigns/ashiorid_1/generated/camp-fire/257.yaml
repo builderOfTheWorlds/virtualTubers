@@ -1,0 +1,41 @@
+id: camp-fire
+take: 257
+model: llama3.1:8b
+generated_at: '2026-09-18T23:43:46.247180+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we should have taken turns keeping watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, now, Chadwick, I laid that fire myself, it's holding fine.
+- kind: dialogue
+  speaker: Vigil
+  text: It won't run out until morning.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain'll let up by morning?
+- kind: dialogue
+  speaker: gm
+  text: Can't say, Leena, weather's been unpredictable.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Unpredictable? You'd think it'd be predictable after a day like today.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean by that, Sodacan?
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Oh, just the usual. Weather's always been finicky.
+- kind: dialogue
+  speaker: Vigil
+  text: You can still smell the wet earth.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, alright, we'll settle the watch order in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good thinking, Chadwick. Now let's all get some rest.

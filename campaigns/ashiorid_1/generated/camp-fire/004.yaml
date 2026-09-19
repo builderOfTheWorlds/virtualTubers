@@ -1,0 +1,35 @@
+id: camp-fire
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T18:58:49.231542+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Looks like we're stuck here for a while.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, who's keeping watch? We need a schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should've lit it in a pyramid shape, gets more airflow that way.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would be better off if we had a windbreak?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's going to burn at 37% its normal rate because of the wet conditions.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what's the plan for watch order?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should have two people on and two people off, in rotations.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've laid it better, but it's not my fault it's raining.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't the moonwells just refill themselves?
+- kind: dialogue
+  speaker: Vigil
+  text: Because magic is a finite resource.

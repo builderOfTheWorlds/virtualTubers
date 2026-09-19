@@ -1,0 +1,42 @@
+id: night-watch
+take: 86
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:52.358168+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky's so clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. I've never seen it so clear in this place.
+- kind: dialogue
+  speaker: Leena
+  text: We're lucky it's not misting like it usually does.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, I think we'll be able to see for miles if anything comes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been listening to the sounds of the forest, and it's like nothing's out
+    there.
+- kind: dialogue
+  speaker: gm
+  text: But that's what we're worried about – the nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: I keep thinking I hear something, but it's just a bird.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, we've been hearing a lot of birds tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: If you think we should wake the others early, just say so.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking we could try to get a few more hours in.
+- kind: dialogue
+  speaker: gm
+  text: I don't want to wake them up for nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: Like you said, we've been hearing nothing all night.

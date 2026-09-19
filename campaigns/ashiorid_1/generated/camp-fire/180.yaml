@@ -1,0 +1,34 @@
+id: camp-fire
+take: 180
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:02.503484+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain shows no signs of letting up, I'm afraid we're stuck here for the
+    night.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle on a watch order, who's on first and who's on last?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire was laid a bit too close to the edge, might need some adjustments.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will wash away the ash from the last town?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't.
+- kind: dialogue
+  speaker: Leena
+  text: What happens to the water when it hits the ash?
+- kind: dialogue
+  speaker: gm
+  text: I don't know, I've never seen it before.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's focus on the watch order. Vigil, you're with me first, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should let the fire burn low, don't want to exhaust the fuel too
+    quickly.

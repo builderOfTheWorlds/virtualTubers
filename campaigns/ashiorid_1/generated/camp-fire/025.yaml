@@ -1,0 +1,32 @@
+id: camp-fire
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:07.795522+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This rain's been coming down for hours, I'm surprised the fire's holding.
+- kind: dialogue
+  speaker: chadwick
+  text: I need to get the watch order settled, we can't have people sleeping on watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, that fire's a marvel. I laid it just right.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames will dance until the wood's gone.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know why the rain's so relentless tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's trying to put out the fire, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Not likely, we've got a decent burn going.
+- kind: dialogue
+  speaker: Leena
+  text: But what's the purpose of it all, then?
+- kind: dialogue
+  speaker: gm
+  text: Purpose? There isn't one that I know of.

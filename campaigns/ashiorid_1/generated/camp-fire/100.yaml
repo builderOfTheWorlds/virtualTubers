@@ -1,0 +1,35 @@
+id: camp-fire
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:33.372124+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain doesn't seem to be letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight. Who's on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire good, should last the night.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would still burn if we covered it?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't last six hours at this rate.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean it won't last six hours?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was saying the fire should last, yeah, the wood's nice.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's true what they say, that magic can be drained?
+- kind: dialogue
+  speaker: gm
+  text: We'll talk about it in the morning, everyone's getting tired.

@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 199
+model: llama3.1:8b
+generated_at: '2026-09-18T20:36:10.909471+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you're leading the way.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, let's move.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, do you think we're heading in the right direction?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course, I know exactly where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh boy, here we go again.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) If you're not sure, just ask, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No need to, I've got this.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, maybe you could help Vigil with something else.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, would you like me to take a look at the map?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it, let's just keep moving.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Alright, let's move, then.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) Looks like we're not the first to be confused by his sense
+    of direction.

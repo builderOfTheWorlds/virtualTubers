@@ -1,0 +1,39 @@
+id: local-rumor
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:48.217137+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You four just arrived in Malmont this morning, and you've been gathering your
+    bearings for a few hours now.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting a bad feeling about this town.
+- kind: dialogue
+  speaker: Leena
+  text: What are you talking about?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it feels off, I don't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Feels like there's more going on here than meets the eye.
+- kind: dialogue
+  speaker: gm
+  text: There is, but it's not anything to do with you four, at least not yet.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Leena
+  text: Ash, what are you trying to say?
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not jump to conclusions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I just want to get some food, has anyone seen the market?
+- kind: dialogue
+  speaker: gm
+  text: Second building on the left as you head down that street.

@@ -1,0 +1,34 @@
+id: camp-fire
+take: 240
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:44.443565+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down steady for hours, no letup in sight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we should take turns keeping watch, rather than just
+    relying on Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire pretty well, should burn till morning easy.
+- kind: dialogue
+  speaker: Vigil
+  text: Smoke's going to get under my eyes if nobody stirs it.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happened to the people from the last town? Did they
+    just... vanish?
+- kind: dialogue
+  speaker: gm
+  text: No, that's a good question Leena, but I don't have an answer for you.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to get the watch order settled, can't keep running on luck.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If the fire's going to burn all night, we should maybe get some rest ourselves.
+- kind: dialogue
+  speaker: Vigil
+  text: Water's just a couple feet out from the fire pit.

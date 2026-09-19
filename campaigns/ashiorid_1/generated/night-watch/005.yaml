@@ -1,0 +1,41 @@
+id: night-watch
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T18:59:33.365771+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing's out there, I'm sure.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) I mean, I'm sure it is.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I could've sworn I heard a rustling ten minutes ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) You think it was just the wind?
+- kind: dialogue
+  speaker: Vigil
+  text: (breathes softly) It's not windy.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Yeah, we should wake the others up.
+- kind: dialogue
+  speaker: Leena
+  text: (protests) Wait, no, let's not. I just got comfortable.
+- kind: dialogue
+  speaker: Vigil
+  text: (chuckles) Okay, fine. But we're not staying up all night.
+- kind: dialogue
+  speaker: chadwick
+  text: (lowers voice) I don't like this. Something feels off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (hesitates) I had a weird dream about the last well...
+- kind: dialogue
+  speaker: Vigil
+  text: (interrupts) What kind of weird dream?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses again) Just... nothing. Forget it.

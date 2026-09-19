@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T20:03:57.094836+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, where are we headed next?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east from here.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil's map says we should head north.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Yeah, Leena's right, Chadwick. We should head north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh, this is going to be fun.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive east is the way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe, Chadwick, if you're not sure, we could check the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to check the map, I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirks) I'm just waiting for you to ask for directions, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Come on, Chadwick, admit it!
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just head north, shall we?
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Yeah, that sounds like a plan.

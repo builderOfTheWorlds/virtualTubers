@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 191
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:19.858906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest should be east of us, Chadwick, don't you think?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course it is.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Maybe we could, uh, consult the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it memorized, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling slightly) I think we should ask Chadwick for directions.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we're fine.
+- kind: dialogue
+  speaker: gm
+  text: Vigil's right, let's ask Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not lost.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Oh, I think I saw something shiny over there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is incredible.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) Just point us in the right direction, Chadwick.

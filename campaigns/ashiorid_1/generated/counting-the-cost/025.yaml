@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:31.879463+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's the damage to the gear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hammer needs a new head, but the handle's fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything that can be joined, can be joined again.
+- kind: dialogue
+  speaker: Leena
+  text: And what about the cart, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Axle's bent, but I can straighten it out.
+- kind: dialogue
+  speaker: Vigil
+  text: We can restock the gear, no problem.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Some of the links are worn smooth.
+- kind: dialogue
+  speaker: gm
+  text: We can get those reforged.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That'll be a day's work, easy.
+- kind: dialogue
+  speaker: chadwick
+  text: And then we're back in business.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Some things are harder to fix than others.

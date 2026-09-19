@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:04.522277+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that went by had a broken wheel, but now it's fixed.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a good thing.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, less chance of it getting stuck on the road.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been meaning to check the roads myself.
+- kind: dialogue
+  speaker: Vigil
+  text: I also noticed that the shutter above the door has been repaired.
+- kind: dialogue
+  speaker: gm
+  text: That's not exactly a newsflash.
+- kind: dialogue
+  speaker: Vigil
+  text: The door opens inward, and there are three people in the room with us.
+- kind: dialogue
+  speaker: Leena
+  text: Including the innkeeper.
+- kind: dialogue
+  speaker: chadwick
+  text: We should probably eat something before we continue.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we're going to continue.

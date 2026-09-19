@@ -1,0 +1,35 @@
+id: camp-fire
+take: 159
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:55.076049+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down harder than I thought. We're lucky the fire's still holding.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still not happy with the watch order. We need to sort it out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's going to be fine. I laid it myself.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood's too green for this climate.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll be able to get to the next town before the rain ruins everything?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, Leena. We can't even see five paces in front of us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to check the flue. See if I can get a bit more air on the fire.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what do you think about the fire? You're the one who lit it.
+- kind: dialogue
+  speaker: Vigil
+  text: We should have used drier wood.
+- kind: dialogue
+  speaker: gm
+  text: Well, we can't change that now. Let's just hope it keeps burning.

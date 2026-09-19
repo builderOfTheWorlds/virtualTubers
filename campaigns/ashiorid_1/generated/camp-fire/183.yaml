@@ -1,0 +1,44 @@
+id: camp-fire
+take: 183
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:17.837433+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's still coming down. We should settle the watch order now, rather than
+    in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's laid wrong. It'll burn through the night,
+    but we'll have to relight it in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will ever stop?
+- kind: dialogue
+  speaker: Vigil
+  text: It'll stop when it stops.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil, that's not helpful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The rain'll slow down, I'm sure of it. It always does.
+- kind: dialogue
+  speaker: Leena
+  text: What if it never stops?
+- kind: dialogue
+  speaker: gm
+  text: (pauses) What do you mean, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't do anything about the weather. We need to focus on the fire and the
+    morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Not laid wrong, not wrong at all...
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)

@@ -1,0 +1,33 @@
+id: camp-fire
+take: 154
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:25.164349+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding for now, but it's going to be a cold night.
+- kind: dialogue
+  speaker: chadwick
+  text: We should settle the watch order before it gets too late.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was telling Chadwick here, it's all about the fuel-to-air ratio.
+- kind: dialogue
+  speaker: Vigil
+  text: The wood's too damp.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how much longer the rain will keep coming down?
+- kind: dialogue
+  speaker: gm
+  text: Not that I've heard.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should have laid the fire in a pit to keep the draft steady.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder if anyone's ever noticed a pattern in the rain. Do some places get
+    more than others?
+- kind: dialogue
+  speaker: gm
+  text: It's probably just climate variation.

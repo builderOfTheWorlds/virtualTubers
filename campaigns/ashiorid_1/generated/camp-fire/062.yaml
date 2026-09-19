@@ -1,0 +1,44 @@
+id: camp-fire
+take: 62
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:09.655967+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, how's the fire looking, folks?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should settle on a watch order for the night, we can't just leave
+    everything to the dark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Bob, the way you laid that fire is the reason it's still
+    burning, you've got a knack for it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the last town we passed through, did we get any news of the road ahead?
+- kind: dialogue
+  speaker: Vigil
+  text: It's still raining.
+- kind: dialogue
+  speaker: gm
+  text: Anyone got any experience with building shelters in this kind of weather?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I saw some decent-looking trees back by the stream, we could use those
+    for poles.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will let up by morning?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get the watch order sorted, I'll take the first shift.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm happy to help keep an eye out, I've got some experience with the night.
+- kind: dialogue
+  speaker: Leena
+  text: What would happen if the seal didn't hold, do you think we'd feel it?

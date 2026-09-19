@@ -1,0 +1,41 @@
+id: the-meal
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:56.256146+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, let's not get into it now, we've got food in front of us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm not getting into it, I'm just stating facts.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Come on, let's not be too hard on the cook, it's not that bad!
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's the seasoning that's off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could season it right, I'm a great cook.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Sodacan Bob, why don't you cook tomorrow?
+- kind: dialogue
+  speaker: Vigil
+  text: No one wants to eat what you'd make.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not fair, I've cooked for plenty of people before.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just drop it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I know I could do better.
+- kind: dialogue
+  speaker: gm
+  text: Everyone, let's just eat.

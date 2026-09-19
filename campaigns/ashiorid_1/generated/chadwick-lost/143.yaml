@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 143
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:18.156334+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The path forked ahead, with two well-trodden routes leading off into the trees.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should take the one on the right.
+- kind: dialogue
+  speaker: Leena
+  text: Are you sure that's a good idea, Chadwick?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: Excuse me, Chadwick, but which route have you taken in the past?
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: I'm just saying, maybe we should check the map before we decide.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, because nothing says "not lost" like a random guess.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive this is the way.
+- kind: dialogue
+  speaker: Vigil
+  text: Very well, let's take the right route then.

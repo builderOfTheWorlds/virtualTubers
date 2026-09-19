@@ -1,0 +1,29 @@
+id: vigil-tracks
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:40:04.455189+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Something was heading north, an hour ago, cart or maybe two.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of cart was it?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a pair of oxen and a bed, no markings that I could see.
+- kind: dialogue
+  speaker: Leena
+  text: Any signs of what was inside?
+- kind: dialogue
+  speaker: Vigil
+  text: Just some hay, I think. The oxen were well-fed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Did you see anyone following behind?
+- kind: dialogue
+  speaker: Vigil
+  text: No, just the two oxen. They looked like they were on their own.
+- kind: dialogue
+  speaker: gm
+  text: We'll keep an eye out for them.

@@ -1,0 +1,42 @@
+id: the-meal
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-19T00:13:01.185971+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: (munching) Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, Ashiorid, if I were in charge of cooking, this wouldn't be an issue.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, don't be too hard on Ashiorid. It's just a meal.
+- kind: dialogue
+  speaker: Vigil
+  text: (offhandedly) I'm giving mine to the dog.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (defensive) I know I could do it better, and I will tomorrow if no one else
+    steps up.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) Yeah, because your cooking is always so great.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's your point, Chadwick? You're just eating, not cooking.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Bob, don't be so sensitive.
+- kind: dialogue
+  speaker: Vigil
+  text: (to the dog) Here, boy.
+- kind: dialogue
+  speaker: gm
+  text: (irritated) That's enough, let's drop it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (exasperated) Fine, whatever.

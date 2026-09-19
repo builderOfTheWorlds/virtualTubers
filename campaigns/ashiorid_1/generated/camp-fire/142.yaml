@@ -1,0 +1,44 @@
+id: camp-fire
+take: 142
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:17.550750+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down hard, I'm not sure our fire'll make it through the
+    night.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order, can't have anyone standing guard for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I've been thinking, I think Bob laid the fire a bit too close to the pit,
+    we should have spaced it out a bit more.
+- kind: dialogue
+  speaker: Vigil
+  text: It will still be burning when the sun comes up.
+- kind: dialogue
+  speaker: Leena
+  text: What's the average lifespan of a fire that's not tended to?
+- kind: dialogue
+  speaker: gm
+  text: Leena, I don't know, why does it matter?
+- kind: dialogue
+  speaker: Leena
+  text: Just curious.
+- kind: dialogue
+  speaker: chadwick
+  text: We need a system, Leena, it can't be a free-for-all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we can make do, we just need to keep an eye on it, make sure it's
+    burning steady.
+- kind: dialogue
+  speaker: Vigil
+  text: We should have brought more tinder.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, we brought as much as we could carry, we can't bring everything.
+- kind: dialogue
+  speaker: Leena
+  text: Can we get it to last till morning, do you think?

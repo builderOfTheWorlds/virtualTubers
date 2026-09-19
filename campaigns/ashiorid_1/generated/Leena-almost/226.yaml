@@ -1,0 +1,26 @@
+id: Leena-almost
+take: 226
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:36.417011+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what is it?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: You must've seen it in your village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something similar in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But that's not it. It's not just something like it.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I won't. It's just...I don't know. It feels...

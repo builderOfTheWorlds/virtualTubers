@@ -1,0 +1,39 @@
+id: camp-fire
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:44.443369+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it seems the rain's not letting up anytime soon.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, Bob, how's the fire looking? Is it going to make it through the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Should be fine, Chadwick. I laid it on a bed of dry leaves and twigs. It's
+    got a good chance of lasting.
+- kind: dialogue
+  speaker: Vigil
+  text: The coals are shifting.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the last town we passed through had any news about the
+    weather?
+- kind: dialogue
+  speaker: chadwick
+  text: 'News about the weather? I thought we all knew what the forecast was: more
+    rain.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Leena, if we're looking for gossip, I reckon we should ask Vigil. He's
+    been quiet all evening.
+- kind: dialogue
+  speaker: Vigil
+  text: We are short on cordwood.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what it would be like to see the world without magic.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) The rain doesn't care.

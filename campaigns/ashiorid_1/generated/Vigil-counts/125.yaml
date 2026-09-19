@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:37.350241+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what did you notice about the room?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the usual, I'm sure.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the right opens inward, and there's a small table in the corner.
+- kind: dialogue
+  speaker: Leena
+  text: What's that to us?
+- kind: dialogue
+  speaker: Vigil
+  text: Also, the cart that passed by earlier is the same one that passed by this
+    morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that the one with the fresh fruit?
+- kind: dialogue
+  speaker: Vigil
+  text: Yes.
+- kind: dialogue
+  speaker: chadwick
+  text: Okay, great.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on. What's our next step?

@@ -1,0 +1,38 @@
+id: malmont-market
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:14.938067+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like someone's been trying to make a go of blacksmithing again, but
+    I've seen better work in a scrapheap.
+- kind: dialogue
+  speaker: Vigil
+  text: (grumbling) Yeah, and look at the prices they're asking.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, just enjoying the local colors, I think.
+- kind: dialogue
+  speaker: Leena
+  text: (bending to examine a map) Oh, this one's dated from before the Great Drought.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I wouldn't trust any of these smiths to make a decent plowshare, let alone
+    a sword.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the map stall) You know, I think I'll take a look at these maps myself.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckling) Oh, I think you've got a taste for history, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: (still studying the map) I don't know, I just... find this sort of thing fascinating.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) You're not seriously thinking of buying this junk, are you?
+- kind: dialogue
+  speaker: Vigil
+  text: (producing a small pouch of coins) I'll take this one, the one from before
+    the drought.

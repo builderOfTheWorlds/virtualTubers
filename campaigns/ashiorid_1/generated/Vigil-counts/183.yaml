@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 183
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:49.635427+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The carriage is finally here to take us to the countryside.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, wonderful. I'm still trying to decide which books to bring.
+- kind: dialogue
+  speaker: Leena
+  text: I'll pack the tea set, it's been a while since we've had a chance to use it.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the carriage house opens to the left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) what's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, just noting it.
+- kind: dialogue
+  speaker: gm
+  text: Shall we board the carriage now?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll grab one more book, I just remembered it.
+- kind: dialogue
+  speaker: Leena
+  text: (sighing) Fine, but hurry up.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart driver's passed us on the way out twice now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (rolling his eyes) of course he has.
+- kind: dialogue
+  speaker: gm
+  text: (laughing) Alright, let's get going.

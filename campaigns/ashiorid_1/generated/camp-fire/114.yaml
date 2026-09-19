@@ -1,0 +1,32 @@
+id: camp-fire
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:42.827873+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, well, I suppose we're stuck here for the night then.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle who's watching first? We can't have half the party asleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I think the fire was laid a bit too close to the edge of the pit.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is cold.
+- kind: dialogue
+  speaker: Leena
+  text: What would happen if the rain just kept going for, say, another week?
+- kind: dialogue
+  speaker: gm
+  text: Not sure I've ever seen that kind of rain.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's going to take the first watch, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should have someone with a clear view of the river.
+- kind: dialogue
+  speaker: gm
+  text: I'll take the first watch, but then someone else needs to wake me.

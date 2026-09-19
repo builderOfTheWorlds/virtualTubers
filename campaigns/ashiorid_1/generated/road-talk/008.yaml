@@ -1,0 +1,38 @@
+id: road-talk
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:52.134869+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, relentless in its heat.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, you've talked about Vabokedos a lot, but what's it like in your village?
+- kind: dialogue
+  speaker: Leena
+  text: It's green, Chadwick, the whole valley is a lush green and the river flows
+    right through it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the food, Leena, what do you eat in Vabokedos?
+- kind: dialogue
+  speaker: Leena
+  text: We grow our own, mostly, but we trade with the city for spices and teas.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... was nice. I had a garden, a small one, but I grew my own herbs
+    and vegetables.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That sounds peaceful, Vigil. I'm sure it was nice to have something to tend
+    to.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: What about you, Sodacan Bob? What's Vabokedos like?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a big city, Leena, lots of people and noise and... chaos.

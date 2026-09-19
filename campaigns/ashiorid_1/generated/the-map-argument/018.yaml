@@ -1,0 +1,44 @@
+id: the-map-argument
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:31.486491+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I've already told you, we need to take the eastern route, it's the shortest
+    way.
+- kind: dialogue
+  speaker: Leena
+  text: I don't see what the problem is, the map says we can go either way.
+- kind: dialogue
+  speaker: chadwick
+  text: That's because you're not looking at the fine print, it clearly states that
+    the eastern route is more... hazardous.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) It's not that hazardous, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we can handle a little bit of rough terrain.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, let's just see who's right, then. ( muttering to himself ) Amateurs.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's just recheck the map, maybe we're both missing something.
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Right, let's just get a move on, we can sort this out on the
+    fly.
+- kind: dialogue
+  speaker: chadwick
+  text: (outraged) You're not even going to let me prove my point?!
+- kind: dialogue
+  speaker: Vigil
+  text: (exasperated) Chadwick, it's just a map, let it go.
+- kind: dialogue
+  speaker: chadwick
+  text: (indignant) Just a map?! You think this is just a triviality?!

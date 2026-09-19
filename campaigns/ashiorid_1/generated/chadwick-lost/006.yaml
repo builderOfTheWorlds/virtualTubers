@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:13.692271+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is setting over the dunes to our left, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm aware of that.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should take a brief rest before pushing on, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't afford to lose daylight.
+- kind: dialogue
+  speaker: Vigil
+  text: I've got the map, and it looks like we need to head east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun watching Chadwick try to navigate.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) You know, Chadwick, sometimes it's okay to ask for help.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help.
+- kind: dialogue
+  speaker: Vigil
+  text: Alright, let's get moving in the right direction.
+- kind: dialogue
+  speaker: chadwick
+  text: We're going the right way, aren't we.
+- kind: dialogue
+  speaker: gm
+  text: We are, but we should have done it an hour ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) You'd think he'd just admit it already.

@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 167
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:02.802553+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you find yourselves in a dense forest, surrounded by tall trees and
+    underbrush. The canopy above is thick, blocking most of the sunlight.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you're leading the way. What do you see?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure, I'll just... keep going.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you give us a better idea of our surroundings?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're in the Heartwood Forest. We need to head east to reach the clearing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is going to be good.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, maybe we should ask Vigil to lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.
+- kind: dialogue
+  speaker: gm
+  text: As you continue, the trees seem to be getting thicker and the path is becoming
+    increasingly overgrown.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should head that way – to the left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, because nothing says "leader" like getting lost in a forest.
+- kind: dialogue
+  speaker: chadwick
+  text: Shut up, Bob.

@@ -1,0 +1,39 @@
+id: before-the-well
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:21.368256+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll be keeping watch on the lower levels tonight, make sure nothing... slips
+    in unnoticed.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything happen?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing I can see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can you check the north tunnel, make sure it's secure?
+- kind: dialogue
+  speaker: Leena
+  text: I'll take care of the upper levels, you handle the lower.
+- kind: dialogue
+  speaker: gm
+  text: See you around midnight, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: Good night, everyone.
+- kind: dialogue
+  speaker: Vigil
+  text: Ashiorid.
+- kind: dialogue
+  speaker: chadwick
+  text: You okay, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just checking.

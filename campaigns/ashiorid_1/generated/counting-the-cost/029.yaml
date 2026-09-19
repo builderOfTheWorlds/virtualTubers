@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:56.379596+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The saw's got a few teeth missing, need to sharpen it up.
+- kind: dialogue
+  speaker: chadwick
+  text: And the cart's wheel's busted, what happened there?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a snag in the track, nothing a bit of weld can't fix.
+- kind: dialogue
+  speaker: Leena
+  text: What about the tools, are they still usable?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The hammer's okay, but the anvil's got a dent in it.
+- kind: dialogue
+  speaker: Vigil
+  text: Looks like someone's been using it as a makeshift punching bag.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just a little wear and tear, nothing to worry about.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get to work then. We've got a lot to do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: First things first, we need to get the cart back on track.
+- kind: dialogue
+  speaker: Leena
+  text: And then we can start fixing the gear and tools.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a plan to me, let's get moving.

@@ -1,0 +1,38 @@
+id: malmont-market
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:44.285179+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think they're skilled enough to be making a living off this.
+- kind: dialogue
+  speaker: Vigil
+  text: Careful how much you say in public, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Smiling at passersby, thinking maybe no one recognizes him as a wanted man.
+- kind: dialogue
+  speaker: Leena
+  text: I'd like to see that map of the old trade routes, see if anything looks familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Familiar? You think we know where we are, let alone where we're going?
+- kind: dialogue
+  speaker: Vigil
+  text: Less talk, Bob. Let's see what we can find.
+- kind: dialogue
+  speaker: chadwick
+  text: Trying to look nonchalant while keeping a hand on his coin purse.
+- kind: dialogue
+  speaker: Leena
+  text: The maps...I think it's something about the maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's there to look at? Just a bunch of worn-out parchment.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't be a snob, Bob. You'll find something you like.
+- kind: dialogue
+  speaker: Leena
+  text: (suddenly) Wait, where did this map come from?

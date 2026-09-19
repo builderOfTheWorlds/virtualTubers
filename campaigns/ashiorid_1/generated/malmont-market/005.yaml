@@ -1,0 +1,36 @@
+id: malmont-market
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:38.055098+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's a bustle of everyday business, nothing out of the ordinary.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure what I'm looking for, but something about that map stall is drawing
+    me in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Smithwork's an art, and I've seen better in my time. These folk need practice.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) Careful with your words, friend. The blacksmiths here have
+    pride.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) Easy for you to say, Vigil. You're not the one getting talked down
+    to.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) What are you doing here, anyway? Nobody seems to know you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Leena) Maybe nobody remembers, but I do. I've been around.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) Don't mind Chadwick. He's a regular here. (to Sodacan Bob) You
+    too, I suppose.
+- kind: dialogue
+  speaker: gm
+  text: The map stall's owner is watching Leena with interest.

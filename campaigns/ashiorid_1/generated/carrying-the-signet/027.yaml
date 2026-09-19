@@ -1,0 +1,44 @@
+id: carrying-the-signet
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:16:52.431736+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: A customer approaches Chadwick at the inn's bar. "Excuse me, traveler. What's
+    that fancy ring on your finger?"
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, just a little something my grandmother gave me. Not much to it.
+- kind: narration
+  speaker: gm
+  text: The customer nods and takes a seat at the bar, chatting with Vigil about the
+    road ahead.
+- kind: dialogue
+  speaker: Leena
+  text: We should get moving. I'm getting restless.
+- kind: dialogue
+  speaker: Vigil
+  text: Soon, soon. We have a few hours yet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm buying the next round. Who's up for another?
+- kind: narration
+  speaker: gm
+  text: A stranger, a merchant type, approaches Leena and whispers something in her
+    ear. "You'd be surprised what's been passing through town. People looking for...
+    someone with your mark."
+- kind: dialogue
+  speaker: Leena
+  text: Mark? What are you talking about?
+- kind: narration
+  speaker: gm
+  text: The merchant smiles and excuses himself, leaving the party to their drinks.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: "Ah, don''t mind him. Just trying to stir up trouble. You folks
+    enjoy the evening."'
+- kind: narration
+  speaker: gm
+  text: A sudden silence falls over the party as they all take a sip of their drinks,
+    the merchant's comment lingering in the air.

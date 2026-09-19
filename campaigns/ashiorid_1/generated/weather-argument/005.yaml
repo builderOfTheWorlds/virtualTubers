@@ -1,0 +1,43 @@
+id: weather-argument
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:04.803654+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, I saw those dark clouds on the horizon
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, but the wind's picking up, which means it'll blow them away
+- kind: dialogue
+  speaker: Leena
+  text: I don't know about the clouds, but my back's been aching all day and I have
+    a bad feeling about it
+- kind: dialogue
+  speaker: Vigil
+  text: A bad feeling? Ha, you're just allergic to rain, Leena
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more worried about the forecast I heard on the radio this morning
+- kind: dialogue
+  speaker: gm
+  text: Forecasts are never right, I once knew a guy who said it was going to snow
+- kind: dialogue
+  speaker: Leena
+  text: But Ashiorid, you're from a dry place, you don't know the first thing about
+    rain
+- kind: dialogue
+  speaker: chadwick
+  text: Snow's a completely different thing from rain, Leena
+- kind: dialogue
+  speaker: Vigil
+  text: At least someone's trying to be logical about this
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Logical? You call arguing with your friends logical?
+- kind: dialogue
+  speaker: gm
+  text: We're not arguing, we're just discussing the weather
+- kind: dialogue
+  speaker: Leena
+  text: Discussing the weather? You're ruining it

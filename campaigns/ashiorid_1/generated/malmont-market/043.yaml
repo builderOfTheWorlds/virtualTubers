@@ -1,0 +1,39 @@
+id: malmont-market
+take: 43
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:54.686513+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Looks like they're trying to sell off last season's scraps here.
+- kind: dialogue
+  speaker: Leena
+  text: These old maps are lovely. Do you have any more?
+- kind: dialogue
+  speaker: Vigil
+  text: Just looking, thank you.
+- kind: dialogue
+  speaker: chadwick
+  text: Nice weather we're having.
+- kind: dialogue
+  speaker: gm
+  text: The market's been quieter than usual this morning.
+- kind: dialogue
+  speaker: Leena
+  text: Do you know what happened to these maps? Were they used for trade or something?
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Unlikely to get a good price here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have a look at the swords over there. No interest in these mediocre bits
+    of work.
+- kind: dialogue
+  speaker: gm
+  text: You four certainly look like travelers. Where are you headed?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, just down the road a bit. We're... exploring.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, exploring. It's a lovely day for it.

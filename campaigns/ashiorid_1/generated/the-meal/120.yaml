@@ -1,0 +1,41 @@
+id: the-meal
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:56.383165+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, I had no hand in preparing this meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a travesty, I'm telling you, the seasoning alone is an insult.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in silence for once?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, it's just a meal, let's make it fun!
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the chicken, thank you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think a little bit of salt and pepper is going to fix this catastrophe?
+- kind: dialogue
+  speaker: Leena
+  text: I added a bit of paprika, does that help?
+- kind: dialogue
+  speaker: Vigil
+  text: (passing his food to Leena) You eat it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could cook a far better meal than this, I guarantee it.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's cooking tomorrow?
+- kind: dialogue
+  speaker: gm
+  text: I thought we decided on takeout?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Takeout? You think takeout is better than this?

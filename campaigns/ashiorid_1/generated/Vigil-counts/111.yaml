@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:33.167341+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village elder approaches you, a gentle smile on her face.
+- kind: dialogue
+  speaker: chadwick
+  text: We're looking for information on the local trade routes.
+- kind: dialogue
+  speaker: Leena
+  text: I've been talking to some of the villagers, and they seem hesitant to discuss
+    anything.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the north opens outward, and there's a small table just inside.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of knowing that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: The elder's smile falters for a moment, before she returns to her usual composure.
+- kind: dialogue
+  speaker: Leena
+  text: Let's focus on the trade routes, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I've got some questions for the elder.

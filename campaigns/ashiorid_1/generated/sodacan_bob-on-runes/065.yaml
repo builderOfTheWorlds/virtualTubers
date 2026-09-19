@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T22:29:39.960230+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's all about striking true, and then again, just to be
+    sure.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the hurry, Bob? You think the Malvakar's secrets are going to disappear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hurry? I'm not in a hurry. I just... never mind.
+- kind: dialogue
+  speaker: Leena
+  text: So, Sodacan Bob, what do you think it means, the runes on the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Leena, I was just... lost in thought.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been a while since we've seen any skilled work around here. Who's the
+    last one who knew their craft?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a good question. I don't know.
+- kind: dialogue
+  speaker: gm
+  text: And what do you think the Malvakar was trying to tell us, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing. It was just a test, that's all.

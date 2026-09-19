@@ -1,0 +1,32 @@
+id: leena-tries-slang
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:32:00.898339+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I'm famished, let's grab some churros at the kiosko!
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Sounds like a plan, Leena!'
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more in the mood for some street food at the kiosko, myself.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, me too! I just love a good kiosko-rito.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Well, I'm sure you'll find something to kiosko-rito-ize about.
+- kind: dialogue
+  speaker: Leena
+  text: (giggles) That's the spirit, Vigil!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, Leena, I think you mean "kiosko-burrito".
+- kind: dialogue
+  speaker: Leena
+  text: Oh, you mean like, "burrito at the kiosko"? I see what you mean now!
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (laughs) Yeah, kind of.'

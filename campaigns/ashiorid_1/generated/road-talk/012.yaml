@@ -1,0 +1,42 @@
+id: road-talk
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:19.039177+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's getting high, folks.
+- kind: dialogue
+  speaker: Leena
+  text: I can see it now, my village surrounded by trees, the river flowing gently
+    by.
+- kind: dialogue
+  speaker: Vigil
+  text: A few fields, some hills...
+- kind: dialogue
+  speaker: Leena
+  text: And the market days, everyone coming together to buy and sell.
+- kind: dialogue
+  speaker: chadwick
+  text: What market days?
+- kind: dialogue
+  speaker: Leena
+  text: The ones I used to go to as a child, I'd buy fresh bread and...
+- kind: dialogue
+  speaker: chadwick
+  text: Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And Vabokedos, I mean, the city, it's got these huge walls...
+- kind: dialogue
+  speaker: gm
+  text: Keep going, Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the canals, they're like rivers, but they're made of stone.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's got a lot of... water... and...
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what about Nafsari?

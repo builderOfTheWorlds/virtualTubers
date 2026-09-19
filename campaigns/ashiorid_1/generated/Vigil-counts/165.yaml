@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 165
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:05.744567+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And while you're still deciding what to do, we should take a look at the map
+    again.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see why we need to review the map, let's just get going.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should review it, I was going to ask you to explain some of the symbols.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by again has a small patch on the wheel, it looks like
+    a makeshift repair.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just some local handyman's work, I'm sure it's not important.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's not waste our time on trivial details, we have a job to do.
+- kind: dialogue
+  speaker: gm
+  text: But you all need to decide how to get to the next location, and the map will
+    help with that.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, fine, let's review the map then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm sure Vigil's observation about the cart will come up again if it's
+    relevant.

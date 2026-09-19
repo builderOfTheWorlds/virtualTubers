@@ -1,0 +1,39 @@
+id: sodacan_bob-on-runes
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:53:30.221519+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You gotta strike the die clean, so the rune sinks in good and deep, or it'll
+    be gone in a few seasons.
+- kind: dialogue
+  speaker: chadwick
+  text: I remember some of the old guys used to talk about the Malvakar's runes being
+    carved by some sort of master craftsman.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a myth, boy. It takes patience and skill to cut a rune that'll last.
+- kind: dialogue
+  speaker: Leena
+  text: I've seen some of the stuff they found in the ruins near Zha'thik... maybe
+    someone actually did know what they were doing.
+- kind: narration
+  speaker: gm
+  text: 'vigel: What makes you think it''s been so long since anyone''s done that
+    kind of work, Sodacan?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd be surprised how few folk can even read the language, let alone carve
+    with precision.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Still, someone must have done the job, or the Malvakar wouldn't be
+    standing now.
+- kind: dialogue
+  speaker: chadwick
+  text: You said the runes would last a few thousand years... which means it's been
+    done by someone with a long memory.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just talking theory, boy.

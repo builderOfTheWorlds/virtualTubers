@@ -1,0 +1,67 @@
+party-attack-arc:
+  node_id: party-attack-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: As the party begins, unexpected guests arrive, and the manor's doors lock
+    from w
+  summary: As the party begins, unexpected guests arrive, and the manor's doors lock
+    from within. The group realizes they are not just guests but targets of a plot
+    that goes back ten thousand years.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 900
+  target_slots: 9
+  kind: branch
+  forced: false
+  children:
+  - party-attack-arc-n0
+  - party-attack-arc-n1
+  slots: null
+party-attack-arc-n0:
+  node_id: party-attack-arc-n0
+  parent_id: party-attack-arc
+  order: 0
+  depth: 1
+  title: The Gathering Storm
+  summary: The party awakens to find themselves trapped within the manor's walls as
+    unexpected guests arrive, their presence signaling that this is no ordinary gathering.
+    The doors lock from within, and the group begins to realize they are not merely
+    attendees but the intended targets of an ancient conspiracy.
+  continuity_in: As the party begins, unexpected guests arrive, and the manor's doors
+    lock from within. The group realizes they are not just guests but targets of a
+    plot that goes back ten thousand years.
+  continuity_out: The party finds themselves trapped within the manor's walls as unexpected
+    guests arrive, their presence signaling that this is no ordinary gathering. The
+    doors lock from within, and the group begins to realize they are not merely attendees
+    but the intended targets of an ancient conspiracy.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+party-attack-arc-n1:
+  node_id: party-attack-arc-n1
+  parent_id: party-attack-arc
+  order: 1
+  depth: 1
+  title: Ancient Secrets Revealed
+  summary: As the trapped party members attempt to understand their predicament, they
+    uncover evidence that this manor has been a focal point for an ancient conflict
+    spanning millennia. The guests reveal themselves as participants in this age-old
+    struggle, and the group discovers their own roles in the unfolding cosmic drama.
+  continuity_in: The party finds themselves trapped within the manor's walls as unexpected
+    guests arrive, their presence signaling that this is no ordinary gathering. The
+    doors lock from within, and the group begins to realize they are not merely attendees
+    but the intended targets of an ancient conspiracy.
+  continuity_out: As the trapped party members attempt to understand their predicament,
+    they uncover evidence that this manor has been a focal point for an ancient conflict
+    spanning millennia. The guests reveal themselves as participants in this age-old
+    struggle, and the group discovers their own roles in the unfolding cosmic drama.
+  target_words: 630
+  target_slots: 6
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

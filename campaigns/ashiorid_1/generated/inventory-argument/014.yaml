@@ -1,0 +1,42 @@
+id: inventory-argument
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:33.141084+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, my pack is the one with the spare socks.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, no, I'm positive they were in yours, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just stop arguing about this for one minute?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone needs to label their bags.
+- kind: dialogue
+  speaker: gm
+  text: Labels are a waste of time, we all know what's in each other's packs.
+- kind: dialogue
+  speaker: Leena
+  text: Oh wait, look at this. The extra water bottle was in my pack this whole time.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, see, I told you I had the water bottle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, because that's exactly what I needed, another thing to prove a point.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just put the water bottle back and move on?
+- kind: dialogue
+  speaker: Leena
+  text: Why do we never label anything? It's just so annoying.
+- kind: dialogue
+  speaker: gm
+  text: Labels would be pointless, we'd just forget what they mean.
+- kind: dialogue
+  speaker: chadwick
+  text: Forget what they mean? You mean like how I've forgotten what's in my pack
+    half the time?

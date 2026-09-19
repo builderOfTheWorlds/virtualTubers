@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:59.571435+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got you staring like that?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the view, I suppose. You were looking at the view.
+- kind: dialogue
+  speaker: Leena
+  text: No, I was not. I was looking at something that shouldn't be here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You saw one like it in your village, didn't you?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. Let it go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should be moving. We're running late.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: gm
+  text: You all know the way.

@@ -1,0 +1,41 @@
+id: the-meal
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:48.404440+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, pass the salt, please.
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Chad, don't be like that!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the seasoning was all wrong, and I could do better.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, it's okay, really.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, it's not okay, I'm a master chef, I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: Well, why don't you just show us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Because I've already cooked the meal for tomorrow, and it's going to be fantastic.
+- kind: dialogue
+  speaker: chadwick
+  text: Who cooked the meal for tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I did, of course.
+- kind: dialogue
+  speaker: gm
+  text: That's good, Sodacan, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, you're not going to eat it?

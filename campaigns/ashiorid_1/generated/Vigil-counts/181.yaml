@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 181
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:39.738326+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: There's a market cart parked outside the door, sir.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice. Good day for shopping.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart's been here twice so far.
+- kind: dialogue
+  speaker: Leena
+  text: It's just passing by.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see the baker's boy with the cart.
+- kind: dialogue
+  speaker: Vigil
+  text: One of the doors opens onto the street, the other into the alley.
+- kind: dialogue
+  speaker: gm
+  text: There are five people in the room, including yourselves.
+- kind: dialogue
+  speaker: Leena
+  text: I think I see what they're selling.
+- kind: dialogue
+  speaker: chadwick
+  text: Fresh bread, looks like.

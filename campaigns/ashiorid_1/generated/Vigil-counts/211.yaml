@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 211
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:30.033541+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the situation at the inn?
+- kind: dialogue
+  speaker: chadwick
+  text: It's quiet, we've got a room to ourselves.
+- kind: dialogue
+  speaker: Leena
+  text: The fire's still burning, but I think it's dying out.
+- kind: dialogue
+  speaker: Vigil
+  text: The window on the left opens inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that same bird perched on the sill before.
+- kind: dialogue
+  speaker: gm
+  text: You notice anything else, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: Is that really important?
+- kind: dialogue
+  speaker: Vigil
+  text: No, not particularly.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a detail, right?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a detail.
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the plan for tonight?

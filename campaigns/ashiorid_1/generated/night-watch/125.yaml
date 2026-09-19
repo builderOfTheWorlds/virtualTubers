@@ -1,0 +1,41 @@
+id: night-watch
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:21.955022+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are still out.
+- kind: dialogue
+  speaker: gm
+  text: (pause) Yeah, I see them.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can you make out the shape of the constellation?
+- kind: dialogue
+  speaker: Leena
+  text: (yawn) What constellation?
+- kind: dialogue
+  speaker: Vigil
+  text: It's a little hard to see.
+- kind: dialogue
+  speaker: chadwick
+  text: (whisper) Shh, do you hear that?
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What?
+- kind: dialogue
+  speaker: chadwick
+  text: (soft) The wind. It's still blowing.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching) I think it's dying down.
+- kind: dialogue
+  speaker: gm
+  text: (low) We should wake the others early, just in case.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know... I think it's fine.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) It's not just about the danger. It's the sun.

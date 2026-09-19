@@ -1,0 +1,32 @@
+id: the-meal
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:37.772563+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get started with dinner
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just going to eat, don't mind me
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's make the most of this lovely meal
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could tell you exactly how it was done wrong, and I'd do it better myself
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat and not talk, please?
+- kind: dialogue
+  speaker: Leena
+  text: But that's the worst part! We have to eat something so bland!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's a matter of proper technique and a pinch of salt
+- kind: dialogue
+  speaker: Leena
+  text: See, someone appreciates a good meal
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's just eat in peace

@@ -1,0 +1,43 @@
+id: night-watch
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:29.099354+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky's a dull grey.
+- kind: dialogue
+  speaker: chadwick
+  text: Can't see any stars.
+- kind: dialogue
+  speaker: Leena
+  text: Don't you think it's funny we can see nothing moving, not even birds?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: I mean, it's not natural. This time of year, there should be some noise, some
+    movement.
+- kind: dialogue
+  speaker: gm
+  text: Maybe the world's just... quieter now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been thinking about that. If we were to wake the others early...
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) What's the point? It's not like we're going anywhere.
+- kind: dialogue
+  speaker: gm
+  text: Just in case. You never know when we might need to move.
+- kind: dialogue
+  speaker: Leena
+  text: (lowers voice) I've been having trouble sleeping lately. I've been having...
+    dreams.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses, uninterested) Oh? What about?
+- kind: dialogue
+  speaker: Leena
+  text: (hedges) Nothing. Never mind.

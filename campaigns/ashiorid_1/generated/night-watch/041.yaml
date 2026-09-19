@@ -1,0 +1,41 @@
+id: night-watch
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:06.616251+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The sky is clear.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Can you see the stars?'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Yeah, they''re really bright.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I don''t hear anything.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I''m listening.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I hear crickets.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: That''s all we''re going to hear, I guess.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Yeah, we''re pretty far out.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Want to wake the others?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Not yet.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''m just going to watch the sky.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Me too.'

@@ -1,0 +1,32 @@
+id: malmont-market
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:04.996649+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I've seen better hammerwork in a poorhouse.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around cautiously) Keep your voice down, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, I think I'll take a look at that old maps stall.
+- kind: dialogue
+  speaker: Leena
+  text: (frowning) What's wrong with the hammerwork, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just... lazy, that's all.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching the crowd) This town's got a funny feel to it.
+- kind: dialogue
+  speaker: Leena
+  text: (leaning in to examine the maps) These are from the old empire, aren't they?
+- kind: dialogue
+  speaker: chadwick
+  text: (whispering to Sodacan Bob) I think that's why nobody's recognizing me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (squinting at the maps) What's this? Some kind of atlas?

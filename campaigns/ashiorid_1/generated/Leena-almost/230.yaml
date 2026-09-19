@@ -1,0 +1,43 @@
+id: Leena-almost
+take: 230
+model: llama3.1:8b
+generated_at: '2026-09-18T22:03:00.465083+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you describe what you see in front of you?
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably just a doorway, Leena. You've seen plenty of those in your village.
+- kind: dialogue
+  speaker: Leena
+  text: No, no... it's not a doorway. I don't know what it is, but it's familiar.
+    I just can't quite...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it on a trip to town? You said your village isn't
+    that big.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, looking away)
+- kind: dialogue
+  speaker: Leena
+  text: What's with all the humming? I could swear I heard that tune before, but I
+    don't know where...
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob's humming the same tune now. What do you think, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I'm just going to let it go, I guess. Chadwick, what's the point
+    of chasing something we can't explain?
+- kind: dialogue
+  speaker: chadwick
+  text: Just don't, Leena. Sometimes it's better not to know.
+- kind: dialogue
+  speaker: gm
+  text: Grovley's manor has been burned down, but we still have the signet ring's
+    half.

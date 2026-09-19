@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:18.176766+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a die struck with that much force, it's a wonder it didn't
+    shatter on impact.
+- kind: dialogue
+  speaker: chadwick
+  text: How many times have you seen a monument's runes hold up to the elements?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Too many to count. I've seen some hold for centuries, and others... well,
+    not so much.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think someone with more experience could have done it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Experience don't mean squat when it comes to craftsmanship like that.
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, what's with all the fuss? It's just some old rocks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You don't know what you're looking at. That's not just a monument, it's a...
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, tell me - what do you think was the motivation behind the person
+    who carved those runes?

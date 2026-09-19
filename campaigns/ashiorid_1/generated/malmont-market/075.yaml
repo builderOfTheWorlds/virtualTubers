@@ -1,0 +1,46 @@
+id: malmont-market
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T20:23:07.797868+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, welcome to Malmont. I hope you're all finding something to your liking.
+- kind: dialogue
+  speaker: gm
+  text: The town's got a bit of a reputation, but it's generally a safe place during
+    the day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something that'll last longer than a week, but so far...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: '...I''m not impressed. Most of this stuff is just for show.'
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too many people, not enough... (eyes a nearby stall)
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling to himself) No one's paying me any attention. I like that.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Ooh, maps! Old maps, at least. I wonder what's on them.
+- kind: dialogue
+  speaker: gm
+  text: The maps are from a collector who's looking to sell. He's not getting any
+    younger.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) I bet those maps are just scraps of parchment with some half-forgotten
+    route scribbled on them.
+- kind: dialogue
+  speaker: Leena
+  text: (disappointed) Oh, really? They look... interesting, though.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a close eye on the map stall) I don't think I've ever seen any of
+    those before.
+- kind: dialogue
+  speaker: gm
+  text: That's probably because they're not from around here. The collector's got
+    a taste for the exotic.

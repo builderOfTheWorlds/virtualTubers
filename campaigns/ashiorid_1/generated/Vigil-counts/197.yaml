@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 197
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:50.968803+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what did you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our room opens to the east.
+- kind: dialogue
+  speaker: Leena
+  text: And the one to the hall to the west?
+- kind: dialogue
+  speaker: Vigil
+  text: Yes, same side as the other doors in the hall.
+- kind: dialogue
+  speaker: chadwick
+  text: That's true.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the difference, then?
+- kind: dialogue
+  speaker: Vigil
+  text: There is no difference.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: We can use the windows for some natural light.
+- kind: dialogue
+  speaker: Vigil
+  text: They let in the same dust as the shutters.
+- kind: dialogue
+  speaker: Leena
+  text: Which one has been fixed, again?
+- kind: dialogue
+  speaker: Vigil
+  text: The north shutter.

@@ -1,0 +1,35 @@
+id: inventory-argument
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:23:48.222649+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, if I have to dig through your backpack one more time...
+- kind: dialogue
+  speaker: chadwick
+  text: It's not my fault you can't organize your own gear, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: At least I don't have random twine and wire scraps scattered everywhere, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: That's exactly what it's for, I'll have you know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hold up, what's that I see in Chadwick's pack?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, just my lucky pen, I was using it to...
+- kind: dialogue
+  speaker: Leena
+  text: Wait, no, that's my spare compass, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: Good job not losing it, Leena, now hand it over.
+- kind: dialogue
+  speaker: gm
+  text: Someone please label their stuff for once, it's ridiculous.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, nice catch, Leena, you win this round.

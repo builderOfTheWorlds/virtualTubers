@@ -1,0 +1,37 @@
+id: camp-fire
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T19:53:44.562118+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Well, looks like we've got a good fire going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, Chadwick, a teepee shape is the way to go.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not burning too hot.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's water still coming up from the ground?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, you're on watch from midnight to two. Leena nods.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think that's a good idea, Chadwick. I mean, what if it starts to rain
+    harder?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't.
+- kind: dialogue
+  speaker: Leena
+  text: Can I still ask, though... what if it didn't just rain? What if there's something
+    else going on?
+- kind: dialogue
+  speaker: chadwick
+  text: Let's not worry about it now. We'll figure it out in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But, Chadwick... have you thought about where we're going to put the ashes?

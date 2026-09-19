@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 74
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:01.225671+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've noticed the cart that passed us earlier is now outside the inn, parked
+    near the well.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east window has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: I could use a drink.
+- kind: dialogue
+  speaker: Leena
+  text: I'll grab some ale from the bar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just going to take a walk outside.
+- kind: dialogue
+  speaker: gm
+  text: Be careful, you never know what's out there.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a nice evening, come on out.
+- kind: dialogue
+  speaker: Leena
+  text: I'll stay here and keep the fire going.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the east is still slightly ajar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just the wind, probably.

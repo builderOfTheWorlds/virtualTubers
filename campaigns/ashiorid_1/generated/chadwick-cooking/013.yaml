@@ -1,0 +1,29 @@
+id: chadwick-cooking
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:21:15.270172+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The kitchen is thick with the stench of burnt offerings.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to try and salvage this, guys.
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell.
+- kind: dialogue
+  speaker: Vigil
+  text: It smells like something died.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just the usual kitchen funk, Bob.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, that's not what I'm getting from this.
+- kind: dialogue
+  speaker: chadwick
+  text: You know, I'm not really hungry anymore.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just eat it, guys, it's not that bad.

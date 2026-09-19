@@ -1,0 +1,32 @@
+id: nafsari-question
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:30.790355+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Vigil, what was it like growing up with the wood elves of Nafsari?
+- kind: dialogue
+  speaker: Vigil
+  text: I learned to hunt with a bow.
+- kind: dialogue
+  speaker: Leena
+  text: You must have loved it, then.
+- kind: dialogue
+  speaker: Vigil
+  text: I had a place to sleep.
+- kind: dialogue
+  speaker: chadwick
+  text: That sounds... cozy.
+- kind: dialogue
+  speaker: Vigil
+  text: It was what I was used to.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it was.
+- kind: dialogue
+  speaker: gm
+  text: Do you miss it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There's less danger here.

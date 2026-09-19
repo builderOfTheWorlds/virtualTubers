@@ -1,0 +1,43 @@
+id: sodacan_bob-on-craft
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-19T00:03:28.062213+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what've you found, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a wagon axle, can't you see the mortise and tenon join?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's keep moving, we've got a long day ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a classic example of late 19th century carriage work, look at the
+    craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, I like the design of the bracket on the door, it's so...ornate.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of wood is this axle made from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, this is some fine cherry, probably imported from the States.
+- kind: dialogue
+  speaker: gm
+  text: (chuckles) Well, Bob, it's nice to see you're still enthusiastic about old
+    things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd be amazed at the story this axle could tell, if only it could talk.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure it could, Bob, you're always so good at bringing things to life.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) Can we go now?
+- kind: dialogue
+  speaker: Vigil
+  text: (smirks) You're not going to try and buy this axle, are you, Bob?

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 86
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:53.011895+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, what've we got so far, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing out of the ordinary, Ash. A few travelers, some market stalls.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the town watch?
+- kind: dialogue
+  speaker: Leena
+  text: One of them's been walking the beat, but he doesn't seem to be paying attention.
+- kind: dialogue
+  speaker: Vigil
+  text: The south door's been repaired recently.
+- kind: dialogue
+  speaker: gm
+  text: Okay, what's the plan?
+- kind: dialogue
+  speaker: chadwick
+  text: Let's get some rest. We can scout the town in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds good to me. I could use a nap.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier... it passed by again about an hour ago.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, yeah. I saw it.
+- kind: dialogue
+  speaker: gm
+  text: Anything else?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the usual.

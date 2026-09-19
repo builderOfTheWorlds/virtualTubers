@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:15.150550+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Metal's gotten its teeth in the cart, but I can hammer that loose
+- kind: dialogue
+  speaker: chadwick
+  text: And the gear, what's the verdict there?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Some teeth are chipped, but the rest can still be filed down
+- kind: dialogue
+  speaker: Leena
+  text: Filing's not going to fix the weight we lost
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The weight's a harder problem, like trying to reforge a broken blade
+- kind: dialogue
+  speaker: Vigil
+  text: Any way to reattach the stabilizer bar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a tricky join, like welding a crack in tempered steel
+- kind: dialogue
+  speaker: chadwick
+  text: And the people, what's the count?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Two of them are battered, but can still hold their own weight
+- kind: dialogue
+  speaker: gm
+  text: What about you, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just a little worse for wear, like a tool with a worn handle

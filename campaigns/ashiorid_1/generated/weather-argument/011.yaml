@@ -1,0 +1,42 @@
+id: weather-argument
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:52.739356+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a low-pressure system, I can feel it in my bones.
+- kind: dialogue
+  speaker: chadwick
+  text: You can feel it in your bones? That's not exactly scientific.
+- kind: dialogue
+  speaker: Leena
+  text: I saw a bird flying south, that usually means bad weather.
+- kind: dialogue
+  speaker: Vigil
+  text: That's just an old wives' tale, I saw the radar on my phone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Radar's not always accurate, I've had it disagree with me before.
+- kind: dialogue
+  speaker: gm
+  text: But don't you think it's suspicious that the wind is picking up?
+- kind: dialogue
+  speaker: chadwick
+  text: Wind picking up, so what? It's not like it's going to make a difference in
+    the grand scheme.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's going to pour, I just got this bad feeling.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't just get a bad feeling and call it rain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just glad I brought my umbrella, better safe than sorry.
+- kind: dialogue
+  speaker: gm
+  text: Yeah, but what if we just make it to the other side before it starts?
+- kind: dialogue
+  speaker: chadwick
+  text: Other side? It's just a quarter mile, we'll be fine either way.

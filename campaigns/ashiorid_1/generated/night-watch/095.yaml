@@ -1,0 +1,41 @@
+id: night-watch
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:55.540322+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are still out, even at this hour.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I know. It's a clear night.
+- kind: dialogue
+  speaker: Leena
+  text: I can see the Milky Way, if I squint.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) You think we should wake the others early?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No reason to. We're not on edge.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Leena, do you hear that?
+- kind: dialogue
+  speaker: Leena
+  text: What?
+- kind: dialogue
+  speaker: chadwick
+  text: What is it?
+- kind: dialogue
+  speaker: gm
+  text: (pauses again) Just... the wind, I think.
+- kind: dialogue
+  speaker: Vigil
+  text: (murmurs) Nothing's moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's just the trees.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Chadwick, I had a weird dream last night.

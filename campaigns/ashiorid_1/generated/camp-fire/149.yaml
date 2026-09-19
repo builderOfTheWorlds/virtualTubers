@@ -1,0 +1,35 @@
+id: camp-fire
+take: 149
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:57.224433+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain shows no signs of letting up, we'll be stuck here for a while.
+- kind: dialogue
+  speaker: chadwick
+  text: I want to settle the watch order before we all fall asleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, it's a good one, should last the night.
+- kind: dialogue
+  speaker: Vigil
+  text: The wood is damp.
+- kind: dialogue
+  speaker: Leena
+  text: What's the longest anyone's gone without sleep in the wilderness?
+- kind: dialogue
+  speaker: gm
+  text: We've all been through worse, try to get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just decide to split the watch among ourselves.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe if we added more kindling it'd dry out faster.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain will keep the forest quiet.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we'll just wake up to the same rain tomorrow.

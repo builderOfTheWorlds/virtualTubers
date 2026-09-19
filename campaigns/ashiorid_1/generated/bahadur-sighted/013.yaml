@@ -1,0 +1,38 @@
+id: bahadur-sighted
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:20.999524+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The treeline looks different.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: gm
+  text: Never mind.
+- kind: dialogue
+  speaker: Leena
+  text: Is something there?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see something.
+- kind: dialogue
+  speaker: gm
+  text: What?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's gone.
+- kind: dialogue
+  speaker: Leena
+  text: Was it Bahadur?
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.

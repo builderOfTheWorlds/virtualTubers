@@ -1,0 +1,41 @@
+id: malmont-market
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:54.883155+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like that apprentice could use some guidance, if you ask me.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, well, I'm here for a reason, not to give lessons.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, don't be so hard on him, Vigil. Everyone needs a bit of help.
+- kind: dialogue
+  speaker: Leena
+  text: You know, I think I'll take a look at that map stall instead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's so interesting about those old maps, hmm?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure, it's just something about them.
+- kind: dialogue
+  speaker: Vigil
+  text: Stay close, Leena. We don't know what we're walking into.
+- kind: dialogue
+  speaker: chadwick
+  text: Easy, Vigil. I'm sure it's just harmless.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go see what I can find at the blacksmith's.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get too far ahead, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: This map seller seems to know a lot about the old roads.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, a local expert, that's nice.

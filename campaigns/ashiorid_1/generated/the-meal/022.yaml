@@ -1,0 +1,41 @@
+id: the-meal
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:22:04.869518+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's done with their plates?
+- kind: dialogue
+  speaker: chadwick
+  text: Me.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's make this a special occasion!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if I were cooking, this wouldn't be a problem.
+- kind: dialogue
+  speaker: gm
+  text: Who cooked today, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Obviously not the most skilled person in the group.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be so harsh, it's just a meal.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat already.
+- kind: dialogue
+  speaker: gm
+  text: Who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I should be, but I doubt I'd be saddled with the pot.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the story with this pot, anyway?
+- kind: dialogue
+  speaker: Leena
+  text: It's just an old pot, Sodacan Bob.

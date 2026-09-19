@@ -1,0 +1,40 @@
+id: chadwick-lost
+take: 159
+model: llama3.1:8b
+generated_at: '2026-09-18T20:16:07.980731+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out, we've got a ways to go.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're heading in the right direction.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I'm not exactly an expert, but it looks like we've been walking in a
+    circle.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I've got it.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) I think I can help if you want, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, poor Chadwick, lost in the woods.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Actually, Chadwick, if you're not sure, I could lead for a
+    bit.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) It's okay, I'm sure we'll get there eventually.
+- kind: dialogue
+  speaker: gm
+  text: Wait, what's that over there?

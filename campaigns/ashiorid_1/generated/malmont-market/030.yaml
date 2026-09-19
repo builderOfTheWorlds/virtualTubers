@@ -1,0 +1,33 @@
+id: malmont-market
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:42.349345+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning, good people. I'm looking for something to get a spark in my travel
+    gear.
+- kind: dialogue
+  speaker: Leena
+  text: You're getting a lot of attention, aren't you?
+- kind: dialogue
+  speaker: chadwick
+  text: Not a bit, love. I'm just another traveler passing through.
+- kind: dialogue
+  speaker: Vigil
+  text: That's a fine hammer you've got there.
+- kind: dialogue
+  speaker: Leena
+  text: Old maps. Where do they come from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: These are your finest pieces? I've seen better work in a child's forge.
+- kind: dialogue
+  speaker: Vigil
+  text: Plenty of places to get a good meal, but not much that's worth buying.
+- kind: dialogue
+  speaker: Leena
+  text: This one's marked with symbols I don't recognize.
+- kind: dialogue
+  speaker: chadwick
+  text: Must be from a different land. Never seen those markings myself.

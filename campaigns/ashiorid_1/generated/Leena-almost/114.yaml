@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:10.778539+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: Leena
+  text: That doorway. I've seen it before. I shouldn't have seen it.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. It's not worth it.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's just a familiar shape, Leena. Don't read too much into it.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not just the shape. There's something... else.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you mean. I've seen similar doorways in your village.
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think so. It's not from my village.
+- kind: dialogue
+  speaker: Vigil
+  text: Whatever it is, it's not a concern right now.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just curious. That's all.

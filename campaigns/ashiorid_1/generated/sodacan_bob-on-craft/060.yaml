@@ -1,0 +1,42 @@
+id: sodacan_bob-on-craft
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T20:52:08.468202+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high overhead, casting a warm glow over the dusty terrain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at this! I was just examining it and I realized it's a wagon axle from
+    the eastern continent.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's get moving. We don't have all day.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, is that a bracket on the door? What kind of door?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's a fine piece of work. Clearly made by a skilled craftsman from the
+    city of Brindlemark.
+- kind: dialogue
+  speaker: Vigil
+  text: Does it show any signs of wear from being used in a battle?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, no. I think it was made for a merchant's wagon, not for military
+    use.
+- kind: dialogue
+  speaker: Leena
+  text: I love the little details on it. Who made the designs?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's a good question. I believe they're the mark of a guild of craftsmen
+    from the north.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighing) This is taking too long.
+- kind: dialogue
+  speaker: gm
+  text: As you stand there, the wind picks up, rustling the dry grass around you.

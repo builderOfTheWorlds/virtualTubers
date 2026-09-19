@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:16.618498+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen carvings like that before, but never so precise, never so... clean.
+- kind: dialogue
+  speaker: Vigil
+  text: You think that's what it says, Bob? You're not just seeing what you want to
+    see?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm seeing what's there, Vigil. It's not my job to decipher the meaning.
+- kind: dialogue
+  speaker: Leena
+  text: But you're a craftsman, Bob. You must have some idea what it means.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm a smith, Leena. I make things that last a lifetime, not ancient artifacts
+    that nobody can read.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, do you have any thoughts on what this might say?
+- kind: dialogue
+  speaker: chadwick
+  text: I was just thinking that it looks like some kind of map, but I couldn't say
+    what it means.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A map, yeah... that's a good thought, Chadwick. A map to where?

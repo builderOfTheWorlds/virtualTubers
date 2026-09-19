@@ -1,0 +1,32 @@
+id: nafsari-question
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:44.887696+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It was a different kind of quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean?
+- kind: dialogue
+  speaker: Vigil
+  text: The trees are still there.
+- kind: dialogue
+  speaker: Leena
+  text: I've always wondered what it's like to grow up in the woods.
+- kind: dialogue
+  speaker: Vigil
+  text: The sun filters through the leaves.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do you miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: I see it in the forest.
+- kind: dialogue
+  speaker: gm
+  text: Enough about that.
+- kind: dialogue
+  speaker: Vigil
+  text: It's nice to remember.

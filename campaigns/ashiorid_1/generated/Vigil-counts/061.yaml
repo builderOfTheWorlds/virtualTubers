@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:05.432462+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the cart that passed by earlier is the same one that passed by last
+    time.
+- kind: dialogue
+  speaker: Leena
+  text: What are you talking about, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just the cart. It's the same one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw that too.
+- kind: dialogue
+  speaker: chadwick
+  text: So what?
+- kind: dialogue
+  speaker: gm
+  text: It's just a cart, it's not a concern.
+- kind: dialogue
+  speaker: Vigil
+  text: No, I'm not saying it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go get some more ale.
+- kind: dialogue
+  speaker: Leena
+  text: Good idea, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll come with you.
+- kind: dialogue
+  speaker: gm
+  text: You're free to go, but let's not get sidetracked.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to stand over here.

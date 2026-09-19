@@ -1,0 +1,43 @@
+id: the-meal
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:20.213023+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's going to take care of cooking tomorrow?
+- kind: dialogue
+  speaker: chadwick
+  text: I will.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Chadwick, let's all take turns, it's more fun!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can cook better than any of you, I swear I can.
+- kind: dialogue
+  speaker: chadwick
+  text: Just give me the ingredients and I'll make something edible.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, don't be so sure, I think your cooking is great.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Great? This food is an abomination, I could do so much better.
+- kind: dialogue
+  speaker: Vigil
+  text: (takes a piece of Vigil's food)
+- kind: dialogue
+  speaker: chadwick
+  text: What's going on here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying, if someone didn't know what they were doing, they must have botched
+    it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, don't be so hard on them, it's just a meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I demand to know who cooked this, I'll make sure to teach them a thing or
+    two.

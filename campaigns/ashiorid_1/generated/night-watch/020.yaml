@@ -1,0 +1,42 @@
+id: night-watch
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:04.567429+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is very clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I can see all the stars.
+- kind: dialogue
+  speaker: Leena
+  text: (stifling a yawn) I wish I could sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) I'll wake you up when it's time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (breathing softly) I don't think anyone's coming.
+- kind: dialogue
+  speaker: chadwick
+  text: Do you think we can let them sleep a bit longer?
+- kind: dialogue
+  speaker: gm
+  text: I don't know, it's not like we're running low on time.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly serious) Leena, what was that you said about your family?
+- kind: dialogue
+  speaker: Leena
+  text: (pausing, then continuing) Just that my mom used to tell me about these...
+    stories.
+- kind: dialogue
+  speaker: gm
+  text: (curious) What kind of stories?
+- kind: dialogue
+  speaker: Leena
+  text: (hesitant) Just... folk tales, I guess. About the world before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (suddenly awake) What are you talking about?

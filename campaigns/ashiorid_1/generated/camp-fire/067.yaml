@@ -1,0 +1,33 @@
+id: camp-fire
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:33.497982+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not showing any signs of letting up.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get to it then. Who's on watch tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, Bob's the only one who knows how to build a fire that'll
+    last the night.
+- kind: dialogue
+  speaker: Vigil
+  text: We need dry wood.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the well is still safe, even if it didn't seal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's fine, we're miles away.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's watching the fire while we're all talking?
+- kind: dialogue
+  speaker: Leena
+  text: Maybe it's not fine, maybe it's just quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: It's quiet.

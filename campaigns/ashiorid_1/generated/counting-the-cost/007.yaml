@@ -1,0 +1,26 @@
+id: counting-the-cost
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:59.681482+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's a bit worse for wear, like a table leg needing a new mortise.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the plan, Bob? Can we get back on the road?
+- kind: dialogue
+  speaker: Leena
+  text: I can help with the repairs. I've worked with wood before.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll scout ahead and see if we can find any materials.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not just the cart, Vigil. We've got gear that needs tempering.
+- kind: dialogue
+  speaker: gm
+  text: And what about the group? Some of you look like you've been through a forge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A bit of wear and tear. Some of us need rejoining.

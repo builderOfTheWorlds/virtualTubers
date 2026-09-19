@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:54.182540+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, we need to get to the next village. Who can lead us there?
+- kind: dialogue
+  speaker: chadwick
+  text: I can lead us there, no problem.
+- kind: dialogue
+  speaker: Leena
+  text: Are you sure, Chadwick? You don't even know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do, I've been paying attention.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (sighs) I'll just sit here and wait to be asked, then.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, I'm trying to help. If you don't know where we are, you can just
+    say so.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know exactly where we are, I'm just... conserving my energy.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Con-serving his energy! (chuckles)
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Shut up, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Actually, I think I can tell you where we are, Chadwick...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.

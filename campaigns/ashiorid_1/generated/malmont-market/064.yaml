@@ -1,0 +1,41 @@
+id: malmont-market
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:05.290266+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work on the side of the road.
+- kind: dialogue
+  speaker: Leena
+  text: I love the colors on this one, but it's all wrong.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Expensive.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, good morning. Isn't it lovely to be anonymous for once?
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Do you have anything from the old road?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the story behind this sword?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) It's been passed from master to apprentice for generations.
+- kind: dialogue
+  speaker: chadwick
+  text: (to no one in particular) It's nice to blend in for a day.
+- kind: dialogue
+  speaker: Leena
+  text: I think this map is from a trade route, but I'm not sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a piece of metal with some lines on it.
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) It's a good piece of metal.
+- kind: dialogue
+  speaker: chadwick
+  text: (whistling) I think I'll just keep walking.

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 198
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:35.273174+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's coming down something fierce, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I wonder how much water we'd need to refill the well.
+- kind: dialogue
+  speaker: Vigil
+  text: We'd need the entire river.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Vigil, it's not that deep.
+- kind: dialogue
+  speaker: gm
+  text: Enough, Bob. We'll worry about it in the morning.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's on watch tonight, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll take the first shift, no problem.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it matters, though – we're not leaving.
+- kind: dialogue
+  speaker: Vigil
+  text: Because the fire won't hold.

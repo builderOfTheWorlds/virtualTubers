@@ -1,0 +1,41 @@
+id: vigil-watches-longer
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:44:36.695742+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear tonight, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Sorry to wake you, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: (stretches) Morning already?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) No one's moving.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) The fire's burning low.
+- kind: dialogue
+  speaker: Leena
+  text: (adds more wood) Need a bit more fuel.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: chadwick
+  text: (looks at Vigil) What's eating at you?
+- kind: dialogue
+  speaker: gm
+  text: (nods at Chadwick) Let him be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pours himself a cup of tea) Anyone want some?
+- kind: dialogue
+  speaker: Leena
+  text: (smiles) No, thank you, Bob.

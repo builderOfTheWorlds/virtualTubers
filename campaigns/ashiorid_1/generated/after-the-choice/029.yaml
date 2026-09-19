@@ -1,0 +1,23 @@
+id: after-the-choice
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:30.589993+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've had some quiet moments like this before, right?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I guess so.
+- kind: dialogue
+  speaker: Leena
+  text: It's not always easy, but it's...
+- kind: dialogue
+  speaker: Vigil
+  text: Sometimes necessary.
+- kind: dialogue
+  speaker: Leena
+  text: Can we... make a joke about something else?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we've earned that.

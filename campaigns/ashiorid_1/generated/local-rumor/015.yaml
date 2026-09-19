@@ -1,0 +1,32 @@
+id: local-rumor
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:01.273116+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: People talk, but nobody really knows anything about it.
+- kind: dialogue
+  speaker: chadwick
+  text: Just another town with too many secrets.
+- kind: dialogue
+  speaker: Leena
+  text: I'll ask the locals about it later.
+- kind: dialogue
+  speaker: Vigil
+  text: Unregistered doesn't mean they're doing anything wrong.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should get a room and get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: A few hours won't hurt, but don't get too comfortable.
+- kind: dialogue
+  speaker: Leena
+  text: I'll keep an eye on our gear, in case.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll be moving on at dawn, as planned.
+- kind: dialogue
+  speaker: gm
+  text: Nothing's changed since we left the manor.

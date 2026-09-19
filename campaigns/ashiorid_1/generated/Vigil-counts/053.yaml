@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:34.129988+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart that passed twice was carrying ale.
+- kind: dialogue
+  speaker: chadwick
+  text: Ale's not going to save us from whatever's waiting for us.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) You think it's waiting for us, Chadwick?
+- kind: dialogue
+  speaker: Vigil
+  text: I just noticed the cart passed twice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's probably just because the driver liked the song it was playing.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter's been repaired, too.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not even worth a comment from you, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: (to Vigil) You're quiet, what's on your mind?
+- kind: dialogue
+  speaker: Vigil
+  text: There are four people in the room besides us.

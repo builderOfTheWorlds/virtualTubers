@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:51.671615+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As I was saying, the cart that's been making deliveries has been making a
+    lot of noise.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I think I've heard it, it's that new guy on the wheelbarrow.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I saw him getting into a fight with the baker yesterday.
+- kind: dialogue
+  speaker: Vigil
+  text: The baker's wife was there, too, arguing with someone over a broken jar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I thought I saw the baker's wife smiling at me earlier.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Maybe she's got a soft spot for you, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Anyway, what's the plan for the rest of the day?
+- kind: dialogue
+  speaker: Vigil
+  text: (nonchalantly) I just thought I'd mention that the north door opens inward.
+- kind: dialogue
+  speaker: gm
+  text: And I still think we should check on the roof.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll go grab some tools.
+- kind: dialogue
+  speaker: chadwick
+  text: (whistles) Sounds good to me, let's get to work.

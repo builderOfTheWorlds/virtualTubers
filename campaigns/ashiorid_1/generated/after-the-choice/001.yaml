@@ -1,0 +1,38 @@
+id: after-the-choice
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:13.471579+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's still lit, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing) We should, uh, make some more hot tea.
+- kind: dialogue
+  speaker: Vigil
+  text: (nothing)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs awkwardly) Oh, I think we can handle that.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) You're right.
+- kind: dialogue
+  speaker: Leena
+  text: (awkward laugh) Yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: Still got the tea bags, don't we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (nervously) Of course we do.
+- kind: dialogue
+  speaker: gm
+  text: (pauses again) You know, just like the last time.
+- kind: dialogue
+  speaker: Vigil
+  text: (nothing)

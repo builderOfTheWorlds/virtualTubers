@@ -1,0 +1,34 @@
+id: bob-vs-the-cart-wheel
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:41.964418+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get back to the route, Sodacan Bob's got some points but
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no, you're thinking like a novice, the axle's off-center, it's a disaster
+    waiting to happen
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we've been over this, the design's sound, it's just
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and we don't have time for a do-over, we've got miles to cover
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Time? Time is what we'll be wasting with this rickety monstrosity on the road
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, I think Ashiorid's trying to get us back on track, literally
+- kind: dialogue
+  speaker: gm
+  text: Exactly, we can't afford to lose another day, let's move
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're just saying that because you don't know what you're talking about,
+    this is crucial
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, we've all listened, maybe it's time to let someone else drive

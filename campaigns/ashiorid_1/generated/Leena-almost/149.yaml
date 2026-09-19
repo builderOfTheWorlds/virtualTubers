@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 149
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:07.552966+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something's familiar to Leena, something that shouldn't be.
+- kind: dialogue
+  speaker: Leena
+  text: It's a turn of phrase, somebody used, a tune being hummed, the shape of a
+    doorway, a smell.
+- kind: dialogue
+  speaker: gm
+  text: What's familiar?
+- kind: dialogue
+  speaker: Leena
+  text: I say it out loud, because I always do.
+- kind: dialogue
+  speaker: gm
+  text: Ordinary explanations, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: She saw one like it in her village.
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just a coincidence, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I won't.

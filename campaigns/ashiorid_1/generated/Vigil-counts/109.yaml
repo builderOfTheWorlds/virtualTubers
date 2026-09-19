@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 109
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:25.073055+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: The village is quiet, people settling in for the night.'
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go get a hot meal, anyone else want one?
+- kind: dialogue
+  speaker: Leena
+  text: I'm good, just sitting here thinking about the next town over.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors on the east side swing out.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Alright, take your time, I''ll just keep an eye on things.'
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, see you all later.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with the shutter, was it busted?
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: It''s been fixed, I think it was the wind that broke it.'
+- kind: dialogue
+  speaker: Leena
+  text: Doesn't matter, it's fixed now.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier is heading in the same direction again.

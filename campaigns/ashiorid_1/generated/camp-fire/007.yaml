@@ -1,0 +1,35 @@
+id: camp-fire
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:28.869134+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, that fire's burning steady, isn't it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I laid it just right, got a good bed of coals going.
+- kind: dialogue
+  speaker: Vigil
+  text: You can hear the rain startin' to let up.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think that's how the world ended, though? Just...a burst of energy?
+- kind: dialogue
+  speaker: chadwick
+  text: We don't have time for that now, we need to figure out who's watch tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should have someone keepin' an eye on the fire, make sure it don't
+    die out.
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's willing to take the first watch?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's still comin' down pretty hard, don't think it'll let up anytime
+    soon.
+- kind: dialogue
+  speaker: Leena
+  text: What if...what if someone tried to close that moonwell, but they were too
+    late?

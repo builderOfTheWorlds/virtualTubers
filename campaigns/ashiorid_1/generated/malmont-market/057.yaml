@@ -1,0 +1,35 @@
+id: malmont-market
+take: 57
+model: llama3.1:8b
+generated_at: '2026-09-18T20:21:21.838003+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning to you, good folk of Malmont.
+- kind: dialogue
+  speaker: Vigil
+  text: (grumbling) Too many people.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice to be just another face in the crowd.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Do they have any new maps in today?
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: A fine day for browsing, indeed.'
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes narrowing) What's with all the magic shops?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Just trying to keep the locals in business.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: And what brings you all to Malmont?'
+- kind: dialogue
+  speaker: Leena
+  text: (distracted) Oh, I was just wondering if they have any... unusual maps.
+- kind: dialogue
+  speaker: chadwick
+  text: (amused) Unusual, you say? That sounds like a story.

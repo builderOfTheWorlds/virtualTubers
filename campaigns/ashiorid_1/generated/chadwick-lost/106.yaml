@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:58.313610+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're getting close to the edge of the forest, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: I know where we are, of course.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, we've been walking for hours. You might want to double-check the
+    map.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive. We just need to keep going straight.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should be heading east now, ma'am.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Told you, guys, he's a one-man compass disaster!
+- kind: dialogue
+  speaker: Leena
+  text: Well, let's just... maybe we can try that, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: No need to reorient ourselves. I know exactly what I'm doing.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's try the east path and see what happens.

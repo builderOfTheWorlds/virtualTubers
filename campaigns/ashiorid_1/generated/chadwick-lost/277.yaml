@@ -1,0 +1,29 @@
+id: chadwick-lost
+take: 277
+model: llama3.1:8b
+generated_at: '2026-09-18T23:50:06.816744+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on the dusty trail ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time, I think.
+- kind: dialogue
+  speaker: Leena
+  text: (hesitantly) Actually, Chadwick, I think we might be off course.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure we're fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) If you're looking for a direction, I could help with that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is going to be fun.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: The trees seem to be thinning out, and the landscape is becoming more... open.

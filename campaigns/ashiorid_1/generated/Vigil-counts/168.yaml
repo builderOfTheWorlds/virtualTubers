@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 168
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:18.077237+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your attention, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the window again.
+- kind: dialogue
+  speaker: Leena
+  text: What's so interesting about that, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it's been to our house twice already.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just the delivery route.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I'm sure it's just coincidence.
+- kind: dialogue
+  speaker: Vigil
+  text: Doesn't seem like it, but nevermind.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on our own route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Indeed, we should keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, there's nothing to see here.
+- kind: dialogue
+  speaker: gm
+  text: Carry on then.

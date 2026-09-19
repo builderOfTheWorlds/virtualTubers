@@ -1,0 +1,39 @@
+id: malmont-market
+take: 81
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:32.116399+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sure I've seen finer work than what's on display here.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around the market) Not impressed, Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I think the smiths are just getting started.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look at this one – a map of the Wysteria Mountains from over a century
+    ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) A century old? It's just a rough outline.
+- kind: dialogue
+  speaker: Leena
+  text: (tapping the map) There's something about it...
+- kind: dialogue
+  speaker: Vigil
+  text: (watching the map vendor with interest) What are you looking at?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Just admiring the... local craftsmanship.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistling softly) Not sure I'd trust a single blacksmith in this town.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes narrowing) You're not exactly selling the local charm, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (excited) Oh, do you think we could talk to the map vendor?

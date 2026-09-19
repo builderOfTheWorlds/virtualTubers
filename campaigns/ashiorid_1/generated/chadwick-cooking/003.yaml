@@ -1,0 +1,32 @@
+id: chadwick-cooking
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:19:59.509906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's eat, I'm starving.
+- kind: dialogue
+  speaker: chadwick
+  text: Pass the sauce, please.
+- kind: dialogue
+  speaker: Leena
+  text: mmm.
+- kind: dialogue
+  speaker: Vigil
+  text: This is... um, interesting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's got character.
+- kind: dialogue
+  speaker: chadwick
+  text: So, how's everyone's day been?
+- kind: dialogue
+  speaker: Leena
+  text: It's been... fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah-choo.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Excuse me.

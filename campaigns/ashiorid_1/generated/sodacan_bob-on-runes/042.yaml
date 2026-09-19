@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:54:13.003860+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die's struck, and the rune has to be cut deep enough to survive the weather,
+    you see.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of weather?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not the kind that comes in a week or a month, but the kind that wears a mountain
+    down over a thousand years.
+- kind: dialogue
+  speaker: Vigil
+  text: And you think it's significant that it was carved like that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just craftsmanship, but the more I think about it...
+- kind: dialogue
+  speaker: Leena
+  text: What's it make you think about?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The ones who carved it, of course. They were planning for something long-term.
+- kind: dialogue
+  speaker: gm
+  text: What's got you so fascinated with this, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, just the way it's carved. Nothing.

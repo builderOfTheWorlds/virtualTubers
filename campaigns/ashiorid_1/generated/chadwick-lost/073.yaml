@@ -1,0 +1,39 @@
+id: chadwick-lost
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:37.098011+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The path forks ahead. You've been walking for a while, Chadwick. What do you
+    see?
+- kind: dialogue
+  speaker: chadwick
+  text: I see the mountains, and a stream down below. We're headed towards the mountains.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, we're definitely headed towards the mountains.
+- kind: dialogue
+  speaker: Leena
+  text: Um, might I suggest we take a look at the stream before deciding which way
+    to go, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: We're not going to follow the stream. We need to get up into the mountains.
+- kind: dialogue
+  speaker: Vigil
+  text: If I recall correctly, the stream usually flows downhill. And the mountains
+    are that way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Yeah, we're definitely not following the stream, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll take the left path. That way we'll be heading into the mountains.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) Alright, the left path it is, then.
+- kind: dialogue
+  speaker: gm
+  text: The left path leads you steadily up into the mountains, and the stream becomes
+    a distant memory.

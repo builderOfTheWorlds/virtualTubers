@@ -1,0 +1,34 @@
+id: malmont-market
+take: 166
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:23.998561+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is a waste of time, I can make better armor than this.
+- kind: dialogue
+  speaker: Vigil
+  text: Careful, Bob, don't let your temper get the better of you.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look at this one – a 19th century map of the eastern ranges.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice. I used to study these sorts of things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, geography? You think that's going to help us find what we're looking
+    for?
+- kind: dialogue
+  speaker: Leena
+  text: It's not about the geography, it's about the maps themselves. These are from
+    before the war.
+- kind: dialogue
+  speaker: Vigil
+  text: The war? What are you talking about, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: I think she's trying to say that these maps might be...interesting.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, that's exactly what I mean.

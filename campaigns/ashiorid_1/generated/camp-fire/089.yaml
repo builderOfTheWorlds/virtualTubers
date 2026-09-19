@@ -1,0 +1,41 @@
+id: camp-fire
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T19:53:32.031871+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to worry about the fire.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told them to lay it with the dry kindling, but they didn't listen.
+- kind: dialogue
+  speaker: Vigil
+  text: We need a firebreak.
+- kind: dialogue
+  speaker: Leena
+  text: What's the earliest the wellspring can replenish the fire?
+- kind: dialogue
+  speaker: gm
+  text: The wellspring's not a magic solution, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We need more kindling, that's the problem.
+- kind: dialogue
+  speaker: Vigil
+  text: We have enough kindling.
+- kind: dialogue
+  speaker: chadwick
+  text: We need a watch order settled before we can think about kindling.
+- kind: dialogue
+  speaker: Leena
+  text: And what's the point of watching if the fire just goes out on its own?
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, Chadwick, let's not get ahead of ourselves.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've sworn I showed you all how to lay a fire like this.

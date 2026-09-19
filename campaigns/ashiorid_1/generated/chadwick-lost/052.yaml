@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 52
+model: llama3.1:8b
+generated_at: '2026-09-18T20:04:15.991917+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, what's the plan? Which way are we heading?
+- kind: dialogue
+  speaker: chadwick
+  text: We're going this way.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, I thought you'd already figured out the route, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I did.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Vigil, do you know where we are?
+- kind: dialogue
+  speaker: Vigil
+  text: If you ask me, I can tell you.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Poor Chadwick, lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't you just ask Vigil for help, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.

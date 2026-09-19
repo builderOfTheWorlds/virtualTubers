@@ -1,0 +1,26 @@
+id: the-map-argument
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:56.076586+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle this. We need to get to the other side of the forest.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally, someone competent to tell me how to read a map.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on Chadwick, it's not that hard.
+- kind: dialogue
+  speaker: chadwick
+  text: You think you're helping, don't you? Always so quick to defend Leena's mediocrity.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, focus. We need to get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, Chadwick's just trying to make a point.
+- kind: dialogue
+  speaker: chadwick
+  text: The point is, Leena can't even read a map without messing it up.

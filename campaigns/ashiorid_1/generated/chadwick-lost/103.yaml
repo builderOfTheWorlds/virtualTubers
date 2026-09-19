@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:43.790883+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's this way, I'm pretty sure.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive it's the other way.
+- kind: dialogue
+  speaker: Leena
+  text: Would you like me to check the map, Chad?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I trust my instincts.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) I can give you directions, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is going to be good.
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) What are you talking about, Bob?
+- kind: dialogue
+  speaker: Leena
+  text: (soothingly) Chad, maybe we can just take a detour and come back?
+- kind: dialogue
+  speaker: chadwick
+  text: No, we'll stick to the plan.

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:43.003349+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the plan for the day?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to try and find that buyer for the goods.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go with him, keep an eye on him.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on your left opens outward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll be back by dinner, don't worry.
+- kind: dialogue
+  speaker: gm
+  text: Anything else before you go?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I think we're good.
+- kind: dialogue
+  speaker: Leena
+  text: Let's get moving then.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that just passed has passed this way before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean?

@@ -1,0 +1,29 @@
+id: chadwick-lost
+take: 68
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:06.610998+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, what's the plan?
+- kind: dialogue
+  speaker: chadwick
+  text: We're heading east, into the hills.
+- kind: dialogue
+  speaker: Leena
+  text: That's... quite a different route than the one we usually take.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) This is going to be good.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, do you think we're on the right track?
+- kind: dialogue
+  speaker: Vigil
+  text: (still silence)
+- kind: dialogue
+  speaker: chadwick
+  text: What are you looking at, Vigil?

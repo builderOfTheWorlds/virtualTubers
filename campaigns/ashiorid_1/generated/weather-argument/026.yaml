@@ -1,0 +1,41 @@
+id: weather-argument
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:19.912660+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, it's going to pour by nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, the sky's been too clear all day.
+- kind: dialogue
+  speaker: Leena
+  text: But I saw clouds building up near the mountains, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: You're just talking about the clouds, Leena, that means nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, but I heard the radio say there's a low-pressure system moving in.
+- kind: dialogue
+  speaker: chadwick
+  text: That was this morning, Bob, it's not going to make it here by tonight.
+- kind: dialogue
+  speaker: Leena
+  text: The wind is picking up, I can feel it.
+- kind: dialogue
+  speaker: gm
+  text: Exactly, that's why I said it's going to rain.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, Ashiorid, the air feels weird, maybe it's just hot.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm still sticking with the radio, guys.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but if it rains I'm blaming Bob.
+- kind: dialogue
+  speaker: Leena
+  text: We'll see about that, Chadwick, I think I'm right.

@@ -1,0 +1,123 @@
+invitation-arc-alt2:
+  node_id: invitation-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers each receive the same mysterious card, marking ten thousand
+    y
+  summary: The four strangers each receive the same mysterious card, marking ten thousand
+    years since the Event. They are drawn together by fate and curiosity.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-alt2-n0
+  - invitation-arc-alt2-n1
+  slots: null
+invitation-arc-alt2-n0:
+  node_id: invitation-arc-alt2-n0
+  parent_id: invitation-arc-alt2
+  order: 0
+  depth: 1
+  title: The Card's Call
+  summary: Four strangers across different worlds receive identical mysterious cards
+    marking ten thousand years since the Event. Each card bears ancient symbols and
+    a strange pull that draws them toward a convergence point. Their curiosity is
+    piqued, but they know not what they seek.
+  continuity_in: The four strangers each receive the same mysterious card, marking
+    ten thousand years since the Event. They are drawn together by fate and curiosity.
+  continuity_out: The mysterious cards have drawn the four strangers to a crossroads
+    where their paths converge, each carrying the weight of ancient knowledge and
+    the promise of revelation.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+invitation-arc-alt2-n1:
+  node_id: invitation-arc-alt2-n1
+  parent_id: invitation-arc-alt2
+  order: 1
+  depth: 1
+  title: Convergence Point
+  summary: The four strangers arrive at the same location, drawn by the cards' pull.
+    They meet for the first time, sharing a moment of recognition and uncertainty.
+    Each holds secrets from their respective worlds, and they begin to sense that
+    the Event was not merely an ending, but perhaps a beginning.
+  continuity_in: The mysterious cards have drawn the four strangers to a crossroads
+    where their paths converge, each carrying the weight of ancient knowledge and
+    the promise of revelation.
+  continuity_out: The strangers have met and shared initial revelations about their
+    cards' significance, now poised to uncover deeper mysteries that connect their
+    worlds and the Event itself.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-alt2-n1-convergence-1
+    kind: ambient
+    prompt: The four strangers arrive at the crossroads, each drawn by the same mysterious
+      card. They pause, looking around with a mixture of recognition and unease.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt2-n1-convergence-2
+    kind: ambient
+    prompt: A tense silence falls between them. Each stranger senses the weight of
+      their shared discovery, but also the secrets they carry from their own worlds.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt2-n1-convergence-3
+    kind: ambient
+    prompt: Leena steps forward, her hand instinctively moving to the amulet around
+      her neck. She looks at the others with a mixture of curiosity and wariness.
+    lore:
+    - amulet-of-wonder
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt2-n1-convergence-4
+    kind: ambient
+    prompt: Vigil's eyes flicker toward the moonwells, remembering stories of ancient
+      magic. He speaks softly, his voice carrying a weight of forgotten knowledge.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt2-n1-convergence-5
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm

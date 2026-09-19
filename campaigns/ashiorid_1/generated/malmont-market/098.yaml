@@ -1,0 +1,20 @@
+id: malmont-market
+take: 98
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:10.787593+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The town square's bustling as usual this morning.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a relief to blend in for a change.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers to Chadwick) I think I saw an old map I've seen before.
+- kind: dialogue
+  speaker: Vigil
+  text: (tactfully ignores Leena's comment) Just... enjoying the atmosphere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Where's the decent blacksmith work around here?

@@ -1,0 +1,32 @@
+id: malmont-market
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:46.788631+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Morning, looks like a slow day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not enough ironmongery on show here.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, actually, I think the pastries are looking quite good.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's this then? (points to a stall with old maps)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, they're just reproducing ancient copies. No skill.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll be buying something. Just to be seen.
+- kind: dialogue
+  speaker: Leena
+  text: These maps are from before the Great Split.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll try one of those scones. Freshly baked.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This town's got more markets than it's got blacksmiths.

@@ -1,0 +1,36 @@
+id: weather-argument
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:45:44.240568+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, I saw a bunch of dark clouds on the way here.
+- kind: dialogue
+  speaker: chadwick
+  text: But didn't we just drive past those? They're not looking ominous now.
+- kind: dialogue
+  speaker: Leena
+  text: Exactly, and the wind is really picking up, that's a good sign for rain.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, I was reading this article about how the weather patterns have
+    shifted lately.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patterns? You mean like, the whole "we get rain every Tuesday" pattern?
+- kind: dialogue
+  speaker: chadwick
+  text: That's not exactly what he means, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, it sounds like Vigil is just making something up.
+- kind: dialogue
+  speaker: Vigil
+  text: I am not, I'm just saying that there's been some changes in the wind direction.
+- kind: dialogue
+  speaker: gm
+  text: And I'm just saying, I don't trust a single one of you with a forecast.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hey, we can't all be experts like you, Vigil.

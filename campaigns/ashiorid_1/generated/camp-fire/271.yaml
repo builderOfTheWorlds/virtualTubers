@@ -1,0 +1,41 @@
+id: camp-fire
+take: 271
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:14.121507+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's letting up a bit, but I think we'll still get wet going out to
+    check the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to take the first watch, make sure everything's secure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think the fire's going to last, not with this wind.
+- kind: dialogue
+  speaker: Vigil
+  text: Wind comes from the east, usually.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how we're going to get more firewood?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure it out, don't worry about it now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I think the fire was laid a bit off-center, that's why it's not
+    burning evenly.
+- kind: dialogue
+  speaker: gm
+  text: It's probably just the rain, but we should keep an eye on it.
+- kind: dialogue
+  speaker: Vigil
+  text: Seal is not a word for holding back magic.
+- kind: dialogue
+  speaker: Leena
+  text: What's the moon's position tonight, do you think?
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just focus on getting through the night, we can figure out the rest
+    in the morning.

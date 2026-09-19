@@ -1,0 +1,38 @@
+id: the-meal
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T21:00:11.002636+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I thought we agreed on a simple pasta dish.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not pasta, it's a travesty.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, everyone, let's not be too hard on the cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You call that a sauce? It's just a stain.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I think it's kind of charming, actually.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Charming? It's a culinary crime scene.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, it's just food.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just food? This is an insult.
+- kind: dialogue
+  speaker: Leena
+  text: Hey, can we talk about something else?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's for dessert?
+- kind: dialogue
+  speaker: Leena
+  text: Anyone want to play cards instead?

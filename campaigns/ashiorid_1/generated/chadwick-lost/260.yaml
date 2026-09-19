@@ -1,0 +1,34 @@
+id: chadwick-lost
+take: 260
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:59.970357+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for a few hours now. Where do you think we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I have no idea, but I'm sure we'll find out soon.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Well, you've been leading us, Chadwick. You must know where we're
+    going.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do. We're following the map, aren't we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, Chadwick, you're such a comedian.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) Actually, I know exactly where we are, Chadwick. But I'd love to see
+    you figure it out.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to figure it out, I have the map. Now, let's keep moving.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Wait, what's that? (points) Do you think that's the right path?
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) Of course it is. I led us here, didn't I?

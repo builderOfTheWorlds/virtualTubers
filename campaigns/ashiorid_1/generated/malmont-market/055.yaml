@@ -1,0 +1,39 @@
+id: malmont-market
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T20:21:09.032262+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the story with the work here, Bob's best forge's got more life in it
+    than this.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too many people, too much interest...
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) How old is this one?
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) Oh, um, just browsing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Unbelievable, no one can make a decent hammer around here.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) This one, the one with the rivers... I've seen it before.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) Someone's been talking.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Just enjoying the view.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disappointed) Guess I'll have to stick to what I've got.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Do you have more like that?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) Keep your voice down.

@@ -1,0 +1,33 @@
+id: chadwick-lost
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:20.424970+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city is spread out before us, Chadwick. We should be able to see the river
+    from here.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I like the look of that valley.
+- kind: dialogue
+  speaker: Leena
+  text: Well, it does look a bit treacherous.
+- kind: dialogue
+  speaker: chadwick
+  text: I just have a feeling about it, okay?
+- kind: dialogue
+  speaker: Vigil
+  text: I think I know exactly where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: Leena
+  text: If you're unsure, Vigil could just tell us where we are, and we can-
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this. I was just testing our map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Save it, Chadwick.

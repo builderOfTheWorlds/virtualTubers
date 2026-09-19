@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:57.683217+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: A shutter on the eastern wall looks like it's been fixed recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What, is it broken again?
+- kind: dialogue
+  speaker: Leena
+  text: Just means the owner's on top of things, don't you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, or they just got some free labor.
+- kind: dialogue
+  speaker: gm
+  text: So you three have a plan for dinner?
+- kind: dialogue
+  speaker: chadwick
+  text: I asked the innkeeper for some recommendations.
+- kind: dialogue
+  speaker: Leena
+  text: There's a place that does a good stew nearby.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier is back at the corner.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just making deliveries.
+- kind: dialogue
+  speaker: Leena
+  text: Must be, because it's moving slow.

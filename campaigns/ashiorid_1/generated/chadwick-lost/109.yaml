@@ -1,0 +1,39 @@
+id: chadwick-lost
+take: 109
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:23.014293+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest is getting thicker, Chadwick, can you tell me if we should turn
+    left or right here?
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's a bit too early to decide that. We've got a good few hours of
+    daylight left.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Vigil can always use her map if we're unsure, can't you, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Of course, Leena. But I'd rather see Chadwick's instincts guide us for now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is rich. The great navigator, Chadwick, lost in the
+    woods.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, come on, Sodacan Bob, it's not that funny.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not lost, I'm just... conserving my energy for the right moment.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) That's good thinking, Chadwick. You're a strategist, after all.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving then. Chadwick, can you tell me what you see up
+    ahead?
+- kind: dialogue
+  speaker: chadwick
+  text: (pausing) Ah, yes... well, I think I see a clearing up ahead.

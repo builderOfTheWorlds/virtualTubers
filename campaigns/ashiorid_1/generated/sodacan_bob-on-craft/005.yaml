@@ -1,0 +1,45 @@
+id: sodacan_bob-on-craft
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:00:01.770246+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you've stopped to examine this gate, Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a beautifully made gate, if I do say so myself. Look at the mortise and
+    tenon joint here.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move. We've got a long way to go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but this is worth a minute or two. I think it was made by the Smith family,
+    who were blacksmiths in the area.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can you show me where they made it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, yes, I think I can see the faint markings of their seal on the hinge.
+- kind: dialogue
+  speaker: Vigil
+  text: Is it still serviceable?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, that depends on what you need it for. I think it's been out of commission
+    for a while.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, seriously, let's keep moving.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob's still explaining the gate's history.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I think the maker was thinking about durability and functionality, rather
+    than just aesthetics.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's pretty, Bob.

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:47.015432+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what's the situation here?
+- kind: dialogue
+  speaker: chadwick
+  text: We were just talking about our plan for getting to the city.
+- kind: dialogue
+  speaker: Leena
+  text: I think we should focus on finding a safe way to get the artifacts there.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the east opens out into a narrow alley.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that a good thing?
+- kind: dialogue
+  speaker: chadwick
+  text: It's a start.
+- kind: dialogue
+  speaker: Vigil
+  text: A shutter on the north wall was fixed recently.
+- kind: dialogue
+  speaker: Leena
+  text: Who does that kind of thing?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a weird thing to fix.

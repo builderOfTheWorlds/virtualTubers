@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 215
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:48.213615+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's main thoroughfare is quiet this time of morning, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: It's a good day for a quiet morning, yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I'm more concerned about getting to the merchant district on time.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter on the east window was repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of noticing that?
+- kind: dialogue
+  speaker: chadwick
+  text: It's just something he notices, Bob.
+- kind: dialogue
+  speaker: gm
+  text: We should get moving, we've still got a few hours.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed us on the way here is going in the opposite direction.
+- kind: dialogue
+  speaker: Leena
+  text: It's just a cart, let's focus on the task at hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that cart before, but I don't remember which day.

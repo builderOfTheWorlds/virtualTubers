@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 131
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:31.611000+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw a doorway like that in your village?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not from my village. I've never been.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: I'm curious, not scared. What is this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, but maybe it's just a trick of the light.
+- kind: dialogue
+  speaker: gm
+  text: What do you want to do about it?
+- kind: dialogue
+  speaker: Leena
+  text: I want to look closer.
+- kind: dialogue
+  speaker: chadwick
+  text: No, Leena, really, don't.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to hurt myself.

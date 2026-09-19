@@ -1,0 +1,29 @@
+id: bob-sings
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:30.309908+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The tavern's quiet evening is shattered by Sodacan Bob's booming voice.
+- kind: dialogue
+  speaker: chadwick
+  text: What in the depths...?
+- kind: dialogue
+  speaker: Leena
+  text: Oh dear heavens.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I will sing of Kragnir's mighty pick! It dug the mountains deep!
+- kind: dialogue
+  speaker: gm
+  text: For the love of...
+- kind: dialogue
+  speaker: chadwick
+  text: Someone get the man a wine jug.
+- kind: dialogue
+  speaker: Leena
+  text: It's like music to my ears, I swear.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I will sing of Kragin's mighty beard! It reached the clouds in a single day!

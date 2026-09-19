@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:46.460323+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we're approaching the old ruins. Let's review the map real quick.
+- kind: dialogue
+  speaker: chadwick
+  text: I knew this was a bad idea, Leena. You said you could read a map.
+- kind: dialogue
+  speaker: Leena
+  text: I can, Chadwick. I said I'd do it, and I will.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, let me see it. I'll prove you wrong.
+- kind: dialogue
+  speaker: Leena
+  text: I don't need you to prove anything.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, come on. I'm just trying to help.
+- kind: dialogue
+  speaker: Leena
+  text: You're just trying to be right.
+- kind: dialogue
+  speaker: Leena
+  text: Look, Vigil, Sodacan Bob, does this look right to you?
+- kind: dialogue
+  speaker: Vigil
+  text: It looks fine to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it looks good. Let's just move on.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no. This is a travesty. I knew it.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just go now?

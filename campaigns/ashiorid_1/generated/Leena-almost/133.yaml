@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 133
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:42.352957+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What's this I smell?
+- kind: dialogue
+  speaker: Vigil
+  text: Smells like rain.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's something else. I've smelled it before.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's that new spice they're selling at the market.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it's from the market.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're thinking of the village, aren't you?
+- kind: dialogue
+  speaker: Leena
+  text: What are you talking about?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you might be remembering.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not speculate.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, just forget about it.
+- kind: dialogue
+  speaker: Leena
+  text: I'd like to know what it is.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not important.

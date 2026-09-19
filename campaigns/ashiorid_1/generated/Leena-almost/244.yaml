@@ -1,0 +1,37 @@
+id: Leena-almost
+take: 244
+model: llama3.1:8b
+generated_at: '2026-09-18T23:37:26.737944+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's been a while since we've been in this part of the manor. Leena, do you
+    recognize anything here?
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like the same sort of place you'd find in any village, Leena. I'm
+    sure it's not familiar to you.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure. It feels familiar, but I don't know how. There's something here
+    that's... off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen something like this before, Leena. Maybe it's similar to the village
+    you're from?
+- kind: dialogue
+  speaker: Vigil
+  text: Let's move on. We don't need to stand around speculating.
+- kind: dialogue
+  speaker: Leena
+  text: No, wait. It's not just something like it. It's exactly like it, but it shouldn't
+    be. I don't know what it is.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You'll get caught up in your own thoughts.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what do you think about the strange feeling Leena's describing?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't have an opinion.

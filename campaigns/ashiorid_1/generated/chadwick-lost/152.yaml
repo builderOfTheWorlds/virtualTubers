@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 152
+model: llama3.1:8b
+generated_at: '2026-09-18T20:15:29.385480+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And as you continue on your journey, you notice that the landscape is changing,
+    with dense trees giving way to a sparse forest.
+- kind: dialogue
+  speaker: Leena
+  text: I'm starting to think we've been walking in circles, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's that look on your face?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, just the thrill of possibly getting lost with these two navigators.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, we're fine, it's all fine.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, if I may suggest, we're actually heading due east.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, that's just what I was thinking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Save it, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, Chadwick, I can always...
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need any help, thank you very much.
+- kind: dialogue
+  speaker: gm
+  text: You see a faint clearing up ahead, and as you enter it, you notice a familiar
+    landmark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah ha! We're back on track!

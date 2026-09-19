@@ -1,0 +1,41 @@
+id: the-meal
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:21:13.213658+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Fine, who's ready for a meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll tell you who's not ready, it's the cook.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, let's not be too hard on the cook, it's a team effort!
+- kind: dialogue
+  speaker: Vigil
+  text: I'll have the leftovers, thank you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should've brought your own food, then.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, don't be such a grouch.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in peace?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather not eat at all than eat this swill.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Vigil, why did you do that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, who cooked this disaster?
+- kind: dialogue
+  speaker: gm
+  text: Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: So what?

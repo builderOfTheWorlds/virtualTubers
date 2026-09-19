@@ -1,0 +1,35 @@
+id: bob-sings
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:45.584381+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Sodacan Bob''s warbling carries through the cavern like a drunken
+    badger.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Is that... "I dig and I dig and the stone''s deep roots"?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Dig and I dig and the stone''s deep roots, but my axe won''t
+    bloody well bite!'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena:'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I think he''s actually in tune, Ashiorid.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Are you having some kind of... fun, Sodacan Bob?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Fun, fun, I''m having fun! My voice is like a pickaxe to the
+    eardrums!'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I think I feel my ears bleeding.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena:'

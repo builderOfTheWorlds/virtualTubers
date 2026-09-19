@@ -1,0 +1,42 @@
+id: the-meal
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:58.575687+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, thanks.
+- kind: dialogue
+  speaker: Leena
+  text: Isn't this a lovely meal, everyone?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Lovely? It's a disaster. I could do so much better than this.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in silence for once?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! We can make it fun.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Chadwick) Here, you can have this one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the story with the pot, Ashiorid? It's like it's been sitting in there
+    forever.
+- kind: dialogue
+  speaker: gm
+  text: I just... (pauses, looking around the table) I thought it was clean.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (shaking his head) Unbelievable.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's all calm down and enjoy our meal.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering to himself) Finally...

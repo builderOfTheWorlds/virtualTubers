@@ -1,0 +1,35 @@
+id: before-the-well
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:34.601643+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll keep the watch tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: What time do you want me to relieve you?
+- kind: dialogue
+  speaker: Leena
+  text: I'll come back at midnight, if that's okay.
+- kind: dialogue
+  speaker: Vigil
+  text: You two take care.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, try to get some rest.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think I'll be sleeping.
+- kind: dialogue
+  speaker: Leena
+  text: Why not?
+- kind: dialogue
+  speaker: gm
+  text: Just be vigilant.
+- kind: dialogue
+  speaker: Vigil
+  text: No need to worry, I'll be here.
+- kind: dialogue
+  speaker: chadwick
+  text: I just have a bad feeling.

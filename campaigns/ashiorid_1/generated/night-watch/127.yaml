@@ -1,0 +1,38 @@
+id: night-watch
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:31.107067+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are still out.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: (yawn) What time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: '3:47.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the same as always, I guess.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) You can hear that bird outside the camp.
+- kind: dialogue
+  speaker: chadwick
+  text: What bird?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs softly) I don't know, but I don't think it's the only one.
+- kind: dialogue
+  speaker: Leena
+  text: (stifles a yawn) I'll keep watch for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: You don't have to, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: (hesitates) I saw something in my dreams last night.

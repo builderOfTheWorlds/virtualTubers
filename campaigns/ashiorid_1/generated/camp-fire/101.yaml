@@ -1,0 +1,38 @@
+id: camp-fire
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:38.708586+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This rain is not going anywhere, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm not sure it is. We should settle the watch order.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, a fire laid like that won't last the night.
+- kind: dialogue
+  speaker: Vigil
+  text: It'll hold.
+- kind: dialogue
+  speaker: Leena
+  text: What's the last town like in winter?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You want to know about winter? I can tell you about winter.
+- kind: dialogue
+  speaker: chadwick
+  text: We can settle this later, Bob. Leena, what do you want to know?
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we light more fires and the rain keeps coming?
+- kind: dialogue
+  speaker: Vigil
+  text: It stays wet.
+- kind: dialogue
+  speaker: gm
+  text: I'll get the extra wood just in case.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is the work of amateurs, laying a fire like that.

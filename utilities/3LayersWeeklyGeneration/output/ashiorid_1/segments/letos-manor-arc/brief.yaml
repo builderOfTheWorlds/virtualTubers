@@ -1,10 +1,11 @@
 segment_id: letos-manor-arc
-order: 4
+order: 19
 loop: 0
 hours: 6
-synopsis: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
-  only to find it is not what they expected. They are greeted by a butler who reveals
-  secrets about their true nature.
+synopsis: The party arrives at Leto's Manor, where they are invited to a party celebrating
+  the Ten Thousandth Anniversary. However, they soon discover that not all guests
+  were meant to be there, and the manor itself holds secrets that will change their
+  lives forever.
 continuity_in: ''
 continuity_out: ''
 carry_in: {}
@@ -12,12 +13,12 @@ carry_out: {}
 slots:
 - slot_id: letos-manor-arc-n0-arrival-1
   kind: ambient
-  prompt: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
-    only to find it is not what they expected. They are greeted by a butler who reveals
-    secrets about their true nature.
+  prompt: The party arrives at Leto's Manor, where they are invited to a party celebrating
+    the Ten Thousandth Anniversary. However, they soon discover that not all guests
+    were meant to be there, and the manor itself holds secrets that will change their
+    lives forever.
   lore:
-  - amulet-of-wonder
-  - malmont
+  - the-event
   participants:
   - Leena
   - Vigil
@@ -33,43 +34,91 @@ slots:
   - Leena
   - Vigil
   - chadwick
+  - gm
   - sodacan_bob
   node_id: letos-manor-arc-n0
-- slot_id: letos-manor-arc-n0-arrival-3
+- slot_id: letos-manor-arc-n1-manor-arrival-1
   kind: ambient
-  prompt: The strangers approach the imposing entrance where a formal butler awaits
-    with an unsettling smile.
+  prompt: The party steps through the grand entrance of Leto's Manor, where the air
+    feels thick with unspoken secrets and the chandeliers cast eerie shadows.
   lore:
-  - moonwells
-  - the-bahadur
+  - the-event
   participants:
   - Leena
   - Vigil
   - chadwick
-  - sodacan_bob
   sensitivity: tone
   depends_on: []
-  node_id: letos-manor-arc-n0
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-manor-arrival-2
+  kind: ambient
+  prompt: As the guests mingle, whispers begin to circulate about the Ten Thousandth
+    Anniversary and what it truly represents for the family that owns this estate.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-manor-arrival-3
+  kind: ambient
+  prompt: Leena notices something odd about the manor's layout, as if certain corridors
+    have shifted since her last visit, and she feels a chill run down her spine.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-manor-arrival-4
+  kind: ambient
+  prompt: Chadwick's axe catches the light as he scans the room, but his expression
+    darkens when he realizes that some of the guests seem to be watching him with
+    unsettling intensity.
+  lore:
+  - the-bahadur
+  participants:
+  - chadwick
+  - Leena
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n1
+- slot_id: letos-manor-arc-n1-manor-arrival-5
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: letos-manor-arc-n1
 nodes:
 - node_id: letos-manor-arc
   parent_id: null
   depth: 0
   kind: branch
   forced: false
-  target_slots: 9
+  target_slots: 7
   slots: 0
 - node_id: letos-manor-arc-n0
   parent_id: letos-manor-arc
   depth: 1
   kind: leaf
   forced: false
-  target_slots: 3
-  slots: 3
+  target_slots: 2
+  slots: 2
 - node_id: letos-manor-arc-n1
   parent_id: letos-manor-arc
   depth: 1
   kind: leaf
   forced: false
-  target_slots: 6
-  slots: 0
-needs_rebrief: true
+  target_slots: 5
+  slots: 5

@@ -1,0 +1,35 @@
+id: malmont-market
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:10.293485+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's in full swing, I see. Let's take a look around.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I think I'll just grab a pastry and...
+- kind: dialogue
+  speaker: Vigil
+  text: Hold on, I want to get a feel for the place.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I'm not seeing much here. That's some...subpar smithwork.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's this? A map stall?
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your hands where I can see them, friend.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I've seen better work from a traveling blacksmith.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) These maps are so old...I don't know why, but...
+- kind: dialogue
+  speaker: gm
+  text: Anything catching your eye, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) No, just...it's something.

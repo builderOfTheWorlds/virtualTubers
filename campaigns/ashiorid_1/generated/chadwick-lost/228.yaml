@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 228
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:57.248158+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back to the adventure. Chadwick, you're still leading the group.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to get moving, it's getting dark.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, are you sure you know which direction we're going?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do, I've been leading for hours.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Hours? I think it's been about 20 minutes.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) I'm just waiting for someone to ask me to lead.
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) We'll figure it out, we're fine.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe I could take a look at the map and...?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it. We're almost there.
+- kind: dialogue
+  speaker: gm
+  text: (smirks) I'm sure you do, Chadwick.

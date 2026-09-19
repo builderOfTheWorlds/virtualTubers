@@ -1,0 +1,31 @@
+id: sodacan_bob-on-runes
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:43.326251+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a well-struck die leaves a mark that'll last millennia if
+    you know what you're doing.
+- kind: dialogue
+  speaker: chadwick
+  text: And what's the point of all this, Bob, if we're just going to guess at what
+    the Malvakar said?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A little patience, and the whole thing's readable as clear as day.
+- kind: dialogue
+  speaker: Leena
+  text: What would happen if the language was just... not a language?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about, Leena?
+- kind: narration
+  speaker: gm
+  text: 'vigor: Would it be like trying to understand an ancient dialect?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, I mean... I don't know what I mean.
+- kind: dialogue
+  speaker: gm
+  text: It's an interesting thought, though.

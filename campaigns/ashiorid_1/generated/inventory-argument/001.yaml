@@ -1,0 +1,36 @@
+id: inventory-argument
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:26:56.514770+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been over this, Sodacan Bob, your bag has the first aid kit in it.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not true, I could have sworn it was in my pack.
+- kind: dialogue
+  speaker: Leena
+  text: If we'd labeled the bags like we're supposed to, this wouldn't be an issue.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just saying, if I'd labeled mine, I'd know where that map is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, well, well, looks like someone's map has turned up in my bag.
+- kind: dialogue
+  speaker: chadwick
+  text: Where's the map now, Sodacan Bob? Hand it over.
+- kind: dialogue
+  speaker: gm
+  text: No, you can't just take it because it's in your bag, it's not yours.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, we're all just so exhausted.
+- kind: dialogue
+  speaker: Vigil
+  text: Finally, something useful shows up in the wrong pack, and you're all acting
+    like children.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, poor Leena, the world is so unfair.

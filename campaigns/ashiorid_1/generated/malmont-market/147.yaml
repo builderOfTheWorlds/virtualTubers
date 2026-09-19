@@ -1,0 +1,35 @@
+id: malmont-market
+take: 147
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:13.614342+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, iron for the road is all I see.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the going rate for a new hammer?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, do you have any maps of the Wysteria Pass?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I don't think I've ever been to the market here.
+- kind: dialogue
+  speaker: Leena
+  text: You don't remember your way around?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd be surprised what people don't remember in this town.
+- kind: dialogue
+  speaker: Vigil
+  text: This town's got a strange feel to it.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's just that everyone knows our names already.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Not to him, they don't.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.

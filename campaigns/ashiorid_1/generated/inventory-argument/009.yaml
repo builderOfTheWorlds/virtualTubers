@@ -1,0 +1,32 @@
+id: inventory-argument
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:56.105244+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Ugh, my bag's got nothing but scraps and useless trinkets.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, because you're the one who always says 'I'll just keep it for inspiration'.
+- kind: dialogue
+  speaker: Vigil
+  text: If we labelled our gear, we wouldn't have to waste time arguing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Easy for you to say, Vigil, you're always so organized.
+- kind: dialogue
+  speaker: gm
+  text: Someone's got to be, considering how the rest of you are.
+- kind: dialogue
+  speaker: Leena
+  text: At least I don't hoard everything like a pack rat.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, look what I just found – your fancy portable stove, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: That's not in my pack.
+- kind: dialogue
+  speaker: Vigil
+  text: Guess you should've labelled it then.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 222
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:16.026556+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's open today, looks like a good day to gather supplies.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we've been eating the same rations for weeks.
+- kind: dialogue
+  speaker: Leena
+  text: Anyone need to restock on anything in particular?
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the east door opens out into the alley now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a change, I didn't see it like that before.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it was stuck when we were here last.
+- kind: dialogue
+  speaker: Vigil
+  text: Just making a note, nothing out of the ordinary.
+- kind: dialogue
+  speaker: gm
+  text: Let's gear up and move out, we don't want to be late.
+- kind: dialogue
+  speaker: Leena
+  text: I'll check the maps and make sure we're on the right route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, I saw that cart from the last pass again.
+- kind: dialogue
+  speaker: chadwick
+  text: Must be a regular delivery, maybe we can get some work.
+- kind: dialogue
+  speaker: Vigil
+  text: Like I said, just noting it for future reference.

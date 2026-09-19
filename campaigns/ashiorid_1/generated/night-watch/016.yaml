@@ -1,0 +1,42 @@
+id: night-watch
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:44.204221+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Astorid: The sky''s clear. Can see stars.'
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. I like nights like this.
+- kind: narration
+  speaker: gm
+  text: 'Astorid: Makes you feel small, doesn''t it?'
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Shh...
+- kind: narration
+  speaker: gm
+  text: 'Astorid: What?'
+- kind: dialogue
+  speaker: Leena
+  text: Nothing. I was just... (pauses) Never mind.
+- kind: narration
+  speaker: gm
+  text: 'Astorid: (pauses) It''s okay. Go ahead.'
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) I was thinking about when I left the north. Before we found the
+    map. I missed the silence.
+- kind: dialogue
+  speaker: chadwick
+  text: (stirring) You mean the silence after a fight?
+- kind: dialogue
+  speaker: Leena
+  text: No... before. The quiet. I liked it.
+- kind: dialogue
+  speaker: Vigil
+  text: (stirring) Morning's still a ways off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Let's get a few more hours.

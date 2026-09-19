@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 174
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:03.844969+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This is the view from your windows. Look outside and tell me what you see.
+- kind: dialogue
+  speaker: chadwick
+  text: What's got you so distracted, Leena? It's not like you to get lost in thought.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be. A turn of phrase,
+    somebody used, a tune being hummed, the shape of a doorway, a smell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like you might have seen something similar in your village, Leena.
+    You're from a small village, aren't you?
+- kind: dialogue
+  speaker: Vigil
+  text: Not me.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. You'll just get confused.
+- kind: dialogue
+  speaker: Leena
+  text: I'll let it go. It's just something familiar, that's all.
+- kind: dialogue
+  speaker: gm
+  text: The others seem to think you're just experiencing a déjà vu. Maybe you should
+    focus on more pressing matters.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, like what's for dinner.

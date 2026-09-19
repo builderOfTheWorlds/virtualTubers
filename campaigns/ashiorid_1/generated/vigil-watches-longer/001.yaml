@@ -1,0 +1,14 @@
+id: vigil-watches-longer
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:44:26.256871+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The night's too clear, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I've seen stars like that in the archives
+- kind: dialogue
+  speaker: gm
+  text: We're not supposed to be up now

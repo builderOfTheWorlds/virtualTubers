@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 264
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:04.499915+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have seen something like it before, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, I haven't. But I'm not scared, just curious.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, I've never seen it before, but it feels like I should know it.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. Just leave it alone.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, I'll leave it alone. It's just... weird.

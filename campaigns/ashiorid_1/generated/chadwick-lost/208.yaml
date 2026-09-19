@@ -1,0 +1,44 @@
+id: chadwick-lost
+take: 208
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:01.716216+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we've got a choice of trails here, let's see which one Chadwick
+    recommends.
+- kind: dialogue
+  speaker: chadwick
+  text: This one.
+- kind: dialogue
+  speaker: Leena
+  text: I think we should take the one with the marker on it.
+- kind: dialogue
+  speaker: chadwick
+  text: No, this one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come on Chad, you're not going to claim you've got a sixth sense for navigation
+    again, are you?
+- kind: dialogue
+  speaker: Vigil
+  text: It's actually a very good idea to follow the marked trail, considering we're
+    not exactly sure where we are.
+- kind: dialogue
+  speaker: Leena
+  text: Chad, I'm just suggesting it, you don't have to be the one in charge.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, let's just keep moving.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's stick with the marked trail for now.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take point and make sure we don't get lost.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is going to be fun.
+- kind: dialogue
+  speaker: Leena
+  text: Chad, don't get your feathers ruffled, I'm just trying to help.

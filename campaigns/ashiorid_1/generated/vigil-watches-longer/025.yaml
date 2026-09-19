@@ -1,0 +1,41 @@
+id: vigil-watches-longer
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:41:08.761576+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil's been standing there for a while.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take watch now.
+- kind: dialogue
+  speaker: Leena
+  text: Can I have the lantern?
+- kind: dialogue
+  speaker: Vigil
+  text: Here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistles softly)
+- kind: dialogue
+  speaker: Leena
+  text: You're tired.
+- kind: dialogue
+  speaker: chadwick
+  text: What time is it?
+- kind: dialogue
+  speaker: gm
+  text: About midnight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (taps foot on the ground)
+- kind: dialogue
+  speaker: Vigil
+  text: (shifts weight)
+- kind: dialogue
+  speaker: chadwick
+  text: Alright.
+- kind: dialogue
+  speaker: Leena
+  text: (places hand on Vigil's arm)

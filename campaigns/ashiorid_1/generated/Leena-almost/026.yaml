@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-18T19:23:49.816553+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're standing outside the old windmill on the edge of town.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just seeing things, Leena. Come inside and get some rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen similar doorways in my village back home.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not like anything I've seen.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Just let it go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: No, I know what I'm seeing.
+- kind: dialogue
+  speaker: Vigil
+  text: (shakes head)

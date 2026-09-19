@@ -1,0 +1,39 @@
+id: sodacan_bob-on-craft
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:50:05.396490+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, carry on.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I'm telling you, this bracket is from the same foundry as the ones used
+    on the Imperial Roads.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can you show me the details, Sodacan Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: Does it match the style of anything from around here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, it's from a shipment that came from across the Sea of Storms.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see why we're stopping for this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a remarkably well-made piece, if I do say so myself.
+- kind: dialogue
+  speaker: Leena
+  text: Can you tell me more about the maker?
+- kind: dialogue
+  speaker: Vigil
+  text: Any idea how long it's been here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let me see... the patina suggests it's been here at least five years.

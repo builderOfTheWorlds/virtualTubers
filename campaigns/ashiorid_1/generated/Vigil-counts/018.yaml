@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:59.831794+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. We've got a meeting with the mayor.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starving, can we get some food?
+- kind: dialogue
+  speaker: Leena
+  text: I see a small market to our left.
+- kind: dialogue
+  speaker: Vigil
+  text: Doors on this side open inward, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That shutter's been fixed since the storm.
+- kind: dialogue
+  speaker: Leena
+  text: There's a cart coming from the other side of the street.
+- kind: dialogue
+  speaker: chadwick
+  text: And it's got a familiar face on the driver's seat.
+- kind: dialogue
+  speaker: Vigil
+  text: It's the second time this cart has passed by us.
+- kind: dialogue
+  speaker: gm
+  text: Good observation, Vigil, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of noting the doors?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noting what I see, that's all.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's focus.

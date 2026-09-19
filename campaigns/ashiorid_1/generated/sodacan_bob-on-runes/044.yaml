@@ -1,0 +1,37 @@
+id: sodacan_bob-on-runes
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:54:26.060057+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, can you tell us a bit about the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die is struck just so, the weight of the hammer, the angle of the blow...
+    a shallow cut won't last, but too deep and it's like chiseling away at the very
+    stone.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of stone is it, exactly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a type of sandstone, worn smooth over time... the Malvakar's markings
+    should've lasted longer, but I suppose that's why it's still a mystery.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's related to the other monuments?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, but the craftsmanship is the same... whoever carved those runes
+    knew their trade.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan Bob, what do you think would've happened if you'd seen the runes more
+    clearly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, eyes glazing over) I... don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: (leaning in) Sodacan Bob, are you thinking that you could've... unlocked it?

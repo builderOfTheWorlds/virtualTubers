@@ -1,0 +1,35 @@
+id: nafsari-question
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:32:24.245699+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Is there something you'd like to talk about, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: No, just the usual.
+- kind: dialogue
+  speaker: Leena
+  text: I was just curious, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: It's a good place to live.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You never said much about growing up here.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't.
+- kind: dialogue
+  speaker: gm
+  text: No worries.
+- kind: dialogue
+  speaker: Leena
+  text: Sorry for prying.
+- kind: dialogue
+  speaker: Vigil
+  text: It's fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Next topic.

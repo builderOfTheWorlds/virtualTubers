@@ -1,0 +1,41 @@
+id: leena-recognizes-nothing
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:47.407856+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. This hill, the way that building is angled...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's the light. It's casting an unusual shadow.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, what do you think about the local flora?
+- kind: dialogue
+  speaker: Vigil
+  text: looks at Leena
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, have you noticed anything else unusual?
+- kind: dialogue
+  speaker: Leena
+  text: No, nothing. Just that... I think I've seen it before, but I haven't.
+- kind: dialogue
+  speaker: Vigil
+  text: keeps watching Leena
+- kind: dialogue
+  speaker: chadwick
+  text: So, has anyone had a chance to rest and get some food?
+- kind: dialogue
+  speaker: gm
+  text: We'll stop soon, don't worry.
+- kind: dialogue
+  speaker: Leena
+  text: Is this where we were going to stop?

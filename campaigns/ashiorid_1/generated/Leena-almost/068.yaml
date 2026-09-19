@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 68
+model: llama3.1:8b
+generated_at: '2026-09-18T19:27:28.159304+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's this I see, Leena's got her hand on the edge of a doorway.
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar about it, and it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I've seen that door before, it's just like one in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: Says who?
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena, we don't need to chase it down.
+- kind: dialogue
+  speaker: Leena
+  text: But why shouldn't I know where I've seen it before?
+- kind: dialogue
+  speaker: gm
+  text: It's a trivial thing, let's move on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The villagers were always telling stories about that door, said it led to
+    a...
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing good, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: No, that's not what I mean. It's not just the door, it's the smell and the...
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, stop, please.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright. The important thing is we have to keep moving.

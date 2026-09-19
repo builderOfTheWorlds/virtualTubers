@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 94
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:34.116617+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's bothering you, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I don't remember seeing it in the village.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's just a memory that feels familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what it might be, let me think a sec.
+- kind: dialogue
+  speaker: Leena
+  text: No, you don't know what it is, and neither do I.
+- kind: dialogue
+  speaker: gm
+  text: What does it smell like?
+- kind: dialogue
+  speaker: Leena
+  text: It smells like... I don't know, it's just familiar.
+- kind: dialogue
+  speaker: chadwick
+  text: Just drop it, Leena, it's not worth chasing.
+- kind: dialogue
+  speaker: Leena
+  text: I'll drop it. For now.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)

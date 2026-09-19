@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:35.181769+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, so this is a wagon axle, and you can tell it was made by the same foundry
+    that produced most of the axles in the region during this time period.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's move.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think it's from around here, though, is it, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, actually, no. The style of the forge marks on the axle are a dead giveaway
+    that it came from a foundry in the eastern provinces.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of wagon would this have been used on, do you think?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now that's a good question, Vigil. Given the weight capacity and the style
+    of the axle, I'd say it was probably used on a two-horse cart or a light goods
+    wagon.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's been here all this time, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it's hard to say, but the condition of the axle suggests it's been buried
+    or hidden for a while.
+- kind: dialogue
+  speaker: chadwick
+  text: I really don't care about wagons, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come on, Chadwick, this is fascinating.

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:04:14.494014+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: A cart has passed by the window twice, heading north.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) You're going to notice all the interesting things, aren't you?
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Someone's got their eyes open.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen it, but I didn't think much of it.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters were fixed recently, I noticed that too.
+- kind: dialogue
+  speaker: gm
+  text: (distracted) Anyway, shall we get back to the task at hand?
+- kind: dialogue
+  speaker: Leena
+  text: (still smiling) Yeah, let's not get too sidetracked.
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) You two can keep an eye on the carts, I'll handle the task.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds good to me, where's the task?

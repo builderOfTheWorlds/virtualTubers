@@ -1,0 +1,30 @@
+id: sodacan_bob-on-runes
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-19T00:06:08.049969+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking about the way that die was struck, the weight of the hammer.
+- kind: dialogue
+  speaker: chadwick
+  text: What's got you thinking about the Malvakar, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the way the runes are cut, deep enough to last, but not so deep they
+    crack.
+- kind: dialogue
+  speaker: Leena
+  text: You think someone would carve something so intentionally?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Intentionally or not, it's a piece of work that's been weathered for centuries.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the point of talking about it, Bob? It's just a relic.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, Vigil. Just habit, I guess.
+- kind: dialogue
+  speaker: gm
+  text: Bob, you've been staring at the Malvakar for a while now. What are you thinking?

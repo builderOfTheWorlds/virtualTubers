@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:17.834005+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something's caught your eye, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: Vigil
+  text: You've seen something like that before?
+- kind: dialogue
+  speaker: Leena
+  text: No, not like that. It's just... something's not right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw one like it in your village, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, that doesn't feel right. It's more than that.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Let it go.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not sure you should listen to him, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, I think he's right. I should let it go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We don't know anything for sure, and we won't until we get to the bottom of
+    it.
+- kind: dialogue
+  speaker: gm
+  text: Agreed. The past is complex, and we'll uncover the truth in time.

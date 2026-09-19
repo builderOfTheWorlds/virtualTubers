@@ -1,0 +1,38 @@
+id: road-talk
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:24.725675+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We'll be lucky if we find a town by nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting a bit peckish, anyone seen any food on the horizon?
+- kind: dialogue
+  speaker: Leena
+  text: My village was surrounded by wheat fields, they stretched out as far as the
+    eye could see.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it was a trading post, I had business there once.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And then there was Vabokedos, our great city on the coast, where the sea meets
+    the land.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that smell?
+- kind: dialogue
+  speaker: Leena
+  text: We used to harvest the wheat in autumn, the whole village would work together.
+- kind: dialogue
+  speaker: gm
+  text: It's not the time of year for wheat, though.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos had the largest market in all the land, merchants from far and wide
+    would come to buy and sell.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses)

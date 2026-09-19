@@ -1,0 +1,44 @@
+id: weather-argument
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:47:07.576088+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I don''t trust the forecast this time of year.'
+- kind: dialogue
+  speaker: chadwick
+  text: But it says clear skies on the app, Ash.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't trust the app, it's always wrong.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should be concerned, I saw a bunch of clouds gathering on the east
+    side.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but it's a high-pressure system, can't be too many clouds.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still going with the app, it's more up-to-date.
+- kind: dialogue
+  speaker: Leena
+  text: I know a farmer who swears by the moon, and it's full today.
+- kind: dialogue
+  speaker: Vigil
+  text: A high-pressure system? Don't be silly, that's just a fancy term for "we don't
+    know what's going to happen".
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We do know what's going to happen, it's going to be sunny.
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''ve lived in this area my whole life, trust my instincts on this
+    one.'
+- kind: dialogue
+  speaker: chadwick
+  text: Your instincts are wrong, Ash.
+- kind: dialogue
+  speaker: Leena
+  text: The wind is picking up, that never ends well.

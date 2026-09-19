@@ -1,0 +1,46 @@
+id: road-talk
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:37.100120+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As I said, we'll reach the next village by nightfall, if we keep this pace.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure my village would be happy to have me back, I'd bring news of the
+    outside world.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm sure Vabokedos would be proud of you all, I've told them so much about
+    your bravery.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's a good place to forget your troubles, I've heard.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it is.
+- kind: dialogue
+  speaker: Leena
+  text: My father would be especially proud, he's always said the outside world is
+    full of wonder.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving, we don't have much daylight left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, and Vabokedos has sent word of a reward for any who return with stories
+    of the outside world.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Oh, I'm sure they're just desperate for gossip.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure my village would be happy to hear stories of the world beyond our
+    hills.
+- kind: dialogue
+  speaker: Vigil
+  text: (stops abruptly, looks away)
+- kind: dialogue
+  speaker: gm
+  text: We'll take a short break when we reach the next bend.

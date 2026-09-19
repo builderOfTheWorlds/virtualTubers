@@ -1,0 +1,33 @@
+id: local-rumor
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:32.559987+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As the sun sets over Malmont, you notice a subtle shift in the air.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a whole lot of folks are staying indoors tonight.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw a notice on the local bulletin board about strange noises.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Unfriendly presence, always at night, never a description...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone know if the constable's watch is any good here?
+- kind: dialogue
+  speaker: gm
+  text: It seems they're a bit...overmatched by whatever it is that's moving through
+    the town.
+- kind: dialogue
+  speaker: Leena
+  text: I didn't hear anything about it from the locals, just whispers.
+- kind: dialogue
+  speaker: Vigil
+  text: (to himself) Just another reason to keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been in places like this before, always something lurking.

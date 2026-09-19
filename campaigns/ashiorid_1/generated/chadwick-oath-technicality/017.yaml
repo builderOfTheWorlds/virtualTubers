@@ -1,0 +1,37 @@
+id: chadwick-oath-technicality
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:18:57.270216+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We have a lead on the group of bandits that's been
+    causing trouble in the area.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I'm comfortable with the plan. I'd rather wait until I've done
+    some more reconnaissance.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, Chadwick. We can't afford to wait. We need to catch them off guard.
+- kind: dialogue
+  speaker: Vigil
+  text: I agree with Leena. We can discuss the plan in more detail once we're in position.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see some tracks. Follow me.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but I'm not saying I'm happy about it.
+- kind: dialogue
+  speaker: Leena
+  text: You know the drill, Chadwick. We work together.
+- kind: dialogue
+  speaker: Vigil
+  text: And we trust each other to get the job done.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Here we are. The bandits are holed up in this abandoned mine.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's gear up and get ready to move in.

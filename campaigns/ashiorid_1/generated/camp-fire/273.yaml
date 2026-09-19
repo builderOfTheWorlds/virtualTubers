@@ -1,0 +1,39 @@
+id: camp-fire
+take: 273
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:26.664680+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the point of gathering around the fire if we can't even see what we're
+    burning?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we alternate watch, two-hour shifts. Someone's got to keep an eye out.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the rain's going to let up at all?
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should've left the town we did. There was a better route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if we'd used some of that dry wood, we'd have a decent fire
+    now.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if we can't find dry wood?
+- kind: dialogue
+  speaker: gm
+  text: That's a good question, Leena. Maybe we should've thought of that before we
+    left.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not getting into the philosophy of firewood right now. Who's on watch
+    first?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire'll hold if we let it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it too close to the rain, okay? That's the problem.

@@ -1,0 +1,31 @@
+id: sodacan_bob-on-craft
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:15:02.167881+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get going, we've got a long way to go yet.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on, please? I'd like to get to the next town before nightfall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no, you have to see this! It's a beautifully crafted gate hinge, look
+    at the detail!
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I take a closer look? I love seeing how things are made.
+- kind: dialogue
+  speaker: Vigil
+  text: How old do you think it is, Sodacan?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I'd say late 19th century, likely made by a local blacksmith. The design
+    is classic, but the craftsmanship is what really stands out.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starving, can we eat soon?
+- kind: dialogue
+  speaker: gm
+  text: There's a stream up ahead, why don't we take a break and have some lunch?

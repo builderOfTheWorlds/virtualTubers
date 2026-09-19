@@ -1,0 +1,41 @@
+id: night-watch
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:32.469364+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: There''s the constellations, aren''t there, Chadwick?'
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. I see the twins tonight.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: I always thought they looked like a pair of broken wings.'
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe they are. Maybe that's the story.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Just talking about the sky, Leena.'
+- kind: dialogue
+  speaker: Leena
+  text: Oh. Sorry. I was having a weird dream.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) You can wake them up if you want.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Do we need to? It''s not getting any lighter out.'
+- kind: dialogue
+  speaker: chadwick
+  text: (low) I feel like I've been hearing... tiny noises.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Like what?'
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know. Just... little creaks.

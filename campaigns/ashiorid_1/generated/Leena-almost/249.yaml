@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 249
+model: llama3.1:8b
+generated_at: '2026-09-18T23:37:49.469629+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's troubling you?
+- kind: dialogue
+  speaker: chadwick
+  text: It's nothing, don't worry about it.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, I said it out loud because I always do. It's just...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you mean. There's a phrase, a song... it's familiar, but
+    it shouldn't be.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know what you're talking about.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. You'll only get hurt.
+- kind: dialogue
+  speaker: Leena
+  text: What if it's something we're not supposed to remember?

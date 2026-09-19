@@ -1,0 +1,35 @@
+id: camp-fire
+take: 210
+model: llama3.1:8b
+generated_at: '2026-09-18T20:33:35.274617+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to try to keep the fire going, but we'll need to split the watch.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm taking first watch, then Sodacan Bob, and so on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not sure that's the most efficient rotation, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: What's the protocol for waking up the next person?
+- kind: dialogue
+  speaker: Vigil
+  text: Wake them.
+- kind: dialogue
+  speaker: gm
+  text: Good, Vigil, thanks for that.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll take all night to burn through the wood we have?
+- kind: dialogue
+  speaker: gm
+  text: I don't know, but we can always gather more if we need to.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The fire's laid out all wrong, it'll take hours to burn properly.
+- kind: dialogue
+  speaker: Vigil
+  text: It's warm.

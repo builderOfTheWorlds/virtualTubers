@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 136
+model: llama3.1:8b
+generated_at: '2026-09-18T20:13:32.592984+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's move out, we have a schedule to keep.
+- kind: dialogue
+  speaker: chadwick
+  text: I know the way, it's right this way.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, are you sure you know which way we're going?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is going to be good.
+- kind: dialogue
+  speaker: Vigil
+  text: If you're lost, Chadwick, I can help.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not lost, I just know a shortcut.
+- kind: dialogue
+  speaker: Leena
+  text: Well, in that case, let's follow Chadwick's lead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, because that always ends well.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering under breath) Fine.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, we're heading in the wrong direction.

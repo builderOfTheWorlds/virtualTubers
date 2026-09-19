@@ -1,0 +1,35 @@
+id: camp-fire
+take: 169
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:48.845599+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle the watch order for tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I say Leena and Vigil take first watch, I'll take the second.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if the rain will let up by morning?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fire's holding, good thing we laid it on dry wood.
+- kind: dialogue
+  speaker: Vigil
+  text: The coals are burning at a stable frequency.
+- kind: dialogue
+  speaker: Leena
+  text: What happens when they stabilize like that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a sign the fire's got a good draft.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, do you think we'll need to move the fire tomorrow?
+- kind: dialogue
+  speaker: chadwick
+  text: Not if the rain lets up, I'd say we're good where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't count on the rain letting up, it's been coming down hard.

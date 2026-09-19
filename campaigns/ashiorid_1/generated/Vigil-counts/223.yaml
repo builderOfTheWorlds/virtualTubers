@@ -1,0 +1,33 @@
+id: Vigil-counts
+take: 223
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:20.817367+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the plan for the day?
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we take a look around the castle's storage areas.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good to me, I've been itching to get my hands on some decent equipment.
+- kind: dialogue
+  speaker: Vigil
+  text: The east door of the storage wing is always slightly ajar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's just because the hinges are worn down, don't worry about it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. Chadwick, you lead the way.
+- kind: dialogue
+  speaker: chadwick
+  text: Roger that, Sodacan Bob, come on up.
+- kind: dialogue
+  speaker: Leena
+  text: (muttering to herself) I swear, I saw that cart with the rusty wheel go by
+    just now.
+- kind: dialogue
+  speaker: Vigil
+  text: That cart's been there for days.

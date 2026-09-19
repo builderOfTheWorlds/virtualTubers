@@ -1,0 +1,39 @@
+id: road-talk
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:45.662797+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a shame we can't take a break, but I think we'll make it to the next
+    town by nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, our village has the best berries in the entire region.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the most beautiful view, you can see the mountains for miles.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari... it's a place of... contrasts.
+- kind: dialogue
+  speaker: Leena
+  text: Our village is nestled between two great rivers, it's a paradise.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's lovely, but Vabokedos has its own charm.
+- kind: dialogue
+  speaker: gm
+  text: We're all just trying to get home, after all.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's focus on the road ahead.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) Sorry, I didn't mean to say that.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Don't apologize, it's nice to hear about someone's home.

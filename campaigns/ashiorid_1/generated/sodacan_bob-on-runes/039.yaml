@@ -1,0 +1,38 @@
+id: sodacan_bob-on-runes
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:53:54.514129+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I've asked you a few times now, what was the carving on the Malvakar
+    like?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A series of deep runes, spaced evenly apart, about a hand's breadth below
+    the surface.
+- kind: dialogue
+  speaker: Vigil
+  text: I thought the Malvakar was just a ruin, what did it say?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It said "Beneath the shadows, seek the keystone".
+- kind: dialogue
+  speaker: Leena
+  text: What's a keystone?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not a thing I can explain, Leena. The runes just are.
+- kind: dialogue
+  speaker: chadwick
+  text: I've seen some of those old carvings that'll survive a few centuries, but
+    this deep?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Depth alone doesn't guarantee longevity, it's the craftsmanship that matters.
+- kind: dialogue
+  speaker: gm
+  text: (no response, just silence)
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)

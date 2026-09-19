@@ -1,0 +1,117 @@
+segment_id: magic-retained-arc-loop1
+order: 2
+loop: 1
+hours: 6
+synopsis: The seal holds, and the last well remains intact. The players learn about
+  the importance of preserving magic in this world.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: magic-retained-arc-loop1-n0-1
+  kind: ambient
+  prompt: The weight of preservation settles on the players as they witness the last
+    well's strength holding firm against the encroaching darkness.
+  lore:
+  - moonwells
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-loop1-n0
+- slot_id: magic-retained-arc-loop1-n0-2
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: magic-retained-arc-loop1-n0
+- slot_id: magic-retained-arc-loop1-n0-3
+  kind: ambient
+  prompt: As the players contemplate their role in maintaining the seal, they realize
+    that the cost of preserving magic is greater than they imagined.
+  lore:
+  - moonwells
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-loop1-n0
+- slot_id: magic-retained-arc-loop1-n1-choice-1
+  kind: ambient
+  prompt: The players stand at a crossroads, weighing their options for preserving
+    the magical balance. What path do they choose?
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-loop1-n1
+- slot_id: magic-retained-arc-loop1-n1-choice-2
+  kind: ambient
+  prompt: The players must decide whether to protect the seal, seek new magical sources,
+    or investigate the well's origins.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  sensitivity: tone
+  depends_on: []
+  node_id: magic-retained-arc-loop1-n1
+- slot_id: magic-retained-arc-loop1-n1-choice-3
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: magic-retained-arc-loop1-n1
+- slot_id: magic-retained-arc-loop1-n1-choice-4
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: magic-retained-arc-loop1-n1
+nodes:
+- node_id: magic-retained-arc-loop1
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: magic-retained-arc-loop1-n0
+  parent_id: magic-retained-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: magic-retained-arc-loop1-n1
+  parent_id: magic-retained-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

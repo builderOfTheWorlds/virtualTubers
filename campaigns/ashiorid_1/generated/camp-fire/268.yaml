@@ -1,0 +1,34 @@
+id: camp-fire
+take: 268
+model: llama3.1:8b
+generated_at: '2026-09-18T23:44:55.566572+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's getting thick. Might be a while before it clears up.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm starting to think we should settle on a watch rotation for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire was laid wrong. It's a wonder it's still
+    burning.
+- kind: dialogue
+  speaker: Vigil
+  text: You need to leave space between the logs.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the well would have been safe if we'd closed it in time?
+- kind: dialogue
+  speaker: gm
+  text: The well's not our problem now. We've got to focus on keeping warm and dry.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got an idea for a watch rotation, but I need to run it by Sodacan Bob
+    first.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Go ahead, I'm listening.
+- kind: dialogue
+  speaker: Vigil
+  text: It's burning, though.

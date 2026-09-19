@@ -1,0 +1,38 @@
+id: malmont-market
+take: 124
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:59.035014+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, not exactly the work I'm used to seeing.
+- kind: dialogue
+  speaker: Vigil
+  text: Just a waste of time, if you ask me.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen most of these people before.
+- kind: dialogue
+  speaker: Leena
+  text: What's this one, then?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I've been here before, but nobody's recognizing me.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe it's the road dust.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not worried, are you, Chadwick?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a decent hammer, but it's not exactly a work of art.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the maps might be... useful?
+- kind: dialogue
+  speaker: Vigil
+  text: What's useful is getting out of here before nightfall.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm good for now. Just looking.

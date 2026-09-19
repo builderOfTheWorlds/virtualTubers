@@ -1,0 +1,42 @@
+id: malmont-market
+take: 71
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:41.720425+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at this, a whole day's work in a single piece, and it's nothing more
+    than a firehook.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the price on that?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I think I'll just... browse.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, do you have any maps from the north?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That constable's watch doesn't bother you, does it?
+- kind: dialogue
+  speaker: Vigil
+  text: Don't mind the watch, just the night shadows.
+- kind: dialogue
+  speaker: Leena
+  text: These maps are from before the wars... do you know what happened to the roads?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll just get some... tea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have that firehook.
+- kind: dialogue
+  speaker: gm
+  text: Good, the shopkeeper says it's a fine piece of work, one of his better pieces.
+- kind: dialogue
+  speaker: Vigil
+  text: How much?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said, I'll take it.

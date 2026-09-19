@@ -1,0 +1,41 @@
+id: night-watch
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:50.568016+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: (whispers) There's a star I see that looks like a cross.
+- kind: dialogue
+  speaker: chadwick
+  text: (softly) Which one?
+- kind: dialogue
+  speaker: gm
+  text: (points) The one in the east. It's been there for weeks now.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What are you talking about?
+- kind: dialogue
+  speaker: gm
+  text: Just the star. You can see it if you look out the window.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) I think it's pretty.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Sodacan Bob, you're not exactly a poet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (defensively) I resent that.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Wake me up if you see something, okay?
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly) Do you think we should wake the others early?
+- kind: dialogue
+  speaker: gm
+  text: What for?
+- kind: dialogue
+  speaker: Vigil
+  text: Just in case. It's a long night still.

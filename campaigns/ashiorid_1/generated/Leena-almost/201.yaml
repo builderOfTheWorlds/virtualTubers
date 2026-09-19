@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 201
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:31.846881+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the usual, what's for lunch?
+- kind: dialogue
+  speaker: Leena
+  text: It's... familiar. Something in front of me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Saw one like it in your village, might be the same.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get too worked up about it, Leena. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I just can't place it. Smell, doorway, the whole thing.
+- kind: dialogue
+  speaker: gm
+  text: What do you think it might be?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be something from the old stories.

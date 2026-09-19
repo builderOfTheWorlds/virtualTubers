@@ -1,0 +1,42 @@
+id: camp-fire
+take: 238
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:34.863830+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down heavy, we should get some more wood on the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed, but first we need to settle the watch order for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking we could try laying the logs in a crisscross pattern, helps
+    with airflow.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will burn till it runs out of fuel.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain's affecting the wellspring's magic?
+- kind: dialogue
+  speaker: gm
+  text: It's possible, but we can't say for certain without checking the readings.
+- kind: dialogue
+  speaker: chadwick
+  text: And we won't be able to do that until morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should dig a drainage trench, just in case.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will hold, it's built to.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get some more wood then, and settle the watch order.
+- kind: dialogue
+  speaker: Leena
+  text: What would happen if the wellspring's magic is affected?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure it out in the morning, Leena.

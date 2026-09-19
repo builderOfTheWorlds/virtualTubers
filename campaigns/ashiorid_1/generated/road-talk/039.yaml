@@ -1,0 +1,42 @@
+id: road-talk
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:45:41.430984+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's climbing high now, let's take a break in that patch of shade over
+    there.
+- kind: dialogue
+  speaker: chadwick
+  text: I could use a drink, anyone seen a water skin?
+- kind: dialogue
+  speaker: Leena
+  text: I brought some dried fruit and nuts, who's hungry?
+- kind: dialogue
+  speaker: Vigil
+  text: Not me, thanks, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, Vabokedos is a wonderful place, full of—
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob, again with the Vabokedos tales.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just proud of it, is all! Beautiful mountains, crystal clear rivers...
+- kind: dialogue
+  speaker: Leena
+  text: Nafsari, yes, I've heard it's a lovely place, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: No comment.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that you said about Nafsari, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: Vigil just mentioned it in passing, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Vigil, share a little bit about Nafsari!

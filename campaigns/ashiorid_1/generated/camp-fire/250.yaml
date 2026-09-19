@@ -1,0 +1,32 @@
+id: camp-fire
+take: 250
+model: llama3.1:8b
+generated_at: '2026-09-18T23:43:01.244580+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm going to go check on the fire, make sure it's holding.
+- kind: dialogue
+  speaker: chadwick
+  text: Good, I'll take over the watch from there. Sodacan Bob, you're next.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was thinking we should've used dryer wood, it would've burned longer.
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke is going to carry all night.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible to find another moonwell, even now?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous, Leena, we've searched for years.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I think Vigil might be right, the smoke...
+- kind: dialogue
+  speaker: Vigil
+  text: '...will be carried a hundred miles.'
+- kind: dialogue
+  speaker: gm
+  text: Good, the fire's still going, let's get some sleep.

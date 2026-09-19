@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:29.686135+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The scene has changed, we're in a new tavern.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice. I could use a hot meal.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go order some food.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left opens in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I noticed that too, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Always the detective.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter over the window was repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: (muttering) Great, now it's light in here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone's got some spare cash.
+- kind: dialogue
+  speaker: gm
+  text: I've got the menu, anyone want to order?

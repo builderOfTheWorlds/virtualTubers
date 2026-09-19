@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 125
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:15.681648+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a decent amount of ground to cover before
+    nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) I'm sure it's this way... (points)
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Perhaps we should follow the map for a bit, just
+    to make sure?
+- kind: dialogue
+  speaker: chadwick
+  text: (offended) What, no confidence in my navigation skills, Leena?
+- kind: dialogue
+  speaker: Vigil
+  text: (deadpan) I'm happy to provide guidance, Chadwick, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) I know exactly where we are. We're... uh... (pauses)
+- kind: dialogue
+  speaker: Leena
+  text: (trying to help) Well, let's see... if we're going by landmarks...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is priceless.
+- kind: dialogue
+  speaker: gm
+  text: (amused) Alright, let's take a look at the map, shall we?
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) About time.
+- kind: dialogue
+  speaker: chadwick
+  text: (grumbling) Fine. Where's the map?

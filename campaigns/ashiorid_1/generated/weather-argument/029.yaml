@@ -1,0 +1,50 @@
+id: weather-argument
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:44.840780+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I saw a weather report on my phone this morning, and it said there''s
+    a chance of rain later.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I don''t know, I''ve been driving for hours and the sky looks pretty
+    clear to me.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Oh, but have you noticed the dark clouds gathering over the hills?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I''ve been watching the wind direction, and it''s coming from the
+    west - that usually means rain.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: You guys are forgetting the humidity, it''s been stuck at 80%
+    all day.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: That''s a good point, but I think the report said it''s supposed
+    to be partly cloudy.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Partly cloudy means it''s going to be sunny when we get there.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I''m just saying, I''ve learned to trust my instincts about this sort
+    of thing.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Trust your instincts? You''re a florist, what do you know about the
+    weather?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Hey, being a florist means you have a green thumb - you know
+    all about plants and growth.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Well, I think we''re all just speculating at this point - let''s
+    just drive and see what happens.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Sounds good to me, let''s get moving.'

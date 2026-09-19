@@ -1,0 +1,41 @@
+id: night-watch
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:42:32.593531+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars are so close to the horizon, they almost touch.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a weird time of year.
+- kind: dialogue
+  speaker: Vigil
+  text: You can hear the crickets, I think. They're quiet too.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I'm not getting any sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Try to relax, Leena. You're on edge.
+- kind: dialogue
+  speaker: chadwick
+  text: We're early. We don't have to wake anyone up yet.
+- kind: dialogue
+  speaker: Vigil
+  text: But it's quiet. I don't like it.
+- kind: dialogue
+  speaker: Leena
+  text: There's nothing to be scared of.
+- kind: dialogue
+  speaker: chadwick
+  text: You said that last night.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I used to steal from the market stalls when I was a kid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, then nothing)
+- kind: dialogue
+  speaker: Leena
+  text: What was it like?

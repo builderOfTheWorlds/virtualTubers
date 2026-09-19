@@ -1,0 +1,44 @@
+id: bob-names-the-runes
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:10:31.289425+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, see this gatepost, I was just examining it and I noticed this intricate
+    rune.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Great.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a temporal anchor, see, and what it does is stabilize the local flow
+    of time.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean by 'stabilize'?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Leena, what it does is prevent localized distortions
+    in the timestream.
+- kind: narration
+  speaker: gm
+  text: 'vigel: (yawns)'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I know what you're thinking, but trust me, this is crucial for maintaining
+    a stable environment.
+- kind: dialogue
+  speaker: chadwick
+  text: (sarcastically) Oh, great, because we were all worried about the timestream.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (ignoring Chadwick) And it's not just the gatepost, I've seen similar runes
+    on other objects.
+- kind: dialogue
+  speaker: Leena
+  text: What's the purpose of having a temporal anchor on a gatepost?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, well, it's primarily a defensive measure, preventing any unwanted temporal
+    incursions.

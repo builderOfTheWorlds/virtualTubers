@@ -1,0 +1,31 @@
+id: Leena-almost
+take: 158
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:50.085167+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's wrong, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, I've seen some similar architecture
+    in the north.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, we don't know what it is.
+- kind: dialogue
+  speaker: gm
+  text: What's it look like?
+- kind: dialogue
+  speaker: Leena
+  text: It's a doorway, and a smell... I don't know, it feels like something I used
+    to know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it sounds like a village from up north.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)

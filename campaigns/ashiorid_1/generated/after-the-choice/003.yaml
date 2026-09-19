@@ -1,0 +1,29 @@
+id: after-the-choice
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:20.967046+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: There's always a cost to progress.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. I just wish...
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should make some tea.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I'll get the kettle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbles) Tea...
+- kind: dialogue
+  speaker: gm
+  text: Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: It's been a long day.

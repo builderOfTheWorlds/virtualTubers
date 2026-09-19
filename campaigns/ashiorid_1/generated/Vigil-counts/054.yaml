@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:38.286225+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As it's quiet in here, let's get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting some rest, maybe I'll join you later.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good to me, I'm beat.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors here open to the left, by the way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, yeah, we've seen that already.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, right, yeah, I remember now.
+- kind: dialogue
+  speaker: Leena
+  text: You'd think we'd have better things to notice.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's gear up and move out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm checking my gear.
+- kind: dialogue
+  speaker: Leena
+  text: This is taking forever.

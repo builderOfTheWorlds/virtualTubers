@@ -1,0 +1,23 @@
+id: Leena-almost
+take: 175
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:07.353655+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got your attention?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't worry about it, Leena, it's just some old architecture.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not just old. I've seen this before. But I shouldn't have seen it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure you've seen something like it back in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't go chasing after it. You'll only get yourself lost.
+- kind: dialogue
+  speaker: gm
+  text: And what do you think you'll find, Leena?

@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 221
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:16.900520+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw it in your village, it looks old enough.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it. I've never seen anything like it. And I think it's familiar.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It could be a copy or a reproduction, you know how many artifacts are floating
+    around.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what's Leena doing now?
+- kind: dialogue
+  speaker: chadwick
+  text: She's staring at the doorway like she's trying to remember something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you just saw it in a book or a movie, Leena. It's not that uncommon.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think so. And even if I did, why would it feel like... home?
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's your take on this?

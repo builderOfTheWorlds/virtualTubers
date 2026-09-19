@@ -1,0 +1,40 @@
+id: camp-fire
+take: 196
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:26.004419+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's been coming down for hours, I'm getting soaked through to the bone.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll make the fire go out if it keeps up?
+- kind: dialogue
+  speaker: Vigil
+  text: We should've built a shelter.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob didn't think to lay the fire in a way that'd withstand this kind of weather,
+    did you?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm putting it to a vote, who's got watch?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how we'll keep it going if we're all asleep at the same time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If you'd done the fire right, we might have some warmth to speak of.
+- kind: dialogue
+  speaker: Vigil
+  text: Ash is key.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, did you just imply that someone else laid the fire?
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, settle down. Bob, you're right, it's not your fault, we'll figure
+    it out.
+- kind: dialogue
+  speaker: Leena
+  text: How does the world even make it through a single night without magic?

@@ -1,0 +1,38 @@
+id: nafsari-question
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:38.841490+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, what was it like growing up among the wood elves of Nafsari?
+- kind: dialogue
+  speaker: Vigil
+  text: It was a forest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's it?
+- kind: dialogue
+  speaker: Vigil
+  text: No more to say.
+- kind: dialogue
+  speaker: gm
+  text: (laughs)
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles softly)
+- kind: dialogue
+  speaker: Vigil
+  text: It's enough.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sorry, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: It's alright, really.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) It was a forest.
+- kind: narration
+  speaker: gm
+  text: (Loop 9 ends)

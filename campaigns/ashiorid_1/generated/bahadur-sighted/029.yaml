@@ -1,0 +1,38 @@
+id: bahadur-sighted
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:36.295331+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Silence.
+- kind: dialogue
+  speaker: chadwick
+  text: What was that?
+- kind: dialogue
+  speaker: Leena
+  text: No, it was nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: I saw something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What?
+- kind: dialogue
+  speaker: gm
+  text: Keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: What'd you see, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a shadow.
+- kind: dialogue
+  speaker: Leena
+  text: We need to keep going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You sure you saw something?
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving.

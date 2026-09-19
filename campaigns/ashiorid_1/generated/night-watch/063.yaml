@@ -1,0 +1,43 @@
+id: night-watch
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:41.789873+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: The stars are really something, aren't they?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, they're so... thin.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean?
+- kind: dialogue
+  speaker: chadwick
+  text: Thin. Like, if you looked really closely, you could almost see the gaps between
+    them.
+- kind: dialogue
+  speaker: Leena
+  text: No, I mean, it's like they're burning up the sky.
+- kind: dialogue
+  speaker: gm
+  text: (pause) You can hear the wind, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pause) Yeah.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should wake the others early. It's going to be a big day.
+- kind: dialogue
+  speaker: Leena
+  text: (sigh) Do we have to?
+- kind: dialogue
+  speaker: gm
+  text: (pause) I don't know. I just have a feeling...
+- kind: narration
+  speaker: gm
+  text: (10 beat pause)
+- kind: dialogue
+  speaker: Vigil
+  text: (whisper) I've been thinking about the moon. How it's always full or new.
+    What if it's not? What if it's... in between?

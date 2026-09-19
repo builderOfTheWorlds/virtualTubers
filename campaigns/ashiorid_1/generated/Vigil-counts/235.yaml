@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 235
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:17.122653+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I see Vigil's noticed a repaired shutter on the eastern wall.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I think the innkeeper did that himself.
+- kind: dialogue
+  speaker: Leena
+  text: I'm more interested in where that cart is headed.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart has a full load of crates, looks like goods for the market.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Does that mean we might find something useful in there?
+- kind: dialogue
+  speaker: Vigil
+  text: The driver seems friendly, might be worth asking.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what else did you notice?
+- kind: dialogue
+  speaker: Vigil
+  text: Just the usual details, doors open inward, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright then, let's go see about those crates.
+- kind: dialogue
+  speaker: Leena
+  text: Can we take a shortcut through the market?

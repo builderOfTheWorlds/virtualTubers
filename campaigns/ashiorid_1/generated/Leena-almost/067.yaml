@@ -1,0 +1,37 @@
+id: Leena-almost
+take: 67
+model: llama3.1:8b
+generated_at: '2026-09-18T19:27:21.443688+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you're talking about. You saw something like it in your
+    village.
+- kind: dialogue
+  speaker: chadwick
+  text: No, let it go. We don't want to make a habit of chasing down every weird feeling.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: Why not? What's the harm in exploring it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The harm is in getting too close to the truth. Trust me, you don't want to
+    go there.
+- kind: dialogue
+  speaker: gm
+  text: It's not going to go away, Leena. You might as well look into it.
+- kind: dialogue
+  speaker: chadwick
+  text: Ashiorid, tell her to drop it.
+- kind: dialogue
+  speaker: gm
+  text: I'm not going to tell her anything. She can make her own decisions.

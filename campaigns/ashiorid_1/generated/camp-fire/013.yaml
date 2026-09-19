@@ -1,0 +1,34 @@
+id: camp-fire
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:01.953471+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, well, it's been a long day. Let's get the watch settled, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we have Vigil and Leena keep watch, you two are the most alert.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of keeping watch? The rain's not going to let up tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see why we can't just have Chadwick keep watch, he's the one who always
+    wants to be in charge.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs more kindling, it's starting to die down.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, we can't have just one person on watch. We need to be safe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire was laid wrong, it's not getting enough oxygen.
+- kind: dialogue
+  speaker: Leena
+  text: What's the significance of the moonwells, anyway? They just seem like big
+    rocks to me.
+- kind: dialogue
+  speaker: Vigil
+  text: The Event will have been different, I think, if they'd used a different well.

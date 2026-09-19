@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 231
+model: llama3.1:8b
+generated_at: '2026-09-18T22:12:18.386688+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. Chadwick, you're in the lead.
+- kind: dialogue
+  speaker: chadwick
+  text: We should keep to the west.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw a landmark to the east, Chadwick. Does that make sense to you?
+- kind: dialogue
+  speaker: chadwick
+  text: What landmark?
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs quietly)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) I don't think Chadwick knows where we are, guys.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Maybe we can try going around that big rock over there, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, we need to keep going straight.
+- kind: dialogue
+  speaker: Vigil
+  text: (still quiet)
+- kind: dialogue
+  speaker: gm
+  text: I think Vigil wants to know if he should say something, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs louder) Oh, this is priceless!
+- kind: dialogue
+  speaker: chadwick
+  text: We should keep moving. Now.

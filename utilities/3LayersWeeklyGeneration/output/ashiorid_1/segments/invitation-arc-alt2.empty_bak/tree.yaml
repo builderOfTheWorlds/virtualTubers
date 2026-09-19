@@ -1,0 +1,59 @@
+invitation-arc-alt2:
+  node_id: invitation-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The four strangers each receive the same mysterious card, marking ten thousand
+    y
+  summary: The four strangers each receive the same mysterious card, marking ten thousand
+    years since the Event. They are drawn together by fate and curiosity.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-alt2-n0
+  - invitation-arc-alt2-n1
+  slots: null
+invitation-arc-alt2-n0:
+  node_id: invitation-arc-alt2-n0
+  parent_id: invitation-arc-alt2
+  order: 0
+  depth: 1
+  title: The Card's Revelation
+  summary: Four strangers simultaneously receive identical mysterious cards marking
+    ten thousand years since the Event, drawing them together through fate and curiosity.
+    Each card bears ancient symbols that seem to pulse with otherworldly energy.
+  continuity_in: The four strangers each receive the same mysterious card, marking
+    ten thousand years since the Event. They are drawn together by fate and curiosity.
+  continuity_out: The mysterious cards begin to glow brighter, and the strangers feel
+    an irresistible pull toward a distant location marked only by the card's symbols.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+invitation-arc-alt2-n1:
+  node_id: invitation-arc-alt2-n1
+  parent_id: invitation-arc-alt2
+  order: 1
+  depth: 1
+  title: The Gathering Storm
+  summary: As the strangers follow the card's指引, they discover that their arrival
+    coincides with the reappearance of ancient forces. The Event's effects are beginning
+    to manifest once more, and their presence is no longer a mere coincidence but
+    a necessary part of an unfolding cosmic drama.
+  continuity_in: The mysterious cards begin to glow brighter, and the strangers feel
+    an irresistible pull toward a distant location marked only by the card's symbols.
+  continuity_out: The strangers arrive at the ancient site where the Event first occurred,
+    now showing signs of awakening power and preparing to fulfill their roles in the
+    cosmic cycle.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

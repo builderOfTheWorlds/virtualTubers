@@ -1,0 +1,43 @@
+id: the-meal
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:40.743416+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, dig in, everyone, it's time for dinner.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know what Saria was thinking with this menu, it's a disaster.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be too hard on Saria, it's her first time cooking for
+    us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: First time? Ha! I could do this in my sleep, I'd at least make sure the pot's
+    clean.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, let's give Saria a break, we can take turns cooking, it's only fair.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not saying it's not fair, I'm saying I'd do better, that's all.
+- kind: dialogue
+  speaker: gm
+  text: Saria, did you, uh, use that new pot last week?
+- kind: narration
+  speaker: gm
+  text: 'Saria: I, uh, think so?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course you did, that's why the flavor's off.
+- kind: dialogue
+  speaker: Leena
+  text: Can we please just enjoy our meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, enjoy it while it lasts, you'll be begging for my cooking tomorrow.
+- kind: dialogue
+  speaker: gm
+  text: Alright, that's enough, let's just eat.

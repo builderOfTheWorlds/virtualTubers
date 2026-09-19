@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 266
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:36.976654+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out. Vigil, do we need to get a bearing?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, I can get us on track.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we're going.
+- kind: dialogue
+  speaker: Leena
+  text: Really, Chad? You've been saying that for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive. I know these paths like the back of my hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, you really do, don't you?
+- kind: dialogue
+  speaker: chadwick
+  text: What's so funny, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the look on your face.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we should just ask Vigil to lead for a bit, Chad?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.

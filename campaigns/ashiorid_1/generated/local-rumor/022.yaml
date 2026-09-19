@@ -1,0 +1,39 @@
+id: local-rumor
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:37.115005+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Malmont's got two magic shops, which is a bit of a surprise, given the size
+    of the town.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more interested in seeing if they have any decent gear to sell.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I could use some new supplies.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take a look around, see what kind of business they're doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just going to grab a room at the local inn and get some rest.
+- kind: dialogue
+  speaker: gm
+  text: You're not really getting a good look at the town's dynamic, though – there's
+    a lot of tension between the constable's watch and whatever's moving around at
+    night.
+- kind: dialogue
+  speaker: chadwick
+  text: Doesn't sound like it affects us, one way or the other.
+- kind: dialogue
+  speaker: Leena
+  text: I don't see why we need to get involved in whatever's going on here.
+- kind: dialogue
+  speaker: Vigil
+  text: We're just passing through, after all.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Besides, we're the ones who've been causing a stir in every other town for
+    weeks now.

@@ -1,0 +1,35 @@
+id: camp-fire
+take: 269
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:01.330064+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's really coming down now, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, someone needs to take watch order.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid this fire myself, I can tell you it's going to last.
+- kind: dialogue
+  speaker: Leena
+  text: How does a fire like this work without any... fuel?
+- kind: dialogue
+  speaker: Vigil
+  text: It's burning the damp from the wood.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the secret. People don't know how to do it.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to decide who's on watch and who gets some sleep.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible to make a fire without any kind of... spark?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're asking too many questions for a party that's lost already.
+- kind: dialogue
+  speaker: Vigil
+  text: You can make one from two sticks.

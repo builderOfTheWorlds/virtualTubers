@@ -1,0 +1,29 @@
+id: night-watch
+take: 59
+model: llama3.1:8b
+generated_at: '2026-09-18T20:44:08.471182+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm not seeing anything.
+- kind: dialogue
+  speaker: Vigil
+  text: No, me neither.
+- kind: dialogue
+  speaker: Leena
+  text: I think the stars are clearer tonight than they were last night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's a good view.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not going to get any more rest if we don't quiet down.
+- kind: dialogue
+  speaker: Vigil
+  text: Sorry, Chadwick. We're good.
+- kind: dialogue
+  speaker: gm
+  text: I'm just going to keep watch for a bit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, I'll join you.

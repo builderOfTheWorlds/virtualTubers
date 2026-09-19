@@ -1,0 +1,43 @@
+id: inventory-argument
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:25:12.683906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I swear, Chadwick's pack has the maps, doesn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about? I have my notes right here.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, I think I saw the maps in Chadwick's bag, but then where's his water bottle?
+- kind: dialogue
+  speaker: Vigil
+  text: I have both, I'm a master packer, that's why.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, Vigil, where's your flashlight?
+- kind: dialogue
+  speaker: gm
+  text: Oh, I'm sure it's in one of these bags somewhere... just think about the time
+    we spent last night setting up camp.
+- kind: dialogue
+  speaker: Leena
+  text: I thought I saw Chadwick fiddling with it, but I'm not sure.
+- kind: dialogue
+  speaker: chadwick
+  text: That was just me cleaning it, Leena, you were sleeping.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think I found a spare compass in Chadwick's pack.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nice job, Vigil, you must have been rummaging through it for hours.
+- kind: dialogue
+  speaker: gm
+  text: Ah, now that we've found the compass, let's not forget whose turn it was to
+    do the dishes last night.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, and I think that's still outstanding.

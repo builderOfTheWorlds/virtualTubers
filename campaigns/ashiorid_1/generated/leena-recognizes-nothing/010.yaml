@@ -1,0 +1,36 @@
+id: leena-recognizes-nothing
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:30:56.411235+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The trees grow denser here, their branches tangled in a way that's almost...
+    deliberate.
+- kind: dialogue
+  speaker: Leena
+  text: I've seen that before, but where?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just the way the wind blows through the trees, makes them lean in.
+- kind: dialogue
+  speaker: Vigil
+  text: (silent, watching Leena)
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, have you ever been to the city for the annual Harvest Festival?
+- kind: dialogue
+  speaker: Leena
+  text: The city? I don't think so, but it sounds familiar somehow.
+- kind: dialogue
+  speaker: gm
+  text: The trees seem to be reflecting the sky, a mirror image of the clouds.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent, eyes fixed on Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's keep moving, folks, we don't want to be late for dinner.
+- kind: dialogue
+  speaker: gm
+  text: The air is filled with the scent of blooming wildflowers, a sweet, heady smell.

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 199
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:39.405839+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, who's up for watch tonight?
+- kind: dialogue
+  speaker: Leena
+  text: Can a fire last through a full storm like this?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it thick, should be fine, but it's not my fire.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it'll be gone by dawn.
+- kind: dialogue
+  speaker: gm
+  text: We should make sure someone stays awake.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, I'll take the first watch. Sodacan Bob, you're with me.
+- kind: dialogue
+  speaker: Leena
+  text: What's the storm like outside now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Still coming down, looks like it's getting worse.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to try to get some sleep.

@@ -1,0 +1,41 @@
+id: road-talk
+take: 58
+model: llama3.1:8b
+generated_at: '2026-09-18T20:47:40.869119+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is getting high, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I know this road, we're close to where I grew up.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I lived in Nafsari, it's...different.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) Vabokedos! Have I told you all about it? The food, the markets...
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, yes, you've told us about the Vabokedos festivals.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) Road's been straight for hours...
+- kind: dialogue
+  speaker: chadwick
+  text: (changing subject) We'll find water soon, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: My village had a great view of the lake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (interrupting) Oh, speaking of lakes, have you seen the crystal one in Vabokedos?
+- kind: dialogue
+  speaker: Vigil
+  text: (trailing off) Nafsari...
+- kind: dialogue
+  speaker: chadwick
+  text: I've been thinking about the time we found that abandoned mine.

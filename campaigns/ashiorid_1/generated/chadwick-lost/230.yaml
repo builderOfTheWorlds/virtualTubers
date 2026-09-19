@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 230
+model: llama3.1:8b
+generated_at: '2026-09-18T22:12:12.116499+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think it's been an hour, Chadwick. We should probably get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're good. I've been keeping an eye on the map.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) It's okay, Chadwick, I'm sure you're doing fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is the part where he asks for directions, right?
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptically) You sure you don't need any help with navigation, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Alright, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: (diplomatically) Maybe we could take a break soon and recheck the map?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) You guys and your maps. You're never where you think you are.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I know exactly where we are.
+- kind: dialogue
+  speaker: gm
+  text: (encouragingly) Alright, that's good. Let's keep going.
+- kind: dialogue
+  speaker: Vigil
+  text: (patiently) I'll just wait for you to ask, Chadwick.

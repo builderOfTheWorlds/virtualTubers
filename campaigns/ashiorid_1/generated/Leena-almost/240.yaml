@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 240
+model: llama3.1:8b
+generated_at: '2026-09-18T22:03:57.749263+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: This is the beginning of a new scene, take your time, and we'll see where
+    it goes.
+- kind: dialogue
+  speaker: Leena
+  text: I know this smell.
+- kind: dialogue
+  speaker: chadwick
+  text: What's wrong, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I just...I don't know, it's like I've smelled it before, but I'm pretty sure
+    I haven't.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, huh? You've been there for
+    a while now.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not scared, I'm just...curious. I don't like not knowing things.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. You'll just get lost.
+- kind: dialogue
+  speaker: gm
+  text: What do you want to do?

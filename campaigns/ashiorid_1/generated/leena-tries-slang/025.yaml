@@ -1,0 +1,41 @@
+id: leena-tries-slang
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:29:19.648064+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, so what's the plan for tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking we grab some grub at that new food truck.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I'm proper famished, famble!
+- kind: dialogue
+  speaker: Vigil
+  text: Sounds good to me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, that truck's been getting some good buzz.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's go, I'm starving.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I'm proper famble!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's "famble" supposed to mean, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Um, it means... you know, when you're feeling really peckish?
+- kind: dialogue
+  speaker: Vigil
+  text: Peckish?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah! Famble, it's a thing.
+- kind: dialogue
+  speaker: gm
+  text: I think Sodacan Bob's just playing along.

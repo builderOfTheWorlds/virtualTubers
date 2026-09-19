@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 54
+model: llama3.1:8b
+generated_at: '2026-09-18T20:04:31.469881+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Chadwick, can you tell us where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure.
+- kind: dialogue
+  speaker: Leena
+  text: You know, Chadwick, we've all been in this situation before, and we've found
+    that just being honest and saying "I'm not sure" can actually be a huge relief.
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick's been lost for hours and he still can't admit it!
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) I think we're going north.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking the same thing, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, great minds think alike, Chadwick! Why don't we just ask Vigil for directions?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, Chadwick's in denial!
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Don't worry, Chadwick, I'll let you figure it out.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Stupid compass...

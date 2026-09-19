@@ -1,0 +1,149 @@
+invitation-arc-alt3:
+  node_id: invitation-arc-alt3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The ten thousandth anniversary of the Event arrives with four strangers each
+    rec
+  summary: The ten thousandth anniversary of the Event arrives with four strangers
+    each receiving identical cards, marking the beginning of a shared destiny.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - invitation-arc-alt3-n0
+  - invitation-arc-alt3-n1
+  slots: null
+invitation-arc-alt3-n0:
+  node_id: invitation-arc-alt3-n0
+  parent_id: invitation-arc-alt3
+  order: 0
+  depth: 1
+  title: The Cards Arrive
+  summary: Four strangers across different locations simultaneously receive identical
+    cards marked with cryptic symbols and numbers, each card bearing the same timestamp
+    of the ten thousandth anniversary of the Event.
+  continuity_in: The ten thousandth anniversary of the Event arrives with four strangers
+    each receiving identical cards, marking the beginning of a shared destiny.
+  continuity_out: Four strangers across different locations simultaneously receive
+    identical cards marked with cryptic symbols and numbers, each card bearing the
+    same timestamp of the ten thousandth anniversary of the Event.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-alt3-n0-cards-01
+    kind: ambient
+    prompt: Four strangers across different locations simultaneously receive identical
+      cards marked with cryptic symbols and numbers, each card bearing the same timestamp
+      of the ten thousandth anniversary of the Event.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: invitation-arc-alt3-n0-cards-02
+    kind: spine
+    scene_ref: invitation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+invitation-arc-alt3-n1:
+  node_id: invitation-arc-alt3-n1
+  parent_id: invitation-arc-alt3
+  order: 1
+  depth: 1
+  title: The Awakening
+  summary: Each recipient begins experiencing strange visions and sensations that
+    seem to connect them to the others, while their cards glow with increasing intensity
+    as they unconsciously begin following the same mysterious path toward an unknown
+    convergence point.
+  continuity_in: Four strangers across different locations simultaneously receive
+    identical cards marked with cryptic symbols and numbers, each card bearing the
+    same timestamp of the ten thousandth anniversary of the Event.
+  continuity_out: Each recipient begins experiencing strange visions and sensations
+    that seem to connect them to the others, while their cards glow with increasing
+    intensity as they unconsciously begin following the same mysterious path toward
+    an unknown convergence point.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: invitation-arc-alt3-n1-awakening-1
+    kind: ambient
+    prompt: The first stirrings of connection begin to manifest in each stranger's
+      mind, as if a distant echo is calling them toward something unknown.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt3-n1-awakening-2
+    kind: ambient
+    prompt: Each card begins to glow faintly, pulsing in rhythm with the heartbeat
+      of a shared destiny, drawing the recipients into a mysterious convergence.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt3-n1-awakening-3
+    kind: ambient
+    prompt: Visions of ancient ruins and forgotten symbols flash across the minds
+      of each stranger, hinting at a deeper narrative woven through time.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt3-n1-awakening-4
+    kind: ambient
+    prompt: A sudden, inexplicable pull draws each individual toward a location they've
+      never been to but somehow know intimately.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: invitation-arc-alt3-n1-awakening-5
+    kind: ambient
+    prompt: The symbols on each card shift and dance, forming new patterns that seem
+      to tell a story of unity, betrayal, and the coming of a great reckoning.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []

@@ -1,0 +1,30 @@
+id: bob-names-the-runes
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:11:29.251145+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, that little rune is a resonance stabilizer, keeps the local
+    harmonic frequency from getting out of whack.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Great, just what we needed, Bob's expert opinion on magic.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, does that mean it's affecting the way the gatepost sounds when you knock
+    on it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly, exactly! You see, when you knock on it, the vibrational frequencies
+    of the wood itself are getting amplified and...
+- kind: dialogue
+  speaker: Vigil
+  text: (not paying attention)
+- kind: dialogue
+  speaker: gm
+  text: (pausing to let someone else respond)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: '...and if it weren''t for this rune, the whole structure might start to vibrate
+    at an unpredictable pitch, causing all sorts of unpleasant resonances.'

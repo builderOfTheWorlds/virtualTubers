@@ -1,0 +1,38 @@
+id: before-the-well
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:30.364849+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The candles in the great hall are lit early tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll make sure the firewood is stacked.
+- kind: dialogue
+  speaker: Leena
+  text: Where's Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: In the library, trying to sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ashiorid, do you smell that?
+- kind: dialogue
+  speaker: gm
+  text: What are you talking about?
+- kind: dialogue
+  speaker: Leena
+  text: Smells like rain. But it's not going to rain.
+- kind: dialogue
+  speaker: chadwick
+  text: Someone check the windows.
+- kind: dialogue
+  speaker: Vigil
+  text: What's wrong?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing, just... anticipation.
+- kind: dialogue
+  speaker: gm
+  text: Everyone, let's try to get some rest.

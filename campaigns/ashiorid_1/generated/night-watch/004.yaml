@@ -1,0 +1,41 @@
+id: night-watch
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T18:59:26.990746+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are a bit different tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've noticed. They seem... more vibrant.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) What time is it?
+- kind: dialogue
+  speaker: Vigil
+  text: (checks time) Still a few hours till dawn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't like it when it's so still.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I feel like we should be doing something.
+- kind: dialogue
+  speaker: chadwick
+  text: We are doing something. We're keeping watch.
+- kind: dialogue
+  speaker: Leena
+  text: (stretches) Wake us up if you see anything.
+- kind: dialogue
+  speaker: Vigil
+  text: I will.
+- kind: dialogue
+  speaker: gm
+  text: You're not really listening to the night, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about?

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 157
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:23.130780+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's setting over the city, casting long shadows across the walls.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go grab some dinner, you folks want anything?
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm good, thanks, Chad.
+- kind: dialogue
+  speaker: Vigil
+  text: Just the one guard at the door, and it opens towards the street.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, thanks for the heads up, Vigil, I thought I saw a shutter fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: Oh, yeah, that's been done, must've been yesterday or the day before.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like the place is getting some TLC.
+- kind: dialogue
+  speaker: Vigil
+  text: Cart's been by again, same old thing.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to go take a walk, need some fresh air.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll come with you, Leena, sounds like fun.

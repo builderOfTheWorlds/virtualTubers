@@ -1,0 +1,29 @@
+id: the-meal
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:02.985378+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food's not great, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, what were you even trying to do, Ashiorid?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, let's make this a special occasion! We can call it...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done better, no offense Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: Oh come on, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: And I made this lovely centerpiece!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And was the pot ever even cleaned?
+- kind: dialogue
+  speaker: gm
+  text: Oh, just drop it, Bob.

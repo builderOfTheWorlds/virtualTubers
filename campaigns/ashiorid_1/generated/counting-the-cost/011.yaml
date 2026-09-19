@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:25.503507+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm thinking the engine's crankshaft is a bit like a worn-down axe handle,
+    worn smooth by too much use.
+- kind: dialogue
+  speaker: Vigil
+  text: And what's the verdict on the cart itself?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We can probably salvage the frame, but the wheels... those are like a pair
+    of mismatched boots.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just find some new boots?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Boots are cheap, Leena, but the frame's got character.
+- kind: dialogue
+  speaker: chadwick
+  text: Character, huh?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, a little like a old friend who's gotten a bit too loose-limbed.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you're getting poetic.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying the wheels won't take a new shaft, not like an old violin
+    can't have its strings changed.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, what about the people? Any damage?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: People are like tools, Chadwick. They take a beating, or they get put away.

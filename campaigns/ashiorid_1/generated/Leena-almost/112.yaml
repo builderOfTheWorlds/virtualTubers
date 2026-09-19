@@ -1,0 +1,17 @@
+id: Leena-almost
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:01.141261+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I don't know what it is, but it feels familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen something like that in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase after it.

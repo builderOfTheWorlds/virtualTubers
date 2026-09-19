@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 253
+model: llama3.1:8b
+generated_at: '2026-09-18T23:40:52.864221+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So what's the plan for today, then?
+- kind: dialogue
+  speaker: chadwick
+  text: We were thinking of heading out to see if we can find any signs of that group
+    that went missing.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I'm not really feeling it today.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors in this room swing open to the left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that got to do with anything?
+- kind: dialogue
+  speaker: gm
+  text: It's just a habit of Vigil's to notice these things.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's get moving.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go check on the horses.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier has a missing wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Great, just what we need, more maintenance.

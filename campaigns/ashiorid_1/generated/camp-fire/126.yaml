@@ -1,0 +1,42 @@
+id: camp-fire
+take: 126
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:50.097632+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we should take turns at the fire, no one person should be
+    alone for too long.
+- kind: dialogue
+  speaker: Leena
+  text: But what if the fire just dies out on its own?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop until it's ready to.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's right, the lay of the fire was a bit wonky, but it's holding.
+- kind: dialogue
+  speaker: chadwick
+  text: Wonky or not, we need to keep it lit.
+- kind: dialogue
+  speaker: Leena
+  text: What's the protocol for watch duties, exactly?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should alternate shifts, get some rest.
+- kind: dialogue
+  speaker: Vigil
+  text: Morning will bring clearer skies.
+- kind: dialogue
+  speaker: chadwick
+  text: Not if the wind keeps up, it won't.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was just a natural occurrence?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: gm
+  text: I think it's time for rest, let's settle in for the night.

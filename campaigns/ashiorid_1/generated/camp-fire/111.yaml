@@ -1,0 +1,29 @@
+id: camp-fire
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:27.484174+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should alternate watch shifts, 3 people at a time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I laid that fire just right, it'll burn till dawn.
+- kind: dialogue
+  speaker: Vigil
+  text: We've seen rain like this before.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens to a sorcerer when the seal fails?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like I said, the fire's laid to catch air, not just burn wood.
+- kind: dialogue
+  speaker: gm
+  text: We'll sort out the watch order in the morning, no need to decide now.
+- kind: dialogue
+  speaker: Leena
+  text: Never mind.
+- kind: dialogue
+  speaker: Vigil
+  text: Rain's been coming down like that for three days in the last town.

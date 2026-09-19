@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 139
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:44.706128+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back to the inn, we'll get you settled in for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Thanks, Ashiorid. We've been traveling for a while.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it's good to have a warm bed again.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the common area opens to the left, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not that we have any reason to be in the common area.
+- kind: dialogue
+  speaker: gm
+  text: Is everything to your liking?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's fine.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to go see if I can find some dinner.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the cart with the red canopy passed us twice on the road.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean, Vigil?
+- kind: dialogue
+  speaker: gm
+  text: Nothing, I'm sure.

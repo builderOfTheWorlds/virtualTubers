@@ -1,0 +1,43 @@
+id: malmont-market
+take: 160
+model: llama3.1:8b
+generated_at: '2026-09-18T23:51:48.463567+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come on now, what's this? A whole forge dedicated to nothing but ornamentation.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Not a single decent-looking scale...
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think I've ever seen anyone around here that's actually... familiar.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, look! This map might show where the Silver Creek flows, that's all I'm
+    interested in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: These people need to get back to basics, I'm not seeing any proper craftsmanship
+    here.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, I wonder if this map shows the old river crossing...
+- kind: dialogue
+  speaker: Vigil
+  text: (keeps his hand near his coin)
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) No one seems to be paying much attention to me, which is nice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can't believe the prices they're asking for these... decorations.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to herself) River, river, river...
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it's because I look like just another lost traveler.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) How old is this map, do you think?

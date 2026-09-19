@@ -1,0 +1,42 @@
+id: camp-fire
+take: 94
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:01.505914+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain seems to be letting up a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thinking we should take turns keeping watch tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire a bit too far to the left, it's not burning evenly.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll have enough wood for two days.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was just about magic, or was there something else going
+    on?
+- kind: dialogue
+  speaker: chadwick
+  text: We can discuss the Event in the morning, let's focus on the watch order.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, the fire was laid wrong.
+- kind: dialogue
+  speaker: Vigil
+  text: Magic doesn't last past dawn.
+- kind: dialogue
+  speaker: Leena
+  text: I wonder what would have happened if they'd just kept searching.
+- kind: dialogue
+  speaker: gm
+  text: The fire's still burning, don't worry about it.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle on a watch schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should rebuild the fire to make sure it lasts.

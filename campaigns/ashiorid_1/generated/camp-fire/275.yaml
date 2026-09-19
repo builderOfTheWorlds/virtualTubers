@@ -1,0 +1,45 @@
+id: camp-fire
+take: 275
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:39.715688+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down in sheets, no use arguing with it now.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we need to settle the watch order for tonight, who's going to take
+    first shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we laid the fire a bit too close to the tent, it's gonna smoke us
+    out if it keeps burning like that.
+- kind: dialogue
+  speaker: Leena
+  text: What's the likelihood of the fire burning through till morning, do we need
+    to start thinking about relighting it?
+- kind: dialogue
+  speaker: Vigil
+  text: Three moons.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bobbing for sticks in the rain, that's a recipe for disaster, someone's gonna
+    slip and break an ankle.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not seeing a problem with the watch order, we can just...
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long it takes for a well to refill after it's drained
+    like the last one?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If I remember right, it was a few moons, but that was just what the old-timer
+    told me.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is not always golden, but it's better than useless chatter in the
+    middle of the night.
+- kind: dialogue
+  speaker: gm
+  text: I think the fire's holding, let's just sit back and see how it goes.

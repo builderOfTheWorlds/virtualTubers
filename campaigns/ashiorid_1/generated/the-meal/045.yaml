@@ -1,0 +1,35 @@
+id: the-meal
+take: 45
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:23.745406+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food's not bad, come on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bad? Bad?! I've had worse at a tavern.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, don't be too hard on our chef, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Chef? You call that a chef? I could—
+- kind: dialogue
+  speaker: Leena
+  text: Alright, who wants to help me clean up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, so now you're deflecting?
+- kind: dialogue
+  speaker: gm
+  text: Let's just focus on finishing dinner, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but someone's gotta do it right.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just...

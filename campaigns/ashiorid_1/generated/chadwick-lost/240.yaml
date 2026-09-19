@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 240
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:22.329780+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out. We're going to need to find that next landmark.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's that way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, he's lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, can I make a suggestion?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I know where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Finally, someone who's not a total moron.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, I was going to say... maybe Vigil can lead for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm leading.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) I'm ready to lead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is gonna be good.
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil, take the lead.

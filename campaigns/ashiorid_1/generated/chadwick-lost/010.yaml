@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:38.787280+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you're in charge of navigation.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it.
+- kind: dialogue
+  speaker: gm
+  text: Good. Which way do we go?
+- kind: dialogue
+  speaker: chadwick
+  text: This way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, I love this part.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, do you have any idea where we are?
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) No.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe we should check the map.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) You don't have it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's go this way then.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I said this way.

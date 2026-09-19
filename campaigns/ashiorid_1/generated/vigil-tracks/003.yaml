@@ -1,0 +1,32 @@
+id: vigil-tracks
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:43:16.922424+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high, not hot, but the air's heavy with moisture.
+- kind: dialogue
+  speaker: chadwick
+  text: Good, I could use a drink.
+- kind: dialogue
+  speaker: Leena
+  text: I see some shade up ahead, near that tree.
+- kind: dialogue
+  speaker: Vigil
+  text: A family passed through yesterday, around noon.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who was it?
+- kind: dialogue
+  speaker: Vigil
+  text: Travelers, heading east.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think they're from the city?
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe, they were dressed like it.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving.

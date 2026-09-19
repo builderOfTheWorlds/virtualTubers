@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 265
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:41.373689+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The streets are quiet, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, I'm checking the eastern rooftops.
+- kind: dialogue
+  speaker: Leena
+  text: Anything?
+- kind: dialogue
+  speaker: chadwick
+  text: No movement, just some scrubby plants.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the alley has a fresh coat of paint.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cares?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a detail.
+- kind: dialogue
+  speaker: gm
+  text: What else do we have?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing much.
+- kind: dialogue
+  speaker: Leena
+  text: The cart that just passed has a worn tire.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, they all do.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on that window's been fixed recently.

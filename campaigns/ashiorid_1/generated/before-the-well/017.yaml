@@ -1,0 +1,35 @@
+id: before-the-well
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:44.034440+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is still up, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: It's been there for hours.
+- kind: dialogue
+  speaker: Leena
+  text: I'll check the time. ( pause ) It's almost midnight.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) I wish I could sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You want to play a round of cards?
+- kind: dialogue
+  speaker: gm
+  text: No, I don't think I can focus.
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) I'll go get some more firewood.
+- kind: dialogue
+  speaker: Leena
+  text: Do we need to?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll keep watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) What are we waiting for?

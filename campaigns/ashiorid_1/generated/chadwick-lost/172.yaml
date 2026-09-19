@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 172
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:34.992797+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You're sure you know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe I can help you check the map, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it under control.
+- kind: dialogue
+  speaker: Vigil
+  text: If anyone needs help, just say.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is rich, Chadwick's lost again.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't we just take a vote on who knows the way?
+- kind: dialogue
+  speaker: chadwick
+  text: I do.
+- kind: dialogue
+  speaker: Vigil
+  text: Okay then, let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun.

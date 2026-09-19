@@ -1,0 +1,40 @@
+id: local-rumor
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:13.686626+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've been thinking, we could all use a hot meal and a good night's rest before
+    we press on.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed. Let's see what Malmont has to offer.
+- kind: dialogue
+  speaker: Leena
+  text: I could do with some fresh bread and a hot bath.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll find us a decent inn.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like a plan. I'm getting a little hungry.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll ask around for some recommendations on local food.
+- kind: dialogue
+  speaker: Leena
+  text: Just be careful, the townspeople might be... wary.
+- kind: dialogue
+  speaker: Vigil
+  text: We can't expect a warm welcome after what happened to Leto's manor.
+- kind: dialogue
+  speaker: gm
+  text: Let's just get settled and worry about the politics later.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I'm more concerned about finding some decent ale.
+- kind: dialogue
+  speaker: Vigil
+  text: There, I saw a sign for the Silver Stag Inn. That looks like a good place
+    to start.

@@ -1,0 +1,36 @@
+id: malmont-market
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:33.323941+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not a single decent hammer I've seen so far.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving, let's see what else is here.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take a look at those old maps, see if I can find anything interesting.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally a place where nobody knows my face.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, all this rubbish, I swear this town's smithwork is a joke.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not seeing anything that makes me want to part with my coin.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Do you think these maps might be connected to what
+    happened to Leto's manor?
+- kind: dialogue
+  speaker: chadwick
+  text: No idea, but it's worth a look, don't you think?
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) I think so.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on, let's get out of here before we're stuck buying some overpriced trinket.

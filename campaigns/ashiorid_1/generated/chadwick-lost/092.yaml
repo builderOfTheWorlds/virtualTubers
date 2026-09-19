@@ -1,0 +1,44 @@
+id: chadwick-lost
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:33.814923+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, so we need to head east if we're going to make it to the other side
+    of the forest before nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we're heading east.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, if I may be so bold, I think it would be a good idea to consult the map
+    one more time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh boy, here we go again.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, why don't you let Vigil check the map and then you can
+    confirm our direction?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine, I know exactly where we're going.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) With all due respect, sir, I think it would be better if...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (interrupting) This is going to be good.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) We are heading east.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out, then.
+- kind: dialogue
+  speaker: Vigil
+  text: (under his breath) I have no idea why we're going this way...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) Neither do I, Vigil...

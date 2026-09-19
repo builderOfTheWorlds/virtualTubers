@@ -1,0 +1,30 @@
+id: leena-different-now
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:29:19.627709+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's troubling you?
+- kind: dialogue
+  speaker: Leena
+  text: I... it's not the same. My magic, it feels different.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) Different how?
+- kind: dialogue
+  speaker: Leena
+  text: (hesitates) I don't know, exactly. It's like... have you ever noticed something
+    changing, but you can't quite put your finger on it?
+- kind: dialogue
+  speaker: Vigil
+  text: ( softly) Like a shadow shifting.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs nervously) Exactly. That's it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (quietly) Do you think it's because of the event?
+- kind: dialogue
+  speaker: Leena
+  text: (skeptically) The Event? No, that was ten thousand years ago.

@@ -1,0 +1,38 @@
+id: after-the-choice
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:05.199591+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're here.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing) Finally.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) After everything we had to give up.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't think about it now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs softly) Yeah, let's not think about it.
+- kind: dialogue
+  speaker: Leena
+  text: Easy for you to say.
+- kind: dialogue
+  speaker: gm
+  text: It's over.
+- kind: dialogue
+  speaker: Vigil
+  text: We did what we had to do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's right, we did.
+- kind: dialogue
+  speaker: Leena
+  text: (sighing) That's all that matters.
+- kind: dialogue
+  speaker: chadwick
+  text: (nothing)

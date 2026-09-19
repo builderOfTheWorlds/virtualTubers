@@ -1,0 +1,41 @@
+id: chadwick-cooking
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:20:53.793798+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The meal Chadwick's prepared is... quite a sight.
+- kind: dialogue
+  speaker: chadwick
+  text: Who's ready to dig in?
+- kind: dialogue
+  speaker: Leena
+  text: I am, actually.
+- kind: dialogue
+  speaker: Vigil
+  text: Careful, folks, I think I saw a... questionable ingredient.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ew, what's that smell?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, it's just a little something I whipped up.
+- kind: dialogue
+  speaker: Leena
+  text: (gagging) Uh, I think I'll start with the vegetables.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) Leena, no, it's worse than that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (backing away) I'll just... grab a plate from the other room.
+- kind: dialogue
+  speaker: gm
+  text: Everyone seems to be... appreciating the effort.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling proudly) See, I told you it'd be a hit.
+- kind: dialogue
+  speaker: Leena
+  text: (forced laugh) Oh, Chadwick, this is so... delicious.

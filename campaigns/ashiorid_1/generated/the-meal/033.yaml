@@ -1,0 +1,43 @@
+id: the-meal
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T20:56:50.434187+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Alright, dig in. Sodacan Bob: This stew''s a travesty, I can tell you that
+    much.'
+- kind: dialogue
+  speaker: chadwick
+  text: (silence)
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, let's make a toast! To good food and good company.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) This stuff's been sitting out too long...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had to cook it, I'd do it right. You know what I'd do differently.
+- kind: dialogue
+  speaker: chadwick
+  text: (still eating)
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, it's just a meal. It's not that bad.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushing food away) I'm good, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just about taste, it's about technique. I'd use fresh herbs, not
+    that wilted nonsense over there.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) Really?
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's drop it. Who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I will, if no one else is stepping up.

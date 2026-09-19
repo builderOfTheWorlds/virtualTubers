@@ -1,0 +1,35 @@
+id: malmont-market
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-18T18:59:14.079518+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work at a traveling fair.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) This one looks like it might be from a century ago.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching the crowd) People seem friendly enough.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Nobody's staring at me, I'm a regular.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of a sword with a hilt like that?
+- kind: dialogue
+  speaker: Leena
+  text: (running her finger over an old map) I don't know, it just feels... right.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Just be glad nobody knows your face.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll go try some of that fruit over there.
+- kind: dialogue
+  speaker: Leena
+  text: (distracted) Wait, is that a route map?
+- kind: dialogue
+  speaker: Vigil
+  text: (sternly) No, Leena, you don't need to go look at that.

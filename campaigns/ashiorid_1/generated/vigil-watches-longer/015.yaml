@@ -1,0 +1,11 @@
+id: vigil-watches-longer
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:45:30.833516+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The watch is yours, Vigil. You can step down if you need to.
+- kind: dialogue
+  speaker: Leena
+  text: is everything alright?

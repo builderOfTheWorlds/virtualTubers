@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-19T00:07:42.172446+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How's this die struck, I wonder, a single impact, a single mark.
+- kind: dialogue
+  speaker: chadwick
+  text: You've seen a lot of die-struck runes in your time, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Seen them, but who has the patience for that kind of work?
+- kind: dialogue
+  speaker: Leena
+  text: What's so special about this one, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing's special, it's just... old.
+- kind: dialogue
+  speaker: Vigil
+  text: Does it mean something, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It means something to someone, I suppose.
+- kind: dialogue
+  speaker: gm
+  text: Does it mean anything to you, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Stop calling me that, Vigil.

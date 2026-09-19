@@ -1,0 +1,32 @@
+id: malmont-market
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:43.505950+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's starting to get crowded, shall we find a place to stand?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, good idea, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: I'll take the corner by the fruit stall.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll join you, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm off to see what they're doing in the back alleys.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, you think that's a good idea?
+- kind: dialogue
+  speaker: Vigil
+  text: Just getting some air, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: (muttering to herself) Old maps... what am I looking for?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the smith) Ah, yes, you call that a sword?

@@ -1,0 +1,35 @@
+id: counting-the-cost
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:54.615137+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Gear's like a bowstring, gotta be tightened back up.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the damage look like?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's been splintered, but we can salvage the frame.
+- kind: dialogue
+  speaker: Leena
+  text: And what about the people, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the handles are bent, but they should still swing.
+- kind: dialogue
+  speaker: Vigil
+  text: Anything we can't fix?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, just some scar tissue.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get to work then.
+- kind: dialogue
+  speaker: gm
+  text: You two, assess the trail ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The road's like a straightedge, but we won't know till we get there.

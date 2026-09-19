@@ -1,0 +1,41 @@
+id: night-watch
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:31.467380+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon's up high, just a sliver of light.
+- kind: dialogue
+  speaker: chadwick
+  text: Can't see the stars, but I think it's a clear night.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not seeing anything. Just a dark sky.
+- kind: dialogue
+  speaker: Vigil
+  text: You think the others are getting some sleep?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure they're all out cold by now.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) I've been thinking about the one in the city.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) You mean the well in the square?
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I heard it's been grey for years.
+- kind: dialogue
+  speaker: gm
+  text: (lowers voice) I've been wondering if it's just us who notice.
+- kind: narration
+  speaker: gm
+  text: ( long pause )
+- kind: dialogue
+  speaker: chadwick
+  text: Do you think we should wake them up a bit early?
+- kind: dialogue
+  speaker: Vigil
+  text: No, I think we can keep watch for a bit longer.

@@ -1,0 +1,37 @@
+id: malmont-market
+take: 165
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:18.552583+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Guess I was hoping for some of that fine work they're always talking about.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing in front of the map stall) These are all from a hundred years ago
+    or more.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the nearby wares) Anybody selling something useful?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling blandly) Ah, good morning, market folk.
+- kind: dialogue
+  speaker: Leena
+  text: (touching a yellowed map) I know this one. From the Great Wastes.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping his hand near his coin purse) We're just passing through.
+- kind: dialogue
+  speaker: chadwick
+  text: (studying a nearby stall's selection) A bit of everything, isn't there?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and not much of it any good.
+- kind: dialogue
+  speaker: Leena
+  text: (examining a map with a faded red line) This one looks like it's from a trade
+    route.
+- kind: dialogue
+  speaker: Vigil
+  text: (moving on) We should find something to eat.

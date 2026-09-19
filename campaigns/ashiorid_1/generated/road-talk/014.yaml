@@ -1,0 +1,41 @@
+id: road-talk
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:29.884328+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, doesn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I've told you, Chadwick, there's a stream up ahead.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we're making good time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But we still have hours before dark.
+- kind: dialogue
+  speaker: gm
+  text: That's the plan, yes.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm from... somewhere.
+- kind: dialogue
+  speaker: Leena
+  text: You're from the south, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Never mind.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's lakes are beautiful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've heard they're full of fish.
+- kind: dialogue
+  speaker: Leena
+  text: We had fish in Vabokedos too.

@@ -1,0 +1,27 @@
+id: Leena-almost
+take: 223
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:25.623245+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what you're talking about, Leena. We have a similar pattern
+    in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. We don't know what it is.
+- kind: dialogue
+  speaker: Leena
+  text: Why not? You're not going to tell me I'm not supposed to wonder, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just that sometimes things seem familiar and then you realize it's not.
+- kind: dialogue
+  speaker: chadwick
+  text: That's true. Sometimes our memories can play tricks on us.
+- kind: dialogue
+  speaker: Leena
+  text: My memories are not tricks. And neither is this feeling.

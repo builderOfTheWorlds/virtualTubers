@@ -1,0 +1,26 @@
+id: Vigil-counts
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:11.832344+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart's wheels creaked on the cobblestones again.
+- kind: dialogue
+  speaker: chadwick
+  text: Morning, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our right swings open, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: Anything interesting about the door?
+- kind: dialogue
+  speaker: Vigil
+  text: No, I just like knowing where it opens.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with the interest in doors, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just habit, Bob.

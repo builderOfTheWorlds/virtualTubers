@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:01.814425+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The carriage is waiting for us, as agreed. Let's get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying the tickets, Leena's paying for the fare.
+- kind: dialogue
+  speaker: Leena
+  text: I've got the coins, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left swings inwards.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We need to get on the carriage before it leaves.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got the tickets, let's hurry.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure which carriage we're supposed to take.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been freshly painted.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This one's got a sign on it, see?
+- kind: dialogue
+  speaker: gm
+  text: That's the one we want, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: All right, then. In we go.
+- kind: dialogue
+  speaker: Leena
+  text: Hold on, I think it's moving.

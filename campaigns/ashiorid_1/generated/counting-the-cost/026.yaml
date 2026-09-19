@@ -1,0 +1,38 @@
+id: counting-the-cost
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:21:37.089861+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright then, let's take stock. Gear's worn, but it'll hold.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the damage to the cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A good sharp crack, but the frame's still sound.
+- kind: dialogue
+  speaker: Leena
+  text: What's a good crack, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Enough to leave its mark, but not enough to break.
+- kind: dialogue
+  speaker: Vigil
+  text: How much is enough, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just enough to teach you something new.
+- kind: dialogue
+  speaker: chadwick
+  text: And what's the lesson here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The lesson's in the weld.
+- kind: dialogue
+  speaker: gm
+  text: You're talking about the cart, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart, the road, the hands that hold it.

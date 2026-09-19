@@ -1,0 +1,41 @@
+id: night-watch
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:12.659169+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky's darker than I remember.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, we've been through this before.
+- kind: dialogue
+  speaker: Vigil
+  text: But it's like a different kind of dark.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: chadwick
+  text: Quiet, Leena. Vigil's just observing.
+- kind: dialogue
+  speaker: Leena
+  text: What are you observing?
+- kind: dialogue
+  speaker: Vigil
+  text: The stars. They're more visible than I thought.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I could watch them all night.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) There's something about them that feels off.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) It's just your imagination.
+- kind: dialogue
+  speaker: Vigil
+  text: No, I mean it. The constellations look... wrong.
+- kind: dialogue
+  speaker: Leena
+  text: (snuggles into blanket) I don't see anything wrong.

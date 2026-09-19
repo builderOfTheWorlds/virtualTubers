@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 194
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:38.009880+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, while we're here, let's review the plan for the evening.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good to me, what's the time frame for departure?
+- kind: dialogue
+  speaker: Leena
+  text: I'm thinking we aim to leave at sunset.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on the east windows were repaired recently, I noticed that earlier.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw that too.
+- kind: dialogue
+  speaker: gm
+  text: What's the difference, exactly?
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) Oh, nothing, really. Just an observation.
+- kind: dialogue
+  speaker: Leena
+  text: I'm going to check on our gear, make sure everything is secure.
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbles) Cart passed by the window again...

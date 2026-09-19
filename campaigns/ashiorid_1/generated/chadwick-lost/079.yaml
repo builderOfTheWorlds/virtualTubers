@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:10.399397+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest is dense and the canopy overhead is thick, casting deep shadows
+    on the forest floor.
+- kind: dialogue
+  speaker: gm
+  text: You've been walking for hours, and the sun is beginning to set.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, how's your sense of direction?
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, can you give us a location update?
+- kind: dialogue
+  speaker: Vigil
+  text: We're about a day's walk from the main trail.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, Chadwick's leading, and we're all following his brilliant
+    navigation skills.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Uh, Chadwick, maybe we should take a moment to...
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I know exactly what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (amused) Actually, Chadwick, I think we should...
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) I'm fine, just a little...route optimization.
+- kind: dialogue
+  speaker: gm
+  text: (laughing) Route optimization?

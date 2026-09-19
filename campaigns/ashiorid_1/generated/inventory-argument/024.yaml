@@ -1,0 +1,42 @@
+id: inventory-argument
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:44.133904+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Come on, Chadwick, it's not that hard to just label your bag
+- kind: dialogue
+  speaker: chadwick
+  text: Who's got time for that? We're not lost yet
+- kind: dialogue
+  speaker: Leena
+  text: You'd think that, wouldn't you, Vigil, considering how you just rummaged through
+    my bag
+- kind: dialogue
+  speaker: Vigil
+  text: Oh, come on, Leena, it's just a few extra minutes, would've been worth it
+    to avoid this mess
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, look at this, my pack's got a whole extra bottle of water
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, nice, Sodacan Bob's got his priorities straight
+- kind: dialogue
+  speaker: Leena
+  text: Where'd you even find that, it's not like I'm just going to lose track of
+    my own stuff
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, you're not even mad, you're just...muttering to yourself
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, we should start labeling things, or something
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you only found that bottle because you've been digging through
+    Leena's pack for five minutes
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, that's not a discovery, that's just you being nosy

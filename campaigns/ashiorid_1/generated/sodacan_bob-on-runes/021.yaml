@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:07.947094+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a well-struck die, I'll give them that.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean, "well-struck"?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, whoever carved those runes knew what they were doing. Deep, but not
+    too deep, so the weather don't eat away at it.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think someone from this village could make something like that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I doubt it. Nobody around here even uses runes no more. Just symbols for decoration,
+    not for the art of it.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the art of it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The art of making it last. The art of making it matter.
+- kind: dialogue
+  speaker: chadwick
+  text: So what's the point of even talking about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No point, just thinking out loud.

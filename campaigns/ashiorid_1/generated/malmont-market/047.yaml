@@ -1,0 +1,41 @@
+id: malmont-market
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T20:20:18.980738+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome, folks, to Malmont's morning market.
+- kind: dialogue
+  speaker: chadwick
+  text: Just happy to be somewhere we're not immediately known, I think.
+- kind: dialogue
+  speaker: Leena
+  text: I'm Leena, by the way. I'll just be browsing.
+- kind: dialogue
+  speaker: Vigil
+  text: Aye.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone know if that's real steelwork?
+- kind: dialogue
+  speaker: gm
+  text: Not much of that around here. More of a... hobby.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) I'm not here to look at steel.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you think it is, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: These old maps are fascinating. What's the cost?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maps? Don't get much call for those around here.
+- kind: dialogue
+  speaker: gm
+  text: Some folks collect 'em. Others use 'em to plan routes.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take that one. The one with the red route.

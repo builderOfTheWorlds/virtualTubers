@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T22:30:34.003143+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A thousand years or more of weather, and a few inches deep, that's how you
+    carve a rune that'll last.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the odds of it lasting longer than the inscription itself?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen runes fade, but I've seen 'em last too - it depends on the craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: You think whoever did the Malvakar was a master?
+- kind: narration
+  speaker: gm
+  text: 'vigor: I think we''re getting away from the point.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point, again?
+- kind: narration
+  speaker: gm
+  text: 'vigor: The point is the amulet.'
+- kind: dialogue
+  speaker: chadwick
+  text: And the runes on the Malvakar. Maybe they're related.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd have to see it for myself.

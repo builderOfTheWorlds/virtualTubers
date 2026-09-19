@@ -1,0 +1,41 @@
+id: road-talk
+take: 18
+model: llama3.1:8b
+generated_at: '2026-09-18T19:13:54.785454+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've been quiet for a while, Chadwick, is everything all right?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine.
+- kind: dialogue
+  speaker: Leena
+  text: I remember the colors of the sunset in my village.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the taste of our homegrown plums, no?
+- kind: dialogue
+  speaker: Vigil
+  text: My family used to catch fish in the river near Nafsari.
+- kind: dialogue
+  speaker: Leena
+  text: We have a saying, "The river flows but the water is always there."
+- kind: dialogue
+  speaker: gm
+  text: That's nice, Leena. Sodacan Bob, what's Vabokedos like?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's...the sea is always there, but the tides change.
+- kind: dialogue
+  speaker: Vigil
+  text: My mother's family.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's big, the biggest thing I've ever seen.
+- kind: dialogue
+  speaker: gm
+  text: Let's stop for a bit, we've been walking for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: There's no shade.

@@ -1,0 +1,41 @@
+id: carrying-the-signet
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:16:45.086767+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A signet ring, half of one, what's the story here?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, this old thing? Just a trinket I picked up.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) He's been wearing it since we were at the Leto estate.
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugging) Just a token from the family, I suppose.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (frowning) I don't recall seeing that one before.
+- kind: dialogue
+  speaker: gm
+  text: (smiling blandly) I thought it was just a curiosity.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (smiling back) Well, I suppose it''s not worth discussing.'
+- kind: dialogue
+  speaker: gm
+  text: (glancing away) Indeed, let's not waste our time.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughing) Sounds like a plan to me.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling up at Grovley) Thank you, sir, for the gift.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: ( muttering) I'll ask around, see if anyone knows.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing at the others, then back to Grovley) No need for that.

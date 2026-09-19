@@ -1,0 +1,35 @@
+id: malmont-market
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:29.388078+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work from the traveling folk.
+- kind: dialogue
+  speaker: Leena
+  text: What kind of ink they using for the maps, looks faded.
+- kind: dialogue
+  speaker: Vigil
+  text: Just checking the prices, no need to haggle.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never been here before, is this the main square?
+- kind: dialogue
+  speaker: Leena
+  text: Old ones, must be from before the war.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not worth my gold, I'll pass.
+- kind: dialogue
+  speaker: Vigil
+  text: Still too expensive, I'll look elsewhere.
+- kind: dialogue
+  speaker: Leena
+  text: These maps... I think I saw something like this once.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything exciting happen in this town?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing but gossip and blacksmith's mistakes.

@@ -1,0 +1,29 @@
+id: the-ring-half
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:40:58.979811+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's your take on this, then? We've been carrying this thing around for
+    who knows how long.
+- kind: dialogue
+  speaker: chadwick
+  text: I... I don't know what to think about it. This thing is just a... a symbol,
+    isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, looking down at the ring) A symbol of what, though?
+- kind: dialogue
+  speaker: Vigil
+  text: (low and even) The sisters said it was a reminder of our... potential.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (nervously) Potential for what, Vigil?
+- kind: dialogue
+  speaker: gm
+  text: (curiously) The sisters never said, did they? Just that we were part of the
+    Program, and that the ring was a symbol of our... bond to the house.
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitantly) I don't feel like I've been very... bonded to anyone, though.

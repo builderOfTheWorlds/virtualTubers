@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 74
+model: llama3.1:8b
+generated_at: '2026-09-18T20:06:44.396377+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So we've been walking for a while now. Chadwick, can you tell us where we
+    are?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yes, of course. We're getting close to... uh...
+- kind: dialogue
+  speaker: Leena
+  text: (nervously chuckling) Close to... what?
+- kind: dialogue
+  speaker: chadwick
+  text: (pausing) The... river. We're following the river.
+- kind: dialogue
+  speaker: Vigil
+  text: (calmly) River?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is good. Chadwick, you don't even know the name of the
+    river.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to help) Well, actually, Chadwick, if we're near the river, that means...
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) No, no, I know exactly what I'm doing. We're fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I'm sure we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is going to be a long day.
+- kind: dialogue
+  speaker: Leena
+  text: (sighing) Can we just keep moving, please?
+- kind: dialogue
+  speaker: gm
+  text: (laughing) Alright, alright. Let's keep moving.

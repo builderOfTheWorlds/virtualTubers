@@ -1,0 +1,38 @@
+id: nafsari-question
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:34.686873+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've never lived anywhere else.
+- kind: dialogue
+  speaker: chadwick
+  text: Never had a chance to, eh?
+- kind: dialogue
+  speaker: Leena
+  text: What's it like?
+- kind: dialogue
+  speaker: Vigil
+  text: The trees are quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Quiet, that's all?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not silence.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Okay, okay.
+- kind: dialogue
+  speaker: Vigil
+  text: It's just different.
+- kind: dialogue
+  speaker: chadwick
+  text: Different how?
+- kind: dialogue
+  speaker: Vigil
+  text: Just is.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses, then changes subject)

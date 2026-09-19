@@ -1,0 +1,42 @@
+id: leena-recognizes-nothing
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:30.627850+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The landscape shifts, and you notice something. What is it, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: The shape of that hill, I think I've seen it before.
+- kind: dialogue
+  speaker: Vigil
+  text: Silent.
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, have you always been fascinated by geography?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Must be something about the geology of this region.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not the geology. It's the way the buildings... fit together.
+- kind: dialogue
+  speaker: Vigil
+  text: Eyes on the horizon.
+- kind: dialogue
+  speaker: chadwick
+  text: Well, let's take a break. We can discuss this over lunch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Smell the air, Leena. See if that helps you remember.
+- kind: dialogue
+  speaker: Leena
+  text: (sighs) I don't know what I'm trying to remember.
+- kind: dialogue
+  speaker: gm
+  text: Silence. Wait and observe.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not uncommon for people to experience déjà vu. Nothing to be concerned
+    about.

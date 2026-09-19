@@ -1,0 +1,33 @@
+id: bob-vs-the-cart-wheel
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-19T03:15:13.743107+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm tellin' you, the axle is too thin for that kind of weight!
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we've been over this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, no, I'm not just "coming on" about it!
+- kind: dialogue
+  speaker: Leena
+  text: Guys, we've got a festival to prepare for.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think the people of Greenhaven want a cart that's gonna fall apart on
+    them?
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Bob, that's a valid concern.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Valid concern? You think you're an engineer now, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just compromise on this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Compromise? You mean surrender to mediocrity?

@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T02:09:57.712744+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Silence is thick around us.
+- kind: dialogue
+  speaker: chadwick
+  text: I saw something.
+- kind: dialogue
+  speaker: Leena
+  text: What did you see?
+- kind: dialogue
+  speaker: Vigil
+  text: Not sure, Chadwick's not clear on what he saw.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing that'd make me change direction.
+- kind: dialogue
+  speaker: Leena
+  text: Keep moving.
+- kind: dialogue
+  speaker: gm
+  text: It's been a while since we've had a clear sighting.
+- kind: dialogue
+  speaker: Vigil
+  text: Could've been a trick of the light.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, I saw it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A trick of the light or something else.

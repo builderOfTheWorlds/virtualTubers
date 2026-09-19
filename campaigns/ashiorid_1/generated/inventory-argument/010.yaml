@@ -1,0 +1,38 @@
+id: inventory-argument
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:02.961440+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I told you to label the packs before we left, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not my job to organize your mess, Leena's the one who lost it.
+- kind: dialogue
+  speaker: Leena
+  text: I did not lose it, I just didn't think it was worth labeling.
+- kind: dialogue
+  speaker: Vigil
+  text: That's because you're always losing things and it's just easier to start over.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I just found the first aid kit in the snacks pack.
+- kind: dialogue
+  speaker: gm
+  text: Where do you think it belongs?
+- kind: dialogue
+  speaker: chadwick
+  text: It belongs in the medical pack where it was actually stored.
+- kind: dialogue
+  speaker: Leena
+  text: That's not the point, the point is you're gloating now.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, try being grateful for once instead of smug.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can we just move on and stop arguing about packing habits?
+- kind: dialogue
+  speaker: Leena
+  text: No, because this is a never-ending cycle of chaos.

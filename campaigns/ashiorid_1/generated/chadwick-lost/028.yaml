@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:34.770807+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got some ground to cover.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we're on the right track. I've been keeping an eye on the map.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think Vigil's map is a bit more detailed.
+- kind: dialogue
+  speaker: chadwick
+  text: Nonsense, I'm sure mine is fine.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I can take a look if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is going to be fun.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Uh, Chadwick, maybe we should just ask Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's so funny?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just Chadwick's navigation skills.

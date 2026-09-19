@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 46
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:09.903143+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed that the shutter on the north wall was repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: No point. I just think it's new.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) I like the look of the woodwork.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's a nice touch.
+- kind: dialogue
+  speaker: gm
+  text: (continues reading) The cart that passed by earlier is headed back this way.
+- kind: dialogue
+  speaker: chadwick
+  text: Great, just what we need. More carts.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go get a drink from the bar.
+- kind: dialogue
+  speaker: Vigil
+  text: (murmurs) Cart's going in the same direction it came from.

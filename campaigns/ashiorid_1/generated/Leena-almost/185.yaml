@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 185
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:59.718174+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what do you see?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me that feels like I should remember.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like you saw a familiar doorway in that place.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get too close to it, it's probably just a trick of the light.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't think that's a good idea, we should focus on the task at hand.
+- kind: dialogue
+  speaker: Leena
+  text: But it feels... wrong. Like I've seen it before, but I shouldn't have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's from your village, Leena. You must have seen it in pictures or
+    something.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, please just drop it, okay?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, it's just... I feel like I'm missing something.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should move on, let's not get distracted.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we can come back to it later if it's bothering you that much.
+- kind: dialogue
+  speaker: chadwick
+  text: Just let's go, okay?

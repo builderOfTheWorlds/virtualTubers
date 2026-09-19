@@ -1,0 +1,42 @@
+id: Leena-almost
+take: 136
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:59.607815+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, you're looking at something familiar but shouldn't be. What's that?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw a similar door in your village. They can look the same sometimes.
+- kind: dialogue
+  speaker: Leena
+  text: It's not that. I'm not talking about a door I saw. It's the way it looks,
+    the feel.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's probably just a common pattern or something. You're just remembering
+    it wrong.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick thinks you might have seen something like it back home. Vigil, what
+    do you think?
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Let's not jump to conclusions, Leena. Maybe it's just your memory playing
+    tricks.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, but I still want to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Forget about it, Leena. It's probably nothing.
+- kind: dialogue
+  speaker: gm
+  text: Leena, are you getting any strange feelings about this?

@@ -1,0 +1,20 @@
+id: night-watch
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:25.546839+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Look, it''s still as black as the inside of a cave.'
+- kind: dialogue
+  speaker: chadwick
+  text: You can see more stars here than anywhere else I've been.
+- kind: dialogue
+  speaker: Leena
+  text: I wish I could see them, but all I see is black.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a lot of nothing between here and the horizon.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I hear a lot of nothing too.

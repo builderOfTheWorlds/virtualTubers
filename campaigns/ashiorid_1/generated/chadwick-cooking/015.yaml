@@ -1,0 +1,38 @@
+id: chadwick-cooking
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:21:27.506191+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Alright, let''s get started.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I made us dinner tonight.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Mmm, looks delicious Chadwick.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I mean, what''s the main course?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Sounds like the mystery meat to me.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Go ahead, Chadwick, serve up.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: It''s a special dish, just for tonight.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I''m starving, just pass me the plate.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Good luck with this one.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Oh, I''m sure it''s fine.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Let''s dig in and show some appreciation.'

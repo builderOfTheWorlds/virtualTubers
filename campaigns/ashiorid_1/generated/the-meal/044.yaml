@@ -1,0 +1,41 @@
+id: the-meal
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T20:58:19.168945+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The meal is laid out before them, a spread of plates and bowls.
+- kind: dialogue
+  speaker: Leena
+  text: Well, isn't it lovely to have a feast in our midst!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I'm not sure what the cook was thinking here...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A little salt, a pinch of this, a dash of that...
+- kind: dialogue
+  speaker: Leena
+  text: Come now, Sodacan Bob, be kind to our cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not being unkind, I'm being constructive.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cooked this meal, if I might ask?
+- kind: dialogue
+  speaker: chadwick
+  text: You.
+- kind: dialogue
+  speaker: gm
+  text: The conversation devolves into a minor argument.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This pot's never been properly cleaned, I'll wager.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, that's not fair.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll do it myself, for goodness' sake.

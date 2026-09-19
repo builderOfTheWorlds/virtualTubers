@@ -1,0 +1,34 @@
+id: the-ring-half
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:36:41.678888+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What if it's a map? A key to something?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see any markings. It just looks like a broken piece of metal.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not supposed to question. We're supposed to serve.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) Tell me, Vigil, what do you think about the idea that we're not
+    what we think we are?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) I don't like this.
+- kind: dialogue
+  speaker: Vigil
+  text: (after a moment) I think it's possible. But what would it mean?
+- kind: dialogue
+  speaker: Leena
+  text: If we're not what we think we are, what are we?
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitating) If we're not what we think we are... maybe we're not what we're
+    supposed to be.
+- kind: dialogue
+  speaker: gm
+  text: (softly) Maybe not.

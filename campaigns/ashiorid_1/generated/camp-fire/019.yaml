@@ -1,0 +1,33 @@
+id: camp-fire
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-18T19:05:34.342597+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down in sheets. I'm not sure the fire's going to hold.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's get the firewood stacked. We can't rely on the rain to stop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was telling you, Chadwick, the fire's laid wrong. We need to reconfigure
+    the embers.
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke's rising, though. That's a good sign.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what would happen if we couldn't get the fire lit?
+- kind: dialogue
+  speaker: gm
+  text: It's not a priority right now. We're not in danger.
+- kind: dialogue
+  speaker: chadwick
+  text: Still, we need a watch order settled. Sodacan Bob, you're on first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but someone needs to re-lay the fire so it doesn't die out.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's so loud, it drowns out the howling.

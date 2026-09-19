@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 153
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:59.266722+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, so we've got the local tavern, what do we want to do?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should just get a room for the night, make a plan in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds good to me, but I'm buying the first round.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the door to the outside opens towards the alley.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's with the alley, is it safe?
+- kind: dialogue
+  speaker: Vigil
+  text: It's fine, I just noticed that the shutter on the window is new.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, really? Yeah, I saw someone fixing it earlier.
+- kind: dialogue
+  speaker: Leena
+  text: Whatever, let's get some drinks and get some sleep.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's do that.

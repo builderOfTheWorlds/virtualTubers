@@ -1,0 +1,36 @@
+id: camp-fire
+take: 262
+model: llama3.1:8b
+generated_at: '2026-09-18T23:44:17.721149+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A few hours until morning, then we'll reassess the situation.
+- kind: dialogue
+  speaker: chadwick
+  text: We still need to settle the watch order for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, a fire laid in a pit with a reflector like that will burn for
+    hours.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's going to make it hard to keep the fire going.
+- kind: dialogue
+  speaker: Leena
+  text: What happens to the fire if we can't keep it lit?
+- kind: dialogue
+  speaker: gm
+  text: We'll have to rely on the embers to smolder through the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not a bad plan, but we should have more wood ready.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain won't stop until dawn.
+- kind: dialogue
+  speaker: Leena
+  text: How do the trees even grow in a place like this?
+- kind: dialogue
+  speaker: gm
+  text: That's a question for the naturalists, Leena.

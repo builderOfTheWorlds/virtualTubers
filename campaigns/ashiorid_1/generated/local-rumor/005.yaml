@@ -1,0 +1,35 @@
+id: local-rumor
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:53.426711+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Folks seem nervous in the market today, but it's not the fire that's got them
+    on edge, it's something else.
+- kind: dialogue
+  speaker: chadwick
+  text: I've heard the local blacksmiths are struggling to make ends meet, but it's
+    not like they're not working at all.
+- kind: dialogue
+  speaker: Leena
+  text: The magic shops seem to be doing alright, considering the size of the town.
+- kind: dialogue
+  speaker: Vigil
+  text: It's probably just the usual small-town rumors, we've heard worse.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's a saying, "you don't want to be in Malmont after dark."
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a story, but I'm sure it's nothing to worry about.
+- kind: dialogue
+  speaker: gm
+  text: Just passing through, we don't need to get involved in local gossip.
+- kind: dialogue
+  speaker: Leena
+  text: The constable's watch seems competent, I'm sure they've got everything under
+    control.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, we've got more pressing concerns than whatever's going on at night.

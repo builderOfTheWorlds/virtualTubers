@@ -1,0 +1,30 @@
+id: leena-tries-slang
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-19T02:32:06.850421+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, Leena's got a lead on that new cafe in town.
+- kind: dialogue
+  speaker: Leena
+  text: Yo, Chadwick, I'm famished, but let's not bog it down at the start of our
+    stroll.
+- kind: dialogue
+  speaker: chadwick
+  text: Haha, you and your fancy words, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: What's fancy about it? "Bog" means to stall or delay, right?
+- kind: dialogue
+  speaker: chadwick
+  text: Uh, I think you might be using it wrong, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: What are you talking about? "Bog" is a slang term, I looked it up.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Leena, it means to get stuck in the mud, not delay something.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, that's so cool! I was using it totally wrong!

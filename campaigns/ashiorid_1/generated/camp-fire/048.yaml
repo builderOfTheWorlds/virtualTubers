@@ -1,0 +1,43 @@
+id: camp-fire
+take: 48
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:51.104964+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain doesn't seem to be letting up anytime soon.
+- kind: dialogue
+  speaker: chadwick
+  text: We should settle the watch order, we can't have everyone sleeping at once.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I've been around fires, that one was laid right, it'll burn
+    till dawn.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even building a fire if we're just going to sit around
+    in the dark?
+- kind: dialogue
+  speaker: Vigil
+  text: You can hear the rain on the metal.
+- kind: dialogue
+  speaker: gm
+  text: Vigil's got a point, the sound of the rain can be disorienting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Metal's good at keeping the wet out, but it don't keep the cold in.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how the metal's holding up?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get to it, we've got a watch to set.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got some spare wood, we can keep it burning.
+- kind: dialogue
+  speaker: gm
+  text: Let's get some rest, we'll reassess in the morning.

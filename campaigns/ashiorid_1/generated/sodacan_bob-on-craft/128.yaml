@@ -1,0 +1,41 @@
+id: sodacan_bob-on-craft
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-19T00:05:24.037532+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, let me show you this, it's a gate hinge, cast iron, made by a foundry
+    in town.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we don't have time to sightsee.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I know what you're thinking, Chadwick, but just listen, it's a pretty
+    standard design.
+- kind: dialogue
+  speaker: Vigil
+  text: How did it end up out here, anyway?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, wow, the patina on that is amazing, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, that's from the rain and the salt air, Leena, it's a classic look.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we please just keep moving?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this is an excellent example of mid-century metalwork.
+- kind: dialogue
+  speaker: Leena
+  text: I could look at it all day, Bob.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we take it with us, maybe figure out where it came from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, we shouldn't touch it, we don't know where it's from or who it belongs
+    to.

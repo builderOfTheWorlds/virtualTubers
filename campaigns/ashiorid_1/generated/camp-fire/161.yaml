@@ -1,0 +1,41 @@
+id: camp-fire
+take: 161
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:07.439224+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A fire's a fire, but the kindling's a bit damp tonight, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, we should settle the watch order before we settle in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got a better way to lay a fire in rain like this, but it's too late now.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not the fire that's the problem, it's the chimney.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how far the rain goes out? Could we be stuck here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I've seen some dry spots nearby, might be worth exploring.
+- kind: dialogue
+  speaker: Vigil
+  text: Not in the dark.
+- kind: dialogue
+  speaker: chadwick
+  text: There's a lantern, can't we just use that?
+- kind: dialogue
+  speaker: gm
+  text: Too much fuel to waste on a maybe.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even deciding, it's not like it's not raining anyway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just as well, we don't want to get too comfortable out here.
+- kind: dialogue
+  speaker: Vigil
+  text: Water's got no hold on stone.

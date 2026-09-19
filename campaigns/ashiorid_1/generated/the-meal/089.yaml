@@ -1,0 +1,41 @@
+id: the-meal
+take: 89
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:11.816677+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, this is an insult to the culinary arts.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, let's not be too hard on the cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do better than this. I'd start by using fresh herbs.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure it was an honest effort.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honest effort? This is a travesty.
+- kind: dialogue
+  speaker: gm
+  text: What's going on here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's an affront to the senses, that's what's going on.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Bob, don't be such a food snob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, I'd clean the pot before cooking.
+- kind: dialogue
+  speaker: Leena
+  text: You'd think that was obvious.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just eat in peace.

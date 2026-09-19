@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 266
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:13.810519+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, something's familiar and it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, you'll only get distracted.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen similar doorways back in my village, maybe that's it.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not just the doorway, it's the phrase, the tune, the smell...
+- kind: dialogue
+  speaker: gm
+  text: What phrase? What tune?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Leena, it's probably just something you saw on the way here.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe we should keep moving.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving.

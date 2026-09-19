@@ -1,0 +1,41 @@
+id: before-the-well
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T02:12:02.488642+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's still warm, Chadwick. You can sleep a bit later.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: Anyone seen Sodacan Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: I think he went for a walk.
+- kind: dialogue
+  speaker: Leena
+  text: Alone?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (from outside) I'll be right back, don't worry.
+- kind: dialogue
+  speaker: gm
+  text: (after a pause) Okay.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Do you think it's a good idea to leave the doors open like this?
+- kind: dialogue
+  speaker: chadwick
+  text: No reason not to, is there?
+- kind: dialogue
+  speaker: gm
+  text: (after a long pause) I don't know.
+- kind: dialogue
+  speaker: Leena
+  text: (sighs)

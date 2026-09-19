@@ -1,0 +1,36 @@
+id: chadwick-lost
+take: 252
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:02.909280+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out. Chadwick, lead the way.
+- kind: dialogue
+  speaker: chadwick
+  text: I am. I know exactly where we're going.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Uh, Chadwick, maybe you could just ask Vigil for a compass check.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this. We're almost there.
+- kind: dialogue
+  speaker: Vigil
+  text: (nonchalantly) Yeah, I can give you a bearing if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, come on, Chadwick, you're not even sure which way is up!
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Oh, it's fine, I'm sure Chadwick knows what he's doing. He's just,
+    uh, conserving energy.
+- kind: dialogue
+  speaker: chadwick
+  text: We're almost there, I told you.
+- kind: dialogue
+  speaker: Vigil
+  text: (still not offering) I'm sure you're doing fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is going to be good.

@@ -1,0 +1,114 @@
+segment_id: malvakar-riddle-arc
+order: 11
+loop: 0
+hours: 6
+synopsis: The party reaches the northern monument and solves the riddle of the Malvakar,
+  uncovering another piece of the map.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malvakar-riddle-arc-n0-malmont-arrival-1
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n0-malvakar-riddle-1
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n1-malvakar-riddle-1
+  kind: ambient
+  prompt: The party carefully examines the ancient symbols etched into the monument's
+    surface, searching for patterns that might unlock the riddle's meaning.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malvakar-riddle-2
+  kind: ambient
+  prompt: Leena traces her fingers along the carvings, her eyes narrowing as she realizes
+    a connection between the symbols and what she knows of the Bahadur's history.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malvakar-riddle-3
+  kind: ambient
+  prompt: Chadwick, ever the practical one, begins to sketch the symbols in his journal,
+    trying to make sense of their arrangement and potential meanings.
+  lore:
+  - malmont
+  participants:
+  - chadwick
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malvakar-riddle-4
+  kind: ambient
+  prompt: Vigil's keen mind finally connects the dots, and a realization dawns on
+    her face as she speaks the solution aloud to the others.
+  lore:
+  - the-begene-program
+  participants:
+  - Vigil
+  - Leena
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-malvakar-riddle-5
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: malvakar-riddle-arc-n1
+nodes:
+- node_id: malvakar-riddle-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

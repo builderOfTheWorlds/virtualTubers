@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 161
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:40.483230+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been repaired recently, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm, yeah I saw that.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticing things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you noticing now?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the door earlier is going to pass by again.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Fine, just... carry on.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, nothing to see here.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just get some rest now?

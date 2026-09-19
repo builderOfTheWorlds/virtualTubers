@@ -1,0 +1,35 @@
+id: vigil-watches-longer
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:40:28.130922+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just stay a bit longer, make sure everything's alright.
+- kind: dialogue
+  speaker: chadwick
+  text: Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a few more minutes.
+- kind: dialogue
+  speaker: Leena
+  text: You're not even supposed to be here.
+- kind: dialogue
+  speaker: Vigil
+  text: Just being cautious.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're making us wait.
+- kind: dialogue
+  speaker: chadwick
+  text: We're good, Sodacan Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, stop.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: Alright, keep an eye out.

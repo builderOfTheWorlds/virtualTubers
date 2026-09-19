@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 170
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:25.593971+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back to Loop 170, the team is continuing their journey.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we're all having a great time, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, do you have any idea where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do, we're just...uh...turning the corner here.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think we should head back to the main trail.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, Chadwick's lost again.
+- kind: dialogue
+  speaker: Leena
+  text: It's okay, Chadwick, we can just re-trace our steps.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to re-trace anything, I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: As it happens, Vigil's suggestion was a good one.
+- kind: dialogue
+  speaker: Vigil
+  text: I told you we should have taken the turn back there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) You know, I think Chadwick's getting better at this.

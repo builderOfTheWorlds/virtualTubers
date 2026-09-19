@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:33.507844+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is setting, cast a long shadow across the room.
+- kind: dialogue
+  speaker: chadwick
+  text: We've been here for hours, I'm starving.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go see if I can find someone to get us some food.
+- kind: dialogue
+  speaker: Vigil
+  text: There's only two people in the kitchen, not that it would take long.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm good, I had a big breakfast.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, me too.
+- kind: dialogue
+  speaker: gm
+  text: The city watch is starting to make their rounds.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on the north wall were recently repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I saw that, looked nice.
+- kind: dialogue
+  speaker: Leena
+  text: (returning) I got us some food, let's eat.
+- kind: dialogue
+  speaker: gm
+  text: The city's getting quiet, it's going to be a long night.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still full.

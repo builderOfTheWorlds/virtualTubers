@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:39.528410+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: A cart just passed by with two crates of fruit on the back.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the big deal, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart was here half an hour ago.
+- kind: dialogue
+  speaker: Leena
+  text: So what?
+- kind: dialogue
+  speaker: Vigil
+  text: I just noticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, so did I.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, really?
+- kind: dialogue
+  speaker: gm
+  text: That's interesting, but let's focus on the job at hand.
+- kind: dialogue
+  speaker: Vigil
+  text: Fine.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, let's get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Lead the way.

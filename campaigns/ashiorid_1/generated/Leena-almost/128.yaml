@@ -1,0 +1,26 @@
+id: Leena-almost
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:13.550157+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've told you, it's a common doorway.
+- kind: dialogue
+  speaker: Leena
+  text: It's just...it's like I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I know, but...I just feel like I've seen it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just go chasing after every familiarity, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I suppose not.

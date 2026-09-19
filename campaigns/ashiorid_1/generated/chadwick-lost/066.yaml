@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 66
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:57.314938+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, which way now?
+- kind: dialogue
+  speaker: chadwick
+  text: We should keep going straight.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, it's probably a bit more to the left.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure it's straight.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering) Um, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is great.
+- kind: dialogue
+  speaker: Vigil
+  text: (still whispering) Okay, Chadwick, but what if I said we're going the wrong
+    way?
+- kind: dialogue
+  speaker: chadwick
+  text: We're not.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Never mind, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just keep moving then.
+- kind: dialogue
+  speaker: chadwick
+  text: Finally, some action.

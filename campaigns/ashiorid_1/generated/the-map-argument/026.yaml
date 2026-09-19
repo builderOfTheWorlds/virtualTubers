@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 26
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:31.749657+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, so let's take a look at the map, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no, you're all doing it wrong.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with how we're doing it?
+- kind: dialogue
+  speaker: chadwick
+  text: You're not even reading the symbols right, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, calm down, it's just a map.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a map? This is navigation 101, people.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see what Vigil means, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, you don't see anything, Sodacan Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, look at the elevation markers.
+- kind: dialogue
+  speaker: Leena
+  text: Ah, I see what you mean now, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: See what I mean? Ha! Victory at last.
+- kind: dialogue
+  speaker: gm
+  text: Moving on, let's focus on the terrain.

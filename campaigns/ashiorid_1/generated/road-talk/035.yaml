@@ -1,0 +1,38 @@
+id: road-talk
+take: 35
+model: llama3.1:8b
+generated_at: '2026-09-18T20:45:15.865378+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, it's going to be a long day.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty, who's got water?
+- kind: dialogue
+  speaker: Leena
+  text: I've got a canteen, pass it around.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You know, Vabokedos has the most beautiful...
+- kind: dialogue
+  speaker: Vigil
+  text: It's hard to imagine anything beautiful in Nafsari's ruins.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that like, Vigil? You've never...
+- kind: dialogue
+  speaker: Leena
+  text: I've heard it's a lot like our village, except...
+- kind: dialogue
+  speaker: chadwick
+  text: What village?
+- kind: dialogue
+  speaker: Leena
+  text: Mine. Back home. Vabokedos is a bit like...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's exactly what I was trying to say, Leena!
+- kind: dialogue
+  speaker: Vigil
+  text: No, Sodacan Bob, it's nothing like that.

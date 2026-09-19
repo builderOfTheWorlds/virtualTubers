@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:01.779502+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's bothering you?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar and shouldn't be. It's a turn of phrase, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw one like it in your village?
+- kind: dialogue
+  speaker: Leena
+  text: No, I've never seen it anywhere else. And there's a smell, too.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, just leave it alone.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Anyone else think they know what she's talking about?
+- kind: dialogue
+  speaker: Leena
+  text: I'm not scared, I just... I want to know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll figure it out eventually. Maybe it's just something from around here.
+- kind: dialogue
+  speaker: chadwick
+  text: Whatever it is, it's not worth your time.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's drop it for now.

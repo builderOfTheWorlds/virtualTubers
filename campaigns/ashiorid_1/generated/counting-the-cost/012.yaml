@@ -1,0 +1,39 @@
+id: counting-the-cost
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:31.966012+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A cart needs its ribs to be sturdy, but I reckon we've got a few cracks to
+    hammer out.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like a plan, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just fix the gear and be done with it?
+- kind: dialogue
+  speaker: Vigil
+  text: Hold on, Leena, let Bob assess the situation.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A broken wheel's not just a part, it's the foundation of the whole thing.
+- kind: dialogue
+  speaker: gm
+  text: What do you recommend, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Need to forge a new path, but first we need to reshape the old one.
+- kind: dialogue
+  speaker: Leena
+  text: How long will that take?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: As long as it takes to heat the metal, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: We can't stay here indefinitely, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just get to it, then.

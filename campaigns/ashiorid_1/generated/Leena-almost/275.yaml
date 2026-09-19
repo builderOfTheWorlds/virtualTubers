@@ -1,0 +1,40 @@
+id: Leena-almost
+take: 275
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:57.816089+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village is quiet except for the sound of chickens clucking in the yard
+    to your left, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the evening fire, Leena. You can smell it from a mile away.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe you're just hungry.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get too curious, Leena. It's not good to start poking around.
+- kind: dialogue
+  speaker: Leena
+  text: But it's familiar. Like something I've seen before.
+- kind: dialogue
+  speaker: gm
+  text: You can see the shape of the doorway in front of you, Leena. It's not like
+    any door you've seen in the village.
+- kind: dialogue
+  speaker: Leena
+  text: I know. I know it's silly, but... it looks like something from my childhood.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Your village must have had a similar door, Leena. People like the same things.
+- kind: dialogue
+  speaker: Vigil
+  text: You're probably just remembering something that never happened.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, let's get inside. The rain is coming.

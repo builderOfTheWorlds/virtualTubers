@@ -1,0 +1,32 @@
+id: inventory-argument
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:24:49.263793+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, I distinctly remember this was in your bag, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not arguing, Leena just threw it in with hers by mistake.
+- kind: dialogue
+  speaker: Leena
+  text: It's not my mistake, you packed it this morning.
+- kind: dialogue
+  speaker: Vigil
+  text: This is why we should label everything, we'd have less arguments.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh look, it's my lucky charm, I've been needing that.
+- kind: dialogue
+  speaker: chadwick
+  text: Lucky charm? You call a tattered old book a lucky charm?
+- kind: dialogue
+  speaker: gm
+  text: It's a perfectly good bookmark, don't be dramatic.
+- kind: dialogue
+  speaker: Leena
+  text: Whatever, can we just keep moving before we get stuck behind a group?
+- kind: dialogue
+  speaker: Vigil
+  text: And who's going to decide what goes in what bag?

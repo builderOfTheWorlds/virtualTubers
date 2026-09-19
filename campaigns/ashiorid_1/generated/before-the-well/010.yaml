@@ -1,0 +1,35 @@
+id: before-the-well
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:07.620965+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The night's been calm so far.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, too quiet.
+- kind: dialogue
+  speaker: Leena
+  text: I don't like it.
+- kind: dialogue
+  speaker: Vigil
+  text: We're all on edge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's the time of year.
+- kind: dialogue
+  speaker: gm
+  text: That's just superstition.
+- kind: dialogue
+  speaker: chadwick
+  text: Superstition or not, it feels like...
+- kind: dialogue
+  speaker: Leena
+  text: Something's waiting.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll get through the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We have to.

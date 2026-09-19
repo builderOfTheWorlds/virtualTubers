@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 189
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:15.668931+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what did we miss in the market?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we got a good look at everything.
+- kind: dialogue
+  speaker: Leena
+  text: I saw some interesting fabrics, but we didn't buy anything.
+- kind: dialogue
+  speaker: Vigil
+  text: The merchant with the cart has been here twice now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw that, yeah, they just restocked.
+- kind: dialogue
+  speaker: chadwick
+  text: Must be doing some kind of trade run.
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's next? Do we grab some dinner?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a shutters on the windows, one of them's been repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can see it's a patch job.
+- kind: dialogue
+  speaker: Leena
+  text: Not that it matters, but the doors open inward.
+- kind: dialogue
+  speaker: chadwick
+  text: And there are five people in the room with us.

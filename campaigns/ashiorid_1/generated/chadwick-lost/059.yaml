@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 59
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:13.190215+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, can anyone tell me where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I think we're somewhere near the river, GM.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Yeah, we're close to the river, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is great, Chadwick's lost again.
+- kind: dialogue
+  speaker: gm
+  text: (laughing) Okay, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) I wasn't lost, I just... took a different route.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to help) You know, Chadwick, sometimes it's okay to ask for help.
+- kind: dialogue
+  speaker: chadwick
+  text: (gruffly) I don't need help.
+- kind: dialogue
+  speaker: Vigil
+  text: (patiently) Of course not, Chadwick. We just want to make sure we're headed
+    in the right direction.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (teasingly) Yeah, like your internal compass isn't a little broken.
+- kind: dialogue
+  speaker: gm
+  text: (calmly) Alright, let's keep moving then.

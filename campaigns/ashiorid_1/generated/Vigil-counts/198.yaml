@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 198
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:55.269499+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: We have eleven people in the room right now, including ourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm counting ten, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I've counted correctly, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I see eleven, too.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, eleven it is.
+- kind: dialogue
+  speaker: gm
+  text: Alright, so we have eleven people in the room.
+- kind: dialogue
+  speaker: Vigil
+  text: The north door opens with a slight squeak.
+- kind: dialogue
+  speaker: gm
+  text: And the shutter on the east wall was repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's good to know, thanks, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: For what?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noting it, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Like what, exactly?

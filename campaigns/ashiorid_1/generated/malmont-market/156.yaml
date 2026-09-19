@@ -1,0 +1,41 @@
+id: malmont-market
+take: 156
+model: llama3.1:8b
+generated_at: '2026-09-18T23:51:20.565796+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is some amateur work right here, folks.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, that one? With the worn leather cover.
+- kind: dialogue
+  speaker: chadwick
+  text: Excuse me, ma'am.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of these intricate stamps, anyway?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not interested in your craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: How much for the map with the notation?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm just admiring the scenery.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're wasting your breath if you think this is worth a silver piece.
+- kind: dialogue
+  speaker: Leena
+  text: Do you have any more from the same region?
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen better work in the streets of Argentum.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I see what you mean about the light.

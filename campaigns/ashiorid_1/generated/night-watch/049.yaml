@@ -1,0 +1,41 @@
+id: night-watch
+take: 49
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:06.143731+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen a night like this, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing's moving. No animals, no wind...
+- kind: dialogue
+  speaker: Leena
+  text: (stirring in her sleep) Mmm...
+- kind: dialogue
+  speaker: Vigil
+  text: Sorry, Leena, go back to sleep.
+- kind: dialogue
+  speaker: Leena
+  text: (sleepily) What time is it?
+- kind: dialogue
+  speaker: chadwick
+  text: Late. Past midnight.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I see a star I've never seen before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) What's it look like?
+- kind: dialogue
+  speaker: Vigil
+  text: It's... a pattern. Looks like a bird.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) I had a dream like that once. About a bird that...
+- kind: dialogue
+  speaker: Vigil
+  text: (interrupting) What about the bird, Chadwick?

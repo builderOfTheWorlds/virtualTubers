@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:12.274554+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So the town's records show a merchant was robbed last night on the other side
+    of town.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) I'm sure it's a real mystery.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the eastern window of this building has been repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, it's just been fixed, then. That's good.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's been a bit of a problem in the rain.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the window twice was carrying grain.
+- kind: dialogue
+  speaker: gm
+  text: And the grain is probably stored somewhere nearby.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) What else did you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The north door opens inward, and there's a small sign on it.
+- kind: dialogue
+  speaker: Leena
+  text: (to the others) Who cares?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's just a sign.

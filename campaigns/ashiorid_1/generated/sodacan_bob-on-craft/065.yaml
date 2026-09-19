@@ -1,0 +1,32 @@
+id: sodacan_bob-on-craft
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:22.652470+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The group stops near a large tree, where Sodacan Bob is examining a rusty
+    gate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's a 19th century wrought iron gate, made by someone in
+    a small workshop, likely in the eastern states.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, just a minute, Chadwick, this is an excellent example of...
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of metal is that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil, it's a type of steel alloy, with a high carbon content.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, can I see the gate from the other side?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Of course, Leena, let's take a look. (pauses) Yes, you can see the
+    rivets are on the inside, which suggests...

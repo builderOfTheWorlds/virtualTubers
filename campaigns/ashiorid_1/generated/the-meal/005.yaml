@@ -1,0 +1,42 @@
+id: the-meal
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:00:28.981572+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, who made dinner tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's been done all wrong. The seasoning's off, the cooking
+    time was way off...
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, everyone, let's not be so critical. We're all in this together.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll have the rice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think that's the problem, Leena? It's not even cooked right.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think it's a lovely effort, and we should be grateful.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Effort? This is a disaster. I could have done it so much better.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, you're not going to help, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to tell you exactly how I would have done it, if you'd like to hear.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I don't think that's necessary, Sodacan Bob.

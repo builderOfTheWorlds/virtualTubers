@@ -1,0 +1,42 @@
+id: camp-fire
+take: 139
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:57.852970+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think we'll make it through the night with this fire.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, now let's get to the watch order. Who's volunteering for the first
+    shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm happy to take it, but we should make sure the fire's properly tended.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been laid well.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will keep up like this until morning?
+- kind: dialogue
+  speaker: gm
+  text: It's possible, but I'm more concerned about the wind picking up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather not have to deal with a gust knocking over the flames.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, Bob takes the first shift, then?
+- kind: dialogue
+  speaker: Vigil
+  text: You can count on it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of having a fire if it's just going to burn itself out?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a waste, but it's a small waste in the grand scheme.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on what we can control.

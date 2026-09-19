@@ -1,0 +1,35 @@
+id: before-the-well
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:20.268447+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The well''s still here, isn''t it?'
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Leena
+  text: You know what Grovley said about the last well.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should just focus on the task at hand.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just trying to get some rest, okay?
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (pauses) I didn''t sleep well last night.'
+- kind: dialogue
+  speaker: chadwick
+  text: (stares at the wall) What's wrong with you?
+- kind: dialogue
+  speaker: Leena
+  text: (fidgets) Is something going to happen?
+- kind: dialogue
+  speaker: Vigil
+  text: (gets up to check the well) Just making sure everything's...stable.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Can we just talk about something else?

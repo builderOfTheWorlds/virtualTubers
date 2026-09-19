@@ -1,0 +1,36 @@
+id: malmont-market
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:49.542656+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm looking for something that'll last longer than a week's use, but I'm not
+    seeing it.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Fine work, but how much does it cost?
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, sir, what's the story with these old maps?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Just a local map, Leena. Nothing too exciting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said I'd take a look at that blacksmithing if you've got anything decent.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the blacksmith) Decent? He's got some nice... decorations.
+- kind: dialogue
+  speaker: Leena
+  text: (leaning in) I think I'll take a few of these maps, please.
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) I don't know, Leena, they look old.
+- kind: dialogue
+  speaker: Vigil
+  text: (sternly) How much for the map, please?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (disapproving) What's wrong with the blacksmithing here?

@@ -1,0 +1,38 @@
+id: inventory-argument
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:03.896269+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Someone's packed the water bottle in their backpack, not that it matters.
+- kind: dialogue
+  speaker: chadwick
+  text: I told you, Leena, it's in the left pack.
+- kind: dialogue
+  speaker: Leena
+  text: That's not my pack, and even if it was, whose job is it to label the bags?
+- kind: dialogue
+  speaker: Vigil
+  text: It's your job to keep track of your own gear, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look, a first aid kit, and it's right where it belongs.
+- kind: dialogue
+  speaker: chadwick
+  text: Ha, told you it was in the other pack, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Not that anyone actually uses the first aid kit when it's in the right place.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, Chadwick, you're just gloating.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's just get moving before we forget what we're arguing about.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just happy it's in the right place, for once.
+- kind: dialogue
+  speaker: chadwick
+  text: Someone's got to keep Leena's stuff straight.

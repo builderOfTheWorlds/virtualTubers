@@ -1,0 +1,26 @@
+id: Vigil-counts
+take: 271
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:08.627875+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As we're preparing to leave, Vigil, what was it you noticed about the room?
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open towards the main corridor.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) I've noticed that before. Let's get moving.
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) Wait, where did you get that cart from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it was from the market square.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) Shutter's been fixed since last week.
+- kind: dialogue
+  speaker: gm
+  text: (ignoring Vigil) Alright, let's keep moving.

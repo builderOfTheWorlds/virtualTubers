@@ -1,0 +1,32 @@
+id: malmont-market
+take: 161
+model: llama3.1:8b
+generated_at: '2026-09-18T23:51:54.006473+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not seeing anything here that justifies a trip from as far as we've come.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not decide anything now, let's just see what else we can find.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, I'll take that map, the one with the River Morwen marked on it.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally a place where nobody knows me. It's a nice feeling.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think these blacksmiths could be more proud of their work.
+- kind: dialogue
+  speaker: Vigil
+  text: We're not here to buy anything, not yet.
+- kind: dialogue
+  speaker: Leena
+  text: I've always been fascinated by maps. There's something about them...
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll take a walk around the market. Get a feel for the place.
+- kind: dialogue
+  speaker: Vigil
+  text: And I'll watch the coin purses.

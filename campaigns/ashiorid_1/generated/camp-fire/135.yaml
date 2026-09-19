@@ -1,0 +1,36 @@
+id: camp-fire
+take: 135
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:36.234006+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's been coming down since dawn, and I'm getting worried it'll extinguish
+    the fire.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a good lay, Chadwick, don't you think? Plenty of tinder and kindling.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames will hold.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire would still burn if we just covered it with a tarp or
+    something?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't leave the fire unattended. That's why we need a watch schedule settled
+    tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm happy to keep an eye on it, but someone needs to be up in case it gets
+    windy.
+- kind: dialogue
+  speaker: Vigil
+  text: Wind is not a concern tonight.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the rain keeps up like this, do you think the river will overflow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The river's been low, I don't think we need to worry about that just yet.

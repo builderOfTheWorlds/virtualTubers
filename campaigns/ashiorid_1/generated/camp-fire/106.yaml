@@ -1,0 +1,33 @@
+id: camp-fire
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T19:55:04.158006+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down like there's no tomorrow.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight. Who's taking the first shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid a mite too shallow. It'll be out before the night's
+    half over.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the fire dies out?
+- kind: dialogue
+  speaker: Vigil
+  text: You'll need to start over.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nonsense, I laid it proper. It'll just be a bit smoky.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't just sit here arguing. We need to decide who's on watch.
+- kind: dialogue
+  speaker: Leena
+  text: Is it true the last well drained in a single day?
+- kind: dialogue
+  speaker: Vigil
+  text: Ten thousand years ago.

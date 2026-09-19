@@ -1,0 +1,41 @@
+id: night-watch
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:55.886785+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's just the sound of the wind, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I think I hear something else, though. Just the trees swaying.
+- kind: dialogue
+  speaker: Leena
+  text: There's a wind coming in. Look at the trees.
+- kind: dialogue
+  speaker: Vigil
+  text: They're just swaying in the wind, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's nothing.
+- kind: dialogue
+  speaker: gm
+  text: The sky's a darker grey than I thought it would be.
+- kind: dialogue
+  speaker: chadwick
+  text: I was thinking maybe we should wake the others early.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point? There's nothing coming.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not even sure if that's true, though.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you talking about?
+- kind: dialogue
+  speaker: Vigil
+  text: You know what I mean. Don't pretend like you don't.
+- kind: dialogue
+  speaker: gm
+  text: Just forget it, Vigil.

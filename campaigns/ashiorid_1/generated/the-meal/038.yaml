@@ -1,0 +1,42 @@
+id: the-meal
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:36.019044+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food's not bad, it's just... straightforward.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just eat, okay?
+- kind: dialogue
+  speaker: Leena
+  text: Come on, guys, it's not about the food, it's about sharing a meal together.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently hands his portion to Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, seriously, who boiled the potatoes for two hours without checking
+    if they were done?
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering under his breath) Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, Sodacan, you're so particular about your cooking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I just want to know who's going to feed me for the next few days.
+- kind: dialogue
+  speaker: chadwick
+  text: (exasperated) Leena, can you please plate the meat?
+- kind: dialogue
+  speaker: Leena
+  text: (handing Chadwick the plate) There we go, everyone's happy now.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirks) Enjoy your dinner, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I will, I will, but someone's going to have to make it edible first.

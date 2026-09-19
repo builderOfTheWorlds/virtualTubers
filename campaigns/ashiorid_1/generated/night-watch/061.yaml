@@ -1,0 +1,41 @@
+id: night-watch
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:29.045225+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's still so dark.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I wish I could see the stars better.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Sorry, guys, I'm going to try to stay awake.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs softly) Good luck with that, Leena.
+- kind: dialogue
+  speaker: gm
+  text: The sky is just a big, empty...
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) It's weird how quiet it is.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, right? Usually I can hear some kind of animal or...
+- kind: dialogue
+  speaker: Leena
+  text: (yawns again) Yeah, it's creepy.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think we should wake the others early?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, then shrugs) I don't know, why?
+- kind: dialogue
+  speaker: gm
+  text: Just in case, you know?
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitates) I've been thinking about what we saw at the last well...

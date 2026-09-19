@@ -1,0 +1,31 @@
+id: chadwick-lost
+take: 141
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:06.924127+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to be thinning out, Chadwick. We should be seeing some landmarks
+    soon.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure why we're stopping, Vigil. We should keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we can take a break and get our bearings, Chadwick. That way you can...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no need for that. I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, come on Chadwick, we all know you got us lost again.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) Well, it's nice to know someone's confident in their navigation skills.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Actually, maybe we can use this as an opportunity to re-check
+    the map, just in case.
+- kind: dialogue
+  speaker: gm
+  text: (skeptical) You're not worried about getting lost, are you, Chadwick?

@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 190
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:11.709334+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And you're still leading, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) Where are we headed, exactly?
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Oh, I'm sure you have a plan, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (gruffly) I do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (snickering) Yeah, sure you do.
+- kind: dialogue
+  speaker: Leena
+  text: (hesitantly) Maybe, um, we could follow Vigil for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) I'm happy to lead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is great.

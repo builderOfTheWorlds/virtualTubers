@@ -1,0 +1,41 @@
+id: night-watch
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T20:44:13.446188+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'll keep watch for another hour, then wake you up.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright.
+- kind: dialogue
+  speaker: Leena
+  text: I can take the next watch, if you want.
+- kind: dialogue
+  speaker: Vigil
+  text: No, I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The stars are so clear tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a good night for stargazing.
+- kind: dialogue
+  speaker: Leena
+  text: Not that I'm complaining, but I could go back to sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't fall asleep, Leena.
+- kind: dialogue
+  speaker: gm
+  text: What's that noise?
+- kind: dialogue
+  speaker: chadwick
+  text: What noise?
+- kind: dialogue
+  speaker: Leena
+  text: Is it the wind?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't hear anything.

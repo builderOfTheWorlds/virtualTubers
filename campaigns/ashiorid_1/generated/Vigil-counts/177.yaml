@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 177
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:23.418229+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city is quiet tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that, Ashiorid?
+- kind: dialogue
+  speaker: gm
+  text: Nothing, I just thought I'd mention it.
+- kind: dialogue
+  speaker: Leena
+  text: What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Just the wind, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's really moving the shutters.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, that shutter's been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, really?
+- kind: dialogue
+  speaker: Vigil
+  text: Just thought I'd mention it.
+- kind: dialogue
+  speaker: gm
+  text: That's all.

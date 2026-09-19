@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:25.045248+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, you're leading the way, how's it going?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm doing fine, don't worry.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, if I may, I think we're headed the wrong way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh, this is good, Chadwick, you're a human compass!
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, why don't you let me take a look at the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help, Leena, I've got this.
+- kind: dialogue
+  speaker: Vigil
+  text: Sir, I'm sure it's just a minor mistake, if you'd like me to confirm...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, come on, Chadwick, admit it, you got us lost!
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe if you just said "I'm not sure", it would be okay?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not lost, I know exactly where we are.

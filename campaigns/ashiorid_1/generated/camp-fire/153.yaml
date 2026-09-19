@@ -1,0 +1,43 @@
+id: camp-fire
+take: 153
+model: llama3.1:8b
+generated_at: '2026-09-18T19:59:20.578312+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Looks like we're in for a long night.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's time we settled on a watch order, don't you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was saying we should lay the fire in a way that maximizes airflow, Bob's
+    got some theories on that.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we could get any water from the cistern to keep the fire going?
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to go out if we don't add more wood.
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, we'll just have to make do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think the last town would've taught us a thing or two about preparing
+    for the wet season.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was really as sudden as everyone says?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see why we're discussing this now, can we focus on the fire?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain smells like ozone.
+- kind: dialogue
+  speaker: gm
+  text: It's holding for now, but we should keep a close eye on it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had to lay a fire in those conditions again...

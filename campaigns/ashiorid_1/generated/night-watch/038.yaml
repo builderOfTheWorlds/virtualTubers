@@ -1,0 +1,29 @@
+id: night-watch
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:50.795145+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is still full, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I think so. It's hard to tell with the trees in the way.
+- kind: dialogue
+  speaker: Leena
+  text: I don't like the sound of crickets at night. It means they're hiding.
+- kind: dialogue
+  speaker: Vigil
+  text: They're just hiding. We don't have to worry about that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should wake the others early, just in case.
+- kind: dialogue
+  speaker: chadwick
+  text: No, let them sleep. We're fine.
+- kind: dialogue
+  speaker: gm
+  text: It's not like anything's going to happen, is it?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing ever happens at Moonwells.

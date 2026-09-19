@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:49.616781+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The inn is quiet tonight, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's been pretty still.
+- kind: dialogue
+  speaker: Leena
+  text: I could do with a bit of peace.
+- kind: dialogue
+  speaker: Vigil
+  text: There are seven people in the common room, including us.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, a bunch.
+- kind: dialogue
+  speaker: gm
+  text: I think I'll go get another blanket from the closet.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't mind me, just reading.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Sorry, late night I guess.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window has been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh? Good.
+- kind: dialogue
+  speaker: gm
+  text: (returns with a blanket) Anyone need it?
+- kind: dialogue
+  speaker: Leena
+  text: No, thanks.

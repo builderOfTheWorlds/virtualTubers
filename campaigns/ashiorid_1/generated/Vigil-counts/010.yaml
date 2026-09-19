@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:24.121719+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The village elder has requested our presence.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the reason for the summons?
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure it's just a routine matter, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to the elder's hut open to the east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that got to do with anything, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Just noting it, Bob. Might as well know.
+- kind: dialogue
+  speaker: Leena
+  text: There's a cart outside with a fresh coat of paint.
+- kind: dialogue
+  speaker: Vigil
+  text: The repair on the shutter on that building is recent.
+- kind: dialogue
+  speaker: gm
+  text: What are you trying to say, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: I think he's just observing, Ashiorid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm gonna go see the elder, want to come?

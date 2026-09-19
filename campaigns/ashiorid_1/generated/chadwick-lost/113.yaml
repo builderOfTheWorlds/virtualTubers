@@ -1,0 +1,31 @@
+id: chadwick-lost
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-18T20:10:42.854754+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road splits off to the east. We need to decide which way to go.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure we should go this way.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you know I trust your instincts, but are you sure you've got a good
+    read on this one?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I'm sure.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, if I recall the map correctly, the east route is probably the wrong
+    one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich. We're lost and we're arguing about it.
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we can just ask Chadwick to take the lead and we'll follow him.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm leading, that's what matters.

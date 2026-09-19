@@ -1,0 +1,41 @@
+id: malmont-market
+take: 171
+model: llama3.1:8b
+generated_at: '2026-09-18T23:52:59.291386+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, no one around here's even close to the craftsmanship I've seen.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't get distracted by the wares, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, sir, may I see that old map on the end?
+- kind: narration
+  speaker: gm
+  text: 'Vendor: Ah, you''re interested in the ones from the old exploratory expeditions?'
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, that one's just a local survey from thirty years ago.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your hands to yourself, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: I just think it might be useful to know what's out there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think you'll find it's not quite as useful as all that.
+- kind: narration
+  speaker: gm
+  text: 'Vendor: Twenty silvers for the set, and the buyer has to take the lot.'
+- kind: dialogue
+  speaker: Vigil
+  text: I think we can afford it.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't buy anything just yet, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather see what that blacksmith's been doing today.

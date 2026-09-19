@@ -1,0 +1,125 @@
+the-age-of-war-arc-loop1:
+  node_id: the-age-of-war-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The players explore the history of the Age of War and its devastating consequenc
+  summary: The players explore the history of the Age of War and its devastating consequences,
+    learning how magic was used as fuel.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-age-of-war-arc-loop1-n0
+  - the-age-of-war-arc-loop1-n1
+  slots: null
+the-age-of-war-arc-loop1-n0:
+  node_id: the-age-of-war-arc-loop1-n0
+  parent_id: the-age-of-war-arc-loop1
+  order: 0
+  depth: 1
+  title: The Forge of Eternal Conflict
+  summary: The players delve into the origins of the Age of War, discovering how magical
+    energy was first harnessed as a weapon. They learn about the great battles that
+    reshaped the world and the terrible cost paid by those who wielded such power.
+    Through ancient texts and crumbling artifacts, they witness the birth of magic
+    as both salvation and destruction.
+  continuity_in: The players explore the history of the Age of War and its devastating
+    consequences, learning how magic was used as fuel.
+  continuity_out: The players uncover how the war's magical weapons evolved from simple
+    enchantments to devastating arcane artillery that changed everything.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-loop1-n0-forge-1
+    kind: ambient
+    prompt: The players examine ancient texts that reveal how magical energy was first
+      weaponized during the Age of War, describing the terrible cost of early enchantments.
+    lore:
+    - the-begene-program
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop1-n0-forge-2
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+the-age-of-war-arc-loop1-n1:
+  node_id: the-age-of-war-arc-loop1-n1
+  parent_id: the-age-of-war-arc-loop1
+  order: 1
+  depth: 1
+  title: The Crucible of Ruin
+  summary: The players witness the peak of magical warfare during the Age of War,
+    examining the catastrophic battles where entire cities were consumed by arcane
+    flames. They learn about the desperate measures taken by both sides, the moral
+    compromises made by leaders, and how the very fabric of reality began to unravel
+    under the weight of magical destruction. This period reveals the true horror of
+    war fueled by magic.
+  continuity_in: The players uncover how the war's magical weapons evolved from simple
+    enchantments to devastating arcane artillery that changed everything.
+  continuity_out: The players discover how the war's end came not through victory,
+    but through a catastrophic magical backlash that left the world forever changed.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-loop1-n1-crucible-1
+    kind: ambient
+    prompt: The players witness the peak of magical warfare during the Age of War,
+      examining the catastrophic battles where entire cities were consumed by arcane
+      flames.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop1-n1-crucible-2
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+  - slot_id: the-age-of-war-arc-loop1-n1-crucible-3
+    kind: ambient
+    prompt: They learn about the desperate measures taken by both sides, the moral
+      compromises made by leaders, and how the very fabric of reality began to unravel
+      under the weight of magical destruction.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop1-n1-crucible-4
+    kind: spine
+    scene_ref: magic-lost
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm

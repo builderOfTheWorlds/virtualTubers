@@ -1,0 +1,36 @@
+id: inventory-argument
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:25.351568+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Look, it's a first aid kit, Chadwick, I told you to put it in your pack.
+- kind: dialogue
+  speaker: chadwick
+  text: I did put it in my pack, you just can't seem to remember which bag is mine.
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous, we're all just scrambling around because none of us labels
+    anything.
+- kind: dialogue
+  speaker: Vigil
+  text: At least I know where my spare socks are, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait a minute, where's your spare socks, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: In my pack, where I put them last night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I'm sure it's not just a coincidence that it turned up in mine this morning.
+- kind: dialogue
+  speaker: gm
+  text: You're just happy it's not in yours, Sodacan Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, well, I'm just happy I found something useful in the chaos.
+- kind: dialogue
+  speaker: Leena
+  text: Someone needs to start labeling these bags, and soon.

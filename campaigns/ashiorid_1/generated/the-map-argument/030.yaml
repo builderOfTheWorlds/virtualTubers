@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:36:05.878917+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head north, it's the most direct route.
+- kind: dialogue
+  speaker: Leena
+  text: I agree with Chadwick, it looks like the road goes straight through.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should go around, it looks like there's a shorter way.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I think Vigil's right, let's not risk getting stuck.
+- kind: dialogue
+  speaker: chadwick
+  text: You're all wrong, north is the clear choice.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you're being really stubborn about this.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just saying what the map clearly shows.
+- kind: dialogue
+  speaker: Vigil
+  text: But the map also says there's a river up north, let's avoid that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's probably better to go around.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but you're all just following me because I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, that's not fair.

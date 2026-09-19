@@ -1,0 +1,32 @@
+id: malmont-market
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T20:39:20.446234+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at the edge of this work, it's a little off.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, eyes scanning the market) I'm not seeing much of a crowd.
+- kind: dialogue
+  speaker: Leena
+  text: (to a vendor) I'm looking for something... old.
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling, relaxed) Just browsing.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) What's that for?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to a nearby blacksmith) You don't know what this metal is?
+- kind: dialogue
+  speaker: Leena
+  text: (holding up a map) I'm not sure. It just draws me in.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Chadwick, not the maps) He's getting some attention.
+- kind: dialogue
+  speaker: chadwick
+  text: (still smiling) Just a local curiosity, I think.

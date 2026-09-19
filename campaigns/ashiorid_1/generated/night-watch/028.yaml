@@ -1,0 +1,38 @@
+id: night-watch
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:57.459350+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's still so quiet out here.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I know. I can almost hear myself think.
+- kind: dialogue
+  speaker: Leena
+  text: It's weird, isn't it? This is the most still I've felt in days.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know about you guys, but I'm getting a little bored.
+- kind: dialogue
+  speaker: Vigil
+  text: You're not on watch, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, right. I forget.
+- kind: dialogue
+  speaker: chadwick
+  text: So, you think we should wake the others up early?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I like the extra rest. We can always wake them if we hear anything.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not even sure what time it is. Does it feel like dawn to you?
+- kind: dialogue
+  speaker: chadwick
+  text: It feels like... I don't know, it's not dawn, but it's getting closer.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I just saw a bat fly by. Don't tell Leena.

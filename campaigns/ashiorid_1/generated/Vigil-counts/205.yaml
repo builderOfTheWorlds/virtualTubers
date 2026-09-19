@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 205
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:27.893411+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I've taken note of your observation, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors here open onto a narrow corridor.
+- kind: dialogue
+  speaker: Leena
+  text: And there's a window with a view of the market.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything else, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I think that cart that passed by has been there before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What are you getting at, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just making note of it.
+- kind: dialogue
+  speaker: gm
+  text: Let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, we've got places to be.
+- kind: dialogue
+  speaker: chadwick
+  text: This way, everyone.

@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 132
+model: llama3.1:8b
+generated_at: '2026-09-18T20:13:04.521374+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're approaching a fork in the path, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: This way is fine.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe, Chadwick, but the map suggests-
+- kind: dialogue
+  speaker: chadwick
+  text: I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) I could take a look if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh boy, here we go again.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, if you don't mind, I could just take the lead for a bit.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's try this route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is going to be entertaining.

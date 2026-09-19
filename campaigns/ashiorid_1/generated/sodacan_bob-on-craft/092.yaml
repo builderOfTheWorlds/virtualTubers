@@ -1,0 +1,37 @@
+id: sodacan_bob-on-craft
+take: 92
+model: llama3.1:8b
+generated_at: '2026-09-18T22:28:35.981797+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, you see, it's a Smithson's Axle from the '25 production run, made at their
+    factory in Tumbleton.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move. We're not going to find anything else here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And look at the finish on this, it's a Smithson's proprietary process, it's
+    what gave them their edge in the market.
+- kind: dialogue
+  speaker: Vigil
+  text: Is that the same axle as the one on the wagons we saw in Brindlemark?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, this one's an earlier model, the wagons we saw were probably refurbished
+    with newer axles.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love the way the metal's aged, it's so... tactile.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly, that's the beauty of it, it's not just functional, it's a piece of
+    history.
+- kind: dialogue
+  speaker: Vigil
+  text: Well, we can't use it, but it might be worth noting the provenance for the
+    historians.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Absolutely, this is a great find, I'll make sure to document it properly.

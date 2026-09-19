@@ -1,0 +1,26 @@
+id: night-watch
+take: 108
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:23.108021+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I think I see a star moving.
+- kind: dialogue
+  speaker: Vigil
+  text: Where?
+- kind: dialogue
+  speaker: Leena
+  text: No, it's just a cloud.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I hear crickets.
+- kind: dialogue
+  speaker: gm
+  text: Quiet, you'll wake the others.
+- kind: dialogue
+  speaker: chadwick
+  text: Sorry.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should wake them early.

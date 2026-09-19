@@ -1,0 +1,33 @@
+id: Leena-almost
+take: 183
+model: llama3.1:8b
+generated_at: '2026-09-18T20:25:47.021257+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's not right in front of me.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something like it in your village.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not something from the village. It's something familiar, but it shouldn't
+    be.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's nothing. Just a trick of the light.
+- kind: dialogue
+  speaker: Leena
+  text: I've been around the village a few times. I know what I see.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not going to chase it. I just... wonder.
+- kind: dialogue
+  speaker: gm
+  text: (to himself) And Leena is still as opaque as ever.

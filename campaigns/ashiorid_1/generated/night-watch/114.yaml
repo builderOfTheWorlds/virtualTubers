@@ -1,0 +1,41 @@
+id: night-watch
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:05.370972+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky's still pretty dark.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. It's not like it's even going to get light for a while.
+- kind: dialogue
+  speaker: Vigil
+  text: What can you hear?
+- kind: dialogue
+  speaker: chadwick
+  text: Not much. The usual night sounds. Leaves rustling, crickets.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Just keeping watch, Leena. You're okay.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Yeah, I'm good. Go back to sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should wake the others early.
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's still hours until dawn. They can sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know...it's just a feeling I have.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of feeling?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just...I don't know. Never mind.

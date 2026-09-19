@@ -1,0 +1,41 @@
+id: chadwick-cooking
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-19T02:20:18.345887+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The aroma of burnt offerings wafts through the air.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Who''s up for dinner?'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena:'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Sounds great, Chadwick, thanks for cooking!'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: yeah, what''s cooking'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The meal is presented, a charred and smoldering disaster.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Alright, let''s dig in!'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena:'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: mm, nice flavor, Chadwick!'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: what''s in it'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The others struggle to choke down the meal.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: So, how''s everyone enjoying it?'

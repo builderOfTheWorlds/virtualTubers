@@ -1,0 +1,36 @@
+id: camp-fire
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:29.807334+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's really coming down now, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: How long till morning, do we even know?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was saying, the way that fire was laid, it's a good thing we had a dry spell
+    before the storm hit.
+- kind: dialogue
+  speaker: Vigil
+  text: We'll run out of firewood in three hours.
+- kind: dialogue
+  speaker: Leena
+  text: What's the longest anyone's been without sleep in the middle of a storm?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you think the fire will make it through the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it will, but we should keep an eye on the wind.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind will be from the east.
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, what's the watch order?
+- kind: dialogue
+  speaker: chadwick
+  text: I was getting to that, but...

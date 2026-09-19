@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 66
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:23.586390+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I see that the north door is hung on a new hinge.
+- kind: dialogue
+  speaker: chadwick
+  text: What does that mean, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that it was repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, so what?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing. Just a detail.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Yeah, like the flowers on the table.
+- kind: dialogue
+  speaker: chadwick
+  text: (smirks) Flowers?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, they're not even the right kind.
+- kind: dialogue
+  speaker: gm
+  text: (deadpan) This is an important moment, I'm sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Can we get on with it?

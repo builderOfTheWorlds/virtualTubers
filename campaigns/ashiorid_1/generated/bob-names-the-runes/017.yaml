@@ -1,0 +1,29 @@
+id: bob-names-the-runes
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:10:18.483572+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the subtle binding on that gatepost is a residual of an old
+    threshold enchantment.
+- kind: dialogue
+  speaker: chadwick
+  text: Uh, thanks for the info, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: What kind of threshold enchantment, though?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's a variant of the ' Entry Without Invitation' charm, commonly used
+    by traveling merchants to avoid unwanted attention.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, real exciting stuff, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: And what's the residual effect? Why is it still active?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, it's usually only temporary, but this one's been sustained by the constant
+    flow of travelers through the gate. Fascinating, really.

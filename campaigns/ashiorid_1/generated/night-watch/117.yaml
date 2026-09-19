@@ -1,0 +1,41 @@
+id: night-watch
+take: 117
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:25.395701+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's been quiet for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm.
+- kind: dialogue
+  speaker: Leena
+  text: Wake them early?
+- kind: dialogue
+  speaker: chadwick
+  text: No, it's not that early.
+- kind: dialogue
+  speaker: Vigil
+  text: Just a few hours. Let's see.
+- kind: dialogue
+  speaker: Leena
+  text: I think the stars are shifting.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh? Where?
+- kind: dialogue
+  speaker: Leena
+  text: To the east. Or is it west?
+- kind: dialogue
+  speaker: Vigil
+  text: It's hard to tell in the dark.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm listening.
+- kind: dialogue
+  speaker: Vigil
+  text: What can you hear?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing. Just the usual.

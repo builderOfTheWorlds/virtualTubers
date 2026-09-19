@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 95
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:53.594328+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're on a narrow path here, winding through the forest. Trees block out most
+    of the sunlight.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's just around the next bend.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, why don't you just ask Vigil for directions?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh boy, Chadwick's got his compass on.
+- kind: dialogue
+  speaker: Vigil
+  text: It's all right, Chadwick. I know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got a map.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) It's okay, just ask him.
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Good time? We're lost in the woods!
+- kind: dialogue
+  speaker: Vigil
+  text: (smirks) Actually, we're not too far off.
+- kind: dialogue
+  speaker: chadwick
+  text: We're almost there.
+- kind: dialogue
+  speaker: gm
+  text: The path is starting to open up a bit.

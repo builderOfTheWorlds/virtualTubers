@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 200
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:04.531962+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A room of strangers, a few locals, and the occasional traveler.
+- kind: dialogue
+  speaker: chadwick
+  text: What's to see?
+- kind: dialogue
+  speaker: Leena
+  text: The view's the same.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart passed twice, same driver.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that important?
+- kind: dialogue
+  speaker: Vigil
+  text: Not particularly.
+- kind: dialogue
+  speaker: gm
+  text: Still, it's a habit of yours, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: What habit?
+- kind: dialogue
+  speaker: Vigil
+  text: Noticing these things.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, what's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: No point, just noticing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you're just bored.

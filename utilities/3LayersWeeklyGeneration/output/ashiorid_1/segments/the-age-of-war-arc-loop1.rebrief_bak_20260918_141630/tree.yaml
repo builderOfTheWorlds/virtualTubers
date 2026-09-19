@@ -1,0 +1,80 @@
+the-age-of-war-arc-loop1:
+  node_id: the-age-of-war-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The players explore the history of the Age of War and its devastating consequenc
+  summary: The players explore the history of the Age of War and its devastating consequences,
+    learning how magic was used as fuel.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - the-age-of-war-arc-loop1-n0
+  - the-age-of-war-arc-loop1-n1
+  slots: null
+the-age-of-war-arc-loop1-n0:
+  node_id: the-age-of-war-arc-loop1-n0
+  parent_id: the-age-of-war-arc-loop1
+  order: 0
+  depth: 1
+  title: The Dawn of Magical Warfare
+  summary: Players delve into the origins of the Age of War, discovering how ancient
+    civilizations first harnessed magical energy as a weapon. They learn about the
+    initial experiments that led to devastating consequences and witness the first
+    major magical battles that changed the world forever.
+  continuity_in: The players explore the history of the Age of War and its devastating
+    consequences, learning how magic was used as fuel.
+  continuity_out: The players discover how the magical war escalated beyond control,
+    leading to the destruction of entire civilizations.
+  target_words: 262
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: the-age-of-war-arc-loop1-n0-dawn-1
+    kind: ambient
+    prompt: Players delve into the origins of the Age of War, discovering how ancient
+      civilizations first harnessed magical energy as a weapon
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: the-age-of-war-arc-loop1-n0-dawn-2
+    kind: spine
+    scene_ref: the-age-of-war
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+the-age-of-war-arc-loop1-n1:
+  node_id: the-age-of-war-arc-loop1-n1
+  parent_id: the-age-of-war-arc-loop1
+  order: 1
+  depth: 1
+  title: The Descent into Destruction
+  summary: Players witness the catastrophic aftermath of magical warfare, exploring
+    how the use of magic as fuel led to environmental collapse and societal ruin.
+    They learn about the great cities that were consumed by magical backlash and the
+    desperate measures taken by survivors to preserve what remained.
+  continuity_in: The players discover how the magical war escalated beyond control,
+    leading to the destruction of entire civilizations.
+  continuity_out: The players begin to understand the true cost of magic and the lessons
+    that must be learned to prevent such devastation in the future.
+  target_words: 438
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

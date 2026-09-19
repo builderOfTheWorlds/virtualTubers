@@ -1,0 +1,41 @@
+id: sodacan_bob-on-craft
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T20:48:32.301577+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what's caught your eye?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is a beautifully crafted gate, Ashiorid, made by the Wexford foundry,
+    late 19th century, no doubt for a wealthy estate.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on, Bob? We're wasting daylight.
+- kind: dialogue
+  speaker: Vigil
+  text: Wait, what's this symbol etched into the latch?
+- kind: dialogue
+  speaker: Leena
+  text: I love the way the metal's oxidized, it adds character to the piece.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, that's a nice touch, isn't it? The maker wanted to add a personal
+    flourish, I think.
+- kind: dialogue
+  speaker: gm
+  text: And what do you think it means, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not sure, but it might be a maker's mark.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we could take it with us? It'd be lovely in my workshop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm afraid not, Leena, this is a relic of a bygone era, best left in its
+    original place.
+- kind: dialogue
+  speaker: chadwick
+  text: Finally, some sense.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 160
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:36.655907+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the quiet like in here?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's pretty still.
+- kind: dialogue
+  speaker: Leena
+  text: You notice anything?
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the left opens towards us.
+- kind: dialogue
+  speaker: gm
+  text: Okay, good to know.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anything else?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the west window was fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: Alright.
+- kind: dialogue
+  speaker: chadwick
+  text: I see that cart again, heading out.
+- kind: dialogue
+  speaker: Leena
+  text: Which way was it going?
+- kind: dialogue
+  speaker: Vigil
+  text: Out through the gate.
+- kind: dialogue
+  speaker: gm
+  text: Moving right along.

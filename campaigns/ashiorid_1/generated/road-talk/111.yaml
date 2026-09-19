@@ -1,0 +1,41 @@
+id: road-talk
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T23:59:40.444672+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun's high overhead, so we should be able to make it to the next village
+    by nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I used to walk to the river every morning, it's only a few hours from Vabokedos.
+- kind: dialogue
+  speaker: Vigil
+  text: The Nafsari mountains are beautiful in the spring, snowmelt creates waterfalls
+    everywhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, Vabokedos has the best sausages, they're made with a special type
+    of pepper.
+- kind: dialogue
+  speaker: gm
+  text: Do you think we'll have time to rest before we head out tomorrow?
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure we'll be fine, I've been on longer walks than this before.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: Do you think we'll see any game today?
+- kind: dialogue
+  speaker: Leena
+  text: There are rabbits in these hills, if we're quiet, we might catch one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to miss the smell of the sea.

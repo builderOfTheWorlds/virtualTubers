@@ -1,0 +1,37 @@
+id: local-rumor
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:28.447235+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Malmont's a bit of a curious town, isn't it, four magic shops and four blacksmiths
+    with cold forges.
+- kind: dialogue
+  speaker: chadwick
+  text: Unregistered... I've heard that phrase before, but I'm not sure what it means.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's just a figure of speech, Chadwick, don't worry about it.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think with all those magic shops, the town would be a lot more lively,
+    but it's actually pretty quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe they're just waiting for nightfall, when things get interesting.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Sodacan Bob, you're a regular ray of sunshine, aren't you?
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) What's it like, traveling with strangers again?
+- kind: dialogue
+  speaker: chadwick
+  text: It's... nice, I suppose, to not know everyone's business for a change.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking around) Yeah, it's a bit of a change of pace, that's for sure.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the food here's not bad either, we should give the local cuisine a try.

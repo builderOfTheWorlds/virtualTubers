@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 169
+model: llama3.1:8b
+generated_at: '2026-09-18T20:17:19.802291+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, lead on.
+- kind: dialogue
+  speaker: chadwick
+  text: Right behind you, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not moving until someone asks for directions.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe we should just take a peek at the map real quick?
+- kind: dialogue
+  speaker: chadwick
+  text: What, no, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, let the genius navigate.
+- kind: dialogue
+  speaker: Vigil
+  text: Seriously, Chadwick, just ask.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm doing fine, Vigil, just keep moving.

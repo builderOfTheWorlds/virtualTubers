@@ -1,0 +1,35 @@
+id: camp-fire
+take: 103
+model: llama3.1:8b
+generated_at: '2026-09-18T19:54:48.904125+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the first watch, no need to argue about it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've laid the fire better, given the damp wood we had.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind's changed.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will let up before morning?
+- kind: dialogue
+  speaker: chadwick
+  text: It's not like it matters, the watch order's settled, isn't it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The kindling could've been arranged differently, it's a shame.
+- kind: dialogue
+  speaker: Leena
+  text: What happens if the rain keeps falling?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's burning well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's holding, yeah, just barely.
+- kind: dialogue
+  speaker: gm
+  text: Alright, keep the fire going, we'll reassess in the morning.

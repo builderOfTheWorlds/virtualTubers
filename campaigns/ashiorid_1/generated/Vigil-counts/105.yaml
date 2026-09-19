@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-18T19:42:09.037709+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: There are six people in the room, two of them with scars on their faces.
+- kind: dialogue
+  speaker: chadwick
+  text: What does that have to do with anything?
+- kind: dialogue
+  speaker: Vigil
+  text: Just something I noticed.
+- kind: dialogue
+  speaker: Leena
+  text: You're not going to start telling us what to do, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, he's just making observations, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Indeed, it seems Vigil's just keeping a record of the scene.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our right opens inwards.
+- kind: dialogue
+  speaker: chadwick
+  text: And?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window's been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that supposed to mean something?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just a detail.

@@ -1,0 +1,122 @@
+segment_id: portal-choice-arc-loop1
+order: 20
+loop: 1
+hours: 6
+synopsis: The party must decide whether to let the Bahadur through the portal or seal
+  it forever, with dire consequences for either choice.
+continuity_in: The party has just witnessed the opening of a portal that leads to
+  the world of the Bahadur, and they are faced with an impossible decision.
+continuity_out: The party has made their choice about the portal, and the consequences
+  are beginning to unfold.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: portal-choice-arc-loop1-n0-choice-1
+  kind: ambient
+  prompt: The party weighs the moral implications of letting the Bahadur through the
+    portal versus sealing it forever
+  lore:
+  - the-bahadur
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n0
+- slot_id: portal-choice-arc-loop1-n0-choice-2
+  kind: spine
+  scene_ref: portal-choice
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: portal-choice-arc-loop1-n0
+- slot_id: portal-choice-arc-loop1-n1-consequences-1
+  kind: ambient
+  prompt: The air grows thick with tension as the party stands in silence, each member
+    grappling with the weight of their decision.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n1
+- slot_id: portal-choice-arc-loop1-n1-consequences-2
+  kind: ambient
+  prompt: Leena's voice cuts through the silence, her words carrying the gravity of
+    a choice that will echo through time.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n1
+- slot_id: portal-choice-arc-loop1-n1-consequences-3
+  kind: ambient
+  prompt: Chadwick's axe clatters to the ground as he realizes the full implications
+    of what they've done.
+  lore:
+  - the-bahadur
+  participants:
+  - chadwick
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n1
+- slot_id: portal-choice-arc-loop1-n1-consequences-4
+  kind: ambient
+  prompt: Vigil's eyes flicker between the portal and the party, contemplating the
+    storm that is about to break.
+  lore:
+  - the-bahadur
+  participants:
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n1
+- slot_id: portal-choice-arc-loop1-n1-consequences-5
+  kind: ambient
+  prompt: The world seems to hold its breath as the first ripples of consequence begin
+    to spread from their decision.
+  lore:
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: portal-choice-arc-loop1-n1
+nodes:
+- node_id: portal-choice-arc-loop1
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: portal-choice-arc-loop1-n0
+  parent_id: portal-choice-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: portal-choice-arc-loop1-n1
+  parent_id: portal-choice-arc-loop1
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

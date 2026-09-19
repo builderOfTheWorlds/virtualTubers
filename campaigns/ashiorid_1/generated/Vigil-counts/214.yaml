@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 214
+model: llama3.1:8b
+generated_at: '2026-09-18T22:04:43.295991+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what did you notice about the market?
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point, Vigil? We're just here for the food.
+- kind: dialogue
+  speaker: Leena
+  text: I think Vigil's just trying to be helpful, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors on the east side open inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: So what, they always do.
+- kind: dialogue
+  speaker: gm
+  text: Just making sure we're all on the same page, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, alright.
+- kind: dialogue
+  speaker: Leena
+  text: Let's just get our food and go.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed us is the same one that delivered our goods last week.

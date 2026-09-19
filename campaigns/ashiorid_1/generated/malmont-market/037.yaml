@@ -1,0 +1,38 @@
+id: malmont-market
+take: 37
+model: llama3.1:8b
+generated_at: '2026-09-18T20:19:23.437675+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Morning, good people of Malmont! A beautiful day for browsing and bargaining.
+- kind: dialogue
+  speaker: gm
+  text: (looking around) Ah, and it seems we have some newcomers in our midst.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and I'm looking for some decent work, not this dented, rusty nonsense.
+- kind: dialogue
+  speaker: Vigil
+  text: (examining a nearby stall) What's the quality of the metal here?
+- kind: dialogue
+  speaker: Leena
+  text: (studying an old map) Excuse me, how much for this?
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling at a nearby vendor) Ah, good day to you, friend! Beautiful weather
+    we're having, eh?
+- kind: dialogue
+  speaker: gm
+  text: (noticing a crowd forming around Leena's map) Ah, looks like we have a cartographer
+    in our midst. What draws your eye to this particular map, young lady?
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a close eye on the vendor) How much?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) You call that a fine hammer? Look at the head on that thing.
+- kind: dialogue
+  speaker: Leena
+  text: (fascinated) I don't know... it's just the way the mountains are drawn. The
+    shapes, the...

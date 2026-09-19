@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:08.791506+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We need to reach the next landmark before nightfall.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I know the way.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, really? Because from my calculations, we're at least three hours off course.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is going to be good.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Maybe, Chadwick, you could take a look at Vigil's map and see
+    if you can spot anything?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine. I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: (patiently) Okay, carry on then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (guffawing) This is priceless.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) I'm sure it's just a little detour, don't worry.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to worry.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) Indeed you do.
+- kind: dialogue
+  speaker: gm
+  text: (laughing) Alright, alright, let's just move.

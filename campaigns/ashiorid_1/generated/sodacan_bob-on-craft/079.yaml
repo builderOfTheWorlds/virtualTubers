@@ -1,0 +1,43 @@
+id: sodacan_bob-on-craft
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T22:27:03.454802+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, so this gate, it was made in a foundry in a town about three days'
+    walk from here.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I can tell by the markings that it was made by a man named Gideon, who
+    worked for the city.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, Gideon, what's he like?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Gideon, good fellow, did his apprenticeship here in town and then moved
+    to the city to work.
+- kind: dialogue
+  speaker: Vigil
+  text: How old is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Roughly... late 30s, maybe 40, before the war.
+- kind: dialogue
+  speaker: Leena
+  text: Mmm, the war.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And look at this, the gate's got a little extra reinforcement here, see, Gideon
+    was a practical man.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not going to get anywhere at this rate.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Now, I've studied this bracket, and I think it's a bit of a departure from
+    the usual design...

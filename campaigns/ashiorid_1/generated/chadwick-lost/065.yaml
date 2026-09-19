@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:51.563139+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And as I said, the forest path splits off to the left here. Chadwick, do you
+    think we should-
+- kind: dialogue
+  speaker: chadwick
+  text: No, we're going straight on.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, you've been leading us for a while now, do you think you can-
+- kind: dialogue
+  speaker: chadwick
+  text: I'm doing fine, thank you for asking.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, if I might suggest, we are not on the main path.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ahahah, nice try, Vigil! Chadwick's got this!
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe we could just take a quick look at the map real quick?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to look at the map, I know where we're going.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving then, stay close together.
+- kind: dialogue
+  speaker: Vigil
+  text: And maybe just a glance to confirm, Chadwick?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Vigil, you're as subtle as a sledgehammer.
+- kind: dialogue
+  speaker: chadwick
+  text: We're fine, just keep walking.

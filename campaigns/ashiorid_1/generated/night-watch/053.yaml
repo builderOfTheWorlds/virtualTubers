@@ -1,0 +1,41 @@
+id: night-watch
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:28.268414+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's calm out here.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I don't hear anything.
+- kind: dialogue
+  speaker: Vigil
+  text: Neither do I.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Quiet night.
+- kind: dialogue
+  speaker: gm
+  text: You think we can wake the others early?
+- kind: dialogue
+  speaker: Leena
+  text: No, let them sleep.
+- kind: dialogue
+  speaker: chadwick
+  text: We've been here before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah.
+- kind: dialogue
+  speaker: gm
+  text: I like it when it's quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a lot of stars out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Can see them for miles.

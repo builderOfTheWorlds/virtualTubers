@@ -1,0 +1,43 @@
+id: weather-argument
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:42:42.407335+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, it's going to rain, the clouds are a deep grey.
+- kind: dialogue
+  speaker: chadwick
+  text: But it's been sunny all morning, I don't see any signs of it changing.
+- kind: dialogue
+  speaker: Leena
+  text: That's just because the sun's been blocked by those trees over there.
+- kind: dialogue
+  speaker: Vigil
+  text: I've lived here my whole life, and I can tell you it's always rainier in the
+    afternoons.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but this time of year, the winds are coming from the east, and that usually
+    means clear skies.
+- kind: dialogue
+  speaker: gm
+  text: East winds bring rain, I'm positive, I've seen the forecast.
+- kind: dialogue
+  speaker: chadwick
+  text: Forecast? You're basing it on a weather app, I'm basing it on instinct.
+- kind: dialogue
+  speaker: Leena
+  text: Instinct is overrated, I'm going by the way the leaves are curled up.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't trust the leaves, they're already parched from the drought.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Drought? I thought we were in the midst of a mild spring.
+- kind: dialogue
+  speaker: gm
+  text: Mild spring or not, it's going to rain, mark my words.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to take a guess we'll get a lovely sunny afternoon.

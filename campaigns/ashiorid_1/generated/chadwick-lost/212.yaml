@@ -1,0 +1,34 @@
+id: chadwick-lost
+take: 212
+model: llama3.1:8b
+generated_at: '2026-09-18T22:10:19.769551+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back, adventurers. Carry on from where we left off.
+- kind: dialogue
+  speaker: gm
+  text: You find yourselves on a well-trodden path, surrounded by dense foliage.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're making good time.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Actually, I think Vigil's been trying to give you subtle hints
+    about the direction.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) That's one way to put it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm just glad we're not lost yet.
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) We're not lost. We're just... exploring an alternative route.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to help) Perhaps, Chadwick, you could ask Vigil to give you a rough
+    estimate of our location?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine.

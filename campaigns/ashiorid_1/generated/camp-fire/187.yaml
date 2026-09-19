@@ -1,0 +1,32 @@
+id: camp-fire
+take: 187
+model: llama3.1:8b
+generated_at: '2026-09-18T20:31:38.792669+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know how much longer this fire's going to hold, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said to lay the kindling thin, Chadwick, so it'd get enough air.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know why the rain's been so bad this week?
+- kind: dialogue
+  speaker: Vigil
+  text: 14th day of Aethersong.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean, Vigil? We've only been here for three days.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Aethersong? I thought that was a local thing.
+- kind: dialogue
+  speaker: Leena
+  text: Is there any way to know if the rain's going to let up tonight?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

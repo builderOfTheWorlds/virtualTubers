@@ -1,0 +1,37 @@
+id: camp-fire
+take: 234
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:07.108280+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down steady for hours, doesn't seem like it'll let up anytime
+    soon.
+- kind: dialogue
+  speaker: chadwick
+  text: We should have a rotation for watch, we can't all just sleep through the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's laid out all wrong, it's a wonder it's
+    holding at all.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's still a way to get word out to the next town over, if
+    we had to evacuate in a hurry?
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke's going to set off every alarm within a hundred miles.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just sit back and assume everything will go smoothly, Vigil, we
+    need contingency plans.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, let's settle on a rotation then, who's first watch?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what's at the bottom of those old moonwells?
+- kind: dialogue
+  speaker: Vigil
+  text: The Event was the end of something, but it was also the beginning of something
+    else.

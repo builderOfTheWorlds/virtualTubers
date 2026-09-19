@@ -1,0 +1,38 @@
+id: malmont-market
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:25.051087+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work at a traveling fair.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) You're looking at the finer pieces, I'm sure.
+- kind: dialogue
+  speaker: Leena
+  text: (to Vigil) I think he's just being picky.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's a lovely piece, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Lovely? That's just a fancy word for "expensive".
+- kind: dialogue
+  speaker: Leena
+  text: (to a map vendor) Excuse me, do you have any old maps from the north?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) I think we should be moving on.
+- kind: dialogue
+  speaker: chadwick
+  text: I'd like to stay a bit longer, if you don't mind.
+- kind: dialogue
+  speaker: Leena
+  text: (to Vigil) Why do you want to leave?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go get a drink, anyone want one?
+- kind: dialogue
+  speaker: gm
+  text: (to the group) Shall I meet you at the tavern in an hour?

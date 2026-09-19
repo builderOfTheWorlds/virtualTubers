@@ -1,0 +1,42 @@
+id: vigil-tracks
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:39:05.060600+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what did we learn from Vigil's track-reading this time?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, he's always talking about the tracks, but he never explains why he's
+    saying what he is.
+- kind: dialogue
+  speaker: Leena
+  text: That's not entirely true, Chadwick, he usually doesn't say much about his
+    thoughts.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just trying to keep everyone safe, see?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fair enough, Vigil, but it's still nice to hear from you every once in a while.
+- kind: dialogue
+  speaker: gm
+  text: So, what else can we learn from these tracks, anyone?
+- kind: dialogue
+  speaker: Leena
+  text: Well, we should probably keep an eye out for any signs of fresh water.
+- kind: dialogue
+  speaker: chadwick
+  text: Good point, Leena, we don't want to run out of water in this heat.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think I saw some water a little ways back, but it's not worth
+    going out of our way for now.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Alright, that's good to know, Vigil, keep an eye out for any other important
+    landmarks.
+- kind: dialogue
+  speaker: gm
+  text: Keep moving, let's see how far we can get today.

@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 81
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:33.234643+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen that doorway before.
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like the one at our village, Leena. We have similar architecture
+    back home.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you just remembered it, Leena? Sometimes our memories play tricks on
+    us.
+- kind: dialogue
+  speaker: Leena
+  text: But I'm not sure... it's like a phrase, a phrase I've never heard, something
+    familiar yet wrong.
+- kind: dialogue
+  speaker: chadwick
+  text: You don't have to chase it, Leena. It's not worth getting worked up over.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it's something important?

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 236
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:20.134771+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, folks. We'll be here for a while yet.
+- kind: dialogue
+  speaker: chadwick
+  text: I'd like to settle the watch order before we all drift off.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying the fire's too high off the ground, it's a wonder it's holding.
+- kind: dialogue
+  speaker: Vigil
+  text: I've seen the logs burn better in a rain like this.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire's magic would work better in a dry climate?
+- kind: dialogue
+  speaker: chadwick
+  text: We can't decide now, Leena. It's not like we have a choice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I still think the logs were laid wrong, that's why it's not burning better.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood will burn even in rain.
+- kind: dialogue
+  speaker: gm
+  text: Well, we'll just have to wait and see.

@@ -1,0 +1,33 @@
+id: Leena-almost
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:35.215250+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's on your mind, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: Just that smell, it's familiar, but I don't know why.
+- kind: dialogue
+  speaker: Leena
+  text: No, I mean something else. It's just... I feel like I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That look on your face, I know that look. You saw one of those things back
+    in your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get distracted, Leena. Let's focus on the task at hand.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm good. It's just... a door. I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A door? That's it? You're not thinking of the old manor, are you?
+- kind: dialogue
+  speaker: Leena
+  text: No. But it feels like I should know what it is.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, we need to move.

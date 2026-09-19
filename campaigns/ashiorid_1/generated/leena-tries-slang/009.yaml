@@ -1,0 +1,33 @@
+id: leena-tries-slang
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:32:27.130475+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Alright, carry on.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: I''m low on zorch, can someone grab a flask?'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Zorch is what you drink at the end of a cycle, right?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Yeah, that''s right.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I''ve got some zorch in my pack.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I''m going to go get some, I need to top up my zorch.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Just grab a drink from the cooler, it''s not that complicated.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: (laughs) Leena''s really got the zorch thing down.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Actually, Leena, you''re supposed to say "I''m low on zorch" as a
+    joke when you''re actually full up.'

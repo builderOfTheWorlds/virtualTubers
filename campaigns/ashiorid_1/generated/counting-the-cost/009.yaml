@@ -1,0 +1,35 @@
+id: counting-the-cost
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:24:11.455164+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A good forge needs a solid foundation.
+- kind: dialogue
+  speaker: chadwick
+  text: Like the one we're standing on now, minus the fire.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly. The anvil's a little worse for wear.
+- kind: dialogue
+  speaker: Leena
+  text: How's the cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The axle's bent, wheel's cracked.
+- kind: dialogue
+  speaker: Vigil
+  text: Any chance of salvaging it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can straighten the axle, re-spoke the wheel.
+- kind: dialogue
+  speaker: gm
+  text: You make it sound like a puzzle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fixing it's like finding the right joints, fitting them together.
+- kind: dialogue
+  speaker: chadwick
+  text: And people, too?

@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 50
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:50.894715+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. It's just your mind playing tricks.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know what you're talking about.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw something like it in your village, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: No, that's not it. I'm not thinking of anywhere I've seen.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe you're just hungry or tired.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not hungry, and I'm not tired. I just... feel it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should go get some rest, then.
+- kind: dialogue
+  speaker: chadwick
+  text: Ash, what do you think it is?

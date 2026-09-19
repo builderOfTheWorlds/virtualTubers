@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 195
+model: llama3.1:8b
+generated_at: '2026-09-18T20:29:41.930057+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your attention, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The window shutter's been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: That's nothing, Vigil. Not everyone has their own work crew.
+- kind: dialogue
+  speaker: Leena
+  text: True, but it's nice to know the place is being maintained.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen the same cart go by twice this morning.
+- kind: dialogue
+  speaker: gm
+  text: You're sure that's the same cart, Bob?
+- kind: dialogue
+  speaker: Vigil
+  text: It had the same worn wheel.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a pretty weak alibi.
+- kind: dialogue
+  speaker: Vigil
+  text: I just thought you should know.
+- kind: dialogue
+  speaker: Leena
+  text: Know what, exactly?

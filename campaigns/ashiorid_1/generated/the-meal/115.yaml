@@ -1,0 +1,38 @@
+id: the-meal
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:24.269971+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I asked you to help with the cooking today.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, come on, I'm just trying to offer some constructive criticism here.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just eat, shall we?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love the little touches you added, Sodacan Bob!
+- kind: dialogue
+  speaker: Vigil
+  text: I didn't eat this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, you're saying I didn't do a good job? I resent that.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you said yourself the recipe was a bad idea.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not the point! The point is presentation and flair!
+- kind: dialogue
+  speaker: chadwick
+  text: Seriously, can we just eat?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be so serious, Sodacan Bob!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, I'll show you all how it's done tomorrow.

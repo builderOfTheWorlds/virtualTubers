@@ -1,0 +1,41 @@
+id: weather-argument
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:42:32.720747+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's going to rain, I saw dark clouds when we drove by the lake
+- kind: dialogue
+  speaker: Leena
+  text: No way, it was just a patch, the sun's still out
+- kind: dialogue
+  speaker: Vigil
+  text: I'm with Leena, that cloud was just a anomaly
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not so sure, the air feels thick
+- kind: dialogue
+  speaker: gm
+  text: You can't just feel the air, look at the wind
+- kind: dialogue
+  speaker: chadwick
+  text: But it's been calm all day, calm days mean rain
+- kind: dialogue
+  speaker: Leena
+  text: That's just a myth, it's all about the pressure
+- kind: dialogue
+  speaker: Vigil
+  text: I've heard the opposite, high pressure means clear skies
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Pressure isn't everything, I've seen rain with high pressure
+- kind: dialogue
+  speaker: gm
+  text: You're all forgetting the humidity
+- kind: dialogue
+  speaker: chadwick
+  text: But we're at the top of the hill, I can see for miles
+- kind: dialogue
+  speaker: Leena
+  text: And what you see is just a thin layer of haze

@@ -1,0 +1,43 @@
+id: chadwick-lost
+take: 140
+model: llama3.1:8b
+generated_at: '2026-09-18T20:14:01.769740+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to stretch on forever, the trees towering above you.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's keep moving. I'm sure it's just up ahead.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chad, if you're not sure where we are, maybe we should take a break
+    and...
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine. I just need to think for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently observing the group)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chad's lost again, guys! Guess he can't navigate like he thinks he can!
+- kind: dialogue
+  speaker: chadwick
+  text: Shut up, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Chad, why don't I just take the lead for a bit? We can...
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it. I'm just... reassessing our route.
+- kind: dialogue
+  speaker: gm
+  text: You continue on for a short time, and then you notice that the forest is thinning
+    out ahead.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, I think I see the river now. We're heading towards it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, great, Chad finally gets lucky! But I'm sure it's just a coincidence.

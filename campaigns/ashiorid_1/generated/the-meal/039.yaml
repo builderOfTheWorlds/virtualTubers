@@ -1,0 +1,38 @@
+id: the-meal
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:42.596396+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I could've done this a million times better.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in silence?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Sodacan, let's not be too hard on the cook.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cooked this, anyway?
+- kind: dialogue
+  speaker: Leena
+  text: I think it was... ... Chadwick, wasn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I did.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I would've added more seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe next time, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And was the pot ever cleaned, or did we just scrape the old grime off?
+- kind: dialogue
+  speaker: Leena
+  text: It's okay, let's just...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine.

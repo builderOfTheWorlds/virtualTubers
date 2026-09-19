@@ -1,0 +1,33 @@
+id: Leena-almost
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-18T19:01:39.823344+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something in front of Leena is familiar and should not be.
+- kind: dialogue
+  speaker: Leena
+  text: It's a turn of phrase, somebody used, a tune being hummed, the shape of a
+    doorway, a smell.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a bunch of old songs and stories, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be a village back home, just like you said, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: No, I mean... this. It's not from the songs.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You'll get lost.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I'm not lost. I'm just curious.
+- kind: dialogue
+  speaker: gm
+  text: The others offer ordinary explanations and one of them is probably right.

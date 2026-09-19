@@ -1,0 +1,36 @@
+id: chadwick-lost
+take: 211
+model: llama3.1:8b
+generated_at: '2026-09-18T22:10:14.849110+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you're walking through a dense forest, the trees tower above you,
+    casting dappled shadows on the ground.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head...that way.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you know we've been over this. You said we should go east, but that's
+    not the sun.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive. The sun was shining on the trees to our left, so that means
+    we go left.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, this is rich. Chadwick, you really don't know where we are, do
+    you?
+- kind: dialogue
+  speaker: Vigil
+  text: (quietly) Chadwick, I can give you a hint if you want to know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: Leena
+  text: (tries to intervene) Chadwick, it's okay, we can just...
+- kind: dialogue
+  speaker: chadwick
+  text: No, I don't need a hand. I'm fine.

@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:25.624713+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we have a lead to investigate.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good, I'm getting a little restless.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what's the lead again?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a market in the next district, someone saw our target.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is this the guy we're looking for, the one with the tattoo?
+- kind: dialogue
+  speaker: gm
+  text: That's the one, let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll scout ahead, see if we can get a lay of the land.
+- kind: dialogue
+  speaker: Leena
+  text: I'll keep an eye on our six, make sure we're not getting followed.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, then speaks up) I noticed the cart that passed us by, it had a fresh
+    coat of paint.
+- kind: dialogue
+  speaker: gm
+  text: What about it, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: It was just a small thing, I didn't think it was important.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What cart are you talking about?

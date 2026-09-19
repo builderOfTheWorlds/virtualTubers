@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:27.683678+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to be thinning out, we should see the river soon.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've gone far enough for the day, let's set up camp.
+- kind: dialogue
+  speaker: Leena
+  text: Well, we did cover a lot of ground, but I think we might be a bit off track.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh boy, Chadwick's lost again!
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think I know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: What are you talking about, Vigil?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, come on Chadwick, don't play dumb.
+- kind: dialogue
+  speaker: Leena
+  text: Hey, maybe we could just say we were taking a detour, and-
+- kind: dialogue
+  speaker: chadwick
+  text: No, we were not taking a detour.

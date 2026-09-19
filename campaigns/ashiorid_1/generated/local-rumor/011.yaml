@@ -1,0 +1,35 @@
+id: local-rumor
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:34:35.120738+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The blacksmiths here seem to be struggling to keep their forges lit.
+- kind: dialogue
+  speaker: chadwick
+  text: I saw a flyer for a sale on new sword designs in one of the magic shops.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe the forge business is just... bad timing.
+- kind: dialogue
+  speaker: Vigil
+  text: Unlikely, Leena. It's not just one blacksmith, it's all four.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not how it works, Vigil. It's not about the timing.
+- kind: dialogue
+  speaker: gm
+  text: The constable's watch is the first stop for any complaints about the blacksmiths.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll go talk to the constable, see what he's got to say.
+- kind: dialogue
+  speaker: Leena
+  text: You know what they say about the night watch in Malmont.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean by "they say"?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Never mind. Just a town rumor. Not worth worrying about.

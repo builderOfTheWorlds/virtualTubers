@@ -1,0 +1,33 @@
+id: bob-vs-the-cart-wheel
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:19.555258+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob, we've gone over the wheel design twice now. What's your
+    main concern?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more worried about the structural integrity of the whole thing.
+- kind: dialogue
+  speaker: Leena
+  text: But, Chad, we did reinforce the axle.
+- kind: dialogue
+  speaker: Vigil
+  text: We need to get moving, we've got a lot to cover today.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're all just glossing over it, I can see the flaw.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, trust me, we've looked at this, it's fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, I think Vigil's right, we should focus on getting moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd rather break something than take an extra hour to get it right?
+- kind: dialogue
+  speaker: Vigil
+  text: We can't afford to break, Bob, not if we want to make the deadline.

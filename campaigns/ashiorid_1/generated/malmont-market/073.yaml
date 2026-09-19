@@ -1,0 +1,42 @@
+id: malmont-market
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:54.909105+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't see anything in here that I'd want to take home and fix.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Cheap work, waste of time.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no, I think I'll just look around a bit.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) Are these the roads to the river delta?
+- kind: dialogue
+  speaker: Vigil
+  text: (still scanning the market stalls) What's the going rate for a good sword
+    here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (at the smith's stall) A sword with a blade this thin?
+- kind: dialogue
+  speaker: Leena
+  text: (staring at an old map) I've seen this before, but...
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Ah, yes, I think I know that place.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Know it? You've been there?
+- kind: dialogue
+  speaker: Vigil
+  text: (folding his arms) Not that it's any business of mine.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) What is it about that place?
+- kind: dialogue
+  speaker: chadwick
+  text: (shrugging) Just a place, I suppose.

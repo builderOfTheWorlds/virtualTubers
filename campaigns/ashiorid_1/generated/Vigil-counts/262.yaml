@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 262
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:27.668465+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the window shutter was fixed yesterday.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm, interesting.
+- kind: dialogue
+  speaker: Leena
+  text: What's interesting about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: And what, pray tell, did you notice about the cart?
+- kind: dialogue
+  speaker: Vigil
+  text: It passed by the inn again, same hour.
+- kind: dialogue
+  speaker: Leena
+  text: Well, that's probably just the milkman.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go check on the innkeeper's wife.
+- kind: dialogue
+  speaker: Vigil
+  text: There are six people in the common room.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's more than usual.
+- kind: dialogue
+  speaker: gm
+  text: Let's move on to more pressing matters.

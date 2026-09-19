@@ -1,0 +1,40 @@
+id: the-map-argument
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:14.957470+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's the holdup?
+- kind: dialogue
+  speaker: Leena
+  text: I think we should take a left up ahead, but the map says we need to go right.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally, a chance to prove my superior map-reading skills.
+- kind: dialogue
+  speaker: Vigil
+  text: Dude, calm down, it's just a map.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, don't get worked up over it, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: You think this is just a trivial matter? I've spent hours pouring over these
+    maps!
+- kind: dialogue
+  speaker: Leena
+  text: Honestly, I don't think it's a big deal either way.
+- kind: dialogue
+  speaker: chadwick
+  text: Silence, Leena! You're just being obtuse.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, we're moving forward.
+- kind: dialogue
+  speaker: chadwick
+  text: This is a travesty, a complete travesty! I'm not moving forward until this
+    is resolved!
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, seriously, it's not a big deal.

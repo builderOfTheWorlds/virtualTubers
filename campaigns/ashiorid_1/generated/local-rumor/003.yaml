@@ -1,0 +1,37 @@
+id: local-rumor
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:39.820708+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: They say it's a thing that moves through the shadows, unseen and unheard.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not interested in local legends.
+- kind: dialogue
+  speaker: Leena
+  text: No, really, what's the story about this... thing?
+- kind: dialogue
+  speaker: Vigil
+  text: I heard it's just a big cat or something, a stray that's been spotted a few
+    times.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: They say it's been seen near the north gate at night, but nobody's seen it
+    clear.
+- kind: dialogue
+  speaker: gm
+  text: Some folks say it's been seen walking on its hind legs.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think we should be paying any mind to it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I don't know, it's not like we're not used to being strangers here.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, and I'm sure it's not like we're going to stir up any more trouble.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: They say it's been seen around the town's waterwheel at midnight.

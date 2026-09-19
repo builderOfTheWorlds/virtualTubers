@@ -1,0 +1,32 @@
+id: night-watch
+take: 110
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:35.610255+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The stars are clearer tonight.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah, it''s a good night to be outside.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I don''t hear anything moving.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: That''s not surprising. We''ve had a few quiet nights in a row.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I''m glad we didn''t get any visitors.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah. Would''ve been nice to get some rest.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: What time do you think we should wake the others?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I say we let them sleep in a bit longer.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I think they''ll be okay.'

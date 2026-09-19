@@ -1,0 +1,41 @@
+id: Leena-almost
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:39.600623+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you're all on the same page about where you are and what you're doing
+    here.
+- kind: dialogue
+  speaker: chadwick
+  text: We've been over this, we can't trust anything that's not from a reliable source.
+- kind: dialogue
+  speaker: Leena
+  text: That's not what's bugging me. I keep thinking I've seen something like this
+    before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you have, Leena, maybe you just don't remember.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Too many questions.
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, it's like something I know, but I don't know how I know it.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, you're getting worked up over nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, let's focus on the task at hand.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) I think she's right.
+- kind: dialogue
+  speaker: gm
+  text: (ignoring Vigil's whisper) Sodacan Bob, can you hack into the manor's system
+    and see if we can find anything useful?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Already on it.

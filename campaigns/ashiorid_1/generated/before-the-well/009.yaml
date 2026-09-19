@@ -1,0 +1,41 @@
+id: before-the-well
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:11:03.645252+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full, it should be easy to reach the well.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never drawn magic from it at night.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with drawing magic at night?
+- kind: dialogue
+  speaker: gm
+  text: Nothing, just tradition, I suppose.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll go check the perimeter.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Need any help?
+- kind: dialogue
+  speaker: gm
+  text: No, I'll be fine.
+- kind: dialogue
+  speaker: Leena
+  text: Do you want me to bring you anything?
+- kind: dialogue
+  speaker: Vigil
+  text: Just... just wait for me.
+- kind: dialogue
+  speaker: gm
+  text: Of course.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Everything look clear?
+- kind: dialogue
+  speaker: gm
+  text: Yes.

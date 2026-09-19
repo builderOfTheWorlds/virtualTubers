@@ -1,0 +1,39 @@
+id: local-rumor
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:25.592596+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Malmont, we're at the local tavern. You can get a room here, but it's not
+    the kind of place that usually... entertains strangers for long.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good, I could use a hot meal.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, I'll take a room. I'm starving.
+- kind: dialogue
+  speaker: Vigil
+  text: Same here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll just get a drink at the bar for now.
+- kind: dialogue
+  speaker: gm
+  text: The bartender's been going on about something for a few nights now. Apparently,
+    some folks around here are spooked about something moving through the town at
+    night.
+- kind: dialogue
+  speaker: chadwick
+  text: What is it, a stray animal or something?
+- kind: dialogue
+  speaker: gm
+  text: That's the rumor. But nobody's seen it, nobody's talking about it. Just a
+    lot of whispering and glancing over their shoulders.
+- kind: dialogue
+  speaker: Leena
+  text: Sounds like a town's version of a ghost story.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Or something a little more real.

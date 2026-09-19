@@ -1,0 +1,41 @@
+id: camp-fire
+take: 144
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:28.029900+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, I suppose we can settle down by the fire for the night then.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, let's get the watch order sorted out. Leena, you're with me.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what about Vigil? He's been quiet all day.
+- kind: dialogue
+  speaker: Vigil
+  text: He's been watching the fire.
+- kind: dialogue
+  speaker: Leena
+  text: I mean, who's watching the fire?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it myself, good and sturdy. It'll hold till morning.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not what I'm asking. Who's on watch?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, I'm sure one of the others can do it.
+- kind: dialogue
+  speaker: gm
+  text: We can take turns. We'll be fine.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what's going on with the rain?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been raining since the day we left.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get settled. We'll figure it out in the morning.

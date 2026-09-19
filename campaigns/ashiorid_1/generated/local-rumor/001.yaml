@@ -1,0 +1,39 @@
+id: local-rumor
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:26.567895+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rumors are thick as thieves in a place like this, but you'd think something
+    like that would be out in the open by now.
+- kind: dialogue
+  speaker: chadwick
+  text: I'd rather not think about it, personally. It's nice to be able to walk down
+    the street without everyone staring.
+- kind: dialogue
+  speaker: Leena
+  text: We're getting some curious looks ourselves, even after a week.
+- kind: dialogue
+  speaker: Vigil
+  text: That's not our problem, though. We're here for the road, not the gossip.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Malmont's not exactly the most well-run place, is it?
+- kind: dialogue
+  speaker: gm
+  text: Not by a long shot. The watch is doing its best, but... something's just off.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe it's just us. We're not used to being in a place that's not... prepared.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a new one. Prepared? What's that even mean?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It means we're used to being treated like we're in some kind of trouble, and
+    it's nice to have a break from it.
+- kind: dialogue
+  speaker: gm
+  text: It's not trouble, it's just... people tend to assume the worst about us, and
+    that gets old fast.

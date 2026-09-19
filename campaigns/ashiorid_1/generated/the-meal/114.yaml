@@ -1,0 +1,41 @@
+id: the-meal
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-19T00:11:18.804360+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The food's not bad, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bad? This is an insult to the culinary arts.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, let's not be too hard on it, it's just a meal.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Ashiorid)
+- kind: dialogue
+  speaker: gm
+  text: Thanks, Vigil.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I've seen better, and I've cooked better.
+- kind: dialogue
+  speaker: chadwick
+  text: (scoffs)
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's move on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who's cooking tomorrow, anyway?
+- kind: dialogue
+  speaker: chadwick
+  text: I am.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, perfect.

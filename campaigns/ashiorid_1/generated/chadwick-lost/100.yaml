@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:28.518854+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick. Can you even give me an estimate of
+    how long it's been?
+- kind: dialogue
+  speaker: chadwick
+  text: We're making good time. Don't worry about it.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering under his breath) If you don't know where we are...
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) You could say... we're on schedule?
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) Of course we're on schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is priceless.
+- kind: dialogue
+  speaker: Vigil
+  text: (shaking his head)
+- kind: dialogue
+  speaker: chadwick
+  text: Let's move, people.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Alright...
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Leena) He knows where we are. He just won't say it.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Yeah. I figured that out a while ago.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is like herding cats.

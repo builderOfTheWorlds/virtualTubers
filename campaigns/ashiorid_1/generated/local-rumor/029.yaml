@@ -1,0 +1,35 @@
+id: local-rumor
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:16.948176+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: People around here seem... nervous.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering to himself) Nothing to do with us, no doubt.
+- kind: dialogue
+  speaker: Leena
+  text: It's good to have some time without everyone knowing our names.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm more concerned about getting out of this rain.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rain's not supposed to start till tomorrow, is it?
+- kind: dialogue
+  speaker: gm
+  text: Don't think so, but it's been a weird week so far.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just happy we're finally getting somewhere.
+- kind: dialogue
+  speaker: Leena
+  text: What's with all the magic shops? Shouldn't we be finding one?
+- kind: dialogue
+  speaker: Vigil
+  text: Let's just ask around, see if anyone knows where we can find some help.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You mean a real blacksmith? I heard they're all closed.

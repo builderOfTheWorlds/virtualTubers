@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 34
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:14.049113+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your eye, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The same cart passed by the window twice, same route.
+- kind: dialogue
+  speaker: Leena
+  text: That's a bit odd, isn't it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could just be the cart driver likes to go back and forth.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, or maybe there's something worth checking out on the other side.
+- kind: dialogue
+  speaker: gm
+  text: I've not noticed anything out of the ordinary myself.
+- kind: dialogue
+  speaker: Vigil
+  text: I suppose it's nothing to bother with.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, let's not get too worked up about it.
+- kind: dialogue
+  speaker: Leena
+  text: We've got more important things to worry about.
+- kind: dialogue
+  speaker: chadwick
+  text: Like where our next meal is coming from.
+- kind: dialogue
+  speaker: gm
+  text: Good point, let's focus on finding some food.

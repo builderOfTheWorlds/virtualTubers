@@ -1,0 +1,38 @@
+id: night-watch
+take: 83
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:29.829154+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The sky's a deep shade of indigo tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm-hmm.
+- kind: dialogue
+  speaker: Vigil
+  text: I can see the stars are hidden behind a layer of cloud.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I wish I could see them.
+- kind: dialogue
+  speaker: chadwick
+  text: You can see them if you go outside.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm sure they're still hidden.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs quietly) You're right, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses) I've been thinking...
+- kind: dialogue
+  speaker: Leena
+  text: (yawns again) What about?
+- kind: dialogue
+  speaker: chadwick
+  text: (hesitates) Nothing, it's not important.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) I'm awake now.

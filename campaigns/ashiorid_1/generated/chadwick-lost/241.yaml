@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 241
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:27.621228+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick. You've got to give someone a sense
+    of direction.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not lost. We're just... taking a scenic route.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, come on, Chadwick. Admit it. You have no idea where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (staying silent, waiting to be asked)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) This is like the third time this has happened, right? You lead
+    us astray and then we all have to backtrack.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Okay, let's just re-trace our steps. It'll be faster this way.
+- kind: dialogue
+  speaker: chadwick
+  text: No. I know exactly where we are. I just... wanted to make sure we didn't miss
+    anything.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Fine. Lead on, then.

@@ -1,0 +1,41 @@
+id: after-the-choice
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:06:22.750281+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, we're here now.
+- kind: dialogue
+  speaker: chadwick
+  text: We had to do it.
+- kind: dialogue
+  speaker: Leena
+  text: Don't think it's going to get any easier.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll just... go get some water.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anyone else need a drink?
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm good.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: You know, at least the view's nice.
+- kind: dialogue
+  speaker: chadwick
+  text: It's not the view that's the problem.
+- kind: dialogue
+  speaker: Vigil
+  text: I just... want to be alone for a bit.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, buddy.
+- kind: dialogue
+  speaker: Leena
+  text: I'll join Vigil for a bit.

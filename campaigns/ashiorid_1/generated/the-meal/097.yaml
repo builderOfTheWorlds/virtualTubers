@@ -1,0 +1,33 @@
+id: the-meal
+take: 97
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:08.070099+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This stew's been reheated one too many times, I can taste it.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, everyone, let's make the best of it! It's not every day we get to
+    share a meal together.
+- kind: dialogue
+  speaker: Vigil
+  text: Here, Leena, you can have my portion.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, if I had to cook like this, I'd be out of a job by now.
+- kind: dialogue
+  speaker: chadwick
+  text: Just stop it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Sodacan Bob, you're such a perfectionist! We all know you'd do it better.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I am a perfectionist, and I'd do it better.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) This stew's not the worst I've ever had...

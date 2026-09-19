@@ -1,0 +1,41 @@
+id: nafsari-question
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:28.969232+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vigil, what's it like having grown up with the wood elves of Nafsari?
+- kind: dialogue
+  speaker: Vigil
+  text: It was home.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it was. Do you miss it?
+- kind: dialogue
+  speaker: Vigil
+  text: I have what I need.
+- kind: dialogue
+  speaker: Leena
+  text: Vigil, is it... quiet?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a stillness to the forest.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (clears throat) Sorry, I shouldn't have asked.
+- kind: dialogue
+  speaker: chadwick
+  text: No need to apologize, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (softly) I think we've intruded enough.
+- kind: dialogue
+  speaker: Vigil
+  text: You haven't intruded.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Thank you, Vigil.

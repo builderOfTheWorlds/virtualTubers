@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 53
+model: llama3.1:8b
+generated_at: '2026-09-18T19:26:07.554387+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what did you see that's bothering you?
+- kind: dialogue
+  speaker: Leena
+  text: It's something familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something similar back in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Or maybe it's just a trick of the light, Leena.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) I think you should try to forget about it.
+- kind: dialogue
+  speaker: Leena
+  text: No, I like knowing when things don't add up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (mumbling to himself) Village, village, probably a village...
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't go chasing after it.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: Leena
+  text: (sighing) Alright, I'll let it go for now.

@@ -1,0 +1,32 @@
+id: nafsari-question
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:32:00.789133+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I grew up surrounded by trees, that's all.
+- kind: dialogue
+  speaker: chadwick
+  text: That sounds... peaceful.
+- kind: dialogue
+  speaker: Vigil
+  text: It was.
+- kind: dialogue
+  speaker: Leena
+  text: Did you miss the forest when you left?
+- kind: dialogue
+  speaker: Vigil
+  text: I knew it would always be there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that makes sense.
+- kind: dialogue
+  speaker: chadwick
+  text: You're a bit of a mystery, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm here now.
+- kind: dialogue
+  speaker: gm
+  text: Let's move on, shall we?

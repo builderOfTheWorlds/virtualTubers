@@ -1,0 +1,41 @@
+id: before-the-well
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:07:36.285241+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: The moonwell is still here, isn''t it?'
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, it's still here.
+- kind: dialogue
+  speaker: Leena
+  text: What are we waiting for?
+- kind: dialogue
+  speaker: Vigil
+  text: Something's going to happen tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just going to go check on the supplies.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Fine.'
+- kind: dialogue
+  speaker: chadwick
+  text: Don't bother, we've got enough.
+- kind: dialogue
+  speaker: Leena
+  text: Are you going to tell me what's really going on?
+- kind: dialogue
+  speaker: Vigil
+  text: There's nothing to tell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll be right back.
+- kind: narration
+  speaker: gm
+  text: 'Ashoreid: Just be quiet.'
+- kind: dialogue
+  speaker: Vigil
+  text: I'll go with you.

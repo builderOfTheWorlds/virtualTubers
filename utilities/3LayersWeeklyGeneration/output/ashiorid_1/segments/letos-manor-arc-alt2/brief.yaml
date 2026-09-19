@@ -1,0 +1,120 @@
+segment_id: letos-manor-arc-alt2
+order: 8
+loop: 0
+hours: 6
+synopsis: The four arrive at Duke Sorensen Leto the Third's manor for a party ten
+  thousand years in the making, only to find it is not what they expected.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-alt2-n0-arrival-1
+  kind: ambient
+  prompt: The four stand at the grand entrance of Duke Sorensen Leto the Third's manor,
+    their boots echoing on the cracked stone steps. The air is thick with dust and
+    the scent of decay.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n0
+- slot_id: letos-manor-arc-alt2-n0-arrival-2
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: letos-manor-arc-alt2-n0
+- slot_id: letos-manor-arc-alt2-n1-discovery-1
+  kind: ambient
+  prompt: The four cautiously enter the manor's grand hall, noting its eerie stillness
+    and the absence of any festive decorations or guests.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n1
+- slot_id: letos-manor-arc-alt2-n1-discovery-2
+  kind: ambient
+  prompt: Leena notices strange symbols etched into the floor, glowing faintly in
+    the dim light, suggesting this place was prepared for something other than a party.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n1
+- slot_id: letos-manor-arc-alt2-n1-discovery-3
+  kind: ambient
+  prompt: Chadwick picks up an old, weathered journal from a nearby table, its pages
+    filled with arcane writings and diagrams that seem to reference ancient rituals.
+  lore:
+  - the-begene-program
+  participants:
+  - chadwick
+  - Vigil
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n1
+- slot_id: letos-manor-arc-alt2-n1-discovery-4
+  kind: ambient
+  prompt: Vigil detects a subtle shift in the air around them, as if the very atmosphere
+    is charged with an otherworldly energy, making their skin tingle.
+  lore:
+  - the-bahadur
+  participants:
+  - Vigil
+  - Leena
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-alt2-n1
+- slot_id: letos-manor-arc-alt2-n1-discovery-5
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: letos-manor-arc-alt2-n1
+nodes:
+- node_id: letos-manor-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: letos-manor-arc-alt2-n0
+  parent_id: letos-manor-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: letos-manor-arc-alt2-n1
+  parent_id: letos-manor-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

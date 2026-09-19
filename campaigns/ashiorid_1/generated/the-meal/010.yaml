@@ -1,0 +1,41 @@
+id: the-meal
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:06.288449+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honestly, Ash, the seasoning on this stew is all wrong.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, it's not that bad. We can make it fun!
+- kind: dialogue
+  speaker: gm
+  text: So, who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I am. And I'm making a real meal.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can we have dessert?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And don't even get me started on the state of the pot.
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, let's calm down.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine. But I'm telling you, this stew is a disaster.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Bob, don't be so hard on Ashiorid.
+- kind: dialogue
+  speaker: gm
+  text: Let's just eat.
+- kind: dialogue
+  speaker: Leena
+  text: We're dining, dining, oh so fine...

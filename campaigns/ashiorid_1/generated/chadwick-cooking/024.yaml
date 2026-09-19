@@ -1,0 +1,41 @@
+id: chadwick-cooking
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:18:14.114699+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's continue from where we left off.
+- kind: dialogue
+  speaker: chadwick
+  text: (proudly) I made us dinner, everyone!
+- kind: dialogue
+  speaker: Leena
+  text: (forced enthusiasm) Oh, Chadwick, it looks great!
+- kind: dialogue
+  speaker: Vigil
+  text: (skeptical) Uh, smells like a challenge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (trying to sound convincing) Mmm, yeah, it's... um...
+- kind: dialogue
+  speaker: chadwick
+  text: (noticing) You guys don't like it.
+- kind: dialogue
+  speaker: gm
+  text: Silence falls over the table.
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Oh, no, no, it's just... it's just really... dense.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispering to Sodacan Bob) What is this, cement?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering back) Shut up, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: (noticing the hushed conversation) I think I might have overcooked it.
+- kind: dialogue
+  speaker: gm
+  text: They all take another bite, wincing.

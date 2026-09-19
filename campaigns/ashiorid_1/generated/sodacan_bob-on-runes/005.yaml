@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 5
+model: llama3.1:8b
+generated_at: '2026-09-18T19:17:26.654245+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a die is struck with precision, not some wild swing with
+    the hammer.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the precision got to do with anything, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The precision is what lets the mark survive the elements. You can't just carve
+    a line and hope for the best.
+- kind: dialogue
+  speaker: Leena
+  text: Does that apply to the Malvakar, or is it just some old shop talk?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the Malvakar. It's not just some old shop talk. I'm telling you, someone
+    who didn't know what they were doing...
+- kind: dialogue
+  speaker: Vigil
+  text: What did you see on the Malvakar, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Never mind what I saw. It's not relevant.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) I'm starting to think it's more than just curiosity that brought
+    you here, Bob.

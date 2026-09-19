@@ -1,0 +1,42 @@
+id: malmont-market
+take: 121
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:43.323833+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What a waste of good metal, most of it's just rusty scraps.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing around) Keep your voice down, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I'll try some of that fresh bread over there.
+- kind: dialogue
+  speaker: Leena
+  text: (running her fingers over an old map) These look like they've been through
+    a lot.
+- kind: dialogue
+  speaker: Vigil
+  text: (looking at Chadwick) You're not exactly inconspicuous, are you?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) That blacksmith over there claims to be from the capital.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) The map on the left... I think I saw it in a book somewhere.
+- kind: dialogue
+  speaker: chadwick
+  text: (taking a bite of bread) Ah, yes. This is much better than the road food.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyeing the crowd) Anyone here could be trouble.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (unimpressed) I'm still not convinced this is a real market.
+- kind: dialogue
+  speaker: Leena
+  text: (excited) Oh, look! A new bookstall.
+- kind: dialogue
+  speaker: Vigil
+  text: (keeping a low profile) Don't get too excited, Leena.

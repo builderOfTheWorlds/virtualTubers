@@ -1,0 +1,36 @@
+id: malmont-market
+take: 157
+model: llama3.1:8b
+generated_at: '2026-09-18T23:51:27.898722+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's some fine ironwork, I'll give them that, but it's all just decorative.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, is that an old map of the Silverleaf? I've heard it's a treacherous region.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) A silver ring and a sapphire pendant, nice work, but
+    the price...
+- kind: dialogue
+  speaker: chadwick
+  text: (to a merchant) Ah, yes, a new pair of boots, if you please. And not a scratch
+    on them, I hope?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Vigil) You're not looking to buy anything, friend, just enjoying the sights.
+- kind: dialogue
+  speaker: Leena
+  text: (running her fingers over an old map) I've seen this one before, I think.
+    In the tower's library...
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes narrowing) Tower's library? What business did you have there, girl?
+- kind: dialogue
+  speaker: chadwick
+  text: (examining a pair of boots) Ah, no, no, these will do. The ones with the brass
+    trim, thank you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (shrugging) Just a waste of good metal, if you ask me.

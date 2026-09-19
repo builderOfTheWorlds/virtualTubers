@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 44
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:00.615865+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Vigil's observation is noted, for what it's worth.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the plan then?
+- kind: dialogue
+  speaker: Leena
+  text: We were talking about looking for supplies.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed twice was carrying crates.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw some crates in the warehouse area.
+- kind: dialogue
+  speaker: Vigil
+  text: There are four people in the room with us now.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, that's not very useful, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: I think Sodacan Bob's got a point about the crates.
+- kind: dialogue
+  speaker: gm
+  text: We're not going to find anything useful in the supply area.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the west wall has been repaired recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you're really getting worked up about nothing, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Just keep it in mind, okay?

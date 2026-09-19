@@ -1,0 +1,32 @@
+id: leena-recognizes-nothing
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:27:41.508102+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You notice the landscape changing, the buildings shifting into view.
+- kind: dialogue
+  speaker: Leena
+  text: I've seen this before, but I don't know where.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but it looks familiar.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering to himself) No, no, no.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just a coincidence, probably.
+- kind: dialogue
+  speaker: Leena
+  text: I feel like I've been here before.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's focus on the task at hand.
+- kind: dialogue
+  speaker: Vigil
+  text: (still muttering) Doesn't feel like a coincidence.

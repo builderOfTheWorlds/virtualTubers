@@ -1,0 +1,38 @@
+id: camp-fire
+take: 248
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:52.173340+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm worried we won't have enough fuel to keep the fire going till morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it right, though. It's a proper fire for the wet weather we're having.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll be safe to move the camp when the rain stops?
+- kind: dialogue
+  speaker: Vigil
+  text: The smoke's going to get in our eyes.
+- kind: dialogue
+  speaker: gm
+  text: It's just a little rain, we can handle it.
+- kind: dialogue
+  speaker: chadwick
+  text: But who's on watch when the rain stops?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I say we let Vigil take it. He's not doing much else.
+- kind: dialogue
+  speaker: Leena
+  text: Can anyone actually see anything in this rain?
+- kind: dialogue
+  speaker: Vigil
+  text: You need at least three dry days for a fire to hold.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Four, I think.
+- kind: dialogue
+  speaker: gm
+  text: Alright, we'll decide on the watch in the morning.

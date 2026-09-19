@@ -1,0 +1,32 @@
+id: leena-different-now
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:54.674371+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I feel it in my bones, but I don't know what it is.
+- kind: dialogue
+  speaker: chadwick
+  text: You okay, Lena?
+- kind: dialogue
+  speaker: Leena
+  text: It's not just my magic, it's... everything.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses, says nothing)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You should try meditating, see if that helps you focus.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not that. It's like I'm waiting for something, but I don't know what.
+- kind: dialogue
+  speaker: gm
+  text: (skeptical) Waiting for what, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, and that's the problem.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)

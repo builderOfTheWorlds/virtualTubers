@@ -1,0 +1,122 @@
+magic-retained-arc-alt2:
+  node_id: magic-retained-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal holds, and the last well retains its magic. A sorcerer is possible
+    in t
+  summary: The seal holds, and the last well retains its magic. A sorcerer is possible
+    in this timeline, though rare. The four are drawn into this reality.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-retained-arc-alt2-n0
+  - magic-retained-arc-alt2-n1
+  slots: null
+magic-retained-arc-alt2-n0:
+  node_id: magic-retained-arc-alt2-n0
+  parent_id: magic-retained-arc-alt2
+  order: 0
+  depth: 1
+  title: The Awakening of Magic
+  summary: The four travelers find themselves drawn into a reality where the ancient
+    seal still holds strong and the last magical well retains its power. Though sorcery
+    is rare in this timeline, the very presence of the seal suggests that magic is
+    not entirely absent from their world. As they arrive, they must grapple with the
+    implications of this magical reality while learning to navigate the delicate balance
+    between the mundane and the mystical.
+  continuity_in: The seal holds, and the last well retains its magic. A sorcerer is
+    possible in this timeline, though rare. The four are drawn into this reality.
+  continuity_out: The four travelers begin to sense that their arrival has awakened
+    something ancient within the realm's magical fabric, and they must now confront
+    both the power and responsibility that comes with being drawn into a world where
+    magic still flows freely.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+magic-retained-arc-alt2-n1:
+  node_id: magic-retained-arc-alt2-n1
+  parent_id: magic-retained-arc-alt2
+  order: 1
+  depth: 1
+  title: The Weight of Destiny
+  summary: As the four arrive in this magical reality, they discover that their presence
+    has awakened dormant magical forces. The seal that once protected the realm now
+    seems to pulse with renewed energy, and each traveler finds themselves drawn toward
+    different aspects of the ancient magic. They must navigate their individual connections
+    to this power while understanding that their arrival may have altered the very
+    fabric of their world's destiny.
+  continuity_in: The four travelers begin to sense that their arrival has awakened
+    something ancient within the realm's magical fabric, and they must now confront
+    both the power and responsibility that comes with being drawn into a world where
+    magic still flows freely.
+  continuity_out: The travelers realize that their journey has only just begun, as
+    the ancient seal's renewed strength suggests that their arrival may have triggered
+    a larger cosmic event, drawing them deeper into a conflict between forces they
+    never knew existed.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-alt2-n1-weight-1
+    kind: ambient
+    prompt: The four travelers sense an ancient power stirring within the realm, as
+      if the very ground beneath their feet remembers their arrival.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-alt2-n1-weight-2
+    kind: ambient
+    prompt: Each traveler feels a unique pull toward different aspects of the magic,
+      their individual connections to the ancient forces becoming apparent.
+    lore:
+    - amulet-of-wonder
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-alt2-n1-weight-3
+    kind: ambient
+    prompt: The seal's renewed strength seems to whisper secrets of a larger cosmic
+      event, drawing them deeper into a conflict they never knew existed.
+    lore:
+    - the-event
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-alt2-n1-weight-4
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: flags
+    depends_on: []

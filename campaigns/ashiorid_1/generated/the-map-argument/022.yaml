@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:00.429737+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think I see a better route on this map.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, great, Leena's got the expertise now.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, I just reoriented it in my head, that's all.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, and I think the map shows we should take the bridge.
+- kind: dialogue
+  speaker: chadwick
+  text: Bridge? You can't be serious, we'd lose an hour.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil's right, the bridge is the fastest way.
+- kind: dialogue
+  speaker: chadwick
+  text: Unbelievable, you're all just following each other off a cliff.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just take a moment and figure it out.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm the navigator, I know what I'm doing.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, really, let's not make this about you for once.
+- kind: dialogue
+  speaker: chadwick
+  text: You think I'm making it about me? This is about competence!

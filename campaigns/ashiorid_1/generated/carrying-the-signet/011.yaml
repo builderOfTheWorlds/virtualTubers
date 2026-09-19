@@ -1,0 +1,43 @@
+id: carrying-the-signet
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:19:01.684055+00:00'
+beats:
+- kind: narration
+  speaker: gm
+  text: 'Grovley: A small token of appreciation, I suppose, for services rendered.'
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Thank you, sir.
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (muttering) Not that it''s worth much now...'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (picking up the half-ring) This design looks familiar...
+- kind: dialogue
+  speaker: Leena
+  text: (absent-minded) What's the story behind this?
+- kind: dialogue
+  speaker: Vigil
+  text: (nonchalant) Just a trinket, I suppose.
+- kind: dialogue
+  speaker: gm
+  text: (innkeeper) Ah, you lot are quite the interesting bunch, aren't you?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (stranger) Excuse me, I couldn''t help but notice... (points to
+    the half-ring)'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (deflecting) Oh, this old thing? Just a bit of silverwork, nothing special.
+- kind: dialogue
+  speaker: Vigil
+  text: (ignoring the stranger) Did you hear about the new shipment of goods from
+    El'gorin?
+- kind: narration
+  speaker: gm
+  text: 'Grovley: (disappointed) No, I don''t suppose I did...'
+- kind: dialogue
+  speaker: gm
+  text: (innkeeper) (muttering to himself) Interesting indeed...

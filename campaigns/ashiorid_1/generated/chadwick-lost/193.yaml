@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 193
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:31.010238+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a little over a mile to the east, should take us a few hours to get there.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm positive we're going the right way.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) Maybe just ask Vigil for confirmation, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is gonna be good.
+- kind: dialogue
+  speaker: Vigil
+  text: (quietly) If you'd like, I could help you navigate.
+- kind: dialogue
+  speaker: chadwick
+  text: I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is better than a map.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Okay, just head down that hill and we'll be fine.
+- kind: dialogue
+  speaker: chadwick
+  text: That's what I said.
+- kind: dialogue
+  speaker: gm
+  text: Alright, down the hill, then up the slope.
+- kind: dialogue
+  speaker: chadwick
+  text: (confidently) Piece of cake.

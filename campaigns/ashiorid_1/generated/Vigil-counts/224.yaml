@@ -1,0 +1,42 @@
+id: Vigil-counts
+take: 224
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:28.507341+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: As you enter the inn, Vigil notices that there are six patrons in addition
+    to yourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm, a small crowd for this time of night.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps the travelers just passed through and are staying for the night.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the kitchen is to the north, by the barkeep's station.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go talk to the barkeep about the food.
+- kind: dialogue
+  speaker: gm
+  text: The repaired shutter is above the window to the west, near the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: It looks like the same cart has been by twice, I noticed it outside.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw it pass by while we were out for a walk.
+- kind: dialogue
+  speaker: Vigil
+  text: The second time it went by, the driver was reading a book.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, nice to see someone enjoying a good book.
+- kind: dialogue
+  speaker: gm
+  text: The patrons seem to be mostly locals, with one traveler in the corner.
+- kind: dialogue
+  speaker: chadwick
+  text: We should probably get a room, it's getting late.

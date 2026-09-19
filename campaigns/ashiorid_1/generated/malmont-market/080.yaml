@@ -1,0 +1,36 @@
+id: malmont-market
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T20:37:26.150865+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, this town's got more smiths than it needs. Every one's a copycat.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw a map from the Silver River here.
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Not sure what I'm doing here.
+- kind: dialogue
+  speaker: chadwick
+  text: No one's given me a second glance yet.
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (gm): Let''s see, what''s the first thing most people do when they
+    arrive in town?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Get a room, I suppose. Not my priority.
+- kind: dialogue
+  speaker: Leena
+  text: I want to see more of those old maps.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll look around, keep an eye out for trouble.
+- kind: dialogue
+  speaker: chadwick
+  text: Anyone else want to join me for some breakfast?
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) This stall has a map from the north!

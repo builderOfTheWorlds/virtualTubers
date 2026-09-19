@@ -1,0 +1,43 @@
+id: night-watch
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-18T23:54:36.772915+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is so black it feels like we're in a cave.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. I've been thinking, what if the stars are just hidden from us right
+    now?
+- kind: dialogue
+  speaker: Leena
+  text: They're not hidden, they're just not visible from down here.
+- kind: dialogue
+  speaker: Vigil
+  text: And even if they were, would it make a difference?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Difference in what?
+- kind: dialogue
+  speaker: gm
+  text: Just... in what we're doing. If we're just sitting here watching the darkness,
+    it feels a little pointless.
+- kind: dialogue
+  speaker: Leena
+  text: It's not pointless. We're safe as long as we're here.
+- kind: dialogue
+  speaker: chadwick
+  text: And what can we hear, anyway?
+- kind: dialogue
+  speaker: Vigil
+  text: The wind, I think. Maybe some crickets.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And nothing else?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.
+- kind: dialogue
+  speaker: gm
+  text: We should probably wake the others soon.

@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:47.027679+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The forest seems to be thinning out, let's keep moving north.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east, I saw some rocks that way.
+- kind: dialogue
+  speaker: Leena
+  text: Um, actually Chadwick, I think you said you saw those rocks yesterday.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a different perspective, don't question my instincts.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is the best part of the adventure, watching Chadwick navigate.
+- kind: dialogue
+  speaker: Vigil
+  text: If you don't mind me chiming in, Ashiorid, we're actually heading due south.
+- kind: dialogue
+  speaker: Leena
+  text: Why don't we just take a vote on which way to go, for fun?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't be ridiculous, I'm fine, let's just keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is priceless, Chadwick's trying to be serious.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's split up and see if we can find any landmarks.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the lead, don't worry about it.
+- kind: dialogue
+  speaker: Vigil
+  text: Ashiorid, if you're going to ask for directions, I'm happy to help.

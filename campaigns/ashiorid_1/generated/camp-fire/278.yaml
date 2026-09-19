@@ -1,0 +1,41 @@
+id: camp-fire
+take: 278
+model: llama3.1:8b
+generated_at: '2026-09-18T23:45:58.465589+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, shall we settle the watch order for the night?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure we can afford to split it up, maybe we should all stay awake
+    together.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire's holding because it's in a natural depression or because
+    of the way Sodacan Bob laid it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's definitely the lay, I've seen fires burn out in these woods, but
+    this one's going strong.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's slowing down.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll see the stars tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I doubt it, but the fire's a good sign.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't stay up all night, someone has to get some rest.
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding, but not burning too high, might not last till morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can get more wood from the nearby trees if we need it.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even trying to sleep? The rain's not stopping.

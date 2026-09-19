@@ -1,0 +1,32 @@
+id: camp-fire
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-18T19:57:05.082828+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it's been a long day.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we settle on the watch order already?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, if you lay the fire like that, it'll burn till dawn.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is heavy.
+- kind: dialogue
+  speaker: Leena
+  text: What do you think will happen if the moonwells are all drained?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Happen? They're all drained. Don't be one of them who forgets.
+- kind: dialogue
+  speaker: chadwick
+  text: This is getting us nowhere. We need a plan.
+- kind: dialogue
+  speaker: Leena
+  text: What's the worst that could happen?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will go out.

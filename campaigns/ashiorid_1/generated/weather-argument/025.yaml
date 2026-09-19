@@ -1,0 +1,41 @@
+id: weather-argument
+take: 25
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:12.191926+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, the clouds are too low for it not to rain
+- kind: dialogue
+  speaker: chadwick
+  text: I saw a bird flying really high, it's a sign of clear skies
+- kind: dialogue
+  speaker: Leena
+  text: You can't just look at the bird, what about the wind direction?
+- kind: dialogue
+  speaker: Vigil
+  text: I've been living here for years, I know when it's going to rain
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what about the smell in the air, it's definitely going to storm
+- kind: dialogue
+  speaker: gm
+  text: Smell? You're just smelling the nearby BBQ pit
+- kind: dialogue
+  speaker: chadwick
+  text: I was at the BBQ pit yesterday, I know that smell
+- kind: dialogue
+  speaker: Leena
+  text: That doesn't explain the humidity
+- kind: dialogue
+  speaker: Vigil
+  text: Humidity? I thought it was just a warm day
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're not looking at the trees, they're all leaning one way
+- kind: dialogue
+  speaker: gm
+  text: Leaning one way? That just means they're all planted in a line
+- kind: dialogue
+  speaker: chadwick
+  text: I planted some of those trees, I know nothing about it

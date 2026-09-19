@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 241
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:42.486532+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the cart has passed this way twice.
+- kind: dialogue
+  speaker: chadwick
+  text: Huh?
+- kind: dialogue
+  speaker: Leena
+  text: What's the big deal about that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that, like, a thing?
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the next thing?
+- kind: dialogue
+  speaker: Leena
+  text: I'm still trying to figure out where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It looks like a market.

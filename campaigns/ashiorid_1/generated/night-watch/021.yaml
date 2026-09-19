@@ -1,0 +1,41 @@
+id: night-watch
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:10.287663+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Stars are out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the air is clear.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, Leena. Just Vigil watching.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I'm watching too.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Morning'll be soon enough.
+- kind: dialogue
+  speaker: chadwick
+  text: (lowers voice) I know something.
+- kind: dialogue
+  speaker: Vigil
+  text: What's that.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses, then continues in a normal tone) Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns again) Too quiet.
+- kind: dialogue
+  speaker: Vigil
+  text: It is.

@@ -1,0 +1,41 @@
+id: night-watch
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T22:18:51.062922+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are out in force tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I wish I could see them better.
+- kind: dialogue
+  speaker: Leena
+  text: You can see them fine, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not about seeing them, it's about being awake to see them.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Silence.
+- kind: dialogue
+  speaker: gm
+  text: What is it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: You're being quiet on purpose.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the night. It's big.
+- kind: dialogue
+  speaker: Leena
+  text: I know what you mean.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's stay quiet a bit longer.
+- kind: dialogue
+  speaker: gm
+  text: Alright.

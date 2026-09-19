@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:03:44.980937+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's next?
+- kind: dialogue
+  speaker: chadwick
+  text: I'll go talk to that merchant.
+- kind: dialogue
+  speaker: Leena
+  text: I'm good, I'll keep an eye on things here.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left opens towards the corridor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm checking the room for hidden compartments.
+- kind: dialogue
+  speaker: gm
+  text: Anything interesting, Bob?
+- kind: dialogue
+  speaker: chadwick
+  text: He's offering us a deal on these fine silks.
+- kind: dialogue
+  speaker: Leena
+  text: How much for a dozen, merchant?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by earlier was carrying crates.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing out of the ordinary here, Ashior.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's hear the merchant's pitch.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we can trust him.

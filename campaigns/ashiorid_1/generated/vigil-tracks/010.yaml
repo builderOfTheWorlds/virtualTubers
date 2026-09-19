@@ -1,0 +1,35 @@
+id: vigil-tracks
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:43:52.459423+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Traffic's been light today.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a change.
+- kind: dialogue
+  speaker: Vigil
+  text: Just a pair of hunters passed through yesterday, mid-morning.
+- kind: dialogue
+  speaker: Leena
+  text: What were they hunting?
+- kind: dialogue
+  speaker: Vigil
+  text: Deer. A small herd, mostly yearlings.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yearlings, eh?
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah. Not much of a challenge for them.
+- kind: dialogue
+  speaker: gm
+  text: We've been seeing more hunters lately.
+- kind: dialogue
+  speaker: chadwick
+  text: That's a concern.
+- kind: dialogue
+  speaker: Vigil
+  text: Still, nothing to worry about.

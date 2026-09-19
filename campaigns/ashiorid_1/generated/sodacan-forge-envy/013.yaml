@@ -1,0 +1,37 @@
+id: sodacan-forge-envy
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-19T02:37:48.573819+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The local smith has outdone himself this time, I'll give him that.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No one asked for your opinion, Ashiorid.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, don't be so hard on him.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a good gate hinge, but that doesn't mean it's exceptional.
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's a bit unfair to dismiss the smith's work without a proper look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've looked at it, Chadwick, and I still say it's nothing special.
+- kind: dialogue
+  speaker: Vigil
+  text: Let's not be too hasty in judging, Sodacan Bob, sometimes the best work goes
+    unnoticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work from the apprentices at the Blacksmith's Guild back
+    in Willowdale.
+- kind: dialogue
+  speaker: Leena
+  text: That's a pretty low bar, Bob, even I know that's not fair.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just stating the facts, Leena, no need to get defensive.

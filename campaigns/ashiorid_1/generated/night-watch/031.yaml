@@ -1,0 +1,42 @@
+id: night-watch
+take: 31
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:15.845777+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: You can keep watch if you want, Chadwick.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: No, it''s my turn. Get some sleep.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I''ll watch with you, Vigil.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: You don''t have to, Leena. Go to sleep.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I think I see some clouds moving in the sky.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah, I see ''em too. Look at that big one.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: It looks like a shadow on the moon.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (pauses) I wonder what would happen if we didn''t wake the others
+    early.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I don''t know, why?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (pauses again) I don''t know, I just wonder.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: We''ve got a few hours, I think we can make it.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (quietly) I had a dream about my sister the other night.'

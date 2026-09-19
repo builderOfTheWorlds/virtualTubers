@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 158
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:28.460639+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The old mill has been converted into a common room for travelers.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm buying a round of drinks, who's in?
+- kind: dialogue
+  speaker: Leena
+  text: I am, but I'm only having one.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on the left opens inwards, the one on the right outwards.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and the one on the left has a squeaky hinge.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I just fixed it yesterday.
+- kind: dialogue
+  speaker: Leena
+  text: That's not the only thing you've been fixing, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that's been coming and going has a wonky wheel.
+- kind: dialogue
+  speaker: gm
+  text: And the repair on the shutter seems to be holding so far.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have another, please.

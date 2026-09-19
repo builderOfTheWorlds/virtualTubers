@@ -1,0 +1,36 @@
+id: bob-vs-the-cart-wheel
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:19.553652+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the next item on the agenda.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, it's just a wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just a wheel, Chadwick, it's the difference between a smooth ride
+    and a bumpy one.
+- kind: dialogue
+  speaker: Leena
+  text: I'm pretty sure Sodacan Bob is right, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: This is a vital part of our transportation system, let's get it right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And let's not forget the added weight it'll put on the axle.
+- kind: dialogue
+  speaker: chadwick
+  text: But Sodacan Bob, you're not even listening to the others.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Bob, I think Vigil was just about to explain his design.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm listening, Vigil, and I still think it's a bad idea.
+- kind: dialogue
+  speaker: Vigil
+  text: That's not the point, Sodacan Bob.

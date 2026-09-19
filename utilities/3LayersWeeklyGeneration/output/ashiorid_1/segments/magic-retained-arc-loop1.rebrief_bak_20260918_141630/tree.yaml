@@ -1,0 +1,99 @@
+magic-retained-arc-loop1:
+  node_id: magic-retained-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal holds, and the last well remains intact. The players learn about
+    the im
+  summary: The seal holds, and the last well remains intact. The players learn about
+    the importance of preserving magic in this world.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-retained-arc-loop1-n0
+  - magic-retained-arc-loop1-n1
+  slots: null
+magic-retained-arc-loop1-n0:
+  node_id: magic-retained-arc-loop1-n0
+  parent_id: magic-retained-arc-loop1
+  order: 0
+  depth: 1
+  title: The Weight of Preservation
+  summary: The players discover the true cost of maintaining the seal and understand
+    that preserving magic requires sacrifice. They witness how the last well's power
+    flows through the world, affecting everything from weather patterns to plant growth.
+    This revelation forces them to consider their own role in the balance between
+    magic and nature.
+  continuity_in: The seal holds, and the last well remains intact. The players learn
+    about the importance of preserving magic in this world.
+  continuity_out: The players realize that their actions directly influence the flow
+    of magical energy through the realm, and they must make difficult choices to maintain
+    the delicate balance.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+magic-retained-arc-loop1-n1:
+  node_id: magic-retained-arc-loop1-n1
+  parent_id: magic-retained-arc-loop1
+  order: 1
+  depth: 1
+  title: The Burden of Choice
+  summary: With knowledge of the seal's importance, players face moral dilemmas about
+    how to proceed. They encounter situations where their personal desires conflict
+    with the greater good of magical preservation. This segment explores themes of
+    sacrifice, leadership, and the weight of responsibility when protecting something
+    as fundamental as the world's magic.
+  continuity_in: The players realize that their actions directly influence the flow
+    of magical energy through the realm, and they must make difficult choices to maintain
+    the delicate balance.
+  continuity_out: The players must now decide whether to seek out other ways to preserve
+    magic or accept the limitations placed upon them by the seal's power.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-loop1-n1-burden-1
+    kind: ambient
+    prompt: The players grapple with the weight of their decisions as they realize
+      that preserving magic may require personal sacrifice.
+    lore:
+    - the-begene-program
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-loop1-n1-burden-2
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+  - slot_id: magic-retained-arc-loop1-n1-burden-3
+    kind: ambient
+    prompt: As the players contemplate their next move, they must decide whether to
+      seek alternative methods of magical preservation or accept the limitations imposed
+      by the seal.
+    lore:
+    - amulet-of-wonder
+    - the-bahadur
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []

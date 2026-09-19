@@ -1,0 +1,31 @@
+id: sodacan_bob-on-runes
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:32.420783+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Weather's a lot gentler these days, but I've seen some of the old monuments
+    withstand a few centuries just fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Still got some of the old techniques, I suppose.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cut the runes deep enough, strike the die just right... it's all about the
+    foundation.
+- kind: dialogue
+  speaker: Leena
+  text: I never thought about the craftsmanship involved.
+- kind: dialogue
+  speaker: Vigil
+  text: We should be focusing on the trial ahead, not the relics.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Relics, relics, relics... always about the relics.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, have you ever seen an unsealed doorway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to mean?

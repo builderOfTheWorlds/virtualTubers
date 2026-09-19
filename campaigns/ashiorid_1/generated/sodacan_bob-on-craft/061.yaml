@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T22:24:57.045504+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, so this is a gate, and I can tell you it was made by the smithy in Oakwood,
+    because they used a specific type of iron in the hinges.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on? This is taking too long.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of iron was it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Good question, Vigil, it was a high-carbon steel, which means the maker was
+    trying to create a stronger gate.
+- kind: dialogue
+  speaker: Leena
+  text: Wow, I had no idea how much went into making something like this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told you, I know my history, Leena. And it's not just about making something,
+    it's about understanding the intent behind it.
+- kind: dialogue
+  speaker: Vigil
+  text: And what do you think the maker's intent was here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, considering the style and the materials, I'd say the maker was going
+    for durability and simplicity.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous. We're wasting our time with a old gate.

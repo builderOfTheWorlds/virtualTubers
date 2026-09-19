@@ -1,0 +1,35 @@
+id: leena-tries-slang
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:29:52.000877+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: Leena
+  text: I'm famished, Chadwick. I could murder a plate of those flamin' pies.
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good to me, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll go grab us a table by the window.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll get the drinks, I'll get the drinks.
+- kind: dialogue
+  speaker: Leena
+  text: This cafe's got a real good vibin' to it, don't you think, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I do. I like the decor.
+- kind: dialogue
+  speaker: Leena
+  text: It's all really... flamin' gorgeous, isn't it?
+- kind: dialogue
+  speaker: gm
+  text: You know, we should get some of those pies to take back to the lodge.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can say that again.

@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:39.853049+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Come on, Sodacan Bob, let's not dwell on the wheel design.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just slap a wheel on a wagon and call it a day! It's a critical
+    failure waiting to happen!
+- kind: dialogue
+  speaker: chadwick
+  text: I think he's right, Ashiorid, the spoke configuration is a major concern.
+- kind: dialogue
+  speaker: Leena
+  text: But we need to get moving, the others are getting restless.
+- kind: dialogue
+  speaker: Vigil
+  text: I agree with Chadwick, Sodacan Bob's design experience is valuable here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just about my experience, it's about the fundamental principles of
+    load distribution!
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not saying you're wrong, Sodacan Bob, but surely there's a way to compromise?
+- kind: dialogue
+  speaker: Leena
+  text: We can't just stand around all day debating this.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a step back, maybe we can revisit this later.
+- kind: dialogue
+  speaker: Vigil
+  text: Revisit it? We can't even build the thing right now!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You're not listening, I'm not just debating the wheel, I'm debating the entire
+    vehicle design!

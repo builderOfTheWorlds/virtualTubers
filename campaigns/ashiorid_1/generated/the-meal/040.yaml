@@ -1,0 +1,36 @@
+id: the-meal
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:48.156208+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I made the soup.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do it better, I've cooked for the whole tribe before.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat it.
+- kind: dialogue
+  speaker: Leena
+  text: Come on, let's make the best of it, it's a meal together.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, this pot's been dirty for weeks, I told you we should've scrubbed
+    it.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be a grump, it's fine.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: gm
+  text: I scrubbed it yesterday.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yesterday? You think a single rinse is enough?
+- kind: dialogue
+  speaker: gm
+  text: Fine, I'll re-wash it before tomorrow's meal.

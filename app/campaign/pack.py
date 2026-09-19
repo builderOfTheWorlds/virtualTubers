@@ -123,6 +123,9 @@ def _build_scene(data, scene_id):
     prompt = data.get("prompt")
     lore = data.get("lore") or []
 
+    ring_tone = _load_str_list(data, scene_id, "ring_tone")
+    mood = _load_str_list(data, scene_id, "mood")
+
     return Scene(
         id=scene_id,
         title=title,
@@ -133,7 +136,19 @@ def _build_scene(data, scene_id):
         ambient=ambient,
         prompt=prompt,
         lore=lore,
+        ring_tone=ring_tone,
+        mood=mood,
     )
+
+
+def _load_str_list(data, scene_id, key):
+    """Load an optional list-of-strings field, raising PackError on the
+    wrong shape. Absent or empty means \"unrestricted\" for the field's
+    consumer — see Scene.ring_tone/Scene.mood docstrings."""
+    value = data.get(key) or []
+    if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+        raise PackError(f"scene {scene_id} has non-string-list {key!r}")
+    return list(value)
 
 
 def _load_ambient_config(campaign_data):
@@ -276,6 +291,25 @@ class Branch:
     when: dict = field(default_factory=dict)
 
 
+# Ring-composition phases (ring_composition_spec.md v3.3, section 1.2). A
+# scene's ring_tone lists which phase(s) it is eligible to be selected in;
+# empty/absent means eligible in any phase (today's behavior, unchanged).
+RING_TONES = frozenset({"descent", "keystone", "ascent"})
+
+# GEMS — the Geneva Emotional Music Scale (Zentner, Grandjean & Scherer,
+# 2008, "Emotions Evoked by the Sound of Music"). Chosen over a generic
+# valence/arousal pair or an invented vocabulary because it was built
+# specifically from how listeners describe MUSIC-induced emotion (as
+# opposed to emotion generally), which is exactly the register ambient
+# scene mood needs to speak in — the same vocabulary a film composer or
+# score-mood tag already uses. A scene may carry more than one; empty/absent
+# means unrestricted, same convention as ring_tone.
+MOODS = frozenset({
+    "wonder", "transcendence", "tenderness", "nostalgia", "peacefulness",
+    "power", "joyful_activation", "tension", "sadness",
+})
+
+
 @dataclass
 class Scene:
     id: str
@@ -287,6 +321,12 @@ class Scene:
     ambient: bool = False
     prompt: str | None = None
     lore: list[str] = field(default_factory=list)
+    # Ring-composition phase eligibility (RING_TONES). Empty means eligible
+    # in every phase — additive, so a pack that never sets this behaves
+    # exactly as before it existed.
+    ring_tone: list[str] = field(default_factory=list)
+    # GEMS mood tag(s) (MOODS). Empty means unrestricted, same convention.
+    mood: list[str] = field(default_factory=list)
 
 
 @dataclass

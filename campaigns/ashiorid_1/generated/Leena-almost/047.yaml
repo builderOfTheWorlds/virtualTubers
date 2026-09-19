@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 47
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:35.592657+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your eye, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the old doorway, you've seen plenty of those before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Or maybe you're thinking of the one in your village?
+- kind: dialogue
+  speaker: Leena
+  text: No, this is different. I know that, and I'm not sure what it is.
+- kind: dialogue
+  speaker: Vigil
+  text: You don't need to know.
+- kind: dialogue
+  speaker: chadwick
+  text: Just leave it alone, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: What's it to you?
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what's your take on this?
+- kind: dialogue
+  speaker: Vigil
+  text: Silence is a more effective guide than a map.

@@ -1,0 +1,77 @@
+segment_id: bahadur-revealed-arc
+order: 10
+loop: 0
+hours: 6
+synopsis: The tear in space-time answers back, revealing the presence of the Bahadur
+  and their ancient plans.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: bahadur-revealed-arc-n1-ancient-designs-1
+  kind: ambient
+  prompt: The tear in space-time answers back, revealing the presence of the Bahadur
+    and their ancient plans
+  lore:
+  - the-bahadur
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-ancient-designs-2
+  kind: ambient
+  prompt: The cosmic beings reveal their long-term strategies that have been shaping
+    reality itself, manipulating events across centuries and dimensions
+  lore:
+  - the-bahadur
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: bahadur-revealed-arc-n1
+- slot_id: bahadur-revealed-arc-n1-ancient-designs-3
+  kind: spine
+  scene_ref: bahadur-revealed
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: none
+  node_id: bahadur-revealed-arc-n1
+nodes:
+- node_id: bahadur-revealed-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+needs_rebrief: true

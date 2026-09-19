@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 238
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:30.741396+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The wind is picking up outside, so it might get chilly later.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good with that, I've got my cloak.
+- kind: dialogue
+  speaker: Leena
+  text: Me too, I brought one.
+- kind: dialogue
+  speaker: Vigil
+  text: There are six people in this room, and the doors open outwards.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's handy to know, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: What else did you notice about our little inn?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the east side of the common room was repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: I didn't see that when we came in.
+- kind: dialogue
+  speaker: Leena
+  text: It looks like new wood.

@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 120
+model: llama3.1:8b
+generated_at: '2026-09-18T20:11:45.878954+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. We've got a few hours of daylight left.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure I know the way.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, you've been arguing with your map for the past hour.
+- kind: dialogue
+  speaker: chadwick
+  text: This map is useless. It's just trying to confuse me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, come on, Chadwick. We know you don't know where you're going.
+- kind: dialogue
+  speaker: Vigil
+  text: (silently holding up a hand, pointing down the path)
+- kind: dialogue
+  speaker: Leena
+  text: Ah, why don't we just follow Vigil for a bit? See if he's got any better ideas.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need to follow anyone. I'm fine.
+- kind: dialogue
+  speaker: gm
+  text: (sighing) Alright, let's just follow Vigil. Maybe he knows the area.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispering) This is priceless.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) We should have taken the left fork back at the clearing.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to sound nonchalant) Oh, I'm sure it's fine. We can always ask for
+    directions.

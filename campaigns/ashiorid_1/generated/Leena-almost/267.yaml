@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 267
+model: llama3.1:8b
+generated_at: '2026-09-18T23:39:17.826746+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell.
+- kind: dialogue
+  speaker: chadwick
+  text: Smells like the kitchen, Leena, don't get distracted.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it's one of those old villages, you must have seen something like it
+    before.
+- kind: dialogue
+  speaker: Vigil
+  text: What's going on?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but it feels... familiar.
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: But what is it, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just a trick of the light.
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean, no?
+- kind: dialogue
+  speaker: gm
+  text: Enough, let's move on.

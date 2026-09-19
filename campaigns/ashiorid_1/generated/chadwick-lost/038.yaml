@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:38.477605+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We need to head east to get to the next town.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fairly certain we're heading east.
+- kind: dialogue
+  speaker: Vigil
+  text: If I recall correctly, we're currently facing northwest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't you let me take the lead for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine.
+- kind: dialogue
+  speaker: Vigil
+  text: It's okay, Chadwick, I'll guide you.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha!
+- kind: dialogue
+  speaker: chadwick
+  text: This is a perfectly reasonable route.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move out.
+- kind: dialogue
+  speaker: Vigil
+  text: Follow the stream, it'll lead us there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is like watching a bird fly into a wall.

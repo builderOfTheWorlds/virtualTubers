@@ -1,0 +1,41 @@
+id: inventory-argument
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:28:40.420325+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, great, whose bag is the portable stove in?
+- kind: dialogue
+  speaker: chadwick
+  text: Mine, I swear, it's always in mine.
+- kind: dialogue
+  speaker: Leena
+  text: I could've sworn it was in the other pack.
+- kind: dialogue
+  speaker: Vigil
+  text: I just packed all the gear, how am I supposed to know?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe if you labelled everything, we wouldn't have this problem.
+- kind: dialogue
+  speaker: gm
+  text: Labels? Who has time for labels?
+- kind: dialogue
+  speaker: chadwick
+  text: This is a valid point, actually.
+- kind: dialogue
+  speaker: Leena
+  text: You're just saying that because you're the one who lost your water bottle.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Actually, I found it in the bottom of this pack.
+- kind: dialogue
+  speaker: Vigil
+  text: See, I told you it was here somewhere.
+- kind: dialogue
+  speaker: chadwick
+  text: Smug much, Bob?
+- kind: dialogue
+  speaker: gm
+  text: Who cares, it's just a water bottle.

@@ -1,0 +1,38 @@
+id: before-the-well
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-19T03:09:25.798035+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's late, I'll check the well again in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: You think there's anything to check?
+- kind: dialogue
+  speaker: gm
+  text: Can't hurt to look.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) Wake me if something happens.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Nothing's going to happen.
+- kind: dialogue
+  speaker: chadwick
+  text: (stretches) I'm not sleeping well.
+- kind: dialogue
+  speaker: Leena
+  text: (sighs) Me neither.
+- kind: dialogue
+  speaker: gm
+  text: (lowers voice) Keep watch.
+- kind: dialogue
+  speaker: Vigil
+  text: (nods)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (snaps fingers) What's the count?
+- kind: dialogue
+  speaker: Leena
+  text: 15 hours to the party.

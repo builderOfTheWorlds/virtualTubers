@@ -1,0 +1,45 @@
+id: camp-fire
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T19:49:01.227128+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding for now, but we should be prepared to shift it if the rain
+    gets worse.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order for tonight. Vigil, you're still with
+    me.
+- kind: dialogue
+  speaker: Vigil
+  text: We should keep an eye on the north.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's problem is the way Chadwick laid the logs. Not enough air
+    flow.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how far the rain will travel in a night?
+- kind: dialogue
+  speaker: gm
+  text: It's hard to say, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll just have to keep an eye on it. Sodacan Bob, you have some expertise
+    on fires.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I do think the logs should be rearranged.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain will come.
+- kind: dialogue
+  speaker: gm
+  text: Alright, watch order. Chadwick, Vigil, then Sodacan Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: And after him?
+- kind: dialogue
+  speaker: gm
+  text: Then Leena.

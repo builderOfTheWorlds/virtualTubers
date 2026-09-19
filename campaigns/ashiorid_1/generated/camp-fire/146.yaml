@@ -1,0 +1,35 @@
+id: camp-fire
+take: 146
+model: llama3.1:8b
+generated_at: '2026-09-18T19:58:38.390609+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's coming down pretty steady, folks. We'll need to keep an eye on that
+    fire.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, can you tell me how you laid the fire? We need to make sure it'll last
+    the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I used a mix of driftwood and kindling, Chadwick. Should burn nice and hot
+    for a while.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know if there's a way to tell if the rain's going to let up soon?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain's probably just getting started.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order. Bob, you're first shift?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's fine, but we should probably reorient the fire to catch any wind.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of reorienting the fire? It's not like we're going anywhere.
+- kind: dialogue
+  speaker: gm
+  text: Just be mindful of it, folks.

@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 214
+model: llama3.1:8b
+generated_at: '2026-09-18T22:10:34.153530+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick, what's the plan for getting to Ironhaven?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll head east, it's the most direct route.
+- kind: dialogue
+  speaker: Leena
+  text: That's... actually a pretty good idea, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, joy, Chadwick's being competent.
+- kind: dialogue
+  speaker: Vigil
+  text: It's a good thing you're sure of that, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I'm sure.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's move out.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, if you're ever unsure, just say so and we can check the map.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, this is gonna be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: I can see the mountains we need to navigate.
+- kind: dialogue
+  speaker: chadwick
+  text: I was just... admiring the view.

@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 128
+model: llama3.1:8b
+generated_at: '2026-09-18T20:12:35.306801+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The woods seem to be getting denser, let's see if we can find a landmark.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's just up ahead, I remember a clearing this way.
+- kind: dialogue
+  speaker: Leena
+  text: Uh, Chadwick, I think we passed that clearing a few hours ago.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling to himself) I could give you directions, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Oh, this is rich, Vigil's going to save the day!
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got it, I'm just... taking a scenic route.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Okay, maybe we should regroup and get our bearings.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, we're fine, just keep moving.
+- kind: dialogue
+  speaker: gm
+  text: (sternly) Alright, let's keep moving then, and I'll try to keep track of where
+    we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) I'm sure we'll be fine, we're in good hands.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick, quietly) You're welcome to ask for help anytime, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (defiantly) I don't need help, I know where we're going.

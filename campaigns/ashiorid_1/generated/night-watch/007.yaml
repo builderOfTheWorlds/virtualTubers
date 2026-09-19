@@ -1,0 +1,41 @@
+id: night-watch
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:10:48.189118+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: It's so dark.
+- kind: dialogue
+  speaker: Leena
+  text: (sighs) I know.
+- kind: dialogue
+  speaker: Vigil
+  text: (yawns) You'd think it'd be easier to stay awake at night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The moon's up, though.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) It's still dark, though.
+- kind: dialogue
+  speaker: Leena
+  text: (after a beat) I'm hungry.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) You're always hungry.
+- kind: dialogue
+  speaker: Vigil
+  text: ( mutters to himself) Should we wake the others?
+- kind: dialogue
+  speaker: gm
+  text: No, we can just keep watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not like anything's going to happen.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know, man. It feels weird.
+- kind: dialogue
+  speaker: Leena
+  text: (after a pause) I had a weird dream before I fell asleep.

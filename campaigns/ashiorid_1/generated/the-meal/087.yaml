@@ -1,0 +1,36 @@
+id: the-meal
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T22:35:52.842687+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think we can all agree it's been a while since we've had a proper meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Proper meal? I've been to the galactic fairgrounds, I've eaten the spiced
+    worms of the Glimmering Isles. This is an insult.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your food, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad! It's just a little... rustic.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not eating the soup, I'm just taking my portion of bread.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rustic? It's been sitting in the same pot for a week, that's what it is.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I think it's nice to have leftovers, don't you?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in silence for once?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could make a better stew than this in my sleep.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I'll just take the fruit.

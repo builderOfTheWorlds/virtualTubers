@@ -1,0 +1,41 @@
+id: nafsari-question
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:32:32.390409+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: It's really nice to live in the forest, isn't it?
+- kind: dialogue
+  speaker: Vigil
+  text: The trees are tall.
+- kind: dialogue
+  speaker: chadwick
+  text: That's all he ever says about the wood elves.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sorry, Vigil. I didn't mean to pry.
+- kind: dialogue
+  speaker: Vigil
+  text: No need to apologize.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whispers) Let it go, Leena.
+- kind: dialogue
+  speaker: gm
+  text: Is there anything else to discuss?
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I think we've exhausted the topic.
+- kind: dialogue
+  speaker: Leena
+  text: (nervously) Yeah, maybe we have.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's burning low.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Time for a refill, then.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) We can discuss it another time, Vigil.

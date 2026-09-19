@@ -1,0 +1,33 @@
+id: camp-fire
+take: 192
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:03.297127+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's been coming down for hours, I'm getting worried about the fire.
+- kind: dialogue
+  speaker: Leena
+  text: Is it even possible for a fire to last this long in this weather?
+- kind: dialogue
+  speaker: Vigil
+  text: We should check the chimney.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it with the wind in mind, it's got a good chance of burning through.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to take turns keeping it going, I'll be first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we can do it for a few more hours, if we're careful.
+- kind: dialogue
+  speaker: Leena
+  text: What if the rain just keeps coming and the fire goes out?
+- kind: dialogue
+  speaker: Vigil
+  text: The wood's wet, but it's not waterlogged.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get settled in for the night and review the watch list in the
+    morning.

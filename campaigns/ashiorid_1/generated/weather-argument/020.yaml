@@ -1,0 +1,41 @@
+id: weather-argument
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-19T03:42:25.038911+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I woke up to a weird fog outside my window.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not a good sign, fog usually means it's going to pour.
+- kind: dialogue
+  speaker: Leena
+  text: But I saw a lot of birds flying around this morning, that's a good sign, right?
+- kind: dialogue
+  speaker: Vigil
+  text: Only if they're not migrating, birds fly around all the time.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And I saw a bunch of squirrels, they always know what's up.
+- kind: dialogue
+  speaker: gm
+  text: Yeah, but have you seen the wind today? It's been blowing nonstop.
+- kind: dialogue
+  speaker: chadwick
+  text: That's just a gentle breeze, trust me, I've got a garden.
+- kind: dialogue
+  speaker: Leena
+  text: Gentle breeze? You call that gentle?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not even that windy, you're just sensitive.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's going to be a perfect day, sunny and calm.
+- kind: dialogue
+  speaker: gm
+  text: You're all wrong, I saw a storm cloud on the news last night.
+- kind: dialogue
+  speaker: chadwick
+  text: News? Who watches the news at this hour?

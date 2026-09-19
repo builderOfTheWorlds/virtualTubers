@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 217
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:59.397711+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I have seen it before.
+- kind: dialogue
+  speaker: gm
+  text: What's that?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me. It's familiar, but it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you saw something similar in your village.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think so. It's not just a shape or a smell. It's a whole scene.
+- kind: dialogue
+  speaker: Vigil
+  text: Say nothing, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, maybe you just saw a house like that before, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. I just feel like I've seen it before.

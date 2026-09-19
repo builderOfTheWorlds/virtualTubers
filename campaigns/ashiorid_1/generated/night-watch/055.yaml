@@ -1,0 +1,41 @@
+id: night-watch
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:44.167628+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Chadwick, can you see any stars?'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah, they''re pretty clear tonight.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I wish I could see them, but my eyes are just not made for this.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: You can hear the crickets, though.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Is it really that late? Should we wake Leena and Vigil up early?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I don''t think it''s worth it yet. We can give them another hour.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Besides, it''s nice to have some time to ourselves.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Yeah, I know what you mean.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: What''s that noise over there?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Just a branch blowing in the wind, I think.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I''m going to go check.'
+- kind: narration
+  speaker: gm
+  text: (chadwick and Sodacan Bob are silent for a moment)

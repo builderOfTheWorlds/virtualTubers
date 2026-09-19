@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 134
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:46.386754+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: chadwick
+  text: What's wrong?
+- kind: dialogue
+  speaker: Leena
+  text: This is where I've been. But it shouldn't be here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like you've seen something like it before, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: You've been walking in circles.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Whatever it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's a trick of the light.
+- kind: dialogue
+  speaker: Vigil
+  text: Whatever it is, it's not real.
+- kind: dialogue
+  speaker: Leena
+  text: I know it's not real. But it feels familiar.
+- kind: dialogue
+  speaker: gm
+  text: Alright, that's enough. Let's keep moving.

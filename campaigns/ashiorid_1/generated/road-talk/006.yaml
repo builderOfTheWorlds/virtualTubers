@@ -1,0 +1,35 @@
+id: road-talk
+take: 6
+model: llama3.1:8b
+generated_at: '2026-09-18T19:12:39.660927+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is high, folks. Take a break if you need to.
+- kind: dialogue
+  speaker: Leena
+  text: I miss the market in my village, always bustling with life.
+- kind: dialogue
+  speaker: Vigil
+  text: Nafsari's got some of the most beautiful coastline I've ever seen.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the seafood! Fresh every morning, right off the boats.
+- kind: dialogue
+  speaker: Leena
+  text: I know, it's a shame we can't have that here. (chuckles)
+- kind: dialogue
+  speaker: chadwick
+  text: Let's just keep walking, shall we?
+- kind: dialogue
+  speaker: Vigil
+  text: Sorry, Chadwick. (pauses)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's it like, Chadwick? No, forget it. (laughs)
+- kind: dialogue
+  speaker: gm
+  text: Just keep moving, everyone. We've got a long way to go.
+- kind: dialogue
+  speaker: Leena
+  text: My grandmother used to make the best pastry...

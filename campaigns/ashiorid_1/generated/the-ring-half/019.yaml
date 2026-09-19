@@ -1,0 +1,32 @@
+id: the-ring-half
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:36:28.410638+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know what this means, but I feel something.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean?
+- kind: dialogue
+  speaker: chadwick
+  text: It's like... a missing piece.
+- kind: dialogue
+  speaker: Leena
+  text: I think it looks like a bird.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena, what bird?
+- kind: dialogue
+  speaker: Leena
+  text: The swan, the one on our crest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not the only thing it looks like.
+- kind: dialogue
+  speaker: gm
+  text: What else does it look like to you, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It looks like the ring my master used to wear.

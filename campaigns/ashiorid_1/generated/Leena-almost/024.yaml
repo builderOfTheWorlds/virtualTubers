@@ -1,0 +1,34 @@
+id: Leena-almost
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:23:39.811957+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What is that smell, it's so familiar.
+- kind: dialogue
+  speaker: gm
+  text: (as GM) You've encountered it before, yes, but you can't quite place it.
+- kind: dialogue
+  speaker: chadwick
+  text: You must have smelled it in the village, Leena, I'm sure it's nothing out
+    of the ordinary.
+- kind: dialogue
+  speaker: Leena
+  text: No, it's not from the village. I don't think so.
+- kind: dialogue
+  speaker: Vigil
+  text: (said quietly) Let it go, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen a door like that before, Leena, maybe it's just a similar
+    design.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not just the smell or the doorway, there's something else too.
+- kind: dialogue
+  speaker: gm
+  text: (as GM) You're humming a tune, Leena, a very familiar one.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, stop that, Chadwick, it's not funny.

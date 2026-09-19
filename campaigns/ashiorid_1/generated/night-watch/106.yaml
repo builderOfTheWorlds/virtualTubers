@@ -1,0 +1,41 @@
+id: night-watch
+take: 106
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:11.978793+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The moon is full, I suppose.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: I can see the stars.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's really quiet tonight.
+- kind: dialogue
+  speaker: gm
+  text: Too quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: You think we should wake them up early?
+- kind: dialogue
+  speaker: Leena
+  text: Maybe.
+- kind: dialogue
+  speaker: Vigil
+  text: No, we should stick to schedule.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, but what if we miss something?
+- kind: dialogue
+  speaker: gm
+  text: What could we miss?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, but it feels like... like we're waiting for something.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:09.389852+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A small room with a wooden table and four chairs, it's a bit cramped but clean.
+- kind: dialogue
+  speaker: chadwick
+  text: Anything noteworthy?
+- kind: dialogue
+  speaker: Leena
+  text: No, not really.
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's nice.
+- kind: dialogue
+  speaker: gm
+  text: Is there anything else to notice?
+- kind: dialogue
+  speaker: chadwick
+  text: The door swings inward, and there's a small cart parked outside.
+- kind: dialogue
+  speaker: Leena
+  text: That cart's been here for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: It passed by again on the way out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah.
+- kind: dialogue
+  speaker: gm
+  text: Is everything... normal here?

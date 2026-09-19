@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 185
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:56.939931+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The room is quiet, except for the distant sound of hammering.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) Morning already?
+- kind: dialogue
+  speaker: Leena
+  text: It is.
+- kind: dialogue
+  speaker: Vigil
+  text: I counted the people in the room, there are nine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (stirring in his seat) That's a lot of folk.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of counting people, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I just did.
+- kind: dialogue
+  speaker: Leena
+  text: Is there a point, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

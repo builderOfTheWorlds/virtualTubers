@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 77
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:16.815510+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're in a small, dimly lit room with a single exit.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the others?
+- kind: dialogue
+  speaker: Leena
+  text: I think we're alone.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the north opens inward, I've noticed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Who cares?
+- kind: dialogue
+  speaker: Vigil
+  text: Just a detail, like the shutter on that window.
+- kind: dialogue
+  speaker: gm
+  text: Yes, I see what you mean.
+- kind: dialogue
+  speaker: chadwick
+  text: Repairing a shutter, really?
+- kind: dialogue
+  speaker: Leena
+  text: Is it supposed to be locked?
+- kind: dialogue
+  speaker: gm
+  text: I didn't see any sign of forced entry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Must be just a maintenance thing.
+- kind: dialogue
+  speaker: Vigil
+  text: A cart passed by this window twice while we were inside.

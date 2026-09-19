@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 186
+model: llama3.1:8b
+generated_at: '2026-09-18T20:26:03.724874+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, something's caught your eye, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and should not be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like you saw something like it back in the village, huh?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, you'll only get hurt.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not frightened, I'm just curious.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could help you dig up more about it, if you want.
+- kind: dialogue
+  speaker: chadwick
+  text: No, really, it's not worth it.
+- kind: dialogue
+  speaker: Leena
+  text: I'll let it go for now.

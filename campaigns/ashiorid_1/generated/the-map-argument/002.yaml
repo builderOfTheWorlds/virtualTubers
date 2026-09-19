@@ -1,0 +1,45 @@
+id: the-map-argument
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:18.811447+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a look at the map and see if we can figure out where we
+    are.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, finally, someone else is taking the reins for once. I'm glad it's not
+    me who's lost.
+- kind: dialogue
+  speaker: Leena
+  text: Can we just focus on the map and not bicker?
+- kind: dialogue
+  speaker: Vigil
+  text: I think I see the problem. We've been following the wrong stream.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I was thinking that. This one's got a different current.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, of course, of course. You're all just a bunch of map-reading geniuses.
+    I'm just a simple, straightforward fella.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's just move on from this. We've agreed on the map.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no. I want to make it clear that I was right all along.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, drop it.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not dropping it. I'm going to make sure everyone knows that I'm the one
+    who was right.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Chadwick, it was a team effort.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, shut up, Vigil. This is all about me.

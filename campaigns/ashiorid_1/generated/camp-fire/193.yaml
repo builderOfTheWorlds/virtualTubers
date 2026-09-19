@@ -1,0 +1,42 @@
+id: camp-fire
+take: 193
+model: llama3.1:8b
+generated_at: '2026-09-18T20:32:09.302281+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we've got the fire holding for now. What's the watch order?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should stick with the rotation we had before. Bob, Chadwick, then
+    Vigil...
+- kind: dialogue
+  speaker: Leena
+  text: Wait, who's going first?
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Why him?
+- kind: dialogue
+  speaker: chadwick
+  text: Because Vigil's the quiet one, he doesn't need rest.
+- kind: dialogue
+  speaker: Leena
+  text: But what if Vigil's the one who needs rest?
+- kind: dialogue
+  speaker: Vigil
+  text: He doesn't.
+- kind: dialogue
+  speaker: gm
+  text: Enough, we'll settle it in the morning. The fire's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire wrong. It's too small.
+- kind: dialogue
+  speaker: Leena
+  text: What's it going to do, stay small?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, but it's not right.

@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:04.196431+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're getting close to the forest's edge.
+- kind: dialogue
+  speaker: chadwick
+  text: We're on the wrong path.
+- kind: dialogue
+  speaker: Leena
+  text: Perhaps we could... take a short cut?
+- kind: dialogue
+  speaker: chadwick
+  text: We're not taking a short cut.
+- kind: dialogue
+  speaker: Vigil
+  text: I think Chadwick should just admit it, he's lost.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Lost? Chadwick lost?
+- kind: dialogue
+  speaker: chadwick
+  text: We're fine, just a minor delay.
+- kind: dialogue
+  speaker: Leena
+  text: Well, I'm sure we'll... figure it out.
+- kind: dialogue
+  speaker: gm
+  text: We're almost there, just a little farther.
+- kind: dialogue
+  speaker: chadwick
+  text: This is ridiculous, we're not lost.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) I guess I'll just have to enjoy the view.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is better than watching the sunset!

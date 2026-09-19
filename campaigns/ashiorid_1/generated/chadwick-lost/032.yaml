@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:02:03.512018+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, people. Which way do we go from here?
+- kind: dialogue
+  speaker: chadwick
+  text: Uh, I'm pretty sure it's straight ahead.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, I think Vigil knows exactly where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) That's a safe bet, yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Poor Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: What's so funny?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You have no idea where we are, do you?
+- kind: dialogue
+  speaker: Leena
+  text: (quickly) Maybe Chadwick is just giving you the benefit of the doubt, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: I do know where we are. I just... appreciate the scenic route.

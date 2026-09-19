@@ -16,6 +16,7 @@ import yaml
 from typing import Dict, List, Optional, Union
 
 from vocabulary import Vocabulary
+from ring import MIRROR_TRANSFORMS as _MIRROR_TRANSFORMS
 
 log = logging.getLogger(__name__)
 
@@ -180,12 +181,22 @@ def normalize_segment(seg: Dict) -> Dict:
         result["fork"] = None
     if "event_windows" not in result:
         result["event_windows"] = []
+    # Ring-composition fields (ring_composition_spec.md section 5.1). Optional
+    # everywhere ring support is not enabled — defaulted here so downstream
+    # code can always read them without a KeyError.
+    if "plot_path" not in result:
+        result["plot_path"] = []
+    if "mirror_of" not in result:
+        result["mirror_of"] = []
+    if "mirror_transform" not in result:
+        result["mirror_transform"] = None
         
     log.debug("normalize_segment returning %s", result)
     return result
 
 
-def validate_batch(segments, expected_orders, known_ids, vocab, config) -> List[str]:
+def validate_batch(segments, expected_orders, known_ids, vocab, config,
+                   ring_roles=None) -> List[str]:
     """
     Validate a batch of segments.
     
@@ -195,6 +206,12 @@ def validate_batch(segments, expected_orders, known_ids, vocab, config) -> List[
         known_ids: Set of already-planned segment ids
         vocab: Vocabulary object for validation
         config: Configuration dictionary
+        ring_roles: optional {order: {"role", ...}} (ring_composition_spec.md
+            section 8.1's `validate_plot_path`, narrowed to plot_0 only in
+            this build). When given, every ascent-role order must carry a
+            `mirror_transform` from the closed vocabulary
+            (spec section 6.5) — an ascent with none, or an invented one,
+            is the diagnosed un-transformed replay in schema-checkable form.
         
     Returns:
         List of problem strings; empty list means valid
@@ -285,11 +302,29 @@ def validate_batch(segments, expected_orders, known_ids, vocab, config) -> List[
         if type(loop) is not int or loop < 0:
             problems.append(f"segment {seg['id']!r} loop must be a non-negative integer, got {type(loop).__name__}")
     
+    # Ring-composition check (spec section 8.1, plot_0 ascent only in this
+    # build): an ascent segment without a valid mirror_transform is a
+    # structurally un-transformed echo, not a legitimate ascent.
+    if ring_roles:
+        by_order = {seg["order"]: seg for seg in segments}
+        for order, info in ring_roles.items():
+            if info.get("role") != "ascent" or order not in by_order:
+                continue
+            seg = by_order[order]
+            transform = seg.get("mirror_transform")
+            if transform not in _MIRROR_TRANSFORMS:
+                problems.append(
+                    f"segment {seg['id']!r} (order {order}, ring role "
+                    f"ascent) has mirror_transform {transform!r}, must be "
+                    f"one of {sorted(_MIRROR_TRANSFORMS)}"
+                )
+    
     return problems
 
 
 def build_prompt(context, expected_orders, previous_continuity,
-                config, problems, spine_scene_ids=None, known_ids=None) -> str:
+                config, problems, spine_scene_ids=None, known_ids=None,
+                ring_roles=None, mirror_briefs=None) -> str:
     """
     Build the user prompt for ONE attempt.
     
@@ -314,6 +349,21 @@ def build_prompt(context, expected_orders, previous_continuity,
             config) failed both attempts and the whole batch got skipped.
             Listed explicitly, with guidance to suffix a repeat visit
             (e.g. `<scene>-arc-loop2`) instead of reusing the bare id.
+        ring_roles: optional {order: {"role", "polarity", "u_lo", "u_hi"}}
+            (ring_composition_spec.md section 5.2/plot_path, plot_0 only in
+            this build) for the orders in THIS batch. When given, each
+            order's role/polarity/keystone-distance is stated explicitly so
+            the planner is told what it is filling instead of inferring
+            structure from nothing (the gap ring_arc_findings.md diagnoses).
+            Ascent orders are also asked for a `mirror_transform` from the
+            closed vocabulary (spec section 6.5).
+        mirror_briefs: optional {order: [{"id","synopsis","continuity_out",
+            "carry_out"}, ...]} — for an ascent order, what its mirror
+            partner(s) established (spec section 6.4). Distinct from and
+            additional to `previous_continuity`: `continuity_in` must still
+            continue from the immediately PRECEDING segment, never from the
+            mirror, so the echo is an informed transformation rather than
+            the diagnosed replay-of-the-front-half failure.
         
     Returns:
         The complete prompt string
@@ -354,6 +404,13 @@ def build_prompt(context, expected_orders, previous_continuity,
     prompt_lines.append(
         "- carry_out: a YAML mapping (use `{}` for none) — NOT a list, NOT null"
     )
+    if ring_roles and any(info["role"] == "ascent" for info in ring_roles.values()):
+        prompt_lines.append(
+            "- mirror_transform: REQUIRED, in addition to the keys above, on "
+            "every segment marked 'ascent' in the RING STRUCTURE section "
+            "below. One of: " + ", ".join(_MIRROR_TRANSFORMS) + ". Omit this "
+            "key entirely on descent/keystone segments."
+        )
 
     prompt_lines.append("")
     prompt_lines.append("Legal spine_scenes ids (use ONLY these, nothing else):")
@@ -382,6 +439,9 @@ def build_prompt(context, expected_orders, previous_continuity,
 
     prompt_lines.append("")
     prompt_lines.append("Example of one correctly-shaped segment:")
+    example_is_ascent = bool(ring_roles) and any(
+        ring_roles.get(o, {}).get("role") == "ascent" for o in expected_orders
+    )
     prompt_lines.append(
         "  - id: " + (f"{scene_ids[0]}-arc" if scene_ids else "segment_000") + "\n"
         "    order: " + str(expected_orders[0]) + "\n"
@@ -394,11 +454,74 @@ def build_prompt(context, expected_orders, previous_continuity,
         "    continuity_out: \"\"\n"
         "    carry_in: {}\n"
         "    carry_out: {}"
+        + ("\n    mirror_transform: knowledge_gained  # required on THIS "
+           "example only because it is an ascent segment" if example_is_ascent else "")
     )
 
     prompt_lines.append("")
     prompt_lines.append("Reply with ONLY YAML under a 'segments:' key.")
-    
+
+    if ring_roles:
+        prompt_lines.append("")
+        prompt_lines.append(
+            "RING STRUCTURE — this arc is built as a ring: "
+            "[descent | keystone | ascent]. Each segment below has an "
+            "assigned ring role; follow it:"
+        )
+        for order in expected_orders:
+            info = ring_roles.get(order)
+            if not info:
+                continue
+            role = info["role"]
+            if role == "keystone":
+                prompt_lines.append(
+                    f"- order {order}: KEYSTONE — the single biggest crisis "
+                    f"this whole ring turns on. Make it irreversible; "
+                    f"everything after this must read differently because "
+                    f"of it."
+                )
+            elif role == "descent":
+                prompt_lines.append(
+                    f"- order {order}: descent (approach toward the "
+                    f"keystone), keystone-distance u=[{info['u_lo']}, "
+                    f"{info['u_hi']})."
+                )
+            else:  # ascent
+                prompt_lines.append(
+                    f"- order {order}: ascent (aftermath, mirrors a descent "
+                    f"segment — see below), keystone-distance "
+                    f"u=[{info['u_lo']}, {info['u_hi']}). Your synopsis must "
+                    f"assign a mirror_transform: one of "
+                    + ", ".join(_MIRROR_TRANSFORMS) + "."
+                )
+
+    if mirror_briefs:
+        for order in expected_orders:
+            briefs = mirror_briefs.get(order)
+            if not briefs:
+                continue
+            prompt_lines.append("")
+            if len(briefs) > 1:
+                prompt_lines.append(
+                    f"Order {order} answers {len(briefs)} earlier beats at "
+                    f"once. Their threads converge here; do not address them "
+                    f"separately."
+                )
+            else:
+                prompt_lines.append(f"Order {order} is the mirror of an earlier beat:")
+            for brief in briefs:
+                prompt_lines.append(
+                    f"  - {brief['id']}: {brief['synopsis']} "
+                    f"(established: {brief['continuity_out']}; "
+                    f"carry_out: {brief['carry_out']})"
+                )
+            prompt_lines.append(
+                f"  Your continuity_in for order {order} must continue from "
+                f"the PRECEDING segment, not from the mirror above. The echo "
+                f"must be an informed transformation of what was "
+                f"established, never a duplicate of it."
+            )
+
     if problems:
         prompt_lines.append("")
         prompt_lines.append("Previous attempt had these problems:")

@@ -1,0 +1,38 @@
+id: camp-fire
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T19:52:15.103150+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, looks like the rain's settled in for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, how's the fire holding up?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a good lay, Chadwick, should burn till morning easy.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames are at a good height.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's worth trying to keep it going during the rain?
+- kind: dialogue
+  speaker: gm
+  text: Not worth the risk, Leena, the embers'll hold.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright then, let's settle the watch order for the night.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I say we split it three to a shift, with Vigil in the first.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm in the back, asleep.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think magic can survive in a world with no moonwell power?
+- kind: dialogue
+  speaker: gm
+  text: That's a question for another time, Leena.

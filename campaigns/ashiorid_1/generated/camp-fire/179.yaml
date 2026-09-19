@@ -1,0 +1,32 @@
+id: camp-fire
+take: 179
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:57.287227+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've been checking the skies. We need to decide who's on watch tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Chadwick, the fire's laid wrong. We need to adjust the logs.
+- kind: dialogue
+  speaker: Vigil
+  text: I think it's the rain that's our problem, not the fire.
+- kind: dialogue
+  speaker: Leena
+  text: What would happen if the fire just...kept going, forever?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, what's that supposed to mean?
+- kind: dialogue
+  speaker: Leena
+  text: Never mind. It's just a thought.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil's right, the rain's the real issue here.
+- kind: dialogue
+  speaker: gm
+  text: Morning's a long way off yet. We'll figure it out.

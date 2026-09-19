@@ -1,0 +1,41 @@
+id: night-watch
+take: 116
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:19.481585+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's so quiet.
+- kind: dialogue
+  speaker: chadwick
+  text: I know. I've never heard the night like this before.
+- kind: dialogue
+  speaker: Leena
+  text: What do you mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just... I don't know, it feels like the world is holding its breath.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, it feels like we're the only ones awake.
+- kind: dialogue
+  speaker: Leena
+  text: Let's not wake the others just yet.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I think we should.
+- kind: dialogue
+  speaker: Vigil
+  text: But we're not even sure if anything is coming.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, but I just get this feeling...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like what?
+- kind: dialogue
+  speaker: Vigil
+  text: Like we're waiting for something, but I'm not even sure what it is.

@@ -1,0 +1,41 @@
+id: malmont-market
+take: 135
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:10.695611+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, more of the same half-forged nails and rusty hinges I see everywhere.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Vigil) What's this one? Old maps.
+- kind: dialogue
+  speaker: Vigil
+  text: (low voice) Just old maps, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: (looking around) Well, no one's stared at me suspiciously, so that's a plus.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, every town has the same three or four blacksmiths doing the same
+    mediocre work.
+- kind: dialogue
+  speaker: Leena
+  text: (examining a map) What's this symbol here?
+- kind: dialogue
+  speaker: Vigil
+  text: (shrugging) No idea.
+- kind: narration
+  speaker: gm
+  text: 'Ashiorid (GM): The constable''s watch is setting up shop on the corner, looks
+    like they''re trying to get a headcount.'
+- kind: dialogue
+  speaker: chadwick
+  text: (grinning) Ah, a town where no one knows my face. This is bliss.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to think I'll just stick to buying what I need and getting out
+    before nightfall.
+- kind: dialogue
+  speaker: Leena
+  text: (frowning) This map looks familiar, but I could swear I've never seen it before.

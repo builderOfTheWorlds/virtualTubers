@@ -1,0 +1,37 @@
+id: bob-vs-the-cart-wheel
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:16:57.130530+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the map of the route we'll be taking.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, wait, you can't just gloss over the cart's wheel problem, we can't have
+    it collapsing on us in the middle of nowhere.
+- kind: dialogue
+  speaker: Leena
+  text: I think we've discussed the wheel enough, Bob, let's focus on the route.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Discussed? You call that a discussion? I call it a Band-Aid solution.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan, we appreciate your input, but we really need to move on.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Input? You want to know what I think? I think that wheel is a ticking time
+    bomb.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, I agree with you, the wheel design is a concern.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I knew you'd see it my way, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, I'm glad you agree, but let's not derail the conversation.
+- kind: dialogue
+  speaker: Leena
+  text: And what about the food, are we forgetting to pack any supplies?

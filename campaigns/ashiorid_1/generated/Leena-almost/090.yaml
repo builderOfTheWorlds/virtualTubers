@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T19:29:15.752543+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar in front of me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You must have seen something like it in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm looking.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just curious.
+- kind: dialogue
+  speaker: gm
+  text: It's probably nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: It's probably something.
+- kind: dialogue
+  speaker: chadwick
+  text: We're not discussing this.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not discussing it, I'm observing.

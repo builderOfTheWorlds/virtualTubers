@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:28.808446+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what's caught your eye?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticed the shutter's been fixed recently, Ashiorid.
+- kind: dialogue
+  speaker: chadwick
+  text: What of it?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, just a detail.
+- kind: dialogue
+  speaker: Leena
+  text: (chuckles) You're always noticing things.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like what else?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed us just now... it passed by this window last night too.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) So?
+- kind: dialogue
+  speaker: gm
+  text: (smirks) Vigil's just observing.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) He's got a good eye for the ordinary.
+- kind: dialogue
+  speaker: Vigil
+  text: (muted) Not a point worth making.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Carry on, then.

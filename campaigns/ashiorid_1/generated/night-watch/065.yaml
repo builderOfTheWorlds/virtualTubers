@@ -1,0 +1,35 @@
+id: night-watch
+take: 65
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:51.255113+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The night is still and dark, the only sound the occasional hoot of a distant
+    owl.
+- kind: dialogue
+  speaker: chadwick
+  text: (yawns) I don't think we need to stay up much longer, Vigil. We're not expecting
+    anything.
+- kind: dialogue
+  speaker: Vigil
+  text: I know, I just feel like we should stay awake until the sun starts to rise.
+- kind: dialogue
+  speaker: Leena
+  text: (stirring) What's going on?
+- kind: dialogue
+  speaker: Vigil
+  text: Just me and Chadwick on watch, Leena. You can go back to sleep.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) Beautiful sky tonight, isn't it? So many stars.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (from his slumber) Mmm, stars...
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I don't know, I feel like I can hear something in the distance. Must
+    be just the wind.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) I don't hear anything.

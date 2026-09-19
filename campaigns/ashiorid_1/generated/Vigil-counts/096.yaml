@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 96
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:32.297246+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've counted nine people in the room, including ourselves.
+- kind: dialogue
+  speaker: gm
+  text: And the doors, where do they lead?
+- kind: dialogue
+  speaker: Leena
+  text: They swing outward, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll check.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How recent do you think the shutter repair is?
+- kind: dialogue
+  speaker: Vigil
+  text: It looked fresh to me, but I don't have a time sense for it.
+- kind: dialogue
+  speaker: chadwick
+  text: Doesn't matter to me.
+- kind: dialogue
+  speaker: Leena
+  text: What's with the cart, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: Same cart, twice, passing by the window.
+- kind: dialogue
+  speaker: gm
+  text: Just the one thing, really.

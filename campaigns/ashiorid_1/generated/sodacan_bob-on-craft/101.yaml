@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 101
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:20.446160+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Okay, this is a gate hinge, made by the Skaal ironworks, probably sometime
+    between 1850 and 1860.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, you can see the maker's mark here, just above the pivot pin. It's a distinctive
+    stamp.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's the story behind it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, the Skaal ironworks were known for their quality, but also for their high
+    prices. This hinge would have been made for a well-to-do farmer, probably.
+- kind: dialogue
+  speaker: Vigil
+  text: Did it come from a gate or a door?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Vigil! The design suggests it was meant for a gate,
+    but it's not impossible it was adapted for a door.
+- kind: dialogue
+  speaker: Leena
+  text: Wow, I had no idea I was walking around with such history in my pockets.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we go now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Almost done! I just want to show you the subtle differences in the metalwork,
+    a characteristic of the period...

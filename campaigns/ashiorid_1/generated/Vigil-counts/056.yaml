@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 56
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:46.024809+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: People in the room, five, all at the tables.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the doors?
+- kind: dialogue
+  speaker: Vigil
+  text: The left one opens inward.
+- kind: dialogue
+  speaker: Leena
+  text: And the right one?
+- kind: dialogue
+  speaker: Vigil
+  text: Outward, with a bit of a squeak.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the one with the loose hinge.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the south wall was fixed recently.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, you mentioned the loose hinge before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I did.

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 240
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:39.317749+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The door to our left opens out into the courtyard.
+- kind: dialogue
+  speaker: Leena
+  text: We're trying to get in, Vigil. Which door do we take?
+- kind: dialogue
+  speaker: chadwick
+  text: Just the one we've been using, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, and let's not forget to ask about the food.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a cart passing by the window, for the third time this hour.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on getting some rest, shall we?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm going to go talk to the innkeeper.
+- kind: dialogue
+  speaker: Leena
+  text: I'll get some dinner.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sound good to me.

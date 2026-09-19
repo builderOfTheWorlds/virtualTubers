@@ -1,0 +1,47 @@
+id: chadwick-lost
+take: 261
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:08.457803+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's been a few days since we set out. Chadwick's been leading the way, but
+    I'm starting to think we're lost.
+- kind: dialogue
+  speaker: chadwick
+  text: I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, I think it's time someone else had a look at the map.
+    How about Vigil takes over for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, Chadwick's lost. This is going to be fun.
+- kind: dialogue
+  speaker: Vigil
+  text: I'd be happy to help, but Chadwick seems pretty sure of himself.
+- kind: dialogue
+  speaker: chadwick
+  text: I know I'm right.
+- kind: dialogue
+  speaker: gm
+  text: Okay, well, let's just take a quick look at the map, then. (pauses) Ah, I
+    think we might need to...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (interrupting) Yeah, because nothing says "experienced leader" like getting
+    lost in the middle of nowhere.
+- kind: dialogue
+  speaker: Leena
+  text: (calmly) Actually, it might be helpful if someone just gave Chadwick a gentle
+    nudge in the right direction.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) I don't need any help.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Alright, alright. I'll just stand back and let Chadwick lead the
+    way.

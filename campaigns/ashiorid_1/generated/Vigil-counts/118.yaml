@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-18T19:43:03.542196+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's get moving, we've got a long road ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, sounds good to me.
+- kind: dialogue
+  speaker: Leena
+  text: I'll take point, keep an eye out for anything.
+- kind: dialogue
+  speaker: Vigil
+  text: The door on our left swings inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, no one else notice that?
+- kind: dialogue
+  speaker: Vigil
+  text: I just did. That's all.
+- kind: dialogue
+  speaker: gm
+  text: Stay sharp, keep your eyes on the road.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's not get sidetracked.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan Bob, you good with the rear?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, got my eyes on the cart behind us.

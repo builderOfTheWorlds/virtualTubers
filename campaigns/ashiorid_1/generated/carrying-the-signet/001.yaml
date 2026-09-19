@@ -1,0 +1,35 @@
+id: carrying-the-signet
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:18:02.623481+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: And that's a fine piece of craftsmanship, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, I'm sure it's a lovely souvenir.
+- kind: dialogue
+  speaker: Leena
+  text: Just a little something we picked up on the road.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not sure what it is, to be honest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's just an old ring, don't mind it.
+- kind: narration
+  speaker: gm
+  text: 'Stranger: A signet ring, I''d guess? Half of one, at least.'
+- kind: dialogue
+  speaker: gm
+  text: Ah, yes, the family crest. Just a bit...damaged.
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing to see here, let's just enjoy our drinks.
+- kind: narration
+  speaker: gm
+  text: 'Stranger: I see. Well, I''m sure it''s just a trifle.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Thanks for the chat, innkeeper.

@@ -1,0 +1,42 @@
+id: camp-fire
+take: 165
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:29.033596+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I've had enough of this. We need to settle the watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I laid that fire just right. It'll burn till morning.
+- kind: dialogue
+  speaker: Vigil
+  text: The coals are too small.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think there's a way to make the rain stop?
+- kind: dialogue
+  speaker: gm
+  text: I've never heard of anyone managing that.
+- kind: dialogue
+  speaker: Leena
+  text: Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think with the amount of firewood we've got, we could make a bigger
+    blaze.
+- kind: dialogue
+  speaker: chadwick
+  text: Someone needs to take charge here.
+- kind: dialogue
+  speaker: gm
+  text: It's not like we're in any real danger.
+- kind: dialogue
+  speaker: Vigil
+  text: Morning will come.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm going to go see if I can get some more wood.

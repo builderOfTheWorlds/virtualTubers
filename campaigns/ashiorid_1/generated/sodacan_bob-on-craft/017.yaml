@@ -1,0 +1,33 @@
+id: sodacan_bob-on-craft
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-18T19:16:16.117697+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what have you found, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, it's a gate, made by the folks at Ironhaven, circa 325 before the Burning.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is significant, I'm telling you. It's a model 3 gate, with reinforced
+    hinges.
+- kind: dialogue
+  speaker: Vigil
+  text: And what kind of gate is it meant to be?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A farm gate, designed to withstand heavy use.
+- kind: dialogue
+  speaker: Leena
+  text: I like the way the maker has balanced form and function.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exactly, that's what I mean. It's a masterpiece of functional design.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't see why we're wasting time on this.

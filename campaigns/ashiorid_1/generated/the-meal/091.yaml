@@ -1,0 +1,42 @@
+id: the-meal
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T22:36:31.223859+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stew's a bit bland, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, let's be gracious. It's a meal, it's company, let's enjoy
+    it.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take this spoon, thanks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Blasphemy, this stew's a travesty! I could've done it ten times better.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I will, but I'm telling you, the seasoning's off, the broth's too thin.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Bob, you're such a perfectionist.
+- kind: dialogue
+  speaker: Vigil
+  text: Pass the bread.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This stew's an insult to the culinary arts.
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, shut up.
+- kind: dialogue
+  speaker: Leena
+  text: Who cooked, by the way?

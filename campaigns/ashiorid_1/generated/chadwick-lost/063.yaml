@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T20:05:37.623145+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Right, so it's this way.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fairly sure we should go left.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, it might be more straightforward if we followed Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm right behind you, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, come on, Chadwick, don't you know where you're going?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just trying to keep things interesting.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, well, let's ask Vigil then.
+- kind: dialogue
+  speaker: Vigil
+  text: We're going this way.
+- kind: dialogue
+  speaker: chadwick
+  text: That's probably just what Vigil wants you to think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, I see, you're playing hard to get lost.
+- kind: dialogue
+  speaker: Leena
+  text: Seriously, Chadwick, would you like to just ask Vigil for confirmation?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine, thanks.

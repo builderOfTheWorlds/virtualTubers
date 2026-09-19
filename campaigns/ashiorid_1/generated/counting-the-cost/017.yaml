@@ -1,0 +1,41 @@
+id: counting-the-cost
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:20:44.089383+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Gears stripped like splinters on a worn workbench.
+- kind: dialogue
+  speaker: Leena
+  text: I think we hit a patch of bad road.
+- kind: dialogue
+  speaker: Vigil
+  text: Bad road? That's nothing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The cart's a mule that won't be broken, but the yoke's a little loose.
+- kind: dialogue
+  speaker: chadwick
+  text: What about the runners? Are they scoured?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: More like a pair of pliers that won't open.
+- kind: dialogue
+  speaker: gm
+  text: We can't afford to have the runners shot.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Better to repair than to remake, like a joint that needs more glue.
+- kind: dialogue
+  speaker: Vigil
+  text: You're starting to sound like a blacksmith.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: At least I'm not forging people into scrap metal.
+- kind: dialogue
+  speaker: Leena
+  text: Sodacan, what are you saying?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying the joints need some TLC.

@@ -1,0 +1,38 @@
+id: sodacan-forge-envy
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:00.347857+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hmm, it's a bit heavier than I'd have made it
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Guess that's what happens when you don't do it yourself
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can't deny it's been put together well, though
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) That's the local smith for you
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, it's not... (pauses) ...bad work
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs) Oh, come on, Bob
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, it's just... (clears throat) ...different
+- kind: dialogue
+  speaker: chadwick
+  text: (teasingly) Different how, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's got its own style, I suppose
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) Let's just say it's a style you don't particularly care for
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (defensively) I do care for it, I just...

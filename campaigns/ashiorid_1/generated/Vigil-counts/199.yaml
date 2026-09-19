@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 199
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:00.442917+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A small village inn, a handful of patrons, the fire crackles in the hearth.
+- kind: dialogue
+  speaker: chadwick
+  text: Looks like they've had some repairs done around here.
+- kind: dialogue
+  speaker: Leena
+  text: What are you talking about, Chadwick?
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the shutter on that window's been fixed recently.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a new cart outside, same one that was here last night.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I saw it.
+- kind: dialogue
+  speaker: Leena
+  text: How many people are in the room, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: There's five patrons, a pair of servers, the innkeeper.
+- kind: dialogue
+  speaker: gm
+  text: The doors open to our left, towards the kitchen.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I think I saw the kitchen staff moving some stuff through the door.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Whatever, I'm gonna go grab a drink.

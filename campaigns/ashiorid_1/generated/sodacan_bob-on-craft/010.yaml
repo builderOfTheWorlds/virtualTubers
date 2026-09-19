@@ -1,0 +1,44 @@
+id: sodacan_bob-on-craft
+take: 10
+model: llama3.1:8b
+generated_at: '2026-09-18T19:15:18.366359+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The dusty gate creaks on its hinges as Sodacan Bob leans against it.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's keep moving. We don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This gate was made by the Jenkins brothers in 1852, and it's a fine piece
+    of craftsmanship, if I do say so myself.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, Sodacan Bob, what kind of wood is that?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's American beech, lovely stuff for furniture making.
+- kind: dialogue
+  speaker: Vigil
+  text: (practically) Does it still work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, it still swings open and shut, though it could use a bit of oil.
+- kind: dialogue
+  speaker: chadwick
+  text: (irritated) Of course it does, because that's what gates are supposed to do.
+- kind: dialogue
+  speaker: Leena
+  text: (distracted) I love the way the light is filtering through the slats...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to Leena) Yes, the Jenkins brothers knew what they were doing, that's for
+    sure.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) We should check the surrounding area to see if there's anything
+    else like this.
+- kind: dialogue
+  speaker: chadwick
+  text: (skeptical) Why?

@@ -1,0 +1,29 @@
+id: Leena-almost
+take: 213
+model: llama3.1:8b
+generated_at: '2026-09-18T22:01:41.543799+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's got you so still, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar and shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw one like it in your village, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't go chasing after it, just ignore it.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing it, I just... can't quite remember where I've seen it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It could be from your village, or maybe a similar one.
+- kind: dialogue
+  speaker: gm
+  text: Let's just focus on moving forward, okay?
+- kind: dialogue
+  speaker: Leena
+  text: Fine, but I still think I've seen it before somewhere.

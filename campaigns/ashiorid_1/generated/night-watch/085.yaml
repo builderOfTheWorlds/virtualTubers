@@ -1,0 +1,41 @@
+id: night-watch
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T22:19:42.813502+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's still as dark as it was an hour ago.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah. No stars visible.
+- kind: dialogue
+  speaker: Leena
+  text: That's not true. There's one star, high up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can't see it from here.
+- kind: dialogue
+  speaker: chadwick
+  text: Try looking for the one below it, then.
+- kind: dialogue
+  speaker: Leena
+  text: '...there''s no other one below it.'
+- kind: dialogue
+  speaker: gm
+  text: You're being quiet, Sodacan.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just thinking about this morning.
+- kind: dialogue
+  speaker: Vigil
+  text: Morning's a while off.
+- kind: dialogue
+  speaker: Leena
+  text: Should we wake the others early?
+- kind: dialogue
+  speaker: gm
+  text: No, let them sleep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: They've been out a lot lately.

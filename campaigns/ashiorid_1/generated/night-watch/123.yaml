@@ -1,0 +1,41 @@
+id: night-watch
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-18T23:57:10.022125+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's so dark.
+- kind: dialogue
+  speaker: chadwick
+  text: Mmm.
+- kind: dialogue
+  speaker: Leena
+  text: Shh, quiet.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think they're dreaming.
+- kind: dialogue
+  speaker: Vigil
+  text: What makes you think that?
+- kind: dialogue
+  speaker: Leena
+  text: Their breathing.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) I hear a bird.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: There's no birds.
+- kind: dialogue
+  speaker: Vigil
+  text: Just wind.
+- kind: dialogue
+  speaker: Leena
+  text: We should wake them up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not yet.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) Maybe I do hear a bird.

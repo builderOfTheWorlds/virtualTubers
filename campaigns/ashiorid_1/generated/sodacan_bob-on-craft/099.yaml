@@ -1,0 +1,36 @@
+id: sodacan_bob-on-craft
+take: 99
+model: llama3.1:8b
+generated_at: '2026-09-19T00:02:06.197584+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, this is a fine piece of engineering, made by the same people
+    who built the wagons we're following.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we can't stay here all day.
+- kind: dialogue
+  speaker: Vigil
+  text: What kind of metal is that? Is it a local alloy?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil! It's a mixture of copper and tin, common in this
+    region but not widely used elsewhere.
+- kind: dialogue
+  speaker: Leena
+  text: I like the curve of that bracket. It's so... fluid.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, yes, Leena, you have an eye for it. The maker wanted to create a sense
+    of movement, even in a static object.
+- kind: dialogue
+  speaker: chadwick
+  text: This is why we don't have a cartographer. We're lost.
+- kind: dialogue
+  speaker: Vigil
+  text: So what can you tell us about the maker? Was it a local craftsman?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the thing! The maker was a journeyman from a town a few days' ride
+    from here, but the design itself is unique to this region.

@@ -1,0 +1,35 @@
+id: Leena-almost
+take: 170
+model: llama3.1:8b
+generated_at: '2026-09-18T19:36:00.149160+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's caught your eye, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me is familiar, and it shouldn't be.
+- kind: dialogue
+  speaker: chadwick
+  text: Just a turn of phrase, I'm sure. You've used it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen one like it in your village, I could swear.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You'll get nowhere.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not chasing anything. I'm just saying it feels familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe it's just something that reminds you of home.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's focus on the task at hand.

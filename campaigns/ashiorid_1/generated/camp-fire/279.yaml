@@ -1,0 +1,35 @@
+id: camp-fire
+take: 279
+model: llama3.1:8b
+generated_at: '2026-09-18T23:46:04.437614+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take the last watch of the night, someone else can spell me in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we're not careful, this fire'll be out by dawn.
+- kind: dialogue
+  speaker: Vigil
+  text: It's not the fire that's the problem.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll ever find another well like that one?
+- kind: dialogue
+  speaker: gm
+  text: I've been thinking about that a lot, but I don't have any answers.
+- kind: dialogue
+  speaker: chadwick
+  text: Well, we'll figure it out in the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I laid the fire too loose, we should've packed more dry tinder.
+- kind: dialogue
+  speaker: Leena
+  text: Is it possible for us to close it, if it was left open?
+- kind: dialogue
+  speaker: Vigil
+  text: We should have brought more water to keep the fire going.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll just have to rely on the fatwood logs for now.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 69
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:39.351380+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The last carriage we saw came from the east, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Interesting, but I'm more concerned about the rumors of bandits on the road.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not sure we should be taking those rumors as fact, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: The driver of the carriage seemed to know the route well.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We'll be on the road for hours, I'm sure we'll see more carriages.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what was it you noticed about the town square?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the shutter on the apothecary's window was recently repaired.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, I remember now, I saw a workman on the roof yesterday.
+- kind: dialogue
+  speaker: Leena
+  text: That's probably just routine maintenance, Chadwick.
+- kind: dialogue
+  speaker: Vigil
+  text: There are eight people in the room, counting the innkeeper's daughter.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the door on my left opens into the corridor, doesn't it?
+- kind: dialogue
+  speaker: gm
+  text: Indeed it does, Sodacan Bob, you're quite observant today.

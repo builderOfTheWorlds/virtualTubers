@@ -1,0 +1,26 @@
+id: malmont-market
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T20:18:07.149752+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better hammerwork on the side of a barn.
+- kind: dialogue
+  speaker: Leena
+  text: What's this one, then?
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, nice morning, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: What's this? A border? I could've sworn that was a river.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the point of a map if it's not accurate?
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take this one.
+- kind: dialogue
+  speaker: chadwick
+  text: Smells like someone's baking bread.

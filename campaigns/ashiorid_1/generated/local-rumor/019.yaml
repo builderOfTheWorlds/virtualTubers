@@ -1,0 +1,35 @@
+id: local-rumor
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-19T03:30:19.239703+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rumor is, something doesn't sleep at night.
+- kind: dialogue
+  speaker: chadwick
+  text: Aye, that's been going around.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even talking about it?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know what to believe.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Doesn't sound like a story to be repeated.
+- kind: dialogue
+  speaker: gm
+  text: Maybe it's just old women's gossip.
+- kind: dialogue
+  speaker: chadwick
+  text: Could be, but it's been passed around.
+- kind: dialogue
+  speaker: Leena
+  text: It's a big town, I'm sure they've got it under control.
+- kind: dialogue
+  speaker: Vigil
+  text: I'd rather not think about it, honestly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing to concern ourselves with.

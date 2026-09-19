@@ -1,0 +1,41 @@
+id: sodacan_bob-on-craft
+take: 119
+model: llama3.1:8b
+generated_at: '2026-09-19T00:04:25.167513+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The group has been walking for hours, the sun beating down on them.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, let's keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Wait, wait, wait! I've found something!
+- kind: dialogue
+  speaker: Leena
+  text: What is it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A gate, look at the hinges, handmade, not mass-produced.
+- kind: dialogue
+  speaker: Vigil
+  text: Where do you think it came from?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd say a small workshop, maybe one man and his apprentice.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what's that thing?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's the bracket on the door, simple but effective.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see how the maker used the same pattern for both the gate and the bracket?
+- kind: dialogue
+  speaker: chadwick
+  text: (sighs) We've wasted enough time.
+- kind: dialogue
+  speaker: Vigil
+  text: (examines the gate) I think we should bring it with us.

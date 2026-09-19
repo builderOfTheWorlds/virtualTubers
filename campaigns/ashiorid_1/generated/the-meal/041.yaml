@@ -1,0 +1,36 @@
+id: the-meal
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T20:57:53.249894+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I've cooked better than this in my sleep, Ashiorid.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come now, friends, let's make the best of it!
+- kind: dialogue
+  speaker: Vigil
+  text: (muttering) Not a surprise, really...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, what's the point of even calling this a stew if it's just going to
+    be... (pauses to sniff a piece of food)
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we can make it more festive? We could play some music!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ashiorid, did you even clean the pot before using it again?
+- kind: dialogue
+  speaker: chadwick
+  text: Not now, Bob.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) I did clean it, okay?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: When, exactly?

@@ -1,0 +1,35 @@
+id: night-watch
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:04.277993+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: The sky is clear tonight, isn''t it, Chadwick?'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah. Not a cloud in sight.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (stirring) I think I heard a bird.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (softly) No, you didn''t. There''s nothing.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Maybe we should wake the others soon.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: They can sleep in a bit.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah, they''re going to want to get an early start tomorrow.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (mumbling) I''ve been dreaming about that bird.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (pausing) What kind of bird?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Do you think it was just a dream?'

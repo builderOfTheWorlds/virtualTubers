@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 72
+model: llama3.1:8b
+generated_at: '2026-09-18T19:39:52.731061+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's market district is quieter than usual today.
+- kind: dialogue
+  speaker: chadwick
+  text: We've been here for hours, let's just get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: I'm hungry, does anyone know when the next food cart comes by?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed earlier came from the north, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a few people watching us from the other stalls.
+- kind: dialogue
+  speaker: chadwick
+  text: Ignore them, it's probably just curiosity.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, let's not let it bother us.
+- kind: dialogue
+  speaker: Vigil
+  text: I saw that one of the stall owners had recently repaired his shutter.
+- kind: dialogue
+  speaker: gm
+  text: (pausing) That's... interesting.

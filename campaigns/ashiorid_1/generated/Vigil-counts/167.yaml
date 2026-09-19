@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 167
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:13.293443+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, it's a small inn. Three floors.
+- kind: dialogue
+  speaker: Vigil
+  text: There are seven people in the common room, Ashiorid.
+- kind: dialogue
+  speaker: chadwick
+  text: And the doors open inward, I think.
+- kind: dialogue
+  speaker: Vigil
+  text: One of the shutters on the windows upstairs has been repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: Who fixed it?
+- kind: dialogue
+  speaker: Vigil
+  text: I didn't see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that important?
+- kind: dialogue
+  speaker: Vigil
+  text: Not that I know of.
+- kind: dialogue
+  speaker: gm
+  text: The cart outside is a milk wagon. It's going to come back this way.
+- kind: dialogue
+  speaker: chadwick
+  text: Which way do the doors open again?
+- kind: dialogue
+  speaker: Vigil
+  text: Inward.

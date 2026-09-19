@@ -1,0 +1,41 @@
+id: night-watch
+take: 111
+model: llama3.1:8b
+generated_at: '2026-09-18T23:55:43.842852+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: There's nothing moving out there, is there?
+- kind: dialogue
+  speaker: gm
+  text: No, nothing at all. It's been quiet for hours.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) I don't know how you two stay awake so long.
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs softly) We're just trying to get used to the rhythm of it all, I guess.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm starting to think the night itself is just really sleepy.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) Do you think it's going to be like this forever, then?
+- kind: dialogue
+  speaker: gm
+  text: I don't know, Vigil. I just know that I need some sleep.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I think we're all getting a little tired of being vigilant.
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) I think Leena's right. We've been up for a while.
+- kind: dialogue
+  speaker: Vigil
+  text: (suddenly) I used to have a dog, back in the city. His name was... (pauses)
+- kind: dialogue
+  speaker: gm
+  text: (doesn't respond)
+- kind: narration
+  speaker: gm
+  text: ( Silence )

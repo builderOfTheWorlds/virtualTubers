@@ -1,0 +1,20 @@
+id: Leena-almost
+take: 123
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:48.554338+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What is it, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Did you see something like it in your village?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean by "familiar"?

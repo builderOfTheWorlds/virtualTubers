@@ -1,0 +1,24 @@
+id: bob-names-the-runes
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:11:00.307204+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's get moving. We've got a gate to open.
+- kind: dialogue
+  speaker: chadwick
+  text: I'll take care of that.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, can I ask you something, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, finally, someone interested in the intricacies of arcane resonance!
+- kind: dialogue
+  speaker: chadwick
+  text: What's going on?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This doorframe, for instance, has a rune of subtle transition – it ensures
+    a smooth passage between areas of varying...

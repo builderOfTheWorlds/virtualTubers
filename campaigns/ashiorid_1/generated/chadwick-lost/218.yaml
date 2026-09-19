@@ -1,0 +1,35 @@
+id: chadwick-lost
+take: 218
+model: llama3.1:8b
+generated_at: '2026-09-18T22:10:57.064189+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's move out, we've got a long way to go.
+- kind: dialogue
+  speaker: chadwick
+  text: Right, I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: I'm sure you do, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Alright, so who's got the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I do, of course.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe we can ask Vigil for help.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I've got this.
+- kind: dialogue
+  speaker: Vigil
+  text: If you need any assistance, just ask.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, because he'll admit it.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move.

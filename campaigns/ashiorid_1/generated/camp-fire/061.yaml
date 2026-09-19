@@ -1,0 +1,33 @@
+id: camp-fire
+take: 61
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:02.166475+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down heavy now.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order. I volunteer for the first shift.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should rotate the fire lay, keep it from getting too hot in one
+    spot.
+- kind: dialogue
+  speaker: Vigil
+  text: The flames will hold if the wood's dry enough.
+- kind: dialogue
+  speaker: Leena
+  text: How long can you keep a fire burning in the rain?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not the rain, it's the wood's moisture content we should be worried about.
+- kind: dialogue
+  speaker: gm
+  text: We'll have to see how it holds through the night.
+- kind: dialogue
+  speaker: Leena
+  text: Is there any reason to think the rain will let up?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

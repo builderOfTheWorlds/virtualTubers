@@ -1,0 +1,35 @@
+id: leena-recognizes-nothing
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:31:06.621603+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The road stretches out before you, winding between hills and trees.
+- kind: dialogue
+  speaker: Leena
+  text: I almost... I think I've been here before.
+- kind: dialogue
+  speaker: gm
+  text: The air is quiet, with only the sound of leaves rustling in the breeze.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're not exactly following the map, are we?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: This place feels... familiar.
+- kind: dialogue
+  speaker: Vigil
+  text: (still silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Let's focus on the task at hand, shall we?
+- kind: dialogue
+  speaker: gm
+  text: The trees seem to be thinning out ahead, and you see a glimpse of a building.

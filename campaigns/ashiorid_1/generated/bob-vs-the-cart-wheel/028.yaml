@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:15:19.709067+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Sodacan Bob, what's your expert opinion on the axle placement?
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just get moving, we've got a lot to do today.
+- kind: dialogue
+  speaker: Leena
+  text: I'm with Chadwick, we can discuss the wheel at the campsite.
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe we can compromise on the design?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Compromise? You want to compromise the structural integrity of our wagon?
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, it's just a little change.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A little change? This is a matter of safety, not aesthetics.
+- kind: dialogue
+  speaker: Leena
+  text: Ashiorid, can we please move on to the next item on the agenda?
+- kind: dialogue
+  speaker: gm
+  text: Let's hear Sodacan Bob out, then we can proceed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm saying we need to re-angle the entire frame to account for the—

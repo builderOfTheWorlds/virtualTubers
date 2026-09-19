@@ -1,0 +1,39 @@
+id: counting-the-cost
+take: 1
+model: llama3.1:8b
+generated_at: '2026-09-19T02:23:25.016092+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're looking at a war-scarred forge here, folks.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the extent of the damage, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got a wheelbarrow full of broken tools and some dented plates.
+- kind: dialogue
+  speaker: Leena
+  text: And the cart?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'The cart''s like a chariot after a battle: battle-scarred, but still mobile.'
+- kind: dialogue
+  speaker: Vigil
+  text: What about the rest of us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We're like a well-seasoned plank – we've got our cracks, but we'll still hold
+    together.
+- kind: dialogue
+  speaker: gm
+  text: That's a bit of a mixed metaphor, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know a thing or two about mixing things, and I think it'll hold.
+- kind: dialogue
+  speaker: chadwick
+  text: I'd rather not be a plank, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I didn't mean to imply that we're just wooden structures, Chad.

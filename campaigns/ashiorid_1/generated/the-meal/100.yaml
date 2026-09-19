@@ -1,0 +1,39 @@
+id: the-meal
+take: 100
+model: llama3.1:8b
+generated_at: '2026-09-19T00:09:30.846277+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm just glad we have enough to eat, even if it's not the best.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, that's all that matters.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, come on, if you're going to do it, do it right. This is a disaster.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, let's not be too hard on the cook. It's just a meal, it's not the end
+    of the world.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the veggies, I don't like the potatoes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Potatoes, really? You call those potatoes? They're like mush.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat in peace?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, I could do a better job than that. I'd start over from scratch.
+- kind: dialogue
+  speaker: Leena
+  text: That's not the point, Sodacan. We're just trying to enjoy our meal.
+- kind: dialogue
+  speaker: Vigil
+  text: (passing his portion to someone else)
+- kind: dialogue
+  speaker: gm
+  text: (changing the subject) Who's cooking tomorrow?

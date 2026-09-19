@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 247
+model: llama3.1:8b
+generated_at: '2026-09-18T23:37:40.096483+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got you looking so puzzled?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, something in front of me just doesn't feel right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw a doorway like it in your village, it's possible.
+- kind: dialogue
+  speaker: Leena
+  text: But I don't remember any doorway like that in my village.
+- kind: dialogue
+  speaker: Vigil
+  text: What's it supposed to be?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, that's the problem.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's probably just your imagination.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, maybe you're right, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on.

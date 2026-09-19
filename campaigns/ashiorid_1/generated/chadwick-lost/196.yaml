@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 196
+model: llama3.1:8b
+generated_at: '2026-09-18T20:35:50.174175+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. Where are we headed today?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we head east. Sounds right to me.
+- kind: dialogue
+  speaker: Vigil
+  text: I can check the map, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, this is rich. Chadwick leading again.
+- kind: dialogue
+  speaker: Leena
+  text: Um, Chadwick, would you like me to double-check the map?
+- kind: dialogue
+  speaker: chadwick
+  text: I know what I'm doing. We're going east.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) I think we might want to head north instead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, nice save, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: We're going east.

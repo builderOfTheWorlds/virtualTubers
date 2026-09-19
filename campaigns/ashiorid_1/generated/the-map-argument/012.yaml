@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:39:38.349906+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to take the shortcut through the woods.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, Chadwick, that map looks pretty ambiguous to me.
+- kind: dialogue
+  speaker: Vigil
+  text: Yeah, I agree with Leena, it's not clear which route we should take.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I say we just stick to the main road, it's safer.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just afraid of a little challenge, Leena.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it at all, Chadwick, I just don't want to get lost.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just look at the map together and figure it out?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, no need to get your feathers ruffled, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but I'm right, and you'll all see soon enough.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's take a look at the map together.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, what's this notation? It looks like some kind of symbol.

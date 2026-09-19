@@ -1,0 +1,42 @@
+id: bob-vs-the-cart-wheel
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:14:07.245536+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get back to the plan, we need to move the cart across the plain.
+- kind: dialogue
+  speaker: chadwick
+  text: But isn't the wheel a problem, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The wheel is fine, it's a solid piece of craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: I've seen it, Bob, and I think you're right, but what's your reasoning?
+- kind: dialogue
+  speaker: Vigil
+  text: Can we hear it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's the placement of the axle, it's too far forward.
+- kind: dialogue
+  speaker: gm
+  text: I've gone over the plans, and it looks like you're right, but let's not get
+    bogged down in the details.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Details are what matter here, it's a matter of safety.
+- kind: dialogue
+  speaker: chadwick
+  text: But what about the weight distribution?
+- kind: dialogue
+  speaker: Leena
+  text: I think Bob's got a point, though, it does look a bit unstable.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just make the change now and be done with it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I won't budge on this, it's a critical flaw.

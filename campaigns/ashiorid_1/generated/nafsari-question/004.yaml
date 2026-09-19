@@ -1,0 +1,29 @@
+id: nafsari-question
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:19.120548+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Vigil, did you ever have a favorite place to play as a kid?
+- kind: dialogue
+  speaker: Vigil
+  text: The forest.
+- kind: dialogue
+  speaker: chadwick
+  text: That's quite a specific answer.
+- kind: dialogue
+  speaker: Vigil
+  text: Yes.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs nervously) I guess I asked the wrong question, didn't I?
+- kind: dialogue
+  speaker: Vigil
+  text: (smiles slightly) Not the wrong one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Maybe we should just move on.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Yeah, sorry, Vigil.

@@ -1,0 +1,42 @@
+id: camp-fire
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:07.844195+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright then, let's settle on the watch order for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: I say we keep the same rotation as last night, with me first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No way, mate, you're as likely to fall asleep on your feet as I am to get
+    a good night's rest.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the rain will let up anytime soon?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire won't hold without more kindling.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick laid the fire all wrong, it's too exposed.
+- kind: dialogue
+  speaker: gm
+  text: What are you talking about, Bob, it's been burning fine for hours.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind will pick up.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long it takes for rain to soak through to the embers?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't know, but I'm getting hungry.
+- kind: dialogue
+  speaker: gm
+  text: We'll figure it out in the morning, let's just enjoy the fire for now.
+- kind: dialogue
+  speaker: chadwick
+  text: Agreed.

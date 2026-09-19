@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 79
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:24.112479+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's the plan for the rest of the day?
+- kind: dialogue
+  speaker: chadwick
+  text: I say we split up and do some shopping in the market.
+- kind: dialogue
+  speaker: Leena
+  text: I'll come with you.
+- kind: dialogue
+  speaker: Vigil
+  text: The east door leads out into the market, I think.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, we can meet back up here later.
+- kind: dialogue
+  speaker: gm
+  text: Sound good to me, let's gear up.
+- kind: dialogue
+  speaker: Leena
+  text: Anyone see where I left my pack?
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably by the cart, let's go check.
+- kind: dialogue
+  speaker: Vigil
+  text: I think the cart's just passing through again.

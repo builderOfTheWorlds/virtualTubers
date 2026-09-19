@@ -1,0 +1,102 @@
+magic-retained-arc-alt2:
+  node_id: magic-retained-arc-alt2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The seal holds, and the last well retains its magic. A sorcerer is possible
+    in t
+  summary: The seal holds, and the last well retains its magic. A sorcerer is possible
+    in this timeline, though rare. The four are drawn into this reality.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - magic-retained-arc-alt2-n0
+  - magic-retained-arc-alt2-n1
+  slots: null
+magic-retained-arc-alt2-n0:
+  node_id: magic-retained-arc-alt2-n0
+  parent_id: magic-retained-arc-alt2
+  order: 0
+  depth: 1
+  title: The Drawing
+  summary: The four individuals find themselves mysteriously pulled into this reality
+    where the ancient seal remains intact and the last magical well still holds its
+    power. Though sorcerers are rare in this timeline, the very existence of magic
+    suggests possibilities for those who might be drawn to it. The circumstances of
+    their arrival remain unclear, but they now stand together in a world where the
+    supernatural is not just possible, but active.
+  continuity_in: The seal holds, and the last well retains its magic. A sorcerer is
+    possible in this timeline, though rare. The four are drawn into this reality.
+  continuity_out: The four stand together in this reality where magic flows freely
+    through the world's veins, their arrival marking the beginning of a new chapter
+    in the ancient story that has been waiting for them.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: magic-retained-arc-alt2-n0-drawing-1
+    kind: ambient
+    prompt: The four individuals stand together in a world where the supernatural
+      is not just possible, but active, their arrival marking the beginning of a new
+      chapter in the ancient story that has been waiting for them.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-alt2-n0-drawing-2
+    kind: ambient
+    prompt: The seal holds, and the last well retains its magic. A sorcerer is possible
+      in this timeline, though rare. The four are drawn into this reality.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: magic-retained-arc-alt2-n0-drawing-3
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    - gm
+magic-retained-arc-alt2-n1:
+  node_id: magic-retained-arc-alt2-n1
+  parent_id: magic-retained-arc-alt2
+  order: 1
+  depth: 1
+  title: The Awakening
+  summary: As the four begin to understand their connection to this magical realm,
+    they discover that each possesses latent abilities that were awakened by their
+    journey through the dimensional barrier. The seal's strength has not been broken,
+    but it has been tested, and the presence of these newcomers may have altered its
+    very nature. They must learn to harness their newfound powers while navigating
+    the complex web of magic that surrounds them.
+  continuity_in: The four stand together in this reality where magic flows freely
+    through the world's veins, their arrival marking the beginning of a new chapter
+    in the ancient story that has been waiting for them.
+  continuity_out: The four have awakened to their magical potential and are beginning
+    to understand how their powers relate to the ancient seal and the mystical forces
+    at work in this realm.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

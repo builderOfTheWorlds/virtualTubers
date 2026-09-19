@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 202
+model: llama3.1:8b
+generated_at: '2026-09-18T20:30:15.199885+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on the east wall were repaired recently, I noticed.
+- kind: dialogue
+  speaker: gm
+  text: Alright, what else did you see while you were snooping around?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing, just a bunch of empty rooms and some cobwebs.
+- kind: dialogue
+  speaker: Leena
+  text: I'm gonna go take a look at the repaired shutters myself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a cart go by with some crates on it, and it's headed back out.
+- kind: dialogue
+  speaker: Vigil
+  text: There's a second cart that just passed it, going in the opposite direction.
+- kind: dialogue
+  speaker: gm
+  text: That's just the regular delivery route, folks. Let's keep moving.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of knowing this stuff anyway?
+- kind: dialogue
+  speaker: Leena
+  text: I'm just curious, that's all.
+- kind: dialogue
+  speaker: Vigil
+  text: It's nothing, just a habit of mine to notice these things.
+- kind: dialogue
+  speaker: gm
+  text: Good, let's focus on the matter at hand then.

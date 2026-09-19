@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 264
+model: llama3.1:8b
+generated_at: '2026-09-18T23:41:36.689258+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that went by had the same cargo as the one that came earlier.
+- kind: dialogue
+  speaker: Leena
+  text: We're not in the middle of a market, are we?
+- kind: dialogue
+  speaker: chadwick
+  text: Not that I've noticed, but we should keep an eye out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm more worried about that noise from the upper levels.
+- kind: dialogue
+  speaker: Vigil
+  text: The window's shutter was recently repaired.
+- kind: dialogue
+  speaker: gm
+  text: And?
+- kind: dialogue
+  speaker: Vigil
+  text: Just thought I'd mention it.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's get moving.
+- kind: dialogue
+  speaker: Leena
+  text: Which way were you thinking, Chadwick?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see what's making that noise...

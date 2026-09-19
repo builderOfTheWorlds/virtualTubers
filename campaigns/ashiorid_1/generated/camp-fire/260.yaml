@@ -1,0 +1,32 @@
+id: camp-fire
+take: 260
+model: llama3.1:8b
+generated_at: '2026-09-18T23:44:06.391843+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Rain's been coming down steady for hours.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order, can't just leave it up in the air.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, the fire's not laid right, it's gonna burn out.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't see the smoke.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how the fire's going to last through the night?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I told Bob how to lay it, but maybe he didn't listen.
+- kind: dialogue
+  speaker: chadwick
+  text: We'll get it sorted, just get some rest, we'll do it in the morning.
+- kind: dialogue
+  speaker: Leena
+  text: How do the moonwells work again?
+- kind: dialogue
+  speaker: Vigil
+  text: One of them is almost empty.

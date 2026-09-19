@@ -1,0 +1,41 @@
+id: camp-fire
+take: 160
+model: llama3.1:8b
+generated_at: '2026-09-18T20:00:01.062451+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: The rain's really coming down, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I wonder if it'll stop before morning.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's still burning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's the damp that'll kill this fire.
+- kind: dialogue
+  speaker: chadwick
+  text: We can't settle the watch order now, let's just get some rest.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll make it to the next town before winter sets in?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The last town had a decent blacksmith, we should've stockpiled more supplies.
+- kind: dialogue
+  speaker: Vigil
+  text: It's still burning.
+- kind: dialogue
+  speaker: gm
+  text: Anyone else want to settle on the watch order before we call it a night?
+- kind: dialogue
+  speaker: Leena
+  text: What happens to magic when the moonwells all drain?
+- kind: dialogue
+  speaker: chadwick
+  text: We'll figure it out in the morning, let's just get some rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This fire's not going anywhere, it'll last the night.

@@ -1,0 +1,38 @@
+id: malmont-market
+take: 143
+model: llama3.1:8b
+generated_at: '2026-09-18T22:16:50.869330+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better hammerwork on a scrap heap.
+- kind: dialogue
+  speaker: Vigil
+  text: (glancing at his coin) Careful what you waste your coin on, friend.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, what kind of map is this one?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd rather look at the blacksmiths' work, if you don't mind.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm interested in the maps.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Just maps. Nothing worth a coin.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, just a quiet morning, eh?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (skeptical) Quiet? I'd hardly call it that.
+- kind: dialogue
+  speaker: Vigil
+  text: (staying close) It's... manageable.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) I've seen this one before! A map of the old trade routes.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (still examining the blacksmiths) Not my trade.

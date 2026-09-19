@@ -1,0 +1,35 @@
+id: malmont-market
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:56.159955+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in the village of Ashbrook.
+- kind: dialogue
+  speaker: Vigil
+  text: Stay alert, there's too many strangers around here.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, good morning! Beautiful day, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: These old maps, are they from around here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, you're not even using proper coal.
+- kind: dialogue
+  speaker: Vigil
+  text: This one looks like a decent piece of leather.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take this one, with the rivers and mountains.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This town's got more smiths than sense.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't draw attention, just make a purchase and leave.
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, I'm not buying anything, I'm just admiring the wares.

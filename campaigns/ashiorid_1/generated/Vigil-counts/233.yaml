@@ -1,0 +1,39 @@
+id: Vigil-counts
+take: 233
+model: llama3.1:8b
+generated_at: '2026-09-18T22:06:08.093686+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market square is looking particularly lively today, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) Always is, this time of year.
+- kind: dialogue
+  speaker: Leena
+  text: I could do with some of that lively energy. I'm getting a bit bored with our
+    current accommodations.
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed that there are five people in this inn's common room, including
+    ourselves, and that the door to our left leads out into the alley.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (stirring his tea) That's an interesting tidbit, Vigil, but I'm not sure what
+    to make of it.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) Oh, come now, Sodacan Bob, Vigil's just making conversation.
+- kind: dialogue
+  speaker: Vigil
+  text: I also noticed that the shutter on the east side of the building was repaired
+    recently.
+- kind: dialogue
+  speaker: Leena
+  text: (curious) How do you know that?
+- kind: dialogue
+  speaker: Vigil
+  text: The nails used to repair it are a slightly newer type.
+- kind: dialogue
+  speaker: chadwick
+  text: (unfazed) Ah, good to know, Vigil.

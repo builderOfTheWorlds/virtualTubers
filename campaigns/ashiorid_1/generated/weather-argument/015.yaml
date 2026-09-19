@@ -1,0 +1,49 @@
+id: weather-argument
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-19T02:47:32.082252+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: I think it''s going to rain, I saw a dark cloud over the hills.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: But we''ve been driving in that direction all day, I''m sure the
+    cloud is just a shadow.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: No, no, I''ve been watching the wind direction and I think it''s definitely
+    shifting.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I don''t care about the cloud or the wind, the smell of ozone in the
+    air tells me it''s going to storm.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: You''re all just reading into things, the forecast said it was
+    going to be clear skies.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: That''s just a model, it''s never accurate in this part of the
+    country.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: But we can''t just assume it''s going to rain, we have to take
+    the forecast seriously.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Seriously? You''re taking the words of some computer model more seriously
+    than your own observations?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: At least we''re not relying on ancient superstitions like the wind
+    direction.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: What''s wrong with a little superstition to spice up the day?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Nothing''s wrong with it, but let''s focus on the facts.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Fine, but I still think the cloud is just a shadow.'

@@ -1,0 +1,32 @@
+id: camp-fire
+take: 246
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:41.983710+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down harder now.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick's got the right idea, we should split it up evenly.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't think it's a good idea to split it up.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens if the fire gets soaked through?
+- kind: dialogue
+  speaker: gm
+  text: The flames'll just smother, you don't need to worry.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire pretty carefully, I think it'll hold.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, I'll take the first watch then.
+- kind: dialogue
+  speaker: Leena
+  text: Why do we need to watch it at all if it's just going to be here till morning?

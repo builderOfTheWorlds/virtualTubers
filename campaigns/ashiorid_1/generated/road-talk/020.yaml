@@ -1,0 +1,41 @@
+id: road-talk
+take: 20
+model: llama3.1:8b
+generated_at: '2026-09-18T19:14:08.420998+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on us, it's going to be a long walk.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm getting thirsty.
+- kind: dialogue
+  speaker: Leena
+  text: I know a spot not far from here where we can find some water.
+- kind: dialogue
+  speaker: Vigil
+  text: Leena's right, it's just up ahead.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I hope it's better than the last place we stopped.
+- kind: dialogue
+  speaker: Leena
+  text: Don't worry, I know what I'm doing.
+- kind: dialogue
+  speaker: Vigil
+  text: Chadwick, what's your village like back home?
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) I'm not from around here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Vabokedos is the best, have you ever been?
+- kind: dialogue
+  speaker: Vigil
+  text: No, I'm from Nafsari.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, allowing the group to absorb Vigil's words)
+- kind: dialogue
+  speaker: Leena
+  text: I'm telling you, it's a beautiful place.

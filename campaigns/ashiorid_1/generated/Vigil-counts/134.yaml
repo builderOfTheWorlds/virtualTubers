@@ -1,0 +1,36 @@
+id: Vigil-counts
+take: 134
+model: llama3.1:8b
+generated_at: '2026-09-18T19:44:16.225713+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market is quiet today.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that?
+- kind: dialogue
+  speaker: gm
+  text: Vigil noticed that the cart that just passed has passed by this stall before.
+- kind: dialogue
+  speaker: Vigil
+  text: I think the cart's owner might be someone who regularly trades here.
+- kind: dialogue
+  speaker: Leena
+  text: That's nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: I just find it interesting.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's interesting?
+- kind: dialogue
+  speaker: Vigil
+  text: That there are eight people in this room and the door to our right is the
+    one that opens.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just making things up, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: The new shutter on that building across the way looks like it was put up recently.

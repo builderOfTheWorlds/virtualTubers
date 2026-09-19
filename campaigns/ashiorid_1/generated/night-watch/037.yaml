@@ -1,0 +1,23 @@
+id: night-watch
+take: 37
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:46.767278+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: Can you see the stars tonight, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, they're clear.
+- kind: dialogue
+  speaker: Leena
+  text: I wish I could see them better.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's a shame we can't have a telescope.
+- kind: dialogue
+  speaker: gm
+  text: (pause)
+- kind: dialogue
+  speaker: Vigil
+  text: Are we going to wake the others early?

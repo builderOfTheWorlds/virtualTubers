@@ -1,0 +1,35 @@
+id: malmont-market
+take: 112
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:33.955245+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't think that's a proper hammerhead on the anvil.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't see why it should be.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm just looking for a good breakfast.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, is that a map of the Ironfens?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've never seen a hammerhead that shape in all my travels.
+- kind: dialogue
+  speaker: Vigil
+  text: Don't be drawn in by fancy decorations, boy.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, I'm just curious.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, what's that on the edge of the map?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's no forge, that's a... a furnace for melting down old iron.
+- kind: dialogue
+  speaker: Vigil
+  text: What are you looking at, traveler?

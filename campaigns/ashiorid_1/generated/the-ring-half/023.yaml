@@ -1,0 +1,38 @@
+id: the-ring-half
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:36:54.230176+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The light in here is very good, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I suppose it is. Though I'm not sure what it's for.
+- kind: dialogue
+  speaker: Leena
+  text: It's a nice view. Reminds me of the valley.
+- kind: dialogue
+  speaker: Vigil
+  text: You think it means anything? The ring, I mean.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be a family crest or something.
+- kind: dialogue
+  speaker: gm
+  text: Do you think it's what we're supposed to be looking for?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't think we're looking for anything.
+- kind: dialogue
+  speaker: chadwick
+  text: Do you remember what the Sisters said about this?
+- kind: dialogue
+  speaker: Leena
+  text: No, I don't think I do.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's been a long time.
+- kind: dialogue
+  speaker: gm
+  text: Years.

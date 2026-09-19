@@ -1,0 +1,34 @@
+id: sodacan_bob-on-runes
+take: 32
+model: llama3.1:8b
+generated_at: '2026-09-18T20:53:12.516742+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's not just a matter of striking the die, it's about the
+    angle, the pressure...
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, you're talking about some pretty old symbols on the Malvakar...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Old? I'll show you old. I've seen runes that old in the museums of Eldrador...
+- kind: dialogue
+  speaker: Leena
+  text: Bob, what's got you so worked up about the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's got me worked up? You think I'm just standing here for fun?
+- kind: dialogue
+  speaker: Vigil
+  text: Bob, what do you think those symbols were trying to say?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Vigil, you want to know about the meaning of it all? I'm no expert...
+- kind: dialogue
+  speaker: chadwick
+  text: Bob, come on, you're the one who's been muttering about the Malvakar for the
+    past hour...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: An hour? I've been here five minutes, you lot just haven't been paying attention...

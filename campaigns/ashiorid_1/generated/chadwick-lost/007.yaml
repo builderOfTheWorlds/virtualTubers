@@ -1,0 +1,44 @@
+id: chadwick-lost
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:19.867233+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You all continue on for several hours, the terrain shifting from rocky outcroppings
+    to dense forest.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we're making good time.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to Chadwick) Maybe we could just ask Vigil where we are, so we
+    can make sure we're on track?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, you do, do you?
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) You're welcome to ask me anytime.
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob starts snickering and can't seem to stop.
+- kind: dialogue
+  speaker: chadwick
+  text: (firmly) Shut up, Bob.
+- kind: dialogue
+  speaker: gm
+  text: After another hour of walking, you come across a familiar landmark in the
+    distance.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, there's the old stream.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) I'm glad we're back on track.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Told you I knew the way.

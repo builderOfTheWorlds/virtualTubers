@@ -1,0 +1,29 @@
+id: sodacan-forge-envy
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:00.320600+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is... quite well made.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think a local blacksmith could handle a simple gate hinge.
+- kind: dialogue
+  speaker: chadwick
+  text: Come now, Bob, it's not like we're comparing it to a fine Elvish steel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, it's the workmanship, the attention to detail...
+- kind: dialogue
+  speaker: chadwick
+  text: You're just trying to sound more discerning than you are, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is not something to sneer at.
+- kind: dialogue
+  speaker: gm
+  text: Perhaps, Sodacan Bob, you could say something nice about it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's... sturdy.

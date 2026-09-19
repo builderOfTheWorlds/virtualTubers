@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 41
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:47.529625+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the cart passed by this morning, same one we saw yesterday.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) You're really paying attention to the deliveries, aren't you?
+- kind: dialogue
+  speaker: chadwick
+  text: (chuckles) What else have you noticed, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutters on the windows have been fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a relief, might get some decent sleep tonight.
+- kind: dialogue
+  speaker: Leena
+  text: What's the count in the room?
+- kind: dialogue
+  speaker: Vigil
+  text: Let's see...I count nine people, not including us.
+- kind: dialogue
+  speaker: gm
+  text: (muttering) One of them's the innkeeper's kid, I think.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't think it matters, does it?
+- kind: dialogue
+  speaker: Vigil
+  text: No, not particularly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistles softly) Guess we're not so hidden after all.

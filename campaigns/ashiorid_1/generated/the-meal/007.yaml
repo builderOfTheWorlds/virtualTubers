@@ -1,0 +1,43 @@
+id: the-meal
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-18T19:19:41.471275+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's all dig in, then.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's eat.
+- kind: dialogue
+  speaker: Leena
+  text: Isn't this a lovely picnic setting? The food is just... rustic.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushing his food away) I'll take a piece of that bread.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I swear, this is a crime against cooking. Anyone can just dump some stuff
+    in a pot.
+- kind: dialogue
+  speaker: chadwick
+  text: (munching on his food) It's fine.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Come on, let's make the most of it!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do so much better myself, I'm telling you.
+- kind: dialogue
+  speaker: Vigil
+  text: (standing up) I think I'll go find some more... fresher food.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) Just enjoy your meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think you're so great with your fancy recipes, but I bet I could whip
+    up something better in an hour.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Bob, don't be such a skeptic!

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:51.816448+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what did you notice, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the eastern window has a fresh coat of paint.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, yeah, someone must have fixed it.
+- kind: dialogue
+  speaker: Leena
+  text: Is that important?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just a repair, Leena.
+- kind: dialogue
+  speaker: Vigil
+  text: The cart that passed by the window earlier is headed back this way.
+- kind: dialogue
+  speaker: gm
+  text: (laughs) You've got a good eye, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's probably just the same route every day.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) You think so?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Does it matter?
+- kind: dialogue
+  speaker: Vigil
+  text: No.

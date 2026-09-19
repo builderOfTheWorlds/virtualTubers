@@ -1,0 +1,39 @@
+id: weather-argument
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:43:35.143502+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, it's been looking cloudy all morning
+- kind: dialogue
+  speaker: chadwick
+  text: Cloudy don't mean anything, just means it's going to be a nice day
+- kind: dialogue
+  speaker: Leena
+  text: But I saw those big, puffy clouds on the way here, those always mean rain
+- kind: dialogue
+  speaker: Vigil
+  text: You can't trust those, they just make the sun shine harder
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But don't you guys remember that one time it rained without any clouds?
+- kind: dialogue
+  speaker: chadwick
+  text: Now you're bringing up exceptions, that's just cherry-picking
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm just saying you can't rely on clouds, it's not a hard science
+- kind: dialogue
+  speaker: gm
+  text: I'm just saying the wind is picking up, that's a sign for sure
+- kind: dialogue
+  speaker: Vigil
+  text: Wind doesn't always mean rain, we had a huge windstorm last week that just
+    died
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we're just being paranoid, maybe it'll just be a light sprinkle
+- kind: dialogue
+  speaker: chadwick
+  text: Light sprinkle doesn't count, that's just a tease

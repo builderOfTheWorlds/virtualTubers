@@ -1,0 +1,35 @@
+id: nafsari-question
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-19T02:35:15.148398+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Vigil, growing up with the wood elves, what was that like for you?
+- kind: dialogue
+  speaker: Vigil
+  text: It was a different way of living.
+- kind: dialogue
+  speaker: chadwick
+  text: Different, that's all?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't miss it in the way you might think.
+- kind: dialogue
+  speaker: Leena
+  text: How so?
+- kind: dialogue
+  speaker: Vigil
+  text: It's just how I was raised.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Anything you'd trade, though?
+- kind: dialogue
+  speaker: Vigil
+  text: No.
+- kind: dialogue
+  speaker: gm
+  text: Alright, well.
+- kind: dialogue
+  speaker: Vigil
+  text: It's been...interesting.

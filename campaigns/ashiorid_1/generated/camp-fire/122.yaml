@@ -1,0 +1,41 @@
+id: camp-fire
+take: 122
+model: llama3.1:8b
+generated_at: '2026-09-18T19:56:26.810058+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's coming down hard, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think it's going to let up anytime soon.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the fire will hold till morning?
+- kind: dialogue
+  speaker: Vigil
+  text: It's been burning for a while, so yeah.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said it was laid right, the way I was taught.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order then. Who's first?
+- kind: dialogue
+  speaker: Vigil
+  text: Leena.
+- kind: dialogue
+  speaker: Leena
+  text: Why me?
+- kind: dialogue
+  speaker: gm
+  text: She's been up for the longest time.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, Vigil's next. We'll take turns.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've got a bad feeling about this rain.
+- kind: dialogue
+  speaker: gm
+  text: We've been through worse.

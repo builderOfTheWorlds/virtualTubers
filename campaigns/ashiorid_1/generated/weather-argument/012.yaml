@@ -1,0 +1,41 @@
+id: weather-argument
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:59.773911+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I think we're getting a cloud bank
+- kind: dialogue
+  speaker: chadwick
+  text: Nah, it's just a high-pressure system
+- kind: dialogue
+  speaker: Leena
+  text: I saw a bird flying low, it's definitely humid
+- kind: dialogue
+  speaker: Vigil
+  text: We're getting into the windward side, it should be fine
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I checked the temperature, it's dropping fast
+- kind: dialogue
+  speaker: gm
+  text: That's what high-pressure does, it cools the air
+- kind: dialogue
+  speaker: chadwick
+  text: But we're not seeing any clouds, just a haze
+- kind: dialogue
+  speaker: Leena
+  text: I saw a spider web glistening, it must be wet
+- kind: dialogue
+  speaker: Vigil
+  text: It's not just the spider web, the plants are droopy
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw a rainbow, that means it's going to pour
+- kind: dialogue
+  speaker: gm
+  text: You can't trust rainbows, they just mean water vapor
+- kind: dialogue
+  speaker: chadwick
+  text: That's right, it's just an optical illusion

@@ -1,0 +1,40 @@
+id: camp-fire
+take: 233
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:01.112751+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire should last a while, but the rain's coming down hard enough it's
+    a good thing we're under the awning.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Ashiorid, we need to get the watch order settled. We can't just go
+    to bed without deciding who's on duty.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, Ashiorid, that fire was laid wrong. You can see it's not
+    burning evenly.
+- kind: dialogue
+  speaker: Leena
+  text: Has anyone noticed anything... unusual... about the rain? It's not just raining,
+    is it?
+- kind: dialogue
+  speaker: Vigil
+  text: The rain is acidic.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean it's acidic, Vigil?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, think about it, if the rain's acidic, it's probably eating away at
+    the wood.
+- kind: dialogue
+  speaker: Leena
+  text: That would explain why the fire's not burning well.
+- kind: dialogue
+  speaker: chadwick
+  text: This is getting us nowhere. We need to focus on the watch order.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's table it for now and get some rest.

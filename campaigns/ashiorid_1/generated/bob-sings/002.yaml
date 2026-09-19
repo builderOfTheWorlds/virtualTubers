@@ -1,0 +1,32 @@
+id: bob-sings
+take: 2
+model: llama3.1:8b
+generated_at: '2026-09-19T02:14:21.811735+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's all the racket, Sodacan Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm singing the Battle of Kragnir, greatest dwarven epic!
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Oh, Bob, you're off-key...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Silence, Leena! The dwarves sang with passion, not harmony!
+- kind: dialogue
+  speaker: Vigil
+  text: (winces) I think I just lost a few teeth.
+- kind: dialogue
+  speaker: chadwick
+  text: (grinning) Go on, Bob, it's music to our ears!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (singing) Kragnir's mines, they dug so deep...
+- kind: dialogue
+  speaker: Leena
+  text: (covering her ears) Sodacan Bob, please...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (singing) And the mountains shook, and the dwarves did weep!

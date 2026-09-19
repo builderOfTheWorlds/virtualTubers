@@ -1,0 +1,32 @@
+id: sodacan_bob-on-runes
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T22:30:39.900607+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, have you given any more thought to the design on the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just wondering how it was done, is all. A die struck, but not just any die...
+    it's been a while since I've seen one that precise.
+- kind: dialogue
+  speaker: Leena
+  text: Was it the runes that were the focus of your attention, or the craftsmanship?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The craftsmanship, mostly. If I'm being honest.
+- kind: dialogue
+  speaker: Vigil
+  text: What do you mean, if you're being honest?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What I mean is... have you ever spent hours at a forge, just thinking out
+    loud, and it's not really about what you're making, but about the process?
+- kind: dialogue
+  speaker: chadwick
+  text: Sodacan Bob, are you trying to distract us from the task at hand?
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I think Vigil was trying to get something out of you, and I'm
+    curious to know what.

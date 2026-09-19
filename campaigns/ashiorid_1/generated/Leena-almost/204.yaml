@@ -1,0 +1,38 @@
+id: Leena-almost
+take: 204
+model: llama3.1:8b
+generated_at: '2026-09-18T20:27:50.636940+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, Leena says something's familiar, but shouldn't be, and she's curious.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, you see weird stuff out here. Get used to it.
+- kind: dialogue
+  speaker: Leena
+  text: I know I've seen it before. But where?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could've seen it in your village. You're always talking about how old it looks.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob is looking at Leena with interest.
+- kind: dialogue
+  speaker: Leena
+  text: That's not it. There's something else too. A smell.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. You'll get yourself lost.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know that smell.
+- kind: dialogue
+  speaker: Vigil
+  text: (staying silent)
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob is getting up to get a map.

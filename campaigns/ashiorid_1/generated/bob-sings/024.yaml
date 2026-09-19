@@ -1,0 +1,35 @@
+id: bob-sings
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-19T03:13:02.554012+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Da-da-da-dee, kragnir krag krag krag krag!
+- kind: dialogue
+  speaker: gm
+  text: For the love of the earth...
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, Bob, you're killing it!
+- kind: dialogue
+  speaker: Leena
+  text: That's a lot of clanging...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: DEE-da-dee-dee, krag krag krag krag krag krag!
+- kind: dialogue
+  speaker: Vigil
+  text: What's all the commotion?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: KRAG-krag-krag-krag, kragnir krag krag krag!
+- kind: dialogue
+  speaker: gm
+  text: I think Bob's found the secret to sonic mining...
+- kind: dialogue
+  speaker: chadwick
+  text: Da-da-da-dee, kragnir krag krag krag!
+- kind: dialogue
+  speaker: Leena
+  text: This is torture...

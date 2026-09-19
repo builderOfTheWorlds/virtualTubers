@@ -1,0 +1,41 @@
+id: bob-vs-the-cart-wheel
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:27.016743+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on to the rest of the preparations.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, Bob's still going on about the wheel design.
+- kind: dialogue
+  speaker: Leena
+  text: Seriously, can we just get moving here?
+- kind: dialogue
+  speaker: Vigil
+  text: I think Bob's got a point, though.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been telling you all, it's gotta be symmetrical!
+- kind: dialogue
+  speaker: gm
+  text: We've been over this, Bob, it's not about symmetry.
+- kind: dialogue
+  speaker: chadwick
+  text: It's about stability, and your design will be safer.
+- kind: dialogue
+  speaker: Leena
+  text: Safer? You're going to make the whole thing tip over!
+- kind: dialogue
+  speaker: Vigil
+  text: That's not what Bob said, he said it's gotta be symmetrical.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I did say that, and I meant it!
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's take a break, we can discuss this later.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No way, we can't move forward with this subpar design!

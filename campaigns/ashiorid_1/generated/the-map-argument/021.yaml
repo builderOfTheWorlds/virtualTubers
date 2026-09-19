@@ -1,0 +1,38 @@
+id: the-map-argument
+take: 21
+model: llama3.1:8b
+generated_at: '2026-09-19T03:34:53.773495+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a long way to go today.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, the trail splits off to the east here.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, it's clear it goes straight up the mountain.
+- kind: dialogue
+  speaker: chadwick
+  text: How can you be so blind? It's obvious we need to take the eastern route.
+- kind: dialogue
+  speaker: Leena
+  text: I've looked at the map, Chadwick, it's a straight shot up.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I think Leena might be right, I've seen this before.
+- kind: dialogue
+  speaker: chadwick
+  text: You're all wrong, I've studied the map, I know what I'm doing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Come on Chadwick, let's just get moving, we're wasting time.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just not used to my expertise, that's why you can't see the obvious.
+- kind: dialogue
+  speaker: gm
+  text: Alright, alright, let's just agree to stick with the map and move out.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but I'm telling you, I'm right.

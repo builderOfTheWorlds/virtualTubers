@@ -1,0 +1,33 @@
+id: camp-fire
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T19:51:19.526834+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not going to let up anytime soon, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight. Someone's got to stay up.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I told you, Chadwick, a fire laid with the kindling out like that's just
+    begging for trouble.
+- kind: dialogue
+  speaker: Leena
+  text: What happens to the fire when the wood's all gone?
+- kind: dialogue
+  speaker: Vigil
+  text: It won't last the night without more fuel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You can't just leave it to burn down, what a waste.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we'll have to get more wood. Who's up for that?
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what we'll do if the fire doesn't last the night?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not my watch.

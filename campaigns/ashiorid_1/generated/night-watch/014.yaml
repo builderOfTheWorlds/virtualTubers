@@ -1,0 +1,38 @@
+id: night-watch
+take: 14
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:32.337884+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sky is clear.
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) Yeah.
+- kind: dialogue
+  speaker: Vigil
+  text: We should wake the others.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not yet, I think we can make it another hour.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't hear anything.
+- kind: dialogue
+  speaker: gm
+  text: I'm not expecting to.
+- kind: dialogue
+  speaker: Leena
+  text: You'd know if it was close, wouldn't you?
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I have a bit of a cold.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, then continues) Yeah, it's not going to get any quieter than this.
+- kind: dialogue
+  speaker: chadwick
+  text: (pauses, looking at the sky) Yeah.
+- kind: dialogue
+  speaker: gm
+  text: (pauses, then speaks up) I think we can stay awake a bit longer.

@@ -1,0 +1,11 @@
+id: vigil-watches-longer
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:44:57.426000+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The stars are brighter than I remember.
+- kind: dialogue
+  speaker: Leena
+  text: I'm just here, Vigil.

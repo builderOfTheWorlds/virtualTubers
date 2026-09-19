@@ -1,0 +1,33 @@
+id: sodacan_bob-on-runes
+take: 80
+model: llama3.1:8b
+generated_at: '2026-09-18T22:31:06.482698+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Can't believe it was carved in Valtorian, of all languages.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the problem with Valtorian?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nothing, it's just... the script's so ornate, the letters all curl up at the
+    ends.
+- kind: dialogue
+  speaker: Leena
+  text: You're worried about the script?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's not just about reading it, it's about cutting it right.
+- kind: dialogue
+  speaker: Vigil
+  text: Cutting it right? What are you talking about?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Cutting a die, making a rune... it's a precision thing, needs finesse.
+- kind: dialogue
+  speaker: gm
+  text: So you're saying you could re-carve it, if you had to?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Me? No... just that it's a lost art, nobody knows how to do it properly anymore.

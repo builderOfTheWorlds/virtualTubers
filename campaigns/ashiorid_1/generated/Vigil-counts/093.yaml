@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 93
+model: llama3.1:8b
+generated_at: '2026-09-18T19:41:21.272301+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: A cart went by twice, carrying a large crate.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm, interesting.
+- kind: dialogue
+  speaker: Leena
+  text: Does that mean it's a regular delivery route?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be.
+- kind: dialogue
+  speaker: gm
+  text: The fact remains, you're all still hungry.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, what's the plan for lunch?
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the north window has been repaired recently.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, nice, let's get some fresh air.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll check the door.
+- kind: dialogue
+  speaker: gm
+  text: The doors open inward, by the way.

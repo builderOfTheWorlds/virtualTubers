@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 176
+model: llama3.1:8b
+generated_at: '2026-09-18T20:28:20.136407+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: People, doors, shutter, cart.
+- kind: dialogue
+  speaker: chadwick
+  text: What does it have to do with anything?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing.
+- kind: dialogue
+  speaker: Leena
+  text: Just curious, what did you notice about the shutter?
+- kind: dialogue
+  speaker: Vigil
+  text: It was recently fixed.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What does that mean?
+- kind: dialogue
+  speaker: Vigil
+  text: It's a new patch on the corner.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a small town, they get stuff fixed around here.
+- kind: dialogue
+  speaker: gm
+  text: What's the point of noticing all this?
+- kind: dialogue
+  speaker: Vigil
+  text: No point.

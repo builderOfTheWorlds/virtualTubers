@@ -1,0 +1,32 @@
+id: chadwick-cooking
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:17:26.163819+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what's cooking?
+- kind: dialogue
+  speaker: chadwick
+  text: Just a little something I whipped up.
+- kind: dialogue
+  speaker: Leena
+  text: Smells... interesting.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm sure it's fine, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Don't say that, Vigil.
+- kind: dialogue
+  speaker: gm
+  text: Alright everyone, dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: I made a special sauce to go with it.
+- kind: dialogue
+  speaker: Leena
+  text: This... tastes like sadness.
+- kind: dialogue
+  speaker: Vigil
+  text: I mean, it's actually quite... flavorful.

@@ -1,0 +1,41 @@
+id: the-meal
+take: 130
+model: llama3.1:8b
+generated_at: '2026-09-19T00:13:14.057837+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get going on dinner, everyone.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't know, it looks like it's been sat out.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's a celebration, let's make the most of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I can tell you exactly why it's not good – the seasoning, the technique...
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the veggies, thanks.
+- kind: dialogue
+  speaker: chadwick
+  text: Who cooked?
+- kind: dialogue
+  speaker: Leena
+  text: I did, don't be so harsh.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could do it so much better, with a bit more flair.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, you do it tomorrow then.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not how it works, Chadwick.
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's just eat already.
+- kind: dialogue
+  speaker: Vigil
+  text: I think Vigil already ate.

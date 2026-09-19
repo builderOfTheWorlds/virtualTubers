@@ -1,0 +1,42 @@
+id: malmont-market
+take: 88
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:16.904690+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ah, welcome to Malmont, I suppose. The market's a good place to start, if
+    you're looking for... something.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'll take a look at those old maps over there. The colors on the edges
+    are starting to fade, but...
+- kind: dialogue
+  speaker: Vigil
+  text: What's the point of maps if they're not even accurate?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't recall ever seeing this town before, I'm sure I would've...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to a nearby blacksmith) Not impressed, my friend. That's some rough work.
+    You call that a blade?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan_Bob) Don't make friends with the locals, Bob. They'll only rip
+    you off.
+- kind: dialogue
+  speaker: Leena
+  text: (to herself) There's something about these maps... a place, a memory, I don't
+    know...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the blacksmith) Fine, I'll take that one for five silvers. You're making
+    a killing on that ugly thing.
+- kind: dialogue
+  speaker: gm
+  text: (to the group) I'll be over at the coffee stand if you need me. Don't get
+    too lost.
+- kind: dialogue
+  speaker: chadwick
+  text: (to himself) No one seems to know me here. It's a nice change of pace.

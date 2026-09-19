@@ -1,0 +1,56 @@
+segment_id: invitation-arc-alt2
+order: 5
+loop: 0
+hours: 6
+synopsis: The four strangers each receive the same mysterious card, marking ten thousand
+  years since the Event. They are drawn together by fate and curiosity.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-alt2-n0-1
+  kind: ambient
+  prompt: Leena feels a strange pull, her hand trembling as she holds the card. The
+    symbols shift and glow, whispering of ancient truths.
+  lore:
+  - the-event
+  - moonwells
+  participants:
+  - Leena
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc-alt2-n0
+- slot_id: invitation-arc-alt2-n0-2
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: invitation-arc-alt2-n0
+nodes:
+- node_id: invitation-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: invitation-arc-alt2-n0
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: invitation-arc-alt2-n1
+  parent_id: invitation-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 0
+needs_rebrief: true

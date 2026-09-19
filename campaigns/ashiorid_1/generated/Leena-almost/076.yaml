@@ -1,0 +1,34 @@
+id: Leena-almost
+take: 76
+model: llama3.1:8b
+generated_at: '2026-09-18T19:28:10.177456+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I don't want to interrupt, Leena, but there's something familiar in front
+    of you, isn't there?
+- kind: dialogue
+  speaker: Leena
+  text: Something. I don't know what it is.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I know what it might be, Leena. You've seen a doorway like that in
+    your village.
+- kind: dialogue
+  speaker: chadwick
+  text: Let it go, Leena. It's just a feeling.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: Leena
+  text: No, I want to know what it is. It's nagging at me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's just a familiar shape. Don't worry about it.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, trust me on this one.
+- kind: dialogue
+  speaker: gm
+  text: The others seem to think it's just a coincidence.

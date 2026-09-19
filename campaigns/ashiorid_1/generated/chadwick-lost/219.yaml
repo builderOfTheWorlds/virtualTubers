@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 219
+model: llama3.1:8b
+generated_at: '2026-09-18T22:11:02.942204+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've been leading for a while now, Chadwick. Where do you think we are?
+- kind: dialogue
+  speaker: chadwick
+  text: We're...on schedule. Yeah, that's it.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, if you're not sure, I could offer to take over for a bit?
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I'm fine. Just keep walking.
+- kind: narration
+  speaker: gm
+  text: 'vigel: Actually, if you''re not sure, I could give you a quick bearings check?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is rich. Chadwick, you're lost.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Bob, don't tease him.
+- kind: dialogue
+  speaker: chadwick
+  text: Shut up, Bob.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Alright, shall we get moving then?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, let's just...just keep going.
+- kind: narration
+  speaker: gm
+  text: 'vigel: (smirking) This way, everyone.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is why we don't let him lead the party.

@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-18T19:02:44.545654+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What did you notice, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Nothing to see here, just a bunch of nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I think I saw that same cart pass by the window twice.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to our left swing outward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: How about the one at the end of the hall?
+- kind: dialogue
+  speaker: Vigil
+  text: That one too, they all do.
+- kind: dialogue
+  speaker: chadwick
+  text: Who cares, right?
+- kind: dialogue
+  speaker: Leena
+  text: I do, a little.
+- kind: dialogue
+  speaker: gm
+  text: Alright, what's bothering you?

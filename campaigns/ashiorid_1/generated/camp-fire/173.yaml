@@ -1,0 +1,33 @@
+id: camp-fire
+take: 173
+model: llama3.1:8b
+generated_at: '2026-09-18T20:01:08.713189+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Rain's coming down pretty hard, don't think it's going to let up.
+- kind: dialogue
+  speaker: Leena
+  text: Wonder if there's a chance the river's overflowing its banks again.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's holding, that's something.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob said the fire's laid good, should last us till morning.
+- kind: dialogue
+  speaker: gm
+  text: Anyone got any thoughts on the watch order for tonight?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should rotate every hour, make sure everyone gets some rest.
+- kind: dialogue
+  speaker: Leena
+  text: What about the ones who were outside when the rain started, should they go
+    first?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Vigil should go first, he's been quiet too long.
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the last watch.

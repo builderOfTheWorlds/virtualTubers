@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:37.397200+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The repair on the shutter seems recent, but I'm not sure how that's relevant.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about the lock on the door, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: I'm with Chadwick on that.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open towards the hallway, as they should.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the cart's still parked outside, like we left it.
+- kind: dialogue
+  speaker: gm
+  text: I'm just trying to understand the rhythm of this place, not look for threats.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just pointing out what I see.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we focus on the task at hand?
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, what's the plan, Ashiorid?

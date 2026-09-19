@@ -1,0 +1,32 @@
+id: camp-fire
+take: 242
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:55.490284+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Well, it's been raining for hours now, when do we break up the watch?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should switch to thirds now, Bob's been up for a bit.
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing's burning, that's a good sign.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what the last well looked like, though?
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, that's not the issue at hand, we need to decide the watch order.
+- kind: dialogue
+  speaker: Vigil
+  text: The logs are laid on a slope.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, Chad, I think the wind's dying, that's our problem now.
+- kind: dialogue
+  speaker: Leena
+  text: I just wonder what would've happened if they'd made it back.
+- kind: dialogue
+  speaker: gm
+  text: You'll all have to get some rest eventually, no sense arguing about it.

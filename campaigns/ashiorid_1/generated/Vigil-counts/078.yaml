@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 78
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:20.278661+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Vigil, you've noticed something, have you?
+- kind: dialogue
+  speaker: chadwick
+  text: What is it, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: Just a detail, I'm sure.
+- kind: dialogue
+  speaker: Vigil
+  text: The eastern door opens inwards, not out.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's... unusual.
+- kind: dialogue
+  speaker: gm
+  text: Let's get back on track.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, what were we discussing?
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) I think we lost the thread.
+- kind: dialogue
+  speaker: Vigil
+  text: No, it's nothing.
+- kind: dialogue
+  speaker: gm
+  text: Alright then, carry on.

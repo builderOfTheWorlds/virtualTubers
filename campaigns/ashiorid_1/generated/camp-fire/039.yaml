@@ -1,0 +1,35 @@
+id: camp-fire
+take: 39
+model: llama3.1:8b
+generated_at: '2026-09-18T19:48:53.982875+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: Not that I can see, no. We need to settle the watch order for tonight.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know what happens if the fire dies out?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think the fire's laid decently, Bob's done a good job.
+- kind: dialogue
+  speaker: Vigil
+  text: Wood's still wet.
+- kind: dialogue
+  speaker: gm
+  text: We'll have to make do. Sodacan Bob, how long will it hold?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Should keep going till morning, but I'd rather not risk it.
+- kind: dialogue
+  speaker: Leena
+  text: Is anyone going to answer my question?
+- kind: dialogue
+  speaker: chadwick
+  text: What question was that again?
+- kind: dialogue
+  speaker: Leena
+  text: Never mind.

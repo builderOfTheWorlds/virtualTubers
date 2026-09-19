@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 102
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:39.471941+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, Chadwick. Perhaps we should take a break.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should keep moving. We can't afford to waste any time.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, why don't you let Vigil take the lead for a bit? He seems
+    to know where we are.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I've got this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ha! Chadwick's lost. Again.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing) I'm happy to help if you need me, Chadwick.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) It's okay, Chadwick. We won't think any less of you if you ask for
+    help.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need any help. I know exactly where we are.
+- kind: dialogue
+  speaker: gm
+  text: (smiling) Alright, let's keep moving then. We should be approaching the...
+    (pauses) Wait, is that a landmark?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, man.

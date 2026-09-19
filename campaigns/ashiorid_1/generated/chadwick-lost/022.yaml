@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 22
+model: llama3.1:8b
+generated_at: '2026-09-18T19:07:59.104580+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, and I still can't get a lock on the location.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, I know where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: (whistling softly)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) This is priceless.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, why don't I just check the map and confirm?
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm good.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) You're not good, Chad.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Okay, let me just...
+- kind: dialogue
+  speaker: gm
+  text: (interrupting) I think we're close to the river.
+- kind: dialogue
+  speaker: chadwick
+  text: I knew that.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Ah, I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Yeah, because you knew that...

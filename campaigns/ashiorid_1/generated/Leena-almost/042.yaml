@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 42
+model: llama3.1:8b
+generated_at: '2026-09-18T19:25:08.476237+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: I know that smell.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you saw it in the village, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena, it's not worth it.
+- kind: dialogue
+  speaker: Vigil
+  text: What smell?
+- kind: dialogue
+  speaker: Leena
+  text: The smell of the old workshop.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's the workshop where they make the sugar crystals.
+- kind: dialogue
+  speaker: Vigil
+  text: Which workshop is that?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but I've never smelled it anywhere else.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a smell, Leena.

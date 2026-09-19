@@ -1,0 +1,35 @@
+id: bob-sings
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:17.526512+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, I'm afraid you're mangling the ancient dwarven tongue!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: HEAR ME, FELLOWS! KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA!
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, for the love of Moradin...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: KRUNK-CHUNK-CHUNK-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA!
+- kind: dialogue
+  speaker: Leena
+  text: Oh, Bob, you're singing it with such passion!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: KRUNK-CHUNK-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA!
+- kind: dialogue
+  speaker: Vigil
+  text: Someone, please, for the sake of our sanity...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: HEAR ME, FELLOWS! KRUNK-CHUNK-CHUNK-KRA-KRA-KRA-KRA-KRA-KRA!
+- kind: dialogue
+  speaker: gm
+  text: Ah, Sodacan Bob, you're bringing the house down!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: KRUNK-CHUNK-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA-KRA!

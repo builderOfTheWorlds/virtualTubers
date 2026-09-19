@@ -1,0 +1,41 @@
+id: camp-fire
+take: 241
+model: llama3.1:8b
+generated_at: '2026-09-18T22:09:50.655851+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, we need to decide on the watch order. Who's up first?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the first watch.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we should have someone who knows how to tend the fire during the night,
+    just in case it gets out of hand.
+- kind: dialogue
+  speaker: Leena
+  text: What's the worst that could happen if the fire goes out?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't even joke about that, Leena.
+- kind: dialogue
+  speaker: gm
+  text: We can discuss this in the morning, for now let's focus on getting some rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire myself, it's been burning good so far, but a bit more ventilation
+    wouldn't hurt.
+- kind: dialogue
+  speaker: Vigil
+  text: The wind will pick up again soon.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of even having a fire if it's just going to go out when the
+    rain gets worse?
+- kind: dialogue
+  speaker: gm
+  text: I'll try to find a spot to store some tinder and kindling for the morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Bob's your uncle if we have some dry wood on hand.

@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 156
+model: llama3.1:8b
+generated_at: '2026-09-18T19:46:17.501267+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: We're in a small common room, two doors that open towards the back.
+- kind: dialogue
+  speaker: chadwick
+  text: (pausing, not looking at Vigil) Okay.
+- kind: dialogue
+  speaker: Leena
+  text: What's the point of that?
+- kind: dialogue
+  speaker: Vigil
+  text: It's not a point. Just what I saw.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (muttering) Yeah, good to know the doors are there...
+- kind: dialogue
+  speaker: gm
+  text: (deadpan) That's very useful, Vigil.
+- kind: dialogue
+  speaker: Vigil
+  text: (no inflection) The shutter on that window was repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: (still not looking) Thanks for the update, Vigil.
+- kind: dialogue
+  speaker: Leena
+  text: (irritated) Can we please focus on finding the innkeeper?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (yawns) I'm pretty sure I saw that cart pass by again.
+- kind: dialogue
+  speaker: gm
+  text: (dryly) Yes, it's very exciting.
+- kind: dialogue
+  speaker: Vigil
+  text: (neutral) Just so you know.

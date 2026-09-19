@@ -1,0 +1,34 @@
+id: camp-fire
+take: 58
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:46.912182+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain doesn't look like it's letting up anytime soon.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Sodacan Bob, can you tell us if the fire will hold?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid the fire like I always do, with a mix of dry wood and kindling, but
+    it's a lot of wet wood to burn.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll be enough to keep us warm through the night?
+- kind: dialogue
+  speaker: Vigil
+  text: No one's coming for us.
+- kind: dialogue
+  speaker: chadwick
+  text: That's not what I asked. Who's first watch, and who's after?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, I think if we split it up, we could keep a decent fire going through
+    the night, but someone needs to keep an eye on it.
+- kind: dialogue
+  speaker: Leena
+  text: How long does it take for a fire to burn itself out?
+- kind: dialogue
+  speaker: gm
+  text: We'll settle the watch order in the morning, for now just get some rest.

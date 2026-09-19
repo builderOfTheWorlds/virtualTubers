@@ -1,0 +1,26 @@
+id: Vigil-counts
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T19:38:25.755252+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the north wall has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What makes you say that?
+- kind: dialogue
+  speaker: Vigil
+  text: The hinges are new, and the paint's still wet.
+- kind: dialogue
+  speaker: Leena
+  text: That's nice craftsmanship.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) The cart that passed by has a loose wheel.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A loose wheel's not a big deal.
+- kind: dialogue
+  speaker: Vigil
+  text: (nods) It's not.

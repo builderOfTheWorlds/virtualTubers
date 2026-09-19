@@ -1,0 +1,29 @@
+id: sodacan_bob-on-runes
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-19T00:08:58.260138+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, a die struck like that wouldn't last a year without proper
+    preservation.
+- kind: dialogue
+  speaker: chadwick
+  text: What kind of preservation?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A wax seal, maybe some oil to keep the rust at bay... no, no, I'm being too
+    optimistic.
+- kind: dialogue
+  speaker: Leena
+  text: What does it have to do with anything?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I was just wondering, that's all.
+- kind: dialogue
+  speaker: Vigil
+  text: Was it a symbol, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, symbols, runes, words... doesn't matter. It's the craftsmanship that's
+    rare.

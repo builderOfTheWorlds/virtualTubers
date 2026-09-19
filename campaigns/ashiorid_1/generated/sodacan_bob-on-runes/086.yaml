@@ -1,0 +1,42 @@
+id: sodacan_bob-on-runes
+take: 86
+model: llama3.1:8b
+generated_at: '2026-09-18T22:31:44.639918+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen some fancy runes on the Malvakar, but I've never seen any as deep
+    as those were cut.
+- kind: dialogue
+  speaker: chadwick
+  text: What makes you think it's the Malvakar's age that carved those into it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patience. Whoever did that work had all the time in the world.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it's possible the Malvakar was a monument all along?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Monument? I thought it was just a temple.
+- kind: dialogue
+  speaker: Vigil
+  text: How many years do you think those runes have been there?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Long enough to make a smith weep.
+- kind: dialogue
+  speaker: gm
+  text: And you think the one who made them was a smith?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it was someone who knew the work.
+- kind: dialogue
+  speaker: Leena
+  text: What kind of person has the patience for that kind of work?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Someone who's waiting for the end of the world.
+- kind: dialogue
+  speaker: Vigil
+  text: Do you think you could match those runes?

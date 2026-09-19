@@ -1,0 +1,36 @@
+id: leena-recognizes-nothing
+take: 16
+model: llama3.1:8b
+generated_at: '2026-09-19T03:26:51.674488+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's on your mind?
+- kind: dialogue
+  speaker: Leena
+  text: I think I almost recognized that hill over there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, it's probably just the light hitting it funny.
+- kind: dialogue
+  speaker: Vigil
+  text: (watching Leena)
+- kind: dialogue
+  speaker: chadwick
+  text: So, Leena, how's your village been treating you?
+- kind: dialogue
+  speaker: Leena
+  text: It's been... quiet. Like it always is.
+- kind: dialogue
+  speaker: Vigil
+  text: (still watching Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I heard the local wildlife is particularly tame around here.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, would you like to walk ahead and see if you can find any signs of
+    civilization?
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds good to me.

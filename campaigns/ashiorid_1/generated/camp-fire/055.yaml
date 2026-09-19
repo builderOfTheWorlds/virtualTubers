@@ -1,0 +1,35 @@
+id: camp-fire
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:29.211923+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Well, it looks like we're stuck here for the night.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's settle the watch order then. Who's on first watch?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I think the fire's laid out pretty well, Bob's got a good eye for this
+    sort of thing.
+- kind: dialogue
+  speaker: Vigil
+  text: It's going to rain some more, isn't it.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think we'll be able to get a clear view of the surrounding area when
+    it does stop?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Like I said, fire's laid out just right, should last us till morning.
+- kind: dialogue
+  speaker: gm
+  text: Someone from the group should stay up to tend to it, we don't want it dying
+    out.
+- kind: dialogue
+  speaker: Vigil
+  text: The fire will hold.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think anyone knows where we are?

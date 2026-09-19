@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 38
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:33.151220+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: People in this room seem to outnumber those in the lobby.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just observed more faces in here.
+- kind: dialogue
+  speaker: Leena
+  text: It's just a bunch of folks waiting for the innkeeper.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors to our left swing inward.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Which way do you think the exit is?
+- kind: dialogue
+  speaker: Vigil
+  text: If the doors are blocked, it's the one straight ahead.
+- kind: dialogue
+  speaker: chadwick
+  text: We should probably keep that in mind.
+- kind: dialogue
+  speaker: gm
+  text: As you were saying, you noticed the shutters were fixed?
+- kind: dialogue
+  speaker: Vigil
+  text: Yes, I saw some repairs being done outside.

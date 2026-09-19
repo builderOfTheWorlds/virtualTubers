@@ -1,0 +1,41 @@
+id: chadwick-lost
+take: 242
+model: llama3.1:8b
+generated_at: '2026-09-18T22:13:33.745720+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Ashiorid, what's the situation, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm still in the lead, aren't I?
+- kind: dialogue
+  speaker: gm
+  text: Yes, you are. But do you know where we are?
+- kind: dialogue
+  speaker: chadwick
+  text: Of course I do.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, it's okay to ask for help.
+- kind: dialogue
+  speaker: chadwick
+  text: No, I'm fine. I know exactly where we are.
+- kind: narration
+  speaker: gm
+  text: 'vigel: Actually, Chadwick, I think it would be a good idea if you asked me.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, this is rich.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not lost, I'm just... exploring the area.
+- kind: dialogue
+  speaker: gm
+  text: (sighs) Vigil, will you give Chadwick directions?
+- kind: narration
+  speaker: gm
+  text: 'vigel: Of course, Chadwick. We''re almost there.'
+- kind: dialogue
+  speaker: chadwick
+  text: See? I told you I knew the way.

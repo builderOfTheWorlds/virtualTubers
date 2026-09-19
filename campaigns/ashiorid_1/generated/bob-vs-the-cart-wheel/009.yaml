@@ -1,0 +1,35 @@
+id: bob-vs-the-cart-wheel
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:17:12.420946+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, shall we move on to the rest of the preparations?
+- kind: dialogue
+  speaker: chadwick
+  text: Not until we get this wheel right.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, you've been over this a dozen times.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've only just gotten started!
+- kind: dialogue
+  speaker: Vigil
+  text: Come on, Bob, it's not that complicated.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think not, but you're just not seeing it.
+- kind: dialogue
+  speaker: chadwick
+  text: Actually, I think Vigil's right.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh no, you're just going to agree with him, aren't you?
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, trust me on this one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, I'll prove it to you all.

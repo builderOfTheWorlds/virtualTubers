@@ -1,0 +1,35 @@
+id: night-watch
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-18T23:56:09.230018+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: The stars look different from up here.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've never seen this configuration before.
+- kind: dialogue
+  speaker: Leena
+  text: I used to be able to identify constellations, before... everything.
+- kind: dialogue
+  speaker: chadwick
+  text: Quietly, what is it?
+- kind: dialogue
+  speaker: Leena
+  text: Nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: You can hear the wind rustling through the trees.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I don't hear anything.
+- kind: dialogue
+  speaker: Vigil
+  text: It's very light, but it's there.
+- kind: dialogue
+  speaker: gm
+  text: Shall we wake the others early?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't think it's worth the risk.

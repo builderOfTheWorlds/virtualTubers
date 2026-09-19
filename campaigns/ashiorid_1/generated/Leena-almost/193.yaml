@@ -1,0 +1,43 @@
+id: Leena-almost
+take: 193
+model: llama3.1:8b
+generated_at: '2026-09-18T20:26:44.954044+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something's off here, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, but I feel like I've seen that doorway before.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's just a coincidence, Leena. You see similar things in the village
+    all the time.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, I've seen doorways like that back in the village. Must be a common design.
+- kind: dialogue
+  speaker: Leena
+  text: No, I'm sure it's not. It's... it's something else.
+- kind: dialogue
+  speaker: gm
+  text: What do you mean?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It just feels... familiar. And yet, it's not.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, just let it go, okay? It's probably nothing.
+- kind: dialogue
+  speaker: gm
+  text: What do you think, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think Chadwick's right, Leena. You can't get worked up over every little
+    thing.

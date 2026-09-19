@@ -1,0 +1,36 @@
+id: the-meal
+take: 13
+model: llama3.1:8b
+generated_at: '2026-09-18T19:20:32.407214+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in, everyone.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I gotta say, I'm not impressed with the seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, who wants to make a toast? We should celebrate the meal.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I could've done this better. Just give me the ingredients and I'm
+    out.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, don't be too hard on whoever cooked, it's not about perfection.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, a little planning would go a long way.
+- kind: dialogue
+  speaker: gm
+  text: Come on, guys, it's just a meal.
+- kind: dialogue
+  speaker: Leena
+  text: Who's cooking tomorrow? Maybe we can have a theme night?
+- kind: dialogue
+  speaker: gm
+  text: Chad, it's fine.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I know I can do better, it's just... never mind.

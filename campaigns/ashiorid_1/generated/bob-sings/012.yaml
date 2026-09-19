@@ -1,0 +1,36 @@
+id: bob-sings
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-19T02:15:38.299833+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Sodacan Bob, what in the depths is that racket?
+- kind: dialogue
+  speaker: chadwick
+  text: (covering his ears) Make it stop, Bob.
+- kind: dialogue
+  speaker: Leena
+  text: (laughing) Oh, Bob's singing his favorite dwarven work-song!
+- kind: dialogue
+  speaker: Vigil
+  text: (grimacing) Please, for the love of Moradin...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hear me, hear me, diggers of old! "Krogga krogga kragga, krogga krogga kree!"
+- kind: dialogue
+  speaker: gm
+  text: (backing away) I think we're making the stone tremble.
+- kind: dialogue
+  speaker: chadwick
+  text: (whimpering) My ears, Bob...
+- kind: dialogue
+  speaker: Leena
+  text: (giggling) This is the most I've ever heard you sing!
+- kind: dialogue
+  speaker: Vigil
+  text: (covering his face) Krogga krogga...kree...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Dig, dig, dig, we must make the tunnels deep! "Krogga krogga kragga, kree
+    kree kree!"

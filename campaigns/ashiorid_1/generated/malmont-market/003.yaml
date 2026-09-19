@@ -1,0 +1,35 @@
+id: malmont-market
+take: 3
+model: llama3.1:8b
+generated_at: '2026-09-18T19:08:24.377558+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that supposed to be, a decorative sword?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not interested in buying anything that's going to get me killed.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, is this one a copy? The ink is quite faded.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, no one knows me here, do they?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: For the love of iron, someone get it right.
+- kind: dialogue
+  speaker: Vigil
+  text: You hear that? The blacksmith's got a sense of humor.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) Look at this one. The cartographer's mark is here.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the smith) I think I've seen enough for one day.
+- kind: dialogue
+  speaker: Vigil
+  text: (paying the blacksmith) Keep the change.
+- kind: dialogue
+  speaker: Leena
+  text: (to Chadwick) You've never been here before, have you?

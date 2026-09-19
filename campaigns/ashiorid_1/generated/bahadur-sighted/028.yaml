@@ -1,0 +1,35 @@
+id: bahadur-sighted
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T02:10:32.670549+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A shape.
+- kind: dialogue
+  speaker: chadwick
+  text: What.
+- kind: dialogue
+  speaker: Leena
+  text: Did you see it.
+- kind: dialogue
+  speaker: Vigil
+  text: Moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (breathing)
+- kind: dialogue
+  speaker: gm
+  text: (long pause) There.
+- kind: dialogue
+  speaker: chadwick
+  text: Where.
+- kind: dialogue
+  speaker: Leena
+  text: Not sure.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (still breathing)

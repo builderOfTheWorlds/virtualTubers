@@ -1,0 +1,39 @@
+id: road-talk
+take: 56
+model: llama3.1:8b
+generated_at: '2026-09-18T20:47:30.465362+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've been walking for hours, maybe we should find some shade.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm fine, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I know, my village is surrounded by these beautiful hills, we grow the
+    most wonderful citrus fruits.
+- kind: dialogue
+  speaker: Vigil
+  text: I've got some good memories of Nafsari, the fishing festival they have every
+    spring...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You mean the one with the giant statue of Vabokedos, the great founder?
+- kind: dialogue
+  speaker: Leena
+  text: Yes, exactly! We have a wonderful statue of him in our town square, with a
+    beautiful fountain in front.
+- kind: dialogue
+  speaker: gm
+  text: It sounds lovely, Leena. Sodacan Bob, what's so special about Vabokedos' statue?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's said to have healing properties, people come from all over to rub the
+    sacred stone.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure it's just a myth.
+- kind: dialogue
+  speaker: Vigil
+  text: Ah, Nafsari...

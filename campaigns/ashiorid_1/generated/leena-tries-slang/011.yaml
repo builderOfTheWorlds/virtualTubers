@@ -1,0 +1,39 @@
+id: leena-tries-slang
+take: 11
+model: llama3.1:8b
+generated_at: '2026-09-19T02:32:41.964756+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You want to grab some zha'thil, huh, Leena?
+- kind: dialogue
+  speaker: chadwick
+  text: What's for dinner?
+- kind: dialogue
+  speaker: Leena
+  text: Oh, just some leftover zhaitil from last night. It's really good, you should
+    try it.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm more of a zha'ril man myself.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the difference?
+- kind: dialogue
+  speaker: Leena
+  text: Well, zhaitil is the one with the weird spices.
+- kind: dialogue
+  speaker: chadwick
+  text: I thought zha'ril was the one with the weird spices.
+- kind: dialogue
+  speaker: Leena
+  text: No, no, zha'thil is the one that's good for you.
+- kind: dialogue
+  speaker: gm
+  text: Actually, zha'thil is the one that's a type of dessert.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, right. I always get those two mixed up.
+- kind: dialogue
+  speaker: Leena
+  text: Wait, no, I was using it wrong all along?

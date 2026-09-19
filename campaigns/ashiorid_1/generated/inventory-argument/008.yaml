@@ -1,0 +1,32 @@
+id: inventory-argument
+take: 8
+model: llama3.1:8b
+generated_at: '2026-09-19T02:27:50.616312+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You'd think it'd be a simple task to pack a single bag each.
+- kind: dialogue
+  speaker: chadwick
+  text: Labels would help, but nobody ever bothers.
+- kind: dialogue
+  speaker: Leena
+  text: You're telling me, I swear I packed the first aid kit in mine.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm pretty sure I saw it in Sodacan Bob's bag this morning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, see, I'm the one who found it in my bag, so it's mine now.
+- kind: dialogue
+  speaker: chadwick
+  text: No way, you just stuck it there to make yourself look good.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, calm down, it's just a first aid kit.
+- kind: dialogue
+  speaker: gm
+  text: Who's got the map, by the way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, actually, I found that in Chadwick's bag too.

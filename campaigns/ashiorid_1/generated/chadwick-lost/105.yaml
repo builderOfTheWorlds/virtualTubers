@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 105
+model: llama3.1:8b
+generated_at: '2026-09-18T20:09:53.486529+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving. You're all on a journey to the next town.
+- kind: dialogue
+  speaker: chadwick
+  text: (to himself) I know exactly where we are. I've been paying attention.
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to chadwick) Hey, you think you're lost?
+- kind: dialogue
+  speaker: chadwick
+  text: (defensively) No, I'm fine. Let's just move out.
+- kind: dialogue
+  speaker: Vigil
+  text: (to the group) I can give you directions if you need them.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, great. Chadwick's lost again.
+- kind: dialogue
+  speaker: Leena
+  text: (interrupting) Sodacan Bob, maybe Chadwick just needs a little help.
+- kind: dialogue
+  speaker: chadwick
+  text: (flatly) I don't need help.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's keep moving. The path splits up ahead.

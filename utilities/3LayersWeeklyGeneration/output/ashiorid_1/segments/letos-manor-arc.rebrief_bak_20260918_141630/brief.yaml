@@ -1,0 +1,75 @@
+segment_id: letos-manor-arc
+order: 19
+loop: 0
+hours: 6
+synopsis: The party arrives at Leto's Manor, where they are invited to a party celebrating
+  the Ten Thousandth Anniversary. However, they soon discover that not all guests
+  were meant to be there, and the manor itself holds secrets that will change their
+  lives forever.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: letos-manor-arc-n0-arrival-1
+  kind: ambient
+  prompt: The four strangers arrive at Duke Sorensen Leto III's manor for the party,
+    only to find it is not what they expected. They are greeted by a butler who reveals
+    secrets about their true nature.
+  lore:
+  - amulet-of-wonder
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-arrival-2
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  node_id: letos-manor-arc-n0
+- slot_id: letos-manor-arc-n0-arrival-3
+  kind: ambient
+  prompt: The strangers approach the imposing entrance where a formal butler awaits
+    with an unsettling smile.
+  lore:
+  - moonwells
+  - the-bahadur
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: letos-manor-arc-n0
+nodes:
+- node_id: letos-manor-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 9
+  slots: 0
+- node_id: letos-manor-arc-n0
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: letos-manor-arc-n1
+  parent_id: letos-manor-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 6
+  slots: 0

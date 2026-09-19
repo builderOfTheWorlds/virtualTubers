@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 260
+model: llama3.1:8b
+generated_at: '2026-09-18T23:38:43.178703+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's caught your attention?
+- kind: dialogue
+  speaker: Leena
+  text: That thing in front of me, I've seen it before. I know I shouldn't have.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sounds like a familiar face, Leena. You might've seen something like it back
+    in your village.
+- kind: dialogue
+  speaker: Vigil
+  text: silence
+- kind: dialogue
+  speaker: chadwick
+  text: Don't go chasing it, Leena. Let's leave it be.
+- kind: dialogue
+  speaker: gm
+  text: What do you think it is, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. But I'm not scared. Just curious.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm sure it's nothing. Just your imagination playing tricks on you.
+- kind: dialogue
+  speaker: Vigil
+  text: says nothing, just looks at Leena
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on. What's our priority for the day?

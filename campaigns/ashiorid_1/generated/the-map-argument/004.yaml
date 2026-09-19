@@ -1,0 +1,35 @@
+id: the-map-argument
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:38:36.399652+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, we've got a decent chunk of the day left.
+- kind: dialogue
+  speaker: chadwick
+  text: Wait, wait, wait, Leena, you can't just think we're taking that shortcut.
+- kind: dialogue
+  speaker: Leena
+  text: What's wrong with the shortcut, Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: Everything, for one, it's clearly marked as impassable on this map.
+- kind: dialogue
+  speaker: Leena
+  text: It's not impassable, it's just that map doesn't update that quickly.
+- kind: dialogue
+  speaker: Vigil
+  text: I think Leena's right, Chadwick, we've walked through worse terrain than that.
+- kind: dialogue
+  speaker: chadwick
+  text: You're just saying that because you're tired of walking in circles.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, come on, Chadwick, don't make this about you for once.
+- kind: dialogue
+  speaker: chadwick
+  text: Me? I'm just trying to keep us alive, unlike some people I could mention.
+- kind: dialogue
+  speaker: gm
+  text: Okay, okay, let's not get sidetracked, we'll take the safer route.

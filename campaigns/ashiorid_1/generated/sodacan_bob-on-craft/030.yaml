@@ -1,0 +1,38 @@
+id: sodacan_bob-on-craft
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T20:48:25.662629+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's a piece of hardware from a Smith & Co. factory in Ashwood,
+    circa 1853.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's move.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This axle was made for a two-wheeled cart, probably used for hauling goods
+    or livestock.
+- kind: dialogue
+  speaker: Vigil
+  text: Was it ever actually used?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, the maker was thinking about durability and strength, you can see
+    the reinforcement here.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I touch it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Leena, be careful, you don't want to get any dirt or grime on it.
+- kind: dialogue
+  speaker: Vigil
+  text: That's a good point, Bob, it's surprisingly well-preserved.
+- kind: dialogue
+  speaker: chadwick
+  text: I said, come on, Bob.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just saying, this is a great example of Victorian-era engineering.

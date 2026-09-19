@@ -1,0 +1,42 @@
+id: chadwick-lost
+take: 235
+model: llama3.1:8b
+generated_at: '2026-09-18T22:12:49.364162+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Welcome back to Loop 235, where the scenery is a little worn but the company
+    is still charming.
+- kind: dialogue
+  speaker: chadwick
+  text: Alright, let's move out, I think we need to head east.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh boy, here we go again.
+- kind: dialogue
+  speaker: Leena
+  text: Well, actually, I think we need to head north first, and then east.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure it's east.
+- kind: dialogue
+  speaker: Vigil
+  text: I think I can help with navigation, if you'd like.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckles) Oh, Chadwick's got this.
+- kind: dialogue
+  speaker: chadwick
+  text: I do too have this.
+- kind: dialogue
+  speaker: Leena
+  text: Well, maybe we could just ask Vigil to double-check, just in case.
+- kind: dialogue
+  speaker: chadwick
+  text: No need, I'm positive.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, Leena's suggestion is a good one.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughs) Oh, Chadwick's going to get us lost.

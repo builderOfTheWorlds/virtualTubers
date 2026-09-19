@@ -1,0 +1,32 @@
+id: Vigil-counts
+take: 33
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:09.193248+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've counted seven people in the room, plus ourselves.
+- kind: dialogue
+  speaker: chadwick
+  text: Hmm, that's about what I'd expected.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, we're not exactly in a big space.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's that you're implying, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not implying anything, just noting the fact.
+- kind: dialogue
+  speaker: gm
+  text: It's a small room, let's just enjoy the view.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's a nice view.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I like the way that shutter's been repaired.
+- kind: dialogue
+  speaker: Leena
+  text: Yeah, it looks new.

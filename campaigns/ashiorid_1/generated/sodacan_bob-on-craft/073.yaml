@@ -1,0 +1,49 @@
+id: sodacan_bob-on-craft
+take: 73
+model: llama3.1:8b
+generated_at: '2026-09-18T22:26:22.224018+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, you've found a gate and a wagon axle, Sodacan Bob. What's so interesting
+    about them?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, it's the workmanship, really. This gate was made by a skilled craftsman
+    in the Eastern provinces, probably around 20 years ago.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on? We've got a long way to go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: No, no, this is fascinating. The maker was clearly going for a sturdy, no-nonsense
+    design.
+- kind: dialogue
+  speaker: Vigil
+  text: Sodacan Bob, do you think the wagon axle is original to the gate?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, good question, Vigil. Yes, I'd say it's a very good match for the gate.
+    The maker would have used a similar axle.
+- kind: dialogue
+  speaker: Leena
+  text: (excitedly) Oh, can you tell us more about the materials they used? Was it
+    locally sourced?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Ah, Leena, you want to know the nitty-gritty, don't you? Alright,
+    the iron used here is a mix of local and imported, as were the hinges.
+- kind: dialogue
+  speaker: chadwick
+  text: (impatiently) We're going to lose the light if we don't get moving.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (not noticing Chadwick's impatience) And look at the way the iron is shaped
+    here. It's clear the maker was trying to make the gate as secure as possible.
+- kind: dialogue
+  speaker: Vigil
+  text: (to the others) I think it's worth taking a closer look at the gate's mechanism,
+    see if we can figure out how it's supposed to work.
+- kind: dialogue
+  speaker: Leena
+  text: (eagerly) Ooh, can we try to open it?

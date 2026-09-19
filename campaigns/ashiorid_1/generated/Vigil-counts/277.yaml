@@ -1,0 +1,41 @@
+id: Vigil-counts
+take: 277
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:37.336566+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We've arrived at the Red Griffin Inn.
+- kind: dialogue
+  speaker: chadwick
+  text: Nice, I'm starving.
+- kind: dialogue
+  speaker: Leena
+  text: I'll go order us some food.
+- kind: dialogue
+  speaker: Vigil
+  text: The door to the left opens out into the courtyard.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the one on the right leads to the kitchen.
+- kind: dialogue
+  speaker: Leena
+  text: Got it, I'll order from there.
+- kind: dialogue
+  speaker: Vigil
+  text: The shutter on the window was repaired recently.
+- kind: dialogue
+  speaker: gm
+  text: Very observant, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Nothing, it was just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on the food.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the rooms. I'll go ask about ours.

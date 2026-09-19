@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 36
+model: llama3.1:8b
+generated_at: '2026-09-18T19:37:23.500744+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I noticed the cart passed by the window twice in the last hour.
+- kind: dialogue
+  speaker: chadwick
+  text: What's the point of that, Vigil?
+- kind: dialogue
+  speaker: Leena
+  text: Just a curiosity, I suppose.
+- kind: dialogue
+  speaker: Vigil
+  text: No particular reason. Just observed it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe we should take note of it anyway.
+- kind: dialogue
+  speaker: gm
+  text: I think that's unnecessary, Bob.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, it's not like we're under attack.
+- kind: dialogue
+  speaker: Leena
+  text: Can we move on from this, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Sorry, sorry.
+- kind: dialogue
+  speaker: Vigil
+  text: No need to apologize, Bob.
+- kind: dialogue
+  speaker: gm
+  text: Let's focus on our meeting with the merchant.

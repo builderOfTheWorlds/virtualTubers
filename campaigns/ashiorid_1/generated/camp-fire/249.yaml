@@ -1,0 +1,32 @@
+id: camp-fire
+take: 249
+model: llama3.1:8b
+generated_at: '2026-09-18T23:42:56.527913+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, the rain is coming down too hard for us to keep going.
+- kind: dialogue
+  speaker: Leena
+  text: Is it possible the Event was somehow triggered by a lunar cycle?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire needs more ventilation.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I laid it wrong, Bob's way would've done better by now.
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, we'll take turns. Leena, you watch first.
+- kind: dialogue
+  speaker: Leena
+  text: I think I'd rather be out there, what's the point of waiting?
+- kind: dialogue
+  speaker: Vigil
+  text: The flames are dying.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: If we add more kindling, we'll choke the fire.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to conserve what we have, no point adding more.

@@ -1,0 +1,42 @@
+id: the-meal
+take: 75
+model: llama3.1:8b
+generated_at: '2026-09-18T22:34:08.105514+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, everyone, this is like a little holiday celebration in the middle of
+    the week, right?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ugh, this is an insult to good cooking. Whoever made this should be ashamed.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands his portion to Leena)
+- kind: dialogue
+  speaker: Leena
+  text: Oh, thank you, Vigil! You're so kind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I could make this in my sleep. It's basic.
+- kind: dialogue
+  speaker: chadwick
+  text: (muttering) Shut up, Bob...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (defensively) Hey, I'm just saying. You can't even be bothered to season it.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers to Leena) I don't think the pot was ever cleaned properly.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, that's probably not true. (tries to reassure Vigil)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, I would've done it so much better. I would've-

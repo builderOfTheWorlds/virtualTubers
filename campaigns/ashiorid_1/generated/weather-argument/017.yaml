@@ -1,0 +1,42 @@
+id: weather-argument
+take: 17
+model: llama3.1:8b
+generated_at: '2026-09-19T03:41:50.545588+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'm telling you, the clouds are getting darker by the minute.
+- kind: dialogue
+  speaker: chadwick
+  text: It's just a high-pressure system, Ash, I'm sure it'll pass.
+- kind: dialogue
+  speaker: Leena
+  text: I'm no expert, but I've lived here for five years and I know it rains when
+    it's like this.
+- kind: dialogue
+  speaker: Vigil
+  text: You can't just assume it's going to rain because you've seen it before, Leena.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: But what about all the birds flying south, doesn't that usually mean rain?
+- kind: dialogue
+  speaker: chadwick
+  text: I think Sodacan's got a point there, Ash, maybe they're just going on a vacation.
+- kind: dialogue
+  speaker: gm
+  text: Vacation? In this weather?
+- kind: dialogue
+  speaker: Leena
+  text: I've seen them fly south when it's perfectly sunny, so I'm not convinced.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm going to go get a closer look at the sky, see if I can see any patterns.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Patterns? It's just a bunch of puffy white clouds, Vigil.
+- kind: dialogue
+  speaker: chadwick
+  text: I think Vigil might be onto something, let's go take a look.
+- kind: dialogue
+  speaker: gm
+  text: Fine, but I'm still saying it's going to rain.

@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 146
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:20.002911+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: You've noticed the repaired shutter, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I saw it too.
+- kind: dialogue
+  speaker: Leena
+  text: I'll take a closer look.
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the hinge is newer than the rest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the cart's still sitting there.
+- kind: dialogue
+  speaker: gm
+  text: Do you think it's related to... anything?
+- kind: dialogue
+  speaker: chadwick
+  text: Not that we can tell.
+- kind: dialogue
+  speaker: Leena
+  text: Let's keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: The doors open towards the stairs.
+- kind: dialogue
+  speaker: gm
+  text: There are four people at the counter.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And the barkeep's polishing a mug.

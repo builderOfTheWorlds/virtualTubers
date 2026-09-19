@@ -1,0 +1,44 @@
+id: night-watch
+take: 90
+model: llama3.1:8b
+generated_at: '2026-09-18T22:20:20.612671+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The world is hushed, Chadwick. The only sound is the distant hum of the moon.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, can you see the moon?
+- kind: dialogue
+  speaker: Leena
+  text: (yawns) It's up, Vigil's got it. I'll take a nap.
+- kind: dialogue
+  speaker: Vigil
+  text: (whispers) Chadwick, I don't think we should wake them up yet. The morning
+    sun...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I hear crickets.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) The crickets are far away, Chadwick. They're not loud enough to be
+    a problem.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) Yeah, I can barely hear them. I wonder what time it is.
+- kind: dialogue
+  speaker: Leena
+  text: (mumbles) What's the point of knowing the time? It's not like anything happens
+    during watch.
+- kind: dialogue
+  speaker: Vigil
+  text: (pauses) I used to think that, too, Leena. But I get anxious when it's still.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, the sky is full of stars. It's always darkest before dawn.
+- kind: dialogue
+  speaker: chadwick
+  text: (whispers) That's true. (pauses) I have nightmares about it being too late.
+- kind: dialogue
+  speaker: Leena
+  text: (sleepily) What's the nightmare about?

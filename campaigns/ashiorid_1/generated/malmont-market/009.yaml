@@ -1,0 +1,38 @@
+id: malmont-market
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-18T19:09:01.215748+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The market's a bustle today, I see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Not impressed. This is the best they've got?
+- kind: dialogue
+  speaker: Vigil
+  text: Just taking in the sights, ma'am.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, is this where they keep the maps?
+- kind: dialogue
+  speaker: chadwick
+  text: Sorry, what's that? (looks around)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I said, where's the decent metalwork around here?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering) I think it's over here...
+- kind: dialogue
+  speaker: Vigil
+  text: (to Chadwick) You're clear of attention, sir.
+- kind: dialogue
+  speaker: gm
+  text: Nothing seems out of the ordinary today.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A bit too ornate for my taste...
+- kind: dialogue
+  speaker: Leena
+  text: (excited) Oh, this one! From before the fires, I think!

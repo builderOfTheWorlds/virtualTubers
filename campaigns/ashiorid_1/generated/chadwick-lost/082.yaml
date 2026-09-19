@@ -1,0 +1,40 @@
+id: chadwick-lost
+take: 82
+model: llama3.1:8b
+generated_at: '2026-09-18T20:07:31.003931+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: I'd like to take a look at the map, Chadwick, and get a bearing on our position.
+- kind: dialogue
+  speaker: chadwick
+  text: I've been studying the maps for days, I know exactly where we are.
+- kind: dialogue
+  speaker: Leena
+  text: Well, Chadwick, you're always so confident, it's nice to see.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Yeah, because "I know exactly where we are" is always a reassuring
+    phrase.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) If you'd like, I can take a look at the map and confirm our position.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need you to do that, I'm perfectly capable of navigating.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) Oh, this is great, Vigil's going to be the one to finally admit
+    we're lost.
+- kind: dialogue
+  speaker: Leena
+  text: (trying to intervene) Actually, Chadwick, if you'd just say you're not sure...
+- kind: dialogue
+  speaker: chadwick
+  text: (interrupting) I said I know exactly where we are, and I do.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just move forward then and see if we can get a better view.
+- kind: dialogue
+  speaker: Vigil
+  text: (under his breath) I'll wait to be asked...

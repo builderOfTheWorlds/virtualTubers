@@ -1,0 +1,17 @@
+id: vigil-watches-longer
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:41:27.582719+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: the watch is almost over
+- kind: dialogue
+  speaker: sodacan_bob
+  text: the fire's burning low
+- kind: dialogue
+  speaker: Vigil
+  text: the wind's changed direction tonight
+- kind: dialogue
+  speaker: Vigil
+  text: I think it might be better inside

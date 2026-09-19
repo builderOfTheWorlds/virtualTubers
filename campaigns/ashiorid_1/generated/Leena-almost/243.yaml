@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 243
+model: llama3.1:8b
+generated_at: '2026-09-18T23:37:20.500921+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, can you tell us more about what's bothering you?
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe you just saw something that looked familiar, but it's not actually from
+    your past.
+- kind: dialogue
+  speaker: Leena
+  text: No, I know what I saw. It's not just the same thing I've seen before, it's...
+    it's not right.
+- kind: dialogue
+  speaker: Vigil
+  text: (sitting quietly, observing Leena)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that sort of thing before, actually - I'm pretty sure it's just
+    a common enough landmark.
+- kind: dialogue
+  speaker: Leena
+  text: But it shouldn't be. I'm certain of it.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't get too worked up about it, Leena. It's probably nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not worked up. I just... I don't know what it is.

@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 225
+model: llama3.1:8b
+generated_at: '2026-09-18T22:05:32.264099+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The city's markets have a new shipment of fresh produce, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I picked some up for breakfast.
+- kind: dialogue
+  speaker: Leena
+  text: Anyone hungry?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a shutter on the east wall that's been repaired.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Nice to have some fresh air, I guess.
+- kind: dialogue
+  speaker: chadwick
+  text: What's with the shutter?
+- kind: dialogue
+  speaker: Vigil
+  text: Just noticed it was new.
+- kind: dialogue
+  speaker: Leena
+  text: Can we focus on the map?
+- kind: dialogue
+  speaker: gm
+  text: We'll get to it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think we're ready to move out.

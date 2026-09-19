@@ -1,0 +1,41 @@
+id: weather-argument
+take: 7
+model: llama3.1:8b
+generated_at: '2026-09-19T02:46:18.618152+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Look at those dark clouds gathering.
+- kind: dialogue
+  speaker: chadwick
+  text: Dark clouds always mean rain, doesn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I saw the birds flying low this morning, that's a sign.
+- kind: dialogue
+  speaker: Vigil
+  text: It's the wind direction, we're getting a westerly flow.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I saw the trees leaning away from the sun.
+- kind: dialogue
+  speaker: gm
+  text: And remember that storm we got last week?
+- kind: dialogue
+  speaker: chadwick
+  text: That was just a front passing through.
+- kind: dialogue
+  speaker: Leena
+  text: But the birds know, they always sense these things.
+- kind: dialogue
+  speaker: Vigil
+  text: Western winds usually bring rain, trust me.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Trees lean towards the sun, not away from it.
+- kind: dialogue
+  speaker: gm
+  text: I saw the way the light was shining on the hills.
+- kind: dialogue
+  speaker: chadwick
+  text: That's just the time of day, it's gonna rain tonight.

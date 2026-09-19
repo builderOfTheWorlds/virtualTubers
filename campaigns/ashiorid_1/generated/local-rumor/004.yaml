@@ -1,0 +1,32 @@
+id: local-rumor
+take: 4
+model: llama3.1:8b
+generated_at: '2026-09-19T02:33:46.081158+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: People seem to be in a hurry to get back to their business, don't they?
+- kind: dialogue
+  speaker: chadwick
+  text: I think it's just the market day. Everyone's trying to get their goods sold.
+- kind: dialogue
+  speaker: Leena
+  text: But the market's still going on. Why the rush?
+- kind: dialogue
+  speaker: Vigil
+  text: Maybe it's just people getting anxious about the manor burning.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think they'd be more scared with that... thing still on the loose.
+- kind: dialogue
+  speaker: gm
+  text: I think it's just small-town worry. People get worked up over nothing.
+- kind: dialogue
+  speaker: Leena
+  text: I don't think I've ever heard anyone mention that thing by name.
+- kind: dialogue
+  speaker: Vigil
+  text: No, nobody does. It's like it's a... unspoken thing.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Unspoken, unregistered, and unfriendly. That's a nice way to put it.

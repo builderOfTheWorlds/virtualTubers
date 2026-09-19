@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 85
+model: llama3.1:8b
+generated_at: '2026-09-18T19:40:48.050354+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What's the notice, Vigil?
+- kind: dialogue
+  speaker: chadwick
+  text: A cart passed by, just like last time.
+- kind: dialogue
+  speaker: Leena
+  text: Is that all?
+- kind: dialogue
+  speaker: Vigil
+  text: There's a shutter been fixed recently, I think on this side of the room.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Where's the other door open to?
+- kind: dialogue
+  speaker: chadwick
+  text: East, I thought.
+- kind: dialogue
+  speaker: Vigil
+  text: It does, yeah.
+- kind: dialogue
+  speaker: gm
+  text: Anyone else notice anything unusual?
+- kind: dialogue
+  speaker: Leena
+  text: No, not really.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just the one cart.
+- kind: dialogue
+  speaker: Vigil
+  text: Guess it's just nothing.

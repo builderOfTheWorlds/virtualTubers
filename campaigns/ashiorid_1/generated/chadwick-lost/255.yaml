@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 255
+model: llama3.1:8b
+generated_at: '2026-09-18T23:47:22.726421+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Chadwick leads the party forward.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm pretty sure this way is it.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, can I ask, are you-
+- kind: dialogue
+  speaker: chadwick
+  text: No, I know exactly where we are.
+- kind: dialogue
+  speaker: Vigil
+  text: Actually, I'm not really sure where we are.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is great, Vigil's just trolling us.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, maybe it's time to just ask for directions?
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need directions, I've got a map.
+- kind: dialogue
+  speaker: gm
+  text: Wait, where did your map go?
+- kind: dialogue
+  speaker: chadwick
+  text: It's right here, somewhere.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we should just keep moving, it's not that far.

@@ -1,0 +1,42 @@
+id: sodacan_bob-on-runes
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:18:12.509009+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a long way to the next door, we should get moving.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I'm comfortable with this, let's wait a day or two.
+- kind: dialogue
+  speaker: Leena
+  text: We can't afford to wait, the map is still incomplete.
+- kind: dialogue
+  speaker: Vigil
+  text: I've been thinking, what if we're going the wrong way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: A die is struck with a certain amount of force, depending on the size of the
+    die...
+- kind: dialogue
+  speaker: chadwick
+  text: How does that relate to the runes on the Malvakar?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: It's all about precision, a shallow cut won't last.
+- kind: dialogue
+  speaker: Leena
+  text: I've never seen anyone make a rune that deep.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Of course not, who has the time for that kind of work?
+- kind: dialogue
+  speaker: Vigil
+  text: Who made the Malvakar, then?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (pauses, looking for a way to change the subject)
+- kind: dialogue
+  speaker: gm
+  text: We should focus on finding the next door, not speculating about history.

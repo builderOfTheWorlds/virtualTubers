@@ -1,0 +1,35 @@
+id: local-rumor
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-19T03:31:22.278085+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: People seem to know their business, don't they?
+- kind: dialogue
+  speaker: chadwick
+  text: I guess you can't say that about everyone, though.
+- kind: dialogue
+  speaker: Leena
+  text: There's a lot of closed-up windows for a town this time of day.
+- kind: dialogue
+  speaker: Vigil
+  text: I think we'll be able to find a room for the night without a problem.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see the constable's men moving through the streets over here.
+- kind: dialogue
+  speaker: gm
+  text: I'm surprised they haven't given us the once-over yet.
+- kind: dialogue
+  speaker: chadwick
+  text: Maybe they're not as eager as we are to get back on the road.
+- kind: dialogue
+  speaker: Leena
+  text: Or maybe they just don't notice us.
+- kind: dialogue
+  speaker: Vigil
+  text: Either way, I'm for keeping a low profile.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's a relief after the last few days.

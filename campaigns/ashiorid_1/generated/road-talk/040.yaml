@@ -1,0 +1,43 @@
+id: road-talk
+take: 40
+model: llama3.1:8b
+generated_at: '2026-09-18T20:45:54.940546+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun is beating down on us, let's find some shade to take a break.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm good, keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I love telling you all about my village in Koralis. The riverside is perfect
+    for catching fish.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And then there's the market day, where we trade goods with the neighboring
+    villages.
+- kind: dialogue
+  speaker: Vigil
+  text: (pausing, looking away) Nafsari... my family's farm was near the old windmill.
+- kind: dialogue
+  speaker: gm
+  text: (not pressing the issue) Okay, let's keep moving.
+- kind: dialogue
+  speaker: Leena
+  text: I swear, the bread from my village is the best in all the land.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm telling you, it's the quality of the water that makes the difference.
+- kind: dialogue
+  speaker: chadwick
+  text: (distracted) How's the water situation looking up ahead?
+- kind: dialogue
+  speaker: gm
+  text: (looking ahead) Still dry, but we're getting close to that stream.
+- kind: dialogue
+  speaker: Vigil
+  text: (mumbling) Too far...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (excitedly) And then we'll have all the soda we can drink!

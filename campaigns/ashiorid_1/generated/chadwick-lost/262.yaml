@@ -1,0 +1,32 @@
+id: chadwick-lost
+take: 262
+model: llama3.1:8b
+generated_at: '2026-09-18T23:48:13.836596+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The dense forest stretches out before you, the trees towering above.
+- kind: dialogue
+  speaker: chadwick
+  text: I think we should head east, don't you all?
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, joy, Chadwick's navigating again.
+- kind: dialogue
+  speaker: Leena
+  text: (smiling) Chadwick, perhaps we should wait for Vigil to confirm the direction?
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm sure I'm right. It's just a little... (pauses) diversion.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, this is good. This is very good.
+- kind: dialogue
+  speaker: Vigil
+  text: (after a moment) Actually, I think you're about 45 degrees off, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: (grinning) Ah, I was just testing you.

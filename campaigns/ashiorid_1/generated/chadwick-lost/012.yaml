@@ -1,0 +1,38 @@
+id: chadwick-lost
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:06:50.357501+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: A dense forest stretches out before you, with trees that seem to close in
+    on either side.
+- kind: dialogue
+  speaker: chadwick
+  text: Let's get moving, people. We don't have all day.
+- kind: dialogue
+  speaker: Leena
+  text: Actually, Chadwick, if we're not sure where we are, maybe we should take a
+    minute to figure it out.
+- kind: dialogue
+  speaker: chadwick
+  text: We know exactly where we are, Leena. We're on a quest.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh, sure, Chadwick. And I'm the king of Gondor.
+- kind: dialogue
+  speaker: Vigil
+  text: (dryly) I'm happy to help with navigation, if you'd like.
+- kind: dialogue
+  speaker: chadwick
+  text: I don't need your help, Vigil. I've got this.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) This is rich. The great Chadwick, lost in the woods.
+- kind: dialogue
+  speaker: Leena
+  text: Chadwick, if you say we're going in the right direction, I'll go along with
+    it.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm saying we're going in the right direction. We are.

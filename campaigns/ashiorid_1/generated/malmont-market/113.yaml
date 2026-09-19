@@ -1,0 +1,29 @@
+id: malmont-market
+take: 113
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:38.336055+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better metalwork in a roadside junkyard.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, good sir, but may I see that old map you have?
+- kind: dialogue
+  speaker: Vigil
+  text: (looking at a nearby stall) A copper pin. Not bad work.
+- kind: dialogue
+  speaker: chadwick
+  text: (to no one in particular) Nice morning, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: I've seen this one before. It's not from around here, is it?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (to the blacksmith) What's with the quality around here? Lazy?
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes narrowing) Don't know you, friend.
+- kind: dialogue
+  speaker: Leena
+  text: (to the map seller) What's this symbol here?

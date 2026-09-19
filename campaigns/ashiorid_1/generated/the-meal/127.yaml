@@ -1,0 +1,41 @@
+id: the-meal
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-19T00:12:53.786412+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's dig in.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This food's been sitting out too long, I can tell you that much.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat your dinner.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, it's not that bad! Let's make a toast!
+- kind: dialogue
+  speaker: Vigil
+  text: I'm just going to take the least appetizing piece.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, I'm no chef, but I know a thing or two about cooking a decent meal.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, Sodacan Bob, can you show us your famous three-alarm chili recipe?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You want to know my secret? It's all about the proportions of cayenne to paprika.
+- kind: dialogue
+  speaker: gm
+  text: Let's just eat already.
+- kind: dialogue
+  speaker: chadwick
+  text: Yes, let's just eat.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fine, but I'm still saying it's the cook's fault.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay, let's not fight over the cooking.

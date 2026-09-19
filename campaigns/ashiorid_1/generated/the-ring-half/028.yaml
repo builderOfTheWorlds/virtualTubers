@@ -1,0 +1,29 @@
+id: the-ring-half
+take: 28
+model: llama3.1:8b
+generated_at: '2026-09-19T03:37:20.558972+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen it before. What's it supposed to be?
+- kind: dialogue
+  speaker: Leena
+  text: I think it's a family crest, but I've never seen the design.
+- kind: dialogue
+  speaker: Vigil
+  text: I don't recognize the symbol on it at all.
+- kind: dialogue
+  speaker: gm
+  text: It's supposed to be the mark of the Begene Sisters.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do you think we're supposed to be looking for the other half?
+- kind: dialogue
+  speaker: Vigil
+  text: Why would anyone split it in two?
+- kind: dialogue
+  speaker: gm
+  text: The letter that came with it just said it was a... a token of their trust.
+- kind: dialogue
+  speaker: Leena
+  text: Trust? What kind of trust?

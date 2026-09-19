@@ -1,0 +1,44 @@
+id: sodacan_bob-on-craft
+take: 12
+model: llama3.1:8b
+generated_at: '2026-09-18T19:15:38.029983+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: This is where the old trade road passes through the hills.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Come on, Bob, we''re wasting time.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: You just don''t appreciate the craftsmanship that went into
+    this gate.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: I think it''s nice, but is it... old?'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: What kind of metal is this?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Ah, good question, Vigil, that''s a rare iron alloy from the
+    north.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: We''re not going to learn anything more from this, Bob.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: Oh, come now, Chad, you''re just not seeing the beauty of it.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: (laughs) I think I am, but I''m also a bit bored.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: (muttering) Iron alloy... doesn''t sound right.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: (excitedly) You see, Vigil, it''s all about the subtleties of
+    the maker''s style.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: (sighs) Alright, Bob, how long are we going to be here?'

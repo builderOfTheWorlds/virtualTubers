@@ -1,24 +1,41 @@
 id: letos-manor-arc-n0-arrival-1
 take: 1
 model: light
-generated_at: '2026-08-26T14:18:16.319944+00:00'
+generated_at: '2026-09-18T18:30:56.664174+00:00'
 beats:
-- kind: narration
+- kind: dialogue
   speaker: gm
-  text: 'Chadwick: Ugh, this doesn''t look like the grand estate I expected.'
+  text: Welcome, everyone, to Leto's Manor, where we gather to celebrate the Ten Thousandth
+    Anniversary of the Event that changed the course of our world.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure I understand the significance of this anniversary, but I'm happy
+    to be here and enjoy the festivities.
 - kind: dialogue
   speaker: Leena
-  text: (examining the manor) Perhaps it was destroyed in the fire you mentioned,
-    Vigil.
+  text: (looking around) I've never been to a party like this before. I hope the cake
+    is good, I'm starving.
 - kind: dialogue
   speaker: Vigil
-  text: Indeed, Leto's manor burned down a fortnight ago. This is its replacement,
-    I suppose.
-- kind: narration
+  text: (adjusting his suit) I've heard the manor's owner, Leto, has a remarkable
+    collection of artifacts from the Age of War.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm just happy to be here, I love a good party. And I hear there's a surprise
+    guest who's going to make an appearance.
+- kind: dialogue
   speaker: gm
-  text: 'Ashiorid: Welcome, I am Butler Grimstone. Please, follow me, and I''ll introduce
-    you to your host.'
-- kind: narration
-  speaker: gm
-  text: 'Sodacan Bob: (looking around the grounds) This is a lot more... modest than I
-    expected.'
+  text: As you make your way through the mansion, you notice a few...uninvited guests
+    lurking in the shadows, trying to blend in with the rest of the partygoers.
+- kind: dialogue
+  speaker: Leena
+  text: (noticing one of the uninvited guests) Oh, is that a...troll? I didn't think
+    they were invited.
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) Ah, I think we have a few other surprises in store for us tonight,
+    Chadwick. (winking at Chadwick)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's going on? Why are some of these people trying to sneak around? And
+    what's with all the guards?

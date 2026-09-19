@@ -1,0 +1,39 @@
+id: sodacan_bob-on-craft
+take: 19
+model: llama3.1:8b
+generated_at: '2026-09-18T19:16:29.353869+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Okay, let's pick up where we left off.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, we don't have all day.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but this is it, folks. This is a classic example of a 19th-century wagon
+    axle.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, what makes it so special?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The maker's mark on the bracket is a dead giveaway. It's a small workshop
+    outside of Birmingham.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the significance of the bracket being mounted this way?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, excellent question, Vigil! The maker was going for maximum strength and
+    stability. This design would have been used for heavy loads.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, what do you think?
+- kind: dialogue
+  speaker: chadwick
+  text: I think we've wasted enough time on this. Can we keep moving now?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Oh, but this is just the beginning! Let me show you the details of the gate
+    hinge...

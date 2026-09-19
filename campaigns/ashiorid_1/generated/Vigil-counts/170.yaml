@@ -1,0 +1,35 @@
+id: Vigil-counts
+take: 170
+model: llama3.1:8b
+generated_at: '2026-09-18T19:47:25.632431+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: I've noticed the shutter on the north wall has been repaired recently.
+- kind: dialogue
+  speaker: chadwick
+  text: What's that supposed to mean?
+- kind: dialogue
+  speaker: Vigil
+  text: Just that the repair is fresh. The paint still smells.
+- kind: dialogue
+  speaker: Leena
+  text: How long do you think it's been fixed?
+- kind: dialogue
+  speaker: Vigil
+  text: Not long. Maybe a day or two.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Is that even important?
+- kind: dialogue
+  speaker: Vigil
+  text: I don't know. It's just something I noticed.
+- kind: dialogue
+  speaker: gm
+  text: Chadwick, do you have any interest in seeing the workshop?
+- kind: dialogue
+  speaker: chadwick
+  text: Where's the workshop?
+- kind: dialogue
+  speaker: gm
+  text: Through the west door. It's just down the hall.

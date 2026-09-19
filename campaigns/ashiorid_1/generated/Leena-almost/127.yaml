@@ -1,0 +1,40 @@
+id: Leena-almost
+take: 127
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:09.935961+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What do you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something's familiar, but I shouldn't know it. It's like a phrase someone
+    used, or a tune being hummed, or the shape of a doorway, or a smell.
+- kind: dialogue
+  speaker: chadwick
+  text: It's probably from your village, Leena. You must have seen something like
+    it before.
+- kind: dialogue
+  speaker: Leena
+  text: But I didn't. And it's not just something I saw – it's like I felt it, like
+    I've been here before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen something similar, but I was thinking of a village I passed through
+    on a trade route. Maybe that's what you saw.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: Leena
+  text: This is ridiculous. I'm not going to chase something I don't know what is.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't be silly. There are plenty of explanations that don't involve...whatever
+    it is you think you saw.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not silly. I'm just...curious. And a little amused at myself, actually.
+- kind: dialogue
+  speaker: gm
+  text: (no response)

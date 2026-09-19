@@ -1,0 +1,35 @@
+id: malmont-market
+take: 66
+model: llama3.1:8b
+generated_at: '2026-09-18T20:22:15.510991+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in a village that can't afford a single blacksmith.
+- kind: dialogue
+  speaker: Leena
+  text: Maybe that's the point of these maps, though. They're not meant to be navigated.
+- kind: dialogue
+  speaker: Vigil
+  text: I'd rather not think about the cartographers who drew these lines.
+- kind: dialogue
+  speaker: chadwick
+  text: At least they're not making anything that requires a spark of magic.
+- kind: dialogue
+  speaker: gm
+  text: This is a town that expects its magic to work.
+- kind: dialogue
+  speaker: Leena
+  text: That's why I like them.
+- kind: dialogue
+  speaker: Vigil
+  text: You'd think they'd have more faith in their smiths.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I suppose I'm just not impressed by anything that's not forged from stone.
+- kind: dialogue
+  speaker: gm
+  text: Perhaps that's why you're a merchant.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: And perhaps that's why I don't run a smithy.

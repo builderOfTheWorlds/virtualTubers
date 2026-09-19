@@ -1,0 +1,41 @@
+id: the-meal
+take: 64
+model: llama3.1:8b
+generated_at: '2026-09-18T22:32:57.027924+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, what do you think of the meal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Honestly, I think it was cooked to death.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, guys, it's a lovely meal!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean, where's the flavor? Where's the flair?
+- kind: dialogue
+  speaker: Leena
+  text: We can always add some spices, make it more exciting!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Exciting? It's a travesty, is what it is.
+- kind: dialogue
+  speaker: gm
+  text: Alright, who's cooking tomorrow?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'I''ll tell you who''s cooking tomorrow: not me.'
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, Bob, don't be such a grump!
+- kind: dialogue
+  speaker: gm
+  text: Sodacan, did you even look at the cooking schedule?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at the schedule? I wrote it!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What, you're eating someone else's leftovers?

@@ -1,0 +1,39 @@
+id: Leena-almost
+take: 129
+model: llama3.1:8b
+generated_at: '2026-09-18T19:32:20.194763+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's got you spooked?
+- kind: dialogue
+  speaker: Leena
+  text: There's something in front of me that feels... familiar, but it shouldn't
+    be.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm sure you saw it in the village. You have a good memory for details.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think it's just the architecture, Leena. Some buildings look alike.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know... it's not just the shape of it, it's the smell too.
+- kind: dialogue
+  speaker: gm
+  text: The smell of what?
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It's just a smell I know, but I shouldn't.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe you're just nostalgic. You do have a lot of memories of the village.
+- kind: dialogue
+  speaker: Leena
+  text: I'm not nostalgic, Bob. I'm... uneasy.
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, don't chase it. It's probably just a dream or a memory or something.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's move on. What do you think is going on here?

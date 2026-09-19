@@ -1,0 +1,26 @@
+id: Leena-almost
+take: 30
+model: llama3.1:8b
+generated_at: '2026-09-18T19:24:04.987840+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: What is it that you see, Leena?
+- kind: dialogue
+  speaker: Leena
+  text: Something in front of me that feels like it shouldn't be.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Could be one of those old windmills you see on the outskirts of Begene, no?
+- kind: dialogue
+  speaker: Vigil
+  text: (silent)
+- kind: dialogue
+  speaker: chadwick
+  text: Don't chase it, Leena. Let's just eat our food and enjoy the evening.
+- kind: dialogue
+  speaker: Leena
+  text: It's not the windmills. I've seen those. I mean... (pauses)
+- kind: dialogue
+  speaker: gm
+  text: What's that look on your face?

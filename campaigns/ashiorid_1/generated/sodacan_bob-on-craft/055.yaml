@@ -1,0 +1,40 @@
+id: sodacan_bob-on-craft
+take: 55
+model: llama3.1:8b
+generated_at: '2026-09-18T20:51:30.237212+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The sun beats down on the dusty road as the group trudges along.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You see, it's a gate hinge, but not just any hinge, no, no, this is a bespoke
+    design from the Eastern Foundries in Alderan.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, Bob, let's keep moving, we've got a long way to go.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, but look at the craftsmanship, the way the metal has been carefully shaped
+    to fit the gate's mechanism.
+- kind: dialogue
+  speaker: Leena
+  text: Ooh, can I touch it, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, yes, of course, Leena, come closer, let me show you the tolerances on
+    this particular piece.
+- kind: dialogue
+  speaker: Vigil
+  text: What's the likely age of this hinge, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, well, given the style and the material, I'd say it's from around the time
+    of the Great Drought, maybe a bit earlier.
+- kind: dialogue
+  speaker: Leena
+  text: Wow, it's so cool, Bob!
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, I know, isn't it just wonderful? The maker was clearly a master of his
+    craft.

@@ -1,0 +1,35 @@
+id: malmont-market
+take: 145
+model: llama3.1:8b
+generated_at: '2026-09-18T22:17:03.800982+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Look at the quality of this work, I'm not seeing a single piece that'd make
+    me think twice about the craftsmanship.
+- kind: dialogue
+  speaker: Vigil
+  text: (to himself) No signs of trouble here, just... people going about their day.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, I'm looking for a map of... (pauses, studying a nearby map) somewhere
+    like this.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) Ah, what do you need a map for?
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Just browsing, I suppose.
+- kind: dialogue
+  speaker: Vigil
+  text: (eyes scanning the crowd) Anyone watching us?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (points to a nearby stall) That's some nice work there, what do you call it?
+- kind: narration
+  speaker: gm
+  text: 'Market Goer: It''s just some scraps from the north, I''m trying to get rid
+    of it.'
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) I don't think we've met before, have we?

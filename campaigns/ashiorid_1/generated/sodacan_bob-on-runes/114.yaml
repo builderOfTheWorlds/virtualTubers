@@ -1,0 +1,39 @@
+id: sodacan_bob-on-runes
+take: 114
+model: llama3.1:8b
+generated_at: '2026-09-19T00:07:48.591685+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, Bob, you've been quiet too long, let's see what's on your mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Just thinking out loud, wondering how that carving on the Malvakar held up
+    for so long.
+- kind: dialogue
+  speaker: chadwick
+  text: I'm more concerned about what it means, not how it was made.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, I'm not thinking about what it means, I'm thinking about the craftsmanship.
+- kind: dialogue
+  speaker: Leena
+  text: Bob, do you think anyone's still doing work like that around here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Maybe the monastery in Dorthan, but I doubt it.
+- kind: dialogue
+  speaker: Vigil
+  text: What makes you think it was from around here, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: The style, the materials... it's not some ancient relic from across the sea.
+- kind: dialogue
+  speaker: chadwick
+  text: What do you mean "not some ancient relic"?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I mean it looks like it was made yesterday, not two thousand years ago.
+- kind: dialogue
+  speaker: Leena
+  text: That's just it, Bob – it's been two thousand years.

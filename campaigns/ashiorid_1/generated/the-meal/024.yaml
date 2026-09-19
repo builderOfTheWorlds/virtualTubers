@@ -1,0 +1,42 @@
+id: the-meal
+take: 24
+model: llama3.1:8b
+generated_at: '2026-09-18T19:22:20.636665+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The turkey's a bit dry, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat it.
+- kind: dialogue
+  speaker: Leena
+  text: But it's not just the turkey, it's the whole meal. We should make it a nice
+    dinner party.
+- kind: dialogue
+  speaker: Vigil
+  text: (hands food to Leena) Here, take this piece.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could've done a better job with the seasonings.
+- kind: dialogue
+  speaker: gm
+  text: Well, I thought it would be nice to have a break from cooking tonight.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, come on, it's not that bad. Let's make the best of it.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'd use a different recipe, that's for sure.
+- kind: dialogue
+  speaker: chadwick
+  text: Just eat.
+- kind: dialogue
+  speaker: Vigil
+  text: (pushes food away) I'm full.
+- kind: dialogue
+  speaker: Leena
+  text: Okay, okay. Someone else bring up the leftovers tomorrow.
+- kind: dialogue
+  speaker: gm
+  text: We can take turns cooking.

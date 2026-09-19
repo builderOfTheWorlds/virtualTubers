@@ -1,0 +1,43 @@
+id: carrying-the-signet
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-19T03:17:08.079868+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: So, you must be new in town. What brings you to our humble inn?
+- kind: dialogue
+  speaker: chadwick
+  text: Just passing through, looking for a hot meal.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs) Always a hot meal, anywhere we go.
+- kind: dialogue
+  speaker: Vigil
+  text: (looks around the room, then focuses on Ashiorid) What kind of wine do you
+    have?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (polite and unremarkable) Just a room, please.
+- kind: narration
+  speaker: gm
+  text: 'stranger: Excuse me, I couldn''t help but notice that signet ring. Is that
+    your family crest?'
+- kind: dialogue
+  speaker: chadwick
+  text: (smiling) Oh, no, just something I picked up at a market.
+- kind: dialogue
+  speaker: Leena
+  text: (laughs again) Chadwick's always collecting trinkets.
+- kind: dialogue
+  speaker: Vigil
+  text: (sips from an imaginary cup) Ah, a fine vintage.
+- kind: narration
+  speaker: gm
+  text: 'stranger: I''m sure it has a story behind it. (looks at Chadwick)'
+- kind: dialogue
+  speaker: chadwick
+  text: (laughs) Maybe some other time. I have to get going.
+- kind: narration
+  speaker: gm
+  text: 'stranger: Of course. (exits)'

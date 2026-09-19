@@ -1,0 +1,32 @@
+id: after-the-choice
+take: 9
+model: llama3.1:8b
+generated_at: '2026-09-19T02:05:50.245101+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We're here, then.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah. We're here.
+- kind: dialogue
+  speaker: Leena
+  text: (pausing) That's... something.
+- kind: dialogue
+  speaker: Vigil
+  text: (laughs softly) Well, we're not going back, are we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (hesitates) Guess not.
+- kind: dialogue
+  speaker: gm
+  text: (pauses) Alright.
+- kind: dialogue
+  speaker: Leena
+  text: (awkwardly) So... what's next?
+- kind: dialogue
+  speaker: Vigil
+  text: (falls silent)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (breaks the silence) Hey, look... I brought snacks.

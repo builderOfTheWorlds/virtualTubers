@@ -1,0 +1,36 @@
+id: Leena-almost
+take: 121
+model: llama3.1:8b
+generated_at: '2026-09-18T19:31:40.795214+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Leena, what's wrong?
+- kind: dialogue
+  speaker: chadwick
+  text: Don't look at it, Leena. It's not something you need to see.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know. It just feels... wrong. But familiar.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You probably saw something like it back in your village, Leena. I'm sure it's
+    nothing.
+- kind: dialogue
+  speaker: Vigil
+  text: (no response)
+- kind: dialogue
+  speaker: chadwick
+  text: Leena, come on. Let's go inside.
+- kind: dialogue
+  speaker: Leena
+  text: No, wait. I want to see it. (approaches the thing)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Be careful, Leena. You don't know what it is.
+- kind: dialogue
+  speaker: Vigil
+  text: (silence)
+- kind: dialogue
+  speaker: gm
+  text: Leena's getting close to it now...

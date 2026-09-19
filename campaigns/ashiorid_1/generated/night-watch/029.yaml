@@ -1,0 +1,32 @@
+id: night-watch
+take: 29
+model: llama3.1:8b
+generated_at: '2026-09-18T20:41:00.996711+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's a clear night, isn't it?
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I've never seen it so clear.
+- kind: dialogue
+  speaker: Leena
+  text: What are you seeing?
+- kind: dialogue
+  speaker: Vigil
+  text: Just the stars, nothing new there.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I think I see the moon.
+- kind: dialogue
+  speaker: gm
+  text: You know it's not in the sky, right?
+- kind: dialogue
+  speaker: chadwick
+  text: Oh, yeah, it's below the trees.
+- kind: dialogue
+  speaker: Leena
+  text: We should wake the others early, I'm getting tired.
+- kind: dialogue
+  speaker: Vigil
+  text: You want to try to get some more sleep?

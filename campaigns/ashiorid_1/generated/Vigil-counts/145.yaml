@@ -1,0 +1,38 @@
+id: Vigil-counts
+take: 145
+model: llama3.1:8b
+generated_at: '2026-09-18T19:45:15.817505+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The cart seems to be making the rounds today.
+- kind: dialogue
+  speaker: chadwick
+  text: What of it?
+- kind: dialogue
+  speaker: Vigil
+  text: The cart driver seems to be following a regular route.
+- kind: dialogue
+  speaker: Leena
+  text: Is this some kind of delivery?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You'd think it would be more efficient.
+- kind: dialogue
+  speaker: Vigil
+  text: I'm not sure it's a matter of efficiency.
+- kind: dialogue
+  speaker: gm
+  text: Perhaps it's a matter of familiarity.
+- kind: dialogue
+  speaker: Vigil
+  text: The driver looks...familiar too.
+- kind: dialogue
+  speaker: chadwick
+  text: I think I've seen him before.
+- kind: dialogue
+  speaker: Leena
+  text: Around here?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This is the fifth time I've seen him this week.

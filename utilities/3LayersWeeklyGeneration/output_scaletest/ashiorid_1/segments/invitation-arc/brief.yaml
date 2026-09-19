@@ -1,0 +1,177 @@
+segment_id: invitation-arc
+order: 0
+loop: 0
+hours: 6
+synopsis: Ten thousand years to the day since the Event, four strangers each receive
+  a mysterious card inviting them to a party that has never been held. The cards appear
+  in unexpected places, each bearing a different name but all pointing to the same
+  location.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: invitation-arc-1
+  kind: ambient
+  prompt: A mysterious card appears in the pocket of a stranger, bearing an invitation
+    to a party that has never been held.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-2
+  kind: ambient
+  prompt: The card arrives in an unexpected place, marked with a name that seems familiar
+    yet unknown.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-3
+  kind: ambient
+  prompt: Each card bears a different name, but all point to the same location — a
+    place that exists only in memory.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-4
+  kind: ambient
+  prompt: The party has never been held, yet the invitation feels urgent and alive
+    in the hands of each recipient.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-5
+  kind: spine
+  scene_ref: invitation
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: invitation-arc
+- slot_id: invitation-arc-6
+  kind: ambient
+  prompt: The cards seem to glow with a faint, otherworldly light as they appear in
+    the pockets of strangers.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-7
+  kind: ambient
+  prompt: As each stranger receives their card, the world around them shifts slightly,
+    as if the air itself is responding.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-8
+  kind: ambient
+  prompt: The names on the cards are not their own, but they feel drawn to the party
+    as if compelled by something greater.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-9
+  kind: ambient
+  prompt: The invitation mentions a time and place that has never been, yet the recipients
+    feel they must go.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-10
+  kind: ambient
+  prompt: The cards appear one by one, each in the most unexpected place — a sign
+    that fate is calling.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: invitation-arc
+- slot_id: invitation-arc-11
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: invitation-arc
+nodes:
+- node_id: invitation-arc
+  parent_id: null
+  depth: 0
+  kind: leaf
+  forced: false
+  target_slots: 11
+  slots: 11
+needs_rebrief: true

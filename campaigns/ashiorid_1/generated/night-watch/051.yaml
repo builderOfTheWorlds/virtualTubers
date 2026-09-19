@@ -1,0 +1,41 @@
+id: night-watch
+take: 51
+model: llama3.1:8b
+generated_at: '2026-09-18T20:43:18.072635+00:00'
+beats:
+- kind: dialogue
+  speaker: Vigil
+  text: It's so quiet.
+- kind: dialogue
+  speaker: gm
+  text: That's what I like about this place.
+- kind: dialogue
+  speaker: Leena
+  text: The stars are really coming out tonight.
+- kind: dialogue
+  speaker: chadwick
+  text: I've never seen the sky so clear.
+- kind: narration
+  speaker: gm
+  text: (Six-second pause)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Do you think we'll get attacked in the morning?
+- kind: dialogue
+  speaker: gm
+  text: I don't think so.
+- kind: dialogue
+  speaker: chadwick
+  text: Yeah, I was thinking we might be able to get a head start.
+- kind: dialogue
+  speaker: Leena
+  text: On what, though?
+- kind: narration
+  speaker: gm
+  text: (One-second pause)
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've been having weird dreams.
+- kind: dialogue
+  speaker: Vigil
+  text: What's that got to do with anything?

@@ -1,0 +1,35 @@
+id: the-meal
+take: 104
+model: llama3.1:8b
+generated_at: '2026-09-19T00:10:01.086013+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, who cooked dinner tonight?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Clearly it was Leena, with a complete disregard for the art of seasoning.
+- kind: dialogue
+  speaker: Leena
+  text: Oh, I thought I'd try something new.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we just eat?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll take the soup.
+- kind: dialogue
+  speaker: Leena
+  text: And I was going for a... uh, a very rustic flavor.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Rustic? This is burnt and overcooked.
+- kind: dialogue
+  speaker: Vigil
+  text: Someone didn't clean the pot properly.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: You think? I'm surprised the food didn't poison us.
+- kind: dialogue
+  speaker: chadwick
+  text: That's enough.

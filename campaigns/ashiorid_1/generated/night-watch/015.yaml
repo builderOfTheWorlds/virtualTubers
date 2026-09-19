@@ -1,0 +1,42 @@
+id: night-watch
+take: 15
+model: llama3.1:8b
+generated_at: '2026-09-18T19:11:38.222268+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: Silence.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: What do you think about the sky?'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: It''s clear.'
+- kind: dialogue
+  speaker: Leena
+  text: 'Leena: Too clear.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: What do you mean?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: I mean, I feel like I''m missing something. There should be
+    some clouds.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: There are no clouds.'
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: I hear some crickets.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: Yeah, me too.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: They''re far away.'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: We should wake the others early. They''re going to be tired.'
+- kind: dialogue
+  speaker: gm
+  text: 'Ashiorid: It''s early. They''re not tired.'

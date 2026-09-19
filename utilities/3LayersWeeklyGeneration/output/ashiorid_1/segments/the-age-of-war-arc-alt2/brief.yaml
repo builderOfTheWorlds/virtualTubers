@@ -1,0 +1,115 @@
+segment_id: the-age-of-war-arc-alt2
+order: 6
+loop: 0
+hours: 6
+synopsis: A flashback to the Age of War, showing how the world's magic was consumed
+  as fuel and how a handful of people attempted to stop it.
+continuity_in: ''
+continuity_out: ''
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: the-age-of-war-arc-alt2-n0-convergence-1
+  kind: ambient
+  prompt: The moment when magic began to be consumed as fuel across the world, triggering
+    massive magical disturbances and the first signs of the Age of War's devastating
+    impact on reality itself
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-alt2-n0
+- slot_id: the-age-of-war-arc-alt2-n0-convergence-2
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: the-age-of-war-arc-alt2-n0
+- slot_id: the-age-of-war-arc-alt2-n1-flashback-1
+  kind: ambient
+  prompt: A small group of magical practitioners and scholars gather in secret, discussing
+    the catastrophic spread of magical reality distortions across the world.
+  lore:
+  - the-begene-program
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-alt2-n1
+- slot_id: the-age-of-war-arc-alt2-n1-flashback-2
+  kind: ambient
+  prompt: Leena, wounded and determined, argues with Chadwick about the ethics of
+    using magic as fuel for war, while Vigil listens silently.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - chadwick
+  - Vigil
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-alt2-n1
+- slot_id: the-age-of-war-arc-alt2-n1-flashback-3
+  kind: spine
+  scene_ref: the-age-of-war
+  participants:
+  - Leena
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: the-age-of-war-arc-alt2-n1
+- slot_id: the-age-of-war-arc-alt2-n1-flashback-4
+  kind: ambient
+  prompt: The group discovers a hidden moonwell that holds memories of the ancient
+    magical world, revealing how magic was first consumed.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: the-age-of-war-arc-alt2-n1
+- slot_id: the-age-of-war-arc-alt2-n1-flashback-5
+  kind: spine
+  scene_ref: magic-retained
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: the-age-of-war-arc-alt2-n1
+nodes:
+- node_id: the-age-of-war-arc-alt2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: the-age-of-war-arc-alt2-n0
+  parent_id: the-age-of-war-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+- node_id: the-age-of-war-arc-alt2-n1
+  parent_id: the-age-of-war-arc-alt2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 5

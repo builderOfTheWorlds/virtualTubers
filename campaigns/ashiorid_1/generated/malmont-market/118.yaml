@@ -1,0 +1,41 @@
+id: malmont-market
+take: 118
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:23.544409+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: That's not how you temper steel, I've seen better work at a traveling forge.
+- kind: dialogue
+  speaker: Leena
+  text: What's that old map supposed to be?
+- kind: dialogue
+  speaker: Vigil
+  text: I'll ask the price.
+- kind: dialogue
+  speaker: chadwick
+  text: No one's looking at me.
+- kind: dialogue
+  speaker: Leena
+  text: Is that the coast?
+- kind: dialogue
+  speaker: Vigil
+  text: It's too high.
+- kind: dialogue
+  speaker: chadwick
+  text: Not that I notice.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: This one's supposed to be a rare find, they say.
+- kind: dialogue
+  speaker: Leena
+  text: What's the history of this map?
+- kind: dialogue
+  speaker: Vigil
+  text: Not here for maps.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'm not buying anything from this lot.
+- kind: dialogue
+  speaker: Leena
+  text: Let me see that.

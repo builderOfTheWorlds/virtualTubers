@@ -1,0 +1,41 @@
+id: night-watch
+take: 27
+model: llama3.1:8b
+generated_at: '2026-09-18T20:40:51.692576+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: It's still a while till morning.
+- kind: dialogue
+  speaker: chadwick
+  text: I know, I've been awake for hours.
+- kind: dialogue
+  speaker: Leena
+  text: I'm cold.
+- kind: dialogue
+  speaker: Vigil
+  text: You can use my blanket if you want.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yeah, you can have mine too.
+- kind: dialogue
+  speaker: gm
+  text: It's just the wind, not even that strong.
+- kind: dialogue
+  speaker: chadwick
+  text: What's it like, just... just looking up at the stars like that?
+- kind: dialogue
+  speaker: gm
+  text: It's... big.
+- kind: dialogue
+  speaker: Leena
+  text: (whispers) I had a dream about my mother. She was showing me something.
+- kind: dialogue
+  speaker: Vigil
+  text: What was it?
+- kind: dialogue
+  speaker: Leena
+  text: (pauses) Nothing. Never mind.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: We should wake the others early.

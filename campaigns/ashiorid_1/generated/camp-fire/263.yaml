@@ -1,0 +1,43 @@
+id: camp-fire
+take: 263
+model: llama3.1:8b
+generated_at: '2026-09-18T23:44:26.207413+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The fire's holding for now, but we'll need to tend to it more frequently if
+    it's going to make it through the night.
+- kind: dialogue
+  speaker: chadwick
+  text: I say we take turns keeping watch, like we did in Blackhaven. We can't have
+    everyone sleeping at once.
+- kind: dialogue
+  speaker: Leena
+  text: Does anyone know how long it takes for a fire to burn through a whole stack
+    of wood?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, that's easy, Leena. A well-laid fire like this one should last us till
+    morning, easy.
+- kind: dialogue
+  speaker: Vigil
+  text: The embers will still be warm in two hours.
+- kind: dialogue
+  speaker: gm
+  text: Vigil, what makes you think that?
+- kind: dialogue
+  speaker: Vigil
+  text: Because of the way the wood is stacked.
+- kind: dialogue
+  speaker: Leena
+  text: But what if it's not just the wood? What if it's the magic in the wood?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Magic? Ha! There's no magic in any wood, Leena.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to get a watch order sorted out, for everyone's sake.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's settle it now. Chadwick, you take first watch, then it's Sodacan
+    Bob's turn...

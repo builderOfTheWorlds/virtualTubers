@@ -1,0 +1,41 @@
+id: camp-fire
+take: 60
+model: llama3.1:8b
+generated_at: '2026-09-18T19:50:57.684921+00:00'
+beats:
+- kind: dialogue
+  speaker: chadwick
+  text: I'm telling you, we need to settle the watch order before the night wears
+    on.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think it'll be dry tomorrow?
+- kind: dialogue
+  speaker: Vigil
+  text: The fire's not going anywhere.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've laid fires for longer than most people've been alive, and I can tell
+    you this one's not going to burn down to nothing.
+- kind: dialogue
+  speaker: chadwick
+  text: What's your point, Bob?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: My point is the coals are spread thin, we need to add more wood to keep it
+    going.
+- kind: dialogue
+  speaker: Vigil
+  text: We have enough wood.
+- kind: dialogue
+  speaker: Leena
+  text: What's the purpose of the moonwells, anyway?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Purpose? Ha! I've seen 'em dry up like candles in the wind.
+- kind: dialogue
+  speaker: chadwick
+  text: This isn't the time for speculation, let's focus on keeping the fire burning.
+- kind: dialogue
+  speaker: Vigil
+  text: It's still burning.

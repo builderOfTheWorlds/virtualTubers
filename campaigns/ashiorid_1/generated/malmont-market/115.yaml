@@ -1,0 +1,33 @@
+id: malmont-market
+take: 115
+model: llama3.1:8b
+generated_at: '2026-09-18T22:14:04.603728+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I'll have a look at that hammerhead over there, see if it's any better than
+    the rest.
+- kind: dialogue
+  speaker: Vigil
+  text: Not sure I trust that blacksmith.
+- kind: dialogue
+  speaker: chadwick
+  text: Ah, it's a lovely day for browsing, isn't it?
+- kind: dialogue
+  speaker: Leena
+  text: (whispering to herself) Old maps... why do I want old maps?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Leena) You thinking of getting lost, love?
+- kind: dialogue
+  speaker: Leena
+  text: No, just... I don't know.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) What's the hurry, Vigil?
+- kind: dialogue
+  speaker: Vigil
+  text: (smirking) None, Chadwick. Just getting the feel of the town.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (whistling) This hammerhead's a bit better, I suppose.

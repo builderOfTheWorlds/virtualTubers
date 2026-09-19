@@ -1,0 +1,41 @@
+id: the-map-argument
+take: 23
+model: llama3.1:8b
+generated_at: '2026-09-19T03:35:08.865246+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's get moving, people. We have a long day ahead of us.
+- kind: dialogue
+  speaker: chadwick
+  text: Actually, I think we should take a look at the map first.
+- kind: dialogue
+  speaker: Leena
+  text: Why? We know the way.
+- kind: dialogue
+  speaker: chadwick
+  text: We don't know the way. That's why we're arguing.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we just get moving?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Hold up, I think Leena's right.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, no. This is exactly why we get lost.
+- kind: dialogue
+  speaker: Leena
+  text: It's not a big deal, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: It's a big deal. I'm telling you, this is a mistake.
+- kind: dialogue
+  speaker: Vigil
+  text: Can we please just start walking?
+- kind: dialogue
+  speaker: chadwick
+  text: Fine, but this is all going to be your fault when we get lost.
+- kind: dialogue
+  speaker: gm
+  text: Alright, let's just move out.

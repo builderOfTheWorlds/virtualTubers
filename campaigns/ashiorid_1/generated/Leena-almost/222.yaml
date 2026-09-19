@@ -1,0 +1,32 @@
+id: Leena-almost
+take: 222
+model: llama3.1:8b
+generated_at: '2026-09-18T22:02:21.330156+00:00'
+beats:
+- kind: dialogue
+  speaker: Leena
+  text: What's that smell, does it smell like—
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: probably just the baking bread from the kitchen, Leena.'
+- kind: dialogue
+  speaker: Leena
+  text: No, it's... I'm not sure, but it's familiar.
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: nothing in particular, Leena.'
+- kind: dialogue
+  speaker: chadwick
+  text: 'Chadwick: you''re not going to go chasing it, are you?'
+- kind: dialogue
+  speaker: Leena
+  text: I don't know, I just feel like I've seen it before.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: 'Sodacan Bob: your village probably has a similar one, Leena.'
+- kind: dialogue
+  speaker: Leena
+  text: My village? I think you're just making excuses.
+- kind: dialogue
+  speaker: Vigil
+  text: 'Vigil: Leena.'

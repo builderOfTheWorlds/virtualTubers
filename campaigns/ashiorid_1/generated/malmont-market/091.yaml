@@ -1,0 +1,41 @@
+id: malmont-market
+take: 91
+model: llama3.1:8b
+generated_at: '2026-09-18T20:38:34.294311+00:00'
+beats:
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen better work in the last village we passed.
+- kind: dialogue
+  speaker: Vigil
+  text: Keep your voice down.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Vigil) I think they can handle it.
+- kind: dialogue
+  speaker: Leena
+  text: Excuse me, how much for the map of the Eldrid forest?
+- kind: dialogue
+  speaker: gm
+  text: You mean the one that's clearly been torn apart by a wild animal?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: What's the use of maps if they're not even accurate?
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) Perhaps you'd prefer a map that's been enchanted with lies?
+- kind: dialogue
+  speaker: Leena
+  text: No, I just like the look of it.
+- kind: dialogue
+  speaker: chadwick
+  text: (to Leena) You don't actually need to buy that, do you?
+- kind: dialogue
+  speaker: gm
+  text: The market's getting busier, shall we find some refreshments?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could use a drink, but I'm not paying market prices.
+- kind: dialogue
+  speaker: Vigil
+  text: (to Sodacan Bob) You can afford it.

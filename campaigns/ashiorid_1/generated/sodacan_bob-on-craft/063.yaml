@@ -1,0 +1,42 @@
+id: sodacan_bob-on-craft
+take: 63
+model: llama3.1:8b
+generated_at: '2026-09-18T22:25:11.161787+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: We come to a small clearing, and Sodacan Bob halts in his tracks.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Ah, look at this, look at it properly! It's a gate hinge, a real beauty.
+- kind: dialogue
+  speaker: chadwick
+  text: Can we move on?
+- kind: dialogue
+  speaker: Leena
+  text: I like the way the metal's been worn.
+- kind: narration
+  speaker: gm
+  text: 'vigli: How old do you think it is?'
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Well, the style of the bracket is from about a century ago, and the metal's
+    patina suggests it's been used outdoors for at least 20 years.
+- kind: dialogue
+  speaker: Leena
+  text: You can still see the maker's mark.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Yes, it's a local craftsman, someone who knew what he was doing.
+- kind: dialogue
+  speaker: chadwick
+  text: Come on, we've got a long way to go.
+- kind: narration
+  speaker: gm
+  text: 'vigli: I think we can spare a few minutes.'
+- kind: dialogue
+  speaker: Leena
+  text: It's not like we're on a deadline, are we?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I just love seeing the work of a skilled craftsman, that's all.

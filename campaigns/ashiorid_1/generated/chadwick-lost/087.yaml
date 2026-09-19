@@ -1,0 +1,36 @@
+id: chadwick-lost
+take: 87
+model: llama3.1:8b
+generated_at: '2026-09-18T20:08:02.412333+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Let's see, we've been walking for a few hours. Where do you think we are,
+    Chadwick?
+- kind: dialogue
+  speaker: chadwick
+  text: I'm not sure. I thought we were following a landmark.
+- kind: dialogue
+  speaker: Leena
+  text: It's possible we passed it while you were distracted, Chadwick.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (chuckling) Oh boy, this is good.
+- kind: dialogue
+  speaker: Vigil
+  text: I could try to get us back on track if you'd like, Chadwick.
+- kind: dialogue
+  speaker: chadwick
+  text: No, no, I'm fine. I can navigate just fine.
+- kind: dialogue
+  speaker: Leena
+  text: Well, if you're sure, then I was just offering.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: (laughing) You guys are like a team of explorers without a map!
+- kind: dialogue
+  speaker: chadwick
+  text: I said I'm fine, let's keep moving.
+- kind: dialogue
+  speaker: Vigil
+  text: (smiling) Very well, lead on, Chadwick.

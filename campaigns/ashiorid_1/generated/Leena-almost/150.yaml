@@ -1,0 +1,43 @@
+id: Leena-almost
+take: 150
+model: llama3.1:8b
+generated_at: '2026-09-18T19:34:13.796352+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: Something is bothering Leena. What's on her mind?
+- kind: dialogue
+  speaker: Leena
+  text: There's something in front of me that shouldn't be. A turn of phrase, a tune,
+    the doorway...
+- kind: dialogue
+  speaker: chadwick
+  text: Sounds like it might be just a familiarity, like seeing a similar house in
+    her village.
+- kind: dialogue
+  speaker: Vigil
+  text: Silence.
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I've seen that look on her face before, after a few too many stories from
+    her childhood.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know why it's bothering me, but it feels... important.
+- kind: dialogue
+  speaker: chadwick
+  text: Don't worry about it, Leena. Sometimes our brains just play tricks on us.
+- kind: dialogue
+  speaker: gm
+  text: Anything else about this "something" that's been nagging at her?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I could try to find some reference to similar phrases or doorways, see if
+    we can figure out where it's from.
+- kind: dialogue
+  speaker: Leena
+  text: I think it's just something my mind is associating with something else. It's
+    not important.
+- kind: dialogue
+  speaker: Vigil
+  text: Agree.

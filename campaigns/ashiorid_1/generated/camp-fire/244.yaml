@@ -1,0 +1,39 @@
+id: camp-fire
+take: 244
+model: llama3.1:8b
+generated_at: '2026-09-18T22:10:04.725836+00:00'
+beats:
+- kind: dialogue
+  speaker: gm
+  text: The rain's not letting up, is it?
+- kind: dialogue
+  speaker: chadwick
+  text: I've been outside, we can hold the fire for a bit longer, but...
+- kind: dialogue
+  speaker: sodacan_bob
+  text: Fire's laid well, it's got a good base, should keep burning till morning.
+- kind: dialogue
+  speaker: Vigil
+  text: The rain'll soak the tinder.
+- kind: dialogue
+  speaker: Leena
+  text: Do you think the Event was just one day, or was it more like a series of events
+    that just culminated?
+- kind: dialogue
+  speaker: gm
+  text: Anyone got any news from the last town?
+- kind: dialogue
+  speaker: sodacan_bob
+  text: I heard they've got some decent trade goods, but I'm not sure if it's true.
+- kind: dialogue
+  speaker: chadwick
+  text: We need to settle the watch order for tonight.
+- kind: dialogue
+  speaker: Vigil
+  text: We should take turns.
+- kind: dialogue
+  speaker: Leena
+  text: I don't know how we'd even keep track of that.
+- kind: dialogue
+  speaker: gm
+  text: We can try to remember who's been up last.

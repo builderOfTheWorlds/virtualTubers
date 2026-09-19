@@ -1,0 +1,145 @@
+letos-manor-arc-loop1:
+  node_id: letos-manor-arc-loop1
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The players arrive at Leto's Manor for a party that has been planned for
+    ten tho
+  summary: The players arrive at Leto's Manor for a party that has been planned for
+    ten thousand years, only to find it under attack.
+  continuity_in: ''
+  continuity_out: ''
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - letos-manor-arc-loop1-n0
+  - letos-manor-arc-loop1-n1
+  slots: null
+letos-manor-arc-loop1-n0:
+  node_id: letos-manor-arc-loop1-n0
+  parent_id: letos-manor-arc-loop1
+  order: 0
+  depth: 1
+  title: Arrival at the Manor
+  summary: The players arrive at Leto's Manor for a party that has been planned for
+    ten thousand years, only to find it under attack. They witness the initial chaos
+    as guards are overwhelmed and the mansion is being breached by mysterious forces.
+    The players must quickly assess the situation and decide how to respond to the
+    immediate threat while trying to locate key party attendees who may be in danger.
+  continuity_in: The players arrive at Leto's Manor for a party that has been planned
+    for ten thousand years, only to find it under attack.
+  continuity_out: The players are confronted with the immediate threat of the attack
+    and must quickly assess their situation while dealing with the chaos of guards
+    being overwhelmed and mysterious forces breaching the mansion.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-loop1-n0-arrival-1
+    kind: ambient
+    prompt: The players arrive at Leto's Manor for a party that has been planned for
+      ten thousand years, only to find it under attack. They witness the initial chaos
+      as guards are overwhelmed and the mansion is being breached by mysterious forces.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-loop1-n0-arrival-2
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+letos-manor-arc-loop1-n1:
+  node_id: letos-manor-arc-loop1-n1
+  parent_id: letos-manor-arc-loop1
+  order: 1
+  depth: 1
+  title: Initial Defense and Investigation
+  summary: The players begin to organize a defense against the attacking forces while
+    simultaneously investigating what is happening at the manor. They must navigate
+    through the chaotic environment, secure any important artifacts or attendees,
+    and determine if this attack is part of the larger party planning that has been
+    orchestrated for millennia. As they move deeper into the mansion, they discover
+    clues about the true nature of the threat and whether this was an intended part
+    of the ancient ritual or a malicious interference.
+  continuity_in: The players are confronted with the immediate threat of the attack
+    and must quickly assess their situation while dealing with the chaos of guards
+    being overwhelmed and mysterious forces breaching the mansion.
+  continuity_out: The players have begun to organize defense and investigation, discovering
+    that this attack might be connected to the ancient party planning or could be
+    a malicious interference in the ritual.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: letos-manor-arc-loop1-n1-initial-defense-1
+    kind: ambient
+    prompt: The players begin organizing a defense against the attacking forces while
+      navigating the chaotic environment of Leto's Manor.
+    lore:
+    - the-event
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-loop1-n1-investigation-1
+    kind: ambient
+    prompt: The players investigate what is happening at the manor, discovering clues
+      about the true nature of the threat.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-loop1-n1-manor-chaos-1
+    kind: ambient
+    prompt: The players secure important artifacts or attendees while dealing with
+      guards being overwhelmed and mysterious forces breaching the mansion.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: letos-manor-arc-loop1-n1-party-attack-1
+    kind: spine
+    scene_ref: party-attack
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: letos-manor-arc-loop1-n1-defense-1
+    kind: ambient
+    prompt: The players move deeper into the mansion, discovering clues about whether
+      this attack was an intended part of the ancient ritual or a malicious interference.
+    lore:
+    - the-bahadur
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: none
+    depends_on: []
