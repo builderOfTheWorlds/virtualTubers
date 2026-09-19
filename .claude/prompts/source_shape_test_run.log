@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/secus/codeProjects/virtualTubers/.claude/prompts/run_source_shape_test.py", line 29, in <module>
+    import concurrent_llm
+ModuleNotFoundError: No module named 'concurrent_llm'

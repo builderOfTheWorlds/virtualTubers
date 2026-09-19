@@ -1,0 +1,111 @@
+id: malmont-arrival
+title: Malmont
+enter_narration: >-
+  Four days south of the ash where a manor used to stand, the road widens into
+  Malmont, and Malmont has never heard of any of you.
+
+lore: [the-event]
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        Malmont is not a large town by the standards of a kingdom, but it is
+        the largest thing any of you have stood inside since the fire, and it
+        does not stop moving for a moment.
+      - >-
+        It is a modest town as towns go, five thousand people and change, and
+        after four days of empty road it feels like the loudest place in the
+        world.
+      - >-
+        The town rises out of the fields the way towns do, gradually and then
+        all at once, five thousand lives going about business that has nothing
+        to do with any of yours.
+
+  - type: dialogue
+    speaker: sodacan_bob
+    improv: true
+    text:
+      - >-
+        Two magic shops in a town this size. Somebody here can afford to be
+        curious, and I intend to find out who.
+      - >-
+        A town of five thousand doesn't usually run two magic shops. That
+        means coin, or it means something worth protecting. Either way, I want
+        a look.
+      - >-
+        Blacksmiths, four of them, and none of the forges are running hot.
+        Something's wrong with the metal trade here, or nobody's told them
+        there's a war on.
+
+  - type: action
+    speaker: Vigil
+    primitive: search
+    params:
+      target: the town square
+      detail: anyone watching the four of you a little too closely
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        Two figures at the fountain are watching your group with the specific
+        attention of people who have been waiting for exactly four strangers
+        to arrive.
+      - >-
+        A pair by the well have stopped their own conversation to watch yours
+        approach, and they do not look away when Vigil notices them noticing.
+      - >-
+        Someone at the market stalls is counting heads, and stops at four, and
+        smiles like a person whose math finally worked out.
+
+  - type: dialogue
+    speaker: chadwick
+    improv: true
+    text:
+      - >-
+        I'm done with people who already know who we are before we've said a
+        word. Ask them plainly, or I will.
+      - >-
+        We've had enough of strangers knowing our business. Whoever that is,
+        we go to them, not the other way around.
+      - >-
+        Four days on the road to get away from people watching us, and here's
+        two more of them. I'm not in the mood for subtle.
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        They introduce themselves as Jasper and Juniper, and they are holding a
+        map with almost nothing drawn on it yet.
+      - >-
+        Jasper and Juniper, they say, and between them they are carrying a map
+        that is mostly blank paper and a handful of confident lines.
+      - >-
+        The two give their names as Jasper and Juniper, and unroll a map with
+        exactly one mark on it and a great deal of empty space around that
+        mark.
+
+  - type: dialogue
+    speaker: Leena
+    improv: true
+    text: >-
+      Leena looks at the blank spaces on the map and has the unshakable
+      sense that she has seen this exact paper before it was ever drawn on.
+
+default_next: amulet-map
+
+continuity_in: The party has arrived in Malmont, a town they have never heard of, four days south of where
+  a manor used to stand. Two figures at the fountain are watching the party with specific attention, as
+  if they have been waiting for them.
+continuity_out: Jasper and Juniper introduce themselves to the party and reveal a map with almost nothing
+  drawn on it. Leena has the unshakable sense that she has seen this exact paper before it was ever drawn
+  on.

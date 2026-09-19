@@ -1,0 +1,32 @@
+id: the-boy-who-lived-confronting-aragog
+title: 'The Boy Who Lived: Confronting Aragog'
+enter_narration: Harry and Ron venture deeper into the Forbidden Forest, seeking answers
+  from the giant spider Aragog.
+beats:
+- speaker: gm
+  type: narration
+  text:
+  - The two friends cautiously approached the hollow where Aragog resided, unsure
+    of what to expect.
+  - As they drew closer, they could hear the rustling of leaves and the clicking of
+    many spider legs.
+  - The sight that greeted them was breathtaking and terrifying - a vast web stretching
+    across the hollow, with Aragog at its center.
+- speaker: harry
+  type: dialogue
+  text:
+  - Aragog, we come seeking your help. Hagrid has been taken to Azkaban, and we need
+    to prove his innocence.
+  - The creature from the Chamber of Secrets has returned, and it's attacking students
+    at Hogwarts. Do you know what it is?
+  - Please, Aragog. We need your wisdom and knowledge to stop this creature before
+    it's too late.
+lore: []
+source:
+  base_hash: 7e8e720f65d4b6be59e720f8e6189ee4df38bffc7725252f3fdc10f543ba3ff8
+  version: the-boy-who-lived-confronting-aragog@1
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_102444
+  authored: generated
+  batch: 2.4.hp
+default_next: null

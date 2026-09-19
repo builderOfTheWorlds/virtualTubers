@@ -1,0 +1,14 @@
+cast: ['Leena', 'Vigil', 'chadwick', 'gm', 'sodacan_bob']
+note: Plots/Age of War.md  kind=plot  chars=3911
+   INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+
+=== SPINE RE-AUTHORED (with local vocabulary filter) ===
+scene id: reunion-ball-discovery
+lore (after local filter): []
+beats: 6
+written: /home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/ashiorid/proposed_spine_retest/ashiorid-spine-retest.yaml
+   INFO campaign.pack: loaded campaign pack ashiorid with 50 scenes and 5 cast members
+   INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 1 warnings
+   INFO pack_gate: gate result: 0 error(s), 1 warning(s)
+gate (this staging only): PASS 1 warning(s)
+  WARN: scene 'reunion-ball-discovery' is unreachable

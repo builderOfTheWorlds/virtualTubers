@@ -1,0 +1,31 @@
+id: the-boy-who-lived-arrival-of-the-owls
+title: 'The Boy Who Lived: Arrival of the Owls'
+enter_narration: As the Dursleys go about their day, strange events begin to unfold
+  around them, hinting at the magical world just beyond their sight.
+beats:
+- speaker: gm
+  type: narration
+  text:
+  - Mr. Dursley noticed a large tawny owl flutter past the window as he left for work,
+    but dismissed it as his mind was on drills.
+  - On his way to work, Mr. Dursley spots a cat seemingly reading a map, but convinces
+    himself it was just a trick of the light.
+  - As Mr. Dursley sat in traffic, he noticed many strangely dressed people, some
+    even wearing cloaks, whispering excitedly together.
+- speaker: ron
+  type: dialogue
+  text:
+  - Blimey, have you seen all those owls about? They're acting mighty strange, they
+    are.
+  - Cor, it's like they're delivering something important, isn't it? But what could
+    it be?
+  - Mark my words, something big's happening. Something magical, if you ask me!
+lore: []
+source:
+  base_hash: 3e1209957d5de625f4fd25a1991e394f8095d6549172c39d4b8c8dcad77b29f5
+  version: the-boy-who-lived-arrival-of-the-owls@3
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_102444
+  authored: generated
+  batch: 2.4.hp
+default_next: the-boy-who-lived-confronting-aragog

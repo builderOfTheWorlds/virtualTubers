@@ -1,0 +1,48 @@
+18:14:34    INFO ashiorid_week: run_id=ashiorid_week_20260919_181434 model=hermes3:70b
+18:14:34    INFO ashiorid_week: source notes loaded: 124
+18:14:34    INFO ashiorid_week: === SPINE CONTINUATION (seeded from scenes/15-malvakar-riddle.yaml) ===
+18:14:34    INFO ashiorid_week: seed context from malvakar-riddle (590 words)
+18:14:34    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:14:34    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:14:34    INFO ashiorid_week: closed vocab  cast=['Leena', 'Vigil', 'chadwick', 'gm', 'sodacan_bob']  lore=['amulet-of-wonder', 'malmont', 'moonwells', 'the-bahadur', 'the-begene-program', 'the-event']  primitives=['attack', 'cast_spell', 'move_to', 'reveal_memory', 'roll_check', 'search']
+18:14:34    INFO ashiorid_week: [1/3] authoring spine from Plots/Shewolf of Idra.md (612 words)
+18:17:16    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:17:16    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:17:16    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:17:16    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:17:16    INFO ashiorid_week:   -> temple-of-malar | 5 beats | 91 spoken words (~0.6m) | speakers=Leena,Vigil,chadwick,gm,sodacan_bob
+18:17:16    INFO ashiorid_week: [2/3] authoring spine from Plots/Lighthouse Campaign.md (283 words)
+18:25:00    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:25:00    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:25:00    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:25:00    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:25:00    INFO ashiorid_week:   -> lighthouse-encounter | 5 beats | 81 spoken words (~0.5m) | speakers=Vigil,chadwick,gm,sodacan_bob
+18:25:00    INFO ashiorid_week: [3/3] authoring spine from Plots/Mutant History - Alien World.md (286 words)
+18:31:50    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:31:50 WARNING author_scenes: author_spine: dropped 1 beat(s) with unknown speakers/primitives (registered cast: ['Leena', 'Vigil', 'chadwick', 'gm', 'sodacan_bob'], enabled primitives: ['attack', 'cast_spell', 'move_to', 'reveal_memory', 'roll_check', 'search'])
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:31:50    INFO ashiorid_week:   -> mutants-encounter | 4 beats | 65 spoken words (~0.4m) | speakers=Leena,Vigil,gm
+18:31:50    INFO ashiorid_week: spine staged 3 scenes under /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/spine (proposal at /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/splice.proposal.yaml)
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 52 scenes and 5 cast members
+18:31:50    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 3 warnings
+18:31:50    INFO pack_gate: gate result: 0 error(s), 3 warning(s)
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+18:31:50    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 0 warnings
+18:31:50    INFO pack_gate: gate result: 0 error(s), 0 warning(s)
+18:31:50    INFO ashiorid_week: GATE spine dir: PASS 3 warning(s) | errors=[] warnings=["scene 'lighthouse-encounter' is unreachable", "scene 'mutants-encounter' is unreachable", "scene 'temple-of-malar' is unreachable"]
+18:31:50    INFO ashiorid_week: GATE ambient dir: PASS 0 warning(s) | errors=[] warnings=[]
+18:31:50    INFO campaign.pack: loaded campaign pack ashiorid with 52 scenes and 5 cast members
+18:31:50    INFO ashiorid_week: COMBINED overlay load_pack: 52 scenes, 5 cast — CLEAN
+
+========================================================================
+ASHIORID WEEK BUILD | run_id=ashiorid_week_20260919_181434
+========================================================================
+  SPINE  temple-of-malar                     5 beats    91w  ~0.61m  pools=4  spk=Leena,Vigil,chadwick,gm,sodacan_bob
+  SPINE  lighthouse-encounter                5 beats    81w  ~0.54m  pools=4  spk=Vigil,chadwick,gm,sodacan_bob
+  SPINE  mutants-encounter                   4 beats    65w  ~0.43m  pools=3  spk=Leena,Vigil,gm
+  SPINE TOTAL: 3 scenes, 237 spoken words (0.03 h at 150wpm)
+  AMBIENT   : 0 definitions, 0 prompt words
+  GATE      : spine=PASS  ambient=PASS
+  STAGED    : /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage  (NOT promoted — that is the explicit human step)

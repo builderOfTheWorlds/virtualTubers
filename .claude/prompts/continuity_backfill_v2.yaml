@@ -1,0 +1,99 @@
+model: hermes3:70b
+pass: 2
+scenes:
+  amulet-map:
+    ambient: false
+    continuity_in: Jasper and Juniper have introduced themselves and shown the party a mostly blank map
+      with only one location marked. Leena feels she has seen the map before it was drawn on.
+    continuity_out: The party learns the map will fill in as they complete nine dungeon challenges. The
+      first, the Malvakar monument, bears a riddle in a language the party does not know.
+  bahadur-revealed:
+    ambient: false
+    continuity_in: The tear in reality has widened, but not closed. The party is unsure of what will happen
+      next.
+    continuity_out: A Bahadur has spoken through the tear, revealing that Muad'Malik is aware of the party
+      and the tear they have created.
+  burn-it-down:
+    ambient: false
+    continuity_in: The Duke is dead, the manor is on fire, and the party is trapped inside.
+    continuity_out: The party escapes the burning manor through the servants' stair, and reaches the subbasement
+      where they find Grovley kneeling over a body.
+  grovley-revelation:
+    ambient: false
+    continuity_in: 'The party has escaped the burning manor and reached the subbasement. They have not
+      yet been told what they are. continuity_out: Grovley has revealed the party''s origin in the Begene
+      Sisters breeding program. The Duke''s body lies in the subbasement.'
+    continuity_out: Grovley has revealed the party's origin in the Begene Sisters breeding program. The
+      Duke's body lies in the subbasement.
+  invitation:
+    ambient: false
+    continuity_in: The party has no shared history yet. They have each received a heavy card inviting
+      them to a manor for the Ten Thousandth Anniversary of the Event.
+    continuity_out: The party has compared notes on their invitations and the Event. They know the invitations
+      were struck, not printed, and that the seal on the back is familiar.
+  letos-manor:
+    ambient: false
+    continuity_in: The party arrives at Leto's Manor for a mysterious party. They are unsure how they
+      were invited or what awaits them inside.
+    continuity_out: The party meets the butler Grovley, who seems to know who they are. Leena asks how
+      the Duke knew her name.
+  magic-lost:
+    ambient: false
+    continuity_in: The party knows the Age of War burned the world's magic for fuel, and a small group
+      went to the last well with a plan to close it. The outcome of their plan is unrevealed.
+    continuity_out: The last well has run dry and magic has died out of the world. Leena is a sorcerer
+      in a world where that should be impossible.
+  magic-retained:
+    ambient: false
+    continuity_in: The party knows that the Age of War burned the world's magic for fuel, and a small
+      group went to the last well with a plan to close it. The scene ends before revealing the outcome
+      of their plan.
+    continuity_out: The last well held and magic survives into the present age, though thin and rationed.
+      Leena realizes she has a full share of magic.
+  malmont-arrival:
+    ambient: false
+    continuity_in: The party has arrived in Malmont, a town they have never heard of, four days south
+      of where a manor used to stand. Two figures at the fountain are watching the party with specific
+      attention, as if they have been waiting for them.
+    continuity_out: Jasper and Juniper introduce themselves to the party and reveal a map with almost
+      nothing drawn on it. Leena has the unshakable sense that she has seen this exact paper before it
+      was ever drawn on.
+  malvakar-riddle:
+    ambient: false
+    continuity_in: The party knows the map will fill in as they complete nine dungeon challenges, the
+      first of which is the Malvakar monument. The monument bears a riddle in a language the party does
+      not know.
+    continuity_out: The party has solved the riddle of the Malvakar monument and opened its door. Jasper
+      and Juniper's map has filled in a second mark far to the south.
+  party-attack:
+    ambient: false
+    continuity_in: The party meets the butler Grovley, who seems to know who they are. Leena asks how
+      the Duke knew her name.
+    continuity_out: The Duke is murdered while frozen by a holding spell. The room is set on fire by unknown
+      attackers who plan to search the ashes.
+  portal-choice:
+    ambient: false
+    continuity_in: A tear in the air has opened, revealing fingers pulling it wider. Leena realizes she
+      knows what is on the other side and that she has always known.
+    continuity_out: The tear is wide enough that the party must decide whether to close it by force or
+      let it remain open. The dying wizard's last word was a warning that none of the party understood
+      in time.
+  portal-encounter:
+    ambient: false
+    continuity_in: The party has been entrusted with guarding the vault and its contents. Chadwick holds
+      half of a signet ring, with the other half being with the person who ordered the attack.
+    continuity_out: A tear in the air has opened, revealing fingers pulling it wider. Leena realizes she
+      knows what is on the other side and that she has always known.
+  the-age-of-war:
+    ambient: false
+    continuity_in: The party knows the invitations were struck, not printed, and that the seal on the
+      back is familiar. They are about to learn about the Age of War and the Event.
+    continuity_out: The party now knows that the Age of War burned the world's magic for fuel, and a small
+      group went to the last well with a plan to close it. The scene ends before revealing the outcome
+      of their plan.
+  the-vault:
+    ambient: false
+    continuity_in: The party knows they are part of the Begene Sisters breeding program and were chosen
+      and assembled by design. They have learned of their connection to the Duke and each other.
+    continuity_out: The party has been entrusted with guarding the vault and its contents. Chadwick holds
+      half of a signet ring, with the other half being with the person who ordered the attack.

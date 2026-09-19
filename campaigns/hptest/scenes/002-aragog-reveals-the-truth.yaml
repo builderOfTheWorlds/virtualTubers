@@ -1,0 +1,38 @@
+id: aragog-reveals-the-truth
+title: Aragog Reveals the Truth
+enter_narration: Deep in the Forbidden Forest, Harry and Ron come face to face with
+  Aragog, the giant spider.
+beats:
+- type: dialogue
+  speaker: harry
+  text:
+  - Aragog, we need your help. Hagrid's been taken to Azkaban, and they think he opened
+    the Chamber of Secrets.
+  - Hagrid's in trouble, Aragog. They've taken him to Azkaban, believing he set free
+    the monster in the Chamber of Secrets.
+  - Aragog, they've taken Hagrid away. They think he's responsible for the Chamber
+    of Secrets being opened.
+- type: narration
+  speaker: gm
+  text:
+  - The spiders around them begin to close in, their many eyes gleaming in the darkness.
+  - As Aragog finishes speaking, the spiders start to inch closer to Harry and Ron
+    menacingly.
+  - The spiders seem to be getting agitated, moving closer to the two boys with each
+    passing moment.
+- type: dialogue
+  speaker: harry
+  text:
+  - Aragog, what is the creature in the castle? What killed the girl back then?
+  - Please, Aragog, tell us what lives in the castle. What is the monster they speak
+    of?
+  - We need to know, Aragog. What is the creature that attacked the girl in the castle?
+lore: []
+source:
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_114147
+  version: aragog-reveals-the-truth@1
+  base_hash: 7e8e720f65d4b6be59e720f8e6189ee4df38bffc7725252f3fdc10f543ba3ff8
+  authored: generated
+  batch: 2.4.hp
+default_next: the-boy-who-lived

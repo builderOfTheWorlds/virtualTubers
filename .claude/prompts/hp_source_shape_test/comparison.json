@@ -1,0 +1,213 @@
+{
+  "run_id": "source_shape_test_20260919_071724",
+  "model": "hermes3:70b",
+  "sources": [
+    {
+      "tag": "ashiorid",
+      "source_path": "/home/secus/codeProjects/ashioridCampaign/DnD Campaign",
+      "base_pack": "/home/secus/codeProjects/virtualTubers/campaigns/ashiorid_1",
+      "base_pack_scenes": 49,
+      "base_cast": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+      ],
+      "base_lore": [
+        "amulet-of-wonder",
+        "malmont",
+        "moonwells",
+        "the-bahadur",
+        "the-begene-program",
+        "the-event"
+      ],
+      "n_source_notes": 124,
+      "scenes": {
+        "spine": {
+          "status": "authored (post-filter)",
+          "note_kind": "plot",
+          "note_rel_path": "Plots/Age of War.md",
+          "note_chars": 3911,
+          "scene": {
+            "id": "reunion-ball-discovery",
+            "ambient": false,
+            "n_beats": 6,
+            "variant_pools": 6,
+            "speakers": [
+              "Leena",
+              "Vigil",
+              "chadwick",
+              "gm",
+              "sodacan_bob"
+            ],
+            "lore": [],
+            "source": {
+              "model": "hermes3:70b",
+              "base_hash": "e68eeb84ed81d1ce177fa5c07081ad6826d3534bec590374c04267f7a413f86e",
+              "batch": "2.3.ashiorid.spine-retest",
+              "authored": "generated",
+              "run_id": "ashiorid_spine_retest_20260919_081429",
+              "version": "reunion-ball-discovery@1"
+            }
+          },
+          "written_to": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/ashiorid/proposed_spine_retest/ashiorid-spine-retest.yaml",
+          "note_on_first_attempt": "First 70b reply invented 3 lore stems (The-battle-takes-place-on-the-northern-pole, There-are-two-evil-armies, The-army-of-evil-is-assembled-here) that do not exist in lore/. Local vocabulary filter in author_scenes dropped them and the gate PASSED."
+        },
+        "ambient": {
+          "status": "authored",
+          "note_kind": "location",
+          "note_rel_path": "Locations/Duke Leto's Manor.md",
+          "note_chars": 3412,
+          "scene": {
+            "id": "manor-courtyard-ambience",
+            "ambient": true,
+            "has_enter_narration": false,
+            "n_beats": 0,
+            "variant_pools": 0,
+            "speakers": [],
+            "lore": [],
+            "source": {
+              "run_id": "source_shape_test_20260919_071724",
+              "batch": "2.3.ashiorid",
+              "model": "hermes3:70b",
+              "base_hash": "95d94f366c4e6799d904946c59219ba45dc5e87b3ffd56bfb56757bfae3afab2",
+              "version": "manor-courtyard-ambience@1",
+              "authored": "generated"
+            }
+          },
+          "written_to": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/ashiorid/proposed/ashiorid-ambient-manor-courtyard-ambience.yaml"
+        }
+      },
+      "gate": "PASS 0 warning(s)",
+      "gate_ok": true,
+      "gate_errors": [],
+      "gate_warnings": [],
+      "note_kind_distribution": [
+        [
+          "item",
+          37
+        ],
+        [
+          "plot",
+          20
+        ],
+        [
+          "unclassified",
+          18
+        ],
+        [
+          "location",
+          14
+        ],
+        [
+          "character",
+          13
+        ],
+        [
+          "lore",
+          9
+        ],
+        [
+          "npc",
+          8
+        ],
+        [
+          "faction",
+          4
+        ],
+        [
+          "attachment",
+          1
+        ]
+      ],
+      "chosen_spine_note": "Plots/Age of War.md",
+      "chosen_ambient_note": "Locations/Duke Leto's Manor.md"
+    },
+    {
+      "tag": "hp",
+      "source_path": "/home/secus/codeProjects/virtualTubers/sourceworks/Harry_Potter_all_books_preprocessed.txt",
+      "base_pack": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_test_pack",
+      "base_pack_scenes": 1,
+      "base_cast": [
+        "gm",
+        "harry",
+        "hermione",
+        "ron"
+      ],
+      "base_lore": [
+        "hogwarts",
+        "the-lightning-scar"
+      ],
+      "n_source_notes": 1500,
+      "scenes": {
+        "spine": {
+          "status": "authored",
+          "note_kind": "lore",
+          "note_rel_path": "Harry_Potter_all_books_preprocessed.txt",
+          "note_chars": 4000,
+          "scene": {
+            "id": "the-curious-cat",
+            "ambient": false,
+            "has_enter_narration": true,
+            "n_beats": 3,
+            "variant_pools": 3,
+            "speakers": [
+              "gm",
+              "ron"
+            ],
+            "lore": [],
+            "source": {
+              "run_id": "source_shape_test_20260919_071724",
+              "batch": "2.3.hp",
+              "model": "hermes3:70b",
+              "base_hash": "92c5ef9a85914f85873886c2cac18a57c25e3bb12d7d79a441bf29c5d5a514f4",
+              "version": "the-curious-cat@2",
+              "authored": "generated"
+            }
+          },
+          "written_to": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/hp/proposed/hp-spine-the-curious-cat.yaml"
+        },
+        "ambient": {
+          "status": "authored",
+          "note_kind": "lore",
+          "note_rel_path": "Harry_Potter_all_books_preprocessed.txt",
+          "note_chars": 4000,
+          "scene": {
+            "id": "sorting-ceremony-ambience",
+            "ambient": true,
+            "has_enter_narration": false,
+            "n_beats": 0,
+            "variant_pools": 0,
+            "speakers": [],
+            "lore": [],
+            "source": {
+              "run_id": "source_shape_test_20260919_071724",
+              "batch": "2.3.hp",
+              "model": "hermes3:70b",
+              "base_hash": "642cfceb2923ef9ded791194311b23371e3e8fc476be46ca1a1621d211d41d14",
+              "version": "sorting-ceremony-ambience@1",
+              "authored": "generated"
+            }
+          },
+          "written_to": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/hp/proposed/hp-ambient-sorting-ceremony-ambience.yaml"
+        }
+      },
+      "gate": "PASS 2 warning(s)",
+      "gate_ok": true,
+      "gate_errors": [],
+      "gate_warnings": [
+        "scene 'the-curious-cat' is unreachable",
+        "cast member 'hermione' never speaks"
+      ],
+      "note_kind_distribution": [
+        [
+          "lore",
+          1500
+        ]
+      ],
+      "chosen_spine_note": "Harry_Potter_all_books_preprocessed.txt#block-0000",
+      "chosen_ambient_note": "Harry_Potter_all_books_preprocessed.txt#block-0040"
+    }
+  ]
+}

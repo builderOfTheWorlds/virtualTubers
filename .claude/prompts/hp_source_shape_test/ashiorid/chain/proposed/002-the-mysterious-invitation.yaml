@@ -1,0 +1,46 @@
+id: the-mysterious-invitation
+title: The Mysterious Invitation
+enter_narration: The four adventurers stand in the courtyard of Duke Leto's manor,
+  each holding a mysterious invitation that has brought them to this place.
+beats:
+- type: dialogue
+  speaker: Leena
+  text:
+  - What do you think this invitation is all about?
+  - There must be a reason we were all specifically chosen.
+  - I have a feeling this is going to be the start of something big.
+- type: dialogue
+  speaker: Vigil
+  text:
+  - I've never seen anything like this before.
+  - The paper is so delicate, yet it feels ancient.
+  - There's a strange energy about it, almost like magic.
+- type: dialogue
+  speaker: chadwick
+  text:
+  - Do you think we're in danger here?
+  - I don't like the feeling of being watched.
+  - But we can't back out now, we've come too far.
+- type: dialogue
+  speaker: sodacan_bob
+  text:
+  - Stay sharp, everyone.
+  - We don't know what we're walking into.
+  - But we've got each other's backs, no matter what.
+- type: narration
+  speaker: gm
+  text:
+  - As the adventurers continue to discuss the mysterious invitation, a figure approaches
+    them from across the courtyard.
+  - It's an older man dressed in a black and white butler's uniform.
+  - He looks at each of them in turn, a slight smile playing at the corners of his
+    mouth.
+lore: []
+source:
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_114147
+  version: the-mysterious-invitation@2
+  base_hash: cbf12d0106737b7e75af511caf09cb68652d596823fd63ec60d76cde43e9bedd
+  authored: generated
+  batch: 2.4.ashiorid
+default_next: null

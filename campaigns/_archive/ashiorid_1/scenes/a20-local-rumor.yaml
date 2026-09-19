@@ -1,0 +1,20 @@
+# AMBIENT — filler, not plot. Descent-tone, plants unease without paying it
+# off. Safe to play often since it never confirms or denies anything.
+id: local-rumor
+title: What the Locals Say
+ambient: true
+ring_tone: [descent]
+mood: [tension]
+
+lore: [malmont]
+
+prompt: |
+  The party overhears an unrelated local rumor — something about the
+  unregistered, unfriendly thing that moves through a town at night, or
+  whatever local unease fits the current location. It goes nowhere this
+  scene.
+
+  Nobody in the party investigates or reacts strongly. It's texture: the
+  world has its own worries that don't touch the plot yet.
+
+  Six to ten short lines. Everything here is read aloud, so write for the ear.

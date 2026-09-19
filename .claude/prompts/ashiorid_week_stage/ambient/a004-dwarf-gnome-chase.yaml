@@ -1,0 +1,28 @@
+id: dwarf-gnome-chase
+title: Dwarf and Gnome Chase
+ambient: true
+prompt: 'The party stumbles upon a chaotic scene in the city streets.
+
+  A frantic dwarf dashes out of an alleyway, nearly colliding with them.
+
+  Moments later, a band of agitated gnomes on furry mounts emerges from the same alley,
+  chattering excitedly.
+
+  Spotting the party, one gnome approaches and jabbers insistently in an unintelligible
+  language, seemingly demanding information.
+
+  Failing to get a response, the gnome lets out an angry squeal before rejoining its
+  comrades.
+
+  The gnomes then gallop off in a direction different from the dwarf''s escape route,
+  leaving the party bewildered by the bizarre encounter.
+
+  '
+lore: []
+source:
+  version: dwarf-gnome-chase@1
+  model: hermes3:70b
+  batch: 2.3.ambient.3
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 3a1d6278c3f3604f25a0b1c76772ae34c55f46d8bb320b3038d35fee7055f231

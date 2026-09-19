@@ -1,0 +1,46 @@
+# Authored seed scene — the hand-written spine that generated scenes grow
+# around. Written for the ear: every line here is read aloud by TTS.
+#
+# `default_next` points back at THIS scene: a self-loop. That is deliberate
+# — the show's spine loops (test_self_referencing_scene_is_allowed: "loops
+# are the premise of the show, not a bug"). It also means the seed is an
+# INSERTION POINT, not an open end: a generated chain splices in between
+# the seed and wherever it would have looped back (here, itself), leaving
+# the loop intact. spine_chain._insertion_points handles both cases.
+id: the-boy-who-lived
+title: The Boy Who Lived
+enter_narration: >-
+  Number Four, Privet Drive. The Dursleys are proud to say they are
+  perfectly normal, thank you very much.
+
+lore: [the-lightning-scar, hogwarts]
+
+beats:
+  - type: narration
+    speaker: gm
+    text:
+      - >-
+        Mr and Mrs Dursley of number four Privet Drive were proud to say
+        that they were perfectly normal, thank you very much.
+      - >-
+        The Dursleys of number four Privet Drive kept themselves busy
+        being, by their own proud account, perfectly normal.
+      - >-
+        They were the last people you would expect to be involved in
+        anything strange or mysterious.
+
+  - type: dialogue
+    speaker: harry
+    improv: true
+    text:
+      - >-
+        So the one thing every one of them had never seen was a boy like
+        the one with the scar who, one night, was delivered to their gate.
+      - >-
+        They never wanted a nephew. And yet here, on a wet night, was a
+        bundle in a duvet and a letter no one had signed.
+      - >-
+        A boy they had never had, with a bolt of a mark, left at their door
+        with a note they could not bring themselves to open.
+
+default_next: the-boy-who-lived

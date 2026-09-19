@@ -1,0 +1,25 @@
+   INFO chainrun: run_id=chained_shape_test_20260919_100918 model=hermes3:70b
+   INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+   INFO chainrun: [ashiorid] registered cast: ['Leena', 'Vigil', 'chadwick', 'gm', 'sodacan_bob']
+   INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+WARNING author_scenes: author_spine attempt 1 failed: could not parse a scene (id required) from model reply:
+
+```yaml
+id: the-final-battle-begins
+title: The Final Battle Begins
+enter_narration: The dawn of the final battle rises, two armies poised on the brink of destiny.
+beats:
+- type: narration
+  speaker: gm
+  text:
+  - "The players, commanding the army of heroes, steel themselves for the coming onslaught."
+  - "Gazing across the icy battlefield, they see the vast forces of evil assembled to protect their dark leaders."
+  - "The players know that failure here means the loss of the world's magic forever. There is no turning back now."
+type: dialogue
+  speaker: Leena
+  text:
+  - "We must hold the lin...
+   INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+   INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members
+WARNING author_scenes: author_spine: dropped 1 beat(s) with unknown speakers (registered cast: ['Leena', 'Vigil', 'chadwick', 'gm', 'sodacan_bob'])
+   INFO campaign.pack: loaded campaign pack ashiorid with 49 scenes and 5 cast members

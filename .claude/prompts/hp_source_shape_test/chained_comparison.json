@@ -1,0 +1,154 @@
+{
+  "run_id": "chained_shape_test_20260919_114147",
+  "model": "hermes3:70b",
+  "sources": [
+    {
+      "tag": "ashiorid",
+      "source_path": "/home/secus/codeProjects/ashioridCampaign/DnD Campaign",
+      "base_pack": "/home/secus/codeProjects/virtualTubers/campaigns/ashiorid_1",
+      "chosen_notes": [
+        "Plots/Age of War.md",
+        "Plots/Campaign Opening - Letos Manor.md"
+      ],
+      "base_open_spines": [
+        {
+          "type": "open",
+          "scene": "malvakar-riddle"
+        }
+      ],
+      "patch_proposal": {
+        "insert_at": "malvakar-riddle",
+        "insertion_type": "open",
+        "set": {
+          "scene": "malvakar-riddle",
+          "default_next": "the-final-battle"
+        },
+        "loop_closure": null,
+        "alternatives": [
+          {
+            "type": "open",
+            "scene": "malvakar-riddle"
+          }
+        ]
+      },
+      "scenes": [
+        {
+          "id": "the-final-battle",
+          "default_next": "the-mysterious-invitation",
+          "n_beats": 5,
+          "variant_pools": 5,
+          "speakers": [
+            "Leena",
+            "Vigil",
+            "chadwick",
+            "gm",
+            "sodacan_bob"
+          ],
+          "lore": [],
+          "source_version": "the-final-battle@1"
+        },
+        {
+          "id": "the-mysterious-invitation",
+          "default_next": null,
+          "n_beats": 5,
+          "variant_pools": 5,
+          "speakers": [
+            "Leena",
+            "Vigil",
+            "chadwick",
+            "gm",
+            "sodacan_bob"
+          ],
+          "lore": [],
+          "source_version": "the-mysterious-invitation@2"
+        }
+      ],
+      "staged_files": [
+        "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/ashiorid/chain/proposed/001-the-final-battle.yaml",
+        "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/ashiorid/chain/proposed/002-the-mysterious-invitation.yaml"
+      ],
+      "gate": "PASS 4 warning(s)",
+      "gate_ok": true,
+      "gate_errors": [],
+      "gate_warnings": [
+        "scene 'the-final-battle' is unreachable",
+        "scene 'the-magic-worm-revealed' is unreachable",
+        "scene 'the-mysterious-invitation' is unreachable",
+        "scene 'the-old-lady-reveals' is unreachable"
+      ]
+    },
+    {
+      "tag": "hp",
+      "source_path": "/home/secus/codeProjects/virtualTubers/sourceworks/Harry_Potter_all_books_preprocessed.txt",
+      "base_pack": "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_test_pack",
+      "chosen_notes": [
+        "Harry_Potter_all_books_preprocessed.txt",
+        "Harry_Potter_all_books_preprocessed.txt"
+      ],
+      "base_open_spines": [
+        {
+          "type": "loop",
+          "scene": "the-boy-who-lived"
+        }
+      ],
+      "patch_proposal": {
+        "insert_at": "the-boy-who-lived",
+        "insertion_type": "loop",
+        "set": {
+          "scene": "the-boy-who-lived",
+          "default_next": "the-curious-cat"
+        },
+        "loop_closure": {
+          "scene": "aragog-reveals-the-truth",
+          "default_next": "the-boy-who-lived"
+        },
+        "alternatives": [
+          {
+            "type": "loop",
+            "scene": "the-boy-who-lived"
+          }
+        ]
+      },
+      "scenes": [
+        {
+          "id": "the-curious-cat",
+          "default_next": "aragog-reveals-the-truth",
+          "n_beats": 2,
+          "variant_pools": 2,
+          "speakers": [
+            "gm",
+            "ron"
+          ],
+          "lore": [],
+          "source_version": "the-curious-cat@3"
+        },
+        {
+          "id": "aragog-reveals-the-truth",
+          "default_next": null,
+          "n_beats": 3,
+          "variant_pools": 3,
+          "speakers": [
+            "gm",
+            "harry"
+          ],
+          "lore": [],
+          "source_version": "aragog-reveals-the-truth@1"
+        }
+      ],
+      "staged_files": [
+        "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/hp/chain/proposed/001-the-curious-cat.yaml",
+        "/home/secus/codeProjects/virtualTubers/.claude/prompts/hp_source_shape_test/hp/chain/proposed/002-aragog-reveals-the-truth.yaml"
+      ],
+      "gate": "PASS 5 warning(s)",
+      "gate_ok": true,
+      "gate_errors": [],
+      "gate_warnings": [
+        "scene 'aragog-reveals-the-truth' is unreachable",
+        "scene 'the-boy-who-lived-arrival-of-the-owls' is unreachable",
+        "scene 'the-boy-who-lived-confronting-aragog' is unreachable",
+        "scene 'the-curious-cat' is unreachable",
+        "cast member 'hermione' never speaks"
+      ]
+    }
+  ]
+}

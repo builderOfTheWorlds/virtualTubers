@@ -1,0 +1,50 @@
+continuity_in: The party arrives at the Temple of Malar in Idra, suspicious of its
+  true nature.
+continuity_out: The party is determined to uncover Pamela's secret and the true devotion
+  of the temple.
+id: temple-of-malar
+title: The Temple of Malar
+enter_narration: The Temple of Malar stands in the northern outskirts of Idra, a small
+  wooden building surrounded by trees covered with overgrown vines.
+beats:
+- speaker: gm
+  text:
+  - The temple is fairly popular, usually with a dozen or so visitors a day. The head
+    priestess, Pamela, is known to many as the She Wolf.
+  - Pamela, the She Wolf, stays at the temple, which is now devoted to Malar but falsely
+    appears to be for Mielikki.
+  - The other two priestesses, Nicole and Emily, are unaware of Pamela's true nature
+    and devotion to Malar.
+  type: narration
+- speaker: chadwick
+  text:
+  - This place gives me the creeps. Something's not right here.
+  - I don't like the vibe we're getting from this temple. It's too quiet.
+  - There's a strange atmosphere in this temple. I don't feel safe.
+  type: dialogue
+- speaker: sodacan_bob
+  text:
+  - Pamela's hiding something. Her story about being in deep prayer doesn't add up.
+  - The She Wolf's not what she seems. We need to find out what she's hiding.
+  - Pamela's secret is the key to this temple. We've gotta dig deeper.
+  type: dialogue
+- speaker: Leena
+  text:
+  - Nicole seems genuinely devoted to Mielikki. She doesn't strike me as dangerous.
+  - Emily's an old woman, but she's sharp. She might know more than she lets on.
+  - We should talk to the other priestesses, see if they know anything about Pamela.
+  type: dialogue
+- primitive: reveal_memory
+  speaker: Vigil
+  params:
+    memory: Pamela's transformation into a Lycanthrope
+  type: action
+lore: []
+source:
+  version: temple-of-malar@1
+  base_hash: bddd434c7ec8f99181d24b465fa613c1fc54b0bbeb81a4e752aad8c310d937a8
+  run_id: ashiorid_week_20260919_181434
+  batch: 2.3.spine.0
+  model: hermes3:70b
+  authored: generated
+default_next: lighthouse-encounter

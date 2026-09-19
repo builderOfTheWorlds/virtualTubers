@@ -1,0 +1,19 @@
+id: losira-nightfall
+title: Nightfall in Losira
+ambient: true
+prompt: 'The sun dips below the horizon, casting long shadows across the streets of
+  Losira. The sounds of the day - the clanking of armor from the academy, the chatter
+  from The Wooden Hat - begin to quiet down. The town takes on a different character
+  as night falls, with pockets of light from windows and the occasional street lamp
+  piercing the growing darkness. The air grows colder, and the quiet whispers of the
+  night bring their own tales.
+
+  '
+lore: []
+source:
+  version: losira-nightfall@1
+  model: hermes3:70b
+  batch: 2.3.ambient.8
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 06eb3640212d47d4a3125abd1f5d564777772a8f45740095efd8ca6ee3915a57

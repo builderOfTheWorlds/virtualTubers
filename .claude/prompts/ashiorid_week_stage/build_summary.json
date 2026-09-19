@@ -1,0 +1,105 @@
+{
+  "run_id": "ashiorid_week_20260919_184406",
+  "spine": [],
+  "ambient": [
+    {
+      "id": "sarahs-inn-ambience",
+      "ambient": true,
+      "prompt_words": 63,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "city-streets-ambient",
+      "ambient": true,
+      "prompt_words": 21,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "mysterious-child-visits-camp",
+      "ambient": true,
+      "prompt_words": 39,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "dwarf-gnome-chase",
+      "ambient": true,
+      "prompt_words": 94,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "village-ambience",
+      "ambient": true,
+      "prompt_words": 37,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "villagers-discuss-unclaimed-treasure",
+      "ambient": true,
+      "prompt_words": 42,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "falling-man-impact",
+      "ambient": true,
+      "prompt_words": 22,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "henderson-ambience",
+      "ambient": true,
+      "prompt_words": 64,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "losira-nightfall",
+      "ambient": true,
+      "prompt_words": 78,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "malmont-market-day",
+      "ambient": true,
+      "prompt_words": 43,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "azra-infiltrates",
+      "ambient": true,
+      "prompt_words": 58,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "grovley-observes",
+      "ambient": true,
+      "prompt_words": 39,
+      "n_beats": 0,
+      "default_next": null
+    }
+  ],
+  "gate_spine": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "scene 'lighthouse-encounter' is unreachable",
+      "scene 'mutants-encounter' is unreachable",
+      "scene 'temple-of-malar' is unreachable"
+    ]
+  },
+  "gate_ambient": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "staged_under": "/home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage"
+}

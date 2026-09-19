@@ -1,0 +1,16 @@
+id: village-ambience
+title: Village Ambience
+ambient: true
+prompt: 'The village is quiet and peaceful. Chickens cluck in the distance.  An old
+  dog barks lazily, lying in a patch of sun. Somewhere, a  blacksmith hammers metal.
+  The wind rustles leaves in the trees  edging the settlement.
+
+  '
+lore: []
+source:
+  version: village-ambience@1
+  model: hermes3:70b
+  batch: 2.3.ambient.4
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: fa849c8fcb9529f4a244fbdb1f4af06183729a56664aa1a99eb13a9fd43c2e8d

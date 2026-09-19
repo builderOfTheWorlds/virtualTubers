@@ -1,0 +1,33 @@
+id: the-curious-cat
+title: The Curious Cat
+enter_narration: Mr. Dursley, a man of strict routine, encounters something peculiar
+  on his way to work.
+beats:
+- type: narration
+  speaker: gm
+  text:
+  - As Mr. Dursley drove around the corner and up the road, he watched the cat in
+    his mirror.
+  - In the rearview mirror, Mr. Dursley kept an eye on the peculiar feline.
+  - Glancing back, Mr. Dursley observed the cat's odd behavior.
+- type: dialogue
+  speaker: gm
+  text:
+  - There was a tabby cat standing on the corner of Privet Drive, but there wasn't
+    a map in sight.
+  - A tabby cat stood at the corner, yet no map was visible.
+  - On the corner of Privet Drive, a tabby cat, with no map to be seen.
+- type: dialogue
+  speaker: ron
+  text:
+  - What could he have been thinking of? It must have been a trick of the light.
+  - How could a cat read a map? Surely it was just a play of shadows.
+  - A cat reading a map? Impossible. It had to be an optical illusion.
+lore: []
+source:
+  authored: generated
+  batch: 2.3.hp
+  base_hash: 92c5ef9a85914f85873886c2cac18a57c25e3bb12d7d79a441bf29c5d5a514f4
+  run_id: source_shape_test_20260919_071724
+  model: hermes3:70b
+  version: the-curious-cat@2

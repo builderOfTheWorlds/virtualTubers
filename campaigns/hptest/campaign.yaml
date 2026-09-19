@@ -1,0 +1,26 @@
+name: hptest
+title: "Harry Potter — Source-Shape Test Pack"
+genre: fantasy
+
+# One authored spine scene seeds the graph; the generated scenes are the
+# actual output this build is testing. start_scene must exist or load_pack
+# fails.
+start_scene: the-boy-who-lived
+
+gm: gm
+players:
+  - harry
+  - ron
+  - hermione
+
+# Two primitives to exercise the closed-vocabulary rule in the validator.
+primitives:
+  - cast_spell
+  - attack
+
+ambient:
+  every: 2
+
+theme:
+  accent: green
+  narration: dim

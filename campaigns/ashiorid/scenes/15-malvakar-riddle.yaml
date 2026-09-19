@@ -1,0 +1,103 @@
+id: malvakar-riddle
+title: The Malvakar
+enter_narration: >-
+  The northern monument stands alone on a plain of black glass, and the
+  riddle is already answering itself if you know where to look.
+
+lore: [the-event, amulet-of-wonder]
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        "Twice in eternity and always within eyesight." The Malvakar rises out
+        of ground fused to glass, and it has clearly been struck by something
+        with real force, more than once.
+      - >-
+        The plain around the Malvakar is black glass, scorched flat, and the
+        riddle is cut so deep it survived whatever did that to the ground.
+      - >-
+        Whatever burned this plain to glass did not touch the Malvakar itself,
+        which is either very good luck or the entire point of the monument.
+
+  - type: dialogue
+    speaker: chadwick
+    improv: true
+    text:
+      - >-
+        Sunrise and sunset. Every day, forever, and you can always see one of
+        them coming.
+      - >-
+        Dawn and dusk. Twice a day, every day there ever was, and neither one
+        sneaks up on you.
+      - >-
+        The horizon does it twice a day and has since the world started. I'll
+        speak that answer myself if nobody objects.
+
+  - type: action
+    speaker: chadwick
+    primitive: roll_check
+    params:
+      skill: intelligence check
+      dc: 12
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        The word Chadwick speaks lands wrong in the air and right in the stone.
+        The monument answers with a groan that comes up through your boots
+        before it reaches your ears.
+      - >-
+        The stone accepts the word the way a lock accepts the right key —
+        without ceremony, just a low sound and a seam opening where there was
+        none.
+      - >-
+        Something in the monument recognises the answer immediately, and a
+        door-shaped absence appears in the black glass at its base.
+
+  - type: dialogue
+    speaker: sodacan_bob
+    improv: true
+    text:
+      - >-
+        Whoever built this wanted it opened, not defended. There's a
+        difference in the joinery, and this is an invitation, not a vault.
+      - >-
+        This isn't a trap door. It's a welcome mat cut from a mile of stone.
+        Somebody meant for this to be found.
+      - >-
+        Every dungeon door I've ever cracked fought me. This one's holding
+        itself open. I don't trust that, but I respect it.
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        Jasper and Juniper's map fills in a second mark, far to the south,
+        the instant the door opens — the reward for one door earning the next.
+      - >-
+        A new line draws itself across the blank map, south of Malmont,
+        exactly as Juniper promised it would.
+      - >-
+        The map does what it was said to do. One dungeon opened, one new mark
+        appears, and the paper is still mostly blank.
+
+  - type: action
+    speaker: Vigil
+    primitive: move_to
+    params:
+      destination: the doorway in the black glass
+      manner: bow drawn, watching the dark
+
+continuity_in: The party knows the map will fill in as they complete nine dungeon challenges, the first
+  of which is the Malvakar monument. The monument bears a riddle in a language the party does not know.
+continuity_out: The party has solved the riddle of the Malvakar monument and opened its door. Jasper and
+  Juniper's map has filled in a second mark far to the south.

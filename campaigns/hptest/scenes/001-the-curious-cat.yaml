@@ -1,0 +1,32 @@
+id: the-curious-cat
+title: The Curious Cat
+enter_narration: A strange day begins in Little Whinging, with odd sightings and whispers
+  spreading through the town.
+beats:
+- type: narration
+  speaker: gm
+  text:
+  - As Mr. Dursley drives to work, he notices strange people in cloaks huddled together,
+    whispering excitedly.
+  - Mr. Dursley spots oddly dressed people in cloaks, whispering and collecting money,
+    as he makes his way to Grunnings.
+  - On his way to the office, Mr. Dursley encounters peculiar people in cloaks, huddling
+    and murmuring mysteriously.
+- type: dialogue
+  speaker: ron
+  text:
+  - What do you think they're collecting for, Hermione? It seems like everyone's talking
+    about something.
+  - Have you heard about the people in cloaks, Hermione? They're acting strange and
+    whispering to each other.
+  - Hey Hermione, did you see those weirdos in cloaks? They're gathering money for
+    something, but I can't figure out what.
+lore: []
+source:
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_114147
+  version: the-curious-cat@3
+  base_hash: 3e1209957d5de625f4fd25a1991e394f8095d6549172c39d4b8c8dcad77b29f5
+  authored: generated
+  batch: 2.4.hp
+default_next: aragog-reveals-the-truth

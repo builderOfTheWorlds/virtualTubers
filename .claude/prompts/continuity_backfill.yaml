@@ -1,0 +1,198 @@
+model: hermes3:70b
+scenes:
+  Leena-almost:
+    ambient: true
+    continuity_in: The party is traveling together when Leena notices something familiar that should not
+      be.
+  Vigil-counts:
+    ambient: true
+    continuity_in: The party is together in an unfamiliar location.
+  after-the-choice:
+    ambient: true
+    continuity_in: The party is traveling together, having recently made a difficult decision that weighs
+      on them.
+  amulet-map:
+    ambient: false
+    continuity_in: The party has been invited to a treasure hunt and received a map with one mark on it.
+      They are at the starting point, the Malvakar monument.
+    continuity_out: The party knows there are nine dungeons to explore, with riddles at each, and the
+      map will fill in as they solve them. They have deciphered the first riddle and know they are looking
+      for something that happens exactly twice, forever.
+  bahadur-revealed:
+    ambient: false
+    continuity_in: The party has opened a tear in the air and encountered a Bahadur. They are familiar
+      with runes and can recognize a Bahadur when they see one.
+    continuity_out: The party has been addressed by the Bahadur, which speaks of Muad'Malik and a door
+      that has been prepared for ten thousand years. The tear in the air has stopped widening.
+  bahadur-sighted:
+    ambient: true
+    continuity_in: The party is traveling together through a forest.
+  before-the-well:
+    ambient: true
+    continuity_in: The party travels together toward a moonwell, feeling unspoken dread.
+  bob-names-the-runes:
+    ambient: true
+    continuity_in: The party is travelling together.
+  bob-sings:
+    ambient: true
+    continuity_in: The party is travelling together.
+  bob-vs-the-cart-wheel:
+    ambient: true
+    continuity_in: The party is traveling together on a cart or wagon.
+  burn-it-down:
+    ambient: false
+    continuity_in: The party is trapped in a burning manor with no clear escape route. They have heard
+      a spell being cast but do not know its full effects.
+    continuity_out: The party has survived the manor's collapse and discovered the old butler alive but
+      grieving over a body in the servants' quarters.
+  camp-fire:
+    ambient: true
+    continuity_in: The party is traveling together and has stopped to rest for the night.
+  carrying-the-signet:
+    ambient: true
+    continuity_in: The party is traveling together and one of them carries a half-signet-ring.
+  chadwick-cooking:
+    ambient: true
+    continuity_in: The party is travelling together and stops to eat a meal prepared by Chadwick.
+  chadwick-lost:
+    ambient: true
+    continuity_in: The party is travelling together, led by Chadwick.
+  chadwick-oath-technicality:
+    ambient: true
+    continuity_in: The party is travelling together.
+  counting-the-cost:
+    ambient: true
+    continuity_in: The party is travelling together.
+  grovley-remembered:
+    ambient: true
+    continuity_in: The party is traveling together, discussing Grovley and the manor.
+  grovley-revelation:
+    ambient: false
+    continuity_in: The party has been invited to the Duke's house and made it to the subbasement. They
+      are unaware of the true nature of their origins.
+    continuity_out: The party knows they are part of the Begene Sisters breeding program and were chosen
+      and assembled by design. They have learned of their connection to the Duke and each other.
+  inventory-argument:
+    ambient: true
+    continuity_in: The party is traveling together.
+  invitation:
+    ambient: false
+    continuity_in: The party members have each received a mysterious invitation to a manor for an anniversary
+      of an unnamed event. They have never met each other before.
+    continuity_out: The party has been invited to the Duke's manor for the ten thousandth anniversary
+      of the Event. They are aware the invitations were individually crafted and not mass produced.
+  leena-different-now:
+    ambient: true
+    continuity_in: The party is traveling together.
+  leena-recognizes-nothing:
+    ambient: true
+    continuity_in: The party is traveling together, and Leena almost recognizes a landmark.
+  leena-tries-slang:
+    ambient: true
+    continuity_in: The party is traveling together.
+  letos-manor:
+    ambient: false
+    continuity_in: The party has been invited to a mysterious party at Duke Leto's manor. They have traveled
+      to the manor and are outside the entrance.
+    continuity_out: The party has entered the manor and encountered a butler who seems to know them. They
+      are now inside the manor's main hall with many other guests.
+  local-rumor:
+    ambient: true
+    continuity_in: The party is together in an unfamiliar town, possibly early in their journey.
+  magic-lost:
+    ambient: false
+    continuity_in: The party knows the world once had magic, but it was burned away ten thousand years
+      ago. They have met a sorcerer named Leena, who is impossible in this age.
+    continuity_out: The party has learned that Leena's magic is real and should not exist. They now know
+      that someone has been secretly keeping sorcerers alive for generations.
+  magic-retained:
+    ambient: false
+    continuity_in: The party knows the world once had abundant magic and burned it for fuel. They have
+      heard a tale of how magic was sealed away ten thousand years ago.
+    continuity_out: The party understands that magic still exists in the world, but is rare and carefully
+      controlled. They know Leena has an unusually strong connection to magic.
+  malmont-arrival:
+    ambient: false
+    continuity_in: The party has travelled south from the ash of a manor and arrived in Malmont. They
+      are aware that the town is larger than any place they have been since the fire.
+    continuity_out: The party has met Jasper and Juniper, who were waiting for them and have a mostly
+      blank map. Leena has seen the map before it was drawn on.
+  malmont-market:
+    ambient: true
+    continuity_in: The party is together in Malmont, a town they are passing through on their journey.
+  malvakar-riddle:
+    ambient: false
+    continuity_in: The party has the map from Jasper and Juniper, which already has one mark on it. They
+      have traveled to the northern monument and are ready to investigate it.
+    continuity_out: The party has solved the riddle of the Malvakar and opened the door. A second mark
+      has appeared on the map, far to the south, indicating the next location they must travel to.
+  nafsari-question:
+    ambient: true
+    continuity_in: The party is travelling together.
+  night-watch:
+    ambient: true
+    continuity_in: The party is travelling together and taking turns on watch at night.
+  party-attack:
+    ambient: false
+    continuity_in: The party is attending a grand party at Duke Sorensen Leto the Third's manor. They
+      are aware of the historical significance of the event.
+    continuity_out: The party has witnessed the Duke's murder and the manor being set on fire by unknown
+      attackers. They know that powerful magic was used to immobilize the guests.
+  portal-choice:
+    ambient: false
+    continuity_in: The party has encountered a dying wizard who created a portal. They are deciding whether
+      to close the portal or go through it.
+    continuity_out: The party has heard a warning from the dying wizard. They now know that the portal
+      will not close on its own and must be shut by force.
+  portal-encounter:
+    ambient: false
+    continuity_in: The party has entered the tunnel behind the subbasement wall in the Letos manor. They
+      have heard stories of an ancient Event from ten thousand years ago.
+    continuity_out: The party has witnessed a dying wizard create a portal at the tunnel's mouth. Leena
+      now knows what is on the other side of the portal.
+  road-talk:
+    ambient: true
+    continuity_in: The party travels together along a long stretch of road.
+  sodacan-forge-envy:
+    ambient: true
+    continuity_in: The party is travelling together and encounters a piece of local smithwork.
+  sodacan_bob-on-craft:
+    ambient: true
+    continuity_in: The party is travelling together when Sodacan Bob stops to examine an ordinary crafted
+      object.
+  sodacan_bob-on-runes:
+    ambient: true
+    continuity_in: The party is traveling together.
+  the-age-of-war:
+    ambient: false
+    continuity_in: The party knows the world burned its own magic for fuel ten thousand years ago, and
+      that a small group went to the last moonwell with a plan to close it.
+    continuity_out: The party has heard a story about the Age of War and the moment the world's fate was
+      decided by four strangers holding a card.
+  the-map-argument:
+    ambient: true
+    continuity_in: The party is travelling together.
+  the-meal:
+    ambient: true
+    continuity_in: The party is eating a meal together during their journey.
+  the-ring-half:
+    ambient: true
+    continuity_in: The party is traveling together, and one of them carries the half-signet-ring.
+  the-vault:
+    ambient: false
+    continuity_in: The party has learned they are the Letos, an ancient family charged with protecting
+      reality. Grovley has revealed the secret vault in the subbasement.
+    continuity_out: The party has entered the vault and accepted the duty of containing the shape. Chadwick
+      holds half a signet ring, the other half with their betrayer.
+  vigil-almost-jokes:
+    ambient: true
+    continuity_in: The party is traveling together.
+  vigil-tracks:
+    ambient: true
+    continuity_in: The party is traveling together on a road.
+  vigil-watches-longer:
+    ambient: true
+    continuity_in: The party is traveling together and taking turns keeping watch.
+  weather-argument:
+    ambient: true
+    continuity_in: The party is travelling together on a road.

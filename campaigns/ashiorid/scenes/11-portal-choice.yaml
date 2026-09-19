@@ -1,0 +1,115 @@
+id: portal-choice
+title: What Comes Through
+enter_narration: >-
+  The tear in the air is wide enough now that the four of you have to decide,
+  and the deciding cannot wait.
+
+lore: [the-event, moonwells]
+
+beats:
+  - type: pane
+    show: map
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        Whatever is on the other side has a hand and a want and neither of
+        those are going to get smaller while you stand here talking about it.
+      - >-
+        The thing beyond the tear does not need your permission, only time, and
+        it is spending less of that every second you spend deciding.
+      - >-
+        Nothing about the shape on the other side is patient. It is simply
+        confident, which is worse, because confident things do not hurry.
+
+  - type: action
+    speaker: chadwick
+    primitive: roll_check
+    params:
+      skill: athletics
+      dc: 15
+
+  - type: dialogue
+    speaker: chadwick
+    improv: true
+    text:
+      - >-
+        We close it. Whatever's on the other side stays on the other side.
+        That's the whole plan.
+      - >-
+        I don't need to know what it is to know it doesn't come through. Close
+        it.
+      - >-
+        Ten thousand years somebody held this door. It closes tonight too.
+
+  - type: dialogue
+    speaker: Leena
+    improv: true
+    text:
+      - >-
+        I know that shape. I have dreamed that shape, and I don't know why a
+        village that doesn't exist would teach me to dream it.
+      - >-
+        That's not a stranger's hand. I've seen it before, somewhere I can't
+        name, and it terrifies me that I recognise it at all.
+      - >-
+        Something in me already knows what's reaching through, and it isn't
+        telling the rest of me. That frightens me more than the hand does.
+
+  - type: dialogue
+    speaker: sodacan_bob
+    improv: true
+    text:
+      - >-
+        A tear like this doesn't heal on its own. We shut it by force, or we
+        don't shut it at all.
+      - >-
+        You don't mend a rip in the world with a kind word. It takes force, or
+        it takes nothing.
+      - >-
+        I've closed worse gaps than this with a hammer and a rune. This one
+        wants both, and quickly.
+
+  - type: action
+    speaker: Vigil
+    primitive: search
+    params:
+      target: the tear's edges
+      detail: whether it is weaker anywhere along the rim
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        The dying wizard's hand closes on Vigil's wrist. His last word was not
+        the spell. It was a warning, and none of you understood it in time.
+      - >-
+        Before the wizard goes still for good, his fingers find Vigil's
+        sleeve. He was trying to say something after the spell, not during it,
+        and nobody caught the difference.
+      - >-
+        The wizard's hand finds Vigil's before it falls still. Whatever he was
+        trying to add after the spell went unheard by everyone but him.
+
+branches:
+  - id: seal-it
+    when:
+      outcome: success
+      weight: 3
+    next: malmont-arrival
+
+  - id: it-widens
+    when:
+      outcome: failure
+      weight: 2
+    next: bahadur-revealed
+
+default_next: malmont-arrival
+
+continuity_in: A tear in the air has opened, revealing fingers pulling it wider. Leena realizes she knows
+  what is on the other side and that she has always known.
+continuity_out: The tear is wide enough that the party must decide whether to close it by force or let
+  it remain open. The dying wizard's last word was a warning that none of the party understood in time.

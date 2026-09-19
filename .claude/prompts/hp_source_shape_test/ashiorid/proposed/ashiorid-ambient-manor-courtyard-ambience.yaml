@@ -1,0 +1,18 @@
+id: manor-courtyard-ambience
+title: Manor Courtyard Ambience
+ambient: true
+prompt: 'The manor''s central courtyard is a hive of activity. Servants hustle about,
+  preparing for the evening''s grand celebration. The clatter of hooves on stone echoes
+  as horse-drawn carriages arrive, disgorging finely dressed guests. From an upper
+  balcony, a musician practices a lively tune on her lute, the notes floating across
+  the bustling scene.
+
+  '
+lore: []
+source:
+  authored: generated
+  batch: 2.3.ashiorid
+  base_hash: 95d94f366c4e6799d904946c59219ba45dc5e87b3ffd56bfb56757bfae3afab2
+  run_id: source_shape_test_20260919_071724
+  model: hermes3:70b
+  version: manor-courtyard-ambience@1

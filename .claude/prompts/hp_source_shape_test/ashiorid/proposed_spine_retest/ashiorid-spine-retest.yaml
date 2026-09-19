@@ -1,0 +1,45 @@
+id: reunion-ball-discovery
+title: The Reunion Ball Discovery
+enter_narration: The grand ball is in full swing, with guests from across the realms
+  in attendance.
+beats:
+- type: narration
+  text:
+  - As the music swells, the player characters feel a strange pull towards the mansion's
+    basement.
+  - Curiosity piqued, the group slips away from the ball to investigate the source
+    of the mysterious sensation.
+  speaker: gm
+- type: dialogue
+  text:
+  - Do you guys feel that? It's like... a call of some kind.
+  - There's definitely something odd going on. I say we check it out!
+  speaker: Leena
+- type: dialogue
+  text:
+  - I've got a bad feeling about this. We should be careful.
+  - Agreed, but we can't ignore this. Let's see where it leads.
+  speaker: Vigil
+- type: dialogue
+  text:
+  - If it's some kind of trap, at least we'll be together.
+  - Strength in numbers, right? Let's do this.
+  speaker: chadwick
+- type: narration
+  text:
+  - Descending into the depths, the group discovers a hidden vault.
+  - Inside, a strange, glowing worm rests in a state of hibernation.
+  speaker: gm
+- type: dialogue
+  text:
+  - Whoa, what is that thing? Some kind of magical creature?
+  - I've never seen anything like it. But it seems to be... waiting for us?
+  speaker: sodacan_bob
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: e68eeb84ed81d1ce177fa5c07081ad6826d3534bec590374c04267f7a413f86e
+  batch: 2.3.ashiorid.spine-retest
+  authored: generated
+  run_id: ashiorid_spine_retest_20260919_081429
+  version: reunion-ball-discovery@1

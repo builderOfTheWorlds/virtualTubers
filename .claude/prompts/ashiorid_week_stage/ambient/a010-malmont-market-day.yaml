@@ -1,0 +1,15 @@
+id: malmont-market-day
+title: A Day at Malmont Market
+ambient: true
+prompt: "The bustling market of Malmont is alive with activity. \nMerchants peddle\
+  \ their wares, hawking spices, fine silks, and gleaming jewelry.\nTownsfolk browse\
+  \ the stalls, bargaining for goods, as carts rumble past.\nThe scents of fresh bread\
+  \ and roasting meats mingle in the air.\n"
+lore: []
+source:
+  version: malmont-market-day@1
+  model: hermes3:70b
+  batch: 2.3.ambient.9
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: d0ac5f19c606f1963e912e14223dfcef7b84e4acb910f3471ec51e5e9f482ea6

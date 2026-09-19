@@ -1,0 +1,58 @@
+18:44:06    INFO ashiorid_week: run_id=ashiorid_week_20260919_184406 model=hermes3:70b
+18:44:06    INFO ashiorid_week: source notes loaded: 124
+18:44:06    INFO ashiorid_week: === AMBIENT BATCH (filler, independent) ===
+18:44:06    INFO ashiorid_week: [1/12] authoring ambient from Plots/Side Quests/Sarah's Simple Inn.md
+18:45:06    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:45:06    INFO ashiorid_week:   -> sarahs-inn-ambience | prompt ~63 words
+18:45:06    INFO ashiorid_week: [2/12] authoring ambient from Plots/Side Quests/The Mage Hole.md
+18:51:59    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:51:59    INFO ashiorid_week:   -> city-streets-ambient | prompt ~21 words
+18:51:59    INFO ashiorid_week: [3/12] authoring ambient from Plots/Side Quests/Mystery Boy and Poison Ring.md
+18:55:05    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:55:05    INFO ashiorid_week:   -> mysterious-child-visits-camp | prompt ~39 words
+18:55:05    INFO ashiorid_week: [4/12] authoring ambient from Plots/Side Quests/Dwarf Related Issues.md
+18:58:12    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+18:58:12    INFO ashiorid_week:   -> dwarf-gnome-chase | prompt ~94 words
+18:58:12    INFO ashiorid_week: [5/12] authoring ambient from Plots/Side Quests/WerePomeranian.md
+19:01:39    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:01:39    INFO ashiorid_week:   -> village-ambience | prompt ~37 words
+19:01:39    INFO ashiorid_week: [6/12] authoring ambient from Plots/Side Quests/Re-Adventure - Unclaimed Loot.md
+19:04:12    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:04:12    INFO ashiorid_week:   -> villagers-discuss-unclaimed-treasure | prompt ~42 words
+19:04:12    INFO ashiorid_week: [7/12] authoring ambient from Plots/Side Quests/Falling Man.md
+19:06:57    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:06:57    INFO ashiorid_week:   -> falling-man-impact | prompt ~22 words
+19:06:57    INFO ashiorid_week: [8/12] authoring ambient from Locations/Henderson.md
+19:09:44    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:09:44    INFO ashiorid_week:   -> henderson-ambience | prompt ~64 words
+19:09:44    INFO ashiorid_week: [9/12] authoring ambient from Locations/Losira.md
+19:12:30    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:12:30    INFO ashiorid_week:   -> losira-nightfall | prompt ~78 words
+19:12:30    INFO ashiorid_week: [10/12] authoring ambient from Locations/Malmont Town Profile.md
+19:15:32    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:15:32    INFO ashiorid_week:   -> malmont-market-day | prompt ~43 words
+19:15:32    INFO ashiorid_week: [11/12] authoring ambient from NPCs/Azra.md
+19:19:09    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:19:09    INFO ashiorid_week:   -> azra-infiltrates | prompt ~58 words
+19:19:09    INFO ashiorid_week: [12/12] authoring ambient from NPCs/Grovley.md
+19:21:45    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+19:21:45    INFO ashiorid_week:   -> grovley-observes | prompt ~39 words
+19:21:45    INFO ashiorid_week: ambient done: 12 authored, 0 failed
+19:21:45    INFO campaign.pack: loaded campaign pack ashiorid with 52 scenes and 5 cast members
+19:21:45    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 3 warnings
+19:21:45    INFO pack_gate: gate result: 0 error(s), 3 warning(s)
+19:21:45    INFO campaign.pack: loaded campaign pack ashiorid with 61 scenes and 5 cast members
+19:21:45    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 0 warnings
+19:21:45    INFO pack_gate: gate result: 0 error(s), 0 warning(s)
+19:21:45    INFO ashiorid_week: GATE spine dir: PASS 3 warning(s) | errors=[] warnings=["scene 'lighthouse-encounter' is unreachable", "scene 'mutants-encounter' is unreachable", "scene 'temple-of-malar' is unreachable"]
+19:21:45    INFO ashiorid_week: GATE ambient dir: PASS 0 warning(s) | errors=[] warnings=[]
+19:21:45    INFO campaign.pack: loaded campaign pack ashiorid with 64 scenes and 5 cast members
+19:21:45    INFO ashiorid_week: COMBINED overlay load_pack: 64 scenes, 5 cast — CLEAN
+
+========================================================================
+ASHIORID WEEK BUILD | run_id=ashiorid_week_20260919_184406
+========================================================================
+  SPINE TOTAL: 0 scenes, 0 spoken words (0.0 h at 150wpm)
+  AMBIENT   : 12 definitions, 600 prompt words
+  GATE      : spine=PASS  ambient=PASS
+  STAGED    : /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage  (NOT promoted — that is the explicit human step)

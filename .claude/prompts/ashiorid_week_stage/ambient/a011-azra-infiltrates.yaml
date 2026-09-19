@@ -1,0 +1,18 @@
+id: azra-infiltrates
+title: Azra Infiltrates the Camp
+ambient: true
+prompt: 'Azra, the white-skinned Bahadur assassin with glowing blue eyes, silently  slips
+  through the camp at night. She moves like a shadow, avoiding the  gaze of the sentries.
+  Her footsteps make no sound on the snow-covered  ground. She is on a scouting mission,
+  gathering information about the  enemy''s forces and defenses, preparing for the
+  next phase of the invasion.
+
+  '
+lore: []
+source:
+  version: azra-infiltrates@1
+  model: hermes3:70b
+  batch: 2.3.ambient.10
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 5c555e6f8590c9a75052ea49143a99f2b867d0784127625f852a4a20cad0c524

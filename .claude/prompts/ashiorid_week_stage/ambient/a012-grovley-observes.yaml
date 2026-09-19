@@ -1,0 +1,15 @@
+id: grovley-observes
+title: Grovley Observes the Party
+ambient: true
+prompt: "Grovley, the butler, moves silently through the party, \nhis eyes noting\
+  \ every detail, every conversation, \nevery gesture of the guests. His expression\
+  \ remains \nimpassive, a mask of polite indifference, but beneath \nthe surface,\
+  \ his mind is racing, cataloging, analyzing.\n"
+lore: []
+source:
+  version: grovley-observes@1
+  model: hermes3:70b
+  batch: 2.3.ambient.11
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 1db71ea4dc2abb5a690a35e07a1917ceb91476008df653030aafdc71fe38bb75

@@ -1,0 +1,99 @@
+id: amulet-map
+title: Nine Doors, One Ruby Prize
+enter_narration: >-
+  Jasper and Juniper's map has one mark on it. Everything else has to be
+  earned.
+
+lore: [the-event, amulet-of-wonder]
+
+beats:
+  - type: pane
+    show: inventory
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        "Nine dungeons," Juniper says. "Nine monuments, nine riddles, and the
+        map fills itself in as you solve them. We only know where the first
+        one is."
+      - >-
+        Jasper taps the one mark on the paper. "This is the only door we know
+        of. Answer its riddle and the map draws you the next one. That's the
+        whole arrangement."
+      - >-
+        "Solve a riddle, open a door, the map grows a little," Juniper says.
+        "Solve nine, and it tells you where the Amulet of Wonder is buried."
+
+  - type: narration
+    speaker: gm
+    improv: true
+    text:
+      - >-
+        The one visible mark sits to the north, at a monument called the
+        Malvakar. Carved into its face, in a language none of you were taught
+        to read: "Twice in eternity and always within eyesight."
+      - >-
+        The northern monument is the Malvakar. Its riddle is cut deep enough
+        to read blind: "Twice in eternity and always within eyesight."
+      - >-
+        Juniper reads the northern riddle aloud so nobody has to touch the
+        stone: "Twice in eternity and always within eyesight."
+
+  - type: dialogue
+    speaker: sodacan_bob
+    improv: true
+    text:
+      - >-
+        Whoever cut that stone wasn't guessing at the letterforms. That's the
+        same hand that struck our invitations. I'd bet coin on it.
+      - >-
+        That carving and the die that struck our party invitations came from
+        the same tools. I've handled enough metalwork to know a signature.
+      - >-
+        Somebody with a smith's patience made both that stone and our
+        invitation. That is not a coincidence I am prepared to ignore.
+
+  - type: dialogue
+    speaker: Vigil
+    improv: true
+    text:
+      - >-
+        Nine doors and a gold amulet at the end of it. That's either the
+        richest treasure hunt in the world, or the longest leash anyone's ever
+        put on four people.
+      - >-
+        A map that only shows the next step once you've earned it. Somebody
+        wants us moving in a specific order, one door at a time.
+      - >-
+        We keep getting handed exactly enough information to take one more
+        step forward, never the whole road. I've noticed the pattern by now.
+
+  - type: action
+    speaker: chadwick
+    primitive: roll_check
+    params:
+      skill: history
+      dc: 14
+
+  - type: dialogue
+    speaker: chadwick
+    improv: true
+    text:
+      - >-
+        The word for "twice" in eternity, seen always. That's a sky word.
+        We're looking for something that happens exactly twice, forever.
+      - >-
+        Something in the sky, is my guess. There's not much else that repeats
+        forever and stays where you can see it.
+      - >-
+        Twice, and always visible, and eternal. That narrows it more than it
+        sounds like it should.
+
+default_next: malvakar-riddle
+
+continuity_in: Jasper and Juniper have introduced themselves and shown the party a mostly blank map with
+  only one location marked. Leena feels she has seen the map before it was drawn on.
+continuity_out: The party learns the map will fill in as they complete nine dungeon challenges. The first,
+  the Malvakar monument, bears a riddle in a language the party does not know.

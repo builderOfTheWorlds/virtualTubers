@@ -1,0 +1,15 @@
+forward_splice:
+  scene: malvakar-riddle
+  default_next: temple-of-malar
+chain:
+- malvakar-riddle
+- temple-of-malar
+- lighthouse-encounter
+- mutants-encounter
+new_last_scene: mutants-encounter
+loop_closure_operator_choice:
+  scene: mutants-encounter
+  default_next: malvakar-riddle
+note: Forward splice only is proposed. Loop-closure (new last -> seed) is LEFT TO
+  THE OPERATOR at promotion, per the ring. The staged chain currently ends OPEN.
+run_id: ashiorid_week_20260919_181434

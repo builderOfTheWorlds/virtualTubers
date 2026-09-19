@@ -1,0 +1,95 @@
+model: hermes3:70b
+pass: 2
+scenes:
+  amulet-map:
+    ambient: false
+    continuity_in: Jasper and Juniper have a mostly blank map that fills in as the party solves riddles.
+      Leena feels she has seen the map before it was drawn on.
+    continuity_out: The party learns there are nine dungeons with riddles to solve, and the first is at
+      a monument called the Malvakar. The riddle on it is in a language the party does not know.
+  bahadur-revealed:
+    ambient: false
+    continuity_in: The party survives the manor collapse and finds the old butler kneeling over a body
+      in the subbasement.
+    continuity_out: The party encounters a Bahadur who speaks of Muad'Malik and implies they have been
+      expected.
+  burn-it-down:
+    ambient: false
+    continuity_in: The last well has run dry and magic has died out of the world. The party is left to
+      ponder the implications of Leena's existence as a sorcerer in a world without magic.
+    continuity_out: The manor has collapsed, killing most of the guests. The party survives by following
+      the stone stairs down to the subbasement where they find the old butler kneeling over a body.
+  grovley-revelation:
+    ambient: false
+    continuity_in: The party is trapped and held in place by a spell after Duke Leto is murdered. The
+      manor is on fire.
+    continuity_out: Grovley reveals the party's origin as products of the Begene Sisters breeding program,
+      chosen and assembled by design.
+  invitation:
+    ambient: false
+    continuity_in: The party has no shared history yet. They have each received a heavy card inviting
+      them to a manor for the Ten Thousandth Anniversary of the Event.
+    continuity_out: The party has compared their invitations and noted the unusual weight and pressing.
+      They are aware this is not a typical social gathering, but an assembly of strangers for unknown
+      purposes.
+  letos-manor:
+    ambient: false
+    continuity_in: The last well holds and magic survives into the present age. Leena realizes she has
+      a full share of magic due to its scarcity.
+    continuity_out: The party attends a party at Duke Leto's manor, where they are the center of attention.
+      Grovley, the Leto family butler, approaches them.
+  magic-lost:
+    ambient: false
+    continuity_in: The monument has opened, revealing a map that marks a second location far to the south.
+      The party is still processing the implications of the riddle's solution.
+    continuity_out: The last well has run dry, and magic has died out of the world. The party is left
+      to ponder the implications of Leena's existence as a sorcerer in a world without magic.
+  magic-retained:
+    ambient: false
+    continuity_in: The party knows they are the four chosen to decide the fate of the last moonwell. They
+      understand that the world's magic was nearly depleted ten thousand years ago.
+    continuity_out: The last well holds and magic survives into the present age. Leena realizes she has
+      a full share of magic due to its scarcity.
+  malmont-arrival:
+    ambient: false
+    continuity_in: The party's fate and the portal's outcome hang in the balance. The dying wizard's final
+      word, a warning none of them understood, echoes.
+    continuity_out: Jasper and Juniper are holding a map with almost nothing drawn on it yet. Leena has
+      the unshakable sense that she has seen this exact paper before it was ever drawn on.
+  malvakar-riddle:
+    ambient: false
+    continuity_in: The party knows there are nine dungeons with riddles to solve, and the first is at
+      the Malvakar monument. The riddle on it is in an unknown language.
+    continuity_out: Chadwick solves the riddle, and the monument opens. The map marks a second location
+      far to the south.
+  party-attack:
+    ambient: false
+    continuity_in: The party attends a party at Duke Leto's manor, where they are the center of attention.
+      Grovley, the Leto family butler, approaches them.
+    continuity_out: Duke Leto is murdered while the party is held in place by a spell. The manor is set
+      on fire by unknown attackers.
+  portal-choice:
+    ambient: false
+    continuity_in: The party faces a tear in the air, pulled wider by an unseen hand. They must decide
+      whether to close the portal or let it expand further.
+    continuity_out: The dying wizard's final word, a warning none of them understood, echoes as the tear
+      in reality grows. The party's fate and the portal's outcome hang in the balance.
+  portal-encounter:
+    ambient: false
+    continuity_in: The party has seen what the Letos guarded for ten thousand years. The duty of guarding
+      it now belongs to them.
+    continuity_out: The air in front of the party has torn open, revealing fingers of an enormous hand
+      pulling the tear wider.
+  the-age-of-war:
+    ambient: false
+    continuity_in: The party has compared their invitations and noted the unusual weight and pressing.
+      They are aware this is not a typical social gathering, but an assembly of strangers for unknown
+      purposes.
+    continuity_out: The party now knows the world's magic was nearly depleted ten thousand years ago.
+      They understand they are the four chosen to decide the fate of the last moonwell.
+  the-vault:
+    ambient: false
+    continuity_in: The party knows they were bred and assembled by the Begene Sisters. Grovley revealed
+      their origin and purpose.
+    continuity_out: The party has seen what the Letos guarded for ten thousand years. The duty of guarding
+      it now belongs to them.

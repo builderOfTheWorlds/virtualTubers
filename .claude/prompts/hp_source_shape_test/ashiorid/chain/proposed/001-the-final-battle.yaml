@@ -1,0 +1,45 @@
+id: the-final-battle
+title: The Final Battle
+enter_narration: The day has come. The final battle will decide the fate of the world.
+beats:
+- type: narration
+  speaker: gm
+  text:
+  - The players stand at the northern pole, gazing upon the vast army of evil before
+    them.
+  - The icy winds howl, carrying the weight of the world on their icy breath.
+  - This is it. The moment they've been preparing for their whole lives.
+- type: dialogue
+  speaker: Vigil
+  text:
+  - Is everyone ready? We can't afford any mistakes.
+  - Remember, we're not just fighting for ourselves, but for the future of the world.
+  - Stay focused and trust in your abilities.
+- type: dialogue
+  speaker: Leena
+  text:
+  - I've never seen so many enemies in one place before.
+  - It's overwhelming, but we have to remember why we're here.
+  - We're the world's last hope. We can't fail now.
+- type: dialogue
+  speaker: chadwick
+  text:
+  - I'm scared. What if we're not strong enough?
+  - But I know we have to try. The world is counting on us.
+  - We've trained for this our whole lives. It's time to put that training to the
+    test.
+- type: dialogue
+  speaker: sodacan_bob
+  text:
+  - I've got your backs, no matter what.
+  - We're in this together, and we'll see it through to the end.
+  - Just focus on the task at hand and don't let fear get the best of you.
+lore: []
+source:
+  model: hermes3:70b
+  run_id: chained_shape_test_20260919_114147
+  version: the-final-battle@1
+  base_hash: e68eeb84ed81d1ce177fa5c07081ad6826d3534bec590374c04267f7a413f86e
+  authored: generated
+  batch: 2.4.ashiorid
+default_next: the-mysterious-invitation

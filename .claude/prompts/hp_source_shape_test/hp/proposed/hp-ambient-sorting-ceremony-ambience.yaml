@@ -1,0 +1,21 @@
+prompt_lore: []
+id: sorting-ceremony-ambience
+title: Sorting Ceremony Ambience
+ambient: true
+prompt: 'The whispers spread like wildfire through the Great Hall.
+
+  "Potter, did she say? The Harry Potter?"
+
+  All eyes were on the boy as he stepped forward,
+
+  His face pale, his heart pounding.
+
+  '
+lore: []
+source:
+  authored: generated
+  batch: 2.3.hp
+  base_hash: 642cfceb2923ef9ded791194311b23371e3e8fc476be46ca1a1621d211d41d14
+  run_id: source_shape_test_20260919_071724
+  model: hermes3:70b
+  version: sorting-ceremony-ambience@1
