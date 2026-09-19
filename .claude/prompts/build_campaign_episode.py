@@ -55,11 +55,18 @@ from campaign.pack import load_pack  # noqa: E402
 # match the cast/ filenames exactly (chadwick.yaml, Leena.yaml, Vigil.yaml,
 # sodacan_bob.yaml, gm.yaml) - a mismatch makes load_pack() fail outright.
 SPEAKER_TO_WORKER = {
+    # campaigns/ashiorid_1
     "gm": "manager",
     "chadwick": "coder",
     "Leena": "tester",
     "Vigil": "coder-native",
     "sodacan_bob": "coder-opencode",
+    # campaigns/hptest (Harry Potter source-shape test pack — same
+    # narrator -> manager mapping; the three protagonists take the
+    # channels ashiorid leaves open, so HP lines get their own voices.
+    "harry": "coder",
+    "ron": "tester",
+    "hermione": "coder-native",
 }
 
 

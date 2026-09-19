@@ -65,16 +65,48 @@ def validate_pack(pack: CampaignPack) -> ValidationReport:
         _check_branches(scene, pack, report)
         _check_beats(scene, pack, report)
 
-        # Check if scene is reachable
-        if scene.id not in reachable and scene.id != pack.start_scene:
+        # Ambient scenes are deliberately not linked into the graph — that
+        # is the whole design of the AmbientScheduler, so suppress the
+        # "unreachable" warning for them.
+        if scene.id not in reachable and scene.id != pack.start_scene and not scene.ambient:
             report.warnings.append(f"scene {scene.id!r} is unreachable")
-            
-        # Check for empty beats list
-        if not scene.beats:
+
+        # Ambient scenes generate their content at runtime from `prompt` and
+        # do not need authored beats, so suppress the "no beats" warning.
+        if not scene.beats and not scene.ambient:
             report.warnings.append(f"scene {scene.id!r} has no beats")
 
+        # Ambient scene must have a prompt OR beats — nothing to play and
+        # nothing to generate from means it airs as silence.
+        if scene.ambient:
+            has_prompt = scene.prompt is not None and bool(scene.prompt.strip())
+            if not has_prompt and not scene.beats:
+                report.errors.append(
+                    f"scene {scene.id!r}: ambient scene has neither a prompt "
+                    f"nor beats")
+
         _check_ring_tone_and_mood(scene, report)
-    
+
+    # Check lore stems — silently dropping a missing stem starves the
+    # improviser of context and produces a take with no lore context.
+    pack_lore = pack.lore or {}
+    for scene in sorted(pack.scenes.values(), key=lambda s: s.id):
+        for stem in scene.lore:
+            if stem not in pack_lore:
+                report.errors.append(
+                    f"scene {scene.id!r}: references unknown lore stem {stem!r}")
+
+    # Check ambient pool entries — pool must name scenes that exist and are
+    # ambient; a non-ambient scene in the pool would air it as filler, and a
+    # missing scene would crash the scheduler at runtime.
+    for entry_id in pack.ambient_pool:
+        if entry_id not in pack.scenes:
+            report.errors.append(
+                f"ambient pool references unknown scene {entry_id!r}")
+        elif not pack.scenes[entry_id].ambient:
+            report.errors.append(
+                f"ambient pool references non-ambient scene {entry_id!r}")
+
     # Check cast usage
     spoken = set()
     for scene in pack.scenes.values():
@@ -150,6 +182,23 @@ def _check_branches(scene: Scene, pack: CampaignPack, report: ValidationReport) 
     if scene.default_next and scene.default_next not in pack.scenes:
         report.errors.append(
             f"scene {scene.id!r}: default_next {scene.default_next!r} not found among scenes")
+    
+    # An ambient scene linked into the graph plays as plot and lets the spine
+    # advance into filler. Catch both the branch target and the default_next
+    # case.
+    if scene.default_next:
+        target = pack.scenes.get(scene.default_next)
+        if target is not None and target.ambient:
+            report.errors.append(
+                f"scene {scene.id!r}: default_next {scene.default_next!r} is "
+                f"an ambient scene — it must not be linked into the graph")
+    for branch in scene.branches:
+        target = pack.scenes.get(branch.next)
+        if target is not None and target.ambient:
+            report.errors.append(
+                f"scene {scene.id!r}: branch {branch.id!r} targets "
+                f"{branch.next!r}, an ambient scene — it must not be linked "
+                f"into the graph")
 
 
 def _check_beats(scene: Scene, pack: CampaignPack, report: ValidationReport) -> None:
@@ -179,6 +228,16 @@ def _check_beats(scene: Scene, pack: CampaignPack, report: ValidationReport) -> 
             if not beat.text:
                 report.errors.append(
                     f"scene {scene.id!r}: {beat.kind} beat has no text")
+            # A variant pool is a list of alternate phrasings cycled at render
+            # time. A blank variant reaches TTS as silence mid-scene, and only
+            # on the run where the cycle happens to land on it — so each
+            # variant must be non-blank. Action and pane beats legitimately
+            # carry no text at all, so they are never checked here.
+            for variant in beat.texts:
+                if not isinstance(variant, str) or not variant.strip():
+                    report.errors.append(
+                        f"scene {scene.id!r}: {beat.kind} beat has a blank "
+                        f"variant in its pool ({variant!r})")
         
         # Check pane beats have show
         if beat.kind == "pane":

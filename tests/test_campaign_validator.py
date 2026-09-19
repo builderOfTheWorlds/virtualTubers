@@ -126,6 +126,18 @@ def test_default_next_pointing_at_unknown_scene_is_an_error():
     assert any("atlantis" in error for error in report.errors)
 
 
+def test_default_next_pointing_at_a_different_scene_is_fine():
+    """Control: default_next pointing at a *different* existing scene is
+    legal (and distinct from the self-referencing loop that the show relies
+    on — see test_self_referencing_scene_is_allowed)."""
+    scenes = [
+        Scene(id="opening", beats=[narration()], default_next="closing"),
+        Scene(id="closing", beats=[narration()]),
+    ]
+    report = validate_pack(make_pack(scenes))
+    assert report.ok is True
+
+
 def test_duplicate_branch_ids_within_a_scene_is_an_error():
     scenes = [
         Scene(id="opening", beats=[narration()],

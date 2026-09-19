@@ -189,6 +189,149 @@ and are waiting.
 
 ---
 
+## Diagram 4 — Pacing: tempo as a dial (plan §6A)
+
+![Pacing model](generator_pacing_model.png)
+
+Regenerate with
+`.venv/bin/python .claude/prompts/render_pacing_model_graph.py`.
+
+```mermaid
+flowchart LR
+    subgraph OLD["AS BUILT — budget from LLM throughput"]
+        O1["measured_baseline<br/>words_per_take = 105<br/>a GPU throughput number"]
+        O2["derive_target_slots()<br/>segment_schema.py:66"]
+        O3["slot count per node"]
+        O4["takes generated, FROZEN"]
+        O5["168h assumed,<br/>never verified"]
+        O1 --> O2 --> O3 --> O4 --> O5
+    end
+
+    subgraph NEW["CORRECTED — budget from story duration"]
+        N1["ring phase<br/>descent / keystone / ascent"]
+        N2["spine_share_by_phase<br/>0.15 / 0.45 / 0.30"]
+        N3["minutes budget per segment<br/>spine_minutes + ambient_minutes"]
+        N4["spine scenes sized by NEED<br/>validated vs min/max"]
+        N5["ambient STRETCHES<br/>to fill the remainder"]
+        N6["168h is an OUTPUT<br/>~450 scene files"]
+        N1 --> N2 --> N3 --> N4 --> N5 --> N6
+    end
+
+    style OLD fill:#3a1a1a,stroke:#c04040,color:#fff
+    style NEW fill:#1a3a2a,stroke:#40c080,color:#fff
+```
+
+**The inversion in one line:** the old chain asked *how many words does a model
+emit per call*; the new chain asks *how long should this scene be*. Only the
+second is an editorial question, and only the second can be paced.
+
+**Why ambient elasticity matters more than it sounds.** Because ambient
+stretches, spine density becomes a free variable — and tying it to ring phase
+turns tempo into a dial. Descent breathes at 15% spine; the keystone stacks
+events at 45%; ascent quickens at 30%. That is ring composition doing real
+work on the *feel* of the week, not just reordering a playlist.
+
+| Phase | Segs | Hours | Spine | Ambient |
+|---|---|---|---|---|
+| descent | 16 | 96 | 15% — 14.4 h | 81.6 h |
+| keystone | 4 | 24 | 45% — 10.8 h | 13.2 h |
+| ascent | 8 | 48 | 30% — 14.4 h | 33.6 h |
+| **total** | **28** | **168** | **39.6 h** | **128.4 h** |
+
+At 150 wpm that is 1,512,000 words — the 1.5M target arrived at from the story
+side, not reverse-engineered from throughput.
+
+**Ambient definitions are not airings.** ~250 definitions x ~10 airings each
+covers 128 h, each airing differently worded by variant pools + `improv: true`.
+Today's 34 definitions would mean 75 airings each — the same campfire premise
+75 times, which no amount of rephrasing disguises.
+
+---
+
+## Diagram 5 — Progressive densification via continuity contracts (plan §6C)
+
+![Densification model](generator_densification_model.png)
+
+Regenerate with
+`.venv/bin/python .claude/prompts/render_densification_graph.py`.
+
+Every scene carries `continuity_in` (state it assumes) and `continuity_out`
+(state it guarantees). Two scenes chain when the first's outro satisfies the
+second's intro — so chaining is a **contract**, not a hard edge, and new
+content can be slotted between any two scenes later without regenerating
+either neighbour.
+
+**The build order this enables:**
+
+| Wave | Spine | Ambient | Status |
+|---|---|---|---|
+| 1 — generate now | ~40 h | ~130 h | complete, airable, deliberately slow |
+| 2 — bridge a gap | +1 scene | shrinks | one ambient stretch becomes plot |
+| 3 — keep going | rising | shrinking | density grows, week never rebuilt |
+
+**The seam already exists on one side only.** `arc_schema.py:226` and
+`segment_schema.py:253` both already require `continuity_in`/`continuity_out` —
+the *planner* reasons in continuity and then discards it, because
+`app/campaign/pack.py:317` gives `Scene` only a spoken `enter_narration` and a
+bare `default_next` edge. Adding the two fields to the pack format is what lets
+that reasoning survive into the scene file, and it is what makes insertion
+verifiable.
+
+**Ambient scenes carry `continuity_in` only.** An ambient scene that emits a
+`continuity_out` is a validation error — ambient decides nothing, so nothing may
+ever depend on it having played. That rule is what keeps ambient injectable
+anywhere, and it is the defect most likely to appear in generated ambient.
+
+---
+
+## Diagram 6 — Arc-level tempo control (plan §6D)
+
+```mermaid
+flowchart TB
+    ARC["ARC PLAN — Layer 1<br/>per segment"]
+
+    subgraph FIELDS["segment fields"]
+        H["hours: 6<br/>(existing)"]
+        D["spine_density: high<br/>NEW — sparse/normal/high/maximum"]
+        SC["spine_scene_count: 12<br/>NEW — explicit override"]
+    end
+
+    ARC --> FIELDS
+
+    PHASE["ring phase default<br/>descent 15% / keystone 45% / ascent 30%"]
+    PHASE -->|"seeds"| D
+    D -->|"default"| SC
+
+    L2["Layer 2 MUST produce<br/>exactly spine_scene_count slots"]
+    SC --> L2
+
+    CHECK{"validation"}
+    L2 --> CHECK
+    CHECK -->|"count mismatch"| RETRY["FAIL + retry<br/>never a logged warning"]
+    CHECK -->|"spine minutes > hours"| REJECT["arc plan rejected"]
+    CHECK -->|"ambient < 20% floor"| REJECT
+    CHECK -->|ok| OK["segment authored"]
+
+    style FIELDS fill:#1a2a3a,stroke:#4080c0,color:#fff
+    style CHECK fill:#3a3a1a,stroke:#c0c040,color:#fff
+    style RETRY fill:#3a1a1a,stroke:#c04040,color:#fff
+    style REJECT fill:#3a1a1a,stroke:#c04040,color:#fff
+    style OK fill:#1a3a2a,stroke:#40c080,color:#fff
+```
+
+Scene count is directable **from the arc** — give the keystone 12 scenes and a
+quiet descent segment 3. Crucially this is a *field*, not prompt wording: a
+prompt-only instruction is unverifiable, so a keystone that quietly produced 3
+scenes instead of 12 would look identical to one that worked. The count is
+checked, and a mismatch retries rather than logging a warning nobody reads.
+
+Two guards keep it honest: spine minutes must fit inside the segment's `hours`,
+and every segment keeps a **20% ambient floor** so there is always elasticity
+left to absorb a short scene. Zero ambient means any pacing drift becomes dead
+air.
+
+---
+
 ## Reading it without a Mermaid renderer
 
 **Today:** a human reads the Obsidian vault and hand-writes `scenes/*.yaml`.

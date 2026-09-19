@@ -125,6 +125,8 @@ def _build_scene(data, scene_id):
 
     ring_tone = _load_str_list(data, scene_id, "ring_tone")
     mood = _load_str_list(data, scene_id, "mood")
+    continuity_in = _load_optional_str(data, scene_id, "continuity_in")
+    continuity_out = _load_optional_str(data, scene_id, "continuity_out")
 
     return Scene(
         id=scene_id,
@@ -138,6 +140,8 @@ def _build_scene(data, scene_id):
         lore=lore,
         ring_tone=ring_tone,
         mood=mood,
+        continuity_in=continuity_in,
+        continuity_out=continuity_out,
     )
 
 
@@ -149,6 +153,18 @@ def _load_str_list(data, scene_id, key):
     if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
         raise PackError(f"scene {scene_id} has non-string-list {key!r}")
     return list(value)
+
+
+def _load_optional_str(data, scene_id, key):
+    """Load an optional plain-string field. Absent means None ("no
+    constraint"); present but non-string is a PackError. See
+    Scene.continuity_in/continuity_out docstrings."""
+    if key not in data or data.get(key) is None:
+        return None
+    value = data.get(key)
+    if not isinstance(value, str):
+        raise PackError(f"scene {scene_id} has non-string {key!r}")
+    return value
 
 
 def _load_ambient_config(campaign_data):
@@ -327,6 +343,13 @@ class Scene:
     ring_tone: list[str] = field(default_factory=list)
     # GEMS mood tag(s) (MOODS). Empty means unrestricted, same convention.
     mood: list[str] = field(default_factory=list)
+    # Continuity contract (§6C): what is established when this scene ends
+    # (continuity_out) and what the audience already knows entering the
+    # NEXT spine scene (continuity_in). Absent/None means "no constraint" —
+    # the improviser/renderer treat the absence exactly as before these
+    # fields existed.
+    continuity_in: str | None = None
+    continuity_out: str | None = None
 
 
 @dataclass
