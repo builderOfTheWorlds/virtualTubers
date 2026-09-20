@@ -1,0 +1,16 @@
+id: vabokedos-ambient-1
+title: Dwarven Market Bustle
+ambient: true
+prompt: "The bustling market square of Vabokedos. Dwarves haggle over goods - weapons,\
+  \ armor, gemstones, and Skuma. \nThe air is filled with the sound of metal on metal,\
+  \ lively chatter, and the occasional cheer as a particularly prized item changes\
+  \ hands.\nA sense of vibrant energy and commerce, underscored by the constant unspoken\
+  \ tension of potential theft.\n"
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: vabokedos-ambient-1@1
+  batch: 2.3.ambient.18
+  base_hash: a7c2f26f18065c7e80e382219b8b57ddeaea54eda463921eda6dcddbe60126a9

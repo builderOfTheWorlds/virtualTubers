@@ -1,0 +1,18 @@
+id: bogdan-paper-mill
+title: Bogdan Paper Mill
+ambient: true
+prompt: 'Outside the fortified city walls of Leenock, the Bogdan family''s massive
+  paper mill churns day and night. Slaves and convicts toil in the fetid vats, pulping
+  wood and rags into the thin, strong sheets that will become the Bogdan broadsheets.
+  Overseers with whips ensure the work never ceases. The reek of the mill carries
+  on the breeze.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: bogdan-paper-mill@1
+  batch: 2.3.ambient.20
+  base_hash: eb89dc6ba4453bdfd5361f0d8e8ccd1c3535353848fa066d9fa0cd24f94c3ef0

@@ -1,0 +1,18 @@
+id: the-politics-of-tea
+title: The Politics of Tea
+ambient: true
+prompt: 'The tavern is abuzz with conversation. At one table, a group of merchants
+  heatedly debate the current political climate, their voices rising with each sip
+  of Hieronymus tea they take. One argues that the alliances will hold, while another
+  insists that war is inevitable. Their voices are impassioned, but the conversation
+  remains civil - for now.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: the-politics-of-tea@1
+  batch: 2.3.ambient.1
+  base_hash: c69b2dc7d31a6d13ba6b47e15c0c1e70c86c5d999865e7518b9a44f7ad356ec8

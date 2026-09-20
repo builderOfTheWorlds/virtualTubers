@@ -1,0 +1,49 @@
+id: lighthouse-encounter
+title: The Lighthouse Encounter
+enter_narration: The party cautiously enters the lighthouse, unsure of what dangers
+  await them inside.
+beats:
+- speaker: gm
+  text:
+  - The party finds themselves on the first floor of the lighthouse, with a spiral
+    staircase leading both up and down.
+  - Broken barrels litter the area, their contents long since spilled and spoiled.
+  - A sense of unease fills the air, as if the lighthouse holds secrets best left
+    undisturbed.
+  type: narration
+- speaker: chadwick
+  text:
+  - I don't like this place. It feels like we're being watched.
+  - There's something off about this lighthouse. We need to be careful.
+  - I've got a bad feeling about this. We should keep our guard up.
+  type: dialogue
+- primitive: search
+  speaker: Vigil
+  params:
+    target: broken barrels
+  type: action
+- speaker: gm
+  text:
+  - Vigil begins rummaging through the broken barrels, searching for anything of use.
+  - The barrels are empty, their former contents having long since leaked out.
+  - The party realizes they will need to venture deeper into the lighthouse to find
+    answers.
+  type: narration
+- speaker: sodacan_bob
+  text:
+  - We need to find out what's on the lower levels. That's where the real answers
+    will be.
+  - The Captain said the fire had to be lit from the top. We'll have to go all the
+    way up.
+  - If there's anything dangerous down there, we'll be ready for it. We have to do
+    this.
+  type: dialogue
+lore: []
+source:
+  version: lighthouse-encounter@1
+  base_hash: 2c9153fcb1b137c4fb5da625815c552b3fe518955c07825a3fb914a15034502c
+  run_id: ashiorid_week_20260919_181434
+  batch: 2.3.spine.1
+  model: hermes3:70b
+  authored: generated
+default_next: mutants-encounter

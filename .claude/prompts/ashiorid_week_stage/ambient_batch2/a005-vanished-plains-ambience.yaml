@@ -1,0 +1,18 @@
+id: vanished-plains-ambience
+title: A Quiet Moment in The Vanished Plains
+ambient: true
+prompt: 'The sun dips low, casting long shadows across the rolling plains. A gentle
+  breeze rustles the tall grasses, carrying the distant sound of cattle lowing. Birds
+  wing their way across the vast sky, silhouetted against the golden hues. For a moment,
+  the troubles of the warring factions seem far away, and a sense of peace settles
+  over the land.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: vanished-plains-ambience@1
+  batch: 2.3.ambient.3
+  base_hash: 8d86ce5f0e9e48f87b0de00f469f00da6e8ec661518b205d23b4d043dee6ac11

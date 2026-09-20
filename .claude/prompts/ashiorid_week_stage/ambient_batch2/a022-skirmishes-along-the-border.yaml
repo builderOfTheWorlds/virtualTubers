@@ -1,0 +1,14 @@
+id: skirmishes-along-the-border
+title: Skirmishes Along the Border
+ambient: true
+prompt: "The tension between the factions in the realm of man is palpable. \nSkirmishes\
+  \ break out along the borders of their lands.\nBrigands take advantage of the chaos,\
+  \ raiding towns and caravans.\n"
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: skirmishes-along-the-border@1
+  batch: 2.3.ambient.21
+  base_hash: 177610ba12d7d8432361af624509d5fb6d1760280f26e349ffe40926dfbddefd

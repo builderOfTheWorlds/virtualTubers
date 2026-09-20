@@ -1,0 +1,38 @@
+id: mutants-encounter
+title: The Mutants Encounter
+enter_narration: The party cautiously enters a dilapidated shack on the alien world,
+  unsure of what dangers await them inside.
+beats:
+- speaker: gm
+  text:
+  - The shack is sparsely furnished, with rough timber chairs lining the walls.
+  - A sense of unease fills the air, as if the shack holds secrets best left undisturbed.
+  - In the corner, a young alien child cowers, eyeing the party warily.
+  type: narration
+- speaker: Leena
+  text:
+  - We need to find out what's going on here. These mutants could be dangerous.
+  - The child seems scared. We should try to talk to it and get some information.
+  - I've got a bad feeling about this. We need to be prepared for anything.
+  type: dialogue
+- primitive: move_to
+  speaker: Vigil
+  params:
+    target: empty chair
+  type: action
+- speaker: gm
+  text:
+  - The party exchanges worried glances, realizing the gravity of the situation.
+  - They need to find out more about The Doctor and the mutants before it's too late.
+  - The child's information has given them a starting point, but they know they must
+    tread carefully.
+  type: narration
+lore: []
+source:
+  version: mutants-encounter@1
+  base_hash: c8e49f8166ac05f91317f8783228e86347a6055afab529ee1ae65765b0359d85
+  run_id: ashiorid_week_20260919_181434
+  batch: 2.3.spine.2
+  model: hermes3:70b
+  authored: generated
+default_next: malvakar-riddle

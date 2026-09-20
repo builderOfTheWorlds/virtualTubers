@@ -1,0 +1,17 @@
+id: moonwell-meditation
+title: Moonwell Meditation
+ambient: true
+prompt: 'The party comes across a serene scene. A lone elf sits cross-legged by a
+  moonwell, eyes closed in meditation. The elf''s hands rest on their knees, palms
+  up. A soft glow emanates from the well, bathing the area in ethereal light. The
+  elf''s face is peaceful, in tune with the energy flowing from the well.
+
+  '
+lore: []
+source:
+  authored: generated
+  version: moonwell-meditation@1
+  run_id: ashiorid_week_20260919_222357
+  base_hash: 06754c494f006bce7a2be42e5ae43af15ec2528eaf480f4e0a526c8a1c32986e
+  model: hermes3:70b
+  batch: 2.3.ambient.0

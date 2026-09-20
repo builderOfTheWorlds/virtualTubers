@@ -1,0 +1,16 @@
+id: trapped-immortal-leaders
+title: Trapped and Immortal Bahadur Leaders
+ambient: true
+prompt: 'In the wake of The Event, the immortal Bahadur leaders are trapped on  Ashiorid,
+  unsure if their plan to save their home world of Ord was  successful. With endless
+  time on their hands, they begin to develop a  ten thousand year plan to return home.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: trapped-immortal-leaders@1
+  batch: 2.3.ambient.0
+  base_hash: 9cf01a33107121e5c90e4af20f9c61057b805c71bca5e829175b0613588b2306

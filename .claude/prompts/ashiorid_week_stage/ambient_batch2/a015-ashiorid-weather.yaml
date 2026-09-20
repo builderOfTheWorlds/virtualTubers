@@ -1,0 +1,15 @@
+id: ashiorid-weather
+title: Ashiorid Weather
+ambient: true
+prompt: 'The weather on Ashiorid is very similar to Earth. Describe the current season
+  and weather conditions.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: ashiorid-weather@2
+  batch: 2.3.ambient.14
+  base_hash: be45d334c1c773e232618a4f4f3ccdc76585e961c9ddcf2af1334902b38862e1

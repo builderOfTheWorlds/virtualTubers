@@ -1,105 +1,160 @@
 {
-  "run_id": "ashiorid_week_20260919_184406",
+  "run_id": "ashiorid_week_20260919_222734",
   "spine": [],
   "ambient": [
     {
-      "id": "sarahs-inn-ambience",
+      "id": "trapped-immortal-leaders",
       "ambient": true,
-      "prompt_words": 63,
+      "prompt_words": 45,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "city-streets-ambient",
+      "id": "the-politics-of-tea",
       "ambient": true,
-      "prompt_words": 21,
+      "prompt_words": 56,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "mysterious-child-visits-camp",
+      "id": "high-port-harbor-scene",
       "ambient": true,
-      "prompt_words": 39,
+      "prompt_words": 46,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "dwarf-gnome-chase",
+      "id": "vanished-plains-ambience",
       "ambient": true,
-      "prompt_words": 94,
+      "prompt_words": 59,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "village-ambience",
-      "ambient": true,
-      "prompt_words": 37,
-      "n_beats": 0,
-      "default_next": null
-    },
-    {
-      "id": "villagers-discuss-unclaimed-treasure",
-      "ambient": true,
-      "prompt_words": 42,
-      "n_beats": 0,
-      "default_next": null
-    },
-    {
-      "id": "falling-man-impact",
-      "ambient": true,
-      "prompt_words": 22,
-      "n_beats": 0,
-      "default_next": null
-    },
-    {
-      "id": "henderson-ambience",
-      "ambient": true,
-      "prompt_words": 64,
-      "n_beats": 0,
-      "default_next": null
-    },
-    {
-      "id": "losira-nightfall",
-      "ambient": true,
-      "prompt_words": 78,
-      "n_beats": 0,
-      "default_next": null
-    },
-    {
-      "id": "malmont-market-day",
+      "id": "manor-courtyard-ambience",
       "ambient": true,
       "prompt_words": 43,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "azra-infiltrates",
+      "id": "malmont-town-square",
       "ambient": true,
-      "prompt_words": 58,
+      "prompt_words": 51,
       "n_beats": 0,
       "default_next": null
     },
     {
-      "id": "grovley-observes",
+      "id": "the-carnage-wall-still-stands",
       "ambient": true,
-      "prompt_words": 39,
+      "prompt_words": 70,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "drokkis-meditation",
+      "ambient": true,
+      "prompt_words": 99,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "kato-guild-ambience",
+      "ambient": true,
+      "prompt_words": 63,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "leena-climbs-a-tree",
+      "ambient": true,
+      "prompt_words": 46,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "the-rob-boss-paints",
+      "ambient": true,
+      "prompt_words": 50,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "ylva-foresight-ambient",
+      "ambient": true,
+      "prompt_words": 55,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "lizard-people-replacement-ambience",
+      "ambient": true,
+      "prompt_words": 28,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "ashiorid-weather",
+      "ambient": true,
+      "prompt_words": 16,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "ord-night-sky",
+      "ambient": true,
+      "prompt_words": 77,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "mysterious-astrior",
+      "ambient": true,
+      "prompt_words": 36,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "idra-city-life",
+      "ambient": true,
+      "prompt_words": 40,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "vabokedos-ambient-1",
+      "ambient": true,
+      "prompt_words": 56,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "desert-winds",
+      "ambient": true,
+      "prompt_words": 43,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "bogdan-paper-mill",
+      "ambient": true,
+      "prompt_words": 57,
+      "n_beats": 0,
+      "default_next": null
+    },
+    {
+      "id": "skirmishes-along-the-border",
+      "ambient": true,
+      "prompt_words": 31,
       "n_beats": 0,
       "default_next": null
     }
   ],
-  "gate_spine": {
-    "ok": true,
-    "errors": [],
-    "warnings": [
-      "scene 'lighthouse-encounter' is unreachable",
-      "scene 'mutants-encounter' is unreachable",
-      "scene 'temple-of-malar' is unreachable"
-    ]
-  },
+  "gate_spine": null,
   "gate_ambient": {
     "ok": true,
     "errors": [],
     "warnings": []
   },
-  "staged_under": "/home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage"
+  "staged_under": "/home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/ambient_batch2"
 }

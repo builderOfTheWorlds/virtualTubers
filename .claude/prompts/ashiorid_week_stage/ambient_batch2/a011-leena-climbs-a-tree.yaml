@@ -1,0 +1,15 @@
+id: leena-climbs-a-tree
+title: Leena Climbs a Tree
+ambient: true
+prompt: Leena finds a tall tree and starts climbing it, her bare feet gripping the
+  rough bark.  The branches sway as she climbs higher, offering a view of the surrounding
+  forest.  Leena smiles, feeling free and at peace high above the ground, away from
+  the dangers below.
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: leena-climbs-a-tree@2
+  batch: 2.3.ambient.10
+  base_hash: 79d508d36b4ed729fdb6feb3a97bbf661887ced558e3a89f523b0530af905e09

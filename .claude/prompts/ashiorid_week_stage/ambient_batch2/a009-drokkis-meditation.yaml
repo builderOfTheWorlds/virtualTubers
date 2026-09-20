@@ -1,0 +1,20 @@
+id: drokkis-meditation
+title: Drokki's Mediation
+ambient: true
+prompt: 'In a quiet forge, lit by the glow of the hearth, Drokki RedGem Finnsson works
+  the bellows, his eyes reflecting the dancing flames. The rhythmic clanging of metal
+  on metal fills the air as he shapes a piece of molten steel, his hands moving with
+  the precision of centuries of practice. He pauses, wiping the sweat from his brow,
+  and takes a moment to meditate on the runes glowing softly along the edge of his
+  greataxe. The warmth of the forge and the comfort of his craft bring a sense of
+  peace amidst the chaos of the world outside.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: drokkis-meditation@1
+  batch: 2.3.ambient.8
+  base_hash: c11357862ab2034208fa1dae1415e9d7ccc9d97488753256d7a59bbc63ac6782

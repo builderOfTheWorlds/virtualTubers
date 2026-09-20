@@ -1,0 +1,101 @@
+22:27:34    INFO ashiorid_week: run_id=ashiorid_week_20260919_222734 model=hermes3:70b
+22:27:34    INFO ashiorid_week: source notes loaded: 124
+22:27:34    INFO ashiorid_week: scale-up ambient batch: 22 explicit refs
+22:27:34    INFO ashiorid_week: === AMBIENT BATCH (filler, independent) ===
+22:27:34    INFO ashiorid_week: [1/22] authoring ambient from Factions/Bahadur Leadership.md
+22:28:37    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:28:37    INFO ashiorid_week:   -> trapped-immortal-leaders | prompt ~45 words
+22:28:37    INFO ashiorid_week: [2/22] authoring ambient from Factions/Faction Statistics and Diplomacy.md
+22:29:09    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:29:09    INFO ashiorid_week:   -> the-politics-of-tea | prompt ~56 words
+22:29:09    INFO ashiorid_week: [3/22] authoring ambient from Factions/Loke Faction Settlements.md
+22:31:50    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:31:50    INFO ashiorid_week:   -> high-port-harbor-scene | prompt ~46 words
+22:31:50    INFO ashiorid_week: [4/22] authoring ambient from Factions/Regional Faction Settlements.md
+22:34:53    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:34:53    INFO ashiorid_week:   -> vanished-plains-ambience | prompt ~59 words
+22:34:53    INFO ashiorid_week: [5/22] authoring ambient from Locations/Duke Leto's Manor.md
+22:38:41    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:38:41    INFO ashiorid_week:   -> manor-courtyard-ambience | prompt ~43 words
+22:38:41 WARNING ashiorid_week: ambient note not found: Locations/Glaciers Rest.md — skipped
+22:38:41    INFO ashiorid_week: [7/22] authoring ambient from Locations/Malmont.md
+22:41:29    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:41:29    INFO ashiorid_week:   -> malmont-town-square | prompt ~51 words
+22:41:29    INFO ashiorid_week: [8/22] authoring ambient from Locations/The Carnage Wall.md
+22:44:52    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:44:52    INFO ashiorid_week:   -> the-carnage-wall-still-stands | prompt ~70 words
+22:44:52    INFO ashiorid_week: [9/22] authoring ambient from NPCs/Drokki RedGem Finnsson.md
+22:49:00    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:49:00    INFO ashiorid_week:   -> drokkis-meditation | prompt ~99 words
+22:49:00    INFO ashiorid_week: [10/22] authoring ambient from NPCs/Dwarven Brothers - Kato Guild.md
+22:52:32    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:52:32    INFO ashiorid_week:   -> kato-guild-ambience | prompt ~63 words
+22:52:32    INFO ashiorid_week: [11/22] authoring ambient from NPCs/Leena.md
+22:55:59    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+22:55:59 WARNING author_scenes: author_ambient attempt 1 failed: could not parse a scene (id required) from model reply:
+
+id: leena-climbs-tree
+title: Leena Climbs a Tree
+ambient: true
+prompt: |
+  Leena, the young girl with the power of invisibility, climbs a tall tree in a forest clearing. She sits on a high branch, looking out at the peaceful surroundings, a welcome respite from the chaos and danger she's faced recently. The rustling of leaves and chirping of birds fill the air, creating a serene atmosphere.
+lore: []
+```...
+23:02:56    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:02:56    INFO ashiorid_week:   -> leena-climbs-a-tree | prompt ~46 words
+23:02:56    INFO ashiorid_week: [12/22] authoring ambient from NPCs/The Rob Boss.md
+23:05:57    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:05:57    INFO ashiorid_week:   -> the-rob-boss-paints | prompt ~50 words
+23:05:57    INFO ashiorid_week: [13/22] authoring ambient from NPCs/Ylva.md
+23:09:37    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:09:37    INFO ashiorid_week:   -> ylva-foresight-ambient | prompt ~55 words
+23:09:37    INFO ashiorid_week: [14/22] authoring ambient from Plots/Side Quests/Lizard people replacement.md
+23:13:33    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:13:33    INFO ashiorid_week:   -> lizard-people-replacement-ambience | prompt ~28 words
+23:13:33    INFO ashiorid_week: [15/22] authoring ambient from World/Ashiorid.md
+23:17:32    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:17:32 WARNING author_scenes: author_ambient attempt 1 failed: could not parse a scene (id required) from model reply:
+
+id: ashiorid-ambient-weather
+title: Earth-like Weather on Ashiorid
+ambient: true
+prompt: |
+  A gentle breeze rustles the leaves of the trees, carrying the scent of fresh rain. Birds chirp melodiously in the distance, their songs harmonizing with the soft patter of raindrops on the lush vegetation. The sky above is a canvas of gray clouds, intermittently allowing rays of sunlight to peek through and cast a warm glow upon the landscape.
+lore: []
+```...
+23:21:02    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:21:02    INFO ashiorid_week:   -> ashiorid-weather | prompt ~16 words
+23:21:02    INFO ashiorid_week: [16/22] authoring ambient from World/Bahadur Race.md
+23:25:50    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:25:50    INFO ashiorid_week:   -> ord-night-sky | prompt ~77 words
+23:25:50    INFO ashiorid_week: [17/22] authoring ambient from World/Campaign Timeline.md
+23:30:51    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:30:51    INFO ashiorid_week:   -> mysterious-astrior | prompt ~36 words
+23:30:51    INFO ashiorid_week: [18/22] authoring ambient from World/Cities/Idra.md
+23:34:43    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:34:43    INFO ashiorid_week:   -> idra-city-life | prompt ~40 words
+23:34:43    INFO ashiorid_week: [19/22] authoring ambient from World/Cities/Vabokedos.md
+23:40:17    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:40:17    INFO ashiorid_week:   -> vabokedos-ambient-1 | prompt ~56 words
+23:40:17    INFO ashiorid_week: [20/22] authoring ambient from World/Desert.md
+23:40:44    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:40:44    INFO ashiorid_week:   -> desert-winds | prompt ~43 words
+23:40:44    INFO ashiorid_week: [21/22] authoring ambient from World/Diplomatic relations.md
+23:41:19    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:41:19    INFO ashiorid_week:   -> bogdan-paper-mill | prompt ~57 words
+23:41:19    INFO ashiorid_week: [22/22] authoring ambient from World/The Realms of Ashiorid.md
+23:41:45    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+23:41:45    INFO ashiorid_week:   -> skirmishes-along-the-border | prompt ~31 words
+23:41:45    INFO ashiorid_week: ambient done: 21 authored, 1 failed
+23:41:45    INFO campaign.pack: loaded campaign pack ashiorid with 74 scenes and 5 cast members
+23:41:45    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 0 warnings
+23:41:45    INFO pack_gate: gate result: 0 error(s), 0 warning(s)
+23:41:45    INFO ashiorid_week: GATE ambient dir: PASS 0 warning(s) | errors=[] warnings=[]
+
+========================================================================
+ASHIORID WEEK BUILD | run_id=ashiorid_week_20260919_222734
+========================================================================
+  SPINE TOTAL: 0 scenes, 0 spoken words (0.0 h at 150wpm)
+  AMBIENT   : 21 definitions, 1067 prompt words
+  GATE      : spine=n/a  ambient=PASS
+  STAGED    : /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/ambient_batch2  (NOT promoted — that is the explicit human step)

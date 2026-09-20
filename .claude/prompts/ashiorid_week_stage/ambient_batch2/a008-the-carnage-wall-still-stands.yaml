@@ -1,0 +1,18 @@
+id: the-carnage-wall-still-stands
+title: The Ancient Wall Endures
+ambient: true
+prompt: 'The Carnage Wall, built by mages in ancient times, still stands tall and
+  proud, a testament to the power of magic and the ingenuity of those who came before.
+  The wall, once erected to protect against goblin hordes, now watches over a changed
+  landscape, its purpose shifted but its presence unwavering. Guards patrol its length,
+  ever vigilant, knowing the stories of its past but focused on the safety of today.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: the-carnage-wall-still-stands@1
+  batch: 2.3.ambient.7
+  base_hash: 6b777f025142e665b71e8bb622f380bc224ba889de7c28298f3e9a51777465e2
