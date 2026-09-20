@@ -1,62 +1,72 @@
-# Checkpoint — 2026-09-19 evening (Ashiorid week build)
+# Checkpoint — 2026-09-19 evening+night (Ashiorid week build)
 
-## State
-- Spine (DONE, staged, GATE PASS 0 errors, 3 expected "unreachable" warnings):
-  .claude/prompts/ashiorid_week_stage/spine/
-  - 001-temple-of-malar      (91w, 5 beats, reveal_memory)
-  - 002-lighthouse-encounter (81w, 5 beats, search)
-  - 003-mutants-encounter    (65w, 4 beats, move_to) — ends OPEN
-  - splice.proposal.yaml at stage ROOT (NOT in scenes dir): forward splice
-    malvakar-riddle -> temple-of-malar; loop-closure left to operator at promote
-  - run_id ashiorid_week_20260919_181434 (run 4; runs 1-3 killed after defects)
-- Ambient (run 5 IN PROGRESS, proc_00979ea2a37f --ambient-only, 8/12 at this
-  checkpoint): sarahs-inn-ambience, city-streets-ambient (1 retry),
-  mysterious-child-visits-camp, dwarf-gnome-chase, village-ambience,
-  villagers-discuss-unclaimed-treasure, falling-man-impact, henderson-ambience
-  -> remaining: Losira, Malmont market, Azra scouting, Grovley watches
-  -> then gate, then DONE (exit 0)
+## State (post-decision, 2026-09-19 ~22:30)
 
-## Fixes landed this session (all verified with tests/compiles)
-1. author_scenes.py: added pack_primitives() + beat-filter for unknown
-   primitives (shared-module bug: prompt never told the model the pack's
-   enabled primitives; now backstopped same as speakers/lore, with WARN log
-   on drop, and a retry hint added). No behavior change when primitives
-   field absent.
-2. test_author_scenes.py: +2 tests (drop path + enabled-keeps) — 9 pass.
-   test_spine_chain.py 14 pass. test_author_scenes.py 9 pass.
-3. run_ashiorid_week_build.py: splice.proposal moved to stage ROOT (was
-   being staged as a scene -> "missing id" gate failure); ambient dir
-   created in --spine-only mode; --ambient-only mode added; exact note-stem
-   matching for CONTINUATION notes (Mutant History - Alien World found).
-4. Gate both check now uses STAGE as root, with separate spine/ambient
-   subdirs.
+### Items 1+2 — SPINE RING: APPLIED + GATE-CLEAN (verified)
+- 3 spine scenes PROMOTED into campaigns/ashiorid/scenes/ (001-temple-of-malar,
+  002-lighthouse-encounter, 003-mutants-encounter). Pack now 52 scenes, 5 cast.
+- Forward splice APPLIED: campaigns/ashiorid/scenes/15-malvakar-riddle.yaml
+  gained `default_next: temple-of-malar` (was absent — the open endpoint).
+- Loop-closure APPLIED: scenes/003-mutants-encounter.yaml switched
+  `default_next: null` -> `malvakar-riddle`.
+- Verified spine walk from invitation: invitation -> ... -> amulet-map ->
+  malvakar-riddle -> temple-of-malar -> lighthouse-encounter -> mutants-
+  encounter -> malvakar-riddle (RING closes). All spine scenes reachable.
+- Standalone tracked-pack gate: 0 errors, 0 warnings (the 3 previous
+  "unreachable" warnings are gone because the ring now reaches everything).
+- Spine scene files in the pack keep their `NNN-name.yaml` staging names
+  (promote() copies filenames verbatim); other canonical scenes keep their
+  `15-malvakar-riddle.yaml` style. Cosmetic only, not a functional issue.
 
-## Decisions this session
-- Spine continuation seeded FROM malvakar-riddle (the pack's only open
-  endpoint), NOT from the Amulet-of-Wonder Quest which is *Agent_Ignore*.
-- Closed-vocab: cast=['Leena','Vigil','chadwick','gm','sodacan_bob'];
-  primitives=['attack','cast_spell','move_to','reveal_memory','roll_check',
-  'search']; lore stems=['amulet-of-wonder','malmont','moonwells',
-  'the-bahadur','the-begene-program','the-event'].
-- Loop-closure (mutants-encounter -> malvakar-riddle) deliberately left as
-  an OPERATOR CHOICE at promote time (proposal.yaml documents this).
+### Item 3 — Ambient batch 1 (12 scenes): HELD per user directive
+- Still staged under .claude/prompts/ashiorid_week_stage/ambient/.
+- Not promoted, not committed. Re-promote any time with pack_gate.promote().
 
-## What I'd do next (operator call needed)
-1. Let run 5 ambient batch complete + gate green (in progress at this point).
-2. Review the 5 spine + 12 ambient staged scenes.
-3. Apply the forward splice (malvakar-riddle default_next -> temple-of-malar)
-   if we want it, and DECIDE on loop-closure at promote.
-4. Promote staged scenes into campaigns/ashiorid/scenes/ (the pack).
-   Nothing in this session has touched the tracked pack.
-5. (Optional) commit the shared-module fix (author_scenes.py) + 2 new
-   tests to git — I have NOT committed anything yet this session.
+### Item 4 — Ambient batch 2 (22 notes): RUNNING in background
+- session_id proc_93f7a16516a2 (Hermes background, notify_on_complete set).
+- Sources: Factions 4, Locations 6, NPCs 6 (incl. Leena profile — new source
+  only, not a new cast member; Leena already in cast), NPCs/README excluded,
+  Side Quests 1 (Lizard people replacement), World 7 (Ashiorid, Bahadur Race,
+  Campaign Timeline, Cities/Idra, Cities/Vabokedos, Desert, Diplomatic
+  relations, The Realms of Ashiorid). Energy and Moonwells already generated
+  in the earlier smoke test as `moonwell-meditation` (see ambient_batch2/).
+- Smoke test (Moonwells) passed 0 errors 0 warnings, 55 prompt words, ~52s.
+- Stage output: .claude/prompts/ashiorid_week_stage/ambient_batch2/
+- Log: .claude/prompts/ashiorid_week_run6_batch2.log
+- Runner changes landed this round (uncommitted):
+  * build_ambient(..., ambient_notes=None, out_dir=None) overrides.
+  * new flags --ambient-notes (newline-dl refs), --ambient-out (stage dir),
+    --gate-ambient-only (skip spine gate since spine is now in base).
+  * summary/staged_under print guarded for g_spine=None.
+  See diff .claude/prompts/run_ashiorid_week_build.py vs commit 41df41b.
 
-## Known open quality nits (not blockers)
-- Spine scenes 2 and 3 share a near-identical narration line
-  ("an uneasy sense fills the air, as if ~ holds secrets best left
-  undisturbed"). Consider revising one of 002/003 after listening pass.
-- Run 1/2/3 logs are in .claude/prompts/ashiorid_week_run*.log; only run 4
-  (spine) and run 5 (ambient) are the final state.
-- The 2 spine scenes that DID land (001-002) use a different "type: action"
-  style than the canonical scenes, but that's within the validator's accepted
-  shape (pack.py Beat dataclass accepts type: action with primitive + params).
+### Item 5 — primitive backstop + 2 tests: ALREADY IN COMMIT 41df41b
+- verified with `git grep 'def pack_primitives' HEAD -- utilities/3Layers…
+- `git grep -l 'filters_unknown_primitives' HEAD -- utilities/3LayersWee…
+- Nothing extra to commit for item 5.
+
+## Pending operator calls
+1. Review ambient batch 2 output when proc_93f7a16516a2 completes (notify
+   will land). Gate will re-run per scene.
+2. Decide whether to promote ambient batch 1 OR batch 2 (or both) into
+   campaigns/ashiorid/scenes/. Both are already gate-clean in isolation.
+3. Scale further if needed — remaining ambient-eligible sources: 13 in
+   unsorted/, 8 in Resources/, 2 in Spells/ — mostly low-value; not
+   recommended for ambient filler.
+4. Quality nit (unchanged): spine 002 + 003 share near-identical opening
+   narration. Optional revision pass after a listening run.
+
+## What is still uncommitted (working tree)
+- promotions of 3 spine scenes into campaigns/ashiorid/scenes/ (new files)
+- default_next edits to 15-malvakar-riddle.yaml + 003-mutants-encounter.yaml
+- .claude/prompts/ashiorid_ambient_batch2_notes.txt (batch2 refs)
+- .claude/prompts/run_ashiorid_week_build.py (scale-up flags)
+- .claude/prompts/ashiorid_week_run6_batch2.log
+- .claude/prompts/ashiorid_week_stage/ambient_batch2/* (as they land)
+- .claude/prompts/build_summary.json (last-write-wins; batch2 will overwrite)
+
+## Known open (unchanged from prior checkpoint)
+- Spine scenes 2+3 share an awkward opening ("an uneasy sense fills the
+  air…"). Optional revision.
+- Two commits are on disk: 41df41b (code) + f034461 (content), main is ahead
+  of both remotes by 3 commits. NOT pushed.

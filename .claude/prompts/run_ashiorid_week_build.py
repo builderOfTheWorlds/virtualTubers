@@ -187,23 +187,29 @@ def build_spine(client, notes, run_id):
     return scenes
 
 
-def build_ambient(client, notes, run_id):
+def build_ambient(client, notes, run_id, ambient_notes=None, out_dir=None):
+    """Author ambient-filler scenes. `ambient_notes` overrides the default AMBIENT_NOTES
+    list (use None to keep the default); `out_dir` overrides STAGE_AMB (use None to keep
+    it). Both parameters are present so future scale-up runs can specify a custom list
+    and a fresh staging dir without re-running an already-staged batch."""
     log.info("=== AMBIENT BATCH (filler, independent) ===")
     by_ref = {n.rel_path: n for n in notes}
+    refs = list(ambient_notes) if ambient_notes is not None else list(AMBIENT_NOTES)
+    out_dir = out_dir or STAGE_AMB
     out, fail = [], 0
-    for i, ref in enumerate(AMBIENT_NOTES):
+    for i, ref in enumerate(refs):
         note = by_ref.get(ref)
         if note is None:
             log.warning("ambient note not found: %s — skipped", ref)
             fail += 1
             continue
-        log.info("[%d/%d] authoring ambient from %s", i + 1, len(AMBIENT_NOTES), ref)
+        log.info("[%d/%d] authoring ambient from %s", i + 1, len(refs), ref)
         try:
             scene = author_ambient(
                 client, note, base_pack_dir=BASE, run_id=run_id,
                 batch=f"2.3.ambient.{i}", model=MODEL, max_retries=MAX_RETRIES)
-            fname = sw.next_scene_filename(STAGE_AMB, prefix="a") + f"-{scene['id']}.yaml"
-            sw.write_scene(STAGE_AMB, fname, scene)
+            fname = sw.next_scene_filename(out_dir, prefix="a") + f"-{scene['id']}.yaml"
+            sw.write_scene(out_dir, fname, scene)
             out.append(scene)
             log.info("  -> %s | prompt ~%d words", scene["id"],
                      len((scene.get("prompt") or "").split()))
@@ -246,6 +252,19 @@ def main():
                     help="author spine continuation, gate it, exit (skip ambient)")
     ap.add_argument("--ambient-only", action="store_true",
                     help="author the ambient filler batch, gate it, exit (skip spine)")
+    # Scale-up flags for a NEW ambient batch (item 4 of the promotion decision):
+    # --ambient-notes: newline-delimited list of vault-relative note paths
+    #                  (feeds build_ambient's `ambient_notes` param).
+    # --ambient-out:   a staging directory distinct from STAGE_AMB so we can
+    #                  hold a second batch without colliding filenames.
+    # --gate-ambient-only: skip the spine gate — the spine was already promoted
+    #                      into the base pack in the 2026-09-19 splice run.
+    ap.add_argument("--ambient-notes", default=None,
+                    help="Newline-delimited list of note rel_paths to author (scale up)")
+    ap.add_argument("--ambient-out", default=None,
+                    help="Staging directory for this batch (defaults to STAGE_AMB)")
+    ap.add_argument("--gate-ambient-only", action="store_true",
+                    help="Only gate the ambient dir; skip spine gate (spine already in base)")
     args = ap.parse_args()
     STAGE.mkdir(parents=True, exist_ok=True)
     STAGE_SPINE.mkdir(parents=True, exist_ok=True)
@@ -255,16 +274,35 @@ def main():
     notes = sa.load_source(SOURCE)
     log.info("source notes loaded: %d", len(notes))
 
+    amb_refs = None
+    if args.ambient_notes:
+        amb_refs = [l.strip() for l in args.ambient_notes.splitlines() if l.strip()]
+        log.info("scale-up ambient batch: %d explicit refs", len(amb_refs))
+    amb_out = pathlib.Path(args.ambient_out).resolve() if args.ambient_out else STAGE_AMB
+    if args.ambient_out:
+        amb_out.mkdir(parents=True, exist_ok=True)
+
     client = concurrent_llm.from_profile({
         "provider": "ollama", "base_url": "http://127.0.0.1:11434",
         "model": MODEL, "temperature": 0.7, "max_tokens": MAX_TOKENS,
         "timeout_s": 900, "num_ctx": None,
     })
     try:
-        spine = [] if args.ambient_only else build_spine(client, notes, run_id)
-        ambient = [] if args.spine_only else build_ambient(client, notes, run_id)
-        g_spine, g_amb = gate_both()
-        gate_ok = (args.ambient_only or g_spine.ok) and (args.spine_only or g_amb.ok)
+        spine = [] if (args.ambient_only or args.ambient_notes) else build_spine(client, notes, run_id)
+        if not (args.spine_only or args.ambient_notes):
+            ambient = build_ambient(client, notes, run_id)
+        else:
+            ambient = build_ambient(client, notes, run_id,
+                                    ambient_notes=amb_refs, out_dir=amb_out)
+        if args.gate_ambient_only or args.ambient_notes:
+            g_spine = None
+            g_amb = check_stage(BASE, amb_out)
+            log.info("GATE ambient dir: %s | errors=%s warnings=%s",
+                     g_amb.summary(), list(g_amb.errors), list(g_amb.warnings))
+            gate_ok = g_amb.ok
+        else:
+            g_spine, g_amb = gate_both()
+            gate_ok = (args.ambient_only or g_spine.ok) and (args.spine_only or g_amb.ok)
 
         summary = {
             "run_id": run_id,
@@ -274,11 +312,11 @@ def main():
                  "prompt_words": len((a.get("prompt") or "").split()),
                  "n_beats": len(a.get("beats") or []),
                  "default_next": a.get("default_next")} for a in ambient],
-            "gate_spine": {"ok": g_spine.ok, "errors": list(g_spine.errors),
-                           "warnings": list(g_spine.warnings)},
+            "gate_spine": ({"ok": g_spine.ok, "errors": list(g_spine.errors),
+                            "warnings": list(g_spine.warnings)} if g_spine else None),
             "gate_ambient": {"ok": g_amb.ok, "errors": list(g_amb.errors),
                              "warnings": list(g_amb.warnings)},
-            "staged_under": str(STAGE),
+            "staged_under": str(amb_out),
         }
         (STAGE / "build_summary.json").write_text(
             json.dumps(summary, indent=2, ensure_ascii=False))
@@ -295,9 +333,10 @@ def main():
               f"({round(total / 9000, 2)} h at 150wpm)")
         aw = sum(a["prompt_words"] for a in summary["ambient"])
         print(f"  AMBIENT   : {len(summary['ambient'])} definitions, {aw} prompt words")
-        print(f"  GATE      : spine={'PASS' if g_spine.ok else 'FAIL'}  "
+        spine_gate = "n/a" if g_spine is None else ("PASS" if g_spine.ok else "FAIL")
+        print(f"  GATE      : spine={spine_gate}  "
               f"ambient={'PASS' if g_amb.ok else 'FAIL'}")
-        print(f"  STAGED    : {STAGE}  (NOT promoted — that is the explicit human step)")
+        print(f"  STAGED    : {amb_out}  (NOT promoted — that is the explicit human step)")
         return 0 if gate_ok else 1
     finally:
         client.close()
