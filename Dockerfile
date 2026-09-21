@@ -20,6 +20,11 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     # Misc utilities
     inotify-tools procps wget \
+    # C toolchain + PPA tooling — build-essential compiles termgl's C
+    # extension (below); software-properties-common/gnupg let us add
+    # deadsnakes for python3.11 (see the render3d venv step below — termgl
+    # requires >=3.11, this image's system python3 is 3.10).
+    build-essential software-properties-common gnupg \
     && rm -rf /var/lib/apt/lists/*
 
 # PulseAudio's system-wide mode (startup.sh: `pulseaudio --system`) gates
@@ -65,8 +70,34 @@ RUN python3 -m venv /opt/aider \
         $(test -n "${AIDER_VERSION}" && echo "aider-chat==${AIDER_VERSION}" || echo "aider-chat") \
     && ln -s /opt/aider/bin/aider /usr/local/bin/aider
 
-# ── Python dependencies ────────────────────────────────────────────────────────
+# render3d — Python 3.11 venv for termgl (3D terminal rendering; see
+# docs/panels.md), used by radar_pane.py, knowledge_graph_pane.py, and
+# avatar_providers/termgl_avatar.py. termgl requires Python >=3.11 (uses
+# enum.FlagBoundary.CONFORM, added in 3.11) — this image's system python3
+# is 3.10 (Ubuntu 22.04's default), so like aider above, it gets its own
+# isolated venv rather than forcing every other dependency in
+# requirements.txt to resolve against a bumped system interpreter.
+# python3.11-dev is needed for the Cython/C-extension build (Python.h).
+#
+# The FULL requirements.txt (not just termgl+numpy) is installed here too:
+# config/panels/avatar.yaml now invokes ALL avatar providers (builtin,
+# ascii_avatar, termgl_avatar) under this interpreter — see that file's
+# comment — so it needs every dep avatar.py/avatar_providers/* import
+# (message_bus's pyyaml/kafka-python, wcwidth, blessed), not just termgl's
+# own numpy dependency. radar_pane.py and knowledge_graph_pane.py need
+# message_bus too. requirements.txt itself is unaffected (still installs
+# against system python3.10 below) — this is a second, independent
+# installation of the same file into a second interpreter.
 COPY requirements.txt /app/requirements.txt
+RUN add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update \
+    && apt-get install -y python3.11 python3.11-venv python3.11-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3.11 -m venv /opt/render3d \
+    && /opt/render3d/bin/pip install --no-cache-dir -r /app/requirements.txt \
+    && /opt/render3d/bin/pip install --no-cache-dir termgl
+
+# ── Python dependencies ────────────────────────────────────────────────────────
 RUN pip3 install -r /app/requirements.txt
 
 # ── App code ──────────────────────────────────────────────────────────────────

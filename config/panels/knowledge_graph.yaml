@@ -1,10 +1,16 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Panel type: knowledge_graph
 #
-# Static placeholder ASCII node/edge graph (Decision 3 of
+# STATIC PLACEHOLDER node/edge graph (Decision 3 of
 # docs/tuber_base_layout_plan.md: STUB structure only — wiring to real
-# campaign-pack/Postgres data is explicitly a separate future task). Clearly
-# labeled "(placeholder)" in the render.
+# campaign-pack/Postgres data is explicitly a separate future task),
+# rendered as a real shaded 3D graph via termgl (docs/panels.md's "3D
+# rendering (termgl)" section): nodes are octahedra on a Fibonacci sphere,
+# edges are projected 3D lines. Clearly labeled "(placeholder)" every frame
+# so nobody mistakes it for real data.
+#
+# Runs under /opt/render3d's Python 3.11 venv (not the system python3.10)
+# — termgl requires Python >=3.11 (see Dockerfile's render3d venv comment).
 # ──────────────────────────────────────────────────────────────────────────────
 type: knowledge_graph
 title: "Knowledge"
@@ -13,4 +19,4 @@ title: "Knowledge"
 # just the border, so this was rendering as hard-to-read dark blue on the
 # dark-grey xterm background.
 border_color: cyan
-command: "python3 /app/knowledge_graph_pane.py --config {config_path}"
+command: "/opt/render3d/bin/python3 /app/knowledge_graph_pane.py --config {config_path}"

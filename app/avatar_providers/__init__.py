@@ -25,12 +25,18 @@ def _load_ascii_avatar():
     return AsciiAvatarProvider
 
 
+def _load_termgl_avatar():
+    from avatar_providers.termgl_avatar import TermglAvatarProvider
+    return TermglAvatarProvider
+
+
 # name -> lazy factory returning the provider class. Lazy so a worker only
 # pays the import cost (and only needs the deps) of the provider it
 # actually selected.
 PROVIDERS = {
     "builtin": _load_builtin,
     "ascii_avatar": _load_ascii_avatar,
+    "termgl_avatar": _load_termgl_avatar,
 }
 
 

@@ -3,10 +3,11 @@
 radar_pane.py
 Standalone display process for the tmux "Stats" pane. Reads the per-worker
 model-performance metrics file `app/agent_metrics.py` writes (Contract A of
-docs/tuber_base_layout_plan.md) and renders a small ASCII bar/radar plot of
-the six tracked metrics, refreshing on a short loop. Plain print() loop (NOT
-a full-screen TUI) so it renders correctly under xterm + ffmpeg capture,
-matching every other pane's house style (see tail_bus.py, avatar.py).
+docs/tuber_base_layout_plan.md) and renders a REAL shaded 3D radar/spike
+mesh via termgl (docs/panels.md's "3D rendering (termgl)" section),
+refreshing on a short loop. Runs under the /opt/render3d Python 3.11 venv
+(see Dockerfile) — termgl requires Python >=3.11, unlike the rest of this
+app which targets the system python3.10.
 
 Metrics file contract (frozen, written by agent_metrics.py — see docs/
 tuber_base_layout_plan.md "A. Metrics file"):
@@ -24,8 +25,9 @@ tuber_base_layout_plan.md "A. Metrics file"):
 This pane is deliberately DEFENSIVE about that file: a worker that just
 started (no LLM call yet), a metrics writer that hasn't landed yet, or a
 transient torn-read must never crash or exit the pane — missing/malformed/
-stale data renders as zeros/placeholder with a clear "no data yet" /
-"STALE" marker instead.
+stale data renders as a flat/zeroed mesh with a "STALE"/"no data" header
+line instead (termgl draws only the mesh; the status header is a plain
+`puts()` text row above it, same house style as before).
 
 Path resolution for the metrics file (no `{runtime_dir}`/`{worker_id}`
 placeholders exist in build_layout.py's substitution context — only
@@ -49,6 +51,7 @@ from datetime import datetime, timezone
 import yaml
 
 from message_bus import load_worker_config, resolve
+from mesh3d import build_radar_mesh
 
 
 logging.basicConfig(
@@ -74,20 +77,25 @@ DEFAULT_METRICS = {
     "messages_sent": 0,
 }
 
-# (label, metrics_key, lo, hi, invert, unit)
-# invert=True means "lower is better" — the bar fills based on (hi - value).
+# (label, metrics_key, lo, hi, invert)
+# invert=True means "lower is better" — the spike height fills based on
+# (hi - value) instead of value, so e.g. a LOW error rate still reads as a
+# tall/healthy spike.
 METRIC_SPECS = [
-    ("tok/s", "tokens_per_sec", 0, 50, False, ""),
-    ("latency", "avg_latency_s", 0, 10, True, "s"),
-    ("context", "context_tokens", 0, 8000, False, ""),
-    ("err%", "error_rate_pct", 0, 100, True, "%"),
-    ("uptime%", "uptime_pct", 0, 100, False, "%"),
-    ("msgs", "messages_sent", 0, 200, False, ""),
+    ("tok/s", "tokens_per_sec", 0, 50, False),
+    ("latency", "avg_latency_s", 0, 10, True),
+    ("context", "context_tokens", 0, 8000, False),
+    ("err%", "error_rate_pct", 0, 100, True),
+    ("uptime%", "uptime_pct", 0, 100, False),
+    ("msgs", "messages_sent", 0, 200, False),
 ]
 
-BAR_WIDTH = 10
-FILLED = "█"
-EMPTY = "░"
+WIDTH = 37
+HEIGHT = 20
+FOV = 1.0
+VIEW_ROT_X = 0.5
+VIEW_ROT_Z_SPEED = 0.06  # radians/frame — slow idle rotation
+VIEW_DIST = 2.2
 
 
 # ── Metrics loading (pure, defensive) ──────────────────────────────────────
@@ -134,13 +142,13 @@ def is_stale(metrics, now=None, max_age_s=STALE_AFTER_S):
     return (now - dt).total_seconds() > max_age_s
 
 
-# ── Rendering (pure) ────────────────────────────────────────────────────────
+# ── Fraction mapping (pure) ─────────────────────────────────────────────────
 def _clamp01(x):
     return max(0.0, min(1.0, x))
 
 
 def normalize(value, lo, hi, invert=False):
-    """Map `value` in [lo, hi] to a 0..1 fill fraction, clamped, tolerant of
+    """Map `value` in [lo, hi] to a 0..1 fraction, clamped, tolerant of
     non-numeric input (renders as 0)."""
     try:
         value = float(value)
@@ -154,38 +162,44 @@ def normalize(value, lo, hi, invert=False):
     return _clamp01(frac)
 
 
-def render_bar(frac, width=BAR_WIDTH):
-    """Render a `frac` (0..1) fill as a block-character bar of `width` cols."""
-    frac = _clamp01(frac)
-    filled_n = round(frac * width)
-    return FILLED * filled_n + EMPTY * (width - filled_n)
+def metrics_to_fractions(metrics):
+    """METRIC_SPECS order -> list of 0..1 fractions, for build_radar_mesh."""
+    return [normalize(metrics.get(key, DEFAULT_METRICS.get(key)), lo, hi, invert)
+            for _, key, lo, hi, invert in METRIC_SPECS]
 
 
-def _format_value(value, unit):
-    if isinstance(value, float):
-        text = f"{value:.1f}"
-    else:
-        text = str(value)
-    return f"{text}{unit}"
+# ── Rendering (imports termgl lazily — only the /opt/render3d Python 3.11
+# venv has it; keeping this out of module-level imports means the pure
+# metrics/normalize logic above stays unit-testable under the regular
+# test venv without termgl installed) ──────────────────────────────────────
+def render_radar_3d(ctx, camera, fractions, angle, stale=False, worker_id=None):
+    """Draw one frame: the shaded 3D radar mesh + a plain-text status header."""
+    import numpy as np
+    import termgl as tgl
+    from render3d_common import make_view, LitPixelShader, write_header_line
 
+    stale_color = tgl.PixFmt(tgl.Idx(tgl.Color.RED))
+    live_color = tgl.PixFmt(tgl.Idx(tgl.Color.GREEN, flags=tgl.FmtFlag.BOLD))
 
-def render_radar(metrics, stale=False, worker_id=None):
-    """Render the full compact stats box as a single multi-line string.
+    trigs = build_radar_mesh(fractions)
+    if len(trigs) > 0:
+        view = make_view(rot_x=VIEW_ROT_X, rot_y=0.0, rot_z=angle, dist=VIEW_DIST)
+        vertex_shader = tgl.VertexShaderSimple(np.matmul(camera, view))
+        pixel_shader = LitPixelShader()
+        pixel_shader.base_color = stale_color if stale else live_color
+        for trig in trigs:
+            pixel_shader.trig = trig
+            ctx.triangle_3d(trig, vertex_shader, pixel_shader)
 
-    Reads fine at ~20% terminal width: label + 10-char bar + value, six rows,
-    plus a status header line.
-    """
-    lines = []
-    label = worker_id or metrics.get("worker_id") or "?"
+    ctx.flush()
+    ctx.clear(tgl.Buffer.FRAME | tgl.Buffer.Z | tgl.Buffer.OUTPUT)
+
+    # Written AFTER flush(), via plain ANSI rather than ctx.puts() — see
+    # write_header_line's docstring (DOUBLE_CHARS doubles puts() text too).
+    label = (worker_id or "?")
     status = "STALE" if stale else "live"
-    lines.append(f"[{label}] stats ({status})")
-    for name, key, lo, hi, invert, unit in METRIC_SPECS:
-        value = metrics.get(key, DEFAULT_METRICS.get(key))
-        frac = normalize(value, lo, hi, invert)
-        bar = render_bar(frac)
-        value_text = _format_value(value, unit)
-        lines.append(f"{name:<8}{bar} {value_text}")
-    return "\n".join(lines)
+    write_header_line(f"[{label}] stats ({status})",
+                       color_name="RED" if stale else "GREEN", bold=not stale)
 
 
 # ── Path resolution ──────────────────────────────────────────────────────────
@@ -206,6 +220,16 @@ def resolve_metrics_path(worker_config, explicit_path=None):
     return os.path.join(runtime_dir, f"metrics_{worker_id}.json")
 
 
+def _make_context_lazy():
+    from render3d_common import make_context
+    return make_context(WIDTH, HEIGHT)
+
+
+def _make_camera_lazy():
+    from render3d_common import make_camera
+    return make_camera(WIDTH, HEIGHT, fov=FOV)
+
+
 # ── Run loop ──────────────────────────────────────────────────────────────
 def run(config_path, metrics_path_arg, sleep=time.sleep):
     worker_config = {}
@@ -220,16 +244,21 @@ def run(config_path, metrics_path_arg, sleep=time.sleep):
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
     log.info("worker_id=%s metrics_path=%s", worker_id, metrics_path)
 
+    ctx = _make_context_lazy()
+    camera = _make_camera_lazy()
+    angle = 0.0
+
     while True:
         metrics = load_metrics(metrics_path)
         stale = is_stale(metrics)
-        os.system("clear")
-        print(render_radar(metrics, stale=stale, worker_id=worker_id), flush=True)
+        fractions = metrics_to_fractions(metrics)
+        render_radar_3d(ctx, camera, fractions, angle, stale=stale, worker_id=worker_id)
+        angle += VIEW_ROT_Z_SPEED
         sleep(REFRESH_INTERVAL_S)
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Radar/stats pane: live model-performance metrics.")
+    parser = argparse.ArgumentParser(description="Radar/stats pane: live model-performance metrics as a 3D mesh.")
     parser.add_argument("--config", default="/config/worker.yaml",
                         help="worker.yaml providing worker_id (for metrics path derivation)")
     parser.add_argument("--metrics-path", default=None,

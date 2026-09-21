@@ -1,11 +1,18 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Panel type: avatar
 #
-# Reusable panel-type definition for the ASCII-art avatar pane. {config_path} is
+# Reusable panel-type definition for the avatar pane. {config_path} is
 # substituted by the layout engine with the worker config path passed to
 # build_layout.py (env-overridable CONFIG_PATH in startup.sh).
+#
+# Runs under /opt/render3d's Python 3.11 venv (not the system python3.10)
+# so the `termgl_avatar` provider (app/avatar_providers/termgl_avatar.py,
+# docs/panels.md's "3D rendering (termgl)" section) is selectable via
+# worker config without a second panel-type entrypoint. That venv has the
+# full requirements.txt installed too (see Dockerfile), so `builtin` and
+# `ascii_avatar` keep working unchanged when selected instead.
 # ──────────────────────────────────────────────────────────────────────────────
 type: avatar
 title: "Avatar"
 border_color: magenta
-command: "python3 /app/avatar.py --config {config_path}"
+command: "/opt/render3d/bin/python3 /app/avatar.py --config {config_path}"

@@ -266,9 +266,11 @@ def test_exact_tmux_command_sequence(built):
     assert last_six == send_keys
 
     # Final id -> tmux pane index mapping, per the docstring above.
-    assert "tmux send-keys -t worker:0.0 'python3 /app/radar_pane.py" in lines[-6]
-    assert "tmux send-keys -t worker:0.1 'python3 /app/knowledge_graph_pane.py" in lines[-2]
-    assert "tmux send-keys -t worker:0.2 'python3 /app/avatar.py" in lines[-5]
+    # radar_pane/knowledge_graph_pane/avatar run under the /opt/render3d
+    # Python 3.11 venv (termgl requires >=3.11) — see config/panels/*.yaml.
+    assert "tmux send-keys -t worker:0.0 '/opt/render3d/bin/python3 /app/radar_pane.py" in lines[-6]
+    assert "tmux send-keys -t worker:0.1 '/opt/render3d/bin/python3 /app/knowledge_graph_pane.py" in lines[-2]
+    assert "tmux send-keys -t worker:0.2 '/opt/render3d/bin/python3 /app/avatar.py" in lines[-5]
     assert "tmux send-keys -t worker:0.3 'python3 /app/thinking_pane.py" in lines[-1]
     assert "tmux send-keys -t worker:0.4 'python3 /app/chat_list_pane.py" in lines[-4]
     assert "tmux send-keys -t worker:0.5 'python3 /app/tail_bus.py" in lines[-3]

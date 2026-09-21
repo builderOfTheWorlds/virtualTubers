@@ -1,13 +1,17 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Panel type: radar_chart
 #
-# Small ASCII bar/radar plot of the six live model-performance metrics
+# Small shaded 3D radar/spike mesh (termgl, see docs/panels.md's "3D
+# rendering (termgl)" section) of the six live model-performance metrics
 # (Contract A of docs/tuber_base_layout_plan.md): tokens/sec, avg latency,
 # context tokens, error/retry rate, uptime, messages sent. Reads
 # `<runtime-dir>/metrics_<worker_id>.json` (default runtime dir /tmp/panes),
 # the same file app/agent_metrics.py rewrites atomically after every LLM
-# completion. Tolerant of a missing/stale file — renders zeros/placeholder,
-# never crashes.
+# completion. Tolerant of a missing/stale file — renders a flat/zeroed mesh
+# with a STALE header, never crashes.
+#
+# Runs under /opt/render3d's Python 3.11 venv (not the system python3.10)
+# — termgl requires Python >=3.11 (see Dockerfile's render3d venv comment).
 #
 # No `{runtime_dir}`/`{worker_id}` placeholders exist in build_layout.py's
 # substitution context (only `{config_path}`/`{resolved_path}` are
@@ -17,4 +21,4 @@
 type: radar_chart
 title: "Stats"
 border_color: green
-command: "python3 /app/radar_pane.py --config {config_path}"
+command: "/opt/render3d/bin/python3 /app/radar_pane.py --config {config_path}"

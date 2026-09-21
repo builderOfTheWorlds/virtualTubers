@@ -1,18 +1,19 @@
 """
 test_radar_pane.py
 Unit tests for the pure rendering/formatting/loading helpers in
-app/radar_pane.py. No real filesystem tmux/Kafka dependency beyond a tmp
-file for the metrics JSON. conftest.py inserts app/ onto sys.path.
+app/radar_pane.py. Deliberately excludes anything that imports termgl
+(render_radar_3d, _make_context_lazy, _make_camera_lazy) — those only run
+under the /opt/render3d Python 3.11 venv, not this project's regular test
+venv (see app/radar_pane.py's module docstring). No real filesystem/tmux/
+Kafka dependency beyond a tmp file for the metrics JSON. conftest.py
+inserts app/ onto sys.path.
 """
 import json
 import os
-import sys
 from datetime import datetime, timedelta, timezone
-from unittest import mock
-
-import pytest
 
 import radar_pane
+from mesh3d import build_radar_mesh, TRIG3D_DTYPE
 
 
 # ── load_metrics: defensive file handling ──────────────────────────────────
@@ -87,7 +88,7 @@ def test_is_stale_old_timestamp():
     assert radar_pane.is_stale(metrics, now=now) is True
 
 
-# ── normalize / render_bar (pure math) ──────────────────────────────────────
+# ── normalize (pure math) ────────────────────────────────────────────────────
 def test_normalize_clamps_within_bounds():
     assert radar_pane.normalize(-5, 0, 10) == 0.0
     assert radar_pane.normalize(15, 0, 10) == 1.0
@@ -104,42 +105,43 @@ def test_normalize_non_numeric_returns_zero():
     assert radar_pane.normalize(None, 0, 10) == 0.0
 
 
-def test_render_bar_full_and_empty():
-    assert radar_pane.render_bar(1.0, width=10) == radar_pane.FILLED * 10
-    assert radar_pane.render_bar(0.0, width=10) == radar_pane.EMPTY * 10
+# ── metrics_to_fractions ─────────────────────────────────────────────────────
+def test_metrics_to_fractions_length_matches_metric_specs():
+    fractions = radar_pane.metrics_to_fractions(radar_pane.DEFAULT_METRICS)
+    assert len(fractions) == len(radar_pane.METRIC_SPECS)
+    assert all(0.0 <= f <= 1.0 for f in fractions)
 
 
-def test_render_bar_half():
-    bar = radar_pane.render_bar(0.5, width=10)
-    assert bar.count(radar_pane.FILLED) == 5
-    assert bar.count(radar_pane.EMPTY) == 5
+def test_metrics_to_fractions_missing_keys_fall_back_to_defaults():
+    fractions = radar_pane.metrics_to_fractions({})
+    assert len(fractions) == len(radar_pane.METRIC_SPECS)
 
 
-# ── render_radar: never crashes, always renders all six metrics ────────────
-def test_render_radar_with_defaults_never_crashes():
-    output = radar_pane.render_radar(radar_pane.DEFAULT_METRICS, stale=True, worker_id="coder")
-    assert "coder" in output
-    assert "STALE" in output
-    for name, *_rest in radar_pane.METRIC_SPECS:
-        assert name in output
-
-
-def test_render_radar_live_status_when_not_stale():
-    output = radar_pane.render_radar(radar_pane.DEFAULT_METRICS, stale=False, worker_id="tester")
-    assert "live" in output
-    assert "STALE" not in output
-
-
-def test_render_radar_missing_worker_id_falls_back_to_metrics_field():
+def test_metrics_to_fractions_high_values_clamp_to_one():
     metrics = dict(radar_pane.DEFAULT_METRICS)
-    metrics["worker_id"] = "manager"
-    output = radar_pane.render_radar(metrics, stale=False, worker_id=None)
-    assert "manager" in output
+    metrics["tokens_per_sec"] = 999.0
+    fractions = radar_pane.metrics_to_fractions(metrics)
+    tok_idx = [i for i, spec in enumerate(radar_pane.METRIC_SPECS) if spec[1] == "tokens_per_sec"][0]
+    assert fractions[tok_idx] == 1.0
 
 
-def test_render_radar_unknown_worker_shows_placeholder():
-    output = radar_pane.render_radar(radar_pane.DEFAULT_METRICS, stale=False, worker_id=None)
-    assert "[?]" in output
+# ── build_radar_mesh (mesh3d.py — pure numpy, no termgl needed) ─────────────
+def test_build_radar_mesh_returns_trig3d_dtype_array():
+    fractions = radar_pane.metrics_to_fractions(radar_pane.DEFAULT_METRICS)
+    mesh = build_radar_mesh(fractions)
+    assert mesh.dtype == TRIG3D_DTYPE
+    assert len(mesh) > 0
+
+
+def test_build_radar_mesh_empty_values_returns_empty_mesh():
+    mesh = build_radar_mesh([])
+    assert len(mesh) == 0
+
+
+def test_build_radar_mesh_triangle_count_scales_with_axis_count():
+    mesh6 = build_radar_mesh([0.5] * 6)
+    mesh3 = build_radar_mesh([0.5] * 3)
+    assert len(mesh6) == 2 * len(mesh3)  # 4 triangles/spike, N spikes
 
 
 # ── resolve_metrics_path ─────────────────────────────────────────────────────
