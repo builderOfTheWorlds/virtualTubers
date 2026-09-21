@@ -1,0 +1,19 @@
+id: around-the-campfire
+title: Around the Campfire
+ambient: true
+prompt: 'The party gathers around a crackling campfire, the light casting dancing
+  shadows on the surrounding trees. The night is calm and peaceful, a welcome respite
+  from their recent trials. They take turns sharing stories of their past adventures
+  and reflecting on the journey ahead. The fire''s warmth and the companionship of
+  their fellow adventurers provides a comforting sense of camaraderie amidst the dangers
+  they face.
+
+  '
+lore: []
+source:
+  base_hash: ba0a93cec3c7e4baa8753370c51aa52c870522d0e0a4c032e674073e35faa638
+  version: around-the-campfire@2
+  authored: generated
+  batch: 2.3.ambient.3
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

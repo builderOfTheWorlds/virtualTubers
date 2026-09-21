@@ -1,0 +1,15 @@
+id: notice-board-chatter
+title: Notice Board Chatter
+ambient: true
+prompt: "The party hears snippets of conversation as they approach the crowded notice\
+  \ board in the town square. \n\"Did you hear about the missing child? Poor thing...\"\
+  \n\"I'm telling you, the Emperor is an imposter! Mark my words.\"\n\"Ooh, looks\
+  \ like they're hiring at the tavern again. Maybe I should apply...\"\n"
+lore: []
+source:
+  base_hash: 3dad4373684e986119e9ed0fe1bef7e1cd8b5fe6742355f02f68ad88ad7ef00a
+  version: notice-board-chatter@1
+  authored: generated
+  batch: 2.3.ambient.2
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

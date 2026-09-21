@@ -1,0 +1,69 @@
+03:01:56    INFO ashiorid_week: run_id=ashiorid_week_20260921_030156 model=hermes3:70b
+03:01:56    INFO ashiorid_week: source notes loaded: 124
+03:01:56    INFO ashiorid_week: scale-up ambient batch: 9 explicit refs
+03:01:56    INFO ashiorid_week: === AMBIENT BATCH (filler, independent) ===
+03:01:56    INFO ashiorid_week: [1/9] authoring ambient from Plots/Campaign Revision.md
+03:03:19    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:03:19    INFO ashiorid_week:   -> the-bahadur-arrive | prompt ~33 words
+03:03:19    INFO ashiorid_week: [2/9] authoring ambient from Resources/Downtime Activities.md
+03:07:58    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:07:58 WARNING author_scenes: author_ambient attempt 1 failed: could not parse a scene (id required) from model reply:
+
+```yaml
+id: crafting-downtime
+title: Crafting Downtime
+ambient: true
+prompt: >
+  The party spends a week in town, crafting items and pursuing downtime activities. 
+  The blacksmith hammers away at a suit of plate armor, sparks flying with each strike.
+  The ranger carefully prepares a potion of healing, mixing herbs with precision. 
+  The rogue chats up the locals, gathering information for a potential heist.
+  The wizard pores over ancient tomes, researching obscure magical lore.
+  The paladin volunteers at the local temple, assisting with tasks and chores.
+  The druid tends to the party's s...
+03:12:59    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:12:59    INFO ashiorid_week:   -> crafting-downtime | prompt ~95 words
+03:12:59    INFO ashiorid_week: [3/9] authoring ambient from Resources/Notice Board Posts Generator.md
+03:18:11    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:18:11    INFO ashiorid_week:   -> notice-board-chatter | prompt ~50 words
+03:18:11    INFO ashiorid_week: [4/9] authoring ambient from Resources/Party Kills and XP Tracking.md
+03:22:55    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:22:55 WARNING author_scenes: author_ambient attempt 1 failed: could not parse a scene (id required) from model reply:
+
+id: eerie-undead-encounter
+title: "Eerie Undead Encounter"
+ambient: true
+prompt: |
+  The party, making their way through an ancient crypt, suddenly hears the shuffling of bones and the rustling of tattered cloth. Turning, they see the skeletons and zombies from their earlier battle rising to their feet, as if commanded by an unseen force. The undead stare at the party with empty eye sockets, the air growing cold and heavy with the promise of violence.
+lore: - "Undead creatures in this world can sometimes reanimate after being defeated, if the necromantic energy is strong enough."
+  - "Powerfu...
+03:27:51    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:27:51    INFO ashiorid_week:   -> around-the-campfire | prompt ~65 words
+03:27:51    INFO ashiorid_week: [5/9] authoring ambient from Resources/D&D Shop Catalog.md
+03:32:39    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:32:39    INFO ashiorid_week:   -> dd-shop-ambience | prompt ~39 words
+03:32:39    INFO ashiorid_week: [6/9] authoring ambient from Resources/Character Traits Reference.md
+03:38:02    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:38:02    INFO ashiorid_week:   -> curious-minds | prompt ~45 words
+03:38:02    INFO ashiorid_week: [7/9] authoring ambient from Resources/Downtime Rules.md
+03:44:39    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:44:39    INFO ashiorid_week:   -> crafting-downtime-ambience | prompt ~55 words
+03:44:39    INFO ashiorid_week: [8/9] authoring ambient from unsorted/Welcome to Your Campaign.md
+03:49:31    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:49:31    INFO ashiorid_week:   -> malmont-town-ambience | prompt ~33 words
+03:49:31    INFO ashiorid_week: [9/9] authoring ambient from Spells/Cleric Spells.md
+03:55:01    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+03:55:01    INFO ashiorid_week:   -> cleric-spells-ambient | prompt ~30 words
+03:55:01    INFO ashiorid_week: ambient done: 9 authored, 0 failed
+03:55:01    INFO campaign.pack: loaded campaign pack ashiorid with 110 scenes and 5 cast members
+03:55:01    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 0 warnings
+03:55:01    INFO pack_gate: gate result: 0 error(s), 0 warning(s)
+03:55:01    INFO ashiorid_week: GATE ambient dir: PASS 0 warning(s) | errors=[] warnings=[]
+
+========================================================================
+ASHIORID WEEK BUILD | run_id=ashiorid_week_20260921_030156
+========================================================================
+  SPINE TOTAL: 0 scenes, 0 spoken words (0.0 h at 150wpm)
+  AMBIENT   : 9 definitions, 445 prompt words
+  GATE      : spine=n/a  ambient=PASS
+  STAGED    : /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/ambient_batch4  (NOT promoted — that is the explicit human step)

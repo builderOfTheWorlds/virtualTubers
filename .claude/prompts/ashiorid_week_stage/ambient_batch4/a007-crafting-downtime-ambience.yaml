@@ -1,0 +1,17 @@
+id: crafting-downtime-ambience
+title: Crafting Downtime Ambience
+ambient: true
+prompt: 'The party takes a break from their adventures. Some head to the market  to
+  purchase supplies and equipment. Others seek out quiet spots to practice their crafts
+  - tinkering with gadgets, mixing potions, or meticulously scribing spells onto parchment.
+  The bustle of the city fades into a background hum as they focus on their tasks.
+
+  '
+lore: []
+source:
+  base_hash: 9c794700b390098de306db02a199daf37a46aab0447c681132a3da3d8e7ec6ba
+  version: crafting-downtime-ambience@1
+  authored: generated
+  batch: 2.3.ambient.6
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

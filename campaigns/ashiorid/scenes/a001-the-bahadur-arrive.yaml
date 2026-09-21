@@ -1,0 +1,14 @@
+id: the-bahadur-arrive
+title: The Bahadur Arrive
+ambient: true
+prompt: "The sky darkens as a massive ship emerges from the clouds. \nDescending from\
+  \ the vessel, the Bahadur set foot on Ashiorid's soil for the first time.\nTheir\
+  \ presence is foreboding, their intentions unclear.\n"
+lore: []
+source:
+  base_hash: 389401b890b2c5aa111b86045d277ac8eac9416cb5d53e98d958d671ed714a04
+  version: the-bahadur-arrive@1
+  authored: generated
+  batch: 2.3.ambient.0
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

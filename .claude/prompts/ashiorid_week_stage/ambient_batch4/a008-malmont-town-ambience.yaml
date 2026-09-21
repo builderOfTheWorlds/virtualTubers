@@ -1,0 +1,18 @@
+id: malmont-town-ambience
+title: Malmont Town Ambience
+ambient: true
+prompt: 'The party rests in Malmont, a bustling trade town.
+
+  Colorful banners flap in the breeze. Vendors hawk their wares.
+
+  Townsfolk hurry past on unknown errands, a few casting curious glances at the adventurers.
+
+  '
+lore: []
+source:
+  base_hash: 7dad7f1596c43c4ce8a25517403ef85e15a990e051fdfac1485a63c4312035ae
+  version: malmont-town-ambience@1
+  authored: generated
+  batch: 2.3.ambient.7
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

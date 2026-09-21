@@ -1,0 +1,14 @@
+id: cleric-spells-ambient
+title: Cleric Studies Their Spells
+ambient: true
+prompt: "The cleric takes a moment to study their spellbook, \nquietly muttering the\
+  \ words to a few cantrips and \nfirst-level spells. The pages glow softly as they\
+  \ \npractice the magical incantations.\n"
+lore: []
+source:
+  base_hash: ea9c9a85bfeae89c995d93d860e409c126e0d3085f48bb7dccbdeab07e5d8cad
+  version: cleric-spells-ambient@1
+  authored: generated
+  batch: 2.3.ambient.8
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156

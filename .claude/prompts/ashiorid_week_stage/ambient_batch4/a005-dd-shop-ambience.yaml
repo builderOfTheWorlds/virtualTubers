@@ -1,0 +1,15 @@
+id: dd-shop-ambience
+title: Browsing the D&D Shop Catalog
+ambient: true
+prompt: "The adventurers pause to browse the extensive shop catalog. They discuss\
+  \ the wide variety of items available - from armor and weapons to adventuring gear\
+  \ and special services. Each ponders what might be most useful for their next quest.\
+  \ \n"
+lore: []
+source:
+  base_hash: d6043b0a59ec649e7da1ce7c0fd85b10c19abb6754580b7480efef613a710d4e
+  version: dd-shop-ambience@1
+  authored: generated
+  batch: 2.3.ambient.4
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156
