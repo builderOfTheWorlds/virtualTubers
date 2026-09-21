@@ -7,6 +7,6 @@
 # routing yet; selecting it does nothing.
 # ──────────────────────────────────────────────────────────────────────────────
 type: chat_list
-title: "c"
+title: "chats"
 border_color: white
 command: "python3 /app/chat_list_pane.py"

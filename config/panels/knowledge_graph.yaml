@@ -8,5 +8,9 @@
 # ──────────────────────────────────────────────────────────────────────────────
 type: knowledge_graph
 title: "Knowledge"
-border_color: blue
+# cyan matches the "Message Bus" (kafka_feed) pane's light-blue text — tmux's
+# `select-pane -P fg=<border_color>` sets the pane's default text style, not
+# just the border, so this was rendering as hard-to-read dark blue on the
+# dark-grey xterm background.
+border_color: cyan
 command: "python3 /app/knowledge_graph_pane.py --config {config_path}"

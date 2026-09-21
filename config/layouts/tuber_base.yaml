@@ -31,8 +31,8 @@
 # whole screen. Panes are laid out in list order; each `target` must already
 # be listed.
 #
-# ── Four uneven columns: L(radar/knowledge) ~20%, M(avatar/thinking) ~45%,
-#    C(chat_list) ~5%, R(kafka_feed) ~30% ───────────────────────────────────
+# ── Four uneven columns: L(radar/knowledge) ~20%, M(avatar/thinking) ~60%,
+#    C(chat_list) ~2.8%, R(kafka_feed) ~17.2% ───────────────────────────────
 # Worked math (same percentage-splitting approach as roundtable.yaml's header,
 # generalized to UNEVEN target widths instead of even quarters — each step
 # still derives size_k from "what % of the CURRENT target's width should the
@@ -44,23 +44,24 @@
 #     -> new pane (avatar, carries M+C+R) = 100 * 80/100 = 80% of screen
 #     -> radar_chart (old/target) keeps 100 * 20/100 = 20% of screen  -> L ✓
 #
-#   split 2 (target: avatar, currently 80% wide) size=44
-#     -> new pane (chat_list, carries C+R) = 80 * 44/100 = 35.2% of screen
-#     -> avatar (old/target) keeps 80 * 56/100 = 44.8% of screen      -> M ✓
+#   split 2 (target: avatar, currently 80% wide) size=25
+#     -> new pane (chat_list, carries C+R) = 80 * 25/100 = 20% of screen
+#     -> avatar (old/target) keeps 80 * 75/100 = 60% of screen        -> M ✓
 #
-#   split 3 (target: chat_list, currently 35.2% wide) size=86
-#     -> new pane (kafka_feed) = 35.2 * 86/100 = 30.27% of screen     -> R ✓
-#     -> chat_list (old/target) keeps 35.2 * 14/100 = 4.93% of screen -> C ✓
+#   split 3 (target: chat_list, currently 20% wide) size=86
+#     -> new pane (kafka_feed) = 20 * 86/100 = 17.2% of screen        -> R ✓
+#     -> chat_list (old/target) keeps 20 * 14/100 = 2.8% of screen    -> C ✓
 #
-# Resulting columns, left to right: L=20%, M=44.8%(~45), C=4.93%(~5), R=30.27%
-# (~30) — matches the mock's narrow-left / wide-middle / narrow-"c" /
-# wide-right proportions. Each column pane is then split VERTICALLY (top/
-# bottom) independently, same shrinking-split logic but on that column's own
-# height instead of the screen's width:
+# Resulting columns, left to right: L=20%, M=60%, C=2.8%("chats"), R=17.2%
+# — narrower "chats" column and wider avatar/thinking column than the
+# original mock, per user request. Each column pane is then split VERTICALLY
+# (top/bottom) independently, same shrinking-split logic but on that column's
+# own height instead of the screen's width:
 #
-#   split 4 (target: radar_chart, the L column, full height) size=50
-#     -> new pane (knowledge_graph) = bottom half of L; radar_chart keeps the
-#        top half. Flat 50/50 split — no reason to favor either stat pane.
+#   split 4 (target: radar_chart, the L column, full height) size=70
+#     -> new pane (knowledge_graph) = bottom 70% of L; radar_chart (Stats)
+#        keeps the top 30%. Knowledge needs more room than the small stats
+#        block above it.
 #
 #   split 5 (target: avatar, the M column, full height) size=60
 #     -> new pane (thinking) = bottom 60% of M; avatar keeps the top 40%. The
@@ -81,10 +82,10 @@ panes:
     split: h
     size: 80
 
-  - use: chat_list                      # carves out C+R combined (~35.2%)
+  - use: chat_list                      # carves out C+R combined
     target: avatar
     split: h
-    size: 44
+    size: 25
 
   - use: kafka_feed                     # carves out R (~30.27%); with: sets
     target: chat_list                   # conversation-mode rendering per
@@ -98,7 +99,7 @@ panes:
   - use: knowledge_graph                # bottom of L column; remainder stays
     target: radar_chart                 # radar_chart (top half).
     split: v
-    size: 50
+    size: 70
 
   - use: thinking                       # bottom 60% of M column; remainder
     target: avatar                      # stays avatar (top 40%).

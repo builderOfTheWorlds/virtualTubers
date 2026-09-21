@@ -107,8 +107,8 @@ def test_base_pane_is_radar_chart(built):
 def test_horizontal_splits_carve_four_columns(built):
     """avatar, chat_list, kafka_feed are all horizontal (h) splits chaining off
     the previous column, per the plan's worked percentage math (tuber_base.yaml
-    header): 80 / 44 / 86 shrinking splits of each successively narrower
-    remainder yield ~20/45/5/30 percent columns."""
+    header): 80 / 25 / 86 shrinking splits of each successively narrower
+    remainder yield ~20/60/2.8/17.2 percent columns."""
     by_id = _by_id(built["panes"])
 
     avatar = by_id["avatar"]
@@ -119,7 +119,7 @@ def test_horizontal_splits_carve_four_columns(built):
     chat_list = by_id["chat_list"]
     assert chat_list["split"] == "h"
     assert chat_list["target"] == "avatar"
-    assert chat_list["size"] == 44
+    assert chat_list["size"] == 25
 
     kafka_feed = by_id["kafka_feed"]
     assert kafka_feed["split"] == "h"
@@ -135,7 +135,7 @@ def test_vertical_splits_carve_column_top_bottom_panes(built):
     knowledge_graph = by_id["knowledge_graph"]
     assert knowledge_graph["split"] == "v"
     assert knowledge_graph["target"] == "radar_chart"
-    assert knowledge_graph["size"] == 50
+    assert knowledge_graph["size"] == 70
 
     thinking = by_id["thinking"]
     assert thinking["split"] == "v"
@@ -143,12 +143,12 @@ def test_vertical_splits_carve_column_top_bottom_panes(built):
     assert thinking["size"] == 60
 
 
-def test_chat_list_is_the_narrow_c_column(built):
-    """The narrow 'c' chat-room-name-list column sits between avatar/thinking
-    (middle) and kafka_feed (right), per the mock."""
+def test_chat_list_is_the_narrow_chats_column(built):
+    """The narrow 'chats' chat-room-name-list column sits between
+    avatar/thinking (middle) and kafka_feed (right), per the mock."""
     by_id = _by_id(built["panes"])
     chat_list = by_id["chat_list"]
-    assert chat_list["title"] == "c"
+    assert chat_list["title"] == "chats"
     assert chat_list["target"] == "avatar"
 
 
@@ -181,7 +181,7 @@ def test_knowledge_graph_panel_matches_contract_d_table(built):
     by_id = _by_id(built["panes"])
     pane = by_id["knowledge_graph"]
     assert pane["title"] == "Knowledge"
-    assert pane["border_color"] == "blue"
+    assert pane["border_color"] == "cyan"
     assert "knowledge_graph_pane.py" in pane["command"]
 
 
@@ -196,7 +196,7 @@ def test_thinking_panel_matches_contract_d_table(built):
 def test_chat_list_panel_matches_contract_d_table(built):
     by_id = _by_id(built["panes"])
     pane = by_id["chat_list"]
-    assert pane["title"] == "c"
+    assert pane["title"] == "chats"
     assert pane["border_color"] == "white"
     assert "chat_list_pane.py" in pane["command"]
 
@@ -248,11 +248,11 @@ def test_exact_tmux_command_sequence(built):
         "tmux select-pane -t worker:0.0",
         "tmux split-window -h -t worker:0.0 -p 80",
         "tmux select-pane -t worker:0.1",
-        "tmux split-window -h -t worker:0.1 -p 44",
+        "tmux split-window -h -t worker:0.1 -p 25",
         "tmux select-pane -t worker:0.2",
         "tmux split-window -h -t worker:0.2 -p 86",
         "tmux select-pane -t worker:0.0",
-        "tmux split-window -v -t worker:0.0 -p 50",
+        "tmux split-window -v -t worker:0.0 -p 70",
         "tmux select-pane -t worker:0.2",
         "tmux split-window -v -t worker:0.2 -p 60",
     ]
