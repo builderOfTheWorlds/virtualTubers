@@ -1,0 +1,2093 @@
+{
+  "host_protocol": "ollama_native",
+  "base_url": "http://localhost:11434",
+  "started_at": 1789925082.0974748,
+  "finished_at": 1789932970.114598,
+  "config": {
+    "models": [
+      "hermes3:70b",
+      "qwen3.8:27b",
+      "gemma4:26b",
+      "gemma4:12b-it-q4_K_M",
+      "llama3.1:8b"
+    ],
+    "ctx_k": [
+      8,
+      16
+    ],
+    "think": false,
+    "temperature": 0.7,
+    "concurrency": 2
+  },
+  "host_state_before": {
+    "protocol": "ollama_native",
+    "note": "1 model(s) resident; weights sum = 18.54 GB (KV-cache at real context is extra \u2014 see On a GB10 the CPU and GPU share unified memory; watch free RAM.)",
+    "loaded": [
+      {
+        "name": "qwen3.8:27b",
+        "size_vram": 18542682438,
+        "size_disk": 18542682438,
+        "context_length": 262144,
+        "quantization": "Q4_K_M",
+        "parameter_size": "27.3B",
+        "expires_at": "2026-09-20T13:29:41.949045002-04:00"
+      }
+    ],
+    "metrics": []
+  },
+  "host_state_after": {},
+  "cells": [
+    {
+      "host_protocol": "ollama_native",
+      "model": "hermes3:70b",
+      "ctx_k": 8,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 6707,
+      "content_tokens": 17,
+      "reasoning_tokens": 0,
+      "decode_tps": 3.659811790698594,
+      "prefill_tps": 13.74297769518789,
+      "ttft_s": 488.4702192879995,
+      "total_s": 493.1152780584962,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 6707,
+          "content_tokens": 17,
+          "reasoning_tokens": 0,
+          "ttft_s": 503.1165581969981,
+          "total_s": 507.75441587899695,
+          "content_text": "\nThat sigil... it feels familiar, but I don't know why.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T17:43:10.251576702Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 507753707945,
+            "load_duration": 478280347553,
+            "prompt_eval_count": 6707,
+            "prompt_eval_duration": 24824043000,
+            "eval_count": 17,
+            "eval_duration": 4637800000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 24.824043,
+            "host_decode_s": 4.6378,
+            "host_total_eval_s": 29.461843000000002,
+            "load_duration_s": 478.280347553
+          },
+          "error": null
+        },
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 6707,
+          "content_tokens": 17,
+          "reasoning_tokens": 0,
+          "ttft_s": 473.8238803790009,
+          "total_s": 478.4761402379954,
+          "content_text": "\nThat sigil... it feels familiar, but I can't place it.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T17:51:08.727652139Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 478475148079,
+            "load_duration": 448851935367,
+            "prompt_eval_count": 6707,
+            "prompt_eval_duration": 24960844000,
+            "eval_count": 17,
+            "eval_duration": 4652005000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 24.960844,
+            "host_decode_s": 4.652005,
+            "host_total_eval_s": 29.612849,
+            "load_duration_s": 448.851935367
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "hermes3:70b",
+      "ctx_k": 8,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 6177,
+      "content_tokens": 58,
+      "reasoning_tokens": 0,
+      "decode_tps": 3.5937581011356565,
+      "prefill_tps": 128.31046982284983,
+      "ttft_s": 48.63249054799962,
+      "total_s": 65.10266958749708,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 6177,
+          "content_tokens": 94,
+          "reasoning_tokens": 0,
+          "ttft_s": 53.52127971500158,
+          "total_s": 80.17999997199513,
+          "content_text": "\nThe Begene vault is being repeatedly mentioned,\nYou're right,\nThe repetition seems to be for emphasis or to convey urgency. I'd suggest looking into why this Begene vault is so important to the story or scene you're creating. It could be a key location, contain vital information or items, or be a major plot point. Consider building the scene around revealing more details about the vault and why it's so significant to the characters or story.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T17:52:28.909249694Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 80179162054,
+            "load_duration": 30857154972,
+            "prompt_eval_count": 6177,
+            "prompt_eval_duration": 22651356000,
+            "eval_count": 94,
+            "eval_duration": 26658634000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 22.651356,
+            "host_decode_s": 26.658634,
+            "host_total_eval_s": 49.30999,
+            "load_duration_s": 30.857154972
+          },
+          "error": null
+        },
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 6177,
+          "content_tokens": 23,
+          "reasoning_tokens": 0,
+          "ttft_s": 43.74370138099766,
+          "total_s": 50.02533920299902,
+          "content_text": "\nThe scene is chaotic and repetitive,\nPlayers are stuck in an endless loop\nOf repeated phrases and actions",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T17:53:18.934467553Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 50024503220,
+            "load_duration": 20828326730,
+            "prompt_eval_count": 6177,
+            "prompt_eval_duration": 22902851000,
+            "eval_count": 23,
+            "eval_duration": 6281623000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 22.902851,
+            "host_decode_s": 6.281623,
+            "host_total_eval_s": 29.184473999999998,
+            "load_duration_s": 20.82832673
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "hermes3:70b",
+      "ctx_k": 16,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 13223,
+      "content_tokens": 24,
+      "reasoning_tokens": 0,
+      "decode_tps": 3.3977066675488548,
+      "prefill_tps": 135.88086911475295,
+      "ttft_s": 284.36765869850205,
+      "total_s": 291.57948369099904,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 13223,
+          "content_tokens": 25,
+          "reasoning_tokens": 0,
+          "ttft_s": 53.733222724011284,
+          "total_s": 61.13349570801074,
+          "content_text": "\nThat sigil... I've seen it before, but I can't place where. It feels important, though.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T17:54:21.971696827Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 61132630733,
+            "load_duration": 234847243,
+            "prompt_eval_count": 13223,
+            "prompt_eval_duration": 53475858000,
+            "eval_count": 25,
+            "eval_duration": 7399960000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 53.475858,
+            "host_decode_s": 7.39996,
+            "host_total_eval_s": 60.875818,
+            "load_duration_s": 0.234847243
+          },
+          "error": null
+        },
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 13223,
+          "content_tokens": 24,
+          "reasoning_tokens": 0,
+          "ttft_s": 515.0020946729928,
+          "total_s": 522.0254716739873,
+          "content_text": "\nThat sigil feels familiar. I can't place it, but it feels like it shouldn't be sealed.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T18:03:03.997169765Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 522024222445,
+            "load_duration": 461842798050,
+            "prompt_eval_count": 13223,
+            "prompt_eval_duration": 53135319000,
+            "eval_count": 24,
+            "eval_duration": 7022822000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 53.135319,
+            "host_decode_s": 7.022822,
+            "host_total_eval_s": 60.158141,
+            "load_duration_s": 461.84279805
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "hermes3:70b",
+      "ctx_k": 16,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 12316,
+      "content_tokens": 21,
+      "reasoning_tokens": 0,
+      "decode_tps": 3.4334144207261943,
+      "prefill_tps": 24.017881839245554,
+      "ttft_s": 512.8211027340003,
+      "total_s": 519.0847136719967,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 12316,
+          "content_tokens": 21,
+          "reasoning_tokens": 0,
+          "ttft_s": 508.49468206599704,
+          "total_s": 514.5611122959963,
+          "content_text": "\nThe party has discovered the Begene vault,\nThe party has discovered the Begene vault.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T18:11:38.558235485Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 514559762939,
+            "load_duration": 459919680225,
+            "prompt_eval_count": 12316,
+            "prompt_eval_duration": 48555625000,
+            "eval_count": 21,
+            "eval_duration": 6065653000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 48.555625,
+            "host_decode_s": 6.065653,
+            "host_total_eval_s": 54.621278,
+            "load_duration_s": 459.919680225
+          },
+          "error": null
+        },
+        {
+          "model": "hermes3:70b",
+          "prompt_tokens": 12316,
+          "content_tokens": 22,
+          "reasoning_tokens": 0,
+          "ttft_s": 517.1475234020036,
+          "total_s": 523.6083150479972,
+          "content_text": "\nThe party has discovered a mysterious vault filled with strange artifacts and must decide what to do with them.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "hermes3:70b",
+            "created_at": "2026-09-20T18:20:22.166799733Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 523607252410,
+            "load_duration": 468838019511,
+            "prompt_eval_count": 12316,
+            "prompt_eval_duration": 48292383000,
+            "eval_count": 22,
+            "eval_duration": 6460378000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 48.292383,
+            "host_decode_s": 6.460378,
+            "host_total_eval_s": 54.752761,
+            "load_duration_s": 468.838019511
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "qwen3.8:27b",
+      "ctx_k": 8,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 6703,
+      "content_tokens": 42,
+      "reasoning_tokens": 438,
+      "decode_tps": 2.992084938340142,
+      "prefill_tps": 15.751052566363512,
+      "ttft_s": 425.7809328814983,
+      "total_s": 457.0343518515001,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 6703,
+          "content_tokens": 85,
+          "reasoning_tokens": 365,
+          "ttft_s": 435.50480527100444,
+          "total_s": 463.9130897120049,
+          "content_text": "You all heard it too, right? The breathing under the floor just stopped, and I know that sound the way I know my own name, except I don't, not here, not in this, and the sigil above the latch is cracked in a way that looks like someone broke it from the inside and I need you to listen to me when I say that feels like a thing that already happened to me once.",
+          "reasoning_text": "The GM says: The party stands before the vault door. The sigil above the latch is cracked. Something under the floor has just stopped breathing, and Leena is the only one who heard.\n\nLeena's character: warm, curious, certain of where she comes from (which is wrong). Her magic is innate. When something feels familiar that should not be familiar, she says so out loud.\n\nThe key beats here:\n- The sigil above the latch is cracked\n- Something under the floor just stopped breathing\n- Leena is the only one who heard it\n- The party is debating whether to open the door\n\nLeena's angle: She heard something stop breathing. That's deeply unsettling. And the sigil is cracked \u2014 and it's not in any record. But for Leena, the thing that should feel familiar and shouldn't is the sound of that breathing stopping. It feels like she's heard that before. Like a lullaby ending. Like her own childhood. That's the chip at her certainty.\n\nShe shouldn't be dramatic. She's warm and curious. She'd feel the wrongness of the silence more than the danger. She'd say something that reveals she recognized the sound without being able to explain why.\n\nLet me write one line. No name label, no quotes, no stage directions.\n\nSomething like: \"You all heard it too, right? The breathing under the floor \u2014 it stopped. And I know that sound. I don't know how I know that sound, but I do, and it's not from here.\"\n\nThat's good. It's warm, slightly confused, commits to the scene, and flags the familiarity that shouldn't be familiar. Let me refine it to feel more natural and spoken.",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T18:28:18.890136216Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 463912215857,
+            "load_duration": 280243381,
+            "prompt_eval_count": 6703,
+            "prompt_eval_duration": 12421972000,
+            "eval_count": 450,
+            "eval_duration": 28408030000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 12.421972,
+            "host_decode_s": 28.40803,
+            "host_total_eval_s": 40.830002,
+            "load_duration_s": 0.280243381
+          },
+          "error": null
+        },
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 6703,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 416.05706049199216,
+          "total_s": 450.15561399099533,
+          "content_text": "",
+          "reasoning_text": "The GM's scene direction says:\n- The party stands before the vault door\n- The sigil above the latch is cracked\n- Something under the floor has just stopped breathing\n- Leena is the only one who heard\n\nLeena's character: warm, curious, certain of where she comes from (which is wrong). Her magic is innate. When something feels familiar that should not be familiar, she says so out loud.\n\nThe key beats here:\n1. She heard something stop breathing under the floor. Only she heard it.\n2. The sigil is cracked.\n3. She should react to the stopped breathing \u2014 this is deeply personal, a sensory/magical perception.\n4. When something feels familiar that should NOT be familiar, she says so out loud.\n\nThe stopped breathing under the floor \u2014 this is something she felt with her magic, her innate sense. It's intimate, almost like feeling a heartbeat stop. And the sigil being cracked \u2014 she might find that familiar in a way that unsettles her.\n\nLet me think about what Leena would say. She'd be the one who noticed the breathing stop. She'd be quiet about it at first, then say it. The \"familiar that shouldn't be familiar\" angle \u2014 maybe the way the breathing stopped felt like something she's done before, or the sigil's crack feels like a wound she's seen somewhere. Or the silence after the breathing stopped feels like a silence she knows from her village, from her family's history.\n\nLet me craft one line. It should be:\n- Spoken, natural\n- In character (warm, curious, certain)\n- React to the stopped breathing (she's the only one who heard)\n- Maybe note the familiarity that shouldn't be there\n- No name label, no quotes, no stage directions\n- One line\n\nSomething like: \"It stopped. Under the floor, something was breathing and then it wasn't, and the way it went quiet felt like \u2014 I don't know, like the last exhale before a door shuts in my grandmother's house except I've never been in a house that closed a door like that. And the sigil's cracked, and that crack feels like I've seen it before, which I shouldn't have, because I haven't.\"\n\nThat's a bit long. Let me tighten it. One spoken line \u2014 it can be a full sentence or two, but it should feel like one breath of speech.",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T18:35:49.045684623Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 450154919672,
+            "load_duration": 308392531,
+            "prompt_eval_count": 6703,
+            "prompt_eval_duration": 239850000,
+            "eval_count": 512,
+            "eval_duration": 34098597000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.23985,
+            "host_decode_s": 34.098597,
+            "host_total_eval_s": 34.338446999999995,
+            "load_duration_s": 0.308392531
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "qwen3.8:27b",
+      "ctx_k": 8,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 6179,
+      "content_tokens": 26,
+      "reasoning_tokens": 88,
+      "decode_tps": 3.753485956910751,
+      "prefill_tps": 14.389839298180256,
+      "ttft_s": 429.4094124405019,
+      "total_s": 436.8299504009992,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 6179,
+          "content_tokens": 26,
+          "reasoning_tokens": 109,
+          "ttft_s": 427.42142172300373,
+          "total_s": 436.4121360680001,
+          "content_text": "The Begene vault remains sealed, indifferent to your endless chanting\u2014its oak door neither creaks nor yields.",
+          "reasoning_text": "The user has pasted the same phrase \"the Event the Begene vault\" hundreds of times, then asks me to summarize the state of the scene in one GM line. This appears to be a repetition/spam input. As a GM, I should treat this as the player's action or input and respond in one line. The most reasonable interpretation is that the player is repeatedly chanting or attempting to open/interact with \"the Begene vault\" during \"the Event.\" I'll give a single, evocative GM response.",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T18:43:05.457866226Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 436411404996,
+            "load_duration": 224890811,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 11445118000,
+            "eval_count": 135,
+            "eval_duration": 8990948000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 11.445118,
+            "host_decode_s": 8.990948,
+            "host_total_eval_s": 20.436066,
+            "load_duration_s": 0.224890811
+          },
+          "error": null
+        },
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 6179,
+          "content_tokens": 27,
+          "reasoning_tokens": 67,
+          "ttft_s": 431.3974031580001,
+          "total_s": 437.24776473399834,
+          "content_text": "You stare blankly at the Begene Vault as the words echo meaninglessly in your mind\u2014what do you actually *do*?",
+          "reasoning_text": "The user has repeated \"oak the Event the Begene vault\" hundreds of times. This appears to be a spam/gibberish input. As the GM, I need to respond in one line. The most appropriate response is to acknowledge the repetition without engaging with nonsense, staying in character as a GM.",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T18:50:22.705819408Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 437247117071,
+            "load_duration": 257409962,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 250276000,
+            "eval_count": 94,
+            "eval_duration": 5850305000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.250276,
+            "host_decode_s": 5.850305,
+            "host_total_eval_s": 6.100581,
+            "load_duration_s": 0.257409962
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "qwen3.8:27b",
+      "ctx_k": 16,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 13202,
+      "content_tokens": 0,
+      "reasoning_tokens": 512,
+      "decode_tps": 0.0,
+      "prefill_tps": 30.90000687226859,
+      "ttft_s": 427.3713186889945,
+      "total_s": 461.0614600244953,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 13202,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 434.5986631059932,
+          "total_s": 469.70555377099663,
+          "content_text": "",
+          "reasoning_text": "The GM's direction: The party stands before the vault door. The sigil above the latch is cracked. Something under the floor has just stopped breathing, and Leena is the only one who heard.\n\nKey things to work with:\n- Leena is the only one who heard something stop breathing under the floor\n- The sigil is cracked\n- The party is debating whether to open the door\n- Leena's magic is innate, she doesn't explain it well\n- When something feels familiar that should not be familiar, say so out loud\n- She's warm, curious, certain of where she comes from\n- She should commit to what the GM describes and add her true angle\n\nThe most powerful angle here: She heard something stop breathing. That's visceral, personal, intimate. She's the only one who heard it. She should say something that reveals she heard it, that it felt familiar (something she shouldn't know is familiar), and that her certainty about where she comes from is being chipped away.\n\nShe shouldn't be overly dramatic. She's warm, curious. But this moment is a crack. She heard a breath stop. That's... like hearing someone in your family stop breathing in their sleep and then not start again.\n\nThe \"something feels familiar that should not be familiar\" rule is key here. The sound of something stopping breathing under the floor \u2014 that should feel familiar to her in a way that's wrong.\n\nLet me write one line. No name, no quotes, no stage directions. Just her speaking.\n\nSomething like: \"I heard it stop. Under the floor. And I need you to understand \u2014 I know what that sound is. I've heard it before. And I don't know why that makes my hands want to press flat against the stone like I'm checking for a pulse.\"\n\nThat's good. It's warm, it's personal, it reveals the familiarity that shouldn't be there, it's innate (she doesn't explain the magic, she just reacts), and it chips at her certainty. Let me refine.\n\nActually, let me make it more natural, less expository. She's not a person who over-explains. She'd say it more simply, with a tremor.\n\n\"I heard it. Under the floor. Something was breathing and then it wasn't, and God help me, I know that sound. I've heard it before. And I don't know whose it was, and I don't know why",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T19:05:07.236062913Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 469704782732,
+            "load_duration": 279742087,
+            "prompt_eval_count": 13202,
+            "prompt_eval_duration": 13306926000,
+            "eval_count": 512,
+            "eval_duration": 35106819000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 13.306926,
+            "host_decode_s": 35.106819,
+            "host_total_eval_s": 48.413745000000006,
+            "load_duration_s": 0.279742087
+          },
+          "error": null
+        },
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 13202,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 420.14397427199583,
+          "total_s": 452.417366277994,
+          "content_text": "",
+          "reasoning_text": "Let me think about what Leena would say here.\n\nThe scene: They're before a vault door. The sigil above the latch is cracked. Something under the floor has just stopped breathing, and Leena is the only one who heard it.\n\nThe party is discussing whether to open the door. Vigil says it's a Begene cut. Chadwick can open it. Bob says the sigil isn't in any record he trusts.\n\nLeena's character: warm, curious, certain of where she comes from (which is wrong). Her magic is innate. When something feels familiar that should not be familiar, she says so out loud.\n\nThe key moment: something under the floor just stopped breathing, and she's the only one who heard it. That's a huge sensory moment for her. She's the only one who perceived it. The sigil is cracked. The door has not opened since the Event closed behind the Bahadur. The vault has survived the last three openings intact, though each opener did not.\n\nLeena would feel the stopped breathing. That's deeply personal to her \u2014 she heard it, she felt it, and no one else did. That's a moment of isolation and also of something being deeply familiar in a way that shouldn't be. The sigil is cracked \u2014 and she might feel a recognition in the crack, in the shape of it, that she can't place but that pulls at her.\n\nShe should say something that:\n- Acknowledges the stopped breathing (she's the only one who heard it)\n- Feels the unfamiliarity/familiarity tension\n- Is warm but shaken\n- Doesn't explain her magic well\n- Commits to what the GM described\n- Is one spoken line\n\nLet me draft:\n\n\"I heard it stop. Under the floor \u2014 it was breathing, and then it wasn't, and I felt it go the way you feel a candle go out in a room where you're the only one still awake. And this sigil \u2014 the crack in it \u2014 I know that crack. I've seen it before. I don't know where. I don't know how I know it, but I do, and that's the part that's making my hands shake.\"\n\nThat's good but maybe too long. Let me tighten it. Also, \"I don't know where\" is very Leena \u2014 she's certain of where she comes from, but this is something she can't place. The familiarity that shouldn't",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T19:12:39.653363463Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 452416261958,
+            "load_duration": 287912448,
+            "prompt_eval_count": 13202,
+            "prompt_eval_duration": 269225000,
+            "eval_count": 512,
+            "eval_duration": 32272993000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.269225,
+            "host_decode_s": 32.272993,
+            "host_total_eval_s": 32.542218,
+            "load_duration_s": 0.287912448
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "qwen3.8:27b",
+      "ctx_k": 16,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 12318,
+      "content_tokens": 29,
+      "reasoning_tokens": 69,
+      "decode_tps": 4.502461093511776,
+      "prefill_tps": 27.034386003627272,
+      "ttft_s": 457.08320141050353,
+      "total_s": 463.71720926299895,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 12318,
+          "content_tokens": 26,
+          "reasoning_tokens": 54,
+          "ttft_s": 482.7498689680069,
+          "total_s": 487.8709274940047,
+          "content_text": "The air is thick with a meaningless, looping incantation that dissolves into static before it can mean anything.",
+          "reasoning_text": "The user has repeated \"oak the Event the Begene vault\" hundreds of times. This appears to be a spam/glitch input with no coherent narrative content. As the GM, I need to respond in one line acknowledging this nonsensical, repetitive input.",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T19:20:47.524384958Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 487870170616,
+            "load_duration": 250361508,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 12504996000,
+            "eval_count": 80,
+            "eval_duration": 5121105000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 12.504996,
+            "host_decode_s": 5.121105,
+            "host_total_eval_s": 17.626101,
+            "load_duration_s": 0.250361508
+          },
+          "error": null
+        },
+        {
+          "model": "qwen3.8:27b",
+          "prompt_tokens": 12318,
+          "content_tokens": 32,
+          "reasoning_tokens": 85,
+          "ttft_s": 431.41653385300015,
+          "total_s": 439.5634910319932,
+          "content_text": "You stand before the Begene Vault, chanting \"oak the Event\" into the void, and the ancient doors remain stubbornly, unimpressedly shut.",
+          "reasoning_text": "The user has repeated \"oak the Event the Begene vault\" hundreds of times and then asks me to summarize the state of this scene in one GM line. This appears to be a spam/glitch input. As the GM, I should acknowledge what happened in a single line - essentially that the player has been repeating a nonsensical phrase, and I should respond as a game master would.",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "qwen3.8:27b",
+            "created_at": "2026-09-20T19:28:07.088011221Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 439562580648,
+            "load_duration": 260423619,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 271776000,
+            "eval_count": 117,
+            "eval_duration": 8147257000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.271776,
+            "host_decode_s": 8.147257,
+            "host_total_eval_s": 8.419032999999999,
+            "load_duration_s": 0.260423619
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:26b",
+      "ctx_k": 8,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 6545,
+      "content_tokens": 0,
+      "reasoning_tokens": 512,
+      "decode_tps": 0.0,
+      "prefill_tps": 4622.772096375893,
+      "ttft_s": 3.482876567999483,
+      "total_s": 33.44512015150394,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 6545,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 6.166030089996639,
+          "total_s": 36.81107726499613,
+          "content_text": "",
+          "reasoning_text": "Leena, human sorcerer. Warm, curious, certain of her origins (though it's wrong). Magic is innate and hard to explain.\nThe party is at the vault door. The sigil is cracked. Something under the floor *just* stopped breathing, and only Leena heard it.\nThe vault (Vault of the Broken Sigil) is old, heavy, and mysterious. The sigil is broken/cracked.\nMust be exactly one spoken line. No name label. No quotation marks. No stage directions. No meta. Commit to the GM's direction (the silence/death under the floor) and add Leena's angle. Use the \"something feels familiar\" prompt if appropriate.\n\n    *   *The GM says:* Something under the floor has just stopped breathing, and Le/Leena is the only one who heard.\n    *   *The context:* The party is debating whether to open the vault.\n    *   *Leena's reaction:* She has just experienced a cessation of life/breath right beneath her feet. This is unsettling. She might feel a connection or a sense of dread, or perhaps a sense of familiarity with this kind of \"silence.\"\n\n    *   *Option 1:* Something just died under our feet.\n    *   *Option 2:* Be careful, the ground feels... empty now, like a breath was just taken away.\n    *   *Option 3:* It's too quiet, like the floor just forgot how to breathe.\n    *   *Option 4:* I think something under us just stopped breathing, and it felt... strangely like home. (Leena is certain of her origins, but the prompt says \"When something feels familiar that should not be familiar, say so out loud.\")\n\n    *   The GM direction: \"Something under the floor has just stopped breathing, and Leena is the only one who heard.\"\n    *   The character's reaction to the *silence* or the *death*.\n    *   The \"familiar\" instruction: \"When something feels familiar that should not be familiar, say so out loud.\"\n\n    *   *Drafting the line:*\n    *   \"The floor just went silent, like a breath was taken away, and it felt... strangely familiar.\"\n    *   \"Something under the stone just stopped breathing, and the silence feels far too much like the quiet in my village.\"",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:28:59.114994679Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 36810081811,
+            "load_duration": 519300099,
+            "prompt_eval_count": 6545,
+            "prompt_eval_duration": 5372455000,
+            "eval_count": 512,
+            "eval_duration": 30866027000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 5.372455,
+            "host_decode_s": 30.866027,
+            "host_total_eval_s": 36.238482,
+            "load_duration_s": 0.519300099
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 6545,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 0.7997230460023275,
+          "total_s": 30.079163038011757,
+          "content_text": "",
+          "reasoning_text": "Leena, human sorcerer.\nWarm, curious, certain of her origins (though this is being challenged), magic is innate/unexplained.\n\"When something feels familiar that should not be familiar, say so out loud.\"\nThe party is at a vault door with a cracked sigil. Something under the floor just stopped breathing, and *only* Leena heard it.\nThe vault is the \"Vault of the Broken Sigil\". The sigil is cracked.\n\n    *   Directly address the death/silence she heard.\n    *   Incorporate the \"familiarity\" aspect if possible (though the prompt says *if* it feels familiar). Let's see... the silence or the feeling of the death might feel familiar if it relates to her lost home/nature.\n    *   The GM's direction: \"Something under the floor has just stopped breathing, and Leena is the only one who heard.\"\n    *   The sigil is cracked.\n    *   The party is debating whether to open it.\n\n    *   *Option 1 (Fear/Warning):* Something just died under our feet.\n    *   *Option 2 (The \"Familiar\" angle):* That silence... it sounds just like the quiet in the village after the wind dies down.\n    *   *Option 3 (Focusing on the death):* It doesn't matter if we open it, because something just stopped breathing right beneath us.\n\n    *   Leena is warm and curious, but the death is a heavy event.\n    *   She heard the breath stop.\n    *   The prompt says \"When something feels familiar that should not be familiar, say so out loud.\" The death of something under the floor might not be \"familiar\" in a way that breaks her certainty, but the *feeling* of the silence might be.\n    *   Wait, the instruction says: \"Something under the floor has just stopped breathing, and Leena is the only one who heard.\"\n    *   If I want to use the \"familiar\" rule, I could say the silence is familiar. Or I could just report the event.\n    *   Let's go with reporting the event because it's a sudden, jarring change.\n\n    *   \"Wait, did you hear that? Something just stopped breathing under the floor.\"\n    *   \"There's a heavy silence now, like",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:29:29.193997541Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 30078239727,
+            "load_duration": 547940698,
+            "prompt_eval_count": 6545,
+            "prompt_eval_duration": 118064000,
+            "eval_count": 512,
+            "eval_duration": 29371456000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.118064,
+            "host_decode_s": 29.371456,
+            "host_total_eval_s": 29.48952,
+            "load_duration_s": 0.547940698
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:26b",
+      "ctx_k": 8,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 6179,
+      "content_tokens": 0,
+      "reasoning_tokens": 256,
+      "decode_tps": 0.0,
+      "prefill_tps": 5305.728084779074,
+      "ttft_s": 2.8241390005059657,
+      "total_s": 9.706928866500675,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 6179,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 4.989039904001402,
+          "total_s": 11.89506792499742,
+          "content_text": "",
+          "reasoning_text": "*   Input: A highly repetitive, nonsensical, and-spammy string: \"oak the Event the Begene vault...\" repeated hundreds of times.\n    *   Instruction: \"Summarize the state of this scene in one GM line.\"\n    *   Constraint: \"Reply in one line.\"\n\n    *   The input is essentially \"noise\" or \"spam\".\n    *   There is no coherent narrative, setting, or character action present in the text.\n    *   The text is a glitch-like repetition of a specific phrase.\n\n    *   As a GM (Game Master), my role is to interpret the state of the game.\n    *   Since the input is a broken, repetitive loop, the \"scene\" is one of chaos, a glitch in reality, a hypnotic chant, or an overwhelming sensory overload.\n    *   I need to provide a single-line summary that acknowledges this-repetition/chaos without breaking character or being overly meta (though a meta-commentary on the \"glitch\" is also a valid GM response).\n\n    *   *Option 1 (Literal/Meta):* The reality of the game world is fracturing into a repetitive, nonsensical loop.\n",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:29:41.089614921Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "\n"
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 11894084694,
+            "load_duration": 558098699,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 3774331000,
+            "eval_count": 256,
+            "eval_duration": 6988595000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 3.774331,
+            "host_decode_s": 6.988595,
+            "host_total_eval_s": 10.762926,
+            "load_duration_s": 0.558098699
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 6179,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 0.6592380970105296,
+          "total_s": 7.51878980800393,
+          "content_text": "",
+          "reasoning_text": "*   Input: A massive repetition of the phrase \"oak the Event the Begene vault\".\n    *   Instruction: \"Summarize the state of this scene in one GM line.\"\n    *   Constraint: \"Reply in one line.\"\n\n    *   The input is clearly spam/glitch/repetition.\n    *   It contains no narrative context, characters, or settings other than the repeated phrase.\n    *   The phrase itself (\"oak the Event the Begene vault\") is nonsensical/gibberical.\n\n    *   As a GM, I need to interpret this \"scene\" (which is just repetitive noise).\n    *   Option A: Treat it as a glitch in reality/the universe.\n    *   Option B: Treat it as a hypnotic/looping spell or an infinite corridor.\n    *   Option C: Acknowledge the repetitive nature as a breakdown of the game world.\n\n    *   *Draft 1:* The world is stuck in an infinite, nonsensical loop of repeating phrases.\n    *   *Draft 2:* Reality begins to fracture as a single, incomprehensible mantra echoes endlessly through the void.\n    *   *Draft 3:* An",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:29:48.608520185Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 7518168705,
+            "load_duration": 429475305,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 113200000,
+            "eval_count": 256,
+            "eval_duration": 6945407000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.1132,
+            "host_decode_s": 6.945407,
+            "host_total_eval_s": 7.058607,
+            "load_duration_s": 0.429475305
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:26b",
+      "ctx_k": 16,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 12893,
+      "content_tokens": 0,
+      "reasoning_tokens": 512,
+      "decode_tps": 0.0,
+      "prefill_tps": 10462.892386458547,
+      "ttft_s": 2.746393341498333,
+      "total_s": 17.161039470505784,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 12893,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 4.785610523991636,
+          "total_s": 19.19574695600022,
+          "content_text": "",
+          "reasoning_text": "Leena, human sorcerer. Warm, curious, certain of her origins (which is wrong). Magic is innate/unexplained.\nThe party is at a vault door. The sigil is cracked. Something under the floor just stopped breathing, and *only* Leena heard it.\nThe sigil is above the latch. Something under the floor stopped breathing.\n\n        *   The Vault of the Broken Sigil.\n        *   The Broken Sigil.\n        *   The Begene vault/program.\n        *   The \"weight\" and \"dust\" motifs.\n        *   The \"event\" and \"Bahadur\" motifs.\n        *   \"Something feels familiar that should not be familiar\" -> Leena must say this out loud if it happens.\n        *   Leena's magic is innate.\n\n    *   The party is debating whether to open the door.\n    *   Leena has a sensory experience: she heard a breath stop under the floor.\n    *   She needs to react to the silence/death she just perceived.\n    *   Since the prompt says \"When something feels familiar that should not be familiar, say so out loud,\" I should check if the death/silence feels familiar.\n    *   The death under the floor is a sudden change. It's a new, unsettling sensation.\n    *   The sigil being cracked/broken is part of the \"Vault of the Broken Sigil.\"\n\n    *   Option 1: \"Did you all hear that? Something just went silent beneath our feet.\" (A bit generic).\n    *   Option 2: \"The air just went cold... like a light went out under the stone.\" (Referencing the \"light no one believes was natural\" lore).\n    *   Option lar 3: \"It\u2019s too quiet now, like something under the floor just stopped breathing.\" (Directly addressing the GM's direction).\n    *   Option 4: \"The silence under the floor... it feels so heavy, like the weight of the vault itself just settled.\" (Referencing the \"weight\" lore).\n\n    *   The GM says: \"Something under the floor has just stopped breathing, and Leena is the only one who heard.\"\n    *   Leena's reaction should be the realization of this specific event.\n    *   Does it feel familiar? The *breath* stopping",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:30:08.562594272Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 19194657694,
+            "load_duration": 358129178,
+            "prompt_eval_count": 12893,
+            "prompt_eval_duration": 4178371000,
+            "eval_count": 512,
+            "eval_duration": 14497972000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 4.178371,
+            "host_decode_s": 14.497972,
+            "host_total_eval_s": 18.676343000000003,
+            "load_duration_s": 0.358129178
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 12893,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 0.7071761590050301,
+          "total_s": 15.126331985011348,
+          "content_text": "",
+          "reasoning_text": "Leena, human sorcerer.\nWarm, curious, certain of her origins (which is wrong). Magic is innate, not studied, hard to explain.\nThe party is at a vault door. The sigil is cracked. Something under the floor just stopped breathing, and Leena is the/the only one who heard it.\n\"When something feels familiar that should not be familiar, say so out loud.\"\nExactly one spoken line, no name label, no quotation marks, no stage directions. No meta-talk.\n\n    *   The sigil is cracked.\n    *   Something under the floor just stopped breathing.\n    *   Leena heard it.\n    *   The party is debating opening the door.\n\n    *   The feeling of the \"death\" or the \"stop\" in breathing.\n    *   The cracked sigil might feel \"familiar\" in a way that breaks her certainty.\n    *   The silence or the sudden absence of sound/breath.\n\n    *   *Draft 1:* I heard something die under us just now.\n    *   *Draft 2:* The breathing under the floor... it just stopped, and it felt so much like the silence back home. (A bit too much exposition).\n    *   *Draft 3:* Something just stopped breathing beneath our feet, and it felt... strangely familiar. (Hits the \"say it out loud\" instruction).\n    *   *Draft 4:* There was a breath under the floor, but it just went away, and that silence felt so much like the end of a dream.\n    *   *Draft 5:* Something beneath us just stopped breathing, and the way it went quiet... it felt exactly like the silence in the village after a storm. (Connecting to her background/certainty).\n\n    *   She shouldn't explain the magic, but she *should* mention the familiarity.\n    *   The \"something under the floor stopped breathing\" is the core event.\n    *   The \"familiarity\" is the character beat.\n\n    *   *Option A:* Something just stopped breathing under the floor, and that sudden silence felt so much like home.\n    *   *Option B:* Did you hear that, the breathing under the floor just stopped, and it felt... it felt like the stillness in my village.\n\n    Let's go with something that highlights the suddenness and the unsettling familiarity.\n\n",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:30:23.688910912Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "\n\n"
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 15125172946,
+            "load_duration": 412294752,
+            "prompt_eval_count": 12893,
+            "prompt_eval_duration": 132090000,
+            "eval_count": 512,
+            "eval_duration": 14512533000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.13209,
+            "host_decode_s": 14.512533,
+            "host_total_eval_s": 14.644623,
+            "load_duration_s": 0.412294752
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:26b",
+      "ctx_k": 16,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 12318,
+      "content_tokens": 0,
+      "reasoning_tokens": 256,
+      "decode_tps": 0.0,
+      "prefill_tps": 9768.583838662442,
+      "ttft_s": 2.8661356110023917,
+      "total_s": 10.031106597496546,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 12318,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 5.011034300012398,
+          "total_s": 12.182054712000536,
+          "content_text": "",
+          "reasoning_text": "*   Input: A massive repetition of the phrase \"oak the Event the Begene vault\".\n    *   Constraint: \"Reply in one line.\"\n    *   Role: \"You are the GM.\"\n    *   Task: \"Summarize the state of this scene in one GM line.\"\n\n    *   The phrase \"oak the Event the Begene vault\" is repeated hundreds/thousands of times.\n    *   \"Oak\" could be a typo for \"Lock\" or part of a ritualistic/glitched text.\n    *   \"Event\" and \"Begene vault\" suggest a setting involving a vault and a specific event.\n    *   The repetition itself represents a state of madness, a loop, a glitch, or a profound, rhythmic obsession.\n\n    *   *Option 1 (Literal/Glitch):* The reality of the Begene vault is fracturing into an endless, repetitive loop.\n    *   *Option 2 (Narrative/Atmospheric):* An obsessive, rhythmic chanting echoes endlessly through the halls of the Begene vault.\n    *   *Option 3 (Abstract):* The very fabric of existence has become trapped in a single, stuttering moment within the",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:30:35.87129452Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 12181076970,
+            "load_duration": 454085543,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 3895724000,
+            "eval_count": 256,
+            "eval_duration": 7262938000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 3.895724,
+            "host_decode_s": 7.262938,
+            "host_total_eval_s": 11.158662,
+            "load_duration_s": 0.454085543
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:26b",
+          "prompt_tokens": 12318,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 0.7212369219923858,
+          "total_s": 7.880158482992556,
+          "content_text": "",
+          "reasoning_text": "*   Input: A massive, repetitive string of \"oak the Event the Begene vault\".\n    *   Constraint: \"Reply in one line.\"\n    *   Role: \"GM\" (Game Master).\n    *   Task: \"Summarize the state of this scene in one GM line.\"\n\n    *   The phrase \"oak the Event the Begene vault\" is repeated hundreds/thousands of times.\n    *   The content is nonsensical/repetitive.\n    /\n    *   In a gaming context, such-like input usually represents:\n        *   A glitch in the matrix/reality.\n        *   A magical loop.\n        *   A consciousness-erasing spell.\n        *   A broken record/cacophony.\n        *   An overwhelming, repetitive environmental phenomena.\n\n    *   *Option 1 (Literal/Surreal):* The reality of the vault begins to fracture under the weight of an infinite, rhythmic echo.\n    *   *Option 2 (Narrative/Action):* A deafening, rhythmic chant of \"oak the Event the Begene vault\" pulses through the air, trapping you in a temporal loop.\n    *   *",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:26b",
+            "created_at": "2026-09-20T19:30:43.751535754Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 7879253187,
+            "load_duration": 428154984,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 155417000,
+            "eval_count": 256,
+            "eval_duration": 7238331000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.155417,
+            "host_decode_s": 7.238331,
+            "host_total_eval_s": 7.3937479999999995,
+            "load_duration_s": 0.428154984
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:12b-it-q4_K_M",
+      "ctx_k": 8,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 6545,
+      "content_tokens": 0,
+      "reasoning_tokens": 512,
+      "decode_tps": 0.0,
+      "prefill_tps": 4800.675087055008,
+      "ttft_s": 3.1874537740077358,
+      "total_s": 35.15177905400196,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 6545,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 5.598728688011761,
+          "total_s": 37.63718338300532,
+          "content_text": "",
+          "reasoning_text": "*   Character: Leena, human sorcerer.\n    *   Backstory: Grew up in a hidden village in a pocket universe, feels a strong sense of belonging.\n    *   Personality: Warm, curious, certain (but her certainty is flawed).\n    *   Magic: Innate, not explained well.\n    *   Special Rule: If something feels \"familiar that should not be familiar,\" say it out loud.\n    *   Constraint: Exactly one spoken line, no name label, no quotes, no stage directions.\n\n    *   Scene: Party is before a vault door. Sigil is cracked. Something under the floor stopped breathing (only Leena heard).\n    *   Context: The sigil is \"not in any record\" (Sodacan_bob), \"Begene cut\" (Vigil).\n    *   Lore: \"Vault of the Broken Sigil\" is a thing of long standing. \"The Broken Sigil\" is a thing of long standing. \"The door home\" is a thing of long standing. \"The microfracture\" is a thing of long standing.\n\n    *   \"Something under the floor has just stopped breathing, and Leena is the only one who heard.\" -> This implies a psychic or somatic connection to the ground or the \"door home\" or the \"microfracture\".\n    *   The \"Broken Sigil\" and \"Vault of the Broken Sigil\" are mentioned in lore.\n    *   Leena's \"home\" feeling: She believes she is from a village that's been there for hundreds of years. The \"door home\" being a thing of long standing might feel familiar to her.\n\n    *   The fact that she heard something *stop* breathing suggests a transition or a release of tension.\n    *   The sigil is cracked.\n    *   She needs to react to the *feeling* of the room/door.\n    *   Is it familiar? The vault? The sigil? The \"breath\" of the earth?\n    *   \"Something feels familiar that should not be familiar, say so out loud.\"\n\n    *   *Option 1:* I can hear it... the ground just let out a breath, like it's finally letting us in.\n    *   *Option 2:* That sigil... it feels like something I've seen in my dreams, something from home. (Wait",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:31:29.297209512Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 37636402088,
+            "load_duration": 348961604,
+            "prompt_eval_count": 6545,
+            "prompt_eval_duration": 5021203000,
+            "eval_count": 512,
+            "eval_duration": 32223971000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 5.021203,
+            "host_decode_s": 32.223971,
+            "host_total_eval_s": 37.245174,
+            "load_duration_s": 0.348961604
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 6545,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 0.7761788600037107,
+          "total_s": 32.666374724998605,
+          "content_text": "",
+          "reasoning_text": "*   Name: Leena (sorcerer).\n    *   Background: Grew up in a hidden village in a pocket universe, family history goes back hundreds of years.\n    *   Traits: Warm, curious, certain of her origins (but this certainty is wrong).\n    *   Magic: Innate, not studied.\n    *   Key Instruction: If something feels familiar that shouldn't be, say so out loud.\n    *   Constraint: Exactly one spoken line, no name label, no quotation marks, no stage directions.\n\n    *   Location: Before a vault door.\n    *   Sign: A cracked sigil above the latch.\n    *   Event: Something under the floor just stopped breathing (only Leena heard it).\n    *   Lore context: \"Vault of the Broken Sigil\" is a thing of long standing. \"The door home\" is a thing of long standing. \"The Begene vault\" is a thing of long standing.\n\n    *   Vigil: Notes it's a Begene cut.\n    *   Chadwick: Can open it.\n    *   Sodacan_bob: Warns against the sigil.\n\n    *   Leena heard something \"stop breathing\" under the floor. This is a visceral, magical sensation.\n    *   The vault is the \"Vault of the Broken Sigil\" or related to the \"door home\".\n    *   The \"sigil\" is \"the Broken Sigil\".\n    *   The feeling of something \"stopping\" might feel familiar to her because of her \"hidden village\" upbringing, but it's actually a resonance with the ancient artifacts.\n    *   She needs to react to the fact that something *just* stopped breathing. This is a moment of tension.\n\n    *   *Option 1:* I heard it... something deep down just took its last breath. (A bit too literal).\n    *   *Option 2:* The stone is still, but it feels like it just lost a heartbeat. (A bit poetic).\n    *   *Option 3:* It stopped... the pulse beneath us just went silent. (Stronger).\n    *   *Option 4:* It just stopped breathing, and it feels like a door finally closing. (Connects to \"door home\").\n    *   *Option 5:* Something beneath us just stopped breathing, and the silence it",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:32:01.963624924Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 32665407174,
+            "load_duration": 335688870,
+            "prompt_eval_count": 6545,
+            "prompt_eval_duration": 226031000,
+            "eval_count": 512,
+            "eval_duration": 32075417000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.226031,
+            "host_decode_s": 32.075417,
+            "host_total_eval_s": 32.301448,
+            "load_duration_s": 0.33568887
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:12b-it-q4_K_M",
+      "ctx_k": 8,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 6179,
+      "content_tokens": 0,
+      "reasoning_tokens": 256,
+      "decode_tps": 0.0,
+      "prefill_tps": 4447.544110466613,
+      "ttft_s": 3.2737287919953815,
+      "total_s": 19.064496272003453,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 6179,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 5.757493865996366,
+          "total_s": 21.525186522005242,
+          "content_text": "",
+          "reasoning_text": "*   Input: A massive repetition of the phrase \"oak the Event the Begene vault\".\n    *   Role: GM (Game Master).\n    *   Constraint: Reply in one line.\n    *   Task: Summarize the state of this scene.\n\n    *   The phrase is \"oak the Event the Begene vault\".\n    *   \"Oak\" could mean a tree, or a typo for \"Open\" or \"Ock\" (rare).\n    *   \"Begene\" might be a misspelling of \"Begone\", \"Begin\", or a specific fictional location.\n    *   The sheer repetition suggests a glitch, a ritualistic incantation, a corrupted data stream, or a magical surge.\n\n    *   *Option 1 (Literal):* You stand before a massive, repeating psychic echo of the \"Begene Vault\" and the \"Event.\"\n    *   *Option 2 (Atmospheric/Mystical):* The air vibrates with a repetitive, haunting chant echoing from the depths of the Begene vault.\n    *   *Option 3 (Glitch/Meta):* The reality around you fractures as the words \"oak the Event the Begene vault\" loop",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:32:23.489442502Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 21524548796,
+            "load_duration": 363732079,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 4833378000,
+            "eval_count": 256,
+            "eval_duration": 15966545000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 4.833378,
+            "host_decode_s": 15.966545,
+            "host_total_eval_s": 20.799923,
+            "load_duration_s": 0.363732079
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 6179,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 0.7899637179943966,
+          "total_s": 16.603806022001663,
+          "content_text": "",
+          "reasoning_text": "*   The user's input is a massive repetition of \"oak the Event the Begene vault\".\n    *   The system prompt says: \"You are the GM. Reply in one line.\"\n    *   The user's prompt is extremely long and repetitive, likely a test of the \"one line\" constraint or a way to see how the AI handles repetitive/nonsense input.\n\n    *   \"oak the Event the Begene vault\" - This sounds like a fantasy or RPG setting (Oak, Event, Begene Vault).\n    *   The repetition suggests a ritual, a glitch, or a heavy emphasis on this specific location/object.\n\n    *   The user wants me to act as a Game Master (GM).\n    *   The user wants a one-line summary of the scene.\n\n    *   *Option 1 (Literal):* You stand before the entrance of the Begene Vault, where the air hums with an ancient, repetitive energy.\n    *   *Option 2 (Abstract):* The echoes of the Begene Vault resonate through your mind like a haunting, rhythmic chant.\n    *   *Option 3 (Reactionary):* You find yourself standing before the Beg",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:32:40.093214588Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 16602932584,
+            "load_duration": 335174693,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 231765000,
+            "eval_count": 256,
+            "eval_duration": 15998922000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.231765,
+            "host_decode_s": 15.998922,
+            "host_total_eval_s": 16.230687,
+            "load_duration_s": 0.335174693
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:12b-it-q4_K_M",
+      "ctx_k": 16,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 12893,
+      "content_tokens": 0,
+      "reasoning_tokens": 512,
+      "decode_tps": 0.0,
+      "prefill_tps": 8731.711678221287,
+      "ttft_s": 4.20940930100187,
+      "total_s": 36.38582859249436,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 12893,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 7.601109645009274,
+          "total_s": 39.707851678002044,
+          "content_text": "",
+          "reasoning_text": "*   Character: Leena, human sorcerer.\n    *   Traits: Warm, curious, certain of her origins (which are actually wrong).\n    *   Magic Type: Innate, not studied (doesn't explain it well).\n    *   Rule: If something feels familiar but shouldn't be, say so out loud.\n    *   Constraint: Exactly one spoken line, no name label, no quotation marks, no stage directions.\n\n    *   Setting: Standing before a vault door with a cracked sigil.\n    *   Key Detail: Something under the floor just *stopped* breathing, and Leena is the only one who heard it.\n    *   Lore context: The \"Vault of the Broken Sigil\" and \"Begene vault\" are things of great age. The sigil is \"the Broken Sigil\".\n    *   Context from others: Vigil mentions a \"Begene cut\". Chadwick wants to open it. Sodacan_bob warns about the sigil.\n\n    *   The \"something under the floor\" stopped breathing. This is a moment of high tension.\n    *   Leena's magic is innate. She feels things.\n    *   The sigil is \"The Broken Sigil\".\n    *   The prompt says: \"When something feels familiar that should not be familiar, say so out loud.\"\n\n    *   The \"something\" that stopped breathing is likely something ancient and powerful.\n    *   Leena heard it stop. It might feel \"wrong\" or \"familiar\" in a way that unnerves her.\n    *   The sigil is \"broken\" and the \"door home\" is a concept mentioned in the lore.\n    *   The prompt says: \"something under the floor has just stopped breathing, and Leena is the only one who heard.\"\n\n    *   *Option 1 (Focus on the breathing):* Did you hear that? It just... stopped.\n    *   *Option 2 (Focus on the familiarity):* That sigil... it feels like something I've seen in my dreams, but I shouldn't know what it is.\n    *   *Option 3 (Combining both):* Something just stopped breathing beneath us, and the sigil... it feels hauntingly familiar.\n    *   *Option 4 (Reaction to the \"stopped breathing\" specifically):* It just stopped. Something deep down stopped",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:33:20.761642197Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 39707096623,
+            "load_duration": 377484123,
+            "prompt_eval_count": 12893,
+            "prompt_eval_duration": 6858479000,
+            "eval_count": 512,
+            "eval_duration": 32288770000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 6.858479,
+            "host_decode_s": 32.28877,
+            "host_total_eval_s": 39.147249,
+            "load_duration_s": 0.377484123
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 12893,
+          "content_tokens": 0,
+          "reasoning_tokens": 512,
+          "ttft_s": 0.8177089569944656,
+          "total_s": 33.06380550698668,
+          "content_text": "",
+          "reasoning_text": "Leena (human sorcerer, innate magic, warm, curious, certain of her heritage but actually from a pocket universe).\nA vault door with a cracked sigil. Something underground stopped breathing (only Leena heard it).\nThe GM says the party is at the vault door. The sigil is cracked. Something under the floor stopped breathing.\nThe GM's prompt is the \"Scene Direction\". The transcript shows other characters debating the door.\nThe vault/sigil/door are \"things of such long standing that its name has outlived the people who named it.\" It is \"the Vault of the Broken Sigil.\"\n        *   The sigil is \"the Broken Sigil\".\n        *   \"the door home\" is a thing of long standing.\n        *   \"the microfracture\" is a thing of long standing.\n        *   \"the anchor line\" is something that was broken.\n        *   The list shows many items (Ashiorid, Malmont, etc.) that were \"cut into the stone by hands that are now dust\" and \"bore, in the days before the sealing, a light no one now believes was natural.\"\n        *   Crucially: \"the door home\" is a thing of such long standing.\n\n    *   Leena is \"warm, curious, and completely certain of where she comes from.\"\n    *   If something feels \"familiar that should not be familiar,\" she must say so out loud.\n    *   The sigil is \"the Broken Sigil.\"\n    *   The door is \"the door home\" (from the lore).\n    *   The feeling of something \"stopping breathing\" under the floor (death/stasis/ancientness).\n\n    *   The vault door is \"the door home\" (from lore).\n    *   The sigil is \"the Broken Sigil\".\n    *   The fact that it's \"cracked\" and \"stopped breathing\" suggests a transition or a change in state.\n    *   Leena's inner feeling: It feels like home, or something familiar from her \"home\" in the pocket universe.\n    *   \"The door home\" is a specific and very significant lore entry.\n\n    *   *Draft 1:* I can hear the silence of it, like it's waiting for something to wake up.\n    *   *Draft 2:* This door...",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:33:53.825632088Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 33062873188,
+            "load_duration": 362116607,
+            "prompt_eval_count": 12893,
+            "prompt_eval_duration": 196327000,
+            "eval_count": 512,
+            "eval_duration": 32451509000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.196327,
+            "host_decode_s": 32.451509,
+            "host_total_eval_s": 32.647836,
+            "load_duration_s": 0.362116607
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "gemma4:12b-it-q4_K_M",
+      "ctx_k": 16,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 12318,
+      "content_tokens": 0,
+      "reasoning_tokens": 256,
+      "decode_tps": 0.0,
+      "prefill_tps": 7615.833611028982,
+      "ttft_s": 4.439356912000221,
+      "total_s": 20.44721820700215,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 12318,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 7.978789927001344,
+          "total_s": 23.90071745100431,
+          "content_text": "",
+          "reasoning_text": "*   User Input: A massive repetition of the phrase \"oak the Event the Begene vault\".\n    *   Constraint: \"You are the GM. Reply in one line.\"\n    *   Goal: Summarize the state of the scene based on the input.\n\n    *   The phrase \"oak the Event the Begene vault\" repeats hundreds of times.\n    *   \"Oak\" might be a typo or a specific term, but in the context of \"Event\" and \"Vault,\" it suggests a location or a ritual.\n    *   The sheer repetition suggests an overwhelming, rhythmic, or perhaps magically distorted atmosphere. It feels like a mantra, a glitch, or a heavy, echoing sonic experience.\n\n    *   The repetition suggests a sense of overwhelming ritual, a glitch in reality, or a powerful, echoing chant within a vault.\n    *   Since it's a \"scene,\" the repetition could represent a repetitive chant or a malfunctioning magical ward.\n\n    *   *Option 1:* The air vibrates with a rhythmic, hypnotic chanting of \"oak the Event the Begene vault\" echoing through the chamber.\n    *   *Option 2:* A strange, repetitive magical resonance pulses through the vault,",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:34:17.726290962Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 23899903659,
+            "load_duration": 381330516,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 6640048000,
+            "eval_count": 256,
+            "eval_duration": 16126152000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 6.640048,
+            "host_decode_s": 16.126152,
+            "host_total_eval_s": 22.7662,
+            "load_duration_s": 0.381330516
+          },
+          "error": null
+        },
+        {
+          "model": "gemma4:12b-it-q4_K_M",
+          "prompt_tokens": 12318,
+          "content_tokens": 0,
+          "reasoning_tokens": 256,
+          "ttft_s": 0.8999238969990984,
+          "total_s": 16.993718962999992,
+          "content_text": "",
+          "reasoning_text": "*   Input: A long, repetitive string: \"oak the Event the Begene vault oak the Event the Begene vault...\" repeated many times.\n    *   Role: Game Master (GM).\n    *   Constraint: Reply in one line.\n    *   Task: Summarize the state of the scene.\n\n    *   The phrase \"oak the Event the Begene vault\" repeats endlessly.\n    *   \"Oak\" might be a mistype for \"Open\" or a specific location/object.\n    *   \"Begene vault\" is likely a corruption/typo for \"Begone vault\" or \"Beginner vault,\" or it's a specific fantasy location.\n    *   The repetition suggests a glitch, a mantra, or a heavy magical resonance/echo.\n\n    *   *Literal interpretation:* The vault is being addressed repeatedly.\n    *   *Metaphorical interpretation:* A magical echo or a broken psychic link.\n    *   *Action-oriented:* A door or vault is malfunctioning or being bombarded by a repeating signal.\n\n    *   *Option 1:* The air hums with a repetitive, glitching magical resonance as the vault's seal fluctuates wildly.\n",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "gemma4:12b-it-q4_K_M",
+            "created_at": "2026-09-20T19:34:34.720085286Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "\n"
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 16992703093,
+            "load_duration": 395396880,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 246764000,
+            "eval_count": 256,
+            "eval_duration": 16292723000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 0.246764,
+            "host_decode_s": 16.292723,
+            "host_total_eval_s": 16.539486999999998,
+            "load_duration_s": 0.39539688
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": true
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 8,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 6709,
+      "content_tokens": 13,
+      "reasoning_tokens": 0,
+      "decode_tps": 10.921763903124907,
+      "prefill_tps": 10436.085586117159,
+      "ttft_s": 3.484548383501533,
+      "total_s": 4.719778369493724,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6709,
+          "content_tokens": 10,
+          "reasoning_tokens": 0,
+          "ttft_s": 6.631289760000072,
+          "total_s": 7.549306638989947,
+          "content_text": "This feels familiar, but it shouldn't.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:00.26653922Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 7548544000,
+            "load_duration": 257215278,
+            "prompt_eval_count": 6709,
+            "prompt_eval_duration": 6360372000,
+            "eval_count": 10,
+            "eval_duration": 918275000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 6.360372,
+            "host_decode_s": 0.918275,
+            "host_total_eval_s": 7.278646999999999,
+            "load_duration_s": 0.257215278
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6709,
+          "content_tokens": 17,
+          "reasoning_tokens": 0,
+          "ttft_s": 0.3378070070029935,
+          "total_s": 1.8902500999975018,
+          "content_text": "This feels familiar, but it shouldn't. Nothing about this should feel familiar.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:02.156598839Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1889067605,
+            "load_duration": 228639781,
+            "prompt_eval_count": 6709,
+            "prompt_eval_duration": 95722000,
+            "eval_count": 17,
+            "eval_duration": 1552582000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.095722,
+            "host_decode_s": 1.552582,
+            "host_total_eval_s": 1.648304,
+            "load_duration_s": 0.228639781
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 8,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 6179,
+      "content_tokens": 37,
+      "reasoning_tokens": 0,
+      "decode_tps": 10.670237285760543,
+      "prefill_tps": 9059.651650576989,
+      "ttft_s": 3.4300244889964233,
+      "total_s": 6.950217611993139,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6179,
+          "content_tokens": 29,
+          "reasoning_tokens": 0,
+          "ttft_s": 6.50015006600006,
+          "total_s": 9.199110888992436,
+          "content_text": "The scene has devolved into a repetition of the phrase \"the Event the Begene vault\" with no apparent plot progression or character interaction.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:11.356106496Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 9197840043,
+            "load_duration": 237632425,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 5849861000,
+            "eval_count": 29,
+            "eval_duration": 2698694000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 5.849861,
+            "host_decode_s": 2.698694,
+            "host_total_eval_s": 8.548555,
+            "load_duration_s": 0.237632425
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6179,
+          "content_tokens": 46,
+          "reasoning_tokens": 0,
+          "ttft_s": 0.35989891199278645,
+          "total_s": 4.701324334993842,
+          "content_text": "You seem to have entered a loop of repetitive text describing the Begene vault, and I'm not sure what's going on in the scene. Can you please clarify what's happening and what you'd like to do next?",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:16.057559679Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4700370864,
+            "load_duration": 244611983,
+            "prompt_eval_count": 6179,
+            "prompt_eval_duration": 100608000,
+            "eval_count": 46,
+            "eval_duration": 4341296000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.100608,
+            "host_decode_s": 4.341296,
+            "host_total_eval_s": 4.441904,
+            "load_duration_s": 0.244611983
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 16,
+      "task": "line",
+      "think": false,
+      "prompt_tokens": 13225,
+      "content_tokens": 20,
+      "reasoning_tokens": 0,
+      "decode_tps": 10.04423376217035,
+      "prefill_tps": 19479.178886230933,
+      "ttft_s": 4.34775386050751,
+      "total_s": 6.341691254507168,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 13225,
+          "content_tokens": 26,
+          "reasoning_tokens": 0,
+          "ttft_s": 8.341642049010261,
+          "total_s": 10.941963935008971,
+          "content_text": "I can feel that it's been a long time since anyone's opened this door, the air around it feels... heavy.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:27.91680235Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 10940294626,
+            "load_duration": 188664236,
+            "prompt_eval_count": 13225,
+            "prompt_eval_duration": 7900044000,
+            "eval_count": 26,
+            "eval_duration": 2599375000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 7.900044,
+            "host_decode_s": 2.599375,
+            "host_total_eval_s": 10.499419,
+            "load_duration_s": 0.188664236
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 13225,
+          "content_tokens": 14,
+          "reasoning_tokens": 0,
+          "ttft_s": 0.3538656720047584,
+          "total_s": 1.7414185740053654,
+          "content_text": "This feels like the door to the village where I was raised.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:29.658440156Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1740405104,
+            "load_duration": 224824858,
+            "prompt_eval_count": 13225,
+            "prompt_eval_duration": 106713000,
+            "eval_count": 14,
+            "eval_duration": 1386817000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.106713,
+            "host_decode_s": 1.386817,
+            "host_total_eval_s": 1.49353,
+            "load_duration_s": 0.224824858
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 16,
+      "task": "prefill_decode",
+      "think": false,
+      "prompt_tokens": 12318,
+      "content_tokens": 32,
+      "reasoning_tokens": 0,
+      "decode_tps": 10.124474757153372,
+      "prefill_tps": 18669.12045861054,
+      "ttft_s": 4.290451641500113,
+      "total_s": 7.504457071001525,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 12318,
+          "content_tokens": 39,
+          "reasoning_tokens": 0,
+          "ttft_s": 8.237236285000108,
+          "total_s": 12.112508890000754,
+          "content_text": "The scene is stuck in an infinite loop of repetition, with the player repeatedly typing the same phrase \"The Begene vault\" without any narrative progression or player input being acknowledged by the game.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:41.771084742Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 12111312412,
+            "load_duration": 257748284,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 7003468000,
+            "eval_count": 39,
+            "eval_duration": 3874418000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 7.003468,
+            "host_decode_s": 3.874418,
+            "host_total_eval_s": 10.877886,
+            "load_duration_s": 0.257748284
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 12318,
+          "content_tokens": 26,
+          "reasoning_tokens": 0,
+          "ttft_s": 0.343666998000117,
+          "total_s": 2.896405252002296,
+          "content_text": "The scene is stuck in an infinite loop of repetition, with the player's actions being constantly repeated without any progression or change.",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:44.667534553Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2895531892,
+            "load_duration": 224583482,
+            "prompt_eval_count": 12318,
+            "prompt_eval_duration": 101889000,
+            "eval_count": 26,
+            "eval_duration": 2552551000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.101889,
+            "host_decode_s": 2.552551,
+            "host_total_eval_s": 2.6544399999999997,
+            "load_duration_s": 0.224583482
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 8,
+      "task": "concurrency",
+      "think": false,
+      "prompt_tokens": 3092,
+      "content_tokens": 50,
+      "reasoning_tokens": 0,
+      "decode_tps": 11.396816609117623,
+      "prefill_tps": 571.2679964807661,
+      "ttft_s": 6.651524972003244,
+      "total_s": 11.046118298501824,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 3092,
+          "content_tokens": 64,
+          "reasoning_tokens": 0,
+          "ttft_s": 3.780764414012083,
+          "total_s": 9.429708314011805,
+          "content_text": "You find yourself standing in front of the Begene Vault, a mysterious ancient structure rumored to hold the secrets of a long-lost civilization. The entrance is a massive stone door adorned with intricate carvings, which seem to be pulsing with a soft, blue light. As you approach, the light grows brighter,",
+          "reasoning_text": "",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:54.098533217Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 9428129516,
+            "load_duration": 227758934,
+            "prompt_eval_count": 3092,
+            "prompt_eval_duration": 2783950000,
+            "eval_count": 64,
+            "eval_duration": 5648975000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 2.78395,
+            "host_decode_s": 5.648975,
+            "host_total_eval_s": 8.432925000000001,
+            "load_duration_s": 0.227758934
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 3092,
+          "content_tokens": 36,
+          "reasoning_tokens": 0,
+          "ttft_s": 9.522285529994406,
+          "total_s": 12.662528282991843,
+          "content_text": "As the repetition of \"the Begene vault\" continues to fill the air, a faint hum begins to emanate from the vault itself, growing louder with each passing moment...",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:35:57.330621796Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 12661454381,
+            "load_duration": 257138397,
+            "prompt_eval_count": 3092,
+            "prompt_eval_duration": 89415000,
+            "eval_count": 36,
+            "eval_duration": 3139520000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.089415,
+            "host_decode_s": 3.13952,
+            "host_total_eval_s": 3.228935,
+            "load_duration_s": 0.257138397,
+            "wall_s": 12.663
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    },
+    {
+      "host_protocol": "ollama_native",
+      "model": "llama3.1:8b",
+      "ctx_k": 16,
+      "task": "concurrency",
+      "think": false,
+      "prompt_tokens": 6165,
+      "content_tokens": 50,
+      "reasoning_tokens": 0,
+      "decode_tps": 10.688723794432821,
+      "prefill_tps": 1284.1989941990255,
+      "ttft_s": 6.272354636006639,
+      "total_s": 10.994799067499116,
+      "n_calls": 2,
+      "error": null,
+      "raw_cells": [
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6165,
+          "content_tokens": 64,
+          "reasoning_tokens": 0,
+          "ttft_s": 3.2340978870051913,
+          "total_s": 9.2114240660012,
+          "content_text": "It seems you've become stuck in an infinite loop of typing the same phrase over and over again. Let's try to break the cycle. What would you like to do? Do you want to start a new adventure, continue a previous one, or explore a different scenario? The Begene vault, a mysterious and ancient",
+          "reasoning_text": "",
+          "finish_reason": "length",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:36:06.543176117Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 9210403460,
+            "load_duration": 230765521,
+            "prompt_eval_count": 6165,
+            "prompt_eval_duration": 2991986000,
+            "eval_count": 64,
+            "eval_duration": 5977800000
+          },
+          "raw_extra": {
+            "finish_reason": "length",
+            "host_prefill_s": 2.991986,
+            "host_decode_s": 5.9778,
+            "host_total_eval_s": 8.969786,
+            "load_duration_s": 0.230765521
+          },
+          "error": null
+        },
+        {
+          "model": "llama3.1:8b",
+          "prompt_tokens": 6165,
+          "content_tokens": 37,
+          "reasoning_tokens": 0,
+          "ttft_s": 9.310611385008087,
+          "total_s": 12.778174068997032,
+          "content_text": "You've been stuck in an infinite loop of \"the Begene vault\" for quite some time now. Let's try to break the cycle. What would you like to do?",
+          "reasoning_text": "",
+          "finish_reason": "stop",
+          "raw_usage": {
+            "model": "llama3.1:8b",
+            "created_at": "2026-09-20T19:36:10.110433383Z",
+            "message": {
+              "role": "assistant",
+              "content": ""
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 12775664777,
+            "load_duration": 276964146,
+            "prompt_eval_count": 6165,
+            "prompt_eval_duration": 96148000,
+            "eval_count": 37,
+            "eval_duration": 3467146000
+          },
+          "raw_extra": {
+            "finish_reason": "stop",
+            "host_prefill_s": 0.096148,
+            "host_decode_s": 3.467146,
+            "host_total_eval_s": 3.563294,
+            "load_duration_s": 0.276964146,
+            "wall_s": 12.779
+          },
+          "error": null
+        }
+      ],
+      "extra": {
+        "n_ok": 2,
+        "n_fail": 0,
+        "budget_capped_on_reasoning": false
+      }
+    }
+  ],
+  "error": "IndexError('list index out of range')"
+}

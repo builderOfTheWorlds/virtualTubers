@@ -1,0 +1,67 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# D&D-agents benchmark configuration
+#
+# This is the single source of truth for how `runBenchmark.sh` runs.
+# Every CLI flag is an *override* of one of the keys below — the config
+# file is the primary, flags are the escape hatch. Precedence (high → low):
+#
+#     CLI flag  >  $BENCH_MARKER_CONFIG  >  this file  >  built-in defaults
+#
+# To switch to vLLM, just flip [host] and the URL — the measurement logic
+# is provider-agnostic (both speak OpenAI-compatible / chat-completions).
+# ─────────────────────────────────────────────────────────────────────────────
+
+[host]
+name     = "ollama"                  # "ollama" | "vllm"
+base_url = "http://localhost:11434"  # Ollama default; vLLM is usually :8000
+
+[models]
+# What to benchmark. GM tier = the big model (hermes3:70b).
+# Seat tier = the models that play the 45-word "feels-live" roles.
+#
+#   hermes3:70b            — the GM (large, reasoning model)
+#   llama3.1:8b            — fast non-thinking seat (clean line-latency metric)
+#   gemma4:12b-it-q4_K_M   — thinking-model seat (budget-capped; use as a
+#                            "quality tier" reference; expect the
+#                            BUDGET-CAPPED-ON-THINKING flag on most cells)
+#
+# Add qwen3.8:27b or hermes3 to this list to include them. The plan
+# runner reads this list and runs every model through every probe.
+list = [
+    "hermes3:70b",
+    "llama3.1:8b",
+    "gemma4:12b-it-q4_K_M",
+]
+
+[run]
+# Context tiers in K tokens. 8k ≈ in-scene transcript + lore + sheet.
+# 16k ≈ the GM's context (full pack + full cast + arc carry).
+ctx_k = [8, 16]
+
+# Enable the model's *thinking* tokens on every call.
+#   false (default) — canonical "spoken line" metric: content-only,
+#                     lowest token per spoken word. Use this for the
+#                     headline latency numbers in the report.
+#   true            — "reasoning tax" measurement: what it costs to
+#                     also think. Slower but more honest about the
+#                     thinking-model overhead.
+think = false
+
+# Sampling temperature for all probe calls.
+temperature = 0.7
+
+# Concurrent calls in the concurrency probe. On unified GB10 memory this
+# is where KV-cache pressure and CPU offload show first. 2 is a good
+# "two seats at once" baseline; 3–4 stress it further.
+concurrency_n = 2
+
+# If true, skip the per-plan full-round and co-resident probes entirely
+# (per-model + concurrency only) — ~10 min quick bench instead of the
+# 60–120 min full battery.
+skip_full_round = false
+
+[output]
+# All artifacts land here: run.json (machine-readable), report.md
+# (human-readable), progress.jsonl (live tail -f for progress).
+dir = "utilities/benchmarker/output"
+report = "utilities/benchmarker/output/report.md"
