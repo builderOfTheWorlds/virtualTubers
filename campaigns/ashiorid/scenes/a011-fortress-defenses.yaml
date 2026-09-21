@@ -1,0 +1,17 @@
+id: fortress-defenses
+title: Fortress Defenses
+ambient: true
+prompt: 'The party approaches a imposing fortress, its stone walls rising majestically
+  against the landscape. As they draw closer, they notice the intricate  defensive
+  features - high guard towers, a deep moat, and heavy portcullises guarding the entry.
+  The fortress seems an impenetrable stronghold.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 5e6cea754c823128722a87db2c7c9e8e78fc3a20411b39e4a97b242eee6ba90e
+  version: fortress-defenses@1
+  batch: 2.3.ambient.10
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

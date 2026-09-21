@@ -1,0 +1,22 @@
+id: helen-alcinoe-fire-practice
+title: Helen Practices Alcinoe Fire Magic
+ambient: true
+prompt: 'Helen sits alone, staring into a small campfire. Her eyes begin to glow
+
+  with an unnatural red light as she practices her fire magic. She holds up
+
+  a hand, and a small flame dances in her palm, switching between red and
+
+  white hues. She looks deep in thought, lost in concentration, as she
+
+  experiments with the magical flames.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 119149ddaecf52667b246ec1a4f0ae4a55de3082d23cddd60a47970248067f35
+  version: helen-alcinoe-fire-practice@1
+  batch: 2.3.ambient.6
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

@@ -1,0 +1,18 @@
+id: kato-guild-ambience
+title: Kato Guild Ambience
+ambient: true
+prompt: 'The brothers Delroy and Veleri Kato, heads of the notorious Kato Guild, go
+  about their daily tasks. Delroy processes and distributes fooma within the city
+  of Vabokedos, while Veleri manages the drug''s growth and distribution outside the
+  city limits. The two dwarves, distinct in appearance due to their clan''s darker
+  skin and unique beard styles, are a formidable force in the criminal underworld.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: kato-guild-ambience@1
+  batch: 2.3.ambient.9
+  base_hash: e2af5cde242e8c910b4beb9b424610aaeceeb8dbfb07fdb490cf57d118848c65

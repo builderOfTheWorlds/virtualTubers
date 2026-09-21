@@ -1,0 +1,17 @@
+id: ylva-foresight-ambient
+title: Ylva's Foresight Stirs
+ambient: true
+prompt: 'The group pauses to rest in a fortified room deep within the Frozen Fortress.
+  Ylva, the young girl with striking green eyes, suddenly grips her head and whispers
+  urgently to the party. For a brief moment, the future unfolds before her, revealing
+  an impending danger. The party must decide how to act on Ylva''s warning.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: ylva-foresight-ambient@1
+  batch: 2.3.ambient.12
+  base_hash: 399ffded7e48526291acb4e008e33623a200f770a91190708d4cd1d3c57977df

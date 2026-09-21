@@ -1,0 +1,17 @@
+id: idra-city-life
+title: Life in the City of Idra
+ambient: true
+prompt: 'The bustling city of Idra is alive with activity.  People hurry along the
+  streets, going about their daily business. Merchants call out, advertising their
+  wares to passersby.  Somewhere in the distance, a smith''s hammer rings out in a
+  steady rhythm.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: idra-city-life@1
+  batch: 2.3.ambient.17
+  base_hash: eb5944134ed91683a6ff2752984170b254cdf5325a39f3b5249143d104bfc232

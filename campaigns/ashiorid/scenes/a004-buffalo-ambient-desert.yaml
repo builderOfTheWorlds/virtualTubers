@@ -1,0 +1,21 @@
+id: buffalo-ambient-desert
+title: Buffalo's Desert Solitude
+ambient: true
+prompt: "Buffalo rides alone through the vast desert under the scorching sun. \nHis\
+  \ mount's hooves crunch rhythmically on the parched earth. \nThe endless expanse\
+  \ of sand dunes stretches to the horizon in all directions, broken only by occasional\
+  \ rocky outcroppings and cacti.\nThe heat shimmers off the ground, creating mirages\
+  \ that dance and shimmer tantalizingly.\nBuffalo wipes the sweat from his brow,\
+  \ his eyes narrowed against the glare.\nHe scans the horizon intently for any sign\
+  \ of his quarry, his hand resting on the hilt of his sword.\nThe only sounds are\
+  \ the crunch of hooves and the occasional snort of his mount.\nThe desert's desolation\
+  \ mirrors the emptiness in Buffalo's heart as he journeys to avenge his parents\
+  \ and bring justice to his adopted brother.\n"
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: b30ee412b3b783dd1af61c6da5577f6e8666212e89e9d4ada536fefebb68f46d
+  version: buffalo-ambient-desert@1
+  batch: 2.3.ambient.3
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

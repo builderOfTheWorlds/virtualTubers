@@ -1,0 +1,16 @@
+id: town-at-dusk
+title: Town at Dusk
+ambient: true
+prompt: 'The sun is setting over the town. Shadows lengthen as people hurry home from
+  market.  Shopkeepers close up for the night. The streets grow quiet, but for the
+  occasional  clatter of hooves or muffled laughter from a tavern.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 9e2760bf602f599465dced6b9584400a98660a720e1e331c13da33bdfad73e2e
+  version: town-at-dusk@1
+  batch: 2.3.ambient.13
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

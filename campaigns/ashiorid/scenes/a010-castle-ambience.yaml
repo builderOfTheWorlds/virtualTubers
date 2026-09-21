@@ -1,0 +1,17 @@
+id: castle-ambience
+title: Castle Ambience
+ambient: true
+prompt: 'The castle halls echo with the distant sounds of clanging metal and muffled
+  voices. A chill draft whispers through the stone corridors, carrying the faint scent
+  of woodsmoke and wax. Torches flicker in their sconces, casting dancing shadows
+  on the tapestries that line the walls.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 87fa91e61f7c00d274e3ce00f80fdbec6b22ec965459b8f5ec9753d3ac183f9c
+  version: castle-ambience@1
+  batch: 2.3.ambient.9
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

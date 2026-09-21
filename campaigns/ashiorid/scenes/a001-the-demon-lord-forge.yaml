@@ -1,0 +1,20 @@
+id: the-demon-lord-forge
+title: The Demon Lord's Hellforged Blade
+ambient: true
+prompt: 'The Demon Lord''s cavernous forge echoes with the clanging of hellforged
+  steel and the screams of the damned. Rivers of molten metal, glinting red with heat,
+  flow between giant, spiked ingots. The air is thick with the stench of brimstone
+  and charred flesh. The Demon Lord, a towering shadow wreathed in flame, toils over
+  a massive blade, folding layers of iron and souls together with each hammer blow.
+  His eyes, pits of ember, never leave the blade, hungering for the day it will taste
+  the blood of gods.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: e56193c51940566ab715bff7c63a9f52aed932f5a53e9b02a0d0d959f3353b2b
+  version: the-demon-lord-forge@1
+  batch: 2.3.ambient.0
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

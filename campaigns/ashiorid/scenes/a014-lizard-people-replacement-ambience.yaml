@@ -1,0 +1,16 @@
+id: lizard-people-replacement-ambience
+title: Lizard People Replacement Ambience
+ambient: true
+prompt: 'The celebrity''s skin looks unnaturally smooth and shiny.  Their eyes seem
+  to gleam with a reptilian quality. You swear their features shift and morph for
+  a split second.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: lizard-people-replacement-ambience@1
+  batch: 2.3.ambient.13
+  base_hash: 3ebc8dd41eb05f287a6b1d5ba7311605fb84ab02fb3c4a4cd22bc00b4a649720

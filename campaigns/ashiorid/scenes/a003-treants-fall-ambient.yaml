@@ -1,0 +1,17 @@
+id: treants-fall-ambient
+title: Treants' Fall
+ambient: true
+prompt: 'The party comes across a strange sight - a pine forest that seems to have
+  sprung up overnight, the trees adorned with armor and weapons. As they walk through
+  the eerie grove, they hear whispers carried on the wind, as if the trees are trying
+  to communicate a warning.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: befaf8788cd5eeb8c83b3c81a3f8a075def445ace7c212c1093655bc925c3632
+  version: treants-fall-ambient@1
+  batch: 2.3.ambient.2
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

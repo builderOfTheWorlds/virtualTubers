@@ -1,0 +1,17 @@
+id: manor-courtyard-ambience
+title: Courtyard Activity at Duke Leto's Manor
+ambient: true
+prompt: 'The hustle and bustle of the manor''s main courtyard. Servants scurry about,
+  preparing for the day''s events. The clatter of hooves on stone as horses are led
+  to the stables. The distant chatter and laughter of the kitchen staff wafts through
+  the air.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: manor-courtyard-ambience@1
+  batch: 2.3.ambient.4
+  base_hash: 95d94f366c4e6799d904946c59219ba45dc5e87b3ffd56bfb56757bfae3afab2

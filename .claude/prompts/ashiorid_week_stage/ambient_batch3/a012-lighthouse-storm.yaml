@@ -1,0 +1,16 @@
+id: lighthouse-storm
+title: Storm at the Lighthouse
+ambient: true
+prompt: 'The party takes shelter in the lighthouse during a fierce coastal storm.
+  Lightning flashes and thunder booms as rain lashes the stone walls. The beacon at
+  the top flickers in the tempest, casting eerie shadows through the windows.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: dcd93ec244fbeecc63c0663ccb5de778d58e70503b0227cc02c8392c2e9e679e
+  version: lighthouse-storm@1
+  batch: 2.3.ambient.11
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

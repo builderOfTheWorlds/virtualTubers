@@ -1,0 +1,18 @@
+id: carls-direwolf-companion
+title: Carl's Direwolf Companion
+ambient: true
+prompt: 'Carl sits by a campfire in the forest, his direwolf companion curled up beside
+  him. The direwolf''s ears perk up, and it lets out a soft growl. Carl reaches over
+  and pats the direwolf, whispering reassurances. The night is dark, but the fire
+  and his companion offer a sense of safety amidst the unknown dangers that lurk in
+  the shadows.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: e7fc9c336cc323ae787bb4d202744fb487b8363feee102268dd65dc24a01cdfa
+  version: carls-direwolf-companion@1
+  batch: 2.3.ambient.4
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

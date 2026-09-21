@@ -1,0 +1,16 @@
+prompt_ear: 'Loud whooshing roar, tremendous THUD, ground shakes, dirt shower
+
+  '
+id: falling-man-impact
+title: Falling Man Impact
+ambient: true
+prompt: "A loud whooshing noise grows to a roar, ending in a tremendous THUD. \nThe\
+  \ ground shakes from a nearby impact, showering dirt.\n"
+lore: []
+source:
+  version: falling-man-impact@1
+  model: hermes3:70b
+  batch: 2.3.ambient.6
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 2d7fd6f9223dd2ba726dec43b51ef14b6a4f20c874cd7538584f107f8780b071

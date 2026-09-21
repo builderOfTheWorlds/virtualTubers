@@ -1,0 +1,17 @@
+id: runeseeker-library
+title: Runeseeker Studies in the Library
+ambient: true
+prompt: "The runeseeker sits in the library, pouring over ancient tomes \nand scrolls,\
+  \ searching for clues to decipher the mysterious runes.\nAbsorbed in research, they\
+  \ occasionally mutter to themselves \nas they uncover fascinating insights about\
+  \ the origins and \nmeanings of the runes. The steady scratch of their quill on\
+  \ \nparchment fills the air, punctuated by the occasional sigh or \nexclamation\
+  \ as they make progress in their studies.\n"
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 77fab9057ee9678bd96417aafa7107d52f324d57407a1715a4ac7f28ffdd4014
+  version: runeseeker-library@1
+  batch: 2.3.ambient.7
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

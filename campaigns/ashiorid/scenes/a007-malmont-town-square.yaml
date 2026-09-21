@@ -1,0 +1,17 @@
+id: malmont-town-square
+title: A Busy Day in Malmont's Town Square
+ambient: true
+prompt: 'The town square of Malmont is bustling with activity.  Shoemakers, furriers,
+  and tailors peddle their wares from colorful stalls.  The smell of fresh bread from
+  the bakers'' ovens fills the air, mingling with the chatter of townsfolk. Children
+  chase each other around the central fountain, their laughter rising above the hubbub.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: malmont-town-square@1
+  batch: 2.3.ambient.6
+  base_hash: 1822769cb8fdf9b8a58d40f170bad429b89156ad3d8bc3d43862c11184004c6b

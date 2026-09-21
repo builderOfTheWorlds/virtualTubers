@@ -1,0 +1,14 @@
+id: mysterious-child-visits-camp
+title: Mysterious Child Visits Camp
+ambient: true
+prompt: "A small boy appears in the party's camp one night, sitting by the fire. \n\
+  He never speaks and cannot be touched, due to a powerful repulsion field.\nThe boy\
+  \ stays for one hour and then vanishes into the night.\n"
+lore: []
+source:
+  version: mysterious-child-visits-camp@1
+  model: hermes3:70b
+  batch: 2.3.ambient.2
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: cdc2f76422f70887bece9af2735fab4e0a769acdaa38b9d3896c1e44d4b8b266

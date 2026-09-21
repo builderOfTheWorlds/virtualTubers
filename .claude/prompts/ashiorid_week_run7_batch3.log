@@ -1,0 +1,62 @@
+02:25:07    INFO ashiorid_week: run_id=ashiorid_week_20260921_022507 model=hermes3:70b
+02:25:07    INFO ashiorid_week: source notes loaded: 124
+02:25:07    INFO ashiorid_week: scale-up ambient batch: 15 explicit refs
+02:25:07    INFO ashiorid_week: === AMBIENT BATCH (filler, independent) ===
+02:25:07    INFO ashiorid_week: [1/15] authoring ambient from Items/Blood-Iron Weapon.md
+02:26:36    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:26:36    INFO ashiorid_week:   -> the-demon-lord-forge | prompt ~88 words
+02:26:36    INFO ashiorid_week: [2/15] authoring ambient from Items/Cursed Ring of Cannibalism.md
+02:26:57    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:26:57    INFO ashiorid_week:   -> cursed-ring-ambient | prompt ~38 words
+02:26:57    INFO ashiorid_week: [3/15] authoring ambient from Items/Treant's Fall.md
+02:30:40    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:30:40    INFO ashiorid_week:   -> treants-fall-ambient | prompt ~49 words
+02:30:40    INFO ashiorid_week: [4/15] authoring ambient from Characters/Buffalo.md
+02:35:40    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:35:40    INFO ashiorid_week:   -> buffalo-ambient-desert | prompt ~125 words
+02:35:40    INFO ashiorid_week: [5/15] authoring ambient from Characters/Carl the Ranger.md
+02:39:49    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:39:49    INFO ashiorid_week:   -> carls-direwolf-companion | prompt ~60 words
+02:39:49    INFO ashiorid_week: [6/15] authoring ambient from Characters/Helen.md
+02:44:10    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:44:10    INFO ashiorid_week:   -> helen-reflects | prompt ~79 words
+02:44:10    INFO ashiorid_week: [7/15] authoring ambient from Characters/Helen - Spell List.md
+02:44:51    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:44:51    INFO ashiorid_week:   -> helen-alcinoe-fire-practice | prompt ~58 words
+02:44:51    INFO ashiorid_week: [8/15] authoring ambient from Classes/Runeseeker.md
+02:45:27    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:45:27    INFO ashiorid_week:   -> runeseeker-library | prompt ~66 words
+02:45:27    INFO ashiorid_week: [9/15] authoring ambient from Maps/Maps - Beach.md
+02:45:47    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:45:47    INFO ashiorid_week:   -> beach-ambient-1 | prompt ~46 words
+02:45:47    INFO ashiorid_week: [10/15] authoring ambient from Maps/Maps - Castle.md
+02:46:08    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:46:08    INFO ashiorid_week:   -> castle-ambience | prompt ~45 words
+02:46:08    INFO ashiorid_week: [11/15] authoring ambient from Maps/Maps - Fortress Layouts.md
+02:46:31    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:46:31    INFO ashiorid_week:   -> fortress-defenses | prompt ~43 words
+02:46:31    INFO ashiorid_week: [12/15] authoring ambient from Maps/Maps - Lighthouse.md
+02:46:50    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:46:50    INFO ashiorid_week:   -> lighthouse-storm | prompt ~38 words
+02:46:50    INFO ashiorid_week: [13/15] authoring ambient from Maps/Maps - Shops and Locations.md
+02:47:15    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:47:15    INFO ashiorid_week:   -> baleons-outfitters-ambience | prompt ~59 words
+02:47:15    INFO ashiorid_week: [14/15] authoring ambient from Maps/Maps - Town.md
+02:47:34    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:47:34    INFO ashiorid_week:   -> town-at-dusk | prompt ~38 words
+02:47:34    INFO ashiorid_week: [15/15] authoring ambient from Maps/Maps - World Map.md
+02:48:08    INFO httpx: HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+02:48:08    INFO ashiorid_week:   -> maps-world-map-ashiorid-ambient | prompt ~82 words
+02:48:08    INFO ashiorid_week: ambient done: 15 authored, 0 failed
+02:48:08    INFO campaign.pack: loaded campaign pack ashiorid with 101 scenes and 5 cast members
+02:48:08    INFO campaign.validator: validated campaign pack ashiorid: 0 errors, 0 warnings
+02:48:08    INFO pack_gate: gate result: 0 error(s), 0 warning(s)
+02:48:08    INFO ashiorid_week: GATE ambient dir: PASS 0 warning(s) | errors=[] warnings=[]
+
+========================================================================
+ASHIORID WEEK BUILD | run_id=ashiorid_week_20260921_022507
+========================================================================
+  SPINE TOTAL: 0 scenes, 0 spoken words (0.0 h at 150wpm)
+  AMBIENT   : 15 definitions, 914 prompt words
+  GATE      : spine=n/a  ambient=PASS
+  STAGED    : /home/secus/codeProjects/virtualTubers/.claude/prompts/ashiorid_week_stage/ambient_batch3  (NOT promoted — that is the explicit human step)

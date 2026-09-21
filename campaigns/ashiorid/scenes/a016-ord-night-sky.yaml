@@ -1,0 +1,19 @@
+id: ord-night-sky
+title: Night Sky of Ord
+ambient: true
+prompt: 'The night sky of Ord is a sight to behold. With magic so scarce, the stars
+  shine brighter than anywhere else. The two moons, one large and one small, cast
+  an ethereal glow over the landscape. The lack of magical interference makes the
+  constellations exceptionally clear. A sense of awe and wonder fills those who gaze
+  upon this celestial beauty, a reminder of the wonders that still exist in a world
+  on the brink of magical extinction.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: ord-night-sky@1
+  batch: 2.3.ambient.15
+  base_hash: c08fb2df9ca0644f8b88dfc4941f5726c156c744e237e078edc597d18034aafb

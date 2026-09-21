@@ -1,0 +1,16 @@
+id: beach-ambient-1
+title: Waves on the Shore
+ambient: true
+prompt: 'The sound of waves gently lapping at the shore fills the air. Seagulls cry
+  out overhead as they glide on the ocean breeze. The sun warms the sand beneath your
+  feet, while the salty tang of the sea mingles with the fresh scent of the beach.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: fc4b4b3cf4a79f4edd3a453f162ea1604a7589f05121a33b98556b462d1fb303
+  version: beach-ambient-1@1
+  batch: 2.3.ambient.8
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

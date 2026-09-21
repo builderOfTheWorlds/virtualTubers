@@ -1,0 +1,15 @@
+id: city-streets-ambient
+title: City Streets Ambient
+ambient: true
+prompt: 'The players race through the city streets,  dodging crowds and carts,  heart
+  pounding as they follow the sound of the explosion.
+
+  '
+lore: []
+source:
+  version: city-streets-ambient@1
+  model: hermes3:70b
+  batch: 2.3.ambient.1
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 274f6a504b682c67a832116f1a1e02ebd1be1cfbdc848a55f3342b6227876755

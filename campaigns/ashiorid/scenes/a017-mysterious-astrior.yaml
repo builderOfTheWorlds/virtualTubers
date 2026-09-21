@@ -1,0 +1,14 @@
+id: mysterious-astrior
+title: Mysterious Astrior
+ambient: true
+prompt: "The party hears whispers on the wind, \nmentioning the mysterious entity\
+  \ Astrior.\nSome claim it to be a powerful artifact,\nothers believe it to be an\
+  \ ancient being.\nThe whispers fade, leaving more questions than answers.\n"
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: mysterious-astrior@1
+  batch: 2.3.ambient.16
+  base_hash: 488096a546a16163cd36fd2d06e34834bb3fb763f285f4f451365b29f670c157

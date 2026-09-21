@@ -1,0 +1,19 @@
+id: helen-reflects
+title: Helen Reflects on Her Two Lives
+ambient: true
+prompt: 'Helen gazes into the flickering campfire, her thoughts drifting between the
+  two lives she''s lived. In one, she''s the cherished daughter of a loving family
+  in a hidden village, destined to be a leader. In the other, she''s a pawn in a grand
+  scheme, born of a breeding program to become a weapon against an ancient evil. She
+  wonders how much of what she believed was true, and what secrets her adoptive family
+  may still be keeping from her.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 0a387b3dcea6771c888e5d116fb6e6e7732c768f3381a1c64c2f957967e87c21
+  version: helen-reflects@1
+  batch: 2.3.ambient.5
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

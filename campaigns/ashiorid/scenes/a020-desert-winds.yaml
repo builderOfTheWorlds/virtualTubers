@@ -1,0 +1,20 @@
+id: desert-winds
+title: Desert Winds
+ambient: true
+prompt: 'The party trudges through the endless dunes, sand whipping their faces.
+
+  The winds carry whispers of the desert''s secrets and the ancient magic that once
+  thrived here.
+
+  The sun beats down mercilessly, a constant reminder of the harsh reality of this
+  desolate land.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: desert-winds@1
+  batch: 2.3.ambient.19
+  base_hash: a242e2f74c3bab639158c4be07a04c4f33b3dede05903487bb263453fd824519

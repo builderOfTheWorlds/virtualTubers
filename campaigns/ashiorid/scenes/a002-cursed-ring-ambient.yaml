@@ -1,0 +1,16 @@
+id: cursed-ring-ambient
+title: Whispers of the Cursed Ring
+ambient: true
+prompt: 'The party spots the glint of a ring on the forest floor. As they approach,
+  a chill wind whispers of dark appetites and unnatural hungers. The ring lies innocently,
+  its malevolent aura hidden beneath a veneer of beauty.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 3349c7cade50df1b2fc75fc6b5a48f429130f23c3e8152c28f32646f64018a6d
+  version: cursed-ring-ambient@1
+  batch: 2.3.ambient.1
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

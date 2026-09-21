@@ -1,0 +1,18 @@
+id: henderson-ambience
+title: Henderson's Desert Sounds
+ambient: true
+prompt: 'The constant din of metal on metal rings out,  punctuated by the occasional
+  shout of a smith or the crack of a whip driving the ore carts. The heat of the forges
+  blends with the desert sun, making the air shimmer and dance. In the distance, the
+  mountains loom, silent and stoic, hiding the wealth of iron, copper, and precious
+  gems in their heart.
+
+  '
+lore: []
+source:
+  version: henderson-ambience@1
+  model: hermes3:70b
+  batch: 2.3.ambient.7
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: d63d7c8e4fd2db5bc74d58e4f6087b5598b579301dc8a322739a4f65f69cb31b

@@ -1,0 +1,15 @@
+id: the-rob-boss-paints
+title: The Rob Boss Paints
+ambient: true
+prompt: "The Rob Boss stands at his easel, dabbing his brush in the paint palette.\
+  \ \nHe carefully applies dabs of color to the canvas, creating a happy little tree.\n\
+  His spherical hair bobs gently as he works, lost in his artistic trance.\nThe small\
+  \ woodland creature on his shoulder chirps softly.\n"
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: the-rob-boss-paints@1
+  batch: 2.3.ambient.11
+  base_hash: 6c5bce4761d2092d984791dc5d9dd70b5fcaedc46a25e605df6346e03508c922

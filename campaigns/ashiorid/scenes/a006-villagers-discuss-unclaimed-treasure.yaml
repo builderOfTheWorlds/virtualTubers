@@ -1,0 +1,16 @@
+id: villagers-discuss-unclaimed-treasure
+title: Villagers Discuss Unclaimed Treasure
+ambient: true
+prompt: 'In a small village tavern, a group of villagers discuss rumors of unclaimed
+  treasure from a recently cleared dungeon. They speculate about what powerful items
+  might be hidden there and who among them might have the courage to go look for it.
+
+  '
+lore: []
+source:
+  version: villagers-discuss-unclaimed-treasure@1
+  model: hermes3:70b
+  batch: 2.3.ambient.5
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 8641d07bf8d79f1ba843bae45485dd99fe7eb0757924bea903ace49ebb846195

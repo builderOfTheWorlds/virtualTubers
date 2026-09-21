@@ -1,0 +1,18 @@
+id: sarahs-inn-ambience
+title: The Cozy Atmosphere of Sarah's Inn
+ambient: true
+prompt: 'The tavern is alive with the sounds of laughter and clinking glasses. The
+  warm glow of the hearth and the flickering candlelight create a cozy atmosphere.
+  Sarah moves from table to table, her Southern drawl mingling with the murmur of
+  conversation. The scent of freshly baked bread and stew wafts through the air, making
+  the inn feel like a home away from home.
+
+  '
+lore: []
+source:
+  version: sarahs-inn-ambience@1
+  model: hermes3:70b
+  batch: 2.3.ambient.0
+  run_id: ashiorid_week_20260919_184406
+  authored: generated
+  base_hash: 91c126a00788c1acfd926a1316e72722d4b62cdae97e967b3a0a401669435474

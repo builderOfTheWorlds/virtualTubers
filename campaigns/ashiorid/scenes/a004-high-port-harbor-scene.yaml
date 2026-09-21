@@ -1,0 +1,17 @@
+id: high-port-harbor-scene
+title: Busy Day at High Port Harbor
+ambient: true
+prompt: 'The bustling harbor of High Port is alive with activity.  Dockworkers hustle
+  to unload cargo ships. Sailors  shout as they prepare their vessels for departure.  Merchants
+  bargain with customers at stalls lining  the waterfront. Seagulls cry overhead,
+  hoping to  snatch up scraps from the constant commerce.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  authored: generated
+  run_id: ashiorid_week_20260919_222734
+  version: high-port-harbor-scene@1
+  batch: 2.3.ambient.2
+  base_hash: d535f64499489c31c49f93ee8f83280704a0770362db293cfc5e7864727be60b

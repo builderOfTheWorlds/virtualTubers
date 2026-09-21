@@ -1,0 +1,20 @@
+id: maps-world-map-ashiorid-ambient
+title: A World of Adventure Awaits
+ambient: true
+prompt: 'The world map of Ashiorid is spread out before the party, showing 40 distinct
+  regions each filled with potential adventure. The colorful map depicts a diverse
+  landscape of coastal areas, island chains, arctic wastes, vast deserts, and mysterious
+  vanished plains. The party traces their fingers over the detailed topography, imagining
+  the dangers and wonders that await them in the unexplored territories beyond. With
+  so many places yet to discover, the air is thick with anticipation of the thrilling
+  journeys that lie ahead.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: 57f673a24dd32f87547bcdfef6d6123a88e8fea33ca247a8d25bdf38f2180ed7
+  version: maps-world-map-ashiorid-ambient@1
+  batch: 2.3.ambient.14
+  run_id: ashiorid_week_20260921_022507
+  authored: generated

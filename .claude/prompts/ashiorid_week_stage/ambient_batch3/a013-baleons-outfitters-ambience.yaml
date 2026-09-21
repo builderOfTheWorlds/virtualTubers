@@ -1,0 +1,18 @@
+id: baleons-outfitters-ambience
+title: Baleon's Outfitters Ambience
+ambient: true
+prompt: 'The well-stocked shelves of Baleon''s Outfitters are filled with a wide variety
+  of adventuring gear. Racks of sturdy clothing, bins of polished weapons, and crates
+  of mysterious potions fill the space with the promise of exciting quests to come.
+  The air is filled with the scent of leather and steel, and the low hum of merchant
+  and customer chatter.
+
+  '
+lore: []
+source:
+  model: hermes3:70b
+  base_hash: c39fe5c700b5229b3286007801ded1a544eaf50241826a295ffce05b562257b0
+  version: baleons-outfitters-ambience@1
+  batch: 2.3.ambient.12
+  run_id: ashiorid_week_20260921_022507
+  authored: generated
