@@ -23,11 +23,14 @@
    - 15 notes: Items (3), Characters (4), Classes (1), Maps (7).
    - Refs in `.claude/prompts/ashiorid_ambient_batch3_notes.txt`.
    - Staging target: `.claude/prompts/ashiorid_week_stage/ambient_batch3/`.
-   - Command:
+   - Command (NOTE: `--ambient-notes` takes the inline list, NOT a file
+     path — passing the .txt path makes the runner look for a vault note
+     literally named that path):
      ```
+     NOTES="$(cat .claude/prompts/ashiorid_ambient_batch3_notes.txt)"
      .venv/bin/python .claude/prompts/run_ashiorid_week_build.py \
        --ambient-only --gate-ambient-only \
-       --ambient-notes .claude/prompts/ashiorid_ambient_batch3_notes.txt \
+       --ambient-notes "$NOTES" \
        --ambient-out .claude/prompts/ashiorid_week_stage/ambient_batch3
      ```
    - Log: `.claude/prompts/ashiorid_week_run7_batch3.log`.
@@ -41,19 +44,34 @@
   (b) densifying existing scenes (the Phase 2.5 path). Deferred to morning.
 - **No Amulet of Wonder quest scenes.** The quest file is explicitly named
   `*Agent_Ignore*.md` in the vault — user instruction.
+- **SackWhores.md excluded** from ambient sources (violence against children
+  — not stream-suitable).
+- **`a005-dd-shop-ambience` (batch 4) HELD, not promoted** — fourth-wall
+  break ("adventurers browsing the shop catalog"). Staged at
+  `.claude/prompts/ashiorid_week_stage/ambient_batch4/a005-dd-shop-ambience.yaml`.
 - **No new cast.** Characters notes (Buffalo, Carl the Ranger, Helen) used
   as ambient only; adding them as cast members is a separate decision.
-- No commit/push of the promotions — operator's call. `git status` will
-  show 34 new files under `campaigns/ashiorid/scenes/`.
+
+## Batch 4 (night run 2) + promotion state:
+- Batch 4: 9/9 authored, 0 failed, gate PASS 0/0. 8 promoted, 1 held.
+- **Pack final: 109 scenes = 18 spine (closed ring) + 91 ambient defs.**
+- Commits: `80101ba` (batches 1-3 promoted, 101 scenes), then batch 4
+  commit (109 scenes). Pushing to remote = operator's call as ever.
+- **Vault ambient-suitable material is now EXHAUSTED.** Remaining unauthored
+  notes are meta/empty/excluded: Import Plan/Progress, PROJECT INSTRUCTIONS,
+  Content Discovery Summary, 0-byte unsorted stubs, *Agent_Ignore* quest,
+  SackWhores, Chadwick's MPMB gameFiles. The path to ~250 ambient defs is
+  the plan's §2.5 DENSIFICATION (regenerate premises with more scene
+  variants), not new source notes.
 
 ## Pending operator calls (morning):
-1. Review ambient batch 3 (15 scenes, gate-clean) → promote or discard.
-2. Spine direction: close-and-restart the ring (new seed), or densify
-   existing spine (Phase 2.5 in the plan)?
-3. Commit the pack promotion to git.
-4. Optional: re-derive the 168 h pacing numbers in §6A of the plan now that
-   ambient definitions went 34 → ~50. The "10 airings per definition per
-   week" health metric improves with each additional definition.
+1. Spine direction: break the closed ring to add new continuation scenes,
+   or start the plan's §2.5 densification phase (regenerate premises with
+   more variants)? The vault is exhausted for new ambient source notes.
+2. `a005-dd-shop-ambience` — promote (minor fourth-wall break) or discard?
+3. Push commits to remote.
+4. Listen-pass: spine scenes 002+003 share a near-identical opening
+   narration ("an uneasy sense fills the air…") — optional revision.
 
 ## Machine state (at launch 2026-09-21):
 - `qwen3.8:27b` was resident in `ollama ps` for the current Hermes agent
