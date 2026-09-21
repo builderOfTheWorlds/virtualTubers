@@ -77,9 +77,11 @@ DEFAULT_FEED_CONFIG = {
     "filters": {
         # NOTE: agent.py publishes its per-tick heartbeat flood as type
         # "status_update" (payload {"text": "heartbeat #N"}), NOT "heartbeat".
-        # Both are hidden by default so the feed is not flooded. This list is
-        # fully configurable via the feed config's filters.hide_types.
-        "hide_types": ["heartbeat", "status_update"],
+        # agent_thinking (Contract B) is also hidden by default so the
+        # reformatted conversation feed isn't flooded with chain-of-thought —
+        # it has its own dedicated `thinking` pane. All three are fully
+        # configurable via the feed config's filters.hide_types.
+        "hide_types": ["heartbeat", "status_update", "agent_thinking"],
         "show_types": [],       # empty = show all except hidden; else whitelist
         "direction": "all",     # all | broadcast | to:<id> | from:<id>
     },
@@ -95,6 +97,24 @@ DEFAULT_FEED_CONFIG = {
     "payload": {"mode": "pretty", "max_chars": 80},   # pretty | raw | hidden
     "timestamp": {"format": "%H:%M:%S", "local": True},
     "header": True,
+    # Rendering mode: "columns" (default, today's rich aligned feed, kept
+    # byte-for-byte identical) | "conversation" (Contract C — reformatted
+    # plain conversation log for tuber_base's kafka_feed pane).
+    "format": "columns",
+    # Conversation-mode character-name resolution: message `from` -> display
+    # name. Unknown `from` falls back to the raw id (never crash on a
+    # missing key). Seeded with each worker's configured agent.name plus the
+    # two non-worker senders.
+    "display_names": {
+        "coder": "KODI-7",
+        "coder-native": "NYX-1",
+        "coder-opencode": "OKO-2",
+        "coder-aider": "ADA-3",
+        "tester": "TESS-3",
+        "manager": "MAX-1",
+        "broadcast": "Broadcast",
+        "operator": "Operator",
+    },
 }
 
 
@@ -256,6 +276,52 @@ def format_header():
     return colorize(header, "gray")
 
 
+# ── Conversation-mode formatting (Contract C) ─────────────────────────────────
+# Hardcoded per the user's literal spec — NOT the configurable
+# timestamp.format used by columns mode.
+CONVERSATION_TIMESTAMP_FORMAT = "%m%d%y %H:%M:%S"
+
+
+def resolve_display_name(sender, display_names):
+    """Resolve a message's `from` id to a character name via the
+    `content.display_names` map. Unknown `from` falls back to the raw id —
+    never raises on a missing key."""
+    display_names = display_names or {}
+    return display_names.get(sender, sender)
+
+
+def extract_narration(payload):
+    """Extract human-readable conversation text from a payload dict, per
+    Contract C: `payload.narration` if present, else `payload.text`, else
+    None (caller must SKIP the message — never print a blank/garbled line).
+    """
+    if not isinstance(payload, dict):
+        return None
+    if payload.get("narration"):
+        return payload["narration"]
+    if payload.get("text"):
+        return payload["text"]
+    return None
+
+
+def format_conversation_line(msg, feed_config):
+    """Render one message as a Contract C conversation-log line, or None if
+    the message carries no human-readable narration (SKIP, not blank line).
+
+    Exact format: ``<mmDDyy HH:MM:SS> : <character_name>: <character message>``
+    """
+    narration = extract_narration(msg.get("payload", {}))
+    if narration is None:
+        return None
+
+    ts = format_timestamp(
+        msg.get("timestamp"), {"format": CONVERSATION_TIMESTAMP_FORMAT, "local": True}
+    )
+    display_names = feed_config.get("display_names", {})
+    character_name = resolve_display_name(msg.get("from", ""), display_names)
+    return f"{ts} : {character_name}: {narration}"
+
+
 CONNECT_RETRY_BASE_SECONDS = 3
 CONNECT_RETRY_MAX_SECONDS = 30
 
@@ -295,8 +361,9 @@ def run(bus_config_path, feed_config_path):
     log.info("worker_id=%s bootstrap=%s topic=%s", worker_id, bootstrap_servers, topic)
 
     feed_config = load_feed_config(feed_config_path)
+    render_mode = (feed_config.get("format") or "columns").strip().lower()
 
-    if feed_config.get("header"):
+    if render_mode == "columns" and feed_config.get("header"):
         print(format_header(), flush=True)
 
     print("Waiting for message bus...", flush=True)
@@ -312,7 +379,14 @@ def run(bus_config_path, feed_config_path):
                 if not passes_filters(msg, filters):
                     log.debug("filtered out type=%s to=%s", msg.get("type"), msg.get("to"))
                     continue
-                print(format_line(msg, feed_config), flush=True)
+                if render_mode == "conversation":
+                    line = format_conversation_line(msg, feed_config)
+                    if line is None:
+                        log.debug("conversation mode: no narration, skipping type=%s", msg.get("type"))
+                        continue
+                    print(line, flush=True)
+                else:
+                    print(format_line(msg, feed_config), flush=True)
         except Exception as exc:  # noqa: BLE001 — keep the feed alive on transient errors
             log.error("error while polling/formatting: %s", exc)
             time.sleep(1)  # avoid a tight retry loop if the broker is down

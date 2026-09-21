@@ -30,8 +30,11 @@ content:
   filters:
     # NOTE: agent.py currently emits its per-tick heartbeat flood as type
     # "status_update" (not "heartbeat"), so both are hidden by default to stop
-    # the flood. Fully configurable — edit this list to change what is hidden.
-    hide_types: [heartbeat, status_update]
+    # the flood. agent_thinking (Contract B, docs/tuber_base_layout_plan.md)
+    # is also hidden by default — it has its own dedicated `thinking` pane
+    # and must not flood this reformatted conversation feed. Fully
+    # configurable — edit this list to change what is hidden.
+    hide_types: [heartbeat, status_update, agent_thinking]
     # Empty = show everything except hidden. Non-empty = whitelist (only these).
     show_types: []
     # all | broadcast | to:<id> | from:<id>
@@ -55,9 +58,33 @@ content:
     max_chars: 80
 
   # Timestamp formatting. local: true converts the UTC ISO stamp to local time.
+  # NOTE: conversation mode (below) ignores this block — its timestamp format
+  # is hardcoded per Contract C (`%m%d%y %H:%M:%S`), not configurable here.
   timestamp:
     format: "%H:%M:%S"
     local: true
 
-  # Print a one-time column header at startup.
+  # Print a one-time column header at startup. Only applies to columns mode.
   header: true
+
+  # Rendering mode: "columns" (default, today's rich aligned feed — kept
+  # byte-for-byte identical) | "conversation" (Contract C, new: a plain
+  # `<mmDDyy HH:MM:SS> : <character_name>: <message>` conversation log, used
+  # by the tuber_base layout's kafka_feed pane via `with: { content: {
+  # format: conversation } }`).
+  format: columns
+
+  # Conversation-mode character-name resolution (Contract C): message
+  # `from` -> display name, same shape/precedence pattern as `colors` above.
+  # Seeded with each worker's configured `agent.name` value plus the two
+  # non-worker senders. Unknown `from` falls back to the raw id.
+  display_names:
+    coder: "KODI-7"
+    coder-native: "NYX-1"
+    coder-opencode: "OKO-2"
+    coder-aider: "ADA-3"
+    tester: "TESS-3"
+    manager: "MAX-1"
+    broadcast: "Broadcast"
+    operator: "Operator"
+

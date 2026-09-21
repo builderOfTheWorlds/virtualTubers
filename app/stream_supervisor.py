@@ -52,7 +52,23 @@ def pulse_monitor_available(sink="vout"):
         return False
 
 
-def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display):
+def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display, capture_resolution=None):
+    """Build the ffmpeg broadcaster command.
+
+    Contract E (docs/tuber_base_layout_plan.md): `capture_resolution` is what
+    Xvfb/xterm actually render at (x11grab's `-video_size`), while
+    `resolution` remains the STREAM OUTPUT size, unchanged in meaning. When
+    `capture_resolution` is omitted or equal to `resolution`, no `-vf scale`
+    step is added and the command is byte-for-byte identical to the
+    single-resolution behavior that existed before capture/output were
+    split — so nobody who hasn't opted into a larger capture size sees any
+    change. When they differ, a `-vf scale=<output_w>:<output_h>` filter is
+    inserted before the encode to scale the larger capture down (or up) to
+    the stream's output resolution.
+    """
+    if capture_resolution is None:
+        capture_resolution = resolution
+
     # Real audio (the PulseAudio null sink narration/audio_player.py plays
     # into) when Pulse is actually up; otherwise a synthesized silent track
     # so the flv/aac muxer still gets an audio stream and the broadcast
@@ -62,13 +78,20 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display):
     else:
         log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
         audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
+
+    scale_filter = []
+    if capture_resolution != resolution:
+        output_w, output_h = resolution.split("x", 1)
+        scale_filter = ["-vf", f"scale={output_w}:{output_h}"]
+
     return [
         "ffmpeg",
         "-f", "x11grab",
-        "-video_size", resolution,
+        "-video_size", capture_resolution,
         "-framerate", "30",
         "-i", display,
         *audio_input,
+        *scale_filter,
         "-c:v", "libx264",
         "-preset", "veryfast",
         "-tune", "zerolatency",
@@ -113,14 +136,28 @@ def main():
     parser.add_argument("--rtmp-url", required=True)
     parser.add_argument("--stream-key", required=True)
     parser.add_argument("--resolution", required=True)
+    parser.add_argument(
+        "--capture-resolution",
+        default=None,
+        help=(
+            "Resolution Xvfb/xterm actually render at (x11grab -video_size). "
+            "Defaults to --resolution when omitted, so single-resolution "
+            "behavior is unchanged unless this is set (docs/tuber_base_layout_plan.md Contract E)."
+        ),
+    )
     parser.add_argument("--display", required=True)
     args = parser.parse_args()
+
+    capture_resolution = args.capture_resolution or args.resolution
 
     config = load_worker_config(args.config)
     bus_config = config.get("message_bus", {})
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
     control = WorkerControl.from_config(config)
-    ffmpeg_cmd = build_ffmpeg_cmd(args.rtmp_url, args.stream_key, args.resolution, args.display)
+    ffmpeg_cmd = build_ffmpeg_cmd(
+        args.rtmp_url, args.stream_key, args.resolution, args.display,
+        capture_resolution=capture_resolution,
+    )
 
     log(redact_stream_key(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}"))
 

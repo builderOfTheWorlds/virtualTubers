@@ -41,7 +41,7 @@ def make_msg(**overrides):
 
 
 # ── Filtering: hide_types ─────────────────────────────────────────────────────
-@pytest.mark.parametrize("msg_type", ["heartbeat", "status_update"])
+@pytest.mark.parametrize("msg_type", ["heartbeat", "status_update", "agent_thinking"])
 def test_default_hide_types_drop_flood(msg_type):
     filters = dict(tail_bus.DEFAULT_FEED_CONFIG["filters"])
     assert tail_bus.passes_filters(make_msg(type=msg_type), filters) is False
@@ -167,7 +167,7 @@ def test_timestamp_bad_value_returns_string():
 # ── Config merge tolerance ────────────────────────────────────────────────────
 def test_merge_feed_config_defaults_when_empty():
     cfg = tail_bus._merge_feed_config({})
-    assert cfg["filters"]["hide_types"] == ["heartbeat", "status_update"]
+    assert cfg["filters"]["hide_types"] == ["heartbeat", "status_update", "agent_thinking"]
 
 
 def test_merge_feed_config_partial_override():
@@ -236,3 +236,88 @@ def test_connect_with_retry_never_raises():
             )
     # delay caps at CONNECT_RETRY_MAX_SECONDS rather than growing unbounded
     assert sleeps[0] == tail_bus.CONNECT_RETRY_BASE_SECONDS
+
+
+# ── Conversation mode (Contract C) ────────────────────────────────────────────
+def test_extract_narration_prefers_narration_over_text():
+    assert tail_bus.extract_narration({"narration": "hi there", "text": "raw"}) == "hi there"
+
+
+def test_extract_narration_falls_back_to_text():
+    assert tail_bus.extract_narration({"text": "hello"}) == "hello"
+
+
+def test_extract_narration_none_when_neither_present():
+    assert tail_bus.extract_narration({"ticket": 42}) is None
+
+
+def test_extract_narration_none_for_non_dict_payload():
+    assert tail_bus.extract_narration("not a dict") is None
+    assert tail_bus.extract_narration(None) is None
+
+
+def test_resolve_display_name_known_sender():
+    cfg = tail_bus._merge_feed_config({})
+    assert tail_bus.resolve_display_name("coder", cfg["display_names"]) == "KODI-7"
+
+
+def test_resolve_display_name_broadcast_and_operator():
+    cfg = tail_bus._merge_feed_config({})
+    assert tail_bus.resolve_display_name("broadcast", cfg["display_names"]) == "Broadcast"
+    assert tail_bus.resolve_display_name("operator", cfg["display_names"]) == "Operator"
+
+
+def test_resolve_display_name_unknown_falls_back_to_raw_id():
+    cfg = tail_bus._merge_feed_config({})
+    assert tail_bus.resolve_display_name("ghost-worker", cfg["display_names"]) == "ghost-worker"
+
+
+def test_format_conversation_line_exact_shape():
+    cfg = tail_bus._merge_feed_config({})
+    msg = make_msg(
+        **{"from": "coder", "type": "narration", "payload": {"narration": "Building the feature now."}}
+    )
+    line = tail_bus.format_conversation_line(msg, cfg)
+    assert line is not None
+    # <mmDDyy HH:MM:SS> : <character_name>: <character message>
+    prefix, rest = line.split(" : ", 1)
+    assert re.match(r"^\d{6} \d{2}:\d{2}:\d{2}$", prefix)
+    assert rest == "KODI-7: Building the feature now."
+
+
+def test_format_conversation_line_uses_text_field_when_no_narration():
+    cfg = tail_bus._merge_feed_config({})
+    msg = make_msg(**{"from": "manager", "payload": {"text": "Status update text"}})
+    line = tail_bus.format_conversation_line(msg, cfg)
+    assert line.endswith("MAX-1: Status update text")
+
+
+def test_format_conversation_line_skips_missing_narration():
+    cfg = tail_bus._merge_feed_config({})
+    msg = make_msg(**{"from": "coder", "payload": {"ticket": 42}})
+    assert tail_bus.format_conversation_line(msg, cfg) is None
+
+
+def test_format_conversation_line_unknown_sender_uses_raw_id():
+    cfg = tail_bus._merge_feed_config({})
+    msg = make_msg(**{"from": "unknown-thing", "payload": {"text": "hi"}})
+    line = tail_bus.format_conversation_line(msg, cfg)
+    assert "unknown-thing: hi" in line
+
+
+def test_conversation_mode_still_honors_filters_pipeline():
+    # Conversation mode is a RENDER change, not a filter-pipeline change:
+    # agent_thinking/heartbeat/status_update stay filtered upstream.
+    filters = dict(tail_bus.DEFAULT_FEED_CONFIG["filters"])
+    assert tail_bus.passes_filters(make_msg(type="agent_thinking"), filters) is False
+
+
+def test_default_feed_config_format_is_columns():
+    assert tail_bus.DEFAULT_FEED_CONFIG["format"] == "columns"
+
+
+def test_merge_feed_config_conversation_format_override():
+    cfg = tail_bus._merge_feed_config({"format": "conversation"})
+    assert cfg["format"] == "conversation"
+    # Columns mode defaults (colors, filters, etc.) remain intact/unaffected.
+    assert cfg["filters"]["hide_types"] == ["heartbeat", "status_update", "agent_thinking"]

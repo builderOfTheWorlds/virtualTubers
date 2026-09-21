@@ -1,0 +1,14 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: thinking
+#
+# Consumes the `agent_thinking` bus message (Contract B of
+# docs/tuber_base_layout_plan.md), published by app/agent_metrics.py's
+# InstrumentedLLMClient wrapper. Pins THIS worker's own agent_thinking
+# stream only (type == agent_thinking AND from == this worker's WORKER_ID)
+# — prints each as it arrives, plain scrolling text, no TUI, matching
+# tail_bus.py's house style.
+# ──────────────────────────────────────────────────────────────────────────────
+type: thinking
+title: "Thinking"
+border_color: yellow
+command: "python3 /app/thinking_pane.py --bus-config {config_path}"

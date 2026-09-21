@@ -1,0 +1,12 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Panel type: chat_list
+#
+# Extremely narrow (~3-5 cols) chat-room-name list. Decision 5 of
+# docs/tuber_base_layout_plan.md: STATIC STUB — always shows exactly one
+# entry, `all` (reverse-video highlighted). No real multi-channel Kafka
+# routing yet; selecting it does nothing.
+# ──────────────────────────────────────────────────────────────────────────────
+type: chat_list
+title: "c"
+border_color: white
+command: "python3 /app/chat_list_pane.py"

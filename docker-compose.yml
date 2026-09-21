@@ -13,10 +13,12 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
       WORKER_ID: coder
-      # Set TUBER1_LAYOUT_PRESET=replay in the stack env to switch this
-      # worker into Rerun Theater mode (docs/replay_pane.md) — env-only
-      # change, no rebuild.
-      LAYOUT_PRESET: ${TUBER1_LAYOUT_PRESET:-coder}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER1_LAYOUT_PRESET=replay in the stack env to switch this
+      # worker into Rerun Theater mode (docs/replay_pane.md) instead.
+      # Env-only change, no rebuild.
+      LAYOUT_PRESET: ${TUBER1_LAYOUT_PRESET:-tuber_base}
       # Swap the avatar renderer without a config edit or rebuild — e.g.
       # "ascii_avatar" (docs/avatar_providers.md). Unset keeps the worker
       # config's own avatar.provider (defaults to "builtin").
@@ -86,10 +88,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 102
       WORKER_ID: coder-native
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # TUBER2_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${TUBER2_LAYOUT_PRESET:-replay}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER2_LAYOUT_PRESET=replay in the stack env to switch this
+      # worker into Rerun Theater mode instead. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${TUBER2_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${TUBER2_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -137,10 +140,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 103
       WORKER_ID: coder-opencode
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # TUBER3_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${TUBER3_LAYOUT_PRESET:-replay}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER3_LAYOUT_PRESET=replay in the stack env to switch this
+      # worker into Rerun Theater mode instead. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${TUBER3_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${TUBER3_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -188,10 +192,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 104
       WORKER_ID: coder-aider
-      # Defaults to Rerun Theater mode (docs/replay_pane.md) for now — set
-      # TUBER4_LAYOUT_PRESET=coder in the stack env to switch this
-      # worker back to its normal editor pane. Env-only change, no rebuild.
-      LAYOUT_PRESET: ${TUBER4_LAYOUT_PRESET:-replay}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER4_LAYOUT_PRESET=replay in the stack env to switch this
+      # worker into Rerun Theater mode instead. Env-only change, no rebuild.
+      LAYOUT_PRESET: ${TUBER4_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${TUBER4_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -239,7 +244,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 100
       WORKER_ID: manager
-      LAYOUT_PRESET: ${TUBER6_LAYOUT_PRESET:-manager}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER6_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
+      # or =manager for the old ticket-board layout. Env-only, no rebuild.
+      LAYOUT_PRESET: ${TUBER6_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${TUBER6_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
@@ -283,7 +292,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 101
       WORKER_ID: tester
-      LAYOUT_PRESET: ${TUBER5_LAYOUT_PRESET:-tester}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
+      # TUBER5_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
+      # or =tester for the old pytest-loop layout. Env-only, no rebuild.
+      LAYOUT_PRESET: ${TUBER5_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${TUBER5_AVATAR_PROVIDER:-}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
       KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}

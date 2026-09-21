@@ -5,13 +5,21 @@ CONFIG_PATH="${CONFIG_PATH:-/config/worker.yaml}"
 DISPLAY_NUM="${DISPLAY_NUM:-99}"
 DISPLAY=":${DISPLAY_NUM}"
 RESOLUTION="${RESOLUTION:-1920x1080}"
-FONT_SIZE="${FONT_SIZE:-14}"
+# Capture resolution (docs/tuber_base_layout_plan.md Contract E): Xvfb/xterm
+# render at this size — bigger than the stream OUTPUT (RESOLUTION above) lets
+# more detail fit on screen before stream_supervisor.py's ffmpeg -vf scale
+# step scales it down. Defaults to 4K; RESOLUTION stays the unchanged
+# 1920x1080 default stream output.
+CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-3840x2160}"
+FONT_SIZE="${FONT_SIZE:-20}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
 
-# Pixel dimensions of the capture, derived from RESOLUTION (e.g. 1920x1080)
-VW="${RESOLUTION%x*}"
-VH="${RESOLUTION#*x}"
+# Pixel dimensions of the capture, derived from CAPTURE_RESOLUTION (e.g.
+# 3840x2160) — NOT from RESOLUTION, which is the stream's OUTPUT size and is
+# passed to stream_supervisor.py separately below.
+VW="${CAPTURE_RESOLUTION%x*}"
+VH="${CAPTURE_RESOLUTION#*x}"
 
 log() { echo "[startup] $*"; }
 
@@ -21,7 +29,7 @@ rm -f "/tmp/.X11-unix/X${DISPLAY_NUM}"
 
 # ── 2. Virtual display ─────────────────────────────────────────────────────────
 log "Starting Xvfb on display ${DISPLAY}"
-Xvfb "${DISPLAY}" -screen 0 "${RESOLUTION}x24" -ac +extension GLX &
+Xvfb "${DISPLAY}" -screen 0 "${CAPTURE_RESOLUTION}x24" -ac +extension GLX &
 XVFB_PID=$!
 export DISPLAY
 sleep 2
@@ -107,7 +115,7 @@ DISPLAY="${DISPLAY}" xterm \
     -fa 'Monospace' -fs "${FONT_SIZE}" \
     -b 0 -bw 0 \
     -geometry "+0+0" \
-    -bg '#0d1117' -fg '#e6edf3' \
+    -bg '#2b2b2b' -fg '#e6edf3' \
     -e "tmux attach -t ${SESSION}" &
 XTERM_PID=$!
 sleep 2
@@ -193,6 +201,7 @@ python3 /app/stream_supervisor.py \
     --rtmp-url "${STREAM_RTMP_URL}" \
     --stream-key "${STREAM_KEY}" \
     --resolution "${RESOLUTION}" \
+    --capture-resolution "${CAPTURE_RESOLUTION}" \
     --display "${DISPLAY}"
 
 log "Stream supervisor exited. Cleaning up."

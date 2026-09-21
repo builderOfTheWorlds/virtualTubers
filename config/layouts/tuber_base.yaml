@@ -1,0 +1,106 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Layout preset: tuber_base
+#
+# The shared preset for all SIX individual-worker roles (coder, coder-native,
+# coder-opencode, coder-aider, tester, manager) — see
+# docs/tuber_base_layout_plan.md. Replaces each role's old three-column preset
+# (coder.yaml / tester.yaml / manager.yaml) with ONE shared layout matching the
+# user-drawn mock:
+#
+#   ______________________________________
+#   |radar  |       |          |c|        |
+#   |chart  |       |          | |        |
+#   |_______|       |  AVATAR  | |        |
+#   |               |          | |        |
+#   |               |__________| |        |
+#   |               |          | | Kafka  |
+#   |knoledge graph |          | |        |
+#   |               | Thinking | |        |
+#   |               |          | |        |
+#   |               |          | |        |
+#   |-------------------------------------|
+#   |__________tmux bottom bar____________|
+#
+# `roundtable` (tuber_0/GM, config/layouts/roundtable.yaml) is OUT OF SCOPE and
+# untouched — it is a different 8-tile grid.
+#
+# Geometry model (see docs/build_layout.md, app/build_layout.py's module
+# docstring): the FIRST pane is the base pane (whole screen); every later pane
+# is created by splitting its `target` pane, sized to `size` percent of that
+# TARGET's CURRENT size at split time (tmux `split-window -p`) — NOT of the
+# whole screen. Panes are laid out in list order; each `target` must already
+# be listed.
+#
+# ── Four uneven columns: L(radar/knowledge) ~20%, M(avatar/thinking) ~45%,
+#    C(chat_list) ~5%, R(kafka_feed) ~30% ───────────────────────────────────
+# Worked math (same percentage-splitting approach as roundtable.yaml's header,
+# generalized to UNEVEN target widths instead of even quarters — each step
+# still derives size_k from "what % of the CURRENT target's width should the
+# NEW pane become", not a flat fraction of the whole screen):
+#
+#   start: base pane (radar_chart) = 100% of screen width.
+#
+#   split 1 (target: radar_chart, the 100%-wide base) size=80
+#     -> new pane (avatar, carries M+C+R) = 100 * 80/100 = 80% of screen
+#     -> radar_chart (old/target) keeps 100 * 20/100 = 20% of screen  -> L ✓
+#
+#   split 2 (target: avatar, currently 80% wide) size=44
+#     -> new pane (chat_list, carries C+R) = 80 * 44/100 = 35.2% of screen
+#     -> avatar (old/target) keeps 80 * 56/100 = 44.8% of screen      -> M ✓
+#
+#   split 3 (target: chat_list, currently 35.2% wide) size=86
+#     -> new pane (kafka_feed) = 35.2 * 86/100 = 30.27% of screen     -> R ✓
+#     -> chat_list (old/target) keeps 35.2 * 14/100 = 4.93% of screen -> C ✓
+#
+# Resulting columns, left to right: L=20%, M=44.8%(~45), C=4.93%(~5), R=30.27%
+# (~30) — matches the mock's narrow-left / wide-middle / narrow-"c" /
+# wide-right proportions. Each column pane is then split VERTICALLY (top/
+# bottom) independently, same shrinking-split logic but on that column's own
+# height instead of the screen's width:
+#
+#   split 4 (target: radar_chart, the L column, full height) size=50
+#     -> new pane (knowledge_graph) = bottom half of L; radar_chart keeps the
+#        top half. Flat 50/50 split — no reason to favor either stat pane.
+#
+#   split 5 (target: avatar, the M column, full height) size=60
+#     -> new pane (thinking) = bottom 60% of M; avatar keeps the top 40%. The
+#        mock draws Thinking noticeably taller than the avatar box (more rows
+#        of scrolling chain-of-thought text vs. a small static face).
+#
+# Per-pane universal knobs: use, id, split, size, target, title, border_color,
+# command, enabled, with.
+# ──────────────────────────────────────────────────────────────────────────────
+preset: tuber_base
+panes:
+  # ── Base pane: top of the narrow left column. ───────────────────────────────
+  - use: radar_chart                    # base pane, L column (~20% wide)
+
+  # ── Horizontal splits: carve the four columns left to right. ───────────────
+  - use: avatar                         # carves out M+C+R combined (~80%)
+    target: radar_chart
+    split: h
+    size: 80
+
+  - use: chat_list                      # carves out C+R combined (~35.2%)
+    target: avatar
+    split: h
+    size: 44
+
+  - use: kafka_feed                     # carves out R (~30.27%); with: sets
+    target: chat_list                   # conversation-mode rendering per
+    split: h                            # contract C.
+    size: 86
+    with:
+      content:
+        format: conversation
+
+  # ── Vertical splits: split each column into its top/bottom panes. ──────────
+  - use: knowledge_graph                # bottom of L column; remainder stays
+    target: radar_chart                 # radar_chart (top half).
+    split: v
+    size: 50
+
+  - use: thinking                       # bottom 60% of M column; remainder
+    target: avatar                      # stays avatar (top 40%).
+    split: v
+    size: 60

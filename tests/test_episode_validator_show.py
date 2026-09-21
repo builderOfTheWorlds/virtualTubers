@@ -39,6 +39,7 @@ VOICES = [
     "tenor_high",
     "baritone_mid",
     "bass_low",
+    "narrator_warm",
 ]
 
 

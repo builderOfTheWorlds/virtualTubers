@@ -17,6 +17,7 @@ The load-bearing properties under test:
 """
 import json
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -981,9 +982,10 @@ def test_perform_tile_request_enables_the_fade_and_closes_it_when_done(
 
     monkeypatch.setattr(tile_pane.TileRenderer, "__init__", spy_init)
     monkeypatch.setattr(tile_pane, "Performer", FakePerformer)
-    request = {"airing_id": "airing-1", "episode": "sample",
+    request = {"airing_id": "airing-1", "episode": "round_ep",
               "cast": {"boss": "tuber_2"}, "worker_name": "Vigil"}
-    write_json(tile_request_file(str(relay), "tuber_2"), request)
+    Path(tile_request_file(str(relay), "tuber_2")).write_text(
+        json.dumps(request), encoding="utf-8")
 
     assert handle_once("tuber_2", str(relay), state_path=tile_state_file(str(relay), "tuber_2")) is True
     assert seen["fade_enabled"] is True
@@ -1009,9 +1011,10 @@ def test_perform_tile_request_closes_the_renderer_even_if_the_performer_raises(
 
     monkeypatch.setattr(tile_pane.TileRenderer, "__init__", spy_init)
     monkeypatch.setattr(tile_pane, "Performer", RaisingPerformer)
-    request = {"airing_id": "airing-1", "episode": "sample",
+    request = {"airing_id": "airing-1", "episode": "round_ep",
               "cast": {"boss": "tuber_2"}, "worker_name": "Vigil"}
-    write_json(tile_request_file(str(relay), "tuber_2"), request)
+    Path(tile_request_file(str(relay), "tuber_2")).write_text(
+        json.dumps(request), encoding="utf-8")
 
     # handle_once swallows the exception (§ "one bad show must never kill
     # the tile"), but the renderer's ticker thread must STILL be stopped.

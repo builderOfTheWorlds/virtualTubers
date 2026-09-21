@@ -67,3 +67,52 @@ def test_build_ffmpeg_cmd_falls_back_to_silence_when_no_monitor():
         cmd = build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99")
     assert "anullsrc=channel_layout=stereo:sample_rate=44100" in cmd
     assert "vout.monitor" not in cmd
+
+
+# ── capture-vs-output resolution (Contract E, docs/tuber_base_layout_plan.md) ─
+def test_build_ffmpeg_cmd_defaults_capture_resolution_to_resolution():
+    """No capture_resolution passed -> byte-identical to pre-scaling behavior:
+    -video_size uses `resolution` and no -vf scale filter is present."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99")
+    i = cmd.index("-video_size")
+    assert cmd[i + 1] == "1920x1080"
+    assert "-vf" not in cmd
+
+
+def test_build_ffmpeg_cmd_equal_capture_and_output_omits_scale_filter():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+            capture_resolution="1920x1080",
+        )
+    i = cmd.index("-video_size")
+    assert cmd[i + 1] == "1920x1080"
+    assert "-vf" not in cmd
+
+
+def test_build_ffmpeg_cmd_scales_down_larger_capture_to_output():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+            capture_resolution="3840x2160",
+        )
+    i = cmd.index("-video_size")
+    assert cmd[i + 1] == "3840x2160"
+    assert "-vf" in cmd
+    vf_i = cmd.index("-vf")
+    assert cmd[vf_i + 1] == "scale=1920:1080"
+    # scale filter must precede the encode args
+    assert vf_i < cmd.index("-c:v")
+
+
+def test_build_ffmpeg_cmd_capture_resolution_precedes_framerate_and_input():
+    """-video_size <capture_resolution> must be what x11grab is told to grab,
+    independent of the output/scale settings."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1280x720", ":99",
+            capture_resolution="2560x1440",
+        )
+    assert cmd[:5] == ["ffmpeg", "-f", "x11grab", "-video_size", "2560x1440"]
+    assert "scale=1280:720" in cmd

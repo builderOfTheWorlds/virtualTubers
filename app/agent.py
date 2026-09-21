@@ -23,6 +23,7 @@ from llm_client import build_llm_client
 from coding_backend import build_coding_backend
 from test_runner import run_pytest, workspace_testable
 from agent_state import resolve_state_path, write_state
+from agent_metrics import AgentMetrics, InstrumentedLLMClient, MetricsProducerWrapper, resolve_runtime_dir
 import episode_store
 from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
 
@@ -1128,6 +1129,19 @@ def main():
     consumer = MessageConsumer(bootstrap_servers, topic, group_id=f"vtuber-agent-{worker_id}", worker_id=worker_id)
     control = WorkerControl.from_config(config)
 
+    # Instrumentation choke point (docs/tuber_base_layout_plan.md, Frozen
+    # Contract A/B): wrap the already-built llm_client + producer so all 8
+    # existing llm_client.complete(...) call sites downstream get thinking
+    # narration, metrics tracking, and messages_sent counting for free,
+    # with no per-call-site changes. AgentMetrics is shared between the two
+    # wrappers so producer.send(...) calls made by message handlers AND the
+    # instrumented client's own agent_thinking publish both count toward
+    # messages_sent.
+    metrics_runtime_dir = resolve_runtime_dir()
+    shared_metrics = AgentMetrics(worker_id, runtime_dir=metrics_runtime_dir)
+    producer = MetricsProducerWrapper(producer, shared_metrics)
+    llm_client = InstrumentedLLMClient(llm_client, producer, worker_id, metrics=shared_metrics)
+
     i = 0
     while True:
         if not control.is_enabled(worker_id):
@@ -1135,16 +1149,24 @@ def main():
             time.sleep(tick_rate_s)
             continue
 
-        for msg in consumer.poll_new():
-            print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")
-            handler = MESSAGE_HANDLERS.get(msg["type"])
-            if handler:
-                handler(worker_id, agent_config, llm_client, producer, msg, state_path,
-                        coding_backend=coding_backend)
+        tick_ok = True
+        try:
+            for msg in consumer.poll_new():
+                print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")
+                handler = MESSAGE_HANDLERS.get(msg["type"])
+                if handler:
+                    handler(worker_id, agent_config, llm_client, producer, msg, state_path,
+                            coding_backend=coding_backend)
 
-        heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})
-        producer.send(heartbeat)
-        print(f"[agent:{worker_id}] {heartbeat['type']} #{i}")
+            heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})
+            producer.send(heartbeat)
+            print(f"[agent:{worker_id}] {heartbeat['type']} #{i}")
+        except Exception as exc:
+            tick_ok = False
+            print(f"[agent:{worker_id}] ERROR unhandled exception in tick #{i}: {exc}")
+            raise
+        finally:
+            llm_client.metrics.record_tick(tick_ok)
 
         i += 1
         time.sleep(tick_rate_s)
