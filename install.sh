@@ -21,12 +21,16 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 log() { echo "[install] $*"; }
 
-log "Fetching Piper voice models (voices/)"
-if command -v python3 >/dev/null 2>&1; then
-    python3 scripts/download_voices.py --out voices \
-        || log "WARN: voice download failed — replays will play silent until voices/ is populated (rerun ./install.sh once network/host issue is resolved)"
+if [[ "${SKIP_VOICES:-}" == "1" ]]; then
+    log "SKIP_VOICES=1 — skipping Piper voice model fetch (routine redeploy, voices/ already populated)"
 else
-    log "WARN: python3 not found — skipping voice download (see scripts/download_voices.py)"
+    log "Fetching Piper voice models (voices/)"
+    if command -v python3 >/dev/null 2>&1; then
+        python3 scripts/download_voices.py --out voices \
+            || log "WARN: voice download failed — replays will play silent until voices/ is populated (rerun ./install.sh once network/host issue is resolved)"
+    else
+        log "WARN: python3 not found — skipping voice download (see scripts/download_voices.py)"
+    fi
 fi
 
 log "Building vtube-worker:latest"
