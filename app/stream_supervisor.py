@@ -33,6 +33,46 @@ STOP_TIMEOUT_S = 10
 TWITCH_BITRATE_KBPS = 4500
 TWITCH_KEYFRAME_INTERVAL_FRAMES = 60
 
+#: Per-input capture queue sizing. `-thread_queue_size` is counted in
+#: PACKETS, and for a raw x11grab input one packet is one uncompressed
+#: frame — at 1920x1080 BGR0 that is 1920*1080*4 == ~8.3 MB EACH (it was
+#: ~14.7 MB at the old 2560x1440 capture size). A flat
+#: `-thread_queue_size 1024` on the video input therefore authorized
+#: 8-15 GB of shared-memory frame buffer per ffmpeg, and because the
+#: software encoder on this host can't drain 30fps at these sizes the
+#: producer always runs ahead and the queue actually fills to the cap.
+#: With 7 stream workers that reached ~50 GB and drove the host into
+#: repeated global OOM kills (ffmpeg dying with shmem-rss ~7 GB, taking
+#: pipewire, dbus, the user systemd and every worker container with it).
+#:
+#: So the video queue is sized by BYTES, not by a frame count: hold at
+#: most VIDEO_QUEUE_BUDGET_BYTES of in-flight frames whatever the capture
+#: resolution is. Audio is unaffected — pulse packets are ~KB, so 1024 of
+#: them is a rounding error and keeps the original dropped-frame fix.
+VIDEO_QUEUE_BUDGET_BYTES = 512 * 1024 * 1024
+VIDEO_QUEUE_MIN_FRAMES = 8     # ffmpeg's own default; never go below it
+VIDEO_QUEUE_MAX_FRAMES = 256
+AUDIO_QUEUE_PACKETS = 1024
+
+
+def video_thread_queue_size(capture_resolution):
+    """Frames to allow in the x11grab input queue at this capture size.
+
+    Bounded so the queue can never cost more than VIDEO_QUEUE_BUDGET_BYTES
+    of resident frame buffer per ffmpeg process, which is what stops N
+    concurrent stream workers from OOM-killing the host.
+    """
+    try:
+        width, height = (int(v) for v in capture_resolution.split("x", 1))
+        frame_bytes = width * height * 4  # x11grab captures BGR0, 4 bytes/px
+        frames = VIDEO_QUEUE_BUDGET_BYTES // frame_bytes
+    except (ValueError, ZeroDivisionError):
+        # Unparseable resolution: fall back to the floor rather than
+        # guessing large — a small queue drops frames, a large one
+        # takes the host down.
+        frames = VIDEO_QUEUE_MIN_FRAMES
+    return max(VIDEO_QUEUE_MIN_FRAMES, min(VIDEO_QUEUE_MAX_FRAMES, frames))
+
 
 
 def log(msg):
@@ -154,7 +194,8 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     # so the flv/aac muxer still gets an audio stream and the broadcast
     # itself never fails over what should only ever mute the narration.
     if pulse_monitor_available():
-        audio_input = ["-thread_queue_size", "1024", "-f", "pulse", "-i", "vout.monitor"]
+        audio_input = ["-thread_queue_size", str(AUDIO_QUEUE_PACKETS),
+                       "-f", "pulse", "-i", "vout.monitor"]
     else:
         log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
         audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
@@ -223,7 +264,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
 
     return [
         "ffmpeg",
-        "-thread_queue_size", "1024",
+        "-thread_queue_size", str(video_thread_queue_size(capture_resolution)),
         "-f", "x11grab",
         "-video_size", capture_resolution,
         "-framerate", "30",

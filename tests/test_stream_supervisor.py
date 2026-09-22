@@ -6,6 +6,9 @@ pulse_monitor_available()/build_ffmpeg_cmd()'s audio input selection
 """
 from unittest.mock import patch
 
+import pytest
+
+import stream_supervisor as ss
 from stream_supervisor import build_ffmpeg_cmd, decide_action, pulse_monitor_available
 
 
@@ -119,7 +122,9 @@ def test_build_ffmpeg_cmd_capture_resolution_precedes_framerate_and_input():
             "rtmp://live.twitch.tv/app", "key123", "1280x720", ":99",
             capture_resolution="2560x1440", use_gpu=False,
         )
-    assert cmd[:7] == ["ffmpeg", "-thread_queue_size", "1024", "-f", "x11grab",
+    assert cmd[:7] == ["ffmpeg",
+                       "-thread_queue_size", str(ss.video_thread_queue_size("2560x1440")),
+                       "-f", "x11grab",
                        "-video_size", "2560x1440"]
     assert "scale=1280:720" in cmd
 
@@ -276,7 +281,7 @@ def test_build_ffmpeg_cmd_sets_thread_queue_size_for_video_input():
             "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
     # the FIRST -thread_queue_size must precede the x11grab -i (video input)
     i = cmd.index("-thread_queue_size")
-    assert cmd[i + 1] == "1024"
+    assert cmd[i + 1] == str(ss.video_thread_queue_size("1920x1080"))
     assert cmd.index("-i") > i  # comes before this input, not after
 
 
@@ -288,6 +293,7 @@ def test_build_ffmpeg_cmd_sets_thread_queue_size_for_pulse_audio_input():
     assert cmd.count("-thread_queue_size") == 2
     pulse_i = cmd.index("pulse")
     assert cmd[pulse_i - 3] == "-thread_queue_size"
+    assert cmd[pulse_i - 2] == str(ss.AUDIO_QUEUE_PACKETS)
 
 
 def test_build_ffmpeg_cmd_silent_audio_fallback_has_no_thread_queue_size():
@@ -297,3 +303,51 @@ def test_build_ffmpeg_cmd_silent_audio_fallback_has_no_thread_queue_size():
         cmd = build_ffmpeg_cmd(
             "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
     assert cmd.count("-thread_queue_size") == 1  # only the video input's
+
+
+# ── video queue must be sized in BYTES, not frames — the flat 1024 above
+#    was an OOM bug: x11grab packets are whole uncompressed frames
+#    (~14.7 MB at 1440p), so 1024 of them authorized ~15 GB of shmem per
+#    ffmpeg, and 7 concurrent stream workers global-OOM-killed the host
+#    (ffmpeg dying with shmem-rss ~7 GB, taking pipewire/dbus/the user
+#    systemd and every worker container with it). ────────────────────────
+@pytest.mark.parametrize("capture_resolution", [
+    "1280x720", "1920x1080", "2560x1440", "3840x2160",
+])
+def test_video_thread_queue_stays_within_memory_budget(capture_resolution):
+    width, height = (int(v) for v in capture_resolution.split("x"))
+    frames = ss.video_thread_queue_size(capture_resolution)
+    assert frames * width * height * 4 <= ss.VIDEO_QUEUE_BUDGET_BYTES
+
+
+def test_video_thread_queue_shrinks_as_capture_resolution_grows():
+    assert (ss.video_thread_queue_size("3840x2160")
+            < ss.video_thread_queue_size("1280x720"))
+
+
+def test_video_thread_queue_never_below_ffmpeg_default():
+    # an absurd capture size must still leave a usable queue, not 0
+    assert ss.video_thread_queue_size("30000x30000") == ss.VIDEO_QUEUE_MIN_FRAMES
+
+
+def test_video_thread_queue_is_capped_for_tiny_captures():
+    assert ss.video_thread_queue_size("64x64") == ss.VIDEO_QUEUE_MAX_FRAMES
+
+
+@pytest.mark.parametrize("bad", ["", "notaresolution", "1920", "0x0", "axb"])
+def test_video_thread_queue_falls_back_to_floor_on_bad_input(bad):
+    """Unparseable input must fail SMALL — a short queue drops frames, an
+    unbounded one takes the whole host down."""
+    assert ss.video_thread_queue_size(bad) == ss.VIDEO_QUEUE_MIN_FRAMES
+
+
+def test_total_video_queue_memory_across_all_workers_is_bounded():
+    """The actual production shape that broke: 7 stream workers, each with
+    its own ffmpeg, must not collectively authorize more frame buffer than
+    the host has RAM."""
+    workers = 7
+    capture_resolution = "2560x1440"
+    width, height = (int(v) for v in capture_resolution.split("x"))
+    per_worker = ss.video_thread_queue_size(capture_resolution) * width * height * 4
+    assert workers * per_worker <= 8 * 1024 ** 3  # well under the 121 GB host
+

@@ -6,16 +6,29 @@ DISPLAY_NUM="${DISPLAY_NUM:-99}"
 DISPLAY=":${DISPLAY_NUM}"
 RESOLUTION="${RESOLUTION:-1920x1080}"
 # Capture resolution (docs/tuber_base_layout_plan.md Contract E): Xvfb/xterm
-# render at this size — bigger than the stream OUTPUT (RESOLUTION above) lets
-# more detail fit on screen before stream_supervisor.py's ffmpeg -vf scale
-# step scales it down. Defaults to 2560x1440 (scaled down from 4K
-# 2026-09-22 — 6 concurrent 4K x11grab captures were saturating host
-# memory bandwidth, the real cause of a ~6-9fps Twitch stream even with
-# GPU rendering/NVENC/CBR all confirmed working in isolation; see
-# docker-compose.yml's CAPTURE_RESOLUTION and stream_supervisor.py);
-# RESOLUTION stays the unchanged 1920x1080 default stream output.
-CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-2560x1440}"
-FONT_SIZE="${FONT_SIZE:-20}"
+# render at this size, and stream_supervisor.py's ffmpeg scales it to the
+# stream OUTPUT size (RESOLUTION above) before encoding.
+#
+# 2026-09-22: set EQUAL to RESOLUTION (1920x1080), down from 2560x1440 and
+# originally 3840x2160. Capturing above the output size never added detail —
+# downscaling cannot add information, it only rendered text at 133% and threw
+# the extra away, and a non-integer downscale of hinted glyphs (17x33 capture
+# px resampled to 12.75x24.75 output px) is exactly what made stream text
+# look mushy. Rendering at the final size with a smaller FONT_SIZE instead
+# gives MORE text on screen (160x45 cells at fs=14 vs 150x43 at fs=20) and
+# each glyph lands on its exact output pixels, fully hinted.
+#
+# Because capture == output, build_ffmpeg_cmd() now emits no `-vf scale`
+# step at all, removing a full-frame software resample per worker per frame
+# (this host has no usable GPU — GL_RENDERER is llvmpipe). It also halves
+# the x11grab frame size (14.7 MB -> 8.3 MB), which doubles how many frames
+# fit in stream_supervisor.py's byte-budgeted input queue.
+CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-1920x1080}"
+# Monospace cell size is ~12x24 px at fs=14 (measured in this image via
+# xterm+xdotool), giving a 160x45 character grid at 1920x1080. Raising this
+# without lowering CAPTURE_RESOLUTION's grid math will reflow every pane —
+# see app/pane_geometry.py and config/workers/coder.yaml's pinned avatar box.
+FONT_SIZE="${FONT_SIZE:-14}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
 
