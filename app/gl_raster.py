@@ -168,8 +168,21 @@ def render(verts, faces, materials, width=480, height=420, rot_x=0.06,
 
     fbo = ctx.simple_framebuffer((width, height))
     fbo.use()
-    ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
-    ctx.front_face = "ccw"
+    # DEPTH_TEST only — NOT CULL_FACE. Backface culling depends on this GL
+    # implementation agreeing with pixel_raster.py's on which winding
+    # direction counts as "front" (ctx.front_face = "ccw" assumes a Y-up
+    # NDC / CCW-front convention). That held on the RTX 3080/mesa desktop
+    # this was developed against, but broke silently on gx10 (aarch64,
+    # different GPU/driver stack, 2026-09-22): every frame came back
+    # near-black regardless of rotation — the signature of EVERY triangle
+    # being (wrongly) treated as back-facing and culled, not an occasional
+    # glitch. The Z-buffer alone is enough to get correct hidden-surface
+    # removal on a closed mesh like this head — it doesn't depend on any
+    # winding convention, so it can't silently disagree across drivers.
+    # Costs a little overdraw (back faces get rasterized and z-tested, then
+    # discarded), not correctness, on hardware that's already ~200x over
+    # the realtime floor (docs/gl_raster_benchmark.md).
+    ctx.enable(moderngl.DEPTH_TEST)
     fbo.clear(0.0, 0.0, 0.0, 1.0)
     prog["mvp"].write(mvp.T.tobytes())
     prog["tint"].value = tuple(float(c) for c in tint)

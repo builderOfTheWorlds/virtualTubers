@@ -87,10 +87,19 @@ avatar:
     #   python3 app/character_preview.py --preset chadwick
     #   python3 app/character_preview.py --preset chadwick --set jaw_width=0.9
     character_params: chadwick
-    # window_pos is intentionally omitted — auto-detected at startup from
-    # this pane's actual on-screen rect (tmux + xterm geometry via
-    # pane_geometry.py), so it tracks tuber_base.yaml's layout instead of a
-    # hardcoded offset that would drift if the layout or resolution changes.
+    # STOPGAP (2026-09-22): auto-detection (pane_geometry.py, tmux + xdotool)
+    # is not yet reliably landing on gx10 — investigating (see
+    # docs/gl_raster_benchmark.md's open-issues note). Pinned explicitly here
+    # instead, computed directly from tuber_base.yaml's own split math at the
+    # DEFAULT CAPTURE_RESOLUTION=3840x2160: the avatar pane is the top 40% of
+    # the M column (60% width, starting after the 20%-wide L column) ->
+    # x=768 (0.20*3840), y=0, width=2304 (0.60*3840), height=864 (0.40*2160).
+    # Remove this block (falls back to auto-detect) once that's fixed, or if
+    # CAPTURE_RESOLUTION is overridden away from the 3840x2160 default —
+    # these numbers do NOT scale with it automatically.
+    window_pos: [768, 0]
+    width: 2304
+    height: 864
   # `expressions` below is unused by codec_avatar (it has no 2D face to
   # draw eyes/mouth into — expression drives rotation speed + tint instead)
   # but is kept so flipping `provider` back to `builtin` still renders
