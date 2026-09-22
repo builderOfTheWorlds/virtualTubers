@@ -59,6 +59,30 @@ EXPRESSION_STYLE = {
     "focused": (1.2, None),
 }
 
+
+def _detect_truecolor_visual_id():
+    """Best-effort: the X server's default TrueColor visual id (e.g.
+    "0x21"), via `xdpyinfo`. Returns None (not an exception) on any
+    failure — no X server (local dev/CI), xdpyinfo missing, or unparsable
+    output all just mean "let SDL pick its own default", same as before
+    this fix existed. See the SDL_VIDEO_X11_VISUALID comment in
+    CodecAvatarProvider.__init__ for why this specific visual matters."""
+    import re
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["xdpyinfo"], capture_output=True, text=True, timeout=3)
+        if out.returncode != 0:
+            return None
+        match = re.search(r"default visual id:\s*(0x[0-9a-fA-F]+)", out.stdout)
+        return match.group(1) if match else None
+    except Exception as exc:  # noqa: BLE001 — cosmetic, falls back to SDL's default
+        log.warning("codec_avatar: could not auto-detect the X server's "
+                   "default visual (%r); leaving SDL_VIDEO_X11_VISUALID "
+                   "unset (SDL's own default pick may be wrong on some "
+                   "servers — see 2026-09-22 gx10 black-window bug)", exc)
+        return None
+
 #: character_schema.ACCENT_COLORS name -> pixel_raster tint (0..1 RGB
 #: float array). Reuses the same 8 names as termgl_avatar/character_schema
 #: so a preset's accent_color means the same thing everywhere; RGB picks
@@ -190,6 +214,30 @@ class CodecAvatarProvider(AvatarProvider):
 
         import os
         os.environ["SDL_VIDEO_WINDOW_POS"] = f"{window_pos[0]},{window_pos[1]}"
+        # SDL_VIDEO_X11_VISUALID pins the exact X visual SDL creates the
+        # window with. Plain depth=24 (tried first, 2026-09-22) is NOT
+        # enough: gx10's Xvfb offers BOTH a TrueColor and a DirectColor
+        # visual at depth 24, and SDL's default pick landed on the
+        # DirectColor one. DirectColor requires its own installed
+        # colormap to translate pixel values on read; this Xvfb only
+        # supports ONE installed colormap at a time, and the xterm/tmux
+        # window already owns it — so our window's colormap silently
+        # never gets installed, and every external reader (ffmpeg
+        # x11grab, the actual stream capture) sees solid black. Only
+        # pygame's OWN in-process readback (surfarray.array3d) looked
+        # correct, which is why this passed local dev-machine testing and
+        # even manual in-process debugging before the actual X-level
+        # capture was checked. Root-caused and confirmed fixed via a live
+        # ssh session against the deployed container, 2026-09-22: pinning
+        # the exact visual ID xdpyinfo reports as this server's default
+        # (TrueColor, matching what the already-working xterm window
+        # uses) makes external readers see the real rendered frame.
+        # `visual_id` is configurable (not hardcoded to gx10's 0x21) since
+        # a different X server could assign a different id for the same
+        # TrueColor visual — auto-detect it there instead of hardcoding.
+        visual_id = cfg.get("sdl_x11_visualid") or _detect_truecolor_visual_id()
+        if visual_id:
+            os.environ["SDL_VIDEO_X11_VISUALID"] = visual_id
         import pygame
         pygame.display.init()
         self._pygame = pygame

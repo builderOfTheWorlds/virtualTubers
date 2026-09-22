@@ -194,3 +194,51 @@ def test_resolve_geometry_retries_until_a_stable_rect_appears(monkeypatch):
     width, height, pos = provider._resolve_geometry({"geometry_retry_s": 5.0})
     assert (width, height, pos) == (640, 720, (160, 72))
     assert len(calls) == 3
+
+
+def test_detect_truecolor_visual_id_parses_xdpyinfo_output(monkeypatch):
+    """Regression test for the gx10 black-window bug: SDL must be pinned
+    to the X server's default TrueColor visual, not whatever visual it
+    picks on its own — gx10's Xvfb offers a DirectColor visual at the
+    same depth (24) that SDL defaulted to, and a window on that visual
+    renders as solid black to any external reader (ffmpeg x11grab, the
+    real stream capture) because its colormap never gets installed. This
+    only reproduces against a real X server, so the unit test covers the
+    parsing logic against captured real `xdpyinfo` output instead."""
+    import subprocess
+    from avatar_providers import codec_avatar
+
+    class FakeResult:
+        returncode = 0
+        stdout = (
+            "name of display:    :99\n"
+            "version number:    11.0\n"
+            "vendor string:    The X.Org Foundation\n"
+            "...\n"
+            "default screen number:    0\n"
+            "number of screens:    1\n"
+            "\n"
+            "screen #0:\n"
+            "  dimensions:    3840x2160 pixels (975x549 millimeters)\n"
+            "  default visual id:  0x21\n"
+            "  visual:\n"
+            "    visual id:    0x21\n"
+            "    class:    TrueColor\n"
+        )
+
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: FakeResult())
+    assert codec_avatar._detect_truecolor_visual_id() == "0x21"
+
+
+def test_detect_truecolor_visual_id_returns_none_when_xdpyinfo_unavailable(monkeypatch):
+    """No X server (local dev/CI) or a missing xdpyinfo binary must not
+    raise — just leave SDL to pick its own default, same as before this
+    fix existed."""
+    import subprocess
+    from avatar_providers import codec_avatar
+
+    def boom(*a, **k):
+        raise FileNotFoundError("xdpyinfo not found")
+
+    monkeypatch.setattr(subprocess, "run", boom)
+    assert codec_avatar._detect_truecolor_visual_id() is None
