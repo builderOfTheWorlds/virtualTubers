@@ -22,6 +22,17 @@ from worker_control import WorkerControl
 POLL_INTERVAL_S = 3
 STOP_TIMEOUT_S = 10
 
+#: docs/twitch_broadcasting_guidelines.md's own 1080p30 recommendation
+#: (4500kbps CBR, 2s keyframe interval == 60 frames at 30fps). Was
+#: 3000k/no-CBR before this session — Twitch's guide explicitly names
+#: VBR as a cause of "broadcast starvation" (bursty delivery the player
+#: buffers heavily around), matching this session's own stream stats
+#: (Download Bitrate 566Kbps vs. an 84Mbps Bandwidth Estimate, Buffer
+#: Size 6.72s, Latency 11.36s — a player fighting a bursty encoder, not
+#: a bandwidth-limited one).
+TWITCH_BITRATE_KBPS = 4500
+TWITCH_KEYFRAME_INTERVAL_FRAMES = 60
+
 
 
 def log(msg):
@@ -171,10 +182,14 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
                                    # quality tradeoff for a live stream
             "-tune", "ll",         # low-latency, NVENC's rough
                                    # equivalent of x264's "zerolatency"
-            "-b:v", "3000k",
-            "-maxrate", "3000k",
-            "-bufsize", "6000k",
-            "-g", "60",
+            "-rc", "cbr",          # true constant bitrate — see the CBR
+                                   # note above the "if use_gpu:" branch;
+                                   # NVENC's default rc mode is VBR, "-b:v"
+                                   # alone does NOT switch it to CBR
+            "-b:v", f"{TWITCH_BITRATE_KBPS}k",
+            "-maxrate", f"{TWITCH_BITRATE_KBPS}k",
+            "-bufsize", f"{TWITCH_BITRATE_KBPS}k",
+            "-g", str(TWITCH_KEYFRAME_INTERVAL_FRAMES),
         ]
     else:
         scale_filter = (["-vf", f"scale={output_w}:{output_h}"]
@@ -183,11 +198,27 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
             "-c:v", "libx264",
             "-preset", "veryfast",
             "-tune", "zerolatency",
-            "-b:v", "3000k",
-            "-maxrate", "3000k",
-            "-bufsize", "6000k",
+            # True CBR, not just a capped VBR: -b:v/-maxrate/-bufsize
+            # alone let x264 vary output bitrate frame-to-frame (lower
+            # during static scenes, spiking on motion) — exactly the
+            # "broadcast starvation" pattern Twitch's own broadcasting
+            # guidelines (docs/twitch_broadcasting_guidelines.md) warn
+            # against, and consistent with what this session's stream
+            # stats showed: Download Bitrate 566Kbps against an 84Mbps
+            # Bandwidth Estimate, Buffer Size 6.72s, Latency 11.36s — a
+            # bursty encoder output the player buffers heavily around,
+            # which reads as choppy/low-fps playback even when frames
+            # are actually being produced upstream. nal-hrd=cbr forces
+            # x264 to actually pad output to a constant rate; force-cfr
+            # 1 (below) is required alongside it or libx264 refuses/
+            # ignores nal-hrd=cbr on a variable-frame-rate input (x11grab
+            # is nominally constant-fps, but not guaranteed frame-exact).
+            "-x264opts", "nal-hrd=cbr:force-cfr=1",
+            "-b:v", f"{TWITCH_BITRATE_KBPS}k",
+            "-maxrate", f"{TWITCH_BITRATE_KBPS}k",
+            "-bufsize", f"{TWITCH_BITRATE_KBPS}k",
             "-pix_fmt", "yuv420p",
-            "-g", "60",
+            "-g", str(TWITCH_KEYFRAME_INTERVAL_FRAMES),
         ]
 
     return [

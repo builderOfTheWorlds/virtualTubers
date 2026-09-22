@@ -219,3 +219,43 @@ def test_build_ffmpeg_cmd_use_gpu_none_calls_nvenc_available():
         cmd = build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99")
     mock_detect.assert_called_once()
     assert cmd[cmd.index("-c:v") + 1] == "h264_nvenc"
+
+
+# ── True CBR, matching docs/twitch_broadcasting_guidelines.md's explicit
+#    warning against VBR ("broadcast starvation" — bursty delivery the
+#    player buffers heavily around, exactly what this session's live
+#    stream stats showed: 566Kbps download vs. an 84Mbps bandwidth
+#    estimate, 6.72s buffer, 11.36s latency). ─────────────────────────────
+def test_build_ffmpeg_cmd_gpu_path_forces_rc_cbr():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=True)
+    assert "-rc" in cmd and cmd[cmd.index("-rc") + 1] == "cbr"
+
+
+def test_build_ffmpeg_cmd_cpu_path_forces_nal_hrd_cbr():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+    assert "-x264opts" in cmd
+    opts = cmd[cmd.index("-x264opts") + 1]
+    assert "nal-hrd=cbr" in opts
+    assert "force-cfr=1" in opts  # required alongside nal-hrd=cbr or x264 ignores it
+
+
+def test_build_ffmpeg_cmd_bitrate_and_bufsize_match_twitch_1080p30_recommendation():
+    """docs/twitch_broadcasting_guidelines.md's 1080p30 CBR spec: 4500kbps,
+    bufsize == bitrate (not a multiple of it — a larger bufsize is what
+    permits the bursty delivery the guide warns against), 2s keyframe
+    interval (60 frames at this pipeline's fixed 30fps capture)."""
+    import stream_supervisor as ss
+    for use_gpu in (True, False):
+        with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+            cmd = build_ffmpeg_cmd(
+                "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+                use_gpu=use_gpu)
+        expected = f"{ss.TWITCH_BITRATE_KBPS}k"
+        assert cmd[cmd.index("-b:v") + 1] == expected
+        assert cmd[cmd.index("-maxrate") + 1] == expected
+        assert cmd[cmd.index("-bufsize") + 1] == expected  # == bitrate, not a multiple
+        assert cmd[cmd.index("-g") + 1] == str(ss.TWITCH_KEYFRAME_INTERVAL_FRAMES)
