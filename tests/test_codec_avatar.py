@@ -153,3 +153,19 @@ def test_resolve_geometry_explicit_size_overrides_detected_size(monkeypatch):
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
     width, height, pos = provider._resolve_geometry({"width": 200, "height": 250})
     assert (width, height, pos) == (200, 250, (160, 72))
+
+
+def test_resolve_geometry_rejects_degenerate_detected_rect(monkeypatch):
+    """Regression test for the gx10 first-deploy bug: detect_pane_rect()
+    returning a 1px-wide rect (tmux not yet resized to match the xterm
+    window at provider startup) must NOT be trusted as-is — it produced an
+    invisible pygame window with no error. Must fall back to WIDTH/HEIGHT
+    at (0,0), which is visible and obviously wrong instead of silently
+    wrong."""
+    import pane_geometry
+    from avatar_providers.codec_avatar import HEIGHT, WIDTH, CodecAvatarProvider
+    monkeypatch.setattr(pane_geometry, "detect_pane_rect",
+                        lambda: (0, 0, 1, 700))
+    provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
+    width, height, pos = provider._resolve_geometry({})
+    assert (width, height, pos) == (WIDTH, HEIGHT, (0, 0))

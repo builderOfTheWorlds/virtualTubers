@@ -226,6 +226,23 @@ class CodecAvatarProvider(AvatarProvider):
             detected = detect_pane_rect()
             if detected is not None:
                 x, y, det_width, det_height = detected
+                # Sanity floor: a misread (tmux not yet resized to match
+                # the xterm window, a 0/1-px degenerate rect) must not
+                # produce an invisible pygame window with no error —
+                # exactly what happened on first deploy (gx10, 2026-09-22:
+                # "codec avatar: ready (1x700 triangles..." — pane_cells
+                # came back as width=1). Falling back to WIDTH/HEIGHT is
+                # visible and debuggable; a 1x700 window silently isn't.
+                if det_width < 32 or det_height < 32:
+                    print(
+                        f"[avatar] codec_avatar: detected pane rect looks "
+                        f"degenerate ({det_width}x{det_height} at "
+                        f"({x},{y})) — falling back to {WIDTH}x{HEIGHT} at "
+                        f"(0,0); set avatar.codec_avatar.window_pos/width/"
+                        f"height explicitly to override",
+                        file=sys.stderr,
+                    )
+                    return width or WIDTH, height or HEIGHT, (0, 0)
                 width = width or det_width
                 height = height or det_height
                 return width or WIDTH, height or HEIGHT, (x, y)

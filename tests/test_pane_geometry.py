@@ -36,7 +36,7 @@ def test_detect_pane_rect_computes_pixel_offset_from_cell_geometry():
     """The core math: a pane at cell (10,2) sized 40x20, inside a
     120x30-cell window that itself sits at pixel (0,0) sized 1920x1080 (so
     each cell is 16x36px) should land at pixel (160, 72), sized 640x720."""
-    def fake_run(cmd, capture_output, text, timeout):
+    def fake_run(cmd, capture_output, text, timeout, env=None):
         joined = " ".join(cmd)
         if "pane_left" in joined:
             return _run_result("10 2 40 20\n")
@@ -64,7 +64,7 @@ def test_detect_pane_rect_returns_none_when_tmux_display_message_fails():
 
 
 def test_detect_pane_rect_returns_none_when_xdotool_search_finds_nothing():
-    def fake_run(cmd, capture_output, text, timeout):
+    def fake_run(cmd, capture_output, text, timeout, env=None):
         joined = " ".join(cmd)
         if "pane_left" in joined:
             return _run_result("0 0 40 20\n")
@@ -98,7 +98,7 @@ def test_detect_pane_rect_returns_none_when_subprocess_raises():
 
 
 def test_detect_pane_rect_handles_zero_size_window_gracefully():
-    def fake_run(cmd, capture_output, text, timeout):
+    def fake_run(cmd, capture_output, text, timeout, env=None):
         joined = " ".join(cmd)
         if "pane_left" in joined:
             return _run_result("0 0 40 20\n")

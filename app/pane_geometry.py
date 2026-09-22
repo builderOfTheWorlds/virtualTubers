@@ -49,9 +49,10 @@ import subprocess
 log = logging.getLogger(__name__)
 
 
-def _run(cmd, timeout=3):
+def _run(cmd, timeout=3, env=None):
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        result = subprocess.run(cmd, capture_output=True, text=True,
+                               timeout=timeout, env=env)
         if result.returncode != 0:
             log.debug("pane_geometry: %r exited %d: %s", cmd, result.returncode,
                      result.stderr.strip())
@@ -96,14 +97,14 @@ def _xterm_window_pixel_rect(display):
     ever runs one."""
     env = dict(os.environ)
     env["DISPLAY"] = display
-    wid_out = _run(["xdotool", "search", "--class", "XTerm"])
+    wid_out = _run(["xdotool", "search", "--class", "XTerm"], env=env)
     if not wid_out:
         return None
     wid = wid_out.splitlines()[0].strip()
     if not wid:
         return None
 
-    geom_out = _run(["xdotool", "getwindowgeometry", "--shell", wid])
+    geom_out = _run(["xdotool", "getwindowgeometry", "--shell", wid], env=env)
     if not geom_out:
         return None
     fields = {}
