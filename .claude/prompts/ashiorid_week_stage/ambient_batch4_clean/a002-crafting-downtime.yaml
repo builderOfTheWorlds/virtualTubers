@@ -1,0 +1,21 @@
+id: crafting-downtime
+title: Crafting Downtime
+ambient: true
+prompt: 'The party decides to take some downtime to pursue personal projects. They
+  set up a makeshift workshop in the common room of the inn they''re staying at. Characters
+  move between various crafting stations - an alchemy lab, a smithy, and a woodworking
+  bench. They carefully measure ingredients, hammer metal, and saw lumber as they
+  focus on their tasks. The room is filled with the sounds of clanking, bubbling,
+  and sawing as the characters lose themselves in their work. Occasionally, characters
+  look up from their projects to chat with their companions about their progress and
+  plans.
+
+  '
+lore: []
+source:
+  base_hash: c43929b79e9f713012e907099cf5605e3464e5b52975498cd3eaaae4e2fb4033
+  version: crafting-downtime@2
+  authored: generated
+  batch: 2.3.ambient.1
+  model: hermes3:70b
+  run_id: ashiorid_week_20260921_030156
