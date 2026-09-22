@@ -97,14 +97,28 @@ avatar:
     # downscale was what made stream text mushy; see startup.sh's
     # CAPTURE_RESOLUTION comment): the avatar pane is the top 40% of the M
     # column (60% width, starting after the 20%-wide L column)
-    # -> x=384 (0.20*1920), y=0, width=1152 (0.60*1920),
+    # -> pane rect x=384 (0.20*1920), y=0, width=1152 (0.60*1920),
     # height=432 (0.40*1080).
+    #
+    # The WINDOW is deliberately NARROWER than that pane and centered in it
+    # (2026-09-22): the renderer is aspect-correct, so a 1152-wide window
+    # rendered a small head surrounded by a wide expanse of empty
+    # background. Half-width (576) at the pane's full height is 4:3, which
+    # frames the head without letterboxing it, and leaves the pane's own
+    # left/right thirds as plain console — so the avatar reads as part of
+    # the tmux frame rather than a wide slab pasted over it.
+    #   x = 384 + (1152 - 576) / 2 = 672
     # Remove this block (falls back to auto-detect) once that's fixed, or if
     # CAPTURE_RESOLUTION is overridden away from the 1920x1080 default —
     # these numbers do NOT scale with it automatically.
-    window_pos: [384, 0]
-    width: 1152
+    window_pos: [672, 0]
+    width: 576
     height: 432
+    # Composite the render onto the console's own background instead of
+    # leaving un-drawn pixels black (pixel_raster.composite_on_background).
+    # Defaults to startup.sh's xterm `-bg '#2b2b2b'`; set `none` to go back
+    # to the hard black rectangle. Keep in sync if that -bg ever changes.
+    background: "#2b2b2b"
   # `expressions` below is unused by codec_avatar (it has no 2D face to
   # draw eyes/mouth into — expression drives rotation speed + tint instead)
   # but is kept so flipping `provider` back to `builtin` still renders

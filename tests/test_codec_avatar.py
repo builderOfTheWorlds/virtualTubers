@@ -104,6 +104,32 @@ def test_green_accent_color_matches_stock_codec_tint():
     assert img.shape == (80, 64, 3)  # renders without error via the None branch
 
 
+def test_frame_source_composites_onto_the_console_background_by_default():
+    """Un-drawn surround must come back as the console grey, not black —
+    the window is an X window over the terminal, so black pixels read as a
+    rectangle cut out of the layout (2026-09-22 UI fix)."""
+    from pixel_raster import CONSOLE_BG
+    source = FrameSource("chadwick", width=64, height=80)
+    img, _ = source.render_frame("idle")
+    # The extreme corners are always outside the head at this framing.
+    corners = np.stack([img[0, 0], img[0, -1], img[-1, 0], img[-1, -1]])
+    assert np.all(corners >= CONSOLE_BG[None, :] - 1e-3)
+    assert img.min() > 0.05  # nothing is pure black any more
+
+
+def test_frame_source_background_none_keeps_the_black_surround():
+    """Opt-out must restore the previous look exactly."""
+    source = FrameSource("chadwick", width=64, height=80, background=None)
+    img, _ = source.render_frame("idle")
+    assert img.min() < 0.02
+
+
+def test_frame_source_accepts_a_hex_background_string():
+    source = FrameSource("chadwick", width=48, height=60, background="#101820")
+    assert np.allclose(source.background, np.array([0x10, 0x18, 0x20]) / 255.0,
+                       atol=1e-6)
+
+
 # ── CodecAvatarProvider._resolve_geometry (no display/pygame needed) ───────
 def test_resolve_geometry_uses_explicit_window_pos_and_defaults_size():
     from avatar_providers.codec_avatar import HEIGHT, WIDTH, CodecAvatarProvider
@@ -132,13 +158,29 @@ def test_resolve_geometry_falls_back_when_detection_unavailable(monkeypatch):
     assert (width, height, pos) == (WIDTH, HEIGHT, (0, 0))
 
 
-def test_resolve_geometry_uses_detected_rect_when_no_window_pos_configured(monkeypatch):
+def test_resolve_geometry_narrows_and_centers_in_the_detected_pane(monkeypatch):
+    """The detected pane is wide and short; the window is deliberately half
+    its width and centered, so the pane's left/right thirds stay plain
+    console and the face blends into the tmux frame instead of sitting on a
+    wide slab. 640 -> 320 wide, x 160 -> 160 + (640-320)/2 = 320."""
     import pane_geometry
     from avatar_providers.codec_avatar import CodecAvatarProvider
     monkeypatch.setattr(pane_geometry, "detect_pane_rect",
                         lambda: (160, 72, 640, 720))
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
     width, height, pos = provider._resolve_geometry({"geometry_retry_s": 0})
+    assert (width, height, pos) == (320, 720, (320, 72))
+
+
+def test_resolve_geometry_width_fraction_one_fills_the_detected_pane(monkeypatch):
+    """Opt back into the old edge-to-edge behavior."""
+    import pane_geometry
+    from avatar_providers.codec_avatar import CodecAvatarProvider
+    monkeypatch.setattr(pane_geometry, "detect_pane_rect",
+                        lambda: (160, 72, 640, 720))
+    provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
+    width, height, pos = provider._resolve_geometry(
+        {"geometry_retry_s": 0, "width_fraction": 1.0})
     assert (width, height, pos) == (640, 720, (160, 72))
 
 
@@ -153,7 +195,9 @@ def test_resolve_geometry_explicit_size_overrides_detected_size(monkeypatch):
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
     width, height, pos = provider._resolve_geometry(
         {"width": 200, "height": 250, "geometry_retry_s": 0})
-    assert (width, height, pos) == (200, 250, (160, 72))
+    # x is still centered on the narrowed rect, since the offset doesn't
+    # depend on the explicit size override.
+    assert (width, height, pos) == (200, 250, (320, 72))
 
 
 def test_resolve_geometry_rejects_degenerate_detected_rect(monkeypatch):
@@ -192,7 +236,7 @@ def test_resolve_geometry_retries_until_a_stable_rect_appears(monkeypatch):
     monkeypatch.setattr("time.sleep", lambda s: None)  # don't actually wait
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
     width, height, pos = provider._resolve_geometry({"geometry_retry_s": 5.0})
-    assert (width, height, pos) == (640, 720, (160, 72))
+    assert (width, height, pos) == (320, 720, (320, 72))  # narrowed+centered
     assert len(calls) == 3
 
 

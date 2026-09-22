@@ -53,7 +53,7 @@ DEFAULT_TIMEOUT_S = 5.0
 
 def render_worker_main(cmd_q, result_q, shm_name, shape,
                        character_params, width, height, view_dist,
-                       angle_speed):
+                       angle_speed, background=None):
     """Entry point for the child process (must be a module-level function
     — multiprocessing's 'spawn' context pickles a reference to it, which
     only works for something importable, not a closure or lambda).
@@ -77,7 +77,8 @@ def render_worker_main(cmd_q, result_q, shm_name, shape,
     from avatar_providers.codec_avatar import FrameSource
 
     source = FrameSource(character_params, width=width, height=height,
-                         view_dist=view_dist, angle_speed=angle_speed)
+                         view_dist=view_dist, angle_speed=angle_speed,
+                         background=background)
     shm = shared_memory.SharedMemory(name=shm_name)
     out = np.ndarray(shape, dtype=np.uint8, buffer=shm.buf)
 
@@ -111,10 +112,18 @@ class GPURenderWorker:
     the byte level, only at the call-signature level; codec_avatar.py's
     render_tick() already converts FrameSource's float output to uint8
     itself, so this just does that conversion worker-side instead.
+
+    `background` is forwarded verbatim to the child's FrameSource, so the
+    grey-console compositing happens worker-side and the frame that lands
+    in shared memory is already final. It must be a concrete value
+    (a (3,) 0..1 array or None) — NOT codec_avatar._UNSET, whose object()
+    identity does not survive the pickling 'spawn' does. Defaults to None
+    (no compositing) so a direct constructor call keeps the original
+    black-surround behavior.
     """
 
     def __init__(self, character_params, width, height, view_dist,
-                angle_speed, timeout_s=DEFAULT_TIMEOUT_S):
+                angle_speed, timeout_s=DEFAULT_TIMEOUT_S, background=None):
         from multiprocessing import shared_memory
         self.width = width
         self.height = height
@@ -137,7 +146,8 @@ class GPURenderWorker:
         self._proc = _CTX.Process(
             target=render_worker_main,
             args=(self._cmd_q, self._result_q, self._shm.name, self._shape,
-                  character_params, width, height, view_dist, angle_speed),
+                  character_params, width, height, view_dist, angle_speed,
+                  background),
             daemon=True,
         )
         self._proc.start()

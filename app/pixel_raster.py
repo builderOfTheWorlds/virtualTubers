@@ -49,6 +49,14 @@ CODEC_PALETTE = np.array([
 TINT_CODEC_GREEN = np.array([0.38, 1.00, 0.52], dtype=np.float32)
 TINT_AMBER = np.array([1.00, 0.72, 0.22], dtype=np.float32)
 
+#: The xterm background startup.sh launches the console with (`-bg '#2b2b2b'`).
+#: The avatar is an X window sitting ON TOP of that console, not inside the
+#: tmux grid, so anything it leaves unpainted reads as a hard black rectangle
+#: cut out of the layout (see the 2026-09-22 screenshot). Compositing the
+#: render onto this exact color instead makes the window's edges invisible —
+#: the face appears to float in the terminal. Keep in sync with startup.sh.
+CONSOLE_BG = np.array([0x2B, 0x2B, 0x2B], dtype=np.float32) / 255.0
+
 #: Key light, normalized: front, above, slightly to the viewer's left.
 #: Codec portraits are lit from the front so the face stays legible; the
 #: elevation is what makes the brow shelf cast onto the sockets.
@@ -205,6 +213,75 @@ def apply_codec_screen(rgb, scanline_strength=0.30, vignette=0.55,
     return np.clip(out, 0.0, 1.0)
 
 
+def composite_on_background(rgb, background=CONSOLE_BG):
+    """Blend a codec frame over a flat background color.
+
+    WHY SCREEN BLEND, NOT ALPHA. The renderer has no alpha channel — the
+    surround is simply un-drawn pixels left at the clear color (black), and
+    apply_codec_screen's glow/vignette/grain deliberately bleed a little
+    light into it. A hard "black == transparent" key would therefore clip
+    that halo into a visible rectangle edge, which is the exact artifact
+    this function exists to remove. A screen blend,
+    ``1 - (1 - bg) * (1 - fg)``, maps fg=0 to EXACTLY the background color
+    (so the window edge disappears into the console) while leaving bright
+    face pixels essentially untouched and letting the CRT bloom fall off
+    smoothly into the grey.
+
+    Args:
+        rgb: (H,W,3) float array in 0..1 — a rendered, post-processed frame.
+        background: (3,) float array in 0..1, or None to skip compositing
+            (returns the input unchanged — the old black-surround look).
+
+    Returns:
+        (H,W,3) float array in 0..1.
+    """
+    if background is None:
+        return rgb
+    bg = np.asarray(background, dtype=np.float32).reshape(1, 1, 3)
+    _trace("composite_on_background(bg=%s)", bg.ravel())
+    return np.clip(1.0 - (1.0 - bg) * (1.0 - rgb), 0.0, 1.0)
+
+
+def parse_background(value, default=CONSOLE_BG):
+    """Normalize a config-supplied background into a (3,) 0..1 array.
+
+    Accepts what a YAML worker config can plausibly hold: ``None`` (use
+    `default`), the strings ``"none"``/``"off"``/``"black"`` (disable
+    compositing -> returns None), a ``"#2b2b2b"``/``"2b2b2b"`` hex string,
+    or a 3-sequence of either 0..1 floats or 0..255 ints. Anything
+    unparseable logs a warning and falls back to `default` rather than
+    killing the avatar pane over a cosmetic setting.
+    """
+    if value is None:
+        return default
+    try:
+        if isinstance(value, str):
+            text = value.strip().lower()
+            if text in ("none", "off", "transparent"):
+                return None
+            if text == "black":
+                return np.zeros(3, dtype=np.float32)
+            text = text.lstrip("#")
+            if len(text) == 3:
+                text = "".join(c * 2 for c in text)
+            if len(text) != 6:
+                raise ValueError(f"not a 6-digit hex color: {value!r}")
+            return np.array(
+                [int(text[i:i + 2], 16) for i in (0, 2, 4)],
+                dtype=np.float32) / 255.0
+        channels = [float(c) for c in value]
+        if len(channels) != 3:
+            raise ValueError(f"expected 3 channels, got {len(channels)}")
+        arr = np.array(channels, dtype=np.float32)
+        if arr.max() > 1.0:          # 0..255 ints
+            arr = arr / 255.0
+        return np.clip(arr, 0.0, 1.0)
+    except Exception as exc:  # noqa: BLE001 — cosmetic; never fatal
+        log.warning("parse_background(%r) failed (%r); using the default "
+                    "console background instead", value, exc)
+        return default
+
+
 def write_png(path, rgb):
     """Write an (H,W,3) 0..1 float array as PNG. No Pillow dependency."""
     buf = (np.clip(rgb, 0.0, 1.0) * 255).astype(np.uint8)
@@ -225,5 +302,6 @@ def write_png(path, rgb):
     return path
 
 
-__all__ = ["render", "apply_codec_screen", "write_png", "CODEC_PALETTE",
-           "TINT_CODEC_GREEN", "TINT_AMBER"]
+__all__ = ["render", "apply_codec_screen", "composite_on_background",
+           "parse_background", "write_png", "CODEC_PALETTE",
+           "TINT_CODEC_GREEN", "TINT_AMBER", "CONSOLE_BG"]

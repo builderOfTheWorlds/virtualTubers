@@ -42,6 +42,10 @@ log = logging.getLogger(__name__)
 WIDTH = 560
 HEIGHT = 700
 
+#: Sentinel for "caller didn't specify a background", distinct from an
+#: explicit None ("composite nothing — keep the original black surround").
+_UNSET = object()
+
 #: expression -> (rotation speed multiplier, tint override or None).
 #: `frustrated` forces amber regardless of accent_color — same "danger"
 #: cue termgl_avatar.py uses (EXPRESSION_STYLE's RED for frustrated) — so
@@ -113,11 +117,19 @@ class FrameSource:
     """
 
     def __init__(self, character_params, width=WIDTH, height=HEIGHT,
-                view_dist=3.25, angle_speed=0.03):
+                view_dist=3.25, angle_speed=0.03, background=_UNSET):
         from codec_head import build_codec_head
         from character_schema import resolve_params
+        from pixel_raster import parse_background
         self.width = width
         self.height = height
+        # None is a MEANINGFUL value here ("don't composite, keep the black
+        # surround"), so it can't double as "not configured" — hence the
+        # _UNSET sentinel defaulting to the console grey.
+        self.background = (
+            None if background is None
+            else parse_background(
+                None if background is _UNSET else background))
         self.view_dist = view_dist
         self.angle_speed_base = angle_speed
         self.angle = 0.0
@@ -140,7 +152,8 @@ class FrameSource:
         float array. Also returns which backend rendered it (gpu/cpu) —
         surfaced so a worker's logs show a GPU-less box degrading instead
         of silently running the slower path forever."""
-        from pixel_raster import TINT_AMBER, TINT_CODEC_GREEN, apply_codec_screen
+        from pixel_raster import (TINT_AMBER, TINT_CODEC_GREEN,
+                                  apply_codec_screen, composite_on_background)
         import gl_raster
 
         speed_mul, forced_tint = EXPRESSION_STYLE.get(
@@ -159,6 +172,12 @@ class FrameSource:
             rot_y=self.angle, dist=self.view_dist, tint=tint,
         )
         img = apply_codec_screen(img)
+        # Last step, AFTER the CRT pass: the scanlines/vignette multiply the
+        # frame down towards black, so compositing before them would darken
+        # the background back out of sync with the console it's meant to
+        # match. Doing it here guarantees un-drawn pixels land on exactly
+        # self.background.
+        img = composite_on_background(img, self.background)
 
         if backend != self.last_backend:
             log.info("codec_avatar: rendering on %s%s", backend.upper(),
@@ -212,6 +231,17 @@ class CodecAvatarProvider(AvatarProvider):
         self._character_params = character_params
         self._view_dist = cfg.get("view_dist", 3.25)
         self._angle_speed = cfg.get("angle_speed", 0.03)
+        # Defaults to the console grey (pixel_raster.CONSOLE_BG) so the
+        # window blends into the terminal instead of punching a black
+        # rectangle through the layout; `background: none` in config keeps
+        # the old black surround. Resolved to a concrete (3,) array (or
+        # None) HERE rather than passed through raw, because the value is
+        # pickled to the spawned GPU worker — and _UNSET is an object()
+        # sentinel, whose identity does NOT survive pickling, so the
+        # child would never recognize it as "unset".
+        from pixel_raster import parse_background
+        self._background = parse_background(cfg.get("background")) \
+            if cfg.get("background", _UNSET) is not None else None
 
         # Render in a SEPARATE process from this one (which owns the
         # pygame window below) whenever possible — see
@@ -232,6 +262,7 @@ class CodecAvatarProvider(AvatarProvider):
                     character_params, width=width, height=height,
                     view_dist=cfg.get("view_dist", 3.25),
                     angle_speed=cfg.get("angle_speed", 0.03),
+                    background=self._background,
                 )
                 print(
                     "[avatar] codec_avatar: GPU rendering in a separate "
@@ -248,6 +279,7 @@ class CodecAvatarProvider(AvatarProvider):
                 character_params, width=width, height=height,
                 view_dist=cfg.get("view_dist", 3.25),
                 angle_speed=cfg.get("angle_speed", 0.03),
+                background=self._background,
             )
 
         import os
@@ -316,6 +348,15 @@ class CodecAvatarProvider(AvatarProvider):
         configured width/height acts as a fallback/override, not the
         default source of truth.
 
+        A detected pane is NARROWED to `width_fraction` (default 0.5) of
+        its width and centered in it. The avatar pane is a wide, short
+        rect; the renderer is aspect-correct, so filling it edge to edge
+        renders a small head marooned in a wide field of background. Half
+        width leaves the pane's left/right thirds as plain console, which
+        — together with the grey background compositing — is what makes
+        the face read as sitting IN the tmux frame instead of on a slab
+        pasted over it. Set `width_fraction: 1.0` for the old behavior.
+
         Retries detection for a few seconds: startup.sh launches every
         pane's process (including this one, via `tmux send-keys` inside
         build_layout.py's emitted script) BEFORE it creates/resizes the
@@ -348,7 +389,11 @@ class CodecAvatarProvider(AvatarProvider):
                 time.sleep(0.5)
             if detected is not None:
                 x, y, det_width, det_height = detected
-                width = width or det_width
+                fraction = float(cfg.get("width_fraction", 0.5))
+                fraction = min(max(fraction, 0.05), 1.0)
+                narrowed = max(32, int(det_width * fraction))
+                x += (det_width - narrowed) // 2     # centered in the pane
+                width = width or narrowed
                 height = height or det_height
                 return width or WIDTH, height or HEIGHT, (x, y)
             print(
@@ -384,6 +429,7 @@ class CodecAvatarProvider(AvatarProvider):
                 self._source = FrameSource(
                     self._character_params, width=self.width, height=self.height,
                     view_dist=self._view_dist, angle_speed=self._angle_speed,
+                    background=self._background,
                 )
                 try:
                     if hasattr(old_source, "close"):
