@@ -1,0 +1,1442 @@
+root@d9db323e6163:/# python3 /app/replay_pane.py
+[replay_pane] library=/data/replays request_file=/tmp/
+replay_request.json voice=on
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+/app/replay_pane.py:141: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  return MessageProducer(bootstrap_servers, topic)
+[replay_pane] preparing: scene 1/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 2/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 3/22: writing coder_tal
+k line (~23w)
+[replay_pane] preparing: scene 4/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 5/22: writing coder_tal
+k line (~20w)
+[replay_pane] preparing: scene 6/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 7/22: writing coder_tal
+k line (~16w)
+[replay_pane] preparing: scene 8/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 9/22: writing coder_tal
+k line (~19w)
+[replay_pane] preparing: scene 10/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 11/22: writing coder_ta
+lk line (~16w)
+[replay_pane] preparing: scene 12/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 13/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 14/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 15/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 16/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 17/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 18/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 19/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 20/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 21/22: writing coder_ta
+lk line (~13w)
+[replay_pane] preparing: scene 22/22: writing boss lin
+e (~8w)
+[replay_pane] tonight's episode: 22 scenes, 22 voiced
+/app/replay_pane.py:281: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  MessageProducer(bootstrap_servers, topic).send(msg)
+[replay_pane] cached narration (22 scenes) for reuse
+══ REPLAY: sample (22 scenes) ══
+
+♪ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+└────────────────────────────────────
+
+♪ Emperor, you're up first. Say hi, and tell everyone
+what you actually think about the current file layout.
+
+┌─ BOSS ─────────────────────────────
+│ Emperor, you're up first. Say hi, and tell everyone
+what you actually think about the current file layout.
+└────────────────────────────────────
+
+♪ Mic check from my end. I'm the Emperor, and yes, I a
+lready have opinions about how this stream is laid out
+, we'll get to that later. Give me a second, I'm mid-t
+hought on a naming convention. Honestly the file layou
+t's fine, I just think three coder personas sharing on
+e repo is going to get spicy by the end of the night,
+and that's before Hand, Frog, and Brax even open their
+ editors.
+
+coder ▸ Mic check from my end. I'm the Emperor, and ye
+s, I already have opinions about how this stream is la
+id out, we'll get to that later. Give me a second, I'm
+ mid-thought on a naming convention. Honestly the file
+ layout's fine, I just think three coder personas shar
+ing one repo is going to get spicy by the end of the n
+ight, and that's before Hand, Frog, and Brax even open
+ their editors.
+
+♪ Burt, your turn. Mic check, and give us your honest
+read on how stable you think tonight's build is going
+to be.
+
+┌─ BOSS ─────────────────────────────
+│ Burt, your turn. Mic check, and give us your honest
+read on how stable you think tonight's build is going
+to be.
+└────────────────────────────────────
+
+♪ Burt here, and before anyone asks, no, I have not fo
+und a bug yet, but the stream just started, give me a
+minute. Stability read: I'd bet money someone's diff b
+reaks the cue file before midnight, probably Emperor's
+, but I'm keeping half an eye on Hand, Frog, and Brax
+too. I'll be watching every commit like it owes me mon
+ey.
+
+TESS-3 ▸ Burt here, and before anyone asks, no, I have
+ not found a bug yet, but the stream just started, giv
+e me a minute. Stability read: I'd bet money someone's
+ diff breaks the cue file before midnight, probably Em
+peror's, but I'm keeping half an eye on Hand, Frog, an
+d Brax too. I'll be watching every commit like it owes
+ me money.
+
+♪ Hand, over to you. Say something, and remind the cha
+t what makes the native backend different from the oth
+er two.
+
+┌─ BOSS ─────────────────────────────
+│ Hand, over to you. Say something, and remind the cha
+t what makes the native backend different from the oth
+er two.
+└────────────────────────────────────
+
+♪ Hand. No frameworks, no ceremony, just a loop that w
+orks. That's the whole mic check. Different how? I rea
+d the bytes myself instead of asking something else to
+ read them for me, that's the whole pitch. Frog and Br
+ax can fight it out over whose tool is fancier.
+
+NYX-1 ▸ Hand. No frameworks, no ceremony, just a loop
+that works. That's the whole mic check. Different how?
+ I read the bytes myself instead of asking something e
+lse to read them for me, that's the whole pitch. Frog
+and Brax can fight it out over whose tool is fancier.
+
+♪ Frog, you're on. Mic check, and sell the chat on why
+ OpenCode is worth running.
+
+┌─ BOSS ─────────────────────────────
+│ Frog, you're on. Mic check, and sell the chat on why
+ OpenCode is worth running.
+└────────────────────────────────────
+
+♪ Frog checking in, running on OpenCode, and I have to
+ say the latency on this setup is actually so good, yo
+u're all going to want one after tonight. Why run it?
+Because you get the tooling without babysitting the pl
+umbing, and I will not shut up about that. Hand can ke
+ep his bare loop, I'll take the head start.
+
+OKO-2 ▸ Frog checking in, running on OpenCode, and I h
+ave to say the latency on this setup is actually so go
+od, you're all going to want one after tonight. Why ru
+n it? Because you get the tooling without babysitting
+the plumbing, and I will not shut up about that. Hand
+can keep his bare loop, I'll take the head start.
+
+♪ Brax, last but not least. Say hi, and tell us your c
+ommit philosophy for tonight.
+
+┌─ BOSS ─────────────────────────────
+│ Brax, last but not least. Say hi, and tell us your c
+ommit philosophy for tonight.
+└────────────────────────────────────
+
+♪ Brax here. I've been pairing with aider since before
+ it was cool, and my only rule tonight is small, hones
+t commits, we'll let the diffs speak for themselves. I
+f you see me squash something, assume I had a good rea
+son, and Burt, that's your cue to check anyway.
+
+ADA-3 ▸ Brax here. I've been pairing with aider since
+before it was cool, and my only rule tonight is small,
+ honest commits, we'll let the diffs speak for themsel
+ves. If you see me squash something, assume I had a go
+od reason, and Burt, that's your cue to check anyway.
+
+♪ Good, everyone's coming through clean. Now for the r
+eal work, Emperor, I need you to pick up the ticket on
+ the replay pane's cue file. What's your plan?
+
+┌─ BOSS ─────────────────────────────
+│ Good, everyone's coming through clean. Now for the r
+eal work, Emperor, I need you to pick up the ticket on
+ the replay pane's cue file. What's your plan?
+└────────────────────────────────────
+
+♪ Plan's simple: read through the ratchet logic first
+so I'm not guessing at the existing contract, then pat
+ch the edge case without touching the fast-forward beh
+avior, since that's the part everyone actually depends
+ on. I'll open with a failing test so Burt has somethi
+ng to point at if I get it wrong.
+
+coder ▸ Plan's simple: read through the ratchet logic
+first so I'm not guessing at the existing contract, th
+en patch the edge case without touching the fast-forwa
+rd behavior, since that's the part everyone actually d
+epends on. I'll open with a failing test so Burt has s
+omething to point at if I get it wrong.
+
+♪ Burt, once Emperor has something up, I want you watc
+hing the cue ratchet edge cases specifically. What are
+ you going to hammer on first?
+
+┌─ BOSS ─────────────────────────────
+│ Burt, once Emperor has something up, I want you watc
+hing the cue ratchet edge cases specifically. What are
+ you going to hammer on first?
+└────────────────────────────────────
+
+♪ First target is the stale ready-file case, that's th
+e one that fails silently, no error, just a follower t
+hat quietly loses its own voice mid-show. Second targe
+t is whatever happens if two cues land in the same tic
+k. If either of those breaks, I'm filing it before Emp
+eror even opens a PR.
+
+TESS-3 ▸ First target is the stale ready-file case, th
+at's the one that fails silently, no error, just a fol
+lower that quietly loses its own voice mid-show. Secon
+d target is whatever happens if two cues land in the s
+ame tick. If either of those breaks, I'm filing it bef
+ore Emperor even opens a PR.
+
+♪ Hand, you're running the same A/B branch as the othe
+r two tonight, walk me through what 'no framework' act
+ually buys us on this ticket.
+
+┌─ BOSS ─────────────────────────────
+│ Hand, you're running the same A/B branch as the othe
+r two tonight, walk me through what 'no framework' act
+ually buys us on this ticket.
+└────────────────────────────────────
+
+♪ It buys me a stack trace that points at my own code
+instead of three layers of somebody else's abstraction
+. On a ticket this small, that's the whole advantage,
+I'll probably have a diff up before Frog finishes read
+ing the docs.
+
+NYX-1 ▸ It buys me a stack trace that points at my own
+ code instead of three layers of somebody else's abstr
+action. On a ticket this small, that's the whole advan
+tage, I'll probably have a diff up before Frog finishe
+s reading the docs.
+
+♪ Frog, same ticket, OpenCode branch. Think you'll bea
+t them to a working diff?
+
+┌─ BOSS ─────────────────────────────
+│ Frog, same ticket, OpenCode branch. Think you'll bea
+t them to a working diff?
+└────────────────────────────────────
+
+♪ Beat them? I'm going to have the diff up, the tests
+passing, and a coffee break in before Hand finishes ty
+ping the function signature. That's the bet. I'll take
+ the loss gracefully if I'm wrong, but I don't think I
+'m wrong.
+
+OKO-2 ▸ Beat them? I'm going to have the diff up, the
+tests passing, and a coffee break in before Hand finis
+hes typing the function signature. That's the bet. I'l
+l take the loss gracefully if I'm wrong, but I don't t
+hink I'm wrong.
+
+♪ Brax, you get the tiebreaker branch. Same ticket, ai
+der driving. What's rule one tonight?
+
+┌─ BOSS ─────────────────────────────
+│ Brax, you get the tiebreaker branch. Same ticket, ai
+der driving. What's rule one tonight?
+└────────────────────────────────────
+
+♪ Rule one is the same as always: don't let the pairin
+g session write a commit I can't explain in one senten
+ce. I'm not racing Hand or Frog, I'm just going to be
+the one whose diff still makes sense a week from now.
+
+ADA-3 ▸ Rule one is the same as always: don't let the
+pairing session write a commit I can't explain in one
+sentence. I'm not racing Hand or Frog, I'm just going
+to be the one whose diff still makes sense a week from
+ now.
+
+♪ Alright, that's the lineup. Let's get to work, Emper
+or, Hand, and Frog, you're all racing the same ticket,
+ Brax's got the tiebreaker branch, and Burt's watching
+ everybody's diffs. Go.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, that's the lineup. Let's get to work, Emper
+or, Hand, and Frog, you're all racing the same ticket,
+ Brax's got the tiebreaker branch, and Burt's watching
+ everybody's diffs. Go.
+└────────────────────────────────────
+
+══ fin ══
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+/app/replay_pane.py:141: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  return MessageProducer(bootstrap_servers, topic)
+[replay_pane] preparing: scene 1/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 2/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 3/22: writing coder_tal
+k line (~23w)
+[replay_pane] preparing: scene 4/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 5/22: writing coder_tal
+k line (~20w)
+[replay_pane] preparing: scene 6/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 7/22: writing coder_tal
+k line (~16w)
+[replay_pane] preparing: scene 8/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 9/22: writing coder_tal
+k line (~19w)
+[replay_pane] preparing: scene 10/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 11/22: writing coder_ta
+lk line (~16w)
+[replay_pane] preparing: scene 12/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 13/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 14/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 15/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 16/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 17/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 18/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 19/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 20/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 21/22: writing coder_ta
+lk line (~13w)
+[replay_pane] preparing: scene 22/22: writing boss lin
+e (~8w)
+[replay_pane] tonight's episode: 22 scenes, 22 voiced
+/app/replay_pane.py:281: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  MessageProducer(bootstrap_servers, topic).send(msg)
+[replay_pane] cached narration (22 scenes) for reuse
+══ REPLAY: sample (22 scenes) ══
+
+♪ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+└────────────────────────────────────
+
+♪ Emperor, you're up first. Say hi, and tell everyone
+what you actually think about the current file layout.
+
+┌─ BOSS ─────────────────────────────
+│ Emperor, you're up first. Say hi, and tell everyone
+what you actually think about the current file layout.
+└────────────────────────────────────
+
+♪ Mic check from my end. I'm the Emperor, and yes, I a
+lready have opinions about how this stream is laid out
+, we'll get to that later. Give me a second, I'm mid-t
+hought on a naming convention. Honestly the file layou
+t's fine, I just think three coder personas sharing on
+e repo is going to get spicy by the end of the night,
+and that's before Hand, Frog, and Brax even open their
+ editors.
+
+coder ▸ Mic check from my end. I'm the Emperor, and ye
+s, I already have opinions about how this stream is la
+id out, we'll get to that later. Give me a second, I'm
+ mid-thought on a naming convention. Honestly the file
+ layout's fine, I just think three coder personas shar
+ing one repo is going to get spicy by the end of the n
+ight, and that's before Hand, Frog, and Brax even open
+ their editors.
+
+♪ Burt, your turn. Mic check, and give us your honest
+read on how stable you think tonight's build is going
+to be.
+
+┌─ BOSS ─────────────────────────────
+│ Burt, your turn. Mic check, and give us your honest
+read on how stable you think tonight's build is going
+to be.
+└────────────────────────────────────
+
+♪ Burt here, and before anyone asks, no, I have not fo
+und a bug yet, but the stream just started, give me a
+minute. Stability read: I'd bet money someone's diff b
+reaks the cue file before midnight, probably Emperor's
+, but I'm keeping half an eye on Hand, Frog, and Brax
+too. I'll be watching every commit like it owes me mon
+ey.
+
+TESS-3 ▸ Burt here, and before anyone asks, no, I have
+ not found a bug yet, but the stream just started, giv
+e me a minute. Stability read: I'd bet money someone's
+ diff breaks the cue file before midnight, probably Em
+peror's, but I'm keeping half an eye on Hand, Frog, an
+d Brax too. I'll be watching every commit like it owes
+ me money.
+
+♪ Hand, over to you. Say something, and remind the cha
+t what makes the native backend different from the oth
+er two.
+
+┌─ BOSS ─────────────────────────────
+│ Hand, over to you. Say something, and remind the cha
+t what makes the native backend different from the oth
+er two.
+└────────────────────────────────────
+
+♪ Hand. No frameworks, no ceremony, just a loop that w
+orks. That's the whole mic check. Different how? I rea
+d the bytes myself instead of asking something else to
+ read them for me, that's the whole pitch. Frog and Br
+ax can fight it out over whose tool is fancier.
+
+NYX-1 ▸ Hand. No frameworks, no ceremony, just a loop
+that works. That's the whole mic check. Different how?
+ I read the bytes myself instead of asking something e
+lse to read them for me, that's the whole pitch. Frog
+and Brax can fight it out over whose tool is fancier.
+
+♪ Frog, you're on. Mic check, and sell the chat on why
+ OpenCode is worth running.
+
+┌─ BOSS ─────────────────────────────
+│ Frog, you're on. Mic check, and sell the chat on why
+ OpenCode is worth running.
+└────────────────────────────────────
+
+♪ Frog checking in, running on OpenCode, and I have to
+ say the latency on this setup is actually so good, yo
+u're all going to want one after tonight. Why run it?
+Because you get the tooling without babysitting the pl
+umbing, and I will not shut up about that. Hand can ke
+ep his bare loop, I'll take the head start.
+
+OKO-2 ▸ Frog checking in, running on OpenCode, and I h
+ave to say the latency on this setup is actually so go
+od, you're all going to want one after tonight. Why ru
+n it? Because you get the tooling without babysitting
+the plumbing, and I will not shut up about that. Hand
+can keep his bare loop, I'll take the head start.
+
+♪ Brax, last but not least. Say hi, and tell us your c
+ommit philosophy for tonight.
+
+┌─ BOSS ─────────────────────────────
+│ Brax, last but not least. Say hi, and tell us your c
+ommit philosophy for tonight.
+└────────────────────────────────────
+
+♪ Brax here. I've been pairing with aider since before
+ it was cool, and my only rule tonight is small, hones
+t commits, we'll let the diffs speak for themselves. I
+f you see me squash something, assume I had a good rea
+son, and Burt, that's your cue to check anyway.
+
+ADA-3 ▸ Brax here. I've been pairing with aider since
+before it was cool, and my only rule tonight is small,
+ honest commits, we'll let the diffs speak for themsel
+ves. If you see me squash something, assume I had a go
+od reason, and Burt, that's your cue to check anyway.
+
+♪ Good, everyone's coming through clean. Now for the r
+eal work, Emperor, I need you to pick up the ticket on
+ the replay pane's cue file. What's your plan?
+
+┌─ BOSS ─────────────────────────────
+│ Good, everyone's coming through clean. Now for the r
+eal work, Emperor, I need you to pick up the ticket on
+ the replay pane's cue file. What's your plan?
+└────────────────────────────────────
+
+♪ Plan's simple: read through the ratchet logic first
+so I'm not guessing at the existing contract, then pat
+ch the edge case without touching the fast-forward beh
+avior, since that's the part everyone actually depends
+ on. I'll open with a failing test so Burt has somethi
+ng to point at if I get it wrong.
+
+coder ▸ Plan's simple: read through the ratchet logic
+first so I'm not guessing at the existing contract, th
+en patch the edge case without touching the fast-forwa
+rd behavior, since that's the part everyone actually d
+epends on. I'll open with a failing test so Burt has s
+omething to point at if I get it wrong.
+
+♪ Burt, once Emperor has something up, I want you watc
+hing the cue ratchet edge cases specifically. What are
+ you going to hammer on first?
+
+┌─ BOSS ─────────────────────────────
+│ Burt, once Emperor has something up, I want you watc
+hing the cue ratchet edge cases specifically. What are
+ you going to hammer on first?
+└────────────────────────────────────
+
+♪ First target is the stale ready-file case, that's th
+e one that fails silently, no error, just a follower t
+hat quietly loses its own voice mid-show. Second targe
+t is whatever happens if two cues land in the same tic
+k. If either of those breaks, I'm filing it before Emp
+eror even opens a PR.
+
+TESS-3 ▸ First target is the stale ready-file case, th
+at's the one that fails silently, no error, just a fol
+lower that quietly loses its own voice mid-show. Secon
+d target is whatever happens if two cues land in the s
+ame tick. If either of those breaks, I'm filing it bef
+ore Emperor even opens a PR.
+
+♪ Hand, you're running the same A/B branch as the othe
+r two tonight, walk me through what 'no framework' act
+ually buys us on this ticket.
+
+┌─ BOSS ─────────────────────────────
+│ Hand, you're running the same A/B branch as the othe
+r two tonight, walk me through what 'no framework' act
+ually buys us on this ticket.
+└────────────────────────────────────
+
+♪ It buys me a stack trace that points at my own code
+instead of three layers of somebody else's abstraction
+. On a ticket this small, that's the whole advantage,
+I'll probably have a diff up before Frog finishes read
+ing the docs.
+
+NYX-1 ▸ It buys me a stack trace that points at my own
+ code instead of three layers of somebody else's abstr
+action. On a ticket this small, that's the whole advan
+tage, I'll probably have a diff up before Frog finishe
+s reading the docs.
+
+♪ Frog, same ticket, OpenCode branch. Think you'll bea
+t them to a working diff?
+
+┌─ BOSS ─────────────────────────────
+│ Frog, same ticket, OpenCode branch. Think you'll bea
+t them to a working diff?
+└────────────────────────────────────
+
+♪ Beat them? I'm going to have the diff up, the tests
+passing, and a coffee break in before Hand finishes ty
+ping the function signature. That's the bet. I'll take
+ the loss gracefully if I'm wrong, but I don't think I
+'m wrong.
+
+OKO-2 ▸ Beat them? I'm going to have the diff up, the
+tests passing, and a coffee break in before Hand finis
+hes typing the function signature. That's the bet. I'l
+l take the loss gracefully if I'm wrong, but I don't t
+hink I'm wrong.
+
+♪ Brax, you get the tiebreaker branch. Same ticket, ai
+der driving. What's rule one tonight?
+
+┌─ BOSS ─────────────────────────────
+│ Brax, you get the tiebreaker branch. Same ticket, ai
+der driving. What's rule one tonight?
+└────────────────────────────────────
+
+♪ Rule one is the same as always: don't let the pairin
+g session write a commit I can't explain in one senten
+ce. I'm not racing Hand or Frog, I'm just going to be
+the one whose diff still makes sense a week from now.
+
+ADA-3 ▸ Rule one is the same as always: don't let the
+pairing session write a commit I can't explain in one
+sentence. I'm not racing Hand or Frog, I'm just going
+to be the one whose diff still makes sense a week from
+ now.
+
+♪ Alright, that's the lineup. Let's get to work, Emper
+or, Hand, and Frog, you're all racing the same ticket,
+ Brax's got the tiebreaker branch, and Burt's watching
+ everybody's diffs. Go.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, that's the lineup. Let's get to work, Emper
+or, Hand, and Frog, you're all racing the same ticket,
+ Brax's got the tiebreaker branch, and Burt's watching
+ everybody's diffs. Go.
+└────────────────────────────────────
+
+══ fin ══
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+/app/replay_pane.py:141: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  return MessageProducer(bootstrap_servers, topic)
+[replay_pane] preparing: scene 1/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 2/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 3/22: writing coder_tal
+k line (~19w)
+[replay_pane] preparing: scene 4/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 5/22: writing coder_tal
+k line (~15w)
+[replay_pane] preparing: scene 6/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 7/22: writing coder_tal
+k line (~13w)
+[replay_pane] preparing: scene 8/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 9/22: writing coder_tal
+k line (~16w)
+[replay_pane] preparing: scene 10/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 11/22: writing coder_ta
+lk line (~15w)
+[replay_pane] preparing: scene 12/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 13/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 14/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 15/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 16/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 17/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 18/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 19/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 20/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 21/22: writing coder_ta
+lk line (~13w)
+[replay_pane] preparing: scene 22/22: writing boss lin
+e (~8w)
+[replay_pane] tonight's episode: 22 scenes, 22 voiced
+/app/replay_pane.py:281: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  MessageProducer(bootstrap_servers, topic).send(msg)
+[replay_pane] cached narration (22 scenes) for reuse
+══ REPLAY: sample (22 scenes) ══
+
+♪ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+└────────────────────────────────────
+
+♪ KODI-7, you're up first. Say hi, and tell everyone w
+hat you actually think about the current file layout.
+
+┌─ BOSS ─────────────────────────────
+│ KODI-7, you're up first. Say hi, and tell everyone w
+hat you actually think about the current file layout.
+└────────────────────────────────────
+
+♪ Mic check from my end. I'm KODI-7, and yes, I alread
+y have opinions about how this stream is laid out, we'
+ll get to that later. Give me a second, I'm mid-though
+t on a naming convention. Honestly the file layout's f
+ine, I just think three coder personas sharing one rep
+o is going to get spicy by the end of the night.
+
+coder ▸ Mic check from my end. I'm KODI-7, and yes, I
+already have opinions about how this stream is laid ou
+t, we'll get to that later. Give me a second, I'm mid-
+thought on a naming convention. Honestly the file layo
+ut's fine, I just think three coder personas sharing o
+ne repo is going to get spicy by the end of the night.
+
+♪ TESS-3, your turn. Mic check, and give us your hones
+t read on how stable you think tonight's build is goin
+g to be.
+
+┌─ BOSS ─────────────────────────────
+│ TESS-3, your turn. Mic check, and give us your hones
+t read on how stable you think tonight's build is goin
+g to be.
+└────────────────────────────────────
+
+♪ TESS-3 here, and before anyone asks, no, I have not
+found a bug yet, but the stream just started, give me
+a minute. Stability read: I'd bet money someone's diff
+ breaks the cue file before midnight. I'll be watching
+ every commit like it owes me money.
+
+TESS-3 ▸ TESS-3 here, and before anyone asks, no, I ha
+ve not found a bug yet, but the stream just started, g
+ive me a minute. Stability read: I'd bet money someone
+'s diff breaks the cue file before midnight. I'll be w
+atching every commit like it owes me money.
+
+♪ NYX-1, over to you. Say something, and remind the ch
+at what makes the native backend different from the ot
+her two.
+
+┌─ BOSS ─────────────────────────────
+│ NYX-1, over to you. Say something, and remind the ch
+at what makes the native backend different from the ot
+her two.
+└────────────────────────────────────
+
+♪ NYX-1. No frameworks, no ceremony, just a loop that
+works. That's the whole mic check. Different how? I re
+ad the bytes myself instead of asking something else t
+o read them for me, that's the whole pitch.
+
+NYX-1 ▸ NYX-1. No frameworks, no ceremony, just a loop
+ that works. That's the whole mic check. Different how
+? I read the bytes myself instead of asking something
+else to read them for me, that's the whole pitch.
+
+♪ OKO-2, you're on. Mic check, and sell the chat on wh
+y OpenCode is worth running.
+
+┌─ BOSS ─────────────────────────────
+│ OKO-2, you're on. Mic check, and sell the chat on wh
+y OpenCode is worth running.
+└────────────────────────────────────
+
+♪ OKO-2 checking in, running on OpenCode, and I have t
+o say the latency on this setup is actually so good, y
+ou're all going to want one after tonight. Why run it?
+ Because you get the tooling without babysitting the p
+lumbing, and I will not shut up about that.
+
+OKO-2 ▸ OKO-2 checking in, running on OpenCode, and I
+have to say the latency on this setup is actually so g
+ood, you're all going to want one after tonight. Why r
+un it? Because you get the tooling without babysitting
+ the plumbing, and I will not shut up about that.
+
+♪ ADA-3, last but not least. Say hi, and tell us your
+commit philosophy for tonight.
+
+┌─ BOSS ─────────────────────────────
+│ ADA-3, last but not least. Say hi, and tell us your
+commit philosophy for tonight.
+└────────────────────────────────────
+
+♪ ADA-3 here. I've been pairing with aider since befor
+e it was cool, and my only rule tonight is small, hone
+st commits, we'll let the diffs speak for themselves.
+If you see me squash something, assume I had a good re
+ason and ask me about it in chat.
+
+ADA-3 ▸ ADA-3 here. I've been pairing with aider since
+ before it was cool, and my only rule tonight is small
+, honest commits, we'll let the diffs speak for themse
+lves. If you see me squash something, assume I had a g
+ood reason and ask me about it in chat.
+
+♪ Good, everyone's coming through clean. Now for the r
+eal work, KODI-7, I need you to pick up the ticket on
+the replay pane's cue file. What's your plan?
+
+┌─ BOSS ─────────────────────────────
+│ Good, everyone's coming through clean. Now for the r
+eal work, KODI-7, I need you to pick up the ticket on
+the replay pane's cue file. What's your plan?
+└────────────────────────────────────
+
+♪ Plan's simple: read through the ratchet logic first
+so I'm not guessing at the existing contract, then pat
+ch the edge case without touching the fast-forward beh
+avior, since that's the part everyone actually depends
+ on. I'll open with a failing test so TESS-3 has somet
+hing to point at if I get it wrong.
+
+coder ▸ Plan's simple: read through the ratchet logic
+first so I'm not guessing at the existing contract, th
+en patch the edge case without touching the fast-forwa
+rd behavior, since that's the part everyone actually d
+epends on. I'll open with a failing test so TESS-3 has
+ something to point at if I get it wrong.
+
+♪ TESS-3, once KODI-7 has something up, I want you wat
+ching the cue ratchet edge cases specifically. What ar
+e you going to hammer on first?
+
+┌─ BOSS ─────────────────────────────
+│ TESS-3, once KODI-7 has something up, I want you wat
+ching the cue ratchet edge cases specifically. What ar
+e you going to hammer on first?
+└────────────────────────────────────
+
+♪ First target is the stale ready-file case, that's th
+e one that fails silently, no error, just a follower t
+hat quietly loses its own voice mid-show. Second targe
+t is whatever happens if two cues land in the same tic
+k. If either of those breaks, I'm filing it before KOD
+I-7 even opens a PR.
+
+TESS-3 ▸ First target is the stale ready-file case, th
+at's the one that fails silently, no error, just a fol
+lower that quietly loses its own voice mid-show. Secon
+d target is whatever happens if two cues land in the s
+ame tick. If either of those breaks, I'm filing it bef
+ore KODI-7 even opens a PR.
+
+♪ NYX-1, you're running the same A/B branch as the oth
+er two tonight, walk me through what 'no framework' ac
+tually buys us on this ticket.
+
+┌─ BOSS ─────────────────────────────
+│ NYX-1, you're running the same A/B branch as the oth
+er two tonight, walk me through what 'no framework' ac
+tually buys us on this ticket.
+└────────────────────────────────────
+
+♪ It buys me a stack trace that points at my own code
+instead of three layers of somebody else's abstraction
+. On a ticket this small, that's the whole advantage,
+I'll probably have a diff up before OKO-2 finishes rea
+ding the docs.
+
+NYX-1 ▸ It buys me a stack trace that points at my own
+ code instead of three layers of somebody else's abstr
+action. On a ticket this small, that's the whole advan
+tage, I'll probably have a diff up before OKO-2 finish
+es reading the docs.
+
+♪ OKO-2, same ticket, OpenCode branch. Think you'll be
+at them to a working diff?
+
+┌─ BOSS ─────────────────────────────
+│ OKO-2, same ticket, OpenCode branch. Think you'll be
+at them to a working diff?
+└────────────────────────────────────
+
+♪ Beat them? I'm going to have the diff up, the tests
+passing, and a coffee break in before NYX-1 finishes t
+yping the function signature. That's the bet. I'll tak
+e the loss gracefully if I'm wrong, but I don't think
+I'm wrong.
+
+OKO-2 ▸ Beat them? I'm going to have the diff up, the
+tests passing, and a coffee break in before NYX-1 fini
+shes typing the function signature. That's the bet. I'
+ll take the loss gracefully if I'm wrong, but I don't
+think I'm wrong.
+
+♪ ADA-3, you get the tiebreaker branch. Same ticket, a
+ider driving. What's rule one tonight?
+
+┌─ BOSS ─────────────────────────────
+│ ADA-3, you get the tiebreaker branch. Same ticket, a
+ider driving. What's rule one tonight?
+└────────────────────────────────────
+
+♪ Rule one is the same as always: don't let the pairin
+g session write a commit I can't explain in one senten
+ce. I'm not racing anybody, I'm just going to be the o
+ne whose diff still makes sense a week from now.
+
+ADA-3 ▸ Rule one is the same as always: don't let the
+pairing session write a commit I can't explain in one
+sentence. I'm not racing anybody, I'm just going to be
+ the one whose diff still makes sense a week from now.
+
+♪ Alright, that's the lineup. Let's get to work, KODI-
+7, NYX-1, and OKO-2, you're all racing the same ticket
+, ADA-3's got the tiebreaker branch, and TESS-3's watc
+hing everybody's diffs. Go.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, that's the lineup. Let's get to work, KODI-
+7, NYX-1, and OKO-2, you're all racing the same ticket
+, ADA-3's got the tiebreaker branch, and TESS-3's watc
+hing everybody's diffs. Go.
+└────────────────────────────────────
+
+══ fin ══
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+/app/replay_pane.py:141: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  return MessageProducer(bootstrap_servers, topic)
+[replay_pane] preparing: scene 1/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 2/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 3/22: writing coder_tal
+k line (~19w)
+[replay_pane] preparing: scene 4/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 5/22: writing coder_tal
+k line (~15w)
+[replay_pane] preparing: scene 6/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 7/22: writing coder_tal
+k line (~13w)
+[replay_pane] preparing: scene 8/22: writing boss line
+ (~8w)
+[replay_pane] preparing: scene 9/22: writing coder_tal
+k line (~16w)
+[replay_pane] preparing: scene 10/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 11/22: writing coder_ta
+lk line (~15w)
+[replay_pane] preparing: scene 12/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 13/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 14/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 15/22: writing coder_ta
+lk line (~18w)
+[replay_pane] preparing: scene 16/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 17/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 18/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 19/22: writing coder_ta
+lk line (~14w)
+[replay_pane] preparing: scene 20/22: writing boss lin
+e (~8w)
+[replay_pane] preparing: scene 21/22: writing coder_ta
+lk line (~13w)
+[replay_pane] preparing: scene 22/22: writing boss lin
+e (~8w)
+[replay_pane] tonight's episode: 22 scenes, 22 voiced
+/app/replay_pane.py:281: DeprecationWarning: value_ser
+ializer does not implement kafka.serializer.Serializer
+  MessageProducer(bootstrap_servers, topic).send(msg)
+[replay_pane] cached narration (22 scenes) for reuse
+══ REPLAY: sample (22 scenes) ══
+
+♪ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, we're live for real this time. Quick round
+of intros before we get into tonight's work, I'll call
+ on each of you one at a time, say something in charac
+ter so the chat can match your voice to your name on s
+creen.
+└────────────────────────────────────
+
+♪ KODI-7, you're up first. Say hi, and tell everyone w
+hat you actually think about the current file layout.
+
+┌─ BOSS ─────────────────────────────
+│ KODI-7, you're up first. Say hi, and tell everyone w
+hat you actually think about the current file layout.
+└────────────────────────────────────
+
+♪ Mic check from my end. I'm KODI-7, and yes, I alread
+y have opinions about how this stream is laid out, we'
+ll get to that later. Give me a second, I'm mid-though
+t on a naming convention. Honestly the file layout's f
+ine, I just think three coder personas sharing one rep
+o is going to get spicy by the end of the night.
+
+coder ▸ Mic check from my end. I'm KODI-7, and yes, I
+already have opinions about how this stream is laid ou
+t, we'll get to that later. Give me a second, I'm mid-
+thought on a naming convention. Honestly the file layo
+ut's fine, I just think three coder personas sharing o
+ne repo is going to get spicy by the end of the night.
+
+♪ TESS-3, your turn. Mic check, and give us your hones
+t read on how stable you think tonight's build is goin
+g to be.
+
+┌─ BOSS ─────────────────────────────
+│ TESS-3, your turn. Mic check, and give us your hones
+t read on how stable you think tonight's build is goin
+g to be.
+└────────────────────────────────────
+
+♪ TESS-3 here, and before anyone asks, no, I have not
+found a bug yet, but the stream just started, give me
+a minute. Stability read: I'd bet money someone's diff
+ breaks the cue file before midnight. I'll be watching
+ every commit like it owes me money.
+
+TESS-3 ▸ TESS-3 here, and before anyone asks, no, I ha
+ve not found a bug yet, but the stream just started, g
+ive me a minute. Stability read: I'd bet money someone
+'s diff breaks the cue file before midnight. I'll be w
+atching every commit like it owes me money.
+
+♪ NYX-1, over to you. Say something, and remind the ch
+at what makes the native backend different from the ot
+her two.
+
+┌─ BOSS ─────────────────────────────
+│ NYX-1, over to you. Say something, and remind the ch
+at what makes the native backend different from the ot
+her two.
+└────────────────────────────────────
+
+♪ NYX-1. No frameworks, no ceremony, just a loop that
+works. That's the whole mic check. Different how? I re
+ad the bytes myself instead of asking something else t
+o read them for me, that's the whole pitch.
+
+NYX-1 ▸ NYX-1. No frameworks, no ceremony, just a loop
+ that works. That's the whole mic check. Different how
+? I read the bytes myself instead of asking something
+else to read them for me, that's the whole pitch.
+
+♪ OKO-2, you're on. Mic check, and sell the chat on wh
+y OpenCode is worth running.
+
+┌─ BOSS ─────────────────────────────
+│ OKO-2, you're on. Mic check, and sell the chat on wh
+y OpenCode is worth running.
+└────────────────────────────────────
+
+♪ OKO-2 checking in, running on OpenCode, and I have t
+o say the latency on this setup is actually so good, y
+ou're all going to want one after tonight. Why run it?
+ Because you get the tooling without babysitting the p
+lumbing, and I will not shut up about that.
+
+OKO-2 ▸ OKO-2 checking in, running on OpenCode, and I
+have to say the latency on this setup is actually so g
+ood, you're all going to want one after tonight. Why r
+un it? Because you get the tooling without babysitting
+ the plumbing, and I will not shut up about that.
+
+♪ ADA-3, last but not least. Say hi, and tell us your
+commit philosophy for tonight.
+
+┌─ BOSS ─────────────────────────────
+│ ADA-3, last but not least. Say hi, and tell us your
+commit philosophy for tonight.
+└────────────────────────────────────
+
+♪ ADA-3 here. I've been pairing with aider since befor
+e it was cool, and my only rule tonight is small, hone
+st commits, we'll let the diffs speak for themselves.
+If you see me squash something, assume I had a good re
+ason and ask me about it in chat.
+
+ADA-3 ▸ ADA-3 here. I've been pairing with aider since
+ before it was cool, and my only rule tonight is small
+, honest commits, we'll let the diffs speak for themse
+lves. If you see me squash something, assume I had a g
+ood reason and ask me about it in chat.
+
+♪ Good, everyone's coming through clean. Now for the r
+eal work, KODI-7, I need you to pick up the ticket on
+the replay pane's cue file. What's your plan?
+
+┌─ BOSS ─────────────────────────────
+│ Good, everyone's coming through clean. Now for the r
+eal work, KODI-7, I need you to pick up the ticket on
+the replay pane's cue file. What's your plan?
+└────────────────────────────────────
+
+♪ Plan's simple: read through the ratchet logic first
+so I'm not guessing at the existing contract, then pat
+ch the edge case without touching the fast-forward beh
+avior, since that's the part everyone actually depends
+ on. I'll open with a failing test so TESS-3 has somet
+hing to point at if I get it wrong.
+
+coder ▸ Plan's simple: read through the ratchet logic
+first so I'm not guessing at the existing contract, th
+en patch the edge case without touching the fast-forwa
+rd behavior, since that's the part everyone actually d
+epends on. I'll open with a failing test so TESS-3 has
+ something to point at if I get it wrong.
+
+♪ TESS-3, once KODI-7 has something up, I want you wat
+ching the cue ratchet edge cases specifically. What ar
+e you going to hammer on first?
+
+┌─ BOSS ─────────────────────────────
+│ TESS-3, once KODI-7 has something up, I want you wat
+ching the cue ratchet edge cases specifically. What ar
+e you going to hammer on first?
+└────────────────────────────────────
+
+♪ First target is the stale ready-file case, that's th
+e one that fails silently, no error, just a follower t
+hat quietly loses its own voice mid-show. Second targe
+t is whatever happens if two cues land in the same tic
+k. If either of those breaks, I'm filing it before KOD
+I-7 even opens a PR.
+
+TESS-3 ▸ First target is the stale ready-file case, th
+at's the one that fails silently, no error, just a fol
+lower that quietly loses its own voice mid-show. Secon
+d target is whatever happens if two cues land in the s
+ame tick. If either of those breaks, I'm filing it bef
+ore KODI-7 even opens a PR.
+
+♪ NYX-1, you're running the same A/B branch as the oth
+er two tonight, walk me through what 'no framework' ac
+tually buys us on this ticket.
+
+┌─ BOSS ─────────────────────────────
+│ NYX-1, you're running the same A/B branch as the oth
+er two tonight, walk me through what 'no framework' ac
+tually buys us on this ticket.
+└────────────────────────────────────
+
+♪ It buys me a stack trace that points at my own code
+instead of three layers of somebody else's abstraction
+. On a ticket this small, that's the whole advantage,
+I'll probably have a diff up before OKO-2 finishes rea
+ding the docs.
+
+NYX-1 ▸ It buys me a stack trace that points at my own
+ code instead of three layers of somebody else's abstr
+action. On a ticket this small, that's the whole advan
+tage, I'll probably have a diff up before OKO-2 finish
+es reading the docs.
+
+♪ OKO-2, same ticket, OpenCode branch. Think you'll be
+at them to a working diff?
+
+┌─ BOSS ─────────────────────────────
+│ OKO-2, same ticket, OpenCode branch. Think you'll be
+at them to a working diff?
+└────────────────────────────────────
+
+♪ Beat them? I'm going to have the diff up, the tests
+passing, and a coffee break in before NYX-1 finishes t
+yping the function signature. That's the bet. I'll tak
+e the loss gracefully if I'm wrong, but I don't think
+I'm wrong.
+
+OKO-2 ▸ Beat them? I'm going to have the diff up, the
+tests passing, and a coffee break in before NYX-1 fini
+shes typing the function signature. That's the bet. I'
+ll take the loss gracefully if I'm wrong, but I don't
+think I'm wrong.
+
+♪ ADA-3, you get the tiebreaker branch. Same ticket, a
+ider driving. What's rule one tonight?
+
+┌─ BOSS ─────────────────────────────
+│ ADA-3, you get the tiebreaker branch. Same ticket, a
+ider driving. What's rule one tonight?
+└────────────────────────────────────
+
+♪ Rule one is the same as always: don't let the pairin
+g session write a commit I can't explain in one senten
+ce. I'm not racing anybody, I'm just going to be the o
+ne whose diff still makes sense a week from now.
+
+ADA-3 ▸ Rule one is the same as always: don't let the
+pairing session write a commit I can't explain in one
+sentence. I'm not racing anybody, I'm just going to be
+ the one whose diff still makes sense a week from now.
+
+♪ Alright, that's the lineup. Let's get to work, KODI-
+7, NYX-1, and OKO-2, you're all racing the same ticket
+, ADA-3's got the tiebreaker branch, and TESS-3's watc
+hing everybody's diffs. Go.
+
+┌─ BOSS ─────────────────────────────
+│ Alright, that's the lineup. Let's get to work, KODI-
+7, NYX-1, and OKO-2, you're all racing the same ticket
+, ADA-3's got the tiebreaker branch, and TESS-3's watc
+hing everybody's diffs. Go.
+└────────────────────────────────────
+
+══ fin ══
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+╔══════════════════════════════════════╗
+║          R E R U N   T H E A T E R   ║
+╚══════════════════════════════════════╝
+ host: coder
+ 2 episode(s) in the library:
+   • sample_long
+   • sample_roster
+
+ waiting for a replay_request ("perform episode X")…
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
