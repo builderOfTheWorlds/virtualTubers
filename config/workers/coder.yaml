@@ -95,25 +95,26 @@ avatar:
     # output size — capturing at 2560x1440/3840x2160 added no real detail,
     # since downscaling cannot add information, and the non-integer glyph
     # downscale was what made stream text mushy; see startup.sh's
-    # CAPTURE_RESOLUTION comment): the avatar pane is the top 40% of the M
-    # column (60% width, starting after the 20%-wide L column)
-    # -> pane rect x=384 (0.20*1920), y=0, width=1152 (0.60*1920),
-    # height=432 (0.40*1080).
+    # CAPTURE_RESOLUTION comment).
     #
-    # The WINDOW is deliberately NARROWER than that pane and centered in it
-    # (2026-09-22): the renderer is aspect-correct, so a 1152-wide window
-    # rendered a small head surrounded by a wide expanse of empty
-    # background. Half-width (576) at the pane's full height is 4:3, which
-    # frames the head without letterboxing it, and leaves the pane's own
-    # left/right thirds as plain console — so the avatar reads as part of
-    # the tmux frame rather than a wide slab pasted over it.
-    #   x = 384 + (1152 - 576) / 2 = 672
+    # tuber_base.yaml now sizes its columns AROUND this window rather than
+    # the reverse (see that file's "SIZED TO THE AVATAR" header): the avatar
+    # pane is the top 45% of the M column, which is 30.16% wide starting
+    # after the 42%-wide L column
+    #   -> pane rect x=806 (0.42*1920), y=0, width=579 (0.3016*1920),
+    #      height=486 (0.45*1080).
+    #
+    # The window is inset a little inside that rect so the pane's own tmux
+    # border stays drawn on all four sides — an exactly pane-sized window
+    # would paint over the border and detach the avatar from the frame,
+    # which is the opposite of what the grey-background compositing is for.
+    #   x = 806 + (579 - 549) / 2 = 821, y = 8, 549x470
     # Remove this block (falls back to auto-detect) once that's fixed, or if
     # CAPTURE_RESOLUTION is overridden away from the 1920x1080 default —
     # these numbers do NOT scale with it automatically.
-    window_pos: [672, 0]
-    width: 576
-    height: 432
+    window_pos: [821, 8]
+    width: 549
+    height: 470
     # Composite the render onto the console's own background instead of
     # leaving un-drawn pixels black (pixel_raster.composite_on_background).
     # Defaults to startup.sh's xterm `-bg '#2b2b2b'`; set `none` to go back

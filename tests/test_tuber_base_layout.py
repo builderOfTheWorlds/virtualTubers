@@ -107,24 +107,54 @@ def test_base_pane_is_radar_chart(built):
 def test_horizontal_splits_carve_four_columns(built):
     """avatar, chat_list, kafka_feed are all horizontal (h) splits chaining off
     the previous column, per the plan's worked percentage math (tuber_base.yaml
-    header): 80 / 25 / 86 shrinking splits of each successively narrower
-    remainder yield ~20/60/2.8/17.2 percent columns."""
+    header): 58 / 48 / 83 shrinking splits of each successively narrower
+    remainder yield 42/30.16/4.73/23.11 percent columns."""
     by_id = _by_id(built["panes"])
 
     avatar = by_id["avatar"]
     assert avatar["split"] == "h"
     assert avatar["target"] == "radar_chart"
-    assert avatar["size"] == 80
+    assert avatar["size"] == 58
 
     chat_list = by_id["chat_list"]
     assert chat_list["split"] == "h"
     assert chat_list["target"] == "avatar"
-    assert chat_list["size"] == 25
+    assert chat_list["size"] == 48
 
     kafka_feed = by_id["kafka_feed"]
     assert kafka_feed["split"] == "h"
     assert kafka_feed["target"] == "chat_list"
-    assert kafka_feed["size"] == 86
+    assert kafka_feed["size"] == 83
+
+
+def test_column_percentages_resolve_to_the_mock_proportions(built):
+    """Guardrail on the actual GEOMETRY, not just the split numbers: the
+    shrinking-split chain must still land on the hand-drawn mock's columns
+    (measured off it: 42.0 / 28.7 / 5.5 / 23.7 percent), and the M column
+    must stay wide enough for the 549px avatar window it is sized around
+    (config/workers/coder.yaml). A wrong `size` that still parses would
+    otherwise pass every other test in this file."""
+    by_id = _by_id(built["panes"])
+    remaining = 100.0
+
+    m_c_r = remaining * by_id["avatar"]["size"] / 100.0
+    left = remaining - m_c_r
+
+    c_r = m_c_r * by_id["chat_list"]["size"] / 100.0
+    middle = m_c_r - c_r
+
+    right = c_r * by_id["kafka_feed"]["size"] / 100.0
+    chats = c_r - right
+
+    assert left == pytest.approx(42.0, abs=0.5)
+    assert middle == pytest.approx(30.2, abs=1.6)   # mock 28.7
+    assert chats == pytest.approx(4.7, abs=1.0)     # mock 5.5
+    assert right == pytest.approx(23.1, abs=1.0)    # mock 23.7
+    assert left + middle + chats + right == pytest.approx(100.0, abs=0.01)
+
+    # The whole point of this layout pass: the avatar column exists to fit
+    # the avatar window, not the other way round.
+    assert middle / 100.0 * 1920 >= 549
 
 
 def test_vertical_splits_carve_column_top_bottom_panes(built):
@@ -135,12 +165,15 @@ def test_vertical_splits_carve_column_top_bottom_panes(built):
     knowledge_graph = by_id["knowledge_graph"]
     assert knowledge_graph["split"] == "v"
     assert knowledge_graph["target"] == "radar_chart"
-    assert knowledge_graph["size"] == 70
+    assert knowledge_graph["size"] == 73
 
     thinking = by_id["thinking"]
     assert thinking["split"] == "v"
     assert thinking["target"] == "avatar"
-    assert thinking["size"] == 60
+    assert thinking["size"] == 55
+    # Thinking stays the taller half of the M column (the mock draws it
+    # that way) even though the avatar box gained height in this pass.
+    assert thinking["size"] > 50
 
 
 def test_chat_list_is_the_narrow_chats_column(built):
@@ -246,15 +279,15 @@ def test_exact_tmux_command_sequence(built):
     ]
     assert split_lines == [
         "tmux select-pane -t worker:0.0",
-        "tmux split-window -h -t worker:0.0 -p 80",
+        "tmux split-window -h -t worker:0.0 -p 58",
         "tmux select-pane -t worker:0.1",
-        "tmux split-window -h -t worker:0.1 -p 25",
+        "tmux split-window -h -t worker:0.1 -p 48",
         "tmux select-pane -t worker:0.2",
-        "tmux split-window -h -t worker:0.2 -p 86",
+        "tmux split-window -h -t worker:0.2 -p 83",
         "tmux select-pane -t worker:0.0",
-        "tmux split-window -v -t worker:0.0 -p 70",
+        "tmux split-window -v -t worker:0.0 -p 73",
         "tmux select-pane -t worker:0.2",
-        "tmux split-window -v -t worker:0.2 -p 60",
+        "tmux split-window -v -t worker:0.2 -p 55",
     ]
 
     assert "tmux set -t worker pane-border-status top" in lines

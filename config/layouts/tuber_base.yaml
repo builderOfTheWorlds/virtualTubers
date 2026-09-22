@@ -31,8 +31,21 @@
 # whole screen. Panes are laid out in list order; each `target` must already
 # be listed.
 #
-# ── Four uneven columns: L(radar/knowledge) ~20%, M(avatar/thinking) ~60%,
-#    C(chat_list) ~2.8%, R(kafka_feed) ~17.2% ───────────────────────────────
+# ── Four uneven columns: L(radar/knowledge) 42%, M(avatar/thinking) ~30%,
+#    C(chat_list) ~4.7%, R(kafka_feed) ~23.1% ────────────────────────────────
+#
+# SIZED TO THE AVATAR (2026-09-22). These percentages are measured off the
+# user's hand-drawn mock above, and the measurement that decided them is:
+# the mock's avatar column is 28.7% of the frame, which at
+# CAPTURE_RESOLUTION=1920x1080 is 550px — and the codec avatar's window is
+# 576px wide (config/workers/coder.yaml, docs/composite_on_background.md).
+# The mock is therefore not an arbitrary redraw, it is "shrink the avatar
+# column until it fits the face, and give the reclaimed width to the
+# knowledge graph and the Kafka feed". The previous 20/60/2.8/17.2 split
+# did the opposite: a 1152px-wide column around a 576px face, leaving a
+# wide empty gutter, a 54px ("ker.yaml") unreadable chats column, and a
+# cramped knowledge graph.
+#
 # Worked math (same percentage-splitting approach as roundtable.yaml's header,
 # generalized to UNEVEN target widths instead of even quarters — each step
 # still derives size_k from "what % of the CURRENT target's width should the
@@ -40,33 +53,36 @@
 #
 #   start: base pane (radar_chart) = 100% of screen width.
 #
-#   split 1 (target: radar_chart, the 100%-wide base) size=80
-#     -> new pane (avatar, carries M+C+R) = 100 * 80/100 = 80% of screen
-#     -> radar_chart (old/target) keeps 100 * 20/100 = 20% of screen  -> L ✓
+#   split 1 (target: radar_chart, the 100%-wide base) size=58
+#     -> new pane (avatar, carries M+C+R) = 100 * 58/100 = 58% of screen
+#     -> radar_chart (old/target) keeps 100 * 42/100 = 42% of screen  -> L ✓
 #
-#   split 2 (target: avatar, currently 80% wide) size=25
-#     -> new pane (chat_list, carries C+R) = 80 * 25/100 = 20% of screen
-#     -> avatar (old/target) keeps 80 * 75/100 = 60% of screen        -> M ✓
+#   split 2 (target: avatar, currently 58% wide) size=48
+#     -> new pane (chat_list, carries C+R) = 58 * 48/100 = 27.84% of screen
+#     -> avatar (old/target) keeps 58 * 52/100 = 30.16% of screen     -> M ✓
+#        (30.16% of 1920 = 579px — the avatar window's column, see above)
 #
-#   split 3 (target: chat_list, currently 20% wide) size=86
-#     -> new pane (kafka_feed) = 20 * 86/100 = 17.2% of screen        -> R ✓
-#     -> chat_list (old/target) keeps 20 * 14/100 = 2.8% of screen    -> C ✓
+#   split 3 (target: chat_list, currently 27.84% wide) size=83
+#     -> new pane (kafka_feed) = 27.84 * 83/100 = 23.11% of screen    -> R ✓
+#     -> chat_list (old/target) keeps 27.84 * 17/100 = 4.73% of screen -> C ✓
 #
-# Resulting columns, left to right: L=20%, M=60%, C=2.8%("chats"), R=17.2%
-# — narrower "chats" column and wider avatar/thinking column than the
-# original mock, per user request. Each column pane is then split VERTICALLY
+# Resulting columns, left to right: L=42%, M=30.16%, C=4.73%("chats"),
+# R=23.11% — sums to 100.00%. Each column pane is then split VERTICALLY
 # (top/bottom) independently, same shrinking-split logic but on that column's
 # own height instead of the screen's width:
 #
-#   split 4 (target: radar_chart, the L column, full height) size=70
-#     -> new pane (knowledge_graph) = bottom 70% of L; radar_chart (Stats)
-#        keeps the top 30%. Knowledge needs more room than the small stats
-#        block above it.
+#   split 4 (target: radar_chart, the L column, full height) size=73
+#     -> new pane (knowledge_graph) = bottom 73% of L; radar_chart (Stats)
+#        keeps the top 27%. Matches the mock's radar box, which ends 26.9%
+#        down its column; knowledge needs the room more than the small
+#        stats block above it.
 #
-#   split 5 (target: avatar, the M column, full height) size=60
-#     -> new pane (thinking) = bottom 60% of M; avatar keeps the top 40%. The
-#        mock draws Thinking noticeably taller than the avatar box (more rows
-#        of scrolling chain-of-thought text vs. a small static face).
+#   split 5 (target: avatar, the M column, full height) size=55
+#     -> new pane (thinking) = bottom 55% of M; avatar keeps the top 45%.
+#        The mock's AVATAR box bottom border sits 44.8% down the column.
+#        Thinking stays the taller of the two (more rows of scrolling
+#        chain-of-thought text vs. one head), but the avatar box gains the
+#        height it needs now that its column is no longer over-wide.
 #
 # Per-pane universal knobs: use, id, split, size, target, title, border_color,
 # command, enabled, with.
@@ -77,31 +93,31 @@ panes:
   - use: radar_chart                    # base pane, L column (~20% wide)
 
   # ── Horizontal splits: carve the four columns left to right. ───────────────
-  - use: avatar                         # carves out M+C+R combined (~80%)
+  - use: avatar                         # carves out M+C+R combined (58%)
     target: radar_chart
     split: h
-    size: 80
+    size: 58
 
   - use: chat_list                      # carves out C+R combined
     target: avatar
     split: h
-    size: 25
+    size: 48
 
-  - use: kafka_feed                     # carves out R (~30.27%); with: sets
+  - use: kafka_feed                     # carves out R (23.11%); with: sets
     target: chat_list                   # conversation-mode rendering per
     split: h                            # contract C.
-    size: 86
+    size: 83
     with:
       content:
         format: conversation
 
   # ── Vertical splits: split each column into its top/bottom panes. ──────────
-  - use: knowledge_graph                # bottom of L column; remainder stays
-    target: radar_chart                 # radar_chart (top half).
+  - use: knowledge_graph                # bottom 73% of L column; remainder
+    target: radar_chart                 # stays radar_chart (top 27%).
     split: v
-    size: 70
+    size: 73
 
-  - use: thinking                       # bottom 60% of M column; remainder
-    target: avatar                      # stays avatar (top 40%).
+  - use: thinking                       # bottom 55% of M column; remainder
+    target: avatar                      # stays avatar (top 45%).
     split: v
-    size: 60
+    size: 55

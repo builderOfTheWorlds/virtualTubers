@@ -24,11 +24,33 @@ RESOLUTION="${RESOLUTION:-1920x1080}"
 # the x11grab frame size (14.7 MB -> 8.3 MB), which doubles how many frames
 # fit in stream_supervisor.py's byte-budgeted input queue.
 CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-1920x1080}"
-# Monospace cell size is ~12x24 px at fs=14 (measured in this image via
-# xterm+xdotool), giving a 160x45 character grid at 1920x1080. Raising this
-# without lowering CAPTURE_RESOLUTION's grid math will reflow every pane —
-# see app/pane_geometry.py and config/workers/coder.yaml's pinned avatar box.
-FONT_SIZE="${FONT_SIZE:-14}"
+# Monospace cell size is exactly 6x12 px at fs=7 (half of the ~12x24 px
+# measured at fs=14 in this image via xterm+xdotool), giving a 320x90
+# character grid at 1920x1080 — 4x the cells of fs=14's 160x45. Halved on
+# 2026-09-22 with the tuber_base layout pass: the narrower avatar column
+# leaves the side panels (knowledge graph, Kafka feed, chats) doing the
+# work, and they were line-wrapping mid-token at fs=14 — "or node_id
+# bootstrap-" / "ker.yaml" in the screenshots.
+#
+# EXACTLY half is the reason for 7 specifically rather than some nearby
+# value: 12x24 -> 6x12 is an integer cell size, so glyphs keep landing on
+# whole output pixels and stay fully hinted. That is the same property
+# CAPTURE_RESOLUTION == RESOLUTION buys above, and losing it (a fractional
+# cell like fs=11's 9.43x18.86) is what makes stream text look mushy.
+#
+# The pinned avatar window (config/workers/coder.yaml) is in PIXELS and so
+# is unaffected directly, but tmux splits on whole CELLS, so the pane
+# boundaries it must line up with do shift slightly with this value.
+# Smaller cells are finer-grained and land closer to tuber_base.yaml's
+# exact percentages, not further: the 42% / 30.16% column edges resolve to
+# 804px / 582px at fs=7 vs 804px / 576px at fs=14, both within ~6px of the
+# percentage-exact 806/579. Re-check the avatar box against a real capture
+# if you change this — see app/pane_geometry.py.
+#
+# Readability caveat: 6x12 px glyphs are small for a 1080p stream viewed
+# full-screen. If text turns out to be too fine on stream, raise this back
+# towards 10-11 rather than re-widening the panes.
+FONT_SIZE="${FONT_SIZE:-7}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
 
