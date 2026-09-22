@@ -205,12 +205,50 @@ class CodecAvatarProvider(AvatarProvider):
                 "mesh for this provider, unlike termgl_avatar's icosahedron")
 
         width, height, window_pos = self._resolve_geometry(cfg)
+        # Stashed for render_tick()'s mid-run GPU-worker-crash fallback,
+        # which needs to build a fresh in-process FrameSource with the
+        # exact same params this provider was constructed with.
+        self.width, self.height = width, height
+        self._character_params = character_params
+        self._view_dist = cfg.get("view_dist", 3.25)
+        self._angle_speed = cfg.get("angle_speed", 0.03)
 
-        self._source = FrameSource(
-            character_params, width=width, height=height,
-            view_dist=cfg.get("view_dist", 3.25),
-            angle_speed=cfg.get("angle_speed", 0.03),
-        )
+        # Render in a SEPARATE process from this one (which owns the
+        # pygame window below) whenever possible — see
+        # gpu_render_worker.py's module docstring for why in-process GPU
+        # + pygame window cannot safely coexist on gx10's Xvfb/driver
+        # combination. Falls back to the old in-process FrameSource (CPU-
+        # only there, via AVATAR_HAS_PYGAME_WINDOW below) if the worker
+        # process itself fails to start — e.g. no `multiprocessing`
+        # spawn support in this environment — so a host where the
+        # subprocess approach doesn't work degrades to the previously
+        # working CPU path instead of crashing the whole avatar.
+        use_subprocess_gpu = cfg.get("gpu_subprocess", True)
+        self._source = None
+        if use_subprocess_gpu:
+            try:
+                from gpu_render_worker import GPURenderWorker
+                self._source = GPURenderWorker(
+                    character_params, width=width, height=height,
+                    view_dist=cfg.get("view_dist", 3.25),
+                    angle_speed=cfg.get("angle_speed", 0.03),
+                )
+                print(
+                    "[avatar] codec_avatar: GPU rendering in a separate "
+                    "process (gpu_render_worker) — window and GPU context "
+                    "no longer share one process", file=sys.stderr)
+            except Exception as exc:  # noqa: BLE001 — fall back below
+                log.warning(
+                    "codec_avatar: could not start the GPU render "
+                    "subprocess (%r); falling back to in-process CPU "
+                    "rendering", exc)
+                self._source = None
+        if self._source is None:
+            self._source = FrameSource(
+                character_params, width=width, height=height,
+                view_dist=cfg.get("view_dist", 3.25),
+                angle_speed=cfg.get("angle_speed", 0.03),
+            )
 
         import os
         os.environ["SDL_VIDEO_WINDOW_POS"] = f"{window_pos[0]},{window_pos[1]}"
@@ -220,9 +258,12 @@ class CodecAvatarProvider(AvatarProvider):
         # fallback interaction between an in-process GL context and that
         # window (see gl_raster.is_available()'s docstring — root-caused
         # 2026-09-22 on gx10 after GPU passthrough + forcing EGL still
-        # didn't produce a real GPU-rendered, visible window). Set BEFORE
-        # gl_raster is imported by anything, so the very first
-        # is_available() call anywhere in this process sees it.
+        # didn't produce a real GPU-rendered, visible window). This ONLY
+        # matters for the in-process FrameSource fallback above —
+        # GPURenderWorker's subprocess never imports pygame and explicitly
+        # unsets this in its own process, so it's unaffected by it. Set
+        # BEFORE gl_raster is imported by anything, so the very first
+        # is_available() call anywhere in THIS process sees it.
         os.environ["AVATAR_HAS_PYGAME_WINDOW"] = "1"
         # SDL_VIDEO_X11_VISUALID pins the exact X visual SDL creates the
         # window with. Plain depth=24 (tried first, 2026-09-22) is NOT
@@ -324,7 +365,32 @@ class CodecAvatarProvider(AvatarProvider):
 
     def render_tick(self, expression, bubble_lines):
         import numpy as np
-        img, _backend = self._source.render_frame(expression)
+        try:
+            img, _backend = self._source.render_frame(expression)
+        except Exception as exc:  # noqa: BLE001 — the GPU worker crashed/hung mid-run
+            if not getattr(self, "_warned_source_failed", False):
+                log.warning(
+                    "codec_avatar: render_frame failed (%r); switching to "
+                    "in-process CPU rendering for the rest of this process's "
+                    "life (not retrying the GPU subprocess mid-run — a "
+                    "worker that failed once is likely to keep failing, and "
+                    "a dropped/duplicate frame here would be worse than a "
+                    "one-time switch to the slower path)", exc)
+                self._warned_source_failed = True
+            if not isinstance(self._source, FrameSource):
+                import os
+                os.environ["AVATAR_HAS_PYGAME_WINDOW"] = "1"
+                old_source = self._source
+                self._source = FrameSource(
+                    self._character_params, width=self.width, height=self.height,
+                    view_dist=self._view_dist, angle_speed=self._angle_speed,
+                )
+                try:
+                    if hasattr(old_source, "close"):
+                        old_source.close()
+                except Exception:  # noqa: BLE001 — best-effort cleanup only
+                    pass
+            img, _backend = self._source.render_frame(expression)
         pixels = (np.clip(img, 0.0, 1.0) * 255).astype("uint8")
         # pygame surfarray is (W,H,3); our frames are (H,W,3).
         surf = self._pygame.surfarray.make_surface(pixels.transpose(1, 0, 2))
