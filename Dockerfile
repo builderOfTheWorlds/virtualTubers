@@ -25,6 +25,18 @@ RUN apt-get update && apt-get install -y \
     # deadsnakes for python3.11 (see the render3d venv step below — termgl
     # requires >=3.11, this image's system python3 is 3.10).
     build-essential software-properties-common gnupg \
+    # X11/EGL/GL dev headers — needed to COMPILE glcontext (moderngl's
+    # native context backend, app/gl_raster.py, docs/gl_raster_benchmark.md)
+    # from source. glcontext auto-picks a backend by probing headers at
+    # build time; installing all three means it builds successfully
+    # whether the target actually has a running X server (x11) or not
+    # (egl — the no-X11-needed path the local Windows/moderngl test used).
+    # Without these, `pip install moderngl` still succeeds (it's pure
+    # Python + prebuilt-wheel friendly) but its glcontext dependency fails
+    # to build from source on architectures with no prebuilt wheel (seen
+    # on aarch64/gx10: "fatal error: X11/Xlib.h: No such file or
+    # directory" building glcontext's x11.cpp).
+    libx11-dev libgl1-mesa-dev libegl1-mesa-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # PulseAudio's system-wide mode (startup.sh: `pulseaudio --system`) gates
