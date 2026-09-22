@@ -60,8 +60,10 @@ pane is also available as a token.
 - **Providers** (`avatar.provider` in the worker config, or env
   `AVATAR_PROVIDER`): `builtin` (static ASCII box face, always available,
   no extra deps) | `ascii_avatar` (animated 2D ASCII face via the vendored
-  repo) | `termgl_avatar` (rotating shaded 3D mesh via termgl — currently a
-  placeholder icosahedron; see "3D rendering (termgl)" below). Any provider
+  repo) | `termgl_avatar` (rotating shaded 3D mesh via termgl — a
+  **generated parametric head** when `character_params` is configured, else
+  the placeholder icosahedron; see "3D rendering (termgl)" below and
+  docs/character_generator.md). Any provider
   construction failure falls back to `builtin` automatically
   (`avatar_providers/__init__.py`).
 - **Notable fields:** universal knobs only. Expression states / bubble sizing

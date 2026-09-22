@@ -14,7 +14,20 @@ Every builder returns (or contributes to) a numpy structured array matching
 termgl.Trig3D's layout: fields `verts` (3,3 float32), `uv` (3,2 uint8),
 `fill` (bool). Callers pass the array straight to `ctx.triangle_3d(...)`.
 """
+import logging
+
 import numpy as np
+
+log = logging.getLogger(__name__)
+TRACE = 5
+
+
+def _trace(msg, *args):
+    """TRACE-level logging (CLAUDE.md's log strategy). Guarded so the
+    per-frame mesh calls pay no formatting cost when TRACE is off."""
+    if log.isEnabledFor(TRACE):
+        log.log(TRACE, msg, *args)
+
 
 
 def make_trig3d_dtype():
@@ -36,6 +49,54 @@ def _trig(v0, v1, v2, uv=((0, 0), (255, 0), (0, 255))):
     t["uv"] = np.array(uv, dtype=np.uint8)
     t["fill"] = True
     return t
+
+
+# ── Indexed geometry: (verts, faces) -> Trig3D array ──────────────────────
+# The builders above each emit independent triangles, which is fine for
+# static meshes. A MORPHABLE mesh (docs/avatar_3d_design.md §4) cannot work
+# that way: lerping between two expression poses requires both poses to
+# share one vertex array and one face table, so vertex i means the same
+# anatomical point in every pose. build_head_mesh therefore works in
+# indexed (verts, faces) form and converts once at the end via trigs_from_indexed.
+
+
+def trigs_from_indexed(verts, faces):
+    """Convert an indexed mesh to the flat Trig3D array termgl consumes.
+
+    verts: (N,3) float array. faces: (M,3) int array/sequence of indices.
+    Vectorized rather than looped — a head is ~600 triangles and this runs
+    per-frame when morph targets are lerped, so the per-triangle Python
+    loop the other builders use would be the wrong shape here.
+
+    Raises IndexError on an out-of-range face index rather than silently
+    skipping it (unlike build_graph_mesh's defensive edge handling): a bad
+    index here is a generator bug, not malformed external data, and
+    silently dropping faces would produce a subtly holed head that's far
+    harder to diagnose than a stack trace.
+    """
+    _trace("trigs_from_indexed(verts=%s, faces=%s)",
+           np.shape(verts), np.shape(faces))
+    verts = np.asarray(verts, dtype=np.float32)
+    faces = np.asarray(faces, dtype=np.int32)
+
+    if faces.size == 0:
+        return np.zeros((0,), dtype=TRIG3D_DTYPE)
+    if verts.ndim != 2 or verts.shape[1] != 3:
+        raise ValueError(f"verts must be (N,3), got {verts.shape}")
+    if faces.ndim != 2 or faces.shape[1] != 3:
+        raise ValueError(f"faces must be (M,3), got {faces.shape}")
+    if faces.max() >= len(verts) or faces.min() < 0:
+        raise IndexError(
+            f"face index out of range: faces span [{faces.min()}, {faces.max()}] "
+            f"but there are only {len(verts)} verts"
+        )
+
+    trigs = np.zeros((len(faces),), dtype=TRIG3D_DTYPE)
+    trigs["verts"] = verts[faces]          # (M,3,3) gather — one indexing op
+    trigs["uv"] = np.array([(0, 0), (255, 0), (0, 255)], dtype=np.uint8)
+    trigs["fill"] = True
+    return trigs
+
 
 
 # ── Radar: hexagonal "spike" mesh, one spike per metric ────────────────────

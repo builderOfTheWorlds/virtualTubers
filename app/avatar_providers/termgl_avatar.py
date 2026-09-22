@@ -6,14 +6,16 @@ docs/panels.md's "3D rendering (termgl)" section) instead of the flat
 ASCII box face (BuiltinProvider) or the vendored 2D animation stack
 (AsciiAvatarProvider).
 
-STATE OF THIS PROVIDER: the mesh is a placeholder icosahedron (mesh3d.
-build_icosahedron) — there is no rigged/expression-driven character model
-yet. Each of our 7 expressions maps only to a rotation-speed + color
-change (see EXPRESSION_STYLE below), not a distinct pose/animation, until
-a real character mesh is authored (future work). This still proves the
-full render loop shape a future rigged mesh would use — swap
-`build_icosahedron()` for a real mesh loader and the rest of this file is
-unchanged.
+STATE OF THIS PROVIDER: the mesh is either a GENERATED PARAMETRIC HEAD
+(when `avatar.termgl_avatar.character_params` is configured — see
+head_mesh.py and docs/character_generator.md) or, by default, the
+placeholder icosahedron (mesh3d.build_icosahedron). Expressions still map
+only to a rotation-speed change (see EXPRESSION_STYLE below), not a
+distinct pose: morph-target support is designed (docs/avatar_3d_design.md
+§4) and the generator already guarantees the stable topology it needs, but
+the per-expression poses themselves are not built yet. A character's
+configured `accent_color` overrides the per-expression color so a face
+keeps a stable identity on stream.
 
 Requires termgl, which needs Python >=3.11 (see Dockerfile's /opt/render3d
 venv) — unlike the rest of this app's system python3.10. The registry
@@ -31,7 +33,13 @@ WIDTH = 55
 HEIGHT = 24
 FOV = 1.2
 VIEW_ROT_X = 0.4
-VIEW_DIST = 3.0
+# Placeholder icosahedron sits at the original distance; a generated head is
+# taller than it is wide and needs slightly more room to avoid clipping its
+# crown/neck at the widest slider settings. Either is overridable per worker
+# via `avatar.termgl_avatar.view_dist`.
+DEFAULT_VIEW_DIST = 3.0
+HEAD_VIEW_DIST = 2.4
+VIEW_DIST = DEFAULT_VIEW_DIST  # back-compat for anything importing the old name
 
 # expression -> (rotation speed multiplier, termgl color name). Faster
 # rotation reads as "more active/animated" for thinking/speaking states;
@@ -81,20 +89,87 @@ class TermglAvatarProvider(AvatarProvider):
 
         self._ctx = make_context(WIDTH, HEIGHT)
         self._camera = make_camera(WIDTH, HEIGHT, fov=FOV)
-        self._mesh = build_icosahedron(radius=termgl_cfg.get("radius", 1.0))
+
+        # character_params (a slider dict or a preset name) selects the
+        # generated parametric head; its ABSENCE keeps the old placeholder
+        # icosahedron. That default matters: the other workers still run
+        # this provider with no character of their own, and must not start
+        # rendering a generic default face just because this code landed.
+        self._character_params = termgl_cfg.get("character_params")
+        self._mesh, self._mesh_kind = self._build_mesh(
+            self._character_params, termgl_cfg.get("radius", 1.0), build_icosahedron)
+        self._accent_color = self._resolve_accent_color(self._character_params)
+        self._view_dist = termgl_cfg.get("view_dist", DEFAULT_VIEW_DIST
+                                         if self._mesh_kind == "icosahedron"
+                                         else HEAD_VIEW_DIST)
         self._last_bubble_row_count = 0
 
         print(
-            f"[avatar] termgl_avatar: ready ({WIDTH}x{HEIGHT}, placeholder icosahedron mesh)",
+            f"[avatar] termgl_avatar: ready ({WIDTH}x{HEIGHT}, {self._mesh_kind} mesh, "
+            f"{len(self._mesh)} triangles)",
             file=sys.stderr,
         )
+
+    def _build_mesh(self, character_params, radius, build_icosahedron):
+        """Return (mesh, kind). Falls back to the placeholder icosahedron if
+        the configured character params are unusable.
+
+        Deliberately does NOT let a bad `character_params` block propagate:
+        the registry (avatar_providers/__init__.py) would catch it and drop
+        the whole provider back to the flat-ASCII BuiltinProvider, so one
+        typo'd slider would silently cost this worker its 3D pane entirely.
+        A placeholder mesh with a loud stderr line degrades far less.
+        """
+        if character_params is None:
+            return build_icosahedron(radius=radius), "icosahedron"
+
+        try:
+            from head_mesh import build_head_mesh
+            mesh = build_head_mesh(character_params)
+            if len(mesh) == 0:
+                raise ValueError("generated head mesh is empty")
+            return mesh, "parametric head"
+        except Exception as exc:  # noqa: BLE001 — see docstring
+            print(
+                f"[avatar] termgl_avatar: could not build parametric head "
+                f"({exc!r}) — falling back to placeholder icosahedron",
+                file=sys.stderr,
+            )
+            return build_icosahedron(radius=radius), "icosahedron (head build failed)"
+
+    def _resolve_accent_color(self, character_params):
+        """The character's own accent color, or None to keep the stock
+        per-expression palette.
+
+        Resolution is best-effort and never raises: a face that renders in
+        the default yellow is a cosmetic miss, while an exception here
+        would cost the worker its whole 3D pane (see _build_mesh).
+        """
+        if character_params is None:
+            return None
+        try:
+            from character_schema import resolve_params
+            return resolve_params(character_params)["accent_color"]
+        except Exception as exc:  # noqa: BLE001 — cosmetic, never fatal
+            print(f"[avatar] termgl_avatar: could not resolve accent_color ({exc!r})",
+                  file=sys.stderr)
+            return None
+
 
     def render_tick(self, expression, bubble_lines):
         tgl = self._tgl
         np = self._np
         speed_mul, color_name = EXPRESSION_STYLE.get(expression, EXPRESSION_STYLE["idle"])
+        # A character's configured accent_color overrides the stock
+        # per-expression color so the face keeps a stable identity on
+        # stream; the expression still drives ROTATION SPEED, which stays
+        # readable either way. Without character_params this is None and
+        # the original color-swap behaviour is unchanged.
+        if self._accent_color is not None:
+            color_name = self._accent_color
 
-        view = self._make_view(rot_x=VIEW_ROT_X, rot_y=self._angle, rot_z=0.0, dist=VIEW_DIST)
+        view = self._make_view(rot_x=VIEW_ROT_X, rot_y=self._angle, rot_z=0.0,
+                               dist=self._view_dist)
         vertex_shader = tgl.VertexShaderSimple(np.matmul(self._camera, view))
         pixel_shader = self._LitPixelShader()
         pixel_shader.base_color = tgl.PixFmt(tgl.Idx(getattr(tgl.Color, color_name), flags=tgl.FmtFlag.BOLD))

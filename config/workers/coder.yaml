@@ -66,9 +66,27 @@ voice:
   verbatim: true
 
 avatar:
-  provider: builtin
+  # Chadwick is the FLAGSHIP character for the parametric generator
+  # (docs/avatar_3d_design.md §5): the first — and currently only — worker
+  # switched off the flat `builtin` ASCII face onto a generated 3D head.
+  # Every other worker stays on its existing provider; nothing here changes
+  # their rendering.
+  provider: termgl_avatar
   name: "KODI-7"
   title: "Software Engineer"
+  termgl_avatar:
+    # A preset NAME resolves to the slider set in app/character_schema.py's
+    # PRESETS. To iterate on the face, either edit that preset or inline the
+    # sliders here as a mapping — both are accepted, and unknown/out-of-range
+    # values degrade (clamp/warn) rather than killing the pane.
+    #
+    # Preview any change WITHOUT deploying:
+    #   python3 app/character_preview.py --preset chadwick
+    #   python3 app/character_preview.py --preset chadwick --set jaw_width=0.9
+    character_params: chadwick
+  # `expressions` below is unused by termgl_avatar (it has no 2D face to
+  # draw eyes/mouth into — expression drives rotation speed instead) but is
+  # kept so flipping `provider` back to `builtin` still renders correctly.
   expressions:
     idle:      { eyes: "◉  ◉", mouth: "╰───╯" }
     thinking:  { eyes: "⊙  ⊙", mouth: "─────" }
