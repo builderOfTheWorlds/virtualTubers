@@ -27,6 +27,7 @@ Two renderers of the same scene description should look the same; if they
 diverge, that is a bug in one of them, not an intentional style difference.
 """
 import logging
+import os
 
 import numpy as np
 
@@ -143,11 +144,54 @@ def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
 
 
 def is_available():
-    """True if a standalone GL context can be created here. Caches its
-    result (an unavailable GPU doesn't become available mid-process) so
-    every render_with_fallback() call after the first is free."""
+    """True if a standalone GL context can be created here, safely,
+    alongside this process's own pygame window.
+
+    Two failure modes matter, not one:
+
+    1. moderngl.create_context(standalone=True) can succeed against a
+       software rasterizer (Mesa llvmpipe) when no real GPU device
+       exists — that "works" but produces a cascade of software-GL-only
+       driver bugs (see _create_gl_context's docstring).
+    2. Even when a REAL GPU is present and EGL context creation succeeds
+       on its own, sharing that GL/DRI resource with an already-created
+       (or about-to-be-created) SDL/pygame X11 window in the SAME
+       process can crash outright. Reproduced directly on gx10
+       (aarch64, real NVIDIA GB10 GPU, EGL confirmed working in
+       isolation): creating the pygame window first makes EGL silently
+       fall back to llvmpipe; creating the EGL context first instead
+       makes the LATER pygame window creation crash with X Error
+       BadAccess / GLX_X_GLXMakeCurrent — this specific Xvfb appears to
+       only allow one GLX/DRI client resource active at a time (the same
+       "one shared resource" pattern discovered earlier for its X
+       colormap). There is no safe ordering that avoids this within a
+       single process.
+
+    Rather than keep chasing new failure modes as they surface, this
+    function refuses "available" whenever this process has ALSO created
+    (or will create) an SDL/pygame video window sharing the same X
+    display — codec_avatar sets AVATAR_HAS_PYGAME_WINDOW=1 before
+    creating its window for exactly this check. That gets every
+    live-avatar worker process pixel_raster's plain numpy CPU path
+    (proven correct on this host, ~12-14fps, see
+    docs/character_generator.md) with no GL context, no window/GPU
+    resource sharing, and none of this whole class of bug.
+    character_preview.py / gl_raster's own test suite (no pygame window
+    involved) are unaffected and still get real GPU acceleration when
+    available. Caches its result (this doesn't change mid-process) so
+    every render_with_fallback() call after the first is free.
+    """
     global _available
     if _available is None:
+        if os.environ.get("AVATAR_HAS_PYGAME_WINDOW") == "1":
+            log.warning(
+                "gl_raster: this process has an SDL/pygame video window — "
+                "refusing to also create a GL context in-process (crashes "
+                "or silently falls back to software on this Xvfb+driver "
+                "combination, see is_available()'s docstring); using "
+                "pixel_raster instead.")
+            _available = False
+            return _available
         try:
             _ensure_context()
             _available = True

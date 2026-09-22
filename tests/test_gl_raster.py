@@ -32,6 +32,30 @@ def test_is_available_is_cached_and_boolean():
     assert result1 == result2
 
 
+def test_is_available_refuses_gpu_when_process_owns_a_pygame_window(monkeypatch):
+    """Regression test for the gx10 GPU-vs-pygame-window crash: even with
+    a real GPU passed through and EGL context creation succeeding on its
+    own, sharing that GL/DRI resource with an SDL/pygame X11 window in
+    the SAME process either crashes (X Error BadAccess/GLXMakeCurrent) or
+    silently falls back to software rendering, depending on creation
+    order — reproduced directly on gx10. codec_avatar sets
+    AVATAR_HAS_PYGAME_WINDOW=1 before creating its window; is_available()
+    must refuse GPU rendering whenever that's set, without even
+    attempting a GL context, and WITHOUT this depending on any real GPU
+    hardware being present to prove it — that's exactly why this uses
+    monkeypatch instead of running on live hardware."""
+    monkeypatch.setattr(gl_raster, "_available", None)
+    monkeypatch.setenv("AVATAR_HAS_PYGAME_WINDOW", "1")
+
+    def _boom():
+        raise AssertionError(
+            "gl_raster must not attempt to create a GL context at all "
+            "when AVATAR_HAS_PYGAME_WINDOW=1")
+    monkeypatch.setattr(gl_raster, "_ensure_context", _boom)
+
+    assert gl_raster.is_available() is False
+
+
 def test_render_with_fallback_returns_backend_label():
     verts, faces, mats = build_codec_head("chadwick")
     img, backend = gl_raster.render_with_fallback(

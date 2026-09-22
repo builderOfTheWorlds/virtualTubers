@@ -214,6 +214,16 @@ class CodecAvatarProvider(AvatarProvider):
 
         import os
         os.environ["SDL_VIDEO_WINDOW_POS"] = f"{window_pos[0]},{window_pos[1]}"
+        # Tells gl_raster.is_available() this process is about to own an
+        # SDL/pygame video window on this X display, so it refuses GPU
+        # rendering entirely rather than risk the crash/silent-software-
+        # fallback interaction between an in-process GL context and that
+        # window (see gl_raster.is_available()'s docstring — root-caused
+        # 2026-09-22 on gx10 after GPU passthrough + forcing EGL still
+        # didn't produce a real GPU-rendered, visible window). Set BEFORE
+        # gl_raster is imported by anything, so the very first
+        # is_available() call anywhere in this process sees it.
+        os.environ["AVATAR_HAS_PYGAME_WINDOW"] = "1"
         # SDL_VIDEO_X11_VISUALID pins the exact X visual SDL creates the
         # window with. Plain depth=24 (tried first, 2026-09-22) is NOT
         # enough: gx10's Xvfb offers BOTH a TrueColor and a DirectColor
