@@ -72,6 +72,22 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # Hard per-container CPU cap (cgroup quota, enforced even outside
+        # Swarm mode by `docker compose`) — added 2026-09-22 after gx10
+        # hit load average 328 and sshd itself became unreachable
+        # ("all cores at 99%"). 7 stream workers (6 tuber_base + GM)
+        # share this host with unrelated services (graphify, redis,
+        # unicorn apps) and no per-worker limit existed before, so any
+        # one worker misbehaving (or, as happened here, all 6 cold-
+        # starting/re-capturing 4K simultaneously) could peg every core
+        # and starve the host's own management plane. 2.5 cores/worker
+        # assumes a ~20-core host (gx10/GB10) — re-tune with `nproc` on
+        # the actual host if that assumption is ever wrong; the goal is
+        # aggregate worker CPU staying well under total cores even at
+        # 7/7 simultaneous full load, leaving headroom for sshd, Docker
+        # itself, and the other unrelated services on this shared box.
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -134,6 +150,10 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -194,6 +214,10 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -254,6 +278,10 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -310,6 +338,10 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -373,6 +405,10 @@ services:
     restart: unless-stopped
     deploy:
       resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.5"
         reservations:
           devices:
             - driver: nvidia
@@ -439,6 +475,15 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        # See worker-coder's identical block for the full rationale (gx10
+        # hit load average 328, sshd unreachable, added 2026-09-22). The
+        # GM has no GPU reservation (it doesn't render its own tile), but
+        # it still runs a full x11grab/ffmpeg capture+encode pipeline for
+        # the 7-tile roundtable composite, so it needs the same CPU cap.
+        limits:
+          cpus: "2.5"
     depends_on:
       - rtmp-preview
       - redis
