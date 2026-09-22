@@ -85,6 +85,56 @@ def test_render_with_fallback_falls_back_when_gpu_returns_near_black(monkeypatch
     assert img.mean() > 0.01  # the real CPU render of a lit face, not black
 
 
+def test_create_gl_context_prefers_egl_when_it_succeeds():
+    """Regression test for the gx10 GPU-passthrough bug: GLX-via-Xvfb is
+    ALWAYS software-rendered (llvmpipe) even when the host's real GPU is
+    correctly passed into the container (/dev/dri present, nvidia-smi
+    working) — only EGL (talking to /dev/dri/renderD128 directly) picks
+    up real GPU acceleration there. _create_gl_context must try EGL
+    first and use it whenever create_context(backend="egl") succeeds,
+    never falling through to the default (GLX/X11) backend in that case."""
+    calls = []
+
+    class FakeCtx:
+        def __init__(self, tag):
+            self.info = {"GL_RENDERER": tag}
+
+    class FakeModernGL:
+        @staticmethod
+        def create_context(standalone=True, backend=None, **kw):
+            calls.append(backend)
+            return FakeCtx("egl-backend" if backend == "egl" else "default-backend")
+
+    ctx = gl_raster._create_gl_context(FakeModernGL)
+    assert ctx.info["GL_RENDERER"] == "egl-backend"
+    assert calls == ["egl"]  # default backend never attempted
+
+
+def test_create_gl_context_falls_back_when_egl_unavailable():
+    """When EGL context creation itself raises (no /dev/dri, no EGL
+    library, etc.), _create_gl_context must fall back to moderngl's
+    default backend rather than propagating the EGL failure — hosts
+    without EGL support (e.g. a plain X11/GLX dev box) must keep
+    working exactly as they did before EGL was tried first."""
+    calls = []
+
+    class FakeCtx:
+        def __init__(self, tag):
+            self.info = {"GL_RENDERER": tag}
+
+    class FakeModernGL:
+        @staticmethod
+        def create_context(standalone=True, backend=None, **kw):
+            calls.append(backend)
+            if backend == "egl":
+                raise RuntimeError("simulated: no EGL device")
+            return FakeCtx("default-backend")
+
+    ctx = gl_raster._create_gl_context(FakeModernGL)
+    assert ctx.info["GL_RENDERER"] == "default-backend"
+    assert calls == ["egl", None]  # tried EGL, then fell back to default
+
+
 @skip_no_gpu
 def test_gpu_render_matches_cpu_render_shape_and_range():
     verts, faces, mats = build_codec_head("chadwick")

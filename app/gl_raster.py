@@ -163,11 +163,42 @@ def _ensure_context():
     if _ctx is not None:
         return _ctx, _prog
     import moderngl
-    ctx = moderngl.create_context(standalone=True)
+    ctx = _create_gl_context(moderngl)
     prog = ctx.program(vertex_shader=_VERT_SHADER, fragment_shader=_FRAG_SHADER)
     _ctx, _prog = ctx, prog
     log.info("gl_raster: GPU context ready (%s)", ctx.info.get("GL_RENDERER"))
     return _ctx, _prog
+
+
+def _create_gl_context(moderngl):
+    """Create the standalone GL context, preferring EGL over GLX/X11.
+
+    moderngl.create_context(standalone=True) with no backend picks GLX
+    (talks to the X server) by default. Under Xvfb that GLX path is
+    ALWAYS software-rendered — confirmed on gx10 (aarch64, real NVIDIA
+    GB10 GPU, driver 580.173.02, container had /dev/dri and nvidia-smi
+    working correctly inside it) — GLX-via-Xvfb still reported
+    GL_RENDERER=llvmpipe even with the GPU properly passed through via
+    `docker run --gpus all`. EGL talks to /dev/dri/renderD128 directly,
+    bypassing Xvfb's software GLX implementation entirely, and DOES pick
+    up the real GPU (verified: GL_RENDERER="NVIDIA GB10/PCIe" once forced
+    to backend="egl" on the same host/container).
+    EGL is tried first and used whenever it succeeds — including on a
+    real desktop GPU host with a real GLX too (RTX 3080 dev machine),
+    where it's equally fast and avoids depending on the X server being
+    up at all for GPU rendering. Falls back to moderngl's own default
+    (GLX/X11, or WGL on Windows) only if EGL context creation itself
+    raises — e.g. no /dev/dri, no EGL library installed — so this never
+    turns a previously-working host into a hard failure.
+    """
+    try:
+        ctx = moderngl.create_context(standalone=True, backend="egl")
+        log.info("gl_raster: using EGL backend (%s)", ctx.info.get("GL_RENDERER"))
+        return ctx
+    except Exception as exc:  # noqa: BLE001 — EGL unavailable, try the default backend
+        log.info("gl_raster: EGL backend unavailable (%r), falling back to "
+                 "moderngl's default backend (GLX/X11 or WGL)", exc)
+        return moderngl.create_context(standalone=True)
 
 
 def render(verts, faces, materials, width=480, height=420, rot_x=0.06,
