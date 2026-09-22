@@ -52,22 +52,91 @@ def pulse_monitor_available(sink="vout"):
         return False
 
 
-def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display, capture_resolution=None):
+_nvenc_available_cache = None
+
+
+def nvenc_available():
+    """Whether this host can hardware-encode H.264 via NVIDIA NVENC —
+    both the codec must be compiled into this ffmpeg AND a real GPU must
+    actually be reachable (a container can have the codec compiled in
+    with no GPU passed through, e.g. before the docker-compose.yml GPU
+    passthrough fix — see gl_raster.py's history for that exact
+    distinction mattering).
+
+    WHY THIS MATTERS: every one of gx10's 6+ worker containers was
+    running SOFTWARE x264 (`libx264 -preset veryfast`) simultaneously,
+    all competing for the same CPU cores (load average ~10 on a 20-core
+    host, observed 2026-09-22) — the most likely cause of stream
+    choppiness reported on Twitch, separate from (and probably bigger
+    than) the avatar rendering fixes earlier this session. NVENC moves
+    the encode (and, via scale_cuda below, the 4K->1080p resize) off the
+    CPU entirely and onto the GPU's dedicated encode hardware, which is
+    NOT the same silicon doing 3D rendering (gpu_render_worker.py) or
+    CUDA compute — so multiple workers encoding at once don't compete
+    with each other or with avatar rendering the way software x264
+    encodes compete for CPU cores. Confirmed on gx10: 7 concurrent NVENC
+    sessions ran with no session-limit/out-of-memory errors, and a
+    4K->1080p capture+encode held ~1x realtime speed standalone.
+
+    Caches its result (this doesn't change mid-process) so this doesn't
+    re-shell out to ffmpeg/nvidia-smi on every start_process() call —
+    stream_supervisor restarts ffmpeg on every worker enable/disable
+    toggle, and detection results don't change between those.
+    """
+    global _nvenc_available_cache
+    if _nvenc_available_cache is not None:
+        return _nvenc_available_cache
+    try:
+        encoders = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-encoders"],
+            capture_output=True, text=True, timeout=5)
+        has_codec = encoders.returncode == 0 and "h264_nvenc" in encoders.stdout
+        if not has_codec:
+            _nvenc_available_cache = False
+            return _nvenc_available_cache
+        gpu = subprocess.run(
+            ["nvidia-smi", "-L"], capture_output=True, text=True, timeout=5)
+        _nvenc_available_cache = gpu.returncode == 0 and "GPU" in gpu.stdout
+    except (OSError, subprocess.TimeoutExpired):
+        _nvenc_available_cache = False
+    return _nvenc_available_cache
+
+
+def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
+                     capture_resolution=None, use_gpu=None):
     """Build the ffmpeg broadcaster command.
 
     Contract E (docs/tuber_base_layout_plan.md): `capture_resolution` is what
     Xvfb/xterm actually render at (x11grab's `-video_size`), while
     `resolution` remains the STREAM OUTPUT size, unchanged in meaning. When
-    `capture_resolution` is omitted or equal to `resolution`, no `-vf scale`
+    `capture_resolution` is omitted or equal to `resolution`, no scale
     step is added and the command is byte-for-byte identical to the
     single-resolution behavior that existed before capture/output were
     split — so nobody who hasn't opted into a larger capture size sees any
-    change. When they differ, a `-vf scale=<output_w>:<output_h>` filter is
-    inserted before the encode to scale the larger capture down (or up) to
-    the stream's output resolution.
+    change. When they differ, a scale filter is inserted before the
+    encode to scale the larger capture down (or up) to the stream's
+    output resolution.
+
+    `use_gpu`: None (default) auto-detects via nvenc_available() — real
+    GPU hardware encoding whenever it's actually usable on this host,
+    software libx264 otherwise, so a host without a GPU/NVENC keeps
+    working exactly as before this parameter existed. Pass True/False to
+    force one path — mainly for tests, but also available as
+    avatar.stream.gpu_encode in worker config for an explicit override
+    (e.g. temporarily forcing software if a specific host's NVENC turns
+    out to be flaky).
+
+    x264 and NVENC take almost entirely different flag sets (there is no
+    single -preset/-tune value that means the same thing to both
+    encoders), so this branches on the whole encode+scale tail rather
+    than trying to parameterize one shared list — same -b:v/-maxrate/
+    -bufsize/-g target either way, so stream bitrate and GOP behavior
+    are unchanged, only which silicon does the work.
     """
     if capture_resolution is None:
         capture_resolution = resolution
+    if use_gpu is None:
+        use_gpu = nvenc_available()
 
     # Real audio (the PulseAudio null sink narration/audio_player.py plays
     # into) when Pulse is actually up; otherwise a synthesized silent track
@@ -79,10 +148,47 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display, capture_resoluti
         log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
         audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
 
-    scale_filter = []
-    if capture_resolution != resolution:
-        output_w, output_h = resolution.split("x", 1)
-        scale_filter = ["-vf", f"scale={output_w}:{output_h}"]
+    needs_scale = capture_resolution != resolution
+    output_w, output_h = resolution.split("x", 1)
+
+    if use_gpu:
+        # format=nv12 before hwupload_cuda: scale_cuda/nvenc need a pixel
+        # format they can actually upload to the GPU — the raw x11grab
+        # capture comes out as bgr0, which neither accepts directly
+        # (confirmed on gx10: omitting this raises "Impossible to
+        # convert between the formats supported by the filter"). This
+        # conversion IS still a CPU step either way — small relative to
+        # the scale+encode work it unblocks moving to the GPU.
+        scale_filter = (
+            ["-vf", f"format=nv12,hwupload_cuda,scale_cuda={output_w}:{output_h}"]
+            if needs_scale else
+            ["-vf", "format=nv12,hwupload_cuda"]
+        )
+        encode_args = [
+            "-c:v", "h264_nvenc",
+            "-preset", "p1",       # NVENC's fastest preset — matches
+                                   # libx264 "veryfast"'s speed-over-
+                                   # quality tradeoff for a live stream
+            "-tune", "ll",         # low-latency, NVENC's rough
+                                   # equivalent of x264's "zerolatency"
+            "-b:v", "3000k",
+            "-maxrate", "3000k",
+            "-bufsize", "6000k",
+            "-g", "60",
+        ]
+    else:
+        scale_filter = (["-vf", f"scale={output_w}:{output_h}"]
+                        if needs_scale else [])
+        encode_args = [
+            "-c:v", "libx264",
+            "-preset", "veryfast",
+            "-tune", "zerolatency",
+            "-b:v", "3000k",
+            "-maxrate", "3000k",
+            "-bufsize", "6000k",
+            "-pix_fmt", "yuv420p",
+            "-g", "60",
+        ]
 
     return [
         "ffmpeg",
@@ -92,14 +198,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display, capture_resoluti
         "-i", display,
         *audio_input,
         *scale_filter,
-        "-c:v", "libx264",
-        "-preset", "veryfast",
-        "-tune", "zerolatency",
-        "-b:v", "3000k",
-        "-maxrate", "3000k",
-        "-bufsize", "6000k",
-        "-pix_fmt", "yuv420p",
-        "-g", "60",
+        *encode_args,
         "-c:a", "aac",
         "-b:a", "128k",
         "-ar", "44100",
