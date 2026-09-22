@@ -138,12 +138,23 @@ log "Building tmux layout from ${CONFIG_PATH}"
 # of tmux commands, and a single one returning non-zero (e.g. an option the
 # container's tmux version rejects) must NOT abort startup before the ffmpeg
 # broadcaster below. new-session/splits/send-keys run first regardless.
+#
+# TWO PHASES (2026-09-22). `tmux split-window -p N` resolves N against the
+# grid tmux has AT SPLIT TIME and then clamps to a minimum pane width, so
+# running the splits here — before xterm exists, while tmux is still on its
+# default 80x24 grid — silently destroyed narrow columns: tuber_base's
+# 4.73%-wide "chats" column came out ~3 cells, hit the clamp, and when the
+# client later grew to 320 cells tmux distributed the new space EVENLY
+# instead of re-applying the percentages, rendering that column at 61/320 =
+# 19% (measured on the live coder worker). Phase 1 creates only the session;
+# phase 2 runs the splits AFTER the xterm resize below, against the real
+# grid. See app/build_layout.py's emit_tmux docstring.
 set +e
-LAYOUT_SCRIPT="$(python3 /app/build_layout.py --config "${CONFIG_PATH}")"
+SESSION_SCRIPT="$(python3 /app/build_layout.py --config "${CONFIG_PATH}" --phase session)"
 BUILD_RC=$?
-eval "${LAYOUT_SCRIPT}"
+eval "${SESSION_SCRIPT}"
 set -e
-[ "${BUILD_RC}" -eq 0 ] || log "build_layout.py exited ${BUILD_RC} — continuing to broadcaster"
+[ "${BUILD_RC}" -eq 0 ] || log "build_layout.py (session) exited ${BUILD_RC} — continuing to broadcaster"
 
 # ── 6. Open a borderless, full-screen xterm on the virtual display ────────────
 # No window manager: a decorated window (title bar + borders) would inset the
@@ -176,6 +187,34 @@ sleep 1
 # xterm recomputes its cell grid to fill the window; make tmux follow the new
 # client size and redraw so its panes expand to the full frame (no fixed 240x67 box).
 DISPLAY="${DISPLAY}" tmux set -g window-size latest \; refresh-client -t "${SESSION}" 2>/dev/null || true
+
+# ── 6.1 Panes: split NOW, against the final grid ──────────────────────────────
+# Phase 2 of the layout build (see the two-phase note at step 4+5). By this
+# point xterm has been resized to ${VW}x${VH} and tmux has followed it, so
+# `split-window -p N` resolves each percentage against the real cell grid
+# (320x90 at 1920x1080/fs=7) instead of tmux's default 80x24 — which is what
+# makes a 4.73%-wide column land at ~15 cells rather than being clamped to
+# ~3 and then grown to 61.
+#
+# Wait for tmux to actually report the resized grid before splitting: the
+# refresh-client above is asynchronous, and splitting against a still-80-col
+# client would reintroduce the exact bug this phase exists to fix.
+for _ in 1 2 3 4 5 6 7 8 9 10; do
+    GRID_W=$(DISPLAY="${DISPLAY}" tmux display -p -t "${SESSION}" '#{window_width}' 2>/dev/null || echo 0)
+    [ "${GRID_W:-0}" -gt 100 ] && break
+    sleep 0.5
+done
+log "Splitting panes against tmux grid ${GRID_W:-unknown} columns"
+if [ "${GRID_W:-0}" -le 100 ]; then
+    log "WARNING: tmux still reports ${GRID_W:-0} columns; narrow panes may be clamped"
+fi
+
+set +e
+PANES_SCRIPT="$(python3 /app/build_layout.py --config "${CONFIG_PATH}" --phase panes)"
+PANES_RC=$?
+eval "${PANES_SCRIPT}"
+set -e
+[ "${PANES_RC}" -eq 0 ] || log "build_layout.py (panes) exited ${PANES_RC} — continuing to broadcaster"
 
 # ── 6.5 Voice registry inventory check (V2) ───────────────────────────────────
 # roundtable_stream_design.md v1.1 §8.2. A show header names voices symbolically

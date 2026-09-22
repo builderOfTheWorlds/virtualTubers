@@ -349,3 +349,59 @@ def test_no_roster_key_at_all_still_resolves_offline(tile_dirs, tmp_path, monkey
                                   tile_dirs["layouts"], tile_dirs["runtime"])
     tile = next(p for p in panes if p["id"] == "tile_tuber_1")
     assert tile["title"] == "Offline"
+
+
+# ── Two-phase emission (startup.sh splits AFTER the xterm resize) ─────────────
+# Regression cover for the 2026-09-22 narrow-column bug: `split-window -p N`
+# resolves N against the grid tmux has AT SPLIT TIME and clamps to a minimum
+# pane width, so running the splits before xterm existed (tmux still on its
+# default 80x24 grid) turned tuber_base's 4.73%-wide "chats" column into ~3
+# clamped cells, which tmux then grew EVENLY to 61/320 = 19% of the screen.
+def _phase_lines(worker_config, dirs, phase):
+    lines, _ = build_layout.build(worker_config, dirs["panels"], dirs["layouts"],
+                                  dirs["runtime"], phase=phase)
+    return lines
+
+
+def test_session_phase_emits_only_the_new_session(dirs, worker_config):
+    """Phase 1 must create the session and nothing else — no split may run
+    before the terminal has reached its final size."""
+    lines = _phase_lines(worker_config, dirs, "session")
+    assert any(line.startswith("tmux new-session") for line in lines)
+    assert not any("split-window" in line for line in lines)
+    assert not any("send-keys" in line for line in lines)
+
+
+def test_panes_phase_emits_splits_but_never_a_second_session(dirs, worker_config):
+    """Phase 2 runs against an ALREADY-CREATED session — emitting
+    new-session again would fail or build a second, unattached layout."""
+    lines = _phase_lines(worker_config, dirs, "panes")
+    assert not any(line.startswith("tmux new-session") for line in lines)
+    assert any("split-window" in line for line in lines)
+    assert any("send-keys" in line for line in lines)
+
+
+def test_two_phases_concatenate_to_exactly_the_single_phase_script(dirs, worker_config):
+    """The phase split is a pure refactor: session + panes must be
+    byte-identical to the original all-in-one script, so no pane index,
+    title, border color or command can drift between the two paths."""
+    combined = (_phase_lines(worker_config, dirs, "session")
+                + _phase_lines(worker_config, dirs, "panes"))
+    assert combined == _phase_lines(worker_config, dirs, "all")
+
+
+def test_pane_targeting_is_identical_across_phases(dirs, worker_config):
+    """Index bookkeeping must run in EVERY phase even when it emits nothing:
+    pane indices are derived from creation order, so a 'panes' phase that
+    skipped the walk would target the wrong panes."""
+    def targeting(lines):
+        return [l for l in lines if "split-window" in l or "send-keys" in l]
+    assert (targeting(_phase_lines(worker_config, dirs, "panes"))
+            == targeting(_phase_lines(worker_config, dirs, "all")))
+
+
+def test_unknown_phase_is_rejected_loudly(dirs, worker_config):
+    """A typo'd phase must fail fast rather than silently emit an empty
+    script and leave the worker with a blank screen on air."""
+    with pytest.raises(ValueError, match="unknown phase"):
+        _phase_lines(worker_config, dirs, "pane")   # singular typo

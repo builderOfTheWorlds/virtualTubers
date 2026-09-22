@@ -288,7 +288,7 @@ def _q(s):
 
 
 def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_ROWS,
-             status_label=None):
+             status_label=None, phase="all"):
     """Build the ordered list of tmux command lines that reproduce the layout.
 
     ``panes`` is the ordered list of resolved (enabled) pane dicts. Panes are
@@ -297,10 +297,29 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     numbers panes 0..N in creation order, which is exactly the emission order,
     so ``id -> pane index`` is deterministic.
 
+    ``phase`` splits the emitted script in two so the caller can run the
+    splits only once the terminal has reached its FINAL cell grid:
+
+    - ``"session"`` — just ``new-session`` (+ status-label options).
+    - ``"panes"``   — the splits, titles, border colors and ``send-keys``.
+    - ``"all"``     — both, in one script (the default; unchanged behavior
+      for every existing caller and for tests).
+
+    WHY THIS EXISTS (2026-09-22). ``split-window -p N`` is resolved against
+    the grid tmux has AT SPLIT TIME, and the result is then clamped to
+    tmux's minimum pane width. startup.sh used to run the whole script
+    before xterm existed, so every percentage was computed against tmux's
+    default 80x24 grid: the 4.73%-wide "chats" column came out as ~3 cells,
+    hit the clamp, and when the client later grew to 320 cells tmux handed
+    out the new space EVENLY across panes rather than re-applying the
+    percentages — so a column specified at 4.73% rendered at 61/320 = 19%.
+    Running the splits after the resize makes each percentage resolve
+    against the real grid, where 4.73% is ~15 cells and needs no clamping.
+
     ``status_label``, when set, replaces the tmux status bar's default
     bottom-left segment (``[<session>] <window-index>:<window-name>*`` — on
-    the roundtable that rendered as the meaningless "[worker] 0:python3*" on
-    air) with a single static string, and blanks the window-list segment that
+    the roundtable that rendered as the meaningless "[worker] 0:python3*")
+    with a single static string, and blanks the window-list segment that
     otherwise sits between status-left and status-right (tmux concatenates it
     straight onto the label with no separator otherwise). This is COSMETIC
     ONLY: the underlying tmux session is still named ``worker`` (SESSION_NAME)
@@ -308,24 +327,32 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
     every existing ``tmux ... -t worker:...`` command (attach, pane
     targeting, tests) keeps working unchanged.
     """
+    if phase not in ("all", "session", "panes"):
+        raise ValueError(
+            f"emit_tmux: unknown phase {phase!r} (expected 'all', 'session' "
+            f"or 'panes')")
+
     lines = []
     session = SESSION_NAME
+    want_session = phase in ("all", "session")
+    want_panes = phase in ("all", "panes")
 
-    lines.append(f"tmux new-session -d -s {session} -x {cols} -y {rows}")
-    if status_label:
-        lines.append(f"tmux set -t {session} status-left {_q(status_label)}")
-        lines.append(f"tmux set -t {session} status-left-length {len(str(status_label)) + 4}")
-        lines.append(f"tmux set -t {session} status-right ''")
-        # The window-list segment (tmux's default "0:python3*") sits BETWEEN
-        # status-left and status-right in status-format[0] — blanking
-        # status-right alone still left it concatenated straight onto the
-        # label with no separator (confirmed on the live broadcast: rendered
-        # as "virtualTubers_roundtable0:python3*"). Blanking the per-window
-        # format strings removes that middle segment entirely so only the
-        # label shows.
-        lines.append(f"tmux set -t {session} window-status-format ''")
-        lines.append(f"tmux set -t {session} window-status-current-format ''")
-        lines.append(f"tmux set -t {session} window-status-separator ''")
+    if want_session:
+        lines.append(f"tmux new-session -d -s {session} -x {cols} -y {rows}")
+        if status_label:
+            lines.append(f"tmux set -t {session} status-left {_q(status_label)}")
+            lines.append(f"tmux set -t {session} status-left-length {len(str(status_label)) + 4}")
+            lines.append(f"tmux set -t {session} status-right ''")
+            # The window-list segment (tmux's default "0:python3*") sits BETWEEN
+            # status-left and status-right in status-format[0] — blanking
+            # status-right alone still left it concatenated straight onto the
+            # label with no separator (confirmed on the live broadcast: rendered
+            # as "virtualTubers_roundtable0:python3*"). Blanking the per-window
+            # format strings removes that middle segment entirely so only the
+            # label shows.
+            lines.append(f"tmux set -t {session} window-status-format ''")
+            lines.append(f"tmux set -t {session} window-status-current-format ''")
+            lines.append(f"tmux set -t {session} window-status-separator ''")
 
     # id -> tmux pane index, assigned as panes are created (base=0, then 1,2,...).
     # tmux inserts each new pane immediately after its split target and shifts
@@ -345,17 +372,24 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
         split_flag = "-h" if str(pane.get("split", "v")).lower() == "h" else "-v"
         size = pane.get("size")
 
-        lines.append(f"tmux select-pane -t {session}:0.{target_idx}")
-        if isinstance(size, int):
-            lines.append(f"tmux split-window {split_flag} -t {session}:0.{target_idx} -p {size}")
-        else:
-            lines.append(f"tmux split-window {split_flag} -t {session}:0.{target_idx}")
+        # NOTE: index bookkeeping below runs in EVERY phase — pane indices
+        # are derived from creation order, so the "panes" phase must walk
+        # the same sequence even when the session phase emitted nothing.
+        if want_panes:
+            lines.append(f"tmux select-pane -t {session}:0.{target_idx}")
+            if isinstance(size, int):
+                lines.append(f"tmux split-window {split_flag} -t {session}:0.{target_idx} -p {size}")
+            else:
+                lines.append(f"tmux split-window {split_flag} -t {session}:0.{target_idx}")
 
         new_idx = target_idx + 1
         for pid, idx in index_of.items():
             if idx >= new_idx:
                 index_of[pid] = idx + 1
         index_of[pane["id"]] = new_idx
+
+    if not want_panes:
+        return lines
 
     # Titles (pane-border-format), border colors, and commands.
     lines.append(f"tmux set -t {session} pane-border-status top")
@@ -395,9 +429,13 @@ def emit_tmux(panes, config_path, runtime_dir, cols=DEFAULT_COLS, rows=DEFAULT_R
 
 
 # ── Orchestration ─────────────────────────────────────────────────────────────
-def build(config_path, panels_dir, layouts_dir, runtime_dir):
+def build(config_path, panels_dir, layouts_dir, runtime_dir, phase="all"):
     """Resolve panes and return (tmux_lines, resolved_panes). Also writes each
-    resolved pane's config to ``runtime_dir``."""
+    resolved pane's config to ``runtime_dir``.
+
+    ``phase`` is forwarded to :func:`emit_tmux` — see its docstring for why
+    the script can be emitted in two parts.
+    """
     _trace("build config=%s panels=%s layouts=%s runtime=%s",
            config_path, panels_dir, layouts_dir, runtime_dir)
 
@@ -424,7 +462,8 @@ def build(config_path, panels_dir, layouts_dir, runtime_dir):
     log.info("resolved %d panes for preset '%s'", len(resolved_panes), preset)
 
     status_label = layout.get("status_label")
-    lines = emit_tmux(resolved_panes, config_path, runtime_dir, status_label=status_label)
+    lines = emit_tmux(resolved_panes, config_path, runtime_dir,
+                      status_label=status_label, phase=phase)
     return lines, resolved_panes
 
 
@@ -438,13 +477,21 @@ def main(argv=None):
                         help="dir of layout preset yaml files (default: /config/layouts or config/layouts)")
     parser.add_argument("--runtime-dir", default="/tmp/panes",
                         help="dir to write resolved per-pane configs (default: /tmp/panes)")
+    parser.add_argument("--phase", default="all",
+                        choices=("all", "session", "panes"),
+                        help="which part of the tmux script to emit: 'session' "
+                             "(new-session only), 'panes' (splits + commands, "
+                             "run AFTER the terminal reaches its final size so "
+                             "split percentages resolve against the real grid), "
+                             "or 'all' (default, both)")
     args = parser.parse_args(argv)
 
     panels_dir = args.panels_dir or _default_dir("panels")
     layouts_dir = args.layouts_dir or _default_dir("layouts")
 
     try:
-        lines, _ = build(args.config, panels_dir, layouts_dir, args.runtime_dir)
+        lines, _ = build(args.config, panels_dir, layouts_dir, args.runtime_dir,
+                         phase=args.phase)
     except Exception as exc:  # noqa: BLE001 — surface a clean error on stderr, fail loud
         log.error("layout build failed: %s", exc)
         return 1
