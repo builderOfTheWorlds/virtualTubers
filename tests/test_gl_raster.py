@@ -147,3 +147,24 @@ def test_gpu_render_at_pane_resolution_beats_realtime_floor():
     dt = time.perf_counter() - t0
     fps = n / dt
     assert fps > 30, f"gl_raster only hit {fps:.1f}fps at pane resolution"
+
+
+@skip_no_gpu
+def test_repeated_render_does_not_grow_the_mesh_cache():
+    """Regression test for the gx10 memory-leak bug: render() used to
+    allocate a fresh VAO/buffers/FBO on EVERY call and release them again
+    at the end, but under gx10's llvmpipe (software GL, no real GPU
+    attached to the container) that per-frame churn leaked ~4MB/frame
+    (34GB RSS in under 5 minutes at 30fps) and correlated with the
+    renderer eventually going solid black. Repeated calls with the SAME
+    verts/faces/materials objects (the live avatar's actual usage
+    pattern — one static head, camera rotates every tick) must reuse one
+    cache entry, not grow without bound."""
+    verts, faces, mats = build_codec_head("chadwick")
+    gl_raster.render(verts, faces, mats, width=64, height=64)
+    size_after_one = len(gl_raster._mesh_cache)
+    for i in range(10):
+        gl_raster.render(verts, faces, mats, width=64, height=64, rot_y=i * 0.1)
+    assert len(gl_raster._mesh_cache) == size_after_one, (
+        "repeated renders of the same mesh grew the GPU object cache — "
+        "the per-frame leak regressed")

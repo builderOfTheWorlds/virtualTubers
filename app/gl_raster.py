@@ -95,6 +95,52 @@ _ctx = None
 _prog = None
 _available = None
 
+#: Per-mesh GPU object cache, keyed by id(verts)/id(faces)/id(materials) +
+#: (width, height). The head mesh is completely static for a character's
+#: whole process lifetime (codec_avatar.FrameSource builds verts/faces
+#: once at construction; only camera rotation changes per frame) so there
+#: is no reason to allocate a fresh VAO/buffers/FBO on every render() call.
+#: Diagnosed on gx10 (aarch64, llvmpipe software GL, no real GPU attached
+#: to the container, 2026-09-22): per-frame create+release of GL objects
+#: under Mesa's software rasterizer leaked ~4MB/frame (34GB RSS in under
+#: 5 minutes at 30fps) and correlated with the renderer eventually
+#: producing a solid black window with no exception raised anywhere to
+#: catch — consistent with llvmpipe's internal state degrading under that
+#: allocation churn, not a one-off fluke. Caching by array identity is
+#: safe because FrameSource never replaces verts/faces/materials after
+#: __init__; a differently-shaped or brand new mesh (different id()) just
+#: gets its own cache entry, so nothing goes stale across characters.
+_mesh_cache = {}
+
+
+def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
+    key = (id(verts), id(faces), id(materials), width, height)
+    cached = _mesh_cache.get(key)
+    if cached is not None:
+        return cached
+
+    tri_verts = verts[faces]                                   # (M,3,3)
+    tri_normals = np.cross(tri_verts[:, 1] - tri_verts[:, 0],
+                           tri_verts[:, 2] - tri_verts[:, 0])   # (M,3)
+    mag = np.linalg.norm(tri_normals, axis=1, keepdims=True)
+    tri_normals = tri_normals / np.maximum(mag, 1e-9)
+    tri_normals = np.repeat(tri_normals, 3, axis=0)             # (M*3,3)
+    tri_mats = np.repeat(materials.astype(np.float32), 3)       # (M*3,)
+
+    pos_buf = ctx.buffer(tri_verts.reshape(-1, 3).astype("f4").tobytes())
+    normal_buf = ctx.buffer(tri_normals.astype("f4").tobytes())
+    mat_buf = ctx.buffer(tri_mats.astype("f4").tobytes())
+    vao = ctx.vertex_array(prog, [
+        (pos_buf, "3f", "in_pos"),
+        (normal_buf, "3f", "in_normal"),
+        (mat_buf, "1f", "in_mat"),
+    ])
+    fbo = ctx.simple_framebuffer((width, height))
+
+    entry = (vao, pos_buf, normal_buf, mat_buf, fbo)
+    _mesh_cache[key] = entry
+    return entry
+
 
 def is_available():
     """True if a standalone GL context can be created here. Caches its
@@ -140,25 +186,14 @@ def render(verts, faces, materials, width=480, height=420, rot_x=0.06,
     faces = np.asarray(faces, dtype=np.int32)
     materials = np.asarray(materials, dtype=np.int32)
 
-    # Flat shading needs one normal per triangle, so vertices are expanded
-    # per-face (3 unique verts per triangle) rather than indexed — the
-    # same trade pixel_raster.render() makes via `world = verts[faces]`.
-    tri_verts = verts[faces]                                   # (M,3,3)
-    tri_normals = np.cross(tri_verts[:, 1] - tri_verts[:, 0],
-                           tri_verts[:, 2] - tri_verts[:, 0])   # (M,3)
-    mag = np.linalg.norm(tri_normals, axis=1, keepdims=True)
-    tri_normals = tri_normals / np.maximum(mag, 1e-9)
-    tri_normals = np.repeat(tri_normals, 3, axis=0)             # (M*3,3)
-    tri_mats = np.repeat(materials.astype(np.float32), 3)       # (M*3,)
-
-    pos_buf = ctx.buffer(tri_verts.reshape(-1, 3).astype("f4").tobytes())
-    normal_buf = ctx.buffer(tri_normals.astype("f4").tobytes())
-    mat_buf = ctx.buffer(tri_mats.astype("f4").tobytes())
-    vao = ctx.vertex_array(prog, [
-        (pos_buf, "3f", "in_pos"),
-        (normal_buf, "3f", "in_normal"),
-        (mat_buf, "1f", "in_mat"),
-    ])
+    # Buffers/VAO/FBO are cached per-mesh (see _get_mesh_gpu_objects) and
+    # reused across every frame of a character's lifetime — only the
+    # camera/tint uniforms change per call. Do NOT go back to allocating
+    # these fresh every frame: that leaked ~4MB/frame under gx10's
+    # llvmpipe software GL and correlated with the renderer eventually
+    # going solid-black (see _mesh_cache's docstring above).
+    vao, pos_buf, normal_buf, mat_buf, fbo = _get_mesh_gpu_objects(
+        ctx, prog, verts, faces, materials, width, height)
 
     camera = make_camera_matrix(width, height, fov=fov)
     view = make_view_matrix(rot_x=rot_x, rot_y=rot_y, dist=dist, pan_y=pan_y)
@@ -166,7 +201,6 @@ def render(verts, faces, materials, width=480, height=420, rot_x=0.06,
 
     padded_palette = list(palette) + [0.0] * (8 - len(palette))
 
-    fbo = ctx.simple_framebuffer((width, height))
     fbo.use()
     # DEPTH_TEST only — NOT CULL_FACE. Backface culling depends on this GL
     # implementation agreeing with pixel_raster.py's on which winding
@@ -194,12 +228,6 @@ def render(verts, faces, materials, width=480, height=420, rot_x=0.06,
     raw = fbo.read(components=3, dtype="f4")
     rgb = np.frombuffer(raw, dtype=np.float32).reshape(height, width, 3)
     rgb = np.flipud(rgb).copy()  # GL's readback origin is bottom-left
-
-    vao.release()
-    pos_buf.release()
-    normal_buf.release()
-    mat_buf.release()
-    fbo.release()
 
     return np.clip(rgb, 0.0, 1.0)
 
