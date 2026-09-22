@@ -66,6 +66,25 @@ def test_render_with_fallback_falls_back_when_gpu_render_raises(monkeypatch):
     assert img.shape == (32, 32, 3)
 
 
+def test_render_with_fallback_falls_back_when_gpu_returns_near_black(monkeypatch):
+    """Regression test for the gx10 deploy bug: a GL context that IS
+    available and renders WITHOUT raising, but produces a near-black frame
+    (e.g. a winding/depth-state mismatch silently culling every triangle
+    on that GPU/driver), must be treated as a failure and fall back to
+    pixel_raster — not returned as if it were a legitimate dark frame."""
+    monkeypatch.setattr(gl_raster, "is_available", lambda: True)
+
+    def _black(verts, faces, materials, width=64, height=64, **kwargs):
+        return np.zeros((height, width, 3), dtype=np.float32)
+    monkeypatch.setattr(gl_raster, "render", _black)
+
+    verts, faces, mats = build_codec_head("chadwick")
+    img, backend = gl_raster.render_with_fallback(
+        verts, faces, mats, width=32, height=32)
+    assert backend == "cpu"
+    assert img.mean() > 0.01  # the real CPU render of a lit face, not black
+
+
 @skip_no_gpu
 def test_gpu_render_matches_cpu_render_shape_and_range():
     verts, faces, mats = build_codec_head("chadwick")

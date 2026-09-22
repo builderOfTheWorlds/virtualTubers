@@ -128,7 +128,7 @@ def test_resolve_geometry_falls_back_when_detection_unavailable(monkeypatch):
     from avatar_providers.codec_avatar import HEIGHT, WIDTH, CodecAvatarProvider
     monkeypatch.setattr(pane_geometry, "detect_pane_rect", lambda: None)
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
-    width, height, pos = provider._resolve_geometry({})
+    width, height, pos = provider._resolve_geometry({"geometry_retry_s": 0})
     assert (width, height, pos) == (WIDTH, HEIGHT, (0, 0))
 
 
@@ -138,7 +138,7 @@ def test_resolve_geometry_uses_detected_rect_when_no_window_pos_configured(monke
     monkeypatch.setattr(pane_geometry, "detect_pane_rect",
                         lambda: (160, 72, 640, 720))
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
-    width, height, pos = provider._resolve_geometry({})
+    width, height, pos = provider._resolve_geometry({"geometry_retry_s": 0})
     assert (width, height, pos) == (640, 720, (160, 72))
 
 
@@ -151,7 +151,8 @@ def test_resolve_geometry_explicit_size_overrides_detected_size(monkeypatch):
     monkeypatch.setattr(pane_geometry, "detect_pane_rect",
                         lambda: (160, 72, 640, 720))
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
-    width, height, pos = provider._resolve_geometry({"width": 200, "height": 250})
+    width, height, pos = provider._resolve_geometry(
+        {"width": 200, "height": 250, "geometry_retry_s": 0})
     assert (width, height, pos) == (200, 250, (160, 72))
 
 
@@ -167,5 +168,29 @@ def test_resolve_geometry_rejects_degenerate_detected_rect(monkeypatch):
     monkeypatch.setattr(pane_geometry, "detect_pane_rect",
                         lambda: (0, 0, 1, 700))
     provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
-    width, height, pos = provider._resolve_geometry({})
+    width, height, pos = provider._resolve_geometry({"geometry_retry_s": 0})
     assert (width, height, pos) == (WIDTH, HEIGHT, (0, 0))
+
+
+def test_resolve_geometry_retries_until_a_stable_rect_appears(monkeypatch):
+    """Regression test for the gx10 1x0 bug's real root cause: startup.sh
+    launches this provider BEFORE the xterm window is created/resized
+    (steps 5 vs 6) — a one-shot detect_pane_rect() call reliably races
+    that. _resolve_geometry must retry and use the first geometrically
+    sane rect once the window settles, not give up on the first bad read."""
+    import pane_geometry
+    from avatar_providers.codec_avatar import CodecAvatarProvider
+    calls = []
+
+    def flaky_detect():
+        calls.append(1)
+        if len(calls) < 3:
+            return (0, 0, 1, 0)  # window not created/resized yet
+        return (160, 72, 640, 720)  # settled
+
+    monkeypatch.setattr(pane_geometry, "detect_pane_rect", flaky_detect)
+    monkeypatch.setattr("time.sleep", lambda s: None)  # don't actually wait
+    provider = CodecAvatarProvider.__new__(CodecAvatarProvider)
+    width, height, pos = provider._resolve_geometry({"geometry_retry_s": 5.0})
+    assert (width, height, pos) == (640, 720, (160, 72))
+    assert len(calls) == 3

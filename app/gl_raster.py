@@ -200,7 +200,27 @@ def render_with_fallback(verts, faces, materials, **kwargs):
     """
     if is_available():
         try:
-            return render(verts, faces, materials, **kwargs), "gpu"
+            img = render(verts, faces, materials, **kwargs)
+            # Sanity check, not just a happy-path try/except: a GPU frame
+            # that renders without raising but comes back near-black is
+            # STILL a failure, not a valid "dark" frame — the codec look
+            # has no all-black pose (fbo.clear(0,0,0,1) is the failure
+            # state itself: nothing got drawn). Diagnosed on gx10
+            # (aarch64, different GPU/driver stack than the RTX 3080 this
+            # was validated on, 2026-09-22): a plausible winding-order or
+            # depth-state mismatch across GL implementations silently
+            # culls every triangle, leaving the clear color on screen with
+            # no exception raised anywhere to catch. render() succeeding
+            # is necessary but not sufficient — this is the second check.
+            if img.mean() < 0.01:
+                log.warning(
+                    "gl_raster.render() returned a near-black frame "
+                    "(mean=%.4f) — treating as a GPU render failure (likely "
+                    "a winding/depth-state mismatch on this GPU/driver, not "
+                    "a real all-black pose) and falling back to pixel_raster",
+                    img.mean())
+            else:
+                return img, "gpu"
         except Exception as exc:  # noqa: BLE001 — never let a GL hiccup drop a frame
             log.warning("gl_raster.render() failed mid-run (%r); "
                        "falling back to pixel_raster for this frame", exc)

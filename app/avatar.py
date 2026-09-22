@@ -14,11 +14,27 @@ import os
 import sys
 import time
 import argparse
+import logging
 import textwrap
 
 from message_bus import load_worker_config
 from agent_state import resolve_state_path, read_state
 from avatar_display import display_width  # re-exported for callers/tests
+
+# Providers (codec_avatar.py, gl_raster.py, pane_geometry.py) log via the
+# standard `logging` module, not print() — without this, those log.warning/
+# log.info calls are invisible in the deployed pane's tmux output (no root
+# handler configured means the stdlib's "handler of last resort" silently
+# swallows everything but a bare WARNING+ one-liner with no context).
+# Diagnosed 2026-09-22: a GPU/GL failure on gx10 (solid black codec_avatar
+# window, no visible error) turned out to be logged and just never shown —
+# this call is what makes that kind of failure debuggable from `docker logs`
+# / the tmux pane instead of requiring a live shell to re-run the module.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s %(name)s %(message)s",
+    stream=sys.stderr,
+)
 
 # Safety net: if the agent dies mid "thinking" (no bubble to time out), don't
 # leave the avatar stuck mid-expression forever — settle back to idle.

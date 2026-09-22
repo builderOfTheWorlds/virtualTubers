@@ -216,41 +216,48 @@ class CodecAvatarProvider(AvatarProvider):
         the window to the pane's actual pixel size when available, so a
         configured width/height acts as a fallback/override, not the
         default source of truth.
+
+        Retries detection for a few seconds: startup.sh launches every
+        pane's process (including this one, via `tmux send-keys` inside
+        build_layout.py's emitted script) BEFORE it creates/resizes the
+        xterm window and runs `tmux set -g window-size latest;
+        refresh-client` (startup.sh steps 5 vs 6) — so a one-shot read at
+        provider __init__ time reliably races that window setup and reads
+        a still-forming or nonexistent window (observed on gx10,
+        2026-09-22: detected rect came back 1x0). Retrying gives that
+        ~1-3s of startup time to finish before falling back.
         """
+        import time
+
         configured_pos = cfg.get("window_pos")
         width = cfg.get("width")
         height = cfg.get("height")
 
         if configured_pos is None:
             from pane_geometry import detect_pane_rect
-            detected = detect_pane_rect()
+            detected = None
+            deadline = time.monotonic() + cfg.get("geometry_retry_s", 5.0)
+            attempt = 0
+            while True:
+                attempt += 1
+                candidate = detect_pane_rect()
+                if candidate is not None and candidate[2] >= 32 and candidate[3] >= 32:
+                    detected = candidate
+                    break
+                if time.monotonic() >= deadline:
+                    break
+                time.sleep(0.5)
             if detected is not None:
                 x, y, det_width, det_height = detected
-                # Sanity floor: a misread (tmux not yet resized to match
-                # the xterm window, a 0/1-px degenerate rect) must not
-                # produce an invisible pygame window with no error —
-                # exactly what happened on first deploy (gx10, 2026-09-22:
-                # "codec avatar: ready (1x700 triangles..." — pane_cells
-                # came back as width=1). Falling back to WIDTH/HEIGHT is
-                # visible and debuggable; a 1x700 window silently isn't.
-                if det_width < 32 or det_height < 32:
-                    print(
-                        f"[avatar] codec_avatar: detected pane rect looks "
-                        f"degenerate ({det_width}x{det_height} at "
-                        f"({x},{y})) — falling back to {WIDTH}x{HEIGHT} at "
-                        f"(0,0); set avatar.codec_avatar.window_pos/width/"
-                        f"height explicitly to override",
-                        file=sys.stderr,
-                    )
-                    return width or WIDTH, height or HEIGHT, (0, 0)
                 width = width or det_width
                 height = height or det_height
                 return width or WIDTH, height or HEIGHT, (x, y)
             print(
-                "[avatar] codec_avatar: could not auto-detect pane geometry "
-                "(no tmux/X session, or xdotool unavailable) — falling back "
-                "to window_pos=(0,0); set avatar.codec_avatar.window_pos "
-                "explicitly to override",
+                f"[avatar] codec_avatar: could not auto-detect a stable pane "
+                f"geometry after {attempt} attempt(s) (no tmux/X session, "
+                f"xdotool unavailable, or the window never settled) — "
+                f"falling back to window_pos=(0,0); set "
+                f"avatar.codec_avatar.window_pos explicitly to override",
                 file=sys.stderr,
             )
             return width or WIDTH, height or HEIGHT, (0, 0)
