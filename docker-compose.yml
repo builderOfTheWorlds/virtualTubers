@@ -12,6 +12,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 99
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -69,6 +70,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
@@ -87,6 +95,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 102
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-native
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -123,6 +132,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
@@ -139,6 +155,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 103
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-opencode
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -175,6 +192,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
@@ -191,6 +215,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 104
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-aider
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -227,6 +252,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
@@ -243,6 +275,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 100
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: manager
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -275,6 +308,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
@@ -291,6 +331,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DISPLAY_NUM: 101
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: tester
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
@@ -330,6 +371,13 @@ services:
     ipc: host
     shm_size: 256mb
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis
