@@ -138,6 +138,13 @@ def _normalize_accent_color(key, value, strict):
 #: and is the one wired live in config/workers/coder.yaml — a wide, square,
 #: heavy-jawed head with big ears and a short nose, so its silhouette is
 #: distinguishable from the other 7 slots at 55x24.
+#:
+#: The rest (nyx1/oko2/ada3/tess3/max1) are the other 5 `tuber_base`
+#: workers, moved onto the codec_avatar renderer alongside Chadwick
+#: (docs/character_generator.md, 2026-09-22). Quick pass: default-shaped
+#: sliders (PARAM_DEFAULTS) with a distinct accent_color per character so
+#: they're visually distinguishable on stream immediately; unique
+#: silhouettes (like chadwick's) are follow-up work, not done here.
 PRESETS = {
     "chadwick": {
         "head_width": 0.72,
@@ -150,6 +157,11 @@ PRESETS = {
         "build": 0.70,
         "accent_color": "YELLOW",
     },
+    "nyx1": {**SLIDER_DEFAULTS, "accent_color": "CYAN"},     # coder-native
+    "oko2": {**SLIDER_DEFAULTS, "accent_color": "GREEN"},    # coder-opencode
+    "ada3": {**SLIDER_DEFAULTS, "accent_color": "PURPLE"},   # coder-aider
+    "tess3": {**SLIDER_DEFAULTS, "accent_color": "RED"},     # tester
+    "max1": {**SLIDER_DEFAULTS, "accent_color": "WHITE"},    # manager
 }
 
 

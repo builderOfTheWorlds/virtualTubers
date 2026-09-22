@@ -3,17 +3,20 @@
 character_preview.py
 The agent-facing iteration loop for the character generator
 (docs/avatar_3d_design.md §5 step 3): take a slider dict, render the
-resulting head as ASCII, print it. An agent calls this, reads the frames
-out of stdout, adjusts sliders, and calls it again.
+resulting head with the codec pixel pipeline, save PNG(s). An agent (or you)
+calls this, looks at the frame(s), adjusts sliders, and calls it again.
 
-Runs on plain numpy — no termgl, no TTY, no container — so the loop is
-fast and fully local (see ascii_raster.py for why termgl itself can't be
-used off a real terminal). The frames it prints are a faithful preview of
-the pane's shading and silhouette, not a pixel-exact capture; the real
-pane in the worker container remains ground truth.
+Renders with codec_head.py + pixel_raster.py — the low-poly MGS2-codec-style
+head with flat shading and dark eye/brow/mouth materials that replaced the
+original smooth-sphere ascii_raster/head_mesh pipeline (see
+docs/character_generator.md for why). Pure numpy + a dependency-free PNG
+writer — no termgl, no TTY, no container, so the loop is fast and fully
+local. This is a **preview of the same codec renderer** the live pane uses
+(pixel_raster.render); it is not guaranteed pixel-identical to whatever
+frame timing/caching the live avatar path applies on top.
 
 Usage:
-    # the flagship character, 4-view turntable
+    # the flagship character, 4-view turntable -> preview_out/*.png
     python3 app/character_preview.py --preset chadwick
 
     # iterate on individual sliders
@@ -22,36 +25,55 @@ Usage:
     # a full param dict (what an agent typically does)
     python3 app/character_preview.py --params '{"head_width":0.8,"eye_size":0.7}'
 
-    # machine-readable, for an agent that wants the grid as data
+    # single view, custom output path
+    python3 app/character_preview.py --preset chadwick --view front -o out.png
+
+    # amber tint instead of the default codec green
+    python3 app/character_preview.py --preset chadwick --tint amber
+
+    # machine-readable, for an agent that wants file paths as data
     python3 app/character_preview.py --preset chadwick --json
 """
 import argparse
 import json
 import logging
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from ascii_raster import render_mesh  # noqa: E402
 from character_schema import (  # noqa: E402
     PARAM_DEFAULTS,
     PRESETS,
     CharacterParamError,
     resolve_params,
 )
-from head_mesh import build_head_params_mesh  # noqa: E402
+from codec_head import build_codec_head  # noqa: E402
+import gl_raster  # noqa: E402
+from pixel_raster import (  # noqa: E402
+    TINT_AMBER,
+    TINT_CODEC_GREEN,
+    apply_codec_screen,
+    write_png,
+)
 
 log = logging.getLogger("character_preview")
 
-#: Default preview geometry. WIDTH/HEIGHT match termgl_avatar.py's pane
-#: constants so what an agent judges is what the pane will draw; DIST is
-#: tuned so a default-proportioned head fills most of the frame without
-#: clipping at the widest slider settings.
-WIDTH = 55
-HEIGHT = 24
-DIST = 2.4
-ROT_X = 0.4
+#: Default preview geometry. Matches the "real avatar pane" render call
+#: proven out in the codec_final.png test render (docs/character_generator.md)
+#: so what an agent judges here is what the live pane renders, not a
+#: differently-framed stand-in.
+WIDTH = 560
+HEIGHT = 700
+DIST = 3.25
+ROT_X = 0.06
+PAN_Y = 0.05
+
+#: Default output directory for saved frames (gitignored — throwaway renders).
+OUT_DIR = Path(__file__).resolve().parent.parent / "preview_out"
+
+TINTS = {"green": TINT_CODEC_GREEN, "amber": TINT_AMBER}
 
 #: Angles rendered by a turntable, labelled for the agent's benefit —
 #: judging a face from one view is how you end up with a head that looks
@@ -106,39 +128,42 @@ def build_params(args):
     return resolve_params(raw, strict=True)
 
 
-def render_views(params, views, width, height, dist, double_chars=True):
-    """Render one (label, rot_y) list into [(label, rows)]."""
+def render_views(params, views, width, height, dist, tint,
+                 scanlines=True, force_cpu=False):
+    """Render one (label, rot_y) list into [(label, rgb array, backend)].
+
+    GPU-first via gl_raster.render_with_fallback() (--cpu forces the numpy
+    path, useful for comparing the two or when debugging a GPU issue).
+    """
     log.debug("render_views(%d views, %dx%d)", len(views), width, height)
-    verts, faces = build_head_params_mesh(params)
-    log.info("built head mesh: %d verts, %d faces", len(verts), len(faces))
-    return [
-        (label, render_mesh(verts, faces, width=width, height=height,
-                            rot_y=rot, rot_x=ROT_X, dist=dist,
-                            double_chars=double_chars))
-        for label, rot in views
-    ]
-
-
-def format_text(params, frames, show_params=True):
-    """Human/agent-readable report: the sliders that produced the frames,
-    then each labelled view. Params are echoed so a rendered frame pasted
-    into a conversation is self-describing — an agent comparing two
-    iterations can see exactly what changed."""
-    out = []
-    if show_params:
-        out.append("params: " + json.dumps(params, sort_keys=True))
-        out.append("")
-    for label, rows in frames:
-        out.append(f"--- {label} ---")
-        out.extend(row.rstrip() for row in rows)
-        out.append("")
-    return "\n".join(out)
+    verts, faces, mats = build_codec_head(params)
+    log.info("built codec head: %d verts, %d faces", len(verts), len(faces))
+    frames = []
+    for label, rot in views:
+        t0 = time.perf_counter()
+        if force_cpu:
+            from pixel_raster import render as cpu_render
+            img = cpu_render(verts, faces, mats, width=width, height=height,
+                             rot_x=ROT_X, rot_y=rot, dist=dist, pan_y=PAN_Y,
+                             tint=tint)
+            backend = "cpu"
+        else:
+            img, backend = gl_raster.render_with_fallback(
+                verts, faces, mats, width=width, height=height,
+                rot_x=ROT_X, rot_y=rot, dist=dist, pan_y=PAN_Y, tint=tint)
+        if scanlines:
+            img = apply_codec_screen(img)
+        dt = time.perf_counter() - t0
+        log.info("rendered %r in %.3fs (%.1f fps, %s)", label, dt, 1.0 / dt, backend)
+        frames.append((label, img, dt, backend))
+    return frames
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(
-        description="Render a parametric character head as ASCII for agent-driven "
-                    "slider iteration (docs/avatar_3d_design.md).")
+        description="Render a parametric character head with the codec pixel "
+                    "renderer for agent-driven slider iteration "
+                    "(docs/avatar_3d_design.md).")
     parser.add_argument("--preset", choices=sorted(PRESETS),
                         help="start from a named preset")
     parser.add_argument("--params", help="JSON object of slider values")
@@ -152,11 +177,19 @@ def main(argv=None):
     parser.add_argument("--height", type=int, default=HEIGHT)
     parser.add_argument("--dist", type=float, default=DIST,
                         help="camera distance; lower = larger head in frame")
-    parser.add_argument("--no-double-chars", action="store_true",
-                        help="disable termgl's DOUBLE_CHARS pixel doubling "
-                             "(halves output width; aspect is corrected)")
+    parser.add_argument("--tint", choices=sorted(TINTS), default="green",
+                        help="codec screen tint (default: green)")
+    parser.add_argument("--no-scanlines", action="store_true",
+                        help="skip the CRT scanline/vignette/glow post-pass")
+    parser.add_argument("--cpu", action="store_true",
+                        help="force the pure-numpy pixel_raster path instead of "
+                             "GPU (gl_raster); useful to compare or when "
+                             "debugging a GPU/driver issue")
+    parser.add_argument("-o", "--out", help="output PNG path (single view only)")
+    parser.add_argument("--out-dir", default=str(OUT_DIR),
+                        help=f"directory for turntable frames (default: {OUT_DIR})")
     parser.add_argument("--json", action="store_true",
-                        help="emit {params, frames} as JSON instead of text")
+                        help="emit {params, frames:[{label,path,seconds}]} as JSON")
     parser.add_argument("--list-params", action="store_true",
                         help="print the slider schema and exit")
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -188,16 +221,39 @@ def main(argv=None):
     else:
         views = TURNTABLE
 
+    if args.out and len(views) != 1:
+        print("error: -o/--out only applies to a single view "
+              "(pass --view or --rot-y)", file=sys.stderr)
+        return 2
+
     frames = render_views(params, views, args.width, args.height, args.dist,
-                          double_chars=not args.no_double_chars)
+                          tint=TINTS[args.tint],
+                          scanlines=not args.no_scanlines,
+                          force_cpu=args.cpu)
+
+    out_dir = Path(args.out_dir)
+    saved = []
+    for label, img, dt, backend in frames:
+        if args.out:
+            path = Path(args.out)
+        else:
+            out_dir.mkdir(parents=True, exist_ok=True)
+            safe_label = label.replace("=", "_")
+            path = out_dir / f"{safe_label}.png"
+        write_png(str(path), img)
+        saved.append({"label": label, "path": str(path), "seconds": round(dt, 4),
+                     "backend": backend})
 
     if args.json:
-        print(json.dumps({
-            "params": params,
-            "frames": [{"label": label, "rows": rows} for label, rows in frames],
-        }, indent=2, sort_keys=True))
+        print(json.dumps({"params": params, "frames": saved},
+                         indent=2, sort_keys=True))
     else:
-        print(format_text(params, frames))
+        print("params: " + json.dumps(params, sort_keys=True))
+        print()
+        for entry in saved:
+            print(f"{entry['label']:>16}: {entry['path']}  "
+                  f"({entry['seconds']:.3f}s, {1.0/entry['seconds']:.1f} fps, "
+                  f"{entry['backend']})")
     return 0
 
 

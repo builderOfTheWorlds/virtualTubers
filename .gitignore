@@ -29,6 +29,9 @@ htmlcov/
 # ── Claude Code (machine-specific, keep local) ────────────────────────────────
 .claude/settings.local.json
 
+# ── character_preview.py output (throwaway renders) ──────────────────────────
+preview_out/
+
 # ── Runtime / world-state (generated at runtime, not source) ──────────────────
 data/
 world-state/

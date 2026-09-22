@@ -67,14 +67,17 @@ voice:
 
 avatar:
   # Chadwick is the FLAGSHIP character for the parametric generator
-  # (docs/avatar_3d_design.md §5): the first — and currently only — worker
-  # switched off the flat `builtin` ASCII face onto a generated 3D head.
-  # Every other worker stays on its existing provider; nothing here changes
-  # their rendering.
-  provider: termgl_avatar
+  # (docs/avatar_3d_design.md §5). Live pixel-rendered via codec_avatar
+  # (app/avatar_providers/codec_avatar.py, docs/gl_raster_benchmark.md) —
+  # GPU-first (gl_raster.py) with automatic CPU fallback if no GL context
+  # is available, ~290fps measured, well above the 30fps stream target.
+  # Replaces the earlier termgl_avatar wiring (character-grid ANSI render
+  # of the same head) now that live GPU rendering + pane-position
+  # auto-detection (app/pane_geometry.py) are both in place.
+  provider: codec_avatar
   name: "KODI-7"
   title: "Software Engineer"
-  termgl_avatar:
+  codec_avatar:
     # A preset NAME resolves to the slider set in app/character_schema.py's
     # PRESETS. To iterate on the face, either edit that preset or inline the
     # sliders here as a mapping — both are accepted, and unknown/out-of-range
@@ -84,9 +87,14 @@ avatar:
     #   python3 app/character_preview.py --preset chadwick
     #   python3 app/character_preview.py --preset chadwick --set jaw_width=0.9
     character_params: chadwick
-  # `expressions` below is unused by termgl_avatar (it has no 2D face to
-  # draw eyes/mouth into — expression drives rotation speed instead) but is
-  # kept so flipping `provider` back to `builtin` still renders correctly.
+    # window_pos is intentionally omitted — auto-detected at startup from
+    # this pane's actual on-screen rect (tmux + xterm geometry via
+    # pane_geometry.py), so it tracks tuber_base.yaml's layout instead of a
+    # hardcoded offset that would drift if the layout or resolution changes.
+  # `expressions` below is unused by codec_avatar (it has no 2D face to
+  # draw eyes/mouth into — expression drives rotation speed + tint instead)
+  # but is kept so flipping `provider` back to `builtin` still renders
+  # correctly.
   expressions:
     idle:      { eyes: "◉  ◉", mouth: "╰───╯" }
     thinking:  { eyes: "⊙  ⊙", mouth: "─────" }

@@ -71,9 +71,21 @@ voice:
   verbatim: true
 
 avatar:
-  provider: builtin
+  # Live pixel-rendered via codec_avatar (app/avatar_providers/codec_avatar.py,
+  # docs/gl_raster_benchmark.md) — same MGS2-codec renderer as coder.yaml's
+  # Chadwick. Default-shaped sliders (character_schema.PARAM_DEFAULTS) with
+  # a distinct accent_color so the roster reads as 6 different characters,
+  # not 1 real face + 5 flat ASCII ones (character_schema.py's `ada3` preset
+  # comment). Unique silhouettes per character are tracked follow-up work.
+  provider: codec_avatar
   name: "ADA-3"
   title: "Engineer (aider)"
+  codec_avatar:
+    character_params: ada3
+    # window_pos intentionally omitted — auto-detected from this pane's
+    # on-screen rect at startup, see coder.yaml's comment for why.
+  # `expressions` below is unused by codec_avatar but kept so flipping
+  # `provider` back to `builtin` still renders correctly.
   expressions:
     idle:      { eyes: "◉  ◉", mouth: "╰───╯" }
     thinking:  { eyes: "⊙  ⊙", mouth: "─────" }

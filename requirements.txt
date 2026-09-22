@@ -41,3 +41,19 @@ psycopg2-binary>=2.9
 # (/opt/render3d, same isolation pattern as the aider-chat venv below) so it
 # never touches this requirements.txt's resolution against python3.10.
 
+# moderngl — GPU-accelerated rasterizer for the codec avatar head
+# (app/gl_raster.py), used when a GPU is available; app/gl_raster.py's
+# is_available() falls back to the pure-numpy app/pixel_raster.py path
+# otherwise, so this dependency is optional at runtime even though it's
+# installed unconditionally here. NOT yet wired into any worker container's
+# GPU passthrough — see docs/gl_raster_benchmark.md.
+moderngl>=5.10
+
+# pygame — window/display surface for avatar_providers/codec_avatar.py's
+# live pixel-rendered avatar (only used for its display.init/set_mode/
+# surfarray/blit; no game-loop/event/audio features touched). Needed
+# because the codec renderer's output is real pixels captured by
+# stream_supervisor.py's ffmpeg -f x11grab, not a tmux character grid —
+# see that module's docstring.
+pygame>=2.5
+

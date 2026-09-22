@@ -11,11 +11,15 @@ only worker currently using it; every other worker is untouched.
 
 ## Quick start
 
-Preview a character without deploying anything:
+Preview a character without deploying anything (renders on GPU by default
+via `gl_raster.py`, falling back to CPU automatically if no GL context is
+available — see docs/gl_raster_benchmark.md):
 
 ```bash
 python3 app/character_preview.py --preset chadwick
 ```
+
+Renders a 4-view turntable to PNG files under `preview_out/` (gitignored).
 
 Iterate on a slider:
 
@@ -29,8 +33,15 @@ Show the full slider schema:
 python3 app/character_preview.py --list-params
 ```
 
-Locally this runs under the repo's `.venv` (numpy only). Inside a worker
-container use `/opt/render3d/bin/python3`.
+Single view to a specific path, or force the CPU renderer:
+
+```bash
+python3 app/character_preview.py --preset chadwick --view front -o out.png
+python3 app/character_preview.py --preset chadwick --cpu
+```
+
+Locally this runs under the repo's `.venv` (numpy + moderngl + pygame).
+Inside a worker container use `/opt/render3d/bin/python3`.
 
 ## The slider schema
 
@@ -184,6 +195,22 @@ Per-pixel density is fixed by the font — the only way to get more detail in
 the same screen area is more cells (smaller font / larger capture), not a
 denser character.
 
+## Rendering pipeline (codec look, live rendering)
+
+The MGS2-codec-style low-poly head (`app/codec_head.py`) superseded the
+smooth-sphere `head_mesh.py` approach described above once it was rendered
+and judged — see this doc's "Why the face reads as a face" section for
+that history, and docs/gl_raster_benchmark.md for the GPU-accelerated live
+render path (`app/gl_raster.py`, falling back to the pure-numpy
+`app/pixel_raster.py` when no GPU context is available) built for
+per-frame live rendering rather than one-off previews. `head_mesh.py` /
+`ascii_raster.py` remain in the tree and tested but are no longer what
+`character_preview.py` renders through.
+
+`app/avatar_providers/codec_avatar.py` is the live-rendering provider
+(registered as `codec_avatar`) built on this pipeline — not yet the
+default for any worker; `coder.yaml` still runs `termgl_avatar`.
+
 ## Morph targets (future work)
 
 Expressions are currently rotation-speed cues only. The generator is
@@ -206,17 +233,22 @@ value, which would silently break morphing.
 | File | Role |
 |---|---|
 | `app/character_schema.py` | slider schema, validation/clamping, presets |
-| `app/head_mesh.py` | Backend A geometry (skull, eyes, nose, ears, neck) |
-| `app/ascii_raster.py` | pure-numpy preview rasterizer |
-| `app/character_preview.py` | agent-facing CLI |
-| `app/mesh3d.py` | `trigs_from_indexed()` converter |
-| `app/avatar_providers/termgl_avatar.py` | `character_params` wiring |
-| `config/workers/coder.yaml` | Chadwick, live |
+| `app/codec_head.py` | current head geometry — low-poly codec-style, materials |
+| `app/pixel_raster.py` | CPU flat-shaded rasterizer + CRT post + PNG writer |
+| `app/gl_raster.py` | GPU-accelerated rasterizer (moderngl), same output contract as pixel_raster.py |
+| `app/character_preview.py` | agent-facing CLI (GPU-first, `--cpu` to force numpy) |
+| `app/avatar_providers/codec_avatar.py` | live-rendering provider (`codec_avatar`) |
+| `app/head_mesh.py` | superseded Backend A geometry (smooth sphere) — kept, tested, unused by the CLI |
+| `app/ascii_raster.py` | superseded pure-numpy ASCII rasterizer — kept, tested, unused by the CLI |
+| `app/mesh3d.py` | `trigs_from_indexed()` converter (used by head_mesh.py/termgl) |
+| `app/avatar_providers/termgl_avatar.py` | ASCII/character-grid `character_params` wiring — still live for `coder.yaml` |
+| `config/workers/coder.yaml` | Chadwick, currently on `termgl_avatar` |
 
 ## Tests
 
 ```bash
 .venv/Scripts/python.exe -m pytest tests/test_character_schema.py \
-  tests/test_head_mesh.py tests/test_ascii_raster.py \
-  tests/test_termgl_avatar_character.py -q
+  tests/test_head_mesh.py tests/test_codec_head.py tests/test_ascii_raster.py \
+  tests/test_character_preview.py tests/test_gl_raster.py \
+  tests/test_codec_avatar.py tests/test_termgl_avatar_character.py -q
 ```

@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 """
 tests/test_ascii_raster.py
-Covers the pure-numpy preview rasterizer (app/ascii_raster.py) and the
-agent-facing CLI built on it (app/character_preview.py).
+Covers the pure-numpy preview rasterizer (app/ascii_raster.py).
+
+STATUS: ascii_raster.py is retained as a standalone module (still fully
+correct and tested here) but is no longer used by character_preview.py,
+which switched to the codec pixel pipeline (codec_head.py + gl_raster.py /
+pixel_raster.py, see docs/character_generator.md and
+tests/test_character_preview.py). These tests exercise ascii_raster.py
+directly rather than through the CLI.
 
 The rasterizer's contract is deliberately modest — it previews SILHOUETTE
-AND SHADING for an agent's slider-iteration loop, it is not a pixel-exact
-termgl emulator — so these tests assert structural properties (frame shape,
-something got drawn, culling works, sliders visibly change the output)
-rather than exact character art, which would be brittle against any
-harmless tuning of the ramp or camera.
+AND SHADING, not a pixel-exact termgl emulator — so these tests assert
+structural properties (frame shape, something got drawn, culling works,
+sliders visibly change the output) rather than exact character art, which
+would be brittle against any harmless tuning of the ramp or camera.
 """
-import json
-
 import numpy as np
 import pytest
 
@@ -23,7 +26,6 @@ from ascii_raster import (
     render_mesh,
     render_turntable,
 )
-from character_preview import build_params, format_text, main, parse_set
 from head_mesh import build_head_params_mesh
 
 VERTS, FACES = build_head_params_mesh("chadwick")
@@ -164,81 +166,3 @@ def test_render_turntable_returns_requested_frame_count():
 def test_turntable_frames_differ_from_each_other():
     frames = render_turntable(VERTS, FACES, frames=4, width=40, height=18)
     assert len({tuple(f) for f in frames}) > 1
-
-
-# ── The agent-facing CLI ──────────────────────────────────────────────────
-@pytest.mark.parametrize("pair,expected", [
-    ("eye_size=0.8", {"eye_size": 0.8}),
-    ("accent_color=CYAN", {"accent_color": "CYAN"}),   # bare string, unquoted
-    ("build=1", {"build": 1}),
-])
-def test_parse_set_parses_pairs(pair, expected):
-    assert parse_set([pair]) == expected
-
-
-def test_parse_set_rejects_malformed_pair():
-    from character_schema import CharacterParamError
-    with pytest.raises(CharacterParamError, match="key=value"):
-        parse_set(["eye_size"])
-
-
-def test_build_params_applies_set_over_preset():
-    class Args:
-        preset = "chadwick"
-        params = None
-        set = ["jaw_width=0.05"]
-
-    assert build_params(Args())["jaw_width"] == pytest.approx(0.05)
-
-
-def test_build_params_set_beats_params_json():
-    class Args:
-        preset = None
-        params = '{"eye_size": 0.2}'
-        set = ["eye_size=0.9"]
-
-    assert build_params(Args())["eye_size"] == pytest.approx(0.9)
-
-
-def test_format_text_includes_params_and_labels():
-    out = format_text({"eye_size": 0.5}, [("front", ["###", "###"])])
-    assert "params:" in out
-    assert "--- front ---" in out
-    assert "###" in out
-
-
-def test_cli_renders_preset(capsys):
-    assert main(["--preset", "chadwick", "--view", "front"]) == 0
-    out = capsys.readouterr().out
-    assert "--- front ---" in out
-    assert any(c in out for c in GRADIENT_MIN.strip())
-
-
-def test_cli_json_output_is_parseable(capsys):
-    assert main(["--preset", "chadwick", "--view", "front", "--json"]) == 0
-    payload = json.loads(capsys.readouterr().out)
-    assert payload["params"]["head_width"] > 0
-    assert len(payload["frames"]) == 1
-    assert len(payload["frames"][0]["rows"]) == 24
-
-
-def test_cli_turntable_renders_every_view(capsys):
-    assert main(["--preset", "chadwick", "--json"]) == 0
-    payload = json.loads(capsys.readouterr().out)
-    assert [f["label"] for f in payload["frames"]] == \
-        ["front", "three-quarter", "profile", "rear-quarter"]
-
-
-def test_cli_reports_bad_params_without_a_traceback(capsys):
-    """An iterating agent will send a bad key; it should get a one-line
-    reason and a non-zero exit, not a stack trace."""
-    code = main(["--set", "hat_size=0.5"])
-    captured = capsys.readouterr()
-    assert code == 2
-    assert "error:" in captured.err
-    assert "Traceback" not in captured.err
-
-
-def test_cli_list_params_emits_the_schema(capsys):
-    assert main(["--list-params"]) == 0
-    assert "head_width" in json.loads(capsys.readouterr().out)

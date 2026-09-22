@@ -140,7 +140,12 @@ def test_view_dist_is_overridable(make_provider):
 def test_coder_worker_config_wires_chadwick():
     """The flagship character is actually live in the shipped config — this
     is the one assertion that would catch the config and the code drifting
-    apart (docs/avatar_3d_design.md §5 step 2)."""
+    apart (docs/avatar_3d_design.md §5 step 2).
+
+    2026-09-22: coder.yaml moved from termgl_avatar (character-grid ANSI)
+    to codec_avatar (live GPU-first pixel rendering, docs/gl_raster_
+    benchmark.md) — this asserts the current wiring, not the original one.
+    """
     from pathlib import Path
 
     import yaml
@@ -151,7 +156,38 @@ def test_coder_worker_config_wires_chadwick():
     cfg = yaml.safe_load(config_path.read_text(encoding="utf-8"))
 
     avatar = cfg["avatar"]
-    assert avatar["provider"] == "termgl_avatar"
-    params = resolve_params(avatar["termgl_avatar"]["character_params"])
+    assert avatar["provider"] == "codec_avatar"
+    params = resolve_params(avatar["codec_avatar"]["character_params"])
     assert params["accent_color"] in ("YELLOW", "CYAN", "GREEN", "RED", "WHITE",
                                       "BLUE", "PURPLE", "BLACK")
+
+
+def test_tuber_base_workers_all_wired_to_codec_avatar():
+    """2026-09-22: all 6 tuber_base-layout workers standardized on
+    codec_avatar with distinct accent_color presets (character_schema.py's
+    nyx1/oko2/ada3/tess3/max1) — tuber_0.yaml (roundtable layout, GM) is
+    deliberately excluded, see its own layout.preset."""
+    from pathlib import Path
+
+    import yaml
+
+    from character_schema import resolve_params
+
+    workers_dir = Path(__file__).resolve().parents[1] / "config" / "workers"
+    expected = {
+        "coder.yaml": "chadwick",
+        "coder-native.yaml": "nyx1",
+        "coder-opencode.yaml": "oko2",
+        "coder-aider.yaml": "ada3",
+        "tester.yaml": "tess3",
+        "manager.yaml": "max1",
+    }
+    for filename, preset in expected.items():
+        cfg = yaml.safe_load((workers_dir / filename).read_text(encoding="utf-8"))
+        avatar = cfg["avatar"]
+        assert avatar["provider"] == "codec_avatar", filename
+        assert cfg["layout"]["preset"] == "tuber_base", filename
+        character_params = avatar["codec_avatar"]["character_params"]
+        assert character_params == preset, filename
+        # Must actually resolve (schema-valid preset, not just a string).
+        resolve_params(character_params)
