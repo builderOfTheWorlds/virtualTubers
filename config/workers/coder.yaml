@@ -90,16 +90,21 @@ avatar:
     # STOPGAP (2026-09-22): auto-detection (pane_geometry.py, tmux + xdotool)
     # is not yet reliably landing on gx10 — investigating (see
     # docs/gl_raster_benchmark.md's open-issues note). Pinned explicitly here
-    # instead, computed directly from tuber_base.yaml's own split math at the
-    # DEFAULT CAPTURE_RESOLUTION=3840x2160: the avatar pane is the top 40% of
-    # the M column (60% width, starting after the 20%-wide L column) ->
-    # x=768 (0.20*3840), y=0, width=2304 (0.60*3840), height=864 (0.40*2160).
+    # instead, computed directly from tuber_base.yaml's own split math at
+    # CAPTURE_RESOLUTION=2560x1440 (scaled down from the original
+    # 3840x2160 default 2026-09-22 — 6 concurrent 4K x11grab captures were
+    # saturating memory bandwidth, the real cause of a ~6-9fps Twitch
+    # stream despite GPU rendering/NVENC/CBR all confirmed working;
+    # see stream_supervisor.py's CAPTURE_RESOLUTION comment): the avatar
+    # pane is the top 40% of the M column (60% width, starting after the
+    # 20%-wide L column) -> x=512 (0.20*2560), y=0, width=1536 (0.60*2560),
+    # height=576 (0.40*1440).
     # Remove this block (falls back to auto-detect) once that's fixed, or if
-    # CAPTURE_RESOLUTION is overridden away from the 3840x2160 default —
+    # CAPTURE_RESOLUTION is overridden away from the 2560x1440 default —
     # these numbers do NOT scale with it automatically.
-    window_pos: [768, 0]
-    width: 2304
-    height: 864
+    window_pos: [512, 0]
+    width: 1536
+    height: 576
   # `expressions` below is unused by codec_avatar (it has no 2D face to
   # draw eyes/mouth into — expression drives rotation speed + tint instead)
   # but is kept so flipping `provider` back to `builtin` still renders

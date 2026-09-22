@@ -119,7 +119,8 @@ def test_build_ffmpeg_cmd_capture_resolution_precedes_framerate_and_input():
             "rtmp://live.twitch.tv/app", "key123", "1280x720", ":99",
             capture_resolution="2560x1440", use_gpu=False,
         )
-    assert cmd[:5] == ["ffmpeg", "-f", "x11grab", "-video_size", "2560x1440"]
+    assert cmd[:7] == ["ffmpeg", "-thread_queue_size", "1024", "-f", "x11grab",
+                       "-video_size", "2560x1440"]
     assert "scale=1280:720" in cmd
 
 
@@ -259,3 +260,40 @@ def test_build_ffmpeg_cmd_bitrate_and_bufsize_match_twitch_1080p30_recommendatio
         assert cmd[cmd.index("-maxrate") + 1] == expected
         assert cmd[cmd.index("-bufsize") + 1] == expected  # == bitrate, not a multiple
         assert cmd[cmd.index("-g") + 1] == str(ss.TWITCH_KEYFRAME_INTERVAL_FRAMES)
+
+
+# ── thread_queue_size: a real dropped-frame bug found live on gx10 —
+#    "Thread message queue blocking; consider raising the thread_queue_size
+#    option (current value: 8)" in ffmpeg's own stderr, independent of
+#    capture resolution or encoder settings. ffmpeg's default input queue
+#    (8 frames) between the x11grab/pulse capture thread and the rest of
+#    the pipeline was overflowing and blocking under real load, capping
+#    throughput well below the requested framerate regardless of how fast
+#    the encoder itself could go. ─────────────────────────────────────────
+def test_build_ffmpeg_cmd_sets_thread_queue_size_for_video_input():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+    # the FIRST -thread_queue_size must precede the x11grab -i (video input)
+    i = cmd.index("-thread_queue_size")
+    assert cmd[i + 1] == "1024"
+    assert cmd.index("-i") > i  # comes before this input, not after
+
+
+def test_build_ffmpeg_cmd_sets_thread_queue_size_for_pulse_audio_input():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+    # both the video AND pulse audio inputs need their own -thread_queue_size
+    assert cmd.count("-thread_queue_size") == 2
+    pulse_i = cmd.index("pulse")
+    assert cmd[pulse_i - 3] == "-thread_queue_size"
+
+
+def test_build_ffmpeg_cmd_silent_audio_fallback_has_no_thread_queue_size():
+    """anullsrc is a synthesized lavfi source, not a real capture thread —
+    it doesn't need (and ffmpeg would likely warn/ignore) a queue size."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=False):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+    assert cmd.count("-thread_queue_size") == 1  # only the video input's

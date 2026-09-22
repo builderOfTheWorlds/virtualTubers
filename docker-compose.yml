@@ -14,7 +14,7 @@ services:
       DISPLAY_NUM: 99
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER1_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode (docs/replay_pane.md) instead.
@@ -97,7 +97,7 @@ services:
       DISPLAY_NUM: 102
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-native
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER2_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -157,7 +157,7 @@ services:
       DISPLAY_NUM: 103
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-opencode
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER3_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -217,7 +217,7 @@ services:
       DISPLAY_NUM: 104
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-aider
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER4_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -277,7 +277,7 @@ services:
       DISPLAY_NUM: 100
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: manager
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER6_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
       # or =manager for the old ticket-board layout. Env-only, no rebuild.
@@ -333,7 +333,7 @@ services:
       DISPLAY_NUM: 101
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: tester
-      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-3840x2160}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-2560x1440}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER5_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
       # or =tester for the old pytest-loop layout. Env-only, no rebuild.

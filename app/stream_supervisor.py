@@ -154,7 +154,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     # so the flv/aac muxer still gets an audio stream and the broadcast
     # itself never fails over what should only ever mute the narration.
     if pulse_monitor_available():
-        audio_input = ["-f", "pulse", "-i", "vout.monitor"]
+        audio_input = ["-thread_queue_size", "1024", "-f", "pulse", "-i", "vout.monitor"]
     else:
         log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
         audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
@@ -223,6 +223,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
 
     return [
         "ffmpeg",
+        "-thread_queue_size", "1024",
         "-f", "x11grab",
         "-video_size", capture_resolution,
         "-framerate", "30",

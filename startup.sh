@@ -8,9 +8,13 @@ RESOLUTION="${RESOLUTION:-1920x1080}"
 # Capture resolution (docs/tuber_base_layout_plan.md Contract E): Xvfb/xterm
 # render at this size — bigger than the stream OUTPUT (RESOLUTION above) lets
 # more detail fit on screen before stream_supervisor.py's ffmpeg -vf scale
-# step scales it down. Defaults to 4K; RESOLUTION stays the unchanged
-# 1920x1080 default stream output.
-CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-3840x2160}"
+# step scales it down. Defaults to 2560x1440 (scaled down from 4K
+# 2026-09-22 — 6 concurrent 4K x11grab captures were saturating host
+# memory bandwidth, the real cause of a ~6-9fps Twitch stream even with
+# GPU rendering/NVENC/CBR all confirmed working in isolation; see
+# docker-compose.yml's CAPTURE_RESOLUTION and stream_supervisor.py);
+# RESOLUTION stays the unchanged 1920x1080 default stream output.
+CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-2560x1440}"
 FONT_SIZE="${FONT_SIZE:-20}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
