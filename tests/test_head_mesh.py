@@ -265,3 +265,88 @@ def test_builder_consumes_exactly_the_documented_schema():
     """Every documented parameter is accepted by the builder — catches the
     schema and Backend A drifting apart."""
     assert len(build_head_mesh(dict(PARAM_DEFAULTS))) > 0
+
+
+# ── Facial structure (the "it just looks like a ball" regression) ─────────
+def test_eye_sockets_are_actually_recessed():
+    """The sockets must be measurably BEHIND the brow above them.
+
+    This is the geometric root of the 'yellow ball with density blocks'
+    failure: without real recesses there is nothing for the shader to turn
+    into the dark eye band a viewer reads as a face.
+    """
+    verts, _ = build_head_params_mesh("chadwick")
+    skull = verts[:SKULL_VERT_COUNT]
+
+    def front_z_near(x_target, y_target, radius=0.16):
+        d_sq = (skull[:, 0] - x_target) ** 2 + (skull[:, 1] - y_target) ** 2
+        near = (d_sq < radius ** 2) & (skull[:, 2] > 0)
+        assert near.any(), f"no front verts near ({x_target}, {y_target})"
+        return skull[near, 2].max()
+
+    socket_z = front_z_near(0.36, 0.10)
+    brow_z = front_z_near(0.0, 0.36)
+    assert brow_z > socket_z + 0.05, \
+        f"brow ({brow_z:.3f}) does not overhang socket ({socket_z:.3f})"
+
+
+def test_face_is_not_a_sphere():
+    """The front of the head must deviate from the shaped ellipsoid — i.e.
+    sculpting actually happened."""
+    import head_mesh
+
+    from character_schema import resolve_params
+
+    params = resolve_params("chadwick")
+    sphere, _ = head_mesh._uv_sphere(head_mesh.SKULL_RINGS, head_mesh.SKULL_SEGMENTS)
+    shaped = head_mesh._shape_skull(sphere, params)
+    sculpted = head_mesh._sculpt_face(shaped, params)
+
+    front = shaped[:, 2] > 0.3
+    deviation = np.abs(sculpted[front, 2] - shaped[front, 2])
+    assert deviation.max() > 0.15, "facial sculpt barely moved the surface"
+
+
+def test_sculpt_leaves_the_back_of_the_head_alone():
+    """Facial features must not leak onto the cranium — the back of the
+    head should stay a clean curve."""
+    import head_mesh
+
+    from character_schema import resolve_params
+
+    params = resolve_params("chadwick")
+    sphere, _ = head_mesh._uv_sphere(head_mesh.SKULL_RINGS, head_mesh.SKULL_SEGMENTS)
+    shaped = head_mesh._shape_skull(sphere, params)
+    sculpted = head_mesh._sculpt_face(shaped, params)
+
+    back = shaped[:, 2] < -0.2
+    np.testing.assert_allclose(sculpted[back], shaped[back], atol=1e-5)
+
+
+def test_features_are_welded_to_the_face():
+    """The nose must be rooted in the skull, not floating in front of it.
+
+    A hardcoded attachment Z left the nose detached once the sculpt pushed
+    the facial plane back — on screen that reads as a rendering glitch.
+    """
+    import head_mesh
+
+    from character_schema import resolve_params
+
+    params = resolve_params("chadwick")
+    sphere, _ = head_mesh._uv_sphere(head_mesh.SKULL_RINGS, head_mesh.SKULL_SEGMENTS)
+    skull = head_mesh._sculpt_face(head_mesh._shape_skull(sphere, params), params)
+    nose, _ = head_mesh._place_nose(params, skull_verts=skull)
+
+    surface = head_mesh._surface_z(skull, 0.0, -0.06, radius=0.20)
+    assert nose[:, 2].min() <= surface, \
+        f"nose base (z={nose[:, 2].min():.3f}) floats in front of the face (z={surface:.3f})"
+
+
+def test_face_light_is_normalized_and_not_along_the_view_axis():
+    """A light pointing down the view axis saturates the whole visible
+    hemisphere and flattens the face — the original blob bug."""
+    from head_mesh import FACE_LIGHT_DIRECTION
+
+    assert np.linalg.norm(FACE_LIGHT_DIRECTION) == pytest.approx(1.0, abs=1e-5)
+    assert FACE_LIGHT_DIRECTION[2] < 0.8, "light is too close to the view axis"

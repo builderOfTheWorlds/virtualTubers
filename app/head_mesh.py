@@ -38,17 +38,37 @@ def _trace(msg, *args):
 
 
 # ── Fixed resolution constants ────────────────────────────────────────────
-# Tuned for the 55x24 target: enough segments that the silhouette reads as
-# curved, few enough that the per-frame Python loop over triangles in
-# termgl_avatar.render_tick() stays cheap. Changing any of these changes the
-# vertex ORDERING, which invalidates any morph targets authored against the
-# old numbers — treat them as a versioned part of the mesh contract.
-SKULL_RINGS = 10
-SKULL_SEGMENTS = 14
-EYE_RINGS = 4
-EYE_SEGMENTS = 6
-CONE_SEGMENTS = 8
-NECK_SEGMENTS = 10
+# The skull is dense enough to carve recognizable FEATURES into (eye
+# sockets, brow ridge, mouth) rather than merely reading as a curved
+# silhouette — at 10x14 the sockets spanned barely one vertex each and the
+# face rendered as a smooth ball. Still cheap: ~1.2k triangles through a
+# per-frame Python loop in termgl_avatar.render_tick().
+#
+# Changing any of these changes the vertex ORDERING, which invalidates any
+# morph targets authored against the old numbers — treat them as a
+# versioned part of the mesh contract.
+SKULL_RINGS = 22
+SKULL_SEGMENTS = 30
+EYE_RINGS = 5
+EYE_SEGMENTS = 8
+CONE_SEGMENTS = 10
+NECK_SEGMENTS = 12
+
+#: Light direction the FACE is designed to be read under, normalized.
+#: render3d_common.LitPixelShader's stock light is nearly parallel to the
+#: view axis, which saturates the entire visible hemisphere at full
+#: brightness — the face collapsed onto the ramp's last character and read
+#: as a flat blob.
+#:
+#: This light is ABOVE and slightly in front, and deliberately SYMMETRIC
+#: (x=0). A side/raking light looked better in the abstract but washes one
+#: cheek bright and the other dark, and that left-right gradient competes
+#: with the features for the few ramp levels available — measurably noisier
+#: output. Lighting straight down the face's own symmetry plane spends the
+#: whole ramp on brow/socket/muzzle relief instead, which is what actually
+#: reads as a face. Both the pane and the ASCII preview use this.
+FACE_LIGHT_DIRECTION = np.array([0.0, 0.75, 0.66], dtype=np.float32)
+FACE_LIGHT_DIRECTION = FACE_LIGHT_DIRECTION / np.linalg.norm(FACE_LIGHT_DIRECTION)
 
 
 def _uv_sphere(rings, segments):
@@ -176,49 +196,169 @@ def _shape_skull(verts, params):
     return v
 
 
-def _place_eyes(params, skull_width):
-    """Two eye spheres on the +Z face. Returns (verts, faces).
+def _falloff(distance_sq, radius):
+    """Smooth 0..1 bump kernel: 1 at the center, 0 at `radius`, with zero
+    slope at both ends.
 
-    Eyes are barely a couple of characters wide at 55x24, so these exist
-    mainly to break up the front silhouette and to give morph targets
-    something to move later — not to be legible as eyes on their own.
+    Every facial feature below is applied by displacing vertices through
+    this kernel rather than by adding or moving geometry. That is what lets
+    a face be sculpted while keeping topology bit-identical across all
+    slider values (the morph-target invariant, docs/avatar_3d_design.md §4)
+    — and the smooth falloff is what stops a displacement from creasing
+    into a faceted dent that reads as a rendering artifact.
+    """
+    t = np.clip(1.0 - distance_sq / (radius * radius), 0.0, 1.0)
+    return t * t * (3.0 - 2.0 * t)      # smoothstep
+
+
+def _sculpt_face(verts, params):
+    """Carve facial structure into the shaped skull.
+
+    A sphere with features stuck ON it reads as a ball with bumps; a face
+    reads through what is carved INTO it — recessed eye sockets, an
+    overhanging brow, a flattened facial plane, a mouth line. Under a
+    raking light those hollows generate the light/dark gradients a viewer
+    decodes as a face, which is the only signal that survives a 55x24
+    flat-shaded render.
+
+    FEATURES ARE FEW, WIDE AND DEEP ON PURPOSE. Flat shading gives every
+    triangle its own tone, so a displacement that varies faster than the
+    triangle spacing turns into speckle rather than shape — narrow or
+    overlapping bumps measurably raise the neighbouring-character change
+    rate and read as noise. Each feature here is therefore broad (low
+    spatial frequency) and displaces far enough to survive a 9-level ramp.
+
+    Pure vertex displacement: no vertex is added, removed, or reordered.
+    """
+    _trace("_sculpt_face(params=%r)", params)
+    v = verts.copy()
+    x, y, z = v[:, 0], v[:, 1], v[:, 2]
+
+    # Only the front hemisphere is a face; everything else is cranium. The
+    # squared weight keeps the displacement from creasing at the silhouette
+    # edge, where a linear falloff leaves a visible seam.
+    front = np.clip(z, 0.0, None) ** 2
+
+    eye_x = _lerp(0.26, 0.44, params["eye_spacing"])
+    eye_y = 0.10
+
+    # ── Flatten the facial plane. A sphere's front is too round to read as
+    # a face; real faces are comparatively flat from brow to chin. This is
+    # one broad displacement, so it costs no sharpness anywhere.
+    face_plane = _falloff(x * x * 0.62 + (y - 0.02) ** 2 * 0.42, 1.30) * front
+    v[:, 2] -= face_plane * 0.20
+
+    # ── Eye sockets: the single most important feature, and the one that
+    # must survive downsampling — a viewer reads two dark hollows as eyes
+    # before anything else. Deep and wide: a parameter sweep scoring
+    # eye-band-vs-cheek-band contrast against speckle put the usable depth
+    # far higher than looked reasonable on paper, because a shallow socket
+    # simply lands on the same ramp character as the cheek beside it.
+    socket_r = _lerp(0.40, 0.50, params["eye_size"])
+    socket_depth = _lerp(0.30, 0.40, params["eye_size"])
+    for sign in (-1.0, 1.0):
+        d_sq = (x - sign * eye_x) ** 2 * 0.80 + (y - eye_y) ** 2 * 1.70
+        v[:, 2] -= _falloff(d_sq, socket_r) * front * socket_depth
+
+    # ── Brow ridge: overhangs the sockets and catches the overhead light,
+    # which is what makes the hollows beneath read as shadowed sockets
+    # rather than as dents.
+    brow_y = eye_y + _lerp(0.20, 0.27, params["eye_size"])
+    brow = _falloff((y - brow_y) ** 2 * 3.4 + x * x * 0.26, 0.74) * front
+    v[:, 2] += brow * 0.20
+
+    # ── Muzzle: the whole nose/mouth/chin block pushed forward as ONE
+    # broad mass. Individually-placed cheek and chin bumps interfered with
+    # each other and speckled; a single mass reads as facial structure and
+    # stays smooth.
+    muzzle = _falloff(x * x * 1.05 + (y + 0.30) ** 2 * 1.25, 0.90) * front
+    v[:, 2] += muzzle * 0.105
+
+    # ── Mouth: a broad, shallow horizontal shadow under the muzzle. At this
+    # resolution a mouth-shaped hole reads as damage; a soft band reads as
+    # a mouth.
+    mouth_w = _lerp(0.30, 0.46, params["jaw_width"])
+    mouth = _falloff((x / mouth_w) ** 2 * 0.10 + (y + 0.36) ** 2 * 6.0, 0.42) * front
+    v[:, 2] -= mouth * 0.075
+
+    log.debug("sculpted face: socket_depth=%.3f", socket_depth)
+    return v
+
+
+def _surface_z(verts, x_query, y_query, radius=0.16, default=0.70):
+    """Front-surface Z of the sculpted skull near (x_query, y_query).
+
+    Features are attached using this rather than a hardcoded constant: the
+    sculpt moves the facial plane back and hollows the sockets, so a fixed
+    anchor that was correct for a plain sphere leaves the nose floating in
+    front of the face (a detached cone reads as a rendering glitch, and the
+    seam speckles). Querying the real surface keeps attachments welded
+    however the sliders reshape the head.
+    """
+    d_sq = (verts[:, 0] - x_query) ** 2 + (verts[:, 1] - y_query) ** 2
+    near = (d_sq < radius * radius) & (verts[:, 2] > 0.0)
+    if not near.any():
+        return default
+    return float(verts[near, 2].max())
+
+
+def _place_eyes(params, skull_width, skull_verts=None):
+    """Two eyeballs seated in the sculpted sockets. Returns (verts, faces).
+
+    Kept small and set deep: the SOCKET does the visual work at 55x24 (a
+    dark hollow under a lit brow is what reads as an eye), while the
+    eyeball only needs to catch a highlight inside it. An eyeball large
+    enough to be legible on its own fills the socket and undoes it.
     """
     base_v, base_f = _uv_sphere(EYE_RINGS, EYE_SEGMENTS)
-    radius = _lerp(0.09, 0.20, params["eye_size"])
-    offset_x = _lerp(0.20, 0.46, params["eye_spacing"]) * skull_width
-    y = 0.14
-    # Far enough forward that the eye spheres break the skull's surface
-    # instead of sitting inside it (the shaped sphere reaches z≈0.88 at
-    # this height, and an eye is only ~0.1-0.2 across).
-    z = 0.80
+    radius = _lerp(0.085, 0.135, params["eye_size"])
+    offset_x = _lerp(0.26, 0.44, params["eye_spacing"])
+    y = 0.10
 
     verts = []
     faces = []
     for sign in (-1.0, 1.0):
         v = base_v * radius
+        v[:, 2] *= 0.62        # flattened; a full sphere overflows the socket
         v[:, 0] += sign * offset_x
         v[:, 1] += y
-        v[:, 2] += z
+        # Sit just proud of the socket FLOOR, wherever the sculpt put it.
+        if skull_verts is not None:
+            floor = _surface_z(skull_verts, sign * offset_x, y, radius=0.13)
+        else:
+            floor = 0.62
+        v[:, 2] += floor - radius * 0.32
         faces.append(base_f + len(base_v) * len(verts))
         verts.append(v)
     return np.concatenate(verts, axis=0), np.concatenate(faces, axis=0)
 
 
-def _place_nose(params):
-    """A cone laid on its side pointing +Z (out of the face)."""
-    base_v, base_f = _cone(CONE_SEGMENTS)
-    length = _lerp(0.14, 0.50, params["nose_length"])
-    radius = 0.13
+def _place_nose(params, skull_verts=None):
+    """A wedge-shaped nose rooted in the face, pointing +Z.
 
-    # Cone is built apex-at-+Y; rotate -90° about X so the apex points +Z.
+    Anchored to the ACTUAL sculpted surface: the facial plane is flattened
+    and set back by _sculpt_face, so a hardcoded Z left the nose hovering
+    in front of the face as a detached cone.
+    """
+    base_v, base_f = _cone(CONE_SEGMENTS)
+    length = _lerp(0.16, 0.42, params["nose_length"])
+    radius = _lerp(0.11, 0.16, params["nose_length"])
+    y = -0.06
+
+    # Cone is built apex-at-+Y; rotate so the apex points +Z and squash it
+    # horizontally — a round cone reads as a ball on the face, a wedge
+    # reads as a nose.
     v = base_v.copy()
-    v = np.stack([v[:, 0] * radius, -v[:, 2] * radius, v[:, 1] * length], axis=-1)
-    v[:, 1] += -0.04
-    # Base ring sits ON the skull surface (the shaped sphere reaches z≈0.88
-    # at this height), so the whole cone length protrudes. Anchoring it any
-    # further back buries the nose inside the skull and it vanishes from the
-    # profile silhouette entirely — which is the one view where a nose reads.
-    v[:, 2] += 0.80
+    v = np.stack([v[:, 0] * radius * 0.80,
+                  -v[:, 2] * radius,
+                  v[:, 1] * length], axis=-1)
+    v[:, 1] += y
+    # Root the base ring slightly INSIDE the surface so the join is welded
+    # rather than a visible floating seam.
+    root = _surface_z(skull_verts, 0.0, y, radius=0.20) if skull_verts is not None else 0.70
+    v[:, 2] += root - 0.06
+    # Tilt the apex down a little; a horizontal nose reads as a spike.
+    v[:, 1] -= (v[:, 2] - (root - 0.06)) * 0.20
     return v.astype(np.float32), base_f
 
 
@@ -275,11 +415,12 @@ def build_head_params_mesh(params):
 
     skull_v, skull_f = _uv_sphere(SKULL_RINGS, SKULL_SEGMENTS)
     skull_v = _shape_skull(skull_v, params)
+    skull_v = _sculpt_face(skull_v, params)
     skull_width = _lerp(0.62, 1.12, params["head_width"])
 
     parts = [(skull_v, skull_f)]
-    parts.append(_place_eyes(params, skull_width))
-    parts.append(_place_nose(params))
+    parts.append(_place_eyes(params, skull_width, skull_verts=skull_v))
+    parts.append(_place_nose(params, skull_verts=skull_v))
     parts.append(_place_ears(params, skull_width))
     parts.append(_place_neck(params))
 

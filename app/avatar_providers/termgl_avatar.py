@@ -99,6 +99,7 @@ class TermglAvatarProvider(AvatarProvider):
         self._mesh, self._mesh_kind = self._build_mesh(
             self._character_params, termgl_cfg.get("radius", 1.0), build_icosahedron)
         self._accent_color = self._resolve_accent_color(self._character_params)
+        self._face_light = self._resolve_face_light()
         self._view_dist = termgl_cfg.get("view_dist", DEFAULT_VIEW_DIST
                                          if self._mesh_kind == "icosahedron"
                                          else HEAD_VIEW_DIST)
@@ -155,6 +156,24 @@ class TermglAvatarProvider(AvatarProvider):
                   file=sys.stderr)
             return None
 
+    def _resolve_face_light(self):
+        """The raking light the generated face was sculpted for, or None to
+        keep LitPixelShader's stock light.
+
+        Only applies when a parametric head is actually being drawn: the
+        placeholder icosahedron predates this and should keep rendering
+        exactly as it always has.
+        """
+        if self._mesh_kind != "parametric head":
+            return None
+        try:
+            from head_mesh import FACE_LIGHT_DIRECTION
+            return FACE_LIGHT_DIRECTION
+        except Exception as exc:  # noqa: BLE001 — cosmetic, never fatal
+            print(f"[avatar] termgl_avatar: could not load face light ({exc!r})",
+                  file=sys.stderr)
+            return None
+
 
     def render_tick(self, expression, bubble_lines):
         tgl = self._tgl
@@ -172,6 +191,15 @@ class TermglAvatarProvider(AvatarProvider):
                                dist=self._view_dist)
         vertex_shader = tgl.VertexShaderSimple(np.matmul(self._camera, view))
         pixel_shader = self._LitPixelShader()
+        # Light the generated face with the raking light it was sculpted
+        # for. LitPixelShader's stock light points nearly down the view
+        # axis, which saturates the whole visible hemisphere at full
+        # brightness and flattens the face into a featureless blob — the
+        # sockets/brow/cheekbones only read as a face when lit from the
+        # side. Left alone for the placeholder icosahedron, whose flat
+        # facets read fine either way.
+        if self._face_light is not None:
+            pixel_shader.light_direction = self._face_light
         pixel_shader.base_color = tgl.PixFmt(tgl.Idx(getattr(tgl.Color, color_name), flags=tgl.FmtFlag.BOLD))
         for trig in self._mesh:
             pixel_shader.trig = trig

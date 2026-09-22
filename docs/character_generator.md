@@ -90,6 +90,54 @@ The avatar pane must never crash a worker, so failures degrade instead:
 - Unresolvable `character_params` (unknown preset name, wrong type) → the
   provider falls back to the placeholder icosahedron and prints why.
 
+## Why the face reads as a face (and how to keep it that way)
+
+The first version rendered as "a yellow ball with some density blocks."
+Three things fixed it, and all three are load-bearing:
+
+**1. Lighting.** `LitPixelShader`'s stock light points nearly down the view
+axis, so the entire visible hemisphere saturated at full brightness — 262
+of 388 on-screen characters were `@`. `head_mesh.FACE_LIGHT_DIRECTION`
+replaces it with an **overhead, symmetric** light (`x=0`). A side/raking
+light seems more sculptural but washes one cheek bright and the other
+dark, and that left-right gradient competes with the features for the nine
+ramp levels available — it measured noticeably noisier. The pane and the
+preview both use this light, so they agree.
+
+**2. Carve features IN, don't stick them ON.** A sphere with bumps attached
+reads as a sphere with bumps. `_sculpt_face()` displaces the skull's own
+vertices: recessed eye sockets, an overhanging brow, a flattened facial
+plane, a forward muzzle mass, a mouth shadow. Under the overhead light the
+brow lights up and the sockets fall dark, and *that contrast* is what a
+viewer decodes as a face.
+
+**3. Features must be few, wide and deep.** Flat shading gives every
+triangle its own tone, so any displacement varying faster than the triangle
+spacing becomes speckle rather than shape. Separate cheekbone and chin
+bumps interfered and measurably raised the neighbour-character change rate;
+merging them into one broad muzzle mass fixed it. Socket depth also had to
+go far deeper than looked sensible on paper (0.30–0.40) — a shallow socket
+just lands on the same ramp character as the cheek beside it.
+
+Useful metrics when tuning, both computable from a rendered frame:
+
+- **contrast** — mean brightness of the cheek band minus the eye band.
+  Higher is better; the shipped face scores ~0.88.
+- **speckle** — fraction of horizontally-adjacent character pairs that
+  differ. Lower is better; a plain skull is ~0.168 and the shipped face is
+  ~0.122, i.e. *smoother* than an unsculpted head despite having features.
+
+If you add a feature and the face gets mushier, check speckle before
+trusting your eyes on a single still.
+
+### Attachments are welded, not placed
+
+`_surface_z()` queries the sculpted skull's actual front surface, and the
+nose and eyeballs anchor to it. Hardcoded Z offsets broke as soon as the
+sculpt moved the facial plane back — the nose floated in front of the face
+as a detached cone, which reads as a rendering glitch. Any new attached
+feature should anchor the same way.
+
 ## The agent iteration loop
 
 `app/character_preview.py` is the tool an agent drives

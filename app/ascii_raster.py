@@ -37,10 +37,15 @@ def _trace(msg, *args):
 #: LitPixelShader uses via `gradient.char(int(light_mul * 255))`.
 GRADIENT_MIN = " .:;ox%#@"
 
-#: Light direction, normalized — copied from LitPixelShader so preview
-#: shading matches the pane's.
-LIGHT_DIRECTION = np.array([0.4, 0.6, 1.0], dtype=np.float32)
-LIGHT_DIRECTION = LIGHT_DIRECTION / np.linalg.norm(LIGHT_DIRECTION)
+#: Light direction, normalized. Imported from head_mesh so the preview, the
+#: live pane, and the face geometry all agree on the lighting the face was
+#: sculpted for — a light nearly parallel to the view axis saturates the
+#: whole visible hemisphere and flattens the face into a featureless blob.
+try:
+    from head_mesh import FACE_LIGHT_DIRECTION as LIGHT_DIRECTION
+except ImportError:  # pragma: no cover — keeps the rasterizer standalone
+    LIGHT_DIRECTION = np.array([0.82, 0.62, 0.42], dtype=np.float32)
+    LIGHT_DIRECTION = LIGHT_DIRECTION / np.linalg.norm(LIGHT_DIRECTION)
 
 
 def make_camera_matrix(width, height, fov=1.2, near=0.1, far=10.0, aspect=None):
