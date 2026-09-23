@@ -1158,8 +1158,10 @@ def test_render_tile_publishes_the_expression_the_driver_thread_reads(pixel_mode
 # ── TileAvatarDriver ─────────────────────────────────────────────────────────
 def test_driver_thread_is_a_daemon_and_ticks_the_head(pixel_mode):
     """A tile being torn down must never be kept alive by its decoration."""
-    driver = tile_pane.TileAvatarDriver(pixel_mode, expression_source=lambda: "idle",
-                                        fps=60)
+    driver = tile_pane.TileAvatarDriver(lambda: pixel_mode,
+                                        expression_source=lambda: "idle",
+                                        fps=60, on_ready=lambda a: None,
+                                        on_lost=lambda: None)
     thread = driver.start()
     assert thread.daemon is True
     for _ in range(50):
@@ -1176,7 +1178,9 @@ def test_driver_stops_when_the_head_goes_inactive():
     """A head that failed once keeps failing — the driver must not respin it
     twelve times a second for the rest of the broadcast."""
     head = FakeHead(fail_on_tick=True)
-    driver = tile_pane.TileAvatarDriver(head, expression_source=lambda: "idle", fps=60)
+    driver = tile_pane.TileAvatarDriver(lambda: head, expression_source=lambda: "idle",
+                                        fps=60, on_ready=lambda a: None,
+                                        on_lost=lambda: None)
     thread = driver.start()
     thread.join(timeout=2.0)
     assert not thread.is_alive()
@@ -1191,8 +1195,10 @@ def test_driver_loop_never_lets_an_exception_escape_the_thread(capsys):
         def tick(self, expression):
             raise RuntimeError("blit exploded")
 
-    driver = tile_pane.TileAvatarDriver(Exploding(), expression_source=lambda: "idle",
-                                        fps=60)
+    driver = tile_pane.TileAvatarDriver(lambda: Exploding(),
+                                        expression_source=lambda: "idle",
+                                        fps=60, on_ready=lambda a: None,
+                                        on_lost=lambda: None)
     thread = driver.start()
     thread.join(timeout=2.0)
     assert not thread.is_alive()
@@ -1200,10 +1206,34 @@ def test_driver_loop_never_lets_an_exception_escape_the_thread(capsys):
     assert "blit exploded" in capsys.readouterr().err
 
 
-def test_driver_start_is_a_no_op_for_an_inactive_head():
-    driver = tile_pane.TileAvatarDriver(FakeHead(active=False))
-    assert driver.start() is None
+def test_driver_never_installs_an_inactive_head():
+    """The head is built on the driver thread, so start() always spawns one;
+    what must not happen is an inactive head being installed as the active
+    avatar, which would blank the ASCII face behind a window that never
+    draws."""
+    driver = tile_pane.TileAvatarDriver(lambda: FakeHead(active=False))
+    thread = driver.start()
+    thread.join(timeout=2.0)
+    assert not thread.is_alive()
+    assert tile_pane.active_tile_avatar() is None
     driver.close()  # idempotent, must not raise
+
+
+def test_driver_with_no_builder_does_not_start():
+    driver = tile_pane.TileAvatarDriver(None)
+    assert driver.start() is None
+    driver.close()
+
+
+def _settle(driver, timeout=2.0):
+    """start_tile_avatar now builds the head on the driver thread, so tests
+    must wait for that build rather than reading state synchronously."""
+    if driver is not None and driver._thread is not None:
+        deadline = time.time() + timeout
+        while time.time() < deadline and tile_pane.active_tile_avatar() is None \
+                and driver._thread.is_alive():
+            time.sleep(0.01)
+    return driver
 
 
 # ── start_tile_avatar: the uncast slot keeps today's behaviour exactly ───────
@@ -1219,10 +1249,15 @@ def test_start_tile_avatar_returns_none_for_an_uncast_slot(monkeypatch):
     assert tile_pane.active_tile_avatar() is None
 
 
-def test_start_tile_avatar_returns_none_when_no_geometry_is_detected(monkeypatch, capsys):
+def test_start_tile_avatar_installs_no_head_when_no_geometry_is_detected(monkeypatch, capsys):
+    """The geometry retry runs on the driver thread, so a driver object comes
+    back immediately — what matters is that no head is ever installed and the
+    tile keeps its ASCII face."""
     monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: None)
     config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
-    assert tile_pane.start_tile_avatar(config, "tuber_1") is None
+    driver = tile_pane.start_tile_avatar(config, "tuber_1")
+    if driver is not None:
+        driver._thread.join(timeout=2.0)
     assert tile_pane.active_tile_avatar() is None
     assert "keeping the ASCII face" in capsys.readouterr().err
 
@@ -1232,7 +1267,7 @@ def test_start_tile_avatar_installs_and_drives_a_head(monkeypatch):
     monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: (0, 0, 480, 540))
     monkeypatch.setattr(tile_pane, "make_tile_avatar", lambda *a, **k: head)
     config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
-    driver = tile_pane.start_tile_avatar(config, "tuber_1")
+    driver = _settle(tile_pane.start_tile_avatar(config, "tuber_1"))
     try:
         assert driver is not None
         assert tile_pane.active_tile_avatar() is head
@@ -1249,7 +1284,9 @@ def test_start_tile_avatar_degrades_when_head_construction_fails(monkeypatch, ca
     monkeypatch.setattr(tile_pane, "make_tile_avatar",
                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("no SDL")))
     config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
-    assert tile_pane.start_tile_avatar(config, "tuber_1") is None
+    driver = tile_pane.start_tile_avatar(config, "tuber_1")
+    if driver is not None:
+        driver._thread.join(timeout=2.0)
     assert tile_pane.active_tile_avatar() is None
     assert "no SDL" in capsys.readouterr().err
     # ...and the tile renders exactly as it did before the head existed.
@@ -1261,6 +1298,8 @@ def test_start_tile_avatar_degrades_when_head_construction_fails(monkeypatch, ca
 def test_start_tile_avatar_writes_diagnostics_to_stderr_only(monkeypatch, capsys):
     """stdout IS the pane's live video display."""
     monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: None)
-    tile_pane.start_tile_avatar({"roster": {"tuber_1": {"character_params": "gm0"}}},
-                                "tuber_1")
+    driver = tile_pane.start_tile_avatar(
+        {"roster": {"tuber_1": {"character_params": "gm0"}}}, "tuber_1")
+    if driver is not None:
+        driver._thread.join(timeout=2.0)
     assert capsys.readouterr().out == ""

@@ -777,6 +777,17 @@ class TileAvatarDriver:
     alive by a head. The head is decoration; the process exiting is not
     negotiable.
 
+    Why the head is BUILT inside that thread rather than handed in ready:
+    an OpenGL context belongs to the thread that made it current. pygame
+    creates the window and its GL context on whichever thread constructs the
+    provider, so constructing on the tile's main thread and then blitting
+    from here fails on the very first frame with
+    `BadAccess (attempt to access private resource denied)` — and fails
+    *after* the window already exists, which paints an undrawn black square
+    over the tile instead of leaving the ASCII face visible. Window, context
+    and every blit therefore live on this one thread for the head's whole
+    life.
+
     The loop body is fully wrapped: an exception escaping a thread's target
     kills only that thread, silently, which would leave a frozen window
     painted over a live tile — visually worse than no head at all. So
@@ -784,8 +795,12 @@ class TileAvatarDriver:
     back to drawing the ASCII face on its next frame.
     """
 
-    def __init__(self, avatar, expression_source=None, fps=TILE_AVATAR_FPS):
-        self.avatar = avatar
+    def __init__(self, builder, expression_source=None, fps=TILE_AVATAR_FPS,
+                 on_ready=None, on_lost=None):
+        # `builder` is a zero-arg callable returning a TileAvatar (or None).
+        # It is invoked ON the driver thread — see the class docstring.
+        self.builder = builder
+        self.avatar = None
         # Defaults to the module's last-rendered expression, which is set by
         # render_tile itself — so the head animates the same expression the
         # text frame is currently showing, with no second source of truth to
@@ -794,9 +809,11 @@ class TileAvatarDriver:
         self.interval_s = 1.0 / max(1.0, float(fps or TILE_AVATAR_FPS))
         self._stop_event = threading.Event()
         self._thread = None
+        self._on_ready = on_ready or set_active_tile_avatar
+        self._on_lost = on_lost or (lambda: set_active_tile_avatar(None))
 
     def start(self):
-        if self.avatar is None or not getattr(self.avatar, "active", False):
+        if self.builder is None:
             return None
         self._thread = threading.Thread(target=self._loop, daemon=True,
                                         name="tile-avatar")
@@ -804,17 +821,37 @@ class TileAvatarDriver:
         return self._thread
 
     def _loop(self):
+        # Build here, not in start(): the GL context must belong to this thread.
+        try:
+            self.avatar = self.builder()
+        except Exception as exc:  # noqa: BLE001 — a head is never a dependency
+            print(f"[tile_pane] avatar build failed: "
+                  f"{type(exc).__name__}: {exc}", file=sys.stderr)
+            self.avatar = None
+        if self.avatar is None or not getattr(self.avatar, "active", False):
+            # Never became active: the tile stays in ASCII mode, and no window
+            # was left on screen to paint over it.
+            self._on_lost()
+            return
+
+        # Only now does the tile start reserving blank rows for the head —
+        # so a head that fails to build never blanks the ASCII face.
+        self._on_ready(self.avatar)
+
         while not self._stop_event.is_set():
             try:
                 if not self.avatar.tick(self.expression_source()):
                     # tick() returning False means the head marked itself
                     # inactive (it logs its own single stderr line). Stop
                     # ticking rather than spinning at the frame rate on a
-                    # head that will never draw again.
+                    # head that will never draw again, and hand the rows back
+                    # to the ASCII face.
+                    self._on_lost()
                     return
             except Exception as exc:  # noqa: BLE001 — never escape the thread
                 print(f"[tile_pane] avatar driver stopping: "
                       f"{type(exc).__name__}: {exc}", file=sys.stderr)
+                self._on_lost()
                 return
             self._stop_event.wait(self.interval_s)
 
@@ -844,10 +881,17 @@ def start_tile_avatar(config, slot, retry_s=None):
     every pane's process before it creates and resizes the xterm window, so
     a one-shot read from a freshly started tile reliably returns a
     nonexistent or still-forming window.
+
+    Both the geometry wait and the provider construction happen on the
+    driver's own thread, because the window's GL context belongs to whatever
+    thread creates it (see TileAvatarDriver). That also keeps the retry loop
+    off the tile's main thread, so a tile whose window never settles still
+    draws its ASCII frames on time instead of blocking on the wait.
     """
-    try:
-        if resolve_slot_character_params(config, slot) is None:
-            return None
+    if resolve_slot_character_params(config, slot) is None:
+        return None
+
+    def _build():
         kwargs = {} if retry_s is None else {"retry_s": retry_s}
         pane_rect = detect_tile_pane_rect(**kwargs)
         if pane_rect is None:
@@ -856,13 +900,14 @@ def start_tile_avatar(config, slot, retry_s=None):
                   f"keeping the ASCII face", file=sys.stderr)
             return None
         avatar = make_tile_avatar(config, slot, pane_rect)
-        if avatar is None or not getattr(avatar, "active", False):
-            return None
-        set_active_tile_avatar(avatar)
-        driver = TileAvatarDriver(avatar)
+        if avatar is not None and getattr(avatar, "active", False):
+            print(f"[tile_pane] {slot}: 3D head active at {avatar.rect} "
+                  f"({TILE_AVATAR_FPS}fps)", file=sys.stderr)
+        return avatar
+
+    try:
+        driver = TileAvatarDriver(_build)
         driver.start()
-        print(f"[tile_pane] {slot}: 3D head active at {avatar.rect} "
-              f"({TILE_AVATAR_FPS}fps)", file=sys.stderr)
         return driver
     except Exception as exc:  # noqa: BLE001 — a head is never a dependency
         print(f"[tile_pane] {slot}: 3D head unavailable "
