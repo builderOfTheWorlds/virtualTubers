@@ -113,6 +113,58 @@ def test_every_preset_is_valid_and_complete(name):
         assert 0.0 <= params[key] <= 1.0
 
 
+def test_every_preset_has_a_distinct_silhouette():
+    """No two presets may share the same eight slider values.
+
+    The cast is meant to be told apart by SHAPE, not by accent_color alone
+    (see the comment above PRESETS). Without this, a future edit could
+    quietly collapse a character back to defaults-plus-tint and nothing
+    would fail until someone watched the stream.
+    """
+    by_sliders = {}
+    for name in sorted(PRESETS):
+        params = load_preset(name)
+        key = tuple(round(params[s], 6) for s in sorted(SLIDER_DEFAULTS))
+        by_sliders.setdefault(key, []).append(name)
+
+    collisions = {k: v for k, v in by_sliders.items() if len(v) > 1}
+    assert not collisions, f"presets share a silhouette: {list(collisions.values())}"
+    assert len(by_sliders) == len(PRESETS)
+
+
+def test_no_preset_is_merely_the_default_silhouette():
+    """A preset equal to SLIDER_DEFAULTS is the 'defaults plus a tint'
+    anti-pattern this roster was built to replace."""
+    default_key = tuple(round(v, 6) for _, v in sorted(SLIDER_DEFAULTS.items()))
+    for name in sorted(PRESETS):
+        params = load_preset(name)
+        key = tuple(round(params[s], 6) for s in sorted(SLIDER_DEFAULTS))
+        assert key != default_key, f"{name} is the neutral default silhouette"
+
+
+@pytest.mark.parametrize("name", sorted(PRESETS))
+def test_every_preset_resolves_cleanly(name):
+    """Both entry points must accept every preset without raising: the
+    config path (`character_params: nyx1`) and the layering path
+    (`{"preset": ..., <override>}`) an agent uses while iterating."""
+    direct = resolve_params(name)
+    assert direct == load_preset(name)
+
+    layered = resolve_params({"preset": name, "eye_size": 0.5}, strict=True)
+    assert set(layered) == set(PARAM_DEFAULTS)
+    assert layered["eye_size"] == pytest.approx(0.5)
+    assert layered["accent_color"] == direct["accent_color"]
+
+
+@pytest.mark.parametrize("name,color", sorted(
+    (n, p["accent_color"]) for n, p in PRESETS.items()
+))
+def test_preset_accent_colors_are_unique_and_valid(name, color):
+    assert color in ACCENT_COLORS
+    owners = [n for n, p in PRESETS.items() if p["accent_color"] == color]
+    assert owners == [name], f"{color} is shared by {owners}"
+
+
 def test_load_preset_rejects_unknown_name():
     with pytest.raises(CharacterParamError, match="unknown preset"):
         load_preset("nobody")

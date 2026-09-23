@@ -69,11 +69,28 @@ def test_worker_selects_tuber_base_preset(role):
     assert build_layout.select_preset(cfg) == "tuber_base"
 
 
-def test_roundtable_and_tuber_0_are_untouched():
-    """Guardrail: this stream must not touch roundtable.yaml or tuber_0.yaml."""
-    tuber_0_path = ROOT / "config" / "workers" / "tuber_0.yaml"
-    cfg = yaml.safe_load(tuber_0_path.read_text(encoding="utf-8"))
-    assert build_layout.select_preset(cfg) == "roundtable"
+def test_the_roundtable_preset_lives_only_in_the_roundtable_config():
+    """The GM character and the roundtable SHOW are separate containers.
+
+    `tuber_0.yaml` is the GM's own character channel and must resolve to
+    `tuber_base` like every other character worker; the roundtable preset
+    belongs to `roundtable.yaml`, the dedicated show-host container.
+
+    This is not cosmetic. app/replay_pane.py's `_resolve_local_tiles` decides
+    whether a container DIRECTS a roundtable show from its layout preset (and
+    `agent.role`), so a config that silently regains the `roundtable` preset
+    regains the director role with it. Two directors race the same relay dir
+    and airings; zero directors means a show that never airs and logs nothing
+    (see config/layouts/roundtable.yaml's header for that exact incident).
+    tests/test_roundtable_layout.py holds the complementary
+    exactly-one-director assertion.
+    """
+    tuber_0 = yaml.safe_load(
+        (ROOT / "config" / "workers" / "tuber_0.yaml").read_text(encoding="utf-8"))
+    roundtable = yaml.safe_load(
+        (ROOT / "config" / "workers" / "roundtable.yaml").read_text(encoding="utf-8"))
+    assert build_layout.select_preset(tuber_0) == "tuber_base"
+    assert build_layout.select_preset(roundtable) == "roundtable"
 
 
 # ── Shape: exactly the six named panes from Contract D + avatar/kafka_feed ───
@@ -332,3 +349,87 @@ def test_resolved_path_substitution_present_in_radar_command(built):
         l for l in built["lines"] if "radar_pane.py" in l and "send-keys" in l
     )
     assert f"--config {CODER}" in send_keys_line
+
+
+# ── Avatar window geometry: no drift between tuber_base workers ───────────────
+#
+# Every tuber_base worker pins the SAME codec_avatar window rect (window_pos /
+# width / height / background) rather than relying on runtime auto-detection
+# (app/pane_geometry.py), which is not reliable on the deploy host. The values
+# are duplicated per-config on purpose — that duplication is only safe if
+# something fails when a copy drifts, which is what these tests are.
+#
+# Discovery is by GLOB, not a hardcoded list: a worker config newly repointed
+# at the tuber_base preset must be covered automatically, with no test edit.
+
+WORKERS_DIR = ROOT / "config" / "workers"
+
+
+def _tuber_base_worker_configs():
+    """(path, parsed cfg) for every config/workers/*.yaml on tuber_base."""
+    found = []
+    for path in sorted(WORKERS_DIR.glob("*.yaml")):
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        if (cfg.get("layout") or {}).get("preset") == "tuber_base":
+            found.append((path, cfg))
+    return found
+
+
+def _codec_avatar_block(cfg):
+    return ((cfg.get("avatar") or {}).get("codec_avatar") or {})
+
+
+def test_tuber_base_worker_discovery_finds_the_known_workers():
+    """Sanity check on the glob itself: if it silently matched nothing, the
+    drift tests below would vacuously pass."""
+    names = {p.stem for p, _ in _tuber_base_worker_configs()}
+    assert names >= set(WORKER_CONFIGS), f"missing tuber_base workers: {names}"
+
+
+def test_all_tuber_base_workers_share_one_avatar_window_geometry():
+    """Same layout preset + same CAPTURE_RESOLUTION (1920x1080) => the avatar
+    pane resolves to the same on-screen rect for every tuber_base worker, so
+    every config must carry byte-identical pinned geometry. Derivation lives
+    in config/workers/coder.yaml."""
+    workers = _tuber_base_worker_configs()
+    assert workers, "no tuber_base worker configs discovered"
+
+    geometries = {}
+    for path, cfg in workers:
+        block = _codec_avatar_block(cfg)
+        assert cfg["avatar"]["provider"] == "codec_avatar", path.name
+        for key in ("window_pos", "width", "height", "background"):
+            assert key in block, f"{path.name}: avatar.codec_avatar.{key} missing"
+        geometries[path.name] = (
+            tuple(block["window_pos"]),
+            block["width"],
+            block["height"],
+            block["background"],
+        )
+
+    distinct = set(geometries.values())
+    assert len(distinct) == 1, f"avatar geometry drift across workers: {geometries}"
+
+    window_pos, width, height, background = distinct.pop()
+    assert window_pos == (821, 8)
+    assert width == 549
+    assert height == 470
+    assert background == "#2b2b2b"
+
+
+def test_every_tuber_base_worker_uses_a_known_character_preset():
+    """character_params names must resolve in character_schema.PRESETS —
+    an unknown name raises CharacterParamError at pane startup, i.e. a black
+    avatar pane on a live stream."""
+    import character_schema
+
+    workers = _tuber_base_worker_configs()
+    assert workers, "no tuber_base worker configs discovered"
+
+    for path, cfg in workers:
+        params = _codec_avatar_block(cfg).get("character_params")
+        assert isinstance(params, str), f"{path.name}: character_params must be a preset name"
+        assert params in character_schema.PRESETS, (
+            f"{path.name}: unknown character preset {params!r} "
+            f"(known: {sorted(character_schema.PRESETS)})"
+        )

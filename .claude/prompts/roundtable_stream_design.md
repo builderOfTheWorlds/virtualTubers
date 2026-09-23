@@ -340,7 +340,9 @@ finished feature:
    **not** patch `avatar.py` for a module that is being replaced.
 2. **The row budget is tight and this project has already been burned by it
    once.** `build_layout.py` defaults to 240×67 and startup.sh then resizes tmux
-   to the real xterm grid (~60-70 rows at 1080p/font 14). Three tile rows sharing
+   to the real xterm grid. At the deployed CAPTURE_RESOLUTION=1920x1080 with
+   FONT_SIZE=7 the cell is exactly 6x12px, so that grid is 320x90 — 90 rows,
+   not the ~60-70 an earlier font size implied. Three tile rows sharing
    the space left after show_log and htop gives roughly 15-16 rows per tile —
    while `config/layouts/replay.yaml` carries a comment stating the avatar pane
    needs ~80% of a column for "~20 content rows + bubble + status bar", a comment

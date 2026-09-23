@@ -89,8 +89,21 @@ avatar:
   title: "QA Engineer"
   codec_avatar:
     character_params: tess3
-    # window_pos intentionally omitted — auto-detected from this pane's
-    # on-screen rect at startup, see coder.yaml's comment for why.
+    # Pinned, NOT auto-detected: pane_geometry.py's tmux + xdotool
+    # detection does not reliably land on the deploy host. Every
+    # tuber_base worker shares the same layout preset at the same
+    # CAPTURE_RESOLUTION (1920x1080), so every avatar pane resolves to the
+    # SAME on-screen rect — these four values are identical in all
+    # tuber_base worker configs BY DESIGN, not per-worker tuning. The full
+    # derivation from config/layouts/tuber_base.yaml's split math lives in
+    # config/workers/coder.yaml; tests/test_tuber_base_layout.py fails if
+    # these copies ever drift apart.
+    window_pos: [821, 8]
+    width: 549
+    height: 470
+    # Composite onto the console grey instead of leaving un-drawn pixels
+    # hard black — matches startup.sh's xterm `-bg '#2b2b2b'`.
+    background: "#2b2b2b"
   # `expressions` below is unused by codec_avatar but kept so flipping
   # `provider` back to `builtin` still renders correctly.
   expressions:

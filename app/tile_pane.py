@@ -68,6 +68,9 @@ import narration_store
 import replay_pane
 from agent_state import read_state, write_state
 from replay import Pacer, Palette, Performer
+from tile_avatar import (TILE_AVATAR_FPS, avatar_subpanel_rows,
+                         detect_tile_pane_rect, make_tile_avatar,
+                         resolve_slot_character_params)
 
 DEFAULT_RELAY_DIR = "/tmp/tiles"
 DEFAULT_WORKER_CONFIG = replay_pane.DEFAULT_WORKER_CONFIG
@@ -152,6 +155,69 @@ TILE_FACES = {
 TILE_AVATAR_LINES = 3    # fixed — "an OK height for now" per the design ask
 TILE_STATUS_LINES = 1    # fixed — one line is enough for "status: speaking"
 
+# ── the 3D head, and the two avatar modes a tile has ─────────────────────────
+# A tile draws its AVATAR subpanel one of two ways, and everything below
+# that reads a row count has to agree on which:
+#
+#   ASCII mode (the default, and the only mode before the 3D head existed):
+#       TILE_AVATAR_LINES rows of TILE_FACES art, drawn as text.
+#   PIXEL mode: a real 3D head rendered into a small borderless window
+#       parked over this tile by app/tile_avatar.py. ffmpeg captures the X
+#       DISPLAY rather than tmux's character grid, so that window lands in
+#       the stream exactly as if it had been drawn into the pane — but only
+#       if the pane leaves it somewhere to land. So in PIXEL mode the
+#       AVATAR subpanel prints BLANK rows: the window sits over empty
+#       console instead of over an ASCII face showing through behind it.
+#
+# The mode is process-wide, not per-call: one tile process owns at most one
+# head window, and every render inside it must reserve the same band or the
+# dialogue would jump rows between frames. It is held in a module-level
+# holder rather than threaded through render_tile's signature because
+# render_tile has many callers (TileRenderer.draw, draw_idle_screen, tests)
+# and none of them should have to know about a window.
+_ACTIVE_TILE_AVATAR = None
+
+# The expression most recently RENDERED, so the background ticker thread
+# animates the same face the text frame is showing. Written by render_tile —
+# whatever chooses the TILE_FACES entry is by definition the tile's current
+# expression, so reading it here can never drift from what is on screen.
+_CURRENT_EXPRESSION = "idle"
+
+
+def set_active_tile_avatar(avatar):
+    """Install (or clear, with None) this process's live 3D head. Only a
+    head reporting `.active` puts the tile into PIXEL mode — a TileAvatar
+    that failed to construct or has since failed leaves the tile drawing the
+    ASCII face, which is the whole point of it being an upgrade rather than
+    a dependency."""
+    global _ACTIVE_TILE_AVATAR
+    _ACTIVE_TILE_AVATAR = avatar
+    return avatar
+
+
+def active_tile_avatar():
+    """The installed 3D head, or None. Returns None once a head has failed,
+    so a single check answers 'is this tile in PIXEL mode'."""
+    avatar = _ACTIVE_TILE_AVATAR
+    if avatar is not None and getattr(avatar, "active", False):
+        return avatar
+    return None
+
+
+def resolve_avatar_row_count(height=None):
+    """How many rows the AVATAR subpanel occupies RIGHT NOW.
+
+    ASCII mode: TILE_AVATAR_LINES, unchanged from before the head existed.
+    PIXEL mode: tile_avatar.avatar_subpanel_rows(), the character-grid twin
+    of the pixel band tile_avatar_rect reserves — so the blank band the tile
+    prints is exactly as tall as the window covering it, rather than the 3
+    rows an ASCII face happens to need.
+    """
+    if active_tile_avatar() is None:
+        return TILE_AVATAR_LINES
+    h = height if height is not None else resolve_tile_height()
+    return avatar_subpanel_rows(h)
+
 # The TEXT subpanel is the one that's supposed to "take up the rest of the
 # tuber panel" — sized from the pane's DETECTED height every render, not
 # hardcoded, the same principle resolve_tile_width already uses for width.
@@ -161,7 +227,23 @@ MIN_DIALOGUE_LINES = 2
 # Fixed overhead OUTSIDE the text subpanel, in rows: top border + avatar (3)
 # + avatar/text divider + text/status divider + status (1) + bottom border
 # = 2 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES.
+#
+# This constant is the ASCII-mode value, and is kept because callers and
+# tests reference it as "the tile's non-dialogue overhead". Live rendering
+# does NOT use it: with a 3D head the avatar band is ~18 rows rather than 3,
+# and a dialogue count computed from a fixed 3 would produce a frame six
+# rows taller than its pane — which scrolls the tile and pushes the avatar
+# off the top, the exact failure resolve_tile_height() exists to prevent.
+# tile_fixed_overhead() below is the live one; it takes the avatar row count
+# actually in use.
 TILE_FIXED_OVERHEAD = 2 + TILE_AVATAR_LINES + 1 + 1 + TILE_STATUS_LINES
+
+
+def tile_fixed_overhead(avatar_rows=None):
+    """Non-dialogue rows in a tile frame, for the given avatar band height.
+    Defaults to whichever mode this process is actually in."""
+    rows = avatar_rows if avatar_rows is not None else resolve_avatar_row_count()
+    return 2 + rows + 1 + 1 + TILE_STATUS_LINES
 
 # Kept for backward compatibility with callers/tests that reference a static
 # "how many dialogue lines" constant; live rendering computes this per-frame
@@ -213,10 +295,15 @@ _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
 #
 # Hard-won: an early version hardcoded a width taken from a geometry spike run
 # at build_layout.py's 240x67 default. The REAL grid is what startup.sh's xterm
-# produces — at 1920x1080 / font 14 that is 160x44, so a roundtable tile is
-# ~38-41 columns, not ~59. Every rendered line wrapped, doubling an 8-line frame
-# to ~16 in an 11-row pane, which scrolled the avatar's face off the top. The
-# pane looked broken on the live broadcast while `tmux list-panes` looked fine.
+# produces — at CAPTURE_RESOLUTION=1920x1080 with FONT_SIZE=7 the monospace cell
+# is exactly 6x12 px, so the grid is 320x90 characters and a roundtable tile
+# (an even 4x2 grid) is 80 columns x 45 rows, i.e. 480x540 pixels. The spike's
+# assumed width was wrong in the same direction either way: every rendered line
+# wrapped, doubling an 8-line frame to ~16 in an 11-row pane, which scrolled the
+# avatar's face off the top. The pane looked broken on the live broadcast while
+# `tmux list-panes` looked fine. The lesson outlives the numbers: the only grid
+# that matters is the one the pane's own pty reports, and it changes with
+# CAPTURE_RESOLUTION, FONT_SIZE and the layout's split percentages alike.
 #
 # Each tmux pane is its own pty, so os.get_terminal_size() inside a tile returns
 # THAT pane's real size. Resolution order, first hit wins:
@@ -225,12 +312,18 @@ _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
 #   3. FALLBACK_TILE_WIDTH — only when detection fails (not a tty, e.g. tests)
 # Always a little under the true width: an overflowing pane corrupts its
 # neighbour's border on air, which is far more visible than a narrow tile.
-FALLBACK_TILE_WIDTH = 36
+# 78 is that deliberate shortfall against the real 80-column roundtable tile
+# (320-col grid / 4 columns) — two columns of slack absorbs a border cell and
+# an off-by-one without ever pushing a glyph into the next pane.
+FALLBACK_TILE_WIDTH = 78
 MIN_TILE_WIDTH = 18
 
 # Same story for HEIGHT (v1.4, TILE_HEIGHT / resolve_tile_height): the text
-# subpanel needs to know how many rows it actually has to fill.
-FALLBACK_TILE_HEIGHT = 20
+# subpanel needs to know how many rows it actually has to fill. 44 is one row
+# under the real 45-row tile (90-row grid / 2 rows) for the same reason — a
+# frame one row too tall scrolls the pane, which pushes the avatar off the top
+# exactly like the wrapping bug above did.
+FALLBACK_TILE_HEIGHT = 44
 MIN_TILE_HEIGHT = TILE_FIXED_OVERHEAD + MIN_DIALOGUE_LINES
 
 
@@ -275,12 +368,19 @@ def resolve_tile_height():
     return FALLBACK_TILE_HEIGHT
 
 
-def resolve_dialogue_line_count(height=None):
+def resolve_dialogue_line_count(height=None, avatar_rows=None):
     """How many rows the TEXT subpanel gets: whatever is left in the tile
-    after the fixed avatar/status/border/divider overhead, floored at
-    MIN_DIALOGUE_LINES so a very short pane still shows something."""
+    after the avatar/status/border/divider overhead, floored at
+    MIN_DIALOGUE_LINES so a very short pane still shows something.
+
+    `avatar_rows` is the AVATAR subpanel's height in rows; it defaults to
+    whichever mode the tile is in (3 for the ASCII face, ~18 for a reserved
+    3D-head band). Passing it explicitly keeps one frame's arithmetic
+    internally consistent even if the head fails between two reads.
+    """
     h = height if height is not None else resolve_tile_height()
-    return max(MIN_DIALOGUE_LINES, h - TILE_FIXED_OVERHEAD)
+    rows = avatar_rows if avatar_rows is not None else resolve_avatar_row_count(h)
+    return max(MIN_DIALOGUE_LINES, h - tile_fixed_overhead(rows))
 
 
 # Kept for callers/tests that want a static default; live rendering uses
@@ -375,12 +475,21 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     sequences) — only what actually reaches `out` carries the color wrap.
     """
     out = out or sys.stdout
+    global _CURRENT_EXPRESSION
+    _CURRENT_EXPRESSION = expression
     face = TILE_FACES.get(expression) or TILE_FACES["idle"]
     tile_width = width or resolve_tile_width()
     tile_height = height if height is not None else resolve_tile_height()
     inner = tile_width - 2
     line_chars = tile_width - 4
-    dialogue_line_count = resolve_dialogue_line_count(tile_height)
+    # Resolved ONCE per frame and threaded into both the band and the
+    # dialogue count: reading the mode twice could see a head fail in
+    # between and emit a frame whose subpanels do not add up to the pane's
+    # height, which scrolls the tile.
+    avatar_rows = resolve_avatar_row_count(tile_height)
+    pixel_head = active_tile_avatar() is not None
+    dialogue_line_count = resolve_dialogue_line_count(tile_height,
+                                                      avatar_rows=avatar_rows)
 
     if lines is None:
         lines = [line] if line else []
@@ -399,8 +508,20 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     # _resolve_tile_title -> `select-pane -T`) already prints the resolved
     # character name on the pane's own top border, so this box starts
     # straight into the avatar.
-    for row in face:
-        rows.append("│" + row.center(inner) + "│")
+    #
+    # In PIXEL mode the band is printed BLANK: the 3D head's window is
+    # already covering these rows on the X display, and an ASCII face
+    # underneath it would only show through wherever the window does not
+    # reach (the window is square and centred; the band is full-width), so
+    # the tile would read as a head glued onto half a second face. The rows
+    # are still emitted — they are what holds the divider and the dialogue
+    # below the window instead of under it.
+    if pixel_head:
+        blank = "│" + " " * inner + "│"
+        rows.extend([blank] * avatar_rows)
+    else:
+        for row in face:
+            rows.append("│" + row.center(inner) + "│")
     # ── TEXT subpanel ────────────────────────────────────────────────────────
     rows.append("├" + "─" * inner + "┤")
     for spoken in dialogue:
@@ -630,6 +751,117 @@ def draw_idle_screen(slot, state_path=None, out=None):
     "listening" status (§5). The roundtable channel never goes blank."""
     write_tile_state(state_path, "idle", action="waiting for the next round")
     return render_tile(slot, expression="idle", line="", status="listening", out=out)
+
+
+class TileAvatarDriver:
+    """Drives a TileAvatar's frames from a DAEMON thread.
+
+    Why a thread at all: the tile's own loop is not a render loop. It sleeps
+    on relay files, waits for cues, and — while a show runs — types dialogue
+    out character by character through the Performer. Calling the head's
+    blit from there would tie the head's framerate to the typing cadence,
+    so a head would freeze for the whole of any silent wait (audio playback,
+    the inter-line gap) — exactly the stalls TileRenderer already needed its
+    own fade ticker to animate through. A thread renders on its own clock
+    and the tile never blocks on a blit.
+
+    Why a DAEMON thread: a tile that is being torn down must not be kept
+    alive by a head. The head is decoration; the process exiting is not
+    negotiable.
+
+    The loop body is fully wrapped: an exception escaping a thread's target
+    kills only that thread, silently, which would leave a frozen window
+    painted over a live tile — visually worse than no head at all. So
+    anything unexpected stops the driver deliberately and the tile falls
+    back to drawing the ASCII face on its next frame.
+    """
+
+    def __init__(self, avatar, expression_source=None, fps=TILE_AVATAR_FPS):
+        self.avatar = avatar
+        # Defaults to the module's last-rendered expression, which is set by
+        # render_tile itself — so the head animates the same expression the
+        # text frame is currently showing, with no second source of truth to
+        # drift from it.
+        self.expression_source = expression_source or (lambda: _CURRENT_EXPRESSION)
+        self.interval_s = 1.0 / max(1.0, float(fps or TILE_AVATAR_FPS))
+        self._stop_event = threading.Event()
+        self._thread = None
+
+    def start(self):
+        if self.avatar is None or not getattr(self.avatar, "active", False):
+            return None
+        self._thread = threading.Thread(target=self._loop, daemon=True,
+                                        name="tile-avatar")
+        self._thread.start()
+        return self._thread
+
+    def _loop(self):
+        while not self._stop_event.is_set():
+            try:
+                if not self.avatar.tick(self.expression_source()):
+                    # tick() returning False means the head marked itself
+                    # inactive (it logs its own single stderr line). Stop
+                    # ticking rather than spinning at the frame rate on a
+                    # head that will never draw again.
+                    return
+            except Exception as exc:  # noqa: BLE001 — never escape the thread
+                print(f"[tile_pane] avatar driver stopping: "
+                      f"{type(exc).__name__}: {exc}", file=sys.stderr)
+                return
+            self._stop_event.wait(self.interval_s)
+
+    def close(self):
+        """Stop ticking and tear the head down. Best-effort and idempotent."""
+        self._stop_event.set()
+        if self._thread is not None:
+            self._thread.join(timeout=1.0)
+            self._thread = None
+        if self.avatar is not None:
+            try:
+                self.avatar.close()
+            except Exception:  # noqa: BLE001 — best-effort cleanup only
+                pass
+
+
+def start_tile_avatar(config, slot, retry_s=None):
+    """Build this tile's 3D head and start driving it, or return None.
+
+    Returns None — leaving the tile in ASCII mode, exactly as it rendered
+    before the head existed — for every reason a head might not happen:
+    the slot has no preset configured (an uncast slot such as
+    roundtable.yaml's tuber_4, absent from its roster), no pane geometry
+    could be detected, or the provider could not be constructed.
+
+    The geometry read RETRIES (detect_tile_pane_rect): startup.sh launches
+    every pane's process before it creates and resizes the xterm window, so
+    a one-shot read from a freshly started tile reliably returns a
+    nonexistent or still-forming window.
+    """
+    try:
+        if resolve_slot_character_params(config, slot) is None:
+            return None
+        kwargs = {} if retry_s is None else {"retry_s": retry_s}
+        pane_rect = detect_tile_pane_rect(**kwargs)
+        if pane_rect is None:
+            print(f"[tile_pane] {slot}: no usable pane geometry for a 3D head "
+                  f"(no tmux/X session, or the window never settled) — "
+                  f"keeping the ASCII face", file=sys.stderr)
+            return None
+        avatar = make_tile_avatar(config, slot, pane_rect)
+        if avatar is None or not getattr(avatar, "active", False):
+            return None
+        set_active_tile_avatar(avatar)
+        driver = TileAvatarDriver(avatar)
+        driver.start()
+        print(f"[tile_pane] {slot}: 3D head active at {avatar.rect} "
+              f"({TILE_AVATAR_FPS}fps)", file=sys.stderr)
+        return driver
+    except Exception as exc:  # noqa: BLE001 — a head is never a dependency
+        print(f"[tile_pane] {slot}: 3D head unavailable "
+              f"({type(exc).__name__}: {exc}) — keeping the ASCII face",
+              file=sys.stderr)
+        set_active_tile_avatar(None)
+        return None
 
 
 
@@ -905,20 +1137,38 @@ def main(argv=None):
           f"narration_store={'ok' if narration_store.available() else 'UNAVAILABLE'}",
           file=sys.stderr)
 
-    if args.once:
-        draw_idle_screen(slot, state_path)
-        handle_once(slot, relay_dir, state_path=state_path, config=config)
-        return 0
+    # The 3D head, if this slot has one. Started BEFORE the first frame is
+    # drawn so the very first render already reserves the blank band the
+    # window sits in, rather than drawing an ASCII face and replacing it a
+    # few seconds later — a visible flicker on a live broadcast. Returns
+    # None for an uncast slot or any failure, in which case everything below
+    # renders exactly as it did before the head existed.
+    avatar_driver = start_tile_avatar(config, slot)
 
-    last_drawn = 0.0
-    while True:
-        if handle_once(slot, relay_dir, state_path=state_path, config=config):
-            time.sleep(TILE_HOLD_FINAL_FRAME_S)  # hold the final frame briefly
-            last_drawn = 0.0  # force an idle redraw
-        if time.monotonic() - last_drawn > TILE_IDLE_REDRAW_S:
+    try:
+        if args.once:
             draw_idle_screen(slot, state_path)
-            last_drawn = time.monotonic()
-        time.sleep(TILE_POLL_INTERVAL_S)
+            handle_once(slot, relay_dir, state_path=state_path, config=config)
+            return 0
+
+        last_drawn = 0.0
+        while True:
+            if handle_once(slot, relay_dir, state_path=state_path, config=config):
+                time.sleep(TILE_HOLD_FINAL_FRAME_S)  # hold the final frame briefly
+                last_drawn = 0.0  # force an idle redraw
+            if time.monotonic() - last_drawn > TILE_IDLE_REDRAW_S:
+                draw_idle_screen(slot, state_path)
+                last_drawn = time.monotonic()
+            time.sleep(TILE_POLL_INTERVAL_S)
+    finally:
+        # Stops the driver thread and the GPU render subprocess behind it.
+        # The thread is a daemon so this is not required for the process to
+        # exit, but leaving a spawned GPU worker running past its parent
+        # would keep a head's share of the container's GPU budget occupied
+        # for nothing.
+        if avatar_driver is not None:
+            avatar_driver.close()
+            set_active_tile_avatar(None)
 
 
 if __name__ == "__main__":

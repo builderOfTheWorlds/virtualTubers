@@ -208,14 +208,78 @@ class CodecAvatarProvider(AvatarProvider):
             # explicitly only to override detection (e.g. local testing
             # with no real tmux/X session).
             window_pos: [0, 0]
+            # fps is OPTIONAL and defaults to DEFAULT_FPS (30), the stream's
+            # own framerate — a full-pane avatar is the focal point of its
+            # frame and should move as smoothly as the capture allows.
+            # Lower it for renders that are not the focal point: a
+            # roundtable tile runs eight heads in ONE container, where
+            # eight 30fps renders buy eight times the GPU/CPU cost for
+            # motion nobody is looking directly at (see
+            # tile_avatar.TILE_AVATAR_FPS).
+            fps: 30
     """
 
-    tick_interval_s = 1.0 / 30.0  # target the stream's 30fps
+    #: Default render cadence, in frames per second: the stream's own 30fps.
+    #: Every caller that does not configure `fps` gets exactly this, which is
+    #: the behaviour that existed before the key did.
+    DEFAULT_FPS = 30.0
+
+    #: Configured fps is clamped into this range rather than trusted. Below 1
+    #: the avatar visibly stutters or (at 0/negative) would divide by zero
+    #: into a nonsensical tick interval; above 60 costs real GPU time for
+    #: frames the 30fps capture throws away. Clamping beats raising: an
+    #: operator typo in a YAML must not take an avatar pane down.
+    MIN_FPS = 1.0
+    MAX_FPS = 60.0
+
+    #: Class-level default kept so `CodecAvatarProvider.tick_interval_s`
+    #: still answers (app/avatar.py reads it with getattr, and callers/tests
+    #: may inspect it on the class). __init__ shadows it with the instance
+    #: value resolved from config.
+    tick_interval_s = 1.0 / DEFAULT_FPS  # target the stream's 30fps
+
+    @classmethod
+    def _resolve_fps(cls, value):
+        """Frames per second for this instance, from the raw config value.
+
+        None/absent means "not configured" -> DEFAULT_FPS, so an existing
+        config renders byte-identically to before this key existed.
+        Anything unparseable (a string, a list, a stray YAML `~`) warns and
+        falls back to the default rather than raising — this is read during
+        provider construction inside a live pane process, and the repo's
+        rule there is degrade, never crash.
+        """
+        if value is None:
+            return cls.DEFAULT_FPS
+        try:
+            fps = float(value)
+        except (TypeError, ValueError):
+            log.warning("codec_avatar: ignoring unparseable "
+                       "avatar.codec_avatar.fps=%r; using %.0f fps",
+                       value, cls.DEFAULT_FPS)
+            return cls.DEFAULT_FPS
+        if fps != fps or fps in (float("inf"), float("-inf")):  # NaN / inf
+            log.warning("codec_avatar: ignoring non-finite "
+                       "avatar.codec_avatar.fps=%r; using %.0f fps",
+                       value, cls.DEFAULT_FPS)
+            return cls.DEFAULT_FPS
+        clamped = min(cls.MAX_FPS, max(cls.MIN_FPS, fps))
+        if clamped != fps:
+            log.warning("codec_avatar: avatar.codec_avatar.fps=%r is outside "
+                       "the supported %.0f..%.0f range; clamped to %.0f",
+                       value, cls.MIN_FPS, cls.MAX_FPS, clamped)
+        return clamped
 
     def __init__(self, avatar_config, name, title):
         super().__init__(avatar_config, name, title)
 
         cfg = (self.avatar_config.get("codec_avatar") or {})
+        # Instance attribute, shadowing the class default: the dispatcher
+        # (app/avatar.py) sleeps tick_interval_s between render_tick calls,
+        # so this is the single knob that decides how much render work one
+        # avatar costs per second of broadcast.
+        self.fps = self._resolve_fps(cfg.get("fps"))
+        self.tick_interval_s = 1.0 / self.fps
         character_params = cfg.get("character_params")
         if character_params is None:
             raise ValueError(

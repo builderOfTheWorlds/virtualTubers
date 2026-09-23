@@ -1,45 +1,49 @@
 # ──────────────────────────────────────────────────────────────────────────────
-# Worker config: tuber_0 — the GM's own character channel
-# (roundtable_stream_design.md v1.1 §1.1, §4)
+# Worker config: roundtable — the SHOW HOST container
+# (roundtable_stream_design.md v1.1 §4, §9)
 #
-# The GM is a character in its own right, and this is its personal stream: an
-# ordinary `tuber_base` channel with a 3D codec avatar, exactly like the six
-# other character workers. It has ONE job — be the GM on its own channel.
+# This is the roundtable channel itself: an 8-tile grid of the whole cast plus a
+# hidden director pane. It is a SHOW, not a person — the character who hosts the
+# table (the GM) has its own personal channel in config/workers/tuber_0.yaml,
+# which is an ordinary tuber_base worker with a 3D avatar. The two used to be one
+# container; they are split so the GM gets a real character stream of its own and
+# the show gets a container whose only job is directing.
 #
-# It is NOT the roundtable director. That role moved to its own container,
-# config/workers/roundtable.yaml (docker-compose's worker-roundtable service),
-# which hosts the 8-tile grid and the hidden director pane. The two used to be
-# a single container; splitting them gives the GM a real character stream
-# instead of only ever appearing as a tile, and leaves the show with a
-# container whose only job is directing.
+# What this container does:
 #
-# WHY THIS FILE CANNOT DIRECT — app/replay_pane.py's _resolve_local_tiles
-# requires BOTH the TILE_RELAY_DIR env var (not set on worker-gm) AND
-# `layout.preset == roundtable` OR `agent.role == roundtable` (neither is true
-# below). Both sides are deliberate belt-and-braces: exactly one config in
-# config/workers/ may satisfy those gates. Two directors race each other on the
-# same request file; zero directors fails SILENTLY — tiles run, nothing polls
-# the request file, no error anywhere (see config/layouts/roundtable.yaml's
-# header for the live incident). tests/test_roundtable_layout.py asserts the
-# count is exactly one.
+#   1. DIRECTS every roundtable show. Its replay_pane runs as the duet director
+#      (docs/duet_replay.md): it prepares the airing (LLM narration + TTS for
+#      EVERY speaker in the cast), persists it to voiced_narration, invites the
+#      character slots, then cues scene-by-scene. Because it does all the
+#      synthesis for all speakers, this container MUST have the voices mount —
+#      without it there is no audio on ANY channel (§9).
 #
-# app/replay_pane.py still runs headless in this container (startup.sh §7.5
-# launches it unconditionally everywhere). With the gates unmet it idles
-# harmlessly, the same as on every other character channel.
+#   2. Renders all 8 character TILES (§1.1). Every character's lines — the GM's
+#      included — are played by that character's TILE, never by the director
+#      process, which owns no scenes and is silent (§4.1).
 #
-# Slot vs persona: everything here is SLOT-level platform identity. The GM's
-# per-show character NAME and VOICE come from the show header (§7.1) and are
-# never written here — `speaker_names` below is only the fallback for an episode
-# that carries no show header (§7.4).
+# DIRECTOR GATES — app/replay_pane.py's _resolve_local_tiles only directs when
+# BOTH hold: the TILE_RELAY_DIR env var is set (docker-compose's
+# worker-roundtable service) AND `layout.preset == roundtable` OR
+# `agent.role == roundtable` (both below). Exactly one worker config in
+# config/workers/ may satisfy those gates — two directors race each other on
+# the same request file, and zero directors fails SILENTLY (tiles still run,
+# nothing polls the request file, no error anywhere; see
+# config/layouts/roundtable.yaml's header for the live incident). The guard
+# test is tests/test_roundtable_layout.py's exactly-one-director assertion.
+#
+# Slot vs persona: everything here is SLOT-level platform identity. Per-show
+# character NAMES and VOICES come from the show header (§7.1) and are never
+# written here — `speaker_names` below is only the fallback for an episode that
+# carries no show header (§7.4).
 # ──────────────────────────────────────────────────────────────────────────────
 agent:
-  # The handoff protocol's role gate (app/agent.py) branches on this. "manager"
-  # keeps the GM out of the dev-team handlers it has no business in while still
-  # matching the `manager` speaker id every episode-building script uses for
-  # GM/narrator lines (see voice.speakers.manager below). Design §2.2 step 3
-  # decision (a): role-gating stays, read from config. Must NOT be
-  # "roundtable" — that is director gate 2 (see the header).
-  role: manager
+  # The handoff protocol's role gate (app/agent.py) branches on this. "roundtable"
+  # is a new role that none of the dev-team handlers match, so the GM ignores
+  # commit_notification / bug_report / test_passed etc. and only handles the
+  # any-role messages it actually needs (replay_request, replay_ready, ...).
+  # Design §2.2 step 3 decision (a): role-gating stays, read from config.
+  role: roundtable
   name: "GM"
   system_prompt: |
     You are the GM — the game master and director of a live-streamed roundtable
@@ -157,37 +161,16 @@ voice:
   verbatim: true
 
 avatar:
-  # Live pixel-rendered 3D head via codec_avatar
-  # (app/avatar_providers/codec_avatar.py) — GPU-first with automatic CPU
-  # fallback, same as every other tuber_base character channel. The GM only
-  # gets an avatar PANE here: on the roundtable channel its face comes from
-  # its tile instead (config/workers/roundtable.yaml).
-  provider: codec_avatar
+  # Deliberately `builtin`, unlike every tuber_base worker: on the roundtable
+  # preset there is no avatar pane at all. The director pane is hidden and
+  # silent, and each character's face comes from its own TILE
+  # (app/tile_avatar.py), so nothing on this channel ever renders from this
+  # block. It is kept only so a config-level avatar lookup still resolves.
+  # The GM's real 3D avatar lives on its own channel
+  # (config/workers/tuber_0.yaml's codec_avatar block).
+  provider: builtin
   name: "GM"
   title: "Game Master"
-  codec_avatar:
-    # Preset NAME resolving to the slider set in app/character_schema.py's
-    # PRESETS. Preview without deploying:
-    #   python3 app/character_preview.py --preset gm0
-    character_params: gm0
-    # Geometry is IDENTICAL on every tuber_base worker by design — it is
-    # computed from tuber_base.yaml's own split math at
-    # CAPTURE_RESOLUTION=1920x1080, not from anything character-specific. See
-    # config/workers/coder.yaml's codec_avatar block for the full derivation
-    # (pane rect 806,0 579x486, inset so the pane's tmux border stays drawn).
-    # Pinned rather than auto-detected while pane_geometry.py's detection is
-    # unreliable on gx10; these numbers do NOT scale if CAPTURE_RESOLUTION is
-    # overridden away from 1920x1080.
-    window_pos: [821, 8]
-    width: 549
-    height: 470
-    # Composite onto the console background instead of leaving un-drawn pixels
-    # black. Matches startup.sh's xterm `-bg '#2b2b2b'`; keep in sync with it.
-    background: "#2b2b2b"
-  # `expressions` below is unused by codec_avatar (expression drives rotation
-  # speed + tint rather than a 2D face) but is kept so flipping `provider` back
-  # to `builtin` still renders correctly — the same pattern every other worker
-  # config follows.
   expressions:
     idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
     thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
@@ -200,16 +183,40 @@ avatar:
   bubble_width: 36
 
 layout:
-  preset: tuber_base
+  preset: roundtable
 
-# No `roster:` block here. The roster is a slot -> character-name map read only
-# by build_layout.py's _resolve_tile_title, i.e. only when building TILE panes —
-# and tuber_base has no tiles. It lives on the one config that does host tiles,
-# config/workers/roundtable.yaml.
+# ── Roster: slot -> on-screen character name (build_layout.py v1.4) ──────────
+# Read by build_layout.py's _resolve_tile_title when it resolves EVERY tile's
+# pane title on this container (this channel hosts all 8 tiles, so this is the
+# one config that actually needs the full map — the six character workers each
+# only ever build their OWN avatar pane on their own individual channel, and so
+# does the GM's channel, config/workers/tuber_0.yaml).
+#
+# Precedence in _resolve_tile_title: an explicit layout `title:` override wins
+# first; this map is checked second; a slot absent here falls back to
+# "Game Master" for tuber_0 or "Offline" for everyone else.
+#
+# Two slots are deliberately absent: tuber_4 (coder-aider) has no character
+# assigned yet (design's "OPEN" tuber, .claude/prompts/build_campaign_episode.py
+# SPEAKER_TO_WORKER comment) — keep it absent so it shows "Offline", and keep
+# config/layouts/roundtable.yaml's tile_tuber_4 border_color: colour240 (grey)
+# in sync with that. tuber_0 is also absent here on purpose: it uses the
+# ROSTER_DEFAULT_GM_TITLE fallback ("Game Master") rather than repeating the
+# `agent.name`/`avatar.title` GM identity a third time in this file.
+roster:
+  tuber_1: "Chadwick"        # coder / KODI-7
+  tuber_2: "Vigil"           # coder-native / NYX-1
+  tuber_3: "Sodacan Bob"     # coder-opencode / OKO-2
+  tuber_5: "Leena"           # tester / TESS-3
+  tuber_6: "MAX-1"           # manager — active worker, no campaign character cast
+  tuber_7: "Iris"            # 8th slot — newly wired up (was the idle spare tile)
 
 stream:
   rtmp_url: "rtmp://localhost:1935/live"
-  key: "test-tuber0"
+  # Overridden in deployment by the STREAM_KEY env var
+  # (${ROUNDTABLE_STREAM_KEY} on the worker-roundtable service). This is the
+  # show's own channel, distinct from the GM's personal channel key.
+  key: "test-roundtable"
   resolution: "1920x1080"
   video_bitrate_kbps: 3000
   fps: 30
@@ -217,10 +224,10 @@ stream:
 world_state:
   backend: file
   path: "/data/world-state"
-  worker_id: "tuber_0"
+  worker_id: "roundtable"
 
 message_bus:
   backend: kafka
   bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
   topic: "vtuber.messages"
-  worker_id: "tuber_0"
+  worker_id: "roundtable"

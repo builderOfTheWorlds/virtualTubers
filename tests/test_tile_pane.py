@@ -1020,3 +1020,247 @@ def test_perform_tile_request_closes_the_renderer_even_if_the_performer_raises(
     # the tile"), but the renderer's ticker thread must STILL be stopped.
     assert handle_once("tuber_2", str(relay), state_path=tile_state_file(str(relay), "tuber_2")) is False
     assert not seen["renderer"]._ticker.is_alive()
+
+
+# ── the 3D head: PIXEL mode vs ASCII mode (app/tile_avatar.py) ───────────────
+# All of this is display-free: the provider is faked, pygame is never
+# imported, and no window is ever created. What is under test is the ROW
+# ARITHMETIC — a tile that reserves the wrong number of rows for its head
+# renders a frame taller or shorter than its pane, which scrolls the tile
+# and pushes the avatar off the top on air.
+class FakeHead:
+    """Stands in for tile_avatar.TileAvatar."""
+
+    def __init__(self, active=True, fail_on_tick=False):
+        self.active = active
+        self.fail_on_tick = fail_on_tick
+        self.ticks = []
+        self.closed = False
+        self.rect = (140, 8, 200, 200)
+
+    def tick(self, expression):
+        if not self.active:
+            return False
+        if self.fail_on_tick:
+            self.active = False
+            return False
+        self.ticks.append(expression)
+        return True
+
+    def close(self):
+        self.closed = True
+        self.active = False
+
+
+@pytest.fixture
+def pixel_mode():
+    """Put the module into PIXEL mode for one test and restore ASCII mode
+    afterwards — the mode is process-wide, so leaking it would silently
+    change every later test's expected row count."""
+    head = FakeHead()
+    tile_pane.set_active_tile_avatar(head)
+    try:
+        yield head
+    finally:
+        tile_pane.set_active_tile_avatar(None)
+
+
+def test_ascii_mode_is_the_default_and_unchanged():
+    """No head installed: the AVATAR subpanel is the same 3 rows of
+    TILE_FACES art it has always been."""
+    assert tile_pane.active_tile_avatar() is None
+    assert tile_pane.resolve_avatar_row_count(45) == tile_pane.TILE_AVATAR_LINES == 3
+    body = "\n".join(render_tile("tuber_1", expression="speaking",
+                                 width=40, height=20))
+    for face_row in tile_pane.TILE_FACES["speaking"]:
+        assert face_row.strip() in body
+
+
+def test_pixel_mode_reserves_blank_rows_instead_of_the_ascii_face(pixel_mode):
+    """The head's window covers these rows on the X display; an ASCII face
+    underneath would show through around a square, centred window."""
+    rows = render_tile("tuber_1", expression="speaking", width=40, height=45)
+    reserved = tile_pane.resolve_avatar_row_count(45)
+    assert reserved == 18  # 0.4 of a real 45-row tile
+    band = rows[1:1 + reserved]
+    assert len(band) == reserved
+    for row in band:
+        assert row == "│" + " " * 38 + "│"
+    body = "\n".join(rows)
+    for face_row in tile_pane.TILE_FACES["speaking"]:
+        assert face_row.strip() not in body
+
+
+def test_an_inactive_head_still_draws_the_ascii_face():
+    """A head that failed to construct (or has since failed) must leave the
+    tile rendering exactly as it did before the head existed."""
+    tile_pane.set_active_tile_avatar(FakeHead(active=False))
+    try:
+        assert tile_pane.active_tile_avatar() is None
+        assert tile_pane.resolve_avatar_row_count(45) == tile_pane.TILE_AVATAR_LINES
+        body = "\n".join(render_tile("tuber_1", expression="idle",
+                                     width=40, height=45))
+        for face_row in tile_pane.TILE_FACES["idle"]:
+            assert face_row.strip() in body
+    finally:
+        tile_pane.set_active_tile_avatar(None)
+
+
+@pytest.mark.parametrize("height", [20, 24, 30, 45, 60])
+def test_frame_height_matches_the_pane_in_both_modes(height):
+    """The load-bearing invariant: whatever the avatar band costs, the
+    dialogue count absorbs it, so the frame is EXACTLY the pane's height in
+    both modes. A frame one row too tall scrolls the pane."""
+    ascii_rows = render_tile("tuber_1", width=40, height=height)
+    assert len(ascii_rows) == height
+
+    tile_pane.set_active_tile_avatar(FakeHead())
+    try:
+        pixel_rows = render_tile("tuber_1", width=40, height=height)
+    finally:
+        tile_pane.set_active_tile_avatar(None)
+    assert len(pixel_rows) == height
+
+
+def test_pixel_mode_costs_the_dialogue_the_extra_avatar_rows(pixel_mode):
+    """18 reserved rows instead of 3 means 15 fewer dialogue rows — and the
+    dialogue subpanel is still the one absorbing the difference, not the
+    frame's total height."""
+    height = 45
+    reserved = tile_pane.resolve_avatar_row_count(height)
+    pixel_dialogue = tile_pane.resolve_dialogue_line_count(height)
+    tile_pane.set_active_tile_avatar(None)
+    ascii_dialogue = tile_pane.resolve_dialogue_line_count(height)
+    assert ascii_dialogue - pixel_dialogue == reserved - tile_pane.TILE_AVATAR_LINES
+    assert pixel_dialogue == height - tile_pane.tile_fixed_overhead(reserved)
+
+
+def test_ascii_mode_dialogue_count_matches_the_legacy_constant():
+    """TILE_FIXED_OVERHEAD stays the ASCII-mode value other callers and
+    tests reference; nothing about it may have shifted."""
+    assert tile_pane.TILE_FIXED_OVERHEAD == tile_pane.tile_fixed_overhead(
+        tile_pane.TILE_AVATAR_LINES)
+    for height in (20, 30, 45):
+        assert tile_pane.resolve_dialogue_line_count(height) == \
+            max(tile_pane.MIN_DIALOGUE_LINES, height - tile_pane.TILE_FIXED_OVERHEAD)
+
+
+def test_render_tile_publishes_the_expression_the_driver_thread_reads(pixel_mode):
+    """The head must animate the SAME expression the text frame is showing —
+    one source of truth, so the two can never drift apart."""
+    render_tile("tuber_1", expression="thinking", width=40, height=45)
+    driver = tile_pane.TileAvatarDriver(pixel_mode)
+    assert driver.expression_source() == "thinking"
+    render_tile("tuber_1", expression="speaking", width=40, height=45)
+    assert driver.expression_source() == "speaking"
+
+
+# ── TileAvatarDriver ─────────────────────────────────────────────────────────
+def test_driver_thread_is_a_daemon_and_ticks_the_head(pixel_mode):
+    """A tile being torn down must never be kept alive by its decoration."""
+    driver = tile_pane.TileAvatarDriver(pixel_mode, expression_source=lambda: "idle",
+                                        fps=60)
+    thread = driver.start()
+    assert thread.daemon is True
+    for _ in range(50):
+        if pixel_mode.ticks:
+            break
+        time.sleep(0.02)
+    driver.close()
+    assert pixel_mode.ticks and set(pixel_mode.ticks) == {"idle"}
+    assert pixel_mode.closed is True
+    assert not thread.is_alive()
+
+
+def test_driver_stops_when_the_head_goes_inactive():
+    """A head that failed once keeps failing — the driver must not respin it
+    twelve times a second for the rest of the broadcast."""
+    head = FakeHead(fail_on_tick=True)
+    driver = tile_pane.TileAvatarDriver(head, expression_source=lambda: "idle", fps=60)
+    thread = driver.start()
+    thread.join(timeout=2.0)
+    assert not thread.is_alive()
+    assert head.ticks == []
+    driver.close()
+
+
+def test_driver_loop_never_lets_an_exception_escape_the_thread(capsys):
+    """An exception out of a thread target kills that thread silently,
+    leaving a frozen window painted over a live tile."""
+    class Exploding(FakeHead):
+        def tick(self, expression):
+            raise RuntimeError("blit exploded")
+
+    driver = tile_pane.TileAvatarDriver(Exploding(), expression_source=lambda: "idle",
+                                        fps=60)
+    thread = driver.start()
+    thread.join(timeout=2.0)
+    assert not thread.is_alive()
+    driver.close()
+    assert "blit exploded" in capsys.readouterr().err
+
+
+def test_driver_start_is_a_no_op_for_an_inactive_head():
+    driver = tile_pane.TileAvatarDriver(FakeHead(active=False))
+    assert driver.start() is None
+    driver.close()  # idempotent, must not raise
+
+
+# ── start_tile_avatar: the uncast slot keeps today's behaviour exactly ───────
+def test_start_tile_avatar_returns_none_for_an_uncast_slot(monkeypatch):
+    """roundtable.yaml omits tuber_4 from its roster. No geometry is even
+    probed for it, and no window is created."""
+    probed = []
+    monkeypatch.setattr(tile_pane, "detect_tile_pane_rect",
+                        lambda **kw: probed.append(1) or (0, 0, 480, 540))
+    config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
+    assert tile_pane.start_tile_avatar(config, "tuber_4") is None
+    assert probed == []
+    assert tile_pane.active_tile_avatar() is None
+
+
+def test_start_tile_avatar_returns_none_when_no_geometry_is_detected(monkeypatch, capsys):
+    monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: None)
+    config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
+    assert tile_pane.start_tile_avatar(config, "tuber_1") is None
+    assert tile_pane.active_tile_avatar() is None
+    assert "keeping the ASCII face" in capsys.readouterr().err
+
+
+def test_start_tile_avatar_installs_and_drives_a_head(monkeypatch):
+    head = FakeHead()
+    monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: (0, 0, 480, 540))
+    monkeypatch.setattr(tile_pane, "make_tile_avatar", lambda *a, **k: head)
+    config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
+    driver = tile_pane.start_tile_avatar(config, "tuber_1")
+    try:
+        assert driver is not None
+        assert tile_pane.active_tile_avatar() is head
+        assert tile_pane.resolve_avatar_row_count(45) == 18
+    finally:
+        driver.close()
+        tile_pane.set_active_tile_avatar(None)
+
+
+def test_start_tile_avatar_degrades_when_head_construction_fails(monkeypatch, capsys):
+    """A head is an upgrade, never a dependency — anything at all going
+    wrong leaves the tile drawing the ASCII face."""
+    monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: (0, 0, 480, 540))
+    monkeypatch.setattr(tile_pane, "make_tile_avatar",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("no SDL")))
+    config = {"roster": {"tuber_1": {"character_params": "gm0"}}}
+    assert tile_pane.start_tile_avatar(config, "tuber_1") is None
+    assert tile_pane.active_tile_avatar() is None
+    assert "no SDL" in capsys.readouterr().err
+    # ...and the tile renders exactly as it did before the head existed.
+    body = "\n".join(render_tile("tuber_1", expression="idle", width=40, height=45))
+    for face_row in tile_pane.TILE_FACES["idle"]:
+        assert face_row.strip() in body
+
+
+def test_start_tile_avatar_writes_diagnostics_to_stderr_only(monkeypatch, capsys):
+    """stdout IS the pane's live video display."""
+    monkeypatch.setattr(tile_pane, "detect_tile_pane_rect", lambda **kw: None)
+    tile_pane.start_tile_avatar({"roster": {"tuber_1": {"character_params": "gm0"}}},
+                                "tuber_1")
+    assert capsys.readouterr().out == ""

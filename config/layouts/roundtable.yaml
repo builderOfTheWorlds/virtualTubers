@@ -58,12 +58,20 @@
 #   │  tuber_4  │  tuber_5  │  tuber_6  │     —     │
 #   └───────────┴───────────┴───────────┴───────────┘
 #
-# At startup.sh's real xterm (1920x1080 / font 14 => 160x44) that is ~40-col,
-# ~22-row tiles — a tile needs ~9 rows (border 2 + name 1 + face 2 + 2 dialogue
-# lines + separator 1 + status 1), so there is real headroom. Confirm with
-# `tmux list-panes` on the GM container after any change here — arithmetic
-# alone has hidden a layout bug in this file before (the double-width tuber_6
-# regression the spare tile below exists to prevent).
+# At startup.sh's real xterm the capture is 1920x1080 with FONT_SIZE=7, whose
+# monospace cell is exactly 6x12 px (startup.sh's FONT_SIZE comment explains
+# why 7: 12x24 halves to 6x12 with no fractional glyph scaling). So the real
+# grid is 1920/6 x 1080/12 = 320x90 characters, and an even 4x2 grid gives
+# 320/4 x 90/2 = 80-col, 45-row tiles — 480x540 PIXELS each.
+#
+# A tile needs 10 rows to draw at all (app/tile_pane.py's TILE_FIXED_OVERHEAD
+# of 8 = border 2 + avatar 3 + two subpanel dividers + status 1, plus
+# MIN_DIALOGUE_LINES of 2), so 45 rows is deep headroom — the text subpanel
+# simply grows into whatever is left, since tile_pane.py detects its own pane
+# size at render time rather than assuming one. Confirm with `tmux list-panes`
+# on the GM container after any change here — arithmetic alone has hidden a
+# layout bug in this file before (the double-width tuber_6 regression the
+# spare tile below exists to prevent).
 #
 # Adding/removing a tile is one entry in this list (OPEN-4). The 8th grid cell
 # is spare capacity, not a committed slot.

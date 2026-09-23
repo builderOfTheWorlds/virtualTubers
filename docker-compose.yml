@@ -14,7 +14,16 @@ services:
       DISPLAY_NUM: 99
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder
+      # CAPTURE_RESOLUTION and FONT_SIZE are pinned explicitly on EVERY stream
+      # worker rather than left to startup.sh's defaults. The layout math
+      # depends on both: tuber_base.yaml's column split and the codec_avatar
+      # window geometry in each worker config are computed for a 1920x1080
+      # capture at font size 7, and neither scales automatically. Leaving them
+      # unset means a later .env edit (or a change to startup.sh's default)
+      # silently moves a worker off the character grid its panes assume, which
+      # shows up as a misplaced avatar window and mushy text, not as an error.
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER1_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode (docs/replay_pane.md) instead.
@@ -75,19 +84,20 @@ services:
         # Hard per-container CPU cap (cgroup quota, enforced even outside
         # Swarm mode by `docker compose`) — added 2026-09-22 after gx10
         # hit load average 328 and sshd itself became unreachable
-        # ("all cores at 99%"). 7 stream workers (6 tuber_base + GM)
-        # share this host with unrelated services (graphify, redis,
-        # unicorn apps) and no per-worker limit existed before, so any
-        # one worker misbehaving (or, as happened here, all 6 cold-
-        # starting/re-capturing 4K simultaneously) could peg every core
-        # and starve the host's own management plane. 2.5 cores/worker
-        # assumes a ~20-core host (gx10/GB10) — re-tune with `nproc` on
-        # the actual host if that assumption is ever wrong; the goal is
-        # aggregate worker CPU staying well under total cores even at
-        # 7/7 simultaneous full load, leaving headroom for sshd, Docker
-        # itself, and the other unrelated services on this shared box.
+        # ("all cores at 99%"). EIGHT stream workers (6 tuber_base + the
+        # GM's own channel + the roundtable show) share this host with
+        # unrelated services (graphify, redis, unicorn apps) and no
+        # per-worker limit existed before, so any one worker misbehaving
+        # (or, as happened here, all of them cold-starting/re-capturing 4K
+        # simultaneously) could peg every core and starve the host's own
+        # management plane. 2.0 cores x 8 workers = 16 cores of aggregate
+        # cap on a ~20-core host (gx10/GB10), leaving ~4 cores of headroom
+        # for sshd, Docker itself, and the other unrelated services on this
+        # shared box. That 20-core figure is an assumption — re-check it
+        # with `nproc` on the actual host and re-derive this number if the
+        # host changes or a ninth stream worker is added.
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -114,6 +124,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-native
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER2_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -153,7 +164,7 @@ services:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -178,6 +189,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-opencode
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER3_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -217,7 +229,7 @@ services:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -242,6 +254,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: coder-aider
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER4_LAYOUT_PRESET=replay in the stack env to switch this
       # worker into Rerun Theater mode instead. Env-only change, no rebuild.
@@ -281,7 +294,7 @@ services:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -306,6 +319,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: manager
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER6_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
       # or =manager for the old ticket-board layout. Env-only, no rebuild.
@@ -341,7 +355,7 @@ services:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -366,6 +380,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: tester
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
       # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — set
       # TUBER5_LAYOUT_PRESET=replay to switch into Rerun Theater mode,
       # or =tester for the old pytest-loop layout. Env-only, no rebuild.
@@ -408,7 +423,7 @@ services:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -418,18 +433,22 @@ services:
       - rtmp-preview
       - redis
 
-  # ── The 7th channel: GM / roundtable (tuber_0) ──────────────────────────────
-  # roundtable_stream_design.md v1.1 §9. The "main" stream: 7 tiles (one per
-  # character slot, including the GM's own) + the show log + a status strip.
+  # ── The GM's own character channel (tuber_0) ────────────────────────────────
+  # roundtable_stream_design.md v1.1 §1.1. An ordinary tuber_base character
+  # stream like the six above — the GM is a character in its own right and gets
+  # its own 3D-avatar channel.
   #
-  # This container is the DIRECTOR of every roundtable show — it runs the LLM
-  # narration and the TTS for EVERY speaker in the cast, then cues the six
-  # character channels scene-by-scene (docs/duet_replay.md). Two mounts are
-  # therefore load-bearing and easy to forget:
-  #   * /data/voices      — without it the GM cannot synthesize ANY speaker, so
-  #                         there is no audio on ANY channel (not just this one).
-  #   * /config/voices.yaml — the symbolic voice registry (§7.2), which is how a
-  #                         show header's voice name resolves to a real model.
+  # This container is NOT the roundtable director; worker-roundtable below is.
+  # Note the deliberate ABSENCE of TILE_RELAY_DIR here: that env var is the
+  # first of app/replay_pane.py's two director gates (_resolve_local_tiles), so
+  # leaving it unset guarantees this channel can never direct a show even if
+  # config/workers/tuber_0.yaml's agent.role were mis-edited back to
+  # "roundtable". Exactly one container may be the director.
+  #
+  # It keeps both voice mounts because the GM still speaks on its own channel:
+  #   * /data/voices        — Piper .onnx models for its own narration.
+  #   * /config/voices.yaml — the symbolic voice registry (§7.2), which every
+  #                           worker needs to resolve show-header voice names.
   worker-gm:
     image: vtube-worker:latest
     pull_policy: never
@@ -441,13 +460,103 @@ services:
       STREAM_KEY: ${TUBER0_STREAM_KEY:-tuber0}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      # 99-104 are taken by the six character workers; the GM takes 105.
+      # 99-104 are the six character workers, 105 the GM, 106 the roundtable.
       DISPLAY_NUM: 105
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: tuber_0
-      LAYOUT_PRESET: ${GM_LAYOUT_PRESET:-roundtable}
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
+      # Defaults to tuber_base (docs/tuber_base_layout_plan.md) — the GM's
+      # personal channel is an ordinary character layout. Setting this to
+      # "roundtable" would satisfy director gate 2; the missing TILE_RELAY_DIR
+      # above still stops it from directing.
+      LAYOUT_PRESET: ${GM_LAYOUT_PRESET:-tuber_base}
       AVATAR_PROVIDER: ${GM_AVATAR_PROVIDER:-}
+      VOICE_REGISTRY_PATH: /config/voices.yaml
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
+      KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      # narration reuse cache (app/narration_store.py)
+      POSTGRES_HOST: ${POSTGRES_HOST:?POSTGRES_HOST must be set in .env}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+      POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
+      REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
+      TTS_PROVIDER: ${TTS_PROVIDER:-}
+      TTS_BASE_URL: ${TTS_BASE_URL:-}
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/tuber_0.yaml:/config/worker.yaml:ro
+      # The GM speaks on its own channel, so it synthesizes its own audio.
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # The symbolic voice registry (§7.2) — resolves show-header voice names.
+      - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
+      - world-state:/data/world-state
+    ipc: host
+    shm_size: 256mb
+    restart: unless-stopped
+    deploy:
+      resources:
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        limits:
+          cpus: "2.0"
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    depends_on:
+      - rtmp-preview
+      - redis
+
+  # ── The roundtable show ─────────────────────────────────────────────────────
+  # roundtable_stream_design.md v1.1 §9. The "main" stream: an even 4x2 grid of
+  # 8 character tiles plus a HIDDEN director pane — a SHOW, not a person. The GM
+  # character that hosts the table streams separately on worker-gm above.
+  #
+  # This container is the DIRECTOR of every roundtable show — it runs the LLM
+  # narration and the TTS for EVERY speaker in the cast, then cues the six
+  # character channels scene-by-scene (docs/duet_replay.md). Three things are
+  # load-bearing and easy to forget:
+  #   * TILE_RELAY_DIR    — director gate 1 (app/replay_pane.py
+  #                         _resolve_local_tiles). Without it this container
+  #                         runs the tiles but directs nothing, and the failure
+  #                         is SILENT: no error appears anywhere, the show just
+  #                         never airs. This must be the ONLY stream service
+  #                         that sets it.
+  #   * /data/voices      — without it the director cannot synthesize ANY
+  #                         speaker, so there is no audio on ANY channel.
+  #   * /config/voices.yaml — the symbolic voice registry (§7.2), which is how a
+  #                         show header's voice name resolves to a real model.
+  #
+  # The control panel's Play button addresses this container by worker id
+  # (services/control-panel/panel.py's ROUNDTABLE_WORKER_ID = "roundtable");
+  # that constant and WORKER_ID here must always agree.
+  worker-roundtable:
+    image: vtube-worker:latest
+    pull_policy: never
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      CONFIG_PATH: /config/worker.yaml
+      STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      STREAM_KEY: ${ROUNDTABLE_STREAM_KEY:-roundtable}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # 99-104 are the six character workers, 105 the GM, 106 the roundtable.
+      DISPLAY_NUM: 106
+      # The tiles render 3D avatar heads, so this container needs the GPU.
+      NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
+      WORKER_ID: roundtable
+      CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
+      FONT_SIZE: ${FONT_SIZE:-7}
+      LAYOUT_PRESET: ${ROUNDTABLE_LAYOUT_PRESET:-roundtable}
+      AVATAR_PROVIDER: ${ROUNDTABLE_AVATAR_PROVIDER:-}
       # Where the director writes per-tile cue/request relay files and each tile
       # writes its own avatar state (§5.1 — tiles cannot share one state file).
+      # Also director gate 1; see this service's header comment.
       TILE_RELAY_DIR: ${TILE_RELAY_DIR:-/tmp/tiles}
       VOICE_REGISTRY_PATH: /config/voices.yaml
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
@@ -459,15 +568,15 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
       POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
-      # With 7 slots to gather instead of 2, the default 60s ready window is
+      # With 8 slots to gather instead of 2, the default 60s ready window is
       # tighter than it looks — tune here, measured during the §8.4 rehearsal.
       REPLAY_READY_TIMEOUT_S: ${REPLAY_READY_TIMEOUT_S:-}
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
     volumes:
-      - ${REPO_ROOT:-.}/config/workers/tuber_0.yaml:/config/worker.yaml:ro
-      # CRITICAL: the GM does ALL the TTS for every speaker in every show.
+      - ${REPO_ROOT:-.}/config/workers/roundtable.yaml:/config/worker.yaml:ro
+      # CRITICAL: the director does ALL the TTS for every speaker in every show.
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
       # The symbolic voice registry (§7.2) — resolves show-header voice names.
       - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
@@ -477,13 +586,15 @@ services:
     restart: unless-stopped
     deploy:
       resources:
-        # See worker-coder's identical block for the full rationale (gx10
-        # hit load average 328, sshd unreachable, added 2026-09-22). The
-        # GM has no GPU reservation (it doesn't render its own tile), but
-        # it still runs a full x11grab/ffmpeg capture+encode pipeline for
-        # the 7-tile roundtable composite, so it needs the same CPU cap.
+        # See worker-coder's identical block above for the full rationale
+        # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
         limits:
-          cpus: "2.5"
+          cpus: "2.0"
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     depends_on:
       - rtmp-preview
       - redis

@@ -2,9 +2,16 @@
 delete. `play` now airs on EVERY stream in one click — the six character
 channels AND the roundtable — since a bare `to: "broadcast"` request left
 the roundtable playing audio-only with no tile text/status update (root
-cause: tuber_0's tile grid only updates via the duet director path, which
-requires payload.cast — see panel.py's play_replay docstring). No LLM/
-bus/DB involved; /messages is mocked at the panel's own _mapi_request
+cause: the roundtable's tile grid only updates via the duet director path,
+which requires payload.cast — see panel.py's play_replay docstring).
+
+This is also the regression test for WHO the roundtable request is addressed
+to. The director lives in its own container (worker-roundtable, worker id
+"roundtable") since the GM character was split onto its own tuber_base
+channel; addressing the old "tuber_0" worker id would air nothing at all,
+and silently — a non-director never polls the request file.
+
+No LLM/bus/DB involved; /messages is mocked at the panel's own _mapi_request
 seam.
 """
 import panel
@@ -74,6 +81,7 @@ def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtabl
     # The roundtable alone gets the worker->slot cast attached, or its tile
     # grid never lights up (app/replay_pane.py perform_director_request
     # only runs when payload.cast is present).
+    assert panel.ROUNDTABLE_WORKER_ID == "roundtable"
     rt_msg = sent_by_worker[panel.ROUNDTABLE_WORKER_ID]
     assert rt_msg["payload"]["episode"] == "ashiorid_smoke"
     assert rt_msg["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
@@ -82,21 +90,26 @@ def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtabl
     # script (build_campaign_episode.py's "gm": "manager", build_generated_
     # episode.py's "ashiorid": "manager") — it must map to the GM's OWN
     # tile (tuber_0), not MAX-1's (tuber_6), or the GM's lines get no
-    # bubble/status update even though the audio (correctly) plays as
-    # tuber_0's own voice. Regression guard for the real reported bug:
+    # bubble/status update even though the audio (correctly) plays as the
+    # GM slot's own voice. Regression guard for the real reported bug:
     # "I can hear the voice but the Game Master shows no text."
+    #
+    # The cast's VALUES are tuber SLOT ids, not container worker ids, so this
+    # stays "tuber_0" even though the director's worker id is now
+    # "roundtable" — the two were the same string before the split.
     assert rt_msg["payload"]["cast"]["manager"] == "tuber_0"
+    assert rt_msg["payload"]["cast"]["manager"] != panel.ROUNDTABLE_WORKER_ID
 
     assert "all 7 streams" in resp.text or "all" in resp.text
 
 
 def test_play_never_sends_a_bare_broadcast_message(monkeypatch):
     """Regression guard for the actual production bug: a "to": "broadcast"
-    replay_request reaches tuber_0's agent too, racing its own cast-bearing
-    request (agent.py's request-file write has no de-dupe/clobber guard
-    for a plain replay_request the way handle_replay_invite does). Every
+    replay_request reaches the roundtable's agent too, racing its own
+    cast-bearing request (agent.py's request-file write has no de-dupe/clobber
+    guard for a plain replay_request the way handle_replay_invite does). Every
     play must address workers BY NAME so nothing but the one call below
-    ever writes to tuber_0's request file."""
+    ever writes to the roundtable's request file."""
     calls = []
 
     async def _mapi_request(method, path, **kwargs):

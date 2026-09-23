@@ -21,17 +21,18 @@ import build_layout
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PANELS_DIR = str(ROOT / "config" / "panels")
 LAYOUTS_DIR = str(ROOT / "config" / "layouts")
-TUBER_0 = str(ROOT / "config" / "workers" / "tuber_0.yaml")
+WORKERS_DIR = ROOT / "config" / "workers"
+ROUNDTABLE_CONFIG = str(WORKERS_DIR / "roundtable.yaml")
 
 SLOTS = [f"tuber_{i}" for i in range(8)]
 
 
 @pytest.fixture
 def built(tmp_path, monkeypatch):
-    """Resolve the roundtable preset from tuber_0's real worker config."""
+    """Resolve the roundtable preset from the show host's real worker config."""
     monkeypatch.delenv("LAYOUT_PRESET", raising=False)
     runtime = tmp_path / "runtime"
-    lines, panes = build_layout.build(TUBER_0, PANELS_DIR, LAYOUTS_DIR, str(runtime))
+    lines, panes = build_layout.build(ROUNDTABLE_CONFIG, PANELS_DIR, LAYOUTS_DIR, str(runtime))
     return {"lines": lines, "panes": panes, "runtime": runtime}
 
 
@@ -40,10 +41,34 @@ def _by_use(panes, use):
 
 
 # ── Preset selection ──────────────────────────────────────────────────────────
-def test_tuber_0_selects_roundtable_preset():
-    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+def test_roundtable_worker_selects_roundtable_preset():
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
     assert build_layout.select_preset(cfg) == "roundtable"
     assert cfg["agent"]["role"] == "roundtable"
+
+
+# ── Exactly one director (the silent-failure guard) ─────────────────────────
+def test_exactly_one_worker_config_is_the_roundtable_director():
+    """app/replay_pane.py's _resolve_local_tiles directs when TILE_RELAY_DIR is
+    set AND the worker's layout preset or agent role names the roundtable. The
+    role side of that gate must hold for EXACTLY one config in config/workers/.
+
+    Zero directors is the dangerous case because it fails SILENTLY: the tile
+    panes still run, nothing ever polls the replay request file, and no error
+    appears anywhere — the show simply never airs (config/layouts/
+    roundtable.yaml's header documents the live incident). Two directors is the
+    other half: both would race each other writing the same relay files.
+
+    This is the guard for the GM/show split — config/workers/tuber_0.yaml is
+    now an ordinary tuber_base character channel and must NOT carry the role.
+    """
+    directors = []
+    for path in sorted(WORKERS_DIR.glob("*.yaml")):
+        cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        if ((cfg.get("agent") or {}).get("role")) == "roundtable":
+            directors.append(path.name)
+    assert directors == ["roundtable.yaml"], (
+        f"expected exactly one roundtable director config, found {directors}")
 
 
 # ── Shape (v1.3: pure tile grid — no show log, no system strip) ──────────────
@@ -147,7 +172,7 @@ def test_each_tile_command_carries_its_own_slot(built, slot):
                 if "tile_pane.py" in l and f"--slot {slot} " in l)
     assert f"--slot {slot}" in line
     assert "{slot}" not in line
-    assert f"--config {TUBER_0}" in line
+    assert f"--config {ROUNDTABLE_CONFIG}" in line
 
 
 def test_tuber_3_tile_command_is_pinned_to_tuber_3(built):
@@ -196,12 +221,12 @@ def test_tile_runtime_config_records_its_slot(built):
 
 
 # ── Character names + colors on the real shipped roster (v1.4) ───────────────
-def test_every_tile_title_matches_tuber_0_yamls_real_roster(built):
-    """The tiles must display the SAME roster the GM's own worker config
+def test_every_tile_title_matches_the_roundtable_configs_real_roster(built):
+    """The tiles must display the SAME roster the show host's worker config
     carries — this locks the two together so an operator adding/renaming a
     character in tuber_0.yaml's `roster:` sees it reflected here without any
     other file changing."""
-    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
     roster = cfg.get("roster") or {}
     by_id = {p["id"]: p for p in built["panes"]}
 
@@ -219,7 +244,7 @@ def test_every_cast_tile_shares_one_active_color(built):
     """Every ACTIVE character (cast or GM) renders in the same light-blue —
     the design ask to normalize colors instead of the old per-slot rainbow."""
     tiles = _cast_tiles(built["panes"])
-    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
     roster = cfg.get("roster") or {}
     active_colors = {t["border_color"] for t in tiles if t["slot"] == "tuber_0" or t["slot"] in roster}
     assert active_colors == {"colour117"}
@@ -229,7 +254,7 @@ def test_uncast_tiles_render_grey_not_the_active_color(built):
     """A slot with no character assigned (tuber_4 today) must read visibly
     different from the active cast — grey, not the light-blue used for
     everyone actually on air."""
-    cfg = yaml.safe_load(pathlib.Path(TUBER_0).read_text(encoding="utf-8"))
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
     roster = cfg.get("roster") or {}
     by_id = {p["id"]: p for p in built["panes"]}
     uncast_cast_slots = [s for s in SLOTS if s != "tuber_0" and s not in roster]

@@ -133,18 +133,32 @@ def _normalize_accent_color(key, value, strict):
     return name
 
 
-#: Named starting points. `chadwick` is the flagship character (roster
-#: tuber_1 / the coder worker, see config/workers/tuber_0.yaml's `roster:`)
-#: and is the one wired live in config/workers/coder.yaml — a wide, square,
-#: heavy-jawed head with big ears and a short nose, so its silhouette is
-#: distinguishable from the other 7 slots at 55x24.
+#: Named starting points — one per roster slot, each a DISTINCT SILHOUETTE.
 #:
-#: The rest (nyx1/oko2/ada3/tess3/max1) are the other 5 `tuber_base`
-#: workers, moved onto the codec_avatar renderer alongside Chadwick
-#: (docs/character_generator.md, 2026-09-22). Quick pass: default-shaped
-#: sliders (PARAM_DEFAULTS) with a distinct accent_color per character so
-#: they're visually distinguishable on stream immediately; unique
-#: silhouettes (like chadwick's) are follow-up work, not done here.
+#: The cast is identified by SHAPE first. Heads are seen small on stream (a
+#: ~200-550px tall pane), where tint survives downscaling but fine facial
+#: detail does not, so every preset is pushed to a different corner of the
+#: slider space rather than nudged a few hundredths off the defaults. The
+#: three sliders that dominate the outline at that size carry the load:
+#:
+#:   head_width  — overall skull mass, narrow spike vs. broad slab
+#:   head_taper  — cranium narrowing above the brow, column vs. cone
+#:   jaw_width   — flare below the cheekbone, pointed chin vs. heavy jaw
+#:
+#: eye_size / eye_spacing / nose_length / ear_size then separate faces that
+#: happen to share an outline (e.g. chadwick and max1 are both broad, but
+#: max1 is squarer, wider-set and short-nosed). `build` describes body mass
+#: for renderers that draw shoulders; the codec head itself ignores it.
+#:
+#: accent_color is now a SECONDARY cue: it reinforces an identity the shape
+#: already establishes, and the cast stays readable in a greyscale capture
+#: or for a colour-blind viewer. Each character owns one palette entry, and
+#: all eight entries of ACCENT_COLORS are spoken for.
+#:
+#: `chadwick` is the flagship (roster tuber_1 / the coder worker, see
+#: config/workers/tuber_0.yaml's `roster:`) and the one wired live in
+#: config/workers/coder.yaml; leave its numbers alone — other docs and the
+#: design notes in docs/character_generator.md reference them.
 PRESETS = {
     "chadwick": {
         "head_width": 0.72,
@@ -157,11 +171,111 @@ PRESETS = {
         "build": 0.70,
         "accent_color": "YELLOW",
     },
-    "nyx1": {**SLIDER_DEFAULTS, "accent_color": "CYAN"},     # coder-native
-    "oko2": {**SLIDER_DEFAULTS, "accent_color": "GREEN"},    # coder-opencode
-    "ada3": {**SLIDER_DEFAULTS, "accent_color": "PURPLE"},   # coder-aider
-    "tess3": {**SLIDER_DEFAULTS, "accent_color": "RED"},     # tester
-    "max1": {**SLIDER_DEFAULTS, "accent_color": "WHITE"},    # manager
+    # NYX-1 — the narrowest, most steeply tapered skull on the roster: an
+    # inverted teardrop that runs from a pinched crown to a small pointed
+    # jaw. Oversized, maximally wide-set eyes and almost no ears, so it
+    # stays a smooth thin outline with nothing sticking out.
+    "nyx1": {
+        "head_width": 0.00,
+        "head_taper": 1.00,
+        "eye_size": 0.95,
+        "eye_spacing": 1.00,
+        "jaw_width": 0.20,
+        "nose_length": 0.28,
+        "ear_size": 0.02,
+        "build": 0.20,
+        "accent_color": "CYAN",
+    },
+    # OKO-2 — broad and completely untapered: a wide dome that stays wide
+    # all the way to a narrow chin. The biggest ears and a near-maximum
+    # nose give it the strongest profile silhouette, while tiny close-set
+    # eyes keep the front of the face sparse.
+    "oko2": {
+        "head_width": 0.88,
+        "head_taper": 0.00,
+        "eye_size": 0.20,
+        "eye_spacing": 0.06,
+        "jaw_width": 0.30,
+        "nose_length": 0.95,
+        "ear_size": 1.00,
+        "build": 0.60,
+        "accent_color": "GREEN",
+    },
+    # ADA-3 — a straight-sided narrow column with the sharpest chin
+    # (jaw_width 0): no flare anywhere below the cheekbone. Deliberately
+    # featureless — the smallest eyes and shortest nose — so it reads as a
+    # blank wedge next to the more sculpted faces.
+    "ada3": {
+        "head_width": 0.40,
+        "head_taper": 0.05,
+        "eye_size": 0.08,
+        "eye_spacing": 0.14,
+        "jaw_width": 0.00,
+        "nose_length": 0.05,
+        "ear_size": 0.24,
+        "build": 0.34,
+        "accent_color": "PURPLE",
+    },
+    # TESS-3 — the diamond: a fully tapered cranium narrowing to a point
+    # above the brow, sitting over the widest possible jaw flare. Huge eyes
+    # and big ears. Top-heavy skull over a bottom-heavy face, the opposite
+    # weight distribution from nyx1.
+    "tess3": {
+        "head_width": 0.42,
+        "head_taper": 1.00,
+        "eye_size": 1.00,
+        "eye_spacing": 0.34,
+        "jaw_width": 1.00,
+        "nose_length": 0.55,
+        "ear_size": 0.86,
+        "build": 0.45,
+        "accent_color": "RED",
+    },
+    # MAX-1 — the slab: maximum width AND maximum jaw with zero taper, the
+    # largest overall mass. A stub nose, small ears and the widest-set eyes
+    # keep the face flat and blocky, distinct from chadwick's narrower,
+    # slightly tapered wedge.
+    "max1": {
+        "head_width": 1.00,
+        "head_taper": 0.00,
+        "eye_size": 0.34,
+        "eye_spacing": 0.92,
+        "jaw_width": 1.00,
+        "nose_length": 0.14,
+        "ear_size": 0.08,
+        "build": 0.95,
+        "accent_color": "WHITE",
+    },
+    # gm0 — the Game Master / host. Nearly the narrowest skull, only
+    # lightly tapered, but carrying the longest nose and largest ears on
+    # the roster: a lean beaked head whose identity lives in profile, which
+    # suits a narrator who is usually shown side-on to the cast.
+    "gm0": {
+        "head_width": 0.12,
+        "head_taper": 0.35,
+        "eye_size": 0.66,
+        "eye_spacing": 0.44,
+        "jaw_width": 0.62,
+        "nose_length": 1.00,
+        "ear_size": 1.00,
+        "build": 0.15,
+        "accent_color": "BLUE",
+    },
+    # iris7 — the wedge: a broad untapered crown running down to the second
+    # narrowest jaw, so the outline is wide at the top and pointed at the
+    # bottom — the inverse of tess3. Mid-size eyes set wide, a long nose and
+    # mid ears place it between the extremes without duplicating any of them.
+    "iris7": {
+        "head_width": 0.72,
+        "head_taper": 0.00,
+        "eye_size": 0.44,
+        "eye_spacing": 0.76,
+        "jaw_width": 0.10,
+        "nose_length": 0.70,
+        "ear_size": 0.50,
+        "build": 0.52,
+        "accent_color": "BLACK",
+    },
 }
 
 

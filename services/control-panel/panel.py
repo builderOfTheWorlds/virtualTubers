@@ -44,42 +44,55 @@ CAMPAIGN_MANAGER_URL = os.environ.get("CAMPAIGN_MANAGER_URL", "http://localhost:
 WORKER_IDS = ["coder", "coder-native", "coder-opencode", "coder-aider", "manager", "tester"]
 MESSAGE_TYPE_EXAMPLES = ["operator_message", "status_update", "coding_run_report"]
 
-# The 7th channel — the roundtable / GM container (docs/duet_replay.md,
-# config/layouts/roundtable.yaml). It is a SEPARATE audience from the six
-# character workers above: a plain replay_request (no payload.cast) addressed
-# to it plays solo on its OWN show-log pane and never touches its tile grid —
-# only app/replay_pane.py's perform_director_request does that, and it only
-# runs when payload.cast is present (docs/duet_replay.md, "Debugging: only
-# the director performs, nobody else joins" — the tile-grid analog of that
-# same gotcha). scripts/send_test_message.sh documents the fix as a
-# "roundtable companion request": address tuber_0 directly with an explicit
-# cast. WORKER_TO_TUBER_SLOT mirrors config/workers/tuber_0.yaml's `roster:`
-# map (reversed) so the Play button can build that cast automatically instead
-# of an operator having to hand-type it every time.
+# The roundtable SHOW container (docs/duet_replay.md,
+# config/layouts/roundtable.yaml, config/workers/roundtable.yaml). It is a
+# SEPARATE audience from the six character workers above: a plain replay_request
+# (no payload.cast) addressed to it plays solo on its own pane and never touches
+# its tile grid — only app/replay_pane.py's perform_director_request does that,
+# and it only runs when payload.cast is present (docs/duet_replay.md, "Debugging:
+# only the director performs, nobody else joins" — the tile-grid analog of that
+# same gotcha). scripts/send_test_message.sh documents the fix as a "roundtable
+# companion request": address the director directly with an explicit cast.
+# WORKER_TO_TUBER_SLOT mirrors config/workers/roundtable.yaml's `roster:` map
+# (reversed) so the Play button can build that cast automatically instead of an
+# operator having to hand-type it every time.
+#
+# This must match the worker-roundtable service's WORKER_ID in docker-compose.yml
+# and config/workers/roundtable.yaml's message_bus.worker_id. It used to be
+# "tuber_0", when the GM character and the show shared one container; the GM now
+# has its own tuber_base channel (worker-gm / config/workers/tuber_0.yaml) which
+# is NOT a director, so a Play still addressed to "tuber_0" would air nothing at
+# all — and silently, since nothing polls the request file on a non-director.
+ROUNDTABLE_WORKER_ID = "roundtable"
+
+# Values here are tuber SLOT ids (tuber_0..tuber_5), not container worker ids —
+# they name a TILE on the roundtable grid, and the slots did not change when the
+# director moved to its own container. So `manager` maps to the literal slot
+# "tuber_0" rather than to ROUNDTABLE_WORKER_ID: those two were the same string
+# before the split and are deliberately different now.
 #
 # manager -> tuber_0, NOT tuber_6, is deliberate and easy to get backwards:
 # every episode-building script in this repo overloads the "manager" WORKER
 # id to carry the GM/narrator's lines, not the MAX-1 character —
 # .claude/prompts/build_campaign_episode.py's SPEAKER_TO_WORKER: {"gm":
 # "manager"} and build_generated_episode.py's {"ashiorid": "manager"}
-# ("Ashiorid -> manager (GM)"). tuber_0.yaml's own roster comment confirms
+# ("Ashiorid -> manager (GM)"). roundtable.yaml's own roster comment confirms
 # the other side of this: "tuber_6: MAX-1 — active worker, no campaign
 # character cast" — nothing currently routes to MAX-1's tile for this kind
 # of content. Mapping manager -> tuber_6 here (the naive "6 workers, 6
 # non-GM slots" reading) sent every GM line to the wrong tile, so tuber_0
 # never owned a scene and rendered silent (audio still played correctly —
-# tuber_0.yaml's voice.speakers.manager is deliberately tuber_0's own voice
-# — but perform_director_request's ownership gate means only the tile the
-# CAST maps a speaker to gets the bubble/status update). Reported live:
+# roundtable.yaml's voice.speakers.manager is deliberately the GM slot's own
+# voice — but perform_director_request's ownership gate means only the tile
+# the CAST maps a speaker to gets the bubble/status update). Reported live:
 # "I can hear the voice but the Game Master shows no text."
-ROUNDTABLE_WORKER_ID = "tuber_0"
 WORKER_TO_TUBER_SLOT = {
     "coder": "tuber_1",
     "coder-native": "tuber_2",
     "coder-opencode": "tuber_3",
     "coder-aider": "tuber_4",
     "tester": "tuber_5",
-    "manager": ROUNDTABLE_WORKER_ID,
+    "manager": "tuber_0",
 }
 
 # In-memory only (module-level, resets on restart) — message-api has no
@@ -350,22 +363,22 @@ async def play_replay(request: Request, name: str):
 
     Deliberately NOT one `to: "broadcast"` message. Two reasons:
 
-    1. tuber_0's tile grid only lights up via the duet DIRECTOR path
+    1. The roundtable's tile grid only lights up via the duet DIRECTOR path
        (app/replay_pane.py perform_director_request), which only runs when
-       payload.cast is present — a bare request plays solo on the GM's own
-       show-log pane with audio but no tile text/status update (reported
-       live: "I can hear the voices on the roundtable but don't see any
-       text or the tubers' statuses updating"). So tuber_0 needs a
-       DIFFERENT payload (with cast) than the other six.
-    2. Addressing "broadcast" would ALSO reach tuber_0's agent with the
-       bare payload, racing its own request file against the cast-bearing
+       payload.cast is present — a bare request plays solo with audio but no
+       tile text/status update (reported live: "I can hear the voices on the
+       roundtable but don't see any text or the tubers' statuses updating").
+       So the roundtable needs a DIFFERENT payload (with cast) than the
+       other six.
+    2. Addressing "broadcast" would ALSO reach the roundtable's agent with
+       the bare payload, racing its own request file against the cast-bearing
        one below (both are unconditional file writes — see
        app/agent.py's _write_replay_request / handle_replay_request,
        which — unlike handle_replay_invite — has no "don't clobber a
        pending request" guard). Addressing each of the 6 character
        workers BY NAME instead of "broadcast" means nothing but this one
-       call ever writes to tuber_0's request file, so there is no race to
-       reason about.
+       call ever writes to the roundtable's request file, so there is no
+       race to reason about.
 
     Every failure is best-effort and independently reported — one
     unreachable worker must not stop the episode airing on the other six.
