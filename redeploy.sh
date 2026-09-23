@@ -87,8 +87,20 @@ docker compose build campaign-manager 3layer-generator
 # compose config changed, only the underlying image content — compose only
 # recreates on a config/tag diff, so --force-recreate is required to actually
 # pick up the rebuilt image.
-WORKERS=(worker-manager worker-tester worker-coder worker-coder-native \
-         worker-coder-opencode worker-coder-aider worker-gm)
+# The worker list is DERIVED from docker-compose.yml, never hardcoded. A
+# hardcoded array silently skips any newly added worker: the deploy reports
+# success, every listed container restarts with fresh code, and the new
+# service is simply never created — which looks exactly like "my changes
+# didn't deploy" with nothing in the logs to say why. Compose is the single
+# source of truth for which workers exist, so ask it.
+mapfile -t WORKERS < <(docker compose config --services | grep '^worker-' | sort)
+
+if [[ ${#WORKERS[@]} -eq 0 ]]; then
+    echo "ERROR: no worker-* services found in docker compose config." >&2
+    echo "Refusing to continue — this would restart nothing and report success." >&2
+    exit 1
+fi
+
 SUPPORT_SERVICES=(message-logger message-api control-panel log-shipper \
                    twitch-presence campaign-manager 3layer-generator)
 
