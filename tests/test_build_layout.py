@@ -351,6 +351,38 @@ def test_no_roster_key_at_all_still_resolves_offline(tile_dirs, tmp_path, monkey
     assert tile["title"] == "Offline"
 
 
+# A roster entry may be a plain string OR a mapping that carries the slot's 3D
+# avatar preset next to its name (app/tile_avatar.py reads the same map). The
+# mapping form has to be unwrapped to `name`: str() on the dict would put a raw
+# `{'name': ..., 'character_params': ...}` repr in a tile's title bar on air.
+def test_mapping_roster_entry_resolves_to_its_name(tile_dirs, tmp_path, monkeypatch):
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    worker_path = tmp_path / "mapping_roster.yaml"
+    worker_path.write_text(yaml.safe_dump({
+        "layout": {"preset": "roundtable"},
+        "roster": {"tuber_1": {"name": "Chadwick", "character_params": "chadwick"}},
+    }), encoding="utf-8")
+    _, panes = build_layout.build(str(worker_path), tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_1")
+    assert tile["title"] == "Chadwick"
+    assert "character_params" not in tile["title"]
+
+
+def test_mapping_roster_entry_without_a_name_falls_back(tile_dirs, tmp_path, monkeypatch):
+    """A malformed entry must degrade to the slot default, never a dict repr."""
+    monkeypatch.delenv("LAYOUT_PRESET", raising=False)
+    worker_path = tmp_path / "nameless_roster.yaml"
+    worker_path.write_text(yaml.safe_dump({
+        "layout": {"preset": "roundtable"},
+        "roster": {"tuber_1": {"character_params": "chadwick"}},
+    }), encoding="utf-8")
+    _, panes = build_layout.build(str(worker_path), tile_dirs["panels"],
+                                  tile_dirs["layouts"], tile_dirs["runtime"])
+    tile = next(p for p in panes if p["id"] == "tile_tuber_1")
+    assert tile["title"] == "Offline"
+
+
 # ── Two-phase emission (startup.sh splits AFTER the xterm resize) ─────────────
 # Regression cover for the 2026-09-22 narrow-column bug: `split-window -p N`
 # resolves N against the grid tmux has AT SPLIT TIME and clamps to a minimum

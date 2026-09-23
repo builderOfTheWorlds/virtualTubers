@@ -204,12 +204,25 @@ layout:
 # ROSTER_DEFAULT_GM_TITLE fallback ("Game Master") rather than repeating the
 # `agent.name`/`avatar.title` GM identity a third time in this file.
 roster:
-  tuber_1: "Chadwick"        # coder / KODI-7
-  tuber_2: "Vigil"           # coder-native / NYX-1
-  tuber_3: "Sodacan Bob"     # coder-opencode / OKO-2
-  tuber_5: "Leena"           # tester / TESS-3
-  tuber_6: "MAX-1"           # manager — active worker, no campaign character cast
-  tuber_7: "Iris"            # 8th slot — newly wired up (was the idle spare tile)
+  # Two forms are accepted per slot (app/tile_avatar.py: resolve_slot_character_params,
+  # app/build_layout.py: _resolve_tile_title):
+  #   tuber_N: "Name"                              -> title only, ASCII face
+  #   tuber_N: {name: "Name", character_params: X}  -> title + a 3D codec head
+  # The mapping form is what gives a tile its rendered head; a plain string
+  # leaves that slot on the 3-row ASCII fallback. character_params must name a
+  # preset in app/character_schema.py PRESETS, and each slot's preset matches
+  # the character's own channel so a face is the same face on both streams.
+  tuber_1: {name: "Chadwick",    character_params: chadwick}  # coder / KODI-7
+  tuber_2: {name: "Vigil",       character_params: nyx1}      # coder-native / NYX-1
+  tuber_3: {name: "Sodacan Bob", character_params: oko2}      # coder-opencode / OKO-2
+  tuber_5: {name: "Leena",       character_params: tess3}     # tester / TESS-3
+  tuber_6: {name: "MAX-1",       character_params: max1}      # manager — active worker, no campaign character cast
+  tuber_7: {name: "Iris",        character_params: iris7}     # 8th slot — newly wired up (was the idle spare tile)
+  # tuber_0 is the GM's own tile on this show; gm0 is the same head its
+  # personal channel (config/workers/tuber_0.yaml) renders.
+  tuber_0: {name: "Game Master", character_params: gm0}
+  # tuber_4 stays uncast: no entry, so it keeps the grey border and the ASCII
+  # fallback, and no pixel window is created for it.
 
 stream:
   rtmp_url: "rtmp://localhost:1935/live"

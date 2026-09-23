@@ -162,7 +162,13 @@ def _resolve_tile_title(resolved, worker_config, explicit_title=None):
          worker-config pane override (NOT the panel-type default "Tile",
          which every tile pane inherits from config/panels/tile.yaml and must
          never win over the roster).
-      2. `roster.<slot>` from the worker config.
+      2. `roster.<slot>` from the worker config. A roster entry is either a
+         plain string (the title itself) or a mapping carrying the slot's
+         3D-avatar wiring alongside its name — see app/tile_avatar.py's
+         resolve_slot_character_params, which reads the same map. The mapping
+         form must be unwrapped to its `name`, since str() on the dict would
+         print the raw `{'name': ..., 'character_params': ...}` as the tile's
+         on-screen title.
       3. Slot-shaped fallback: `tuber_0` -> ROSTER_DEFAULT_GM_TITLE ("Game
          Master" — the GM/narrator has no character cast, but is still the
          host, not "offline"); every other slot -> ROSTER_DEFAULT_OFFLINE_TITLE
@@ -177,8 +183,17 @@ def _resolve_tile_title(resolved, worker_config, explicit_title=None):
     if not slot:
         return resolved.get("title")
     roster = worker_config.get("roster")
-    if isinstance(roster, dict) and roster.get(slot):
-        return str(roster[slot])
+    if isinstance(roster, dict):
+        entry = roster.get(slot)
+        if isinstance(entry, dict):
+            # Mapping form: the title is the `name` key. Fall through to the
+            # slot-shaped default when it's missing, rather than printing a
+            # dict repr on a live tile.
+            name = entry.get("name")
+            if name:
+                return str(name)
+        elif entry:
+            return str(entry)
     return ROSTER_DEFAULT_GM_TITLE if slot == "tuber_0" else ROSTER_DEFAULT_OFFLINE_TITLE
 
 

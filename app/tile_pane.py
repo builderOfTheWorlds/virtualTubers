@@ -319,11 +319,19 @@ FALLBACK_TILE_WIDTH = 78
 MIN_TILE_WIDTH = 18
 
 # Same story for HEIGHT (v1.4, TILE_HEIGHT / resolve_tile_height): the text
-# subpanel needs to know how many rows it actually has to fill. 44 is one row
-# under the real 45-row tile (90-row grid / 2 rows) for the same reason — a
-# frame one row too tall scrolls the pane, which pushes the avatar off the top
-# exactly like the wrapping bug above did.
-FALLBACK_TILE_HEIGHT = 44
+# subpanel needs to know how many rows it actually has to fill. A frame one row
+# too tall scrolls the pane, which pushes the avatar off the top exactly like
+# the wrapping bug above did.
+#
+# 40 is the deliberate shortfall against the real roundtable tile. Note the row
+# count does NOT follow from the column count: the live 1920x1080 grid measures
+# 320x82, not the 320x90 that a square 6x12 cell would predict, because the cell
+# is ~6x13 and the xterm's own chrome eats the remainder. Arithmetic from
+# CAPTURE_RESOLUTION and FONT_SIZE alone will overestimate the rows available
+# and silently reintroduce the scrolling bug — measure the grid on the running
+# container (`tmux display-message -p '#{window_width}x#{window_height}'`)
+# before trusting any derived number here.
+FALLBACK_TILE_HEIGHT = 40
 MIN_TILE_HEIGHT = TILE_FIXED_OVERHEAD + MIN_DIALOGUE_LINES
 
 

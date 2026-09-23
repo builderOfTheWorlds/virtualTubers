@@ -16,6 +16,8 @@ import pytest
 import yaml
 
 import build_layout
+import character_schema
+import tile_avatar
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -233,7 +235,11 @@ def test_every_tile_title_matches_the_roundtable_configs_real_roster(built):
     for slot in SLOTS:
         tile = by_id[f"tile_{slot}"]
         if slot in roster:
-            assert tile["title"] == roster[slot]
+            # An entry is either a bare title string or a mapping carrying the
+            # slot's 3D preset alongside `name` — compare against the name.
+            entry = roster[slot]
+            expected = entry["name"] if isinstance(entry, dict) else entry
+            assert tile["title"] == expected
         elif slot == "tuber_0":
             assert tile["title"] == "Game Master"
         else:
@@ -273,3 +279,33 @@ def test_roundtable_sets_a_static_status_bar_label(built):
     assert "tmux set -t worker window-status-format ''" in joined
     # Cosmetic only: the underlying session keeps its real name everywhere.
     assert built["lines"][0] == "tmux new-session -d -s worker -x 240 -y 67"
+
+
+# ── Roster casting: the shipped config must actually wire up 3D heads ─────────
+# A roster whose entries are plain strings is valid YAML, resolves correct tile
+# titles, and renders a perfectly normal-looking show — with every tile silently
+# on the 3-row ASCII fallback, because nothing carries a character_params. That
+# failure is invisible to every other test here, so assert the real shipped
+# config casts each slot it claims to cast.
+def test_every_cast_slot_in_the_shipped_roster_has_a_3d_preset():
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
+    roster = cfg.get("roster") or {}
+    assert roster, "roundtable.yaml must cast its slots"
+    for slot, entry in roster.items():
+        preset = tile_avatar.resolve_slot_character_params(cfg, slot)
+        assert preset, (
+            f"roster slot {slot} ({entry!r}) resolves no character_params, so its "
+            "tile would fall back to the ASCII face on air"
+        )
+        assert preset in character_schema.PRESETS, (
+            f"roster slot {slot} names preset {preset!r}, absent from PRESETS"
+        )
+
+
+def test_uncast_slots_resolve_no_preset():
+    """The complement: an uncast slot must NOT get a pixel window."""
+    cfg = yaml.safe_load(pathlib.Path(ROUNDTABLE_CONFIG).read_text(encoding="utf-8"))
+    roster = cfg.get("roster") or {}
+    for slot in SLOTS:
+        if slot not in roster:
+            assert tile_avatar.resolve_slot_character_params(cfg, slot) is None
