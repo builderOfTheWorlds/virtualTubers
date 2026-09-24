@@ -1,0 +1,10 @@
+<table id="theme-workers-table" class="panel-table" hx-get="/partials/theme-workers" hx-trigger="every 15s" hx-swap="outerHTML">
+  <thead>
+    <tr><th>worker</th><th>active theme</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for worker in theme_workers %}
+      {% include "_theme_worker_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>

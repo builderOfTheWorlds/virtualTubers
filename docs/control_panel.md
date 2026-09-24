@@ -26,6 +26,15 @@ Sections on the one dashboard page (`GET /`):
   rows (docs/log_shipper.md).
 - **Rerun Theater replays** — list, upload, view, and delete episodes in the
   library (docs/episode_store.md).
+- **Console theme** — live-switch a worker's terminal color scheme (any of
+  the 1247 Gogh schemes, see `app/console_theme.py`), auto-refreshed every
+  15s. Applies without a redeploy or stream interruption
+  (`app/theme_watcher.py` repaints the running xterm via an OSC escape
+  sequence). Covers all 8 worker containers, including `tuber_0` (the GM's
+  own channel) and `roundtable` — both run `theme_watcher.py` unconditionally
+  even though they're excluded from the Workers/message-composer sections
+  above (which only address the six character-worker IDs valid for
+  `operator_message`/`replay_request`).
 
 ## Signature
 
@@ -49,6 +58,10 @@ GET  /partials/replays          -> HTML   # replays section fragment
 POST /replays/upload            -> HTML   # form: file, name, overwrite
 POST /replays/{name}/delete     -> HTML   # empty body on success (row removed), row+error on failure
 GET  /replays/{name}/view       -> HTML   # pretty-printed script fragment
+
+GET  /partials/theme-workers            -> HTML   # theme table fragment (polled every 15s)
+POST /console-theme/{worker_id}         -> HTML   # form: theme; single updated <tr>
+POST /console-theme/{worker_id}/clear   -> HTML   # revert to config default; single updated <tr>
 ```
 
 Internal:
@@ -77,6 +90,11 @@ async def _mapi_request(method: str, path: str, **kwargs) -> MapiResult
   `MESSAGE_TYPE_EXAMPLES`, for the same reason stated there: message-api
   exposes no "list workers" or "list message types" endpoint, and these can
   drift from `docker-compose.yml`.
+- `THEME_WORKER_IDS` — `WORKER_IDS` plus `tuber_0` and `roundtable`. Both run
+  `app/theme_watcher.py` unconditionally at boot (`startup.sh` §7.6) and so
+  are valid live-retheme targets even though they're deliberately excluded
+  from `WORKER_IDS` for message-composer/replay-play purposes (see
+  `panel.py`'s own comment on `WORKER_TO_TUBER_SLOT`).
 - `KNOWN_LOG_TYPES` — in-memory list of message types shown in the Log
   Filter table, seeded with `status_update` (the one type
   `log_filter_control.py` excludes by default). Growing this list via the
@@ -149,6 +167,10 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.1.0 (2026-09-24) — Console theme section: live-switch/clear a worker's
+  terminal color scheme via `services/message-api`'s
+  `/console-theme(s)` endpoints (`app/console_theme.py`). Covers all 8
+  worker containers via the new `THEME_WORKER_IDS`.
 - v1.0.0 (2026-08-17) — Initial version. Dashboard covering workers,
   log-filter, message injection, log pruning, and the Rerun Theater replay
   library, all proxied through `services/message-api`. Optional HTTP Basic

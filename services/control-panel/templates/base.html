@@ -65,5 +65,13 @@
     <h2>Rerun Theater replays</h2>
     {% include "_replays_section.html" %}
   </section>
+
+  <section>
+    <h2>Console theme <span class="hint">live-switch a worker's terminal color scheme — no redeploy, no stream interruption</span></h2>
+    {% if themes_error %}
+      <div class="banner err">{{ themes_error }}</div>
+    {% endif %}
+    {% include "_theme_workers_table.html" %}
+  </section>
 </body>
 </html>

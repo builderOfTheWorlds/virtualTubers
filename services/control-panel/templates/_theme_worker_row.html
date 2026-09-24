@@ -1,0 +1,24 @@
+<tr id="theme-worker-row-{{ worker.id }}">
+  <td class="mono">{{ worker.id }}</td>
+  <td>
+    {% if worker.error %}
+      <span class="badge err" title="{{ worker.error }}">error</span>
+    {% else %}
+      <span class="mono">{{ worker.theme or "—" }}</span>
+      {% if worker.overridden %}<span class="badge on" title="live override — takes precedence over the worker's config file until cleared">live</span>{% endif %}
+    {% endif %}
+  </td>
+  <td class="actions">
+    <form class="inline-form" hx-post="/console-theme/{{ worker.id }}" hx-target="closest tr" hx-swap="outerHTML">
+      <select name="theme" class="theme-select">
+        {% for t in themes %}<option value="{{ t }}" {% if t == worker.theme %}selected{% endif %}>{{ t }}</option>{% endfor %}
+      </select>
+      <button class="btn" type="submit">Apply</button>
+    </form>
+    {% if worker.overridden %}
+      <button class="btn danger"
+        hx-post="/console-theme/{{ worker.id }}/clear" hx-target="closest tr" hx-swap="outerHTML"
+        title="revert to this worker's config file default">Clear</button>
+    {% endif %}
+  </td>
+</tr>

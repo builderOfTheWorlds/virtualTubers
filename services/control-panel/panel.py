@@ -95,6 +95,20 @@ WORKER_TO_TUBER_SLOT = {
     "manager": "tuber_0",
 }
 
+# ── Console theme control (app/console_theme.py, message-api's
+#    /console-theme(s) endpoints) ────────────────────────────────────────
+# Every worker container runs app/theme_watcher.py unconditionally
+# (startup.sh §7.6), including tuber_0 (the GM's own channel) and
+# roundtable — unlike WORKER_IDS above, which deliberately excludes both
+# for its own purposes (operator_message/replay_request addressing). All 8
+# are valid live-retheme targets.
+THEME_WORKER_IDS = WORKER_IDS + ["tuber_0", ROUNDTABLE_WORKER_ID]
+
+# In-memory cache of the theme name list — it's static per deploy
+# (config/themes/gogh_themes.json ships baked into the message-api image),
+# so there's no reason to re-fetch all 1247 names on every page load.
+_THEME_NAMES_CACHE: Optional[list] = None
+
 # In-memory only (module-level, resets on restart) — message-api has no
 # "list filtered types" endpoint either, so the panel just tracks whichever
 # types an operator has looked at/added this process's lifetime, seeded with
@@ -192,6 +206,28 @@ async def _log_filter_status(message_type: str) -> dict:
     return {"type": message_type, "excluded": None, "error": result.error}
 
 
+async def _theme_names() -> list:
+    global _THEME_NAMES_CACHE
+    if _THEME_NAMES_CACHE is not None:
+        return _THEME_NAMES_CACHE
+    result = await _mapi_request("GET", "/console-themes")
+    if result.ok:
+        _THEME_NAMES_CACHE = result.data.get("themes", [])
+    return _THEME_NAMES_CACHE or []
+
+
+async def _worker_theme_status(worker_id: str) -> dict:
+    result = await _mapi_request("GET", f"/console-theme/{worker_id}")
+    if result.ok:
+        return {
+            "id": worker_id,
+            "theme": result.data.get("theme"),
+            "overridden": result.data.get("overridden"),
+            "error": None,
+        }
+    return {"id": worker_id, "theme": None, "overridden": False, "error": result.error}
+
+
 @app.get("/healthz")
 def healthz():
     return {"status": "ok"}
@@ -203,6 +239,8 @@ async def dashboard(request: Request):
     log_types = [await _log_filter_status(t) for t in KNOWN_LOG_TYPES]
     replays_result = await _mapi_request("GET", "/replays")
     replays = replays_result.data.get("episodes", []) if replays_result.ok else []
+    themes = await _theme_names()
+    theme_workers = [await _worker_theme_status(w) for w in THEME_WORKER_IDS]
     return templates.TemplateResponse(request, "base.html", {
         "message_api_url": MESSAGE_API_URL,
         "campaign_manager_url": CAMPAIGN_MANAGER_URL,
@@ -214,6 +252,9 @@ async def dashboard(request: Request):
         "replays_error": None if replays_result.ok else replays_result.error,
         "message_result": None,
         "prune_result": None,
+        "themes": themes,
+        "themes_error": None if themes else "message-api unreachable or returned no themes",
+        "theme_workers": theme_workers,
     })
 
 
@@ -241,6 +282,41 @@ async def enable_worker(request: Request, worker_id: str):
 @app.post("/workers/{worker_id}/disable", response_class=HTMLResponse)
 async def disable_worker(request: Request, worker_id: str):
     return await _set_worker(request, worker_id, False)
+
+
+# ── Console theme ────────────────────────────────────────────────────────
+@app.get("/partials/theme-workers", response_class=HTMLResponse)
+async def partial_theme_workers(request: Request):
+    themes = await _theme_names()
+    theme_workers = [await _worker_theme_status(w) for w in THEME_WORKER_IDS]
+    return templates.TemplateResponse(request, "_theme_workers_table.html", {
+        "theme_workers": theme_workers, "themes": themes,
+    })
+
+
+@app.post("/console-theme/{worker_id}", response_class=HTMLResponse)
+async def set_console_theme(request: Request, worker_id: str, theme: str = Form(...)):
+    result = await _mapi_request("POST", f"/console-theme/{worker_id}", json={"theme": theme})
+    themes = await _theme_names()
+    if result.ok:
+        worker = {"id": worker_id, "theme": result.data.get("theme"), "overridden": True, "error": None}
+    else:
+        worker = {"id": worker_id, "theme": None, "overridden": False, "error": result.error}
+    return templates.TemplateResponse(request, "_theme_worker_row.html", {"worker": worker, "themes": themes})
+
+
+@app.post("/console-theme/{worker_id}/clear", response_class=HTMLResponse)
+async def clear_console_theme(request: Request, worker_id: str):
+    result = await _mapi_request("DELETE", f"/console-theme/{worker_id}")
+    themes = await _theme_names()
+    if result.ok:
+        # Re-resolve so the row shows what the worker will actually fall
+        # back to (its config file's console.theme, or the built-in
+        # default) rather than a bare "cleared" state.
+        worker = await _worker_theme_status(worker_id)
+    else:
+        worker = {"id": worker_id, "theme": None, "overridden": False, "error": result.error}
+    return templates.TemplateResponse(request, "_theme_worker_row.html", {"worker": worker, "themes": themes})
 
 
 # ── Log filter ───────────────────────────────────────────────────────────
