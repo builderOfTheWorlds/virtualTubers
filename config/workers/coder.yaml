@@ -117,9 +117,9 @@ avatar:
     height: 470
     # Composite the render onto the console's own background instead of
     # leaving un-drawn pixels black (pixel_raster.composite_on_background).
-    # Defaults to startup.sh's xterm `-bg '#2b2b2b'`; set `none` to go back
+    # Defaults to startup.sh's xterm `-bg '#002b36'` (Solarized Dark base03); set `none` to go back
     # to the hard black rectangle. Keep in sync if that -bg ever changes.
-    background: "#2b2b2b"
+    background: "#002b36"
   # `expressions` below is unused by codec_avatar (it has no 2D face to
   # draw eyes/mouth into — expression drives rotation speed + tint instead)
   # but is kept so flipping `provider` back to `builtin` still renders

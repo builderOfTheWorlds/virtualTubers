@@ -49,13 +49,14 @@ CODEC_PALETTE = np.array([
 TINT_CODEC_GREEN = np.array([0.38, 1.00, 0.52], dtype=np.float32)
 TINT_AMBER = np.array([1.00, 0.72, 0.22], dtype=np.float32)
 
-#: The xterm background startup.sh launches the console with (`-bg '#2b2b2b'`).
+#: The xterm background startup.sh launches the console with
+#: (`-bg '#002b36'` — Solarized Dark base03).
 #: The avatar is an X window sitting ON TOP of that console, not inside the
 #: tmux grid, so anything it leaves unpainted reads as a hard black rectangle
 #: cut out of the layout (see the 2026-09-22 screenshot). Compositing the
 #: render onto this exact color instead makes the window's edges invisible —
 #: the face appears to float in the terminal. Keep in sync with startup.sh.
-CONSOLE_BG = np.array([0x2B, 0x2B, 0x2B], dtype=np.float32) / 255.0
+CONSOLE_BG = np.array([0x00, 0x2B, 0x36], dtype=np.float32) / 255.0
 
 #: Key light, normalized: front, above, slightly to the viewer's left.
 #: Codec portraits are lit from the front so the face stays legible; the
@@ -247,7 +248,7 @@ def parse_background(value, default=CONSOLE_BG):
 
     Accepts what a YAML worker config can plausibly hold: ``None`` (use
     `default`), the strings ``"none"``/``"off"``/``"black"`` (disable
-    compositing -> returns None), a ``"#2b2b2b"``/``"2b2b2b"`` hex string,
+    compositing -> returns None), a ``"#002b36"``/``"002b36"`` hex string,
     or a 3-sequence of either 0..1 floats or 0..255 ints. Anything
     unparseable logs a warning and falls back to `default` rather than
     killing the avatar pane over a cosmetic setting.

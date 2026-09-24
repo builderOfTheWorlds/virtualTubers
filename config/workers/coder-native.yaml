@@ -94,8 +94,8 @@ avatar:
     width: 549
     height: 470
     # Composite onto the console grey instead of leaving un-drawn pixels
-    # hard black — matches startup.sh's xterm `-bg '#2b2b2b'`.
-    background: "#2b2b2b"
+    # hard black — matches startup.sh's xterm `-bg '#002b36'` (Solarized Dark base03).
+    background: "#002b36"
   # `expressions` below is unused by codec_avatar but kept so flipping
   # `provider` back to `builtin` still renders correctly.
   expressions:

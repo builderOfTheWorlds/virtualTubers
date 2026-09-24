@@ -37,7 +37,11 @@ def test_bright_face_pixels_are_barely_shifted():
     frame = np.full((2, 2, 3), 0.85, dtype=np.float32)
     out = composite_on_background(frame, CONSOLE_BG)
     assert np.all(out >= 0.85)          # screen only ever brightens
-    assert np.all(out - 0.85 < 0.03)    # ...and barely, up here
+    # ...and barely, up here. The bound is 0.05 rather than 0.03 because the
+    # Solarized base03 ground is a saturated teal (0x00/0x2b/0x36): its blue
+    # channel shifts a 0.85 pixel by ~0.032, where the old neutral grey moved
+    # all three channels equally by ~0.025.
+    assert np.all(out - 0.85 < 0.05)
 
 
 def test_output_stays_in_unit_range_and_keeps_shape():
@@ -72,8 +76,8 @@ def test_parse_none_returns_the_console_default():
     assert np.allclose(parse_background(None), CONSOLE_BG)
 
 
-@pytest.mark.parametrize("value", ["#2b2b2b", "2b2b2b", "#2B2B2B"])
-def test_parse_hex_forms_all_match_the_console_grey(value):
+@pytest.mark.parametrize("value", ["#002b36", "002b36", "#002B36"])
+def test_parse_hex_forms_all_match_the_console_background(value):
     assert np.allclose(parse_background(value), CONSOLE_BG, atol=1e-6)
 
 
@@ -100,7 +104,7 @@ def test_parse_float_triple_passes_through():
 
 
 def test_parse_byte_triple_is_scaled_to_unit_range():
-    assert np.allclose(parse_background([43, 43, 43]), CONSOLE_BG, atol=1e-6)
+    assert np.allclose(parse_background([0, 43, 54]), CONSOLE_BG, atol=1e-6)
 
 
 @pytest.mark.parametrize("value", ["not-a-color", "#12345", [1, 2], {}, "#xyzxyz"])

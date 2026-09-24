@@ -11,12 +11,12 @@ punched through the layout — clearly visible in the 2026-09-22 screenshot
 that prompted this change.
 
 `composite_on_background` blends the finished frame over a flat colour —
-by default `CONSOLE_BG`, which is exactly the `-bg '#2b2b2b'` that
+by default `CONSOLE_BG`, which is exactly the `-bg '#002b36'` that
 `startup.sh` launches xterm with — so the window's edges disappear into
 the terminal and the face reads as floating in the console.
 
 `parse_background` is the config-facing half: it turns whatever a worker
-YAML holds (`"#2b2b2b"`, `"none"`, `[43, 43, 43]`, …) into the concrete
+YAML holds (`"#002b36"`, `"none"`, `[0, 43, 54]`, …) into the concrete
 value `composite_on_background` wants, and never raises.
 
 ### Why a screen blend, not an alpha key
@@ -69,9 +69,9 @@ Accepted `value` forms:
 - `None` → `default`
 - `"none"` / `"off"` / `"transparent"` (case/space insensitive) → `None`, i.e. disable compositing
 - `"black"` → `[0, 0, 0]` (composites onto black — visually a no-op, but distinct from `none`)
-- `"#2b2b2b"`, `"2b2b2b"`, `"#fff"` → the parsed colour
+- `"#002b36"`, `"002b36"`, `"#fff"` → the parsed colour
 - `[0.17, 0.17, 0.17]` → used as-is
-- `[43, 43, 43]` → any channel `> 1.0` is treated as `0..255` and scaled
+- `[0, 43, 54]` → any channel `> 1.0` is treated as `0..255` and scaled
 - anything else → a warning is logged and `default` is returned
 
 ## Return Value
@@ -106,7 +106,7 @@ img = composite_on_background(img, self.background)  # then blend to console
 ```python
 from pixel_raster import parse_background
 
-cfg = {"background": "#2b2b2b"}      # from config/workers/<role>.yaml
+cfg = {"background": "#002b36"}      # from config/workers/<role>.yaml
 background = parse_background(cfg.get("background"))
 source = FrameSource("chadwick", width=576, height=432, background=background)
 ```
@@ -118,7 +118,7 @@ avatar:
   provider: codec_avatar
   codec_avatar:
     character_params: chadwick
-    background: "#2b2b2b"   # or `none` for the old black surround
+    background: "#002b36"   # or `none` for the old black surround
 ```
 
 ## Error Handling

@@ -414,7 +414,7 @@ def test_all_tuber_base_workers_share_one_avatar_window_geometry():
     assert window_pos == (821, 8)
     assert width == 549
     assert height == 470
-    assert background == "#2b2b2b"
+    assert background == "#002b36"
 
 
 def test_every_tuber_base_worker_uses_a_known_character_preset():

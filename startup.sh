@@ -160,12 +160,63 @@ set -e
 # No window manager: a decorated window (title bar + borders) would inset the
 # terminal and leave black margins in the capture. Running xterm undecorated and
 # sizing it to the exact display dimensions makes it fill the whole 1920x1080 frame.
-log "Opening xterm (${VW}x${VH}, font ${FONT_SIZE})"
+# ── Solarized Dark palette ────────────────────────────────────────────────────
+# Replaces the old `-bg '#2b2b2b' -fg '#e6edf3'` on xterm's DEFAULT ANSI colors,
+# whose pure-primary red/green/blue (#ff0000-class) against near-black read as
+# harsh, vibrating edges once Twitch's encoder has chewed on them — thin
+# monospace glyphs at font size 7 are the worst case for chroma subsampling.
+# Solarized Dark keeps every foreground within a narrow luminance band on a
+# low-contrast base03 ground, which survives a low bitrate far better.
+#
+# The panes never hardcode hex: app/tail_bus.py (and the other pane scripts)
+# emit plain ANSI 30-37/90 codes, so remapping color0-15 HERE retints the whole
+# layout — feed, chats, thinking pane, borders — with no per-pane change.
+#
+# ONE DELIBERATE DEVIATION from the canonical/gogh palette: upstream sets
+# color8 ("bright black") to base03 #002b36, i.e. identical to the background.
+# tail_bus.py maps "gray"/"grey" -> ANSI 90 = color8, so taking that literally
+# renders every de-emphasized line INVISIBLE on stream. color8 is base01
+# #586e75 instead — still clearly dimmer than body text, but legible.
+SOL_BASE03='#002b36'   # background
+SOL_BASE02='#073642'   # background highlight / borders
+SOL_BASE01='#586e75'   # de-emphasized text (see color8 note above)
+SOL_BASE00='#657b83'
+SOL_BASE0='#839496'    # default body text
+SOL_BASE1='#93a1a1'    # emphasized text
+SOL_BASE2='#eee8d5'
+SOL_BASE3='#fdf6e3'
+SOL_YELLOW='#b58900'
+SOL_ORANGE='#cb4b16'
+SOL_RED='#dc322f'
+SOL_MAGENTA='#d33682'
+SOL_VIOLET='#6c71c4'
+SOL_BLUE='#268bd2'
+SOL_CYAN='#2aa198'
+SOL_GREEN='#859900'
+
+log "Opening xterm (${VW}x${VH}, font ${FONT_SIZE}, Solarized Dark)"
 DISPLAY="${DISPLAY}" xterm \
     -fa 'Monospace' -fs "${FONT_SIZE}" \
     -b 0 -bw 0 \
     -geometry "+0+0" \
-    -bg '#2b2b2b' -fg '#e6edf3' \
+    -bg "${SOL_BASE03}" -fg "${SOL_BASE0}" \
+    -xrm "XTerm*cursorColor: ${SOL_BASE1}" \
+    -xrm "XTerm*color0: ${SOL_BASE02}" \
+    -xrm "XTerm*color1: ${SOL_RED}" \
+    -xrm "XTerm*color2: ${SOL_GREEN}" \
+    -xrm "XTerm*color3: ${SOL_YELLOW}" \
+    -xrm "XTerm*color4: ${SOL_BLUE}" \
+    -xrm "XTerm*color5: ${SOL_MAGENTA}" \
+    -xrm "XTerm*color6: ${SOL_CYAN}" \
+    -xrm "XTerm*color7: ${SOL_BASE2}" \
+    -xrm "XTerm*color8: ${SOL_BASE01}" \
+    -xrm "XTerm*color9: ${SOL_ORANGE}" \
+    -xrm "XTerm*color10: ${SOL_BASE01}" \
+    -xrm "XTerm*color11: ${SOL_BASE00}" \
+    -xrm "XTerm*color12: ${SOL_BASE0}" \
+    -xrm "XTerm*color13: ${SOL_VIOLET}" \
+    -xrm "XTerm*color14: ${SOL_BASE1}" \
+    -xrm "XTerm*color15: ${SOL_BASE3}" \
     -e "tmux attach -t ${SESSION}" &
 XTERM_PID=$!
 sleep 2

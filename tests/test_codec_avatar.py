@@ -114,7 +114,11 @@ def test_frame_source_composites_onto_the_console_background_by_default():
     # The extreme corners are always outside the head at this framing.
     corners = np.stack([img[0, 0], img[0, -1], img[-1, 0], img[-1, -1]])
     assert np.all(corners >= CONSOLE_BG[None, :] - 1e-3)
-    assert img.min() > 0.05  # nothing is pure black any more
+    # No pixel is pure black any more. Tested per-PIXEL (max across channels),
+    # not per-channel: the Solarized base03 ground is a saturated teal whose
+    # red channel is legitimately 0x00, so a per-channel floor would fail on
+    # the very background it was meant to prove is present.
+    assert img.max(axis=2).min() > 0.05
 
 
 def test_frame_source_background_none_keeps_the_black_surround():

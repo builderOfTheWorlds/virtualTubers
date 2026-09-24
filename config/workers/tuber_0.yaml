@@ -182,8 +182,8 @@ avatar:
     width: 549
     height: 470
     # Composite onto the console background instead of leaving un-drawn pixels
-    # black. Matches startup.sh's xterm `-bg '#2b2b2b'`; keep in sync with it.
-    background: "#2b2b2b"
+    # black. Matches startup.sh's xterm `-bg '#002b36'` (Solarized Dark base03); keep in sync with it.
+    background: "#002b36"
   # `expressions` below is unused by codec_avatar (expression drives rotation
   # speed + tint rather than a 2D face) but is kept so flipping `provider` back
   # to `builtin` still renders correctly — the same pattern every other worker

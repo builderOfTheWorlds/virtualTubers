@@ -261,11 +261,11 @@ def resolve_slot_character_params(config, slot):
 #:      solo character channels, where the head IS the frame, keep 30.
 TILE_AVATAR_FPS = 12
 
-#: Window background for a tile head. Matches the dark console grey the tile
-#: frame is drawn on, so the square window reads as part of the tile instead
-#: of a slab pasted over it (the same reasoning as codec_avatar's default
-#: console-grey composite).
-TILE_AVATAR_BACKGROUND = "#2b2b2b"
+#: Window background for a tile head. Matches the Solarized Dark base03 the
+#: tile frame is drawn on, so the square window reads as part of the tile
+#: instead of a slab pasted over it (the same reasoning as codec_avatar's
+#: default console composite). Keep in sync with startup.sh's xterm `-bg`.
+TILE_AVATAR_BACKGROUND = "#002b36"
 
 #: How long to keep retrying pane geometry detection before giving up.
 #: startup.sh launches every pane's process BEFORE it creates and resizes
