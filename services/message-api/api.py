@@ -28,6 +28,7 @@ from fastapi import FastAPI, HTTPException, Path, Query, Request
 from pydantic import BaseModel
 
 import episode_store
+from console_theme import ConsoleThemeControl, get_theme, load_themes, theme_exists
 from episode_validator import EpisodeInvalid, resolve_name, validate_episode
 from log_filter_control import LogFilterControl
 from log_prune import prune_logs
@@ -43,6 +44,7 @@ producer = MessageProducer(
 )
 control = WorkerControl.from_config()
 log_filter = LogFilterControl.from_config()
+console_theme = ConsoleThemeControl.from_config()
 
 # Example message types shown as a dropdown in /docs; accepts any string.
 MESSAGE_TYPE_EXAMPLES = {
@@ -68,6 +70,10 @@ class InjectMessage(BaseModel):
     to: str
     type: str = "operator_message"
     payload: dict = {}
+
+
+class SetThemeRequest(BaseModel):
+    theme: str
 
 
 class PruneLogsRequest(BaseModel):
@@ -160,6 +166,50 @@ def _set_log_filter(message_type: str, excluded: bool):
     except redis.RedisError as exc:
         raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
     return {"type": message_type, "excluded": excluded}
+
+
+# ── Console theme control ────────────────────────────────────────────────────
+# Gogh's full theme set (config/themes/gogh_themes.json, 1247 schemes) applied
+# live to a worker's xterm via app/theme_watcher.py — see console_theme.py's
+# module docstring for the full precedence/plumbing story.
+@app.get("/console-themes")
+def list_console_themes():
+    """Every available theme name — what a `theme` value below must match."""
+    return {"themes": sorted(load_themes().keys())}
+
+
+@app.get("/console-theme/{worker_id}")
+def get_console_theme(worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES)):
+    active = console_theme.get_theme_name(worker_id)
+    return {"worker_id": worker_id, "theme": active, "overridden": active is not None}
+
+
+@app.post("/console-theme/{worker_id}")
+def set_console_theme(
+    body: SetThemeRequest,
+    worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES),
+):
+    # Validate against the real theme set up front: a typo here should be a
+    # 400 now, not a silent no-op fallback the next time theme_watcher polls.
+    if not theme_exists(body.theme):
+        raise HTTPException(status_code=404, detail=f"unknown theme {body.theme!r}")
+    theme = get_theme(body.theme)
+    try:
+        console_theme.set_theme_name(worker_id, theme["name"])
+    except redis.RedisError as exc:
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    return {"worker_id": worker_id, "theme": theme["name"]}
+
+
+@app.delete("/console-theme/{worker_id}")
+def clear_console_theme(worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES)):
+    """Drop the live override so the worker falls back to its config file's
+    `console.theme` (or the built-in default) on theme_watcher's next poll."""
+    try:
+        console_theme.clear_theme_name(worker_id)
+    except redis.RedisError as exc:
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    return {"worker_id": worker_id, "theme": None, "overridden": False}
 
 
 @app.post("/logs/prune")

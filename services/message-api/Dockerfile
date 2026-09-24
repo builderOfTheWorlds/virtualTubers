@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY app/message_bus.py /app/message_bus.py
 COPY app/worker_control.py /app/worker_control.py
+COPY app/console_theme.py /app/console_theme.py
+COPY config/themes/gogh_themes.json /config/themes/gogh_themes.json
 COPY app/log_filter_control.py /app/log_filter_control.py
 COPY app/log_prune.py /app/log_prune.py
 # Episode upload (POST /replays): the store, the validator, and everything

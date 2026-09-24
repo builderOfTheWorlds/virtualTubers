@@ -160,64 +160,29 @@ set -e
 # No window manager: a decorated window (title bar + borders) would inset the
 # terminal and leave black margins in the capture. Running xterm undecorated and
 # sizing it to the exact display dimensions makes it fill the whole 1920x1080 frame.
-# ── Solarized Dark palette ────────────────────────────────────────────────────
-# Replaces the old `-bg '#2b2b2b' -fg '#e6edf3'` on xterm's DEFAULT ANSI colors,
-# whose pure-primary red/green/blue (#ff0000-class) against near-black read as
-# harsh, vibrating edges once Twitch's encoder has chewed on them — thin
-# monospace glyphs at font size 7 are the worst case for chroma subsampling.
-# Solarized Dark keeps every foreground within a narrow luminance band on a
-# low-contrast base03 ground, which survives a low bitrate far better.
+# ── Console theme (config-file default, live-switchable via message-api) ──────
+# Color scheme comes from app/console_theme.py, NOT hardcoded here — see that
+# module's docstring. It resolves `console.theme` from CONFIG_PATH (falling
+# back to "Builtin Solarized Dark", the scheme this UI shipped with on
+# 2026-09-24) against config/themes/gogh_themes.json (all 1247 Gogh schemes),
+# and prints ready-to-eval `-xrm 'XTerm*colorN: #rrggbb'` args covering
+# background/foreground/cursor/color0-15 in one shot.
 #
 # The panes never hardcode hex: app/tail_bus.py (and the other pane scripts)
-# emit plain ANSI 30-37/90 codes, so remapping color0-15 HERE retints the whole
+# emit plain ANSI 30-37/90 codes, so setting color0-15 HERE retints the whole
 # layout — feed, chats, thinking pane, borders — with no per-pane change.
-#
-# ONE DELIBERATE DEVIATION from the canonical/gogh palette: upstream sets
-# color8 ("bright black") to base03 #002b36, i.e. identical to the background.
-# tail_bus.py maps "gray"/"grey" -> ANSI 90 = color8, so taking that literally
-# renders every de-emphasized line INVISIBLE on stream. color8 is base01
-# #586e75 instead — still clearly dimmer than body text, but legible.
-SOL_BASE03='#002b36'   # background
-SOL_BASE02='#073642'   # background highlight / borders
-SOL_BASE01='#586e75'   # de-emphasized text (see color8 note above)
-SOL_BASE00='#657b83'
-SOL_BASE0='#839496'    # default body text
-SOL_BASE1='#93a1a1'    # emphasized text
-SOL_BASE2='#eee8d5'
-SOL_BASE3='#fdf6e3'
-SOL_YELLOW='#b58900'
-SOL_ORANGE='#cb4b16'
-SOL_RED='#dc322f'
-SOL_MAGENTA='#d33682'
-SOL_VIOLET='#6c71c4'
-SOL_BLUE='#268bd2'
-SOL_CYAN='#2aa198'
-SOL_GREEN='#859900'
-
-log "Opening xterm (${VW}x${VH}, font ${FONT_SIZE}, Solarized Dark)"
-DISPLAY="${DISPLAY}" xterm \
-    -fa 'Monospace' -fs "${FONT_SIZE}" \
+# theme_watcher.py (started in §7.6 below) is what makes a LATER switch (via
+# POST /console-theme/{worker_id}) repaint this same xterm live, without
+# relaunching it.
+THEME_NAME="$(python3 /app/console_theme.py --config "${CONFIG_PATH}" --name 2>/dev/null || echo 'Builtin Solarized Dark')"
+XTERM_XRM_ARGS="$(python3 /app/console_theme.py --config "${CONFIG_PATH}" --xterm-args)"
+log "Opening xterm (${VW}x${VH}, font ${FONT_SIZE}, theme '${THEME_NAME}')"
+eval "DISPLAY=\"\${DISPLAY}\" xterm \
+    -fa 'Monospace' -fs \"\${FONT_SIZE}\" \
     -b 0 -bw 0 \
-    -geometry "+0+0" \
-    -bg "${SOL_BASE03}" -fg "${SOL_BASE0}" \
-    -xrm "XTerm*cursorColor: ${SOL_BASE1}" \
-    -xrm "XTerm*color0: ${SOL_BASE02}" \
-    -xrm "XTerm*color1: ${SOL_RED}" \
-    -xrm "XTerm*color2: ${SOL_GREEN}" \
-    -xrm "XTerm*color3: ${SOL_YELLOW}" \
-    -xrm "XTerm*color4: ${SOL_BLUE}" \
-    -xrm "XTerm*color5: ${SOL_MAGENTA}" \
-    -xrm "XTerm*color6: ${SOL_CYAN}" \
-    -xrm "XTerm*color7: ${SOL_BASE2}" \
-    -xrm "XTerm*color8: ${SOL_BASE01}" \
-    -xrm "XTerm*color9: ${SOL_ORANGE}" \
-    -xrm "XTerm*color10: ${SOL_BASE01}" \
-    -xrm "XTerm*color11: ${SOL_BASE00}" \
-    -xrm "XTerm*color12: ${SOL_BASE0}" \
-    -xrm "XTerm*color13: ${SOL_VIOLET}" \
-    -xrm "XTerm*color14: ${SOL_BASE1}" \
-    -xrm "XTerm*color15: ${SOL_BASE3}" \
-    -e "tmux attach -t ${SESSION}" &
+    -geometry \"+0+0\" \
+    ${XTERM_XRM_ARGS}
+    -e \"tmux attach -t \${SESSION}\" &"
 XTERM_PID=$!
 sleep 2
 
@@ -317,6 +282,17 @@ log "Starting roundtable director (headless — see startup.sh §7.5)"
 python3 /app/replay_pane.py --config "${CONFIG_PATH}" &
 REPLAY_PANE_PID=$!
 
+# ── 7.6 Console theme watcher (headless) ───────────────────────────────────────
+# app/theme_watcher.py polls for a POST /console-theme/{worker_id} switch
+# (message-api -> ConsoleThemeControl, Redis-backed) and, on change, re-paints
+# the xterm opened in §6 via a live OSC escape sequence — no restart, no
+# stream interruption. Without this process a theme switch only ever takes
+# effect on the NEXT container restart, which is not what "at will" (the
+# feature's whole point) means.
+log "Starting console theme watcher (headless — see startup.sh §7.6)"
+python3 /app/theme_watcher.py --config "${CONFIG_PATH}" --session "${SESSION}" &
+THEME_WATCHER_PID=$!
+
 # ── 8. Stream supervisor ───────────────────────────────────────────────────────
 # Runs ffmpeg as a child process it starts/stops based on this worker's on/off
 # flag (app/worker_control.py, toggled via message-api's /workers/{id}/enable|
@@ -334,4 +310,4 @@ python3 /app/stream_supervisor.py \
     --display "${DISPLAY}"
 
 log "Stream supervisor exited. Cleaning up."
-kill $AGENT_PID $XTERM_PID $XVFB_PID 2>/dev/null
+kill $AGENT_PID $THEME_WATCHER_PID $XTERM_PID $XVFB_PID 2>/dev/null

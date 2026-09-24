@@ -130,6 +130,10 @@ COPY config/worker.yaml /config/worker.yaml
 # In k8s these become a shared panels ConfigMap + per-role layout ConfigMaps.
 COPY config/panels/ /config/panels/
 COPY config/layouts/ /config/layouts/
+# Console color schemes (app/console_theme.py) — the full Gogh dump, so a
+# worker can be retargeted to any of the 1247 built-in schemes without a
+# rebuild (config file default + live switch via message-api).
+COPY config/themes/ /config/themes/
 
 # ── Startup ───────────────────────────────────────────────────────────────────
 COPY startup.sh /startup.sh

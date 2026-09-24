@@ -65,6 +65,23 @@ voice:
   verbosity: 0.8
   verbatim: true
 
+# ── Console color scheme ───────────────────────────────────────────────────────
+# Optional top-level block. `theme` names a Gogh scheme (config/themes/
+# gogh_themes.json, 1247 options — `python3 app/console_theme.py --list`)
+# applied to this worker's xterm at boot. Unset (or the whole `console:`
+# block omitted) falls back to console_theme.DEFAULT_THEME_NAME ("Builtin
+# Solarized Dark" — the scheme this UI shipped with, 2026-09-24).
+#
+# This is the boot-time DEFAULT only. Switch it live, without a redeploy or
+# stream interruption (app/theme_watcher.py repaints the running xterm via
+# an OSC escape sequence), through message-api:
+#   POST /console-theme/{worker_id}  {"theme": "Dracula"}
+#   DELETE /console-theme/{worker_id}   # revert to this config's value
+# A live override takes precedence over this value until cleared — see
+# app/console_theme.py's resolve_active_theme_name for the full precedence.
+# console:
+#   theme: "Builtin Solarized Dark"
+
 avatar:
   # Chadwick is the FLAGSHIP character for the parametric generator
   # (docs/avatar_3d_design.md §5). Live pixel-rendered via codec_avatar
