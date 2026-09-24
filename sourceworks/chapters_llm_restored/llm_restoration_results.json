@@ -1,0 +1,20 @@
+[
+  {
+    "chapter_num": 1,
+    "windows": 1114,
+    "scenes_found": 6,
+    "stats": {
+      "chapter_num": 1,
+      "original_size": 5924829,
+      "cleaned_size": 6584071,
+      "windows_total": 1114,
+      "windows_hallucinated": 0,
+      "windows_error": 1105,
+      "windows_ok": 9,
+      "hallucination_rate": 0.0,
+      "avg_api_time_sec": 28.842398310478114,
+      "total_api_time_sec": 32130.43171787262,
+      "llm_model": "llama3.1:8b"
+    }
+  }
+]

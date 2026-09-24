@@ -1,0 +1,8 @@
+Column Descriptors
+character_name: Name of the character speaking
+book_title: Title of the book the dialogue is from
+chapter: Chapter number or name
+dialogue_text: The actual text of the character's dialogue
+context: Brief description of the scene or situation (if available)
+page_number: Page number in the book (if available)
+timestamp: Timestamp or scene marker for movie dialogues (if applicable)
