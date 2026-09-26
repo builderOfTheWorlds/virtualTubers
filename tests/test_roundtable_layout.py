@@ -292,14 +292,19 @@ def test_every_cast_slot_in_the_shipped_roster_has_a_3d_preset():
     roster = cfg.get("roster") or {}
     assert roster, "roundtable.yaml must cast its slots"
     for slot, entry in roster.items():
-        preset = tile_avatar.resolve_slot_character_params(cfg, slot)
-        assert preset, (
+        params = tile_avatar.resolve_slot_character_params(cfg, slot)
+        assert params, (
             f"roster slot {slot} ({entry!r}) resolves no character_params, so its "
             "tile would fall back to the ASCII face on air"
         )
-        assert preset in character_schema.PRESETS, (
-            f"roster slot {slot} names preset {preset!r}, absent from PRESETS"
-        )
+        if isinstance(params, str):
+            assert params in character_schema.PRESETS, (
+                f"roster slot {slot} names preset {params!r}, absent from PRESETS"
+            )
+        else:
+            # Inline sliders (the character generator's cast export): they
+            # must be valid, not just present.
+            character_schema.resolve_params(params, strict=True)
 
 
 def test_uncast_slots_resolve_no_preset():

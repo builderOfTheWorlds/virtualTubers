@@ -209,9 +209,11 @@ roster:
   #   tuber_N: "Name"                              -> title only, ASCII face
   #   tuber_N: {name: "Name", character_params: X}  -> title + a 3D codec head
   # The mapping form is what gives a tile its rendered head; a plain string
-  # leaves that slot on the 3-row ASCII fallback. character_params must name a
-  # preset in app/character_schema.py PRESETS, and each slot's preset matches
-  # the character's own channel so a face is the same face on both streams.
+  # leaves that slot on the 3-row ASCII fallback. character_params is a preset
+  # name from app/character_schema.py PRESETS or an inline slider mapping (the
+  # same two forms avatar.codec_avatar.character_params takes), and each slot's
+  # params match the character's own channel so a face is the same face on
+  # both streams.
   tuber_1: {name: "Chadwick",    character_params: chadwick}  # coder / KODI-7
   tuber_2: {name: "Vigil",       character_params: nyx1}      # coder-native / NYX-1
   tuber_3: {name: "Sodacan Bob", character_params: oko2}      # coder-opencode / OKO-2

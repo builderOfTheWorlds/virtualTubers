@@ -1312,6 +1312,74 @@ def test_follower_happy_path_loads_owned_audio_and_notifies_director(
     assert ready_msgs[0]["payload"] == {"airing_id": "airing-77"}
 
 
+def test_follower_with_no_owned_scenes_still_sends_ready(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """A cast slot with NO lines in this show (its worker_id never appears
+    as a value the follower is cast to) must still rebuild its scene list,
+    mark every scene owned=False, and send replay_ready normally — the
+    director's ready-wait must never stall on a legitimately silent
+    follower. Here `cast` maps both speakers to OTHER workers, so
+    follower-2 owns nothing at all."""
+    rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
+                      boss_duration=1.5, coder_duration=2.5)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    # Both speakers cast to OTHER workers — follower-2 is invited (it's a
+    # cast value elsewhere in the full cast, e.g. a third persona slot) but
+    # owns no scene in THIS episode's script.
+    cast = {"boss": "director-1", "coder": "follower-1"}
+    request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
+              "speed": 1000, "worker_name": "KODI-Silent", "director": "director-1"}
+
+    ok = perform_follower_request(request, "follower-2", None, "follower-2",
+                                  config=_duet_config("follower-2"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    assert all(scene["owned"] is False for scene in show)
+    assert all(scene["audio"] is None for scene in show)
+
+    producer = holder["producer"]
+    ready_msgs = [m for m in producer.sent if m["type"] == "replay_ready"]
+    assert len(ready_msgs) == 1
+    assert ready_msgs[0]["to"] == "director-1"
+    assert ready_msgs[0]["payload"] == {"airing_id": "airing-77"}
+
+
+def test_follower_speaker_not_in_script_never_sends_ready(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
+    """Distinct from 'no owned scenes': here the cached rows themselves no
+    longer line up with the current episode script (scene count mismatch —
+    docs/duet_replay.md's 'nothing usable' refusal). This is the one path
+    that can legitimately leave the director's ready-wait hanging: the
+    follower fails BEFORE ever publishing replay_ready, so it must return
+    False and send nothing."""
+    rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder", "text": "x",
+             "audio": None, "audio_duration_s": None}]  # duet_ep's script has TWO scenes
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "follower-1"}
+    request = {"mode": "follow", "airing_id": "airing-mismatch", "episode": "duet_ep", "cast": cast,
+              "speed": 1000, "worker_name": "KODI-Follower", "director": "director-1"}
+
+    ok = perform_follower_request(request, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+
+    assert ok is False
+    assert FakePerformer.instances == []
+    assert "no longer matches" in capsys.readouterr().err
+    # No replay_ready ever published — the director's ready-wait for this
+    # follower will genuinely time out, which is the correct, documented
+    # outcome for this case (not a bug in the ready-gathering step itself).
+    assert holder == {}
+
+
 def test_follower_missing_airing_returns_to_idle_without_performing(
         duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)

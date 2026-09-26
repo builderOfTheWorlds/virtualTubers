@@ -130,6 +130,22 @@ def test_resolve_slot_character_params_returns_none_for_a_plain_string_entry():
     assert resolve_slot_character_params(config, "tuber_1") is None
 
 
+def test_resolve_slot_character_params_passes_an_inline_slider_mapping_through():
+    """The character generator's cast export writes sliders inline, not a
+    preset name — the same inline form a channel's codec_avatar takes."""
+    sliders = {"head_width": 0.45, "eye_size": 0.6, "accent_color": "RED"}
+    config = {"roster": {"tuber_2": {"name": "Harry", "character_params": sliders}}}
+    assert resolve_slot_character_params(config, "tuber_2") == sliders
+
+
+def test_resolve_slot_character_params_returns_a_copy_of_the_mapping():
+    sliders = {"preset": "nyx1", "eye_size": 0.9}
+    config = {"roster": {"tuber_2": {"name": "Harry", "character_params": sliders}}}
+    resolved = resolve_slot_character_params(config, "tuber_2")
+    resolved["eye_size"] = 0.1
+    assert sliders["eye_size"] == 0.9
+
+
 def test_resolve_slot_character_params_returns_none_for_a_missing_slot():
     config = {"roster": {"tuber_1": {"name": "Vigil", "character_params": "nyx1"}}}
     assert resolve_slot_character_params(config, "tuber_5") is None
@@ -144,6 +160,9 @@ def test_resolve_slot_character_params_returns_none_for_a_missing_slot():
     "not-a-config",
     {"roster": {"tuber_3": {"name": "Iris"}}},          # mapping, no preset
     {"roster": {"tuber_3": {"character_params": "  "}}},  # blank preset
+    {"roster": {"tuber_3": {"character_params": {}}}},    # empty slider mapping
+    {"roster": {"tuber_3": {"character_params": 42}}},    # neither form
+    {"roster": {"tuber_3": {"character_params": ["nyx1"]}}},
 ])
 def test_resolve_slot_character_params_degrades_to_none(config):
     assert resolve_slot_character_params(config, "tuber_3") is None

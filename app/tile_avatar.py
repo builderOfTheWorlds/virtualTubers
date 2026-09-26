@@ -182,7 +182,8 @@ def avatar_subpanel_rows(tile_height_rows, avatar_fraction=DEFAULT_AVATAR_FRACTI
 
 
 def resolve_slot_character_params(config, slot):
-    """The 3D character preset name for `slot`, or None.
+    """The 3D character params for `slot` — a preset name or an inline
+    slider mapping — or None.
 
     Reads the worker config's `roster:` mapping — the SAME mapping
     app/build_layout.py's _resolve_tile_title already reads for a tile's
@@ -196,6 +197,15 @@ def resolve_slot_character_params(config, slot):
           tuber_2:                               # mapping (avatar-aware)
             name: "Vigil"
             character_params: nyx1
+          tuber_3:                               # mapping, inline sliders
+            name: "Harry"
+            character_params: {head_width: 0.45, eye_size: 0.6, accent_color: RED}
+
+    character_params takes the same two forms as a channel's
+    avatar.codec_avatar.character_params: a preset name from
+    app/character_schema.py PRESETS, or an inline slider mapping (what the
+    character generator's cast export writes). Either is handed to the
+    renderer unchanged; resolve_params() clamps and warns on bad values there.
 
     The plain string is the form every existing config uses and
     _resolve_tile_title consumes via `str(roster[slot])`; it must keep
@@ -226,14 +236,15 @@ def resolve_slot_character_params(config, slot):
     params = entry.get("character_params")
     if params is None:
         return None
-    # A preset NAME is the only form this returns. An inline slider mapping
-    # (the other shape codec_avatar accepts, see coder.yaml's comment) is
-    # deliberately passed through unchanged only when it is a string; any
-    # other type is left to the renderer's own validation rather than being
-    # stringified into a bogus preset name here.
     if isinstance(params, str):
         params = params.strip()
         return params or None
+    if isinstance(params, dict):
+        # A copy, so nothing downstream can mutate the loaded config. An
+        # empty mapping configures no head, like a blank preset name.
+        return dict(params) or None
+    # Any other type (a number, a list) is a config typo: keep the ASCII face
+    # rather than hand the renderer something it can't read.
     return None
 
 
