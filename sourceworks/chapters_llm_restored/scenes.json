@@ -1,19 +1,93 @@
 [
   {
     "chapter_num": 1,
-    "window_idx": 35,
+    "window_idx": 6,
     "characters": [
-      "Snape",
-      "he"
+      "d really",
+      "he had",
+      "she",
+      "t"
     ],
-    "locations": [
-      "Gryffindor House"
-    ],
-    "confidence": "high"
+    "locations": [],
+    "confidence": "medium"
   },
   {
     "chapter_num": 1,
-    "window_idx": 39,
+    "window_idx": 10,
+    "characters": [
+      "He",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 13,
+    "characters": [
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 14,
+    "characters": [
+      "Hagrid",
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 19,
+    "characters": [
+      "Harry",
+      "she",
+      "the boy"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 23,
+    "characters": [
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 31,
+    "characters": [
+      "ve never"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 32,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 33,
     "characters": [
       "Ron",
       "he",
@@ -24,7 +98,371 @@
   },
   {
     "chapter_num": 1,
-    "window_idx": 41,
+    "window_idx": 92,
+    "characters": [
+      "he"
+    ],
+    "locations": [
+      "Knockturn Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 93,
+    "characters": [],
+    "locations": [
+      "Knockturn Alley"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 114,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 116,
+    "characters": [
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 117,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "Professor Binns",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 118,
+    "characters": [
+      "Percy",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 119,
+    "characters": [
+      "Harry",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 120,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 121,
+    "characters": [
+      "Oliver"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 123,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 124,
+    "characters": [
+      "Harry",
+      "Madam Pomfrey",
+      "Professor McGonagall",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 126,
+    "characters": [
+      "Professor Snape",
+      "Snape",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 128,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 129,
+    "characters": [
+      "Harry"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 131,
+    "characters": [
+      "Dumbledore",
+      "Hagrid",
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 132,
+    "characters": [
+      "Hagrid",
+      "he",
+      "people",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 133,
+    "characters": [
+      "Hermione",
+      "Ron",
+      "she",
+      "they"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 135,
+    "characters": [
+      "Ha ha",
+      "I",
+      "That I",
+      "he",
+      "s always"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 137,
+    "characters": [
+      "Harry",
+      "He had",
+      "Ron",
+      "he",
+      "ll card"
+    ],
+    "locations": [
+      "Gryffindor Tower"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 138,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [
+      "Gryffindor Tower",
+      "Diagon Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 139,
+    "characters": [
+      "Harry",
+      "Lockhart",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 140,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 142,
+    "characters": [
+      "Harry",
+      "Ron",
+      "Stand aside",
+      "he",
+      "who"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 143,
+    "characters": [
+      "He",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 144,
+    "characters": [
+      "But McGonagall",
+      "d accidentally",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 145,
+    "characters": [
+      "Dumbledore",
+      "Fudge",
+      "Hagrid",
+      "Harry",
+      "I never",
+      "Malfoy",
+      "Professor Dumbledore",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 147,
+    "characters": [
+      "Ernie",
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 149,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 151,
+    "characters": [
+      "he",
+      "ve"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 152,
+    "characters": [
+      "Harry",
+      "Lockhart",
+      "Percy",
+      "Ron",
+      "he",
+      "it",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 153,
+    "characters": [
+      "s bathroom"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 154,
+    "characters": [
+      "Gilderoy",
+      "Harry",
+      "Lockhart",
+      "Professor McGonagall",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 155,
     "characters": [
       "Harry",
       "he",
@@ -35,17 +473,21 @@
   },
   {
     "chapter_num": 1,
-    "window_idx": 52,
+    "window_idx": 156,
     "characters": [
-      "You"
+      "Harry",
+      "he",
+      "s voice"
     ],
     "locations": [],
     "confidence": "medium"
   },
   {
     "chapter_num": 1,
-    "window_idx": 54,
+    "window_idx": 157,
     "characters": [
+      "Harry",
+      "Riddle",
       "he"
     ],
     "locations": [],
@@ -53,7 +495,117 @@
   },
   {
     "chapter_num": 1,
-    "window_idx": 89,
+    "window_idx": 158,
+    "characters": [
+      "Harry"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 160,
+    "characters": [
+      "Harry"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 161,
+    "characters": [
+      "Harry",
+      "Harry Potter",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 162,
+    "characters": [
+      "Fawkes",
+      "he",
+      "it",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 163,
+    "characters": [
+      "Dumbledore",
+      "Ginny",
+      "Harry",
+      "Lockhart",
+      "Professor Dumbledore",
+      "Professor Lockhart",
+      "Riddle",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 165,
+    "characters": [
+      "But Dobby",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 168,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "Ron",
+      "t have"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 172,
+    "characters": [
+      "Uncle Vernon",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 173,
+    "characters": [
+      "Aunt Petunia",
+      "Harry"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 174,
+    "characters": [
+      "Harry"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 178,
     "characters": [
       "Harry",
       "he"
@@ -62,5 +614,1048 @@
       "Diagon Alley"
     ],
     "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 179,
+    "characters": [
+      "he"
+    ],
+    "locations": [
+      "Diagon Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 180,
+    "characters": [
+      "Dad",
+      "she"
+    ],
+    "locations": [
+      "Diagon Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 181,
+    "characters": [
+      "Fred",
+      "I",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 183,
+    "characters": [
+      "Ron",
+      "he"
+    ],
+    "locations": [
+      "Diagon Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 185,
+    "characters": [
+      "Ron",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 186,
+    "characters": [],
+    "locations": [
+      "Slytherin House"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 188,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 189,
+    "characters": [
+      "Ron"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 190,
+    "characters": [
+      "Malfoy",
+      "Neville Longbottom",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 191,
+    "characters": [
+      "Ron",
+      "it",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 194,
+    "characters": [
+      "Hagrid",
+      "Harry",
+      "Professor Trelawney",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 196,
+    "characters": [
+      "Hagrid",
+      "Harry",
+      "You",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 198,
+    "characters": [
+      "Harry",
+      "He",
+      "Ron",
+      "he",
+      "ve"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 199,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 200,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 201,
+    "characters": [
+      "Lupin",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 202,
+    "characters": [
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 203,
+    "characters": [
+      "If you",
+      "Parvati",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 204,
+    "characters": [
+      "Harry",
+      "He",
+      "Lupin",
+      "No",
+      "Nothing anyone",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 205,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 206,
+    "characters": [
+      "Hermione",
+      "Ron",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 208,
+    "characters": [
+      "Wood",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 209,
+    "characters": [
+      "You",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 210,
+    "characters": [
+      "Harry",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 211,
+    "characters": [
+      "Hermione",
+      "No one",
+      "he",
+      "s"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 212,
+    "characters": [
+      "Hermione",
+      "Lupin",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 214,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 215,
+    "characters": [
+      "Dissendiurrd Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 216,
+    "characters": [
+      "Harry",
+      "Ta Rosmerta",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 217,
+    "characters": [
+      "Hagrid",
+      "d have"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 219,
+    "characters": [
+      "Hermione"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 227,
+    "characters": [
+      "Harry",
+      "Lupin",
+      "Not now",
+      "Okay",
+      "Ron",
+      "d",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 228,
+    "characters": [
+      "Harry",
+      "You",
+      "he",
+      "t"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 229,
+    "characters": [
+      "Harry",
+      "Ron",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 232,
+    "characters": [
+      "Fred",
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 233,
+    "characters": [
+      "Dean",
+      "Fred",
+      "Fred Weasley",
+      "Harry",
+      "Percy",
+      "Professor McGonagall",
+      "Ron",
+      "Sir Cadogan",
+      "he",
+      "she",
+      "someone",
+      "someone else"
+    ],
+    "locations": [
+      "Gryffindor Tower"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 234,
+    "characters": [
+      "Harry"
+    ],
+    "locations": [
+      "Gryffindor Tower"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 235,
+    "characters": [
+      "Hagrid",
+      "Harry",
+      "Neville",
+      "Ron",
+      "Snape",
+      "he",
+      "s"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 236,
+    "characters": [
+      "I",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 237,
+    "characters": [
+      "So he"
+    ],
+    "locations": [
+      "Gryffindor Tower"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 239,
+    "characters": [
+      "Ron",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 240,
+    "characters": [
+      "Harry",
+      "Ron",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 241,
+    "characters": [
+      "Professor Trelawney",
+      "Ron",
+      "You"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 242,
+    "characters": [
+      "Ron",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 245,
+    "characters": [
+      "Ron",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 246,
+    "characters": [
+      "Lupin",
+      "She"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 247,
+    "characters": [
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 249,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "Ron",
+      "he",
+      "she",
+      "they"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 250,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 251,
+    "characters": [
+      "Ron",
+      "he",
+      "she",
+      "they"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 252,
+    "characters": [
+      "Harry",
+      "Lupin",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 253,
+    "characters": [
+      "Hermione",
+      "Lupin",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 255,
+    "characters": [
+      "Black",
+      "Lupin",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 258,
+    "characters": [
+      "Black",
+      "Lupin",
+      "Pettigrew",
+      "Ron",
+      "Sirius",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 259,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 261,
+    "characters": [
+      "Black",
+      "He",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 262,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 263,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 264,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "Now Snape",
+      "Snape",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 266,
+    "characters": [
+      "Hagrid",
+      "Harry",
+      "Hermione",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 269,
+    "characters": [
+      "Harry",
+      "Hermione",
+      "I",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 270,
+    "characters": [
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 272,
+    "characters": [
+      "And he",
+      "You",
+      "d",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 273,
+    "characters": [
+      "Dumbledore",
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 274,
+    "characters": [
+      "Ron",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 275,
+    "characters": [
+      "Dot",
+      "s not"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 279,
+    "characters": [
+      "Muggle"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 280,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 284,
+    "characters": [
+      "Harry",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 285,
+    "characters": [
+      "Ron"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 286,
+    "characters": [
+      "Uncle Vernon",
+      "t be"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 287,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 289,
+    "characters": [
+      "George",
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 290,
+    "characters": [
+      "Harry",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 291,
+    "characters": [
+      "Percy",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 292,
+    "characters": [
+      "Harry",
+      "he",
+      "said Fred",
+      "she"
+    ],
+    "locations": [
+      "Diagon Alley"
+    ],
+    "confidence": "high"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 293,
+    "characters": [
+      "Fred",
+      "Ginny",
+      "Harry",
+      "Mrs Weasley",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 294,
+    "characters": [
+      "he",
+      "s father",
+      "s wife"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 295,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 296,
+    "characters": [
+      "Harry",
+      "Ron",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 297,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 298,
+    "characters": [
+      "Fred",
+      "he",
+      "they"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 299,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 301,
+    "characters": [
+      "Harry",
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 303,
+    "characters": [
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 304,
+    "characters": [
+      "Charlie",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 306,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 307,
+    "characters": [
+      "Ron",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 308,
+    "characters": [
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 309,
+    "characters": [
+      "Harry",
+      "he",
+      "s always",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 310,
+    "characters": [
+      "Barty",
+      "They",
+      "he"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 311,
+    "characters": [
+      "Amos",
+      "Amos Diggory",
+      "No",
+      "So",
+      "he",
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 312,
+    "characters": [
+      "he",
+      "someone"
+    ],
+    "locations": [],
+    "confidence": "medium"
+  },
+  {
+    "chapter_num": 1,
+    "window_idx": 314,
+    "characters": [
+      "she"
+    ],
+    "locations": [],
+    "confidence": "medium"
   }
 ]
