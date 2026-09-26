@@ -24,8 +24,9 @@ whole frame (2304x864x3 bytes ≈ 5.6MB) through a pipe on every tick at
 side and a zero-copy read on the other.
 
 GPURenderWorker duck-types FrameSource's public interface
-(render_frame(expression) -> (img, backend)) so CodecAvatarProvider can
-swap one for the other without changing render_tick() at all.
+(render_frame(expression, mouth_open=0.0, emotion="neutral") -> (img, backend))
+so CodecAvatarProvider can swap one for the other without changing
+render_tick() at all.
 """
 import logging
 import multiprocessing as mp
@@ -87,9 +88,19 @@ def render_worker_main(cmd_q, result_q, shm_name, shape,
             msg = cmd_q.get()
             if msg is None:  # shutdown sentinel
                 break
-            expression = msg
+            # Message shape: (expression, mouth_open, emotion) — a 3-tuple
+            # since docs/avatar_emotion_design.md added the morph channels.
+            # Tolerates a bare string (the OLD expression-only protocol) by
+            # falling back to inert defaults, so a stale parent process
+            # mid-upgrade degrades to a static mouth/neutral face for a
+            # tick rather than crashing the render worker.
+            if isinstance(msg, tuple) and len(msg) == 3:
+                expression, mouth_open, emotion = msg
+            else:
+                expression, mouth_open, emotion = msg, 0.0, "neutral"
             try:
-                img, backend = source.render_frame(expression)
+                img, backend = source.render_frame(
+                    expression, mouth_open=mouth_open, emotion=emotion)
                 pixels = (np.clip(img, 0.0, 1.0) * 255).astype(np.uint8)
                 out[:] = pixels
                 result_q.put(("ok", backend))
@@ -153,7 +164,7 @@ class GPURenderWorker:
         self._proc.start()
         self._closed = False
 
-    def render_frame(self, expression):
+    def render_frame(self, expression, mouth_open=0.0, emotion="neutral"):
         """Ask the worker to render one frame, block for the result, and
         return a frame with the SAME contract as FrameSource.render_frame:
         an (H,W,3) float array in 0..1 — NOT the raw uint8 0..255 bytes
@@ -164,14 +175,18 @@ class GPURenderWorker:
         silently corrupt the image (clip nearly everything to 0) if
         handed uint8 0..255 values instead. Raises RuntimeError on a
         worker crash/timeout so callers can fall back rather than
-        silently reusing a stale or garbage frame forever."""
+        silently reusing a stale or garbage frame forever.
+
+        `mouth_open`/`emotion` ride alongside `expression` in the message
+        sent to the worker — see render_worker_main's 3-tuple protocol.
+        """
         if self._closed:
             raise RuntimeError("GPURenderWorker: render_frame() called after close()")
         if not self._proc.is_alive():
             raise RuntimeError(
                 "GPURenderWorker: render worker process is no longer alive")
 
-        self._cmd_q.put(expression)
+        self._cmd_q.put((expression, mouth_open, emotion))
         try:
             status, payload = self._result_q.get(timeout=self.timeout_s)
         except Exception as exc:  # noqa: BLE001 — queue.Empty or similar

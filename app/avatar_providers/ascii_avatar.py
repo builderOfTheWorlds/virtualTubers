@@ -172,7 +172,11 @@ class AsciiAvatarProvider(AvatarProvider):
             file=sys.stderr,
         )
 
-    def render_tick(self, expression, bubble_lines):
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral"):
+        # mouth_open/emotion accepted for interface parity (avatar.py's
+        # dispatcher always passes them) but unused — the vendored
+        # ascii-avatar renderer has its own 5-state frame animation
+        # (AvatarState) with no morphable geometry to drive independently.
         state_value = self.expression_map.get(expression, "idle")
         try:
             state = self._AvatarState(state_value)

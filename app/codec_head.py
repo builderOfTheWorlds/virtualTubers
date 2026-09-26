@@ -32,6 +32,7 @@ import logging
 import numpy as np
 
 from character_schema import resolve_params
+from emotion import DEFAULT_EMOTION, EMOTIONS, normalize_emotion
 
 log = logging.getLogger(__name__)
 TRACE = 5
@@ -88,6 +89,43 @@ RING_PROFILE = [
 
 RING_TAGS = {tag: i for i, (_, _, _, tag) in enumerate(RING_PROFILE)}
 NUM_RINGS = len(RING_PROFILE)
+
+# ── Emotion recipes (docs/avatar_emotion_design.md) ────────────────────────
+# Each named emotion is a small set of independent, additive dials on the
+# SAME feature quads _sculpt already builds (brow bar, eye slots, mouth
+# slot) — the FACS Action Unit combinations these approximate:
+#   happy      ~ AU6+AU12  (cheek raiser + lip corner puller)
+#   sad        ~ AU1+AU4+AU15 (inner brow raiser + brow lowerer + lip corner depressor)
+#   angry      ~ AU4+AU5+AU7+AU9+AU23 (brow lowerer + lid tighten + lip tighten)
+#   afraid     ~ AU1+AU2+AU4+AU5+AU20+AU26 (brow raise + lid raise + lip stretch + jaw drop)
+#   surprised  ~ AU1+AU2+AU5+AU26 (brow raise + lid raise + jaw drop)
+#   disgusted  ~ AU9+AU5+AU16 (nose wrinkle approximated as lowered brow + lip tighten)
+#
+# Fields, each roughly -1..1 (sign is the direction, magnitude is scaled by
+# the feature function that consumes it — see _add_brows/_add_eyes/_add_mouth):
+#   brow      — brow bar height: + raises (surprise/fear), - lowers (anger)
+#   eye       — eye opening: + widens (fear/surprise), - squints (anger/happy)
+#   mouth     — mouth corner lift: + smile, - frown
+#   jaw_drop  — baseline jaw/mouth opening this emotion adds on its OWN, before
+#               any audio-driven mouth_open is summed on top (kept small —
+#               speech should still dominate the mouth's shape while talking)
+EMOTION_RECIPES = {
+    "neutral":   {"brow": 0.00, "eye": 0.00, "mouth": 0.00, "jaw_drop": 0.00},
+    "happy":     {"brow": 0.00, "eye": -0.35, "mouth": 1.00, "jaw_drop": 0.00},
+    "sad":       {"brow": 0.35, "eye": -0.10, "mouth": -1.00, "jaw_drop": 0.00},
+    "angry":     {"brow": -0.65, "eye": -0.50, "mouth": -0.50, "jaw_drop": 0.00},
+    "afraid":    {"brow": 0.80, "eye": 0.60, "mouth": -0.20, "jaw_drop": 0.25},
+    "surprised": {"brow": 1.00, "eye": 0.80, "mouth": 0.00, "jaw_drop": 0.35},
+    "disgusted": {"brow": -0.30, "eye": -0.40, "mouth": -0.60, "jaw_drop": 0.00},
+}
+
+
+def _emotion_recipe(emotion):
+    """Normalized emotion name -> its recipe dict, defaulting to neutral's
+    (all-zero) recipe for anything unrecognized — mirrors emotion.py's
+    'never raise, degrade to neutral' contract."""
+    name = normalize_emotion(emotion)
+    return EMOTION_RECIPES[name]
 
 
 def _superellipse(phi, exponent):
@@ -315,16 +353,25 @@ def _surface_quad(verts, faces, mats, grid, corners, material, offset=0.012):
         mats.append(material)
 
 
-def _add_eyes(verts, faces, mats, params, grid):
+def _add_eyes(verts, faces, mats, params, grid, emotion="neutral"):
     """Dark eye slots set into the sockets.
 
     These are surface-wrapped quads, not spheres: at codec scale an eye is
     a dark rectangle, and a sphere produced a shiny bead that read as a
     bug's eye.
+
+    `emotion`'s "eye" dial (EMOTION_RECIPES) widens the slot for
+    fear/surprise (AU5, upper lid raiser) or narrows it for anger/happiness
+    (AU7/AU6, lid tightener / cheek raiser) — same quad-corner technique
+    _add_mouth uses for corner lift, so topology never changes, only the
+    four corner coordinates do.
     """
     eye_x = _lerp(0.26, 0.42, params["eye_spacing"])
     half_w = _lerp(0.085, 0.125, params["eye_size"])
     half_h = _lerp(0.045, 0.070, params["eye_size"])
+    eye_dial = _emotion_recipe(emotion)["eye"]
+    half_h *= 1.0 + eye_dial * 0.55   # +55% open at max widen, -55% at max squint
+    half_h = max(0.010, half_h)       # never fully collapse to a degenerate quad
     y_top = RING_PROFILE[RING_TAGS["eye_top"]][0]
     y_low = RING_PROFILE[RING_TAGS["eye_low"]][0]
     y_mid = (y_top + y_low) * 0.5
@@ -339,13 +386,20 @@ def _add_eyes(verts, faces, mats, params, grid):
         ], MAT_EYE)
 
 
-def _add_brows(verts, faces, mats, params, grid):
+def _add_brows(verts, faces, mats, params, grid, emotion="neutral"):
     """Dark brow bars on the shelf — the feature that most strongly says
-    'face' at low resolution, and the one MGS2 portraits lean on hardest."""
+    'face' at low resolution, and the one MGS2 portraits lean on hardest.
+
+    `emotion`'s "brow" dial raises the bar for fear/surprise/sadness (AU1/
+    AU2, brow raiser) or lowers/furrows it for anger/disgust (AU4, brow
+    lowerer) — the single strongest legible emotional cue at this vertex
+    budget, per docs/avatar_emotion_design.md.
+    """
     eye_x = _lerp(0.26, 0.42, params["eye_spacing"])
     half_w = _lerp(0.13, 0.17, params["eye_size"])
     half_h = 0.035
-    y_brow = RING_PROFILE[RING_TAGS["brow"]][0] - 0.03
+    brow_dial = _emotion_recipe(emotion)["brow"]
+    y_brow = RING_PROFILE[RING_TAGS["brow"]][0] - 0.03 + brow_dial * 0.09
 
     for sign in (-1.0, 1.0):
         cx = sign * eye_x
@@ -358,16 +412,33 @@ def _add_brows(verts, faces, mats, params, grid):
         ], MAT_BROW)
 
 
-def _add_mouth(verts, faces, mats, params, grid):
-    """A dark horizontal slot at the mouth loop."""
+def _add_mouth(verts, faces, mats, params, grid, mouth_open=0.0, emotion="neutral"):
+    """A dark horizontal slot at the mouth loop.
+
+    Two INDEPENDENT channels shape this quad, matching the two separate
+    signals driving it (docs/avatar_emotion_design.md):
+      - `mouth_open` (0..1): audio envelope RMS, updated every render tick
+        while a bubble/line is live. Opens the slot vertically (jaw drop)
+        and drops it slightly, same as a real jaw hinge.
+      - `emotion`: the character's current emotional pose (agent_state.py's
+        `emotion` field). Its "mouth" dial tilts the two corners up (smile)
+        or down (frown) — a trapezoid instead of a rectangle, which is
+        still just 4 explicit corners, so topology is unaffected — and its
+        "jaw_drop" dial adds a small baseline opening of its own (e.g.
+        fear/surprise part their lips a little even at rest), summed with
+        (not overriding) the audio-driven mouth_open.
+    """
     half_w = _lerp(0.13, 0.20, params["jaw_width"])
-    half_h = 0.028
-    y_mouth = RING_PROFILE[RING_TAGS["mouth"]][0] + 0.02
+    recipe = _emotion_recipe(emotion)
+    total_open = max(0.0, min(1.0, float(mouth_open) + recipe["jaw_drop"]))
+    half_h = 0.028 + total_open * 0.10
+    y_mouth = RING_PROFILE[RING_TAGS["mouth"]][0] + 0.02 - total_open * 0.05
+    corner_lift = recipe["mouth"] * 0.028   # +smile / -frown, per corner
     _surface_quad(verts, faces, mats, grid, [
-        (-half_w, y_mouth + half_h),
-        (half_w, y_mouth + half_h),
-        (half_w, y_mouth - half_h),
-        (-half_w, y_mouth - half_h),
+        (-half_w, y_mouth + half_h + corner_lift),
+        (half_w, y_mouth + half_h + corner_lift),
+        (half_w, y_mouth - half_h + corner_lift * 0.4),
+        (-half_w, y_mouth - half_h + corner_lift * 0.4),
     ], MAT_MOUTH)
 
 
@@ -409,13 +480,29 @@ def _orient_outward(verts, faces, center):
     return faces
 
 
-def build_codec_head(params=None):
+def build_codec_head(params=None, mouth_open=0.0, emotion="neutral"):
     """Build the head. Returns (verts (N,3), faces (M,3), materials (M,)).
 
     `materials` is what makes the face readable — see MAT_* above and
     pixel_raster.CODEC_PALETTE.
+
+    `mouth_open` (0..1, default 0.0) and `emotion` (one of emotion.EMOTIONS,
+    default "neutral") are the two INDEPENDENT animation channels
+    (docs/avatar_emotion_design.md): mouth_open is normally driven by the
+    spoken line's audio envelope, emotion by the character's current
+    emotional pose (agent_state.py's `emotion` field). Both default to the
+    inert/neutral values, so every existing call site (character_preview.py,
+    gpu_render_worker.py, tests) that builds a head with no animation state
+    gets EXACTLY the previous static mesh — this is additive, not a
+    behavior change for anyone not yet passing the new arguments.
+
+    TOPOLOGY IS STILL FIXED (docs/avatar_3d_design.md §4's invariant, which
+    this module inherited from head_mesh.py): neither argument changes
+    vertex COUNT or the face table, only where the mouth/brow/eye quads'
+    existing corners sit — see _add_mouth/_add_brows/_add_eyes.
     """
-    _trace("build_codec_head(params=%r)", params)
+    _trace("build_codec_head(params=%r, mouth_open=%s, emotion=%r)",
+           params, mouth_open, emotion)
     params = resolve_params(params)
 
     grid = _sculpt(_flatten_face(_build_rings(params)), params)
@@ -461,9 +548,9 @@ def build_codec_head(params=None):
             mats[fi] = MAT_HAIR
 
     _add_ears(verts, faces, mats, params, grid)
-    _add_brows(verts, faces, mats, params, grid)
-    _add_eyes(verts, faces, mats, params, grid)
-    _add_mouth(verts, faces, mats, params, grid)
+    _add_brows(verts, faces, mats, params, grid, emotion=emotion)
+    _add_eyes(verts, faces, mats, params, grid, emotion=emotion)
+    _add_mouth(verts, faces, mats, params, grid, mouth_open=mouth_open, emotion=emotion)
 
     verts_arr = np.asarray(verts, dtype=np.float32)
     faces_arr = _orient_outward(verts_arr, faces, center=(0.0, 0.0, -0.05))

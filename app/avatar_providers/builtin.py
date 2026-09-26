@@ -35,7 +35,11 @@ class BuiltinProvider(AvatarProvider):
         self.expressions = (self.avatar_config.get("expressions") or DEFAULT_EXPRESSIONS)
         self._talk_tick = 0
 
-    def render_tick(self, expression, bubble_lines):
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral"):
+        # mouth_open/emotion are accepted for interface parity with the
+        # other providers (avatar.py's dispatcher always passes them) but
+        # unused here — the ASCII glyph face has no morphable geometry;
+        # its talk_mouth alternation already covers "is it talking".
         face = self.expressions.get(expression, DEFAULT_EXPRESSIONS["idle"])
         mouth = face["mouth"]
         if bubble_lines and "talk_mouth" in face:

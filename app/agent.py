@@ -26,6 +26,7 @@ from agent_state import resolve_state_path, write_state
 from agent_metrics import AgentMetrics, InstrumentedLLMClient, MetricsProducerWrapper, resolve_runtime_dir
 import episode_store
 from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
+from emotion import STRUCTURED_REPLY_INSTRUCTION, parse_structured_reply
 
 
 # Stub test-outcome heuristic — fallback for workspaces the tester can't
@@ -76,6 +77,26 @@ def _decide_test_outcome():
         return True, None
     severity = random.choices(BUG_SEVERITIES, weights=BUG_SEVERITY_WEIGHTS, k=1)[0]
     return False, severity
+
+
+def _complete_with_emotion(llm_client, system_prompt, prompt):
+    """llm_client.complete(...), but asking for structured
+    `{"line": "...", "emotion": "..."}` output and returning
+    (narration_text, emotion) instead of a bare string.
+
+    The emotion vocabulary/instruction/parsing all live in emotion.py so
+    agent.py and campaign/improviser.py ask for and parse the exact same
+    shape. Raises exactly what llm_client.complete raises (LLMError,
+    connection errors, ...) — callers already wrap this in the same
+    try/except they used around the old bare `llm_client.complete(...)`
+    call, so a network/model failure surfaces identically to before this
+    existed; only a successful reply's SHAPE changed.
+    """
+    reply = llm_client.complete(
+        f"{system_prompt}\n\n{STRUCTURED_REPLY_INSTRUCTION}",
+        [{"role": "user", "content": prompt}],
+    )
+    return parse_structured_reply(reply)
 
 
 def demo_editor_note(worker_id, task):
@@ -193,10 +214,8 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
         )
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
@@ -205,7 +224,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
             # The code exists and is committed; only the narration failed.
             # Hand the commit over anyway — never let a flaky narration LLM
             # strand real, finished work.
-            narration = f"(narration unavailable: {exc})"
+            narration, emotion = f"(narration unavailable: {exc})", "neutral"
         else:
             producer.send(build_message(
                 worker_id, reply_to, "clarification_request",
@@ -215,7 +234,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
-        write_state(state_path, "speaking", action=f"replied to {reply_to}", bubble=narration)
+        write_state(state_path, "speaking", action=f"replied to {reply_to}", bubble=narration, emotion=emotion)
     producer.send(build_message(
         worker_id, reply_to, "task_complete",
         {"task": task, "narration": narration},
@@ -320,10 +339,8 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
         )
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
@@ -331,7 +348,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
         if run is not None and run.ran:
             # A real verdict exists — report it with fallback narration
             # rather than dropping it on the floor over a narration failure.
-            narration = f"(narration unavailable: {exc})"
+            narration, emotion = f"(narration unavailable: {exc})", "neutral"
         else:
             producer.send(build_message(
                 worker_id, "manager", "clarification_request",
@@ -343,7 +360,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
     real_run = run is not None and run.ran
     if passed:
         if state_path:
-            write_state(state_path, "happy", action=f"tests passed: {task}", bubble=narration)
+            write_state(state_path, "happy", action=f"tests passed: {task}", bubble=narration, emotion=emotion)
         producer.send(build_message(
             worker_id, "manager", "test_passed",
             {
@@ -365,7 +382,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
         else:
             repro = f"Run the suite against '{task}' — the new tests fail ({severity})."
         if state_path:
-            write_state(state_path, "speaking", action=f"found a bug: {task}", bubble=narration)
+            write_state(state_path, "speaking", action=f"found a bug: {task}", bubble=narration, emotion=emotion)
         producer.send(build_message(
             worker_id, "manager", "bug_report",
             {
@@ -449,18 +466,16 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
         )
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
-        narration = (
+        narration, emotion = (
             f"(narration unavailable: {exc}) Escalating {severity} bug on '{task}' "
             f"after {retry_count} fix attempts."
-        )
+        ), "neutral"
         if state_path:
-            write_state(state_path, "frustrated", action=f"escalating: {task}", bubble=narration)
+            write_state(state_path, "frustrated", action=f"escalating: {task}", bubble=narration, emotion=emotion)
         _send_manager_report(
             worker_id, producer, "escalation", task, narration,
             extra={"severity": severity, "retry_count": retry_count},
@@ -470,7 +485,7 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
     print(f"[agent:{worker_id}] {narration}")
     if at_cap:
         if state_path:
-            write_state(state_path, "frustrated", action=f"escalating: {task}", bubble=narration)
+            write_state(state_path, "frustrated", action=f"escalating: {task}", bubble=narration, emotion=emotion)
         _send_manager_report(
             worker_id, producer, "escalation", task, narration,
             extra={"severity": severity, "retry_count": retry_count},
@@ -478,7 +493,7 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
         return
 
     if state_path:
-        write_state(state_path, "speaking", action=f"re-delegated: {task}", bubble=narration)
+        write_state(state_path, "speaking", action=f"re-delegated: {task}", bubble=narration, emotion=emotion)
     producer.send(build_message(
         worker_id, coder_id, "task_assignment",
         {
@@ -508,10 +523,8 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
         write_state(state_path, "thinking", action=f"reviewing results: {task}")
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
@@ -520,7 +533,7 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
-        write_state(state_path, "happy", action=f"shipped: {task}", bubble=narration)
+        write_state(state_path, "happy", action=f"shipped: {task}", bubble=narration, emotion=emotion)
     _send_manager_report(worker_id, producer, "milestone", task, narration)
 
 
@@ -550,10 +563,8 @@ def handle_task_complete(worker_id, agent_config, llm_client, producer, msg,
         write_state(state_path, "thinking", action=f"reviewing: {task}")
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
@@ -562,7 +573,7 @@ def handle_task_complete(worker_id, agent_config, llm_client, producer, msg,
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
-        write_state(state_path, "speaking", action=f"acknowledged: {task}", bubble=narration)
+        write_state(state_path, "speaking", action=f"acknowledged: {task}", bubble=narration, emotion=emotion)
 
 
 def handle_clarification_request(worker_id, agent_config, llm_client, producer, msg,
@@ -592,20 +603,18 @@ def handle_clarification_request(worker_id, agent_config, llm_client, producer, 
         write_state(state_path, "thinking", action=f"assessing blocker: {task}")
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
-        narration = (
+        narration, emotion = (
             f"(narration unavailable: {exc}) {sender} is blocked on '{task}': {error}"
-        )
+        ), "neutral"
     else:
         print(f"[agent:{worker_id}] {narration}")
 
     if state_path:
-        write_state(state_path, "frustrated", action=f"blocker: {task}", bubble=narration)
+        write_state(state_path, "frustrated", action=f"blocker: {task}", bubble=narration, emotion=emotion)
     _send_manager_report(
         worker_id, producer, "blocker", task, narration,
         extra={"blocked_worker": sender, "error": error},
@@ -628,10 +637,8 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
         write_state(state_path, "thinking", action="replying to operator")
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
         if state_path:
@@ -644,7 +651,7 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
-        write_state(state_path, "speaking", action="replied to operator", bubble=narration)
+        write_state(state_path, "speaking", action="replied to operator", bubble=narration, emotion=emotion)
     producer.send(build_message(
         worker_id, "operator", "operator_reply",
         {"narration": narration},
@@ -786,10 +793,8 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
         write_state(state_path, "thinking", action=f"greeting {username}")
 
     try:
-        narration = llm_client.complete(
-            agent_config.get("system_prompt", ""),
-            [{"role": "user", "content": prompt}],
-        )
+        narration, emotion = _complete_with_emotion(
+            llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
         print(f"[agent:{worker_id}] LLM call failed greeting {username!r}: {exc}")
         if state_path:
@@ -798,7 +803,7 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
-        write_state(state_path, "happy", action=f"welcomed {username}", bubble=narration)
+        write_state(state_path, "happy", action=f"welcomed {username}", bubble=narration, emotion=emotion)
 
 
 def _is_valid_cast(cast):

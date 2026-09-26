@@ -110,7 +110,7 @@ def test_defaults_are_the_documented_ones():
 def test_call_returns_the_models_line(Leena):
     improviser = build(FakeLLM("The door is not the problem."))
 
-    assert improviser(dialogue(), Leena) == "The door is not the problem."
+    assert improviser(dialogue(), Leena)[0] == "The door is not the problem."
 
 
 def test_call_without_an_llm_raises(Leena):
@@ -328,12 +328,12 @@ def test_update_context_leaves_unspecified_fields_alone():
     ("  Leena:   We should run.  ", "We should run."),
 ])
 def test_a_leading_name_label_is_stripped(Leena, raw, expected):
-    assert build(FakeLLM(raw))(dialogue(), Leena) == expected
+    assert build(FakeLLM(raw))(dialogue(), Leena)[0] == expected
 
 
 def test_a_label_that_is_not_the_speakers_name_is_kept(Leena):
     # "Note:" is content, not a speaker label — stripping it would eat the line.
-    assert build(FakeLLM("Note: the door is barred."))(dialogue(), Leena) \
+    assert build(FakeLLM("Note: the door is barred."))(dialogue(), Leena)[0] \
         == "Note: the door is barred."
 
 
@@ -344,13 +344,13 @@ def test_a_label_that_is_not_the_speakers_name_is_kept(Leena):
     '"We should run."  ',
 ])
 def test_wrapping_quotes_are_stripped(Leena, raw):
-    assert build(FakeLLM(raw))(dialogue(), Leena) == "We should run."
+    assert build(FakeLLM(raw))(dialogue(), Leena)[0] == "We should run."
 
 
 def test_an_internal_quote_is_left_alone(Leena):
     raw = 'He said "run" and I ran.'
 
-    assert build(FakeLLM(raw))(dialogue(), Leena) == raw
+    assert build(FakeLLM(raw))(dialogue(), Leena)[0] == raw
 
 
 @pytest.mark.parametrize("raw", [
@@ -359,40 +359,40 @@ def test_an_internal_quote_is_left_alone(Leena):
     "*sighs* We should run. *waits*",
 ])
 def test_stage_directions_are_stripped(Leena, raw):
-    assert build(FakeLLM(raw))(dialogue(), Leena) == "We should run."
+    assert build(FakeLLM(raw))(dialogue(), Leena)[0] == "We should run."
 
 
 def test_markdown_emphasis_markers_are_stripped(Leena):
-    assert build(FakeLLM("We **should** run."))(dialogue(), Leena) == "We should run."
+    assert build(FakeLLM("We **should** run."))(dialogue(), Leena)[0] == "We should run."
 
 
 def test_newlines_collapse_to_one_paragraph(Leena):
-    result = build(FakeLLM("We should run.\n\nThe door is barred."))(dialogue(), Leena)
+    result = build(FakeLLM("We should run.\n\nThe door is barred."))(dialogue(), Leena)[0]
 
     assert "\n" not in result
     assert result == "We should run. The door is barred."
 
 
 def test_repeated_whitespace_collapses(Leena):
-    assert build(FakeLLM("We    should\t\trun."))(dialogue(), Leena) == "We should run."
+    assert build(FakeLLM("We    should\t\trun."))(dialogue(), Leena)[0] == "We should run."
 
 
 def test_output_is_capped_at_max_words(Leena):
     raw = " ".join(["word"] * 200)
-    result = build(FakeLLM(raw), max_words=10)(dialogue(), Leena)
+    result = build(FakeLLM(raw), max_words=10)(dialogue(), Leena)[0]
 
     assert len(result.split()) == 10
 
 
 def test_a_truncated_line_still_ends_in_terminal_punctuation(Leena):
     raw = " ".join(["word"] * 200)
-    result = build(FakeLLM(raw), max_words=10)(dialogue(), Leena)
+    result = build(FakeLLM(raw), max_words=10)(dialogue(), Leena)[0]
 
     assert result.endswith(".")
 
 
 def test_a_short_line_is_not_padded_or_truncated(Leena):
-    assert build(FakeLLM("No."), max_words=45)(dialogue(), Leena) == "No."
+    assert build(FakeLLM("No."), max_words=45)(dialogue(), Leena)[0] == "No."
 
 
 @pytest.mark.parametrize("terminal", [".", "!", "?", "…"])
@@ -400,7 +400,7 @@ def test_truncation_does_not_double_up_existing_terminal_punctuation(Leena, term
     # The cut can land on a word that already ends a sentence. Appending a
     # second period there ships "four.." and "four!." straight to text-to-speech.
     raw = " ".join(["word", "word", "word", "word" + terminal, "word", "word"])
-    result = build(FakeLLM(raw), max_words=4)(dialogue(), Leena)
+    result = build(FakeLLM(raw), max_words=4)(dialogue(), Leena)[0]
 
     assert result == "word word word word" + terminal
     assert len(result.split()) == 4
@@ -409,7 +409,7 @@ def test_truncation_does_not_double_up_existing_terminal_punctuation(Leena, term
 def test_truncation_onto_a_comma_replaces_it_rather_than_appending(Leena):
     raw = " ".join(["word", "word", "word", "word,", "word", "word"])
 
-    assert build(FakeLLM(raw), max_words=4)(dialogue(), Leena) == "word word word word."
+    assert build(FakeLLM(raw), max_words=4)(dialogue(), Leena)[0] == "word word word word."
 
 
 @pytest.mark.parametrize("raw", ["", "   ", "\n\n", "*shrugs*", '""'])
@@ -426,7 +426,7 @@ def test_a_non_string_reply_raises(Leena):
 def test_sanitation_survives_every_defect_at_once(Leena):
     raw = '  Leena: *leans in* "We **should** run.\n\nNow."  '
 
-    assert build(FakeLLM(raw))(dialogue(), Leena) == "We should run. Now."
+    assert build(FakeLLM(raw))(dialogue(), Leena)[0] == "We should run. Now."
 
 
 # ── generating a whole ambient scene ─────────────────────────────────────────

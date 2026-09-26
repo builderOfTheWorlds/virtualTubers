@@ -338,7 +338,7 @@ def test_without_a_tts_client_nothing_is_spoken():
 # ── improv seam ──────────────────────────────────────────────────────────────
 def test_improv_beats_are_routed_through_the_improviser():
     def improviser(beat, member):
-        return f"{member.name} riffs on: {beat.text}"
+        return f"{member.name} riffs on: {beat.text}", "neutral"
 
     renderer = build(improviser=improviser)
     result = renderer.render_beat(

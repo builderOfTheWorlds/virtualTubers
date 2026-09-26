@@ -133,6 +133,15 @@ class FrameSource:
         self.view_dist = view_dist
         self.angle_speed_base = angle_speed
         self.angle = 0.0
+        # character_params kept (not just the built mesh) — mouth_open/
+        # emotion morphing (docs/avatar_emotion_design.md) rebuilds the
+        # head fresh every render_frame() call, since _add_mouth/_add_brows/
+        # _add_eyes place their quads' corners differently per (mouth_open,
+        # emotion) even though the TOPOLOGY (vertex count, face table)
+        # never changes. Cheap: build_codec_head is a few numpy ops over
+        # ~20x15 rings plus a handful of feature quads, well inside a
+        # single 30fps frame budget (docs/gl_raster_benchmark.md).
+        self._character_params = character_params
         self.verts, self.faces, self.materials = build_codec_head(character_params)
         self.last_backend = None
         # Resolved once at construction (not per-frame) — accent_color is
@@ -147,11 +156,23 @@ class FrameSource:
                        "defaulting to GREEN", exc)
             self.accent_color = "GREEN"
 
-    def render_frame(self, expression):
+    def render_frame(self, expression, mouth_open=0.0, emotion="neutral"):
         """Advance rotation and render one frame. Returns an (H,W,3) 0..1
         float array. Also returns which backend rendered it (gpu/cpu) —
         surfaced so a worker's logs show a GPU-less box degrading instead
-        of silently running the slower path forever."""
+        of silently running the slower path forever.
+
+        `expression` drives the pre-existing rotation-speed/tint cue
+        (EXPRESSION_STYLE, unchanged). `mouth_open` (0..1, normally the
+        current audio envelope sample) and `emotion` (one of
+        emotion.EMOTIONS, the character's current emotional pose) are the
+        two independent morph channels — see codec_head.build_codec_head's
+        docstring. Both default to the inert values so a caller that
+        hasn't wired them yet (or a stale GPU-worker message shaped like
+        the old expression-only protocol) still renders exactly the old
+        static-mouth, neutral-brow face.
+        """
+        from codec_head import build_codec_head
         from pixel_raster import (TINT_AMBER, TINT_CODEC_GREEN,
                                   apply_codec_screen, composite_on_background)
         import gl_raster
@@ -165,6 +186,15 @@ class FrameSource:
             tint = TINT_AMBER
         else:
             tint = tint_choice
+
+        # Rebuild the morphed mesh for THIS tick's (mouth_open, emotion).
+        # faces/materials are guaranteed identical to the ones built in
+        # __init__ (topology is parameter-independent — see
+        # build_codec_head's docstring) so only verts is actually used;
+        # re-fetching all three keeps this call symmetric with __init__'s
+        # and costs nothing extra (same function, same cost either way).
+        self.verts, self.faces, self.materials = build_codec_head(
+            self._character_params, mouth_open=mouth_open, emotion=emotion)
 
         img, backend = gl_raster.render_with_fallback(
             self.verts, self.faces, self.materials,
@@ -472,10 +502,11 @@ class CodecAvatarProvider(AvatarProvider):
 
         return width or WIDTH, height or HEIGHT, tuple(configured_pos)
 
-    def render_tick(self, expression, bubble_lines):
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral"):
         import numpy as np
         try:
-            img, _backend = self._source.render_frame(expression)
+            img, _backend = self._source.render_frame(
+                expression, mouth_open=mouth_open, emotion=emotion)
         except Exception as exc:  # noqa: BLE001 — the GPU worker crashed/hung mid-run
             if not getattr(self, "_warned_source_failed", False):
                 log.warning(
@@ -500,7 +531,8 @@ class CodecAvatarProvider(AvatarProvider):
                         old_source.close()
                 except Exception:  # noqa: BLE001 — best-effort cleanup only
                     pass
-            img, _backend = self._source.render_frame(expression)
+            img, _backend = self._source.render_frame(
+                expression, mouth_open=mouth_open, emotion=emotion)
         pixels = (np.clip(img, 0.0, 1.0) * 255).astype("uint8")
         # pygame surfarray is (W,H,3); our frames are (H,W,3).
         surf = self._pygame.surfarray.make_surface(pixels.transpose(1, 0, 2))

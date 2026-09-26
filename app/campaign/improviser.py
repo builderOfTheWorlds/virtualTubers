@@ -4,6 +4,7 @@ import logging
 import re
 
 from campaign.pack import Beat, CampaignPack, CastMember, Scene
+from emotion import STRUCTURED_REPLY_INSTRUCTION, parse_structured_reply, DEFAULT_EMOTION, normalize_emotion
 
 log = logging.getLogger(__name__)
 
@@ -68,8 +69,13 @@ class LLMImproviser:
         if len(self.recent) > self.max_recent:
             self.recent = self.recent[-self.max_recent:]
 
-    def __call__(self, beat: Beat, cast_member: CastMember) -> str:
-        """Improvise a line for a beat."""
+    def __call__(self, beat: Beat, cast_member: CastMember) -> tuple[str, str]:
+        """Improvise a line for a beat. Returns (text, emotion) — `emotion`
+        is one of emotion.EMOTIONS, decided by the LLM per-line (see
+        emotion.STRUCTURED_REPLY_INSTRUCTION), not inherited from the
+        scene's GEMS mood: a scene tagged "tenderness" can still have one
+        beat where a character is stabbed and needs to read as afraid.
+        """
         if self.llm is None:
             raise ImproviserError("no LLM available")
 
@@ -86,6 +92,7 @@ class LLMImproviser:
             "\n\nYou reply with exactly one spoken line, in character, "
             "with no name label, no quotation marks and no stage directions."
         )
+        system_prompt += "\n\n" + STRUCTURED_REPLY_INSTRUCTION
 
         # Build user prompt
         user_parts = []
@@ -127,12 +134,17 @@ class LLMImproviser:
         except Exception as exc:
             raise ImproviserError("LLM call failed") from exc
 
+        # Parse structured {"line": ..., "emotion": ...}; parse_structured_reply
+        # never raises, degrading to (whole reply, "neutral") if the model
+        # ignored the JSON instruction — same tolerance agent.py relies on.
+        raw_line, emotion = parse_structured_reply(reply)
+
         # Sanitise the reply
-        text = self._sanitise(reply, [cast_member.name, cast_member.id])
+        text = self._sanitise(raw_line, [cast_member.name, cast_member.id])
 
-        log.debug("sanitised %d chars to %d", len(reply), len(text))
+        log.debug("sanitised %d chars to %d, emotion=%s", len(reply), len(text), emotion)
 
-        return text
+        return text, emotion
 
     def _sanitise(self, text: str, labels: list[str] | None = None) -> str:
         """Sanitise a line of text."""
@@ -245,7 +257,11 @@ class LLMImproviser:
             "'<speaker_id>: <what they say>'. Use the speaker_id from the "
             "Cast list above (not the display name). Do not number or bullet "
             "the lines, do not add commentary before or after, and do not "
-            "wrap any line in quotation marks."
+            "wrap any line in quotation marks. After each line, on the SAME "
+            "line, append ' ||emotion:<emotion>' where <emotion> is exactly "
+            "one of: neutral, happy, sad, angry, afraid, surprised, disgusted "
+            "— whichever matches what that character is feeling for that "
+            "specific line. Example: 'gm: The door creaks open. ||emotion:afraid'"
         )
 
         user_prompt = "\n\n".join(user_parts)
@@ -289,6 +305,17 @@ class LLMImproviser:
             if not line or _FILLER_LINE_RE.match(line):
                 continue  # meta-commentary ("Here is the scene:"), not a beat
 
+            # Pull off a trailing " ||emotion:<name>" tag, if present.
+            # normalize_emotion degrades anything unrecognized/malformed
+            # (missing tag, typo'd emotion name) to "neutral" rather than
+            # dropping the beat — an emotion tag is a nice-to-have, never a
+            # reason to lose an otherwise-good generated line.
+            beat_emotion = DEFAULT_EMOTION
+            emo_match = re.search(r"\|\|emotion:\s*(\w+)\s*$", line, re.IGNORECASE)
+            if emo_match:
+                beat_emotion = normalize_emotion(emo_match.group(1))
+                line = line[:emo_match.start()].rstrip()
+
             prefix, sep, rest = line.partition(":")
             matched_id = cast_lookup.get(prefix.strip().lower()) if sep else None
             if matched_id is not None:
@@ -305,7 +332,8 @@ class LLMImproviser:
 
             beats.append(Beat(kind=kind, speaker=speaker, text=text,
                               texts=[text], improv=False,
-                              key=f"{scene.id}#gen{len(beats)}"))
+                              key=f"{scene.id}#gen{len(beats)}",
+                              emotion=beat_emotion))
 
         log.info("generated %d beats", len(beats))
         return beats

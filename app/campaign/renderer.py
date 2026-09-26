@@ -2,6 +2,7 @@
 import logging
 import sys
 import tempfile
+import time
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,6 +12,8 @@ from campaign.primitives import render as primitive_render, PrimitiveError
 from replay import DIALOGUE_CPS, Pacer, Palette
 
 from agent_state import write_state
+from emotion import normalize_emotion
+from audio_envelope import compute_envelope
 
 log = logging.getLogger(__name__)
 
@@ -71,14 +74,16 @@ class SceneRenderer:
 
         # Handle improv seam
         text = beat.text
+        emotion = normalize_emotion(beat.emotion)  # scripted/authored default
         if beat.improv and self.improviser and cast_member:
             try:
-                improvised = self.improviser(beat, cast_member)
+                improvised, improv_emotion = self.improviser(beat, cast_member)
                 if improvised and improvised.strip():
                     text = improvised
+                    emotion = improv_emotion  # improv's per-line call always wins
             except Exception as exc:
                 log.warning("improviser failed for %s: %s", beat.speaker, exc)
-                # Fall back to scripted text
+                # Fall back to scripted text (and its authored emotion, if any)
 
         # Determine line to write and text to speak
         line = ""
@@ -129,27 +134,57 @@ class SceneRenderer:
         if beat.kind != "pane":
             self._emit(line, cps, color)
 
-        # Handle avatar state
+        # Handle voice — synthesize BEFORE writing avatar state so the
+        # audio envelope (if any) can ride in the SAME write_state call as
+        # the bubble/emotion, rather than a separate racy second write the
+        # avatar pane might poll between. A synth/envelope failure still
+        # falls back to the heuristic (envelope=None) bubble-presence path
+        # avatar.resolve_mouth_open already handles — never lets a TTS
+        # hiccup block the line from being shown at all.
+        audio = None
+        envelope, rate_hz = None, None
+        wav_file = None
+        if self.tts and beat.kind != "pane" and rendered_text:
+            try:
+                wav_file = self._resolve_audio_dir() / f"{uuid.uuid4()}.wav"
+                narration_obj = self.tts.synthesize(rendered_text, str(wav_file), speaker=beat.speaker)
+                audio = narration_obj
+            except Exception as exc:
+                log.warning("TTS failed for beat %s: %s", beat.kind, exc)
+                wav_file = None
+            if wav_file is not None:
+                try:
+                    envelope, rate_hz = compute_envelope(wav_file)
+                    if not envelope:
+                        envelope, rate_hz = None, None
+                except Exception as exc:  # noqa: BLE001 — envelope is best-effort
+                    log.warning("audio envelope failed for beat %s: %s", beat.kind, exc)
+                    envelope, rate_hz = None, None
+
+        # Handle avatar state — after synthesis so a real envelope (if any)
+        # is already available to attach in this one write.
+        started_at = None
         if self.state_path and rendered_text:
             expression = "neutral"
             if beat.kind == "dialogue":
                 expression = "talking"
             elif beat.kind == "action":
                 expression = "focused"
-                
-            write_state(self.state_path, expression, "", rendered_text)
 
-        # Handle voice
-        audio = None
-        if self.tts and beat.kind != "pane" and rendered_text:
+            started_at = time.time() if envelope else None
+            write_state(self.state_path, expression, "", rendered_text,
+                       emotion=emotion, audio_envelope=envelope,
+                       audio_rate_hz=rate_hz, audio_started_at=started_at)
+
+        # Start playback now — right at (or as close as possible to) the
+        # `started_at` timestamp just written, so the avatar pane's
+        # elapsed-time sampling of the envelope stays in sync with what's
+        # actually audible.
+        if wav_file is not None and self.audio_player:
             try:
-                wav_file = self._resolve_audio_dir() / f"{uuid.uuid4()}.wav"
-                narration_obj = self.tts.synthesize(rendered_text, str(wav_file), speaker=beat.speaker)
-                audio = narration_obj
-                if self.audio_player:
-                    self.audio_player(str(wav_file))
+                self.audio_player(str(wav_file))
             except Exception as exc:
-                log.warning("TTS failed for beat %s: %s", beat.kind, exc)
+                log.warning("audio playback failed for beat %s: %s", beat.kind, exc)
 
         # Handle pane control
         if beat.kind == "pane" and self.pane_control:

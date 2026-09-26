@@ -81,6 +81,7 @@ def _build_beat(data, scene_id, index):
         show=show,
         texts=texts,
         key=f"{scene_id}#{index}",
+        emotion=data.get("emotion"),
     )
 
 
@@ -298,6 +299,14 @@ class Beat:
     show: str | None = None
     texts: list[str] = field(default_factory=list)
     key: str = ""
+    #: Optional authored emotional pose (emotion.EMOTIONS) for a SCRIPTED
+    #: line — e.g. a beat the pack author knows is a gut-punch reveal.
+    #: None means "no authored opinion": an improv beat gets its emotion
+    #: from the LLM instead (LLMImproviser.__call__), a scripted beat with
+    #: no authored emotion renders neutral. Never inferred from `text` —
+    #: sentiment-from-text is a known-unreliable heuristic; an explicit
+    #: field a human (or the improviser) sets is far more trustworthy.
+    emotion: str | None = None
 
 
 @dataclass

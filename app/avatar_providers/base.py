@@ -27,11 +27,23 @@ class AvatarProvider:
         self.name = name
         self.title = title
 
-    def render_tick(self, expression, bubble_lines):
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral"):
         """Draw one frame to the terminal.
 
         expression: our expression key (e.g. "idle", "thinking", "speaking").
         bubble_lines: list[str] of already word-wrapped speech-bubble
             lines, or None/[] when no bubble is currently shown.
+        mouth_open: 0..1, how open the mouth should be THIS tick — audio-
+            envelope-driven when real synthesized audio exists, a fixed-
+            rate heuristic oscillation otherwise (see avatar.resolve_mouth_open).
+            Always 0.0 with no bubble shown. A provider with no morphable
+            mesh (e.g. BuiltinProvider's ASCII glyphs) may ignore this and
+            keep its own talk_mouth-alternation behavior — the parameter
+            exists so providers that CAN morph geometry (codec_avatar) have
+            a value to morph with, not as a hard requirement.
+        emotion: one of emotion.EMOTIONS — the character's current
+            emotional pose, independent of `expression`'s activity cue.
+            Defaults to "neutral"; a provider with no emotional-pose
+            geometry may ignore it.
         """
         raise NotImplementedError

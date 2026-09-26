@@ -62,7 +62,7 @@ def test_handle_task_assignment_success_sends_task_complete():
     assert sent["to"] == "manager"
     assert sent["type"] == "task_complete"
     assert sent["payload"]["narration"] == "Digging into the login bug now."
-    assert llm.calls[0][0] == "You are KODI-7."
+    assert llm.calls[0][0].startswith("You are KODI-7.")
 
 
 def test_handle_task_assignment_llm_failure_sends_clarification_request():
