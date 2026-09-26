@@ -1,3 +1,5 @@
+> Superseded by docs/charcterProfileGenerationNotes/character_generator_updater_v4.md (2026-09-25). Kept as the decision trail.
+
 # Character Generator + Updater — Design Plan
 
 Status: design, not yet implemented. Written 2026-09-23.
@@ -44,6 +46,19 @@ stages without touching existing ones.
 Tables the module owns, created by `app/character/store.py` `CREATE_TABLE_SQL`
 on first use, mirrored in `docs/sql/02_create_tables.sql` +
 `docs/database_schema.md` per project convention.
+
+**Where the data lives:** every table in this module (characters,
+character_profiles, knowledge_nodes, knowledge_edges, character_weeks, jobs,
+artifacts) lands in the **generator Postgres instance** — the
+`generator-postgres` compose service, DB name `generation`, host port 5455.
+That is the same instance `3layer-generator` already uses
+(`POSTGRES_HOST: generator-postgres` / `GENERATOR_POSTGRES_DB`), *not* the
+stack-wide `virtualtubers` DB on mafober (`192.168.1.120:5432`). The character
+generator is part of the generator, so it owns its state there. The only
+cross-DB read is the updater pulling the experience stream out of the
+`messages` table in the stack DB (read-only). Connection handling: the same
+lazy-psycopg2 + per-call-connection + `available()==False` pattern as
+`generation_store.py`, reading the `GENERATOR_POSTGRES_*` env vars.
 
 ### `characters`
 
@@ -151,18 +166,57 @@ No rows are ever deleted by the reset. History lives in the rows.
 | `notes` | TEXT | One-paragraph human-readable summary of the character's state after reset |
 | PK | (character_id, week) | |
 
-### `generation_jobs` / `generation_artifacts` pattern
+> One 1-based **`week` counter is the time axis for the whole module** —
+> `character_weeks.week`, `knowledge_nodes.first_known_week` /
+> `last_reinforced_week`, `knowledge_edges.established_week` /
+> `broken_at_week` / `relearned_at_week`, and the experiences table below all
+> use the same value. The updater increments it once per reset and every
+> row it touches writes that value. (This is the campaign runtime's `loop`
+> counter from a character's viewpoint.)
 
-Reuse the *pattern*; create `character_jobs` + `character_artifacts` with the
-same shape (status machine, queue, per-stage artifacts) but character-scoped:
+### `character_experiences` (the week's experience stream, indexed by week)
+
+The updater's raw material, captured per character per week in the generator
+DB. This is what the "index on the week id" the updater queries — the
+`messages` table in the stack DB has no week/character column to index on, so
+instead of adding columns to a shared table we **denormalize the week's
+experience rows into this table at reset time** (read from `messages`, write
+here). It is append-only history and is what Phase 1 reads, fast, every reset.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | BIGSERIAL PK | |
+| `character_id` | TEXT FK → characters.id | |
+| `week` | INT NOT NULL | 1-based week the message fell in |
+| `message_id` | UUID NOT NULL | FK-like link to `messages.id` (stack DB) — provenance, not enforced |
+| `kind` | TEXT NOT NULL | `narration` | `dialogue` | `campaign_event` | `chat` (subset of `messages.type`) |
+| `payload` | JSONB NOT NULL | The message body relevant to this character |
+| `at` | TIMESTAMPTZ | message timestamp |
+| `captured_at` | TIMESTAMPTZ | when the updater pulled it in |
+
+Indexes: `uq_char_exp (character_id, week, message_id)` — the uniqueness
+guard; **`idx_char_exp_week (character_id, week)` — the week index the
+updater's Phase 1 uses** ("give me this character's experiences for week W"
+is one indexed range scan). Optional: `idx_char_exp_chatweek (week)` if a
+GUI later lists "the week's feed across all characters."
+
+### Jobs & artifacts — `character_jobs` + `character_artifacts`
+
+**Resolved (D3):** the character generator is part of the generator, so its
+job/artifact tables live in the **generator `generation` DB** alongside
+`generation_jobs` / `generation_artifacts`. They are **standalone tables**
+(same column shape, same status machine) rather than a `domain` column added
+to the 3layer tables — that keeps the `services/3layer-generator` store's code
+paths and natural keys (pack/segment) untouched, per the "don't modify a
+shared utility for one project's needs" rule. Same DB, separate tables, so a
+future GUI can list both without a join across databases.
+
+Create `character_jobs` + `character_artifacts`, mirroring the 3layer shape
+but character-scoped:
 
 - `stage`: `profile` | `knowledge` | `avatar` | `brief` | `all` | `reset` | `ingest`
 - `character` name on the job row (maps to `characters.name`)
 - artifacts keyed by `(character, stage, artifact_key)`
-
-(Open decision D3 below: standalone tables vs. adding a `domain` column to
-the existing 3layer tables. Leaning standalone — the 3layer store is
-`services/3layer-generator`-owned and its natural keys are pack/segment.)
 
 ## Node kinds (taxonomy — enforce like llm-wiki's tag taxonomy)
 
@@ -294,11 +348,14 @@ a second character; a `--fresh` flag forces a new character row.
 Runs per-character. Deterministic code owns structure; LLM owns *judgment*;
 a validator enforces both. Two phases, one LLM call boundary between them:
 
-**Phase 1 — collect (no LLM).** From the `messages` table + campaign
-runtime history for the week, gather the experience stream: every
-narration/dialogue beat the character participated in, every event/scene,
-chat interactions. Raw, unfiltered. (Read-only; the updater never writes to
-`messages`.)
+**Phase 1 — collect (no LLM).** Read the week's experience stream from
+`character_experiences` via the **`idx_char_exp_week (character_id, week)`
+index** — one indexed range scan, no full-table, no cross-DB join at reset
+time. (The source rows were pulled from the stack-DB `messages` table and
+denormalized here in a prior capture step; the updater's read path never
+touches the shared tables.) Also read: character's current profile vN,
+active node + edge lists, dormant node names. (Read-only against the graph;
+the updater never writes back into `messages`.)
 
 **Phase 2 — judge (LLM, one call with a strict JSON contract):**
 
@@ -368,19 +425,23 @@ ships a stale copy. (Open decision D2: brief at boot vs. refresh on
 ```
 app/character/
   __init__.py              # public API: generate_character, run_weekly_reset, load_character_brief
-  store.py                 # CREATE_TABLE_SQL + all SQL (psycopg2, per project convention)
+  store.py                 # CREATE_TABLE_SQL + all SQL (psycopg2, per project convention) -> generator DB
   schema.py                # node/edge taxonomy validators + profile shape validator (collect-problems, never raise — campaign.validator style)
   pipeline.py              # StageContext, Stage protocol, StageRegistry, job dispatch (runner.py pattern)
   generator.py             # generate_character(name, source, stages=['all'])
-  updater.py               # run_weekly_reset(character, week); the deterministic apply-phase
-  loader.py                # load_character_brief() — worker-facing
-  cli.py                   # operator surface (campaign/cli.py style)
+  updater.py               # run_weekly_reset(character, week); the deterministic apply-phase (the updater's brain)
+  loader.py                # load_character_brief() — worker-facing (D2-A boot-only)
+  cli.py                   # operator surface for GENERATION (campaign/cli.py style)
   stages/
     __init__.py            # registry
     profile.py
     knowledge.py
     avatar.py
     brief.py
+services/character-updater/   # D1 — the standalone process (its own container)
+  main.py                 # `--once --character X [--dry-run]` | `--daemon`; drives updater.run_weekly_reset
+  Dockerfile              # flat copy like message-api; depends_on generator-postgres
+  api.py (optional)       # REST trigger for the scheduler / a GUI later
 tests/
   test_character_store.py
   test_character_schema.py
@@ -390,6 +451,12 @@ tests/
   test_character_avatar.py     # slider output validates against character_schema
   test_character_brief.py
 ```
+
+> `app/character/updater.py` is the *logic* (pure, testable, no process
+> concerns); `services/character-updater/` is the *process* (argparse,
+> connection, retry, the single-shot contract a scheduler will call). The
+> generation side is driven through `api.py` + the existing job-queue idiom,
+> not a dedicated service — the 3layer-generator already provides the queue.
 
 Config: `config/character.yaml` (new top-level section in
 `config/worker.yaml` is the template):
@@ -422,32 +489,89 @@ character:
   generator only) or a new `docs/character_system.md` — the latter, to avoid
   two different things called "character generator" in two docs.
 
-## Open decisions (need user input)
+## Decisions (resolved)
 
-- **D1 — Reset trigger.** Manual (`cli.py reset --character harry --week 2`)
-  vs. automatic on a `campaign_reset` bus message vs. a scheduled job.
-  Recommend: manual first (the campaign runtime's `reset()` seam can call it
-  later), with a `--dry-run` that prints what would break before committing.
-- **D2 — Brief freshness.** At worker boot only (simplest, matches the
-  existing cast-YAML flow) vs. push-refresh on reset. Recommend: boot only
-  for v1; the bus-message refresh is a small seam left (like
-  `CampaignRuntime`'s `carry`).
-- **D3 — Jobs tables.** Standalone `character_jobs`/`character_artifacts`
-  (my lean) vs. adding a `domain TEXT` column to the 3layer tables. Standalone
-  keeps the 3layer service's store untouched — matches the "never modify a
-  shared utility for one project's needs" rule.
-- **D4 — First character to run end-to-end.** `harry` (source in
-  `sourceworks/`, pack already exists in `campaigns/hptest`) is the obvious
-  pilot — it also exercises the multi-character + relationship-edge paths
-  that a single character wouldn't.
+- **D1 — Reset trigger: its own process, later put in a scheduler.**
+  The updater is a **standalone executable** — a long-lived process with its
+  own container (sibling to `3layer-generator` in compose), not a CLI subcommand
+  of the campaign. It exposes a `--once --character <name>` single-shot
+  invocation (the unit a scheduler fires) and a `--daemon` mode (polls
+  `character_jobs` for `stage: reset` rows). Wiring the actual schedule
+  (cron / the existing scheduler) is a **follow-up**, explicitly deferred —
+  the deliverable this build is the process + a manual trigger. It ships
+ `--dry-run`, which prints exactly which nodes/edges would deactivate and
+ which would be retained *before* committing the transaction. The campaign
+ runtime's `reset()` seam can invoke the process's contract later (see D5).
+- **D3 — Jobs tables: standalone, in the generator DB.** (Resolved in the
+  data model — `character_jobs` / `character_artifacts`, own tables, generator
+  `generation` DB, 3layer store untouched.)
+- **D4 — Pilot character: `harry`.** Source in
+  `sourceworks/Harry_Potter_all_books_preprocessed.txt`; pack already exists in
+  `campaigns/hptest` (harry/ron/hermione). Multi-character + relationship-edge
+  paths get exercised for free, which a single character wouldn't.
+- **D5 — Campaign-seam hook (follow-up, not this build).** The campaign
+  runtime's `reset()` seam (`app/campaign/runtime.py`) will invoke the
+  updater process's contract when a full campaign loop resets, so the
+  per-character weekly reset and the whole-show reset stay in lockstep. Not
+  wired in v1 — the campaign module's Wave 4 is still outstanding.
+- **D2 — Brief freshness (elaborated).** The "brief" is the one prompt the
+  launched character actually reads at startup — its identity, active
+  knowledge graph, dormant-node names, objectives, locked core (see *Agent
+  ingestion*). The question is purely *when that text is assembled and how a
+  reset reaches an already-running worker*:
+  - **Option A — boot only.** The worker calls `load_character_brief()` once at
+    startup and keeps that text for the life of the container. A reset only
+    takes effect when the worker is **restarted** (worker restart is already
+    the weekly cadence in this project — `redeploy.sh` / worker on-off). Simple,
+    matches the existing cast-YAML flow, no push path to build. Downside: a
+    worker that survives across a reset keeps the *old* (pre-reset) memory
+    until someone restarts it.
+  - **Option B — boot + push-refresh.** Same boot load, but the updater also
+    publishes a `character_reset_done` bus message (carrying character + new
+    week + brief-digest); the worker's agent loop, on receiving it, re-runs
+    `load_character_brief()` and hot-swaps its prompt. This is the
+    "small seam" — it is the *character* analogue of the campaign
+    `CampaignRuntime` `carry` that survives `reset()`. Requires the agent
+    loop to hold the brief in a mutable ref rather than a startup-time local.
+  **Decision: A for v1 (boot only), B designed-for-not-built (the seam is
+  documented in `loader.py`).** Rationale: v1's weekly reset coincides with
+  the weekly worker restart, so A is already behaviour-correct for the
+  current cadence; B is a ~40-line addition (one message type + one re-load in
+  the existing handler dispatch) to slot in the moment a worker is expected
+  to *survive* a reset. No schema impact either way — the brief is always
+  re-derived from the (already versioned) Postgres rows, never stored.
 
 ## Build order (suggested)
 
-1. `store.py` + `schema.py` + tests (tables + taxonomy, no LLM)
-2. `pipeline.py` + `stages/profile.py` + `stages/knowledge.py` with fake LLM
-3. `updater.py` (deterministic apply + fake-LLM judge) + reset tests
-4. `stages/avatar.py` (reuses character_schema; preview-loop optional)
-5. `stages/brief.py` + `loader.py` + worker config wiring
-6. `cli.py` + config/character.yaml + docs (database_schema, sql, CHANGELOG)
-7. Pilot: generate `harry` from `sourceworks/`, run one weekly reset
-   end-to-end with the `hptest` pack, inspect the knowledge pane data
+1. `store.py` + `schema.py` + tests — all tables (including `character_experiences`
+   with `idx_char_exp_week`) wired to the **generator `generation` DB**,
+   node/edge taxonomy, profile-shape validator. No LLM.
+2. `pipeline.py` (stage registry, job dispatch over `character_jobs`) +
+   `stages/profile.py` + `stages/knowledge.py` with a fake LLM.
+3. `stages/avatar.py` — reuses `character_schema.py` slider contract;
+   optional `character_preview.py` refine pass.
+4. `updater.py` — **the standalone process**: deterministic apply-phase +
+   fake-LLM judge, `--once --character harry [--dry-run]` + `--daemon`
+   (daemon wiring deferred; the `--once` contract is what a scheduler will call).
+5. `stages/brief.py` + `loader.py` (boot-only, D2-A) + worker config wiring in
+   `config/workers/*.yaml`.
+6. `services/character-updater/` — the process's compose entry + Dockerfile
+   (flat copy like message-api, `depends_on: [generator-postgres]`, reads
+   `GENERATOR_POSTGRES_*`). **Not** yet scheduled.
+7. `cli.py` (operator surface for generation) + `config/character.yaml` +
+   docs (`docs/database_schema.md`, `docs/sql/02_create_tables.sql`,
+   `docs/character_system.md`, `CHANGELOG.md`).
+8. **Pilot (D4):** generate `harry` (and `ron`, `hermione`) from
+   `sourceworks/Harry_Potter_all_books_preprocessed.txt`, run one
+   `--once --character harry --dry-run`, then a real reset against the
+   `campaigns/hptest` pack, and inspect the brief + knowledge-pane data.
+
+## Explicitly deferred (not this build)
+
+- Scheduler/cron wiring of the updater process (D1 "later").
+- Option B brief push-refresh (D2) — seam documented in `loader.py`.
+- Campaign-runtime `reset()` hook (D5).
+- Backup/mirror of the generator DB to mafober (matches the existing
+  generator-DB follow-up in `utilities/3LayersWeeklyGeneration/PLAN_v3.md`).
+- Wire `app/knowledge_graph_pane.py`'s static placeholder to live rows
+  (Decision 3 in that file) — the schema is now what it would read.

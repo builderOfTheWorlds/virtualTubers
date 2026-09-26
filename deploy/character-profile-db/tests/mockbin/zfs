@@ -1,0 +1,24 @@
+#!/bin/bash
+# Mock `zfs` — datasets live in $MOCK_STATE/datasets, mountpoints under $MOCK_STATE/fs.
+S="$MOCK_STATE"
+echo "zfs $*" >> "$S/calls"
+ds="${*: -1}"
+case "$1" in
+    list)
+        if [[ "$*" == *"-r -t"* ]]; then
+            echo "NAME                                   USED  CREATION"
+            grep -x "$ds" "$S/datasets" | sed 's/$/  1.2G  Thu Sep 24 2026/'
+            exit 0
+        fi
+        grep -qx "$ds" "$S/datasets" 2>/dev/null || exit 1
+        if [[ "$*" == *"-o used"* ]]; then echo "1.2G"; else echo "$ds"; fi ;;
+    get)
+        echo "$S/fs/$ds" ;;
+    create)
+        echo "$ds" >> "$S/datasets"
+        mkdir -p "$S/fs/$ds" ;;
+    destroy)
+        grep -vx "$ds" "$S/datasets" > "$S/datasets.tmp" || true
+        mv "$S/datasets.tmp" "$S/datasets"
+        rm -rf "${S:?}/fs/$ds" ;;
+esac

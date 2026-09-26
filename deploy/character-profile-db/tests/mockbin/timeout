@@ -1,0 +1,3 @@
+#!/bin/bash
+# Mock `timeout`: the TCP probe always fails (port filtered), like the LAN today.
+exit 1

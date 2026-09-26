@@ -1,0 +1,44 @@
+#!/bin/bash
+# Mock `pct` for exercising deploy/character-profile-db/scripts/*.sh off-host.
+S="$MOCK_STATE"
+echo "pct $*" >> "$S/calls"
+case "$1" in
+    status)
+        if [[ -f "$S/ct_stopped" ]]; then echo "status: stopped"; else echo "status: running"; fi ;;
+    config)
+        cat "$S/ctconfig" 2>/dev/null ;;
+    set)
+        shift 2
+        if [[ "$1" == "-delete" ]]; then
+            grep -v "^$2:" "$S/ctconfig" > "$S/ctconfig.tmp" || true
+            mv "$S/ctconfig.tmp" "$S/ctconfig"
+        else
+            echo "${1#-}: $2" >> "$S/ctconfig"
+        fi ;;
+    reboot)
+        if grep -q "character-profile-db" "$S/ctconfig" 2>/dev/null; then touch "$S/mounted"; else rm -f "$S/mounted"; fi ;;
+    exec)
+        shift 3
+        case "$1" in
+            mountpoint) [[ -f "$S/mounted" ]] ;;
+            docker)
+                shift
+                case "$1" in
+                    inspect)
+                        shift
+                        fmt=""
+                        if [[ "$1" == "-f" ]]; then fmt="$2"; name="$3"; else name="$1"; fi
+                        grep -qx "$name" "$S/containers" 2>/dev/null || exit 1
+                        case "$fmt" in
+                            *Health*)       cat "$S/health" 2>/dev/null || echo healthy ;;
+                            *State.Status*) cat "$S/initstate" 2>/dev/null || echo "exited 0" ;;
+                        esac ;;
+                    exec)
+                        sql="${*: -1}"
+                        case "$sql" in
+                            *pg_get_userbyid*) cat "$S/dbowner" 2>/dev/null || echo character_profile ;;
+                            *extversion*)      cat "$S/extversion" 2>/dev/null || echo 0.8.6 ;;
+                        esac ;;
+                esac ;;
+        esac ;;
+esac

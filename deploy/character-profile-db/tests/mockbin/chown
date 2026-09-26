@@ -1,0 +1,5 @@
+#!/bin/bash
+# Mock `chown UID:GID PATH`: records the owner, never touches the real filesystem.
+S="$MOCK_STATE"
+echo "chown $*" >> "$S/calls"
+echo "$1" > "$S/owner"

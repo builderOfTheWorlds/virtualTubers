@@ -1,0 +1,4 @@
+# The mocks are bash scripts without a .sh extension, so the root rule
+# (*.sh text eol=lf) misses them. With CRLF their shebang becomes
+# "#!/bin/bash\r" and every mocked command fails.
+mockbin/* text eol=lf

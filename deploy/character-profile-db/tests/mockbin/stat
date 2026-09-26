@@ -1,0 +1,6 @@
+#!/bin/bash
+# Mock `stat -c '%u:%g' PATH`: owner recorded by the chown mock, 0:0 by default.
+S="$MOCK_STATE"
+path="${*: -1}"
+[[ -e "$path" ]] || exit 1
+cat "$S/owner" 2>/dev/null || echo "0:0"

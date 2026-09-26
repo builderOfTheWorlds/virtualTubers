@@ -1,0 +1,92 @@
+# character-profile-db — pgvector Postgres for the character generator/updater.
+#
+# Deployed as a Portainer stack named "character-profile-db" on mafober
+# (CT 101, 192.168.1.120). Run scripts/install.sh on the Proxmox host BEFORE
+# deploying: it creates the ZFS dataset bound below and bind-mounts it into
+# CT 101. Deploying first makes Postgres write into CT 101's view of the parent
+# dataset instead (mafober_summary.md, lessons 1-2). Steps: README.md here.
+#
+# Holds the character_profile database (owned by its own character_profile
+# role) and, per plan v4, every character table plus character_jobs /
+# character_artifacts. The 3-layer generator keeps its generator-postgres on
+# gx10; the stack-wide virtualtubers database stays on :5432.
+
+services:
+  db:
+    # Pinned: pgvector 0.8.6 on Postgres 16 (matches the project's other
+    # instances), Debian bookworm. Changing the codename changes glibc and its
+    # collation rules — REINDEX text indexes if you ever do.
+    image: pgvector/pgvector:0.8.6-pg16-bookworm
+    container_name: character-profile-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:?POSTGRES_SUPERUSER_PASSWORD must be set in the stack environment}
+      POSTGRES_DB: postgres
+      # A subdirectory of the mount, as the image docs advise when the volume
+      # is a filesystem root. install.sh --verify checks the host sees it.
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${CHARACTER_DB_PORT:-5433}:5432"
+    volumes:
+      # Mafober default. For a throwaway test instance on another Docker host,
+      # set CHARACTER_DB_DATA_DIR to a local directory (the image's entrypoint
+      # creates and chowns pgdata/ itself, so no install.sh is needed there).
+      - ${CHARACTER_DB_DATA_DIR:-/tank_0/utilities/character-profile-db}:/var/lib/postgresql/data
+    shm_size: 256mb
+    healthcheck:
+      # TCP, not the socket: during first-boot initdb the image runs a
+      # temporary socket-only server, and a socket check would report ready
+      # before the real server listens — the init service would then fail.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432 -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    restart: unless-stopped
+
+  # One-shot: creates the app role + database + pgvector extension, then exits 0.
+  # Idempotent — safe on every stack redeploy; re-applies the role password so
+  # changing CHARACTER_DB_PASSWORD in Portainer and redeploying rotates it.
+  init:
+    image: pgvector/pgvector:0.8.6-pg16-bookworm
+    container_name: character-profile-db-init
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:?POSTGRES_SUPERUSER_PASSWORD must be set in the stack environment}
+      APP_DB: ${CHARACTER_DB_NAME:-character_profile}
+      APP_USER: ${CHARACTER_DB_USER:-character_profile}
+      APP_PASSWORD: ${CHARACTER_DB_PASSWORD:?CHARACTER_DB_PASSWORD must be set in the stack environment}
+    entrypoint: ["/bin/bash", "-c"]
+    # $$ is compose's escape for a literal $ (expanded at run time inside the
+    # container). psql reads the values with \getenv, so the password is never
+    # in the container's command or in any process's argv.
+    command:
+      - |
+        set -euo pipefail
+        for attempt in $$(seq 1 30); do
+          pg_isready -h "$$PGHOST" -U "$$PGUSER" -d postgres >/dev/null 2>&1 && break
+          sleep 2
+        done
+        echo "character-profile-db-init: ensuring role $$APP_USER and database $$APP_DB"
+        psql -v ON_ERROR_STOP=1 -d postgres <<'SQL'
+        \getenv app_user APP_USER
+        \getenv app_db APP_DB
+        \getenv app_password APP_PASSWORD
+        SELECT format('CREATE ROLE %I LOGIN PASSWORD %L', :'app_user', :'app_password')
+        WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = :'app_user')
+        \gexec
+        SELECT format('ALTER ROLE %I LOGIN PASSWORD %L', :'app_user', :'app_password')
+        \gexec
+        SELECT format('CREATE DATABASE %I OWNER %I', :'app_db', :'app_user')
+        WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = :'app_db')
+        \gexec
+        SELECT format('REVOKE ALL ON DATABASE %I FROM PUBLIC', :'app_db')
+        \gexec
+        SQL
+        psql -v ON_ERROR_STOP=1 -d "$$APP_DB" -c 'CREATE EXTENSION IF NOT EXISTS vector'
+        echo "character-profile-db-init: done"
+    restart: "no"
