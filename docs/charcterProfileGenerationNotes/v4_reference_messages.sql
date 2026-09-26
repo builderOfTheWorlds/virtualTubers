@@ -1,0 +1,82 @@
+-- v4 reference SQL for the `messages` bus log in the virtualtubers database
+-- (192.168.1.120:5432). Plan §3.4. Validated by
+-- .claude/prompts/character_v4_plan_validation.py.
+--
+-- Three stages. Each can ship on its own, and the code handles both table shapes:
+--   M1  additive columns + indexes (safe on the live table, no downtime)
+--   M2  one-off conversion to daily range partitions (logger stopped; operator-run)
+--   C   the nightly compaction queries, for either table shape
+--
+-- Schema copies that must stay in sync (handover §3):
+--   services/message-logger/logger.py CREATE_TABLE_SQL
+--   docs/sql/02_create_tables.sql
+--   docs/message_logger.md
+
+-- ── M1: additive (idempotent, safe while the logger runs) ───────────────────
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS character TEXT;
+CREATE INDEX IF NOT EXISTS idx_messages_timestamp ON messages (timestamp);
+CREATE INDEX IF NOT EXISTS idx_messages_character_ts ON messages (character, timestamp);
+
+-- The logger fills `character` from payload->>'character' (decision D-04):
+--   INSERT INTO messages (id, "from", "to", type, payload, timestamp, character)
+--   VALUES (..., %(character)s)
+--   ON CONFLICT (id) DO NOTHING;            -- unpartitioned shape
+--   ON CONFLICT (id, timestamp) DO NOTHING; -- partitioned shape (after M2)
+
+-- ── M2: partitioned shape (operator-run migration; logger STOPPED) ──────────
+-- Driver: services/message-logger/migrate_partitioned.py (WP-17) runs these
+-- steps with --dry-run support and keeps messages_legacy until verified.
+--
+--   CREATE TABLE messages_new (
+--       id          UUID NOT NULL,
+--       "from"      TEXT NOT NULL,
+--       "to"        TEXT NOT NULL,
+--       type        TEXT NOT NULL,
+--       payload     JSONB NOT NULL,
+--       timestamp   TIMESTAMPTZ NOT NULL,
+--       ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+--       character   TEXT,
+--       PRIMARY KEY (id, timestamp)
+--   ) PARTITION BY RANGE (timestamp);
+--   CREATE TABLE messages_new_default PARTITION OF messages_new DEFAULT;
+--   -- one partition per UTC day from min(timestamp) to today+14:
+--   CREATE TABLE messages_pYYYYMMDD PARTITION OF messages_new
+--       FOR VALUES FROM ('YYYY-MM-DD 00:00+00') TO ('YYYY-MM-DD+1 00:00+00');
+--   INSERT INTO messages_new (id, "from", "to", type, payload, timestamp, ingested_at, character)
+--       SELECT id, "from", "to", type, payload, timestamp, ingested_at, character FROM messages;
+--   ALTER TABLE messages RENAME TO messages_legacy;
+--   ALTER TABLE messages_new RENAME TO messages;
+--   ALTER TABLE messages_new_default RENAME TO messages_default;
+--   CREATE INDEX ... ("to"), (type), (character, timestamp)   -- on the parent; propagates
+--
+-- Partition naming is a contract: messages_pYYYYMMDD covers exactly that UTC
+-- day. Compaction path B derives each partition's age from its name.
+-- The logger ensures partitions for today..today+14 at startup and hourly,
+-- but only when relkind = 'p' (partitioned). On the old shape it does nothing.
+
+-- ── Archive table (created by compaction on first run, either shape) ─────────
+--   Partitioned source: messages_archive is created PARTITION BY RANGE with
+--   the same columns, so old partitions can be DETACHed from messages and
+--   ATTACHed here with no row copying.
+--   Unpartitioned source: messages_archive is a plain table and rows are
+--   moved in batches (see B-plain below).
+
+-- ── C: nightly compaction (daily-maintenance step 2) ────────────────────────
+-- A: drop noisy types after N hours (config: compaction.noisy_types, noisy_keep_hours)
+--   DELETE FROM messages
+--    WHERE type = ANY(%(noisy_types)s)
+--      AND timestamp < now() - make_interval(hours => %(noisy_keep_hours)s);
+--
+-- B-partitioned: for each messages_pYYYYMMDD whose day + 1 <= today - keep_days:
+--   ALTER TABLE messages DETACH PARTITION messages_pYYYYMMDD;
+--   ALTER TABLE messages_archive ATTACH PARTITION messages_pYYYYMMDD
+--       FOR VALUES FROM ('YYYY-MM-DD 00:00+00') TO ('YYYY-MM-DD+1 00:00+00');
+--
+-- B-plain: in batches of %(batch)s until nothing moves:
+--   WITH moved AS (
+--       DELETE FROM messages
+--        WHERE id IN (SELECT id FROM messages WHERE timestamp < %(cutoff)s LIMIT %(batch)s)
+--    RETURNING id, "from", "to", type, payload, timestamp, ingested_at, character)
+--   INSERT INTO messages_archive (id, "from", "to", type, payload, timestamp, ingested_at, character)
+--   SELECT id, "from", "to", type, payload, timestamp, ingested_at, character FROM moved
+--   ON CONFLICT DO NOTHING;

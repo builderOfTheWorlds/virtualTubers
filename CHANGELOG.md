@@ -4,6 +4,18 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**source_pipeline: stage 0 (chapter split) replaces `sourceworks/split_chapters.py`.**
+New source-agnostic utility `utilities/source_pipeline/` (README there; design in
+`docs/charcterProfileGenerationNotes/character_generator_updater_v3.md` §1).
+Stage 0 splits a flat source text by a table of contents, searching headings
+in reading order, ending each chapter at the next heading, and failing on any
+missing heading or out-of-bounds chapter size instead of writing bloated files.
+Per-source differences live in `sources/<id>.yaml` (`heading_aliases` for
+misspelled headings). Harry Potter now splits 199/199 chapters
+(1,630–8,954 words each) into `sourceworks/chapters_v2/` + `manifest.json`;
+the old splitter dropped 14 chapters, ran 26 to end-of-file, and started 5
+early. 18 tests, including a real-corpus check; added to `pytest.ini` testpaths.
+
 **campaign-manager: job artifacts got a detail view and clickable links, and
 the live log panel got an autoscroll toggle.** Two small gaps closed on the
 Campaign Manager dashboard while walking through a running generation job:

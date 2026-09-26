@@ -1,0 +1,42 @@
+# Source config: Harry Potter (books 1-7) — the calibration corpus for the
+# source pipeline (utilities/source_pipeline/README.md). Paths are relative to
+# the repo root. Copy this file as the template for a new source work.
+source:
+  id: harry_potter
+  title: Harry Potter (books 1-7)
+  text: sourceworks/Harry_Potter_all_books_preprocessed.txt
+  encoding: utf-8
+
+toc:
+  path: sourceworks/harryPotterChapterNamesRaw.txt
+  format: tsv_book_headers     # see src/toc.py for supported formats
+
+split:
+  output_dir: sourceworks/chapters_v2
+  # Sanity bounds. A chapter outside them almost always means a missed
+  # heading swallowed the next chapter(s), so the run fails instead of
+  # writing bloated files. Longest real HP chapter is ~11.5k words.
+  max_words: 25000
+  min_words: 500
+
+  # LITERAL source text for headings the source spells differently from the
+  # toc. Normalisation (upper-case, drop ' , . - and friends) already covers
+  # punctuation-only differences like "Cat, Rat, and Dog" or "Hallowe'en";
+  # only true spelling/OCR differences belong here. Found by running with
+  # --dry-run and reading the "not found" list.
+  heading_aliases:
+    2:   ["THE VANASHIG GLASS"]
+    5:   ["DIAGON ALLY"]
+    13:  ["NICHOLAS FLAMBL"]
+    28:  ["THE DUELING CLUB"]
+    29:  ["THE POLY JUICE POTION"]
+    54:  ["THE SERVANT OF LORD VOLDERMORT"]
+    72:  ["BEAUXBATONS AND DRUMSTRANG"]
+    81:  ["RITA SKEBTERS SCOOP"]
+    97:  ["THE ADVANCED GUARD"]
+    116: ["MUNGOS HOSPITAL FOR MAGICAL MALADIES AND INJURIES"]   # source: "ST .MUNGOS ..."
+    125: ["O .W .L .S"]
+    159: ["THE LIGHTNINGSTRUCK TOWER"]
+    168: ["THE GHOUL IN PAJAMAS"]
+    182: ["XEN OPHILIUS LOVEGOOD"]
+    199: ["NINETEEN YEARS LATER"]                                 # toc says "Epilogue"
