@@ -2,18 +2,18 @@
   {
     "chapter_num": 1,
     "windows": 1114,
-    "scenes_found": 149,
+    "scenes_found": 810,
     "stats": {
       "chapter_num": 1,
       "original_size": 5924829,
-      "cleaned_size": 6643464,
+      "cleaned_size": 6900264,
       "windows_total": 1114,
-      "windows_hallucinated": 16,
-      "windows_error": 907,
-      "windows_ok": 191,
-      "hallucination_rate": 0.01436265709156194,
-      "avg_api_time_sec": 60.969719438407324,
-      "total_api_time_sec": 67920.26745438576,
+      "windows_hallucinated": 117,
+      "windows_error": 21,
+      "windows_ok": 976,
+      "hallucination_rate": 0.10502692998204669,
+      "avg_api_time_sec": 203.99655061628488,
+      "total_api_time_sec": 227252.15738654137,
       "llm_model": "llama3.1:8b"
     }
   }

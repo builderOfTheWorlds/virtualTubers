@@ -32,4 +32,33 @@ Split into 1114 windows (~1000 words each)
 ..  [1050/1114].........  [1060/1114].........  [1070/1114].........ERROR: Ollama request timed out after 300s
   [1080/1114].ERROR: Ollama request timed out after 300s
 .ERROR: Ollama request timed out after 300s
-.......  [1090/1114]......
+.......  [1090/1114]......ERROR: Ollama request timed out after 300s
+.ERROR: Ollama request timed out after 300s
+..ERROR: Ollama request timed out after 300s
+  [1100/1114].........  [1110/1114]....
+
+Stats:
+  Total windows: 1114
+  Hallucinations detected & rejected: 117
+  API errors: 21
+  Successful: 976
+  Hallucination rate: 10.5%
+  Avg API latency: 204.00s/window
+  Est. time for chapter: 63.1 hours
+✓ Written to 1_001_The Boy Who Lived.txt
+
+Results summary written to C:\Users\matt\PycharmProjects\virtualTubers\sourceworks\chapters_llm_restored\llm_restoration_results.json
+Scenes metadata written to C:\Users\matt\PycharmProjects\virtualTubers\sourceworks\chapters_llm_restored\scenes.json (810 scenes)
+
+======================================================================
+SUMMARY - All chapters processed:
+======================================================================
+  Total windows: 1114
+  Hallucinations rejected: 117 (10.5%)
+  API errors: 21
+  Total API time: 227252.2s
+  Avg latency: 204.00s/window
+  Scenes extracted: 810
+
+✅ Phase 2 (LLM Restoration): Complete with Ollama on http://192.168.1.23:11434
+Ready for Phase 3 (Word Diff Guard) and Phase 4 (Postgres Storage)
