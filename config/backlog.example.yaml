@@ -1,0 +1,26 @@
+# Example task backlog for the manager's `file` source (docs/task_backlog.md).
+# Tasks are served in this order; each needs a stable `id` (done-state is
+# keyed on it — renaming an id makes that task run again) and a `title`;
+# `body` is optional detail appended to the coder's task text.
+# Sized for the seeded sandbox/ workspace every coder starts from.
+# JSON works too (a list of the same objects).
+tasks:
+  - id: sandbox-divide-by-zero
+    title: "Fix divide() in calculator.py"
+    body: >-
+      divide() must raise ValueError on division by zero instead of
+      returning 0. tests/test_calculator.py::test_divide_by_zero_raises
+      covers it; do not change the tests.
+
+  - id: sandbox-clamp
+    title: "Add clamp(value, low, high) to calculator.py"
+    body: >-
+      Return value limited to the inclusive range [low, high]; raise
+      ValueError when low > high. Add tests in tests/test_calculator.py.
+
+  - id: sandbox-slugify
+    title: "Add slugify(text) to string_utils.py"
+    body: >-
+      Lowercase, strip, drop punctuation, and join words with single
+      hyphens ("  Hello, World! " -> "hello-world"). Add tests in
+      tests/test_string_utils.py.

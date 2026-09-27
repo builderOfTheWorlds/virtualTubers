@@ -7,6 +7,10 @@ table built from them. See docs/agent_handlers.md for the module layout.
 All handlers share one signature:
     handler(worker_id, agent_config, llm_client, producer, msg,
             state_path=None, coding_backend=None)
+
+IDLE_TICK_HOOKS maps a role to an optional per-tick hook the loop calls
+after polling (only on enabled ticks):
+    hook(worker_id, agent_config, llm_client, producer, state_path=None)
 """
 from .coder import handle_task_assignment
 from .tester import handle_commit_notification, handle_retest_request
@@ -15,6 +19,7 @@ from .manager import (
     handle_clarification_request,
     handle_task_complete,
     handle_test_passed,
+    manager_idle_tick,
 )
 from .operator import handle_operator_message
 from .viewer import handle_viewer_joined
@@ -50,4 +55,12 @@ MESSAGE_HANDLERS = {
     "replay_end": handle_replay_end,
 }
 
-__all__ = ["MESSAGE_HANDLERS", *(h.__name__ for h in MESSAGE_HANDLERS.values())]
+# Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in
+# task backlog (docs/task_backlog.md); a hook must never raise.
+IDLE_TICK_HOOKS = {
+    "manager": manager_idle_tick,
+}
+
+__all__ = ["MESSAGE_HANDLERS", "IDLE_TICK_HOOKS",
+           *(h.__name__ for h in MESSAGE_HANDLERS.values()),
+           *(h.__name__ for h in IDLE_TICK_HOOKS.values())]

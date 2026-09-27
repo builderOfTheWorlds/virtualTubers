@@ -30,6 +30,19 @@ agent:
   tick_rate_ms: 8000
   max_context_tokens: 8000
 
+  # Task backlog — OFF (docs/task_backlog.md; full key reference in
+  # config/worker.yaml). Example to let MAX-1 run the show on its own from
+  # the seeded sandbox tasks (also mount config/backlog.example.yaml at
+  # /config/backlog.yaml in docker-compose.yml):
+  # backlog:
+  #   enabled: true
+  #   source: file
+  #   file_path: /config/backlog.yaml
+  #   state_path: /data/world-state/backlog_state.json
+  #   coders: [coder]
+  #   cooldown_s: 60
+  #   stale_after_s: 1800
+
 llm:
   provider: ollama
   base_url: "http://100.37.208.112:11434"

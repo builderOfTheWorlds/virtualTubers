@@ -22,6 +22,19 @@ Key sections inside a worker config:
 | `message_bus` | Kafka backend, bootstrap servers, topic, and this worker's ID |
 | `coding_backend` | Which tool writes real code (`provider`: `native` \| `opencode` \| `aider` \| `none`; `workspace`, `timeout_s`, optional `model` override). See [docs/coding_backend.md](coding_backend.md). |
 
+## Task backlog (manager, opt-in)
+
+`agent.backlog` (annotated in `config/worker.yaml`, **off by default**) lets
+the manager pull the next task itself whenever the team has no task chain
+in flight, instead of waiting for the operator to POST a `task_assignment`.
+Keys: `enabled`, `source` (`file` | `gitea`), `file_path`, `state_path`,
+`gitea.{base_url, owner, repo, label, in_progress_label, blocked_label,
+close_on_success}`, `coders` (round-robin), `cooldown_s` (default 60),
+`stale_after_s` (default 1800). The gitea source's token comes only from the
+`GITEA_TOKEN` env var, which `docker-compose.yml` passes to `worker-manager`
+alone. A file backlog needs its task list mounted into the manager (example:
+`config/backlog.example.yaml`). Full behaviour: [docs/task_backlog.md](task_backlog.md).
+
 ## Worker on/off control (what's set up)
 
 Every worker's enabled/disabled state lives outside `worker.yaml` entirely —
