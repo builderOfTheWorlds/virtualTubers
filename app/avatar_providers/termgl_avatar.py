@@ -26,6 +26,7 @@ ImportError here is caught there) rather than crashing the avatar pane.
 """
 import math
 import sys
+import time
 
 from avatar_display import build_bubble_box
 from avatar_providers.base import AvatarProvider
@@ -41,6 +42,17 @@ VIEW_ROT_X = 0.4
 DEFAULT_VIEW_DIST = 3.0
 HEAD_VIEW_DIST = 2.4
 VIEW_DIST = DEFAULT_VIEW_DIST  # back-compat for anything importing the old name
+
+# Idle "breathing" motion so a stationary avatar doesn't read as a frozen/
+# stuck stream: a slow, small sinusoidal sway layered on top of the fixed
+# profile angle (never touches self._angle itself, so it composes cleanly
+# with the fixed 15-degree offset and, if ever configured, resumed
+# rotation). Amplitudes are deliberately tiny — this should look like a
+# person holding a pose, not a bobblehead.
+BREATH_PERIOD_S = 4.2
+BREATH_YAW_RAD = math.radians(1.2)
+BREATH_PITCH_RAD = math.radians(0.6)
+BREATH_DIST = 0.035
 
 # expression -> (rotation speed multiplier, termgl color name). Faster
 # rotation reads as "more active/animated" for thinking/speaking states;
@@ -193,8 +205,16 @@ class TermglAvatarProvider(AvatarProvider):
         if self._accent_color is not None:
             color_name = self._accent_color
 
-        view = self._make_view(rot_x=VIEW_ROT_X, rot_y=self._angle, rot_z=0.0,
-                               dist=self._view_dist)
+        # Idle breathing sway — see BREATH_* constants' docstring above.
+        phase = (time.monotonic() % BREATH_PERIOD_S) / BREATH_PERIOD_S
+        breath = math.sin(phase * 2 * math.pi)
+        breath_yaw = breath * BREATH_YAW_RAD
+        breath_pitch = breath * BREATH_PITCH_RAD
+        breath_dist = breath * BREATH_DIST
+
+        view = self._make_view(rot_x=VIEW_ROT_X + breath_pitch,
+                               rot_y=self._angle + breath_yaw, rot_z=0.0,
+                               dist=self._view_dist + breath_dist)
         vertex_shader = tgl.VertexShaderSimple(np.matmul(self._camera, view))
         pixel_shader = self._LitPixelShader()
         # Light the generated face with the raking light it was sculpted

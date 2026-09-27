@@ -30,6 +30,7 @@ in the worker container, not by the unit suite.
 import logging
 import math
 import sys
+import time
 
 import numpy as np
 
@@ -63,6 +64,24 @@ EXPRESSION_STYLE = {
     "happy": (2.0, None),
     "focused": (1.2, None),
 }
+
+# Idle "breathing" motion — see termgl_avatar.py's matching BREATH_*
+# constants for the rationale (a stationary avatar otherwise reads as a
+# frozen/stuck stream). Small sinusoidal sway layered on top of the fixed
+# profile angle and view distance; never touches self.angle itself, so it
+# composes cleanly with the fixed 15-degree offset.
+BREATH_PERIOD_S = 4.2
+BREATH_YAW_RAD = math.radians(1.2)
+BREATH_PITCH_RAD = math.radians(0.6)
+BREATH_DIST = 0.035
+
+
+def _breath_offsets():
+    """(yaw, pitch, dist) sinusoidal offsets for the current instant."""
+    phase = (time.monotonic() % BREATH_PERIOD_S) / BREATH_PERIOD_S
+    breath = math.sin(phase * 2 * math.pi)
+    return (breath * BREATH_YAW_RAD, breath * BREATH_PITCH_RAD,
+            breath * BREATH_DIST)
 
 
 def _detect_truecolor_visual_id():
@@ -200,10 +219,12 @@ class FrameSource:
         self.verts, self.faces, self.materials = build_codec_head(
             self._character_params, mouth_open=mouth_open, emotion=emotion)
 
+        breath_yaw, breath_pitch, breath_dist = _breath_offsets()
         img, backend = gl_raster.render_with_fallback(
             self.verts, self.faces, self.materials,
             width=self.width, height=self.height,
-            rot_y=self.angle, dist=self.view_dist, tint=tint,
+            rot_x=0.06 + breath_pitch, rot_y=self.angle + breath_yaw,
+            dist=self.view_dist + breath_dist, tint=tint,
         )
         img = apply_codec_screen(img)
         # Last step, AFTER the CRT pass: the scanlines/vignette multiply the
