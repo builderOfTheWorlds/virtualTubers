@@ -368,6 +368,12 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # Task backlog, gitea source only (docs/task_backlog.md): issues token
+      # (read:issue + write:issue). Deliberately passed to the manager and no
+      # other service. Empty = gitea backlog idles with a WARN. A `file`
+      # backlog needs no env, just a mount of the task list, e.g.
+      #   - ${REPO_ROOT:-.}/config/backlog.example.yaml:/config/backlog.yaml:ro
+      GITEA_TOKEN: ${GITEA_TOKEN:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state

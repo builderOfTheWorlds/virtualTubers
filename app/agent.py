@@ -27,7 +27,7 @@ from llm_client import build_llm_client
 from coding_backend import build_coding_backend
 from agent_state import resolve_state_path, write_state
 from agent_metrics import AgentMetrics, InstrumentedLLMClient, MetricsProducerWrapper, resolve_runtime_dir
-from agent_handlers import MESSAGE_HANDLERS
+from agent_handlers import IDLE_TICK_HOOKS, MESSAGE_HANDLERS
 
 # Backward-compatible re-exports: these names lived in this module before the
 # agent_handlers/ split, and `from agent import ...` callers keep working.
@@ -209,6 +209,12 @@ def main():
                 if handler:
                     handler(worker_id, agent_config, llm_client, producer, msg, state_path,
                             coding_backend=coding_backend)
+
+            # Optional per-role hook (e.g. the manager's task backlog,
+            # docs/task_backlog.md). Enabled ticks only, like the handlers.
+            idle_hook = IDLE_TICK_HOOKS.get(agent_config.get("role"))
+            if idle_hook:
+                idle_hook(worker_id, agent_config, llm_client, producer, state_path)
 
             if bus_heartbeat_due(i, bus_heartbeat_every):
                 heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})

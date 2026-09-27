@@ -33,6 +33,19 @@ bug-fix retries and the final `manager_report` — is a single chain. The
 "received" log line and the handlers' structured log lines include
 `correlation_id=`. See docs/message_bus.md "Correlation IDs".
 
+**Idle-tick hooks / task backlog (v2.7.0).** After the handlers run on an
+enabled tick, the loop calls the optional per-role hook
+`agent_handlers.IDLE_TICK_HOOKS.get(role)` with `(worker_id, agent_config,
+llm_client, producer, state_path)`. Only the manager has one
+(`manager_idle_tick`): when `agent.backlog.enabled`, it pulls the next task
+from a file or Gitea backlog whenever the manager has no task chain in
+flight and a cooldown has passed, and assigns it to a coder as a
+`task_assignment` starting a new correlation chain (`payload.backlog_id`,
+`backlog_source`). The chain ends on the manager's milestone / escalation /
+blocker decision and the backlog item is marked with that outcome; blockers
+are never retried. Disabled ticks skip the hook like they skip handlers.
+Off by default — see docs/task_backlog.md.
+
 The handlers form a collaboration graph so a single ticket flows through
 the whole team: the coder answers a `task_assignment` with `task_complete`
 to the sender **and** hands the commit to the tester
@@ -108,12 +121,12 @@ tick loop. Every handler described on this page lives in the
 
 | Module | Contents |
 |---|---|
-| `agent_handlers/__init__.py` | `MESSAGE_HANDLERS` dispatch table |
+| `agent_handlers/__init__.py` | `MESSAGE_HANDLERS` dispatch table, `IDLE_TICK_HOOKS` (role → per-tick hook) |
 | `agent_handlers/common.py` | `_complete_with_emotion`, `_send_manager_report` |
 | `agent_handlers/relay_files.py` | `REPLAY_*_FILE` env/default constants, `_resolve_replay_*_file`, `_atomic_write_json`, `_read_json_file`, `_write_replay_request` |
 | `agent_handlers/coder.py` | `handle_task_assignment`, `demo_editor_note`, `demo_filetree_ls`, `show_commit_in_filetree` |
 | `agent_handlers/tester.py` | `handle_commit_notification`, `handle_retest_request`, `_run_tests_and_report`, `_decide_test_outcome`, `_resolve_workspace`, `_severity_from_failures`, test-stub constants, `WORKSPACE_MOUNT_PATTERN` |
-| `agent_handlers/manager.py` | `handle_bug_report`, `handle_test_passed`, `handle_task_complete`, `handle_clarification_request`, `MAX_BUG_RETRIES` |
+| `agent_handlers/manager.py` | `handle_bug_report`, `handle_test_passed`, `handle_task_complete`, `handle_clarification_request`, `MAX_BUG_RETRIES`, task backlog `BacklogDispatcher` + `manager_idle_tick` (docs/task_backlog.md) |
 | `agent_handlers/operator.py` | `handle_operator_message` |
 | `agent_handlers/viewer.py` | `handle_viewer_joined`, `_pick_rerun_episode` |
 | `agent_handlers/replay_relay.py` | `handle_replay_request`, `handle_replay_stop`, `handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`, `handle_replay_end`, `_is_valid_cast` |
@@ -379,6 +392,13 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.7.0 (2026-09-27) — Generic per-role idle-tick hook: the loop calls
+  `IDLE_TICK_HOOKS.get(role)` after the handlers on every enabled tick
+  (never while disabled). The manager's hook drives the opt-in task backlog
+  (new config `agent.backlog.*`, env `GITEA_TOKEN`; docs/task_backlog.md).
+  Backlog dispatches add `backlog_id` / `backlog_source` to the
+  `task_assignment` payload. Tests: `tests/test_manager_backlog.py`,
+  `tests/test_task_backlog.py`.
 - v2.6.0 (2026-09-27) — Redis liveness key `worker:{id}:alive` written
   every tick (`WorkerControl.heartbeat`, TTL from new config
   `agent.liveness_ttl_s`); the `status_update` bus heartbeat is now sent
