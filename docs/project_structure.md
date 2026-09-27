@@ -43,6 +43,7 @@ virtualTubers/
 │   └── layouts/            # Composition presets that place & size panels (coder, tester, manager)
 ├── docs/
 │   ├── VTuber_AI_Dev_Team_Concept.md   # Full architecture & roadmap doc
+│   ├── agent_flow_reference.md         # Text flow reference for AI agents (components, message types, flows, invariants)
 │   ├── feature_flow_diagram.md         # Feature-level flow diagrams (overview, dev loop, Rerun Theater, rendering, content gen)
 │   ├── architecture_flow_diagram.md    # Infra/data-ownership flow diagram
 │   ├── agent.md, llm_client.md         # Agent loop and LLM client docs

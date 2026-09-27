@@ -8,6 +8,8 @@ The project is early-stage but the core loops are real: the agent brain (`app/ag
 
 See [docs/VTuber_AI_Dev_Team_Concept.md](docs/VTuber_AI_Dev_Team_Concept.md) for the full architecture and design plan.
 
+**AI agents working in this repo:** read [docs/agent_flow_reference.md](docs/agent_flow_reference.md) next — a text-only map of every component, message type, feature flow, and invariant, with file paths. Diagram versions: [docs/feature_flow_diagram.md](docs/feature_flow_diagram.md) (features) and [docs/architecture_flow_diagram.md](docs/architecture_flow_diagram.md) (data ownership).
+
 ## Changelog
 
 Dated write-ups of every feature and fix live in **[CHANGELOG.md](CHANGELOG.md)**
@@ -143,6 +145,8 @@ Top level:
 - `repos/` — vendored third-party avatar repos
 - `config/` — worker configs, tmux panel/layout presets
 - `docs/` — per-module reference docs, including this README's detail subfiles
+  - `docs/agent_flow_reference.md` — component/message/flow reference for AI agents
+  - `docs/feature_flow_diagram.md` — feature-level Mermaid flow diagrams
 - `tests/` — pytest suite
 - `Dockerfile`, `docker-compose.yml`, `startup.sh`, `requirements.txt`, `.env.example` — root-level build/run files
 
