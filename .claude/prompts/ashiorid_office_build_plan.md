@@ -598,19 +598,28 @@ All other work packages own disjoint paths.
 | OB-07 | done (a19c6bd). Speaking turns must be SERIALIZED. `qwen3-coder:30b` is not installed. `hermes3:70b` is unusable on gx10. Allocation: CEO/TL/Analyst/Marketing on gemma4:26b; Tester/OM on gemma4:12b; Engineer on qwen3.8:27b + aider; llama3.1:8b as fallback; keep_alive ≥30m. OPEN: another client holds qwen3.8:27b at 262k ctx, so a ctx mismatch costs a 30–70 s reload. |
 | Wave 1 verify | Full suite: 2939 passed, 3 failed (the same baseline relay_io failures), 7 skipped. |
 | OB-10a | done. `profiles/_cast_bible.md`: names, ages, speech styles, relationship matrix, odd details. Names: CEO Graham Ellery, TL Anselm Brody, Analyst Maren Voss, Engineer Theo Palliser, Tester Owen Hask, Marketing Julian Faire, OM Nora Blakeley, Party Member "A. Penhale". |
-| OB-10b | **NEXT.** 4 agents × 2 characters, writing `cast/<id>.yaml` + `profiles/<id>.yaml`. The contract is `profiles/_SCHEMA.md`; the canon is `_cast_bible.md` + `lore/`. |
-| OB-10c | Script done (`scripts/validate_office_profiles.py`, 50 tests). Currently exits 1 with 16 errors because the character files don't exist yet. After OB-10b: run it and send the fixes back. Then the **USER REVIEW GATE**. |
-| OB-11 | todo. Pack skeleton; can run alongside OB-10b. |
+| OB-10b | done (30f7417, 9b68f20, 47c3c0a, 62f134b; e74cb8c de-duplicates two signature features). All 8 `cast/<id>.yaml` + `profiles/<id>.yaml`. Believed backstories 804–998 words. |
+| OB-10c | done. Validator: PASS, 0 errors, 0 warnings on all 8. **USER REVIEW GATE is open** — the user has not yet read the characters. |
+| OB-11 | done (fad4123). `--validate` ok, `--dry-run --no-pace` plays `first-standup`, `build_campaign_episode.py` → 15 events, PASS. Follow-up: the builder drops text-less action beats (coffee, assign_task, observe, open_ticket), so office actions and tuber_7 never reach the episode. |
 | OB-12 | done. `CorpusAdapter` in 3Layers `source_adapter.py` (`.jsonl` → work_session notes). `app/office/role_attribution.py` (session → tuber_N episode, audit-gated). |
 | OB-20 | todo (after the review gate) |
-| OB-21, OB-22 | todo |
+| OB-21 | done (99e710a). `app/agent_handlers/office.py` + `app/office/brief_stub.py`; fake-bus e2e passes. `day_start`/`day_end` unhandled (OB-30); `set_day_runner()` / `issue_directive()` are the OB-30 hooks. Reused manager/coder/tester narration still uses `agent.system_prompt`, so OB-22 must fill it from the cast files. Config schema: `agent.office` block, see docs/agent_handlers.md. |
+| OB-22 | **NEXT** (can start now; not gated on user review). |
 | OB-23 | done. `git_client` has real push/fetch/tag/reset (ssh or askpass token, never logged); new `app/gitea_client.py`. NOTE: Gitea returns 422 on self-approval. With one shared token, TL approvals must be COMMENT reviews, or each persona needs its own bot user/token. |
 | OB-24 | done. Seed repo at `C:/Users/matt/PycharmProjects/fraudStop`, tag `loop-seed` (20a1de1), 24 tests green. Canon from product.md: score 0–1000, APPROVE/REVIEW/DECLINE, keyed on account_id. Not yet on Gitea (see Handoff). |
 | OB-30 .. OB-33 | todo |
 | OB-40 .. OB-42 | todo |
 
 
-## 7. Handoff: where we are (updated 2026-09-27)
+## 7. Handoff: where we are (updated 2026-09-27, session 2)
+
+**Session 2 (Linux cloud container, branch `claude/feature-development-progress-79sysa`):**
+OB-10b, OB-10c run, OB-11 and OB-21 landed. Linux full suite: **4042 passed, 0 failed, 61
+skipped, 1 xfailed** (the Windows relay_io failures don't occur on Linux; service deps from
+`services/*/requirements.txt` must be installed into `.venv` for collection). Next: USER REVIEW
+GATE on the 8 characters, then OB-20; OB-22 can proceed in parallel.
+
+### Session 1 notes (original handoff)
 
 Branch `feat/ashiorid-office` on `origin` (Gitea `gitea_admin/virtualTubers`, push-mirrored to
 GitHub `builderOfTheWorlds/virtualTubers`).
