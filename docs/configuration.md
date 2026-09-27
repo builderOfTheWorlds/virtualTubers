@@ -6,13 +6,15 @@ All runtime behavior is config-driven — no code changes needed to retune an ag
 
 - `config/worker.yaml` — the annotated template/default worker config (role, name, system prompt, LLM/voice/avatar/stream/world-state/message-bus settings)
 - `config/workers/coder.yaml`, `manager.yaml`, `tester.yaml` — per-role configs mounted into each container at `/config/worker.yaml`
-- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `TUBER1_STREAM_KEY` / `TUBER6_STREAM_KEY` / `TUBER5_STREAM_KEY`, `TUBER0_STREAM_KEY` / `GM_LAYOUT_PRESET` (the GM / roundtable channel), `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`
+- Environment variables (set via `docker-compose.yml` or `.env`) override config file values at runtime, notably: `STREAM_RTMP_URL`, `TUBER1_STREAM_KEY` / `TUBER6_STREAM_KEY` / `TUBER5_STREAM_KEY`, `TUBER0_STREAM_KEY` / `GM_LAYOUT_PRESET` (the GM / roundtable channel), `LLM_BASE_URL`, `DISPLAY_NUM`, `WORKER_ID`, `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`, `REDIS_URL`, `POSTGRES_HOST` / `POSTGRES_PORT` / `POSTGRES_DB` / `POSTGRES_USER` / `POSTGRES_PASSWORD`, `WORKER_KILL_FILE` (local kill switch path, default `/tmp/worker_disabled`), `GITEA_TOKEN` (manager only, gitea task backlog)
+- Service-only env vars (not worker config): `AUTO_SUBMIT_DRAFTS` (default `false`) / `AUTO_SUBMIT_TIMEOUT_S` (default `60`) on `3layer-generator` — auto-submit finished publish jobs to message-api as review drafts ([docs/draft_submitter.md](draft_submitter.md)); it reuses `MESSAGE_API_URL`
 
 Key sections inside a worker config:
 
 | Section | Controls |
 |---|---|
-| `agent` | Role, display name, system prompt, tick rate, context window |
+| `agent` | Role, display name, system prompt, tick rate, context window; `liveness_ttl_s` (TTL of the Redis liveness key, unset = `max(3 ticks, 15s)`), `bus_heartbeat_every` (send the `status_update` bus heartbeat every N ticks, default 12, 0 = off); `backlog.*` (manager task backlog, below) |
+| `worker_control` | `kill_file` — the local emergency kill-switch path (default `/tmp/worker_disabled`; `WORKER_KILL_FILE` env wins). See "Worker on/off control" below |
 | `llm` | Provider (`ollama` \| `claude`), base URL, model, temperature |
 | `voice` | TTS for spoken replay narration: provider (`piper` \| `kokoro` \| `openai` \| `elevenlabs` \| `fake` \| `null`), Piper model path, per-speaker (boss/coder) voice overrides. `model_path` doubles as this worker's own distinct persona voice, since `speakers.coder` is empty by default — see [Rerun Theater](usage.md#rerun-theater--replaying-past-sessions-with-voices). Piper synthesizes locally by default (one loaded model kept resident per worker) or against a remote `piper.http_server` if `base_url` is set. See [docs/tts_client.md](tts_client.md) |
 | `avatar` | Name, title, ASCII expression states, speech bubble sizing |
@@ -55,6 +57,17 @@ config files or the stack:
   temporarily unreachable Redis, is treated as *enabled*. A control-plane
   hiccup can never silently take a live stream down. Writes do not fail
   open — the API returns HTTP 503 if a toggle couldn't be persisted.
+- **Local kill switch**: while the file at `worker_control.kill_file`
+  (`WORKER_KILL_FILE`, default `/tmp/worker_disabled`) exists inside a
+  worker container, that worker is OFF without consulting Redis — so it
+  works with Redis/message-api down. Created/removed by
+  `scripts/emergency_stop.sh` / `emergency_resume.sh` (or `.ps1` over SSH),
+  or `kill -USR1` to `stream_supervisor.py`. Survives `docker restart`, not
+  container re-creation. Never create it in the `message-api` container.
+- **Liveness**: every tick (even while disabled) the agent writes
+  `worker:{id}:alive` (JSON `{ts, local_override, ttl_s}`, TTL
+  `agent.liveness_ttl_s`); `GET /workers/health` and the control panel's
+  health column read it.
 - **Full design**: [docs/worker_control.md](worker_control.md) and
   [docs/stream_supervisor.md](stream_supervisor.md).
 
@@ -65,7 +78,9 @@ worker config picks a preset (`layout.preset`) from `config/layouts/*.yaml`, whi
 places and sizes reusable panel types from `config/panels/*.yaml`. **Reorder,
 resize, retitle, or disable a pane by editing config only** — no `startup.sh` edit
 or image rebuild. The rich Kafka "Message Bus" feed pane (`config/panels/kafka_feed.yaml`)
-is configured the same way (colors, type filters, payload controls). See
+is configured the same way (colors, type filters, payload controls, and the
+optional correlation-tag column `content.correlation.show|chars|color`, off by
+default — [docs/message_bus_feed.md](message_bus_feed.md)). See
 [docs/layout_system.md](layout_system.md) and [docs/panels.md](panels.md).
 
 The layered config maps directly onto **Kubernetes ConfigMaps** — `config/panels/`

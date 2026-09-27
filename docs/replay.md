@@ -83,7 +83,7 @@ instead of raising. `_perform_scene` also stops any in-flight audio
 playback before the exception propagates, so a stopped voiced scene never
 leaves narration playing under a show that already ended. `app/replay_pane.py`
 wires this to `REPLAY_STOP_FILE` (docs/replay_pane.md), written by
-`app/agent.py`'s `handle_replay_stop` on an operator `replay_stop`
+`app/agent_handlers/replay_relay.py`'s `handle_replay_stop` on an operator `replay_stop`
 (docs/operator_commands.md) — `replay.py` itself has no bus/file
 awareness, it just calls whatever `should_stop` it's given.
 

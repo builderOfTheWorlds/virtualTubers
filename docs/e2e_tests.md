@@ -28,10 +28,10 @@ All are marked `@pytest.mark.integration` (not `slow`), so CI's
 .venv/bin/python -m pytest -q -m integration tests
 ```
 
-Two tests are `xfail(strict=True)`. Each one records a bug these scenarios
-found in production code (see "Known bugs" below). When a bug is fixed, its
-test starts passing, strict xfail turns that into a failure, and whoever
-fixed it removes the marker.
+One test is `xfail(strict=True)`. It records a known, low-priority quirk
+these scenarios found in production code (see "Known quirks" below). If the
+behaviour ever changes, the test starts passing, strict xfail turns that
+into a failure, and whoever changed it removes the marker.
 
 ## How the harness works
 
@@ -148,21 +148,26 @@ Rules of thumb:
 - Keep every scenario well under a second. Where the code polls, patch the
   timeouts; the harness already does this for duets.
 
-## Known bugs found by these tests
+## Known quirks found by these tests
 
 Fixed: `handle_test_passed` used to return without a milestone `manager_report` when the manager's LLM failed; it now falls back to a `(narration unavailable: ...)` report, and `test_manager_llm_down_on_test_passed_still_reports_milestone` is a regular regression test.
 
-| Test | Bug |
+| Test | Quirk (current, known behaviour) |
 |---|---|
-| `test_narration_only_coder_llm_failure_reaches_manager` | `app/agent_handlers/coder.py:149`: when the coder's narration LLM fails (with no coding backend), it sends `clarification_request` to the task's **sender**. For an operator-assigned task that is `operator`, so the manager never raises a blocker. Compare the backend-failure path (`coder.py:116`, always `manager`) and docs/agent_flow_reference.md §3. |
+| `test_narration_only_coder_llm_failure_reaches_manager` | `app/agent_handlers/coder.py:148-152`: when the coder's narration LLM fails (with no coding backend), it sends `clarification_request` to the task's **sender**. For an operator-assigned task that is `operator`, so the manager never raises a blocker. Compare the backend-failure path (`coder.py:115-119`, always `manager`). This is documented as current behaviour in docs/agent_flow_reference.md §3; it is low priority because `clarification_request` is not in active use, and the strict xfail is kept as its record. |
 
-The dev-loop tests also pin down behaviour that disagrees with
-docs/agent_flow_reference.md §3. The coder sends `task_complete` to the
+The dev-loop tests also pin down behaviour that docs/agent_flow_reference.md
+§3 used to get wrong (corrected 2026-09-27). The coder sends `task_complete` to the
 **task's sender**, not always to the manager. For an operator-assigned task
 it goes to `operator`, so the manager only acknowledges `task_complete` for
 fix re-assignments that it sent itself.
 
 ## Changelog
+
+- v1.0.1 (2026-09-27): One strict xfail left (the `handle_test_passed` one
+  was fixed); the remaining one is recorded as a known low-priority quirk,
+  not a pending decision. agent_flow_reference §3 now matches the pinned
+  recipients.
 
 - v1.0.0 (2026-09-27): Initial harness, 6 dev-loop scenarios (plus LLM-failure
   variants) and 5 duet scenarios; 2 strict xfails that document bugs.

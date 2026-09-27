@@ -210,7 +210,9 @@ pane:
   `MAX_BUG_RETRIES = 3`). Highlighted cyan on the feed.
 - **`operator_reply`** — any worker → operator, in response to an
   `operator_message`. Highlighted blue on the feed.
-- **`status_update`** — heartbeat traffic, sent by every worker every tick.
+- **`status_update`** — bus heartbeat traffic, sent by every worker every
+  `agent.bus_heartbeat_every` ticks (default 12; 0 = off). Liveness does not
+  depend on it (Redis `worker:{id}:alive`, see `GET /workers/health`).
   Hidden from the feed by default (heartbeat flood filter).
 
 ## Full pipeline example

@@ -4,6 +4,58 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**2026-09-27 — operability round: handler split, correlation IDs, liveness
+and health view, kill switch, draft review gate, race-safe relay files,
+manager task backlog, end-to-end flow tests.** Eight changes merged
+together, all safe by default (nothing new airs or streams unless an
+operator turns it on):
+
+- **Handlers split out of `app/agent.py`** into `app/agent_handlers/` (one
+  module per role/concern, `MESSAGE_HANDLERS` + new per-role
+  `IDLE_TICK_HOOKS`); pure refactor ([docs/agent_handlers.md](docs/agent_handlers.md)).
+- **Correlation IDs.** Every bus envelope now carries `correlation_id` (the
+  chain's first message id) and `causation_id`; dev-team handlers reply with
+  `**reply_ids(msg)`, so a task and all its bug-fix retries share one id.
+  `messages` gains two UUID columns + an index; the feed pane can show a
+  correlation tag (`content.correlation.show`, off)
+  ([docs/message_bus.md](docs/message_bus.md)).
+- **Liveness + health view.** Each agent writes Redis `worker:{id}:alive`
+  (JSON `{ts, local_override, ttl_s}`, TTL `agent.liveness_ttl_s`) every
+  tick; the `status_update` bus heartbeat drops to every
+  `agent.bus_heartbeat_every` ticks (default 12). New message-api
+  `GET /workers/health` and `GET /workers/{id}/health` (alive / stale /
+  down / unknown, never 503) and a control-panel health column
+  ([docs/worker_control.md](docs/worker_control.md)).
+- **Local kill switch.** A per-container kill file (`WORKER_KILL_FILE`,
+  default `/tmp/worker_disabled`) forces a worker off without consulting
+  Redis; `scripts/emergency_stop.sh|.ps1` / `emergency_resume.sh|.ps1`
+  create/remove it via `docker exec`, and SIGUSR1 to `stream_supervisor.py`
+  does the same. Works with Redis/message-api down.
+- **Draft review gate.** `replay_episodes.status` is `draft | approved`
+  (existing rows migrate as approved); drafts never air. message-api:
+  `POST /replays?status=draft`, `GET /replays?status=approved|draft|all`,
+  `POST /replays/{name}/approve`; control panel: "Drafts awaiting review".
+  `3layer-generator` can post finished publish jobs as drafts with
+  `AUTO_SUBMIT_DRAFTS=true` (off by default)
+  ([docs/draft_submitter.md](docs/draft_submitter.md)). The new SQL has not
+  yet been run against the real Postgres.
+- **Race-safe relay files.** New `app/relay_io.py` is the one implementation
+  of the in-container JSON relay files (unique temp names, atomic publish,
+  claim-then-consume); fixes six races between the agent, replay pane and
+  tile panes ([docs/relay_io.md](docs/relay_io.md)).
+- **Manager task backlog** (`agent.backlog`, off): an idle manager pulls
+  the next task from a file or Gitea issues (`GITEA_TOKEN`, manager only)
+  and starts a new chain; blockers and escalations are never retried
+  automatically ([docs/task_backlog.md](docs/task_backlog.md)).
+- **End-to-end flow tests** with fakes for the dev loop and duets
+  ([docs/e2e_tests.md](docs/e2e_tests.md)); they found and fixed a missing
+  milestone report when the manager's narration LLM failed. One strict xfail
+  records a known low-priority quirk: a narration-only coder's
+  `clarification_request` goes to the task's sender, not the manager.
+- **Docs:** agent flow reference, feature/architecture diagrams, README,
+  deployment (now argyre `192.168.1.23` via Portainer; previously d2000)
+  and configuration updated to match.
+
 **roundtable: heads look at whoever is talking, synced to the voice.**
 New `app/gaze.py` ([docs/gaze.md](docs/gaze.md)). While a character speaks,
 every other tile's 3D head turns toward its tile; the speaker looks at its

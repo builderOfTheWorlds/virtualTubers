@@ -6,7 +6,8 @@ listing, and performs an episode (app/replay.py) whenever the agent drops
 a request file.
 
 The request file is the agent -> pane handoff (same local-file IPC pattern
-as agent_state.py): agent.py's replay_request handler writes
+as agent_state.py): the agent's replay_request handler
+(app/agent_handlers/replay_relay.py, via app/relay_io.py) writes
 REPLAY_REQUEST_FILE atomically; this pane polls for it, performs the
 episode, deletes the file, and returns to the idle screen. File-based on
 purpose — the pane never consumes Kafka and never executes anything from
@@ -59,14 +60,14 @@ IDLE_REDRAW_S = 300  # re-list the library occasionally (episodes get uploaded)
 
 # Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
-# handle_replay_stop (app/agent.py) writes it; every performance path below
+# handle_replay_stop (app/agent_handlers/replay_relay.py) writes it; every performance path below
 # wires it into its Performer's Pacer(should_stop=...) so an operator stop
 # lands within a fraction of a second, not just at the next scene boundary
 # (docs/replay.md ReplayStopped).
 DEFAULT_REPLAY_STOP_FILE = relay_io.DEFAULT_REPLAY_STOP_FILE
 
 # ── Duet replay (docs/duet_replay.md) ────────────────────────────────────────
-# Relay files the agent (app/agent.py) writes and this pane polls — same
+# Relay files the agent (app/agent_handlers/replay_relay.py) writes and this pane polls — same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
 DEFAULT_REPLAY_CUE_FILE = relay_io.DEFAULT_REPLAY_CUE_FILE
 DEFAULT_REPLAY_READY_FILE = relay_io.DEFAULT_REPLAY_READY_FILE
@@ -768,7 +769,7 @@ def perform_director_request(request, worker_name, state_path, self_id,
         should_stop = lambda: os.path.exists(stop_file)
 
         # Stale-state hygiene, same convention as cue_file/stop_file above:
-        # handle_replay_ready (app/agent.py) unions a sender into an existing
+        # handle_replay_ready (app/agent_handlers/replay_relay.py) unions a sender into an existing
         # ready_file when its airing_id matches — which it always will for a
         # narration:"reuse" airing performed more than once (the airing_id
         # is the persisted cache's message_id, identical on every replay).

@@ -1,8 +1,10 @@
 # Campaign Module — Status and Handoff
 
 > **Read this first if you are picking up the campaign work.**
-> Written 2026-08-16, at the end of Wave 3 + content. Nothing here is committed
-> yet — the whole module is uncommitted on `main`.
+> Written 2026-08-16, at the end of Wave 3 + content. **Status update
+> (2026-09-27):** the module is now committed — `app/campaign/` first landed in
+> `a1f9312` ("deployment fixes", 2026-09-22). Wave 4 (`agent.py` / handler
+> integration) is still not done: no agent handler references `app/campaign`.
 
 ## What this module is
 
@@ -158,7 +160,7 @@ none *is* `--dry-run`. That is why the CLI builds
 ## Hard constraints — do not break these
 
 - Existing `role: manager|coder|tester` keeps working.
-- All 15 entries in `MESSAGE_HANDLERS` ([app/agent.py:1074](../app/agent.py#L1074)) keep working.
+- All 15 entries in `MESSAGE_HANDLERS` ([app/agent_handlers/__init__.py:40](../app/agent_handlers/__init__.py#L40)) keep working.
 - All 34 pre-existing test files keep passing untouched.
 - **Campaign mode is additive**, activated by a new `agent.campaign` config section.
 - Never install into system Python — a `PreToolUse` hook blocks bare
@@ -215,7 +217,7 @@ exceed qwen's ceiling. The test-first spec is what keeps that bounded.
   `encoding="utf-8"` appeared in **all seven** generated modules. No linter is
   currently installed (`ruff`, `flake8`, `pylint` all absent). Adding one to the
   sandbox's verification step would remove an entire class of manual review.
-- **Nothing is committed.** Still on `main`; branch before committing.
+- ~~**Nothing is committed.**~~ Committed since (`a1f9312`, 2026-09-22) — see the status note at the top.
 
 ## Known qwen failure modes — check for these on review
 
@@ -234,6 +236,9 @@ incapacity** — ambiguity about "missing key" vs. "value is None", and an
 unstated ordering constraint. When a dispatch fails, suspect the spec first.
 
 ## Changelog
+
+- **v1.0.1** (2026-09-27) — Status corrected: the module is committed
+  (`a1f9312`); `MESSAGE_HANDLERS` citation moved to `app/agent_handlers/`.
 
 - **v1.0.0** (2026-08-16) — Waves 1–3 complete (7 modules, 308 tests), Ashiorid
   opening arc curated and verified, full suite 924 passing. Wave 4 outstanding.

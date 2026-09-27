@@ -47,8 +47,8 @@ agent:
   # How often the agent loop ticks (milliseconds)
   tick_rate_ms: 5000
 
-  # Liveness: every tick the agent writes Redis key worker:<id>:alive (ISO
-  # timestamp) with this TTL in seconds; the key expiring == worker not
+  # Liveness: every tick the agent writes Redis key worker:<id>:alive (JSON
+  # {ts, local_override, ttl_s}) with this TTL in seconds; the key expiring == worker not
   # ticking. Unset/0 = auto: max(3 ticks, 15s). Read it with
   # WorkerControl.last_seen()/alive() (docs/worker_control.md).
   # liveness_ttl_s: 15
