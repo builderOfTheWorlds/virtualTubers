@@ -3,6 +3,20 @@
 > This file holds notes specific to this project only. Unlike `CLAUDE.md`, it is
 > never synced from or to the master template — edit it freely.
 
+## ashiorid_office campaign: in progress (started 2026-09-27)
+
+This is an office-setting campaign: 8 live role agents (CEO … Party Member) at "Ashiorid", building
+the Fraud-Stop fraud-detection SaaS inside the weekly time loop, with memory fragments. The work
+is on branch `feat/ashiorid-office`.
+
+**Resume from the handoff section (§7) of
+[.claude/prompts/ashiorid_office_build_plan.md](.claude/prompts/ashiorid_office_build_plan.md).**
+The design and the user's decisions are in
+[.claude/prompts/office_campaign_plan.md](.claude/prompts/office_campaign_plan.md).
+
+Sibling repos: `sessionCorpus` (session gathering utility) and `fraudStop` (the agents' working
+repo). Both are on Gitea under `gitea_admin`.
+
 ## Campaign module — in progress (started 2026-08-16)
 
 A generic campaign layer (`app/campaign/`, `campaigns/`, `tools/qwen_worker/`) is

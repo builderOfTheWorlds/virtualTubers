@@ -597,7 +597,66 @@ All other work packages own disjoint paths.
 | OB-06 | done (0252c43). Added `tzdata` to requirements.txt and .venv. |
 | OB-07 | done (a19c6bd). Speaking turns must be SERIALIZED. `qwen3-coder:30b` is not installed. `hermes3:70b` is unusable on gx10. Allocation: CEO/TL/Analyst/Marketing on gemma4:26b; Tester/OM on gemma4:12b; Engineer on qwen3.8:27b + aider; llama3.1:8b as fallback; keep_alive ≥30m. OPEN: another client holds qwen3.8:27b at 262k ctx, so a ctx mismatch costs a 30–70 s reload. |
 | Wave 1 verify | Full suite: 2939 passed, 3 failed (the same baseline relay_io failures), 7 skipped. |
-| OB-10a/b/c, OB-11, OB-12 | todo |
-| OB-20 .. OB-24 | todo |
+| OB-10a | done. `profiles/_cast_bible.md`: names, ages, speech styles, relationship matrix, odd details. Names: CEO Graham Ellery, TL Anselm Brody, Analyst Maren Voss, Engineer Theo Palliser, Tester Owen Hask, Marketing Julian Faire, OM Nora Blakeley, Party Member "A. Penhale". |
+| OB-10b | **NEXT.** 4 agents × 2 characters, writing `cast/<id>.yaml` + `profiles/<id>.yaml`. The contract is `profiles/_SCHEMA.md`; the canon is `_cast_bible.md` + `lore/`. |
+| OB-10c | Script done (`scripts/validate_office_profiles.py`, 50 tests). Currently exits 1 with 16 errors because the character files don't exist yet. After OB-10b: run it and send the fixes back. Then the **USER REVIEW GATE**. |
+| OB-11 | todo. Pack skeleton; can run alongside OB-10b. |
+| OB-12 | done. `CorpusAdapter` in 3Layers `source_adapter.py` (`.jsonl` → work_session notes). `app/office/role_attribution.py` (session → tuber_N episode, audit-gated). |
+| OB-20 | todo (after the review gate) |
+| OB-21, OB-22 | todo |
+| OB-23 | done. `git_client` has real push/fetch/tag/reset (ssh or askpass token, never logged); new `app/gitea_client.py`. NOTE: Gitea returns 422 on self-approval. With one shared token, TL approvals must be COMMENT reviews, or each persona needs its own bot user/token. |
+| OB-24 | done. Seed repo at `C:/Users/matt/PycharmProjects/fraudStop`, tag `loop-seed` (20a1de1), 24 tests green. Canon from product.md: score 0–1000, APPROVE/REVIEW/DECLINE, keyed on account_id. Pushed to Gitea `gitea_admin/fraudStop` (see Handoff). |
 | OB-30 .. OB-33 | todo |
 | OB-40 .. OB-42 | todo |
+
+
+## 7. Handoff: where we are (updated 2026-09-27)
+
+Branch `feat/ashiorid-office` on `origin` (Gitea `gitea_admin/virtualTubers`, push-mirrored to
+GitHub `builderOfTheWorlds/virtualTubers`).
+
+Full suite at handoff: **3972 passed, 3 failed, 63 skipped, 1 xfailed**. The 3 failures are the
+baseline Windows `tests/test_relay_io.py` failures, not regressions.
+
+### Repos in play
+
+| Repo | Local path | Remote | State |
+|---|---|---|---|
+| virtualTubers | `C:/Users/matt/PycharmProjects/virtualTubers` | Gitea `gitea_admin/virtualTubers`, mirrored to GitHub | branch `feat/ashiorid-office` |
+| sessionCorpus | `C:/Users/matt/PycharmProjects/sessionCorpus` | Gitea `gitea_admin/sessionCorpus` | main. **No GitHub mirror yet** |
+| fraudStop | `C:/Users/matt/PycharmProjects/fraudStop` | Gitea `gitea_admin/fraudStop` | main + tag `loop-seed`. **No GitHub mirror yet**. OB-22/OB-31 expect the repo name `fraud-stop`: rename it in Gitea or update the configs |
+
+### Resume here: next actions, in order
+
+1. **OB-10b + OB-11 (parallel).**
+   - Dispatch 4 character agents (pairs listed in OB-10b) plus the pack-skeleton agent.
+   - Each character agent reads `profiles/_SCHEMA.md`, `profiles/_cast_bible.md`, `lore/*.md`.
+2. **OB-10c run.** `.venv/Scripts/python.exe scripts/validate_office_profiles.py`. Send the
+   violations back to the owning pair and repeat until it exits 0.
+3. **USER REVIEW GATE:** the user reads all 8 characters.
+4. **Wave 3:**
+   - OB-20 avatars (`map_appearance`)
+   - OB-21 office handlers, which must include `brief_stub.py`
+   - OB-22 configs + `docker-compose.office.yml`, using the OB-07 model allocation
+5. **Wave 4:** OB-30 .. OB-33. **Wave 5:** OB-40 .. OB-42.
+
+### Open items / user actions
+
+- **OP-1:** add `GITEA_TOKEN_OFFICE` and `GITEA_TOKEN_OBSERVER` to `.env` (names are already in
+  `.env.example`). Consider one Gitea bot user per persona to avoid the self-approval 422.
+- **Model context clash (OB-07):** another client holds `qwen3.8:27b` at 262k ctx. The Engineer
+  at 8k forces a 30–70 s reload. Decide: match the 262k ctx, or keep the other client off it
+  during 06:00–00:00.
+- **GitHub mirror token** (the Gitea push-mirror) **expires 2026-10-03.** Renew it in Gitea →
+  repo → Settings → Repository → Mirror Settings. Add mirrors for sessionCorpus and fraudStop
+  there too if they are wanted on GitHub.
+- **Follow-up:** sessionCorpus found redaction gaps (escaped-JSON IPs/passwords, masked
+  `ghp_` tokens) that likely also exist in `app/session_log_parser.py`. Port the fixes and tests.
+- The 3 coder worker configs name `qwen2.5:7b-instruct-q4_K_M`, which isn't installed on gx10.
+  This affects the existing dev-team show, not the office build.
+- `tzdata` was added to requirements.txt. The Docker image needs a rebuild to pick it up.
+
+### Conventions for subagents (unchanged)
+
+§1 rules apply. The parent commits per WP with conventional commits, scope `office`, on
+`feat/ashiorid-office`, and re-runs the full suite after each wave against the counts above.
