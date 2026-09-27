@@ -436,10 +436,15 @@ class TileAvatar:
                   f"ASCII face for the rest of this process's life",
                   file=sys.stderr)
 
-    def tick(self, expression):
+    def tick(self, expression, gaze=None, mouth_open=None):
         """Render one frame. Returns True when a frame was actually drawn,
         False when this head is inactive (the caller should be drawing the
-        ASCII face). Never raises."""
+        ASCII face). Never raises.
+
+        `gaze` ((yaw, pitch) radians, app/gaze.py) turns the head toward
+        another tile; `mouth_open` (0..1) drives the mouth from the current
+        voice line's audio envelope. Both are only forwarded when given, so
+        a provider predating them keeps working."""
         if not self.active or self._provider is None:
             return False
         try:
@@ -447,7 +452,12 @@ class TileAvatar:
             # its TEXT subpanel, drawn by tile_pane as terminal text. Passing
             # captions here would only trip codec_avatar's "not implemented
             # for the pixel-window path" warning once per tile.
-            self._provider.render_tick(expression, None)
+            extra = {}
+            if gaze is not None:
+                extra["gaze"] = gaze
+            if mouth_open is not None:
+                extra["mouth_open"] = mouth_open
+            self._provider.render_tick(expression, None, **extra)
             return True
         except Exception as exc:  # noqa: BLE001 — see the class docstring
             self._fail(f"render failed ({type(exc).__name__}: {exc})")

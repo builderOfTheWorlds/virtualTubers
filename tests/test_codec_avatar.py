@@ -290,3 +290,32 @@ def test_detect_truecolor_visual_id_returns_none_when_xdpyinfo_unavailable(monke
 
     monkeypatch.setattr(subprocess, "run", boom)
     assert codec_avatar._detect_truecolor_visual_id() is None
+
+
+def _face_centroid_x(img):
+    lum = img.mean(axis=2)
+    mask = lum > lum.mean() + lum.std()
+    xs = np.nonzero(mask)[1]
+    return xs.mean() / img.shape[1]
+
+
+def test_gaze_turns_the_rendered_head():
+    """Roundtable look-at (app/gaze.py): a gaze yaw must actually move the
+    rendered face — turning left shifts the bright face mass left of where
+    turning right puts it, and a None gaze is the old fixed pose."""
+    import math
+    import avatar_providers.codec_avatar as ca
+    source = FrameSource("chadwick", width=96, height=96)
+    source._breath_offsets = lambda: (0.0, 0.0, 0.0)  # deterministic
+    left, _ = source.render_frame("idle", gaze=(-math.radians(50), 0.0))
+    right, _ = source.render_frame("idle", gaze=(math.radians(50), 0.0))
+    fixed, _ = source.render_frame("idle")
+    fixed_again, _ = source.render_frame("idle", gaze=(source.angle, 0.0))
+    assert _face_centroid_x(left) < _face_centroid_x(right)
+    assert np.allclose(fixed, fixed_again)
+
+
+def test_malformed_gaze_falls_back_to_fixed_pose():
+    source = FrameSource("chadwick", width=48, height=60)
+    img, _ = source.render_frame("idle", gaze="sideways")
+    assert img.shape == (60, 48, 3)

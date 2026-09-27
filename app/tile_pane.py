@@ -64,6 +64,7 @@ import time
 from collections import deque
 from pathlib import Path
 
+import gaze
 import narration_store
 import replay_pane
 from agent_state import read_state, write_state
@@ -106,6 +107,13 @@ def tile_state_file(relay_dir, slot):
     the G2 regression guard — seven tiles in one container must never share
     one state file the way `avatar.py`'s resolve_state_path would force."""
     return str(Path(relay_dir) / f"{slot}.state.json")
+
+
+def tile_stage_file(relay_dir):
+    """The ONE shared "who is speaking to whom" file (app/gaze.py). Written
+    by whichever tile has just started a voice line, read by every tile's
+    head so all of them turn toward the speaker together."""
+    return str(Path(relay_dir) / "stage.json")
 
 
 def ensure_relay_dir(relay_dir):
@@ -796,11 +804,15 @@ class TileAvatarDriver:
     """
 
     def __init__(self, builder, expression_source=None, fps=TILE_AVATAR_FPS,
-                 on_ready=None, on_lost=None):
+                 on_ready=None, on_lost=None, gaze_source=None):
         # `builder` is a zero-arg callable returning a TileAvatar (or None).
         # It is invoked ON the driver thread — see the class docstring.
         self.builder = builder
         self.avatar = None
+        # Optional zero-arg callable -> ((yaw, pitch), mouth_open): the
+        # roundtable look-at + lip-sync channel (gaze.StageGaze.sample).
+        # None keeps the head on its fixed pose, ticking exactly as before.
+        self.gaze_source = gaze_source
         # Defaults to the module's last-rendered expression, which is set by
         # render_tile itself — so the head animates the same expression the
         # text frame is currently showing, with no second source of truth to
@@ -840,7 +852,13 @@ class TileAvatarDriver:
 
         while not self._stop_event.is_set():
             try:
-                if not self.avatar.tick(self.expression_source()):
+                if self.gaze_source is not None:
+                    gaze_pose, mouth = self.gaze_source()
+                    drew = self.avatar.tick(self.expression_source(),
+                                            gaze=gaze_pose, mouth_open=mouth)
+                else:
+                    drew = self.avatar.tick(self.expression_source())
+                if not drew:
                     # tick() returning False means the head marked itself
                     # inactive (it logs its own single stderr line). Stop
                     # ticking rather than spinning at the frame rate on a
@@ -868,7 +886,7 @@ class TileAvatarDriver:
                 pass
 
 
-def start_tile_avatar(config, slot, retry_s=None):
+def start_tile_avatar(config, slot, retry_s=None, stage_path=None):
     """Build this tile's 3D head and start driving it, or return None.
 
     Returns None — leaving the tile in ASCII mode, exactly as it rendered
@@ -906,7 +924,10 @@ def start_tile_avatar(config, slot, retry_s=None):
         return avatar
 
     try:
-        driver = TileAvatarDriver(_build)
+        # stage_path given (the roundtable): the head turns toward whoever
+        # is speaking and lip-syncs its own lines (app/gaze.py).
+        gaze_source = gaze.StageGaze(slot, stage_path).sample if stage_path else None
+        driver = TileAvatarDriver(_build, gaze_source=gaze_source)
         driver.start()
         return driver
     except Exception as exc:  # noqa: BLE001 — a head is never a dependency
@@ -1001,6 +1022,59 @@ def clear_stale_relay_files(relay_dir, slot):
     this show ends."""
     replay_pane._delete_stale_file(tile_cue_file(relay_dir, slot))
     replay_pane._delete_stale_file(tile_request_file(relay_dir, slot))
+
+
+def _roster_names(config):
+    """slot -> display name from the worker config's `roster:` (string or
+    {name: ...} entries), for spotting a character's name inside a line."""
+    names = {}
+    roster = (config or {}).get("roster")
+    if isinstance(roster, dict):
+        for slot, entry in roster.items():
+            name = entry.get("name") if isinstance(entry, dict) else entry
+            if name:
+                names[str(slot)] = str(name)
+    return names
+
+
+def make_stage_writer(slot, stage_path, script, cast, config=None, airing_id=None):
+    """The Performer's on_voice_start hook for a tile: at the instant this
+    tile's voice line starts, publish who is speaking and to whom
+    (app/gaze.py) so every head on the table turns in sync with the audio.
+
+    Names used to detect "talking to Max" come from the show header's
+    personas (authoritative) layered over the config roster and
+    voice.speaker_names (mapped through the cast)."""
+    from revoice import show_bindings
+    cast = dict(cast or {})
+    participants = sorted({str(s) for s in cast.values()
+                           if s and gaze.slot_index(s) is not None},
+                          key=lambda s: gaze.slot_index(s) or 0)
+    names = _roster_names(config)
+    for speaker, name in (((config or {}).get("voice") or {}).get("speaker_names") or {}).items():
+        target = cast.get(speaker) or (speaker if gaze.slot_index(speaker) is not None else None)
+        if target and name:
+            names[str(target)] = str(name)
+    header_names, _voices = show_bindings(script)
+    names.update(header_names)
+    gm_slot = cast.get("boss") if gaze.slot_index(cast.get("boss")) is not None else "tuber_0"
+
+    def on_voice_start(scene, duration_s, audio_path):
+        previous = (gaze.read_stage(stage_path) or {}).get("speaker")
+        if previous == slot:
+            previous = None
+        addressees = gaze.resolve_addressees(
+            scene, slot, cast, participants, names,
+            previous_speaker=previous, gm_slot=gm_slot)
+        envelope, rate = None, None
+        if audio_path:
+            from audio_envelope import compute_envelope
+            envelope, rate = compute_envelope(audio_path)
+        gaze.write_stage(stage_path, slot, addressees, duration_s,
+                         envelope=envelope or None, envelope_rate_hz=rate,
+                         previous_speaker=previous, airing_id=airing_id)
+
+    return on_voice_start
 
 
 def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
@@ -1109,6 +1183,14 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
             # seat; show.audio.max_concurrent or VOICE_GATE_CONCURRENT allows
             # deliberate overlap).
             gate, line_gap_s = replay_pane.build_voice_gate(script, config, tag=f"tile:{slot}")
+            try:
+                on_voice_start = make_stage_writer(
+                    slot, tile_stage_file(relay_dir), script, cast,
+                    config=config, airing_id=airing_id)
+            except Exception as exc:  # noqa: BLE001 — gaze is decoration
+                print(f"[tile_pane] {slot}: gaze disabled for this show: {exc}",
+                      file=sys.stderr)
+                on_voice_start = None
             performer = Performer(
                 out=renderer,
                 pacer=Pacer(speed=speed, should_stop=lambda: os.path.exists(stop_file)),
@@ -1120,6 +1202,7 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
                 boss_name=voice.get("boss_name"),
                 voice_gate=gate,
                 line_gap_s=line_gap_s,
+                on_voice_start=on_voice_start,
             )
             performer.perform(script, show=show)
             # Leave the final frame up (the caller holds it for
@@ -1196,7 +1279,8 @@ def main(argv=None):
     # few seconds later — a visible flicker on a live broadcast. Returns
     # None for an uncast slot or any failure, in which case everything below
     # renders exactly as it did before the head existed.
-    avatar_driver = start_tile_avatar(config, slot)
+    avatar_driver = start_tile_avatar(config, slot,
+                                      stage_path=tile_stage_file(relay_dir))
 
     try:
         if args.once:

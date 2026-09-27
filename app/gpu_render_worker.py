@@ -88,19 +88,21 @@ def render_worker_main(cmd_q, result_q, shm_name, shape,
             msg = cmd_q.get()
             if msg is None:  # shutdown sentinel
                 break
-            # Message shape: (expression, mouth_open, emotion) — a 3-tuple
-            # since docs/avatar_emotion_design.md added the morph channels.
-            # Tolerates a bare string (the OLD expression-only protocol) by
-            # falling back to inert defaults, so a stale parent process
-            # mid-upgrade degrades to a static mouth/neutral face for a
-            # tick rather than crashing the render worker.
-            if isinstance(msg, tuple) and len(msg) == 3:
+            # Message shape: (expression, mouth_open, emotion, gaze) — gaze
+            # ((yaw, pitch) or None) added for roundtable look-at
+            # (app/gaze.py). Still tolerates the 3-tuple and the bare-string
+            # OLD protocols with inert defaults, so a stale parent process
+            # mid-upgrade degrades for a tick rather than crashing the worker.
+            gaze = None
+            if isinstance(msg, tuple) and len(msg) == 4:
+                expression, mouth_open, emotion, gaze = msg
+            elif isinstance(msg, tuple) and len(msg) == 3:
                 expression, mouth_open, emotion = msg
             else:
                 expression, mouth_open, emotion = msg, 0.0, "neutral"
             try:
                 img, backend = source.render_frame(
-                    expression, mouth_open=mouth_open, emotion=emotion)
+                    expression, mouth_open=mouth_open, emotion=emotion, gaze=gaze)
                 pixels = (np.clip(img, 0.0, 1.0) * 255).astype(np.uint8)
                 out[:] = pixels
                 result_q.put(("ok", backend))
@@ -164,7 +166,7 @@ class GPURenderWorker:
         self._proc.start()
         self._closed = False
 
-    def render_frame(self, expression, mouth_open=0.0, emotion="neutral"):
+    def render_frame(self, expression, mouth_open=0.0, emotion="neutral", gaze=None):
         """Ask the worker to render one frame, block for the result, and
         return a frame with the SAME contract as FrameSource.render_frame:
         an (H,W,3) float array in 0..1 — NOT the raw uint8 0..255 bytes
@@ -186,7 +188,13 @@ class GPURenderWorker:
             raise RuntimeError(
                 "GPURenderWorker: render worker process is no longer alive")
 
-        self._cmd_q.put((expression, mouth_open, emotion))
+        gaze_msg = None
+        if gaze is not None:
+            try:
+                gaze_msg = (float(gaze[0]), float(gaze[1]))
+            except (TypeError, ValueError, IndexError):
+                gaze_msg = None
+        self._cmd_q.put((expression, mouth_open, emotion, gaze_msg))
         try:
             status, payload = self._result_q.get(timeout=self.timeout_s)
         except Exception as exc:  # noqa: BLE001 — queue.Empty or similar

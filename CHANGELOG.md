@@ -4,6 +4,20 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**roundtable: heads look at whoever is talking, synced to the voice.**
+New `app/gaze.py` ([docs/gaze.md](docs/gaze.md)). While a character speaks,
+every other tile's 3D head turns toward its tile; the speaker looks at its
+addressee (explicit `addressee`/`to` on the event, a character named in the
+line, or — for the GM / "everyone" lines — sweeps slowly across the whole
+table). The owning tile writes `<relay-dir>/stage.json` at the instant its
+audio starts (new `Performer.on_voice_start` hook, fired after the voice gate
+grants the seat), and the speaking bubble is now written at that same instant
+rather than at scene start — so text, voice and head motion begin together.
+Heads ease (τ 0.35 s, ≤150°/s) rather than snap; the speaker's mouth follows
+the line's audio envelope. `gaze=(yaw, pitch)` threads through
+`TileAvatar.tick` → `CodecAvatarProvider.render_tick` → `GPURenderWorker`
+(4-tuple protocol, 3-tuple still accepted) → `FrameSource.render_frame`.
+
 **source_pipeline: stage 0 (chapter split) replaces `sourceworks/split_chapters.py`.**
 New source-agnostic utility `utilities/source_pipeline/` (README there; design in
 `docs/charcterProfileGenerationNotes/character_generator_updater_v3.md` §1).

@@ -166,7 +166,8 @@ class Performer:
     def __init__(self, out=None, pacer=None, palette=None, worker_name="KODI-7",
                  state_path=None, max_output_lines=MAX_OUTPUT_LINES, *,
                  on_scene_start=None, wait_for_scene=None, speaker_names=None,
-                 boss_name=None, voice_gate=None, line_gap_s=0.0):
+                 boss_name=None, voice_gate=None, line_gap_s=0.0,
+                 on_voice_start=None):
         self.out = out or sys.stdout
         self.pacer = pacer or Pacer()
         self.c = palette or Palette()
@@ -195,6 +196,13 @@ class Performer:
         # Deliberate silence between consecutive lines on this performer
         # (escape-hatch tuning; 0.0 = back-to-back as before).
         self.line_gap_s = max(0.0, float(line_gap_s))
+        # on_voice_start(scene, duration_s, audio_path_or_None): fired for
+        # an OWNED scene at the instant its line actually starts — right
+        # after play_wav, i.e. after the voice gate granted the seat — or
+        # at scene start for an owned line with no audio. The roundtable
+        # tiles publish "who is speaking to whom" from here (app/gaze.py)
+        # so every head turns on the voice, not on a queued-up line.
+        self.on_voice_start = on_voice_start
         # Multi-speaker duet display names (docs/revoice.md): speaker id ->
         # on-screen name, mirroring revoice._display_name. _display_name is
         # the label _on_assistant_text actually prints; _perform_scene sets
@@ -443,6 +451,15 @@ class Performer:
             return self.worker_name
         return speaker
 
+    def _voice_started(self, scene, duration_s, audio_path):
+        """Fire on_voice_start; a failing hook must never stop the show."""
+        if self.on_voice_start is None or not self.pacer.enabled:
+            return
+        try:
+            self.on_voice_start(scene, duration_s, audio_path)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[replay] on_voice_start hook failed: {exc}", file=sys.stderr)
+
     def _perform_scene(self, scene):
         """Perform one scene; when it carries synthesized narration, anchor
         the visual pacing to the audio's measured duration so both finish
@@ -472,14 +489,20 @@ class Performer:
         if narration:
             self._line()
             self._line(f"{self.c.dim}♪ {narration}{self.c.reset}")
-            if owned:
-                self._avatar("speaking", action="narrating the rerun", bubble=narration)
-            else:
+            if not owned:
                 self._avatar("idle", action="listening to the show")
+            # An OWNED line's speaking bubble is written below, at the
+            # moment its audio starts (after the voice gate), so the text
+            # never appears while the line is still queued behind another
+            # character's voice.
 
         playback, started, hold_seconds = None, None, None
         seat = None
-        if owned and audio is not None and audio.duration > 0:
+        voiced = owned and audio is not None and audio.duration > 0
+        if owned and narration and not voiced:
+            # No audio to wait for (TTS off/failed): show the line now.
+            self._avatar("speaking", action="narrating the rerun", bubble=narration)
+        if voiced:
             natural = sum(
                 estimate_event_seconds(e, self.max_output_lines)
                 for e in scene["events"]
@@ -493,8 +516,11 @@ class Performer:
             # line still plays; that is the liveness guarantee by design.
             if self.voice_gate is not None and self.pacer.enabled:
                 seat = self.voice_gate.acquire()
+            if narration:
+                self._avatar("speaking", action="narrating the rerun", bubble=narration)
             playback = play_wav(audio.audio_path)
             started = time.monotonic()
+            self._voice_started(scene, audio.duration, audio.audio_path)
         elif not (owned and audio is not None) and target_duration is not None and target_duration > 0:
             natural = sum(
                 estimate_event_seconds(e, self.max_output_lines)
@@ -504,6 +530,8 @@ class Performer:
                                    max(MIN_SCENE_SCALE, natural / target_duration))
             started = time.monotonic()
             hold_seconds = target_duration
+            if owned:
+                self._voice_started(scene, target_duration, None)
         self._display_name = self._resolve_display_name(scene.get("speaker"))
         # Drive this avatar for the scene only when it is actually ours — the
         # same "owned" gate the audio and the narration line above already use

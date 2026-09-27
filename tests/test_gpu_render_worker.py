@@ -73,3 +73,9 @@ def test_faces_available_without_rendering_a_frame(worker):
     before any render_frame() call — this must work immediately after
     construction, not require a round-trip to the child process."""
     assert len(worker.faces) > 0
+
+
+def test_render_frame_accepts_gaze(worker):
+    """4-tuple protocol (expression, mouth_open, emotion, gaze) round-trips."""
+    img, _backend = worker.render_frame("idle", gaze=(0.5, -0.1))
+    assert img.shape == (64, 64, 3) and img.mean() > 0.01

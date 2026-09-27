@@ -192,7 +192,7 @@ class FrameSource:
         return (breath * BREATH_YAW_RAD, breath * BREATH_PITCH_RAD,
                 breath * BREATH_DIST)
 
-    def render_frame(self, expression, mouth_open=0.0, emotion="neutral"):
+    def render_frame(self, expression, mouth_open=0.0, emotion="neutral", gaze=None):
         """Advance rotation and render one frame. Returns an (H,W,3) 0..1
         float array. Also returns which backend rendered it (gpu/cpu) —
         surfaced so a worker's logs show a GPU-less box degrading instead
@@ -207,6 +207,12 @@ class FrameSource:
         hasn't wired them yet (or a stale GPU-worker message shaped like
         the old expression-only protocol) still renders exactly the old
         static-mouth, neutral-brow face.
+
+        `gaze` (optional (yaw, pitch) radians, app/gaze.py conventions)
+        REPLACES the fixed profile angle for this frame — the roundtable
+        turns each head toward whoever is speaking. None keeps the fixed
+        `self.angle` pose exactly as before. Breathing sway still layers on
+        top either way.
         """
         from codec_head import build_codec_head
         from pixel_raster import (TINT_AMBER, TINT_CODEC_GREEN,
@@ -233,10 +239,16 @@ class FrameSource:
             self._character_params, mouth_open=mouth_open, emotion=emotion)
 
         breath_yaw, breath_pitch, breath_dist = self._breath_offsets()
+        base_yaw, base_pitch = self.angle, 0.0
+        if gaze is not None:
+            try:
+                base_yaw, base_pitch = float(gaze[0]), float(gaze[1])
+            except (TypeError, ValueError, IndexError):
+                pass  # malformed gaze: keep the fixed pose, never crash
         img, backend = gl_raster.render_with_fallback(
             self.verts, self.faces, self.materials,
             width=self.width, height=self.height,
-            rot_x=0.06 + breath_pitch, rot_y=self.angle + breath_yaw,
+            rot_x=0.06 + base_pitch + breath_pitch, rot_y=base_yaw + breath_yaw,
             dist=self.view_dist + breath_dist, tint=tint,
         )
         img = apply_codec_screen(img)
@@ -542,11 +554,12 @@ class CodecAvatarProvider(AvatarProvider):
 
         return width or WIDTH, height or HEIGHT, tuple(configured_pos)
 
-    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral"):
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral",
+                    gaze=None):
         import numpy as np
         try:
             img, _backend = self._source.render_frame(
-                expression, mouth_open=mouth_open, emotion=emotion)
+                expression, mouth_open=mouth_open, emotion=emotion, gaze=gaze)
         except Exception as exc:  # noqa: BLE001 — the GPU worker crashed/hung mid-run
             if not getattr(self, "_warned_source_failed", False):
                 log.warning(
@@ -573,7 +586,7 @@ class CodecAvatarProvider(AvatarProvider):
                 except Exception:  # noqa: BLE001 — best-effort cleanup only
                     pass
             img, _backend = self._source.render_frame(
-                expression, mouth_open=mouth_open, emotion=emotion)
+                expression, mouth_open=mouth_open, emotion=emotion, gaze=gaze)
         pixels = (np.clip(img, 0.0, 1.0) * 255).astype("uint8")
         # pygame surfarray is (W,H,3); our frames are (H,W,3).
         surf = self._pygame.surfarray.make_surface(pixels.transpose(1, 0, 2))

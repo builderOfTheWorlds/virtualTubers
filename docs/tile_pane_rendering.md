@@ -131,6 +131,12 @@ each tile a 31x20 pane; the frame renders 9 rows at 31 columns. Verified with
 
 ## Changelog
 
+- **v1.6** — Roundtable look-at (docs/gaze.md): each tile's 3D head turns
+  toward whoever is speaking; the speaker faces/sweeps its addressees and
+  lip-syncs from its audio envelope. The owning tile publishes
+  `<relay-dir>/stage.json` from the Performer's new `on_voice_start` hook,
+  i.e. at the instant its voice line starts (after the voice gate), and the
+  speaking bubble is now written at that same instant.
 - **v1.5** — Removed the redundant name row inside the frame: the character
   name already appears on the pane's own tmux top border
   (`build_layout.py`'s `_resolve_tile_title` + `select-pane -T`), so a tile
