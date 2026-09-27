@@ -66,6 +66,7 @@ from pathlib import Path
 
 import gaze
 import narration_store
+import relay_io
 import replay_pane
 from agent_state import read_state, write_state
 from replay import Pacer, Palette, Performer
@@ -73,7 +74,7 @@ from tile_avatar import (TILE_AVATAR_FPS, avatar_subpanel_rows,
                          detect_tile_pane_rect, make_tile_avatar,
                          resolve_slot_character_params)
 
-DEFAULT_RELAY_DIR = "/tmp/tiles"
+DEFAULT_RELAY_DIR = relay_io.DEFAULT_TILE_RELAY_DIR
 DEFAULT_WORKER_CONFIG = replay_pane.DEFAULT_WORKER_CONFIG
 TILE_POLL_INTERVAL_S = 1.0
 TILE_IDLE_REDRAW_S = 30.0
@@ -91,7 +92,7 @@ TILE_HOLD_FINAL_FRAME_S = 3.0
 # ── relay paths ──────────────────────────────────────────────────────────────
 def resolve_relay_dir(relay_dir=None):
     """--relay-dir > TILE_RELAY_DIR env > /tmp/tiles."""
-    return str(relay_dir or os.environ.get("TILE_RELAY_DIR") or DEFAULT_RELAY_DIR)
+    return str(relay_dir or relay_io.resolve_path(relay_io.TILE_RELAY_DIR_ENV, DEFAULT_RELAY_DIR))
 
 
 def tile_request_file(relay_dir, slot):
@@ -1009,7 +1010,7 @@ def make_wait_for_scene(cue_file, airing_id, show, slot, stop_file=None):
     return wait_for_scene
 
 
-def clear_stale_relay_files(relay_dir, slot):
+def clear_stale_relay_files(relay_dir, slot, airing_id=None):
     """Stale-state hygiene, BEFORE performing — mirroring the duet roles'
     rule (docs/duet_replay.md "stale-state hygiene", replay_pane lines
     ~548-563). This has caused real silent failures in this codebase: a
@@ -1019,8 +1020,20 @@ def clear_stale_relay_files(relay_dir, slot):
     audio is discarded via playback.stop() instead of played — a tile that
     looks broken with no error anywhere. A leftover request file for this
     slot goes too, so a stale invite can't re-trigger the tile the moment
-    this show ends."""
-    replay_pane._delete_stale_file(tile_cue_file(relay_dir, slot))
+    this show ends.
+
+    airing_id (the show about to run): a cue for THIS airing is kept, not
+    cleared. The director cues scene 0 within milliseconds of writing the
+    tile requests (an all-local roundtable has no ready-wait), while a tile
+    only notices its request on its next 1 s poll and then loads + rebuilds
+    the airing — so by the time this runs, the file usually already holds
+    this show's own scene-0 cue. Deleting it unconditionally left the tile
+    waiting for a cue that had already come and gone (scene 0 skipped via
+    the catch-up path, or the first-cue watchdog). Anything older is still
+    removed; the director's own _clear_tile_relay_files, which runs BEFORE
+    it writes the request, is what clears a same-airing leftover from an
+    earlier performance of a reused airing."""
+    replay_pane._delete_stale_file(tile_cue_file(relay_dir, slot), keep_airing_id=airing_id)
     replay_pane._delete_stale_file(tile_request_file(relay_dir, slot))
 
 
@@ -1153,7 +1166,7 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
         for scene in show:
             scene["owned"] = bool(owns(scene))
 
-        clear_stale_relay_files(relay_dir, slot)
+        clear_stale_relay_files(relay_dir, slot, airing_id=airing_id)
 
         wait_for_scene = make_wait_for_scene(cue_file, airing_id, show, slot,
                                              stop_file=stop_file)
@@ -1212,10 +1225,12 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
         finally:
             renderer.close()
 
-    # The cue file is this tile's alone; consume it so the NEXT show starts
-    # from a clean slate too (the request file was already consumed by
-    # read_request before we got here).
-    replay_pane._delete_stale_file(cue_file)
+    # The cue file is this tile's alone; consume THIS airing's last cue/end
+    # so the NEXT show starts from a clean slate too (the request file was
+    # already consumed by read_request before we got here). Only if it is
+    # still ours: the director may already have cleared it and cued the
+    # next airing while this tile was finishing, and that cue must survive.
+    relay_io.delete_if_airing(cue_file, airing_id)
     return True
 
 

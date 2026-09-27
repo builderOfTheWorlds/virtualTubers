@@ -329,6 +329,64 @@ def test_stale_cue_from_a_previous_airing_is_cleared_before_performing(
     assert not cue.exists()  # and consumed again on the way out
 
 
+def test_clear_stale_relay_files_keeps_a_cue_for_the_current_airing(relay):
+    """Race guard (docs/relay_io.md): the director cues scene 0 within
+    milliseconds of writing the tile request, long before the tile polls,
+    loads and rebuilds the airing. That cue is this show's own — clearing
+    it would leave the tile waiting for a cue that already came."""
+    cue = Path(tile_cue_file(str(relay), "tuber_2"))
+    fresh = {"airing_id": "airing-1", "type": "cue", "scene_index": 0}
+    cue.write_text(json.dumps(fresh), encoding="utf-8")
+
+    clear_stale_relay_files(str(relay), "tuber_2", airing_id="airing-1")
+    assert json.loads(cue.read_text(encoding="utf-8")) == fresh
+
+    clear_stale_relay_files(str(relay), "tuber_2", airing_id="airing-2")
+    assert not cue.exists()  # another airing's cue is stale
+
+
+def test_scene_zero_cue_written_before_the_tile_clears_is_not_lost(
+        tile_library, store, relay, monkeypatch, fast_cues):
+    """End to end: cue 0 for this airing is already on disk when the tile
+    starts; wait_for_scene(0) must see it instead of timing out."""
+    cue = Path(tile_cue_file(str(relay), "tuber_2"))
+    cue.write_text(json.dumps({"airing_id": "airing-1", "type": "cue", "scene_index": 0}),
+                   encoding="utf-8")
+    seen = {}
+
+    class WaitingPerformer(FakePerformer):
+        def perform(self, script, show=None, start=0, limit=None):
+            seen["scene0"] = self.kwargs["wait_for_scene"](0)
+            return super().perform(script, show=show, start=start, limit=limit)
+
+    FakePerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", WaitingPerformer)
+
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is True
+    assert seen["scene0"] == 0
+
+
+def test_post_show_cleanup_keeps_the_next_airings_cue(
+        tile_library, store, relay, monkeypatch):
+    """The director may already have cued the NEXT airing while this tile
+    was finishing; the tile's own post-show cleanup must only consume the
+    airing it just performed."""
+    cue = Path(tile_cue_file(str(relay), "tuber_2"))
+    nxt = {"airing_id": "airing-2", "type": "cue", "scene_index": 0}
+
+    class DirectorMovesOnPerformer(FakePerformer):
+        def perform(self, script, show=None, start=0, limit=None):
+            result = super().perform(script, show=show, start=start, limit=limit)
+            cue.write_text(json.dumps(nxt), encoding="utf-8")
+            return result
+
+    FakePerformer.instances = []
+    monkeypatch.setattr(tile_pane, "Performer", DirectorMovesOnPerformer)
+
+    assert perform_tile_request(_request(), "tuber_2", str(relay)) is True
+    assert json.loads(cue.read_text(encoding="utf-8")) == nxt
+
+
 # ── degradation: nothing raises out of the pane loop ─────────────────────────
 def test_malformed_request_file_is_consumed_and_pane_returns_to_idle(
         tile_library, store, relay, fake_performer, capsys):
