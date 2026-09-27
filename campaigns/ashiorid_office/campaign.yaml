@@ -1,0 +1,62 @@
+# Ashiorid — the office. Fraud-Stop, the Tallow Street third floor, 06:00 to 00:00.
+#
+# Design: .claude/prompts/office_campaign_plan.md (roster and chain of
+# command, §2). Build plan: .claude/prompts/ashiorid_office_build_plan.md
+# (OB-11). Scene text here is SPOKEN ALOUD by TTS on stream, so it is written
+# to be heard: short, declarative, concrete.
+name: ashiorid_office
+title: "Ashiorid — Fraud-Stop"
+genre: office
+
+start_scene: first-standup
+
+# The CEO is the in-fiction game master: he sets each day's scenario at the
+# 06:00 standup (cast bible §3). Enter-narration is voiced under his id.
+gm: ceo
+players:
+  - tech_lead
+  - analyst
+  - engineer
+  - tester
+  - marketing
+  - office_manager
+  - party_member
+
+# Cast id -> positional tuber slot (design §2; app/office/roles.py SEAT).
+seats:
+  ceo: tuber_0
+  tech_lead: tuber_1
+  analyst: tuber_2
+  engineer: tuber_3
+  tester: tuber_4
+  marketing: tuber_5
+  office_manager: tuber_6
+  party_member: tuber_7
+
+# The office verb set only (OB-02). The fantasy and cyber verbs are absent on
+# purpose; an action beat naming one of them fails validation.
+primitives:
+  - assign_task
+  - write_spec
+  - open_ticket
+  - commit
+  - run_tests
+  - file_bug
+  - open_pr
+  - merge_pr
+  - deploy
+  - pitch
+  - brew_coffee
+  - take_out_trash
+  - hr_notice
+  - observe
+
+# Filler scenes between spine scenes. `pool` is omitted, so every scene
+# flagged `ambient: true` is eligible. `every: 0` or --no-ambient runs the
+# spine alone.
+ambient:
+  every: 2
+
+theme:
+  accent: cyan
+  narration: dim

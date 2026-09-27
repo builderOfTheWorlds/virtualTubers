@@ -1,0 +1,151 @@
+# Spine scene 00 — the 06:00 standup in the Moonwell room.
+#
+# The CEO frames the day (cast bible §3): a client, a deadline, a reason it
+# matters. He hands the what to the Analyst, the how to the Tech Lead, the
+# story to Marketing and the notices to the Office Manager. The Tech Lead
+# hands work to the Engineer and the Tester. The Party Member never speaks;
+# he only appears in `observe` beats and in what others can see.
+#
+# Every line is read aloud by TTS. Keep it short enough to breathe.
+id: first-standup
+title: The Six O'Clock Standup
+enter_narration: >-
+  Tallow Street, third floor. Five to six in the morning. The coffee machine
+  is already warm.
+
+lore: [rituals, office, product, clients]
+mood: [joyful_activation]
+continuity_out: >-
+  The day's directive is set: every Fraud-Stop decline must carry a reason
+  before Ostry's noon sale. The Analyst owns what done means for Pellbridge,
+  the Tech Lead owns the build, and the CEO has opened the ticket.
+
+beats:
+  - type: narration
+    speaker: ceo
+    text: >-
+      Nora Blakeley is behind the kitchen counter, sleeves pushed up, the
+      snack shelf already stocked. Nobody saw her come in. Nobody ever does.
+
+  - type: action
+    speaker: office_manager
+    primitive: brew_coffee
+    params: {recipient: the Glass Box desk, strength: black}
+
+  - type: narration
+    speaker: ceo
+    text: >-
+      By six, the Moonwell room is full. Eight chairs, and nobody sits. Graham
+      Ellery stands at the head of the table with a folded index card, and he
+      waits.
+
+  - type: action
+    speaker: party_member
+    primitive: observe
+    params: {target: the room from just inside the Moonwell door}
+
+  - type: narration
+    speaker: ceo
+    text: >-
+      The man by the door is in the room now. The CEO unfolds the card.
+
+  - type: dialogue
+    speaker: ceo
+    text: >-
+      Morning, all. Here's where we are. Ostry's running a sale at noon, and
+      velocity is going to light up like a switchboard. Halvard's compliance
+      people are reading our declines this week. So here's what we need. Every
+      decline says why. No empty reasons, not one. Who's got it?
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. Three things. One, for whom? Pellbridge reads every reason by hand,
+      so functionally, done means a person can understand it. Two, I'll have
+      the plan written by eight. Three, it comes to you first.
+
+  - type: dialogue
+    speaker: ceo
+    text: >-
+      Good. Brody. Can we build it before ship?
+
+  - type: dialogue
+    speaker: tech_lead
+    text: >-
+      Hm. The rule is already there. No verdict without a reason. The gap is
+      the amount outlier. It declines, and sometimes it forgets to say why.
+      We'll have a design by nine.
+
+  - type: action
+    speaker: tech_lead
+    primitive: assign_task
+    params:
+      to: the Engineer
+      task: the empty reasons on amount outlier declines
+      due: before the Build watch
+
+  - type: dialogue
+    speaker: engineer
+    text: >-
+      Okay, okay, so. That's a one-liner. Probably. I'll stub the reason, and
+      then I'll find where it gets dropped, and then, well. Easy. I'm writing
+      easy on the sticky note right now.
+
+  - type: dialogue
+    speaker: tester
+    text: >-
+      Overnight run. Fourteen of fifteen green. The red one is amount outlier.
+      New accounts. I'll write the test that fails when the reasons list is
+      empty.
+
+  - type: action
+    speaker: tech_lead
+    primitive: assign_task
+    params:
+      to: the Tester
+      task: a failing test for any decline with no reason
+      due: by noon
+
+  - type: dialogue
+    speaker: marketing
+    text: >-
+      Love that. Here's the story. Picture a woman at a till in Malmont. Her
+      card is declined, and for once, somebody can tell her why. I'm pitching
+      that to Halvard this afternoon.
+
+  - type: dialogue
+    speaker: office_manager
+    text: >-
+      Three things, then I'll let you go. The milk delivery is late, so oat
+      milk is rationed till ten. The fridge audit is Thursday, so label your
+      boxes. And whoever left a mug in the server closet, it's in the sink,
+      love. Leave it cleaner than you found it.
+
+  - type: action
+    speaker: party_member
+    primitive: observe
+    params: {target: the index card in the CEO's hand}
+
+  - type: narration
+    speaker: ceo
+    text: >-
+      Ellery glances toward the door before he answers anyone. It is a short
+      glance. Maren Voss notices it. So does Nora.
+
+  - type: dialogue
+    speaker: ceo
+    text: >-
+      Right. Ostry at noon, Halvard reading everything, and every decline says
+      why. Maren has the what. Brody has the how. Fair?
+
+  - type: action
+    speaker: ceo
+    primitive: open_ticket
+    params: {title: Every decline says why, priority: high}
+
+  - type: narration
+    speaker: ceo
+    text: >-
+      The room empties toward the desks. When anyone looks back, the Moonwell
+      doorway is clear. The man is already at the corner desk by the fire
+      exit, his notebook closed, facing into the room.
