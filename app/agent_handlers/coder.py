@@ -85,7 +85,12 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
     # second — so the narration can describe what actually happened instead
     # of inventing an outcome.
     result = None
+    office_ctx = None
     if coding_backend is not None and agent_config.get("role") == "coder":
+        if agent_config.get("office_role"):
+            # Office Engineer hook (OB-21): check out the task's feature branch.
+            from .office import engineer_prepare
+            office_ctx = engineer_prepare(worker_id, agent_config, coding_backend, msg)
         if state_path:
             write_state(state_path, "focused", action=f"coding: {task}")
         result = coding_backend.run_task(task)
@@ -113,7 +118,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
                 write_state(state_path, "frustrated", action=f"failed: {task}",
                             bubble=f"Ugh... {result.error}")
             producer.send(build_message(
-                worker_id, "manager", "clarification_request",
+                worker_id, agent_config.get("manager_id") or "manager", "clarification_request",
                 {"task": task, "error": f"coding backend failed: {result.error}"},
                 **ids,
             ))
@@ -166,6 +171,13 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
     # manager can bound the bug/fix loop (MAX_BUG_RETRIES); coder_id rides
     # along so the tester finds the right workspace mount and the manager
     # re-delegates fixes to the right coder now that there are several.
+    if agent_config.get("role") == "coder" and agent_config.get("office_role"):
+        # Office Engineer hook (OB-21): lane check, push, PR, then an office
+        # `test_request` to the Tester seat instead of commit_notification.
+        from .office import engineer_handoff
+        engineer_handoff(worker_id, agent_config, producer, msg, result, narration, office_ctx)
+        return
+
     if agent_config.get("role") == "coder":
         commit_payload = {
             "task": task,

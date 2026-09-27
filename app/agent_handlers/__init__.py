@@ -21,6 +21,17 @@ from .manager import (
     handle_test_passed,
     manager_idle_tick,
 )
+from .office import (
+    ceo_idle_tick,
+    handle_directive,
+    handle_functional_plan,
+    handle_phase_change,
+    handle_status_report,
+    handle_technical_plan,
+    handle_test_request,
+    observer_idle_tick,
+    office_manager_idle_tick,
+)
 from .operator import handle_operator_message
 from .viewer import handle_viewer_joined
 from .replay_relay import (
@@ -53,12 +64,27 @@ MESSAGE_HANDLERS = {
     "replay_ready": handle_replay_ready,
     "replay_cue": handle_replay_cue,
     "replay_end": handle_replay_end,
+    # ashiorid_office protocol (app/office/protocol.py; docs/agent_handlers.md
+    # "Office handlers"). day_start / day_end are clock broadcasts with no
+    # handler yet (OB-30).
+    "directive": handle_directive,
+    "functional_plan": handle_functional_plan,
+    "technical_plan": handle_technical_plan,
+    "test_request": handle_test_request,
+    "status_report": handle_status_report,
+    "phase_change": handle_phase_change,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in
-# task backlog (docs/task_backlog.md); a hook must never raise.
+# task backlog (docs/task_backlog.md); the office ones drive the CEO's day
+# runner, the Office Manager's chores and the Party Member's gaze. A hook
+# must never raise.
 IDLE_TICK_HOOKS = {
     "manager": manager_idle_tick,
+    # ashiorid_office (keyed by agent.role, build plan E2).
+    "ceo": ceo_idle_tick,
+    "office_manager": office_manager_idle_tick,
+    "observer": observer_idle_tick,
 }
 
 __all__ = ["MESSAGE_HANDLERS", "IDLE_TICK_HOOKS",

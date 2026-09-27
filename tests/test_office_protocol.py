@@ -23,8 +23,9 @@ from office.roles import OfficeRole as R
 DAY = "2026-09-28"
 
 
-def test_message_types_do_not_collide_with_existing_handlers():
-    assert not set(OFFICE_MESSAGE_TYPES) & set(MESSAGE_HANDLERS)
+def test_message_types_registered_except_clock_edges():
+    # OB-21 handles six office types; day_start/day_end are left for OB-30.
+    assert set(OFFICE_MESSAGE_TYPES) - set(MESSAGE_HANDLERS) == {"day_start", "day_end"}
     assert len(OFFICE_MESSAGE_TYPES) == 8
 
 

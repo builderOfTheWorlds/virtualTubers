@@ -1000,6 +1000,13 @@ def test_message_handlers_covers_all_documented_types():
         "replay_ready",
         "replay_cue",
         "replay_end",
+        # ashiorid_office (OB-21)
+        "directive",
+        "functional_plan",
+        "technical_plan",
+        "test_request",
+        "status_report",
+        "phase_change",
     }
 
 
@@ -1023,6 +1030,8 @@ def test_agent_entry_point_dispatches_via_agent_handlers_table():
         "test_passed", "task_complete", "clarification_request", "operator_message",
         "replay_request", "replay_stop", "viewer_joined", "replay_invite",
         "replay_ready", "replay_cue", "replay_end",
+        "directive", "functional_plan", "technical_plan", "test_request",
+        "status_report", "phase_change",
     }
 
 

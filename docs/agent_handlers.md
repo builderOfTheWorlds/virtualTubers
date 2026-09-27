@@ -25,6 +25,7 @@ matter when editing or testing it.
 | `operator.py` | `operator_message` | — |
 | `viewer.py` | `viewer_joined` | `_pick_rerun_episode` |
 | `replay_relay.py` | `replay_request`, `replay_stop`, `replay_invite`, `replay_ready`, `replay_cue`, `replay_end` | `_is_valid_cast` |
+| `office.py` | `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change` | idle hooks `ceo_idle_tick` / `office_manager_idle_tick` / `observer_idle_tick`; `issue_directive`, `set_day_runner`; office_role hooks `engineer_prepare` / `engineer_handoff` / `tech_lead_after_test_passed`; `lane_commit`, `collect_garbage` — see "Office handlers" below |
 
 Dependency direction is one-way: handler modules import from `common` /
 `relay_files` (and from sibling app modules such as `message_bus`,
@@ -55,7 +56,7 @@ threaded (their messages start their own chains; the duet protocol uses
 hook(worker_id, agent_config, llm_client, producer, state_path=None) -> None
 ```
 
-A hook must never raise. Only `"manager": manager_idle_tick` exists — it
+A hook must never raise. `"manager": manager_idle_tick` (below) plus the three office hooks (`ceo`, `office_manager`, `observer` — see "Office handlers"). The manager hook
 drives the opt-in task backlog (docs/task_backlog.md). Because handlers are
 stateless functions, the backlog's in-flight chain tracker is one
 module-level `BacklogDispatcher` in `manager.py` (built lazily from
@@ -79,7 +80,7 @@ def handle_<type>(worker_id: str, agent_config: dict, llm_client,
 ```
 
 ```python
-MESSAGE_HANDLERS: dict[str, Callable]  # 15 entries, see __init__.py
+MESSAGE_HANDLERS: dict[str, Callable]  # 21 entries (15 dev-team/replay + 6 office), see __init__.py
 ```
 
 ## Parameters
@@ -146,7 +147,145 @@ Unchanged from before the split — see docs/agent.md "Error Handling"
 (LLM failures are caught per handler; role mismatches log and no-op; relay
 file write failures log and never raise out of the tick loop).
 
+## Office handlers (v1.3.0, OB-21)
+
+`office.py` runs the ashiorid_office chain (build plan E2/E3/E6) on the same
+bus and the same handler signature. The Tech Lead, Engineer and Tester reuse
+the dev-team handlers (`agent.role` manager / coder / tester). Small
+`office_role` hooks in those handlers route the chain onto office seats.
+Without `agent.office_role`, every dev-team path behaves exactly as before.
+
+```
+CEO ──directive──▶ TL (ack only), Analyst, Marketing, Office Manager
+Analyst ──functional_plan──▶ TL          (docs/requirements/ PR)
+Marketing / OM ──status_report──▶ CEO    (marketing/ PR, CHANGELOG.md PR)
+TL ──technical_plan──▶ CEO               (docs/design/ PR; COMMENT-review + merge Analyst PR)
+TL ──task_assignment──▶ Engineer         (existing type, coder handler)
+Engineer: coding run on office/engineer/task-<chain8> ──test_request──▶ Tester  (src/ PR)
+Tester ──test_passed | bug_report──▶ TL   (CI comment on the Engineer PR)
+TL ──status_report(done)──▶ CEO          (COMMENT-review + merge Engineer PR)
+CEO closes the directive issue.
+```
+
+A bug report from the Tester follows the existing manager loop. The Tech Lead
+re-assigns the fix to `coder_id`. The Engineer re-uses the same branch and
+opens no new PR, because the branch is keyed on the chain.
+
+Each office handler does five steps:
+
+1. It checks the role and the rank with `office.protocol.validate_message`.
+   A violation logs `event=rank_violation ... outcome=retake`, and the
+   message is dropped.
+2. It builds the persona prompt with `office.brief_stub` (docs/brief_stub.md).
+   When the cast file is missing it falls back to `agent.system_prompt`.
+3. It makes one LLM call through `_complete_with_emotion`. A failure uses a
+   fallback line, so the chain never stops on it.
+4. It does the lane action through `git_client` / `gitea_client`. Every
+   written path goes through `lane_allows` first. A git or Gitea failure is
+   logged, and the message still goes out.
+5. It sends the next protocol message with `reply_to=msg`, so the day's
+   directive stays on one `correlation_id`.
+
+| Handler | Office roles | Lane action | Sends |
+|---|---|---|---|
+| `handle_directive` | analyst, tech_lead, marketing, office_manager | Analyst `docs/requirements/<day>-<slug>.md`; Marketing `marketing/<day>-<slug>.md`; OM appends to `CHANGELOG.md`; TL none | Analyst: `functional_plan`; Marketing/OM: `status_report` (on_track); TL: nothing |
+| `handle_functional_plan` | tech_lead | COMMENT review + merge of the Analyst PR; `docs/design/<day>-<slug>.md` PR | `technical_plan` → CEO, then `task_assignment` → Engineer |
+| `handle_technical_plan` | ceo | comment on the directive issue | nothing |
+| `handle_test_request` | tester | CI result comment on the PR | `test_passed` / `bug_report` → TL (reused `tester._run_tests_and_report`) |
+| `handle_status_report` | ceo, tech_lead | CEO: comment + close the issue on the TL's `done` | nothing |
+| `handle_phase_change` | all | none | nothing. Speaking roles say one line. The Party Member only changes pose and never calls the LLM. |
+
+Idle hooks (`IDLE_TICK_HOOKS`, keyed by `agent.role`):
+
+- `ceo_idle_tick` calls the day runner that `set_day_runner(fn)` installed.
+  It is a no-op by default. OB-30 fills it and calls
+  `issue_directive(worker_id, agent_config, llm, producer, text, title=, day=)`.
+- `office_manager_idle_tick` rotates `coffee` → `cleanup` →
+  `garbage_collection` every `chores.interval_s` (default 1800 s).
+  Garbage collection deletes the head branches of **closed** PRs. It only
+  touches branches that start with `office/` and that no open PR still uses.
+  It never touches the base branch or `loop/*`. A 404 means the branch is
+  already gone.
+- `observer_idle_tick` runs every `observer.every_ticks` ticks (default 3).
+  It broadcasts `observer_pose` `{seat, pose: "idle_watch", gaze_target}` and
+  writes an avatar state with `bubble=None`. The gaze target is the live
+  speaker from `observer.stage_path` (gaze.py) when one is set, else a
+  rotation over the seats. It has no LLM and no text.
+
+office_role hooks in the reused handlers (each one is gated on
+`agent.office_role`):
+
+- `coder.handle_task_assignment` calls `office.engineer_prepare` before the
+  coding run and `office.engineer_handoff` in place of
+  `commit_notification`. The handoff checks the lane of `git diff
+  --name-only` (src/ only). A violation sends a `clarification_request` to
+  the assigner. Otherwise it pushes the branch, opens or re-uses the PR,
+  and sends `test_request`.
+- `coder.handle_task_assignment`, backend-failure path: the
+  `clarification_request` goes to `agent.manager_id` (default `"manager"`).
+- `tester._run_tests_and_report(..., report_to="manager", extra=None)` now
+  returns the message it sent. The office Tester passes the TL seat and
+  the chain context (pr, branch, commit, directive_id, issue, title).
+- `manager.handle_test_passed` calls `office.tech_lead_after_test_passed`
+  after its `manager_report`. That hook COMMENT-reviews and merges the
+  Engineer PR and sends `status_report(done)` to the CEO.
+
+The Tech Lead reviews with **COMMENT**, never APPROVE. Gitea returns 422 on
+approving a PR opened with the same shared token (OB-23).
+
+Worker config (`agent:` block; OB-22 writes the real files):
+
+```yaml
+agent:
+  role: analyst               # handler family (E2)
+  office_role: analyst        # OfficeRole value
+  manager_id: tuber_1         # coder only: backend-failure blocker recipient
+  office:
+    pack_dir: /campaigns/ashiorid_office   # else env OFFICE_PACK_DIR, else repo default
+    max_backstory_chars: 4000              # optional
+    workspace: /data/repos/fraud-stop      # enables lane commits (Engineer: coding backend workspace)
+    remote_url: ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git
+    base_branch: main
+    author_name: "Maren Voss"
+    merge_prs: true                        # TL merges after its COMMENT review
+    narrate_phase_change: true
+    gitea:                                 # absent or enabled: false = no Gitea calls
+      base_url: http://192.168.1.120:3300
+      owner: gitea_admin
+      repo: fraud-stop
+      token_env: GITEA_TOKEN_OFFICE        # the Party Member always gets GITEA_TOKEN_OBSERVER, read-only
+    chores: {interval_s: 1800, rotation: [coffee, cleanup, garbage_collection]}
+    observer: {every_ticks: 3, stage_path: /tmp/relay/stage.json}
+```
+
+Extra payload keys ride along on the protocol messages. The protocol
+validates only the keys it knows about:
+
+- `functional_plan` and `technical_plan` carry `directive`, `title`,
+  `issue`, `day` and `pr`.
+- `functional_plan` also carries `branch`.
+- `technical_plan` also carries `requirements_merged`.
+- `test_request` carries `task`, `retry_count`, `coder_id`, `narration`,
+  `pr`, `directive_id`, `issue`, `title` and `directive`.
+- `status_report` carries `issue`, `directive_id` and `pr`. The TL's report
+  also carries `task` and `merged`.
+- `task_assignment` from the TL carries `directive_id`, `title`, `issue`
+  and `directive`.
+
+Where to patch in tests: `agent_handlers.office.build_gitea_client`,
+`agent_handlers.office.build_git_client` and
+`agent_handlers.office._changed_paths`. Reset the per-process state with
+`office._reset_office_state()`. See tests/test_agent_handlers_office.py; its
+fake-bus e2e runs the whole chain.
+
 ## Changelog
+
+- v1.3.0 (2026-09-27): Office handlers (`office.py`, OB-21). 6 new message
+  types and 3 new idle hooks are registered. The coder, tester and manager
+  get office_role hooks, which are no-ops without `agent.office_role`. The
+  tester's `_run_tests_and_report` gains `report_to=` / `extra=` and returns
+  the sent message. The coder's backend-failure blocker goes to
+  `agent.manager_id` (default `"manager"`).
 
 - v1.2.1 (2026-09-27) — Docs only: `relay_files.py` is now aliases onto
   `app/relay_io.py` (race-safe relay IO); dependency list updated.

@@ -355,8 +355,8 @@ def _file_backlog_config(tmp_path, **overrides):
     return {**MANAGER, "backlog": cfg}
 
 
-def test_idle_hook_registered_for_manager_only():
-    assert IDLE_TICK_HOOKS == {"manager": manager_idle_tick}
+def test_idle_hook_registered_for_manager_role():
+    assert IDLE_TICK_HOOKS["manager"] is manager_idle_tick
 
 
 def test_manager_idle_tick_disabled_by_default():

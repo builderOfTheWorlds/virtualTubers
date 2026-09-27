@@ -145,6 +145,10 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
     if state_path:
         write_state(state_path, "happy", action=f"shipped: {task}", bubble=narration, emotion=emotion)
     _send_manager_report(worker_id, producer, "milestone", task, narration, cause=msg)
+    if agent_config.get("office_role"):
+        # Office Tech Lead hook (OB-21): review + merge the PR, report to the CEO.
+        from .office import tech_lead_after_test_passed
+        tech_lead_after_test_passed(worker_id, agent_config, producer, msg, narration)
 
 
 def handle_task_complete(worker_id, agent_config, llm_client, producer, msg,

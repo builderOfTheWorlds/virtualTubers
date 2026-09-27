@@ -60,7 +60,14 @@ def _severity_from_failures(failed_tests):
     return "low"
 
 
-def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, state_path=None):
+def _send(producer, message):
+    """Send `message` and return it (regardless of what producer.send returns)."""
+    producer.send(message)
+    return message
+
+
+def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, state_path=None,
+                          report_to="manager", extra=None):
     """Shared tester flow for commit_notification / retest_request: REALLY run
     pytest against the coder's workspace mount when it's reachable (see
     test_runner.py), falling back to the _decide_test_outcome() stub when it
@@ -69,6 +76,11 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
     re-delegates fixes to the right coder. On the tester's own LLM failure,
     send `clarification_request` to the manager (same contract shape the
     coder uses, so one manager handler covers both origins).
+
+    `report_to` is the manager's worker id (the office Tester reports to the
+    Tech Lead seat); `extra` keys are added to the verdict payload (office
+    chain context such as pr / issue). Returns the message sent (None when
+    nothing was sent).
     """
     payload = msg.get("payload", {})
     task = payload.get("task", "(no task description provided)")
@@ -132,26 +144,26 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
             # rather than dropping it on the floor over a narration failure.
             narration, emotion = f"(narration unavailable: {exc})", "neutral"
         else:
-            producer.send(build_message(
-                worker_id, "manager", "clarification_request",
+            return _send(producer, build_message(
+                worker_id, report_to, "clarification_request",
                 {"task": task, "error": str(exc)},
                 **ids,
             ))
-            return
 
     print(f"[agent:{worker_id}] {narration}")
     real_run = run is not None and run.ran
     if passed:
         if state_path:
             write_state(state_path, "happy", action=f"tests passed: {task}", bubble=narration, emotion=emotion)
-        producer.send(build_message(
-            worker_id, "manager", "test_passed",
+        return _send(producer, build_message(
+            worker_id, report_to, "test_passed",
             {
                 "task": task,
                 "narration": narration,
                 "retry_count": retry_count,
                 "coder_id": coder_id,
                 "real_run": real_run,
+                **{k: v for k, v in (extra or {}).items() if v is not None},
             },
             **ids,
         ))
@@ -167,8 +179,8 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
             repro = f"Run the suite against '{task}' — the new tests fail ({severity})."
         if state_path:
             write_state(state_path, "speaking", action=f"found a bug: {task}", bubble=narration, emotion=emotion)
-        producer.send(build_message(
-            worker_id, "manager", "bug_report",
+        return _send(producer, build_message(
+            worker_id, report_to, "bug_report",
             {
                 "task": task,
                 "severity": severity,
@@ -177,6 +189,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
                 "retry_count": retry_count,
                 "coder_id": coder_id,
                 "real_run": real_run,
+                **{k: v for k, v in (extra or {}).items() if v is not None},
             },
             **ids,
         ))
