@@ -458,14 +458,35 @@ async def play_replay(request: Request, name: str):
 
     Every failure is best-effort and independently reported — one
     unreachable worker must not stop the episode airing on the other six.
+
+    Stops each of the 7 targets before requesting the new episode
+    (docs/operator_commands.md `replay_stop`, app/agent.py
+    handle_replay_stop): replay_pane.py's poll loop only reads a fresh
+    request file once it's idle between episodes, so a bare replay_request
+    fired at a worker that's still mid-show just queues silently behind
+    whatever's already playing — potentially minutes away, with nothing in
+    this UI to say so (reported live: hit Play on 'roundtable-stream-check',
+    saw it logged on the Kafka panel, but the 'coder' channel just kept
+    airing its previous ashiorid_generated_ce8d episode for another 25+
+    minutes). replay_stop cancels a still-queued request outright and
+    signals a currently-playing one to abort within a fraction of a second
+    (Pacer.should_stop), so Play now always preempts rather than queuing.
     """
     results = []
     for worker_id in WORKER_IDS:
+        await _mapi_request(
+            "POST", "/messages",
+            json={"to": worker_id, "type": "replay_stop", "payload": {}},
+        )
         r = await _mapi_request(
             "POST", "/messages",
             json={"to": worker_id, "type": "replay_request", "payload": {"episode": name}},
         )
         results.append((worker_id, r))
+    await _mapi_request(
+        "POST", "/messages",
+        json={"to": ROUNDTABLE_WORKER_ID, "type": "replay_stop", "payload": {}},
+    )
     roundtable_result = await _mapi_request(
         "POST", "/messages",
         json={"to": ROUNDTABLE_WORKER_ID, "type": "replay_request",
