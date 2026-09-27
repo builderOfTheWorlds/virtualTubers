@@ -153,6 +153,25 @@ check "install.sh rejects unknown option"   test "$RC" -eq 1
 run_script uninstall.sh "" --bogus
 check "uninstall.sh rejects unknown option" test "$RC" -eq 1
 
+echo "== 16. read-only role (character_reader) in the deploy package =="
+COMPOSE_FILE="$HERE/../docker-compose.yml"
+ENV_EXAMPLE="$HERE/../.env.example"
+check "init command creates character_reader" grep -q 'character_reader' "$COMPOSE_FILE"
+check "init command creates the role idempotently" grep -q 'IF NOT EXISTS' "$COMPOSE_FILE"
+check "init command is gated on CHARACTER_READER_PASSWORD" grep -q 'CHARACTER_READER_PASSWORD' "$COMPOSE_FILE"
+check ".env.example has an empty CHARACTER_READER_PASSWORD line" grep -qx 'CHARACTER_READER_PASSWORD=' "$ENV_EXAMPLE"
+# The init script is a YAML block scalar: extract it (strip the 8-space block
+# indent, unescape compose's $$) and make sure bash can parse it. Catches an
+# indented heredoc terminator, which grep checks above cannot see.
+INIT_SH="$(mktemp)"
+awk '/^  init:/{s=1} s&&/^    command:/{c=1;next} c&&/^      - \|/{b=1;next}
+     b&&/^    [a-z_]+:/{exit} b{sub(/^        /,""); gsub(/\$\$/,"$"); print}' \
+    "$COMPOSE_FILE" > "$INIT_SH"
+check "init command was extracted" test -s "$INIT_SH"
+check "init command parses as bash" bash -n "$INIT_SH"
+check "init heredoc terminators are unindented" bash -c "! grep -qE '^[[:space:]]+SQL\$' '$INIT_SH'"
+rm -f "$INIT_SH"
+
 echo ""
 echo "passed: $PASS  failed: $FAIL"
 [[ $FAIL -eq 0 ]]

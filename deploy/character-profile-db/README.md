@@ -80,6 +80,15 @@ Services read `CHARACTER_DB_HOST`, `CHARACTER_DB_PORT`, `CHARACTER_DB_NAME`,
 **Rotating the app password:** change `CHARACTER_DB_PASSWORD` in the stack
 environment, then Update the stack. `init` re-applies it.
 
+## Read-only role
+
+If `CHARACTER_READER_PASSWORD` is set in the stack environment, `init` also
+creates a login role `character_reader` with a read-only grant: `CONNECT` on
+the app database, `USAGE` on the `public` schema, `SELECT` on all tables, and
+the same by default for future tables. Leave `CHARACTER_READER_PASSWORD`
+empty to skip creating the role. Rotate its password the same way: change the
+variable and Update the stack.
+
 ## Uninstall
 
 1. Delete the stack in Portainer. `uninstall.sh` refuses to run while either

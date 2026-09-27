@@ -60,6 +60,8 @@ services:
       APP_DB: ${CHARACTER_DB_NAME:-character_profile}
       APP_USER: ${CHARACTER_DB_USER:-character_profile}
       APP_PASSWORD: ${CHARACTER_DB_PASSWORD:?CHARACTER_DB_PASSWORD must be set in the stack environment}
+      # Optional: leave empty to skip the read-only character_reader role.
+      CHARACTER_READER_PASSWORD: ${CHARACTER_READER_PASSWORD:-}
     entrypoint: ["/bin/bash", "-c"]
     # $$ is compose's escape for a literal $ (expanded at run time inside the
     # container). psql reads the values with \getenv, so the password is never
@@ -88,5 +90,33 @@ services:
         \gexec
         SQL
         psql -v ON_ERROR_STOP=1 -d "$$APP_DB" -c 'CREATE EXTENSION IF NOT EXISTS vector'
+        # Optional read-only role (D-05). Heredoc bodies and terminators stay at
+        # the block's left margin: an indented `SQL` terminator is not
+        # recognised by bash and the whole init script fails to parse.
+        if [ -n "$$CHARACTER_READER_PASSWORD" ]; then
+          echo "character-profile-db-init: ensuring read-only role character_reader"
+          psql -v ON_ERROR_STOP=1 -d postgres <<'SQL'
+        \getenv reader_password CHARACTER_READER_PASSWORD
+        DO $$$$ BEGIN
+          IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'character_reader') THEN
+            CREATE ROLE character_reader LOGIN;
+          END IF;
+        END $$$$;
+        SELECT format('ALTER ROLE character_reader LOGIN PASSWORD %L', :'reader_password')
+        \gexec
+        SQL
+          psql -v ON_ERROR_STOP=1 -d "$$APP_DB" <<'SQL'
+        \getenv app_user APP_USER
+        \getenv app_db APP_DB
+        SELECT format('GRANT CONNECT ON DATABASE %I TO character_reader', :'app_db')
+        \gexec
+        GRANT USAGE ON SCHEMA public TO character_reader;
+        GRANT SELECT ON ALL TABLES IN SCHEMA public TO character_reader;
+        SELECT format('ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA public GRANT SELECT ON TABLES TO character_reader', :'app_user')
+        \gexec
+        SQL
+        else
+          echo "character-profile-db-init: CHARACTER_READER_PASSWORD empty, skipping character_reader"
+        fi
         echo "character-profile-db-init: done"
     restart: "no"
