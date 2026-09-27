@@ -589,7 +589,14 @@ All other work packages own disjoint paths.
 |---|---|
 | OB-00 | done. Branch `feat/ashiorid-office` created. Baseline: 2575 passed, 3 failed, 7 skipped, 1 xfailed. The 3 failures are pre-existing Windows failures in `tests/test_relay_io.py` (umask and concurrent atomic-write tests). |
 | OP-1 | todo (user) |
-| OB-01 .. OB-07 | todo |
+| OB-01 | done (c5d06af). Tenures fixed in lore: TL 8y, OM 5y, Analyst 3y, Engineer 2y, Tester 18mo, CEO 14mo, Party Member 13mo, Marketing 10mo. Former CEOs: Oswin Harrowgate (founder), Delphine Maro-Kest. |
+| OB-02 | done (9df6298). 14 office verbs, genre `office`. |
+| OB-03 | done (65158e2). `seats:`, `check_seats`, `speaker_map`. Ashiorid and hptest episodes byte-identical before and after. |
+| OB-04 | done (sessionCorpus 8261114, separate repo). 3 Claude + 90 Hermes sessions, 0 quarantined. Its redaction fixes (escaped-JSON IPs/passwords, masked tokens) likely also apply to `app/session_log_parser.py`: follow-up. |
+| OB-05 | done (999a663). Tester's superior is the Tech Lead only; Engineer→Tester is `test_request` only. Clock messages are sent by `office_clock` or `tuber_0`. |
+| OB-06 | done (0252c43). Added `tzdata` to requirements.txt and .venv. |
+| OB-07 | done (a19c6bd). Speaking turns must be SERIALIZED. `qwen3-coder:30b` is not installed. `hermes3:70b` is unusable on gx10. Allocation: CEO/TL/Analyst/Marketing on gemma4:26b; Tester/OM on gemma4:12b; Engineer on qwen3.8:27b + aider; llama3.1:8b as fallback; keep_alive ≥30m. OPEN: another client holds qwen3.8:27b at 262k ctx, so a ctx mismatch costs a 30–70 s reload. |
+| Wave 1 verify | Full suite: 2939 passed, 3 failed (the same baseline relay_io failures), 7 skipped. |
 | OB-10a/b/c, OB-11, OB-12 | todo |
 | OB-20 .. OB-24 | todo |
 | OB-30 .. OB-33 | todo |
