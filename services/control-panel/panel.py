@@ -568,7 +568,8 @@ async def play_replay(request: Request, name: str):
     2. Addressing "broadcast" would ALSO reach the roundtable's agent with
        the bare payload, racing its own request file against the cast-bearing
        one below (both are unconditional file writes — see
-       app/agent.py's _write_replay_request / handle_replay_request,
+       app/agent_handlers/relay_files.py's _write_replay_request /
+       app/agent_handlers/replay_relay.py's handle_replay_request,
        which — unlike handle_replay_invite — has no "don't clobber a
        pending request" guard). Addressing each of the 6 character
        workers BY NAME instead of "broadcast" means nothing but this one
@@ -579,8 +580,8 @@ async def play_replay(request: Request, name: str):
     unreachable worker must not stop the episode airing on the other six.
 
     Stops each of the 7 targets before requesting the new episode
-    (docs/operator_commands.md `replay_stop`, app/agent.py
-    handle_replay_stop): replay_pane.py's poll loop only reads a fresh
+    (docs/operator_commands.md `replay_stop`,
+    app/agent_handlers/replay_relay.py handle_replay_stop): replay_pane.py's poll loop only reads a fresh
     request file once it's idle between episodes, so a bare replay_request
     fired at a worker that's still mid-show just queues silently behind
     whatever's already playing — potentially minutes away, with nothing in

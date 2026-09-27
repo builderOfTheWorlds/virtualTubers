@@ -52,6 +52,37 @@ The flag lives in the shared `redis` service and defaults to enabled — a
 worker nobody has ever toggled, or a temporarily-unreachable Redis, both
 behave as "on" rather than silently going dark.
 
+**Is it actually running?** Each agent refreshes a Redis liveness key every
+tick, and message-api turns those into one status row per worker (never a
+503 — Redis down reads as `unknown`):
+
+```bash
+curl http://localhost:8090/workers/health          # every known worker
+curl http://localhost:8090/workers/coder/health    # {"worker_id": "coder", "state": "alive", "age_s": 2.1, "local_override": false, "enabled": true, ...}
+```
+
+`state` is `alive`, `stale` (missed beats), `down` (no beat within its TTL)
+or `unknown` (Redis unreachable). The control panel shows the same data as a
+health column with a kill-switch badge.
+
+**Emergency stop when Redis / message-api are down.** Because reads fail
+open, the `/disable` toggle can't take a stream off air while Redis is
+unreachable. The local kill switch can: it `docker exec`s a kill file into
+each worker container, and while that file exists the worker is off
+(ffmpeg stops within ~0.5 s, the agent pauses) without consulting Redis.
+Run on the Docker host:
+
+```bash
+scripts/emergency_stop.sh              # all running worker-* containers
+scripts/emergency_stop.sh coder gm     # by service suffix / service / container name
+scripts/emergency_resume.sh coder      # remove it again (back under the Redis flag)
+```
+
+`scripts/emergency_stop.ps1` / `emergency_resume.ps1` do the same from a
+Windows PC over SSH (default `secus@192.168.1.23`). The kill file survives
+`docker restart` but not container re-creation (a redeploy). Details:
+[docs/worker_control.md](worker_control.md).
+
 ## Rerun Theater — replaying past sessions, with voices
 
 Rerun Theater re-performs saved (parsed, redacted) Claude Code dev sessions
@@ -88,7 +119,21 @@ done
 `replays/` is a local staging directory on the machine that builds it —
 nothing is copied to the deploy host and there is no `/data/replays`
 mount. Adding an episode later is step 2 on its own; `curl
-http://localhost:8090/replays` lists what's in the library. See
+http://localhost:8090/replays` lists what's in the (airable) library.
+
+**Drafts.** Add `?status=draft` to the upload to hold an episode for review
+instead of airing it at once. A draft is validated and stored but can
+never be requested or randomly picked until it is approved — in the control
+panel's "Drafts awaiting review" table, or:
+
+```bash
+curl http://localhost:8090/replays?status=draft               # the review queue
+curl -X POST http://localhost:8090/replays/<name>/approve     # make it airable
+curl -X DELETE http://localhost:8090/replays/<name>           # reject it
+```
+
+The offline generator can post drafts itself when `AUTO_SUBMIT_DRAFTS=true`
+is set on `3layer-generator` (off by default; docs/draft_submitter.md). See
 [docs/episode_store.md](episode_store.md),
 [docs/episode_validator.md](episode_validator.md), and the `/replays`
 routes in [docs/message_api.md](message_api.md).

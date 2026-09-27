@@ -6,7 +6,7 @@ no OAuth token or Twitch app needed to read — joins each configured channel,
 and whenever a viewer shows up in a channel's chat POSTs a `viewer_joined`
 message to message-api (POST /messages), addressed to the worker that streams
 on that channel. The worker's agent then greets the viewer on stream
-(agent.py `handle_viewer_joined`).
+(app/agent_handlers/viewer.py `handle_viewer_joined`).
 
 Channel -> worker mapping comes from TWITCH_CHANNEL_MAP, e.g.
 `mycoderchannel:coder,mymanagerchannel:manager`. With no map configured the

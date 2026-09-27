@@ -278,13 +278,13 @@ def test_coder_llm_down_after_real_commit_still_hands_over(tmp_path, monkeypatch
 
 
 @pytest.mark.xfail(strict=True, reason=(
-    "BUG/doc mismatch app/agent_handlers/coder.py:149: a narration-only coder "
+    "Known quirk app/agent_handlers/coder.py:149: a narration-only coder "
     "(no coding backend) whose LLM fails sends clarification_request to the "
     "task's SENDER (reply_to), not to the manager. For an operator-assigned "
     "task it goes straight to 'operator', so the manager never sees the "
     "blocker and no manager_report is produced -- unlike the backend-failure "
-    "path (coder.py:116, always 'manager') and docs/agent_flow_reference.md "
-    "§3 ('On failure: clarification_request -> manager')."))
+    "path (coder.py:116, always 'manager'). Documented as current behaviour "
+    "in docs/agent_flow_reference.md §3 and docs/e2e_tests.md."))
 def test_narration_only_coder_llm_failure_reaches_manager(tmp_path, monkeypatch):
     h = make_harness(tmp_path, monkeypatch)
     h.add_worker("coder", "coder", llm=ScriptedLLM("coder", down=True))  # no backend

@@ -11,6 +11,11 @@ people who don't have Mermaid.
 - Every worker reads episodes (Rerun Theater), not just the GM
 - GM's TILE_RELAY_DIR relay is intra-container (its own 8 tiles); cross-worker
   duet shows use the Kafka replay_invite/ready/cue/end protocol
+
+2026-09-27 label refresh: handler citations moved from app/agent.py to
+app/agent_handlers/; the roundtable director is worker-roundtable (the GM
+node below stands for it); Redis also holds liveness keys; replay_episodes
+has a draft/approved review gate. Labels only — the layout is unchanged.
 """
 import networkx as nx
 import matplotlib
@@ -24,19 +29,19 @@ G = nx.DiGraph()
 # ---- node definitions: name -> (x, y, group) ------------------------------
 # groups: live, worker, infra, gen, bridge
 OPER = "Operator"
-CP = "control-panel\n:8091 · /replays upload UI"
+CP = "control-panel\n:8091 · /replays upload UI\ndraft review · worker health"
 MAPI = "message-api\n:8090 · sole Kafka publisher\nsole INSERT of replay_episodes"
 TP = "twitch-presence"
 KAFKA = "Kafka\nvtuber.messages (one topic)"
-REDIS = "Redis\non/off flags + log-filter\n(reads fail-open)"
+REDIS = "Redis\non/off flags + log-filter\n+ liveness keys (reads fail-open)"
 MLOG = "message-logger\nsole bus archive"
 LSHIP = "log-shipper\n(docker.sock logs)"
 APG = "App Postgres\nvirtualtubers @ 192.168.1.120:5432\nmessages · replay_episodes ·\nvoiced_narration · container_logs ·\ncoding_backend_runs"
 CODER = "worker-coder\n(+ -native/-opencode/-aider)"
 MGR = "worker-manager"
 TEST = "worker-tester"
-GM = "worker-gm (tuber_0)\ndirector · LLM+TTS all speakers\nhosts ALL 8 tiles locally"
-STREAM = "per-worker streaming stack\nXvfb + tmux + PulseAudio + ffmpeg\n→ 6 Twitch channels"
+GM = "worker-roundtable (+ worker-gm)\ndirector · LLM+TTS all speakers\nhosts ALL 8 tiles locally"
+STREAM = "per-worker streaming stack\nXvfb + tmux + PulseAudio + ffmpeg\n→ 1 Twitch channel per worker"
 CAMPM = "campaign-manager\n:8082 (job GUI)"
 GEN = "3layer-generator\n:8001 · Arc→Segment→Dialogue"
 PACKS = "campaigns/*.yaml\n(pack input)"
@@ -76,14 +81,14 @@ edges = [
     (OPER, CP, "instructions", None, None),
     (OPER, MAPI, "curl POST /messages", 0.75, None),
     (CP, MAPI, "HTTP", 0.5, None),
-    (TP, MAPI, "viewer_joined (REST) → any worker may\nauto-pick a random episode (agent.py:712)", 0.5, 0.42),
+    (TP, MAPI, "viewer_joined (REST) → any worker may\nauto-pick a random approved episode\n(agent_handlers/viewer.py:32-39)", 0.5, 0.42),
     (MAPI, KAFKA, "publish · sole producer", 0.5),
     (KAFKA, CODER, "consume / produce", 0.38),
     (KAFKA, MGR, "consume / produce", 0.45),
-    (KAFKA, TEST, "consume / produce + duet relay\nreplay_invite·ready·cue·end (agent.py:955-1049)", 0.5),
+    (KAFKA, TEST, "consume / produce + duet relay\nreplay_invite·ready·cue·end\n(agent_handlers/replay_relay.py:178-292)", 0.5),
     (KAFKA, GM, "consume / produce", 0.62),
     (KAFKA, MLOG, "consume", 0.5),
-    (MAPI, APG, "sole INSERT · replay\n(episode_store.py:55)", 1.0, -0.7),
+    (MAPI, APG, "sole INSERT · replay\n(episode_store.py:84)", 1.0, -0.7),
     (MLOG, APG, "messages · voiced_narration(text) · coding_backend_runs", 0.35),
     (LSHIP, APG, "container_logs (+ retention)", 0.3),
     (MAPI, REDIS, "set flags + log-filter excludes", 0.5),
@@ -101,7 +106,7 @@ edges = [
     (GEN, GPG, "job state", 0.5),
     (GEN, OUT, "writes", 0.5),
     (OUT, BRIDGE, "run artifacts (or authored pack)", 0.25),
-    (BRIDGE, MAPI, "POST /replays (urllib / curl) — all manual routes", 0.12),
+    (BRIDGE, MAPI, "POST /replays — manual routes (approved)\n+ opt-in generator auto-submit (draft)", 0.12),
 ]
 
 for n, (x, y, grp) in nodes.items():

@@ -1,14 +1,24 @@
-# Deployment (Docker Compose on d2000)
+# Deployment (argyre, via Portainer)
 
-The stack runs on **d2000**, a Windows machine on the local network running Docker
-Desktop, via plain `docker compose` — there is no Portainer in front of it. The repo
-is checked out directly on that host (e.g.
-`C:\Users\matt\PycharmProjects\virtualTubers`), and Kafka, Postgres, and Redis all
-run there too (see [Required environment variables](#required-environment-variables-env)
-below).
+The stack runs on **argyre** (hostname `gx10-35a4`, `192.168.1.23`, Ubuntu
+24.04 LTS), managed through a **Portainer** instance running locally on argyre
+itself (stack name `virtualtubers`). The repo is checked out on that host at
+`/home/secus/codeProjects/virtualTubers`. Kafka and Redis are bundled
+containers in the stack (`kafka:9092`, `redis:6379`, stack-internal — Kafka
+via the `local-infra` compose profile); Postgres is **external**, on mafober
+at `192.168.1.120:5432` (`.env` `POSTGRES_HOST`). Source of truth for these
+facts: `PROJECT_CLAUDE.md`.
+
+> **Previously (until 2026-08-16):** the stack ran on **d2000**, a Windows
+> machine running Docker Desktop, via plain `docker compose` with no
+> Portainer, with Kafka/Postgres/Redis on d2000 too (`192.168.2.158`).
+> `install.ps1` was written for that host. Old IPs still appear in some
+> examples in other docs.
 
 **The worker image is never built by `docker compose up`.**
-The three workers use `image: vtube-worker:latest` with `pull_policy: never`, so
+Every worker service (`worker-coder`, `-coder-native`, `-coder-opencode`,
+`-coder-aider`, `-manager`, `-tester`, `-gm`, `-roundtable`) uses
+`image: vtube-worker:latest` with `pull_policy: never`, so
 plain `docker compose up -d` will **not** build or pull it — it just fails or runs a
 stale image. You must build it on the host after any code change ([Deploy /
 redeploy](#deploy--redeploy-after-a-code-change), below), then recreate the
@@ -31,16 +41,19 @@ channel's key:
 | `TUBER0_STREAM_KEY` | `live_00000000` | GM / roundtable channel's key — the 7th channel (`worker-gm`, worker id `tuber_0`) |
 | `LLM_BASE_URL` | `http://host:11434` | Ollama endpoint |
 | `ANTHROPIC_API_KEY` | `sk-ant-...` | Only needed if a worker's config sets `llm.provider: claude` |
-| `KAFKA_BOOTSTRAP_SERVERS` | `192.168.2.158:9092` | Message-bus broker (runs on d2000 itself) |
+| `KAFKA_BOOTSTRAP_SERVERS` | `kafka:9092` | Message-bus broker — on argyre the bundled `kafka` service (enable with `COMPOSE_PROFILES=local-infra`); was `192.168.2.158:9092` on d2000 |
 | `KAFKA_TOPIC` | `vtuber.messages` | |
 | `REDIS_URL` | *(optional)* | Worker on/off flags (docs/worker_control.md). Defaults to `redis://redis:6379`, the bundled `redis` service — only set this if pointing at a different Redis instance |
-| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.2.158` / `5432` / … | Postgres connection (also on d2000). Backs `message-logger`, `log-shipper`, the narration cache, **and the Rerun Theater episode library** — a worker without these can't perform a rerun at all (docs/episode_store.md) |
+| `POSTGRES_HOST` … `POSTGRES_PASSWORD` | `192.168.1.120` / `5432` / … | Postgres connection — external on mafober for argyre (a bundled `postgres` service exists behind the `local-postgres` profile for standalone hosts; d2000 used `192.168.2.158`). Backs `message-logger`, `log-shipper`, the narration cache, **and the Rerun Theater episode library** — a worker without these can't perform a rerun at all (docs/episode_store.md) |
 | `TUBER2_STREAM_KEY` etc. | `live_...` | Optional keys for the three A/B coder workers (default to rtmp-preview) |
 | `TUBER1_LAYOUT_PRESET` / `TUBER6_LAYOUT_PRESET` / `TUBER5_LAYOUT_PRESET` | `replay` | Optional per-worker layout preset override — set to `replay` to switch that worker into Rerun Theater mode (docs/replay_pane.md). Defaults to the role's normal layout |
 | `TUBER2_LAYOUT_PRESET` / `TUBER3_LAYOUT_PRESET` / `TUBER4_LAYOUT_PRESET` | `coder` | Same override for the three A/B coding-backend workers — these three currently **default to `replay`** (Rerun Theater); set one to `coder` to switch that worker back to its normal editor pane |
 | `GM_LAYOUT_PRESET` | `roundtable` | Layout preset for the GM / roundtable channel. Defaults to `roundtable` |
 | `REPLAY_READY_TIMEOUT_S` | `60` | Optional — seconds a duet **director** worker waits for every invited follower's `replay_ready` before refusing the airing outright (docs/duet_replay.md). Passed through to `worker-coder`/`worker-manager`/`worker-tester`; unset keeps the code default (`60.0`) |
 | `TUBER1_AVATAR_PROVIDER` / `TUBER2_AVATAR_PROVIDER` / `TUBER3_AVATAR_PROVIDER` / `TUBER4_AVATAR_PROVIDER` / `TUBER6_AVATAR_PROVIDER` / `TUBER5_AVATAR_PROVIDER` | `ascii_avatar` | Optional per-worker avatar renderer override — swaps the avatar pane's provider with no config edit or rebuild (docs/avatar_provider_integration.md, docs/avatar_providers.md). Unset keeps that worker config's `avatar.provider` (defaults to `builtin`) |
+| `WORKER_KILL_FILE` | `/tmp/worker_disabled` | Optional — path of the per-container emergency kill file (docs/worker_control.md). Only matters in worker containers; never create it in `message-api` |
+| `GITEA_TOKEN` | *(secret)* | Optional — manager only, for the `gitea` task-backlog source (`read:issue` + `write:issue`, docs/task_backlog.md). Empty = gitea backlog idles with a WARN |
+| `AUTO_SUBMIT_DRAFTS` / `AUTO_SUBMIT_TIMEOUT_S` | `false` / `60` | Optional — `3layer-generator` posts each finished publish job to message-api as a review **draft** (never airs until approved; docs/draft_submitter.md) |
 | `GIT_SERVER_URL` | *(empty)* | Leave empty for local-commits-only; set when the local git server exists |
 | `TWITCH_CHANNEL_MAP` | `mychannel:coder,other:manager` | Twitch channel → worker pairs for viewer greetings (docs/twitch_presence.md). Unset → the twitch-presence service idles |
 | `PRESENCE_COOLDOWN_S` | `3600` | Optional — seconds before the same viewer is greeted again |
@@ -70,26 +83,51 @@ channel's key:
 
 ## Deploy / redeploy after a code change
 
-The `git` and `docker` commands must run **on d2000 itself** (RDP/console
-access, or PowerShell remoting into it) — that's where the Docker Desktop
-daemon lives:
+Image builds run **on argyre itself**, in the repo checkout — that's where
+the Docker daemon Portainer manages lives:
+
+```bash
+cd /home/secus/codeProjects/virtualTubers
+git pull
+./install.sh                             # fetches Piper voices + rebuilds every image (SKIP_VOICES=1 skips voices)
+# or build just the worker image:
+docker build -t vtube-worker:latest .
+```
+
+Then recreate the containers so they pick up the new images. The repo ships
+`./redeploy.sh` (pytest smoke gate → `install.sh` → `docker compose build`
+for the two `build:` services → `docker compose up -d --no-deps
+--force-recreate` on every `worker-*` and support service → verification);
+it drives `docker compose` directly from the checkout.
+
+> **Not in the repo:** the exact Portainer-side steps for redeploying the
+> `virtualtubers` stack (which Portainer action to use after a rebuild, and
+> whether the stack's env lives in Portainer or in `.env`) are not
+> documented here — check with the operator before relying on either
+> `redeploy.sh` or a Portainer stack update for a live change. Either way
+> the image must be rebuilt first; recreating containers on a stale
+> `vtube-worker:latest` changes nothing.
+
+> Env-only change (e.g. a new stream key)? No rebuild — update the env and
+> recreate the affected containers.
+
+**Legacy d2000 (Windows) flow**, kept for reference:
 
 ```powershell
 cd C:\Users\matt\PycharmProjects\virtualTubers
-git pull                                 # get the latest code
-.\install.ps1                            # fetches Piper voices + rebuilds every image the stack needs (see below)
-docker compose up -d                     # recreate containers on the freshly built images
+git pull
+.\install.ps1
+docker compose up -d
 ```
-
-> Env-only change (e.g. a new stream key)? Skip `install.ps1` — just edit `.env`
-> and run `docker compose up -d` to re-inject it and recreate the containers.
 
 `install.ps1` builds every image the stack needs directly (`docker build -f
 services/<name>/Dockerfile -t virtualtubers-<name>:latest .`), the same way it
 builds `vtube-worker:latest`. **No service in `docker-compose.yml` may use a
 `build:` block** — every service is built explicitly via `install.ps1` (or its
 bash equivalent, `install.sh`) so builds stay scriptable and reproducible
-across every service in one pass. Every service must be `image:` +
+across every service in one pass. (Current exception, as of 2026-09-27:
+`campaign-manager` and `3layer-generator` *do* carry `build:` blocks in
+`docker-compose.yml`; `redeploy.sh` builds them with `docker compose build`.) Every service must be `image:` +
 `pull_policy: never`. **Whenever a new service is added to the stack, add its
 `docker build` line to both `install.ps1` and `install.sh` in the same
 change** — a service missing from both scripts has no image on the host, so
@@ -110,7 +148,8 @@ goes in both.
 ## Verify a worker is streaming to the right place
 
 Compose prefixes container names with the project, so they are
-`virtualtubers-worker-coder-1`, `-manager-1`, and `-tester-1`:
+`virtualtubers-worker-coder-1`, `virtualtubers-worker-manager-1`, and so on for
+every `worker-*` service:
 
 ```bash
 # What env did the container actually receive?
@@ -128,3 +167,19 @@ A healthy worker logs
 by ffmpeg `frame= … speed=~1x` progress lines. If it shows
 `rtmp://rtmp-preview:1935/live/...`, `STREAM_RTMP_URL` didn't reach the container
 (see the image-never-built gotcha above).
+
+## Health check and emergency stop
+
+- **Health view:** `curl http://192.168.1.23:8090/workers/health` (or the
+  health column in the control panel at `:8091`) — one row per worker with
+  `state` `alive | stale | down | unknown`, last-seen age, and whether that
+  worker reports its local kill switch engaged. Backed by each agent's Redis
+  liveness key `worker:{id}:alive` (docs/worker_control.md).
+- **Emergency stop without Redis/message-api:** on the host,
+  `scripts/emergency_stop.sh [worker ...]` creates the kill file in each
+  worker container via `docker exec` (ffmpeg stops within ~0.5 s, the agent
+  pauses); `scripts/emergency_resume.sh [worker ...]` removes it. From a
+  Windows PC, `scripts/emergency_stop.ps1` / `emergency_resume.ps1` SSH to
+  `secus@192.168.1.23` and run the same thing. The kill file survives
+  `docker restart` but **not** container re-creation (`redeploy.sh`, a
+  stack update).

@@ -195,7 +195,7 @@ operator ──POST /messages (cast: {...})──▶ Kafka ──▶ director ag
                                               │ 3. annotate every scene: owned + target_duration
                                               │ 4. publish replay_invite to each follower
                                               ▼
-                          each follower's agent.py: handle_replay_invite
+                          each follower's agent (agent_handlers/replay_relay.py): handle_replay_invite
                                               │ writes REPLAY_REQUEST_FILE {"mode": "follow", ...}
                                               ▼
                           follower's replay_pane.py: perform_follower_request

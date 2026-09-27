@@ -131,7 +131,7 @@ Function/class parameters:
   `json`, `os`, `time`, `random`.
 - Runtime: the `message-api` service (docs/message_api.md) and outbound
   reachability to `irc.chat.twitch.tv:6667`.
-- Consumed by: `app/agent.py`'s `handle_viewer_joined` (docs/agent.md).
+- Consumed by: `app/agent_handlers/viewer.py`'s `handle_viewer_joined` (docs/agent.md, docs/agent_handlers.md).
 
 ## Usage Examples
 

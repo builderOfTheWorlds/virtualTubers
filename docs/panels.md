@@ -222,12 +222,14 @@ Only the `content:` block is consumed by `tail_bus.py`. Its schema:
 
 Filtering order: `hide_types` → `show_types` (whitelist if non-empty) → `direction`.
 
-> **status_update / heartbeat note.** `app/agent.py` publishes its per-tick
-> heartbeat flood as message type **`status_update`** (payload
-> `{"text": "heartbeat #N"}`), **not** `heartbeat`. To stop that flood the feed
-> hides **both** `heartbeat` and `status_update` by default. `agent.py` was
-> intentionally left unchanged; the filter is fully configurable — edit
-> `content.filters.hide_types` to change what is hidden.
+> **status_update / heartbeat note.** `app/agent.py` publishes its bus
+> heartbeat as message type **`status_update`** (payload
+> `{"text": "heartbeat #N"}`), **not** `heartbeat`. It used to be sent every
+> tick; since agent v2.6.0 it is sent only every `agent.bus_heartbeat_every`
+> ticks (default 12) and worker liveness lives in the Redis key
+> `worker:{id}:alive` instead (docs/worker_control.md). The feed still hides
+> **both** `heartbeat` and `status_update` by default; the filter is fully
+> configurable — edit `content.filters.hide_types` to change what is hidden.
 
 **Example — a debug-oriented feed** (worker override that keeps only errors and
 clarifications, shows raw payloads, and re-enables status updates):

@@ -36,8 +36,9 @@
 #>
 param(
     # [string]$Url = "http://192.168.1.120:8090/messages"
-    # [string]$Url = "http://192.168.2.158:8090/messages"
-    [string]$Url = "http://192.168.2.170:8090/messages"
+    # [string]$Url = "http://192.168.2.158:8090/messages"   # d2000 (old)
+    # [string]$Url = "http://192.168.2.170:8090/messages"   # argyre's old IP
+    [string]$Url = "http://192.168.1.23:8090/messages"      # argyre (gx10-35a4)
 )
 
 # Reset preset variables so stale values can't leak in from the console

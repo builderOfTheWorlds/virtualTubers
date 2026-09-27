@@ -10,7 +10,7 @@ agent drops a request file.
 The full wiring, operator to screen:
 
 ```
-operator ──POST /messages──▶ Kafka ──▶ agent.py handle_replay_request
+operator ──POST /messages──▶ Kafka ──▶ agent_handlers/replay_relay.py handle_replay_request
                                             │ writes REPLAY_REQUEST_FILE (atomic)
                                             ▼
                               replay_pane.py (this program, polling)
@@ -73,7 +73,7 @@ generation, logged to stderr, never a crash or a stalled show. `"voice":
 false` skips reuse too, same as it skips fresh narration.
 
 **Stopping a show (`replay_stop`).** An operator `replay_stop`
-(docs/operator_commands.md) reaches `app/agent.py`'s `handle_replay_stop`,
+(docs/operator_commands.md) reaches `app/agent_handlers/replay_relay.py`'s `handle_replay_stop`,
 which (1) deletes `REPLAY_REQUEST_FILE` if a request is still queued but
 hasn't been picked up yet — cancelling it outright — and (2) writes
 `REPLAY_STOP_FILE`, which every performance path here (`perform_request`,
@@ -173,14 +173,14 @@ need different words on the idle screen — see "Idle screen" below.
   followers alike (docs/duet_replay.md) — without it a duet refuses
   outright rather than degrading.
 - `REPLAY_STOP_FILE` (env, default `/tmp/replay_stop.json`): agent -> pane
-  stop signal written by `app/agent.py`'s `handle_replay_stop` on an
+  stop signal written by `app/agent_handlers/replay_relay.py`'s `handle_replay_stop` on an
   operator `replay_stop` (docs/operator_commands.md); this pane only ever
   polls it via each performance path's `Pacer(should_stop=...)` (see
   "Stopping a show" above; docs/replay.md `ReplayStopped`). Same
   env-override + atomic-write convention as `REPLAY_REQUEST_FILE`.
 - `REPLAY_CUE_FILE` (env, default `/tmp/replay_cue.json`) /
   `REPLAY_READY_FILE` (env, default `/tmp/replay_ready.json`): duet relay
-  files written by `app/agent.py`'s `handle_replay_cue`/`handle_replay_end`
+  files written by `app/agent_handlers/replay_relay.py`'s `handle_replay_cue`/`handle_replay_end`
   and `handle_replay_ready`; this pane only ever polls them
   (`_resolve_replay_cue_file`/`_resolve_replay_ready_file`). Same
   env-override + atomic-write convention as `REPLAY_REQUEST_FILE`. See

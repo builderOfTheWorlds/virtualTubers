@@ -18,7 +18,7 @@ matter when editing or testing it.
 |---|---|---|
 | `__init__.py` | — | `MESSAGE_HANDLERS`, `IDLE_TICK_HOOKS` |
 | `common.py` | — | `_complete_with_emotion` (structured LLM narration, via `emotion.py`), `_send_manager_report` |
-| `relay_files.py` | — | agent → replay pane relay files: `REPLAY_{REQUEST,STOP,CUE,READY}_FILE_ENV` + `DEFAULT_*` paths, `_resolve_replay_*_file`, `_atomic_write_json`, `_read_json_file`, `_write_replay_request` |
+| `relay_files.py` | — | agent → replay pane relay files. Thin aliases onto `app/relay_io.py` (docs/relay_io.md, the one race-safe implementation shared with `replay_pane.py` / `tile_pane.py`): `REPLAY_{REQUEST,STOP,CUE,READY}_FILE_ENV` + `DEFAULT_*` paths, `_resolve_replay_*_file`, `_atomic_write_json` (= `relay_io.atomic_write_json`), `_read_json_file` (= `relay_io.read_json`), and `_write_replay_request(request, if_absent=False)` (`if_absent=True` uses `relay_io.atomic_create_json`, so "don't clobber a pending request" is one atomic step) |
 | `coder.py` | `task_assignment` | tmux demos `demo_editor_note`, `demo_filetree_ls`, `show_commit_in_filetree` |
 | `tester.py` | `commit_notification`, `retest_request` | `_run_tests_and_report`, `_decide_test_outcome` + stub constants, `_resolve_workspace`, `WORKSPACE_MOUNT_PATTERN`, `_severity_from_failures` |
 | `manager.py` | `bug_report`, `test_passed`, `task_complete`, `clarification_request` | `MAX_BUG_RETRIES`; task backlog `BacklogDispatcher`, `manager_idle_tick`, `_backlog_activity` / `_backlog_end`, `_reset_backlog` |
@@ -28,8 +28,8 @@ matter when editing or testing it.
 
 Dependency direction is one-way: handler modules import from `common` /
 `relay_files` (and from sibling app modules such as `message_bus`,
-`agent_state`, `tmux_control`, `test_runner`, `episode_store`); `common` and
-`relay_files` import nothing from the package; nothing in the package
+`agent_state`, `tmux_control`, `test_runner`, `episode_store`, `relay_io`,
+`task_backlog`); `common` and `relay_files` import nothing from the package; nothing in the package
 imports `agent`.
 
 ### Correlation contract (v1.1.0)
@@ -98,7 +98,9 @@ relay-file writes, tmux keystrokes, console prints).
 - `message_bus.build_message`, `message_bus.reply_ids` / `correlation_of`
   (dev-team handlers), `agent_state.write_state` (most handlers)
 - `emotion` (`common.py`), `tmux_control` (`coder.py`),
-  `test_runner` (`tester.py`), `episode_store` (`viewer.py`)
+  `test_runner` (`tester.py`), `episode_store` (`viewer.py`),
+  `relay_io` (`relay_files.py`, docs/relay_io.md), `task_backlog`
+  (`manager.py`, docs/task_backlog.md)
 - stdlib: `json`, `os`, `random`, `time`
 
 ## Usage Examples
@@ -145,6 +147,9 @@ Unchanged from before the split — see docs/agent.md "Error Handling"
 file write failures log and never raise out of the tick loop).
 
 ## Changelog
+
+- v1.2.1 (2026-09-27) — Docs only: `relay_files.py` is now aliases onto
+  `app/relay_io.py` (race-safe relay IO); dependency list updated.
 
 - v1.2.0 (2026-09-27) — `IDLE_TICK_HOOKS` (per-role per-tick hook) and the
   manager's task backlog (`BacklogDispatcher`, `manager_idle_tick`); the
