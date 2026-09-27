@@ -88,6 +88,64 @@ def test_disable_worker_returns_503_when_redis_unavailable(client):
     assert resp.status_code == 503
 
 
+def _health(worker_id, state="alive", **fields):
+    row = {"worker_id": worker_id, "state": state, "alive": state in ("alive", "stale"),
+           "last_seen": None, "age_s": None, "local_override": None, "enabled": True, "ttl_s": None}
+    row.update(fields)
+    return row
+
+
+def test_get_worker_health_returns_control_health_row(client, monkeypatch):
+    fake = MagicMock(return_value=_health("coder", local_override=True, age_s=3.0))
+    monkeypatch.setattr(api.control, "health", fake)
+    resp = client.get("/workers/coder/health")
+    assert resp.status_code == 200
+    assert resp.json()["local_override"] is True
+    fake.assert_called_once_with("coder")
+
+
+def test_get_all_workers_health_uses_known_list_plus_redis_discovered(client, monkeypatch):
+    monkeypatch.setattr(api.control, "known_worker_ids", MagicMock(return_value=["coder", "roundtable"]))
+    fake = MagicMock(side_effect=lambda ids: [_health(w) for w in ids])
+    monkeypatch.setattr(api.control, "health_many", fake)
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    ids = [r["worker_id"] for r in resp.json()["workers"]]
+    assert ids == list(api.WORKER_ID_EXAMPLES) + ["roundtable"]
+
+
+def test_workers_health_is_not_captured_as_worker_id(client):
+    """/workers/health must hit the health route, not GET /workers/{id}."""
+    api.control._client.mget.return_value = [None] * 2 * len(api.WORKER_ID_EXAMPLES)
+    api.control._client.scan_iter.return_value = iter([])
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    assert "workers" in resp.json()
+
+
+def test_workers_health_reports_unknown_not_503_when_redis_down(client):
+    api.control._client.mget.side_effect = redis.ConnectionError("refused")
+    api.control._client.scan_iter.side_effect = redis.ConnectionError("refused")
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    rows = resp.json()["workers"]
+    assert rows and all(r["state"] == "unknown" and r["alive"] is None and r["enabled"] is None for r in rows)
+
+    resp = client.get("/workers/coder/health")
+    assert resp.status_code == 200
+    assert resp.json()["alive"] is None
+
+
+def test_worker_health_enabled_uses_redis_flag_not_local_kill_file(client, monkeypatch, tmp_path):
+    kill = tmp_path / "worker_disabled"
+    kill.write_text("x")
+    monkeypatch.setattr(api.control, "kill_file", str(kill))
+    api.control._client.mget.return_value = [None, None]  # no alive key, no enabled key
+    body = client.get("/workers/coder/health").json()
+    assert body["enabled"] is True
+    assert body["state"] == "down"
+
+
 def test_get_log_filter_defaults_excluded_for_status_update(client):
     api.log_filter._client.get.return_value = None
     resp = client.get("/log-filter/status_update")

@@ -73,13 +73,37 @@ while the worker is disabled — "alive" (process ticking) and "enabled"
   was never written, or Redis is unreachable — "unknown" is never reported
   as alive, and readers stay silent so a polling health view can't flood the log.
 
-**Reader API for a health view** (message-api / control-panel — not wired
-yet): construct `WorkerControl.from_config(config)` (or
-`WorkerControl(redis_url)`) once, then per worker id call
-`control.last_seen(worker_id)` → ISO timestamp string or `None`, and/or
-`control.alive(worker_id)` → bool. Combine with `is_enabled()` and
-`local_override_active()` for a full status row. Worker ids are the same
-`WORKER_ID`s used on the bus (`coder`, `tester`, `manager`, ...).
+**Liveness value carries the local override (v1.3.0).** The kill file is
+per container, so no other container (message-api) can check it. Instead
+`heartbeat()` stores JSON —
+`{"ts": "<utc iso>", "local_override": true|false, "ttl_s": <int>}` —
+with `local_override` computed from `self.local_override_active()` inside
+`heartbeat()` (no `agent.py` change). Because `agent.py` heartbeats *before*
+its enabled check, a worker forced off by its kill file keeps ticking and
+keeps reporting `local_override: true`. Readers accept both this JSON and the
+pre-1.3 plain ISO-string value (`parse_alive_value()`), so mixed old/new
+images during a rolling upgrade work; an old value reports
+`local_override`/`ttl_s` as `None`. `last_seen()` still returns just the
+ISO timestamp.
+
+**Health view (wired: message-api `GET /workers/health`, control-panel
+Workers table).** `health(worker_id)` / `health_many(worker_ids)` return one
+row per worker from a single `MGET` of every alive + enabled key (a hung
+Redis costs one socket timeout, not one per worker). Never raises:
+
+| field | meaning |
+|---|---|
+| `state` | `alive` — key live; `stale` — key live but older than `STALE_TTL_FRACTION` (0.5) of the reported TTL (missed beats; will be `down` when it expires; old values without `ttl_s` are never stale); `down` — key expired / never written; `unknown` — Redis unreachable |
+| `alive` | `True` for alive/stale, `False` for down, `None` for unknown |
+| `last_seen`, `age_s` | ISO ts of the last tick and seconds since it (`None` when down/unknown) |
+| `local_override` | the worker's own kill-file report; `None` when down/unknown/old image |
+| `enabled` | the **raw Redis flag** (missing key → `True`, `"0"` → `False`, Redis down → `None`). Deliberately not `is_enabled()`, which consults the *reader's* kill file and fails open — in message-api that would report a Redis outage as "enabled". |
+| `ttl_s` | the TTL the worker reported, or `None` |
+
+`known_worker_ids()` SCANs `worker:*:alive` / `worker:*:enabled` and returns
+the ids found (sorted; `[]` if Redis is down) — message-api adds these to its
+`WORKER_ID_EXAMPLES` list so heartbeating workers outside it (`roundtable`,
+`tuber_0`) show up too. Worker ids are the same `WORKER_ID`s used on the bus.
 
 ## Signature
 
@@ -104,6 +128,14 @@ class WorkerControl:
     def heartbeat(self, worker_id: str, ttl_s: int) -> bool
     def last_seen(self, worker_id: str) -> str | None
     def alive(self, worker_id: str) -> bool
+
+    # health view (v1.3.0)
+    def health(self, worker_id: str, now: datetime | None = None) -> dict
+    def health_many(self, worker_ids: Iterable[str], now: datetime | None = None) -> list[dict]
+    def known_worker_ids(self) -> list[str]
+
+def parse_alive_value(value: str | None) -> dict | None   # {"ts", "local_override", "ttl_s"}
+STALE_TTL_FRACTION = 0.5
 ```
 
 ## Parameters
@@ -121,6 +153,8 @@ class WorkerControl:
   `worker_control.kill_file` (config/worker.yaml) > `/tmp/worker_disabled`.
 - `reason` (str) — free text written into the kill file by `engage_local_override`.
 - `ttl_s` (int) — liveness key TTL in seconds for `heartbeat`; clamped to at least 1.
+- `worker_ids` (iterable of str) — ids for `health_many`; empty → `[]` with no Redis call.
+- `now` (aware `datetime`, optional) — clock override for `age_s`/staleness (tests); default UTC now.
 
 ## Return Value
 
@@ -133,6 +167,9 @@ class WorkerControl:
 - `heartbeat` — `True` if the liveness key was written, `False` on a Redis error (never raises).
 - `last_seen` — ISO-8601 UTC timestamp of the last tick, or `None` (expired / never written / Redis down).
 - `alive` — `last_seen(...) is not None`.
+- `health` / `health_many` — status row(s) as in the table above, in input order.
+- `known_worker_ids` — sorted ids with an alive or enabled key; `[]` on Redis error.
+- `parse_alive_value` — `None` for an empty value, else the decoded dict (old plain value → `ts` only).
 - `set_enabled` — echoes back the `enabled` value passed in on success; raises `redis.RedisError` on failure.
 
 ## Dependencies
@@ -166,8 +203,15 @@ for wid in ("coder", "tester", "manager"):
     print(wid, "alive" if control.alive(wid) else "down/unknown", control.last_seen(wid))
 ```
 
+```python
+# one-call status table (what message-api's GET /workers/health returns)
+for row in control.health_many(["coder", "tester", "manager"]):
+    print(row["worker_id"], row["state"], row["age_s"],
+          "KILL-SWITCH" if row["local_override"] else "", row["enabled"])
+```
+
 ```bash
-redis-cli GET worker:coder:alive   # "2026-09-27T12:00:05.123456+00:00"
+redis-cli GET worker:coder:alive   # {"ts": "2026-09-27T12:00:05.123456+00:00", "local_override": false, "ttl_s": 15}
 redis-cli TTL worker:coder:alive   # seconds until it counts as dead
 ```
 
@@ -187,7 +231,21 @@ curl http://localhost:8090/workers/coder
   and `INFO event=local_override_cleared` when it goes away (not on every poll).
 - `engage_local_override` — raises `OSError` if the file can't be written (caller decides the fallback).
 
+- `health` / `health_many` / `known_worker_ids` — never raise; a Redis error yields
+  `state: "unknown"` rows / `[]`, silently (they are polled by the control panel).
+- Malformed alive value (not JSON, or JSON without `ts`) — treated as a plain
+  timestamp; an unparseable `ts` still counts as alive with `age_s: None`.
+
 ## Changelog
+
+- v1.3.0 (2026-09-27) — Liveness value is now JSON
+  `{"ts", "local_override", "ttl_s"}`; `heartbeat()` fills `local_override`
+  from this container's kill file so message-api can report it. `last_seen()`
+  still returns the ISO ts and accepts the old plain-string value (rolling
+  upgrades). New `health()` / `health_many()` (one MGET; alive/stale/down/
+  unknown, age, override, raw Redis enable flag), `known_worker_ids()`,
+  module-level `parse_alive_value()` and `STALE_TTL_FRACTION`. Kill-file and
+  enable/disable semantics unchanged; no `agent.py` change.
 
 - v1.2.0 (2026-09-27) — Liveness key `worker:{id}:alive` (ISO timestamp, TTL):
   `heartbeat(worker_id, ttl_s)` (never raises, logs outage/recovery once),
