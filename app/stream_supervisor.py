@@ -184,11 +184,14 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     LOCAL_PREVIEW_ENABLED, see startup.sh), the already-encoded output is
     duplicated to a second RTMP destination via ffmpeg's `tee` muxer
     instead of re-encoding — near-zero extra CPU cost, since it's just
-    copying encoded packets to a second socket. Each branch is tagged
-    `onfail=ignore` so a stall/disconnect on either destination (e.g. a
-    local VLC viewer closing, or a Twitch ingest hiccup) can't stall or
-    kill the other — the two outputs are independent from ffmpeg's
-    perspective. Exists so a local rtmp-preview viewer (VLC) can watch
+    copying encoded packets to a second socket. Only the LOCAL leg is
+    tagged `onfail=ignore` (see the inline comment in the tee branch for
+    why the Twitch leg deliberately is NOT) — a stall/disconnect on the
+    local preview (e.g. a VLC viewer closing, or rtmp-preview restarting)
+    can't affect the real Twitch broadcast, but a genuine Twitch failure
+    still fails the whole process and gets picked up by
+    stream_supervisor's normal restart loop, same as single-output mode
+    always has. Exists so a local rtmp-preview viewer (VLC) can watch
     with near-zero latency without interrupting the live Twitch broadcast
     (the whole point being to skip Twitch's ~30s CDN delay for debugging).
 
@@ -282,14 +285,25 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     if local_preview_url:
         # tee muxer duplicates the already-encoded packets to a second
         # destination — no second encode, so no meaningful extra CPU cost
-        # (see local_preview_url's docstring above). onfail=ignore on BOTH
-        # legs means a stall/drop on either destination (local VLC closing,
-        # or a Twitch ingest hiccup) can't block or kill writes to the
-        # other — matches -reconnect's job of keeping THIS process alive
-        # independent of either downstream's health.
+        # (see local_preview_url's docstring above). onfail=ignore ONLY on
+        # the local leg — a local VLC viewer disconnecting or the
+        # rtmp-preview container hiccuping must never take down the real
+        # broadcast. The Twitch leg deliberately has NO onfail=ignore:
+        # ffmpeg's tee muxer treats onfail=ignore as PERMANENT for that
+        # slave once it fails once (a single write stall/error, e.g. from
+        # a CPU-throttled moment, drops it for the rest of the process's
+        # life — tee does not retry, so -reconnect/-reconnect_streamed
+        # never get a chance to kick in). Confirmed live: with
+        # onfail=ignore on both legs, Twitch silently went offline for the
+        # rest of the run while the local leg kept working. Leaving Twitch
+        # WITHOUT onfail means a Twitch failure now fails the whole ffmpeg
+        # process instead, which stream_supervisor.py's own poll loop
+        # already restarts (decide_action) — the exact same recovery path
+        # single-output mode has always relied on, so this doesn't
+        # introduce a new failure mode, only avoids a NEW one from tee.
         local_output = f"{local_preview_url}/{stream_key}"
         tee_spec = (
-            f"[f=flv:onfail=ignore]{primary_output}"
+            f"[f=flv]{primary_output}"
             f"|[f=flv:onfail=ignore]{local_output}"
         )
         # Map by explicit INPUT INDEX + stream type: video is always input 0

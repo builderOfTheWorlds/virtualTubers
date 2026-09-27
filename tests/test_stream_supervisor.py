@@ -323,7 +323,18 @@ def test_build_ffmpeg_cmd_tees_to_both_destinations_when_local_preview_set():
     tee_spec = cmd[cmd.index("tee") + 1]
     assert "rtmp://live.twitch.tv/app/key123" in tee_spec
     assert "rtmp://rtmp-preview:1935/live/key123" in tee_spec
-    assert "onfail=ignore" in tee_spec
+    # onfail=ignore ONLY on the local leg. ffmpeg's tee treats
+    # onfail=ignore as PERMANENT once a slave fails once — it does not
+    # retry — so putting it on the Twitch leg silently drops the real
+    # broadcast forever after one write stall (confirmed live: Twitch
+    # went offline for the rest of the run while local preview kept
+    # working). Without onfail there, a Twitch failure instead fails the
+    # whole ffmpeg process, which stream_supervisor's restart loop
+    # already recovers from — the same path single-output mode always
+    # relied on.
+    twitch_leg, local_leg = tee_spec.split("|", 1)
+    assert "onfail=ignore" not in twitch_leg
+    assert "onfail=ignore" in local_leg
     # Explicit input-indexed maps, not bare "0:a"/"a:0" — video capture is
     # always input 0 and audio (pulse or anullsrc) is always input 1, so a
     # stream-type-only or input-0 audio map matches nothing and ffmpeg
