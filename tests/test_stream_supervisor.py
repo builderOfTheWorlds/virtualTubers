@@ -488,3 +488,22 @@ def test_resolve_music_source(monkeypatch, config, env, sink_present, expected):
     with patch("stream_supervisor.pulse_monitor_available", return_value=sink_present):
         source, _duck = ss.resolve_music_source(config)
     assert source == expected
+
+
+def test_music_filter_graph_normalizes_both_legs_to_one_format():
+    # vout is 48 kHz, the music sink 44.1 kHz: sidechaincompress fails
+    # ("could not choose their formats") unless both legs are aformat-ed.
+    graph = ss.music_filter_graph()
+    fmt = "aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo"
+    assert graph.count(fmt) == 2
+
+
+def test_pacat_writer_thread_can_be_joined():
+    # Regression: naming the stop Event `_stop` shadowed Thread._stop() and
+    # made join() raise TypeError on every director shutdown.
+    import music_director as md
+    w = md.PacatWriter(sink="music", sample_rate=44100)
+    w.start()
+    w.put(None)
+    w.join(timeout=5)
+    assert not w.is_alive()

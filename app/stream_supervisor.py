@@ -166,9 +166,15 @@ def music_filter_graph(duck=None, music_gain=1.0):
     """
     d = {"threshold": 0.02, "ratio": 8, "attack_ms": 20, "release_ms": 600}
     d.update({k: v for k, v in (duck or {}).items() if k in d})
+    # Both legs MUST be forced to one rate/format/layout: vout runs at 48 kHz
+    # and the music sink at 44.1 kHz, and sidechaincompress refuses mismatched
+    # inputs ("could not choose their formats") — which crash-looped the live
+    # broadcaster on first deploy. 44.1 kHz matches the AAC output (-ar 44100).
+    fmt = ("aresample=44100:async=1,"
+           "aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo")
     return (
-        "[1:a]aresample=async=1,asplit=2[voice][key];"
-        f"[2:a]aresample=async=1,volume={float(music_gain):.3f}[bed];"
+        f"[1:a]{fmt},asplit=2[voice][key];"
+        f"[2:a]{fmt},volume={float(music_gain):.3f}[bed];"
         f"[bed][key]sidechaincompress=threshold={float(d['threshold'])}"
         f":ratio={float(d['ratio'])}:attack={float(d['attack_ms'])}"
         f":release={float(d['release_ms'])}[ducked];"

@@ -301,8 +301,10 @@ fi
 # answering operator commands instead of going deaf.
 log "Starting agent loop (restart-on-crash)"
 ( while true; do
-    python3 /app/agent.py --config "${CONFIG_PATH}"
-    code=$?
+    # `|| code=$?`, not a bare call + `code=$?`: startup.sh runs under
+    # `set -e`, so a non-zero exit would kill this whole restart loop.
+    code=0
+    python3 /app/agent.py --config "${CONFIG_PATH}" || code=$?
     log "agent.py exited (code ${code}) — restarting in 2s"
     sleep 2
 done ) &
@@ -347,8 +349,9 @@ THEME_WATCHER_PID=$!
 if [ "${MUSIC_ENABLED_RESOLVED}" = "1" ]; then
     log "Starting background music director (restart-on-crash)"
     ( while true; do
-        python3 /app/music_director.py --config "${CONFIG_PATH}"
-        code=$?
+        # `|| code=$?` so `set -e` can't kill the restart loop (see §7).
+        code=0
+        python3 /app/music_director.py --config "${CONFIG_PATH}" || code=$?
         log "music_director.py exited (code ${code}) — restarting in 5s"
         sleep 5
     done ) &

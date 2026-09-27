@@ -50,7 +50,7 @@ class PacatWriter(threading.Thread):
         self.sr = sample_rate
         self.queue = queue.Queue(maxsize=lookahead)
         self._proc = None
-        self._stop = threading.Event()
+        self._halt = threading.Event()  # NOT _stop: that shadows Thread._stop() and breaks join()
 
     def _spawn(self):
         cmd = ["pacat", "--playback", "--raw", "--format=s16le", f"--rate={self.sr}",
@@ -62,7 +62,7 @@ class PacatWriter(threading.Thread):
         self._proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 
     def run(self):
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             item = self.queue.get()
             if item is None:
                 break
@@ -86,7 +86,7 @@ class PacatWriter(threading.Thread):
         self.queue.put(audio)
 
     def close(self):
-        self._stop.set()
+        self._halt.set()
         if self._proc:
             try:
                 self._proc.stdin.close()
