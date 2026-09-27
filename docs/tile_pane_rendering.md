@@ -131,6 +131,15 @@ each tile a 31x20 pane; the frame renders 9 rows at 31 columns. Verified with
 
 ## Changelog
 
+- **v1.7** — Relay-file I/O for the tile pane (request consume, cue reads,
+  stale cleanup, relay-dir resolution) now goes through `app/relay_io.py`
+  (docs/relay_io.md). Rendering is unchanged. Two cue-file races are fixed.
+  `clear_stale_relay_files(relay_dir, slot, airing_id=...)` keeps a cue for
+  the airing about to run: the director usually writes scene 0's cue before
+  the tile has loaded the airing, and clearing it left the tile waiting for
+  a cue that had already arrived. The post-show cleanup now removes the cue
+  file only when it still belongs to the airing that just finished, so a
+  cue already written for the next airing is kept.
 - **v1.6** — Roundtable look-at (docs/gaze.md): each tile's 3D head turns
   toward whoever is speaking; the speaker faces/sweeps its addressees and
   lip-syncs from its audio envelope. The owning tile publishes

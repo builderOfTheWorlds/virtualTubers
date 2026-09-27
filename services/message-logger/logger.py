@@ -10,6 +10,7 @@ docs/log_filter_control.md.
 """
 import json
 import os
+import uuid
 
 import psycopg2
 
@@ -24,10 +25,17 @@ CREATE TABLE IF NOT EXISTS messages (
     type        TEXT NOT NULL,
     payload     JSONB NOT NULL,
     timestamp   TIMESTAMPTZ NOT NULL,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    correlation_id UUID,
+    causation_id   UUID
 );
 CREATE INDEX IF NOT EXISTS idx_messages_to ON messages ("to");
 CREATE INDEX IF NOT EXISTS idx_messages_type ON messages (type);
+-- Correlation IDs (docs/message_bus.md): nullable, so tables created before
+-- they existed migrate in place and rows from older senders stay NULL.
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS correlation_id UUID;
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS causation_id UUID;
+CREATE INDEX IF NOT EXISTS idx_messages_correlation ON messages (correlation_id);
 
 -- Typed unpacking of coding_run_report messages: one row per coding-backend
 -- run, for A/B comparison queries (see docs/coding_backend.md). The raw
@@ -80,8 +88,9 @@ ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio_duration_s DOUBLE PR
 """
 
 INSERT_SQL = """
-INSERT INTO messages (id, "from", "to", type, payload, timestamp)
-VALUES (%(id)s, %(from)s, %(to)s, %(type)s, %(payload)s, %(timestamp)s)
+INSERT INTO messages (id, "from", "to", type, payload, timestamp, correlation_id, causation_id)
+VALUES (%(id)s, %(from)s, %(to)s, %(type)s, %(payload)s, %(timestamp)s,
+        %(correlation_id)s, %(causation_id)s)
 ON CONFLICT (id) DO NOTHING;
 """
 
@@ -106,6 +115,35 @@ INSERT INTO voiced_narration (
 )
 ON CONFLICT (message_id, scene_index) DO NOTHING;
 """
+
+
+def _uuid_or_none(msg, key):
+    """msg[key] as a canonical UUID string, or None when absent (older
+    senders) or not a UUID. The columns are UUID-typed, so an unparseable
+    value from a foreign producer must become NULL here rather than fail the
+    whole INSERT and lose the raw message."""
+    value = msg.get(key)
+    if value in (None, ""):
+        return None
+    try:
+        return str(uuid.UUID(str(value)))
+    except ValueError:
+        print(f"[logger] WARN event=bad_uuid field={key} value={value!r} id={msg.get('id')}")
+        return None
+
+
+def message_row(msg):
+    """INSERT_SQL parameters for one bus message."""
+    return {
+        "id": msg["id"],
+        "from": msg["from"],
+        "to": msg["to"],
+        "type": msg["type"],
+        "payload": json.dumps(msg["payload"]),
+        "timestamp": msg["timestamp"],
+        "correlation_id": _uuid_or_none(msg, "correlation_id"),
+        "causation_id": _uuid_or_none(msg, "causation_id"),
+    }
 
 
 def insert_coding_run(cur, msg):
@@ -183,14 +221,7 @@ def main():
         if log_filter.is_excluded(msg["type"]):
             continue
         with conn.cursor() as cur:
-            cur.execute(INSERT_SQL, {
-                "id": msg["id"],
-                "from": msg["from"],
-                "to": msg["to"],
-                "type": msg["type"],
-                "payload": json.dumps(msg["payload"]),
-                "timestamp": msg["timestamp"],
-            })
+            cur.execute(INSERT_SQL, message_row(msg))
             if msg["type"] == "coding_run_report":
                 try:
                     insert_coding_run(cur, msg)
@@ -203,7 +234,8 @@ def main():
                     insert_voiced_narration(cur, msg)
                 except Exception as exc:
                     print(f"[logger] WARN voiced_narration insert failed: {exc}")
-        print(f"[logger] logged {msg['type']} {msg['from']} -> {msg['to']}")
+        print(f"[logger] logged {msg['type']} {msg['from']} -> {msg['to']} "
+              f"correlation_id={msg.get('correlation_id')}")
 
 
 if __name__ == "__main__":

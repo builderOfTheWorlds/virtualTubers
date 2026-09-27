@@ -47,11 +47,60 @@ agent:
   # How often the agent loop ticks (milliseconds)
   tick_rate_ms: 5000
 
+  # Liveness: every tick the agent writes Redis key worker:<id>:alive (JSON
+  # {ts, local_override, ttl_s}) with this TTL in seconds; the key expiring == worker not
+  # ticking. Unset/0 = auto: max(3 ticks, 15s). Read it with
+  # WorkerControl.last_seen()/alive() (docs/worker_control.md).
+  # liveness_ttl_s: 15
+
+  # Publish the legacy `status_update` "heartbeat #N" bus message every N
+  # ticks (0 = never). Liveness no longer depends on it — it is kept at a low
+  # rate (default 12 ≈ once a minute at 5 s ticks) only so message-logger's
+  # "include status_update" log-filter toggle still has something to record.
+  # The feed pane and logger hide/drop status_update by default either way.
+  bus_heartbeat_every: 12
+
   # Maximum tokens to keep in the agent's context window
   max_context_tokens: 8000
 
   # How many previous messages to include in each LLM call
   context_history_turns: 20
+
+  # Task backlog (manager role only; docs/task_backlog.md). OFF by default.
+  # When enabled, the manager pulls the next task whenever it has zero
+  # in-flight task chains (dispatch -> its milestone/escalation/blocker
+  # manager_report) and the cooldown has passed, and sends it to a coder as a
+  # task_assignment that starts a new correlation chain. A blocker or
+  # escalation marks the item done with that outcome — it is never retried
+  # automatically. Nothing is dispatched while the manager is disabled.
+  # backlog:
+  #   enabled: false
+  #   source: file                 # file | gitea
+  #   # source: file — YAML/JSON list of {id, title, body}; see
+  #   # config/backlog.example.yaml. Mount it into the manager container.
+  #   file_path: /config/backlog.yaml
+  #   # Done-state (so a restart doesn't re-run finished tasks). The
+  #   # world-state volume is persistent in docker-compose.yml.
+  #   state_path: /data/world-state/backlog_state.json
+  #   # source: gitea — open issues carrying `label`. The token comes ONLY
+  #   # from env GITEA_TOKEN (read:issue + write:issue); never put it here.
+  #   gitea:
+  #     base_url: "http://192.168.1.120:3300"
+  #     owner: gitea_admin
+  #     repo: virtualTubers
+  #     label: stream-task
+  #     in_progress_label: in-progress   # added on start, removed on done
+  #     blocked_label: needs-human       # added on escalation/blocker; skipped by next_task
+  #     close_on_success: false          # close the issue on a milestone
+  #   # Coders to assign to, round-robin (worker ids).
+  #   coders: [coder]
+  #   # Seconds to wait after a chain ends (and after startup / an empty
+  #   # poll) before pulling the next task. Default 60.
+  #   cooldown_s: 60
+  #   # A chain with no manager-visible activity for this long is dropped
+  #   # with a WARN and marked "escalation", so the backlog can't wedge.
+  #   # Default 1800.
+  #   stale_after_s: 1800
 
 
 # ── LLM settings ──────────────────────────────────────────────────────────────
@@ -367,3 +416,18 @@ message_bus:
   # incoming ones (to == worker_id or to == "broadcast").
   # Can also be set via WORKER_ID env var (preferred, matches per-container role)
   worker_id: "coder"
+
+
+# ── Worker on/off control (app/worker_control.py) ──────────────────────────────
+worker_control:
+  # Local kill switch (docs/worker_control.md). While this file exists in the
+  # container, the worker is OFF — agent.py pauses and stream_supervisor.py
+  # stops ffmpeg — WITHOUT consulting Redis, so it works with Redis/message-api
+  # down. Created/removed by scripts/emergency_stop.sh / emergency_resume.sh
+  # (docker exec) or by `kill -USR1` to stream_supervisor.py. Survives
+  # agent/supervisor restarts and `docker restart`; wiped when the container is
+  # re-created. Precedence: WORKER_KILL_FILE env var > this key > default.
+  # NOTE: the emergency scripts resolve the path from the container's
+  # WORKER_KILL_FILE env (default /tmp/worker_disabled) — if you change it
+  # here only, set the env var too or the scripts will write the wrong file.
+  kill_file: "/tmp/worker_disabled"

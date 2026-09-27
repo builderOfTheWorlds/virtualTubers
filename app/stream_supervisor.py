@@ -8,6 +8,11 @@ Twitch stream: it runs as the container's new long-lived foreground
 process, and ffmpeg becomes a child it can kill and restart in place
 without the container exiting (see startup.sh step 8 and
 docs/stream_supervisor.md).
+
+Emergency stop that works with Redis down: WorkerControl's local kill file
+(WORKER_KILL_FILE) wins over Redis, is checked every KILL_CHECK_INTERVAL_S
+between polls, and SIGUSR1 to this process writes it and stops ffmpeg
+immediately (scripts/emergency_stop.sh).
 """
 import argparse
 import os
@@ -21,6 +26,10 @@ from worker_control import WorkerControl
 
 POLL_INTERVAL_S = 3
 STOP_TIMEOUT_S = 10
+#: Between full polls the supervisor wakes this often to stat the local kill
+#: file (cheap, no Redis) so an emergency stop takes <1s rather than a full
+#: POLL_INTERVAL_S. Only the kill file / SIGUSR1 flag are checked here.
+KILL_CHECK_INTERVAL_S = 0.5
 
 #: docs/twitch_broadcasting_guidelines.md's own 1080p30 recommendation
 #: (4500kbps CBR, 2s keyframe interval == 60 frames at 30fps). Was
@@ -428,6 +437,67 @@ def stop_process(proc):
         proc.wait()
 
 
+def supervise_step(control, worker_id, proc, ffmpeg_cmd, force_off=False):
+    """One poll: reap a dead ffmpeg, ask WorkerControl (kill file first, then
+    Redis) whether we should be live, and start/stop ffmpeg accordingly.
+    Returns the (possibly new/None) process. `force_off` is the in-memory
+    fallback for a SIGUSR1 whose kill-file write failed."""
+    if proc is not None and proc.poll() is not None:
+        log(f"ffmpeg exited unexpectedly (code {proc.returncode})")
+        proc = None
+
+    # is_enabled() already checks the kill file before Redis; the separate
+    # local_override_active() call only decides which reason gets logged.
+    enabled = False if force_off else control.is_enabled(worker_id)
+    override = force_off or (not enabled and control.local_override_active())
+    action = decide_action(enabled, proc is not None)
+
+    if action == "start":
+        log("starting ffmpeg broadcaster")
+        proc = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    elif action == "stop":
+        if override:
+            log(f"WARN event=stop_ffmpeg reason=local_override worker_id={worker_id} "
+                f"kill_file={control.kill_file} force_off={force_off}")
+        else:
+            log("worker disabled: stopping ffmpeg broadcaster")
+        stop_process(proc)
+        proc = None
+    return proc
+
+
+def wait_for_next_poll(control, proc, should_wake, sleep=time.sleep,
+                       interval=POLL_INTERVAL_S, slice_s=KILL_CHECK_INTERVAL_S):
+    """Sleep up to `interval`, returning early when a live ffmpeg should be
+    stopped NOW (kill file appeared, or should_wake() — SIGUSR1/shutdown).
+    Python retries time.sleep after a signal handler (PEP 475), so the
+    handler alone can't cut a 3s sleep short; slicing it does."""
+    waited = 0.0
+    while waited < interval:
+        if should_wake():
+            return True
+        if proc is not None and control.local_override_active():
+            return True
+        sleep(slice_s)
+        waited += slice_s
+    return False
+
+
+def make_emergency_stop_handler(control, state):
+    """SIGUSR1: "stop streaming now and write the kill file". The file makes
+    it stick (and stops agent.py too); if it can't be written, state
+    ["force_off"] keeps ffmpeg off in this process regardless."""
+    def handle_emergency_stop(signum, frame):
+        state["wake"] = True
+        try:
+            control.engage_local_override(reason="SIGUSR1")
+        except OSError as exc:
+            state["force_off"] = True
+            log(f"ERROR event=kill_file_write_failed kill_file={control.kill_file} "
+                f"error={exc!r} fallback=in_memory_force_off")
+    return handle_emergency_stop
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="/config/worker.yaml")
@@ -478,32 +548,25 @@ def main():
         log(f"{worker_id} also tee'ing to local preview -> {args.local_preview_url}/{args.stream_key}")
 
     proc = None
-    running = True
+    state = {"running": True, "wake": False, "force_off": False}
 
     def handle_signal(signum, frame):
-        nonlocal running
-        running = False
+        state["running"] = False
+        state["wake"] = True
 
     signal.signal(signal.SIGTERM, handle_signal)
     signal.signal(signal.SIGINT, handle_signal)
+    signal.signal(signal.SIGUSR1, make_emergency_stop_handler(control, state))
 
-    while running:
-        if proc is not None and proc.poll() is not None:
-            log(f"ffmpeg exited unexpectedly (code {proc.returncode})")
-            proc = None
+    if control.local_override_active():
+        log(f"WARN event=local_override_active_at_startup worker_id={worker_id} "
+            f"kill_file={control.kill_file} ffmpeg=not_started")
 
-        enabled = control.is_enabled(worker_id)
-        action = decide_action(enabled, proc is not None)
-
-        if action == "start":
-            log("starting ffmpeg broadcaster")
-            proc = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        elif action == "stop":
-            log("worker disabled: stopping ffmpeg broadcaster")
-            stop_process(proc)
-            proc = None
-
-        time.sleep(POLL_INTERVAL_S)
+    while state["running"]:
+        state["wake"] = False
+        proc = supervise_step(control, worker_id, proc, ffmpeg_cmd,
+                              force_off=state["force_off"])
+        wait_for_next_poll(control, proc, lambda: state["wake"])
 
     log("shutting down")
     if proc is not None:

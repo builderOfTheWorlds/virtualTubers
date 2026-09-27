@@ -28,9 +28,9 @@ content:
     operator: blue
 
   filters:
-    # NOTE: agent.py currently emits its per-tick heartbeat flood as type
-    # "status_update" (not "heartbeat"), so both are hidden by default to stop
-    # the flood. agent_thinking (Contract B, docs/tuber_base_layout_plan.md)
+    # NOTE: agent.py emits its bus heartbeat as type "status_update" (not
+    # "heartbeat"; since agent v2.6.0 only every agent.bus_heartbeat_every
+    # ticks, default 12), so both are hidden by default to stop the flood. agent_thinking (Contract B, docs/tuber_base_layout_plan.md)
     # is also hidden by default — it has its own dedicated `thinking` pane
     # and must not flood this reformatted conversation feed. Fully
     # configurable — edit this list to change what is hidden.
@@ -66,6 +66,16 @@ content:
 
   # Print a one-time column header at startup. Only applies to columns mode.
   header: true
+
+  # Columns mode only: a short correlation tag column (first `chars` of the
+  # message's correlation_id, docs/message_bus.md "Correlation IDs") between
+  # TYPE and PAYLOAD, so one task's chain — including its bug-fix retries —
+  # can be followed by eye. Off by default (tail_bus.py's built-in default;
+  # the narrow pane's default line stays unchanged). docs/message_bus_feed.md.
+  # correlation:
+  #   show: false
+  #   chars: 6
+  #   color: gray
 
   # Rendering mode: "columns" (default, today's rich aligned feed — kept
   # byte-for-byte identical) | "conversation" (Contract C, new: a plain

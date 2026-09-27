@@ -208,6 +208,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates.env.filters["age"] = lambda seconds: format_age(seconds)
 
 
 @app.middleware("http")
@@ -268,6 +269,48 @@ async def _worker_status(worker_id: str) -> dict:
     if result.ok:
         return {"id": worker_id, "enabled": result.data.get("enabled"), "error": None}
     return {"id": worker_id, "enabled": None, "error": result.error}
+
+
+def _health_or_none(data: Any) -> Optional[dict]:
+    return data if isinstance(data, dict) and data.get("worker_id") else None
+
+
+async def _workers_health() -> dict:
+    """{worker_id: health row} from ONE GET /workers/health call. {} when
+    message-api is unreachable/old — every row then renders "unknown"."""
+    result = await _mapi_request("GET", "/workers/health")
+    if not result.ok or not isinstance(result.data, dict):
+        return {}
+    rows = [_health_or_none(r) for r in result.data.get("workers") or []]
+    return {r["worker_id"]: r for r in rows if r}
+
+
+async def _worker_health(worker_id: str) -> Optional[dict]:
+    result = await _mapi_request("GET", f"/workers/{worker_id}/health")
+    return _health_or_none(result.data) if result.ok else None
+
+
+async def _workers_view() -> list:
+    """The dashboard's worker rows: on/off status + health (alive/stale/down,
+    last seen, local kill switch) merged per worker id."""
+    health = await _workers_health()
+    workers = [await _worker_status(w) for w in WORKER_IDS]
+    for worker in workers:
+        worker["health"] = health.get(worker["id"])
+    return workers
+
+
+def format_age(seconds: Any) -> str:
+    """12.3 -> "12s", 130 -> "2m 10s", 7500 -> "2h 5m"; "?" if not a number.
+    Jinja filter `age` for the workers table's "last seen ... ago"."""
+    if isinstance(seconds, bool) or not isinstance(seconds, (int, float)):
+        return "?"
+    s = max(0, int(seconds))
+    if s < 60:
+        return f"{s}s"
+    if s < 3600:
+        return f"{s // 60}m {s % 60}s"
+    return f"{s // 3600}h {(s % 3600) // 60}m"
 
 
 async def _log_filter_status(message_type: str) -> dict:
@@ -344,10 +387,9 @@ def healthz():
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    workers = [await _worker_status(w) for w in WORKER_IDS]
+    workers = await _workers_view()
     log_types = [await _log_filter_status(t) for t in KNOWN_LOG_TYPES]
-    replays_result = await _mapi_request("GET", "/replays")
-    replays = replays_result.data.get("episodes", []) if replays_result.ok else []
+    episode_lists = await _episode_lists()
     themes = await _theme_names()
     theme_workers = [await _worker_theme_status(w) for w in THEME_WORKER_IDS]
     music = await _music_state()
@@ -359,8 +401,7 @@ async def dashboard(request: Request):
         "message_type_examples": MESSAGE_TYPE_EXAMPLES,
         "worker_ids": WORKER_IDS,
         "log_types": log_types,
-        "replays": replays,
-        "replays_error": None if replays_result.ok else replays_result.error,
+        **episode_lists,
         "message_result": None,
         "prune_result": None,
         "themes": themes,
@@ -374,7 +415,7 @@ async def dashboard(request: Request):
 # ── Workers ──────────────────────────────────────────────────────────────
 @app.get("/partials/workers", response_class=HTMLResponse)
 async def partial_workers(request: Request):
-    workers = [await _worker_status(w) for w in WORKER_IDS]
+    workers = await _workers_view()
     return templates.TemplateResponse(request, "_workers_table.html", {"workers": workers})
 
 
@@ -384,6 +425,9 @@ async def _set_worker(request: Request, worker_id: str, enabled: bool):
         worker = {"id": worker_id, "enabled": result.data.get("enabled"), "error": None}
     else:
         worker = {"id": worker_id, "enabled": None, "error": result.error}
+    # Re-read health so the swapped-in row keeps its alive/kill-switch
+    # badges (and shows the kill switch right after a futile Enable).
+    worker["health"] = await _worker_health(worker_id)
     return templates.TemplateResponse(request, "_worker_row.html", {"worker": worker})
 
 
@@ -527,15 +571,31 @@ async def prune_logs(request: Request, after: str = Form(""), before: str = Form
 
 
 # ── Rerun Theater replays ───────────────────────────────────────────────
-async def _replays_section_context(banner: Optional[dict] = None, play_result: Optional[dict] = None) -> dict:
-    result = await _mapi_request("GET", "/replays")
-    replays = result.data.get("episodes", []) if result.ok else []
+async def _episode_lists() -> dict:
+    """The airable library AND the review queue, as template context.
+
+    message-api's plain GET /replays is approved-only (drafts never air, so
+    they never show up next to a Play button); drafts are a separate
+    ?status=draft listing rendered in their own "awaiting review" table
+    with Approve / Delete instead of Play."""
+    library = await _mapi_request("GET", "/replays")
+    drafts = await _mapi_request("GET", "/replays", params={"status": "draft"})
     return {
-        "replays": replays,
-        "replays_error": None if result.ok else result.error,
+        "replays": library.data.get("episodes", []) if library.ok else [],
+        "replays_error": None if library.ok else library.error,
+        "drafts": drafts.data.get("episodes", []) if drafts.ok else [],
+        "drafts_error": None if drafts.ok else drafts.error,
+    }
+
+
+async def _replays_section_context(banner: Optional[dict] = None, play_result: Optional[dict] = None,
+                                   approve_result: Optional[dict] = None) -> dict:
+    return {
+        **await _episode_lists(),
         "upload_result": banner,
         "worker_ids": WORKER_IDS,
         "play_result": play_result,
+        "approve_result": approve_result,
     }
 
 
@@ -585,7 +645,8 @@ async def play_replay(request: Request, name: str):
     2. Addressing "broadcast" would ALSO reach the roundtable's agent with
        the bare payload, racing its own request file against the cast-bearing
        one below (both are unconditional file writes — see
-       app/agent.py's _write_replay_request / handle_replay_request,
+       app/agent_handlers/relay_files.py's _write_replay_request /
+       app/agent_handlers/replay_relay.py's handle_replay_request,
        which — unlike handle_replay_invite — has no "don't clobber a
        pending request" guard). Addressing each of the 6 character
        workers BY NAME instead of "broadcast" means nothing but this one
@@ -596,8 +657,8 @@ async def play_replay(request: Request, name: str):
     unreachable worker must not stop the episode airing on the other six.
 
     Stops each of the 7 targets before requesting the new episode
-    (docs/operator_commands.md `replay_stop`, app/agent.py
-    handle_replay_stop): replay_pane.py's poll loop only reads a fresh
+    (docs/operator_commands.md `replay_stop`,
+    app/agent_handlers/replay_relay.py handle_replay_stop): replay_pane.py's poll loop only reads a fresh
     request file once it's idle between episodes, so a bare replay_request
     fired at a worker that's still mid-show just queues silently behind
     whatever's already playing — potentially minutes away, with nothing in
@@ -707,6 +768,36 @@ async def delete_replay(request: Request, name: str):
         return HTMLResponse("")  # row's hx-swap="outerHTML" removes it from the DOM
     replay = {"name": name, "error": result.error}
     return templates.TemplateResponse(request, "_replay_row.html", {"replay": replay})
+
+
+# ── Draft review (docs/episode_store.md "Review status") ─────────────────
+@app.post("/replays/{name}/approve", response_class=HTMLResponse)
+async def approve_replay(request: Request, name: str):
+    """Promote a draft into the airable library. Re-renders the whole
+    replays section so the episode moves from the drafts table into the
+    library table (where Play becomes available) in one swap."""
+    result = await _mapi_request("POST", f"/replays/{quote(name)}/approve")
+    if result.ok:
+        log.info("approved draft name=%s previous_status=%s",
+                 name, (result.data or {}).get("previous_status"))
+        banner = {"ok": True, "name": name}
+    else:
+        banner = {"ok": False, "name": name, "error": result.error}
+    return templates.TemplateResponse(
+        request, "_replays_section.html", await _replays_section_context(approve_result=banner))
+
+
+@app.post("/replays/{name}/reject", response_class=HTMLResponse)
+async def reject_replay(request: Request, name: str):
+    """Reject a draft = message-api's existing DELETE. Same empty-body /
+    error-row contract as delete_replay, but an error re-renders a DRAFT
+    row (Approve/Delete, no Play button) since that's what it replaces."""
+    result = await _mapi_request("DELETE", f"/replays/{quote(name)}")
+    if result.ok:
+        log.info("rejected draft name=%s deleted=%s", name, (result.data or {}).get("deleted"))
+        return HTMLResponse("")
+    draft = {"name": name, "error": result.error}
+    return templates.TemplateResponse(request, "_draft_row.html", {"draft": draft})
 
 
 @app.get("/replays/{name}/view", response_class=HTMLResponse)

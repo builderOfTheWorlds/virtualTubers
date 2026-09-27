@@ -17,10 +17,20 @@ CREATE TABLE IF NOT EXISTS messages (
     type        TEXT NOT NULL,
     payload     JSONB NOT NULL,
     timestamp   TIMESTAMPTZ NOT NULL,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    correlation_id UUID,
+    causation_id   UUID
 );
 CREATE INDEX IF NOT EXISTS idx_messages_to ON messages ("to");
 CREATE INDEX IF NOT EXISTS idx_messages_type ON messages (type);
+-- Correlation IDs (docs/message_bus.md): correlation_id groups a whole task
+-- chain (task_assignment -> ... -> manager_report, incl. bug-fix retries);
+-- causation_id is the id of the message that directly caused this one.
+-- Nullable: rows from senders predating them stay NULL. The ALTERs migrate
+-- a table created before these columns existed (idempotent).
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS correlation_id UUID;
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS causation_id UUID;
+CREATE INDEX IF NOT EXISTS idx_messages_correlation ON messages (correlation_id);
 
 -- One row per coding-backend run (typed unpacking of coding_run_report bus
 -- messages by message-logger) — the A/B comparison table for the
@@ -87,10 +97,22 @@ CREATE TABLE IF NOT EXISTS replay_episodes (
     event_count  INTEGER NOT NULL,
     byte_size    INTEGER NOT NULL,
     uploaded_by  TEXT NOT NULL DEFAULT 'operator',
-    uploaded_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+    uploaded_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    -- Review gate: 'draft' rows are stored but NEVER air (every worker read
+    -- path filters on 'approved'); POST /replays/{name}/approve promotes one.
+    status       TEXT NOT NULL DEFAULT 'approved'
+                 CHECK (status IN ('draft', 'approved'))
 );
 CREATE INDEX IF NOT EXISTS idx_replay_episodes_uploaded_at
     ON replay_episodes (uploaded_at DESC);
+-- Upgrade for a table created before the review gate existed: every
+-- pre-existing row is filled with 'approved' and keeps airing. No-op on a
+-- fresh table. Mirrors episode_store.MIGRATE_SQL.
+ALTER TABLE replay_episodes
+    ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'approved'
+    CHECK (status IN ('draft', 'approved'));
+CREATE INDEX IF NOT EXISTS idx_replay_episodes_status
+    ON replay_episodes (status);
 
 CREATE TABLE IF NOT EXISTS container_logs (
     id             BIGSERIAL PRIMARY KEY,

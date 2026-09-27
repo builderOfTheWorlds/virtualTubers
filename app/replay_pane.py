@@ -6,7 +6,8 @@ listing, and performs an episode (app/replay.py) whenever the agent drops
 a request file.
 
 The request file is the agent -> pane handoff (same local-file IPC pattern
-as agent_state.py): agent.py's replay_request handler writes
+as agent_state.py): the agent's replay_request handler
+(app/agent_handlers/replay_relay.py, via app/relay_io.py) writes
 REPLAY_REQUEST_FILE atomically; this pane polls for it, performs the
 episode, deletes the file, and returns to the idle screen. File-based on
 purpose — the pane never consumes Kafka and never executes anything from
@@ -37,7 +38,6 @@ just degrades this to an uncached fresh airing every time (see
 docs/revoice.md).
 """
 import argparse
-import json
 import os
 import sys
 import tempfile
@@ -48,28 +48,29 @@ from pathlib import Path
 
 import episode_store
 import narration_store
+import relay_io
 from agent_state import resolve_state_path
 from message_bus import MessageProducer, build_message, resolve
 from replay import Pacer, Palette, Performer, prepare_voiced_show
 
-DEFAULT_REQUEST_FILE = "/tmp/replay_request.json"
+DEFAULT_REQUEST_FILE = relay_io.DEFAULT_REPLAY_REQUEST_FILE
 DEFAULT_WORKER_CONFIG = "/config/worker.yaml"
 POLL_INTERVAL_S = 2.0
 IDLE_REDRAW_S = 300  # re-list the library occasionally (episodes get uploaded)
 
 # Agent -> pane stop signal (docs/operator_commands.md `replay_stop`): same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
-# handle_replay_stop (app/agent.py) writes it; every performance path below
+# handle_replay_stop (app/agent_handlers/replay_relay.py) writes it; every performance path below
 # wires it into its Performer's Pacer(should_stop=...) so an operator stop
 # lands within a fraction of a second, not just at the next scene boundary
 # (docs/replay.md ReplayStopped).
-DEFAULT_REPLAY_STOP_FILE = "/tmp/replay_stop.json"
+DEFAULT_REPLAY_STOP_FILE = relay_io.DEFAULT_REPLAY_STOP_FILE
 
 # ── Duet replay (docs/duet_replay.md) ────────────────────────────────────────
-# Relay files the agent (app/agent.py) writes and this pane polls — same
+# Relay files the agent (app/agent_handlers/replay_relay.py) writes and this pane polls — same
 # atomic-write / env-override convention as REPLAY_REQUEST_FILE above.
-DEFAULT_REPLAY_CUE_FILE = "/tmp/replay_cue.json"
-DEFAULT_REPLAY_READY_FILE = "/tmp/replay_ready.json"
+DEFAULT_REPLAY_CUE_FILE = relay_io.DEFAULT_REPLAY_CUE_FILE
+DEFAULT_REPLAY_READY_FILE = relay_io.DEFAULT_REPLAY_READY_FILE
 
 # Director: how long to wait for every invited follower to publish
 # replay_ready before refusing the airing outright (duets never degrade to
@@ -100,39 +101,27 @@ def resolve_self_id(config, worker_name):
     return bus_config.get("worker_id") or os.environ.get("WORKER_ID") or worker_name
 
 
-def _read_json_file(path):
-    """Best-effort read of a small relay file this pane only ever polls
-    (never writes) — missing or corrupt content is "nothing new yet", not an
-    error worth raising."""
-    p = Path(path)
-    if not p.exists():
-        return None
-    try:
-        return json.loads(p.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return None
+# ── relay files: thin aliases onto app/relay_io.py (docs/relay_io.md) ────────
+# The one shared implementation of the file IPC. The names stay module-level
+# here because tile_pane.py calls them through `replay_pane.` and tests patch
+# them on this module.
+
+# Best-effort read of a relay file this pane polls — missing or corrupt
+# content is "nothing new yet" (None), never an exception.
+_read_json_file = relay_io.read_json
 
 
-def _delete_stale_file(path):
+def _delete_stale_file(path, keep_airing_id=None):
     """Best-effort cleanup of a leftover relay file from a previous show —
     a duet role starting up must never trip over stale state (docs/
-    duet_replay.md "stale-state hygiene")."""
-    try:
-        Path(path).unlink()
-    except OSError:
-        pass
+    duet_replay.md "stale-state hygiene"). keep_airing_id spares a file
+    written for THAT airing (relay_io.delete_stale)."""
+    relay_io.delete_stale(path, keep_airing_id=keep_airing_id)
 
 
-def _resolve_replay_stop_file():
-    return os.environ.get("REPLAY_STOP_FILE") or DEFAULT_REPLAY_STOP_FILE
-
-
-def _resolve_replay_cue_file():
-    return os.environ.get("REPLAY_CUE_FILE") or DEFAULT_REPLAY_CUE_FILE
-
-
-def _resolve_replay_ready_file():
-    return os.environ.get("REPLAY_READY_FILE") or DEFAULT_REPLAY_READY_FILE
+_resolve_replay_stop_file = relay_io.resolve_replay_stop_file
+_resolve_replay_cue_file = relay_io.resolve_replay_cue_file
+_resolve_replay_ready_file = relay_io.resolve_replay_ready_file
 
 
 def build_voice_gate(script, config, tag="worker"):
@@ -237,21 +226,20 @@ def resolve_episode(episode):
 def read_request(request_file):
     """Read-and-consume the request file. Returns the request dict or None.
     A malformed file is consumed (deleted) and reported — a bad request must
-    not wedge the pane in a crash loop."""
-    path = Path(request_file)
-    if not path.exists():
+    not wedge the pane in a crash loop.
+
+    relay_io.consume_json claims the file (atomic rename) BEFORE reading it,
+    so a request the agent writes while this one is being read keeps its
+    name and is picked up on the next poll — the old read-then-unlink
+    deleted it unread (docs/relay_io.md)."""
+    found, request, error = relay_io.consume_json(request_file)
+    if not found:
         return None
-    try:
-        request = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(request, dict):
-            raise ValueError(f"expected object, got {type(request).__name__}")
-    except (OSError, ValueError) as exc:
-        print(f"[replay_pane] discarding malformed request: {exc}", file=sys.stderr)
-        request = None
-    try:
-        path.unlink()
-    except OSError:
-        pass
+    if error is None and not isinstance(request, dict):
+        error = ValueError(f"expected object, got {type(request).__name__}")
+    if error is not None:
+        print(f"[replay_pane] discarding malformed request: {error}", file=sys.stderr)
+        return None
     return request
 
 
@@ -493,19 +481,14 @@ def _send_operator_error(producer, self_id, error):
 # show down; the tile's own watchdog is the backstop, same philosophy as
 # _safe_send above).
 ROUNDTABLE_PRESET = "roundtable"
-TILE_RELAY_DIR_ENV = "TILE_RELAY_DIR"
+TILE_RELAY_DIR_ENV = relay_io.TILE_RELAY_DIR_ENV
 LAYOUT_PRESET_ENV = "LAYOUT_PRESET"
 
 
-def _atomic_write_json(path, data):
-    """Atomic write of a small director -> tile relay file (same
-    temp+replace pattern as agent_state.py / agent.py's _atomic_write_json)
-    so a polling tile never reads a half-written cue. Raises OSError —
-    callers decide how loudly to report a failure."""
-    tmp_path = f"{path}.tmp"
-    with open(tmp_path, "w", encoding="utf-8") as f:
-        json.dump(data, f)
-    os.replace(tmp_path, path)
+# Atomic write of a small director -> tile relay file (relay_io: unique temp
+# file + os.replace) so a polling tile never reads a half-written cue.
+# Raises OSError — callers decide how loudly to report a failure.
+_atomic_write_json = relay_io.atomic_write_json
 
 
 def _layout_preset(config):
@@ -866,7 +849,7 @@ def perform_director_request(request, worker_name, state_path, self_id,
         should_stop = lambda: os.path.exists(stop_file)
 
         # Stale-state hygiene, same convention as cue_file/stop_file above:
-        # handle_replay_ready (app/agent.py) unions a sender into an existing
+        # handle_replay_ready (app/agent_handlers/replay_relay.py) unions a sender into an existing
         # ready_file when its airing_id matches — which it always will for a
         # narration:"reuse" airing performed more than once (the airing_id
         # is the persisted cache's message_id, identical on every replay).
@@ -1163,7 +1146,7 @@ def load_worker_config(path):
 
 def main():
     parser = argparse.ArgumentParser(description="Rerun Theater pane — idles, performs requested episodes")
-    parser.add_argument("--request-file", default=os.environ.get("REPLAY_REQUEST_FILE", DEFAULT_REQUEST_FILE))
+    parser.add_argument("--request-file", default=relay_io.resolve_replay_request_file())
     parser.add_argument("--worker-name", default=os.environ.get("WORKER_ID", "worker"))
     parser.add_argument("--config", default=os.environ.get("CONFIG_PATH", DEFAULT_WORKER_CONFIG),
                         help="Worker config YAML — its voice+llm sections drive spoken "

@@ -95,6 +95,12 @@ DEFAULT_FEED_CONFIG = {
         "operator_reply": "blue",
     },
     "payload": {"mode": "pretty", "max_chars": 80},   # pretty | raw | hidden
+    # Columns mode only: a short correlation tag (first `chars` of the
+    # message's correlation_id — docs/message_bus.md) between the type and
+    # payload columns, so one task's chain can be followed by eye. Off by
+    # default: the feed pane is narrow and the default line must stay
+    # byte-for-byte unchanged.
+    "correlation": {"show": False, "chars": 6, "color": "gray"},
     "timestamp": {"format": "%H:%M:%S", "local": True},
     "header": True,
     # Rendering mode: "columns" (default, today's rich aligned feed, kept
@@ -262,17 +268,42 @@ def format_line(msg, feed_config):
 
     payload_text = format_payload(msg.get("payload", {}), feed_config.get("payload", {}))
 
-    line = f"{ts} {sender_cell} ──▶ {to_cell} {type_cell} {payload_text}"
+    corr_cell = ""
+    corr_config = feed_config.get("correlation") or {}
+    if corr_config.get("show"):
+        width = _correlation_width(corr_config)
+        corr_cell = colorize(format_correlation_tag(msg, width).ljust(width), corr_config.get("color")) + " "
+
+    line = f"{ts} {sender_cell} ──▶ {to_cell} {type_cell} {corr_cell}{payload_text}"
     return line.rstrip()
 
 
-def format_header():
-    """One-time column header line (plain text, dim)."""
+def _correlation_width(corr_config):
+    chars = corr_config.get("chars", 6)
+    return chars if isinstance(chars, int) and chars > 0 else 6
+
+
+def format_correlation_tag(msg, chars=6):
+    """First `chars` characters of the message's correlation_id, falling
+    back to its own id (older senders set no correlation_id), or "" when it
+    has neither."""
+    corr = msg.get("correlation_id") or msg.get("id") or ""
+    return str(corr)[:chars]
+
+
+def format_header(feed_config=None):
+    """One-time column header line (plain text, dim). With the correlation
+    column enabled in `feed_config`, a CORR heading is added; otherwise the
+    header is unchanged."""
     ts = "TIME".ljust(8)
     sender = "FROM".ljust(SENDER_WIDTH)
     to = "TO".ljust(TO_WIDTH)
     type_col = "TYPE".ljust(TYPE_WIDTH)
-    header = f"{ts} {sender}     {to} {type_col} PAYLOAD"
+    corr_config = (feed_config or {}).get("correlation") or {}
+    corr_col = ""
+    if corr_config.get("show"):
+        corr_col = "CORR"[:_correlation_width(corr_config)].ljust(_correlation_width(corr_config)) + " "
+    header = f"{ts} {sender}     {to} {type_col} {corr_col}PAYLOAD"
     return colorize(header, "gray")
 
 
@@ -364,7 +395,7 @@ def run(bus_config_path, feed_config_path):
     render_mode = (feed_config.get("format") or "columns").strip().lower()
 
     if render_mode == "columns" and feed_config.get("header"):
-        print(format_header(), flush=True)
+        print(format_header(feed_config), flush=True)
 
     print("Waiting for message bus...", flush=True)
 

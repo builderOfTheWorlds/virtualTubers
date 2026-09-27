@@ -55,6 +55,11 @@ class Context:
     # passed against, so the cutover is a per-context opt-in rather than a
     # rewrite of every existing test's fake.
     load_pack_for_job: object = None
+    # Opt-in auto-submit of a finished publish job's episode.json to
+    # message-api as a review DRAFT (draft_submitter.py). A callable
+    # `(episode_path, name) -> dict`, or None (the default, and what every
+    # existing test's Context carries) for "off".
+    submit_draft: object = None
     _calls: object = None
 
 
@@ -69,6 +74,7 @@ def build_default_context(config, pack_root, output_root) -> Context:
     """
     import config as config_module
     import concurrent_llm
+    import draft_submitter
     import generation_store
 
     import campaign.pack
@@ -98,6 +104,8 @@ def build_default_context(config, pack_root, output_root) -> Context:
         plan_segment=plan_segment.plan_segment,
         generate_dialogue=generate_segment_dialogue.generate_segment_dialogue,
         load_pack_for_job=_load_pack_for_job,
+        # None unless AUTO_SUBMIT_DRAFTS is set — off by default.
+        submit_draft=draft_submitter.from_env(),
     )
 
 
@@ -466,6 +474,45 @@ def _run_publish(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
     result["artifacts"].append("episode")
 
 
+def _auto_submit_draft(ctx, job_id, result) -> None:
+    """Hand a freshly written episode.json to ctx.submit_draft and record the
+    outcome on `result["auto_submit"]`.
+
+    Runs only when auto-submit is enabled AND this job actually built an
+    episode (only the publish stage sets `written_to`). NEVER raises: the
+    episode is safely on disk whatever happens here, so a message-api outage
+    or a validator rejection is recorded on the job, not turned into a
+    failed job. The submitter itself already never raises; the try/except
+    here guards against a misbehaving injected callable.
+    """
+    if ctx.submit_draft is None:
+        log.debug("_auto_submit_draft: job_id=%s auto-submit off", job_id)
+        return
+    episode_path = result.get("written_to")
+    if not episode_path:
+        log.debug("_auto_submit_draft: job_id=%s built no episode, skipping",
+                  job_id)
+        return
+    name = result.get("episode_name")
+    try:
+        outcome = ctx.submit_draft(episode_path, name)
+    except Exception as exc:  # noqa: BLE001 — must never fail the job
+        log.error("_auto_submit_draft: job_id=%s submitter raised %s: %s",
+                  job_id, type(exc).__name__, exc)
+        outcome = {"status": "failed", "name": name,
+                   "error": f"{type(exc).__name__}: {exc}"}
+    if not isinstance(outcome, dict):
+        outcome = {"status": "failed", "name": name,
+                   "error": f"submitter returned {type(outcome).__name__}"}
+    result["auto_submit"] = outcome
+    if outcome.get("status") == "submitted":
+        log.info("_auto_submit_draft: job_id=%s submitted draft name=%s",
+                 job_id, outcome.get("name"))
+    else:
+        log.warning("_auto_submit_draft: job_id=%s draft NOT submitted "
+                    "name=%s error=%s", job_id, name, outcome.get("error"))
+
+
 def _run_stage(ctx, job, run_name, pack, llm, vocab, progress, cancel_check,
                result) -> None:
     """Dispatch a single stage, or the full arc->segment->dialogue chain."""
@@ -611,6 +658,9 @@ def dispatch_once(ctx) -> bool:
         log.info("dispatch_once: job_id=%s cancelled", job_id)
         ctx.store.finish(job_id, "cancelled", result=result)
     else:
+        # Before finish() so the outcome lands on the same job row. A
+        # cancelled job (above) never auto-submits.
+        _auto_submit_draft(ctx, job_id, result)
         log.info("dispatch_once: job_id=%s completed", job_id)
         ctx.store.finish(job_id, "completed", result=result)
     return True

@@ -15,7 +15,10 @@ covers the architecture decisions, the local-model worker harness and how to
 drive it, the seams left for the deferred weekly-loop/chat-voting work, and the
 review checklist for generated code.
 
-Nothing in that module is committed yet.
+The module is committed (first landed in `a1f9312`, 2026-09-22); Wave 4 is
+still open. Note `agent.py` is now split — handlers live in
+`app/agent_handlers/` (see [docs/agent_handlers.md](docs/agent_handlers.md)),
+which is where the Wave 4 integration will plug in.
 
 ## Deployment target: argyre, via Portainer (moved off d2000 — 2026-08-16)
 
@@ -28,7 +31,7 @@ still doesn't apply to virtualTubers).
 | Item | Value |
 |------|-------|
 | Hostname | `argyre` (a.k.a. `argyreServer`; actual hostname `gx10-35a4`) |
-| IP Address | `192.168.2.170` |
+| IP Address | `192.168.1.23` (previously `192.168.2.170`) |
 | OS | Ubuntu 24.04 LTS |
 | Stack management | Portainer (`portainer/portainer-ce`, local container, ports 8000/9443) — stack name `virtualtubers` |
 | Repo checkout | `/home/secus/codeProjects/virtualTubers` |
@@ -37,10 +40,9 @@ still doesn't apply to virtualTubers).
 | Postgres | External — `192.168.1.120:5432` (mafober), per `.env` `POSTGRES_HOST` |
 
 Full deploy workflow (env vars, build/redeploy steps) lives in
-[docs/deployment.md](docs/deployment.md) — that doc and
-[README.md](README.md)'s "Deployment" section still describe the old d2000/
-plain-compose setup as of this edit and need updating to match; flagged to
-the user, not yet done here.
+[docs/deployment.md](docs/deployment.md); [README.md](README.md)'s
+"Deployment" section summarises it. Both were updated on 2026-09-27 to
+describe argyre/Portainer as current (d2000 kept as a "previously" note).
 
 Gitea (source control mirror) is unaffected by this — it still lives on
 `mafober` (`192.168.1.120`), per [docs/git_remotes.md](docs/git_remotes.md).

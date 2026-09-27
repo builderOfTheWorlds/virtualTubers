@@ -13,8 +13,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
-import agent  # noqa: E402
-from agent import MESSAGE_HANDLERS, handle_replay_request  # noqa: E402
+from agent_handlers import MESSAGE_HANDLERS  # noqa: E402
+from agent_handlers.replay_relay import handle_replay_request  # noqa: E402
 import replay_pane  # noqa: E402
 from replay_pane import (  # noqa: E402
     list_episodes,
@@ -120,6 +120,27 @@ def test_read_request_discards_malformed_without_raising(tmp_path, content):
     req.write_text(content, encoding="utf-8")
     assert read_request(req) is None
     assert not req.exists()  # consumed, not wedged in a crash loop
+
+
+def test_read_request_never_deletes_a_request_queued_while_reading(tmp_path, monkeypatch):
+    """handle_replay_request overwrites the request file unconditionally; one
+    landing while the pane reads the previous one used to be unlinked unread.
+    relay_io.consume_json claims the file first, so it survives."""
+    import relay_io
+    req = tmp_path / "req.json"
+    req.write_text(json.dumps({"episode": "first"}), encoding="utf-8")
+    real_load = relay_io._load
+
+    def load_while_operator_queues_another(path):
+        result = real_load(path)
+        relay_io.atomic_write_json(req, {"episode": "second"})
+        return result
+
+    monkeypatch.setattr(relay_io, "_load", load_while_operator_queues_another)
+    assert read_request(req) == {"episode": "first"}
+    monkeypatch.setattr(relay_io, "_load", real_load)
+    assert read_request(req) == {"episode": "second"}
+    assert read_request(req) is None
 
 
 # ── perform_request ──────────────────────────────────────────────────────────

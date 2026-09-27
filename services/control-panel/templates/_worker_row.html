@@ -9,6 +9,28 @@
       <span class="badge off">disabled</span>
     {% endif %}
   </td>
+  {% set h = worker.health %}
+  <td class="health">
+    {% if not h or h.state == "unknown" %}
+      <span class="badge off" title="liveness unknown: message-api or Redis unreachable">unknown</span>
+    {% elif h.state == "alive" %}
+      <span class="badge on" title="agent loop ticked within its liveness TTL">alive</span>
+      <span class="subtle">last seen {{ h.age_s | age }} ago</span>
+    {% elif h.state == "stale" %}
+      <span class="badge warn" title="missed heartbeats; reads as down once the key expires">stale</span>
+      <span class="subtle">last seen {{ h.age_s | age }} ago</span>
+    {% else %}
+      <span class="badge err" title="no heartbeat within its liveness TTL (agent loop dead, wedged or container stopped)">down</span>
+      <span class="subtle">no heartbeat</span>
+    {% endif %}
+    {% if h and h.local_override %}
+      <div class="kill-note">
+        <span class="badge kill">local kill-switch engaged</span>
+        <span class="subtle">Forced off inside the container; Enable here cannot override it.
+          Clear with <code>scripts/emergency_resume.sh {{ worker.id }}</code>.</span>
+      </div>
+    {% endif %}
+  </td>
   <td class="actions">
     <button class="btn"
       hx-post="/workers/{{ worker.id }}/enable" hx-target="closest tr" hx-swap="outerHTML">Enable</button>

@@ -1,0 +1,23 @@
+<tr id="draft-row-{{ draft.name }}">
+  {% if draft.error %}
+    <td class="mono">{{ draft.name }}</td>
+    <td colspan="5"><span class="badge err">{{ draft.error }}</span></td>
+  {% else %}
+    <td class="mono">{{ draft.name }} <span class="badge off">draft</span></td>
+    <td>{{ draft.project | default("") }}</td>
+    <td>{{ draft.date | default("") }}</td>
+    <td>{{ draft.event_count | default("") }}</td>
+    <td>{{ draft.uploaded_by | default("") }}</td>
+    <td>{{ draft.uploaded_at | default("") }}</td>
+  {% endif %}
+  <td class="actions">
+    <button class="btn"
+      hx-get="/replays/{{ draft.name }}/view" hx-target="#replay-view" hx-swap="innerHTML">View</button>
+    <button class="btn ok"
+      hx-post="/replays/{{ draft.name }}/approve" hx-target="#replays-section" hx-swap="outerHTML"
+      hx-confirm="Approve draft {{ draft.name }}? It joins the Rerun Theater library and can air on any stream (including random viewer_joined picks) from now on.">Approve</button>
+    <button class="btn danger"
+      hx-post="/replays/{{ draft.name }}/reject" hx-target="closest tr" hx-swap="outerHTML"
+      hx-confirm="Reject draft {{ draft.name }}? This deletes it — it never aired.">Delete</button>
+  </td>
+</tr>

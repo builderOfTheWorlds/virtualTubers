@@ -9,8 +9,42 @@ avatar state). Incoming messages are dispatched through the
 `MESSAGE_HANDLERS` table, which covers all 8 message types from
 `docs/VTuber_AI_Dev_Team_Concept.md` §3.4 (`status_update` itself is
 send-only heartbeat traffic; `operator_message` is `message-api`'s default
-type, standing in for direct operator chat). Every tick still publishes a
-`status_update` heartbeat, unchanged from the earlier stub.
+type, standing in for direct operator chat).
+
+**Liveness and the bus heartbeat (v2.6.0).** Every tick — even while the
+worker is disabled — the loop writes the Redis liveness key
+`worker:{id}:alive` (ISO timestamp, TTL `agent.liveness_ttl_s`, default
+`max(3 × tick, 15s)`) via `WorkerControl.heartbeat()`; health views read it
+with `WorkerControl.last_seen()` / `alive()` (docs/worker_control.md). The
+old per-tick `status_update` "heartbeat #N" bus message is now rate-limited
+by `agent.bus_heartbeat_every` (N ticks; 0 = off; default **12**, ≈ once a
+minute at the 5 s default tick). Why 12 rather than 0: no consumer uses the
+bus heartbeat for liveness (the feed hides `status_update`, message-logger
+drops it by default via LogFilterControl, control-panel/message-api only
+expose the log-filter toggle for it), but that toggle
+(`POST /log-filter/status_update/include`) is an operator feature that
+would record nothing if the bus beat were off. The beat keeps the tick
+counter in its text, so `heartbeat #0`, `#12`, `#24`, ... are published.
+
+**Correlation IDs (v2.6.0).** Every message the dev-team handlers send
+carries the incoming message's `correlation_id` and `causation_id =
+msg["id"]` (`message_bus.reply_ids`), so one task — including all its
+bug-fix retries and the final `manager_report` — is a single chain. The
+"received" log line and the handlers' structured log lines include
+`correlation_id=`. See docs/message_bus.md "Correlation IDs".
+
+**Idle-tick hooks / task backlog (v2.7.0).** After the handlers run on an
+enabled tick, the loop calls the optional per-role hook
+`agent_handlers.IDLE_TICK_HOOKS.get(role)` with `(worker_id, agent_config,
+llm_client, producer, state_path)`. Only the manager has one
+(`manager_idle_tick`): when `agent.backlog.enabled`, it pulls the next task
+from a file or Gitea backlog whenever the manager has no task chain in
+flight and a cooldown has passed, and assigns it to a coder as a
+`task_assignment` starting a new correlation chain (`payload.backlog_id`,
+`backlog_source`). The chain ends on the manager's milestone / escalation /
+blocker decision and the backlog item is marked with that outcome; blockers
+are never retried. Disabled ticks skip the hook like they skip handlers.
+Off by default — see docs/task_backlog.md.
 
 The handlers form a collaboration graph so a single ticket flows through
 the whole team: the coder answers a `task_assignment` with `task_complete`
@@ -78,11 +112,39 @@ which pane to touch — `llm_client.complete()` returns free-form narration
 text only, no structured tool calls — see `docs/VTuber_AI_Dev_Team_Concept.md`
 Phase 1 roadmap for what's next.
 
+### Module layout (v2.5.0)
+
+`app/agent.py` is now the entry point only: CLI/config loading, wiring
+(LLM client, coding backend, producer/consumer, metrics wrappers) and the
+tick loop. Every handler described on this page lives in the
+`app/agent_handlers/` package, which also builds `MESSAGE_HANDLERS`:
+
+| Module | Contents |
+|---|---|
+| `agent_handlers/__init__.py` | `MESSAGE_HANDLERS` dispatch table, `IDLE_TICK_HOOKS` (role → per-tick hook) |
+| `agent_handlers/common.py` | `_complete_with_emotion`, `_send_manager_report` |
+| `agent_handlers/relay_files.py` | `REPLAY_*_FILE` env/default constants, `_resolve_replay_*_file`, `_atomic_write_json`, `_read_json_file`, `_write_replay_request` |
+| `agent_handlers/coder.py` | `handle_task_assignment`, `demo_editor_note`, `demo_filetree_ls`, `show_commit_in_filetree` |
+| `agent_handlers/tester.py` | `handle_commit_notification`, `handle_retest_request`, `_run_tests_and_report`, `_decide_test_outcome`, `_resolve_workspace`, `_severity_from_failures`, test-stub constants, `WORKSPACE_MOUNT_PATTERN` |
+| `agent_handlers/manager.py` | `handle_bug_report`, `handle_test_passed`, `handle_task_complete`, `handle_clarification_request`, `MAX_BUG_RETRIES`, task backlog `BacklogDispatcher` + `manager_idle_tick` (docs/task_backlog.md) |
+| `agent_handlers/operator.py` | `handle_operator_message` |
+| `agent_handlers/viewer.py` | `handle_viewer_joined`, `_pick_rerun_episode` |
+| `agent_handlers/replay_relay.py` | `handle_replay_request`, `handle_replay_stop`, `handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`, `handle_replay_end`, `_is_valid_cast` |
+
+`agent.py` re-exports every moved name, so `from agent import
+handle_bug_report` (etc.) keeps working. **Tests must monkeypatch the
+`agent_handlers` module that looks a name up**, not `agent` — e.g.
+`monkeypatch.setattr(agent_handlers.tester, "_decide_test_outcome", ...)`.
+Patching `agent.<name>` only rebinds the re-export and has no effect on
+the handlers. See docs/agent_handlers.md.
+
 ## Signature
 
 Module-level constants — the test-outcome stub's tuning knobs, kept at
 module level specifically so tuning (or replacing the stub with real test
-execution) is a one-edit change:
+execution) is a one-edit change (`TEST_PASS_PROBABILITY`/`BUG_SEVERITIES`/
+`BUG_SEVERITY_WEIGHTS` in `agent_handlers/tester.py`, `MAX_BUG_RETRIES` in
+`agent_handlers/manager.py`):
 
 ```python
 TEST_PASS_PROBABILITY = 0.7
@@ -92,7 +154,8 @@ MAX_BUG_RETRIES = 3
 ```
 
 Functions (every `handle_*` shares the same signature and is looked up in
-the `MESSAGE_HANDLERS` dict — message type → handler — by `main()`'s loop):
+the `MESSAGE_HANDLERS` dict — message type → handler — by `main()`'s loop;
+see the module layout table above for where each one lives):
 
 ```python
 def resolve(env_name: str, config_value, default=None)
@@ -233,6 +296,9 @@ def main() -> None
 
 ## Dependencies
 
+- `agent_handlers` (`MESSAGE_HANDLERS` and every handler — docs/agent_handlers.md);
+  the imports below are split across `agent.py` (main loop) and the
+  handler modules that use them.
 - `message_bus` (`load_worker_config`, `build_message`, `MessageProducer`, `MessageConsumer`)
 - `llm_client` (`build_llm_client`)
 - `agent_state` (`resolve_state_path`, `write_state`)
@@ -326,6 +392,31 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.7.0 (2026-09-27) — Generic per-role idle-tick hook: the loop calls
+  `IDLE_TICK_HOOKS.get(role)` after the handlers on every enabled tick
+  (never while disabled). The manager's hook drives the opt-in task backlog
+  (new config `agent.backlog.*`, env `GITEA_TOKEN`; docs/task_backlog.md).
+  Backlog dispatches add `backlog_id` / `backlog_source` to the
+  `task_assignment` payload. Tests: `tests/test_manager_backlog.py`,
+  `tests/test_task_backlog.py`.
+- v2.6.0 (2026-09-27) — Redis liveness key `worker:{id}:alive` written
+  every tick (`WorkerControl.heartbeat`, TTL from new config
+  `agent.liveness_ttl_s`); the `status_update` bus heartbeat is now sent
+  only every `agent.bus_heartbeat_every` ticks (new key, default 12, 0 =
+  off). New module helpers `resolve_bus_heartbeat_every`,
+  `resolve_liveness_ttl`, `bus_heartbeat_due`. Dev-team handlers propagate
+  correlation IDs; "received" log line shows `correlation_id=`. Tests:
+  `tests/test_agent_liveness.py`, `tests/test_correlation_ids.py`.
+- v2.5.0 (2026-09-27) — Pure refactor, zero behaviour change: every
+  message handler and its helpers moved out of `app/agent.py` into the new
+  `app/agent_handlers/` package (`common`, `relay_files`, `coder`,
+  `tester`, `manager`, `operator`, `viewer`, `replay_relay`;
+  `MESSAGE_HANDLERS` built in `agent_handlers/__init__.py`). `agent.py`
+  keeps `main()` (config, wiring, tick loop) and re-exports all moved names
+  for `from agent import ...` callers. Function bodies, message types,
+  payloads and log lines are unchanged. Tests now monkeypatch the
+  `agent_handlers.<module>` that looks a name up. See
+  docs/agent_handlers.md.
 - v2.4.0 (2026-08-16) — The Rerun Theater library moved from the filesystem
   into Postgres. `_pick_rerun_episode` now picks from
   `episode_store.list_episodes()` instead of globbing a mounted directory;

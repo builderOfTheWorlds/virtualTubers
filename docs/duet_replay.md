@@ -113,8 +113,12 @@ followers really are already waiting and get told to stop.
 Security invariant (unchanged by this feature): panes **produce** to Kafka
 but never **consume** — every inbound duet message lands in an `app/agent.py`
 handler, which relays it into a small local JSON file that
-`app/replay_pane.py` polls. All writes are atomic (`<path>.tmp` +
-`os.replace`, same pattern as `agent_state.py`).
+`app/replay_pane.py` polls. Every read and write goes through
+`app/relay_io.py` (docs/relay_io.md): writes are atomic (a uniquely named
+temp file in the same directory + `os.replace`), reads treat a missing or
+garbage file as "nothing yet", and the pane consumes the request file by
+claiming it with an atomic rename first, so a request is acted on once and
+a newer one written meanwhile is never deleted unread.
 
 ### Request file — `REPLAY_REQUEST_FILE` (default `/tmp/replay_request.json`)
 
@@ -130,7 +134,9 @@ Existing file, two new uses:
   `replay_pane.perform_request`).
 - The existing "don't clobber a pending request" rule applies to invites
   too: if the file already exists, the invite is dropped (logged) — the
-  director's own `replay_ready` wait will then time out and refuse.
+  director's own `replay_ready` wait will then time out and refuse. The
+  check and the write are one atomic step (`relay_io.atomic_create_json`,
+  an `os.link` that fails if the file exists).
 
 ### Cue file — `REPLAY_CUE_FILE` (default `/tmp/replay_cue.json`)
 
@@ -189,7 +195,7 @@ operator ──POST /messages (cast: {...})──▶ Kafka ──▶ director ag
                                               │ 3. annotate every scene: owned + target_duration
                                               │ 4. publish replay_invite to each follower
                                               ▼
-                          each follower's agent.py: handle_replay_invite
+                          each follower's agent (agent_handlers/replay_relay.py): handle_replay_invite
                                               │ writes REPLAY_REQUEST_FILE {"mode": "follow", ...}
                                               ▼
                           follower's replay_pane.py: perform_follower_request
@@ -523,6 +529,15 @@ Deployment requirements above).
 
 ## Changelog
 
+- **v1.3.0** (2026-09-27): No protocol change — file names, JSON shapes,
+  refusal rules and watchdog timeouts are identical. All relay-file I/O
+  now goes through `app/relay_io.py` (docs/relay_io.md). This fixes races:
+  a fixed `<path>.tmp` temp name, a request overwritten during the pane's
+  read and then deleted unread, and check-then-write on the "don't clobber
+  a pending request" rule. On the local roundtable, a tile no longer
+  clears its own airing's scene-0 cue during pre-show cleanup, and its
+  post-show cleanup no longer deletes a cue already written for the next
+  airing.
 - **v1.2.0** (2026-08-16): No protocol change — `airing_id`, the `cast`
   map and all four message types are byte-for-byte identical. The episode
   library moved from the `/data/replays` bind mount into the Postgres

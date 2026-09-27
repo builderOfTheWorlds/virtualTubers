@@ -16,6 +16,31 @@ As a side effect of the same poll loop, if ffmpeg exits on its own (e.g. an
 RTMP hiccup exhausts its `-reconnect` budget) while the worker is still
 enabled, the supervisor notices and restarts it.
 
+**Local kill switch / emergency stop.** `WorkerControl.is_enabled` returns
+`False` whenever the container's kill file (`WORKER_KILL_FILE`, default
+`/tmp/worker_disabled`) exists, without consulting Redis
+(docs/worker_control.md), so the normal poll stops ffmpeg even with Redis
+down. To make that prompt, the wait between polls is sliced into
+`KILL_CHECK_INTERVAL_S = 0.5` checks: if ffmpeg is running and the kill file
+appears, the supervisor wakes early and stops it (≤0.5s, never more than one
+poll). `SIGUSR1` means "stop streaming now": the handler writes the kill file
+(reason `SIGUSR1`) and wakes the loop; if the file can't be written it logs
+`ERROR event=kill_file_write_failed` and falls back to an in-memory
+force-off that lasts until the process restarts. An override-driven stop is
+logged as `WARN event=stop_ffmpeg reason=local_override worker_id=...
+kill_file=...`, and a supervisor that starts with the file present logs
+`WARN event=local_override_active_at_startup` and never starts ffmpeg. While
+the override is in force ffmpeg is not restarted if it had exited.
+
+```bash
+docker exec <worker-container> pkill -USR1 -f /app/stream_supervisor.py
+```
+
+(Only send `SIGUSR1` to a supervisor built from this version or later —
+older ones have no handler, and SIGUSR1's default action terminates the
+supervisor and with it the container. `scripts/emergency_stop.sh` therefore
+uses the kill file, not the signal.)
+
 **Audio input.** `build_ffmpeg_cmd` captures the `vout` PulseAudio null
 sink's monitor (`-f pulse -i vout.monitor`) when `pulse_monitor_available()`
 finds it — that's the same sink `app/audio_player.py`'s `paplay` plays
@@ -42,6 +67,11 @@ def pulse_monitor_available(sink="vout") -> bool
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display) -> list[str]
 def decide_action(enabled: bool, proc_running: bool) -> "start" | "stop" | "noop"
 def stop_process(proc: subprocess.Popen) -> None
+def supervise_step(control: WorkerControl, worker_id: str, proc, ffmpeg_cmd: list[str],
+                   force_off: bool = False) -> subprocess.Popen | None
+def wait_for_next_poll(control, proc, should_wake: Callable[[], bool], sleep=time.sleep,
+                       interval=POLL_INTERVAL_S, slice_s=KILL_CHECK_INTERVAL_S) -> bool
+def make_emergency_stop_handler(control: WorkerControl, state: dict) -> Callable  # SIGUSR1
 def main() -> None
 ```
 
@@ -53,11 +83,16 @@ CLI: `stream_supervisor.py --config PATH --rtmp-url URL --stream-key KEY --resol
 - `--rtmp-url`, `--stream-key`, `--resolution`, `--display` (str, all required) — same values `startup.sh` already resolves from env (`STREAM_RTMP_URL`, `STREAM_KEY`, `RESOLUTION`, `DISPLAY`); passed through unchanged into the ffmpeg command.
 - `enabled` (bool) / `proc_running` (bool) — inputs to `decide_action`.
 
-Poll interval is fixed at `POLL_INTERVAL_S = 3` seconds; stop grace period at `STOP_TIMEOUT_S = 10` seconds before escalating from `SIGTERM` to `SIGKILL`.
+- `force_off` (bool) — `supervise_step`'s in-memory override (set by the SIGUSR1 handler when the kill file can't be written).
+- `should_wake` (callable) — `wait_for_next_poll` returns early when it's truthy (SIGUSR1/SIGTERM set it).
+
+Poll interval is fixed at `POLL_INTERVAL_S = 3` seconds (kill file checked every `KILL_CHECK_INTERVAL_S = 0.5` s in between); stop grace period at `STOP_TIMEOUT_S = 10` seconds before escalating from `SIGTERM` to `SIGKILL`.
 
 ## Return Value
 
 - `decide_action` — `"start"` (enabled, no process running), `"stop"` (disabled, process running), or `"noop"` otherwise.
+- `supervise_step` — the ffmpeg process after this poll (new `Popen`, the same one, or `None`).
+- `wait_for_next_poll` — `True` if it woke early, `False` after the full interval.
 - `main` — blocks until `SIGTERM`/`SIGINT`, then stops any running ffmpeg child and returns.
 
 ## Dependencies
@@ -88,13 +123,19 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Error Handling
 
-- Redis unreachable — `WorkerControl.is_enabled` fails open (treats the worker as enabled), so a control-plane outage keeps the stream running rather than stopping it.
+- Redis unreachable — `WorkerControl.is_enabled` fails open (treats the worker as enabled), so a control-plane outage keeps the stream running rather than stopping it — unless the local kill file exists, which always wins.
+- `SIGUSR1` — write the kill file and stop ffmpeg now; on `OSError` fall back to an in-memory force-off (logged at ERROR).
 - ffmpeg exits unexpectedly while still enabled — logged, treated as "no process running" next poll, restarted.
 - `SIGTERM`/`SIGINT` — stop the poll loop and terminate any running ffmpeg child (`SIGTERM`, escalating to `SIGKILL` after `STOP_TIMEOUT_S`) before exiting, so `docker stop`/container recreation still works normally.
 - `pulse_monitor_available` — any error (Pulse down, `pactl` missing/timeout, non-zero exit) is treated as "not available"; it never raises, it only decides which audio input `build_ffmpeg_cmd` picks.
 
 ## Changelog
 
+- v1.3.0 (2026-09-27) — Emergency stop that works with Redis down: honours
+  WorkerControl's local kill file (checked every 0.5s between polls), SIGUSR1
+  writes it and stops ffmpeg immediately, WARN-level structured log lines for
+  override-driven stops. Main loop split into `supervise_step` /
+  `wait_for_next_poll` / `make_emergency_stop_handler` for testability. +9 tests.
 - v1.2.0 (2026-07-18) — Security fix: added `redact_stream_key()` to mask
   Twitch credentials (format `live_XXXX`) in supervisor log messages so they
   never reach Postgres via `log-shipper`. Also suppressed ffmpeg's

@@ -100,6 +100,64 @@ def test_disable_worker_returns_503_when_redis_unavailable(client):
     assert resp.status_code == 503
 
 
+def _health(worker_id, state="alive", **fields):
+    row = {"worker_id": worker_id, "state": state, "alive": state in ("alive", "stale"),
+           "last_seen": None, "age_s": None, "local_override": None, "enabled": True, "ttl_s": None}
+    row.update(fields)
+    return row
+
+
+def test_get_worker_health_returns_control_health_row(client, monkeypatch):
+    fake = MagicMock(return_value=_health("coder", local_override=True, age_s=3.0))
+    monkeypatch.setattr(api.control, "health", fake)
+    resp = client.get("/workers/coder/health")
+    assert resp.status_code == 200
+    assert resp.json()["local_override"] is True
+    fake.assert_called_once_with("coder")
+
+
+def test_get_all_workers_health_uses_known_list_plus_redis_discovered(client, monkeypatch):
+    monkeypatch.setattr(api.control, "known_worker_ids", MagicMock(return_value=["coder", "roundtable"]))
+    fake = MagicMock(side_effect=lambda ids: [_health(w) for w in ids])
+    monkeypatch.setattr(api.control, "health_many", fake)
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    ids = [r["worker_id"] for r in resp.json()["workers"]]
+    assert ids == list(api.WORKER_ID_EXAMPLES) + ["roundtable"]
+
+
+def test_workers_health_is_not_captured_as_worker_id(client):
+    """/workers/health must hit the health route, not GET /workers/{id}."""
+    api.control._client.mget.return_value = [None] * 2 * len(api.WORKER_ID_EXAMPLES)
+    api.control._client.scan_iter.return_value = iter([])
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    assert "workers" in resp.json()
+
+
+def test_workers_health_reports_unknown_not_503_when_redis_down(client):
+    api.control._client.mget.side_effect = redis.ConnectionError("refused")
+    api.control._client.scan_iter.side_effect = redis.ConnectionError("refused")
+    resp = client.get("/workers/health")
+    assert resp.status_code == 200
+    rows = resp.json()["workers"]
+    assert rows and all(r["state"] == "unknown" and r["alive"] is None and r["enabled"] is None for r in rows)
+
+    resp = client.get("/workers/coder/health")
+    assert resp.status_code == 200
+    assert resp.json()["alive"] is None
+
+
+def test_worker_health_enabled_uses_redis_flag_not_local_kill_file(client, monkeypatch, tmp_path):
+    kill = tmp_path / "worker_disabled"
+    kill.write_text("x")
+    monkeypatch.setattr(api.control, "kill_file", str(kill))
+    api.control._client.mget.return_value = [None, None]  # no alive key, no enabled key
+    body = client.get("/workers/coder/health").json()
+    assert body["enabled"] is True
+    assert body["state"] == "down"
+
+
 def test_get_log_filter_defaults_excluded_for_status_update(client):
     api.log_filter._client.get.return_value = None
     resp = client.get("/log-filter/status_update")
@@ -255,16 +313,19 @@ def test_upload_replay_success_stores_and_returns_info(client, monkeypatch):
     save_calls = []
     monkeypatch.setattr(
         api.episode_store, "save_episode",
-        lambda name, script, overwrite=False: save_calls.append((name, script, overwrite)) or True)
+        lambda name, script, overwrite=False, **kw: save_calls.append((name, script, overwrite, kw)) or True)
 
     resp = client.post("/replays", content=json.dumps(VALID_SCRIPT).encode())
 
     assert resp.status_code == 200
     body = resp.json()
-    assert body == {"name": "demo-ep", "event_count": 5, "byte_size": 123, "created": True}
+    assert body == {"name": "demo-ep", "event_count": 5, "byte_size": 123,
+                    "created": True, "status": "approved"}
     assert len(save_calls) == 1
     assert save_calls[0][0] == "demo-ep"
     assert save_calls[0][2] is False
+    # No ?status= means today's behaviour: stored approved, airs immediately.
+    assert save_calls[0][3] == {"status": "approved", "uploaded_by": "operator"}
 
 
 def test_upload_replay_success_with_explicit_json_content_type(client, monkeypatch):
@@ -280,7 +341,7 @@ def test_upload_replay_success_with_explicit_json_content_type(client, monkeypat
         api, "validate_episode",
         lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
     monkeypatch.setattr(
-        api.episode_store, "save_episode", lambda name, script, overwrite=False: True)
+        api.episode_store, "save_episode", lambda name, script, overwrite=False, **kw: True)
 
     resp = client.post(
         "/replays",
@@ -301,7 +362,7 @@ def test_upload_replay_overwrite_query_param_passed_through(client, monkeypatch)
     save_calls = []
     monkeypatch.setattr(
         api.episode_store, "save_episode",
-        lambda name, script, overwrite=False: save_calls.append(overwrite) or True)
+        lambda name, script, overwrite=False, **kw: save_calls.append(overwrite) or True)
 
     resp = client.post(
         "/replays?overwrite=true", content=json.dumps(VALID_SCRIPT).encode())
@@ -377,7 +438,7 @@ def test_list_replays_returns_detailed_episode_metadata(client, monkeypatch):
     episodes = [{"name": "ep1", "project": "virtualTubers", "session_id": "s1",
                  "date": "2026-08-01", "event_count": 5, "byte_size": 123,
                  "uploaded_by": "operator", "uploaded_at": "2026-08-01T00:00:00+00:00"}]
-    monkeypatch.setattr(api.episode_store, "list_episodes_detailed", lambda: episodes)
+    monkeypatch.setattr(api.episode_store, "list_episodes_detailed", lambda status="approved": episodes)
 
     resp = client.get("/replays")
 
@@ -389,7 +450,7 @@ def test_list_replays_503_when_listing_raises_operational_error(client, monkeypa
     monkeypatch.setattr(api.episode_store, "available", lambda: True)
     monkeypatch.setattr(api, "_schema_ready", True)
 
-    def raise_op_error():
+    def raise_op_error(status="approved"):
         raise psycopg2.OperationalError("connection refused")
     monkeypatch.setattr(api.episode_store, "list_episodes_detailed", raise_op_error)
 
@@ -400,7 +461,7 @@ def test_list_replays_503_when_listing_raises_operational_error(client, monkeypa
 
 def test_get_replay_returns_the_stored_script(client, monkeypatch):
     monkeypatch.setattr(api.episode_store, "available", lambda: True)
-    monkeypatch.setattr(api.episode_store, "load_episode", lambda name: VALID_SCRIPT)
+    monkeypatch.setattr(api.episode_store, "load_episode", lambda name, include_drafts=False: VALID_SCRIPT)
 
     resp = client.get("/replays/demo-ep")
 
@@ -410,7 +471,7 @@ def test_get_replay_returns_the_stored_script(client, monkeypatch):
 
 def test_get_replay_404_when_episode_missing(client, monkeypatch):
     monkeypatch.setattr(api.episode_store, "available", lambda: True)
-    monkeypatch.setattr(api.episode_store, "load_episode", lambda name: None)
+    monkeypatch.setattr(api.episode_store, "load_episode", lambda name, include_drafts=False: None)
 
     resp = client.get("/replays/nope")
 
@@ -431,7 +492,7 @@ def test_get_replay_400_when_name_has_disallowed_characters(client, monkeypatch)
 def test_get_replay_503_when_load_raises_operational_error(client, monkeypatch):
     monkeypatch.setattr(api.episode_store, "available", lambda: True)
 
-    def raise_op_error(name):
+    def raise_op_error(name, include_drafts=False):
         raise psycopg2.OperationalError("connection refused")
     monkeypatch.setattr(api.episode_store, "load_episode", raise_op_error)
 
@@ -572,3 +633,138 @@ def test_music_control_import_does_not_pull_numpy():
             "from music.mood_map import MOODS; assert 'numpy' not in sys.modules, 'numpy imported'"
             % str(ROOT / "app"))
     subprocess.run([sys.executable, "-c", code], check=True)
+
+
+# ── Draft review gate (docs/episode_store.md "Review status") ──────────────
+@pytest.fixture
+def store_up(client, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(
+        api, "validate_episode",
+        lambda script, name=None: {"name": "demo-ep", "event_count": 5, "byte_size": 123})
+    return client
+
+
+@pytest.mark.parametrize("query,expected_status", [
+    ("", "approved"),
+    ("?status=approved", "approved"),
+    ("?status=draft", "draft"),
+])
+def test_upload_replay_status_query_passed_to_store(store_up, monkeypatch, query, expected_status):
+    calls = []
+    monkeypatch.setattr(
+        api.episode_store, "save_episode",
+        lambda name, script, overwrite=False, **kw: calls.append(kw) or True)
+
+    resp = store_up.post("/replays" + query, content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 200
+    assert resp.json()["status"] == expected_status
+    assert calls[0]["status"] == expected_status
+
+
+def test_upload_replay_uploaded_by_query_passed_to_store(store_up, monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        api.episode_store, "save_episode",
+        lambda name, script, overwrite=False, **kw: calls.append(kw) or True)
+
+    resp = store_up.post("/replays?status=draft&uploaded_by=3layer-generator",
+                         content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 200
+    assert calls[0] == {"status": "draft", "uploaded_by": "3layer-generator"}
+
+
+def test_upload_replay_invalid_status_is_422_and_nothing_saved(store_up, monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        api.episode_store, "save_episode",
+        lambda *a, **kw: calls.append(kw) or True)
+
+    resp = store_up.post("/replays?status=live", content=json.dumps(VALID_SCRIPT).encode())
+
+    assert resp.status_code == 422
+    assert calls == []
+
+
+@pytest.mark.parametrize("query,expected_arg", [
+    ("", "approved"),
+    ("?status=approved", "approved"),
+    ("?status=draft", "draft"),
+    ("?status=all", None),
+])
+def test_list_replays_status_filter_maps_to_store_arg(store_up, monkeypatch, query, expected_arg):
+    seen = []
+    monkeypatch.setattr(
+        api.episode_store, "list_episodes_detailed",
+        lambda status="approved": seen.append(status) or [])
+
+    resp = store_up.get("/replays" + query)
+
+    assert resp.status_code == 200
+    assert seen == [expected_arg]
+
+
+def test_list_replays_invalid_status_is_422(store_up):
+    assert store_up.get("/replays?status=bogus").status_code == 422
+
+
+def test_get_replay_includes_drafts_for_review(store_up, monkeypatch):
+    seen = []
+    monkeypatch.setattr(
+        api.episode_store, "load_episode",
+        lambda name, include_drafts=False: seen.append(include_drafts) or VALID_SCRIPT)
+
+    resp = store_up.get("/replays/demo-ep")
+
+    assert resp.status_code == 200
+    assert seen == [True]
+
+
+def test_approve_replay_promotes_a_draft(store_up, monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        api.episode_store, "approve_episode", lambda name: calls.append(name) or "draft")
+
+    resp = store_up.post("/replays/demo-ep/approve")
+
+    assert resp.status_code == 200
+    assert resp.json() == {"name": "demo-ep", "status": "approved", "previous_status": "draft"}
+    assert calls == ["demo-ep"]
+
+
+def test_approve_replay_already_approved_is_idempotent(store_up, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "approve_episode", lambda name: "approved")
+
+    resp = store_up.post("/replays/demo-ep/approve")
+
+    assert resp.status_code == 200
+    assert resp.json()["previous_status"] == "approved"
+
+
+def test_approve_replay_404_when_episode_missing(store_up, monkeypatch):
+    monkeypatch.setattr(api.episode_store, "approve_episode", lambda name: None)
+
+    assert store_up.post("/replays/nope/approve").status_code == 404
+
+
+def test_approve_replay_400_when_name_has_disallowed_characters(store_up, monkeypatch):
+    calls = []
+    monkeypatch.setattr(api.episode_store, "approve_episode", lambda name: calls.append(name))
+
+    assert store_up.post("/replays/bad name/approve").status_code == 400
+    assert calls == []
+
+
+def test_approve_replay_503_when_postgres_unavailable(store_up, monkeypatch):
+    def raise_op_error(name):
+        raise psycopg2.OperationalError("connection refused")
+    monkeypatch.setattr(api.episode_store, "approve_episode", raise_op_error)
+
+    assert store_up.post("/replays/demo-ep/approve").status_code == 503
+
+
+def test_approve_replay_503_when_store_unavailable(no_store):
+    assert no_store.post("/replays/demo-ep/approve").status_code == 503

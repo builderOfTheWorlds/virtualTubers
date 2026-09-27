@@ -9,9 +9,10 @@ by `services/message-logger/logger.py` before every INSERT, written by
 `services/message-api`'s `/log-filter/{type}/exclude`/`include` endpoints
 (docs/message_api.md).
 
-Built to stop the per-tick heartbeat flood: `app/agent.py` publishes a
+Built to stop the per-tick heartbeat flood: `app/agent.py` published a
 `status_update` message every tick (5-8s per worker, see `worker.yaml` /
-`config/workers/*.yaml`'s `tick_rate_ms`), and until this filter existed
+`config/workers/*.yaml`'s `tick_rate_ms`; since agent v2.6.0 it is only sent
+every `agent.bus_heartbeat_every` ticks, default 12), and until this filter existed
 every one of those was durably inserted into the `messages` table with no
 retention policy — pure clutter, since nothing reads heartbeats back out of
 Postgres today.

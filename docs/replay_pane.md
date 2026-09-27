@@ -10,7 +10,7 @@ agent drops a request file.
 The full wiring, operator to screen:
 
 ```
-operator ──POST /messages──▶ Kafka ──▶ agent.py handle_replay_request
+operator ──POST /messages──▶ Kafka ──▶ agent_handlers/replay_relay.py handle_replay_request
                                             │ writes REPLAY_REQUEST_FILE (atomic)
                                             ▼
                               replay_pane.py (this program, polling)
@@ -73,7 +73,7 @@ generation, logged to stderr, never a crash or a stalled show. `"voice":
 false` skips reuse too, same as it skips fresh narration.
 
 **Stopping a show (`replay_stop`).** An operator `replay_stop`
-(docs/operator_commands.md) reaches `app/agent.py`'s `handle_replay_stop`,
+(docs/operator_commands.md) reaches `app/agent_handlers/replay_relay.py`'s `handle_replay_stop`,
 which (1) deletes `REPLAY_REQUEST_FILE` if a request is still queued but
 hasn't been picked up yet — cancelling it outright — and (2) writes
 `REPLAY_STOP_FILE`, which every performance path here (`perform_request`,
@@ -170,7 +170,13 @@ need different words on the idle screen — see "Idle screen" below.
 
 - `--request-file` / `REPLAY_REQUEST_FILE` (default
   `/tmp/replay_request.json`): the agent → pane handoff file. Same value
-  must be visible to `agent.py` (same container, both default it).
+  must be visible to `agent.py` (same container, both default it). An
+  empty `REPLAY_REQUEST_FILE` now means "use the default" here too, which
+  matches how the agent resolves it (`relay_io.resolve_replay_request_file`).
+  `read_request` consumes it through `relay_io.consume_json`: it claims the
+  file with an atomic rename, then reads it. A request the agent writes
+  while the pane is reading keeps its name and is picked up on the next
+  poll instead of being deleted unread (docs/relay_io.md).
 - `--worker-name` / `WORKER_ID` (default `worker`): persona name on
   dialogue lines when the request doesn't override it.
 - `--config` / `CONFIG_PATH` (default `/config/worker.yaml`): worker config
@@ -192,14 +198,14 @@ need different words on the idle screen — see "Idle screen" below.
   followers alike (docs/duet_replay.md) — without it a duet refuses
   outright rather than degrading.
 - `REPLAY_STOP_FILE` (env, default `/tmp/replay_stop.json`): agent -> pane
-  stop signal written by `app/agent.py`'s `handle_replay_stop` on an
+  stop signal written by `app/agent_handlers/replay_relay.py`'s `handle_replay_stop` on an
   operator `replay_stop` (docs/operator_commands.md); this pane only ever
   polls it via each performance path's `Pacer(should_stop=...)` (see
   "Stopping a show" above; docs/replay.md `ReplayStopped`). Same
   env-override + atomic-write convention as `REPLAY_REQUEST_FILE`.
 - `REPLAY_CUE_FILE` (env, default `/tmp/replay_cue.json`) /
   `REPLAY_READY_FILE` (env, default `/tmp/replay_ready.json`): duet relay
-  files written by `app/agent.py`'s `handle_replay_cue`/`handle_replay_end`
+  files written by `app/agent_handlers/replay_relay.py`'s `handle_replay_cue`/`handle_replay_end`
   and `handle_replay_ready`; this pane only ever polls them
   (`_resolve_replay_cue_file`/`_resolve_replay_ready_file`). Same
   env-override + atomic-write convention as `REPLAY_REQUEST_FILE`. See
@@ -226,7 +232,10 @@ logged to stderr on failure).
 
 ## Dependencies
 
-`app/replay.py` (Performer + `prepare_voiced_show`), `app/episode_store.py`
+`app/relay_io.py` (every relay-file read/write/consume/cleanup and the
+relay path resolvers — docs/relay_io.md; `_read_json_file`,
+`_atomic_write_json`, `_delete_stale_file` and `_resolve_replay_*_file` are
+thin aliases onto it), `app/replay.py` (Performer + `prepare_voiced_show`), `app/episode_store.py`
 (`available`/`load_episode`/`list_episodes` — the episode library itself,
 docs/episode_store.md), `app/agent_state.py` (avatar state path),
 `app/message_bus.py` (`MessageProducer`/`build_message`, for
@@ -373,7 +382,14 @@ docs/episode_validator.md for what an upload is checked against.
   whose events carry a `music` cue, with `show.music.theme` as the theme
   (`_scene_music_cues`, `_show_music_theme`, `_publish_music_cue`;
   `MUSIC_CUE_PATH` env). Best-effort, never affects the show.
-
+- **v2.1.0** (2026-09-27): Relay-file I/O moved to `app/relay_io.py`
+  (docs/relay_io.md). The file names, JSON shapes and timeouts stay the
+  same. `read_request` now claims the request file before reading it, so a
+  request written while the pane reads the previous one is no longer
+  deleted unread. Director → tile writes use a unique temp name instead of
+  a fixed `<path>.tmp`. `_delete_stale_file` gained an optional
+  `keep_airing_id`, which tiles use. `--request-file` now treats an empty
+  `REPLAY_REQUEST_FILE` as unset, the way the agent always did.
 - **v2.0.0** (2026-08-16): **The episode library moved from the filesystem
   into Postgres** (docs/episode_store.md). `resolve_episode(episode)` now
   returns `(name, script)` from `episode_store.load_episode` instead of a

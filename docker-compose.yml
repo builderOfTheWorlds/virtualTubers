@@ -368,6 +368,12 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # Task backlog, gitea source only (docs/task_backlog.md): issues token
+      # (read:issue + write:issue). Deliberately passed to the manager and no
+      # other service. Empty = gitea backlog idles with a WARN. A `file`
+      # backlog needs no env, just a mount of the task list, e.g.
+      #   - ${REPO_ROOT:-.}/config/backlog.example.yaml:/config/backlog.yaml:ro
+      GITEA_TOKEN: ${GITEA_TOKEN:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/manager.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -920,6 +926,13 @@ services:
       # host, so loopback is correct here — override only if that mapping
       # changes.
       MESSAGE_API_URL: ${MESSAGE_API_URL:-http://127.0.0.1:8090}
+      # Opt-in: when a `publish` job completes, POST its episode.json to
+      # MESSAGE_API_URL/replays?status=draft. A draft NEVER airs until an
+      # operator approves it in the control panel's "Drafts awaiting review"
+      # list. Off by default; a submit failure is recorded on the job
+      # (result.auto_submit) and never fails it. docs/draft_submitter.md.
+      AUTO_SUBMIT_DRAFTS: ${AUTO_SUBMIT_DRAFTS:-false}
+      AUTO_SUBMIT_TIMEOUT_S: ${AUTO_SUBMIT_TIMEOUT_S:-60}
     # host networking already binds 0.0.0.0:8000 for the app's own
     # LLM_BASE_URL default (127.0.0.1:11434 Ollama) — but port 8000 itself
     # collides with Portainer on this host, so run the API on 8001 instead.

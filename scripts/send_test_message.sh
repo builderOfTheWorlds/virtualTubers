@@ -32,8 +32,8 @@
 #
 set -euo pipefail
 
-# URL="${1:-http://192.168.2.170:8090/messages}"
-URL="${1:-http://192.168.1.23:8090/messages}"
+# URL="${1:-http://192.168.2.170:8090/messages}"   # argyre's old IP
+URL="${1:-http://192.168.1.23:8090/messages}"      # argyre (gx10-35a4)
 # URL="${1:-http://192.168.1.120:8090/messages}"
 # URL="${1:-http://192.168.2.158:8090/messages}"
 

@@ -1204,3 +1204,132 @@ def _make_publish_ctx(tmp_path, store, pack_name, run):
             AssertionError("publish must not call the dialogue layer")),
         load_pack_for_job=lambda pack_name2: loaded_pack,
     )
+
+
+# ---------------------------------------------------------------------------
+# Opt-in auto-submit of a published episode as a review DRAFT
+# (draft_submitter.py, docs/draft_submitter.md). The submitter is injected
+# through ctx.submit_draft and faked here — no HTTP, no database.
+# ---------------------------------------------------------------------------
+
+def _publish_job(store, run="run-auto-1"):
+    store.upsert_cast_member("alpha", "gm", "name: Ashiorid\n", worker_id="manager")
+    _seed_a_minimal_generated_run(store, run)
+    return store.submit({
+        "pack": "alpha", "run": run, "stage": "publish", "profile": "",
+        "params": {"episode_name": f"ashiorid_generated_{run}"},
+    })
+
+
+def test_auto_submit_off_by_default_records_nothing(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-auto-1")
+    assert ctx.submit_draft is None
+    job = _publish_job(store)
+
+    runner.dispatch_once(ctx)
+
+    row = store.get(job)
+    assert row["status"] == "completed"
+    assert "auto_submit" not in row["result"]
+
+
+def test_auto_submit_on_posts_the_written_episode_and_records_success(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-auto-1")
+    seen = []
+
+    def fake_submit(episode_path, name):
+        seen.append((episode_path, name))
+        return {"status": "submitted", "name": name, "http_status": 200}
+    ctx.submit_draft = fake_submit
+    job = _publish_job(store)
+
+    runner.dispatch_once(ctx)
+
+    row = store.get(job)
+    assert row["status"] == "completed"
+    assert seen == [(row["result"]["written_to"], "ashiorid_generated_run-auto-1")]
+    assert pathlib.Path(seen[0][0]).name == "episode.json"
+    assert row["result"]["auto_submit"]["status"] == "submitted"
+
+
+def test_auto_submit_failure_is_recorded_and_job_still_completes(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-auto-1")
+    ctx.submit_draft = lambda path, name: {
+        "status": "failed", "name": name, "http_status": 409,
+        "error": "episode already exists"}
+    job = _publish_job(store)
+
+    runner.dispatch_once(ctx)
+
+    row = store.get(job)
+    assert row["status"] == "completed"
+    assert row["error"] is None
+    assert row["result"]["auto_submit"]["status"] == "failed"
+    assert "already exists" in row["result"]["auto_submit"]["error"]
+
+
+def test_auto_submit_raising_submitter_never_fails_the_job(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-auto-1")
+
+    def explode(path, name):
+        raise RuntimeError("submitter bug")
+    ctx.submit_draft = explode
+    job = _publish_job(store)
+
+    runner.dispatch_once(ctx)
+
+    row = store.get(job)
+    assert row["status"] == "completed"
+    assert row["result"]["auto_submit"]["status"] == "failed"
+    assert "submitter bug" in row["result"]["auto_submit"]["error"]
+
+
+def test_auto_submit_skipped_for_a_stage_that_builds_no_episode(store, ctx):
+    calls = []
+    ctx.submit_draft = lambda path, name: calls.append(path) or {"status": "submitted"}
+    job = queue(store, "arc")
+
+    runner.dispatch_once(ctx)
+
+    assert store.get(job)["status"] == "completed"
+    assert calls == []
+    assert "auto_submit" not in store.get(job)["result"]
+
+
+def test_auto_submit_skipped_when_publish_fails(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-none")
+    calls = []
+    ctx.submit_draft = lambda path, name: calls.append(path) or {"status": "submitted"}
+    # No artifacts seeded for this run -> zero events -> EmptyOutputError.
+    store.upsert_cast_member("alpha", "gm", "name: Ashiorid\n", worker_id="manager")
+    job = store.submit({"pack": "alpha", "run": "run-none", "stage": "publish",
+                        "profile": "", "params": {}})
+
+    runner.dispatch_once(ctx)
+
+    assert store.get(job)["status"] == "failed"
+    assert calls == []
+
+
+def test_auto_submit_skipped_when_the_job_was_cancelled(store, tmp_path):
+    ctx = _make_publish_ctx(tmp_path, store, pack_name="alpha", run="run-auto-1")
+    calls = []
+    ctx.submit_draft = lambda path, name: calls.append(path) or {"status": "submitted"}
+    job = _publish_job(store)
+    store.is_cancelled = lambda job_id: True
+
+    runner.dispatch_once(ctx)
+
+    assert store.get(job)["status"] == "cancelled"
+    assert calls == []
+
+
+def test_build_default_context_wires_submit_draft_from_env(tmp_path, monkeypatch):
+    import draft_submitter
+    sentinel = object()
+    monkeypatch.setattr(draft_submitter, "from_env", lambda env=None: sentinel)
+    try:
+        ctx = runner.build_default_context({}, tmp_path, tmp_path)
+    except ImportError as exc:  # a layer module missing in this environment
+        pytest.skip(f"layer modules unavailable: {exc}")
+    assert ctx.submit_draft is sentinel

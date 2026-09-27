@@ -17,7 +17,14 @@ it. No changes were made to message-api itself; this is purely additive.
 Sections on the one dashboard page (`GET /`):
 
 - **Workers** — enable/disable each of the six known worker IDs
-  (docs/worker_control.md), auto-refreshed every 10s.
+  (docs/worker_control.md), auto-refreshed every 10s. A **health** column
+  (from message-api's `GET /workers/health`, one call per refresh) shows
+  `alive` / `stale` with "last seen Ns ago", `down` (no heartbeat within the
+  worker's liveness TTL) or `unknown` (message-api/Redis unreachable), and a
+  red **local kill-switch engaged** badge when the worker reports its
+  `WORKER_KILL_FILE` exists. That switch lives inside the worker container,
+  so the panel's Enable button cannot override it — the badge says to clear
+  it with `scripts/emergency_resume.sh <worker>`.
 - **Send a message** — compose an arbitrary Kafka message (`to`/`type`/JSON
   `payload`), same shape as `POST /messages`.
 - **Log filter** — exclude/include a message type from `message-logger`'s
@@ -28,6 +35,12 @@ Sections on the one dashboard page (`GET /`):
   library (docs/episode_store.md). Hitting Play shows a live, auto-refreshing
   log viewer (container stdout/stderr + Kafka bus messages for the 7
   targeted streams, docs/replay_logs.md) underneath the play banner.
+  Above the library table, **Drafts awaiting review** lists episodes stored
+  with `status=draft` (e.g. auto-submitted by the 3layer-generator,
+  docs/draft_submitter.md) with **View / Approve / Delete** — and no Play
+  button: a draft never airs until it is approved. Approve moves it into
+  the library table below; Delete rejects it (message-api's existing
+  `DELETE /replays/{name}`).
 - **Console theme** — live-switch a worker's terminal color scheme (any of
   the 1247 Gogh schemes, see `app/console_theme.py`), auto-refreshed every
   15s. Applies without a redeploy or stream interruption
@@ -69,6 +82,8 @@ POST /replays/upload            -> HTML   # form: file, name, overwrite
 POST /replays/{name}/delete     -> HTML   # empty body on success (row removed), row+error on failure
 GET  /replays/{name}/view       -> HTML   # pretty-printed script fragment
 GET  /replays/{name}/log        -> HTML   # merged container-log + bus-message tail, polled every 3s after Play
+POST /replays/{name}/approve    -> HTML   # promote a draft; re-renders the whole replays section
+POST /replays/{name}/reject     -> HTML   # delete a draft; empty body on success, draft row+error on failure
 
 GET  /partials/theme-workers            -> HTML   # theme table fragment (polled every 15s)
 POST /console-theme/{worker_id}         -> HTML   # form: theme; single updated <tr>
@@ -184,6 +199,13 @@ docker compose up -d control-panel
   message-api unreachable) re-render the card with the error in a banner
   above the current (re-read) state, so the GM sees both that the change
   didn't land and what is actually playing.
+- The dashboard and the replays section make two listing calls:
+  `GET /replays` (approved library) and `GET /replays?status=draft` (review
+  queue). Either can fail independently — the other table still renders,
+  with its own error banner.
+- `GET /workers/health` failing (message-api down, or an older message-api
+  without the route) — every worker's health cell shows `unknown`; the
+  on/off status column is unaffected (separate per-worker calls).
 - Every destructive action (disable a worker, delete a replay, prune logs)
   has an `hx-confirm` prompt in the browser before the request is even
   sent — no server-side undo exists for any of them, same as the endpoints
@@ -193,11 +215,33 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.4.0 (2026-09-27) — Worker health in the Workers table: new health
+  column (alive/stale/down/unknown + "last seen Ns ago" via the new `age`
+  Jinja filter, `format_age()`) and a local kill-switch badge pointing at
+  `scripts/emergency_resume.sh`. Fed by message-api's new
+  `GET /workers/health` (dashboard + `/partials/workers`) and
+  `GET /workers/{id}/health` (re-read after an Enable/Disable so the
+  swapped-in row keeps its badges). New helpers `_workers_health`,
+  `_worker_health`, `_workers_view`; CSS `.badge.warn` / `.badge.kill`.
+  Also fixed `tests/test_control_panel.py::test_dashboard_renders_worker_and_replay_data`,
+  a stale test: its strict message-api fake predated the v1.1.0 Console
+  theme section and raised on the dashboard's legitimate
+  `GET /console-themes` call (plus a module-level theme-name cache made the
+  outcome test-order dependent — now reset per test). No panel bug.
 - v1.3.0 (2026-09-27) — Music section: GM live control of the roundtable's
   background score via message-api's new `/music-moods` and
   `/music/{worker_id}` endpoints (`app/music/control.py`). New template
   `_music_card.html`; routes `GET /partials/music`, `POST /music/set`,
   `POST /music/clear`. No image change beyond the new template.
+- v1.3.0 (2026-09-27) — Draft review gate: a "Drafts awaiting review"
+  table in the Rerun Theater section (new `_draft_row.html`), fed by
+  message-api's `GET /replays?status=draft`, with View / Approve / Delete.
+  New routes `POST /replays/{name}/approve` (wraps message-api's new
+  `POST /replays/{name}/approve`, re-renders the section so the episode
+  moves into the library) and `POST /replays/{name}/reject` (wraps the
+  existing `DELETE /replays/{name}`, re-renders a draft row on error).
+  Drafts never get a Play button. The upload form is unchanged — operator
+  uploads are still stored `approved` and air immediately.
 
 - v1.2.0 (2026-09-27) — Rerun Theater "Play" now shows a live log viewer:
   a new `GET /replays/{name}/log` route merges `message-api`'s

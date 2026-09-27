@@ -37,6 +37,13 @@ def _reset_log_types():
     panel.KNOWN_LOG_TYPES[:] = original
 
 
+@pytest.fixture(autouse=True)
+def _reset_theme_cache(monkeypatch):
+    """_theme_names caches GET /console-themes at module scope; without a
+    reset, whether the dashboard calls it depends on which test ran first."""
+    monkeypatch.setattr(panel, "_THEME_NAMES_CACHE", None)
+
+
 @pytest.fixture
 def client(monkeypatch):
     mock = AsyncMock(return_value=mapi_result())
@@ -48,7 +55,16 @@ def client(monkeypatch):
 
 # ── dashboard ────────────────────────────────────────────────────────────
 def test_dashboard_renders_worker_and_replay_data(client):
+    # The dashboard also renders the Console theme section (added after this
+    # test was written), so the fake must answer /console-themes and
+    # /console-theme/{id} too — plus the workers' /workers/health batch.
     async def side_effect(method, path, **kwargs):
+        if path == "/workers/health":
+            return mapi_result(data={"workers": []})
+        if path == "/console-themes":
+            return mapi_result(data={"themes": ["Dracula"]})
+        if path.startswith("/console-theme/"):
+            return mapi_result(data={"theme": None, "overridden": False})
         if path.startswith("/workers/"):
             return mapi_result(data={"worker_id": path.split("/")[-1], "enabled": True})
         if path.startswith("/log-filter/"):
@@ -87,7 +103,9 @@ def test_enable_worker_forwards_and_renders_enabled(client):
     resp = client.post("/workers/coder/enable")
     assert resp.status_code == 200
     assert "enabled" in resp.text
-    client.mapi.assert_awaited_once_with("POST", "/workers/coder/enable")
+    # The toggle, then a health re-read so the swapped row keeps its badges.
+    calls = [c.args for c in client.mapi.await_args_list]
+    assert calls == [("POST", "/workers/coder/enable"), ("GET", "/workers/coder/health")]
 
 
 def test_disable_worker_error_renders_error_badge(client):
@@ -96,6 +114,85 @@ def test_disable_worker_error_renders_error_badge(client):
     assert resp.status_code == 200
     assert "redis unavailable" in resp.text
     assert "error" in resp.text
+
+
+# ── worker health (GET /workers/health) ─────────────────────────────────
+def _health_row(worker_id, state, **fields):
+    row = {"worker_id": worker_id, "state": state,
+           "alive": None if state == "unknown" else state in ("alive", "stale"),
+           "last_seen": None, "age_s": None, "local_override": None,
+           "enabled": True, "ttl_s": 15}
+    row.update(fields)
+    return row
+
+
+def _workers_partial(client, health_rows, health_ok=True):
+    async def side_effect(method, path, **kwargs):
+        if path == "/workers/health":
+            if not health_ok:
+                return mapi_result(ok=False, status_code=0, error="message-api unreachable")
+            return mapi_result(data={"workers": health_rows})
+        return mapi_result(data={"worker_id": path.split("/")[-1], "enabled": True})
+
+    client.mapi.side_effect = side_effect
+    resp = client.get("/partials/workers")
+    assert resp.status_code == 200
+    return resp.text
+
+
+def _row_html(text, worker_id):
+    start = text.index(f'id="worker-row-{worker_id}"')
+    return text[start:text.index("</tr>", start)]
+
+
+def test_workers_partial_renders_alive_with_last_seen_age(client):
+    text = _workers_partial(client, [_health_row("coder", "alive", age_s=4.2, last_seen="2026-09-27T12:00:00+00:00")])
+    row = _row_html(text, "coder")
+    assert ">alive<" in row
+    assert "last seen 4s ago" in row
+    assert "kill-switch" not in row
+
+
+def test_workers_partial_renders_stale_and_down(client):
+    text = _workers_partial(client, [
+        _health_row("coder", "stale", age_s=130),
+        _health_row("tester", "down"),
+    ])
+    assert ">stale<" in _row_html(text, "coder")
+    assert "last seen 2m 10s ago" in _row_html(text, "coder")
+    assert ">down<" in _row_html(text, "tester")
+
+
+def test_workers_partial_renders_local_kill_switch_badge(client):
+    text = _workers_partial(client, [_health_row("coder", "alive", age_s=1, local_override=True)])
+    row = _row_html(text, "coder")
+    assert "local kill-switch engaged" in row
+    assert "scripts/emergency_resume.sh coder" in row
+    assert "local kill-switch" not in _row_html(text, "tester")
+
+
+def test_workers_partial_health_unknown_when_message_api_fails(client):
+    text = _workers_partial(client, [], health_ok=False)
+    for worker_id in panel.WORKER_IDS:
+        assert ">unknown<" in _row_html(text, worker_id)
+
+
+def test_toggle_row_keeps_kill_switch_badge(client):
+    async def side_effect(method, path, **kwargs):
+        if path == "/workers/coder/health":
+            return mapi_result(data=_health_row("coder", "alive", age_s=2, local_override=True))
+        return mapi_result(data={"worker_id": "coder", "enabled": True})
+
+    client.mapi.side_effect = side_effect
+    resp = client.post("/workers/coder/enable")
+    assert "local kill-switch engaged" in resp.text
+
+
+@pytest.mark.parametrize("seconds,expected", [
+    (0, "0s"), (12.7, "12s"), (130, "2m 10s"), (7500, "2h 5m"), (None, "?"), ("x", "?"),
+])
+def test_format_age(seconds, expected):
+    assert panel.format_age(seconds) == expected
 
 
 # ── message composer ────────────────────────────────────────────────────
@@ -209,6 +306,116 @@ def test_upload_replay_forwards_raw_body_and_params(client):
     assert args == ("POST", "/replays")
     assert kwargs["content"] == b'{"source": "ep1"}'
     assert kwargs["params"]["overwrite"] == "true"
+    # The panel upload never sends ?status= — operator uploads stay approved.
+    assert "status" not in kwargs["params"]
+
+
+# ── draft review ─────────────────────────────────────────────────────────
+def _library_and_drafts(library, drafts, extra=None):
+    """side_effect answering the two GET /replays listings separately."""
+    async def side_effect(method, path, **kwargs):
+        if extra is not None:
+            hit = extra(method, path, **kwargs)
+            if hit is not None:
+                return hit
+        if method == "GET" and path == "/replays":
+            params = kwargs.get("params") or {}
+            if params.get("status") == "draft":
+                return mapi_result(data={"episodes": drafts})
+            return mapi_result(data={"episodes": library})
+        raise AssertionError(f"unexpected call {method} {path} {kwargs}")
+    return side_effect
+
+
+def test_partial_replays_renders_drafts_separately_with_approve_and_no_play(client):
+    client.mapi.side_effect = _library_and_drafts(
+        [{"name": "aired-ep"}], [{"name": "draft-ep", "uploaded_by": "3layer-generator"}])
+
+    resp = client.get("/partials/replays")
+
+    assert resp.status_code == 200
+    assert 'id="draft-row-draft-ep"' in resp.text
+    assert 'hx-post="/replays/draft-ep/approve"' in resp.text
+    assert 'hx-post="/replays/draft-ep/reject"' in resp.text
+    # A draft must never get a Play button.
+    assert "/replays/draft-ep/play" not in resp.text
+    assert "/replays/aired-ep/play" in resp.text
+    assert "3layer-generator" in resp.text
+
+
+def test_partial_replays_no_drafts_shows_empty_hint(client):
+    client.mapi.side_effect = _library_and_drafts([{"name": "aired-ep"}], [])
+    resp = client.get("/partials/replays")
+    assert "no drafts awaiting review" in resp.text
+
+
+def test_partial_replays_drafts_error_shown_library_still_renders(client):
+    def extra(method, path, **kwargs):
+        if (kwargs.get("params") or {}).get("status") == "draft":
+            return mapi_result(ok=False, status_code=503, error="drafts listing broke")
+        return None
+    client.mapi.side_effect = _library_and_drafts([{"name": "aired-ep"}], [], extra)
+
+    resp = client.get("/partials/replays")
+
+    assert "drafts listing broke" in resp.text
+    assert "aired-ep" in resp.text
+
+
+def test_approve_replay_forwards_and_rerenders_section(client):
+    calls = []
+
+    def extra(method, path, **kwargs):
+        calls.append((method, path))
+        if method == "POST":
+            return mapi_result(data={"name": "draft-ep", "status": "approved",
+                                     "previous_status": "draft"})
+        return None
+    client.mapi.side_effect = _library_and_drafts([{"name": "draft-ep"}], [], extra)
+
+    resp = client.post("/replays/draft-ep/approve")
+
+    assert resp.status_code == 200
+    assert calls[0] == ("POST", "/replays/draft-ep/approve")
+    assert "approved" in resp.text
+    assert 'id="replays-section"' in resp.text
+    # Now in the library table, where Play lives.
+    assert "/replays/draft-ep/play" in resp.text
+
+
+def test_approve_replay_error_shows_banner(client):
+    def extra(method, path, **kwargs):
+        if method == "POST":
+            return mapi_result(ok=False, status_code=404, error="no episode named 'gone'")
+        return None
+    client.mapi.side_effect = _library_and_drafts([], [], extra)
+
+    resp = client.post("/replays/gone/approve")
+
+    assert resp.status_code == 200
+    assert "approve gone failed" in resp.text
+    assert "no episode named" in resp.text
+
+
+def test_reject_replay_success_deletes_and_returns_empty_body(client):
+    client.mapi.return_value = mapi_result(data={"name": "draft-ep", "deleted": True})
+
+    resp = client.post("/replays/draft-ep/reject")
+
+    assert resp.status_code == 200
+    assert resp.text == ""
+    args, _ = client.mapi.await_args_list[0]
+    assert args == ("DELETE", "/replays/draft-ep")
+
+
+def test_reject_replay_error_keeps_draft_row_without_play(client):
+    client.mapi.return_value = mapi_result(ok=False, status_code=503, error="postgres unavailable")
+
+    resp = client.post("/replays/draft-ep/reject")
+
+    assert "postgres unavailable" in resp.text
+    assert 'id="draft-row-draft-ep"' in resp.text
+    assert "/play" not in resp.text
 
 
 # ── _mapi_request itself (run via asyncio.run — no pytest-asyncio in this

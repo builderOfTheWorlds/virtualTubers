@@ -33,7 +33,8 @@ def passes_filters(msg: dict, filters: dict) -> bool
 def format_timestamp(iso_ts: str, ts_config: dict) -> str
 def format_payload(payload, payload_config: dict) -> str
 def format_line(msg: dict, feed_config: dict) -> str
-def format_header() -> str
+def format_header(feed_config: dict | None = None) -> str
+def format_correlation_tag(msg: dict, chars: int = 6) -> str
 def connect_with_retry(bootstrap_servers: str, topic: str, group_id: str, sleep=time.sleep) -> MessageConsumer
 def run(bus_config_path: str, feed_config_path: str | None) -> None
 def main(argv: list[str] | None = None) -> None
@@ -62,6 +63,9 @@ def main(argv: list[str] | None = None) -> None
 | `timestamp.format` | str | `%H:%M:%S` | `strftime` format. |
 | `timestamp.local` | bool | `true` | Convert UTC ISO stamp to local time. |
 | `header` | bool | `true` | Print a one-time column header at startup. |
+| `correlation.show` | bool | `false` | Columns mode only: insert a short correlation tag column between TYPE and PAYLOAD (header gets `CORR`). Off by default so the narrow pane's default line is byte-for-byte unchanged. |
+| `correlation.chars` | int | `6` | Tag width: first N chars of `correlation_id` (falls back to the message `id` for older senders). |
+| `correlation.color` | str | `gray` | ANSI color for the tag. |
 
 ### Environment overrides (env wins over file)
 
@@ -140,13 +144,22 @@ Structured logging goes to **stderr only** so the stdout feed stays clean:
 
 ## Notes
 
-- **Heartbeat carrier:** `app/agent.py` publishes its per-tick flood as message
+- **Heartbeat carrier:** `app/agent.py` publishes its bus heartbeat as message
   type `status_update` (payload `{"text": "heartbeat #N"}`), **not** `heartbeat`.
-  Both are hidden by default so the feed is not flooded. `agent.py` is not edited;
-  filtering is fully configurable via `filters.hide_types`.
+  Since agent v2.6.0 it is sent only every `agent.bus_heartbeat_every` ticks
+  (default 12; liveness moved to the Redis key `worker:{id}:alive`), but both
+  types stay hidden by default; filtering is fully configurable via
+  `filters.hide_types`.
+- **Following one task:** enable `correlation.show` to tag every line with the
+  first chars of its `correlation_id` — a task and its bug-fix retries share
+  one tag (docs/message_bus.md "Correlation IDs").
 
 ## Changelog
 
+- **v1.2.0** (2026-09-27) — Optional correlation tag column
+  (`content.correlation.show|chars|color`, off by default);
+  `format_correlation_tag()`; `format_header(feed_config=None)` adds a `CORR`
+  heading when enabled. Default output unchanged.
 - **v1.1.0** (2026-07-02) — Kafka bootstrap failures on the initial connect no
   longer crash the pane process (which used to drop the tmux pane to a bare
   shell); `connect_with_retry()` retries with backoff instead. Poll-loop

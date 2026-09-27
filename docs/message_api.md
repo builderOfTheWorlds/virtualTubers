@@ -44,6 +44,16 @@ bar; `DELETE` drops it so the score goes back to following scene cues; `GET`
 reports the override plus the director's now-playing heartbeat. The Redis
 contract is `MusicControl` in `app/music/control.py` (docs/music_engine.md).
 
+**Review gate (drafts).** An upload may be stored as a `draft`
+(`?status=draft`) instead of the default `approved`. A draft has passed the
+same validator but **never airs**: `episode_store`'s worker read paths only
+see approved rows, so a `replay_request` or a `viewer_joined` random pick
+can't reach it. `POST /replays/{name}/approve` promotes a draft;
+rejecting one is the ordinary `DELETE /replays/{name}`. The
+3layer-generator's opt-in auto-submit (docs/draft_submitter.md) is what
+uploads drafts; every existing client (builder scripts, the control-panel
+upload form, `curl`) sends no `status` and keeps the old behaviour.
+
 ## Signature
 
 ```python
@@ -55,6 +65,8 @@ class InjectMessage(BaseModel):
 @app.get("/healthz") -> dict
 @app.post("/messages") def post_message(body: InjectMessage) -> dict
 
+@app.get("/workers/health") -> dict             # declared before /workers/{worker_id}
+@app.get("/workers/{worker_id}/health") -> dict
 @app.get("/workers/{worker_id}") -> dict
 @app.post("/workers/{worker_id}/enable") -> dict
 @app.post("/workers/{worker_id}/disable") -> dict
@@ -81,11 +93,14 @@ MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 
 @app.post("/replays") async def upload_replay(request: Request,
                                               name: Optional[str] = None,
-                                              overwrite: bool = False) -> dict
+                                              overwrite: bool = False,
+                                              status: Literal["approved", "draft"] = "approved",
+                                              uploaded_by: str = "operator") -> dict
 # body is read via `await request.body()`, not a Body(...) param — see Changelog v1.4.1
-@app.get("/replays") def list_replays() -> dict
-@app.get("/replays/{name}") def get_replay(name: str) -> dict
-@app.delete("/replays/{name}") def delete_replay(name: str) -> dict
+@app.get("/replays") def list_replays(status: Literal["approved", "draft", "all"] = "approved") -> dict
+@app.get("/replays/{name}") def get_replay(name: str) -> dict          # includes drafts
+@app.post("/replays/{name}/approve") def approve_replay(name: str) -> dict
+@app.delete("/replays/{name}") def delete_replay(name: str) -> dict    # also "reject a draft"
 
 # GM live music control (app/music/control.py MusicControl; docs/music_engine.md)
 class SetMusicRequest(BaseModel):
@@ -119,9 +134,19 @@ query parameters:
   filename stem used to be, so an unmodified episode keeps the key the rest
   of the stack already knows it by (including `voiced_narration.episode`).
 - `overwrite` (bool, optional, default `false`) — replace an episode of the
-  same name instead of failing with `409`.
+  same name instead of failing with `409`. The replacement's `status` wins,
+  so overwriting an aired episode with `status=draft` takes it off air
+  until it is re-approved.
+- `status` (`approved` | `draft`, optional, default `approved`) — review
+  status to store. Anything else is a `422`.
+- `uploaded_by` (str, optional, default `"operator"`, 1-64 chars) — free-text
+  attribution stored on the row (the generator sends `3layer-generator`).
 
-`GET`/`DELETE /replays/{name}` take the library key as a path parameter,
+`GET /replays` takes an optional `status` query parameter: `approved`
+(default — the airable library, exactly what it listed before drafts
+existed), `draft` (the review queue), or `all`.
+
+`GET`/`DELETE /replays/{name}` and `POST /replays/{name}/approve` take the library key as a path parameter,
 validated against the same `^[A-Za-z0-9._-]{1,128}$` rule the upload path
 applies, so a lookup can never be handed something an upload would refuse.
 
@@ -146,12 +171,17 @@ working, and must heal on its own once the database is back.
 - `POST /messages` — the full message envelope that was published (`id`, `from` (always `"operator"`), `to`, `type`, `payload`, `timestamp`), HTTP 200.
 - `GET /workers/{worker_id}` — `{"worker_id": ..., "enabled": bool}`, HTTP 200. Defaults to `enabled: true` if the worker has never been toggled.
 - `POST /workers/{worker_id}/enable` / `/disable` — same shape as the GET, reflecting the new state, HTTP 200.
+- `GET /workers/{worker_id}/health` — one health row, HTTP 200 (never 503), from `WorkerControl.health()` (docs/worker_control.md v1.3.0):
+  `{"worker_id", "state": "alive"|"stale"|"down"|"unknown", "alive": bool|null, "last_seen": iso|null, "age_s": float|null, "local_override": bool|null, "enabled": bool|null, "ttl_s": int|null}`.
+  `local_override` is the worker's **own report** of its local kill file, carried in its liveness key (message-api cannot see other containers' files); `null` when the worker is down, Redis is down, or it runs a pre-v1.3 image. `enabled` is the **raw Redis flag** (missing key => `true`), never this container's kill file; `null` when Redis is unreachable. Redis down => `state: "unknown"`, `alive: null`.
+- `GET /workers/health` — `{"workers": [row, ...]}` for every known worker: the `WORKER_ID_EXAMPLES` ids (in that order) plus any other id that has a `worker:*:alive` or `worker:*:enabled` key in Redis (e.g. `roundtable`, `tuber_0`), from one `MGET`. Redis down => every example id with `state: "unknown"`. Consequence of the route order: a worker literally named `health` can't be read via `GET /workers/{id}`.
 - `GET /log-filter/{message_type}` — `{"type": ..., "excluded": bool}`, HTTP 200. Defaults to `excluded: true` for `status_update` and `false` for any other type that's never been toggled.
 - `POST /log-filter/{message_type}/exclude` / `/include` — same shape as the GET, reflecting the new state, HTTP 200.
 - `POST /logs/prune` — `{"deleted": int, "after": ..., "before": ...}`, HTTP 200.
-- `POST /replays` — `{"name": str, "event_count": int, "byte_size": int, "created": true}`, HTTP 200.
-- `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, sorted by name. No scripts.
-- `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform, HTTP 200.
+- `POST /replays` — `{"name": str, "event_count": int, "byte_size": int, "created": true, "status": "approved"|"draft"}`, HTTP 200.
+- `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, `status`, sorted by name, filtered by `?status=` (default approved only). No scripts.
+- `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform and for reviewing a draft before approving it (this endpoint, unlike the workers' read path, **includes drafts**), HTTP 200.
+- `POST /replays/{name}/approve` — `{"name": str, "status": "approved", "previous_status": "draft"|"approved"}`, HTTP 200. Idempotent: approving an approved episode reports `previous_status: "approved"`.
 - `DELETE /replays/{name}` — `{"name": str, "deleted": bool}`, HTTP 200. `deleted: false` means the name was already absent (idempotent, not an error).
 - `GET /logs/containers` — `{"logs": [...]}` — rows from `container_logs` (docs/log_shipper.md) filtered to the given `service` name(s), oldest-first, `container_name`/`stream`/`message`/`log_timestamp` per row.
 - `GET /logs/messages` — `{"messages": [...]}` — rows from `messages` (docs/message_logger.md) filtered to the given `worker_id`(s) (matched against either `from` or `to`), oldest-first, `from`/`to`/`type`/`payload`/`timestamp` per row.
@@ -192,6 +222,12 @@ curl -X POST http://localhost:8090/messages \
 curl -X POST http://localhost:8090/workers/coder/disable
 curl http://localhost:8090/workers/coder
 curl -X POST http://localhost:8090/workers/coder/enable
+
+# Is it actually ticking, and is its local kill switch engaged?
+curl http://localhost:8090/workers/coder/health
+# {"worker_id":"coder","state":"alive","alive":true,"last_seen":"2026-09-27T12:00:05+00:00",
+#  "age_s":2.1,"local_override":false,"enabled":true,"ttl_s":15}
+curl http://localhost:8090/workers/health   # every known worker
 ```
 
 ```bash
@@ -248,12 +284,22 @@ curl -X DELETE http://localhost:8090/music/roundtable
 curl http://localhost:8090/music/roundtable
 ```
 
+```bash
+# Review gate: upload as a draft (stored, never airs), list the review
+# queue, then approve it — or reject it with the ordinary DELETE.
+curl -X POST "http://localhost:8090/replays?status=draft" \
+  -H "Content-Type: application/json" --data-binary @replays/sample.json
+curl -sS "http://localhost:8090/replays?status=draft" | python3 -m json.tool
+curl -X POST http://localhost:8090/replays/sample/approve
+```
+
 ## Error Handling
 
 - Missing `to` field — HTTP 422 with a Pydantic validation error body.
 - Kafka unreachable at startup — the process fails to construct `MessageProducer` and exits; `restart: unless-stopped` retries.
 - Redis unreachable when reading status — `is_enabled` fails open, so `GET /workers/{id}` reports `enabled: true` rather than erroring.
 - Redis unreachable when writing status — `enable`/`disable` return HTTP 503; the toggle did not take effect.
+- Redis unreachable when reading health — `GET /workers/health` and `/workers/{id}/health` still return HTTP 200 with `state: "unknown"`, `alive`/`enabled`/`local_override` `null` (unknown is never reported as alive or enabled).
 - Redis unreachable when reading a log filter — `is_excluded` falls back to `DEFAULT_EXCLUDED_TYPES`, so `GET /log-filter/{type}` keeps reporting `status_update` as excluded rather than erroring.
 - Redis unreachable when writing a log filter — `exclude`/`include` return HTTP 503; the toggle did not take effect.
 - `/logs/prune` called with neither `after` nor `before` — HTTP 400.
@@ -268,6 +314,8 @@ curl http://localhost:8090/music/roundtable
 - `POST /music/{worker_id}` with an unknown mood — HTTP 400 listing the valid moods; nothing written.
 - Redis unreachable when writing/clearing a music override — HTTP 503; the change did not take effect.
 - Redis unreachable when reading music state — reads fail open: `GET /music/{worker_id}` reports `override: null, running: false` rather than erroring.
+- `POST /replays/{name}/approve` for an unknown episode — HTTP 404; Postgres unreachable — HTTP 503; bad name — HTTP 400.
+- `POST /replays?status=<anything but approved/draft>` or `GET /replays?status=<not approved/draft/all>` — HTTP 422, nothing written.
 - `GET`/`DELETE /replays/{name}` with a name containing path separators or other disallowed characters — HTTP 400, before any query runs.
 
 ## Changelog
@@ -278,5 +326,7 @@ curl http://localhost:8090/music/roundtable
 - v1.3.0 (2026-07-12) — Added `POST /logs/prune`, a manual time-range delete of `container_logs` rows backed by the new `app/log_prune.py`, complementing log-shipper's automatic age-based retention prune.
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
 - v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.
+- v1.6.0 (2026-09-27) — Draft review gate. `POST /replays` takes optional `status` (`approved` default | `draft`) and `uploaded_by` query params and echoes `status`; `GET /replays` takes `?status=approved|draft|all` (default `approved`, so existing callers are unchanged) and each row now carries `status`; `GET /replays/{name}` includes drafts (review); new `POST /replays/{name}/approve`. Drafts never air — the filter lives in `app/episode_store.py` (docs/episode_store.md v1.1.0), whose `ensure_schema()` now also migrates an existing table (new `status` column, existing rows `approved`).
+- v1.7.0 (2026-09-27) — Worker health: `GET /workers/health` (all known workers — `WORKER_ID_EXAMPLES` plus ids discovered from Redis keys) and `GET /workers/{worker_id}/health`, backed by `WorkerControl.health_many()`/`health()` (docs/worker_control.md v1.3.0). Reports liveness (alive/stale/down/unknown, last seen, age), the worker's self-reported local kill switch, and the raw Redis enable flag. Never 503s — Redis down reads as `unknown`. Existing `/workers/{id}` responses unchanged.
 - v1.5.0 (2026-09-27) — Added `GET /logs/containers` and `GET /logs/messages`, backed by the new `app/replay_logs.py` (docs/replay_logs.md). Read-only tails of `container_logs` (log-shipper) and `messages` (message-logger) scoped to a caller-given `service`/`worker_id` list plus an optional `since` timestamp — the source data for the control-panel's Rerun Theater "Play" log viewer, which previously had no way to show whether a replay_request actually landed or what a worker printed while preparing narration.
 - v1.6.0 (2026-09-27) — Added GM live music control: `GET /music-moods`, `GET`/`POST`/`DELETE /music/{worker_id}`, backed by `app/music/control.py` `MusicControl` (Redis override key `music:{worker_id}:override`, director heartbeat `music:{worker_id}:status`). The image now copies `app/music/` (no new pip dependency — numpy is not imported). Needs a `message-api` image rebuild + redeploy.

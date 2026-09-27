@@ -9,6 +9,7 @@
   --ok: #3fbf6f;
   --err: #e5534b;
   --off: #6b7280;
+  --warn: #e6a739;
 }
 
 * { box-sizing: border-box; }
@@ -53,6 +54,13 @@ h2 { margin-top: 0; font-size: 1rem; }
 .badge.on  { background: rgba(63,191,111,0.15); color: var(--ok); }
 .badge.off { background: rgba(107,114,128,0.2); color: var(--off); }
 .badge.err { background: rgba(229,83,75,0.15); color: var(--err); }
+.badge.warn { background: rgba(230,167,57,0.15); color: var(--warn); }
+.badge.kill { background: var(--err); color: white; }
+
+/* Workers table health cell: local kill-switch explanation under the badges. */
+.health .subtle { font-size: 0.8rem; }
+.kill-note { margin-top: 0.3rem; }
+.kill-note code { font-size: 0.75rem; }
 
 .actions { white-space: nowrap; }
 

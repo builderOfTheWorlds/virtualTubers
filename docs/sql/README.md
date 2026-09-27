@@ -60,6 +60,11 @@ update the others, and `docs/database_schema.md` too.
 retries on every `/replays` request until it succeeds. A Postgres that was
 down when `message-api` started therefore still gets the table on the
 first request after it comes back — the workers only ever read it.
+Its later `status` column (the draft review gate) is added the same way:
+`02_create_tables.sql` and `episode_store.ensure_schema()` both run an
+idempotent `ALTER TABLE ... ADD COLUMN IF NOT EXISTS status ... DEFAULT
+'approved'`, so re-running the SQL file against an existing database is
+safe and upgrades it in place.
 
 ## Common gotcha: wrong database in a manual client
 

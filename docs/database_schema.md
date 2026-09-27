@@ -23,12 +23,22 @@ Postgres is an external, pre-existing instance (not run via docker-compose) — 
 | `payload` | JSONB | NOT NULL | Full message body |
 | `timestamp` | TIMESTAMPTZ | NOT NULL | When the message was sent (from envelope) |
 | `ingested_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When message-logger wrote the row |
+| `correlation_id` | UUID | nullable | Chain id from the envelope: every message caused (transitively) by one `task_assignment` — including bug-fix re-assignments — shares it. A chain-starting message uses its own `id`. NULL for rows from senders that predate correlation IDs, or a non-UUID value |
+| `causation_id` | UUID | nullable | `id` of the message that directly caused this one; NULL for chain starters |
 
-Indexes: `idx_messages_to (to)`, `idx_messages_type (type)`.
+Indexes: `idx_messages_to (to)`, `idx_messages_type (type)`, `idx_messages_correlation (correlation_id)`.
 
 Inserts use `ON CONFLICT (id) DO NOTHING`, making consumer restarts / at-least-once redelivery safe against duplicates.
 
-Defined in: `docs/sql/02_create_tables.sql:13-23`, `services/message-logger/logger.py:19-30`. Prose: `docs/message_logger.md`.
+Migration: `correlation_id` / `causation_id` were added 2026-09-27. Both are created in the `CREATE TABLE` for new databases and added to existing ones by idempotent `ALTER TABLE messages ADD COLUMN IF NOT EXISTS ...` statements that message-logger runs on every startup (same pattern as `voiced_narration.audio`). Existing rows keep NULL.
+
+Follow one task end to end:
+```sql
+SELECT timestamp, "from", "to", type, id, causation_id
+FROM messages WHERE correlation_id = '<uuid>' ORDER BY timestamp;
+```
+
+Defined in: `docs/sql/02_create_tables.sql` (`messages` block), `services/message-logger/logger.py` (`CREATE_TABLE_SQL`). Prose: `docs/message_logger.md`, `docs/message_bus.md`.
 
 ---
 
@@ -100,7 +110,7 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py`
 
 ## `replay_episodes`
 
-**Owner:** `message-api` service via `app/episode_store.py`. `services/message-api/api.py` is the only writer (`POST /replays`, `DELETE /replays/{name}`) and also runs the `CREATE TABLE IF NOT EXISTS` — best-effort at import, retried on every `/replays` request until it succeeds, since unlike `messages`/`container_logs` no long-lived consumer owns this table. Read directly by `app/replay_pane.py` and `app/agent.py` on every worker.
+**Owner:** `message-api` service via `app/episode_store.py`. `services/message-api/api.py` is the only writer (`POST /replays`, `POST /replays/{name}/approve`, `DELETE /replays/{name}`) and also runs the `CREATE TABLE IF NOT EXISTS` — best-effort at import, retried on every `/replays` request until it succeeds, since unlike `messages`/`container_logs` no long-lived consumer owns this table. Read directly by `app/replay_pane.py` and `app/agent.py` on every worker.
 
 **Why it exists:** the Rerun Theater episode library (`docs/episode_store.md`). Episodes used to be JSON files that an operator hand-copied to the deploy host, bind-mounted read-only into every worker at `/data/replays`, with nothing validating them anywhere in the loop — a malformed or unredacted script was discovered only when it failed, or leaked, live on stream. They are now uploaded to `POST /replays`, validated (`docs/episode_validator.md`: shape → name → leak audit → dry-run render) and stored here; the mount is gone.
 
@@ -115,8 +125,11 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py`
 | `byte_size` | INTEGER | NOT NULL | Size of the serialized script in UTF-8 bytes |
 | `uploaded_by` | TEXT | NOT NULL, DEFAULT `'operator'` | Free-text attribution for the upload |
 | `uploaded_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When the episode was uploaded; refreshed by an `?overwrite=true` re-upload |
+| `status` | TEXT | NOT NULL, DEFAULT `'approved'`, CHECK `IN ('draft','approved')` | Review gate. `draft` rows are stored but **never air** — `episode_store`'s worker read paths select `status = 'approved'` only. Promoted by `POST /replays/{name}/approve`; a draft is rejected by deleting it |
 
-Indexes: `idx_replay_episodes_uploaded_at (uploaded_at DESC)`.
+Indexes: `idx_replay_episodes_uploaded_at (uploaded_at DESC)`, `idx_replay_episodes_status (status)`.
+
+Migration: `status` was added after the table first shipped. `episode_store.ensure_schema()` runs `ALTER TABLE replay_episodes ADD COLUMN IF NOT EXISTS status ... DEFAULT 'approved'` after the `CREATE TABLE IF NOT EXISTS`, so an existing table gains the column with every pre-existing row backfilled as `approved` (the library keeps airing unchanged); the same statement is in `docs/sql/02_create_tables.sql`. Idempotent on every later run.
 
 Inserts use `ON CONFLICT (name) DO NOTHING` normally — `message-api` turns the resulting "no row written" into a `409` — and `ON CONFLICT (name) DO UPDATE` when the upload passes `?overwrite=true`.
 
@@ -209,4 +222,4 @@ When adding or changing a table:
 2. Update `docs/sql/02_create_tables.sql` to match.
 3. Update this file.
 
-There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with one exception: `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.
+There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with two exceptions: `messages`' `correlation_id`/`causation_id` columns (+ `idx_messages_correlation`) and `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.

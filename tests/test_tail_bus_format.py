@@ -321,3 +321,32 @@ def test_merge_feed_config_conversation_format_override():
     assert cfg["format"] == "conversation"
     # Columns mode defaults (colors, filters, etc.) remain intact/unaffected.
     assert cfg["filters"]["hide_types"] == ["heartbeat", "status_update", "agent_thinking"]
+
+
+# ── correlation tag (columns mode, opt-in) ────────────────────────────────────
+
+def test_correlation_column_off_by_default_line_unchanged():
+    cfg = tail_bus._merge_feed_config({})
+    assert cfg["correlation"]["show"] is False
+    msg = make_msg(correlation_id="abcdef123456")
+    assert "abcdef" not in strip_ansi(tail_bus.format_line(msg, cfg))
+    assert tail_bus.format_header(cfg) == tail_bus.format_header()
+
+
+def test_correlation_column_shows_short_tag_when_enabled():
+    cfg = tail_bus._merge_feed_config({"correlation": {"show": True}})
+    line = strip_ansi(tail_bus.format_line(make_msg(correlation_id="abcdef123456"), cfg))
+    assert "abcdef ticket=42" in line
+    assert "abcdef1" not in line
+    assert "CORR" in strip_ansi(tail_bus.format_header(cfg))
+
+
+def test_correlation_tag_custom_width_and_legacy_fallback():
+    cfg = tail_bus._merge_feed_config({"correlation": {"show": True, "chars": 4}})
+    # No correlation_id (older sender): falls back to the message's own id.
+    line = strip_ansi(tail_bus.format_line(make_msg(id="zyxwvut"), cfg))
+    assert "zyxw ticket=42" in line
+
+
+def test_format_correlation_tag_empty_when_no_ids():
+    assert tail_bus.format_correlation_tag({}, 6) == ""
