@@ -4,14 +4,13 @@ Any-role `viewer_joined` handler (split out of app/agent.py): queue a
 Rerun Theater episode for a newly arrived Twitch viewer, then greet them.
 Narration-only — nothing is sent back onto the bus.
 """
-import os
 import random
 
 import episode_store
 from agent_state import write_state
 
 from .common import _complete_with_emotion
-from .relay_files import _resolve_replay_request_file, _write_replay_request
+from .relay_files import _write_replay_request
 
 
 def _pick_rerun_episode(payload):
@@ -68,8 +67,6 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
     queued = False
     if episode is None:
         print(f"[agent:{worker_id}] no replay episodes available — greeting {username!r} only")
-    elif os.path.exists(_resolve_replay_request_file()):
-        print(f"[agent:{worker_id}] a replay request is already pending — greeting {username!r} only")
     else:
         request = {"episode": episode}
         # voice/narration ride along verbatim, same as handle_replay_request
@@ -78,10 +75,15 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
             request["voice"] = payload["voice"]
         if payload.get("narration"):
             request["narration"] = str(payload["narration"])
+        # if_absent: "already pending?" and the write are one atomic step
+        # (relay_io.atomic_create_json) — no check-then-write window.
         try:
-            _write_replay_request(request)
-            queued = True
-            print(f"[agent:{worker_id}] viewer {username!r} arrived — queued rerun {episode!r}")
+            if _write_replay_request(request, if_absent=True) is None:
+                print(f"[agent:{worker_id}] a replay request is already pending — "
+                      f"greeting {username!r} only")
+            else:
+                queued = True
+                print(f"[agent:{worker_id}] viewer {username!r} arrived — queued rerun {episode!r}")
         except OSError as exc:
             print(f"[agent:{worker_id}] failed to queue viewer-join rerun: {exc}")
 

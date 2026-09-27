@@ -5,9 +5,9 @@ Any-role replay handlers (split out of app/agent.py): the operator levers
 types `replay_invite` / `replay_ready` / `replay_cue` / `replay_end`. None
 of them calls the LLM; they only write relay files for app/replay_pane.py.
 """
-import os
 import time
 
+import relay_io
 from message_bus import build_message
 from agent_state import write_state
 
@@ -136,12 +136,13 @@ def handle_replay_stop(worker_id, agent_config, llm_client, producer, msg,
     """
     request_file = _resolve_replay_request_file()
     cancelled_queued = False
-    if os.path.exists(request_file):
-        try:
-            os.remove(request_file)
-            cancelled_queued = True
-        except OSError as exc:
-            print(f"[agent:{worker_id}] failed to cancel queued replay request: {exc}")
+    try:
+        # A single unlink, not exists-then-remove: if the pane claims the
+        # request in between, it simply isn't queued any more (the stop
+        # file below catches it playing) — not a "failed to cancel".
+        cancelled_queued = relay_io.remove_file(request_file)
+    except OSError as exc:
+        print(f"[agent:{worker_id}] failed to cancel queued replay request: {exc}")
 
     try:
         _atomic_write_json(_resolve_replay_stop_file(), {
@@ -186,20 +187,22 @@ def handle_replay_invite(worker_id, agent_config, llm_client, producer, msg,
     this handler does not report anything back itself.
     """
     payload = msg.get("payload", {})
-    request_file = _resolve_replay_request_file()
-    if os.path.exists(request_file):
-        print(f"[agent:{worker_id}] dropped replay_invite — a replay request is already pending")
-        return
 
     # Fields copied verbatim from the invite payload, plus the follower-mode
     # marker replay_pane.py switches on.
     request = dict(payload)
     request["mode"] = "follow"
 
+    # if_absent: the "already pending?" check and the write are one atomic
+    # step (relay_io.atomic_create_json), so there is no window in which a
+    # request landing after the check gets clobbered.
     try:
-        _write_replay_request(request)
+        written = _write_replay_request(request, if_absent=True)
     except OSError as exc:
         print(f"[agent:{worker_id}] failed to write follower request for replay_invite: {exc}")
+        return
+    if written is None:
+        print(f"[agent:{worker_id}] dropped replay_invite — a replay request is already pending")
         return
 
     print(
