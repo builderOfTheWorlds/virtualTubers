@@ -24,19 +24,45 @@ log = logging.getLogger("qwen_worker.sandbox")
 # Directories copied into the verification sandbox. Everything the test suite
 # imports or reads must be here; .venv, .git and node_modules must not.
 SANDBOX_DIRS = ("app", "tests", "config", "campaigns", "tools", "utilities",
-                "services")
+                "services", "deploy")
 SANDBOX_FILES = ("pytest.ini",)
 
 # Never copied — large, irrelevant, or actively harmful to duplicate.
 COPY_IGNORE = shutil.ignore_patterns(
     "__pycache__", "*.pyc", ".pytest_cache", ".git", ".venv",
     "node_modules", "*.wav", "*.mp4", ".qwen_staging",
+    # *.har are browser network captures (reference material only) — large and
+    # never read by the suite, so exclude them wherever they live.
+    "*.har",
     # utilities/3LayersWeeklyGeneration/output/ holds the generated take
     # library, which grows to ~1.5M words. The sandbox is rebuilt on every
     # attempt, so copying it would turn a milliseconds-cheap sandbox into a
     # multi-gigabyte one. No test reads it — they all use tmp_path.
     "output",
 )
+
+
+def venv_python(repo_root):
+    """Locate the project's venv interpreter for either host.
+
+    Returns the first existing path of ``.venv/bin/python`` (Linux/macOS) or
+    ``.venv/Scripts/python.exe`` (Windows). Raises ``FileNotFoundError`` naming
+    both candidates when neither exists, so a mis-provisioned box fails loudly
+    at preflight / first sandboxed run instead of mid-test.
+    """
+    repo_root = Path(repo_root)
+    candidates = (
+        repo_root / ".venv" / "bin" / "python",
+        repo_root / ".venv" / "Scripts" / "python.exe",
+    )
+    for candidate in candidates:
+        if candidate.exists():
+            log.debug("venv python found at %s", candidate)
+            return candidate
+    raise FileNotFoundError(
+        "no venv python found; looked for "
+        + " and ".join(str(candidate) for candidate in candidates)
+    )
 
 
 def staging_dir(repo_root, task_id):
@@ -113,7 +139,7 @@ def run_pytest(repo_root, staged_files, test_paths, extra_files=None,
     Returns (passed, output). Output is combined stdout+stderr, tail-trimmed by
     the caller before being fed back to the model.
     """
-    python_bin = python_bin or str(Path(repo_root) / ".venv" / "bin" / "python")
+    python_bin = python_bin or str(venv_python(repo_root))
     sandbox = build_sandbox(repo_root, staged_files, extra_files)
 
     # --maxfail/--tb keep the feedback useful: a broad failure otherwise fills

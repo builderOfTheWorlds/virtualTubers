@@ -110,9 +110,14 @@ def read_sources(paths, label):
 def cmd_preflight(args):
     ok, detail = ollama_client.is_available(base_url=args.base_url, model=args.model)
     print(f"{'OK  ' if ok else 'FAIL'} {detail}")
-    print(f"{'OK  ' if (REPO_ROOT / '.venv/bin/python').exists() else 'FAIL'} "
-          f".venv python at {REPO_ROOT / '.venv/bin/python'}")
-    return 0 if ok else 1
+    try:
+        venv = sandbox.venv_python(REPO_ROOT)
+        venv_ok = True
+        print(f"OK   venv python at {venv}")
+    except FileNotFoundError as exc:
+        venv_ok = False
+        print(f"FAIL venv python: {exc}")
+    return 0 if (ok and venv_ok) else 1
 
 
 def cmd_run(args):

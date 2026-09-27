@@ -10,14 +10,19 @@ without adding a package for one HTTP POST.
 """
 import json
 import logging
+import os
 import time
 import urllib.error
 import urllib.request
 
 log = logging.getLogger("qwen_worker.ollama")
 
-DEFAULT_BASE_URL = "http://localhost:11434"
-DEFAULT_MODEL = "qwen3-coder:30b"
+# Defaults are overridable from the environment so a `runner.py preflight` /
+# `run` on the Windows dev PC can reach the model server on the gx10 box
+# without a CLI flag. The env is read at import time; the runner and the
+# sandboxed pytest are separate processes, so each picks up the live values.
+DEFAULT_BASE_URL = os.environ.get("QWEN_WORKER_BASE_URL", "http://localhost:11434")
+DEFAULT_MODEL = os.environ.get("QWEN_WORKER_MODEL", "qwen3-coder:30b")
 
 # A 30B model writing a whole module needs room; qwen3-coder:30b advertises a
 # 262144-token context. num_ctx is what actually gets allocated per request, so
