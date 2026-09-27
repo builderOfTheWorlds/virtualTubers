@@ -32,6 +32,20 @@ Dependency direction is one-way: handler modules import from `common` /
 `relay_files` import nothing from the package; nothing in the package
 imports `agent`.
 
+### Correlation contract (v1.1.0)
+
+Every bus send made **while handling `msg`** in `coder.py`, `tester.py`,
+`manager.py`, `operator.py` and `common._send_manager_report` passes
+`**reply_ids(msg)` to `build_message` (docs/message_bus.md "Correlation
+IDs"): the new message keeps `msg`'s `correlation_id` (falling back to
+`msg["id"]` for older senders) and gets `causation_id = msg["id"]`. The
+manager's bug-fix re-assignment therefore keeps the original task's chain.
+`_send_manager_report(..., cause=msg)` takes the triggering message as a
+keyword (default `None` = new chain). New dev-team sends must follow the
+same rule. `viewer.py`, `replay_relay.py` and `relay_files.py` are not
+threaded (their messages start their own chains; the duet protocol uses
+`airing_id`).
+
 ## Signature
 
 Every handler shares one signature:
@@ -59,7 +73,8 @@ relay-file writes, tmux keystrokes, console prints).
 
 ## Dependencies
 
-- `message_bus.build_message`, `agent_state.write_state` (most handlers)
+- `message_bus.build_message`, `message_bus.reply_ids` / `correlation_of`
+  (dev-team handlers), `agent_state.write_state` (most handlers)
 - `emotion` (`common.py`), `tmux_control` (`coder.py`),
   `test_runner` (`tester.py`), `episode_store` (`viewer.py`)
 - stdlib: `json`, `os`, `random`, `time`
@@ -109,6 +124,11 @@ file write failures log and never raise out of the tick loop).
 
 ## Changelog
 
+- v1.1.0 (2026-09-27) — Correlation IDs threaded through the dev-team
+  handlers (`coder`, `tester`, `manager`, `operator`, `common`); structured
+  log lines there gain `correlation_id=`; `_send_manager_report` gains
+  `cause=`. The manager logs a `re-delegating fix ... correlation_id=` line
+  before a bug-fix re-assignment. Message types and payloads unchanged.
 - v1.0.0 (2026-09-27) — Created by splitting `app/agent.py` (pure
   refactor, zero behaviour change). Function bodies moved verbatim;
   `agent.py` keeps `main()` and backward-compatible re-exports.

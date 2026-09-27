@@ -3,7 +3,7 @@ agent_handlers/operator.py
 Any-role `operator_message` handler (split out of app/agent.py): direct
 operator chat, answered with an `operator_reply`.
 """
-from message_bus import build_message
+from message_bus import build_message, reply_ids
 from agent_state import write_state
 
 from .common import _complete_with_emotion
@@ -34,6 +34,7 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
         producer.send(build_message(
             worker_id, "operator", "operator_reply",
             {"error": str(exc)},
+            **reply_ids(msg),
         ))
         return
 
@@ -43,4 +44,5 @@ def handle_operator_message(worker_id, agent_config, llm_client, producer, msg,
     producer.send(build_message(
         worker_id, "operator", "operator_reply",
         {"narration": narration},
+        **reply_ids(msg),
     ))

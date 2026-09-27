@@ -223,3 +223,64 @@ def test_main_bad_narration_payload_does_not_crash_loop(monkeypatch, capsys):
         logger.main()  # must not raise
 
     assert "voiced_narration insert failed" in capsys.readouterr().out
+
+
+def _run_main_with(messages):
+    fake_cursor = MagicMock()
+    fake_cursor.__enter__ = MagicMock(return_value=fake_cursor)
+    fake_cursor.__exit__ = MagicMock(return_value=False)
+    fake_conn = MagicMock()
+    fake_conn.cursor.return_value = fake_cursor
+    with patch("logger.connect_db", return_value=fake_conn), \
+         patch("logger.MessageConsumer", return_value=iter(messages)):
+        logger.main()
+    return [c.args[1] for c in fake_cursor.execute.call_args_list if c.args[0] == logger.INSERT_SQL]
+
+
+CORR = "11111111-1111-1111-1111-111111111111"
+CAUSE = "22222222-2222-2222-2222-222222222222"
+
+
+def test_insert_sql_includes_correlation_columns():
+    assert "%(correlation_id)s" in logger.INSERT_SQL
+    assert "%(causation_id)s" in logger.INSERT_SQL
+
+
+def test_create_table_sql_migrates_and_indexes_correlation():
+    sql = logger.CREATE_TABLE_SQL
+    assert "ALTER TABLE messages ADD COLUMN IF NOT EXISTS correlation_id UUID" in sql
+    assert "ALTER TABLE messages ADD COLUMN IF NOT EXISTS causation_id UUID" in sql
+    assert "idx_messages_correlation ON messages (correlation_id)" in sql
+    # The ALTERs must run before the index on the new column.
+    assert sql.index("ADD COLUMN IF NOT EXISTS correlation_id") < sql.index("idx_messages_correlation")
+
+
+def test_main_insert_includes_correlation_and_causation(monkeypatch):
+    monkeypatch.setenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    monkeypatch.setenv("KAFKA_TOPIC", "vtuber.messages")
+    msg = _fake_message(msg_id=CORR)
+    msg.update({"correlation_id": CORR, "causation_id": CAUSE})
+    (params,) = _run_main_with([msg])
+    assert params["correlation_id"] == CORR
+    assert params["causation_id"] == CAUSE
+
+
+def test_main_insert_legacy_message_without_correlation_stores_null(monkeypatch):
+    monkeypatch.setenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+    monkeypatch.setenv("KAFKA_TOPIC", "vtuber.messages")
+    (params,) = _run_main_with([_fake_message()])
+    assert params["correlation_id"] is None
+    assert params["causation_id"] is None
+
+
+@pytest.mark.parametrize("value, expected", [
+    (CORR, CORR),
+    (CORR.upper(), CORR),
+    (None, None),
+    ("", None),
+    ("not-a-uuid", None),
+])
+def test_message_row_normalizes_correlation_uuid(value, expected):
+    msg = _fake_message()
+    msg["correlation_id"] = value
+    assert logger.message_row(msg)["correlation_id"] == expected

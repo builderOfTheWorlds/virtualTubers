@@ -55,6 +55,32 @@ disabled. That is right for worker containers (one worker each); never
 create it in the `message-api` container, whose `GET /workers/{id}` would
 then report all workers disabled.
 
+**Liveness key (v1.2.0).** Separately from the enable flag, `agent.py`
+writes `worker:{worker_id}:alive` every tick — value: the tick's ISO-8601
+UTC timestamp, with a TTL (`SET ... EX ttl_s`). The key existing means "the
+agent loop ticked within the last `ttl_s` seconds"; it expires on its own
+when the loop dies or wedges, so no reaper is needed. This replaces
+inferring liveness from the per-tick `status_update` bus heartbeat (now
+rate-limited by `agent.bus_heartbeat_every`, docs/agent.md). TTL: config
+`agent.liveness_ttl_s`, default `max(3 × tick, 15s)`. It is written even
+while the worker is disabled — "alive" (process ticking) and "enabled"
+(operator toggle) are independent.
+
+- `heartbeat()` never raises: a Redis outage logs
+  `WARN event=liveness_write_failed` once and `INFO event=liveness_write_recovered`
+  once when writes succeed again.
+- `last_seen()` / `alive()` return `None` / `False` when the key expired,
+  was never written, or Redis is unreachable — "unknown" is never reported
+  as alive, and readers stay silent so a polling health view can't flood the log.
+
+**Reader API for a health view** (message-api / control-panel — not wired
+yet): construct `WorkerControl.from_config(config)` (or
+`WorkerControl(redis_url)`) once, then per worker id call
+`control.last_seen(worker_id)` → ISO timestamp string or `None`, and/or
+`control.alive(worker_id)` → bool. Combine with `is_enabled()` and
+`local_override_active()` for a full status row. Worker ids are the same
+`WORKER_ID`s used on the bus (`coder`, `tester`, `manager`, ...).
+
 ## Signature
 
 ```python
@@ -73,6 +99,11 @@ class WorkerControl:
     def local_override_active(self) -> bool
     def engage_local_override(self, reason: str = "manual") -> None
     def release_local_override(self) -> bool
+
+    # liveness (v1.2.0)
+    def heartbeat(self, worker_id: str, ttl_s: int) -> bool
+    def last_seen(self, worker_id: str) -> str | None
+    def alive(self, worker_id: str) -> bool
 ```
 
 ## Parameters
@@ -89,6 +120,7 @@ class WorkerControl:
   `resolve_kill_file()`: env `WORKER_KILL_FILE` > config
   `worker_control.kill_file` (config/worker.yaml) > `/tmp/worker_disabled`.
 - `reason` (str) — free text written into the kill file by `engage_local_override`.
+- `ttl_s` (int) — liveness key TTL in seconds for `heartbeat`; clamped to at least 1.
 
 ## Return Value
 
@@ -98,6 +130,9 @@ class WorkerControl:
 - `local_override_active` — whether the kill file exists (for status reporting).
 - `engage_local_override` — `None`; creates the kill file.
 - `release_local_override` — `True` if a kill file was removed, `False` if none existed.
+- `heartbeat` — `True` if the liveness key was written, `False` on a Redis error (never raises).
+- `last_seen` — ISO-8601 UTC timestamp of the last tick, or `None` (expired / never written / Redis down).
+- `alive` — `last_seen(...) is not None`.
 - `set_enabled` — echoes back the `enabled` value passed in on success; raises `redis.RedisError` on failure.
 
 ## Dependencies
@@ -125,6 +160,17 @@ if control.local_override_active():
     print("forced off locally:", control.kill_file)
 ```
 
+```python
+# health view: who is ticking?
+for wid in ("coder", "tester", "manager"):
+    print(wid, "alive" if control.alive(wid) else "down/unknown", control.last_seen(wid))
+```
+
+```bash
+redis-cli GET worker:coder:alive   # "2026-09-27T12:00:05.123456+00:00"
+redis-cli TTL worker:coder:alive   # seconds until it counts as dead
+```
+
 ```bash
 # same effect via the HTTP API (services/message-api)
 curl -X POST http://localhost:8090/workers/coder/disable
@@ -143,6 +189,11 @@ curl http://localhost:8090/workers/coder
 
 ## Changelog
 
+- v1.2.0 (2026-09-27) — Liveness key `worker:{id}:alive` (ISO timestamp, TTL):
+  `heartbeat(worker_id, ttl_s)` (never raises, logs outage/recovery once),
+  `last_seen(worker_id)` / `alive(worker_id)` readers (None/False when
+  expired or Redis down). Written every tick by `agent.py`. Kill-file and
+  enable-flag semantics unchanged.
 - v1.1.0 (2026-09-27) — Local kill switch: `WORKER_KILL_FILE` (default
   `/tmp/worker_disabled`, config `worker_control.kill_file`) forces the worker
   off without consulting Redis; added `resolve_kill_file`,

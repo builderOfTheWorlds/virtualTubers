@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 agent.py
-Agent loop: publishes a heartbeat each tick and dispatches every incoming
-message type (docs/VTuber_AI_Dev_Team_Concept.md §3.4) via MESSAGE_HANDLERS.
+Agent loop: refreshes the worker's Redis liveness key every tick (plus a
+rate-limited `status_update` bus heartbeat — agent.bus_heartbeat_every) and
+dispatches every incoming message type (docs/VTuber_AI_Dev_Team_Concept.md
+§3.4) via MESSAGE_HANDLERS.
 Workers collaborate by role (agent config `role`): the coder replies
 `task_complete` to the sender and hands the commit to the tester
 (`commit_notification`), the tester "runs tests" and reports `test_passed`
@@ -15,10 +17,11 @@ This file is the entry point only (config, wiring, tick loop). The handlers
 themselves live in app/agent_handlers/ (one module per role/concern — see
 docs/agent_handlers.md); MESSAGE_HANDLERS is built there.
 """
+import math
 import time
 import argparse
 
-from message_bus import load_worker_config, build_message, resolve, MessageProducer, MessageConsumer
+from message_bus import load_worker_config, build_message, correlation_of, resolve, MessageProducer, MessageConsumer
 from worker_control import WorkerControl
 from llm_client import build_llm_client
 from coding_backend import build_coding_backend
@@ -87,6 +90,51 @@ from agent_handlers.replay_relay import (  # noqa: F401
 )
 
 
+# Bus heartbeat cadence default: one status_update every 12 ticks (~1 min at
+# the default 5 s tick). Liveness lives in Redis (worker:{id}:alive) now; the
+# low-rate bus beat is kept only so the operator's "include status_update"
+# log-filter toggle still has something to record. 0 turns it off.
+DEFAULT_BUS_HEARTBEAT_EVERY = 12
+# Liveness key TTL when agent.liveness_ttl_s is unset: this many ticks, with a
+# floor, so one slow tick (an LLM call) doesn't flap the worker to "dead".
+LIVENESS_TTL_TICKS = 3
+MIN_LIVENESS_TTL_S = 15
+
+
+def resolve_bus_heartbeat_every(agent_config):
+    """agent.bus_heartbeat_every as a non-negative int (0 = off). A missing
+    or malformed value falls back to DEFAULT_BUS_HEARTBEAT_EVERY."""
+    value = (agent_config or {}).get("bus_heartbeat_every", DEFAULT_BUS_HEARTBEAT_EVERY)
+    if value is None:
+        return DEFAULT_BUS_HEARTBEAT_EVERY
+    try:
+        value = int(value)
+    except (TypeError, ValueError):
+        print(f"[agent] WARN event=bad_config key=agent.bus_heartbeat_every value={value!r} "
+              f"fallback={DEFAULT_BUS_HEARTBEAT_EVERY}")
+        return DEFAULT_BUS_HEARTBEAT_EVERY
+    return max(0, value)
+
+
+def resolve_liveness_ttl(agent_config, tick_rate_s):
+    """agent.liveness_ttl_s if set (> 0), else max(LIVENESS_TTL_TICKS ticks,
+    MIN_LIVENESS_TTL_S) seconds, rounded up to whole seconds."""
+    configured = (agent_config or {}).get("liveness_ttl_s")
+    if configured is not None:
+        try:
+            if int(configured) > 0:
+                return int(configured)
+        except (TypeError, ValueError):
+            print(f"[agent] WARN event=bad_config key=agent.liveness_ttl_s value={configured!r} fallback=auto")
+    return max(math.ceil(tick_rate_s * LIVENESS_TTL_TICKS), MIN_LIVENESS_TTL_S)
+
+
+def bus_heartbeat_due(tick, every):
+    """True on the ticks that should also publish a status_update bus
+    heartbeat: tick 0 and every `every` ticks after; never when every <= 0."""
+    return every > 0 and tick % every == 0
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="/config/worker.yaml")
@@ -100,6 +148,8 @@ def main():
     bootstrap_servers = resolve("KAFKA_BOOTSTRAP_SERVERS", bus_config.get("bootstrap_servers"), "localhost:9092")
     topic = resolve("KAFKA_TOPIC", bus_config.get("topic"))
     tick_rate_s = agent_config.get("tick_rate_ms", 5000) / 1000
+    bus_heartbeat_every = resolve_bus_heartbeat_every(agent_config)
+    liveness_ttl_s = resolve_liveness_ttl(agent_config, tick_rate_s)
 
     llm_client = build_llm_client(config)
     state_path = resolve_state_path(agent_config)
@@ -118,6 +168,8 @@ def main():
     print(f"[agent] LLM provider={config.get('llm', {}).get('provider', 'ollama')}")
     print(f"[agent] coding backend={coding_backend.name if coding_backend else 'none'}")
     print(f"[agent] avatar state file={state_path}")
+    print(f"[agent] liveness key=worker:{worker_id}:alive ttl_s={liveness_ttl_s} "
+          f"bus_heartbeat_every={bus_heartbeat_every}")
 
     write_state(state_path, "idle", action="starting up")
 
@@ -140,6 +192,9 @@ def main():
 
     i = 0
     while True:
+        # Liveness first, and even while disabled: "alive" means the process
+        # is ticking; "enabled" is the separate operator toggle. Never raises.
+        control.heartbeat(worker_id, liveness_ttl_s)
         if not control.is_enabled(worker_id):
             write_state(state_path, "idle", action="disabled by operator")
             time.sleep(tick_rate_s)
@@ -148,15 +203,17 @@ def main():
         tick_ok = True
         try:
             for msg in consumer.poll_new():
-                print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']}: {msg['payload']}")
+                print(f"[agent:{worker_id}] received {msg['type']} from {msg['from']} "
+                      f"correlation_id={correlation_of(msg)}: {msg['payload']}")
                 handler = MESSAGE_HANDLERS.get(msg["type"])
                 if handler:
                     handler(worker_id, agent_config, llm_client, producer, msg, state_path,
                             coding_backend=coding_backend)
 
-            heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})
-            producer.send(heartbeat)
-            print(f"[agent:{worker_id}] {heartbeat['type']} #{i}")
+            if bus_heartbeat_due(i, bus_heartbeat_every):
+                heartbeat = build_message(worker_id, "broadcast", "status_update", {"text": f"heartbeat #{i}"})
+                producer.send(heartbeat)
+                print(f"[agent:{worker_id}] {heartbeat['type']} #{i}")
         except Exception as exc:
             tick_ok = False
             print(f"[agent:{worker_id}] ERROR unhandled exception in tick #{i}: {exc}")

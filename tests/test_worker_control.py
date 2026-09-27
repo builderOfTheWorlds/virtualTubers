@@ -142,3 +142,105 @@ def test_from_config_uses_resolved_kill_file(monkeypatch, kill_file):
     with patch("worker_control.redis.Redis.from_url", return_value=MagicMock()):
         control = WorkerControl.from_config({})
     assert control.kill_file == str(kill_file)
+
+
+# ── liveness key (worker:{id}:alive) ─────────────────────────────────────────
+
+class _FakeRedisWithTTL:
+    """Tiny in-memory Redis stand-in honouring SET ... EX via an injectable
+    clock, so key expiry can be tested without sleeping."""
+
+    def __init__(self):
+        self.now = 0.0
+        self.store = {}
+        self.down = False
+
+    def _check(self):
+        if self.down:
+            raise redis.ConnectionError("connection refused")
+
+    def set(self, key, value, ex=None):
+        self._check()
+        self.store[key] = (value, self.now + ex if ex else None)
+        return True
+
+    def get(self, key):
+        self._check()
+        value, expires = self.store.get(key, (None, None))
+        if expires is not None and self.now >= expires:
+            self.store.pop(key, None)
+            return None
+        return value
+
+
+def _control_with_ttl_redis():
+    fake = _FakeRedisWithTTL()
+    with patch("worker_control.redis.Redis.from_url", return_value=fake):
+        control = WorkerControl("redis://fake:6379", kill_file=_NO_KILL_FILE)
+    return control, fake
+
+
+def test_heartbeat_sets_alive_key_with_ttl():
+    from datetime import datetime
+
+    control, fake_client = _control_with_fake_client()
+    assert control.heartbeat("coder", 15) is True
+    args, kwargs = fake_client.set.call_args
+    assert args[0] == "worker:coder:alive"
+    assert kwargs == {"ex": 15}
+    assert datetime.fromisoformat(args[1]).tzinfo is not None
+
+
+def test_heartbeat_clamps_ttl_to_at_least_one_second():
+    control, fake_client = _control_with_fake_client()
+    control.heartbeat("coder", 0)
+    assert fake_client.set.call_args.kwargs == {"ex": 1}
+
+
+def test_last_seen_and_alive_round_trip_while_key_live():
+    control, _ = _control_with_ttl_redis()
+    control.heartbeat("coder", 15)
+    assert control.last_seen("coder") is not None
+    assert control.alive("coder") is True
+
+
+def test_last_seen_none_and_not_alive_after_expiry():
+    control, fake = _control_with_ttl_redis()
+    control.heartbeat("coder", 15)
+    fake.now += 16
+    assert control.last_seen("coder") is None
+    assert control.alive("coder") is False
+
+
+def test_last_seen_none_when_never_written():
+    control, _ = _control_with_ttl_redis()
+    assert control.last_seen("tester") is None
+    assert control.alive("tester") is False
+
+
+def test_readers_return_none_false_when_redis_down():
+    control, fake = _control_with_ttl_redis()
+    control.heartbeat("coder", 15)
+    fake.down = True
+    assert control.last_seen("coder") is None
+    assert control.alive("coder") is False
+
+
+def test_heartbeat_fails_silently_and_logs_once_when_redis_down(capsys):
+    control, fake = _control_with_ttl_redis()
+    fake.down = True
+    assert control.heartbeat("coder", 15) is False
+    assert control.heartbeat("coder", 15) is False
+    assert capsys.readouterr().out.count("liveness_write_failed") == 1
+
+    fake.down = False
+    assert control.heartbeat("coder", 15) is True
+    assert "liveness_write_recovered" in capsys.readouterr().out
+    assert control.alive("coder") is True
+
+
+def test_heartbeat_does_not_touch_enabled_flag():
+    control, fake = _control_with_ttl_redis()
+    control.heartbeat("coder", 15)
+    assert "worker:coder:enabled" not in fake.store
+    assert control.is_enabled("coder") is True

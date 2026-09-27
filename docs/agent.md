@@ -9,8 +9,29 @@ avatar state). Incoming messages are dispatched through the
 `MESSAGE_HANDLERS` table, which covers all 8 message types from
 `docs/VTuber_AI_Dev_Team_Concept.md` §3.4 (`status_update` itself is
 send-only heartbeat traffic; `operator_message` is `message-api`'s default
-type, standing in for direct operator chat). Every tick still publishes a
-`status_update` heartbeat, unchanged from the earlier stub.
+type, standing in for direct operator chat).
+
+**Liveness and the bus heartbeat (v2.6.0).** Every tick — even while the
+worker is disabled — the loop writes the Redis liveness key
+`worker:{id}:alive` (ISO timestamp, TTL `agent.liveness_ttl_s`, default
+`max(3 × tick, 15s)`) via `WorkerControl.heartbeat()`; health views read it
+with `WorkerControl.last_seen()` / `alive()` (docs/worker_control.md). The
+old per-tick `status_update` "heartbeat #N" bus message is now rate-limited
+by `agent.bus_heartbeat_every` (N ticks; 0 = off; default **12**, ≈ once a
+minute at the 5 s default tick). Why 12 rather than 0: no consumer uses the
+bus heartbeat for liveness (the feed hides `status_update`, message-logger
+drops it by default via LogFilterControl, control-panel/message-api only
+expose the log-filter toggle for it), but that toggle
+(`POST /log-filter/status_update/include`) is an operator feature that
+would record nothing if the bus beat were off. The beat keeps the tick
+counter in its text, so `heartbeat #0`, `#12`, `#24`, ... are published.
+
+**Correlation IDs (v2.6.0).** Every message the dev-team handlers send
+carries the incoming message's `correlation_id` and `causation_id =
+msg["id"]` (`message_bus.reply_ids`), so one task — including all its
+bug-fix retries and the final `manager_report` — is a single chain. The
+"received" log line and the handlers' structured log lines include
+`correlation_id=`. See docs/message_bus.md "Correlation IDs".
 
 The handlers form a collaboration graph so a single ticket flows through
 the whole team: the coder answers a `task_assignment` with `task_complete`
@@ -358,6 +379,14 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.6.0 (2026-09-27) — Redis liveness key `worker:{id}:alive` written
+  every tick (`WorkerControl.heartbeat`, TTL from new config
+  `agent.liveness_ttl_s`); the `status_update` bus heartbeat is now sent
+  only every `agent.bus_heartbeat_every` ticks (new key, default 12, 0 =
+  off). New module helpers `resolve_bus_heartbeat_every`,
+  `resolve_liveness_ttl`, `bus_heartbeat_due`. Dev-team handlers propagate
+  correlation IDs; "received" log line shows `correlation_id=`. Tests:
+  `tests/test_agent_liveness.py`, `tests/test_correlation_ids.py`.
 - v2.5.0 (2026-09-27) — Pure refactor, zero behaviour change: every
   message handler and its helpers moved out of `app/agent.py` into the new
   `app/agent_handlers/` package (`common`, `relay_files`, `coder`,

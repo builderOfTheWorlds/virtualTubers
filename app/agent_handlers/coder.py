@@ -4,7 +4,7 @@ Coder-side handling of `task_assignment` (split out of app/agent.py): the
 scripted tmux demos, the real coding-backend run, narration, and the
 `task_complete` + `commit_notification` hand-off to the tester.
 """
-from message_bus import build_message
+from message_bus import build_message, correlation_of, reply_ids
 from agent_state import write_state
 from tmux_control import select_pane, send_keys, send_raw, send_command, TmuxError
 
@@ -70,6 +70,11 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
     task = payload.get("task", "(no task description provided)")
     retry_count = payload.get("retry_count", 0)
     reply_to = msg.get("from") or "broadcast"
+    # Every message this handler sends joins the assignment's chain — a
+    # bug-fix re-assignment carries the original task's correlation_id, so
+    # retries stay one chain end to end.
+    ids = reply_ids(msg)
+    correlation_id = correlation_of(msg)
 
     if state_path:
         write_state(state_path, "thinking", action=f"working on: {task}")
@@ -88,13 +93,14 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
             f"[agent:{worker_id}] coding run backend={result.backend} "
             f"success={result.success} commit={result.commit} "
             f"files={result.files_changed} +{result.insertions}/-{result.deletions} "
-            f"in {result.duration_s}s"
+            f"in {result.duration_s}s correlation_id={correlation_id}"
         )
         # Durable A/B record: message-logger unpacks this type into the
         # coding_backend_runs table (broadcast so the feed pane shows it too).
         producer.send(build_message(
             worker_id, "broadcast", "coding_run_report",
             {"task": task, "retry_count": retry_count, **result.to_payload()},
+            **ids,
         ))
         if result.success:
             show_commit_in_filetree(worker_id, coding_backend.workspace)
@@ -102,13 +108,14 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
             # A failed coding run is a blocker, not a commit to hand over —
             # same clarification_request contract the LLM-failure path uses,
             # so the manager escalates it identically.
-            print(f"[agent:{worker_id}] coding run failed: {result.error}")
+            print(f"[agent:{worker_id}] coding run failed: {result.error} correlation_id={correlation_id}")
             if state_path:
                 write_state(state_path, "frustrated", action=f"failed: {task}",
                             bubble=f"Ugh... {result.error}")
             producer.send(build_message(
                 worker_id, "manager", "clarification_request",
                 {"task": task, "error": f"coding backend failed: {result.error}"},
+                **ids,
             ))
             return
 
@@ -141,6 +148,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
             producer.send(build_message(
                 worker_id, reply_to, "clarification_request",
                 {"task": task, "error": str(exc)},
+                **ids,
             ))
             return
 
@@ -150,6 +158,7 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
     producer.send(build_message(
         worker_id, reply_to, "task_complete",
         {"task": task, "narration": narration},
+        **ids,
     ))
 
     # Coder hands the "commit" straight to the tester so the ticket keeps
@@ -173,4 +182,5 @@ def handle_task_assignment(worker_id, agent_config, llm_client, producer, msg,
             })
         producer.send(build_message(
             worker_id, "tester", "commit_notification", commit_payload,
+            **ids,
         ))

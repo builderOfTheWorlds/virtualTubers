@@ -4,7 +4,7 @@ Helpers shared by several message handlers (split out of app/agent.py):
 the structured LLM narration call every narrating handler uses, and the
 manager -> operator report sender.
 """
-from message_bus import build_message
+from message_bus import build_message, reply_ids
 from emotion import STRUCTURED_REPLY_INSTRUCTION, parse_structured_reply
 
 
@@ -28,13 +28,18 @@ def _complete_with_emotion(llm_client, system_prompt, prompt):
     return parse_structured_reply(reply)
 
 
-def _send_manager_report(worker_id, producer, report_type, task, narration, extra=None):
+def _send_manager_report(worker_id, producer, report_type, task, narration, extra=None, cause=None):
     """Manager -> operator feedback surface. One message type
     (`manager_report`) with payload discriminator
     report_type: "milestone" | "blocker" | "escalation" — deliberately NOT
     `status_update`, which the feed hides by default (heartbeat flood filter).
+
+    `cause` is the bus message being handled when the report is sent; the
+    report joins its correlation chain (docs/message_bus.md). None starts a
+    new chain (backward compatible with older callers).
     """
     payload = {"report_type": report_type, "task": task, "narration": narration}
     if extra:
         payload.update(extra)
-    return producer.send(build_message(worker_id, "operator", "manager_report", payload))
+    return producer.send(build_message(worker_id, "operator", "manager_report", payload,
+                                       **reply_ids(cause)))

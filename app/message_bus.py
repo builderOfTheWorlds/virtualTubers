@@ -30,15 +30,51 @@ def resolve(env_name, config_value, default=None):
     return os.environ.get(env_name) or config_value or default
 
 
-def build_message(from_, to, type_, payload=None):
+def build_message(from_, to, type_, payload=None, correlation_id=None, causation_id=None):
+    """Build a bus envelope.
+
+    Correlation (docs/message_bus.md "Correlation IDs"): every message
+    carries `correlation_id` — the id shared by a whole causal chain (one
+    task, including its bug/fix retries) — and `causation_id` — the `id` of
+    the message that directly caused this one, or None. A message that
+    starts a new chain (correlation_id=None) uses its own `id` as the
+    correlation id. Handlers replying to a message should pass
+    `**reply_ids(msg)` instead of computing these by hand.
+    """
+    msg_id = str(uuid.uuid4())
     return {
-        "id": str(uuid.uuid4()),
+        "id": msg_id,
         "from": from_,
         "to": to,
         "type": type_,
         "payload": payload or {},
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "correlation_id": correlation_id or msg_id,
+        "causation_id": causation_id,
     }
+
+
+def correlation_of(msg):
+    """The chain id of `msg`: its `correlation_id`, falling back to its own
+    `id` for messages from older senders that predate correlation IDs (and
+    None when `msg` has neither, e.g. a hand-built test dict)."""
+    if not isinstance(msg, dict):
+        return None
+    return msg.get("correlation_id") or msg.get("id")
+
+
+def reply_ids(msg):
+    """Keyword args for build_message() when sending a message *because of*
+    `msg`: same chain (correlation_id), caused by `msg` (causation_id).
+
+        producer.send(build_message(me, to, "task_complete", payload, **reply_ids(msg)))
+
+    Tolerates a missing/None `msg` or one without an `id` — the new message
+    then simply starts its own chain.
+    """
+    if not isinstance(msg, dict):
+        return {"correlation_id": None, "causation_id": None}
+    return {"correlation_id": correlation_of(msg), "causation_id": msg.get("id")}
 
 
 class MessageProducer:
