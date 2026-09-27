@@ -28,6 +28,7 @@ only part of this file that needs a real display and is exercised by hand /
 in the worker container, not by the unit suite.
 """
 import logging
+import math
 import sys
 
 import numpy as np
@@ -117,7 +118,7 @@ class FrameSource:
     """
 
     def __init__(self, character_params, width=WIDTH, height=HEIGHT,
-                view_dist=3.25, angle_speed=0.03, background=_UNSET):
+                view_dist=3.25, angle_speed=0.0, angle_deg=15.0, background=_UNSET):
         from codec_head import build_codec_head
         from character_schema import resolve_params
         from pixel_raster import parse_background
@@ -132,7 +133,10 @@ class FrameSource:
                 None if background is _UNSET else background))
         self.view_dist = view_dist
         self.angle_speed_base = angle_speed
-        self.angle = 0.0
+        # Stationary side-angle profile rather than a continuous spin — see
+        # termgl_avatar.py's matching comment. angle_speed defaults to 0.0
+        # now, so this fixed offset is what actually shows on screen.
+        self.angle = math.radians(angle_deg)
         # character_params kept (not just the built mesh) — mouth_open/
         # emotion morphing (docs/avatar_emotion_design.md) rebuilds the
         # head fresh every render_frame() call, since _add_mouth/_add_brows/
@@ -324,7 +328,8 @@ class CodecAvatarProvider(AvatarProvider):
         self.width, self.height = width, height
         self._character_params = character_params
         self._view_dist = cfg.get("view_dist", 3.25)
-        self._angle_speed = cfg.get("angle_speed", 0.03)
+        self._angle_speed = cfg.get("angle_speed", 0.0)
+        self._angle_deg = cfg.get("angle_deg", 15.0)
         # Defaults to the console grey (pixel_raster.CONSOLE_BG) so the
         # window blends into the terminal instead of punching a black
         # rectangle through the layout; `background: none` in config keeps
@@ -355,7 +360,7 @@ class CodecAvatarProvider(AvatarProvider):
                 self._source = GPURenderWorker(
                     character_params, width=width, height=height,
                     view_dist=cfg.get("view_dist", 3.25),
-                    angle_speed=cfg.get("angle_speed", 0.03),
+                    angle_speed=cfg.get("angle_speed", 0.0),
                     background=self._background,
                 )
                 print(
@@ -372,7 +377,8 @@ class CodecAvatarProvider(AvatarProvider):
             self._source = FrameSource(
                 character_params, width=width, height=height,
                 view_dist=cfg.get("view_dist", 3.25),
-                angle_speed=cfg.get("angle_speed", 0.03),
+                angle_speed=cfg.get("angle_speed", 0.0),
+                angle_deg=cfg.get("angle_deg", 15.0),
                 background=self._background,
             )
 
@@ -524,6 +530,7 @@ class CodecAvatarProvider(AvatarProvider):
                 self._source = FrameSource(
                     self._character_params, width=self.width, height=self.height,
                     view_dist=self._view_dist, angle_speed=self._angle_speed,
+                    angle_deg=self._angle_deg,
                     background=self._background,
                 )
                 try:

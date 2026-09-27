@@ -24,6 +24,7 @@ a provider's __init__ and falls back to BuiltinProvider, so running this
 under an interpreter without termgl installed degrades gracefully (an
 ImportError here is caught there) rather than crashing the avatar pane.
 """
+import math
 import sys
 
 from avatar_display import build_bubble_box
@@ -84,8 +85,13 @@ class TermglAvatarProvider(AvatarProvider):
         self._write_header_line = write_header_line
 
         termgl_cfg = (self.avatar_config.get("termgl_avatar") or {})
-        self._angle = 0.0
-        self._angle_speed_base = termgl_cfg.get("angle_speed", 0.08)
+        # Stationary 3/4-ish profile rather than a continuous spin: fixed at
+        # ~15 degrees off dead-center so the face reads with a bit of side
+        # depth instead of a flat frontal silhouette. angle_speed is kept
+        # in the config schema (defaults to 0.0) in case a future preset
+        # wants motion back, but it no longer defaults to spinning.
+        self._angle = math.radians(termgl_cfg.get("angle_deg", 15.0))
+        self._angle_speed_base = termgl_cfg.get("angle_speed", 0.0)
 
         self._ctx = make_context(WIDTH, HEIGHT)
         self._camera = make_camera(WIDTH, HEIGHT, fov=FOV)
