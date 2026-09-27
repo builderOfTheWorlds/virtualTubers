@@ -8,6 +8,7 @@ docs/VTuber_AI_Dev_Team_Concept.md §13.3).
 """
 import json
 import os
+import tempfile
 import time
 
 DEFAULT_STATE_FILE = "/tmp/agent_state.json"
@@ -55,9 +56,36 @@ def write_state(path, expression, action="", bubble=None, emotion=None,
         "updated_at": time.time(),
     }
     tmp_path = f"{path}.tmp"
-    with open(tmp_path, "w", encoding="utf-8") as f:
-        json.dump(state, f)
-    os.replace(tmp_path, path)
+    try:
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(state, f)
+        os.replace(tmp_path, path)
+    except FileNotFoundError:
+        # A second write_state call racing on the SAME fixed `{path}.tmp`
+        # name can have its rename source vanish out from under it if
+        # another writer's os.replace already consumed that exact tmp file
+        # first (observed live: agent.py's tick loop crashed outright with
+        # "No such file or directory: '/tmp/agent_state.json.tmp' ->
+        # '/tmp/agent_state.json'", which killed the roundtable worker's
+        # ENTIRE message consumer — no more replay_request handling at all —
+        # since startup.sh launches agent.py once with no restart-on-crash
+        # supervisor). Retry once with a name unique to this call
+        # (tempfile.mkstemp in the SAME directory, so os.replace stays an
+        # atomic same-filesystem rename) rather than letting a benign race
+        # between two legitimate writers take the whole agent down.
+        directory = os.path.dirname(path) or "."
+        fd, unique_tmp = tempfile.mkstemp(
+            prefix=os.path.basename(path) + ".", suffix=".tmp", dir=directory)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(state, f)
+            os.replace(unique_tmp, path)
+        except Exception:
+            try:
+                os.unlink(unique_tmp)
+            except OSError:
+                pass
+            raise
     return state
 
 

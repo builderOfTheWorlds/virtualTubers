@@ -53,6 +53,18 @@ CAPTURE_RESOLUTION="${CAPTURE_RESOLUTION:-1920x1080}"
 FONT_SIZE="${FONT_SIZE:-7}"
 STREAM_RTMP_URL="${STREAM_RTMP_URL:-rtmp://localhost:1935/live}"
 STREAM_KEY="${STREAM_KEY:-test}"
+# Opt-in dual-push (docs above stream_supervisor.build_ffmpeg_cmd's
+# local_preview_url param): when set to 1/true, the already-encoded stream
+# is ALSO tee'd (no re-encode) to the bundled local rtmp-preview server so
+# VLC can watch at near-zero latency without waiting on Twitch's ~30s CDN
+# delay, and without interrupting the live broadcast. Off by default —
+# each worker's own small tee overhead multiplies by however many workers
+# are running on the host, so it costs nothing unless deliberately turned
+# on for a debugging session. LOCAL_PREVIEW_URL lets that second
+# destination be overridden; defaults to the same rtmp-preview service
+# every worker already reaches via STREAM_RTMP_URL's own default.
+LOCAL_PREVIEW_ENABLED="${LOCAL_PREVIEW_ENABLED:-0}"
+LOCAL_PREVIEW_URL="${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}"
 
 # Pixel dimensions of the capture, derived from CAPTURE_RESOLUTION (e.g.
 # 3840x2160) — NOT from RESOLUTION, which is the stream's OUTPUT size and is
@@ -260,8 +272,24 @@ if [ -f /app/voice_registry.py ]; then
 fi
 
 # ── 7. Agent loop ─────────────────────────────────────────────────────────────
-log "Starting agent loop"
-python3 /app/agent.py --config "${CONFIG_PATH}" &
+# Wrapped in a restart-on-crash loop, not a bare `&`: agent.py's tick loop
+# re-raises on any unhandled exception in a message handler (see its own
+# `except Exception: ... raise` around handler dispatch) and this script
+# never used to restart it — a crash here silently killed the ENTIRE
+# worker's message consumer for good (no more replay_request, no more
+# operator_message, nothing) with no restart and no obvious symptom besides
+# "the tmux pane went quiet." Reported live: a race in agent_state.write_state
+# (fixed separately) took down worker-roundtable's agent.py mid-episode, and
+# it never came back until manually restarted. A crash loop still gets
+# logged loudly (so a code bug is still visible), but the worker keeps
+# answering operator commands instead of going deaf.
+log "Starting agent loop (restart-on-crash)"
+( while true; do
+    python3 /app/agent.py --config "${CONFIG_PATH}"
+    code=$?
+    log "agent.py exited (code ${code}) — restarting in 2s"
+    sleep 2
+done ) &
 AGENT_PID=$!
 
 # ── 7.5 Roundtable director (headless) ─────────────────────────────────────────
@@ -301,13 +329,24 @@ THEME_WATCHER_PID=$!
 # cleanup line below), so a "disable" needs a supervisor that can stop/restart
 # ffmpeg in place instead.
 log "Starting stream supervisor (toggle via worker control API — no redeploy needed) → ${STREAM_RTMP_URL}/${STREAM_KEY}"
+LOCAL_PREVIEW_ARGS=()
+if [ "${LOCAL_PREVIEW_ENABLED}" = "1" ] || [ "${LOCAL_PREVIEW_ENABLED}" = "true" ]; then
+    log "Local preview enabled — also tee'ing to ${LOCAL_PREVIEW_URL}/${STREAM_KEY} (see startup.sh's LOCAL_PREVIEW_ENABLED note)"
+    LOCAL_PREVIEW_ARGS=(--local-preview-url "${LOCAL_PREVIEW_URL}")
+fi
 python3 /app/stream_supervisor.py \
     --config "${CONFIG_PATH}" \
     --rtmp-url "${STREAM_RTMP_URL}" \
     --stream-key "${STREAM_KEY}" \
     --resolution "${RESOLUTION}" \
     --capture-resolution "${CAPTURE_RESOLUTION}" \
-    --display "${DISPLAY}"
+    --display "${DISPLAY}" \
+    "${LOCAL_PREVIEW_ARGS[@]}"
 
 log "Stream supervisor exited. Cleaning up."
+# AGENT_PID is the restart-on-crash WRAPPER (§7), not agent.py itself — kill
+# it explicitly too, since killing the wrapper alone leaves its current
+# python3 child running (and about to be respawned by the wrapper's own
+# loop right as the container is going down).
 kill $AGENT_PID $THEME_WATCHER_PID $XTERM_PID $XVFB_PID 2>/dev/null
+pkill -f '/app/agent.py' 2>/dev/null
