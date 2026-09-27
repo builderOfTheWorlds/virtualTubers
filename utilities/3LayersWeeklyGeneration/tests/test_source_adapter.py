@@ -28,6 +28,8 @@ def _write(vault: pathlib.Path, rel: str, text: str):
     p.write_text(text, encoding="utf-8")
 
 
+@pytest.mark.skipif(sys.platform == "win32",
+                    reason="'*' is not a legal filename character on Windows")
 def test_vault_adapter_excludes_agent_ignore():
     with tempfile.TemporaryDirectory() as d:
         v = pathlib.Path(d)
@@ -37,6 +39,17 @@ def test_vault_adapter_excludes_agent_ignore():
         ids = [n.rel_path for n in notes]
         assert "Plots/Good.md" in ids
         assert "Plots/Bad*Agent_Ignore*.md" not in ids
+
+
+def test_vault_adapter_excludes_agent_ignore_portable_name():
+    """Same exclusion with a filename legal on every OS — the adapter keys on
+    the Agent_Ignore marker, not on the surrounding asterisks."""
+    with tempfile.TemporaryDirectory() as d:
+        v = pathlib.Path(d)
+        _write(v, "Plots/Good.md", "A good plot note.")
+        _write(v, "Plots/Bad_Agent_Ignore_.md", "Excluded note.")
+        ids = [n.rel_path for n in sa.ObsidianVaultAdapter(v).notes()]
+        assert ids == ["Plots/Good.md"]
 
 
 def test_vault_kind_is_derived_from_folder():

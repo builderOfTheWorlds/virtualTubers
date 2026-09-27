@@ -640,6 +640,8 @@ def test_uncast_speaker_routes_to_directors_own_tile_on_the_roundtable(
 
 
 # ── voice gate escape hatch: show.audio flows into the gate ──────────────────
+@pytest.mark.skipif(sys.platform == "win32",
+                    reason="voice gate needs fcntl.flock (POSIX-only; prod is Linux)")
 def test_build_voice_gate_honours_show_audio_header(monkeypatch, tmp_path):
     """show.audio.max_concurrent=N (the deliberate-overlap escape hatch) must
     resolve to N seats; the default (no audio block) must stay at 1 seat —

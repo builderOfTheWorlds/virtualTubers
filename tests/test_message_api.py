@@ -20,17 +20,29 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services" / "message-api"))
 sys.path.insert(0, str(ROOT / "app"))
 
-os.environ.setdefault("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-os.environ.setdefault("KAFKA_TOPIC", "test-topic")
+# api needs these at import time only. Restore the environment afterwards:
+# leaving POSTGRES_* set for the rest of the session made
+# generation_store.available() report True in unrelated suites, so their
+# real-Postgres tests ran against localhost:5432 instead of skipping.
+_IMPORT_ENV = {
+    "KAFKA_BOOTSTRAP_SERVERS": "localhost:9092",
+    "KAFKA_TOPIC": "test-topic",
+    "POSTGRES_DB": "virtualtubers",
+    "POSTGRES_USER": "virtualtubers",
+    "POSTGRES_PASSWORD": "secret",
+}
+_added_env = [k for k in _IMPORT_ENV if k not in os.environ]
+for _k in _added_env:
+    os.environ[_k] = _IMPORT_ENV[_k]
 
-os.environ.setdefault("POSTGRES_DB", "virtualtubers")
-os.environ.setdefault("POSTGRES_USER", "virtualtubers")
-os.environ.setdefault("POSTGRES_PASSWORD", "secret")
-
-with patch("message_bus.KafkaProducer"), \
-     patch("worker_control.redis.Redis.from_url"), \
-     patch("log_filter_control.redis.Redis.from_url"):
-    import api
+try:
+    with patch("message_bus.KafkaProducer"), \
+         patch("worker_control.redis.Redis.from_url"), \
+         patch("log_filter_control.redis.Redis.from_url"):
+        import api
+finally:
+    for _k in _added_env:
+        os.environ.pop(_k, None)
 
 
 @pytest.fixture

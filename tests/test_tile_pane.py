@@ -158,9 +158,9 @@ def test_relay_paths_are_per_slot(monkeypatch):
     assert resolve_relay_dir() == "/tmp/elsewhere"
     assert resolve_relay_dir("/explicit") == "/explicit"  # flag beats env
 
-    assert tile_request_file("/r", "tuber_2") == "/r/tuber_2.request.json"
-    assert tile_cue_file("/r", "tuber_2") == "/r/tuber_2.cue.json"
-    assert tile_state_file("/r", "tuber_2") == "/r/tuber_2.state.json"
+    assert Path(tile_request_file("/r", "tuber_2")) == Path("/r/tuber_2.request.json")
+    assert Path(tile_cue_file("/r", "tuber_2")) == Path("/r/tuber_2.cue.json")
+    assert Path(tile_state_file("/r", "tuber_2")) == Path("/r/tuber_2.state.json")
 
 
 # ── the owns predicate ───────────────────────────────────────────────────────
@@ -449,7 +449,7 @@ def test_tile_state_path_ignores_agent_state_file_env(monkeypatch, tmp_path):
     """A tile must NOT inherit the container-wide AGENT_STATE_FILE — that is
     exactly the collision agent_state.resolve_state_path would cause."""
     monkeypatch.setenv("AGENT_STATE_FILE", str(tmp_path / "shared.json"))
-    assert tile_state_file("/tmp/tiles", "tuber_3") == "/tmp/tiles/tuber_3.state.json"
+    assert Path(tile_state_file("/tmp/tiles", "tuber_3")) == Path("/tmp/tiles/tuber_3.state.json")
 
 
 def test_write_tile_state_degrades_on_unwritable_path(capsys):

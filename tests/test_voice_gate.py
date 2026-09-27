@@ -21,8 +21,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 import voice_gate  # noqa: E402
 
+# The gate is POSIX-only by design (fcntl.flock; prod is Linux). Without
+# fcntl it deliberately degrades to "no gate" (acquire() -> None), so the
+# locking tests below can only run where flock exists. The degrade and
+# resolve tests run everywhere.
+needs_flock = pytest.mark.skipif(
+    voice_gate.fcntl is None, reason="fcntl.flock unavailable (non-POSIX host)")
+
 
 # ── basic serialization (1 seat, the default) ────────────────────────────────
+@needs_flock
 def test_single_seat_serializes_two_holders(tmp_path):
     gate = voice_gate.VoiceGate(tmp_path, seats=1, tag="t1")
     first = gate.acquire()
@@ -41,6 +49,7 @@ def test_single_seat_serializes_two_holders(tmp_path):
     assert third.acquire() is not None
 
 
+@needs_flock
 def test_two_seats_allow_two_holders_and_block_the_third(tmp_path):
     gate = voice_gate.VoiceGate(tmp_path, seats=2, tag="t1")
     a, b = gate.acquire(), gate.acquire()
@@ -57,6 +66,7 @@ def test_two_seats_allow_two_holders_and_block_the_third(tmp_path):
     assert freed.seat not in {b.seat}
 
 
+@needs_flock
 def test_release_is_idempotent(tmp_path):
     gate = voice_gate.VoiceGate(tmp_path, seats=1, tag="t1")
     seat = gate.acquire()
@@ -64,6 +74,7 @@ def test_release_is_idempotent(tmp_path):
     seat.release()  # second release is a no-op, must not raise
 
 
+@needs_flock
 def test_acquired_seat_releases_when_holder_thread_unblocks(tmp_path):
     """A holder that waits out a long line (simulated by holding the seat
     in another thread) frees it for the next line without any cleanup."""
@@ -87,6 +98,7 @@ def test_acquired_seat_releases_when_holder_thread_unblocks(tmp_path):
     assert events == [("waiter_acquire", True)]
 
 
+@needs_flock
 def test_gate_survives_a_crashed_holder(tmp_path):
     """The liveness guarantee: a process that holds a seat and DIES must
     not wedge the show — the OS releases the flock, so the next acquire
@@ -125,6 +137,7 @@ def test_unusable_gate_dir_degrades_to_none(tmp_path):
     assert gate.acquire() is None
 
 
+@needs_flock
 def test_events_are_recorded_for_reconstruction(tmp_path):
     gate = voice_gate.VoiceGate(tmp_path, seats=1, tag="recorder")
     seat = gate.acquire()

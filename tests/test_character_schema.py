@@ -156,13 +156,21 @@ def test_every_preset_resolves_cleanly(name):
     assert layered["accent_color"] == direct["accent_color"]
 
 
+#: Deliberate, documented colour reuses (see the comment above "braxton" in
+#: app/character_schema.py): 9 presets, only 8 ACCENT_COLORS, and silhouette
+#: is the primary identity cue. Anything not listed here must stay unique.
+ALLOWED_SHARED_ACCENTS = {"GREEN": {"oko2", "braxton"}}
+
+
 @pytest.mark.parametrize("name,color", sorted(
     (n, p["accent_color"]) for n, p in PRESETS.items()
 ))
 def test_preset_accent_colors_are_unique_and_valid(name, color):
     assert color in ACCENT_COLORS
-    owners = [n for n, p in PRESETS.items() if p["accent_color"] == color]
-    assert owners == [name], f"{color} is shared by {owners}"
+    owners = {n for n, p in PRESETS.items() if p["accent_color"] == color}
+    allowed = ALLOWED_SHARED_ACCENTS.get(color, {name})
+    assert owners <= allowed | {name} and name in owners, (
+        f"{color} is shared by {sorted(owners)}")
 
 
 def test_load_preset_rejects_unknown_name():
