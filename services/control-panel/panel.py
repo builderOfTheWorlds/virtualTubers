@@ -196,6 +196,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates.env.filters["age"] = lambda seconds: format_age(seconds)
 
 
 @app.middleware("http")
@@ -258,6 +259,48 @@ async def _worker_status(worker_id: str) -> dict:
     return {"id": worker_id, "enabled": None, "error": result.error}
 
 
+def _health_or_none(data: Any) -> Optional[dict]:
+    return data if isinstance(data, dict) and data.get("worker_id") else None
+
+
+async def _workers_health() -> dict:
+    """{worker_id: health row} from ONE GET /workers/health call. {} when
+    message-api is unreachable/old — every row then renders "unknown"."""
+    result = await _mapi_request("GET", "/workers/health")
+    if not result.ok or not isinstance(result.data, dict):
+        return {}
+    rows = [_health_or_none(r) for r in result.data.get("workers") or []]
+    return {r["worker_id"]: r for r in rows if r}
+
+
+async def _worker_health(worker_id: str) -> Optional[dict]:
+    result = await _mapi_request("GET", f"/workers/{worker_id}/health")
+    return _health_or_none(result.data) if result.ok else None
+
+
+async def _workers_view() -> list:
+    """The dashboard's worker rows: on/off status + health (alive/stale/down,
+    last seen, local kill switch) merged per worker id."""
+    health = await _workers_health()
+    workers = [await _worker_status(w) for w in WORKER_IDS]
+    for worker in workers:
+        worker["health"] = health.get(worker["id"])
+    return workers
+
+
+def format_age(seconds: Any) -> str:
+    """12.3 -> "12s", 130 -> "2m 10s", 7500 -> "2h 5m"; "?" if not a number.
+    Jinja filter `age` for the workers table's "last seen ... ago"."""
+    if isinstance(seconds, bool) or not isinstance(seconds, (int, float)):
+        return "?"
+    s = max(0, int(seconds))
+    if s < 60:
+        return f"{s}s"
+    if s < 3600:
+        return f"{s // 60}m {s % 60}s"
+    return f"{s // 3600}h {(s % 3600) // 60}m"
+
+
 async def _log_filter_status(message_type: str) -> dict:
     result = await _mapi_request("GET", f"/log-filter/{message_type}")
     if result.ok:
@@ -294,7 +337,7 @@ def healthz():
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    workers = [await _worker_status(w) for w in WORKER_IDS]
+    workers = await _workers_view()
     log_types = [await _log_filter_status(t) for t in KNOWN_LOG_TYPES]
     episode_lists = await _episode_lists()
     themes = await _theme_names()
@@ -318,7 +361,7 @@ async def dashboard(request: Request):
 # ── Workers ──────────────────────────────────────────────────────────────
 @app.get("/partials/workers", response_class=HTMLResponse)
 async def partial_workers(request: Request):
-    workers = [await _worker_status(w) for w in WORKER_IDS]
+    workers = await _workers_view()
     return templates.TemplateResponse(request, "_workers_table.html", {"workers": workers})
 
 
@@ -328,6 +371,9 @@ async def _set_worker(request: Request, worker_id: str, enabled: bool):
         worker = {"id": worker_id, "enabled": result.data.get("enabled"), "error": None}
     else:
         worker = {"id": worker_id, "enabled": None, "error": result.error}
+    # Re-read health so the swapped-in row keeps its alive/kill-switch
+    # badges (and shows the kill switch right after a futile Enable).
+    worker["health"] = await _worker_health(worker_id)
     return templates.TemplateResponse(request, "_worker_row.html", {"worker": worker})
 
 

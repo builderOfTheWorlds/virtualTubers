@@ -58,6 +58,8 @@ class InjectMessage(BaseModel):
 @app.get("/healthz") -> dict
 @app.post("/messages") def post_message(body: InjectMessage) -> dict
 
+@app.get("/workers/health") -> dict             # declared before /workers/{worker_id}
+@app.get("/workers/{worker_id}/health") -> dict
 @app.get("/workers/{worker_id}") -> dict
 @app.post("/workers/{worker_id}/enable") -> dict
 @app.post("/workers/{worker_id}/disable") -> dict
@@ -147,6 +149,10 @@ working, and must heal on its own once the database is back.
 - `POST /messages` — the full message envelope that was published (`id`, `from` (always `"operator"`), `to`, `type`, `payload`, `timestamp`), HTTP 200.
 - `GET /workers/{worker_id}` — `{"worker_id": ..., "enabled": bool}`, HTTP 200. Defaults to `enabled: true` if the worker has never been toggled.
 - `POST /workers/{worker_id}/enable` / `/disable` — same shape as the GET, reflecting the new state, HTTP 200.
+- `GET /workers/{worker_id}/health` — one health row, HTTP 200 (never 503), from `WorkerControl.health()` (docs/worker_control.md v1.3.0):
+  `{"worker_id", "state": "alive"|"stale"|"down"|"unknown", "alive": bool|null, "last_seen": iso|null, "age_s": float|null, "local_override": bool|null, "enabled": bool|null, "ttl_s": int|null}`.
+  `local_override` is the worker's **own report** of its local kill file, carried in its liveness key (message-api cannot see other containers' files); `null` when the worker is down, Redis is down, or it runs a pre-v1.3 image. `enabled` is the **raw Redis flag** (missing key => `true`), never this container's kill file; `null` when Redis is unreachable. Redis down => `state: "unknown"`, `alive: null`.
+- `GET /workers/health` — `{"workers": [row, ...]}` for every known worker: the `WORKER_ID_EXAMPLES` ids (in that order) plus any other id that has a `worker:*:alive` or `worker:*:enabled` key in Redis (e.g. `roundtable`, `tuber_0`), from one `MGET`. Redis down => every example id with `state: "unknown"`. Consequence of the route order: a worker literally named `health` can't be read via `GET /workers/{id}`.
 - `GET /log-filter/{message_type}` — `{"type": ..., "excluded": bool}`, HTTP 200. Defaults to `excluded: true` for `status_update` and `false` for any other type that's never been toggled.
 - `POST /log-filter/{message_type}/exclude` / `/include` — same shape as the GET, reflecting the new state, HTTP 200.
 - `POST /logs/prune` — `{"deleted": int, "after": ..., "before": ...}`, HTTP 200.
@@ -189,6 +195,12 @@ curl -X POST http://localhost:8090/messages \
 curl -X POST http://localhost:8090/workers/coder/disable
 curl http://localhost:8090/workers/coder
 curl -X POST http://localhost:8090/workers/coder/enable
+
+# Is it actually ticking, and is its local kill switch engaged?
+curl http://localhost:8090/workers/coder/health
+# {"worker_id":"coder","state":"alive","alive":true,"last_seen":"2026-09-27T12:00:05+00:00",
+#  "age_s":2.1,"local_override":false,"enabled":true,"ttl_s":15}
+curl http://localhost:8090/workers/health   # every known worker
 ```
 
 ```bash
@@ -249,6 +261,7 @@ curl -X POST http://localhost:8090/replays/sample/approve
 - Kafka unreachable at startup — the process fails to construct `MessageProducer` and exits; `restart: unless-stopped` retries.
 - Redis unreachable when reading status — `is_enabled` fails open, so `GET /workers/{id}` reports `enabled: true` rather than erroring.
 - Redis unreachable when writing status — `enable`/`disable` return HTTP 503; the toggle did not take effect.
+- Redis unreachable when reading health — `GET /workers/health` and `/workers/{id}/health` still return HTTP 200 with `state: "unknown"`, `alive`/`enabled`/`local_override` `null` (unknown is never reported as alive or enabled).
 - Redis unreachable when reading a log filter — `is_excluded` falls back to `DEFAULT_EXCLUDED_TYPES`, so `GET /log-filter/{type}` keeps reporting `status_update` as excluded rather than erroring.
 - Redis unreachable when writing a log filter — `exclude`/`include` return HTTP 503; the toggle did not take effect.
 - `/logs/prune` called with neither `after` nor `before` — HTTP 400.
@@ -273,4 +286,5 @@ curl -X POST http://localhost:8090/replays/sample/approve
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
 - v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.
 - v1.6.0 (2026-09-27) — Draft review gate. `POST /replays` takes optional `status` (`approved` default | `draft`) and `uploaded_by` query params and echoes `status`; `GET /replays` takes `?status=approved|draft|all` (default `approved`, so existing callers are unchanged) and each row now carries `status`; `GET /replays/{name}` includes drafts (review); new `POST /replays/{name}/approve`. Drafts never air — the filter lives in `app/episode_store.py` (docs/episode_store.md v1.1.0), whose `ensure_schema()` now also migrates an existing table (new `status` column, existing rows `approved`).
+- v1.7.0 (2026-09-27) — Worker health: `GET /workers/health` (all known workers — `WORKER_ID_EXAMPLES` plus ids discovered from Redis keys) and `GET /workers/{worker_id}/health`, backed by `WorkerControl.health_many()`/`health()` (docs/worker_control.md v1.3.0). Reports liveness (alive/stale/down/unknown, last seen, age), the worker's self-reported local kill switch, and the raw Redis enable flag. Never 503s — Redis down reads as `unknown`. Existing `/workers/{id}` responses unchanged.
 - v1.5.0 (2026-09-27) — Added `GET /logs/containers` and `GET /logs/messages`, backed by the new `app/replay_logs.py` (docs/replay_logs.md). Read-only tails of `container_logs` (log-shipper) and `messages` (message-logger) scoped to a caller-given `service`/`worker_id` list plus an optional `since` timestamp — the source data for the control-panel's Rerun Theater "Play" log viewer, which previously had no way to show whether a replay_request actually landed or what a worker printed while preparing narration.

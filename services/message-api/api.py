@@ -3,7 +3,8 @@
 api.py
 Minimal HTTP interface for injecting test messages onto the Kafka bus, and
 for turning individual workers on/off without a stack redeploy (see
-worker_control.py).
+worker_control.py), and for reading their health (GET /workers/health:
+liveness key, the worker's self-reported local kill switch, enable flag).
 Pure producer for /messages — no DB or filesystem writes; the message-logger
 service handles durable logging independently.
 Also exposes the /log-filter control endpoints — the HTTP surface for
@@ -122,6 +123,27 @@ def post_message(body: InjectMessage):
     message = build_message("operator", body.to, body.type, body.payload)
     producer.send(message)
     return message
+
+
+# Health routes are declared BEFORE GET /workers/{worker_id} so the literal
+# "health" segment isn't captured as a worker id. Never 503: a Redis outage
+# reads as state "unknown" / alive null (see WorkerControl.health_many), and
+# "enabled" is the raw Redis flag — never this container's kill file.
+@app.get("/workers/health")
+def get_all_workers_health():
+    """Every known worker: the WORKER_ID_EXAMPLES list plus any id that has
+    a liveness or enable key in Redis (e.g. roundtable, tuber_0)."""
+    worker_ids = list(WORKER_ID_EXAMPLES)
+    worker_ids += [w for w in control.known_worker_ids() if w not in worker_ids]
+    rows = control.health_many(worker_ids)
+    log.debug("event=workers_health count=%d unknown=%d", len(rows),
+              sum(1 for r in rows if r["state"] == "unknown"))
+    return {"workers": rows}
+
+
+@app.get("/workers/{worker_id}/health")
+def get_worker_health(worker_id: str = Path(..., openapi_examples=WORKER_ID_EXAMPLES)):
+    return control.health(worker_id)
 
 
 @app.get("/workers/{worker_id}")

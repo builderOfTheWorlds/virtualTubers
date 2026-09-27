@@ -17,7 +17,14 @@ it. No changes were made to message-api itself; this is purely additive.
 Sections on the one dashboard page (`GET /`):
 
 - **Workers** — enable/disable each of the six known worker IDs
-  (docs/worker_control.md), auto-refreshed every 10s.
+  (docs/worker_control.md), auto-refreshed every 10s. A **health** column
+  (from message-api's `GET /workers/health`, one call per refresh) shows
+  `alive` / `stale` with "last seen Ns ago", `down` (no heartbeat within the
+  worker's liveness TTL) or `unknown` (message-api/Redis unreachable), and a
+  red **local kill-switch engaged** badge when the worker reports its
+  `WORKER_KILL_FILE` exists. That switch lives inside the worker container,
+  so the panel's Enable button cannot override it — the badge says to clear
+  it with `scripts/emergency_resume.sh <worker>`.
 - **Send a message** — compose an arbitrary Kafka message (`to`/`type`/JSON
   `payload`), same shape as `POST /messages`.
 - **Log filter** — exclude/include a message type from `message-logger`'s
@@ -173,6 +180,9 @@ docker compose up -d control-panel
   `GET /replays` (approved library) and `GET /replays?status=draft` (review
   queue). Either can fail independently — the other table still renders,
   with its own error banner.
+- `GET /workers/health` failing (message-api down, or an older message-api
+  without the route) — every worker's health cell shows `unknown`; the
+  on/off status column is unaffected (separate per-worker calls).
 - Every destructive action (disable a worker, delete a replay, prune logs)
   has an `hx-confirm` prompt in the browser before the request is even
   sent — no server-side undo exists for any of them, same as the endpoints
@@ -182,6 +192,19 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.4.0 (2026-09-27) — Worker health in the Workers table: new health
+  column (alive/stale/down/unknown + "last seen Ns ago" via the new `age`
+  Jinja filter, `format_age()`) and a local kill-switch badge pointing at
+  `scripts/emergency_resume.sh`. Fed by message-api's new
+  `GET /workers/health` (dashboard + `/partials/workers`) and
+  `GET /workers/{id}/health` (re-read after an Enable/Disable so the
+  swapped-in row keeps its badges). New helpers `_workers_health`,
+  `_worker_health`, `_workers_view`; CSS `.badge.warn` / `.badge.kill`.
+  Also fixed `tests/test_control_panel.py::test_dashboard_renders_worker_and_replay_data`,
+  a stale test: its strict message-api fake predated the v1.1.0 Console
+  theme section and raised on the dashboard's legitimate
+  `GET /console-themes` call (plus a module-level theme-name cache made the
+  outcome test-order dependent — now reset per test). No panel bug.
 - v1.3.0 (2026-09-27) — Draft review gate: a "Drafts awaiting review"
   table in the Rerun Theater section (new `_draft_row.html`), fed by
   message-api's `GET /replays?status=draft`, with View / Approve / Delete.

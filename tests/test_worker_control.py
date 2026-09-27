@@ -2,6 +2,8 @@
 Tests for app/worker_control.py.
 redis.Redis is mocked — these tests never touch a real Redis instance.
 """
+import json
+from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -172,6 +174,16 @@ class _FakeRedisWithTTL:
             return None
         return value
 
+    def mget(self, keys):
+        self._check()
+        return [self.get(k) for k in keys]
+
+    def scan_iter(self, match=None, count=None):
+        import fnmatch
+        self._check()
+        return iter([k for k in list(self.store) if self.get(k) is not None
+                     and (match is None or fnmatch.fnmatchcase(k, match))])
+
 
 def _control_with_ttl_redis():
     fake = _FakeRedisWithTTL()
@@ -188,7 +200,10 @@ def test_heartbeat_sets_alive_key_with_ttl():
     args, kwargs = fake_client.set.call_args
     assert args[0] == "worker:coder:alive"
     assert kwargs == {"ex": 15}
-    assert datetime.fromisoformat(args[1]).tzinfo is not None
+    value = json.loads(args[1])
+    assert datetime.fromisoformat(value["ts"]).tzinfo is not None
+    assert value["local_override"] is False
+    assert value["ttl_s"] == 15
 
 
 def test_heartbeat_clamps_ttl_to_at_least_one_second():
@@ -244,3 +259,98 @@ def test_heartbeat_does_not_touch_enabled_flag():
     control.heartbeat("coder", 15)
     assert "worker:coder:enabled" not in fake.store
     assert control.is_enabled("coder") is True
+
+
+# ── alive value format + health view (v1.3.0) ────────────────────────────────
+
+def test_heartbeat_reports_local_override_in_alive_value(kill_file):
+    kill_file.write_text("x")
+    fake = _FakeRedisWithTTL()
+    with patch("worker_control.redis.Redis.from_url", return_value=fake):
+        control = WorkerControl("redis://fake:6379", kill_file=str(kill_file))
+    control.heartbeat("coder", 15)
+    assert json.loads(fake.store["worker:coder:alive"][0])["local_override"] is True
+    assert control.health("coder")["local_override"] is True
+
+
+def test_last_seen_accepts_old_plain_iso_value():
+    control, fake = _control_with_ttl_redis()
+    fake.set("worker:coder:alive", "2026-09-27T12:00:00+00:00", ex=15)
+    assert control.last_seen("coder") == "2026-09-27T12:00:00+00:00"
+    assert control.alive("coder") is True
+
+
+def test_last_seen_returns_ts_from_new_json_value():
+    control, _ = _control_with_ttl_redis()
+    control.heartbeat("coder", 15)
+    ts = control.last_seen("coder")
+    assert not ts.startswith("{")
+    assert datetime.fromisoformat(ts).tzinfo is not None
+
+
+@pytest.mark.parametrize("value,expected", [
+    (None, None),
+    ("", None),
+    ("2026-09-27T12:00:00+00:00", {"ts": "2026-09-27T12:00:00+00:00", "local_override": None, "ttl_s": None}),
+    ('{"ts": "T", "local_override": true, "ttl_s": 15}', {"ts": "T", "local_override": True, "ttl_s": 15}),
+    ('{"ts": "T", "local_override": "yes", "ttl_s": -1}', {"ts": "T", "local_override": None, "ttl_s": None}),
+    ('{not json', {"ts": "{not json", "local_override": None, "ttl_s": None}),
+])
+def test_parse_alive_value_handles_old_new_and_bad_values(value, expected):
+    from worker_control import parse_alive_value
+    assert parse_alive_value(value) == expected
+
+
+def test_health_alive_then_stale_then_down_as_key_ages():
+    control, fake = _control_with_ttl_redis()
+    t0 = datetime(2026, 9, 27, 12, 0, 0, tzinfo=timezone.utc)
+    fake.set("worker:coder:alive", json.dumps({"ts": t0.isoformat(), "local_override": False, "ttl_s": 20}), ex=20)
+
+    row = control.health("coder", now=t0 + timedelta(seconds=3))
+    assert (row["state"], row["alive"], row["age_s"], row["local_override"], row["enabled"]) \
+        == ("alive", True, 3.0, False, True)
+
+    row = control.health("coder", now=t0 + timedelta(seconds=15))
+    assert (row["state"], row["alive"]) == ("stale", True)
+
+    fake.now += 21
+    row = control.health("coder")
+    assert (row["state"], row["alive"], row["last_seen"], row["local_override"]) == ("down", False, None, None)
+
+
+def test_health_old_value_is_alive_with_unknown_override():
+    control, fake = _control_with_ttl_redis()
+    t0 = datetime(2026, 9, 27, 12, 0, 0, tzinfo=timezone.utc)
+    fake.set("worker:coder:alive", t0.isoformat(), ex=15)
+    row = control.health("coder", now=t0 + timedelta(seconds=100))
+    # no reported TTL => never "stale"; key presence alone means alive
+    assert (row["state"], row["local_override"], row["age_s"]) == ("alive", None, 100.0)
+
+
+def test_health_enabled_is_raw_redis_flag_ignoring_local_kill_file(kill_file):
+    kill_file.write_text("x")
+    fake = _FakeRedisWithTTL()
+    with patch("worker_control.redis.Redis.from_url", return_value=fake):
+        control = WorkerControl("redis://fake:6379", kill_file=str(kill_file))
+    assert control.health("coder")["enabled"] is True  # missing key => enabled
+    control.set_enabled("coder", False)
+    assert control.health("coder")["enabled"] is False
+
+
+def test_health_many_unknown_when_redis_down_single_round_trip():
+    control, fake_client = _control_with_fake_client()
+    fake_client.mget.side_effect = redis.ConnectionError("refused")
+    rows = control.health_many(["coder", "tester"])
+    assert [r["state"] for r in rows] == ["unknown", "unknown"]
+    assert all(r["alive"] is None and r["enabled"] is None for r in rows)
+    fake_client.mget.assert_called_once()
+    assert control.health_many([]) == []
+
+
+def test_known_worker_ids_from_alive_and_enabled_keys():
+    control, fake = _control_with_ttl_redis()
+    control.heartbeat("roundtable", 15)
+    control.set_enabled("tuber_0", False)
+    assert control.known_worker_ids() == ["roundtable", "tuber_0"]
+    fake.down = True
+    assert control.known_worker_ids() == []

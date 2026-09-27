@@ -37,6 +37,13 @@ def _reset_log_types():
     panel.KNOWN_LOG_TYPES[:] = original
 
 
+@pytest.fixture(autouse=True)
+def _reset_theme_cache(monkeypatch):
+    """_theme_names caches GET /console-themes at module scope; without a
+    reset, whether the dashboard calls it depends on which test ran first."""
+    monkeypatch.setattr(panel, "_THEME_NAMES_CACHE", None)
+
+
 @pytest.fixture
 def client(monkeypatch):
     mock = AsyncMock(return_value=mapi_result())
@@ -48,7 +55,16 @@ def client(monkeypatch):
 
 # ── dashboard ────────────────────────────────────────────────────────────
 def test_dashboard_renders_worker_and_replay_data(client):
+    # The dashboard also renders the Console theme section (added after this
+    # test was written), so the fake must answer /console-themes and
+    # /console-theme/{id} too — plus the workers' /workers/health batch.
     async def side_effect(method, path, **kwargs):
+        if path == "/workers/health":
+            return mapi_result(data={"workers": []})
+        if path == "/console-themes":
+            return mapi_result(data={"themes": ["Dracula"]})
+        if path.startswith("/console-theme/"):
+            return mapi_result(data={"theme": None, "overridden": False})
         if path.startswith("/workers/"):
             return mapi_result(data={"worker_id": path.split("/")[-1], "enabled": True})
         if path.startswith("/log-filter/"):
@@ -79,7 +95,9 @@ def test_enable_worker_forwards_and_renders_enabled(client):
     resp = client.post("/workers/coder/enable")
     assert resp.status_code == 200
     assert "enabled" in resp.text
-    client.mapi.assert_awaited_once_with("POST", "/workers/coder/enable")
+    # The toggle, then a health re-read so the swapped row keeps its badges.
+    calls = [c.args for c in client.mapi.await_args_list]
+    assert calls == [("POST", "/workers/coder/enable"), ("GET", "/workers/coder/health")]
 
 
 def test_disable_worker_error_renders_error_badge(client):
@@ -88,6 +106,85 @@ def test_disable_worker_error_renders_error_badge(client):
     assert resp.status_code == 200
     assert "redis unavailable" in resp.text
     assert "error" in resp.text
+
+
+# ── worker health (GET /workers/health) ─────────────────────────────────
+def _health_row(worker_id, state, **fields):
+    row = {"worker_id": worker_id, "state": state,
+           "alive": None if state == "unknown" else state in ("alive", "stale"),
+           "last_seen": None, "age_s": None, "local_override": None,
+           "enabled": True, "ttl_s": 15}
+    row.update(fields)
+    return row
+
+
+def _workers_partial(client, health_rows, health_ok=True):
+    async def side_effect(method, path, **kwargs):
+        if path == "/workers/health":
+            if not health_ok:
+                return mapi_result(ok=False, status_code=0, error="message-api unreachable")
+            return mapi_result(data={"workers": health_rows})
+        return mapi_result(data={"worker_id": path.split("/")[-1], "enabled": True})
+
+    client.mapi.side_effect = side_effect
+    resp = client.get("/partials/workers")
+    assert resp.status_code == 200
+    return resp.text
+
+
+def _row_html(text, worker_id):
+    start = text.index(f'id="worker-row-{worker_id}"')
+    return text[start:text.index("</tr>", start)]
+
+
+def test_workers_partial_renders_alive_with_last_seen_age(client):
+    text = _workers_partial(client, [_health_row("coder", "alive", age_s=4.2, last_seen="2026-09-27T12:00:00+00:00")])
+    row = _row_html(text, "coder")
+    assert ">alive<" in row
+    assert "last seen 4s ago" in row
+    assert "kill-switch" not in row
+
+
+def test_workers_partial_renders_stale_and_down(client):
+    text = _workers_partial(client, [
+        _health_row("coder", "stale", age_s=130),
+        _health_row("tester", "down"),
+    ])
+    assert ">stale<" in _row_html(text, "coder")
+    assert "last seen 2m 10s ago" in _row_html(text, "coder")
+    assert ">down<" in _row_html(text, "tester")
+
+
+def test_workers_partial_renders_local_kill_switch_badge(client):
+    text = _workers_partial(client, [_health_row("coder", "alive", age_s=1, local_override=True)])
+    row = _row_html(text, "coder")
+    assert "local kill-switch engaged" in row
+    assert "scripts/emergency_resume.sh coder" in row
+    assert "local kill-switch" not in _row_html(text, "tester")
+
+
+def test_workers_partial_health_unknown_when_message_api_fails(client):
+    text = _workers_partial(client, [], health_ok=False)
+    for worker_id in panel.WORKER_IDS:
+        assert ">unknown<" in _row_html(text, worker_id)
+
+
+def test_toggle_row_keeps_kill_switch_badge(client):
+    async def side_effect(method, path, **kwargs):
+        if path == "/workers/coder/health":
+            return mapi_result(data=_health_row("coder", "alive", age_s=2, local_override=True))
+        return mapi_result(data={"worker_id": "coder", "enabled": True})
+
+    client.mapi.side_effect = side_effect
+    resp = client.post("/workers/coder/enable")
+    assert "local kill-switch engaged" in resp.text
+
+
+@pytest.mark.parametrize("seconds,expected", [
+    (0, "0s"), (12.7, "12s"), (130, "2m 10s"), (7500, "2h 5m"), (None, "?"), ("x", "?"),
+])
+def test_format_age(seconds, expected):
+    assert panel.format_age(seconds) == expected
 
 
 # ── message composer ────────────────────────────────────────────────────
