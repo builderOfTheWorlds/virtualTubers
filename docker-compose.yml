@@ -8,6 +8,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER1_STREAM_KEY:-coder}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -117,6 +123,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER2_STREAM_KEY:-coder-native}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -182,6 +194,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER3_STREAM_KEY:-coder-opencode}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -247,6 +265,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER4_STREAM_KEY:-coder-aider}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -312,6 +336,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER6_STREAM_KEY:-manager}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -373,6 +403,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER5_STREAM_KEY:-tester}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -457,6 +493,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${TUBER0_STREAM_KEY:-tuber0}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
@@ -542,6 +584,12 @@ services:
     environment:
       CONFIG_PATH: /config/worker.yaml
       STREAM_RTMP_URL: ${STREAM_RTMP_URL:-rtmp://rtmp-preview:1935/live}
+      # Opt-in dual-push to a local rtmp-preview server for near-zero-
+      # latency VLC viewing alongside the live broadcast (see startup.sh's
+      # LOCAL_PREVIEW_ENABLED note / stream_supervisor.build_ffmpeg_cmd's
+      # local_preview_url docstring). Off by default on every worker.
+      LOCAL_PREVIEW_ENABLED: ${LOCAL_PREVIEW_ENABLED:-0}
+      LOCAL_PREVIEW_URL: ${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}
       STREAM_KEY: ${ROUNDTABLE_STREAM_KEY:-roundtable}
       LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

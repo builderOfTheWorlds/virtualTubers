@@ -296,6 +296,51 @@ def test_build_ffmpeg_cmd_sets_thread_queue_size_for_pulse_audio_input():
     assert cmd[pulse_i - 2] == str(ss.AUDIO_QUEUE_PACKETS)
 
 
+# ── local_preview_url: dual-push (tee muxer) for near-zero-latency local
+#    VLC viewing alongside the live Twitch broadcast, without re-encoding
+#    (see build_ffmpeg_cmd's docstring). ───────────────────────────────────
+def test_build_ffmpeg_cmd_omits_tee_when_local_preview_url_not_set():
+    """Default (None) must be byte-identical to pre-tee behavior."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+    assert "-f" in cmd and "flv" in cmd
+    i = cmd.index("flv")
+    assert cmd[i + 1] == "rtmp://live.twitch.tv/app/key123"
+    assert "tee" not in cmd
+
+
+def test_build_ffmpeg_cmd_tees_to_both_destinations_when_local_preview_set():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False,
+            local_preview_url="rtmp://rtmp-preview:1935/live",
+        )
+    assert "-f" in cmd
+    i = cmd.index("-f")
+    # last -f before the tee spec must be "tee", not "flv"
+    assert cmd[cmd.index("tee") - 1] == "-f"
+    tee_spec = cmd[cmd.index("tee") + 1]
+    assert "rtmp://live.twitch.tv/app/key123" in tee_spec
+    assert "rtmp://rtmp-preview:1935/live/key123" in tee_spec
+    assert "onfail=ignore" in tee_spec
+    assert "-map" in cmd  # tee muxer requires explicit stream maps
+
+
+def test_build_ffmpeg_cmd_tee_does_not_change_encode_args():
+    """Dual-push must not alter the encoder settings — only what happens
+    to the already-encoded output."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd_single = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False)
+        cmd_tee = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False,
+            local_preview_url="rtmp://rtmp-preview:1935/live",
+        )
+    for flag in ("-c:v", "-b:v", "-maxrate", "-bufsize", "-g", "-x264opts"):
+        assert cmd_single[cmd_single.index(flag) + 1] == cmd_tee[cmd_tee.index(flag) + 1]
+
+
 def test_build_ffmpeg_cmd_silent_audio_fallback_has_no_thread_queue_size():
     """anullsrc is a synthesized lavfi source, not a real capture thread —
     it doesn't need (and ffmpeg would likely warn/ignore) a queue size."""

@@ -154,7 +154,8 @@ def nvenc_available():
 
 
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
-                     capture_resolution=None, use_gpu=None):
+                     capture_resolution=None, use_gpu=None,
+                     local_preview_url=None):
     """Build the ffmpeg broadcaster command.
 
     Contract E (docs/tuber_base_layout_plan.md): `capture_resolution` is what
@@ -176,6 +177,20 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     avatar.stream.gpu_encode in worker config for an explicit override
     (e.g. temporarily forcing software if a specific host's NVENC turns
     out to be flaky).
+
+    `local_preview_url`: None (default) keeps single-output behavior
+    byte-identical to before this parameter existed — one `-f flv
+    <rtmp_url>/<stream_key>` output, nothing else. When set (opt-in via
+    LOCAL_PREVIEW_ENABLED, see startup.sh), the already-encoded output is
+    duplicated to a second RTMP destination via ffmpeg's `tee` muxer
+    instead of re-encoding — near-zero extra CPU cost, since it's just
+    copying encoded packets to a second socket. Each branch is tagged
+    `onfail=ignore` so a stall/disconnect on either destination (e.g. a
+    local VLC viewer closing, or a Twitch ingest hiccup) can't stall or
+    kill the other — the two outputs are independent from ffmpeg's
+    perspective. Exists so a local rtmp-preview viewer (VLC) can watch
+    with near-zero latency without interrupting the live Twitch broadcast
+    (the whole point being to skip Twitch's ~30s CDN delay for debugging).
 
     x264 and NVENC take almost entirely different flag sets (there is no
     single -preset/-tune value that means the same thing to both
@@ -262,6 +277,29 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
             "-g", str(TWITCH_KEYFRAME_INTERVAL_FRAMES),
         ]
 
+    primary_output = f"{rtmp_url}/{stream_key}"
+
+    if local_preview_url:
+        # tee muxer duplicates the already-encoded packets to a second
+        # destination — no second encode, so no meaningful extra CPU cost
+        # (see local_preview_url's docstring above). onfail=ignore on BOTH
+        # legs means a stall/drop on either destination (local VLC closing,
+        # or a Twitch ingest hiccup) can't block or kill writes to the
+        # other — matches -reconnect's job of keeping THIS process alive
+        # independent of either downstream's health.
+        local_output = f"{local_preview_url}/{stream_key}"
+        tee_spec = (
+            f"[f=flv:onfail=ignore]{primary_output}"
+            f"|[f=flv:onfail=ignore]{local_output}"
+        )
+        output_args = [
+            "-map", "0:v", "-map", "0:a",
+            "-f", "tee",
+            tee_spec,
+        ]
+    else:
+        output_args = ["-f", "flv", primary_output]
+
     return [
         "ffmpeg",
         "-thread_queue_size", str(video_thread_queue_size(capture_resolution)),
@@ -278,8 +316,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
         "-reconnect", "1",
         "-reconnect_streamed", "1",
         "-reconnect_delay_max", "5",
-        "-f", "flv",
-        f"{rtmp_url}/{stream_key}",
+        *output_args,
     ]
 
 
@@ -318,6 +355,17 @@ def main():
         ),
     )
     parser.add_argument("--display", required=True)
+    parser.add_argument(
+        "--local-preview-url",
+        default=None,
+        help=(
+            "Optional second RTMP destination (e.g. rtmp://rtmp-preview:1935/live) "
+            "the encoded stream is also tee'd to, for near-zero-latency local "
+            "viewing (VLC) alongside the normal Twitch broadcast. Omitted by "
+            "default (opt-in via LOCAL_PREVIEW_ENABLED, see startup.sh) so "
+            "existing single-output behavior is unchanged unless set."
+        ),
+    )
     args = parser.parse_args()
 
     capture_resolution = args.capture_resolution or args.resolution
@@ -329,9 +377,12 @@ def main():
     ffmpeg_cmd = build_ffmpeg_cmd(
         args.rtmp_url, args.stream_key, args.resolution, args.display,
         capture_resolution=capture_resolution,
+        local_preview_url=args.local_preview_url,
     )
 
     log(redact_stream_key(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}"))
+    if args.local_preview_url:
+        log(f"{worker_id} also tee'ing to local preview -> {args.local_preview_url}/{args.stream_key}")
 
     proc = None
     running = True
