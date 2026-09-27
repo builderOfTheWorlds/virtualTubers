@@ -778,3 +778,80 @@ def test_approve_replay_503_when_postgres_unavailable(store_up, monkeypatch):
 
 def test_approve_replay_503_when_store_unavailable(no_store):
     assert no_store.post("/replays/demo-ep/approve").status_code == 503
+
+
+# ── /recordings: replay recording budget (docs/recording_budget.md) ──────────
+@pytest.fixture
+def recordings(client, monkeypatch, tmp_path):
+    """Recordings dir in tmp, a 1-episode store, and a tiny budget knob."""
+    script = {"source": "ep1", "events": [
+        {"type": "assistant_text", "text": " ".join(["word"] * 40)} for _ in range(20)]}
+    monkeypatch.setenv("RECORDINGS_DIR", str(tmp_path / "rec"))
+    monkeypatch.delenv("RECORDINGS_MAX_BYTES", raising=False)
+    monkeypatch.setattr(api.episode_store, "available", lambda: True)
+    monkeypatch.setattr(api, "_schema_ready", True)
+    monkeypatch.setattr(api.episode_store, "load_episode",
+                        lambda name, include_drafts=False: script if name == "ep1" else None)
+    client.root = tmp_path / "rec"
+    return client
+
+
+def test_recordings_estimate_reports_size_without_reserving(recordings):
+    resp = recordings.post("/recordings/estimate", json={"episode": "ep1", "streams": ["roundtable"]})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["allowed"] is True
+    assert body["estimated_bytes"] > 0
+    assert body["limit_bytes"] == 5 * 1000 ** 3
+    assert not recordings.root.exists() or list(recordings.root.iterdir()) == []
+
+
+def test_recordings_reserve_returns_id_and_cap(recordings):
+    resp = recordings.post("/recordings", json={"episode": "ep1", "streams": ["coder", "roundtable"]})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["recording_id"]
+    assert body["max_bytes_per_stream"] > 0
+    assert (recordings.root / body["recording_id"] / ".reservation.json").is_file()
+
+
+def test_recordings_reserve_409_when_estimate_exceeds_budget(recordings, monkeypatch):
+    monkeypatch.setenv("RECORDINGS_MAX_BYTES", "1000")
+    resp = recordings.post("/recordings", json={"episode": "ep1", "streams": ["roundtable"]})
+    assert resp.status_code == 409
+    detail = resp.json()["detail"]
+    assert detail["allowed"] is False
+    assert "exceeds" in detail["reason"]
+    assert not recordings.root.exists() or list(recordings.root.iterdir()) == []
+
+
+def test_recordings_reserve_404_for_unknown_episode(recordings):
+    resp = recordings.post("/recordings", json={"episode": "nope", "streams": ["roundtable"]})
+    assert resp.status_code == 404
+
+
+def test_recordings_reserve_400_for_empty_streams(recordings):
+    resp = recordings.post("/recordings", json={"episode": "ep1", "streams": ["/", ""]})
+    assert resp.status_code == 400
+
+
+def test_recordings_list_download_and_delete(recordings):
+    rid = recordings.post("/recordings", json={"episode": "ep1", "streams": ["roundtable"]}).json()["recording_id"]
+    d = recordings.root / rid
+    (d / "roundtable.mp4").write_bytes(b"video-bytes")
+    # still live until the worker's done marker lands -> delete refused
+    assert recordings.delete(f"/recordings/{rid}").status_code == 409
+    (d / ".roundtable.done").write_text("{}")
+
+    listing = recordings.get("/recordings").json()
+    assert listing["recordings"][0]["id"] == rid
+    assert listing["recordings"][0]["files"] == [{"name": "roundtable.mp4", "bytes": 11}]
+    assert listing["used_bytes"] >= 11
+
+    got = recordings.get(f"/recordings/{rid}/roundtable.mp4")
+    assert got.status_code == 200 and got.content == b"video-bytes"
+    assert recordings.get(f"/recordings/{rid}/.reservation.json").status_code == 400
+    assert recordings.get(f"/recordings/{rid}/..%2F..%2Fsecret.mp4").status_code in (400, 404)
+
+    assert recordings.delete(f"/recordings/{rid}").json()["deleted"] is True
+    assert not d.exists()

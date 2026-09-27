@@ -613,3 +613,43 @@ def test_sigusr1_handler_falls_back_to_force_off_when_write_fails(tmp_path):
     ss.make_emergency_stop_handler(control, state)(10, None)
     assert state["force_off"] is True
     assert state["wake"] is True
+
+
+# ── record_tap_url: zero-re-encode MPEG-TS tap for replay recordings
+#    (docs/stream_recorder.md) ────────────────────────────────────────────
+def _tap_cmd(**kwargs):
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        return build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+                                use_gpu=False, **kwargs)
+
+
+def test_build_ffmpeg_cmd_without_record_tap_is_unchanged():
+    assert _tap_cmd() == _tap_cmd(record_tap_url=None)
+    assert "tee" not in _tap_cmd()
+
+
+def test_build_ffmpeg_cmd_record_tap_adds_ignorable_mpegts_leg():
+    cmd = _tap_cmd(record_tap_url="udp://127.0.0.1:23000")
+    tee_spec = cmd[cmd.index("tee") + 1]
+    twitch_leg, tap_leg = tee_spec.split("|")
+    assert twitch_leg == "[f=flv]rtmp://live.twitch.tv/app/key123"
+    # onfail=ignore on the tap leg ONLY — a recorder problem must never
+    # take the live broadcast down (same rule as the local preview leg).
+    assert tap_leg == "[f=mpegts:onfail=ignore]udp://127.0.0.1:23000?pkt_size=1316"
+    assert cmd[cmd.index("-map") + 1] == "0:v:0"
+
+
+def test_build_ffmpeg_cmd_record_tap_and_local_preview_share_one_tee():
+    cmd = _tap_cmd(local_preview_url="rtmp://rtmp-preview:1935/live",
+                   record_tap_url="udp://127.0.0.1:23000?ttl=1")
+    legs = cmd[cmd.index("tee") + 1].split("|")
+    assert len(legs) == 3
+    assert "onfail=ignore" not in legs[0]
+    assert all("onfail=ignore" in leg for leg in legs[1:])
+    assert legs[2].endswith("?ttl=1&pkt_size=1316")
+
+
+def test_build_ffmpeg_cmd_record_tap_does_not_change_encode_args():
+    plain, tapped = _tap_cmd(), _tap_cmd(record_tap_url="udp://127.0.0.1:23000")
+    cut = plain.index("-f", plain.index("-ar"))
+    assert tapped[:cut] == plain[:cut]

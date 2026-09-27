@@ -211,7 +211,8 @@ def resolve_music_source(config, sink="music"):
 
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
                      capture_resolution=None, use_gpu=None,
-                     local_preview_url=None, music_source=None, music_duck=None):
+                     local_preview_url=None, music_source=None, music_duck=None,
+                     record_tap_url=None):
     """Build the ffmpeg broadcaster command.
 
     Contract E (docs/tuber_base_layout_plan.md): `capture_resolution` is what
@@ -264,6 +265,16 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     mixed `[aout]` label replaces input 1's audio in every -map. Ignored
     when Pulse itself is down (the anullsrc fallback has nothing to duck).
     `music_duck` is the worker config's `music.duck` dict.
+
+    `record_tap_url`: None (default) keeps the command unchanged. When set
+    (RECORDING_TAP_ENABLED, on by default in startup.sh; e.g.
+    udp://127.0.0.1:23000), the already-encoded packets are ALSO tee'd as
+    MPEG-TS to that local UDP port, where app/stream_recorder.py picks them
+    up with `-c copy` only while a recorded replay is airing
+    (docs/stream_recorder.md). Same zero-re-encode tee as the local
+    preview, and the same `onfail=ignore` rule for the non-Twitch leg; UDP
+    to a port nobody is listening on just drops, so the tap costs one
+    loopback datagram copy per packet and never blocks the broadcast.
     """
     if capture_resolution is None:
         capture_resolution = resolution
@@ -351,7 +362,16 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
 
     primary_output = f"{rtmp_url}/{stream_key}"
 
+    tee_legs = []
     if local_preview_url:
+        tee_legs.append(f"[f=flv:onfail=ignore]{local_preview_url}/{stream_key}")
+    if record_tap_url:
+        # pkt_size=1316 == 7 TS packets: the standard MPEG-TS-over-UDP
+        # datagram size, well under the loopback MTU.
+        sep = "&" if "?" in record_tap_url else "?"
+        tee_legs.append(f"[f=mpegts:onfail=ignore]{record_tap_url}{sep}pkt_size=1316")
+
+    if tee_legs:
         # tee muxer duplicates the already-encoded packets to a second
         # destination — no second encode, so no meaningful extra CPU cost
         # (see local_preview_url's docstring above). onfail=ignore ONLY on
@@ -370,11 +390,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
         # already restarts (decide_action) — the exact same recovery path
         # single-output mode has always relied on, so this doesn't
         # introduce a new failure mode, only avoids a NEW one from tee.
-        local_output = f"{local_preview_url}/{stream_key}"
-        tee_spec = (
-            f"[f=flv]{primary_output}"
-            f"|[f=flv:onfail=ignore]{local_output}"
-        )
+        tee_spec = "|".join([f"[f=flv]{primary_output}", *tee_legs])
         # Map by explicit INPUT INDEX + stream type: video is always input 0
         # (the x11grab -i above); audio is always input 1, whichever branch
         # of audio_input supplied it (pulse or anullsrc) — both are single
@@ -525,6 +541,16 @@ def main():
             "existing single-output behavior is unchanged unless set."
         ),
     )
+    parser.add_argument(
+        "--record-tap-url",
+        default=None,
+        help=(
+            "Optional local UDP address (e.g. udp://127.0.0.1:23000) the encoded "
+            "stream is also tee'd to as MPEG-TS, for app/stream_recorder.py to save "
+            "recorded replay airings from (docs/stream_recorder.md). Set by "
+            "startup.sh unless RECORDING_TAP_ENABLED=0; omitted = command unchanged."
+        ),
+    )
     args = parser.parse_args()
 
     capture_resolution = args.capture_resolution or args.resolution
@@ -539,6 +565,7 @@ def main():
         capture_resolution=capture_resolution,
         local_preview_url=args.local_preview_url,
         music_source=music_source, music_duck=music_duck,
+        record_tap_url=args.record_tap_url,
     )
     if music_source:
         log(f"{worker_id} mixing background music from {music_source} (ducked under voices)")
@@ -546,6 +573,8 @@ def main():
     log(redact_stream_key(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}"))
     if args.local_preview_url:
         log(f"{worker_id} also tee'ing to local preview -> {args.local_preview_url}/{args.stream_key}")
+    if args.record_tap_url:
+        log(f"{worker_id} recording tap enabled -> {args.record_tap_url} (mpegts, used only while a recorded replay airs)")
 
     proc = None
     state = {"running": True, "wake": False, "force_off": False}

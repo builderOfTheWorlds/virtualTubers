@@ -55,3 +55,6 @@ Thumbs.db
 /.env
 # Local-model worker staging output (tools/qwen_worker)
 .qwen_staging/
+
+# ── Saved replay recordings (docs/stream_recorder.md) — big binaries, host-only
+recordings/

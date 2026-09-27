@@ -178,6 +178,17 @@ header, or `VOICE_GATE_CONCURRENT` at runtime —
 **[docs/voice_gate.md](docs/voice_gate.md)** (rules, escape hatch, event log
 for reconstructing the on-air sequence).
 
+### Saving replays to file (5 GB cap)
+
+Rerun Theater's Play has a **Save to file** option (off / roundtable / all 7
+streams). It records the exact encoded stream sent to Twitch (a zero-re-encode
+tee tap), into host `./recordings/<id>/<worker>.mp4`. The size is estimated
+first and the Play is refused if it wouldn't fit the recordings budget
+(`RECORDINGS_MAX_BYTES` on message-api, default 5 GB); each file is also
+hard-capped by ffmpeg. `RECORDING_TAP_ENABLED=0` on a worker removes the tap.
+Details: **[docs/stream_recorder.md](docs/stream_recorder.md)**,
+**[docs/recording_budget.md](docs/recording_budget.md)**.
+
 ### Background music (roundtable)
 
 The roundtable streams a live-generated score: one theme per campaign

@@ -13,6 +13,11 @@
     {% else %}
       <div class="banner err">play {{ play_result.name }} failed: {{ play_result.error }}</div>
     {% endif %}
+    {% if play_result.recording %}
+      <div class="banner ok" id="recording-banner">recording to <span class="mono">{{ play_result.recording.recording_id }}</span> —
+        {{ play_result.recording.streams }} stream(s), estimated {{ play_result.recording.estimated }}
+        (~{{ play_result.recording.duration }}); {{ play_result.recording.remaining }} of the {{ play_result.recording.limit }} limit left after this one</div>
+    {% endif %}
     {% if play_result.progress_url %}
     <div id="replay-progress" class="replay-progress"
          hx-get="{{ play_result.progress_url }}"
@@ -21,11 +26,13 @@
       <div class="replay-progress-track"><div id="replay-progress-fill" class="replay-progress-fill" style="width: 0%"></div></div>
     </div>
     {% endif %}
+    {% if play_result.log_url %}
     <div id="replay-log-viewer" class="log-viewer"
          hx-get="{{ play_result.log_url }}"
          hx-trigger="load, every 3s" hx-swap="innerHTML">
       <div class="log-lines">loading log…</div>
     </div>
+    {% endif %}
   {% endif %}
 
   <form class="inline-form" hx-post="/replays/upload" hx-target="#replays-section" hx-swap="outerHTML"
@@ -78,6 +85,41 @@
       {% endfor %}
     </tbody>
   </table>
+
+  <h3>Recordings
+    {% if recordings_budget %}<span class="hint">{{ recordings_budget.used }} of {{ recordings_budget.limit }} used ({{ recordings_budget.percent }}%) — {{ recordings_budget.remaining }} free</span>{% endif %}
+  </h3>
+  {% if recordings_error %}
+    <div class="banner err">recordings unavailable: {{ recordings_error }}</div>
+  {% elif not recordings %}
+    <p class="hint" id="recordings-empty">no saved recordings — pick a "save … to file" option next to Play</p>
+  {% else %}
+  <table class="panel-table">
+    <thead>
+      <tr><th>recording</th><th>size</th><th>files</th><th></th></tr>
+    </thead>
+    <tbody id="recordings-table">
+      {% for rec in recordings %}
+      <tr id="recording-row-{{ rec.id }}">
+        <td class="mono">{{ rec.id }}{% if rec.live %} <span class="badge">recording…</span>{% endif %}</td>
+        <td>{{ rec.size }}</td>
+        <td>
+          {% for f in rec.files %}
+            <a class="mono" href="/recordings/{{ rec.id }}/{{ f.name }}" download>{{ f.name }}</a> ({{ f.size }}){% if not loop.last %}<br>{% endif %}
+          {% else %}<span class="hint">no files</span>{% endfor %}
+        </td>
+        <td class="actions">
+          {% if not rec.live %}
+          <button class="btn danger"
+            hx-post="/recordings/{{ rec.id }}/delete" hx-target="#replays-section" hx-swap="outerHTML"
+            hx-confirm="Delete recording {{ rec.id }} and all its video files?">Delete</button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
 
   <div id="replay-view"></div>
 </div>

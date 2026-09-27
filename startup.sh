@@ -65,6 +65,14 @@ STREAM_KEY="${STREAM_KEY:-test}"
 # every worker already reaches via STREAM_RTMP_URL's own default.
 LOCAL_PREVIEW_ENABLED="${LOCAL_PREVIEW_ENABLED:-0}"
 LOCAL_PREVIEW_URL="${LOCAL_PREVIEW_URL:-rtmp://rtmp-preview:1935/live}"
+# Replay recording tap (docs/stream_recorder.md): the already-encoded stream
+# is also tee'd (no re-encode) as MPEG-TS to a container-local UDP port, where
+# app/stream_recorder.py stream-copies it to disk ONLY while an airing that
+# asked to be recorded is on. Nobody listening = datagrams dropped, so this
+# never affects the live broadcast. RECORDING_TAP_ENABLED=0 removes the leg.
+RECORDING_TAP_ENABLED="${RECORDING_TAP_ENABLED:-1}"
+RECORDING_TAP_URL="${RECORDING_TAP_URL:-udp://127.0.0.1:23000}"
+export RECORDING_TAP_URL
 
 # Pixel dimensions of the capture, derived from CAPTURE_RESOLUTION (e.g.
 # 3840x2160) — NOT from RESOLUTION, which is the stream's OUTPUT size and is
@@ -371,6 +379,11 @@ if [ "${LOCAL_PREVIEW_ENABLED}" = "1" ] || [ "${LOCAL_PREVIEW_ENABLED}" = "true"
     log "Local preview enabled — also tee'ing to ${LOCAL_PREVIEW_URL}/${STREAM_KEY} (see startup.sh's LOCAL_PREVIEW_ENABLED note)"
     LOCAL_PREVIEW_ARGS=(--local-preview-url "${LOCAL_PREVIEW_URL}")
 fi
+RECORD_TAP_ARGS=()
+if [ "${RECORDING_TAP_ENABLED}" = "1" ] || [ "${RECORDING_TAP_ENABLED}" = "true" ]; then
+    log "Recording tap enabled → ${RECORDING_TAP_URL} (docs/stream_recorder.md)"
+    RECORD_TAP_ARGS=(--record-tap-url "${RECORDING_TAP_URL}")
+fi
 python3 /app/stream_supervisor.py \
     --config "${CONFIG_PATH}" \
     --rtmp-url "${STREAM_RTMP_URL}" \
@@ -378,7 +391,8 @@ python3 /app/stream_supervisor.py \
     --resolution "${RESOLUTION}" \
     --capture-resolution "${CAPTURE_RESOLUTION}" \
     --display "${DISPLAY}" \
-    "${LOCAL_PREVIEW_ARGS[@]}"
+    "${LOCAL_PREVIEW_ARGS[@]}" \
+    "${RECORD_TAP_ARGS[@]}"
 
 log "Stream supervisor exited. Cleaning up."
 # AGENT_PID is the restart-on-crash WRAPPER (§7), not agent.py itself — kill

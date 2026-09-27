@@ -318,6 +318,9 @@ def _library_and_drafts(library, drafts, extra=None):
             hit = extra(method, path, **kwargs)
             if hit is not None:
                 return hit
+        if method == "GET" and path == "/recordings":
+            return mapi_result(data={"recordings": [], "used_bytes": 0,
+                                     "limit_bytes": 5_000_000_000, "remaining_bytes": 5_000_000_000})
         if method == "GET" and path == "/replays":
             params = kwargs.get("params") or {}
             if params.get("status") == "draft":

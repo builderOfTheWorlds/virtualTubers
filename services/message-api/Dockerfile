@@ -26,6 +26,9 @@ COPY app/voice_registry.py /app/voice_registry.py
 COPY app/session_log_parser.py /app/session_log_parser.py
 COPY app/replay.py /app/replay.py
 COPY app/revoice.py /app/revoice.py
+# Replay recording budget (/recordings): size estimate + reservations, pure
+# stdlib on top of revoice/replay (already copied above).
+COPY app/recording_budget.py /app/recording_budget.py
 COPY app/agent_state.py /app/agent_state.py
 COPY app/audio_player.py /app/audio_player.py
 # GM live music control (/music endpoints). The whole package is copied, but

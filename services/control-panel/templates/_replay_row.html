@@ -15,6 +15,11 @@
       hx-get="/replays/{{ replay.name }}/view" hx-target="#replay-view" hx-swap="innerHTML">View</button>
     <form class="inline-form" style="display:inline"
           hx-post="/replays/{{ replay.name }}/play" hx-target="#replays-section" hx-swap="outerHTML">
+      <select name="record" title="Also save the airing to a video file (5 GB total recording limit; the size is estimated first and Play is refused if it won't fit)">
+        <option value="none" selected>don't save</option>
+        <option value="roundtable">save roundtable to file</option>
+        <option value="all">save all 7 streams to files</option>
+      </select>
       <button class="btn ok" type="submit"
         hx-confirm="Play {{ replay.name }} on every stream — all 6 character channels plus the roundtable?&#10;&#10;This STOPS whatever episode is currently playing on each of those 7 streams first (queued or in-progress), then starts {{ replay.name }} immediately. Continue?">Play</button>
     </form>

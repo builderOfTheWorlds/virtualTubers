@@ -26,7 +26,7 @@ from urllib.parse import quote
 
 import httpx
 from fastapi import FastAPI, Form, Query, Request, UploadFile
-from fastapi.responses import HTMLResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -589,10 +589,28 @@ async def _episode_lists() -> dict:
     }
 
 
+async def _recordings_view() -> dict:
+    """Saved recordings + budget for the Recordings table. A failure is a
+    banner, never a broken replays section."""
+    result = await _mapi_request("GET", "/recordings")
+    if not result.ok:
+        return {"recordings": [], "recordings_error": result.error, "recordings_budget": None}
+    data = result.data or {}
+    budget = {"used": _fmt_bytes(data.get("used_bytes")), "limit": _fmt_bytes(data.get("limit_bytes")),
+              "remaining": _fmt_bytes(data.get("remaining_bytes")),
+              "percent": min(100, round(100 * (data.get("used_bytes") or 0)
+                                        / max(data.get("limit_bytes") or 1, 1)))}
+    recordings = [{**rec, "size": _fmt_bytes(rec.get("bytes")),
+                   "files": [{**f, "size": _fmt_bytes(f.get("bytes"))} for f in rec.get("files", [])]}
+                  for rec in data.get("recordings", [])]
+    return {"recordings": recordings, "recordings_error": None, "recordings_budget": budget}
+
+
 async def _replays_section_context(banner: Optional[dict] = None, play_result: Optional[dict] = None,
                                    approve_result: Optional[dict] = None) -> dict:
     return {
         **await _episode_lists(),
+        **await _recordings_view(),
         "upload_result": banner,
         "worker_ids": WORKER_IDS,
         "play_result": play_result,
@@ -628,8 +646,59 @@ async def upload_replay(
         request, "_replays_section.html", await _replays_section_context(banner))
 
 
+#: Play's "save to file" choices (docs/stream_recorder.md) -> which streams
+#: get recorded. "roundtable" is the one composite view of the whole show
+#: (~2 GB/hour); "all" records every one of the 7 airing streams (7x that).
+RECORD_CHOICES = ("none", "roundtable", "all")
+
+
+def _record_streams(record: str) -> List[str]:
+    if record == "roundtable":
+        return [ROUNDTABLE_WORKER_ID]
+    if record == "all":
+        return [*WORKER_IDS, ROUNDTABLE_WORKER_ID]
+    return []
+
+
+async def _reserve_recording(name: str, record: str) -> tuple:
+    """Ask message-api to estimate + reserve storage for a recorded Play.
+    Returns (record_payload, info, error): payload is the replay_request's
+    `record` field; error is set (and nothing may air) when the recording
+    was refused or couldn't be reserved."""
+    streams = _record_streams(record)
+    result = await _mapi_request("POST", "/recordings",
+                                 json={"episode": name, "streams": streams})
+    if not result.ok:
+        detail = result.data.get("detail") if isinstance(result.data, dict) else None
+        reason = detail.get("reason") if isinstance(detail, dict) else result.error
+        log.warning("recording refused name=%s record=%s reason=%s", name, record, reason)
+        return None, None, f"not started — recording refused: {reason}"
+    data = result.data or {}
+    payload = {"recording_id": data["recording_id"], "max_bytes": data["max_bytes_per_stream"]}
+    info = {"recording_id": data["recording_id"], "streams": len(streams),
+            "estimated": _fmt_bytes(data.get("estimated_bytes", 0)),
+            "duration": _fmt_duration(data.get("estimated_duration_s", 0)),
+            "remaining": _fmt_bytes(data.get("remaining_bytes", 0) - data.get("reserved_bytes", 0)),
+            "limit": _fmt_bytes(data.get("limit_bytes", 0))}
+    log.info("recording reserved name=%s record=%s recording_id=%s estimated_bytes=%s",
+             name, record, data["recording_id"], data.get("estimated_bytes"))
+    return payload, info, None
+
+
+def _fmt_bytes(n: Any) -> str:
+    n = float(n or 0)
+    if n >= 1e9:
+        return f"{n / 1e9:.2f} GB"
+    return f"{n / 1e6:.0f} MB"
+
+
+def _fmt_duration(seconds: Any) -> str:
+    minutes, secs = divmod(int(float(seconds or 0)), 60)
+    return f"{minutes // 60}h{minutes % 60:02d}m" if minutes >= 60 else f"{minutes}m{secs:02d}s"
+
+
 @app.post("/replays/{name}/play", response_class=HTMLResponse)
-async def play_replay(request: Request, name: str):
+async def play_replay(request: Request, name: str, record: str = Form("none")):
     """Launch a Rerun Theater airing for an already-uploaded episode on
     EVERY stream at once: the six character channels AND the roundtable's
     tile grid.
@@ -669,7 +738,30 @@ async def play_replay(request: Request, name: str):
     minutes). replay_stop cancels a still-queued request outright and
     signals a currently-playing one to abort within a fraction of a second
     (Pacer.should_stop), so Play now always preempts rather than queuing.
+
+    `record` ("none" | "roundtable" | "all", docs/stream_recorder.md): save
+    the airing to disk as well. The size is estimated and reserved against
+    the recordings budget (message-api POST /recordings) BEFORE anything is
+    stopped or queued — a refused recording airs nothing, so the operator
+    can pick a smaller option rather than get an unrecorded airing they
+    didn't ask for.
     """
+    if record not in RECORD_CHOICES:
+        record = "none"
+    record_payload, record_info = None, None
+    if record != "none":
+        record_payload, record_info, error = await _reserve_recording(name, record)
+        if error:
+            banner = {"ok": False, "name": name, "error": error}
+            return templates.TemplateResponse(
+                request, "_replays_section.html", await _replays_section_context(play_result=banner))
+    recorded = set(_record_streams(record))
+
+    def _payload(worker_id: str, base: dict) -> dict:
+        if record_payload and worker_id in recorded:
+            return {**base, "record": record_payload}
+        return base
+
     results = []
     for worker_id in WORKER_IDS:
         await _mapi_request(
@@ -678,7 +770,8 @@ async def play_replay(request: Request, name: str):
         )
         r = await _mapi_request(
             "POST", "/messages",
-            json={"to": worker_id, "type": "replay_request", "payload": {"episode": name}},
+            json={"to": worker_id, "type": "replay_request",
+                  "payload": _payload(worker_id, {"episode": name})},
         )
         results.append((worker_id, r))
     await _mapi_request(
@@ -688,8 +781,9 @@ async def play_replay(request: Request, name: str):
     roundtable_result = await _mapi_request(
         "POST", "/messages",
         json={"to": ROUNDTABLE_WORKER_ID, "type": "replay_request",
-              "payload": {"episode": name,
-                          "cast": {**WORKER_TO_TUBER_SLOT, **TUBER_SLOT_IDENTITY_CAST}}},
+              "payload": _payload(ROUNDTABLE_WORKER_ID, {
+                  "episode": name,
+                  "cast": {**WORKER_TO_TUBER_SLOT, **TUBER_SLOT_IDENTITY_CAST}})},
     )
     results.append((ROUNDTABLE_WORKER_ID, roundtable_result))
 
@@ -699,12 +793,14 @@ async def play_replay(request: Request, name: str):
     progress_url = f"/replays/{quote(name)}/progress?since={quote(played_at)}"
     if not failed:
         banner = {"ok": True, "name": name, "log_url": log_url, "progress_url": progress_url,
-                  "to": f"all {len(results)} streams (6 channels + roundtable)"}
+                  "to": f"all {len(results)} streams (6 channels + roundtable)",
+                  "recording": record_info}
     else:
         errors = "; ".join(f"{w}: {r.error}" for w, r in results if not r.ok)
         succeeded = len(results) - len(failed)
         banner = {"ok": False, "name": name, "log_url": log_url, "progress_url": progress_url,
-                  "error": f"{succeeded}/{len(results)} streams queued — failed: {errors}"}
+                  "error": f"{succeeded}/{len(results)} streams queued — failed: {errors}",
+                  "recording": record_info}
     return templates.TemplateResponse(
         request, "_replays_section.html", await _replays_section_context(play_result=banner))
 
@@ -901,6 +997,48 @@ async def replay_progress(request: Request, name: str, since: str = Query("")):
         log.info("replay_progress terminal name=%s state=%s", name, snap["state"])
     return templates.TemplateResponse(request, "_replay_progress.html",
                                       {"name": name, "p": snap}, status_code=status_code)
+
+
+# ── Saved replay recordings (docs/stream_recorder.md) ────────────────────
+@app.get("/recordings/{recording_id}/{filename}")
+async def download_recording(recording_id: str, filename: str):
+    """Stream a saved recording through from message-api (the only service
+    that mounts the recordings volume) — the browser never needs to reach
+    message-api directly. No read timeout: files run to GBs."""
+    path = f"/recordings/{quote(recording_id)}/{quote(filename)}"
+    req = http_client.build_request("GET", path, timeout=httpx.Timeout(10.0, read=None))
+    try:
+        resp = await http_client.send(req, stream=True)
+    except httpx.RequestError as exc:
+        log.error("recording download failed recording_id=%s file=%s error=%s", recording_id, filename, exc)
+        return PlainTextResponse(f"message-api unreachable: {exc}", status_code=502)
+    if resp.status_code >= 400:
+        body = await resp.aread()
+        await resp.aclose()
+        return PlainTextResponse(body.decode("utf-8", "replace"), status_code=resp.status_code)
+
+    async def _body():
+        try:
+            async for chunk in resp.aiter_bytes():
+                yield chunk
+        finally:
+            await resp.aclose()
+
+    headers = {k: v for k, v in resp.headers.items()
+               if k.lower() in ("content-length", "content-disposition")}
+    return StreamingResponse(_body(), media_type="video/mp4", headers=headers)
+
+
+@app.post("/recordings/{recording_id}/delete", response_class=HTMLResponse)
+async def delete_recording(request: Request, recording_id: str):
+    result = await _mapi_request("DELETE", f"/recordings/{quote(recording_id)}")
+    banner = None
+    if not result.ok:
+        banner = {"ok": False, "name": recording_id, "error": f"delete recording failed: {result.error}"}
+    else:
+        log.info("recording deleted recording_id=%s", recording_id)
+    return templates.TemplateResponse(
+        request, "_replays_section.html", await _replays_section_context(play_result=banner))
 
 
 @app.post("/replays/{name}/delete", response_class=HTMLResponse)

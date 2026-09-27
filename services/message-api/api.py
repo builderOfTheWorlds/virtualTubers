@@ -21,19 +21,28 @@ human approves it via POST /replays/{name}/approve (the control panel's
 "Drafts awaiting review" list). Rejecting a draft is the existing DELETE.
 And the /music endpoints — GM live control of the roundtable's background
 score (music/control.py MusicControl: Redis override + director heartbeat).
+And the /recordings endpoints — the 5 GB storage budget for saving replay
+airings to disk (recording_budget.py): estimate a recorded Play's size,
+reserve it (refused when it won't fit), list/download/delete recordings.
+The recordings themselves are written by each worker's
+stream_recorder.py onto the shared recordings volume.
 """
 import json
 import logging
 import os
+import threading
 from datetime import datetime
-from typing import Literal, Optional
+from pathlib import Path as FsPath
+from typing import List, Literal, Optional
 
 import psycopg2
 import redis
 from fastapi import FastAPI, HTTPException, Path, Query, Request
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 import episode_store
+import recording_budget
 from console_theme import ConsoleThemeControl, get_theme, load_themes, theme_exists
 from episode_validator import EpisodeInvalid, resolve_name, validate_episode
 from log_filter_control import LogFilterControl
@@ -97,6 +106,13 @@ class SetMusicRequest(BaseModel):
 class PruneLogsRequest(BaseModel):
     after: Optional[datetime] = None
     before: Optional[datetime] = None
+
+
+class RecordingRequest(BaseModel):
+    episode: str
+    #: Worker ids whose streams will be recorded — one file each.
+    streams: List[str]
+    speed: float = 1.0
 
 
 # uvicorn imposes no body-size limit of its own, and every upload is held in
@@ -510,3 +526,126 @@ def delete_replay(name: str = Path(...)):
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
     return {"name": safe, "deleted": deleted}
+
+
+# ── Replay recordings (docs/recording_budget.md, docs/stream_recorder.md) ────
+# message-api owns the storage budget: the control panel asks it to reserve
+# room for a recorded Play BEFORE any replay_request is sent, and only a
+# reserved recording id is ever handed to the workers. One lock serializes
+# reservations inside this process (FastAPI runs these sync handlers in a
+# threadpool) so two Plays can't both claim the same free space.
+_recording_lock = threading.Lock()
+
+
+def _recordings_root() -> FsPath:
+    return FsPath(recording_budget.resolve_recordings_dir())
+
+
+def _load_episode_for_recording(episode: str) -> dict:
+    _require_store()
+    _ensure_schema()
+    try:
+        script = episode_store.load_episode(_safe_name(episode))
+    except psycopg2.OperationalError as exc:
+        raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
+    if script is None:
+        raise HTTPException(status_code=404, detail=f"no approved episode named {episode!r}")
+    return script
+
+
+def _clean_streams(streams: List[str]) -> List[str]:
+    cleaned = []
+    for s in streams:
+        safe = recording_budget.sanitize_recording_id(s)
+        if not safe:
+            raise HTTPException(status_code=400, detail=f"invalid stream id {s!r}")
+        if safe not in cleaned:
+            cleaned.append(safe)
+    if not cleaned:
+        raise HTTPException(status_code=400, detail="streams must name at least one worker")
+    return cleaned
+
+
+@app.get("/recordings")
+def list_recordings():
+    """Every saved recording plus the budget it counts against."""
+    root = _recordings_root()
+    limit = recording_budget.resolve_max_bytes()
+    used = recording_budget.budget_usage(root)
+    return {
+        "recordings": recording_budget.list_recordings(root),
+        "used_bytes": used,
+        "limit_bytes": limit,
+        "remaining_bytes": max(limit - used, 0),
+    }
+
+
+@app.post("/recordings/estimate")
+def estimate_recording(body: RecordingRequest):
+    """Dry run of POST /recordings: the size estimate and the budget
+    decision, without reserving anything."""
+    script = _load_episode_for_recording(body.episode)
+    streams = _clean_streams(body.streams)
+    estimate = recording_budget.estimate_recording(script, streams=len(streams), speed=body.speed)
+    root = _recordings_root()
+    decision = recording_budget.check_budget(
+        estimate, recording_budget.budget_usage(root), recording_budget.resolve_max_bytes())
+    return {**decision, "episode": body.episode}
+
+
+@app.post("/recordings")
+def reserve_recording(body: RecordingRequest):
+    """Estimate the recorded airing's size and reserve it against the
+    budget. 409 (nothing reserved) when the estimate doesn't fit; otherwise
+    returns the recording_id and the per-stream max_bytes cap the replay
+    request's payload.record must carry."""
+    script = _load_episode_for_recording(body.episode)
+    streams = _clean_streams(body.streams)
+    with _recording_lock:
+        try:
+            decision = recording_budget.reserve(
+                _recordings_root(), body.episode, script, streams,
+                recording_budget.resolve_max_bytes(), speed=body.speed)
+        except OSError as exc:
+            log.error("recording reservation failed episode=%s error=%s", body.episode, exc)
+            raise HTTPException(status_code=503,
+                                detail=f"recordings directory unavailable: {exc}")
+    if not decision["allowed"]:
+        raise HTTPException(status_code=409, detail=decision)
+    return {**decision, "episode": body.episode}
+
+
+def _recording_dir(recording_id: str) -> FsPath:
+    safe = recording_budget.sanitize_recording_id(recording_id)
+    if not safe or safe != recording_id:
+        raise HTTPException(status_code=400, detail=f"invalid recording id {recording_id!r}")
+    directory = _recordings_root() / safe
+    if not directory.is_dir():
+        raise HTTPException(status_code=404, detail=f"no recording {recording_id!r}")
+    return directory
+
+
+@app.get("/recordings/{recording_id}/{filename}")
+def download_recording(recording_id: str = Path(...), filename: str = Path(...)):
+    directory = _recording_dir(recording_id)
+    safe = recording_budget.sanitize_recording_id(filename)
+    if safe != filename or not filename.endswith(".mp4"):
+        raise HTTPException(status_code=400, detail=f"invalid file name {filename!r}")
+    target = directory / safe
+    if not target.is_file():
+        raise HTTPException(status_code=404, detail=f"no file {filename!r} in {recording_id!r}")
+    return FileResponse(target, media_type="video/mp4",
+                        filename=f"{recording_id}_{safe}")
+
+
+@app.delete("/recordings/{recording_id}")
+def delete_recording(recording_id: str = Path(...)):
+    """Delete a recording and free its budget. Refused (409) while it is
+    still being written — stop the airing first."""
+    directory = _recording_dir(recording_id)
+    if recording_budget.recording_status(directory)["live"]:
+        raise HTTPException(status_code=409,
+                            detail="recording is still in progress — stop the airing first")
+    with _recording_lock:
+        deleted = recording_budget.delete_recording(_recordings_root(), recording_id)
+    return {"recording_id": recording_id, "deleted": deleted}

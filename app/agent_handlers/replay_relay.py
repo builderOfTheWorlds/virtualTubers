@@ -86,6 +86,12 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
         request["voice"] = payload["voice"]
     if payload.get("narration"):
         request["narration"] = str(payload["narration"])
+    # Replay recording (docs/stream_recorder.md): {recording_id, max_bytes},
+    # issued by message-api's budget check. Forwarded verbatim; the pane
+    # validates it (stream_recorder.parse_record_request) and records only
+    # when it's well-formed, so a bad value just airs unrecorded.
+    if isinstance(payload.get("record"), dict):
+        request["record"] = payload["record"]
     if cast is not None:
         # Already validated above — forwarded verbatim, per contract.
         request["cast"] = cast

@@ -1633,3 +1633,55 @@ def test_show_music_theme_is_tolerant_of_malformed_headers():
     assert replay_pane._show_music_theme({"show": {"music": "x"}}) is None
     assert replay_pane._show_music_theme({}) is None
     assert replay_pane._show_music_theme(None) is None
+
+
+# ── replay recording (docs/stream_recorder.md) ───────────────────────────────
+def test_handle_replay_request_forwards_record_payload(request_file):
+    record = {"recording_id": "20260927T000000Z_ep_abcdef", "max_bytes": 1000}
+    msg = {"from": "operator", "type": "replay_request",
+           "payload": {"episode": "ep1", "record": record}}
+    handle_replay_request("coder", {}, None, FakeProducer(), msg)
+    assert json.loads(request_file.read_text(encoding="utf-8"))["record"] == record
+
+
+def test_handle_replay_request_drops_non_dict_record(request_file):
+    msg = {"from": "operator", "type": "replay_request",
+           "payload": {"episode": "ep1", "record": "yes please"}}
+    handle_replay_request("coder", {}, None, FakeProducer(), msg)
+    assert "record" not in json.loads(request_file.read_text(encoding="utf-8"))
+
+
+def _spy_recording(monkeypatch, events):
+    from contextlib import contextmanager
+
+    @contextmanager
+    def fake_recording(record, worker_id, **kwargs):
+        events.append(("start", record, worker_id))
+        try:
+            yield None
+        finally:
+            events.append(("stop", record, worker_id))
+    monkeypatch.setattr(replay_pane.stream_recorder, "recording", fake_recording)
+
+
+def test_perform_request_records_only_the_performance(library, monkeypatch):
+    """Voice prep (LLM/TTS on an idle screen) must happen BEFORE the
+    recorder starts — it isn't in the size estimate."""
+    events = []
+    _spy_recording(monkeypatch, events)
+
+    def fake_prepare(*args, **kwargs):
+        events.append(("prepare",))
+        return None
+    monkeypatch.setattr(replay_pane, "prepare_voice", fake_prepare)
+    record = {"recording_id": "r1", "max_bytes": 10}
+    assert perform_request({"episode": "ep1", "speed": 0, "record": record}, "KODI-7", None,
+                           config={"message_bus": {"worker_id": "coder"}})
+    assert events == [("prepare",), ("start", record, "coder"), ("stop", record, "coder")]
+
+
+def test_perform_request_without_record_passes_none(library, monkeypatch):
+    events = []
+    _spy_recording(monkeypatch, events)
+    perform_request({"episode": "ep1", "speed": 0, "voice": False}, "KODI-7", None)
+    assert events[0][1] is None

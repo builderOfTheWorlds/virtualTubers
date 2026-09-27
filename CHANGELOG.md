@@ -4,6 +4,16 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**2026-09-27 — save replays to file.** Opt-in per Play (control panel
+"Save to file": off / roundtable / all 7 streams). The broadcaster tees its
+already-encoded output to a local UDP MPEG-TS tap (`onfail=ignore`, no
+re-encode); during a recorded airing `app/stream_recorder.py` stream-copies
+it to `./recordings/<id>/<worker>.mp4`. message-api estimates the size and
+reserves it against a 5 GB budget before anything airs
+(`app/recording_budget.py`, new `/recordings` endpoints); ffmpeg `-fs` hard-
+caps each file. Needs worker + message-api + control-panel rebuild
+([docs/stream_recorder.md](docs/stream_recorder.md)).
+
 **2026-09-27 — operability round: handler split, correlation IDs, liveness
 and health view, kill switch, draft review gate, race-safe relay files,
 manager task backlog, end-to-end flow tests.** Eight changes merged

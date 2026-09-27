@@ -131,6 +131,10 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Changelog
 
+- v1.x (2026-09-27) — `build_ffmpeg_cmd(record_tap_url=None)` / `--record-tap-url`:
+  optional third tee leg `[f=mpegts:onfail=ignore]udp://…?pkt_size=1316` carrying
+  the already-encoded stream to a local UDP port for replay recordings
+  (docs/stream_recorder.md). Encode args unchanged; omitted = command unchanged.
 - v1.3.0 (2026-09-27) — Emergency stop that works with Redis down: honours
   WorkerControl's local kill file (checked every 0.5s between polls), SIGUSR1
   writes it and stops ffmpeg immediately, WARN-level structured log lines for

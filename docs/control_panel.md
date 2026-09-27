@@ -219,6 +219,14 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.6.0 (2026-09-27) — Save to file on Play: a `record` select (off / roundtable /
+  all 7 streams) next to each replay's Play. The size is estimated and reserved via
+  message-api `POST /recordings` BEFORE any stop/request is sent; over budget → error
+  banner and nothing airs. Admitted → banner shows id, estimated size/length, budget
+  left, and only the chosen workers' `replay_request` carries `payload.record`. New
+  Recordings list (usage vs 5 GB, download, delete) — routes
+  `GET /recordings/{id}/{file}` (proxied download) and `POST /recordings/{id}/delete`
+  (docs/stream_recorder.md).
 - v1.5.0 (2026-09-27) — Replay progress bar under the Play banner:
   `GET /replays/{name}/progress` reads only the roundtable's milestone
   lines (message-api `/logs/containers?contains=…`) and folds them via

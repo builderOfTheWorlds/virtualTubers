@@ -49,6 +49,7 @@ from pathlib import Path
 import episode_store
 import narration_store
 import relay_io
+import stream_recorder
 from agent_state import resolve_state_path
 from message_bus import MessageProducer, build_message, resolve
 from replay import Pacer, Palette, Performer, prepare_voiced_show
@@ -801,6 +802,10 @@ def perform_director_request(request, worker_name, state_path, self_id,
         for follower in followers:
             payload = {"airing_id": airing_id, "episode": episode_name, "cast": cast,
                       "speed": speed, "worker_name": name, "director": self_id}
+            if isinstance(request.get("record"), dict):
+                # Same recording id + per-stream cap: message-api budgeted
+                # every stream in the airing, followers included.
+                payload["record"] = request["record"]
             _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
         invited = followers
 
@@ -931,7 +936,8 @@ def perform_director_request(request, worker_name, state_path, self_id,
             voice_gate=gate,
             line_gap_s=line_gap_s,
         )
-        completed = performer.perform(script, show=show)
+        with stream_recorder.recording(request.get("record"), self_id):
+            completed = performer.perform(script, show=show)
         _delete_stale_file(stop_file)
 
         _send_replay_end(producer, self_id, followers, airing_id,
@@ -1060,7 +1066,8 @@ def perform_follower_request(request, worker_name, state_path, self_id,
             voice_gate=gate,
             line_gap_s=line_gap_s,
         )
-        performer.perform(script, show=show)
+        with stream_recorder.recording(request.get("record"), self_id):
+            performer.perform(script, show=show)
         _delete_stale_file(stop_file)
     return True
 
@@ -1124,7 +1131,11 @@ def perform_request(request, worker_name, state_path, default_speed=1.0,
                 show = prepare_voice(script, config, workdir, name, speed)
                 message_id = publish_narration(show, config, episode_name, name)
                 persist_narration(message_id, show, config, episode_name, name)
-        performer.perform(script, show=show)
+        # Recording spans the performance only — not voice prep, which can
+        # take minutes of LLM/TTS work on an idle screen and isn't part of
+        # the size estimate (app/recording_budget.py).
+        with stream_recorder.recording(request.get("record"), self_id):
+            performer.perform(script, show=show)
     _delete_stale_file(stop_file)
     return True
 

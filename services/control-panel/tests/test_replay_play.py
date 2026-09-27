@@ -67,8 +67,12 @@ def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtabl
     resp = client.post("/replays/ashiorid_smoke/play")
     assert resp.status_code == 200
 
-    message_calls = [c for c in calls if c[1] == "/messages"]
+    message_calls = [c for c in calls if c[1] == "/messages"
+                     and c[2]["json"]["type"] == "replay_request"]
     assert len(message_calls) == len(panel.WORKER_IDS) + 1  # 6 characters + roundtable
+    # ...each preceded by a replay_stop so Play preempts instead of queuing
+    stops = [c for c in calls if c[1] == "/messages" and c[2]["json"]["type"] == "replay_stop"]
+    assert len(stops) == len(panel.WORKER_IDS) + 1
 
     sent_by_worker = {c[2]["json"]["to"]: c[2]["json"] for c in message_calls}
     assert set(sent_by_worker) == set(panel.WORKER_IDS) | {panel.ROUNDTABLE_WORKER_ID}
@@ -85,7 +89,8 @@ def test_play_sends_a_replay_request_to_every_character_worker_and_the_roundtabl
     assert panel.ROUNDTABLE_WORKER_ID == "roundtable"
     rt_msg = sent_by_worker[panel.ROUNDTABLE_WORKER_ID]
     assert rt_msg["payload"]["episode"] == "ashiorid_smoke"
-    assert rt_msg["payload"]["cast"] == panel.WORKER_TO_TUBER_SLOT
+    assert rt_msg["payload"]["cast"] == {**panel.WORKER_TO_TUBER_SLOT,
+                                         **panel.TUBER_SLOT_IDENTITY_CAST}
     assert rt_msg["payload"]["cast"]["coder"] == "tuber_1"
     # manager carries the GM/narrator's lines in every episode-building
     # script (build_campaign_episode.py's "gm": "manager", build_generated_
@@ -362,3 +367,105 @@ def test_progress_ignores_the_preempted_airings_replay_stop_refusal_after_queued
     snap = panel.parse_replay_progress(_QUEUED + [
         "[replay_pane] duet refused: operator replay_stop received before duet cast was ready"])
     assert snap["state"] == "running"
+
+
+# ── Save to file (docs/stream_recorder.md) ───────────────────────────────
+def _recording_mapi(calls, reserve_ok=True):
+    async def _mapi_request(method, path, **kwargs):
+        calls.append((method, path, kwargs))
+
+        class _R:
+            ok = True
+            error = None
+            status_code = 200
+            data = {"episodes": []} if path == "/replays" else {}
+        r = _R()
+        if path == "/recordings" and method == "POST":
+            if reserve_ok:
+                r.data = {"recording_id": "20260927T000000Z_ep_abcdef", "max_bytes_per_stream": 12345,
+                          "estimated_bytes": 1_000_000_000, "estimated_duration_s": 1800,
+                          "remaining_bytes": 4_000_000_000, "reserved_bytes": 1_200_000_000,
+                          "limit_bytes": 5_000_000_000}
+            else:
+                r.ok, r.status_code = False, 409
+                r.error = "message-api returned HTTP 409"
+                r.data = {"detail": {"allowed": False, "reason": "estimated 9.00 GB exceeds the 4.00 GB left"}}
+        elif path == "/recordings":
+            r.data = {"recordings": [], "used_bytes": 0, "limit_bytes": 5_000_000_000,
+                      "remaining_bytes": 5_000_000_000}
+        return r
+    return _mapi_request
+
+
+def test_play_row_offers_save_to_file_choices(monkeypatch):
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls))
+    monkeypatch.setattr(panel, "_episode_lists", _one_episode)
+    resp = client.get("/partials/replays")
+    assert 'name="record"' in resp.text
+    for choice in panel.RECORD_CHOICES:
+        assert f'value="{choice}"' in resp.text
+
+
+async def _one_episode():
+    return {"replays": [{"name": "ep1"}], "replays_error": None, "drafts": [], "drafts_error": None}
+
+
+def test_play_without_record_never_touches_recordings(monkeypatch):
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls))
+    client.post("/replays/ep1/play")
+    assert not any(c[0] == "POST" and c[1] == "/recordings" for c in calls)
+    reqs = [c[2]["json"] for c in calls if c[1] == "/messages" and c[2]["json"]["type"] == "replay_request"]
+    assert all("record" not in r["payload"] for r in reqs)
+
+
+def test_play_record_roundtable_reserves_then_tags_only_the_roundtable(monkeypatch):
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls))
+    resp = client.post("/replays/ep1/play", data={"record": "roundtable"})
+    assert resp.status_code == 200
+
+    reserve = next(i for i, c in enumerate(calls) if c[0] == "POST" and c[1] == "/recordings")
+    first_msg = next(i for i, c in enumerate(calls) if c[1] == "/messages")
+    assert reserve < first_msg  # estimated + reserved BEFORE anything is stopped/queued
+    assert calls[reserve][2]["json"] == {"episode": "ep1", "streams": [panel.ROUNDTABLE_WORKER_ID]}
+
+    reqs = {c[2]["json"]["to"]: c[2]["json"]["payload"] for c in calls
+            if c[1] == "/messages" and c[2]["json"]["type"] == "replay_request"}
+    assert reqs[panel.ROUNDTABLE_WORKER_ID]["record"] == {
+        "recording_id": "20260927T000000Z_ep_abcdef", "max_bytes": 12345}
+    assert reqs[panel.ROUNDTABLE_WORKER_ID]["cast"]  # cast still attached
+    assert all("record" not in reqs[w] for w in panel.WORKER_IDS)
+    assert "20260927T000000Z_ep_abcdef" in resp.text
+    assert "1.00 GB" in resp.text
+
+
+def test_play_record_all_tags_all_seven_streams(monkeypatch):
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls))
+    client.post("/replays/ep1/play", data={"record": "all"})
+    reserve = next(c for c in calls if c[0] == "POST" and c[1] == "/recordings")
+    assert set(reserve[2]["json"]["streams"]) == set(panel.WORKER_IDS) | {panel.ROUNDTABLE_WORKER_ID}
+    reqs = [c[2]["json"]["payload"] for c in calls
+            if c[1] == "/messages" and c[2]["json"]["type"] == "replay_request"]
+    assert len(reqs) == 7 and all("record" in p for p in reqs)
+
+
+def test_play_refused_recording_airs_nothing(monkeypatch):
+    """Over budget: the operator must be told why, and NOTHING is stopped or
+    queued — not a silent unrecorded airing."""
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls, reserve_ok=False))
+    resp = client.post("/replays/ep1/play", data={"record": "all"})
+    assert resp.status_code == 200
+    assert not any(c[1] == "/messages" for c in calls)
+    assert "recording refused" in resp.text
+    assert "exceeds the 4.00 GB left" in resp.text
+
+
+def test_play_unknown_record_value_is_treated_as_none(monkeypatch):
+    calls = []
+    client = _client(monkeypatch, _recording_mapi(calls))
+    client.post("/replays/ep1/play", data={"record": "../../etc"})
+    assert not any(c[0] == "POST" and c[1] == "/recordings" for c in calls)

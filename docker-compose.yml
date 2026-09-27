@@ -78,6 +78,10 @@ services:
       # Piper .onnx voice models for spoken replay narration
       # (docs/tts_client.md; download with scripts/download_voices.py)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -164,6 +168,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -235,6 +243,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -306,6 +318,10 @@ services:
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       # Piper .onnx voice models for spoken replay narration
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -379,6 +395,10 @@ services:
       - world-state:/data/world-state
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -446,6 +466,10 @@ services:
       - world-state:/data/world-state
       # "Rerun Theater" episodes come from Postgres (docs/episode_store.md)
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — a
       # follower in a roundtable show resolves the show header's voice NAMES
       # through this file, so every worker needs it, not just the GM.
@@ -538,6 +562,10 @@ services:
       - ${REPO_ROOT:-.}/config/workers/tuber_0.yaml:/config/worker.yaml:ro
       # The GM speaks on its own channel, so it synthesizes its own audio.
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # The symbolic voice registry (§7.2) — resolves show-header voice names.
       - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
       - world-state:/data/world-state
@@ -635,6 +663,10 @@ services:
       - ${REPO_ROOT:-.}/config/workers/roundtable.yaml:/config/worker.yaml:ro
       # CRITICAL: the director does ALL the TTS for every speaker in every show.
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
+      # Replay recordings (docs/stream_recorder.md): shared with message-api,
+      # which reserves each recording's directory against the 5 GB budget
+      # (RECORDINGS_MAX_BYTES) before this worker's recorder writes into it.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
       # The symbolic voice registry (§7.2) — resolves show-header voice names.
       - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
       # Background music themes: app/music_director.py loads
@@ -693,12 +725,17 @@ services:
       # Symbolic voice registry (roundtable_stream_design.md v1.1 §7.2) — POST
       # /replays validates that a show header's voice NAMES are known (§8.1 V1).
       VOICE_REGISTRY_PATH: /config/voices.yaml
+      # Hard cap on ALL saved replay recordings together (bytes, default 5 GB).
+      RECORDINGS_MAX_BYTES: ${RECORDINGS_MAX_BYTES:-5000000000}
     volumes:
       # Registry only — deliberately NO /data/voices mount. message-api must
       # validate voice names without being able to see voice files; that
       # asymmetry is the entire reason the registry exists (§7.2). Checking the
       # assets themselves is V2's job, in a container that has them (§8.2).
       - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
+      # Replay recordings budget (/recordings, docs/recording_budget.md) — the
+      # same host dir every worker's stream_recorder writes into.
+      - ${REPO_ROOT:-.}/recordings:/data/recordings
     ports:
       - "8090:8000"
     restart: unless-stopped
