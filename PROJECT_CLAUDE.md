@@ -15,7 +15,10 @@ covers the architecture decisions, the local-model worker harness and how to
 drive it, the seams left for the deferred weekly-loop/chat-voting work, and the
 review checklist for generated code.
 
-Nothing in that module is committed yet.
+The module is committed (first landed in `a1f9312`, 2026-09-22); Wave 4 is
+still open. Note `agent.py` is now split — handlers live in
+`app/agent_handlers/` (see [docs/agent_handlers.md](docs/agent_handlers.md)),
+which is where the Wave 4 integration will plug in.
 
 ## Deployment target: argyre, via Portainer (moved off d2000 — 2026-08-16)
 
