@@ -12,6 +12,7 @@ so it sees every message regardless of who produced or consumed it.
 
 ```python
 def connect_db() -> psycopg2.extensions.connection
+def message_row(msg: dict) -> dict   # INSERT_SQL params for one message
 def main() -> None
 ```
 
@@ -42,9 +43,20 @@ CREATE TABLE IF NOT EXISTS messages (
     type        TEXT NOT NULL,
     payload     JSONB NOT NULL,
     timestamp   TIMESTAMPTZ NOT NULL,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    correlation_id UUID,   -- task chain id (docs/message_bus.md "Correlation IDs")
+    causation_id   UUID    -- id of the message that caused this one
 );
+-- run on every startup, so tables created before v1.2.0 migrate in place:
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS correlation_id UUID;
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS causation_id UUID;
+CREATE INDEX IF NOT EXISTS idx_messages_correlation ON messages (correlation_id);
 ```
+
+- `correlation_id` / `causation_id` come straight from the envelope via
+  `message_row()`. Missing (older senders) or non-UUID values are stored as
+  NULL — a non-UUID logs `WARN event=bad_uuid` rather than failing the
+  INSERT and losing the raw message.
 
 - Beyond the raw `messages` row every message gets, two message types are
   also typed-unpacked into their own table for structured querying (see
@@ -95,3 +107,9 @@ psql -h 192.168.2.158 -U virtualtubers -d virtualtubers \
   published by `app/replay_pane.py` after each voiced airing. Covered by
   new tests: multi-scene insert, empty-scenes no-op, dispatch-by-type in
   `main`, and malformed-payload resilience.
+- v1.2.0 (2026-09-27) — Persists the envelope's `correlation_id` /
+  `causation_id` into new nullable UUID columns on `messages` (idempotent
+  `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` migration on startup, new
+  index `idx_messages_correlation`); insert params built by `message_row()`.
+  The "logged" line now includes `correlation_id=`. Tests cover the SQL,
+  the insert params, legacy (NULL) rows and UUID normalisation.

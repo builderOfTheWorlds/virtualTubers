@@ -7,7 +7,7 @@ against the coder's workspace mount, stub outcome as fallback) and report
 """
 import random
 
-from message_bus import build_message
+from message_bus import build_message, correlation_of, reply_ids
 from agent_state import write_state
 from test_runner import run_pytest, workspace_testable
 
@@ -75,6 +75,8 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
     retry_count = payload.get("retry_count", 0)
     coder_id = payload.get("coder_id") or msg.get("from") or "coder"
     sender = msg.get("from") or "broadcast"
+    ids = reply_ids(msg)
+    correlation_id = correlation_of(msg)
 
     if state_path:
         write_state(state_path, "focused", action=f"testing: {task}")
@@ -83,13 +85,15 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
     workspace = _resolve_workspace(agent_config, coder_id)
     run = None
     if workspace_testable(workspace):
-        print(f"[agent:{worker_id}] running pytest against {workspace} (coder={coder_id})")
+        print(f"[agent:{worker_id}] running pytest against {workspace} "
+              f"(coder={coder_id} correlation_id={correlation_id})")
         run = run_pytest(workspace)
         if run.ran:
             passed, severity = run.passed, (
                 None if run.passed else _severity_from_failures(run.failed_tests)
             )
-            print(f"[agent:{worker_id}] pytest verdict: passed={passed} failed={run.failed_tests}")
+            print(f"[agent:{worker_id}] pytest verdict: passed={passed} failed={run.failed_tests} "
+                  f"correlation_id={correlation_id}")
         else:
             # Suite couldn't produce a verdict (timeout/collection error) —
             # that's a real bug report in itself, highest confidence signal.
@@ -131,6 +135,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
             producer.send(build_message(
                 worker_id, "manager", "clarification_request",
                 {"task": task, "error": str(exc)},
+                **ids,
             ))
             return
 
@@ -148,6 +153,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
                 "coder_id": coder_id,
                 "real_run": real_run,
             },
+            **ids,
         ))
     else:
         if real_run:
@@ -172,6 +178,7 @@ def _run_tests_and_report(worker_id, agent_config, llm_client, producer, msg, st
                 "coder_id": coder_id,
                 "real_run": real_run,
             },
+            **ids,
         ))
 
 

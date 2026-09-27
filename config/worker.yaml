@@ -47,6 +47,19 @@ agent:
   # How often the agent loop ticks (milliseconds)
   tick_rate_ms: 5000
 
+  # Liveness: every tick the agent writes Redis key worker:<id>:alive (ISO
+  # timestamp) with this TTL in seconds; the key expiring == worker not
+  # ticking. Unset/0 = auto: max(3 ticks, 15s). Read it with
+  # WorkerControl.last_seen()/alive() (docs/worker_control.md).
+  # liveness_ttl_s: 15
+
+  # Publish the legacy `status_update` "heartbeat #N" bus message every N
+  # ticks (0 = never). Liveness no longer depends on it — it is kept at a low
+  # rate (default 12 ≈ once a minute at 5 s ticks) only so message-logger's
+  # "include status_update" log-filter toggle still has something to record.
+  # The feed pane and logger hide/drop status_update by default either way.
+  bus_heartbeat_every: 12
+
   # Maximum tokens to keep in the agent's context window
   max_context_tokens: 8000
 

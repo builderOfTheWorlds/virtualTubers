@@ -17,10 +17,20 @@ CREATE TABLE IF NOT EXISTS messages (
     type        TEXT NOT NULL,
     payload     JSONB NOT NULL,
     timestamp   TIMESTAMPTZ NOT NULL,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    correlation_id UUID,
+    causation_id   UUID
 );
 CREATE INDEX IF NOT EXISTS idx_messages_to ON messages ("to");
 CREATE INDEX IF NOT EXISTS idx_messages_type ON messages (type);
+-- Correlation IDs (docs/message_bus.md): correlation_id groups a whole task
+-- chain (task_assignment -> ... -> manager_report, incl. bug-fix retries);
+-- causation_id is the id of the message that directly caused this one.
+-- Nullable: rows from senders predating them stay NULL. The ALTERs migrate
+-- a table created before these columns existed (idempotent).
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS correlation_id UUID;
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS causation_id UUID;
+CREATE INDEX IF NOT EXISTS idx_messages_correlation ON messages (correlation_id);
 
 -- One row per coding-backend run (typed unpacking of coding_run_report bus
 -- messages by message-logger) — the A/B comparison table for the

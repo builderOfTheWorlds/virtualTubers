@@ -18,14 +18,23 @@ directions of failure: while it exists, is_enabled() returns False without
 consulting Redis at all. It is created/removed with nothing but Docker
 (scripts/emergency_stop.sh / emergency_resume.sh, `docker exec`), or by
 sending the stream supervisor SIGUSR1. See docs/worker_control.md.
+
+Liveness: agent.py also writes worker:{id}:alive (ISO timestamp, EX ttl)
+every tick via heartbeat(); last_seen()/alive() read it back and return
+None/False when the key expired or Redis is down. This replaces relying on
+the per-tick status_update bus heartbeat for "is this worker up?".
 """
 import os
 import time
+from datetime import datetime, timezone
 
 import redis
 
 KEY_PREFIX = "worker"
 KEY_SUFFIX = "enabled"
+#: Liveness key suffix: worker:{id}:alive, written by agent.py every tick
+#: with a TTL (see WorkerControl.heartbeat / last_seen / alive).
+ALIVE_KEY_SUFFIX = "alive"
 
 KILL_FILE_ENV = "WORKER_KILL_FILE"
 #: /tmp in the worker container: startup.sh's /tmp cleanup only removes the
@@ -65,6 +74,9 @@ class WorkerControl:
         # Last override state we logged, so a loop polling every few seconds
         # logs the transition once rather than on every call.
         self._override_logged = False
+        # Whether heartbeat() writes are currently failing, so a Redis outage
+        # logs once on the way down and once on recovery.
+        self._heartbeat_failing = False
 
     @classmethod
     def from_config(cls, config=None):
@@ -113,3 +125,46 @@ class WorkerControl:
     def set_enabled(self, worker_id, enabled):
         self._client.set(self._key(worker_id), "1" if enabled else "0")
         return enabled
+
+    # ── Liveness (worker:{id}:alive) ─────────────────────────────────────────
+    # agent.py writes this every tick instead of relying on the per-tick
+    # status_update bus heartbeat (which every worker consumes and the feed
+    # has to hide). The key expires on its own, so "key present" == "the
+    # agent loop ticked within the last ttl_s seconds".
+
+    def _alive_key(self, worker_id):
+        return f"{KEY_PREFIX}:{worker_id}:{ALIVE_KEY_SUFFIX}"
+
+    def heartbeat(self, worker_id, ttl_s):
+        """SET worker:{id}:alive <utc iso ts> EX ttl_s. Never raises: a
+        Redis outage must not take the tick loop down. Logs WARN once when
+        writes start failing and INFO once when they recover (the loop calls
+        this every few seconds). Returns True if the write succeeded."""
+        ttl = max(1, int(ttl_s))
+        ts = datetime.now(timezone.utc).isoformat()
+        try:
+            self._client.set(self._alive_key(worker_id), ts, ex=ttl)
+        except redis.RedisError as exc:
+            if not self._heartbeat_failing:
+                log("WARN", "liveness_write_failed", worker_id=worker_id, ttl_s=ttl, error=exc)
+                self._heartbeat_failing = True
+            return False
+        if self._heartbeat_failing:
+            log("INFO", "liveness_write_recovered", worker_id=worker_id, ttl_s=ttl)
+            self._heartbeat_failing = False
+        return True
+
+    def last_seen(self, worker_id):
+        """ISO-8601 UTC timestamp of the worker's last tick, or None when the
+        key expired/was never written or Redis is unreachable. Deliberately
+        silent on RedisError: callers poll this for a health view, so an
+        outage should show up as "unknown", not as a log flood."""
+        try:
+            return self._client.get(self._alive_key(worker_id)) or None
+        except redis.RedisError:
+            return None
+
+    def alive(self, worker_id):
+        """True iff the worker ticked within its liveness TTL. False when the
+        key expired or Redis is unreachable (unknown != alive)."""
+        return self.last_seen(worker_id) is not None

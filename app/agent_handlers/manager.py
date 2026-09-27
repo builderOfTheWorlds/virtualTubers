@@ -5,7 +5,7 @@ or escalate, bounded by MAX_BUG_RETRIES), `test_passed` milestones,
 narration-only `task_complete` acknowledgement, and `clarification_request`
 blocker escalation.
 """
-from message_bus import build_message
+from message_bus import build_message, correlation_of, reply_ids
 from agent_state import write_state
 
 from .common import _complete_with_emotion, _send_manager_report
@@ -68,6 +68,7 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
         _send_manager_report(
             worker_id, producer, "escalation", task, narration,
             extra={"severity": severity, "retry_count": retry_count},
+            cause=msg,
         )
         return
 
@@ -78,17 +79,24 @@ def handle_bug_report(worker_id, agent_config, llm_client, producer, msg,
         _send_manager_report(
             worker_id, producer, "escalation", task, narration,
             extra={"severity": severity, "retry_count": retry_count},
+            cause=msg,
         )
         return
 
     if state_path:
         write_state(state_path, "speaking", action=f"re-delegated: {task}", bubble=narration, emotion=emotion)
+    # The fix re-assignment stays on the bug_report's chain, which is the
+    # original task's chain — so a task and all its retries share one
+    # correlation_id.
+    print(f"[agent:{worker_id}] re-delegating fix to={coder_id} retry_count={retry_count + 1} "
+          f"correlation_id={correlation_of(msg)}")
     producer.send(build_message(
         worker_id, coder_id, "task_assignment",
         {
             "task": f"Fix bug ({severity}): {task}. Repro: {repro}",
             "retry_count": retry_count + 1,
         },
+        **reply_ids(msg),
     ))
 
 
@@ -123,7 +131,7 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
     print(f"[agent:{worker_id}] {narration}")
     if state_path:
         write_state(state_path, "happy", action=f"shipped: {task}", bubble=narration, emotion=emotion)
-    _send_manager_report(worker_id, producer, "milestone", task, narration)
+    _send_manager_report(worker_id, producer, "milestone", task, narration, cause=msg)
 
 
 def handle_task_complete(worker_id, agent_config, llm_client, producer, msg,
@@ -207,4 +215,5 @@ def handle_clarification_request(worker_id, agent_config, llm_client, producer, 
     _send_manager_report(
         worker_id, producer, "blocker", task, narration,
         extra={"blocked_worker": sender, "error": error},
+        cause=msg,
     )

@@ -23,12 +23,22 @@ Postgres is an external, pre-existing instance (not run via docker-compose) — 
 | `payload` | JSONB | NOT NULL | Full message body |
 | `timestamp` | TIMESTAMPTZ | NOT NULL | When the message was sent (from envelope) |
 | `ingested_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When message-logger wrote the row |
+| `correlation_id` | UUID | nullable | Chain id from the envelope: every message caused (transitively) by one `task_assignment` — including bug-fix re-assignments — shares it. A chain-starting message uses its own `id`. NULL for rows from senders that predate correlation IDs, or a non-UUID value |
+| `causation_id` | UUID | nullable | `id` of the message that directly caused this one; NULL for chain starters |
 
-Indexes: `idx_messages_to (to)`, `idx_messages_type (type)`.
+Indexes: `idx_messages_to (to)`, `idx_messages_type (type)`, `idx_messages_correlation (correlation_id)`.
 
 Inserts use `ON CONFLICT (id) DO NOTHING`, making consumer restarts / at-least-once redelivery safe against duplicates.
 
-Defined in: `docs/sql/02_create_tables.sql:13-23`, `services/message-logger/logger.py:19-30`. Prose: `docs/message_logger.md`.
+Migration: `correlation_id` / `causation_id` were added 2026-09-27. Both are created in the `CREATE TABLE` for new databases and added to existing ones by idempotent `ALTER TABLE messages ADD COLUMN IF NOT EXISTS ...` statements that message-logger runs on every startup (same pattern as `voiced_narration.audio`). Existing rows keep NULL.
+
+Follow one task end to end:
+```sql
+SELECT timestamp, "from", "to", type, id, causation_id
+FROM messages WHERE correlation_id = '<uuid>' ORDER BY timestamp;
+```
+
+Defined in: `docs/sql/02_create_tables.sql` (`messages` block), `services/message-logger/logger.py` (`CREATE_TABLE_SQL`). Prose: `docs/message_logger.md`, `docs/message_bus.md`.
 
 ---
 
@@ -159,4 +169,4 @@ When adding or changing a table:
 2. Update `docs/sql/02_create_tables.sql` to match.
 3. Update this file.
 
-There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with one exception: `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.
+There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with two exceptions: `messages`' `correlation_id`/`causation_id` columns (+ `idx_messages_correlation`) and `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.
