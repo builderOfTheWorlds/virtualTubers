@@ -251,8 +251,8 @@ def test_cyberpunk_primitive_is_registered(name):
     assert get(name).genre == "cyber"
 
 
-def test_fantasy_and_cyber_are_the_only_genres():
-    assert sorted({get(name).genre for name in names()}) == ["cyber", "fantasy"]
+def test_fantasy_cyber_and_office_are_the_only_genres():
+    assert sorted({get(name).genre for name in names()}) == ["cyber", "fantasy", "office"]
 
 
 def test_roll_check_does_not_invent_an_outcome():
@@ -326,3 +326,150 @@ def test_suffixes_only_key_off_declared_params(name):
     declared = {spec.name for spec in primitive.params}
 
     assert {key for key, _ in primitive.suffixes} <= declared
+
+
+# ── office vocabulary (ashiorid_office) ──────────────────────────────────────
+OFFICE = ["assign_task", "brew_coffee", "commit", "deploy", "file_bug", "hr_notice",
+          "merge_pr", "observe", "open_pr", "open_ticket", "pitch", "run_tests",
+          "take_out_trash", "write_spec"]
+
+
+def test_office_genre_lists_exactly_the_office_verbs():
+    assert names(genre="office") == OFFICE
+
+
+def test_office_verbs_do_not_disturb_the_existing_genres():
+    assert names(genre="fantasy") == FANTASY
+    assert names(genre="cyber") == CYBER
+
+
+def _required_only(primitive):
+    params = {spec.name: f"<{spec.name}>" for spec in primitive.params if spec.required}
+    for spec in primitive.params:
+        if spec.required and spec.choices:
+            params[spec.name] = spec.choices[0]
+    return params
+
+
+def _every_param(primitive):
+    return {spec.name: (spec.choices[0] if spec.choices else f"<{spec.name}>")
+            for spec in primitive.params}
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_primitive_renders_from_required_params_alone(name):
+    primitive = get(name)
+    result = primitive.render("Mara", _required_only(primitive))
+
+    assert result.startswith("Mara") and result.endswith(".")
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_primitive_renders_with_every_param(name):
+    primitive = get(name)
+    result = primitive.render("Mara", _every_param(primitive))
+
+    assert result.startswith("Mara") and result.endswith(".")
+    for value in _every_param(primitive).values():
+        assert str(value) in result
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_primitive_is_byte_identical_across_renders(name):
+    primitive = get(name)
+    params = _every_param(primitive)
+
+    assert len({primitive.render("Mara", params) for _ in range(5)}) == 1
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_primitive_has_a_summary(name):
+    assert get(name).summary
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_template_only_references_declared_params(name):
+    import string
+
+    primitive = get(name)
+    declared = {spec.name for spec in primitive.params} | {"actor"}
+    text = primitive.template + "".join(fragment for _, fragment in primitive.suffixes)
+    referenced = {field for _, field, _, _ in string.Formatter().parse(text) if field}
+
+    assert referenced <= declared
+    assert {key for key, _ in primitive.suffixes} <= {spec.name for spec in primitive.params}
+
+
+@pytest.mark.parametrize("name", OFFICE)
+def test_office_primitive_rejects_an_unknown_param(name):
+    with pytest.raises(PrimitiveError, match="bogus"):
+        get(name).render("Mara", {**_required_only(get(name)), "bogus": 1})
+
+
+@pytest.mark.parametrize("name,missing", [
+    ("assign_task", "to"), ("assign_task", "task"), ("write_spec", "topic"),
+    ("open_ticket", "title"), ("commit", "message"), ("run_tests", "suite"),
+    ("file_bug", "title"), ("open_pr", "title"), ("merge_pr", "pr"),
+    ("deploy", "environment"), ("pitch", "idea"), ("hr_notice", "subject"),
+])
+def test_office_primitive_missing_required_param_is_named(name, missing):
+    params = _required_only(get(name))
+    del params[missing]
+
+    with pytest.raises(PrimitiveError, match=missing):
+        render(name, "Mara", params)
+
+
+def test_assign_task_names_assignee_and_task():
+    assert render("assign_task", "Mara", {"to": "Dev", "task": "the rate limiter",
+                                          "due": "by standup"}) == \
+        "Mara assigns the rate limiter to Dev, due by standup."
+
+
+def test_run_tests_does_not_invent_a_result():
+    """The script owns results; run_tests never decides pass or fail."""
+    result = render("run_tests", "Quinn", {"suite": "the scoring suite"})
+
+    assert result == "Quinn runs the scoring suite."
+    assert "pass" not in result and "fail" not in result
+
+
+@pytest.mark.parametrize("outcome", ["pass", "fail"])
+def test_run_tests_narrates_a_scripted_result(outcome):
+    assert outcome in render("run_tests", "Quinn", {"suite": "unit", "result": outcome})
+
+
+def test_run_tests_rejects_an_unscripted_result():
+    with pytest.raises(PrimitiveError, match="flaky"):
+        render("run_tests", "Quinn", {"suite": "unit", "result": "flaky"})
+
+
+def test_deploy_rejects_an_unknown_outcome():
+    with pytest.raises(PrimitiveError, match="exploded"):
+        render("deploy", "Dev", {"environment": "staging", "outcome": "exploded"})
+
+
+def test_file_bug_rejects_an_unknown_severity():
+    with pytest.raises(PrimitiveError, match="apocalyptic"):
+        render("file_bug", "Quinn", {"title": "x", "severity": "apocalyptic"})
+
+
+def test_observe_needs_no_params_for_the_silent_watcher():
+    assert render("observe", "The Party Member") == "The Party Member watches."
+
+
+def test_observe_can_name_what_is_watched():
+    assert render("observe", "The Party Member", {"target": "the standup"}) == \
+        "The Party Member watches the standup."
+
+
+def test_take_out_trash_and_brew_coffee_need_no_params():
+    assert render("take_out_trash", "Pat") == "Pat takes out the trash."
+    assert render("brew_coffee", "Pat") == "Pat brews a fresh pot of coffee."
+
+
+def test_office_render_uses_only_the_primitive_error_type():
+    """Bad input surfaces as PrimitiveError, never KeyError or TypeError."""
+    for name in OFFICE:
+        with pytest.raises(PrimitiveError):
+            render(name, "Mara", {"definitely_not_a_param": "x"})

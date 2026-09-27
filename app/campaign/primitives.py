@@ -8,7 +8,7 @@ primitive with the same arguments must produce byte-identical text forever, so
 a recorded show replays word for word.
 
 The registry is also what makes a second campaign config rather than code:
-fantasy verbs and cyberpunk verbs are registered side by side, and each
+fantasy, cyberpunk, and office verbs are registered side by side, and each
 campaign pack enables the subset it wants (pack.primitives is that list).
 """
 import logging
@@ -47,7 +47,7 @@ class Primitive:
     wraith with his axe."
     """
     name: str
-    genre: str                       # "fantasy" or "cyber"
+    genre: str                       # "fantasy", "cyber", or "office"
     summary: str                     # one line, for operator tooling
     params: tuple[ParamSpec, ...] = ()
     template: str = ""
@@ -261,4 +261,190 @@ DEFAULT_REGISTRY.register(Primitive(
     ),
     template="{actor} scans {target}",
     suffixes=(("depth", " down to {depth}"),),
+))
+
+
+# ── office verbs (ashiorid_office) ───────────────────────────────────────────
+# The Fraud-Stop workplace vocabulary. Like every other primitive these only
+# narrate: "run_tests" never runs anything and "deploy" never ships anything.
+# The script (or a live agent's already-completed action) supplies every
+# result; the verb just words it for the stream.
+
+OFFICE_SEVERITIES = ("low", "medium", "high", "critical")
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="assign_task",
+    genre="office",
+    summary="Hand a task to a colleague, optionally with a due time.",
+    params=(
+        ParamSpec("to", required=True),
+        ParamSpec("task", required=True),
+        ParamSpec("due", required=False),
+    ),
+    template="{actor} assigns {task} to {to}",
+    suffixes=(("due", ", due {due}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="write_spec",
+    genre="office",
+    summary="Write up a spec or requirements doc for a topic.",
+    params=(
+        ParamSpec("topic", required=True),
+        ParamSpec("detail", required=False),
+    ),
+    template="{actor} writes up a spec for {topic}",
+    suffixes=(("detail", ", covering {detail}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="open_ticket",
+    genre="office",
+    summary="Open a work ticket (an issue), optionally with a priority.",
+    params=(
+        ParamSpec("title", required=True),
+        ParamSpec("priority", required=False, choices=OFFICE_SEVERITIES),
+    ),
+    template="{actor} opens a ticket titled {title}",
+    suffixes=(("priority", ", marked {priority} priority"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="commit",
+    genre="office",
+    summary="Commit a change with a message, optionally to a named branch.",
+    params=(
+        ParamSpec("message", required=True),
+        ParamSpec("branch", required=False),
+    ),
+    template='{actor} commits "{message}"',
+    suffixes=(("branch", " to {branch}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="run_tests",
+    genre="office",
+    summary="Run a test suite; narrates a result only when the script supplies one.",
+    params=(
+        ParamSpec("suite", required=True),
+        ParamSpec("result", required=False, choices=("pass", "fail")),
+    ),
+    template="{actor} runs {suite}",
+    # As with roll_check, the verb never decides the result.
+    suffixes=(("result", " — the result is {result}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="file_bug",
+    genre="office",
+    summary="File a bug report, optionally against a component and with a severity.",
+    params=(
+        ParamSpec("title", required=True),
+        ParamSpec("component", required=False),
+        ParamSpec("severity", required=False, choices=OFFICE_SEVERITIES),
+    ),
+    template="{actor} files a bug: {title}",
+    suffixes=(("component", ", against {component}"),
+              ("severity", ", severity {severity}")),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="open_pr",
+    genre="office",
+    summary="Open a pull request, optionally from a branch and for a reviewer.",
+    params=(
+        ParamSpec("title", required=True),
+        ParamSpec("branch", required=False),
+        ParamSpec("reviewer", required=False),
+    ),
+    template="{actor} opens a pull request for {title}",
+    suffixes=(("branch", " from {branch}"),
+              ("reviewer", ", asking {reviewer} to review")),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="merge_pr",
+    genre="office",
+    summary="Merge a pull request, optionally into a named branch.",
+    params=(
+        ParamSpec("pr", required=True),
+        ParamSpec("into", required=False),
+    ),
+    template="{actor} merges {pr}",
+    suffixes=(("into", " into {into}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="deploy",
+    genre="office",
+    summary="Ship a build to an environment; narrates an outcome only when scripted.",
+    params=(
+        ParamSpec("environment", required=True),
+        ParamSpec("version", required=False),
+        ParamSpec("outcome", required=False,
+                  choices=("success", "failure", "rolled back")),
+    ),
+    template="{actor} deploys to {environment}",
+    suffixes=(("version", ", shipping {version}"),
+              ("outcome", " — {outcome}")),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="pitch",
+    genre="office",
+    summary="Pitch an idea, optionally to a named audience.",
+    params=(
+        ParamSpec("idea", required=True),
+        ParamSpec("audience", required=False),
+    ),
+    template="{actor} pitches {idea}",
+    suffixes=(("audience", " to {audience}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="brew_coffee",
+    genre="office",
+    summary="Brew a pot of coffee, optionally for someone and to a strength.",
+    params=(
+        ParamSpec("recipient", required=False),
+        ParamSpec("strength", required=False),
+    ),
+    template="{actor} brews a fresh pot of coffee",
+    suffixes=(("recipient", " for {recipient}"),
+              ("strength", ", {strength}")),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="take_out_trash",
+    genre="office",
+    summary="Take out the trash, literal or digital (stale branches, old builds).",
+    params=(
+        ParamSpec("detail", required=False),
+    ),
+    template="{actor} takes out the trash",
+    suffixes=(("detail", ": {detail}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="hr_notice",
+    genre="office",
+    summary="Post an HR notice about a subject, optionally to an audience.",
+    params=(
+        ParamSpec("subject", required=True),
+        ParamSpec("audience", required=False),
+    ),
+    template="{actor} posts an HR notice about {subject}",
+    suffixes=(("audience", " for {audience}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="observe",
+    genre="office",
+    summary="Watch silently, optionally watching something specific.",
+    params=(
+        ParamSpec("target", required=False),
+    ),
+    # The Party Member's verb: it never speaks, so the line carries no speech.
+    template="{actor} watches",
+    suffixes=(("target", " {target}"),),
 ))
