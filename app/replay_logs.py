@@ -52,11 +52,17 @@ def _service_suffix_pattern(service: str) -> str:
     return f"-{re.escape(service)}-[0-9]+$"
 
 
-def fetch_container_logs(services, since=None, limit=200):
+def fetch_container_logs(services, since=None, limit=200, contains=None):
     """The most recent `limit` container_logs rows whose container name ends
     in "-<service>-<replica>" for any service in `services`. Returns
     oldest-first (a human-readable tail), even though the underlying query
-    orders newest-first to bound the LIMIT correctly."""
+    orders newest-first to bound the LIMIT correctly.
+
+    `contains` (optional list of literal substrings) keeps only rows whose
+    message contains at least one of them — lets the replay progress bar
+    pull just the replay-pane milestone lines without heartbeat chatter
+    pushing them out of the LIMIT window. strpos(), not LIKE, so `%`/`_`
+    in a needle are matched literally."""
     services = list(services)
     if not services:
         return []
@@ -67,6 +73,11 @@ def fetch_container_logs(services, since=None, limit=200):
         "SELECT container_name, stream, message, log_timestamp "
         f"FROM container_logs WHERE ({' OR '.join(clauses)})"
     )
+    needles = [c for c in (contains or []) if c]
+    if needles:
+        text_clauses = [f"strpos(message, %(txt{i})s) > 0" for i in range(len(needles))]
+        sql += f" AND ({' OR '.join(text_clauses)})"
+        params.update({f"txt{i}": n for i, n in enumerate(needles)})
     if since is not None:
         sql += " AND log_timestamp > %(since)s"
         params["since"] = since

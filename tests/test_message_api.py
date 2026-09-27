@@ -238,6 +238,16 @@ def test_get_container_logs_passes_services_since_and_limit(client):
     assert kwargs["since"].isoformat() == "2026-08-01T00:00:00+00:00"
 
 
+def test_get_container_logs_passes_contains_filters(client):
+    with patch("api.fetch_container_logs", return_value=[]) as fake_fetch:
+        resp = client.get(
+            "/logs/containers",
+            params=[("service", "worker-roundtable"), ("contains", "══ fin ══"), ("contains", "♪ ")],
+        )
+    assert resp.status_code == 200
+    assert fake_fetch.call_args[1]["contains"] == ["══ fin ══", "♪ "]
+
+
 def test_get_container_logs_503_when_postgres_unavailable(client):
     with patch("api.fetch_container_logs", side_effect=psycopg2.OperationalError("refused")):
         resp = client.get("/logs/containers", params={"service": "worker-coder"})

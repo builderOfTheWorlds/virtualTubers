@@ -28,7 +28,7 @@ Two tables, two very different join keys:
 
 ```python
 def connect_db() -> psycopg2.extensions.connection
-def fetch_container_logs(services: list[str], since: datetime | None = None, limit: int = 200) -> list[dict]
+def fetch_container_logs(services: list[str], since: datetime | None = None, limit: int = 200, contains: list[str] | None = None) -> list[dict]
 def fetch_messages(worker_ids: list[str], since: datetime | None = None, limit: int = 200) -> list[dict]
 ```
 
@@ -48,6 +48,11 @@ def _service_suffix_pattern(service: str) -> str
 - `limit` (default `200`) — bounds the query with `ORDER BY ... DESC LIMIT`
   before reversing to oldest-first, so a large window can't return an
   unbounded result while still reading naturally top-to-bottom.
+- `contains` (optional, `fetch_container_logs` only) — keep only rows whose
+  message contains at least one of these literal substrings (`strpos`, so
+  `%`/`_` aren't wildcards). Exposed as repeatable `?contains=` on
+  `/logs/containers`; the control panel's replay progress bar uses it so
+  heartbeat chatter can't push milestone lines out of the LIMIT window.
 
 Connection handling mirrors `app/log_prune.py` deliberately: one fresh
 `psycopg2` connection per call, closed in a `finally`, no pooling. This is
@@ -101,6 +106,9 @@ curl "http://localhost:8090/logs/messages?worker_id=coder&worker_id=roundtable"
 
 ## Changelog
 
+- v1.1.0 (2026-09-27) — `fetch_container_logs(contains=…)` literal
+  substring filter / `GET /logs/containers?contains=`, for the replay
+  progress bar.
 - v1.0.0 (2026-09-27) — Initial version, added alongside `message-api`'s
   `GET /logs/containers`/`GET /logs/messages` and the control-panel's
   Rerun Theater log viewer.

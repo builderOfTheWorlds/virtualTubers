@@ -16,6 +16,7 @@ import base64
 import json
 import logging
 import os
+import re
 import secrets
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -695,13 +696,14 @@ async def play_replay(request: Request, name: str):
     failed = [worker_id for worker_id, r in results if not r.ok]
     played_at = datetime.now(timezone.utc).isoformat()
     log_url = f"/replays/{quote(name)}/log?since={quote(played_at)}"
+    progress_url = f"/replays/{quote(name)}/progress?since={quote(played_at)}"
     if not failed:
-        banner = {"ok": True, "name": name, "log_url": log_url,
+        banner = {"ok": True, "name": name, "log_url": log_url, "progress_url": progress_url,
                   "to": f"all {len(results)} streams (6 channels + roundtable)"}
     else:
         errors = "; ".join(f"{w}: {r.error}" for w, r in results if not r.ok)
         succeeded = len(results) - len(failed)
-        banner = {"ok": False, "name": name, "log_url": log_url,
+        banner = {"ok": False, "name": name, "log_url": log_url, "progress_url": progress_url,
                   "error": f"{succeeded}/{len(results)} streams queued — failed: {errors}"}
     return templates.TemplateResponse(
         request, "_replays_section.html", await _replays_section_context(play_result=banner))
@@ -759,6 +761,146 @@ async def replay_log(request: Request, name: str, since: str = Query("")):
     return templates.TemplateResponse(request, "_replay_log.html", {
         "name": name, "entries": entries, "error": error,
     })
+
+
+# ── Replay progress bar ──────────────────────────────────────────────────
+# The roundtable director is the airing's master clock (it cues every other
+# stream per scene — app/replay_pane.py perform_director_request), so its
+# own pane output is the one authoritative "how far along is this" signal.
+# These are the literal milestone substrings it prints (app/replay_pane.py,
+# app/replay.py Performer.perform); message-api filters on them server-side
+# so the hundreds of heartbeat lines in the same window can't push them out
+# of the row LIMIT.
+PROGRESS_MARKERS = {
+    "queued": "queued replay episode",
+    "preparing": "[replay_pane] preparing: ",
+    "reusing": "[replay_pane] reusing cached narration",
+    "airing": "══ REPLAY: ",
+    "scene": "♪ ",
+    "fin": "══ fin ══",
+    "stopped": "══ stopped ══",
+    "interrupted": "══ interrupted ══",
+    "refused": "duet refused",
+    "missing": "episode not in the library",
+    "failed": "[replay_pane] episode failed",
+}
+# Share of the bar each phase owns: voice prep is real work (LLM + TTS per
+# scene) but airing is what the operator is actually waiting through.
+PROGRESS_QUEUED_PCT = 5
+PROGRESS_PREP_END_PCT = 35
+_ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+_PREP_RE = re.compile(r"preparing: scene (\d+)/(\d+)")
+_AIRING_RE = re.compile(r"══ REPLAY: .*\((\d+) scenes\) ══")
+
+
+def parse_replay_progress(lines: List[str]) -> dict:
+    """Fold the director's milestone lines (oldest-first) into one progress
+    snapshot: {state, phase, percent, label, scene, total}.
+
+    state is "running" | "done" | "stopped" | "failed". Terminal markers
+    only count once THIS airing has visibly started (prep or header seen):
+    Play sends replay_stop first, so the PREVIOUS airing's own
+    "══ stopped ══"/"duet refused" lines routinely land inside this window
+    and must not end the new bar before it begins."""
+    log.debug("parse_replay_progress lines=%d", len(lines))
+    snap = {"state": "running", "phase": "requested", "percent": 1,
+            "label": "request sent, waiting for the roundtable to pick it up",
+            "scene": 0, "total": 0}
+    started = False
+    queued = False
+    for raw in lines:
+        line = _ANSI_RE.sub("", raw or "")
+        m = _AIRING_RE.search(line)
+        if m:
+            started = True
+            snap.update(phase="airing", total=int(m.group(1)), scene=0,
+                        percent=PROGRESS_PREP_END_PCT, label="airing — starting scene 1")
+            continue
+        if PROGRESS_MARKERS["queued"] in line:
+            # The roundtable accepted a request: whatever came before it in
+            # this window belongs to the PREVIOUS airing being preempted.
+            started, queued = False, True
+            snap.update(state="running", phase="queued", percent=PROGRESS_QUEUED_PCT,
+                        label="queued on the roundtable — waiting for voice prep",
+                        scene=0, total=0)
+            continue
+        m = _PREP_RE.search(line)
+        if m and snap["phase"] != "airing":
+            started = True
+            i, n = int(m.group(1)), max(int(m.group(2)), 1)
+            pct = PROGRESS_QUEUED_PCT + (PROGRESS_PREP_END_PCT - PROGRESS_QUEUED_PCT) * i / n
+            snap.update(phase="preparing", total=n, scene=i, percent=round(pct),
+                        label=f"preparing voices — scene {i}/{n}")
+            continue
+        if PROGRESS_MARKERS["reusing"] in line and snap["phase"] != "airing":
+            started = True
+            snap.update(phase="preparing", percent=PROGRESS_PREP_END_PCT,
+                        label="reusing cached narration")
+            continue
+        if snap["phase"] == "airing" and line.lstrip().startswith("♪"):
+            total = max(snap["total"], 1)
+            scene = min(snap["scene"] + 1, total)
+            pct = PROGRESS_PREP_END_PCT + (100 - PROGRESS_PREP_END_PCT) * (scene - 1) / total
+            snap.update(scene=scene, percent=round(pct),
+                        label=f"airing — scene {scene}/{total}")
+            continue
+        if not started:
+            # Pre-start errors only count for a request the roundtable has
+            # actually accepted in this window (see docstring) — and never
+            # the preempted airing's own "refused: operator replay_stop…",
+            # which Play itself caused and which can print after "queued".
+            if queued and any(PROGRESS_MARKERS[k] in line for k in ("refused", "missing", "failed")) \
+                    and "replay_stop" not in line:
+                snap.update(state="failed", phase="failed", label=line.strip()[:200])
+                log.debug("parse_replay_progress branch=failed_before_start")
+            continue
+        if PROGRESS_MARKERS["fin"] in line:
+            snap.update(state="done", phase="done", percent=100, scene=snap["total"],
+                        label="finished")
+        elif PROGRESS_MARKERS["stopped"] in line or PROGRESS_MARKERS["interrupted"] in line:
+            snap.update(state="stopped", phase="stopped",
+                        label=f"stopped at scene {snap['scene']}/{snap['total']}")
+        elif any(PROGRESS_MARKERS[k] in line for k in ("refused", "missing", "failed")):
+            snap.update(state="failed", phase="failed", label=line.strip()[:200])
+    log.debug("parse_replay_progress result state=%s phase=%s percent=%s",
+              snap["state"], snap["phase"], snap["percent"])
+    return snap
+
+
+def _format_elapsed(since: str) -> str:
+    try:
+        started = datetime.fromisoformat(since)
+    except ValueError:
+        return ""
+    if started.tzinfo is None:
+        started = started.replace(tzinfo=timezone.utc)
+    seconds = max(0, int((datetime.now(timezone.utc) - started).total_seconds()))
+    return f"{seconds // 60}:{seconds % 60:02d}"
+
+
+@app.get("/replays/{name}/progress", response_class=HTMLResponse)
+async def replay_progress(request: Request, name: str, since: str = Query("")):
+    """Progress bar for the airing a Play click started, polled alongside
+    the log viewer. Answers HTTP 286 once the airing reaches a terminal
+    state — htmx's documented "stop polling" status — so a finished bar
+    freezes instead of re-querying Postgres forever."""
+    params: List[Any] = [("service", ROUNDTABLE_SERVICE), ("limit", "500")]
+    params += [("contains", marker) for marker in PROGRESS_MARKERS.values()]
+    if since:
+        params.append(("since", since))
+    result = await _mapi_request("GET", "/logs/containers", params=params)
+    if not result.ok:
+        log.error("replay_progress fetch failed name=%s error=%s", name, result.error)
+        snap = {"state": "running", "phase": "unknown", "percent": 0,
+                "label": f"progress unavailable: {result.error}", "scene": 0, "total": 0}
+    else:
+        snap = parse_replay_progress([row["message"] for row in result.data.get("logs", [])])
+    snap["elapsed"] = _format_elapsed(since) if since else ""
+    status_code = 200 if snap["state"] == "running" else 286
+    if status_code == 286:
+        log.info("replay_progress terminal name=%s state=%s", name, snap["state"])
+    return templates.TemplateResponse(request, "_replay_progress.html",
+                                      {"name": name, "p": snap}, status_code=status_code)
 
 
 @app.post("/replays/{name}/delete", response_class=HTMLResponse)

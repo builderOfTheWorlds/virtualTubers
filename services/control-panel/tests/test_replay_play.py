@@ -15,6 +15,7 @@ No LLM/bus/DB involved; /messages is mocked at the panel's own _mapi_request
 seam.
 """
 import panel
+import pytest
 from fastapi.testclient import TestClient
 
 
@@ -233,3 +234,131 @@ def test_replay_log_reports_error_when_both_sources_fail(monkeypatch):
     resp = client.get("/replays/ashiorid_smoke/log")
     assert resp.status_code == 200
     assert "postgres unavailable" in resp.text
+
+
+# ── Replay progress bar ─────────────────────────────────────────────────
+# Line shapes copied from a real roundtable airing's container_logs rows
+# (roundtable_stream_check_double, 2026-09-27) — including the ANSI color
+# codes Performer wraps its headers/narration in.
+_PREVIOUS_AIRING_TAIL = [
+    "\x1b[2m♪ an old line from the show being preempted\x1b[0m",
+    "\x1b[1m\x1b[35m══ stopped ══\x1b[0m",
+]
+_QUEUED = ["[agent:roundtable] queued replay episode 'roundtable_stream_check_double'"]
+_PREP = [f"[replay_pane] preparing: scene {i}/4: writing coder_talk line (~8w)" for i in range(1, 5)]
+_HEADER = ["\x1b[1m\x1b[35m══ REPLAY: roundtable_stream_check_double (4 scenes) ══\x1b[0m"]
+_SCENES = [f"\x1b[2m♪ line {i}\x1b[0m" for i in range(1, 5)]
+_FIN = ["\x1b[1m\x1b[35m══ fin ══\x1b[0m"]
+
+
+def test_progress_starts_at_requested_with_no_lines():
+    snap = panel.parse_replay_progress([])
+    assert snap["state"] == "running"
+    assert snap["phase"] == "requested"
+
+
+def test_progress_ignores_the_preempted_airings_stop_marker():
+    """Play sends replay_stop first, so the OLD airing's "══ stopped ══"
+    lands in this window — it must not end the new bar."""
+    snap = panel.parse_replay_progress(_PREVIOUS_AIRING_TAIL + _QUEUED)
+    assert snap["state"] == "running"
+    assert snap["phase"] == "queued"
+
+
+def test_progress_tracks_voice_prep_per_scene():
+    snap = panel.parse_replay_progress(_QUEUED + _PREP[:2])
+    assert snap["phase"] == "preparing"
+    assert (snap["scene"], snap["total"]) == (2, 4)
+    assert panel.PROGRESS_QUEUED_PCT < snap["percent"] < panel.PROGRESS_PREP_END_PCT
+
+
+def test_progress_counts_aired_scenes_and_is_monotonic():
+    lines = _QUEUED + _PREP + _HEADER + _SCENES
+    percents = [panel.parse_replay_progress(lines[:n])["percent"] for n in range(len(lines) + 1)]
+    assert percents == sorted(percents)
+    snap = panel.parse_replay_progress(lines)
+    assert snap["phase"] == "airing"
+    assert (snap["scene"], snap["total"]) == (4, 4)
+    assert snap["percent"] < 100
+
+
+def test_progress_reaches_100_on_fin():
+    snap = panel.parse_replay_progress(_PREVIOUS_AIRING_TAIL + _QUEUED + _PREP + _HEADER + _SCENES + _FIN)
+    assert snap["state"] == "done"
+    assert snap["percent"] == 100
+
+
+def test_progress_reports_a_stop_during_this_airing():
+    snap = panel.parse_replay_progress(_QUEUED + _HEADER + _SCENES[:2] + ["══ stopped ══"])
+    assert snap["state"] == "stopped"
+    assert "2/4" in snap["label"]
+
+
+@pytest.mark.parametrize("line", [
+    "[replay_pane] duet refused: timed out waiting for duet followers to become ready",
+    "[replay_pane] episode not in the library: 'nope'",
+])
+def test_progress_reports_failures_after_the_request_was_queued(line):
+    snap = panel.parse_replay_progress(_QUEUED + [line])
+    assert snap["state"] == "failed"
+
+
+def test_progress_route_filters_to_roundtable_milestones_and_stops_polling_when_done(monkeypatch):
+    calls = []
+
+    async def _mapi_request(method, path, **kwargs):
+        calls.append((path, kwargs))
+
+        class _R:
+            ok = True
+            error = None
+            data = {"logs": [{"message": m} for m in _QUEUED + _HEADER + _SCENES + _FIN]}
+        return _R()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.get("/replays/roundtable_stream_check_double/progress",
+                      params={"since": "2026-09-27T16:40:43+00:00"})
+    # 286 = htmx's "stop polling" status
+    assert resp.status_code == 286
+    assert 'width: 100%' in resp.text
+    assert "finished" in resp.text
+
+    path, kwargs = calls[0]
+    assert path == "/logs/containers"
+    params = kwargs["params"]
+    assert [v for k, v in params if k == "service"] == [panel.ROUNDTABLE_SERVICE]
+    assert set(v for k, v in params if k == "contains") == set(panel.PROGRESS_MARKERS.values())
+    assert ("since", "2026-09-27T16:40:43+00:00") in params
+
+
+def test_progress_route_keeps_polling_while_running_or_unreachable(monkeypatch):
+    async def _mapi_request(method, path, **kwargs):
+        class _Fail:
+            ok = False
+            error = "postgres unavailable"
+            data = None
+        return _Fail()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.get("/replays/x/progress")
+    assert resp.status_code == 200
+    assert "postgres unavailable" in resp.text
+
+
+def test_play_response_includes_a_progress_bar_polling_the_progress_route(monkeypatch):
+    async def _mapi_request(method, path, **kwargs):
+        class _R:
+            ok = True
+            error = None
+            data = {"episodes": []} if path == "/replays" else {}
+        return _R()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.post("/replays/ashiorid_smoke/play")
+    assert 'hx-get="/replays/ashiorid_smoke/progress?since=' in resp.text
+
+
+def test_progress_ignores_the_preempted_airings_replay_stop_refusal_after_queued():
+    snap = panel.parse_replay_progress(_QUEUED + [
+        "[replay_pane] duet refused: operator replay_stop received before duet cast was ready"])
+    assert snap["state"] == "running"

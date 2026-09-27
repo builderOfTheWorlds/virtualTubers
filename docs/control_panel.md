@@ -34,7 +34,10 @@ Sections on the one dashboard page (`GET /`):
 - **Rerun Theater replays** — list, upload, view, and delete episodes in the
   library (docs/episode_store.md). Hitting Play shows a live, auto-refreshing
   log viewer (container stdout/stderr + Kafka bus messages for the 7
-  targeted streams, docs/replay_logs.md) underneath the play banner.
+  targeted streams, docs/replay_logs.md) underneath the play banner,
+  plus a progress bar tracking the airing from request → voice prep →
+  scene N/M → finished (or stopped/failed), driven by the roundtable
+  director's own pane milestones since it is the airing's master clock.
   Above the library table, **Drafts awaiting review** lists episodes stored
   with `status=draft` (e.g. auto-submitted by the 3layer-generator,
   docs/draft_submitter.md) with **View / Approve / Delete** — and no Play
@@ -82,6 +85,7 @@ POST /replays/upload            -> HTML   # form: file, name, overwrite
 POST /replays/{name}/delete     -> HTML   # empty body on success (row removed), row+error on failure
 GET  /replays/{name}/view       -> HTML   # pretty-printed script fragment
 GET  /replays/{name}/log        -> HTML   # merged container-log + bus-message tail, polled every 3s after Play
+GET  /replays/{name}/progress   -> HTML   # progress bar, polled every 2s; answers 286 (htmx "stop polling") once done/stopped/failed
 POST /replays/{name}/approve    -> HTML   # promote a draft; re-renders the whole replays section
 POST /replays/{name}/reject     -> HTML   # delete a draft; empty body on success, draft row+error on failure
 
@@ -214,6 +218,12 @@ docker compose up -d control-panel
   `WWW-Authenticate` header, timing-safe compared via `secrets.compare_digest`.
 
 ## Changelog
+
+- v1.5.0 (2026-09-27) — Replay progress bar under the Play banner:
+  `GET /replays/{name}/progress` reads only the roundtable's milestone
+  lines (message-api `/logs/containers?contains=…`) and folds them via
+  `parse_replay_progress` into queued 5% → voice prep to 35% → per-scene
+  airing to 100%. Ignores the preempted airing's own stop/refusal lines.
 
 - v1.4.0 (2026-09-27) — Worker health in the Workers table: new health
   column (alive/stale/down/unknown + "last seen Ns ago" via the new `age`

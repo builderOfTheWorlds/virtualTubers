@@ -13,6 +13,14 @@
     {% else %}
       <div class="banner err">play {{ play_result.name }} failed: {{ play_result.error }}</div>
     {% endif %}
+    {% if play_result.progress_url %}
+    <div id="replay-progress" class="replay-progress"
+         hx-get="{{ play_result.progress_url }}"
+         hx-trigger="load, every 2s" hx-swap="innerHTML">
+      <div class="replay-progress-head"><span class="replay-progress-label">waiting for progress…</span></div>
+      <div class="replay-progress-track"><div id="replay-progress-fill" class="replay-progress-fill" style="width: 0%"></div></div>
+    </div>
+    {% endif %}
     <div id="replay-log-viewer" class="log-viewer"
          hx-get="{{ play_result.log_url }}"
          hx-trigger="load, every 3s" hx-swap="innerHTML">

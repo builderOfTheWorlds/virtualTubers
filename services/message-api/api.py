@@ -346,9 +346,10 @@ def get_container_logs(
     service: list[str] = Query(..., description="Compose service name(s), e.g. worker-coder"),
     since: Optional[datetime] = Query(None),
     limit: int = Query(200, ge=1, le=MAX_LOG_LIMIT),
+    contains: list[str] = Query([], description="Keep only lines containing any of these substrings"),
 ):
     try:
-        rows = fetch_container_logs(service, since=since, limit=limit)
+        rows = fetch_container_logs(service, since=since, limit=limit, contains=contains)
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
     return {"logs": rows}

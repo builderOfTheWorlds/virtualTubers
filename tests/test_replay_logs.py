@@ -99,3 +99,23 @@ def test_fetch_messages_applies_since_when_given():
     sql, params = fake_cursor.execute.call_args[0]
     assert "timestamp > %(since)s" in sql
     assert params["since"] == since
+
+
+def test_fetch_container_logs_contains_filters_with_literal_strpos():
+    fake_conn, fake_cursor = _fake_conn([])
+    with patch("replay_logs.connect_db", return_value=fake_conn):
+        replay_logs.fetch_container_logs(["worker-roundtable"], contains=["══ fin ══", "100%_"])
+
+    sql, params = fake_cursor.execute.call_args[0]
+    assert "strpos(message, %(txt0)s) > 0 OR strpos(message, %(txt1)s) > 0" in sql
+    assert params["txt0"] == "══ fin ══"
+    assert params["txt1"] == "100%_"
+
+
+def test_fetch_container_logs_without_contains_adds_no_text_filter():
+    fake_conn, fake_cursor = _fake_conn([])
+    with patch("replay_logs.connect_db", return_value=fake_conn):
+        replay_logs.fetch_container_logs(["worker-roundtable"])
+
+    sql, _ = fake_cursor.execute.call_args[0]
+    assert "strpos" not in sql

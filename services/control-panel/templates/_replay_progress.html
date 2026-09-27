@@ -1,0 +1,9 @@
+<div class="replay-progress-head">
+  <span class="mono">{{ name }}</span>
+  <span class="badge {{ 'on' if p.state in ('running', 'done') else 'err' }}">{{ p.state }}</span>
+  <span class="replay-progress-label">{{ p.label }}</span>
+  <span class="replay-progress-meta mono">{{ p.percent }}%{% if p.elapsed %} · {{ p.elapsed }} elapsed{% endif %}</span>
+</div>
+<div class="replay-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ p.percent }}">
+  <div id="replay-progress-fill" class="replay-progress-fill state-{{ p.state }} phase-{{ p.phase }}" style="width: {{ p.percent }}%"></div>
+</div>
