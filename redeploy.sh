@@ -19,14 +19,16 @@
 #
 # What it does, in order:
 #   1. pytest smoke gate (non-blocking warn-only — see Testing note below)
-#   2. install.sh (SKIP_VOICES=1) — rebuilds every image with new code:
+#   2. ensure base infra is up (docker compose up -d, no service list) —
+#      fills in redis/kafka/postgres if any went missing since last deploy.
+#   3. install.sh (SKIP_VOICES=1) — rebuilds every image with new code:
 #        vtube-worker:latest, virtualtubers-message-logger,
 #        virtualtubers-message-api, virtualtubers-control-panel,
 #        virtualtubers-log-shipper, virtualtubers-twitch-presence
 #      plus the two docker-compose `build:` services (campaign-manager,
 #      3layer-generator) via `docker compose build`.
-#   3. force-recreate every container backed by those images.
-#   4. verify: image ID parity + a live rendered frame off the GM channel.
+#   4. force-recreate every container backed by those images.
+#   5. verify: image ID parity + a live rendered frame off the GM channel.
 #
 # Testing note: the full pytest suite has pre-existing failures unrelated to
 # deploy readiness (test_episode_validator_show.py's own harness bug,
@@ -75,14 +77,33 @@ if [[ "$ASSUME_YES" != "1" ]]; then
     esac
 fi
 
-# ── 2. rebuild every app-code image ───────────────────────────────────────────
+# ── 2. ensure base infra is up ────────────────────────────────────────────────
+# redeploy.sh only force-recreates the app-code services it knows about
+# (WORKERS + SUPPORT_SERVICES, below) — it never touches base infra like
+# redis or the profile-gated kafka/postgres, so if one of those containers
+# is ever missing entirely (host reboot, `docker compose down`, manual prune,
+# a prior deploy whose image pull got interrupted), nothing downstream would
+# notice: the worker/image-parity checks at the end don't probe Kafka/Redis
+# connectivity, so the script would happily report "Redeploy complete" while
+# message-api silently crash-loops on `Unable to bootstrap from kafka:9092`
+# (confirmed happening in practice — see Gitea/session notes 2026-09-27).
+# Plain `docker compose up -d` with no service list and no --force-recreate
+# is the fix: compose only creates what's missing or config-changed, so this
+# is a no-op for anything already running correctly, but fills in any base
+# service (redis unconditionally, kafka/postgres per whatever
+# COMPOSE_PROFILES is set in this host's .env) that vanished since the last
+# deploy — without disturbing already-running workers.
+log "Ensuring base infra (redis + any active COMPOSE_PROFILES) is up"
+docker compose up -d
+
+# ── 3. rebuild every app-code image ───────────────────────────────────────────
 log "Rebuilding docker-tagged images via install.sh (SKIP_VOICES=1)"
 SKIP_VOICES=1 ./install.sh
 
 log "Rebuilding compose-managed images (campaign-manager, 3layer-generator)"
 docker compose build campaign-manager 3layer-generator
 
-# ── 3. force-recreate every container running those images ───────────────────
+# ── 4. force-recreate every container running those images ───────────────────
 # Ordinary `docker compose up -d` is a NO-OP here: none of these services'
 # compose config changed, only the underlying image content — compose only
 # recreates on a config/tag diff, so --force-recreate is required to actually
@@ -110,7 +131,7 @@ docker compose up -d --no-deps --force-recreate "${WORKERS[@]}"
 log "Force-recreating support services: ${SUPPORT_SERVICES[*]}"
 docker compose up -d --no-deps --force-recreate "${SUPPORT_SERVICES[@]}"
 
-# ── 4. verify ──────────────────────────────────────────────────────────────
+# ── 5. verify ──────────────────────────────────────────────────────────────
 log "Waiting 20s for containers to settle..."
 sleep 20
 
@@ -126,6 +147,30 @@ for w in "${WORKERS[@]}"; do
     actual_img="$(docker inspect "$cid" --format '{{.Image}}' 2>/dev/null | sed 's/^sha256://')"
     if [[ "$actual_img" != "$EXPECTED_IMG"* ]]; then
         warn "$cid is NOT running the freshly built vtube-worker image"
+        FAIL=1
+    fi
+done
+
+log "Verifying message-api can reach kafka + redis..."
+# healthz only ever returns a static {"status":"ok"} — it doesn't probe
+# Kafka/Redis at all, so it would NOT have caught the kafka/redis containers
+# going missing entirely (the actual incident this check exists for, see
+# session notes 2026-09-27: kafka/redis vanished from a prior deploy,
+# message-api crash-looped on `Unable to bootstrap from kafka:9092`, and the
+# old verify step — image parity + a GM frame grab — reported success anyway
+# since none of that touches Kafka/Redis). Probe both directly by DNS+TCP
+# connect from inside the message-api container, which is where it matters.
+for infra_host_port in "kafka:9092" "redis:6379"; do
+    infra_host="${infra_host_port%:*}"
+    infra_port="${infra_host_port#*:}"
+    if docker exec virtualtubers-message-api-1 python3 -c "
+import socket
+s = socket.create_connection(('${infra_host}', ${infra_port}), timeout=5)
+s.close()
+" 2>/dev/null; then
+        log "  ${infra_host}:${infra_port} reachable from message-api"
+    else
+        warn "message-api CANNOT reach ${infra_host}:${infra_port} — check 'docker compose up -d ${infra_host}' and 'docker logs virtualtubers-message-api-1'"
         FAIL=1
     fi
 done
