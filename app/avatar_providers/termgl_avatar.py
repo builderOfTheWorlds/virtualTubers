@@ -25,6 +25,7 @@ under an interpreter without termgl installed degrades gracefully (an
 ImportError here is caught there) rather than crashing the avatar pane.
 """
 import math
+import random
 import sys
 import time
 
@@ -53,6 +54,11 @@ BREATH_PERIOD_S = 4.2
 BREATH_YAW_RAD = math.radians(1.2)
 BREATH_PITCH_RAD = math.radians(0.6)
 BREATH_DIST = 0.035
+#: Each avatar instance's period is jittered +/- this fraction, and its
+#: phase is randomized 0..2pi at construction, so a roundtable full of
+#: characters doesn't visibly breathe in lockstep (see __init__'s
+#: self._breath_phase/_breath_period).
+BREATH_PERIOD_JITTER = 0.25
 
 # expression -> (rotation speed multiplier, termgl color name). Faster
 # rotation reads as "more active/animated" for thinking/speaking states;
@@ -104,6 +110,11 @@ class TermglAvatarProvider(AvatarProvider):
         # wants motion back, but it no longer defaults to spinning.
         self._angle = math.radians(termgl_cfg.get("angle_deg", 15.0))
         self._angle_speed_base = termgl_cfg.get("angle_speed", 0.0)
+        # Randomized per-instance so a roundtable of characters doesn't
+        # breathe in lockstep — see BREATH_PERIOD_JITTER's comment.
+        self._breath_phase = random.uniform(0.0, 2 * math.pi)
+        self._breath_period = BREATH_PERIOD_S * random.uniform(
+            1.0 - BREATH_PERIOD_JITTER, 1.0 + BREATH_PERIOD_JITTER)
 
         self._ctx = make_context(WIDTH, HEIGHT)
         self._camera = make_camera(WIDTH, HEIGHT, fov=FOV)
@@ -206,8 +217,8 @@ class TermglAvatarProvider(AvatarProvider):
             color_name = self._accent_color
 
         # Idle breathing sway — see BREATH_* constants' docstring above.
-        phase = (time.monotonic() % BREATH_PERIOD_S) / BREATH_PERIOD_S
-        breath = math.sin(phase * 2 * math.pi)
+        phase = (time.monotonic() % self._breath_period) / self._breath_period
+        breath = math.sin(phase * 2 * math.pi + self._breath_phase)
         breath_yaw = breath * BREATH_YAW_RAD
         breath_pitch = breath * BREATH_PITCH_RAD
         breath_dist = breath * BREATH_DIST

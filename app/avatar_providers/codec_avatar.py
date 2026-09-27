@@ -29,6 +29,7 @@ in the worker container, not by the unit suite.
 """
 import logging
 import math
+import random
 import sys
 import time
 
@@ -74,14 +75,10 @@ BREATH_PERIOD_S = 4.2
 BREATH_YAW_RAD = math.radians(1.2)
 BREATH_PITCH_RAD = math.radians(0.6)
 BREATH_DIST = 0.035
-
-
-def _breath_offsets():
-    """(yaw, pitch, dist) sinusoidal offsets for the current instant."""
-    phase = (time.monotonic() % BREATH_PERIOD_S) / BREATH_PERIOD_S
-    breath = math.sin(phase * 2 * math.pi)
-    return (breath * BREATH_YAW_RAD, breath * BREATH_PITCH_RAD,
-            breath * BREATH_DIST)
+#: Each avatar instance's period is jittered +/- this fraction, and its
+#: phase is randomized 0..2pi at construction (see FrameSource.__init__),
+#: so a roundtable full of characters doesn't visibly breathe in lockstep.
+BREATH_PERIOD_JITTER = 0.25
 
 
 def _detect_truecolor_visual_id():
@@ -156,6 +153,14 @@ class FrameSource:
         # termgl_avatar.py's matching comment. angle_speed defaults to 0.0
         # now, so this fixed offset is what actually shows on screen.
         self.angle = math.radians(angle_deg)
+        # Randomized per-instance so a roundtable of characters doesn't
+        # breathe in lockstep — see BREATH_PERIOD_JITTER's comment. Also
+        # constructed fresh in each GPURenderWorker subprocess (which
+        # builds its own FrameSource), so those get their own random
+        # phase too, not one shared across every worker.
+        self._breath_phase = random.uniform(0.0, 2 * math.pi)
+        self._breath_period = BREATH_PERIOD_S * random.uniform(
+            1.0 - BREATH_PERIOD_JITTER, 1.0 + BREATH_PERIOD_JITTER)
         # character_params kept (not just the built mesh) — mouth_open/
         # emotion morphing (docs/avatar_emotion_design.md) rebuilds the
         # head fresh every render_frame() call, since _add_mouth/_add_brows/
@@ -178,6 +183,14 @@ class FrameSource:
             log.warning("codec_avatar: could not resolve accent_color (%r), "
                        "defaulting to GREEN", exc)
             self.accent_color = "GREEN"
+
+    def _breath_offsets(self):
+        """(yaw, pitch, dist) sinusoidal offsets for the current instant,
+        using this instance's randomized phase/period."""
+        phase = (time.monotonic() % self._breath_period) / self._breath_period
+        breath = math.sin(phase * 2 * math.pi + self._breath_phase)
+        return (breath * BREATH_YAW_RAD, breath * BREATH_PITCH_RAD,
+                breath * BREATH_DIST)
 
     def render_frame(self, expression, mouth_open=0.0, emotion="neutral"):
         """Advance rotation and render one frame. Returns an (H,W,3) 0..1
@@ -219,7 +232,7 @@ class FrameSource:
         self.verts, self.faces, self.materials = build_codec_head(
             self._character_params, mouth_open=mouth_open, emotion=emotion)
 
-        breath_yaw, breath_pitch, breath_dist = _breath_offsets()
+        breath_yaw, breath_pitch, breath_dist = self._breath_offsets()
         img, backend = gl_raster.render_with_fallback(
             self.verts, self.faces, self.materials,
             width=self.width, height=self.height,
