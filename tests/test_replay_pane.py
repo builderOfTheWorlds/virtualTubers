@@ -1467,3 +1467,148 @@ def test_follower_wait_for_scene_stops_immediately_on_stop_file(
 
     stop_file.write_text("{}", encoding="utf-8")
     assert wait_for_scene(0) == -1
+
+
+# ── background-music scene cues (docs/replay_pane.md "Scene mood cues") ──────
+@pytest.fixture
+def music_cue_recorder(monkeypatch):
+    """Stand-in music.control module in sys.modules, so the director's lazy
+    `from music.control import write_scene_cue` picks it up without pulling
+    numpy/the engine in. Records every call."""
+    import types
+    calls = []
+
+    def write_scene_cue(mood, scene_id="", intensity=0.5, path="/tmp/music/scene_cue.json",
+                        theme=None):
+        calls.append({"mood": mood, "scene_id": scene_id, "intensity": intensity,
+                      "path": path, "theme": theme})
+        return True
+
+    fake = types.ModuleType("music.control")
+    fake.write_scene_cue = write_scene_cue
+    monkeypatch.setitem(sys.modules, "music.control", fake)
+    monkeypatch.delenv("MUSIC_CUE_PATH", raising=False)
+    return calls
+
+
+def _music_script():
+    """4 scenes via plan_scenes: boss, coder_talk (cue), boss (no cue),
+    coder_work run of 2 tool_calls where only the SECOND carries a cue."""
+    return {
+        "source": "music_ep",
+        "show": {"music": {"theme": "ashiorid"}},
+        "events": [
+            {"type": "user_message", "text": "the door creaks"},
+            {"type": "assistant_text", "text": "who is there",
+             "music": {"mood": ["tension"], "intensity": 0.8, "scene_id": "door"}},
+            {"type": "user_message", "text": "nobody"},
+            {"type": "tool_call", "tool": "bash", "text": "ls"},
+            {"type": "tool_call", "tool": "bash", "text": "pwd",
+             "music": {"mood": "sadness", "scene_id": "after"}},
+        ],
+    }
+
+
+def _plan_show_factory():
+    """prepare_voiced_show stand-in that returns the REAL plan_scenes output
+    (so each scene keeps its 'events', like revoice.prepare_show)."""
+    def fake(script, config, workdir, **kwargs):
+        from revoice import plan_scenes
+        scenes = plan_scenes(script.get("events", []))
+        for scene in scenes:
+            scene["narration"] = "line"
+            scene["audio"] = None
+        return scenes
+    return fake
+
+
+def _run_music_director(monkeypatch, script, show_factory=None):
+    scripts = {"music_ep": script}
+    monkeypatch.setattr(replay_pane.episode_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.episode_store, "load_episode", lambda name: scripts.get(name))
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", show_factory or _plan_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-m")
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor({}))
+    # All-local cast (no remote followers) -> no ready-wait at all.
+    request = {"episode": "music_ep", "cast": {}, "speed": 1000}
+    return perform_director_request(request, "director-1", None, "director-1",
+                                    config=_duet_config("director-1"))
+
+
+def test_director_writes_music_cue_only_for_scenes_that_carry_one(
+        monkeypatch, fake_performer, duet_timeouts, relay_files, music_cue_recorder):
+    assert _run_music_director(monkeypatch, _music_script()) is True
+    assert music_cue_recorder == [
+        {"mood": ["tension"], "scene_id": "door", "intensity": 0.8,
+         "path": "/tmp/music/scene_cue.json", "theme": "ashiorid"},
+        {"mood": "sadness", "scene_id": "after", "intensity": 0.5,
+         "path": "/tmp/music/scene_cue.json", "theme": "ashiorid"},
+    ]
+
+
+def test_director_music_cue_honors_music_cue_path_env(
+        monkeypatch, fake_performer, duet_timeouts, relay_files, music_cue_recorder, tmp_path):
+    monkeypatch.setenv("MUSIC_CUE_PATH", str(tmp_path / "cue.json"))
+    _run_music_director(monkeypatch, _music_script())
+    assert music_cue_recorder and all(c["path"] == str(tmp_path / "cue.json")
+                                      for c in music_cue_recorder)
+
+
+def test_director_music_cue_without_theme_passes_none(
+        monkeypatch, fake_performer, duet_timeouts, relay_files, music_cue_recorder):
+    script = _music_script()
+    del script["show"]
+    _run_music_director(monkeypatch, script)
+    assert [c["theme"] for c in music_cue_recorder] == [None, None]
+
+
+def test_director_music_cues_replanned_when_scenes_lack_events(
+        monkeypatch, fake_performer, duet_timeouts, relay_files, music_cue_recorder):
+    def stripped(script, config, workdir, **kwargs):
+        scenes = _plan_show_factory()(script, config, workdir)
+        for scene in scenes:
+            del scene["events"]
+        return scenes
+    _run_music_director(monkeypatch, _music_script(), show_factory=stripped)
+    assert [c["scene_id"] for c in music_cue_recorder] == ["door", "after"]
+
+
+def test_director_music_cue_failure_never_breaks_the_show(
+        monkeypatch, fake_performer, duet_timeouts, relay_files, music_cue_recorder):
+    def explode(*a, **kw):
+        raise RuntimeError("disk full")
+    sys.modules["music.control"].write_scene_cue = explode
+    assert _run_music_director(monkeypatch, _music_script()) is True
+    assert FakePerformer.instances[0].aborted is False
+
+
+def test_director_music_import_failure_never_breaks_the_show(
+        monkeypatch, fake_performer, duet_timeouts, relay_files):
+    # None in sys.modules makes `from music.control import ...` raise ImportError.
+    monkeypatch.setitem(sys.modules, "music.control", None)
+    assert _run_music_director(monkeypatch, _music_script()) is True
+
+
+def test_scene_music_cues_first_cue_in_scene_wins():
+    show = [{"events": [{"type": "tool_call", "music": {"mood": ["power"]}},
+                        {"type": "tool_call", "music": {"mood": ["sadness"]}}]},
+            {"events": [{"type": "user_message", "music": {"mood": []}}]},
+            {"events": [{"type": "user_message", "music": "tension"}]}]
+    assert replay_pane._scene_music_cues({}, show) == [{"mood": ["power"]}, None, None]
+
+
+def test_scene_music_cues_replan_mismatch_returns_no_cues():
+    show = [{"kind": "boss"}]  # no events AND the script plans to 2 scenes
+    script = {"events": [{"type": "user_message", "text": "a", "music": {"mood": "power"}},
+                         {"type": "assistant_text", "text": "b"}]}
+    assert replay_pane._scene_music_cues(script, show) == [None]
+
+
+def test_show_music_theme_is_tolerant_of_malformed_headers():
+    assert replay_pane._show_music_theme({"show": {"music": {"theme": "hp"}}}) == "hp"
+    assert replay_pane._show_music_theme({"show": "x"}) is None
+    assert replay_pane._show_music_theme({"show": {"music": "x"}}) is None
+    assert replay_pane._show_music_theme({}) is None
+    assert replay_pane._show_music_theme(None) is None

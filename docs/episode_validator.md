@@ -29,6 +29,45 @@ order:
    replaying it" check: an episode that crashes the renderer is rejected
    here rather than on air.
 
+A **show-header** stage (`_check_show`) and a **music-cue** stage
+(`_check_music`, see "Scene mood cues" below) run between the leak audit
+and the dry run.
+
+### Scene mood cues
+
+Campaign scenes carry a GEMS `mood:` list (`campaign.pack.MOODS`). The
+campaign episode builders now carry it into the aired episode so the
+roundtable director can publish background-music scene cues
+(docs/replay_pane.md "Scene mood cues"). Two optional, additive fields:
+
+```json
+{
+  "show":   {"music": {"theme": "ashiorid"}},
+  "events": [
+    {"type": "user_message", "text": "The door bursts open.",
+     "music": {"mood": ["tension"], "intensity": 0.7, "scene_id": "party-attack"}},
+    ...
+  ]
+}
+```
+
+- `event.music` — allowed on **any** event; means "from this event onward
+  the music should be this mood". `mood` (required) is one GEMS name or a
+  non-empty list of them (`wonder, transcendence, tenderness, nostalgia,
+  peacefulness, power, joyful_activation, tension, sadness` — `neutral` is
+  *not* accepted); `intensity` (optional) a number 0..1; `scene_id`
+  (optional) a string of at most 128 characters.
+- `show.music` — optional object; `theme` (optional) is the campaign name,
+  1-64 characters of `[A-Za-z0-9_-]` (the music director resolves it to
+  `<themes_dir>/<theme>/music/theme.yaml`, so no path characters).
+- **A music-only header** (`"show": {"music": {...}}` with no other key)
+  does not require `slots` and triggers no slot/persona/speaker checks — it
+  casts nobody, so it is treated like an episode with no `show` block. Any
+  other key in `show` still requires `slots`, exactly as before.
+
+`GEMS_MOODS` is a local copy of `campaign.pack.MOODS` (importing the music
+package would pull numpy into message-api); a test pins the two equal.
+
 Stage 4 is only feasible because `app/replay.py` and `app/revoice.py` are
 stdlib-only at import time — their `llm_client`/`tts_client`/`yaml` imports
 are lazy, inside `prepare_voiced_show`/`main` — so the renderer runs inside
@@ -145,6 +184,8 @@ becomes an HTTP 400 `detail`) and never quotes episode content:
 | A name that isn't `^[A-Za-z0-9._-]{1,128}$`, or no name at all | the rule, not the name's content |
 | Serialized script over `MAX_BYTES` (8 MB) | the size and the limit |
 | Leak audit hit | **the categories audited and how to fix it** — never the match, the rule, or the event |
+| `event.music` not an object, missing `mood`, a mood outside GEMS, `intensity` not a number in 0..1, `scene_id` not a string ≤128 chars | the event index, field, and the offending mood name (vocabulary, not a secret) |
+| `show.music` not an object, or `theme` not `^[A-Za-z0-9_-]{1,64}$` | the rule |
 | Dry-run render or `plan_scenes` raising | the exception type and message, chained via `raise … from exc` |
 
 Two deliberate choices:
@@ -162,6 +203,11 @@ episode is well under 1 MB. `message-api` applies the same cap to the raw
 request body first, returning `413`.
 
 ## Changelog
+
+- **v1.1.0** (2026-09-27): Scene mood cues — optional per-event `music`
+  object (`mood`, `intensity`, `scene_id`) and optional `show.music.theme`,
+  validated by the new `_check_music` stage; a music-only `show` header no
+  longer requires `slots`. Tests: `tests/test_episode_validator_music.py`.
 
 - **v1.0.0** (2026-08-16): Initial version. Introduced with the move of the
   episode library from `/data/replays` into Postgres — `validate_episode()`

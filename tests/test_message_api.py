@@ -466,3 +466,97 @@ def test_delete_replay_503_when_delete_raises_operational_error(client, monkeypa
     resp = client.delete("/replays/demo-ep")
 
     assert resp.status_code == 503
+
+
+# ── GM live music control (/music) ───────────────────────────────────────────
+@pytest.fixture
+def music_redis():
+    """MusicControl talks to a mocked redis client for the /music tests."""
+    fake = MagicMock()
+    original = api.music_control._client
+    api.music_control._client = fake
+    yield fake
+    api.music_control._client = original
+
+
+def test_list_music_moods_includes_gems_neutral_and_silence(client):
+    moods = client.get("/music-moods").json()["moods"]
+    assert "tension" in moods and "joyful_activation" in moods
+    assert "neutral" in moods and moods[-1] == "silence"
+    assert len(moods) == 11
+
+
+def test_get_music_no_override_no_director(client, music_redis):
+    music_redis.get.return_value = None
+    body = client.get("/music/roundtable").json()
+    assert body == {"worker_id": "roundtable", "override": None, "overridden": False,
+                    "running": False, "status": None}
+
+
+def test_get_music_reports_override_and_status(client, music_redis):
+    status = {"theme": "ashiorid", "mood": "tension", "playing_mood": "tension", "tempo_bpm": 120.0}
+
+    def get(key):
+        if key == "music:roundtable:override":
+            return json.dumps({"mood": "tension", "intensity": 0.8})
+        if key == "music:roundtable:status":
+            return json.dumps(status)
+        return None
+
+    music_redis.get.side_effect = get
+    body = client.get("/music/roundtable").json()
+    assert body["override"] == {"mood": "tension", "intensity": 0.8}
+    assert body["overridden"] is True
+    assert body["running"] is True
+    assert body["status"] == status
+
+
+@pytest.mark.parametrize("mood,expected", [("tension", "tension"), (" Silence ", "silence"),
+                                           ("joyful_activation", "joyful_activation")])
+def test_set_music_valid_mood_writes_override(client, music_redis, mood, expected):
+    resp = client.post("/music/roundtable", json={"mood": mood, "intensity": 0.7})
+    assert resp.status_code == 200
+    assert resp.json() == {"worker_id": "roundtable", "override": {"mood": expected, "intensity": 0.7},
+                           "overridden": True}
+    key, raw = music_redis.set.call_args.args
+    assert key == "music:roundtable:override"
+    assert json.loads(raw)["mood"] == expected
+
+
+def test_set_music_clamps_intensity(client, music_redis):
+    resp = client.post("/music/roundtable", json={"mood": "power", "intensity": 3})
+    assert resp.json()["override"]["intensity"] == 1.0
+
+
+def test_set_music_unknown_mood_is_400(client, music_redis):
+    resp = client.post("/music/roundtable", json={"mood": "banana"})
+    assert resp.status_code == 400
+    assert "unknown mood" in resp.json()["detail"]
+    music_redis.set.assert_not_called()
+
+
+def test_set_music_redis_down_is_503(client, music_redis):
+    music_redis.set.side_effect = redis.ConnectionError("down")
+    resp = client.post("/music/roundtable", json={"mood": "tension"})
+    assert resp.status_code == 503
+
+
+def test_clear_music_deletes_override(client, music_redis):
+    resp = client.delete("/music/roundtable")
+    assert resp.status_code == 200
+    assert resp.json() == {"worker_id": "roundtable", "override": None, "overridden": False}
+    music_redis.delete.assert_called_once_with("music:roundtable:override")
+
+
+def test_clear_music_redis_down_is_503(client, music_redis):
+    music_redis.delete.side_effect = redis.ConnectionError("down")
+    assert client.delete("/music/roundtable").status_code == 503
+
+
+def test_music_control_import_does_not_pull_numpy():
+    """message-api's image has no numpy — music.control must stay numpy-free."""
+    import subprocess
+    code = ("import sys; sys.path.insert(0, %r); from music.control import MusicControl; "
+            "from music.mood_map import MOODS; assert 'numpy' not in sys.modules, 'numpy imported'"
+            % str(ROOT / "app"))
+    subprocess.run([sys.executable, "-c", code], check=True)

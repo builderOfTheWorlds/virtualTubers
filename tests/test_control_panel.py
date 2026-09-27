@@ -55,6 +55,14 @@ def test_dashboard_renders_worker_and_replay_data(client):
             return mapi_result(data={"type": "status_update", "excluded": True})
         if path == "/replays":
             return mapi_result(data={"episodes": [{"name": "ep1", "project": "demo", "event_count": 3}]})
+        if path == "/console-themes":
+            return mapi_result(data={"themes": ["Dracula"]})
+        if path.startswith("/console-theme/"):
+            return mapi_result(data={"theme": None, "overridden": False})
+        if path == "/music-moods":
+            return mapi_result(data={"moods": ["neutral", "tension", "silence"]})
+        if path.startswith("/music/"):
+            return mapi_result(data={"override": None, "overridden": False, "running": False, "status": None})
         raise AssertionError(f"unexpected call {method} {path}")
 
     client.mapi.side_effect = side_effect
@@ -263,3 +271,88 @@ def test_basic_auth_always_skips_healthz(client, monkeypatch):
     monkeypatch.setattr(panel, "BASIC_AUTH_PASS", "secret")
     resp = client.get("/healthz")
     assert resp.status_code == 200
+
+
+# ── GM live music ────────────────────────────────────────────────────────
+@pytest.fixture
+def _reset_music_moods(monkeypatch):
+    monkeypatch.setattr(panel, "_MUSIC_MOODS_CACHE", None)
+
+
+PLAYING_STATUS = {"theme": "ashiorid", "mood": "tension", "intensity": 0.7, "source": "gm_override",
+                  "scene_id": "", "playing_mood": "tension", "tempo_bpm": 132.0, "mode": "phrygian",
+                  "bar": 42, "recording_session": None, "at": 0}
+
+
+def _music_side_effect(calls, state, write_result=None):
+    async def side_effect(method, path, **kwargs):
+        calls.append((method, path, kwargs))
+        if path == "/music-moods":
+            return mapi_result(data={"moods": ["neutral", "tension", "silence"]})
+        if method == "GET" and path == "/music/roundtable":
+            return mapi_result(data=state)
+        if method in ("POST", "DELETE") and path == "/music/roundtable":
+            return write_result or mapi_result(data={})
+        raise AssertionError(f"unexpected call {method} {path}")
+    return side_effect
+
+
+def test_music_partial_renders_now_playing_and_override(client, _reset_music_moods):
+    state = {"override": {"mood": "tension", "intensity": 0.7}, "overridden": True,
+             "running": True, "status": PLAYING_STATUS}
+    client.mapi.side_effect = _music_side_effect([], state)
+    resp = client.get("/partials/music")
+    assert resp.status_code == 200
+    assert "GM override" in resp.text
+    assert "132.0 bpm" in resp.text
+    assert "phrygian" in resp.text
+    assert "Follow scene" in resp.text
+
+
+def test_music_partial_not_running_following_scene(client, _reset_music_moods):
+    state = {"override": None, "overridden": False, "running": False, "status": None}
+    client.mapi.side_effect = _music_side_effect([], state)
+    resp = client.get("/partials/music")
+    assert "not running" in resp.text
+    assert "following scene moods" in resp.text
+    assert "Follow scene" not in resp.text
+
+
+def test_music_set_forwards_mood_and_intensity(client, _reset_music_moods):
+    calls = []
+    state = {"override": {"mood": "silence", "intensity": 0.3}, "overridden": True,
+             "running": True, "status": PLAYING_STATUS}
+    client.mapi.side_effect = _music_side_effect(calls, state)
+    resp = client.post("/music/set", data={"mood": "silence", "intensity": "0.3"})
+    assert resp.status_code == 200
+    post = [c for c in calls if c[0] == "POST"]
+    assert post == [("POST", "/music/roundtable", {"json": {"mood": "silence", "intensity": 0.3}})]
+    assert "silence @ 0.30" in resp.text
+
+
+def test_music_set_error_is_shown(client, _reset_music_moods):
+    state = {"override": None, "overridden": False, "running": True, "status": PLAYING_STATUS}
+    client.mapi.side_effect = _music_side_effect(
+        [], state, mapi_result(ok=False, status_code=503, error="redis unavailable: down"))
+    resp = client.post("/music/set", data={"mood": "tension", "intensity": "0.5"})
+    assert resp.status_code == 200
+    assert "redis unavailable: down" in resp.text
+
+
+def test_music_clear_forwards_delete(client, _reset_music_moods):
+    calls = []
+    state = {"override": None, "overridden": False, "running": True, "status": PLAYING_STATUS}
+    client.mapi.side_effect = _music_side_effect(calls, state)
+    resp = client.post("/music/clear")
+    assert resp.status_code == 200
+    assert ("DELETE", "/music/roundtable", {}) in calls
+    assert "following scene moods" in resp.text
+
+
+def test_music_moods_fall_back_when_message_api_down(client, _reset_music_moods):
+    client.mapi.side_effect = None
+    client.mapi.return_value = mapi_result(ok=False, status_code=0, error="message-api unreachable")
+    resp = client.get("/partials/music")
+    assert resp.status_code == 200
+    assert "joyful_activation" in resp.text  # from MUSIC_MOODS_FALLBACK
+    assert "message-api unreachable" in resp.text

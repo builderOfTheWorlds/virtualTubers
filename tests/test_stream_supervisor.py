@@ -426,3 +426,65 @@ def test_total_video_queue_memory_across_all_workers_is_bounded():
     per_worker = ss.video_thread_queue_size(capture_resolution) * width * height * 4
     assert workers * per_worker <= 8 * 1024 ** 3  # well under the 121 GB host
 
+
+
+# ── background music bed (roundtable only — docs/music_engine.md) ─────────────
+def _cmd(music_source=None, local_preview_url=None, pulse=True, duck=None):
+    with patch("stream_supervisor.pulse_monitor_available", return_value=pulse):
+        return build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+                                use_gpu=False, local_preview_url=local_preview_url,
+                                music_source=music_source, music_duck=duck)
+
+
+def test_build_ffmpeg_cmd_without_music_is_unchanged():
+    assert _cmd() == _cmd(music_source=None)
+    assert "-filter_complex" not in _cmd()
+    assert "music.monitor" not in _cmd()
+
+
+def test_build_ffmpeg_cmd_music_adds_input_and_ducking_graph():
+    cmd = _cmd(music_source="music.monitor")
+    inputs = [cmd[i + 1] for i, a in enumerate(cmd) if a == "-i"]
+    assert inputs == [":99", "vout.monitor", "music.monitor"]
+    graph = cmd[cmd.index("-filter_complex") + 1]
+    assert "sidechaincompress" in graph and "[2:a]" in graph and "[1:a]" in graph
+    assert "normalize=0" in graph
+    maps = [cmd[i + 1] for i, a in enumerate(cmd) if a == "-map"]
+    assert maps == ["0:v:0", "[aout]"]
+
+
+def test_build_ffmpeg_cmd_music_with_tee_maps_mixed_audio():
+    cmd = _cmd(music_source="music.monitor", local_preview_url="rtmp://rtmp-preview:1935/live/rt")
+    maps = [cmd[i + 1] for i, a in enumerate(cmd) if a == "-map"]
+    assert maps == ["0:v:0", "[aout]"]
+    assert "tee" in cmd
+
+
+def test_build_ffmpeg_cmd_music_ignored_when_pulse_down():
+    cmd = _cmd(music_source="music.monitor", pulse=False)
+    assert "music.monitor" not in cmd and "-filter_complex" not in cmd
+
+
+def test_music_filter_graph_applies_duck_config():
+    graph = ss.music_filter_graph({"threshold": 0.05, "ratio": 4, "release_ms": 900, "bogus": 1})
+    assert "threshold=0.05" in graph and "ratio=4.0" in graph and "release=900.0" in graph
+    assert "bogus" not in graph
+
+
+@pytest.mark.parametrize("config,env,sink_present,expected", [
+    ({}, None, True, None),                                      # no music section
+    ({"music": {"enabled": False}}, None, True, None),
+    ({"music": {"enabled": True}}, None, True, "music.monitor"),
+    ({"music": {"enabled": True}}, "0", True, None),             # env kill switch
+    ({"music": {"enabled": False}}, "1", True, "music.monitor"),
+    ({"music": {"enabled": True}}, None, False, None),           # sink missing
+])
+def test_resolve_music_source(monkeypatch, config, env, sink_present, expected):
+    if env is None:
+        monkeypatch.delenv("MUSIC_ENABLED", raising=False)
+    else:
+        monkeypatch.setenv("MUSIC_ENABLED", env)
+    monkeypatch.delenv("MUSIC_SINK", raising=False)
+    with patch("stream_supervisor.pulse_monitor_available", return_value=sink_present):
+        source, _duck = ss.resolve_music_source(config)
+    assert source == expected

@@ -133,6 +133,19 @@ header, or `VOICE_GATE_CONCURRENT` at runtime —
 **[docs/voice_gate.md](docs/voice_gate.md)** (rules, escape hatch, event log
 for reconstructing the on-air sequence).
 
+### Background music (roundtable)
+
+The roundtable streams a live-generated score: one theme per campaign
+(`campaigns/<name>/music/theme.yaml`), reshaped in real time to the
+current scene's emotion (GEMS moods such as sadness, tension and wonder),
+ducked under the voices, and recorded to Postgres. The mood comes from
+scene cues in the episode JSON, and the GM can override it from the
+control panel's Music card. To switch it off, set `music.enabled` in
+`config/workers/roundtable.yaml`, or `MUSIC_ENABLED=0` in `.env`. To
+audition a theme locally, run `cd app && ../.venv/Scripts/python.exe -m
+music.cli render ../campaigns/ashiorid/music/theme.yaml --mood sadness`.
+Details: **[docs/music_engine.md](docs/music_engine.md)**.
+
 ## Project Structure
 
 Top level:

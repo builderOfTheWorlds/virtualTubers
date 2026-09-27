@@ -37,6 +37,14 @@ Sections on the one dashboard page (`GET /`):
   even though they're excluded from the Workers/message-composer sections
   above (which only address the six character-worker IDs valid for
   `operator_message`/`replay_request`).
+- **Music** — GM live control of the roundtable's background score
+  (docs/music_engine.md), auto-refreshed every 5s. Shows whether
+  `music_director.py` is running (its now-playing heartbeat: mood, tempo,
+  mode, theme, source, scene, bar, recording session) and whether a GM
+  override is active or the score is following scene moods. "Hold mood"
+  pins a mood (9 GEMS moods, `neutral`, or `silence` to fade out) at an
+  intensity slider value; "Follow scene" clears the override. Targets
+  `roundtable` only — the one container running the music director.
 
 ## Signature
 
@@ -65,6 +73,10 @@ GET  /replays/{name}/log        -> HTML   # merged container-log + bus-message t
 GET  /partials/theme-workers            -> HTML   # theme table fragment (polled every 15s)
 POST /console-theme/{worker_id}         -> HTML   # form: theme; single updated <tr>
 POST /console-theme/{worker_id}/clear   -> HTML   # revert to config default; single updated <tr>
+
+GET  /partials/music   -> HTML   # music card fragment (polled every 5s)
+POST /music/set        -> HTML   # form: mood, intensity (0..1); re-rendered card
+POST /music/clear      -> HTML   # follow scene moods again; re-rendered card
 ```
 
 Internal:
@@ -98,6 +110,10 @@ async def _mapi_request(method: str, path: str, **kwargs) -> MapiResult
   are valid live-retheme targets even though they're deliberately excluded
   from `WORKER_IDS` for message-composer/replay-play purposes (see
   `panel.py`'s own comment on `WORKER_TO_TUBER_SLOT`).
+- `MUSIC_WORKER_ID` — `roundtable`, the only container running
+  `app/music_director.py`. `MUSIC_MOODS_FALLBACK` mirrors message-api's
+  `GET /music-moods` so the mood picker still renders if that call fails;
+  a successful fetch is cached in-memory for the process lifetime.
 - `KNOWN_LOG_TYPES` — in-memory list of message types shown in the Log
   Filter table, seeded with `status_update` (the one type
   `log_filter_control.py` excludes by default). Growing this list via the
@@ -135,6 +151,9 @@ open http://localhost:8091
 # see docs/message_api.md for the authoritative list.
 curl -X POST http://localhost:8090/workers/coder/disable
 curl -X POST http://localhost:8090/log-filter/status_update/include
+curl -X POST http://localhost:8090/music/roundtable \
+  -H "Content-Type: application/json" -d '{"mood": "tension", "intensity": 0.7}'
+curl -X DELETE http://localhost:8090/music/roundtable
 curl -X POST http://localhost:8090/logs/prune \
   -H "Content-Type: application/json" \
   -d '{"after": "2026-07-01T00:00:00Z"}'
@@ -161,6 +180,10 @@ docker compose up -d control-panel
 - `POST /messages` with a `payload` field that isn't valid JSON, or isn't a
   JSON *object* — rejected **before** calling message-api, with an inline
   error; message-api is never contacted for a client-side-catchable mistake.
+- Music set/clear failures (unknown mood → 400, Redis down → 503, or
+  message-api unreachable) re-render the card with the error in a banner
+  above the current (re-read) state, so the GM sees both that the change
+  didn't land and what is actually playing.
 - Every destructive action (disable a worker, delete a replay, prune logs)
   has an `hx-confirm` prompt in the browser before the request is even
   sent — no server-side undo exists for any of them, same as the endpoints
@@ -169,6 +192,12 @@ docker compose up -d control-panel
   `WWW-Authenticate` header, timing-safe compared via `secrets.compare_digest`.
 
 ## Changelog
+
+- v1.3.0 (2026-09-27) — Music section: GM live control of the roundtable's
+  background score via message-api's new `/music-moods` and
+  `/music/{worker_id}` endpoints (`app/music/control.py`). New template
+  `_music_card.html`; routes `GET /partials/music`, `POST /music/set`,
+  `POST /music/clear`. No image change beyond the new template.
 
 - v1.2.0 (2026-09-27) — Rerun Theater "Play" now shows a live log viewer:
   a new `GET /replays/{name}/log` route merges `message-api`'s

@@ -17,6 +17,11 @@ through the same scene, for as many loops as there is material, with the
 oldest look repeating once the pool is exhausted mid-run (better than
 crashing; --min-loops/--target-words governs how far to push it).
 
+Music: each spine/ambient scene's GEMS `mood:` list is attached as `music`
+to the first event emitted for it, the pack name becomes show.music.theme,
+and every split part re-opens with the mood in force where it starts
+(docs/episode_validator.md "Scene mood cues").
+
 Episode size is capped at episode_validator.MAX_BYTES (8MB); once a build
 would exceed it, this script splits output across multiple sequentially
 named episode files (`<name>_partNN`) rather than producing one file the
@@ -62,6 +67,55 @@ SPEAKER_LINE_RE = re.compile(r"^([A-Za-z][A-Za-z _]{1,24}):\s*(.+)$")
 
 MAX_BYTES_SAFETY = 7 * 1024 * 1024  # leave headroom under the server's 8MB cap
 WORDS_PER_HOUR = 8929  # docs/campaign_content_expansion.md: 168h * 150wpm ~= 1.5M
+
+
+# Background-music cues (docs/episode_validator.md "Scene mood cues"): the
+# scene's GEMS `mood:` list rides along on the FIRST event emitted for that
+# scene, and the pack name becomes show.music.theme, so the roundtable
+# director can publish a music scene cue at each scene start.
+_MUSIC_THEME_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+_GEMS_MOODS = frozenset({
+    "wonder", "transcendence", "tenderness", "nostalgia", "peacefulness",
+    "power", "joyful_activation", "tension", "sadness",
+})
+
+
+def scene_music(scene):
+    """The `music` object for a scene's first event, or None when the scene
+    carries no (valid) mood."""
+    moods = [m for m in (getattr(scene, "mood", None) or []) if m in _GEMS_MOODS]
+    if not moods:
+        return None
+    return {"mood": moods, "scene_id": str(scene.id)}
+
+
+def attach_scene_music(events, start, scene):
+    """Mark events[start] (the scene's first emitted event) with the scene's
+    music cue. No-op when the scene emitted nothing or has no mood."""
+    music = scene_music(scene)
+    if music and len(events) > start:
+        events[start]["music"] = music
+
+
+def show_music_header(pack):
+    """{"music": {"theme": <pack name>}} or None if the name is unsafe."""
+    name = str(getattr(pack, "name", "") or "")
+    if not _MUSIC_THEME_RE.match(name):
+        return None
+    return {"music": {"theme": name}}
+
+
+def carry_music_into_part(part_events, previous_events):
+    """A byte-capped part that starts mid-scene would otherwise open with no
+    mood at all (the director only learns a mood from a `music` event). Copy
+    the most recent cue from everything before this part onto the part's
+    first event, unless it already has its own."""
+    if not part_events or "music" in part_events[0]:
+        return
+    for ev in reversed(previous_events):
+        if "music" in ev:
+            part_events[0]["music"] = dict(ev["music"])
+            return
 
 
 def _text_of(beat):
@@ -164,6 +218,7 @@ def build_events(pack, max_scenes, target_words):
         loop_count += 1
         loop_events = []
         for i, scene in enumerate(spine):
+            start = len(loop_events)
             if scene.enter_narration:
                 loop_events.append({"type": "user_message",
                                      "text": str(scene.enter_narration).strip()})
@@ -180,11 +235,17 @@ def build_events(pack, max_scenes, target_words):
                     loop_events.append(ev)
                 elif kind in ("narration", "action"):
                     loop_events.append({"type": "user_message", "text": text})
+            attach_scene_music(loop_events, start, scene)
 
             if pack.ambient_every and (i + 1) % pack.ambient_every == 0 and ambient_ids:
                 sid = ambient_ids[ambient_pointer % len(ambient_ids)]
                 ambient_pointer += 1
+                start = len(loop_events)
                 loop_events.extend(cyclers[sid].next_events())
+                try:
+                    attach_scene_music(loop_events, start, pack.scene(sid))
+                except Exception:
+                    pass  # ambient id with no scene definition: no cue
 
         events.extend(loop_events)
         total_words += word_count(loop_events)
@@ -224,14 +285,19 @@ def main():
     print(f"  target was {args.target_words:,} words "
           f"({args.target_words / WORDS_PER_HOUR:.1f} hours at target rate)")
 
+    music_header = show_music_header(pack)
+
     def make_episode(name, evs):
-        return {
+        episode = {
             "source": name,
             "project": args.project,
             "session_id": f"campaign-loop-{name}",
             "date": dt.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
             "events": evs,
         }
+        if music_header:
+            episode["show"] = music_header
+        return episode
 
     # Split into byte-capped parts if needed.
     parts = []
@@ -245,6 +311,10 @@ def main():
         current_bytes += ev_bytes
     if current:
         parts.append(current)
+    seen_events = []
+    for part_events in parts:
+        carry_music_into_part(part_events, seen_events)
+        seen_events.extend(part_events)
 
     print(f"  split into {len(parts)} episode file(s) (8MB server cap)")
 

@@ -156,3 +156,48 @@ CREATE TABLE IF NOT EXISTS generation_artifacts (
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     UNIQUE (pack, kind, segment_id)
 );
+
+-- Added 2026-09-27: roundtable background music (app/music/music_store.py,
+-- docs/music_engine.md). Created on demand by music_store.ensure_schema().
+CREATE TABLE IF NOT EXISTS music_themes (
+    name            TEXT PRIMARY KEY,
+    campaign        TEXT NOT NULL DEFAULT '',
+    theme           JSONB NOT NULL,
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS music_sessions (
+    id              BIGSERIAL PRIMARY KEY,
+    worker_id       TEXT NOT NULL DEFAULT '',
+    campaign        TEXT NOT NULL DEFAULT '',
+    episode         TEXT NOT NULL DEFAULT '',
+    theme_name      TEXT NOT NULL,
+    theme           JSONB NOT NULL,
+    engine_version  TEXT NOT NULL,
+    sample_rate     INTEGER NOT NULL,
+    started_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    ended_at        TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_music_sessions_started_at
+    ON music_sessions (started_at DESC);
+
+CREATE TABLE IF NOT EXISTS music_segments (
+    id              BIGSERIAL PRIMARY KEY,
+    session_id      BIGINT NOT NULL REFERENCES music_sessions(id) ON DELETE CASCADE,
+    seq             INTEGER NOT NULL,
+    mood            TEXT NOT NULL,
+    intensity       REAL NOT NULL,
+    source          TEXT NOT NULL DEFAULT '',
+    scene_id        TEXT NOT NULL DEFAULT '',
+    bar_start       INTEGER NOT NULL,
+    bar_count       INTEGER NOT NULL,
+    start_s         DOUBLE PRECISION NOT NULL,
+    duration_s      DOUBLE PRECISION NOT NULL,
+    params          JSONB NOT NULL,
+    notes           JSONB NOT NULL,
+    audio           BYTEA,
+    audio_format    TEXT NOT NULL DEFAULT '',
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (session_id, seq)
+);
+CREATE INDEX IF NOT EXISTS idx_music_segments_mood ON music_segments (mood);

@@ -149,6 +149,59 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/log-shipper/shipper.py:17
 
 ---
 
+## Music tables — `music_themes`, `music_sessions`, `music_segments`
+
+**Owner:** `app/music/music_store.py` (`CREATE_TABLE_SQL`, run by `ensure_schema()` whenever a music session starts — the roundtable's `music_director.py` or `python -m music.cli ... --record`). Full design: `docs/music_engine.md`.
+
+**Why they exist:** every piece of background music the engine generates is recorded — what mood was playing, why (scene cue vs. GM override), the exact notes, and the audio that aired.
+
+`music_themes` — one row per campaign theme, upserted at every session start.
+
+| Column | Type | Constraints | Meaning |
+|---|---|---|---|
+| `name` | TEXT | PRIMARY KEY | Theme name (`theme.yaml` `name`) |
+| `campaign` | TEXT | NOT NULL, DEFAULT `''` | Campaign it belongs to |
+| `theme` | JSONB | NOT NULL | The full theme (motif, progression, tonic, seed) |
+| `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | Last upsert |
+
+`music_sessions` — one row per engine run.
+
+| Column | Type | Constraints | Meaning |
+|---|---|---|---|
+| `id` | BIGSERIAL | PRIMARY KEY | |
+| `worker_id` | TEXT | NOT NULL, DEFAULT `''` | `roundtable`, or `cli` for offline renders |
+| `campaign` / `episode` | TEXT | NOT NULL, DEFAULT `''` | What was on air |
+| `theme_name` | TEXT | NOT NULL | |
+| `theme` | JSONB | NOT NULL | Snapshot of the theme as played (themes get edited) |
+| `engine_version` | TEXT | NOT NULL | `music.engine.ENGINE_VERSION` — with `theme` + segment `params`/`notes`, enough to re-render deterministically |
+| `sample_rate` | INTEGER | NOT NULL | |
+| `started_at` / `ended_at` | TIMESTAMPTZ | | `ended_at` NULL = still running or crashed |
+
+`music_segments` — contiguous bars in one mood (split on every mood/intensity/source change, and at most `--segment-seconds`, default 60 s).
+
+| Column | Type | Constraints | Meaning |
+|---|---|---|---|
+| `id` | BIGSERIAL | PRIMARY KEY | |
+| `session_id` | BIGINT | NOT NULL, FK → `music_sessions(id)` ON DELETE CASCADE | |
+| `seq` | INTEGER | NOT NULL, UNIQUE with `session_id` | Order within the session |
+| `mood` | TEXT | NOT NULL | GEMS mood (or `neutral`) |
+| `intensity` | REAL | NOT NULL | 0..1 |
+| `source` | TEXT | NOT NULL, DEFAULT `''` | `scene`, `gm_override`, `hold`, `cue` (CLI) |
+| `scene_id` | TEXT | NOT NULL, DEFAULT `''` | Scene that requested the mood |
+| `bar_start` / `bar_count` | INTEGER | NOT NULL | Bar range within the session |
+| `start_s` / `duration_s` | DOUBLE PRECISION | NOT NULL | Seconds from session start |
+| `params` | JSONB | NOT NULL | Per-bar resolved musical parameters (tempo, mode, brightness, layer levels, chord, motif flag) |
+| `notes` | JSONB | NOT NULL | Every note played: `layer, midi, beat, beats, vel, t, dur_s, bar` |
+| `audio` | BYTEA | nullable | Rendered audio as aired (96 kbps Opus; measured ≈ 55 MB per hour incl. Ogg overhead) |
+| `audio_format` | TEXT | NOT NULL, DEFAULT `''` | `ogg/opus` or `wav` |
+| `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | |
+
+Indexes: `idx_music_sessions_started_at (started_at DESC)`, `idx_music_segments_mood (mood)`.
+
+Defined in: `docs/sql/02_create_tables.sql`, `app/music/music_store.py` (`CREATE_TABLE_SQL`).
+
+---
+
 ## Keeping this in sync
 
 When adding or changing a table:

@@ -37,6 +37,13 @@ and only then inserts it into Postgres via `app/episode_store.py`. The
 workers read the library straight from that table, so there is no mount and
 no host filesystem access involved in adding a show.
 
+And exposes the `/music` endpoints — **GM live control of the roundtable's
+background score**. `POST /music/{worker_id}` writes a mood override that
+`app/music_director.py` (on the roundtable container) picks up on its next
+bar; `DELETE` drops it so the score goes back to following scene cues; `GET`
+reports the override plus the director's now-playing heartbeat. The Redis
+contract is `MusicControl` in `app/music/control.py` (docs/music_engine.md).
+
 ## Signature
 
 ```python
@@ -79,6 +86,16 @@ MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 @app.get("/replays") def list_replays() -> dict
 @app.get("/replays/{name}") def get_replay(name: str) -> dict
 @app.delete("/replays/{name}") def delete_replay(name: str) -> dict
+
+# GM live music control (app/music/control.py MusicControl; docs/music_engine.md)
+class SetMusicRequest(BaseModel):
+    mood: str                 # 9 GEMS moods, "neutral", or "silence"
+    intensity: float = 0.5    # clamped to 0..1
+
+@app.get("/music-moods") def list_music_moods() -> dict
+@app.get("/music/{worker_id}") def get_music(worker_id: str) -> dict
+@app.post("/music/{worker_id}") def set_music(body: SetMusicRequest, worker_id: str) -> dict
+@app.delete("/music/{worker_id}") def clear_music(worker_id: str) -> dict
 ```
 
 ## Parameters
@@ -108,7 +125,12 @@ query parameters:
 validated against the same `^[A-Za-z0-9._-]{1,128}$` rule the upload path
 applies, so a lookup can never be handed something an upload would refuse.
 
-Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers` and `/log-filter` endpoints). Required for `/logs/prune` **and `/replays`**: `POSTGRES_HOST`/`POSTGRES_PORT` (code default `localhost`/`5432` if unset, but `docker-compose.yml` requires both to be set explicitly in `.env` — e.g. `192.168.2.158`/`5432` for the d2000 deployment), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
+`/music/{worker_id}` takes the id of the container running
+`music_director.py` — today only `roundtable`. `mood` is case/whitespace
+insensitive (`" Silence "` → `silence`); `silence` fades the score out;
+`intensity` is clamped to `0..1`.
+
+Environment variables (required at startup): `KAFKA_BOOTSTRAP_SERVERS`, `KAFKA_TOPIC`. Optional: `REDIS_URL` (default `redis://redis:6379`, used by the `/workers`, `/log-filter`, `/console-theme` and `/music` endpoints). Required for `/logs/prune` **and `/replays`**: `POSTGRES_HOST`/`POSTGRES_PORT` (code default `localhost`/`5432` if unset, but `docker-compose.yml` requires both to be set explicitly in `.env` — e.g. `192.168.2.158`/`5432` for the d2000 deployment), `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
 
 This service also owns the `replay_episodes` table's DDL at runtime: no
 long-lived consumer owns it the way `message-logger` owns `messages`, so
@@ -133,6 +155,10 @@ working, and must heal on its own once the database is back.
 - `DELETE /replays/{name}` — `{"name": str, "deleted": bool}`, HTTP 200. `deleted: false` means the name was already absent (idempotent, not an error).
 - `GET /logs/containers` — `{"logs": [...]}` — rows from `container_logs` (docs/log_shipper.md) filtered to the given `service` name(s), oldest-first, `container_name`/`stream`/`message`/`log_timestamp` per row.
 - `GET /logs/messages` — `{"messages": [...]}` — rows from `messages` (docs/message_logger.md) filtered to the given `worker_id`(s) (matched against either `from` or `to`), oldest-first, `from`/`to`/`type`/`payload`/`timestamp` per row.
+- `GET /music-moods` — `{"moods": [...]}` — the 11 accepted override moods (`MOODS` from `app/music/mood_map.py`, i.e. `neutral` + the 9 GEMS moods, then `silence`).
+- `GET /music/{worker_id}` — `{"worker_id", "override": {"mood", "intensity"} | null, "overridden": bool, "running": bool, "status": {...} | null}`. `override: null` = following scene moods. `status` is the director's now-playing heartbeat (`theme`, `mood`, `intensity`, `source`, `scene_id`, `playing_mood`, `tempo_bpm`, `mode`, `bar`, `recording_session`, `at`); `null`/`running: false` = no music director has published in the last 30s.
+- `POST /music/{worker_id}` — `{"worker_id", "override": {"mood", "intensity"}, "overridden": true}` with the canonical mood and clamped intensity actually written.
+- `DELETE /music/{worker_id}` — `{"worker_id", "override": null, "overridden": false}` (idempotent).
 - Malformed/missing required fields — HTTP 422 (FastAPI/Pydantic validation).
 
 ## Dependencies
@@ -142,6 +168,7 @@ working, and must heal on its own once the database is back.
 - `log_filter_control.LogFilterControl` (`app/log_filter_control.py`, copied into this service's image; docs/log_filter_control.md)
 - `log_prune.prune_logs` (`app/log_prune.py`, copied into this service's image; docs/log_shipper.md)
 - `episode_store` and `episode_validator` (`app/episode_store.py`, `app/episode_validator.py`; docs/episode_store.md, docs/episode_validator.md). The validator's dry-run stage renders the episode, so the image also copies in `app/replay.py`, `app/revoice.py`, `app/session_log_parser.py`, `app/agent_state.py` and `app/audio_player.py` — all stdlib-only at import time, which is what makes running the renderer inside this service viable. No new pip dependency.
+- `music.control.MusicControl` and `music.mood_map.MOODS` (`app/music/`, the whole package copied into this service's image as `/app/music`; docs/music_engine.md). Only `control.py` and `mood_map.py` are imported, both stdlib-only; `music/__init__.py` loads `engine`/`theme` lazily, so **numpy is not a message-api dependency** (`tests/test_message_api.py::test_music_control_import_does_not_pull_numpy` guards this).
 - `fastapi`, `uvicorn`, `pydantic`, `redis`, `psycopg2`
 
 ## Usage Examples
@@ -210,6 +237,17 @@ curl -X POST "http://localhost:8090/replays?overwrite=true" \
 curl -X DELETE http://localhost:8090/replays/sample
 ```
 
+```bash
+# GM: hold the roundtable score on tension, fade it out, then hand control
+# back to the scene cues. Check what's playing at any point.
+curl -X POST http://localhost:8090/music/roundtable \
+  -H "Content-Type: application/json" -d '{"mood": "tension", "intensity": 0.8}'
+curl -X POST http://localhost:8090/music/roundtable \
+  -H "Content-Type: application/json" -d '{"mood": "silence"}'
+curl -X DELETE http://localhost:8090/music/roundtable
+curl http://localhost:8090/music/roundtable
+```
+
 ## Error Handling
 
 - Missing `to` field — HTTP 422 with a Pydantic validation error body.
@@ -227,6 +265,9 @@ curl -X DELETE http://localhost:8090/replays/sample
 - Any `/replays` call when `POSTGRES_*` isn't configured for this service — HTTP 503 before anything else runs.
 - Any `/replays` call when Postgres is unreachable (`psycopg2.OperationalError`) — HTTP 503, mirroring `/logs/prune`. Nothing was written.
 - `GET /replays/{name}` for an unknown episode — HTTP 404.
+- `POST /music/{worker_id}` with an unknown mood — HTTP 400 listing the valid moods; nothing written.
+- Redis unreachable when writing/clearing a music override — HTTP 503; the change did not take effect.
+- Redis unreachable when reading music state — reads fail open: `GET /music/{worker_id}` reports `override: null, running: false` rather than erroring.
 - `GET`/`DELETE /replays/{name}` with a name containing path separators or other disallowed characters — HTTP 400, before any query runs.
 
 ## Changelog
@@ -238,3 +279,4 @@ curl -X DELETE http://localhost:8090/replays/sample
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
 - v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.
 - v1.5.0 (2026-09-27) — Added `GET /logs/containers` and `GET /logs/messages`, backed by the new `app/replay_logs.py` (docs/replay_logs.md). Read-only tails of `container_logs` (log-shipper) and `messages` (message-logger) scoped to a caller-given `service`/`worker_id` list plus an optional `since` timestamp — the source data for the control-panel's Rerun Theater "Play" log viewer, which previously had no way to show whether a replay_request actually landed or what a worker printed while preparing narration.
+- v1.6.0 (2026-09-27) — Added GM live music control: `GET /music-moods`, `GET`/`POST`/`DELETE /music/{worker_id}`, backed by `app/music/control.py` `MusicControl` (Redis override key `music:{worker_id}:override`, director heartbeat `music:{worker_id}:status`). The image now copies `app/music/` (no new pip dependency — numpy is not imported). Needs a `message-api` image rebuild + redeploy.

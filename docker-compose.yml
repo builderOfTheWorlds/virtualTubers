@@ -622,12 +622,18 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # Background music (config/workers/roundtable.yaml `music:`). Set
+      # MUSIC_ENABLED=0 in .env to switch it off without editing config.
+      MUSIC_ENABLED: ${MUSIC_ENABLED:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/roundtable.yaml:/config/worker.yaml:ro
       # CRITICAL: the director does ALL the TTS for every speaker in every show.
       - ${REPO_ROOT:-.}/voices:/data/voices:ro
       # The symbolic voice registry (§7.2) — resolves show-header voice names.
       - ${REPO_ROOT:-.}/config/voices.yaml:/config/voices.yaml:ro
+      # Background music themes: app/music_director.py loads
+      # /data/campaigns/<campaign>/music/theme.yaml (docs/music_engine.md).
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
       - world-state:/data/world-state
     ipc: host
     shm_size: 256mb

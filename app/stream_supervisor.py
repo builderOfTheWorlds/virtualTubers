@@ -153,9 +153,50 @@ def nvenc_available():
     return _nvenc_available_cache
 
 
+def music_filter_graph(duck=None, music_gain=1.0):
+    """filter_complex that mixes the music bed (input 2) under the voices
+    (input 1), ducked by a sidechain compressor keyed on the voices.
+
+    Voices are split: one copy goes straight to the mix untouched, the other
+    is only the compressor's KEY. So speech is never altered; the music
+    drops by `ratio` whenever the voice level crosses `threshold`, and
+    recovers over `release_ms` after the line ends. amix normalize=0 keeps
+    the voices at exactly their current level (the default normalize would
+    halve them just because a second input exists).
+    """
+    d = {"threshold": 0.02, "ratio": 8, "attack_ms": 20, "release_ms": 600}
+    d.update({k: v for k, v in (duck or {}).items() if k in d})
+    return (
+        "[1:a]aresample=async=1,asplit=2[voice][key];"
+        f"[2:a]aresample=async=1,volume={float(music_gain):.3f}[bed];"
+        f"[bed][key]sidechaincompress=threshold={float(d['threshold'])}"
+        f":ratio={float(d['ratio'])}:attack={float(d['attack_ms'])}"
+        f":release={float(d['release_ms'])}[ducked];"
+        "[voice][ducked]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[aout]"
+    )
+
+
+def resolve_music_source(config, sink="music"):
+    """(pulse_source, duck_config) when this worker has background music
+    enabled (`music.enabled`, overridable by MUSIC_ENABLED env — same rule
+    as music_director.music_config) AND the music sink actually exists;
+    (None, None) otherwise, which leaves the ffmpeg command unchanged."""
+    section = dict((config or {}).get("music") or {})
+    env = os.environ.get("MUSIC_ENABLED")
+    enabled = (env.strip().lower() in ("1", "true", "yes", "on")
+               if env is not None and env.strip() else bool(section.get("enabled")))
+    if not enabled:
+        return None, None
+    sink = os.environ.get("MUSIC_SINK") or section.get("sink") or sink
+    if not pulse_monitor_available(sink):
+        log(f"WARNING: music enabled but Pulse source {sink}.monitor missing — streaming voices only")
+        return None, None
+    return f"{sink}.monitor", section.get("duck") or {}
+
+
 def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
                      capture_resolution=None, use_gpu=None,
-                     local_preview_url=None):
+                     local_preview_url=None, music_source=None, music_duck=None):
     """Build the ffmpeg broadcaster command.
 
     Contract E (docs/tuber_base_layout_plan.md): `capture_resolution` is what
@@ -201,6 +242,13 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     than trying to parameterize one shared list — same -b:v/-maxrate/
     -bufsize/-g target either way, so stream bitrate and GOP behavior
     are unchanged, only which silicon does the work.
+    `music_source`: None (default) keeps the command byte-identical to
+    before background music existed. When set (e.g. "music.monitor", only
+    on the roundtable — see main()), that Pulse source becomes input 2 and
+    a filter_complex (music_filter_graph) ducks it under the voices; the
+    mixed `[aout]` label replaces input 1's audio in every -map. Ignored
+    when Pulse itself is down (the anullsrc fallback has nothing to duck).
+    `music_duck` is the worker config's `music.duck` dict.
     """
     if capture_resolution is None:
         capture_resolution = resolution
@@ -211,9 +259,15 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     # into) when Pulse is actually up; otherwise a synthesized silent track
     # so the flv/aac muxer still gets an audio stream and the broadcast
     # itself never fails over what should only ever mute the narration.
+    music_args, audio_map = [], "1:a:0"
     if pulse_monitor_available():
         audio_input = ["-thread_queue_size", str(AUDIO_QUEUE_PACKETS),
                        "-f", "pulse", "-i", "vout.monitor"]
+        if music_source:
+            music_args = ["-thread_queue_size", str(AUDIO_QUEUE_PACKETS),
+                          "-f", "pulse", "-i", music_source,
+                          "-filter_complex", music_filter_graph(music_duck)]
+            audio_map = "[aout]"
     else:
         log("WARNING: PulseAudio vout.monitor not found — streaming silent audio")
         audio_input = ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
@@ -316,10 +370,15 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
         # on gx10, ffmpeg only resolves stream-type-only map specs within a
         # SINGLE named input, not across every -i.
         output_args = [
-            "-map", "0:v:0", "-map", "1:a:0",
+            "-map", "0:v:0", "-map", audio_map,
             "-f", "tee",
             tee_spec,
         ]
+    elif music_args:
+        # A labelled filter_complex output must be mapped explicitly (an
+        # unmapped [aout] is an "unconnected output" error), and once any
+        # -map is given ffmpeg stops auto-selecting video too.
+        output_args = ["-map", "0:v:0", "-map", audio_map, "-f", "flv", primary_output]
     else:
         output_args = ["-f", "flv", primary_output]
 
@@ -331,6 +390,7 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
         "-framerate", "30",
         "-i", display,
         *audio_input,
+        *music_args,
         *scale_filter,
         *encode_args,
         "-c:a", "aac",
@@ -397,11 +457,15 @@ def main():
     bus_config = config.get("message_bus", {})
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
     control = WorkerControl.from_config(config)
+    music_source, music_duck = resolve_music_source(config)
     ffmpeg_cmd = build_ffmpeg_cmd(
         args.rtmp_url, args.stream_key, args.resolution, args.display,
         capture_resolution=capture_resolution,
         local_preview_url=args.local_preview_url,
+        music_source=music_source, music_duck=music_duck,
     )
+    if music_source:
+        log(f"{worker_id} mixing background music from {music_source} (ducked under voices)")
 
     log(redact_stream_key(f"{worker_id} supervising ffmpeg -> {args.rtmp_url}/{args.stream_key}"))
     if args.local_preview_url:

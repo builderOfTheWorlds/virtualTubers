@@ -241,6 +241,36 @@ stream:
   video_bitrate_kbps: 3000
   fps: 30
 
+# ── Background music (docs/music_engine.md) ───────────────────────────────────
+# The roundtable is the ONLY worker with a score. startup.sh §3.5/§7.7 creates
+# the `music` Pulse sink and runs app/music_director.py when enabled; the
+# broadcaster then mixes it under the voices, ducked while anyone speaks.
+# MUSIC_ENABLED=0 in the environment turns it off without editing this file.
+music:
+  enabled: true
+  # Campaign theme played until a scene cue names another campaign
+  # (<themes_dir>/<name>/music/theme.yaml — campaigns/ is mounted there).
+  theme_name: ashiorid
+  themes_dir: /data/campaigns
+  initial_mood: peacefulness
+  # 0..1 music level BEFORE ducking; voices are always on top.
+  volume: 0.8
+  # Seconds a scene mood holds before another scene cue may replace it
+  # (GM overrides always apply immediately).
+  min_dwell_s: 20
+  transition_bars: 2
+  # Record everything played to Postgres (music_sessions / music_segments).
+  record: true
+  segment_seconds: 60
+  audio_format: opus
+  # Sidechain ducking applied by stream_supervisor's ffmpeg: how hard the
+  # music drops under speech. threshold is the voice level that triggers it.
+  duck:
+    threshold: 0.02
+    ratio: 8
+    attack_ms: 20
+    release_ms: 600
+
 world_state:
   backend: file
   path: "/data/world-state"

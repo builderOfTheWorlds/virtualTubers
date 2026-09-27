@@ -105,6 +105,31 @@ scene-by-scene as `replay_cue` messages authorize each one. Full protocol
 reference, message schemas, timeouts, and deployment requirements:
 [docs/duet_replay.md](duet_replay.md).
 
+### Scene mood cues (background music, director only)
+
+An episode may carry `music` cues on events and a `show.music.theme` header
+(format: docs/episode_validator.md "Scene mood cues"; emitted by the
+campaign episode builders from each scene's GEMS `mood:` list).
+`perform_director_request` turns them into background-music scene cues:
+
+- Before performing, `_scene_music_cues(script, show)` computes, per voiced
+  scene index, the `music` of the **first event in that scene** that has
+  one (else `None`). Scenes from `revoice.prepare_show` and
+  `_rebuild_scenes_from_rows` (narration reuse) both come from
+  `plan_scenes` and keep their `events`; if any scene lacks them the list
+  is re-planned from `script["events"]` (same deterministic indices the
+  follower cache rebuild relies on), and a count mismatch yields no cues.
+- In `on_scene_start(index)` — the per-scene master clock, after follower
+  and tile cues — a scene with a cue calls
+  `music.control.write_scene_cue(mood, scene_id=…, intensity=… (default
+  0.5), theme=show.music.theme)`, passing `path=$MUSIC_CUE_PATH` when that
+  env var is set (default `/tmp/music/scene_cue.json`). Scenes without a
+  cue write nothing: carrying the mood forward is the music director's job.
+- Entirely best-effort: the `music.control` import is lazy and guarded (the
+  package imports numpy), and any import/write failure is logged to stderr
+  and never affects the show. Followers and the solo path do not publish
+  cues — only the roundtable director runs the music director.
+
 ## Signature
 
 ```python
@@ -179,6 +204,9 @@ need different words on the idle screen — see "Idle screen" below.
   (`_resolve_replay_cue_file`/`_resolve_replay_ready_file`). Same
   env-override + atomic-write convention as `REPLAY_REQUEST_FILE`. See
   docs/duet_replay.md.
+- `MUSIC_CUE_PATH` (env, optional): where the **director** writes
+  background-music scene cues (see "Scene mood cues"); unset means
+  `music.control`'s default `/tmp/music/scene_cue.json`.
 - `REPLAY_READY_TIMEOUT_S` (env, default `60.0`): how long a duet
   **director** waits for every invited follower's `replay_ready` before
   refusing the airing (`reason: "ready_timeout"`). Not read by followers.
@@ -339,6 +367,12 @@ docs/episode_validator.md for what an upload is checked against.
   a failed `replay_ready` publish.
 
 ## Changelog
+
+- **v2.1.0** (2026-09-27): Scene mood cues — the duet/roundtable director
+  publishes a `music.control.write_scene_cue` at the start of every scene
+  whose events carry a `music` cue, with `show.music.theme` as the theme
+  (`_scene_music_cues`, `_show_music_theme`, `_publish_music_cue`;
+  `MUSIC_CUE_PATH` env). Best-effort, never affects the show.
 
 - **v2.0.0** (2026-08-16): **The episode library moved from the filesystem
   into Postgres** (docs/episode_store.md). `resolve_episode(episode)` now

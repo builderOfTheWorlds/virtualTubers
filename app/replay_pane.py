@@ -596,6 +596,86 @@ def _write_tile_end(relay_dir, slots, airing_id):
             {"airing_id": airing_id, "type": "end"}, "end")
 
 
+# ── background-music scene cues (docs/replay_pane.md "Scene mood cues") ──────
+# An episode event may carry `music: {mood, intensity?, scene_id?}` (validated
+# by episode_validator._check_music) and the header may carry
+# `show.music.theme`. The DIRECTOR — the per-scene master clock — publishes
+# the cue for a scene at that scene's start through music.control's
+# write_scene_cue; the standalone music_director (roundtable container) polls
+# the file. Carry-forward between cues is the music director's job, so only
+# scenes that carry a cue write anything. Every step is best-effort: music
+# is decoration, and nothing here may ever affect the show.
+MUSIC_CUE_PATH_ENV = "MUSIC_CUE_PATH"
+
+
+def _scene_music_cues(script, show):
+    """Per-scene-index music cue: the `music` dict of the first event in
+    that scene that has one, else None. Scene dicts from revoice.plan_scenes
+    keep their 'events' list through prepare_show and
+    _rebuild_scenes_from_rows; if a scene ever arrives without it, re-plan
+    from the script (plan_scenes is deterministic, so indices line up — the
+    same property the follower's cache rebuild relies on). Never raises."""
+    try:
+        scenes = show or []
+        if any("events" not in scene for scene in scenes):
+            from revoice import plan_scenes
+            planned = plan_scenes((script or {}).get("events", []))
+            if len(planned) != len(scenes):
+                print(f"[replay_pane] music cues skipped: {len(planned)} planned "
+                      f"scenes vs {len(scenes)} in show", file=sys.stderr)
+                return [None] * len(scenes)
+            scenes = planned
+        cues = []
+        for scene in scenes:
+            cue = None
+            for event in scene.get("events") or []:
+                music = event.get("music") if isinstance(event, dict) else None
+                if isinstance(music, dict) and music.get("mood"):
+                    cue = music
+                    break
+            cues.append(cue)
+        return cues
+    except Exception as exc:  # noqa: BLE001 — music must never break a show
+        print(f"[replay_pane] music cue planning failed: {exc}", file=sys.stderr)
+        return [None] * len(show or [])
+
+
+def _show_music_theme(script):
+    """show.music.theme, or None. Tolerant of any malformed header."""
+    show = (script or {}).get("show") if isinstance(script, dict) else None
+    music = show.get("music") if isinstance(show, dict) else None
+    theme = music.get("theme") if isinstance(music, dict) else None
+    return str(theme) if theme else None
+
+
+def _publish_music_cue(cue, theme, index):
+    """Write one scene cue via music.control.write_scene_cue. The import is
+    lazy and guarded: music/__init__ pulls numpy in, and a worker image
+    without it must still air the show (silently, musically). Never raises;
+    returns True only when the cue file was written."""
+    try:
+        from music.control import write_scene_cue
+    except Exception as exc:  # noqa: BLE001
+        print(f"[replay_pane] music cue unavailable (import failed: {exc})", file=sys.stderr)
+        return False
+    try:
+        intensity = cue.get("intensity")
+        intensity = 0.5 if intensity is None else float(intensity)
+        kwargs = {"scene_id": str(cue.get("scene_id") or ""), "intensity": intensity,
+                  "theme": theme}
+        path = os.environ.get(MUSIC_CUE_PATH_ENV)
+        if path:
+            kwargs["path"] = path
+        ok = bool(write_scene_cue(cue["mood"], **kwargs))
+        print(f"[replay_pane] music cue scene={index} mood={cue['mood']} "
+              f"intensity={intensity:.2f} scene_id={kwargs['scene_id'] or '-'} "
+              f"theme={theme or '-'} written={ok}")
+        return ok
+    except Exception as exc:  # noqa: BLE001
+        print(f"[replay_pane] music cue write failed scene={index}: {exc}", file=sys.stderr)
+        return False
+
+
 def perform_director_request(request, worker_name, state_path, self_id,
                              default_speed=1.0, config=None):
     """Duet director path (docs/duet_replay.md): prepare + persist the full
@@ -838,6 +918,11 @@ def perform_director_request(request, worker_name, state_path, self_id,
             return refuse("timed out waiting for duet followers to become ready",
                           reason="ready_timeout", airing_id=airing_id)
 
+        # Background-music cues (docs/replay_pane.md "Scene mood cues"),
+        # computed once up front so the per-scene hook stays O(1).
+        music_cues = _scene_music_cues(script, show)
+        music_theme = _show_music_theme(script)
+
         def on_scene_start(index):
             for follower in followers:
                 _safe_send(producer, build_message(self_id, follower, "replay_cue",
@@ -847,6 +932,9 @@ def perform_director_request(request, worker_name, state_path, self_id,
             # more than one scene boundary (WP-6 §6 risk row).
             if local_tiles:
                 _write_tile_cues(tiles["relay_dir"], local_tiles, airing_id, index)
+            # Last, so a music failure can't delay a cue; itself never raises.
+            if 0 <= index < len(music_cues) and music_cues[index]:
+                _publish_music_cue(music_cues[index], music_theme, index)
 
         gate, line_gap_s = build_voice_gate(script, config, tag=f"director:{self_id}")
         performer = Performer(

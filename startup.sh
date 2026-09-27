@@ -137,6 +137,22 @@ else
     log "module-suspend-on-idle not loaded (nothing to disable) — continuing"
 fi
 
+# ── 3.5 Background-music sink (roundtable only — docs/music_engine.md) ─────────
+# A SECOND null sink, separate from vout, so the broadcaster can duck the
+# music under the voices (stream_supervisor.py music_filter_graph) instead of
+# receiving one pre-summed signal. Gated on the worker config's music.enabled
+# (MUSIC_ENABLED env overrides); every other worker never creates it, so its
+# ffmpeg command stays byte-identical.
+MUSIC_ENABLED_RESOLVED="$(python3 /app/music_director.py --config "${CONFIG_PATH}" --print-enabled 2>/dev/null || echo 0)"
+if [ "${MUSIC_ENABLED_RESOLVED}" = "1" ]; then
+    if MUSIC_SINK_OUTPUT=$(pactl load-module module-null-sink sink_name=music sink_properties=device.description=MusicBed 2>&1); then
+        log "PulseAudio null sink 'music' ready (module id ${MUSIC_SINK_OUTPUT})"
+    else
+        log "WARNING: could not create PulseAudio null sink 'music': ${MUSIC_SINK_OUTPUT} — stream will carry voices only"
+        MUSIC_ENABLED_RESOLVED=0
+    fi
+fi
+
 # ── 4+5. Tmux session + panes (config-driven) ─────────────────────────────────
 # The layout engine resolves config/layouts/<preset>.yaml + config/panels/*.yaml,
 # writes each pane's resolved config to /tmp/panes/<id>.yaml, and emits the tmux
@@ -321,6 +337,24 @@ log "Starting console theme watcher (headless — see startup.sh §7.6)"
 python3 /app/theme_watcher.py --config "${CONFIG_PATH}" --session "${SESSION}" &
 THEME_WATCHER_PID=$!
 
+# ── 7.7 Background music director (roundtable only — docs/music_engine.md) ────
+# Standalone: it only WATCHES the current mood (scene cues the roundtable
+# director writes to /tmp/music/scene_cue.json, GM overrides in Redis) and
+# plays the campaign theme in that mood into the `music` sink created in
+# §3.5, recording everything to Postgres. Restart-on-crash like agent.py —
+# a music bug must never be able to leave the show silent for good, and it
+# can never take anything else down with it.
+if [ "${MUSIC_ENABLED_RESOLVED}" = "1" ]; then
+    log "Starting background music director (restart-on-crash)"
+    ( while true; do
+        python3 /app/music_director.py --config "${CONFIG_PATH}"
+        code=$?
+        log "music_director.py exited (code ${code}) — restarting in 5s"
+        sleep 5
+    done ) &
+    MUSIC_DIRECTOR_PID=$!
+fi
+
 # ── 8. Stream supervisor ───────────────────────────────────────────────────────
 # Runs ffmpeg as a child process it starts/stops based on this worker's on/off
 # flag (app/worker_control.py, toggled via message-api's /workers/{id}/enable|
@@ -348,5 +382,6 @@ log "Stream supervisor exited. Cleaning up."
 # it explicitly too, since killing the wrapper alone leaves its current
 # python3 child running (and about to be respawned by the wrapper's own
 # loop right as the container is going down).
-kill $AGENT_PID $THEME_WATCHER_PID $XTERM_PID $XVFB_PID 2>/dev/null
+kill $AGENT_PID $THEME_WATCHER_PID ${MUSIC_DIRECTOR_PID:-} $XTERM_PID $XVFB_PID 2>/dev/null
 pkill -f '/app/agent.py' 2>/dev/null
+pkill -f '/app/music_director.py' 2>/dev/null

@@ -25,7 +25,12 @@ a live Twitch stream" ever checked the file. Five stages now do:
                    believed the dry run performed — _dry_run never imports
                    tts_client, so a typo'd voice used to reach air and kill
                    the show on EVERY channel.
-  5. dry run     — actually render the whole episode through replay.Performer
+  5. music cues  — the optional per-event `music` object and the optional
+                   `show.music` header (docs/episode_validator.md "Scene mood
+                   cues"): GEMS mood names, intensity in 0..1, a safe
+                   scene_id / theme name. The roundtable director turns these
+                   into background-music scene cues at air time.
+  6. dry run     — actually render the whole episode through replay.Performer
                    into a throwaway buffer with pacing disabled, and group it
                    with revoice.plan_scenes. This is the "won't have issues
                    replaying it" check: an episode that crashes the renderer
@@ -86,6 +91,21 @@ ROSTER_SIZE = 8
 # references the SLOT, and the persona name is display data only.
 SLOT_RE = re.compile(r"^tuber_([0-9]+)$")
 
+# GEMS mood vocabulary a `music` cue may name. Deliberately a local copy of
+# campaign.pack.MOODS (== the 9 non-neutral music.mood_map.MOODS) rather than
+# an import: this module runs inside message-api, and importing the music
+# package pulls numpy in through music/__init__ -> engine. A test pins the
+# three sets equal so they cannot drift.
+GEMS_MOODS = frozenset({
+    "wonder", "transcendence", "tenderness", "nostalgia", "peacefulness",
+    "power", "joyful_activation", "tension", "sadness",
+})
+
+# Theme names become a directory lookup on the director
+# (<themes_dir>/<theme>/music/theme.yaml) — same pattern music_director's
+# resolve_theme_path enforces, checked here so a bad one never reaches air.
+MUSIC_THEME_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+MUSIC_SCENE_ID_MAX = 128
 
 
 class EpisodeInvalid(ValueError):
@@ -184,6 +204,14 @@ def _check_show(script):
         raise EpisodeInvalid(
             f"'show' must be an object, got {type(show).__name__} — see the "
             f"show header format in roundtable_stream_design.md §7.1")
+
+    # A music-only header ({"music": {...}} and nothing else) casts nobody:
+    # campaign builders emit it to name the music theme without having any
+    # slot casting to declare. It is validated by _check_music and otherwise
+    # treated exactly like an episode with no 'show' block (no slot checks,
+    # no speaker checks). Any OTHER key still requires 'slots', unchanged.
+    if set(show) == {"music"}:
+        return
 
     slots = show.get("slots")
     if slots is None:
@@ -297,6 +325,78 @@ def _check_show(script):
                     f"valid range 0..60 — 0 means back-to-back lines")
 
 
+def _check_music_mood(mood, where):
+    """A cue mood: one GEMS name or a non-empty list of them."""
+    moods = [mood] if isinstance(mood, str) else mood
+    if not isinstance(moods, list) or not moods:
+        raise EpisodeInvalid(
+            f"{where}.mood must be a GEMS mood name or a non-empty list of "
+            f"them, got {type(mood).__name__}")
+    for value in moods:
+        if not isinstance(value, str) or value not in GEMS_MOODS:
+            shown = value if isinstance(value, str) else type(value).__name__
+            raise EpisodeInvalid(
+                f"{where}.mood names {shown!r}, which is not a GEMS mood — "
+                f"expected one of {', '.join(sorted(GEMS_MOODS))}")
+
+
+def _check_music(script):
+    """Static validation of background-music cues (docs/episode_validator.md
+    "Scene mood cues").
+
+      * event.music = {"mood": str | [str], "intensity"?: 0..1,
+                       "scene_id"?: str} — "from this event on, the music is
+        this mood". Optional on any event.
+      * show.music  = {"theme": "<campaign name>"} — which campaign theme the
+        director plays. Optional.
+
+    Both are optional and additive: an episode without them is untouched.
+    Mood and theme names are vocabulary, not secrets, so they are echoed.
+    """
+    show = script.get("show")
+    if isinstance(show, dict) and "music" in show:
+        music = show["music"]
+        if not isinstance(music, dict):
+            raise EpisodeInvalid(
+                f"'show.music' must be an object like {{\"theme\": \"ashiorid\"}}, "
+                f"got {type(music).__name__}")
+        theme = music.get("theme")
+        if theme is not None and (not isinstance(theme, str)
+                                  or not MUSIC_THEME_RE.match(theme)):
+            raise EpisodeInvalid(
+                "'show.music.theme' must be 1-64 characters of letters, digits, "
+                "dash or underscore (the campaign name, e.g. 'ashiorid')")
+
+    for index, event in enumerate(script.get("events") or []):
+        if not isinstance(event, dict) or "music" not in event:
+            continue
+        music = event["music"]
+        where = f"event {index} music"
+        if not isinstance(music, dict):
+            raise EpisodeInvalid(
+                f"{where} must be an object like {{\"mood\": [\"tension\"]}}, "
+                f"got {type(music).__name__}")
+        if "mood" not in music:
+            raise EpisodeInvalid(f"{where} is missing required field 'mood'")
+        _check_music_mood(music["mood"], where)
+        intensity = music.get("intensity")
+        if intensity is not None:
+            if isinstance(intensity, bool) or not isinstance(intensity, (int, float)):
+                raise EpisodeInvalid(
+                    f"{where}.intensity must be a number from 0 to 1, got "
+                    f"{type(intensity).__name__}")
+            if not (0.0 <= float(intensity) <= 1.0):
+                raise EpisodeInvalid(
+                    f"{where}.intensity is {intensity}, outside the valid "
+                    f"range 0..1")
+        scene_id = music.get("scene_id")
+        if scene_id is not None and (not isinstance(scene_id, str)
+                                     or len(scene_id) > MUSIC_SCENE_ID_MAX):
+            raise EpisodeInvalid(
+                f"{where}.scene_id must be a string of at most "
+                f"{MUSIC_SCENE_ID_MAX} characters")
+
+
 def validate_episode(script, name=None):
     """Validate an uploaded episode end to end.
 
@@ -320,6 +420,8 @@ def validate_episode(script, name=None):
             "scripts/build_replay_library.py so the parser's redaction runs.")
 
     _check_show(script)
+
+    _check_music(script)
 
     _dry_run(script)
 

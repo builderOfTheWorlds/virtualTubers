@@ -168,6 +168,18 @@ THEME_WORKER_IDS = WORKER_IDS + ["tuber_0", ROUNDTABLE_WORKER_ID]
 # so there's no reason to re-fetch all 1247 names on every page load.
 _THEME_NAMES_CACHE: Optional[list] = None
 
+# ── GM live music control (app/music/control.py, message-api's /music
+#    endpoints) ──────────────────────────────────────────────────────────
+# Only the roundtable container runs app/music_director.py, so the Music
+# card targets it alone. The mood list is fetched from GET /music-moods;
+# this fallback keeps the form usable (and identical) if that call fails.
+MUSIC_WORKER_ID = ROUNDTABLE_WORKER_ID
+MUSIC_MOODS_FALLBACK = [
+    "neutral", "wonder", "transcendence", "tenderness", "nostalgia",
+    "peacefulness", "power", "joyful_activation", "tension", "sadness", "silence",
+]
+_MUSIC_MOODS_CACHE: Optional[list] = None
+
 # In-memory only (module-level, resets on restart) — message-api has no
 # "list filtered types" endpoint either, so the panel just tracks whichever
 # types an operator has looked at/added this process's lifetime, seeded with
@@ -287,6 +299,44 @@ async def _worker_theme_status(worker_id: str) -> dict:
     return {"id": worker_id, "theme": None, "overridden": False, "error": result.error}
 
 
+async def _music_moods() -> list:
+    global _MUSIC_MOODS_CACHE
+    if _MUSIC_MOODS_CACHE is not None:
+        return _MUSIC_MOODS_CACHE
+    result = await _mapi_request("GET", "/music-moods")
+    if result.ok and result.data.get("moods"):
+        _MUSIC_MOODS_CACHE = result.data["moods"]
+        return _MUSIC_MOODS_CACHE
+    log.debug("music moods fetch failed, using fallback error=%s", result.error)
+    return MUSIC_MOODS_FALLBACK
+
+
+async def _music_state(worker_id: str = MUSIC_WORKER_ID) -> dict:
+    """Template context for _music_card.html: override + now-playing."""
+    result = await _mapi_request("GET", f"/music/{worker_id}")
+    if result.ok:
+        return {
+            "id": worker_id,
+            "override": result.data.get("override"),
+            "overridden": bool(result.data.get("overridden")),
+            "running": bool(result.data.get("running")),
+            "status": result.data.get("status") or {},
+            "error": None,
+        }
+    return {"id": worker_id, "override": None, "overridden": False,
+            "running": False, "status": {}, "error": result.error}
+
+
+async def _render_music_card(request: Request, error: Optional[str] = None):
+    music = await _music_state()
+    if error:
+        # The write failed — show it, even if the follow-up read succeeded.
+        music["error"] = error
+    return templates.TemplateResponse(request, "_music_card.html", {
+        "music": music, "music_moods": await _music_moods(),
+    })
+
+
 @app.get("/healthz")
 def healthz():
     return {"status": "ok"}
@@ -300,6 +350,8 @@ async def dashboard(request: Request):
     replays = replays_result.data.get("episodes", []) if replays_result.ok else []
     themes = await _theme_names()
     theme_workers = [await _worker_theme_status(w) for w in THEME_WORKER_IDS]
+    music = await _music_state()
+    music_moods = await _music_moods()
     return templates.TemplateResponse(request, "base.html", {
         "message_api_url": MESSAGE_API_URL,
         "campaign_manager_url": _campaign_manager_public_url(request),
@@ -314,6 +366,8 @@ async def dashboard(request: Request):
         "themes": themes,
         "themes_error": None if themes else "message-api unreachable or returned no themes",
         "theme_workers": theme_workers,
+        "music": music,
+        "music_moods": music_moods,
     })
 
 
@@ -376,6 +430,29 @@ async def clear_console_theme(request: Request, worker_id: str):
     else:
         worker = {"id": worker_id, "theme": None, "overridden": False, "error": result.error}
     return templates.TemplateResponse(request, "_theme_worker_row.html", {"worker": worker, "themes": themes})
+
+
+# ── GM live music ────────────────────────────────────────────────────────
+@app.get("/partials/music", response_class=HTMLResponse)
+async def partial_music(request: Request):
+    return await _render_music_card(request)
+
+
+@app.post("/music/set", response_class=HTMLResponse)
+async def set_music(request: Request, mood: str = Form(...), intensity: float = Form(0.5)):
+    result = await _mapi_request("POST", f"/music/{MUSIC_WORKER_ID}",
+                                 json={"mood": mood, "intensity": intensity})
+    if result.ok:
+        log.info("music override set via panel mood=%s intensity=%s", mood, intensity)
+    return await _render_music_card(request, None if result.ok else result.error)
+
+
+@app.post("/music/clear", response_class=HTMLResponse)
+async def clear_music(request: Request):
+    result = await _mapi_request("DELETE", f"/music/{MUSIC_WORKER_ID}")
+    if result.ok:
+        log.info("music override cleared via panel")
+    return await _render_music_card(request, None if result.ok else result.error)
 
 
 # ── Log filter ───────────────────────────────────────────────────────────

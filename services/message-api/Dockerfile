@@ -28,6 +28,11 @@ COPY app/replay.py /app/replay.py
 COPY app/revoice.py /app/revoice.py
 COPY app/agent_state.py /app/agent_state.py
 COPY app/audio_player.py /app/audio_player.py
+# GM live music control (/music endpoints). The whole package is copied, but
+# message-api only imports music.control + music.mood_map (both stdlib-only);
+# music/__init__.py loads engine/theme lazily, so numpy/pyyaml-heavy modules
+# are never imported here and numpy is NOT a message-api requirement.
+COPY app/music /app/music
 COPY services/message-api/api.py /app/api.py
 
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]

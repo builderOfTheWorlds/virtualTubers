@@ -15,6 +15,8 @@ Theater library. Episodes used to be files hand-copied onto the deploy
 host; they are now uploaded here, validated (episode_validator.py) and
 stored in Postgres (episode_store.py), which is where the workers read
 them from.
+And the /music endpoints — GM live control of the roundtable's background
+score (music/control.py MusicControl: Redis override + director heartbeat).
 """
 import json
 import logging
@@ -33,6 +35,8 @@ from episode_validator import EpisodeInvalid, resolve_name, validate_episode
 from log_filter_control import LogFilterControl
 from log_prune import prune_logs
 from message_bus import build_message, MessageProducer
+from music.control import MusicControl
+from music.mood_map import MOODS
 from replay_logs import fetch_container_logs, fetch_messages
 from worker_control import WorkerControl
 
@@ -46,6 +50,10 @@ producer = MessageProducer(
 control = WorkerControl.from_config()
 log_filter = LogFilterControl.from_config()
 console_theme = ConsoleThemeControl.from_config()
+# Same REDIS_URL resolution as the other controls; from_url builds the client
+# lazily (no connection until the first command), so a Redis that is down at
+# container start doesn't stop the API from booting.
+music_control = MusicControl.from_url(os.environ.get("REDIS_URL") or "redis://redis:6379")
 
 # Example message types shown as a dropdown in /docs; accepts any string.
 MESSAGE_TYPE_EXAMPLES = {
@@ -75,6 +83,11 @@ class InjectMessage(BaseModel):
 
 class SetThemeRequest(BaseModel):
     theme: str
+
+
+class SetMusicRequest(BaseModel):
+    mood: str
+    intensity: float = 0.5
 
 
 class PruneLogsRequest(BaseModel):
@@ -211,6 +224,76 @@ def clear_console_theme(worker_id: str = Path(..., openapi_examples=WORKER_ID_EX
     except redis.RedisError as exc:
         raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
     return {"worker_id": worker_id, "theme": None, "overridden": False}
+
+
+# ── GM live music control ───────────────────────────────────────────────────
+# Redis contract lives in app/music/control.py (MusicControl); the reader is
+# app/music_director.py on the roundtable container, which polls the override
+# every bar and publishes a now-playing heartbeat (status). See
+# docs/music_engine.md and docs/message_api.md.
+MUSIC_OVERRIDE_MOODS = list(MOODS) + ["silence"]
+
+
+def _music_state(worker_id: str) -> dict:
+    """Current override (None = following scene moods) plus the director's
+    now-playing heartbeat (None = no music director running)."""
+    override = music_control.get_override(worker_id)
+    status = music_control.get_status(worker_id)
+    log.debug("music state worker=%s override=%s running=%s", worker_id, override, status is not None)
+    return {
+        "worker_id": worker_id,
+        "override": ({"mood": override.mood, "intensity": override.intensity}
+                     if override is not None else None),
+        "overridden": override is not None,
+        "running": status is not None,
+        "status": status,
+    }
+
+
+@app.get("/music-moods")
+def list_music_moods():
+    """Every mood a GM override accepts: the 9 GEMS moods, `neutral`, and
+    `silence` (fade the score out)."""
+    return {"moods": MUSIC_OVERRIDE_MOODS}
+
+
+@app.get("/music/{worker_id}")
+def get_music(worker_id: str = Path(..., openapi_examples={"roundtable": {"value": "roundtable"}})):
+    return _music_state(worker_id)
+
+
+@app.post("/music/{worker_id}")
+def set_music(
+    body: SetMusicRequest,
+    worker_id: str = Path(..., openapi_examples={"roundtable": {"value": "roundtable"}}),
+):
+    """Hold the score on `mood` at `intensity` (0..1, clamped) until cleared.
+    Applied by the director on its next bar — no dwell time for overrides."""
+    try:
+        mood = MusicControl.validate_mood(body.mood)
+    except ValueError as exc:
+        log.debug("music override rejected worker=%s mood=%r", worker_id, body.mood)
+        raise HTTPException(status_code=400, detail=str(exc))
+    try:
+        applied = music_control.set_override(worker_id, mood, body.intensity)
+    except redis.RedisError as exc:
+        log.error("music override write failed worker=%s mood=%s err=%s", worker_id, mood, exc)
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    log.info("music override set worker=%s mood=%s intensity=%.2f",
+             worker_id, applied["mood"], applied["intensity"])
+    return {"worker_id": worker_id, "override": applied, "overridden": True}
+
+
+@app.delete("/music/{worker_id}")
+def clear_music(worker_id: str = Path(..., openapi_examples={"roundtable": {"value": "roundtable"}})):
+    """Drop the GM override so the director goes back to following scene cues."""
+    try:
+        music_control.clear_override(worker_id)
+    except redis.RedisError as exc:
+        log.error("music override clear failed worker=%s err=%s", worker_id, exc)
+        raise HTTPException(status_code=503, detail=f"redis unavailable: {exc}")
+    log.info("music override cleared worker=%s", worker_id)
+    return {"worker_id": worker_id, "override": None, "overridden": False}
 
 
 @app.post("/logs/prune")

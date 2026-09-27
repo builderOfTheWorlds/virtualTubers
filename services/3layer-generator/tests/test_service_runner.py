@@ -1118,6 +1118,45 @@ def test_campaign_episode_builder_uses_the_same_speaker_map_mechanism(store):
     assert by_text["We did it."]["speaker"] == "coder"
 
 
+def _mood_pack(name="ashiorid"):
+    """Pack-shaped stand-in: s1 (mood tension, enter_narration + beats) ->
+    s2 (no mood) -> s3 (moods, first beat has no text so the cue must land
+    on the first event actually EMITTED)."""
+    import types
+    ns = types.SimpleNamespace
+    scenes = {
+        "s1": ns(id="s1", enter_narration="The door bursts open.", mood=["tension"],
+                 beats=[ns(kind="dialogue", speaker="Chadwick", text="Run!")],
+                 ambient=False, default_next="s2"),
+        "s2": ns(id="s2", enter_narration=None, mood=[],
+                 beats=[ns(kind="narration", speaker="gm", text="Silence.")],
+                 ambient=False, default_next="s3"),
+        "s3": ns(id="s3", enter_narration=None, mood=["sadness", "tenderness", "bogus"],
+                 beats=[ns(kind="narration", speaker="gm", text=""),
+                        ns(kind="narration", speaker="gm", text="They mourn.")],
+                 ambient=False, default_next=None),
+    }
+    return ns(name=name, start_scene="s1", scene=lambda sid: scenes[sid])
+
+
+def test_campaign_episode_builder_attaches_scene_music_to_first_event(store):
+    ep = build_campaign_episode(_mood_pack(), "alpha", "virtualTubers", max_scenes=5,
+                                speaker_map={"Chadwick": "coder"})
+    events = ep["events"]
+    assert [e["text"] for e in events] == ["The door bursts open.", "Run!", "Silence.", "They mourn."]
+    assert events[0]["music"] == {"mood": ["tension"], "scene_id": "s1"}
+    assert "music" not in events[1] and "music" not in events[2]
+    # unknown mood names are dropped; the cue lands on the first EMITTED event
+    assert events[3]["music"] == {"mood": ["sadness", "tenderness"], "scene_id": "s3"}
+    assert ep["show"] == {"music": {"theme": "ashiorid"}}
+
+
+def test_campaign_episode_builder_skips_theme_for_unsafe_pack_name(store):
+    ep = build_campaign_episode(_mood_pack(name="bad name/.."), "alpha", "virtualTubers",
+                                max_scenes=5, speaker_map={})
+    assert "show" not in ep
+
+
 def _seed_a_minimal_generated_run(store, run):
     """A run with exactly one segment, one leaf, one slot, and one
     dialogue take holding one real beat — the smallest shape big enough to
