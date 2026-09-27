@@ -15,7 +15,7 @@ import logging
 from collections import deque
 from dataclasses import dataclass, field
 
-from campaign.pack import CampaignPack, MOODS, RING_TONES, Scene
+from campaign.pack import CampaignPack, MOODS, RING_TONES, SEAT_COUNT, SEAT_RE, Scene
 from campaign.scene_graph import WEIGHT_KEY
 
 log = logging.getLogger(__name__)
@@ -114,6 +114,8 @@ def validate_pack(pack: CampaignPack) -> ValidationReport:
             if beat.speaker is not None:
                 spoken.add(beat.speaker)
     _check_cast_usage(pack, spoken, report)
+
+    report.errors.extend(check_seats(pack))
     
     log.info("validated campaign pack %s: %d errors, %d warnings",
              pack.name, len(report.errors), len(report.warnings))
@@ -269,3 +271,33 @@ def _check_ring_tone_and_mood(scene: Scene, report: ValidationReport) -> None:
             report.errors.append(
                 f"scene {scene.id!r}: unknown mood {value!r} "
                 f"(expected one of {sorted(MOODS)})")
+
+
+def check_seats(pack: CampaignPack) -> list[str]:
+    """Return every problem with the pack's `seats:` map (empty list = ok).
+
+    Rules: each slot is tuber_N with N in 0..SEAT_COUNT-1, no two cast ids
+    share a slot, and every seated id is a loaded cast member. Exposed on
+    its own so the episode builder can refuse a bad seat map without
+    running the whole-pack validation. Never raises.
+    """
+    log.debug("check_seats: enter pack=%s seats=%d", pack.name, len(pack.seats or {}))
+    errors: list[str] = []
+    taken: dict[str, str] = {}
+    for cast_id, slot in sorted((pack.seats or {}).items()):
+        if cast_id not in pack.cast:
+            errors.append(f"seats: {cast_id!r} is not a cast member")
+        match = SEAT_RE.match(slot) if isinstance(slot, str) else None
+        if not match:
+            errors.append(f"seats: {cast_id!r} has invalid seat {slot!r} (expected tuber_N)")
+            continue
+        if int(match.group(1)) >= SEAT_COUNT:
+            errors.append(
+                f"seats: {cast_id!r} seat {slot!r} is outside tuber_0..tuber_{SEAT_COUNT - 1}")
+        if slot in taken:
+            errors.append(
+                f"seats: {slot!r} is assigned to both {taken[slot]!r} and {cast_id!r}")
+        else:
+            taken[slot] = cast_id
+    log.debug("check_seats: exit errors=%d", len(errors))
+    return errors

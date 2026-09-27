@@ -734,3 +734,82 @@ def test_the_ashiorid_pack_still_loads(tmp_path):
     # every scene loaded before this change had no ambient tier
     assert all(beat.texts for scene in pack.scenes.values()
                for beat in scene.beats if beat.text)
+
+
+# ── seats: {cast_id: tuber_N} (OB-03) ────────────────────────────────────────
+def test_seats_default_to_empty_dict_when_absent(pack_root):
+    assert load_pack(pack_root).seats == {}
+
+
+def test_seats_are_loaded_from_campaign_yaml(tmp_path):
+    campaign = {**CAMPAIGN_YAML, "seats": {"gm": "tuber_0", "alice": "tuber_3"}}
+    pack = load_pack(write_pack(tmp_path / "p", campaign=campaign))
+    assert pack.seats == {"gm": "tuber_0", "alice": "tuber_3"}
+
+
+@pytest.mark.parametrize("seats", [
+    ["tuber_0"],
+    {"gm": 0},
+    {"gm": "manager"},
+    {"gm": "tuber_x"},
+])
+def test_malformed_seats_raise_pack_error(tmp_path, seats):
+    campaign = {**CAMPAIGN_YAML, "seats": seats}
+    with pytest.raises(PackError, match="seats"):
+        load_pack(write_pack(tmp_path / "p", campaign=campaign))
+
+
+def test_out_of_range_seat_loads_and_is_left_to_the_validator(tmp_path):
+    # The loader checks shape only; range/uniqueness/cast are semantic.
+    campaign = {**CAMPAIGN_YAML, "seats": {"gm": "tuber_9"}}
+    assert load_pack(write_pack(tmp_path / "p", campaign=campaign)).seats == {"gm": "tuber_9"}
+
+
+# ── build_campaign_episode.py seat mapping ───────────────────────────────────
+def _load_builder():
+    import importlib.util
+    path = Path(__file__).resolve().parents[1] / ".claude" / "prompts" / "build_campaign_episode.py"
+    spec = importlib.util.spec_from_file_location("_builder_seats", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_builder_maps_speakers_via_seats_and_casts_slots(tmp_path):
+    from episode_validator import validate_episode
+    builder = _load_builder()
+    campaign = {**CAMPAIGN_YAML, "primitives": [],
+                "seats": {"gm": "tuber_0", "alice": "tuber_2", "bob": "tuber_7"}}
+    scenes = [
+        {"id": "opening", "enter_narration": "A hall.", "default_next": "victory",
+         "beats": [
+             {"speaker": "gm", "type": "narration", "text": "Doors open."},
+             {"speaker": "alice", "type": "dialogue", "text": "Hello."},
+             {"speaker": "bob", "type": "dialogue", "text": "Hi."},
+         ]},
+        {"id": "victory", "beats": [
+            {"speaker": "alice", "type": "dialogue", "text": "We won."},
+            {"speaker": "gm", "type": "narration", "text": "The end."},
+        ]},
+    ]
+    pack = load_pack(write_pack(tmp_path / "p", campaign=campaign, scenes=scenes))
+    ep = builder.build_episode(pack, "seatstest", "virtualTubers", 12)
+
+    speakers = [e["speaker"] for e in ep["events"] if "speaker" in e]
+    assert speakers == ["tuber_2", "tuber_7", "tuber_2"]
+    assert ep["show"]["slots"] == ["tuber_0", "tuber_2", "tuber_7"]
+    validate_episode(ep, "seatstest")
+
+
+def test_builder_without_seats_keeps_speaker_to_worker(tmp_path):
+    builder = _load_builder()
+    pack = load_pack(write_pack(tmp_path / "p"))
+    assert builder.speaker_map(pack) is builder.SPEAKER_TO_WORKER
+
+
+def test_builder_refuses_an_invalid_seat_map(tmp_path):
+    builder = _load_builder()
+    campaign = {**CAMPAIGN_YAML, "seats": {"gm": "tuber_1", "alice": "tuber_1"}}
+    pack = load_pack(write_pack(tmp_path / "p", campaign=campaign))
+    with pytest.raises(ValueError, match="tuber_1"):
+        builder.build_episode(pack, "bad", "virtualTubers", 12)

@@ -2,6 +2,7 @@
 
 import logging
 import pathlib
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -187,6 +188,42 @@ def _load_ambient_config(campaign_data):
     return every, list(pool)
 
 
+# A seat is a positional tuber slot id (episode_validator.SLOT_RE). The
+# loader only checks the SHAPE; the roster range (0..SEAT_COUNT-1), seat
+# uniqueness and cast membership are semantic checks done by
+# campaign.validator.check_seats, which reports every problem at once.
+SEAT_RE = re.compile(r"^tuber_([0-9]+)$")
+# Mirrors episode_validator.ROSTER_SIZE (tuber_0..tuber_7). Kept local so
+# the campaign package does not import message-api's validator.
+SEAT_COUNT = 8
+
+
+def _load_seats(campaign_data):
+    """Load the optional `seats: {cast_id: tuber_N}` mapping.
+
+    Absent/null/empty means "no seat map" and returns {}; the episode
+    builder then keeps its legacy worker-id mapping. Non-mapping values or
+    non-string / non-slot-shaped entries are a PackError.
+    """
+    log.debug("_load_seats: enter")
+    seats = campaign_data.get("seats")
+    if not seats:
+        log.debug("_load_seats: no seats declared")
+        return {}
+    if not isinstance(seats, dict):
+        raise PackError("campaign.yaml has non-mapping 'seats'")
+    result = {}
+    for cast_id, slot in seats.items():
+        if not isinstance(cast_id, str):
+            raise PackError(f"campaign.yaml 'seats' key {cast_id!r} is not a string cast id")
+        if not isinstance(slot, str) or not SEAT_RE.match(slot):
+            raise PackError(
+                f"campaign.yaml 'seats.{cast_id}' is {slot!r}; expected tuber_N")
+        result[cast_id] = slot
+    log.debug("_load_seats: exit with %d seats", len(result))
+    return result
+
+
 def load_pack(path):
     """Load a campaign pack from disk into typed objects."""
     root = pathlib.Path(path).resolve()
@@ -264,6 +301,9 @@ def load_pack(path):
     # Load ambient config
     ambient_every, ambient_pool = _load_ambient_config(campaign_data)
 
+    # Load seat map (optional)
+    seats = _load_seats(campaign_data)
+
     pack = CampaignPack(
         name=name,
         title=title,
@@ -280,6 +320,7 @@ def load_pack(path):
         lore=lore,
         ambient_every=ambient_every,
         ambient_pool=ambient_pool,
+        seats=seats,
     )
 
     log.info("loaded campaign pack %s with %d scenes and %d cast members",
@@ -389,6 +430,9 @@ class CampaignPack:
     lore: dict[str, str] = field(default_factory=dict)
     ambient_every: int = 0
     ambient_pool: list[str] = field(default_factory=list)
+    #: Optional cast id -> tuber slot id ("tuber_0".."tuber_7") map from
+    #: campaign.yaml `seats:`. Empty means the pack declares no seating.
+    seats: dict[str, str] = field(default_factory=dict)
 
     def scene(self, scene_id) -> Scene:
         try:

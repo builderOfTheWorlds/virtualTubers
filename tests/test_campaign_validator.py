@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 from campaign.pack import Beat, Branch, CampaignPack, CastMember, Scene  # noqa: E402
 from campaign.validator import (  # noqa: E402
-    CampaignInvalid, ValidationReport, validate_pack,
+    CampaignInvalid, ValidationReport, check_seats, validate_pack,
 )
 
 
@@ -607,3 +607,37 @@ def test_every_new_problem_is_collected_in_one_pass():
     report = validate_pack(make_pack(scenes, ambient_pool=["nowhere"]))
 
     assert len(report.errors) >= 4
+
+
+# ── seats (OB-03) ────────────────────────────────────────────────────────────
+def _seated(seats):
+    pack = make_pack(VALID_SCENES)
+    pack.seats = seats
+    return pack
+
+
+def test_valid_seats_produce_no_errors():
+    report = validate_pack(_seated({"gm": "tuber_0", "alice": "tuber_7"}))
+    assert not [e for e in report.errors if "seats" in e]
+
+
+def test_no_seats_is_fine():
+    assert check_seats(make_pack(VALID_SCENES)) == []
+
+
+@pytest.mark.parametrize("seats, fragment", [
+    ({"gm": "tuber_8"}, "outside tuber_0..tuber_7"),
+    ({"gm": "tuber_1", "alice": "tuber_1"}, "assigned to both"),
+    ({"ghost": "tuber_2"}, "'ghost' is not a cast member"),
+    ({"gm": "worker"}, "invalid seat"),
+])
+def test_bad_seats_are_errors(seats, fragment):
+    report = validate_pack(_seated(seats))
+    assert not report.ok
+    assert any(fragment in e for e in report.errors), report.errors
+
+
+def test_every_seat_problem_is_reported():
+    errors = check_seats(_seated({"gm": "tuber_9", "ghost": "tuber_9"}))
+    # ghost: not in cast, out of range, duplicate slot; gm: out of range.
+    assert len(errors) == 4

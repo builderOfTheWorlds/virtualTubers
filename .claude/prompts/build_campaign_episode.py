@@ -27,6 +27,12 @@ Mapping:
 
 `speaker` is mapped from campaign cast ids to WORKER ids, because the duet
 cast map and the avatar panes key off worker ids, not campaign names.
+A pack that declares `seats: {cast_id: tuber_N}` in campaign.yaml instead
+has its speakers mapped to those tuber slot ids (the control panel's
+TUBER_SLOT_IDENTITY_CAST resolves tuber_N on air), and the episode's
+show header lists the seated slots in `show.slots` so the episode
+validator checks every slot-shaped speaker is cast. Packs without seats
+keep the SPEAKER_TO_WORKER mapping and output unchanged.
 
 Usage:
     python3 .claude/prompts/build_campaign_episode.py \
@@ -43,6 +49,7 @@ REPO = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "app"))
 
 from campaign.pack import load_pack  # noqa: E402
+from campaign.validator import check_seats  # noqa: E402
 
 # Campaign cast id -> worker id. The replay pane resolves speakers to the
 # worker avatars on screen, so an unmapped name would render as an unknown
@@ -138,7 +145,22 @@ def walk_scenes(pack, max_scenes):
     return order
 
 
+def speaker_map(pack):
+    """cast id -> episode speaker id. The pack's `seats:` map (tuber slot
+    ids) when it declares one, else the legacy SPEAKER_TO_WORKER map.
+    Raises ValueError when the seat map is invalid (campaign.validator
+    check_seats), so a bad seating never reaches an aired episode."""
+    seats = getattr(pack, "seats", None) or {}
+    if not seats:
+        return SPEAKER_TO_WORKER
+    problems = check_seats(pack)
+    if problems:
+        raise ValueError("invalid seats: " + "; ".join(problems))
+    return dict(seats)
+
+
 def build_episode(pack, source, project, max_scenes):
+    speakers = speaker_map(pack)
     events = []
     for scene in walk_scenes(pack, max_scenes):
         start = len(events)
@@ -151,7 +173,7 @@ def build_episode(pack, source, project, max_scenes):
             if not text:
                 continue
             if kind == "dialogue":
-                speaker = SPEAKER_TO_WORKER.get(getattr(beat, "speaker", None))
+                speaker = speakers.get(getattr(beat, "speaker", None))
                 ev = {"type": "assistant_text", "text": text}
                 if speaker:
                     ev["speaker"] = speaker
@@ -167,6 +189,11 @@ def build_episode(pack, source, project, max_scenes):
         "events": events,
     }
     header = show_music_header(pack)
+    seats = getattr(pack, "seats", None) or {}
+    if seats:
+        header = dict(header or {})
+        header["slots"] = sorted(set(seats.values()),
+                                 key=lambda s: int(s.split("_", 1)[1]))
     if header:
         episode["show"] = header
     return episode
@@ -184,7 +211,11 @@ def main():
     args = ap.parse_args()
 
     pack = load_pack(REPO / args.pack)
-    ep = build_episode(pack, args.name, args.project, args.max_scenes)
+    try:
+        ep = build_episode(pack, args.name, args.project, args.max_scenes)
+    except ValueError as exc:
+        print(f"episode '{args.name}': FAIL — {exc}")
+        return 1
 
     kinds = {}
     for e in ep["events"]:

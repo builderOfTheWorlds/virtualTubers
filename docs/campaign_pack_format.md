@@ -42,10 +42,39 @@ graph uses** — renaming a file changes nothing.
 | `primitives` | no | Whitelist of action verbs this campaign may use. An action beat naming a primitive outside this list is a validation **error**. |
 | `theme` | no | Mapping passed through to the renderer's palette. |
 
-The `primitives` whitelist is how one registry serves every genre: the fantasy
-and cyberpunk verbs are all registered in
+The `primitives` whitelist is how one registry serves every genre: the fantasy,
+cyberpunk, and office verbs are all registered in
 [app/campaign/primitives.py](../app/campaign/primitives.py), and each pack
 enables only its own.
+
+Shipped primitives by genre (params: **bold** = required, others optional;
+`a|b` = fixed choices). Every verb is pure narration — none decides an outcome
+the script didn't supply.
+
+| Genre | Primitive | Params |
+|---|---|---|
+| fantasy | `roll_check` | **skill**, dc, outcome `success\|failure` |
+| fantasy | `cast_spell` | **spell**, target, level |
+| fantasy | `attack` | **target**, weapon |
+| fantasy | `move_to` | **destination**, manner |
+| fantasy | `search` | **target**, detail |
+| fantasy | `reveal_memory` | **subject**, detail |
+| cyber | `execute_exploit` | **exploit**, target |
+| cyber | `scan_target` | **target**, depth |
+| office | `assign_task` | **to**, **task**, due |
+| office | `write_spec` | **topic**, detail |
+| office | `open_ticket` | **title**, priority `low\|medium\|high\|critical` |
+| office | `commit` | **message**, branch |
+| office | `run_tests` | **suite**, result `pass\|fail` |
+| office | `file_bug` | **title**, component, severity `low\|medium\|high\|critical` |
+| office | `open_pr` | **title**, branch, reviewer |
+| office | `merge_pr` | **pr**, into |
+| office | `deploy` | **environment**, version, outcome `success\|failure\|rolled back` |
+| office | `pitch` | **idea**, audience |
+| office | `brew_coffee` | recipient, strength |
+| office | `take_out_trash` | detail |
+| office | `hr_notice` | **subject**, audience |
+| office | `observe` | target (the Party Member's silent verb) |
 
 ## cast/&lt;id&gt;.yaml
 
@@ -200,8 +229,36 @@ separately in
 authoring recipes for each. All of them are optional; a pack using none of them
 behaves exactly as this document describes.
 
+## Seats
+
+`seats:` is an optional `campaign.yaml` mapping that pins cast members to tuber
+slots — the positional stream seats `tuber_0` … `tuber_7`:
+
+```yaml
+seats:
+  ceo: tuber_0
+  tech_lead: tuber_1
+  engineer: tuber_2
+```
+
+- Loaded as `CampaignPack.seats` (`dict[str, str]`); `{}` when absent or empty.
+- The loader (`load_pack`) raises `PackError` if `seats` is not a mapping or a
+  value is not a `tuber_N` string.
+- The validator (`validate_pack`, or `check_seats` on its own) reports as
+  errors: N outside 0–7, two cast ids sharing a seat, and a seated id that is
+  not a loaded cast member (`gm:`/`players:`). A cast member may go unseated.
+- `.claude/prompts/build_campaign_episode.py`: when a pack has seats, dialogue
+  speakers become their `tuber_N` slot and the episode's `show.slots` lists
+  every seated slot, so the episode validator checks each slot-shaped speaker
+  is cast. The builder refuses to build if the seat map is invalid. A pack
+  with no seats keeps the legacy `SPEAKER_TO_WORKER` worker-id mapping, and its
+  output is unchanged.
+
 ## Changelog
 
+- **v1.3.0** (2026-09-27) — optional `seats:` cast-to-tuber-slot map (OB-03).
+- **v1.2.0** (2026-09-27) — list shipped primitives by genre; add the `office`
+  verb set (OB-02, `ashiorid_office`).
 - **v1.1.0** (2026-08-17) — cross-reference the content-expansion additions
   (`ambient`, `prompt`, `lore`, variant pools).
 - **v1.0.0** (2026-08-16) — initial format: pack layout, beat kinds, branch
