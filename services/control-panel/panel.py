@@ -38,6 +38,25 @@ MESSAGE_API_URL = os.environ.get("MESSAGE_API_URL", "http://message-api:8000")
 # matches the docker-compose mapping already in place.
 CAMPAIGN_MANAGER_URL = os.environ.get("CAMPAIGN_MANAGER_URL", "http://localhost:8082")
 
+
+def _campaign_manager_public_url(request: Request) -> str:
+    """The campaign-manager link an operator's browser can actually
+    navigate to: an explicitly-set CAMPAIGN_MANAGER_URL env var wins,
+    otherwise derive scheme://host from the incoming request and point it
+    at the campaign manager's own public port (8082 in docker-compose) —
+    the host/IP the operator reached THIS app on, with the port swapped
+    from ours (8091) to the manager's. Keeps the cross-link correct from
+    any machine (LAN IP, tunnel) without per-host config; a non-standard
+    port mapping or a different host is what the env override is for."""
+    override = os.environ.get("CAMPAIGN_MANAGER_URL", "").strip()
+    if override:
+        return override
+    scheme = request.headers.get("x-forwarded-proto") or request.url.scheme
+    host = request.headers.get("x-forwarded-host") or request.url.hostname or "localhost"
+    if ":" in host and not host.startswith("["):  # IPv6 literal
+        host = f"[{host}]"
+    return f"{scheme}://{host}:8082"
+
 # Same hardcoded lists api.py's own WORKER_ID_EXAMPLES/MESSAGE_TYPE_EXAMPLES
 # use, for the same reason: message-api exposes no "list workers" or "list
 # message types" endpoint, and these can drift from docker-compose.yml.
@@ -94,6 +113,22 @@ WORKER_TO_TUBER_SLOT = {
     "tester": "tuber_5",
     "manager": "tuber_0",
 }
+
+# Some episodes (e.g. roundtable-stream-check, built as a "does every seat
+# wire up" sanity check) name their speakers with the literal slot id —
+# "tuber_0".."tuber_6" — instead of a worker id like "coder"/"manager".
+# perform_director_request's ownership gate only matches a speaker that's a
+# KEY in the cast dict (app/replay_pane.py:673-711): WORKER_TO_TUBER_SLOT
+# alone has no "tuber_0".."tuber_6" keys, so every line in such an episode
+# falls through to "uncast" and the director voices/owns all of it itself —
+# audio plays (it's still routed through the director's own pane) but no
+# character tile ever gets ownership, so nobody's mouth animates and no
+# tile shows any speech text. Reported live: "I don't see any of the
+# avatars doing the speaking animation, and I don't see any of their
+# speech displayed" on roundtable-stream-check specifically. The fix is an
+# identity entry per slot, merged into the cast alongside the worker-id
+# mapping above so BOTH speaker-naming conventions resolve to a tile.
+TUBER_SLOT_IDENTITY_CAST = {f"tuber_{i}": f"tuber_{i}" for i in range(7)}
 
 # ── Console theme control (app/console_theme.py, message-api's
 #    /console-theme(s) endpoints) ────────────────────────────────────────
@@ -243,7 +278,7 @@ async def dashboard(request: Request):
     theme_workers = [await _worker_theme_status(w) for w in THEME_WORKER_IDS]
     return templates.TemplateResponse(request, "base.html", {
         "message_api_url": MESSAGE_API_URL,
-        "campaign_manager_url": CAMPAIGN_MANAGER_URL,
+        "campaign_manager_url": _campaign_manager_public_url(request),
         "workers": workers,
         "message_type_examples": MESSAGE_TYPE_EXAMPLES,
         "worker_ids": WORKER_IDS,
@@ -490,7 +525,8 @@ async def play_replay(request: Request, name: str):
     roundtable_result = await _mapi_request(
         "POST", "/messages",
         json={"to": ROUNDTABLE_WORKER_ID, "type": "replay_request",
-              "payload": {"episode": name, "cast": dict(WORKER_TO_TUBER_SLOT)}},
+              "payload": {"episode": name,
+                          "cast": {**WORKER_TO_TUBER_SLOT, **TUBER_SLOT_IDENTITY_CAST}}},
     )
     results.append((ROUNDTABLE_WORKER_ID, roundtable_result))
 
