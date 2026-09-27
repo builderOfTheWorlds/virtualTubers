@@ -3,26 +3,25 @@ import json
 import pytest
 
 import agent
-from agent import (
-    MESSAGE_HANDLERS,
-    demo_editor_note,
-    demo_filetree_ls,
+from agent_handlers import MESSAGE_HANDLERS, coder, manager, replay_relay, tester, viewer
+from agent_handlers.coder import demo_editor_note, demo_filetree_ls, handle_task_assignment
+from agent_handlers.manager import (
     handle_bug_report,
     handle_clarification_request,
-    handle_commit_notification,
-    handle_operator_message,
+    handle_task_complete,
+    handle_test_passed,
+)
+from agent_handlers.operator import handle_operator_message
+from agent_handlers.replay_relay import (
     handle_replay_cue,
     handle_replay_end,
     handle_replay_invite,
     handle_replay_ready,
     handle_replay_request,
     handle_replay_stop,
-    handle_retest_request,
-    handle_viewer_joined,
-    handle_task_assignment,
-    handle_task_complete,
-    handle_test_passed,
 )
+from agent_handlers.tester import handle_commit_notification, handle_retest_request
+from agent_handlers.viewer import handle_viewer_joined
 from agent_state import read_state
 from tmux_control import TmuxError
 
@@ -136,9 +135,9 @@ def test_handle_task_assignment_without_state_path_does_not_raise():
 
 def test_demo_editor_note_selects_pane_and_enters_then_leaves_insert_mode(monkeypatch):
     calls = []
-    monkeypatch.setattr(agent, "select_pane", lambda name: calls.append(("select_pane", name)))
-    monkeypatch.setattr(agent, "send_raw", lambda name, *keys: calls.append(("send_raw", name, keys)))
-    monkeypatch.setattr(agent, "send_keys", lambda name, text, **kw: calls.append(("send_keys", name, text)))
+    monkeypatch.setattr(coder, "select_pane", lambda name: calls.append(("select_pane", name)))
+    monkeypatch.setattr(coder, "send_raw", lambda name, *keys: calls.append(("send_raw", name, keys)))
+    monkeypatch.setattr(coder, "send_keys", lambda name, text, **kw: calls.append(("send_keys", name, text)))
 
     demo_editor_note("coder", "fix   the   login   bug")
 
@@ -151,7 +150,7 @@ def test_demo_editor_note_selects_pane_and_enters_then_leaves_insert_mode(monkey
 
 
 def test_demo_editor_note_swallows_tmux_errors(monkeypatch, capsys):
-    monkeypatch.setattr(agent, "select_pane", lambda name: (_ for _ in ()).throw(TmuxError("no session")))
+    monkeypatch.setattr(coder, "select_pane", lambda name: (_ for _ in ()).throw(TmuxError("no session")))
 
     demo_editor_note("coder", "fix the login bug")  # must not raise
 
@@ -160,7 +159,7 @@ def test_demo_editor_note_swallows_tmux_errors(monkeypatch, capsys):
 
 def test_handle_task_assignment_invokes_demo_editor_note(monkeypatch):
     calls = []
-    monkeypatch.setattr(agent, "demo_editor_note", lambda worker_id, task: calls.append((worker_id, task)))
+    monkeypatch.setattr(coder, "demo_editor_note", lambda worker_id, task: calls.append((worker_id, task)))
     producer = FakeProducer()
     llm = FakeLLM(response="On it.")
     msg = {"from": "manager", "type": "task_assignment", "payload": {"task": "fix the login bug"}}
@@ -172,8 +171,8 @@ def test_handle_task_assignment_invokes_demo_editor_note(monkeypatch):
 
 def test_demo_filetree_ls_selects_pane_runs_ls_and_returns_to_editor(monkeypatch):
     calls = []
-    monkeypatch.setattr(agent, "select_pane", lambda name: calls.append(("select_pane", name)))
-    monkeypatch.setattr(agent, "send_command", lambda name, cmd: calls.append(("send_command", name, cmd)))
+    monkeypatch.setattr(coder, "select_pane", lambda name: calls.append(("select_pane", name)))
+    monkeypatch.setattr(coder, "send_command", lambda name, cmd: calls.append(("send_command", name, cmd)))
 
     demo_filetree_ls("coder")
 
@@ -185,7 +184,7 @@ def test_demo_filetree_ls_selects_pane_runs_ls_and_returns_to_editor(monkeypatch
 
 
 def test_demo_filetree_ls_swallows_tmux_errors(monkeypatch, capsys):
-    monkeypatch.setattr(agent, "select_pane", lambda name: (_ for _ in ()).throw(TmuxError("no session")))
+    monkeypatch.setattr(coder, "select_pane", lambda name: (_ for _ in ()).throw(TmuxError("no session")))
 
     demo_filetree_ls("coder")  # must not raise
 
@@ -194,7 +193,7 @@ def test_demo_filetree_ls_swallows_tmux_errors(monkeypatch, capsys):
 
 def test_handle_task_assignment_invokes_demo_filetree_ls(monkeypatch):
     calls = []
-    monkeypatch.setattr(agent, "demo_filetree_ls", lambda worker_id: calls.append(worker_id))
+    monkeypatch.setattr(coder, "demo_filetree_ls", lambda worker_id: calls.append(worker_id))
     producer = FakeProducer()
     llm = FakeLLM(response="On it.")
     msg = {"from": "manager", "type": "task_assignment", "payload": {"task": "fix the login bug"}}
@@ -261,7 +260,7 @@ def test_role_mismatch_is_a_noop(handler, wrong_role, msg_type):
 # ── Tester: commit_notification / retest_request ──────────────────────────────
 
 def test_handle_commit_notification_pass_sends_test_passed_to_manager(monkeypatch, tmp_path):
-    monkeypatch.setattr(agent, "_decide_test_outcome", lambda: (True, None))
+    monkeypatch.setattr(tester, "_decide_test_outcome", lambda: (True, None))
     state_path = str(tmp_path / "state.json")
     producer = FakeProducer()
     llm = FakeLLM(response="Suite is green across the board.")
@@ -280,7 +279,7 @@ def test_handle_commit_notification_pass_sends_test_passed_to_manager(monkeypatc
 
 
 def test_handle_commit_notification_failure_sends_bug_report_with_severity_and_repro(monkeypatch, tmp_path):
-    monkeypatch.setattr(agent, "_decide_test_outcome", lambda: (False, "high"))
+    monkeypatch.setattr(tester, "_decide_test_outcome", lambda: (False, "high"))
     state_path = str(tmp_path / "state.json")
     producer = FakeProducer()
     llm = FakeLLM(response="Found something juicy.")
@@ -298,7 +297,7 @@ def test_handle_commit_notification_failure_sends_bug_report_with_severity_and_r
 
 
 def test_handle_retest_request_behaves_like_commit_notification(monkeypatch):
-    monkeypatch.setattr(agent, "_decide_test_outcome", lambda: (True, None))
+    monkeypatch.setattr(tester, "_decide_test_outcome", lambda: (True, None))
     producer = FakeProducer()
     llm = FakeLLM(response="Re-ran the suite, all green.")
     msg = {"from": "manager", "type": "retest_request", "payload": {"task": "fix the login bug"}}
@@ -361,7 +360,7 @@ def test_handle_bug_report_escalates_to_operator_at_retry_cap(tmp_path):
             "task": "fix the login bug",
             "severity": "critical",
             "repro": "login as admin",
-            "retry_count": agent.MAX_BUG_RETRIES,
+            "retry_count": manager.MAX_BUG_RETRIES,
         },
     }
 
@@ -464,8 +463,11 @@ def test_handle_clarification_request_still_escalates_when_llm_fails(tmp_path):
 
 def test_handle_operator_message_replies_operator_reply_without_demo_helpers(monkeypatch):
     demo_calls = []
-    monkeypatch.setattr(agent, "demo_editor_note", lambda *a, **kw: demo_calls.append("editor"))
-    monkeypatch.setattr(agent, "demo_filetree_ls", lambda *a, **kw: demo_calls.append("filetree"))
+    monkeypatch.setattr(coder, "demo_editor_note", lambda *a, **kw: demo_calls.append("editor"))
+    monkeypatch.setattr(coder, "demo_filetree_ls", lambda *a, **kw: demo_calls.append("filetree"))
+    # Every tmux demo helper (however it is imported) resolves select_pane in
+    # agent_handlers.coder, so this also catches a demo call from operator.py.
+    monkeypatch.setattr(coder, "select_pane", lambda *a, **kw: demo_calls.append("select_pane"))
     producer = FakeProducer()
     llm = FakeLLM(response="All quiet on my end, boss.")
     msg = {"from": "operator", "type": "operator_message", "payload": {"message": "status?"}}
@@ -503,8 +505,8 @@ def replay_env(tmp_path, monkeypatch):
     Library starts empty — tests append names to simulate uploaded episodes."""
     episodes = []
     request_file = tmp_path / "replay_request.json"
-    monkeypatch.setattr(agent.episode_store, "available", lambda: True)
-    monkeypatch.setattr(agent.episode_store, "list_episodes", lambda: list(episodes))
+    monkeypatch.setattr(viewer.episode_store, "available", lambda: True)
+    monkeypatch.setattr(viewer.episode_store, "list_episodes", lambda: list(episodes))
     monkeypatch.setenv("REPLAY_REQUEST_FILE", str(request_file))
     return episodes, request_file
 
@@ -842,7 +844,7 @@ def test_handle_replay_end_writes_end_file_contents(duet_relay_env):
 
 def test_handle_replay_cue_write_failure_logs_and_does_not_raise(duet_relay_env, monkeypatch, capsys):
     monkeypatch.setattr(
-        agent, "_atomic_write_json",
+        replay_relay, "_atomic_write_json",
         lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
     )
     producer = FakeProducer()
@@ -860,7 +862,7 @@ def test_handle_replay_cue_write_failure_logs_and_does_not_raise(duet_relay_env,
 
 def test_handle_replay_invite_write_failure_logs_and_does_not_raise(duet_relay_env, monkeypatch, capsys):
     monkeypatch.setattr(
-        agent, "_write_replay_request",
+        replay_relay, "_write_replay_request",
         lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
     )
     producer = FakeProducer()
@@ -933,7 +935,7 @@ def test_handle_replay_stop_never_calls_the_llm(replay_stop_env):
 
 def test_handle_replay_stop_write_failure_reports_error(replay_stop_env, monkeypatch, capsys):
     monkeypatch.setattr(
-        agent, "_atomic_write_json",
+        replay_relay, "_atomic_write_json",
         lambda *a, **kw: (_ for _ in ()).throw(OSError("disk full")),
     )
     producer = FakeProducer()
@@ -951,7 +953,7 @@ def test_handle_replay_stop_write_failure_reports_error(replay_stop_env, monkeyp
 # ── Retry-count round trip (coder → tester → manager) ─────────────────────────
 
 def test_retry_count_survives_coder_tester_manager_round_trip(monkeypatch):
-    monkeypatch.setattr(agent, "_decide_test_outcome", lambda: (False, "high"))
+    monkeypatch.setattr(tester, "_decide_test_outcome", lambda: (False, "high"))
     llm = FakeLLM(response="Working it.")
 
     # Coder: task_assignment (retry_count=1, i.e. a re-delegated fix) →
@@ -1010,3 +1012,28 @@ def test_message_handlers_registers_duet_replay_handlers():
 
 def test_message_handlers_registers_replay_stop():
     assert MESSAGE_HANDLERS["replay_stop"] is handle_replay_stop
+
+
+# ── agent.py <-> agent_handlers/ split ────────────────────────────────────────
+
+def test_agent_entry_point_dispatches_via_agent_handlers_table():
+    assert agent.MESSAGE_HANDLERS is MESSAGE_HANDLERS
+    assert set(MESSAGE_HANDLERS) == {
+        "task_assignment", "commit_notification", "retest_request", "bug_report",
+        "test_passed", "task_complete", "clarification_request", "operator_message",
+        "replay_request", "replay_stop", "viewer_joined", "replay_invite",
+        "replay_ready", "replay_cue", "replay_end",
+    }
+
+
+@pytest.mark.parametrize("name, module", [
+    ("handle_task_assignment", coder),
+    ("demo_editor_note", coder),
+    ("_decide_test_outcome", tester),
+    ("MAX_BUG_RETRIES", manager),
+    ("_pick_rerun_episode", viewer),
+    ("_write_replay_request", replay_relay),
+    ("_atomic_write_json", replay_relay),
+])
+def test_agent_reexports_moved_names_for_backward_compat(name, module):
+    assert getattr(agent, name) is getattr(module, name)

@@ -78,11 +78,39 @@ which pane to touch — `llm_client.complete()` returns free-form narration
 text only, no structured tool calls — see `docs/VTuber_AI_Dev_Team_Concept.md`
 Phase 1 roadmap for what's next.
 
+### Module layout (v2.5.0)
+
+`app/agent.py` is now the entry point only: CLI/config loading, wiring
+(LLM client, coding backend, producer/consumer, metrics wrappers) and the
+tick loop. Every handler described on this page lives in the
+`app/agent_handlers/` package, which also builds `MESSAGE_HANDLERS`:
+
+| Module | Contents |
+|---|---|
+| `agent_handlers/__init__.py` | `MESSAGE_HANDLERS` dispatch table |
+| `agent_handlers/common.py` | `_complete_with_emotion`, `_send_manager_report` |
+| `agent_handlers/relay_files.py` | `REPLAY_*_FILE` env/default constants, `_resolve_replay_*_file`, `_atomic_write_json`, `_read_json_file`, `_write_replay_request` |
+| `agent_handlers/coder.py` | `handle_task_assignment`, `demo_editor_note`, `demo_filetree_ls`, `show_commit_in_filetree` |
+| `agent_handlers/tester.py` | `handle_commit_notification`, `handle_retest_request`, `_run_tests_and_report`, `_decide_test_outcome`, `_resolve_workspace`, `_severity_from_failures`, test-stub constants, `WORKSPACE_MOUNT_PATTERN` |
+| `agent_handlers/manager.py` | `handle_bug_report`, `handle_test_passed`, `handle_task_complete`, `handle_clarification_request`, `MAX_BUG_RETRIES` |
+| `agent_handlers/operator.py` | `handle_operator_message` |
+| `agent_handlers/viewer.py` | `handle_viewer_joined`, `_pick_rerun_episode` |
+| `agent_handlers/replay_relay.py` | `handle_replay_request`, `handle_replay_stop`, `handle_replay_invite`, `handle_replay_ready`, `handle_replay_cue`, `handle_replay_end`, `_is_valid_cast` |
+
+`agent.py` re-exports every moved name, so `from agent import
+handle_bug_report` (etc.) keeps working. **Tests must monkeypatch the
+`agent_handlers` module that looks a name up**, not `agent` — e.g.
+`monkeypatch.setattr(agent_handlers.tester, "_decide_test_outcome", ...)`.
+Patching `agent.<name>` only rebinds the re-export and has no effect on
+the handlers. See docs/agent_handlers.md.
+
 ## Signature
 
 Module-level constants — the test-outcome stub's tuning knobs, kept at
 module level specifically so tuning (or replacing the stub with real test
-execution) is a one-edit change:
+execution) is a one-edit change (`TEST_PASS_PROBABILITY`/`BUG_SEVERITIES`/
+`BUG_SEVERITY_WEIGHTS` in `agent_handlers/tester.py`, `MAX_BUG_RETRIES` in
+`agent_handlers/manager.py`):
 
 ```python
 TEST_PASS_PROBABILITY = 0.7
@@ -92,7 +120,8 @@ MAX_BUG_RETRIES = 3
 ```
 
 Functions (every `handle_*` shares the same signature and is looked up in
-the `MESSAGE_HANDLERS` dict — message type → handler — by `main()`'s loop):
+the `MESSAGE_HANDLERS` dict — message type → handler — by `main()`'s loop;
+see the module layout table above for where each one lives):
 
 ```python
 def resolve(env_name: str, config_value, default=None)
@@ -233,6 +262,9 @@ def main() -> None
 
 ## Dependencies
 
+- `agent_handlers` (`MESSAGE_HANDLERS` and every handler — docs/agent_handlers.md);
+  the imports below are split across `agent.py` (main loop) and the
+  handler modules that use them.
 - `message_bus` (`load_worker_config`, `build_message`, `MessageProducer`, `MessageConsumer`)
 - `llm_client` (`build_llm_client`)
 - `agent_state` (`resolve_state_path`, `write_state`)
@@ -326,6 +358,16 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.5.0 (2026-09-27) — Pure refactor, zero behaviour change: every
+  message handler and its helpers moved out of `app/agent.py` into the new
+  `app/agent_handlers/` package (`common`, `relay_files`, `coder`,
+  `tester`, `manager`, `operator`, `viewer`, `replay_relay`;
+  `MESSAGE_HANDLERS` built in `agent_handlers/__init__.py`). `agent.py`
+  keeps `main()` (config, wiring, tick loop) and re-exports all moved names
+  for `from agent import ...` callers. Function bodies, message types,
+  payloads and log lines are unchanged. Tests now monkeypatch the
+  `agent_handlers.<module>` that looks a name up. See
+  docs/agent_handlers.md.
 - v2.4.0 (2026-08-16) — The Rerun Theater library moved from the filesystem
   into Postgres. `_pick_rerun_episode` now picks from
   `episode_store.list_episodes()` instead of globbing a mounted directory;
