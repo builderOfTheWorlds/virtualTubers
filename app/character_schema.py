@@ -276,6 +276,29 @@ PRESETS = {
         "build": 0.52,
         "accent_color": "BLACK",
     },
+    # braxton — tuber_4's character, bringing coder-aider's tile online
+    # (previously uncast: config/layouts/roundtable.yaml's tile_tuber_4 grey
+    # "Offline" placeholder). Sits opposite chadwick: a rounder, more tapered
+    # head with a narrower jaw and smaller ears, so the two don't read as the
+    # same silhouette despite similar build.
+    #
+    # accent_color: all 8 ACCENT_COLORS entries were already spoken for
+    # before this preset existed (see the module comment above), so this is
+    # a deliberate reuse, not an omission — GREEN is oko2's color, but oko2's
+    # shape (broad, untapered, huge ears/nose) is nothing like braxton's
+    # (rounder, tapered, small ears), so the two stay distinguishable by
+    # silhouette alone even sharing a color.
+    "braxton": {
+        "head_width": 0.58,
+        "head_taper": 0.55,
+        "eye_size": 0.50,
+        "eye_spacing": 0.48,
+        "jaw_width": 0.44,
+        "nose_length": 0.42,
+        "ear_size": 0.36,
+        "build": 0.62,
+        "accent_color": "GREEN",
+    },
 }
 
 

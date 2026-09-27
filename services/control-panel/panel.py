@@ -116,10 +116,10 @@ WORKER_TO_TUBER_SLOT = {
 
 # Some episodes (e.g. roundtable-stream-check, built as a "does every seat
 # wire up" sanity check) name their speakers with the literal slot id —
-# "tuber_0".."tuber_6" — instead of a worker id like "coder"/"manager".
+# "tuber_0".."tuber_7" — instead of a worker id like "coder"/"manager".
 # perform_director_request's ownership gate only matches a speaker that's a
 # KEY in the cast dict (app/replay_pane.py:673-711): WORKER_TO_TUBER_SLOT
-# alone has no "tuber_0".."tuber_6" keys, so every line in such an episode
+# alone has no "tuber_0".."tuber_7" keys, so every line in such an episode
 # falls through to "uncast" and the director voices/owns all of it itself —
 # audio plays (it's still routed through the director's own pane) but no
 # character tile ever gets ownership, so nobody's mouth animates and no
@@ -128,7 +128,14 @@ WORKER_TO_TUBER_SLOT = {
 # speech displayed" on roundtable-stream-check specifically. The fix is an
 # identity entry per slot, merged into the cast alongside the worker-id
 # mapping above so BOTH speaker-naming conventions resolve to a tile.
-TUBER_SLOT_IDENTITY_CAST = {f"tuber_{i}": f"tuber_{i}" for i in range(7)}
+#
+# range(8), NOT range(7): the roster has 8 slots, tuber_0..tuber_7
+# (config/workers/roundtable.yaml roster: — the 8th, tuber_7 "Iris", was
+# "promoted from spare" per config/layouts/roundtable.yaml's tile_tuber_7
+# comment). The first version of this fix used range(7) and missed
+# tuber_7 — reported live as "the very last one iris didn't have a line"
+# on roundtable-stream-check, which does cast a tuber_7 line.
+TUBER_SLOT_IDENTITY_CAST = {f"tuber_{i}": f"tuber_{i}" for i in range(8)}
 
 # ── Console theme control (app/console_theme.py, message-api's
 #    /console-theme(s) endpoints) ────────────────────────────────────────

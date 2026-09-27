@@ -196,13 +196,17 @@ layout:
 # first; this map is checked second; a slot absent here falls back to
 # "Game Master" for tuber_0 or "Offline" for everyone else.
 #
-# Two slots are deliberately absent: tuber_4 (coder-aider) has no character
-# assigned yet (design's "OPEN" tuber, .claude/prompts/build_campaign_episode.py
-# SPEAKER_TO_WORKER comment) — keep it absent so it shows "Offline", and keep
-# config/layouts/roundtable.yaml's tile_tuber_4 border_color: colour240 (grey)
-# in sync with that. tuber_0 is also absent here on purpose: it uses the
-# ROSTER_DEFAULT_GM_TITLE fallback ("Game Master") rather than repeating the
-# `agent.name`/`avatar.title` GM identity a third time in this file.
+# tuber_0 is deliberately absent here: it uses the ROSTER_DEFAULT_GM_TITLE
+# fallback ("Game Master") rather than repeating the `agent.name`/
+# `avatar.title` GM identity a third time in this file.
+#
+# tuber_4 (coder-aider) WAS deliberately absent — design's "OPEN" tuber,
+# .claude/prompts/build_campaign_episode.py's SPEAKER_TO_WORKER comment —
+# and showed the config/layouts/roundtable.yaml tile_tuber_4 grey "Offline"
+# placeholder. Now cast as Braxton (app/character_schema.py PRESETS
+# "braxton"), bringing that tile online; tile_tuber_4's border_color was
+# updated from colour240 (grey) to colour117 (the same active light-blue
+# every other cast tuber uses) to match.
 roster:
   # Two forms are accepted per slot (app/tile_avatar.py: resolve_slot_character_params,
   # app/build_layout.py: _resolve_tile_title):
@@ -217,6 +221,7 @@ roster:
   tuber_1: {name: "Chadwick",    character_params: chadwick}  # coder / KODI-7
   tuber_2: {name: "Vigil",       character_params: nyx1}      # coder-native / NYX-1
   tuber_3: {name: "Sodacan Bob", character_params: oko2}      # coder-opencode / OKO-2
+  tuber_4: {name: "Braxton",     character_params: braxton}   # coder-aider — newly cast, was "OPEN"
   tuber_5: {name: "Leena",       character_params: tess3}     # tester / TESS-3
   tuber_6: {name: "MAX-1",       character_params: max1}      # manager — active worker, no campaign character cast
   tuber_7: {name: "Iris",        character_params: iris7}     # 8th slot — newly wired up (was the idle spare tile)

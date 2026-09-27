@@ -97,11 +97,12 @@ panes:
       slot: "tuber_0"
 
   # ── Bottom row, split off the base first so both rows divide evenly. ───────
-  # tuber_4 (coder-aider) has no character assigned (see tuber_0.yaml's
-  # `roster` config) — grey/offline like the spare cell, not light blue.
+  # tuber_4 (coder-aider) is now cast as Braxton (config/workers/roundtable.yaml
+  # roster) — same active light-blue border as every other cast tuber, no
+  # explicit border_color override needed (config/panels/tile.yaml's
+  # colour117 default applies). Was grey/"Offline" (colour240) before.
   - use: tile
     id: tile_tuber_4
-    border_color: colour240
     target: tile_tuber_0
     split: v
     size: 50
