@@ -426,3 +426,109 @@ def test_total_video_queue_memory_across_all_workers_is_bounded():
     per_worker = ss.video_thread_queue_size(capture_resolution) * width * height * 4
     assert workers * per_worker <= 8 * 1024 ** 3  # well under the 121 GB host
 
+
+
+# ── local kill switch: supervise_step / wait_for_next_poll / SIGUSR1 ─────────
+from unittest.mock import MagicMock  # noqa: E402
+
+from worker_control import WorkerControl  # noqa: E402
+
+
+@pytest.fixture
+def kill_control(tmp_path):
+    fake_client = MagicMock()
+    fake_client.get.return_value = "1"  # Redis says enabled
+    with patch("worker_control.redis.Redis.from_url", return_value=fake_client):
+        control = WorkerControl("redis://fake:6379", kill_file=str(tmp_path / "worker_disabled"))
+    return control, fake_client
+
+
+def _running_proc():
+    proc = MagicMock()
+    proc.poll.return_value = None
+    return proc
+
+
+def test_supervise_step_stops_ffmpeg_when_kill_file_appears(kill_control, capsys):
+    control, _ = kill_control
+    proc = _running_proc()
+    control.engage_local_override(reason="test")
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        result = ss.supervise_step(control, "coder", proc, ["ffmpeg"])
+    assert result is None
+    proc.terminate.assert_called_once()
+    popen.assert_not_called()
+    assert "reason=local_override" in capsys.readouterr().out
+
+
+def test_supervise_step_stops_ffmpeg_on_kill_file_even_with_redis_down(kill_control):
+    control, fake_client = kill_control
+    import redis
+    fake_client.get.side_effect = redis.RedisError("down")
+    proc = _running_proc()
+    control.engage_local_override(reason="test")
+    assert ss.supervise_step(control, "coder", proc, ["ffmpeg"]) is None
+    proc.terminate.assert_called_once()
+
+
+def test_supervise_step_does_not_restart_ffmpeg_while_kill_file_present(kill_control):
+    control, _ = kill_control
+    control.engage_local_override(reason="test")
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        assert ss.supervise_step(control, "coder", None, ["ffmpeg"]) is None
+    popen.assert_not_called()
+
+
+def test_supervise_step_starts_ffmpeg_without_kill_file(kill_control):
+    control, _ = kill_control
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        result = ss.supervise_step(control, "coder", None, ["ffmpeg"])
+    popen.assert_called_once()
+    assert result is popen.return_value
+
+
+def test_supervise_step_force_off_stops_without_kill_file(kill_control):
+    control, _ = kill_control
+    proc = _running_proc()
+    assert ss.supervise_step(control, "coder", proc, ["ffmpeg"], force_off=True) is None
+    proc.terminate.assert_called_once()
+
+
+def test_wait_for_next_poll_wakes_early_on_kill_file(kill_control):
+    control, _ = kill_control
+    sleeps = []
+
+    def fake_sleep(s):
+        sleeps.append(s)
+        if len(sleeps) == 1:
+            control.engage_local_override(reason="test")
+
+    woke = ss.wait_for_next_poll(control, _running_proc(), lambda: False, sleep=fake_sleep)
+    assert woke is True
+    assert len(sleeps) == 1
+
+
+def test_wait_for_next_poll_sleeps_full_interval_when_nothing_happens(kill_control):
+    control, _ = kill_control
+    sleeps = []
+    woke = ss.wait_for_next_poll(control, _running_proc(), lambda: False, sleep=sleeps.append)
+    assert woke is False
+    assert sum(sleeps) == pytest.approx(ss.POLL_INTERVAL_S)
+
+
+def test_sigusr1_handler_writes_kill_file_and_wakes(kill_control):
+    control, _ = kill_control
+    state = {"running": True, "wake": False, "force_off": False}
+    ss.make_emergency_stop_handler(control, state)(10, None)
+    assert control.local_override_active() is True
+    assert state["wake"] is True
+    assert state["force_off"] is False
+
+
+def test_sigusr1_handler_falls_back_to_force_off_when_write_fails(tmp_path):
+    with patch("worker_control.redis.Redis.from_url", return_value=MagicMock()):
+        control = WorkerControl("redis://fake:6379", kill_file=str(tmp_path / "missing-dir" / "kf"))
+    state = {"running": True, "wake": False, "force_off": False}
+    ss.make_emergency_stop_handler(control, state)(10, None)
+    assert state["force_off"] is True
+    assert state["wake"] is True

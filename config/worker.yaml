@@ -367,3 +367,18 @@ message_bus:
   # incoming ones (to == worker_id or to == "broadcast").
   # Can also be set via WORKER_ID env var (preferred, matches per-container role)
   worker_id: "coder"
+
+
+# ── Worker on/off control (app/worker_control.py) ──────────────────────────────
+worker_control:
+  # Local kill switch (docs/worker_control.md). While this file exists in the
+  # container, the worker is OFF — agent.py pauses and stream_supervisor.py
+  # stops ffmpeg — WITHOUT consulting Redis, so it works with Redis/message-api
+  # down. Created/removed by scripts/emergency_stop.sh / emergency_resume.sh
+  # (docker exec) or by `kill -USR1` to stream_supervisor.py. Survives
+  # agent/supervisor restarts and `docker restart`; wiped when the container is
+  # re-created. Precedence: WORKER_KILL_FILE env var > this key > default.
+  # NOTE: the emergency scripts resolve the path from the container's
+  # WORKER_KILL_FILE env (default /tmp/worker_disabled) — if you change it
+  # here only, set the env var too or the scripts will write the wrong file.
+  kill_file: "/tmp/worker_disabled"
