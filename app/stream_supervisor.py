@@ -292,8 +292,17 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
             f"[f=flv:onfail=ignore]{primary_output}"
             f"|[f=flv:onfail=ignore]{local_output}"
         )
+        # Map by explicit INPUT INDEX + stream type: video is always input 0
+        # (the x11grab -i above); audio is always input 1, whichever branch
+        # of audio_input supplied it (pulse or anullsrc) — both are single
+        # -f/-i pairs immediately after the video input, so "1:a:0" is
+        # correct either way. A bare "0:a" (or the unprefixed "a:0" form)
+        # fails ("Stream map '0:a'/'a:0' matches no streams") because input
+        # 0 (the video capture) has no audio stream at all — confirmed live
+        # on gx10, ffmpeg only resolves stream-type-only map specs within a
+        # SINGLE named input, not across every -i.
         output_args = [
-            "-map", "0:v", "-map", "0:a",
+            "-map", "0:v:0", "-map", "1:a:0",
             "-f", "tee",
             tee_spec,
         ]

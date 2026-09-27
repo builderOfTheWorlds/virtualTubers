@@ -324,7 +324,26 @@ def test_build_ffmpeg_cmd_tees_to_both_destinations_when_local_preview_set():
     assert "rtmp://live.twitch.tv/app/key123" in tee_spec
     assert "rtmp://rtmp-preview:1935/live/key123" in tee_spec
     assert "onfail=ignore" in tee_spec
-    assert "-map" in cmd  # tee muxer requires explicit stream maps
+    # Explicit input-indexed maps, not bare "0:a"/"a:0" — video capture is
+    # always input 0 and audio (pulse or anullsrc) is always input 1, so a
+    # stream-type-only or input-0 audio map matches nothing and ffmpeg
+    # refuses to start ("Stream map matches no streams" — confirmed live).
+    assert cmd[cmd.index("-map") + 1] == "0:v:0"
+    map_indices = [i for i, v in enumerate(cmd) if v == "-map"]
+    assert cmd[map_indices[1] + 1] == "1:a:0"
+
+
+def test_build_ffmpeg_cmd_tee_maps_anullsrc_audio_input_correctly():
+    """The silent-audio fallback (no Pulse monitor) is still input 1 —
+    the -map fix must not be pulse-specific."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=False):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False,
+            local_preview_url="rtmp://rtmp-preview:1935/live",
+        )
+    assert cmd[cmd.index("-map") + 1] == "0:v:0"
+    map_indices = [i for i, v in enumerate(cmd) if v == "-map"]
+    assert cmd[map_indices[1] + 1] == "1:a:0"
 
 
 def test_build_ffmpeg_cmd_tee_does_not_change_encode_args():
