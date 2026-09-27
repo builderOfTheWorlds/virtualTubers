@@ -136,10 +136,10 @@ def handle_test_passed(worker_id, agent_config, llm_client, producer, msg,
         narration, emotion = _complete_with_emotion(
             llm_client, agent_config.get("system_prompt", ""), prompt)
     except Exception as exc:
+        # The win still has to reach the operator — same fallback as
+        # handle_bug_report / handle_clarification_request.
         print(f"[agent:{worker_id}] LLM call failed: {exc}")
-        if state_path:
-            write_state(state_path, "frustrated", action=f"failed: {task}", bubble=f"Ugh... {exc}")
-        return
+        narration, emotion = f"(narration unavailable: {exc}) '{task}' passed its test suite.", "neutral"
 
     print(f"[agent:{worker_id}] {narration}")
     if state_path:

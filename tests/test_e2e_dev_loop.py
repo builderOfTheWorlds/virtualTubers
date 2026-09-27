@@ -234,12 +234,8 @@ def test_manager_llm_down_on_blocker_still_reports(tmp_path, monkeypatch):
     h.bus.assert_chain_consistent(root)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "BUG app/agent_handlers/manager.py:125 handle_test_passed: when the "
-    "manager's narration LLM fails it logs and returns WITHOUT sending the "
-    "milestone manager_report, so a passing task is never reported to the "
-    "operator. bug_report and clarification_request both fall back to a "
-    "'(narration unavailable: ...)' report instead."))
+# Regression: handle_test_passed used to return without reporting when the
+# manager's LLM failed; it now falls back like the other manager handlers.
 def test_manager_llm_down_on_test_passed_still_reports_milestone(tmp_path, monkeypatch):
     h = make_harness(tmp_path, monkeypatch, outcomes=[True])
     h.dev_team(manager_llm=ScriptedLLM("manager", down=True))

@@ -150,9 +150,10 @@ Rules of thumb:
 
 ## Known bugs found by these tests
 
+Fixed: `handle_test_passed` used to return without a milestone `manager_report` when the manager's LLM failed; it now falls back to a `(narration unavailable: ...)` report, and `test_manager_llm_down_on_test_passed_still_reports_milestone` is a regular regression test.
+
 | Test | Bug |
 |---|---|
-| `test_manager_llm_down_on_test_passed_still_reports_milestone` | `app/agent_handlers/manager.py:125` `handle_test_passed` returns without a `manager_report` when the manager's LLM fails. A passing task is then never reported. `bug_report` and `clarification_request` fall back to a `(narration unavailable: ...)` report instead. |
 | `test_narration_only_coder_llm_failure_reaches_manager` | `app/agent_handlers/coder.py:149`: when the coder's narration LLM fails (with no coding backend), it sends `clarification_request` to the task's **sender**. For an operator-assigned task that is `operator`, so the manager never raises a blocker. Compare the backend-failure path (`coder.py:116`, always `manager`) and docs/agent_flow_reference.md §3. |
 
 The dev-loop tests also pin down behaviour that disagrees with
