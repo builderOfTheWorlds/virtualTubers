@@ -25,13 +25,16 @@ def test_dashboard_renders_the_campaign_manager_link(monkeypatch):
     monkeypatch.setattr(panel, "_log_filter_status", _log_filter_status)
 
     client = TestClient(panel.app)
+    # No override set: the link derives host/scheme from the incoming
+    # request (TestClient hits "testserver") and swaps to the manager's
+    # own public port — navigable from whatever machine the operator is
+    # on instead of hard-coding localhost.
     resp = client.get("/")
     assert resp.status_code == 200
-    assert f'href="{panel.CAMPAIGN_MANAGER_URL}"' in resp.text
+    assert 'href="http://testserver:8082"' in resp.text
     assert "Campaign manager" in resp.text
 
-    # Prove the value flows through from the constant (not a coincidence of
-    # the default): change the constant, the rendered href must follow.
-    monkeypatch.setattr(panel, "CAMPAIGN_MANAGER_URL", "http://example.test:9999")
+    # An explicitly-set env var is authoritative over the derived value.
+    monkeypatch.setenv("CAMPAIGN_MANAGER_URL", "http://example.test:9999")
     resp2 = client.get("/")
     assert 'href="http://example.test:9999"' in resp2.text

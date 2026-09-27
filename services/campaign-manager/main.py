@@ -28,6 +28,18 @@ GENERATOR_CONTAINER_NAME = os.environ.get("GENERATOR_CONTAINER_NAME", "virtualtu
 # Publish flow cross-links INTO it (job_detail.html's "view this episode in
 # the control panel" banner) rather than duplicating its viewer. Port 8091
 # matches the docker-compose mapping already in place.
+#
+# BROWSER-FACING vs INTERNAL: the navbar / publish banner render this URL
+# into an <a href> the OPERATOR's browser navigates to. Hard-coding
+# localhost here made every cross-link dead for anyone opening this app on
+# a URL other than localhost (a different machine, the host's LAN IP, a
+# reverse proxy) — the browser resolves localhost to the operator's own
+# machine. So unless CONTROL_PANEL_URL is explicitly set, the rendered
+# link derives its scheme/host/port from the incoming request
+# (_control_panel_public_url) and follows however the operator reached
+# this app; the constant below remains the env-var override AND the
+# publish-redirect default for the one route that builds the URL with no
+# live request in hand (publish_job_ui).
 CONTROL_PANEL_URL = os.environ.get("CONTROL_PANEL_URL", "http://localhost:8091")
 
 log = logging.getLogger("campaign-manager")
@@ -82,6 +94,25 @@ WORKER_IDS = ["coder", "manager", "tester"]
 MESSAGE_TYPE_EXAMPLES = ["operator_message", "status_update"]
 
 
+def _control_panel_public_url(request: Request) -> str:
+    """The control-panel link an operator's browser can actually navigate
+    to: an explicitly-set CONTROL_PANEL_URL env var wins, otherwise derive
+    scheme://host from the incoming request and point it at the control
+    panel's own public port (8091 in docker-compose) — the host/IP the
+    operator reached THIS app on, with the port swapped from ours (8082)
+    to the panel's. That keeps the cross-link correct from any machine
+    (LAN IP, tunnel) without per-host config; a non-standard port mapping
+    or a different host is what the env override is for."""
+    override = os.environ.get("CONTROL_PANEL_URL", "").strip()
+    if override:
+        return override
+    scheme = request.headers.get("x-forwarded-proto") or request.url.scheme
+    host = request.headers.get("x-forwarded-host") or request.url.hostname or "localhost"
+    if ":" in host and not host.startswith("["):  # IPv6 literal
+        host = f"[{host}]"
+    return f"{scheme}://{host}:8091"
+
+
 def _dashboard_context(request: Request, jobs=None, jobs_error=None, message_result=None,
                         configs=None, configs_error=None, packs=None, packs_error=None,
                         profiles=None, profiles_error=None, runs=None, runs_error=None,
@@ -94,7 +125,7 @@ def _dashboard_context(request: Request, jobs=None, jobs_error=None, message_res
         "jobs": jobs or [],
         "jobs_error": jobs_error,
         "generator_api_url": GENERATOR_API_URL,
-        "control_panel_url": CONTROL_PANEL_URL,
+        "control_panel_url": _control_panel_public_url(request),
         "worker_ids": WORKER_IDS,
         "log_types": [],
         "replays": [],
@@ -273,7 +304,7 @@ async def job_detail(request: Request, job_id: str):
             "publish_event_count": request.query_params.get("event_count") or "",
             "publish_error": request.query_params.get("publish_error") or "",
             "control_panel_url": request.query_params.get("control_panel_url")
-                                 or CONTROL_PANEL_URL,
+                                 or _control_panel_public_url(request),
         }
     )
 

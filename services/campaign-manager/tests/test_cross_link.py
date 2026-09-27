@@ -37,11 +37,15 @@ def client(fclient):
 
 
 def test_dashboard_renders_the_control_panel_link(client, monkeypatch):
+    # No override set: the link derives host/scheme from the incoming
+    # request (TestClient hits "testserver") and swaps to the panel's own
+    # public port — so it stays navigable from whatever machine the
+    # operator is on instead of hard-coding localhost.
     resp = client.get("/")
     assert resp.status_code == 200
-    assert f'href="{main.CONTROL_PANEL_URL}" class="btn btn-outline-light btn-sm" target="_blank"' in resp.text
-    # The outgoing link is the constant, not something hard-coded in the
-    # template — prove it moves when the constant does.
-    monkeypatch.setattr(main, "CONTROL_PANEL_URL", "http://example.test:9998")
+    assert 'href="http://testserver:8091" class="btn btn-outline-light btn-sm" target="_blank"' in resp.text
+
+    # An explicitly-set env var is authoritative over the derived value.
+    monkeypatch.setenv("CONTROL_PANEL_URL", "http://example.test:9998")
     resp2 = client.get("/")
     assert 'href="http://example.test:9998"' in resp2.text
