@@ -14,13 +14,16 @@ And the /replays endpoints — the only way an episode enters the Rerun
 Theater library. Episodes used to be files hand-copied onto the deploy
 host; they are now uploaded here, validated (episode_validator.py) and
 stored in Postgres (episode_store.py), which is where the workers read
-them from.
+them from. An upload may be marked `?status=draft` (the 3layer-generator's
+opt-in auto-submit does this): a draft is stored but never airs until a
+human approves it via POST /replays/{name}/approve (the control panel's
+"Drafts awaiting review" list). Rejecting a draft is the existing DELETE.
 """
 import json
 import logging
 import os
 from datetime import datetime
-from typing import Optional
+from typing import Literal, Optional
 
 import psycopg2
 import redis
@@ -283,6 +286,14 @@ async def upload_replay(
         None, description="Override the episode key; defaults to the script's 'source'"),
     overwrite: bool = Query(
         False, description="Replace an episode of the same name instead of failing with 409"),
+    status: Literal["approved", "draft"] = Query(
+        "approved",
+        description="'draft' holds the episode for review — it never airs until "
+                    "POST /replays/{name}/approve. Default 'approved' airs immediately "
+                    "(the behaviour every upload had before drafts existed)."),
+    uploaded_by: str = Query(
+        "operator", min_length=1, max_length=64,
+        description="Free-text attribution stored on the row"),
 ):
     """Validate a pre-built episode script (scripts/build_replay_library.py)
     and store it in the library. The body is the raw episode JSON, so
@@ -319,35 +330,45 @@ async def upload_replay(
     _ensure_schema()
     try:
         created = episode_store.save_episode(
-            info["name"], script, overwrite=overwrite)
+            info["name"], script, overwrite=overwrite, status=status,
+            uploaded_by=uploaded_by)
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
     if not created:
         raise HTTPException(
             status_code=409,
             detail=f"episode {info['name']!r} already exists — re-send with ?overwrite=true")
-    log.info("stored episode name=%s events=%s bytes=%s overwrite=%s",
-             info["name"], info["event_count"], info["byte_size"], overwrite)
-    return {**info, "created": True}
+    log.info("stored episode name=%s events=%s bytes=%s overwrite=%s status=%s "
+             "uploaded_by=%s", info["name"], info["event_count"], info["byte_size"],
+             overwrite, status, uploaded_by)
+    return {**info, "created": True, "status": status}
 
 
 @app.get("/replays")
-def list_replays():
+def list_replays(
+    status: Literal["approved", "draft", "all"] = Query(
+        "approved",
+        description="'approved' (default) is the airable library; 'draft' is the "
+                    "review queue; 'all' is every row"),
+):
     _require_store()
     _ensure_schema()
     try:
-        return {"episodes": episode_store.list_episodes_detailed()}
+        return {"episodes": episode_store.list_episodes_detailed(
+            status=None if status == "all" else status)}
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
 
 
 @app.get("/replays/{name}")
 def get_replay(name: str = Path(...)):
-    """The full stored script, for debugging what a worker will perform."""
+    """The full stored script, for debugging what a worker will perform and
+    for reviewing a draft before approving it — so, unlike the workers' own
+    read path, this one includes drafts."""
     _require_store()
     _ensure_schema()
     try:
-        script = episode_store.load_episode(_safe_name(name))
+        script = episode_store.load_episode(_safe_name(name), include_drafts=True)
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
     if script is None:
@@ -355,8 +376,26 @@ def get_replay(name: str = Path(...)):
     return script
 
 
+@app.post("/replays/{name}/approve")
+def approve_replay(name: str = Path(...)):
+    """Promote a draft so it can air. Idempotent: approving an already
+    approved episode is a 200 with previous_status 'approved'."""
+    _require_store()
+    _ensure_schema()
+    safe = _safe_name(name)
+    try:
+        previous = episode_store.approve_episode(safe)
+    except psycopg2.OperationalError as exc:
+        raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
+    if previous is None:
+        raise HTTPException(status_code=404, detail=f"no episode named {name!r}")
+    log.info("approved episode name=%s previous_status=%s", safe, previous)
+    return {"name": safe, "status": "approved", "previous_status": previous}
+
+
 @app.delete("/replays/{name}")
 def delete_replay(name: str = Path(...)):
+    """Remove an episode whatever its status — rejecting a draft is this."""
     _require_store()
     _ensure_schema()
     safe = _safe_name(name)

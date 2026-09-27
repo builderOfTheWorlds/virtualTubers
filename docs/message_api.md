@@ -37,6 +37,16 @@ and only then inserts it into Postgres via `app/episode_store.py`. The
 workers read the library straight from that table, so there is no mount and
 no host filesystem access involved in adding a show.
 
+**Review gate (drafts).** An upload may be stored as a `draft`
+(`?status=draft`) instead of the default `approved`. A draft has passed the
+same validator but **never airs**: `episode_store`'s worker read paths only
+see approved rows, so a `replay_request` or a `viewer_joined` random pick
+can't reach it. `POST /replays/{name}/approve` promotes a draft;
+rejecting one is the ordinary `DELETE /replays/{name}`. The
+3layer-generator's opt-in auto-submit (docs/draft_submitter.md) is what
+uploads drafts; every existing client (builder scripts, the control-panel
+upload form, `curl`) sends no `status` and keeps the old behaviour.
+
 ## Signature
 
 ```python
@@ -74,11 +84,14 @@ MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 
 @app.post("/replays") async def upload_replay(request: Request,
                                               name: Optional[str] = None,
-                                              overwrite: bool = False) -> dict
+                                              overwrite: bool = False,
+                                              status: Literal["approved", "draft"] = "approved",
+                                              uploaded_by: str = "operator") -> dict
 # body is read via `await request.body()`, not a Body(...) param — see Changelog v1.4.1
-@app.get("/replays") def list_replays() -> dict
-@app.get("/replays/{name}") def get_replay(name: str) -> dict
-@app.delete("/replays/{name}") def delete_replay(name: str) -> dict
+@app.get("/replays") def list_replays(status: Literal["approved", "draft", "all"] = "approved") -> dict
+@app.get("/replays/{name}") def get_replay(name: str) -> dict          # includes drafts
+@app.post("/replays/{name}/approve") def approve_replay(name: str) -> dict
+@app.delete("/replays/{name}") def delete_replay(name: str) -> dict    # also "reject a draft"
 ```
 
 ## Parameters
@@ -102,9 +115,19 @@ query parameters:
   filename stem used to be, so an unmodified episode keeps the key the rest
   of the stack already knows it by (including `voiced_narration.episode`).
 - `overwrite` (bool, optional, default `false`) — replace an episode of the
-  same name instead of failing with `409`.
+  same name instead of failing with `409`. The replacement's `status` wins,
+  so overwriting an aired episode with `status=draft` takes it off air
+  until it is re-approved.
+- `status` (`approved` | `draft`, optional, default `approved`) — review
+  status to store. Anything else is a `422`.
+- `uploaded_by` (str, optional, default `"operator"`, 1-64 chars) — free-text
+  attribution stored on the row (the generator sends `3layer-generator`).
 
-`GET`/`DELETE /replays/{name}` take the library key as a path parameter,
+`GET /replays` takes an optional `status` query parameter: `approved`
+(default — the airable library, exactly what it listed before drafts
+existed), `draft` (the review queue), or `all`.
+
+`GET`/`DELETE /replays/{name}` and `POST /replays/{name}/approve` take the library key as a path parameter,
 validated against the same `^[A-Za-z0-9._-]{1,128}$` rule the upload path
 applies, so a lookup can never be handed something an upload would refuse.
 
@@ -127,9 +150,10 @@ working, and must heal on its own once the database is back.
 - `GET /log-filter/{message_type}` — `{"type": ..., "excluded": bool}`, HTTP 200. Defaults to `excluded: true` for `status_update` and `false` for any other type that's never been toggled.
 - `POST /log-filter/{message_type}/exclude` / `/include` — same shape as the GET, reflecting the new state, HTTP 200.
 - `POST /logs/prune` — `{"deleted": int, "after": ..., "before": ...}`, HTTP 200.
-- `POST /replays` — `{"name": str, "event_count": int, "byte_size": int, "created": true}`, HTTP 200.
-- `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, sorted by name. No scripts.
-- `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform, HTTP 200.
+- `POST /replays` — `{"name": str, "event_count": int, "byte_size": int, "created": true, "status": "approved"|"draft"}`, HTTP 200.
+- `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, `status`, sorted by name, filtered by `?status=` (default approved only). No scripts.
+- `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform and for reviewing a draft before approving it (this endpoint, unlike the workers' read path, **includes drafts**), HTTP 200.
+- `POST /replays/{name}/approve` — `{"name": str, "status": "approved", "previous_status": "draft"|"approved"}`, HTTP 200. Idempotent: approving an approved episode reports `previous_status: "approved"`.
 - `DELETE /replays/{name}` — `{"name": str, "deleted": bool}`, HTTP 200. `deleted: false` means the name was already absent (idempotent, not an error).
 - `GET /logs/containers` — `{"logs": [...]}` — rows from `container_logs` (docs/log_shipper.md) filtered to the given `service` name(s), oldest-first, `container_name`/`stream`/`message`/`log_timestamp` per row.
 - `GET /logs/messages` — `{"messages": [...]}` — rows from `messages` (docs/message_logger.md) filtered to the given `worker_id`(s) (matched against either `from` or `to`), oldest-first, `from`/`to`/`type`/`payload`/`timestamp` per row.
@@ -210,6 +234,15 @@ curl -X POST "http://localhost:8090/replays?overwrite=true" \
 curl -X DELETE http://localhost:8090/replays/sample
 ```
 
+```bash
+# Review gate: upload as a draft (stored, never airs), list the review
+# queue, then approve it — or reject it with the ordinary DELETE.
+curl -X POST "http://localhost:8090/replays?status=draft" \
+  -H "Content-Type: application/json" --data-binary @replays/sample.json
+curl -sS "http://localhost:8090/replays?status=draft" | python3 -m json.tool
+curl -X POST http://localhost:8090/replays/sample/approve
+```
+
 ## Error Handling
 
 - Missing `to` field — HTTP 422 with a Pydantic validation error body.
@@ -227,6 +260,8 @@ curl -X DELETE http://localhost:8090/replays/sample
 - Any `/replays` call when `POSTGRES_*` isn't configured for this service — HTTP 503 before anything else runs.
 - Any `/replays` call when Postgres is unreachable (`psycopg2.OperationalError`) — HTTP 503, mirroring `/logs/prune`. Nothing was written.
 - `GET /replays/{name}` for an unknown episode — HTTP 404.
+- `POST /replays/{name}/approve` for an unknown episode — HTTP 404; Postgres unreachable — HTTP 503; bad name — HTTP 400.
+- `POST /replays?status=<anything but approved/draft>` or `GET /replays?status=<not approved/draft/all>` — HTTP 422, nothing written.
 - `GET`/`DELETE /replays/{name}` with a name containing path separators or other disallowed characters — HTTP 400, before any query runs.
 
 ## Changelog
@@ -237,4 +272,5 @@ curl -X DELETE http://localhost:8090/replays/sample
 - v1.3.0 (2026-07-12) — Added `POST /logs/prune`, a manual time-range delete of `container_logs` rows backed by the new `app/log_prune.py`, complementing log-shipper's automatic age-based retention prune.
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
 - v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.
+- v1.6.0 (2026-09-27) — Draft review gate. `POST /replays` takes optional `status` (`approved` default | `draft`) and `uploaded_by` query params and echoes `status`; `GET /replays` takes `?status=approved|draft|all` (default `approved`, so existing callers are unchanged) and each row now carries `status`; `GET /replays/{name}` includes drafts (review); new `POST /replays/{name}/approve`. Drafts never air — the filter lives in `app/episode_store.py` (docs/episode_store.md v1.1.0), whose `ensure_schema()` now also migrates an existing table (new `status` column, existing rows `approved`).
 - v1.5.0 (2026-09-27) — Added `GET /logs/containers` and `GET /logs/messages`, backed by the new `app/replay_logs.py` (docs/replay_logs.md). Read-only tails of `container_logs` (log-shipper) and `messages` (message-logger) scoped to a caller-given `service`/`worker_id` list plus an optional `since` timestamp — the source data for the control-panel's Rerun Theater "Play" log viewer, which previously had no way to show whether a replay_request actually landed or what a worker printed while preparing narration.

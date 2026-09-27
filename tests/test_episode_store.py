@@ -250,8 +250,8 @@ def test_list_episodes_empty_table_returns_empty_list(monkeypatch):
 def test_list_episodes_detailed_returns_metadata_dicts(monkeypatch):
     uploaded_at = datetime(2023, 1, 1, 10, 0)
     fake_conn = FakeConn(fetch_rows=[
-        ("ep1", "proj1", "sess1", "2023-01-01", 5, 100, "user1", uploaded_at),
-        ("ep2", "proj2", "sess2", "2023-01-02", 3, 150, "user2", None),
+        ("ep1", "proj1", "sess1", "2023-01-01", 5, 100, "user1", uploaded_at, "approved"),
+        ("ep2", "proj2", "sess2", "2023-01-02", 3, 150, "user2", None, "approved"),
     ])
     monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
 
@@ -260,13 +260,16 @@ def test_list_episodes_detailed_returns_metadata_dicts(monkeypatch):
     assert result == [
         {"name": "ep1", "project": "proj1", "session_id": "sess1",
          "date": "2023-01-01", "event_count": 5, "byte_size": 100,
-         "uploaded_by": "user1", "uploaded_at": "2023-01-01T10:00:00"},
+         "uploaded_by": "user1", "uploaded_at": "2023-01-01T10:00:00",
+         "status": "approved"},
         {"name": "ep2", "project": "proj2", "session_id": "sess2",
          "date": "2023-01-02", "event_count": 3, "byte_size": 150,
-         "uploaded_by": "user2", "uploaded_at": None},
+         "uploaded_by": "user2", "uploaded_at": None, "status": "approved"},
     ]
-    sql, _ = fake_conn.cur.calls[0]
+    sql, params = fake_conn.cur.calls[0]
     assert sql == episode_store.LIST_DETAILED_SQL
+    # Default listing is the airable library only.
+    assert params == {"status": "approved"}
 
 
 def test_list_episodes_detailed_empty_table_returns_empty_list(monkeypatch):
@@ -314,15 +317,14 @@ def test_delete_episode_closes_connection_even_when_execute_raises(monkeypatch):
 
 # ── ensure_schema ────────────────────────────────────────────────────────────
 
-def test_ensure_schema_sends_create_table_sql_and_closes_connection(monkeypatch):
+def test_ensure_schema_sends_create_table_then_migrate_sql_and_closes_connection(monkeypatch):
     fake_conn = FakeConn()
     monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
 
     episode_store.ensure_schema()
 
-    assert len(fake_conn.cur.calls) == 1
-    sql, _ = fake_conn.cur.calls[0]
-    assert sql == episode_store.CREATE_TABLE_SQL
+    assert [sql for sql, _ in fake_conn.cur.calls] == [
+        episode_store.CREATE_TABLE_SQL, episode_store.MIGRATE_SQL]
     assert fake_conn.closed is True
 
 
@@ -336,5 +338,171 @@ def test_ensure_schema_closes_connection_even_when_execute_raises(monkeypatch):
 
     with pytest.raises(RuntimeError):
         episode_store.ensure_schema()
+
+    assert fake_conn.closed is True
+
+
+# ── Review status: schema + migration ───────────────────────────────────────
+
+def test_create_table_sql_has_status_column_defaulting_to_approved():
+    sql = episode_store.CREATE_TABLE_SQL
+    assert "status" in sql
+    assert "DEFAULT 'approved'" in sql
+    assert "CHECK (status IN ('draft', 'approved'))" in sql
+
+
+def test_migrate_sql_is_idempotent_and_backfills_existing_rows_as_approved():
+    sql = episode_store.MIGRATE_SQL
+    # IF NOT EXISTS: safe on a fresh table (column already there) and on
+    # every repeat call; DEFAULT 'approved' + NOT NULL: Postgres fills every
+    # pre-existing row with 'approved', so the existing library keeps airing.
+    assert "ADD COLUMN IF NOT EXISTS status" in sql
+    assert "NOT NULL DEFAULT 'approved'" in sql
+    assert "CREATE INDEX IF NOT EXISTS idx_replay_episodes_status" in sql
+
+
+def test_docs_sql_mirrors_status_column():
+    ddl = (Path(__file__).resolve().parents[1] / "docs" / "sql"
+           / "02_create_tables.sql").read_text()
+    assert "ADD COLUMN IF NOT EXISTS status" in ddl
+    assert "CHECK (status IN ('draft', 'approved'))" in ddl
+
+
+# ── Review status: writes ───────────────────────────────────────────────────
+
+def test_save_episode_default_status_is_approved(monkeypatch):
+    fake_conn = FakeConn(rowcount=1)
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    episode_store.save_episode("ep", {"project": "p"})
+
+    _, params = fake_conn.cur.calls[0]
+    assert params["status"] == "approved"
+
+
+@pytest.mark.parametrize("overwrite", [False, True])
+def test_save_episode_draft_status_passed_through(monkeypatch, overwrite):
+    fake_conn = FakeConn(rowcount=1)
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    assert episode_store.save_episode(
+        "ep", {"project": "p"}, overwrite=overwrite, status="draft") is True
+
+    sql, params = fake_conn.cur.calls[0]
+    assert params["status"] == "draft"
+    assert "%(status)s" in sql
+
+
+def test_save_episode_overwrite_sql_replaces_status():
+    # Re-uploading an aired episode as a draft must pull it off air.
+    assert "status = EXCLUDED.status" in episode_store.SAVE_OVERWRITE_SQL
+
+
+@pytest.mark.parametrize("bad", ["", "live", "APPROVED", None])
+def test_save_episode_invalid_status_raises_before_connecting(monkeypatch, bad):
+    def no_connect():
+        raise AssertionError("must not connect for an invalid status")
+    monkeypatch.setattr(episode_store, "_connect", no_connect)
+
+    with pytest.raises(ValueError):
+        episode_store.save_episode("ep", {}, status=bad)
+
+
+# ── Review status: drafts never air ─────────────────────────────────────────
+
+def test_airing_read_sql_filters_to_approved():
+    assert "status = 'approved'" in episode_store.LOAD_SQL
+    assert "status = 'approved'" in episode_store.LIST_SQL
+    assert "status" not in episode_store.LOAD_ANY_SQL
+    assert "status" not in episode_store.LIST_ANY_SQL
+
+
+@pytest.mark.parametrize("include_drafts,expected_attr", [
+    (False, "LOAD_SQL"),
+    (True, "LOAD_ANY_SQL"),
+])
+def test_load_episode_include_drafts_selects_sql(monkeypatch, include_drafts, expected_attr):
+    fake_conn = FakeConn(fetchone_row=({"source": "ep"},))
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    episode_store.load_episode("ep", include_drafts=include_drafts)
+
+    sql, params = fake_conn.cur.calls[0]
+    assert sql == getattr(episode_store, expected_attr)
+    assert params == {"name": "ep"}
+
+
+def test_load_episode_default_is_approved_only(monkeypatch):
+    # The positional-only call replay_pane.resolve_episode makes.
+    fake_conn = FakeConn(fetchone_row=None)
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    assert episode_store.load_episode("a-draft") is None
+    assert fake_conn.cur.calls[0][0] == episode_store.LOAD_SQL
+
+
+@pytest.mark.parametrize("include_drafts,expected_attr", [
+    (False, "LIST_SQL"),
+    (True, "LIST_ANY_SQL"),
+])
+def test_list_episodes_include_drafts_selects_sql(monkeypatch, include_drafts, expected_attr):
+    fake_conn = FakeConn(fetch_rows=[("ep1",)])
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    assert episode_store.list_episodes(include_drafts=include_drafts) == ["ep1"]
+    assert fake_conn.cur.calls[0][0] == getattr(episode_store, expected_attr)
+
+
+@pytest.mark.parametrize("status,expected_sql_attr,expected_params", [
+    ("approved", "LIST_DETAILED_SQL", {"status": "approved"}),
+    ("draft", "LIST_DETAILED_SQL", {"status": "draft"}),
+    (None, "LIST_DETAILED_ANY_SQL", None),
+])
+def test_list_episodes_detailed_status_filter(monkeypatch, status, expected_sql_attr, expected_params):
+    fake_conn = FakeConn(fetch_rows=[])
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    episode_store.list_episodes_detailed(status=status)
+
+    sql, params = fake_conn.cur.calls[0]
+    assert sql == getattr(episode_store, expected_sql_attr)
+    assert params == expected_params
+
+
+def test_list_episodes_detailed_invalid_status_raises(monkeypatch):
+    monkeypatch.setattr(episode_store, "_connect", lambda: FakeConn())
+    with pytest.raises(ValueError):
+        episode_store.list_episodes_detailed(status="all")
+
+
+# ── approve_episode ─────────────────────────────────────────────────────────
+
+@pytest.mark.parametrize("row,expected", [
+    (("draft",), "draft"),
+    (("approved",), "approved"),
+    (None, None),
+])
+def test_approve_episode_returns_previous_status(monkeypatch, row, expected):
+    fake_conn = FakeConn(fetchone_row=row)
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    assert episode_store.approve_episode("ep") == expected
+
+    sql, params = fake_conn.cur.calls[0]
+    assert sql == episode_store.APPROVE_SQL
+    assert params == {"name": "ep"}
+    assert fake_conn.closed is True
+
+
+def test_approve_episode_closes_connection_even_when_execute_raises(monkeypatch):
+    fake_conn = FakeConn()
+
+    def explode(sql, params=None):
+        raise RuntimeError("db exploded")
+    fake_conn.cur.execute = explode
+    monkeypatch.setattr(episode_store, "_connect", lambda: fake_conn)
+
+    with pytest.raises(RuntimeError):
+        episode_store.approve_episode("ep")
 
     assert fake_conn.closed is True

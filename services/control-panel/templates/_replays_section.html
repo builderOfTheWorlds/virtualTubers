@@ -28,6 +28,34 @@
     <button class="btn" type="submit">Upload episode</button>
   </form>
 
+  {% if approve_result %}
+    {% if approve_result.ok %}
+      <div class="banner ok">approved <span class="mono">{{ approve_result.name }}</span> — it is now in the library and can air</div>
+    {% else %}
+      <div class="banner err">approve {{ approve_result.name }} failed: {{ approve_result.error }}</div>
+    {% endif %}
+  {% endif %}
+
+  <h3>Drafts awaiting review <span class="hint">validated but never aired — approve to add to the library, delete to reject</span></h3>
+  {% if drafts_error %}
+    <div class="banner err">{{ drafts_error }}</div>
+  {% elif not drafts %}
+    <p class="hint" id="drafts-empty">no drafts awaiting review</p>
+  {% endif %}
+  {% if drafts %}
+  <table class="panel-table">
+    <thead>
+      <tr><th>name</th><th>project</th><th>date</th><th>events</th><th>uploaded by</th><th>uploaded at</th><th></th></tr>
+    </thead>
+    <tbody id="drafts-table">
+      {% for draft in drafts %}
+        {% include "_draft_row.html" %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <h3>Library</h3>
   {% if replays_error %}
     <div class="banner err">{{ replays_error }}</div>
   {% endif %}

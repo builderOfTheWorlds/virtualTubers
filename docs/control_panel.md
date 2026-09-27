@@ -28,6 +28,12 @@ Sections on the one dashboard page (`GET /`):
   library (docs/episode_store.md). Hitting Play shows a live, auto-refreshing
   log viewer (container stdout/stderr + Kafka bus messages for the 7
   targeted streams, docs/replay_logs.md) underneath the play banner.
+  Above the library table, **Drafts awaiting review** lists episodes stored
+  with `status=draft` (e.g. auto-submitted by the 3layer-generator,
+  docs/draft_submitter.md) with **View / Approve / Delete** — and no Play
+  button: a draft never airs until it is approved. Approve moves it into
+  the library table below; Delete rejects it (message-api's existing
+  `DELETE /replays/{name}`).
 - **Console theme** — live-switch a worker's terminal color scheme (any of
   the 1247 Gogh schemes, see `app/console_theme.py`), auto-refreshed every
   15s. Applies without a redeploy or stream interruption
@@ -61,6 +67,8 @@ POST /replays/upload            -> HTML   # form: file, name, overwrite
 POST /replays/{name}/delete     -> HTML   # empty body on success (row removed), row+error on failure
 GET  /replays/{name}/view       -> HTML   # pretty-printed script fragment
 GET  /replays/{name}/log        -> HTML   # merged container-log + bus-message tail, polled every 3s after Play
+POST /replays/{name}/approve    -> HTML   # promote a draft; re-renders the whole replays section
+POST /replays/{name}/reject     -> HTML   # delete a draft; empty body on success, draft row+error on failure
 
 GET  /partials/theme-workers            -> HTML   # theme table fragment (polled every 15s)
 POST /console-theme/{worker_id}         -> HTML   # form: theme; single updated <tr>
@@ -161,6 +169,10 @@ docker compose up -d control-panel
 - `POST /messages` with a `payload` field that isn't valid JSON, or isn't a
   JSON *object* — rejected **before** calling message-api, with an inline
   error; message-api is never contacted for a client-side-catchable mistake.
+- The dashboard and the replays section make two listing calls:
+  `GET /replays` (approved library) and `GET /replays?status=draft` (review
+  queue). Either can fail independently — the other table still renders,
+  with its own error banner.
 - Every destructive action (disable a worker, delete a replay, prune logs)
   has an `hx-confirm` prompt in the browser before the request is even
   sent — no server-side undo exists for any of them, same as the endpoints
@@ -169,6 +181,16 @@ docker compose up -d control-panel
   `WWW-Authenticate` header, timing-safe compared via `secrets.compare_digest`.
 
 ## Changelog
+
+- v1.3.0 (2026-09-27) — Draft review gate: a "Drafts awaiting review"
+  table in the Rerun Theater section (new `_draft_row.html`), fed by
+  message-api's `GET /replays?status=draft`, with View / Approve / Delete.
+  New routes `POST /replays/{name}/approve` (wraps message-api's new
+  `POST /replays/{name}/approve`, re-renders the section so the episode
+  moves into the library) and `POST /replays/{name}/reject` (wraps the
+  existing `DELETE /replays/{name}`, re-renders a draft row on error).
+  Drafts never get a Play button. The upload form is unchanged — operator
+  uploads are still stored `approved` and air immediately.
 
 - v1.2.0 (2026-09-27) — Rerun Theater "Play" now shows a live log viewer:
   a new `GET /replays/{name}/log` route merges `message-api`'s
