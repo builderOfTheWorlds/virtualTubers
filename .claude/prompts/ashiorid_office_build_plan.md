@@ -605,7 +605,7 @@ All other work packages own disjoint paths.
 | OB-20 | todo (after the review gate) |
 | OB-21, OB-22 | todo |
 | OB-23 | done. `git_client` has real push/fetch/tag/reset (ssh or askpass token, never logged); new `app/gitea_client.py`. NOTE: Gitea returns 422 on self-approval. With one shared token, TL approvals must be COMMENT reviews, or each persona needs its own bot user/token. |
-| OB-24 | done. Seed repo at `C:/Users/matt/PycharmProjects/fraudStop`, tag `loop-seed` (20a1de1), 24 tests green. Canon from product.md: score 0–1000, APPROVE/REVIEW/DECLINE, keyed on account_id. Pushed to Gitea `gitea_admin/fraudStop` (see Handoff). |
+| OB-24 | done. Seed repo at `C:/Users/matt/PycharmProjects/fraudStop`, tag `loop-seed` (20a1de1), 24 tests green. Canon from product.md: score 0–1000, APPROVE/REVIEW/DECLINE, keyed on account_id. Not yet on Gitea (see Handoff). |
 | OB-30 .. OB-33 | todo |
 | OB-40 .. OB-42 | todo |
 
@@ -623,8 +623,8 @@ baseline Windows `tests/test_relay_io.py` failures, not regressions.
 | Repo | Local path | Remote | State |
 |---|---|---|---|
 | virtualTubers | `C:/Users/matt/PycharmProjects/virtualTubers` | Gitea `gitea_admin/virtualTubers`, mirrored to GitHub | branch `feat/ashiorid-office` |
-| sessionCorpus | `C:/Users/matt/PycharmProjects/sessionCorpus` | Gitea `gitea_admin/sessionCorpus` | main. **No GitHub mirror yet** |
-| fraudStop | `C:/Users/matt/PycharmProjects/fraudStop` | Gitea `gitea_admin/fraudStop` | main + tag `loop-seed`. **No GitHub mirror yet**. OB-22/OB-31 expect the repo name `fraud-stop`: rename it in Gitea or update the configs |
+| sessionCorpus | `C:/Users/matt/PycharmProjects/sessionCorpus` | **LOCAL ONLY.** Remote `origin` is set to `ssh://git@192.168.1.120:2222/gitea_admin/sessionCorpus.git`, but the push failed: the repo doesn't exist and push-to-create is off. Create it in Gitea, then run `git push -u origin main` | main, committed |
+| fraudStop | `C:/Users/matt/PycharmProjects/fraudStop` | **LOCAL ONLY.** Same as sessionCorpus. Create `gitea_admin/fraud-stop` (the name OB-22/OB-31 expect), run `git remote set-url origin ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git`, then `git push -u origin main --tags` | main + tag `loop-seed` (20a1de1) |
 
 ### Resume here: next actions, in order
 
