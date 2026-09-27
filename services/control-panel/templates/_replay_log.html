@@ -1,0 +1,16 @@
+<div class="log-lines">
+  {% if error %}
+    <div class="banner err">log unavailable: {{ error }}</div>
+  {% elif not entries %}
+    <div class="log-empty">no log lines yet…</div>
+  {% else %}
+    {% for e in entries %}
+      <div class="log-line log-{{ e.kind }}">
+        <span class="log-ts mono">{{ e.ts }}</span>
+        <span class="log-source mono">{{ e.source }}</span>
+        <span class="log-detail badge {{ 'on' if e.kind == 'bus' else 'off' }}">{{ e.detail }}</span>
+        <span class="log-text">{{ e.text }}</span>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

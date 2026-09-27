@@ -18,11 +18,13 @@ import logging
 import os
 import secrets
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, List, Optional
+from urllib.parse import quote
 
 import httpx
-from fastapi import FastAPI, Form, Request, UploadFile
+from fastapi import FastAPI, Form, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -113,6 +115,21 @@ WORKER_TO_TUBER_SLOT = {
     "tester": "tuber_5",
     "manager": "tuber_0",
 }
+
+# docker-compose SERVICE names (not worker/tuber ids) for the same 7 Play
+# targets — what services/log-shipper's container_logs rows are actually
+# keyed by (docs/replay_logs.md, docs/log_shipper.md). Needed because the
+# log viewer reads container stdout/stderr, which knows nothing about
+# worker ids or tuber slots.
+WORKER_TO_SERVICE = {
+    "coder": "worker-coder",
+    "coder-native": "worker-coder-native",
+    "coder-opencode": "worker-coder-opencode",
+    "coder-aider": "worker-coder-aider",
+    "manager": "worker-manager",
+    "tester": "worker-tester",
+}
+ROUNDTABLE_SERVICE = "worker-roundtable"
 
 # Some episodes (e.g. roundtable-stream-check, built as a "does every seat
 # wire up" sanity check) name their speakers with the literal slot id —
@@ -538,16 +555,72 @@ async def play_replay(request: Request, name: str):
     results.append((ROUNDTABLE_WORKER_ID, roundtable_result))
 
     failed = [worker_id for worker_id, r in results if not r.ok]
+    played_at = datetime.now(timezone.utc).isoformat()
+    log_url = f"/replays/{quote(name)}/log?since={quote(played_at)}"
     if not failed:
-        banner = {"ok": True, "name": name,
+        banner = {"ok": True, "name": name, "log_url": log_url,
                   "to": f"all {len(results)} streams (6 channels + roundtable)"}
     else:
         errors = "; ".join(f"{w}: {r.error}" for w, r in results if not r.ok)
         succeeded = len(results) - len(failed)
-        banner = {"ok": False, "name": name,
+        banner = {"ok": False, "name": name, "log_url": log_url,
                   "error": f"{succeeded}/{len(results)} streams queued — failed: {errors}"}
     return templates.TemplateResponse(
         request, "_replays_section.html", await _replays_section_context(play_result=banner))
+
+
+# ── Replay log viewer (docs/replay_logs.md) ─────────────────────────────
+# The 7 Play targets, in the two shapes message-api's two log endpoints
+# need: container_logs is keyed by compose SERVICE name, messages by bus
+# WORKER id. Order doesn't matter; a dict comprehension would drop
+# duplicates, which can't happen here since each maps 1:1, but a plain list
+# keeps the intent obvious at the call site.
+_LOG_SERVICES = list(WORKER_TO_SERVICE.values()) + [ROUNDTABLE_SERVICE]
+_LOG_WORKER_IDS = WORKER_IDS + [ROUNDTABLE_WORKER_ID]
+
+
+@app.get("/replays/{name}/log", response_class=HTMLResponse)
+async def replay_log(request: Request, name: str, since: str = Query("")):
+    """Merged, chronological tail of container stdout/stderr AND bus
+    messages for every worker a Play click could have targeted — polled by
+    the log viewer div every few seconds starting from the Play click's
+    timestamp (`since`, ISO-8601). Deliberately fetches the WHOLE window
+    from `since` every poll rather than tracking a per-poll cursor: a
+    Rerun Theater airing is short and MAX_LOG_LIMIT-bounded on the
+    message-api side, so re-fetching is simple and correct rather than
+    fast."""
+    container_params: List[Any] = [("service", s) for s in _LOG_SERVICES]
+    message_params: List[Any] = [("worker_id", w) for w in _LOG_WORKER_IDS]
+    if since:
+        container_params.append(("since", since))
+        message_params.append(("since", since))
+
+    containers_result = await _mapi_request(
+        "GET", "/logs/containers", params=container_params + [("limit", "500")])
+    messages_result = await _mapi_request(
+        "GET", "/logs/messages", params=message_params + [("limit", "500")])
+
+    entries = []
+    if containers_result.ok:
+        for row in containers_result.data.get("logs", []):
+            entries.append({
+                "ts": row["log_timestamp"], "source": row["container_name"],
+                "kind": "log", "detail": row["stream"], "text": row["message"],
+            })
+    if messages_result.ok:
+        for row in messages_result.data.get("messages", []):
+            entries.append({
+                "ts": row["timestamp"], "source": f'{row["from"]} → {row["to"]}',
+                "kind": "bus", "detail": row["type"], "text": json.dumps(row["payload"]),
+            })
+    entries.sort(key=lambda e: e["ts"])
+
+    error = None
+    if not containers_result.ok and not messages_result.ok:
+        error = containers_result.error or messages_result.error
+    return templates.TemplateResponse(request, "_replay_log.html", {
+        "name": name, "entries": entries, "error": error,
+    })
 
 
 @app.post("/replays/{name}/delete", response_class=HTMLResponse)

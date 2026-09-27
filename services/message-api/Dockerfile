@@ -11,6 +11,7 @@ COPY app/console_theme.py /app/console_theme.py
 COPY config/themes/gogh_themes.json /config/themes/gogh_themes.json
 COPY app/log_filter_control.py /app/log_filter_control.py
 COPY app/log_prune.py /app/log_prune.py
+COPY app/replay_logs.py /app/replay_logs.py
 # Episode upload (POST /replays): the store, the validator, and everything
 # the validator's dry-run render imports — replay/revoice and the two
 # stdlib-only modules replay itself pulls in at import time.

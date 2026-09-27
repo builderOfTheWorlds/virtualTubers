@@ -130,3 +130,28 @@ textarea { min-width: 260px; font-family: ui-monospace, monospace; }
 .link { color: var(--accent); text-decoration: none; }
 .link:hover { text-decoration: underline; }
 .subtle { color: var(--muted); }
+
+.log-viewer {
+  margin-top: 0.5rem;
+  max-height: 320px;
+  overflow: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+}
+.log-line {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.1rem 0;
+  border-bottom: 1px solid var(--border);
+  white-space: pre-wrap;
+}
+.log-line:last-child { border-bottom: none; }
+.log-ts { color: var(--muted); flex-shrink: 0; }
+.log-source { color: var(--accent); flex-shrink: 0; }
+.log-detail { flex-shrink: 0; }
+.log-text { word-break: break-word; }
+.log-empty { color: var(--muted); padding: 0.5rem 0; }

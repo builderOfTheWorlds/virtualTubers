@@ -151,3 +151,85 @@ def test_play_partial_failure_still_reports_which_streams_failed(monkeypatch):
     assert "tester" in resp.text
     assert "worker unreachable" in resp.text
     assert "ashiorid_smoke" in resp.text
+
+
+def test_play_response_includes_a_log_viewer_pointed_at_the_new_log_route(monkeypatch):
+    async def _mapi_request(method, path, **kwargs):
+        class _R:
+            ok = True
+            error = None
+            data = {"episodes": []} if path == "/replays" else {}
+        return _R()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.post("/replays/ashiorid_smoke/play")
+    assert resp.status_code == 200
+    assert 'hx-get="/replays/ashiorid_smoke/log?since=' in resp.text
+    assert 'hx-trigger="load, every 3s"' in resp.text
+
+
+def test_replay_log_merges_container_and_message_logs_chronologically(monkeypatch):
+    async def _mapi_request(method, path, **kwargs):
+        class _R:
+            ok = True
+            error = None
+            data = None
+        r = _R()
+        if path == "/logs/containers":
+            r.data = {"logs": [
+                {"container_name": "virtualtubers-worker-coder-1", "stream": "stdout",
+                 "message": "preparing narration", "log_timestamp": "2026-08-01T00:00:02+00:00"},
+            ]}
+        elif path == "/logs/messages":
+            r.data = {"messages": [
+                {"from": "operator", "to": "coder", "type": "replay_request",
+                 "payload": {"episode": "ashiorid_smoke"}, "timestamp": "2026-08-01T00:00:01+00:00"},
+            ]}
+        else:
+            r.data = {}
+        return r
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.get("/replays/ashiorid_smoke/log")
+    assert resp.status_code == 200
+    # message (00:00:01) must render before the log line (00:00:02)
+    assert resp.text.index("replay_request") < resp.text.index("preparing narration")
+
+
+def test_replay_log_requests_every_play_target_by_service_and_worker_id(monkeypatch):
+    calls = []
+
+    async def _mapi_request(method, path, **kwargs):
+        calls.append((path, kwargs))
+
+        class _R:
+            ok = True
+            error = None
+            data = {"logs": []} if path == "/logs/containers" else {"messages": []}
+        return _R()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.get("/replays/ashiorid_smoke/log")
+    assert resp.status_code == 200
+
+    container_call = next(c for c in calls if c[0] == "/logs/containers")
+    services = [v for k, v in container_call[1]["params"] if k == "service"]
+    assert set(services) == set(panel.WORKER_TO_SERVICE.values()) | {panel.ROUNDTABLE_SERVICE}
+
+    message_call = next(c for c in calls if c[0] == "/logs/messages")
+    worker_ids = [v for k, v in message_call[1]["params"] if k == "worker_id"]
+    assert set(worker_ids) == set(panel.WORKER_IDS) | {panel.ROUNDTABLE_WORKER_ID}
+
+
+def test_replay_log_reports_error_when_both_sources_fail(monkeypatch):
+    async def _mapi_request(method, path, **kwargs):
+        class _Fail:
+            ok = False
+            error = "postgres unavailable"
+            data = None
+        return _Fail()
+
+    client = _client(monkeypatch, _mapi_request)
+    resp = client.get("/replays/ashiorid_smoke/log")
+    assert resp.status_code == 200
+    assert "postgres unavailable" in resp.text

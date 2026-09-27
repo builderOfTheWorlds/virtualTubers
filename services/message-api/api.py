@@ -33,6 +33,7 @@ from episode_validator import EpisodeInvalid, resolve_name, validate_episode
 from log_filter_control import LogFilterControl
 from log_prune import prune_logs
 from message_bus import build_message, MessageProducer
+from replay_logs import fetch_container_logs, fetch_messages
 from worker_control import WorkerControl
 
 log = logging.getLogger("message_api")
@@ -221,6 +222,41 @@ def prune_logs_endpoint(body: PruneLogsRequest):
     except psycopg2.OperationalError as exc:
         raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
     return {"deleted": deleted, "after": body.after, "before": body.before}
+
+
+# ── Log read endpoints (docs/replay_logs.md) ────────────────────────────────
+# Read-only tails for the control-panel's Rerun Theater "Play" log viewer:
+# container stdout/stderr (log-shipper's container_logs) and Kafka bus
+# messages (message-logger's messages), each scoped to a caller-given
+# identifier list plus an optional `since` timestamp so the panel can poll
+# forward from when it started watching instead of re-fetching everything.
+MAX_LOG_LIMIT = 500
+
+
+@app.get("/logs/containers")
+def get_container_logs(
+    service: list[str] = Query(..., description="Compose service name(s), e.g. worker-coder"),
+    since: Optional[datetime] = Query(None),
+    limit: int = Query(200, ge=1, le=MAX_LOG_LIMIT),
+):
+    try:
+        rows = fetch_container_logs(service, since=since, limit=limit)
+    except psycopg2.OperationalError as exc:
+        raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
+    return {"logs": rows}
+
+
+@app.get("/logs/messages")
+def get_message_logs(
+    worker_id: list[str] = Query(..., description="Worker id(s), e.g. coder, roundtable"),
+    since: Optional[datetime] = Query(None),
+    limit: int = Query(200, ge=1, le=MAX_LOG_LIMIT),
+):
+    try:
+        rows = fetch_messages(worker_id, since=since, limit=limit)
+    except psycopg2.OperationalError as exc:
+        raise HTTPException(status_code=503, detail=f"postgres unavailable: {exc}")
+    return {"messages": rows}
 
 
 # ── Rerun Theater episode library ────────────────────────────────────────────

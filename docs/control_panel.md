@@ -25,7 +25,9 @@ Sections on the one dashboard page (`GET /`):
 - **Prune container logs** — a manual time-range delete of `container_logs`
   rows (docs/log_shipper.md).
 - **Rerun Theater replays** — list, upload, view, and delete episodes in the
-  library (docs/episode_store.md).
+  library (docs/episode_store.md). Hitting Play shows a live, auto-refreshing
+  log viewer (container stdout/stderr + Kafka bus messages for the 7
+  targeted streams, docs/replay_logs.md) underneath the play banner.
 - **Console theme** — live-switch a worker's terminal color scheme (any of
   the 1247 Gogh schemes, see `app/console_theme.py`), auto-refreshed every
   15s. Applies without a redeploy or stream interruption
@@ -58,6 +60,7 @@ GET  /partials/replays          -> HTML   # replays section fragment
 POST /replays/upload            -> HTML   # form: file, name, overwrite
 POST /replays/{name}/delete     -> HTML   # empty body on success (row removed), row+error on failure
 GET  /replays/{name}/view       -> HTML   # pretty-printed script fragment
+GET  /replays/{name}/log        -> HTML   # merged container-log + bus-message tail, polled every 3s after Play
 
 GET  /partials/theme-workers            -> HTML   # theme table fragment (polled every 15s)
 POST /console-theme/{worker_id}         -> HTML   # form: theme; single updated <tr>
@@ -167,6 +170,13 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.2.0 (2026-09-27) — Rerun Theater "Play" now shows a live log viewer:
+  a new `GET /replays/{name}/log` route merges `message-api`'s
+  `GET /logs/containers` (container stdout/stderr for the 7 targeted
+  worker/roundtable containers) and `GET /logs/messages` (bus messages
+  to/from those same 7 ids) into one chronological tail, rendered in the
+  replays section under the play banner and auto-refreshed every 3s
+  (docs/replay_logs.md).
 - v1.1.0 (2026-09-24) — Console theme section: live-switch/clear a worker's
   terminal color scheme via `services/message-api`'s
   `/console-theme(s)` endpoints (`app/console_theme.py`). Covers all 8

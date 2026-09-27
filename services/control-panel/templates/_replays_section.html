@@ -13,6 +13,11 @@
     {% else %}
       <div class="banner err">play {{ play_result.name }} failed: {{ play_result.error }}</div>
     {% endif %}
+    <div id="replay-log-viewer" class="log-viewer"
+         hx-get="{{ play_result.log_url }}"
+         hx-trigger="load, every 3s" hx-swap="innerHTML">
+      <div class="log-lines">loading log…</div>
+    </div>
   {% endif %}
 
   <form class="inline-form" hx-post="/replays/upload" hx-target="#replays-section" hx-swap="outerHTML"

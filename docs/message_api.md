@@ -62,6 +62,13 @@ class PruneLogsRequest(BaseModel):
 
 @app.post("/logs/prune") def prune_logs_endpoint(body: PruneLogsRequest) -> dict
 
+# Log read endpoints (docs/replay_logs.md) — container stdout/stderr and
+# Kafka bus messages, scoped to a caller-given identifier list.
+MAX_LOG_LIMIT = 500
+
+@app.get("/logs/containers") def get_container_logs(service: list[str], since: Optional[datetime] = None, limit: int = 200) -> dict
+@app.get("/logs/messages") def get_message_logs(worker_id: list[str], since: Optional[datetime] = None, limit: int = 200) -> dict
+
 # Rerun Theater episode library (docs/episode_store.md)
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 
@@ -124,6 +131,8 @@ working, and must heal on its own once the database is back.
 - `GET /replays` — `{"episodes": [...]}` — one dict per episode with `name`, `project`, `session_id`, `date`, `event_count`, `byte_size`, `uploaded_by`, `uploaded_at`, sorted by name. No scripts.
 - `GET /replays/{name}` — the full stored episode script, for debugging what a worker will actually perform, HTTP 200.
 - `DELETE /replays/{name}` — `{"name": str, "deleted": bool}`, HTTP 200. `deleted: false` means the name was already absent (idempotent, not an error).
+- `GET /logs/containers` — `{"logs": [...]}` — rows from `container_logs` (docs/log_shipper.md) filtered to the given `service` name(s), oldest-first, `container_name`/`stream`/`message`/`log_timestamp` per row.
+- `GET /logs/messages` — `{"messages": [...]}` — rows from `messages` (docs/message_logger.md) filtered to the given `worker_id`(s) (matched against either `from` or `to`), oldest-first, `from`/`to`/`type`/`payload`/`timestamp` per row.
 - Malformed/missing required fields — HTTP 422 (FastAPI/Pydantic validation).
 
 ## Dependencies
@@ -228,3 +237,4 @@ curl -X DELETE http://localhost:8090/replays/sample
 - v1.3.0 (2026-07-12) — Added `POST /logs/prune`, a manual time-range delete of `container_logs` rows backed by the new `app/log_prune.py`, complementing log-shipper's automatic age-based retention prune.
 - v1.4.0 (2026-08-16) — Added the `/replays` endpoints: `POST` (validate + store an uploaded episode), `GET` (library listing), `GET /{name}` (full script) and `DELETE /{name}`, backed by the new `app/episode_store.py` and `app/episode_validator.py`. This service is now the only writer to the Rerun Theater episode library and owns the `replay_episodes` table's `CREATE TABLE IF NOT EXISTS`, replacing the `/data/replays` bind mount that used to carry episodes onto the workers (docs/replay_pane.md v2.0.0).
 - v1.4.1 (2026-08-16) — Fixed: `POST /replays` returned `422 Input should be a valid bytes` for the exact call this doc and `scripts/build_replay_library.py` tell you to make (`curl -H 'Content-Type: application/json' --data-binary @file`). On fastapi 0.141.1 (pulled in by a previously-unpinned `fastapi>=0.110`), a `bytes`-typed `Body(...)` param gets JSON-decoded before its own type validator runs whenever the client's Content-Type is `application/json`, regardless of any `media_type=` hint passed to `Body()`. `upload_replay` now takes a `Request` and reads `await request.body()` directly, which always returns the raw bytes no matter the Content-Type header — `json.loads()` inside the handler is what actually parses it, same as before. `fastapi`/`starlette` are now pinned exact in `services/message-api/requirements.txt` so this doesn't silently drift again. No API or client-facing change — the documented curl commands now behave as documented. Needs a `message-api` image rebuild + redeploy.
+- v1.5.0 (2026-09-27) — Added `GET /logs/containers` and `GET /logs/messages`, backed by the new `app/replay_logs.py` (docs/replay_logs.md). Read-only tails of `container_logs` (log-shipper) and `messages` (message-logger) scoped to a caller-given `service`/`worker_id` list plus an optional `since` timestamp — the source data for the control-panel's Rerun Theater "Play" log viewer, which previously had no way to show whether a replay_request actually landed or what a worker printed while preparing narration.

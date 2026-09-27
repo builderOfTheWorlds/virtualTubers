@@ -145,6 +145,62 @@ def test_prune_logs_returns_503_when_postgres_unavailable(client):
     assert resp.status_code == 503
 
 
+# ── /logs/containers, /logs/messages (docs/replay_logs.md) ─────────────────
+def test_get_container_logs_requires_at_least_one_service(client):
+    resp = client.get("/logs/containers")
+    assert resp.status_code == 422
+
+
+def test_get_container_logs_passes_services_since_and_limit(client):
+    rows = [{"container_name": "virtualtubers-worker-coder-1", "stream": "stdout",
+             "message": "hi", "log_timestamp": "2026-08-01T00:00:01+00:00"}]
+    with patch("api.fetch_container_logs", return_value=rows) as fake_fetch:
+        resp = client.get(
+            "/logs/containers",
+            params=[("service", "worker-coder"), ("service", "worker-roundtable"),
+                    ("since", "2026-08-01T00:00:00Z"), ("limit", "50")],
+        )
+    assert resp.status_code == 200
+    assert resp.json() == {"logs": rows}
+    args, kwargs = fake_fetch.call_args
+    assert list(args[0]) == ["worker-coder", "worker-roundtable"]
+    assert kwargs["limit"] == 50
+    assert kwargs["since"].isoformat() == "2026-08-01T00:00:00+00:00"
+
+
+def test_get_container_logs_503_when_postgres_unavailable(client):
+    with patch("api.fetch_container_logs", side_effect=psycopg2.OperationalError("refused")):
+        resp = client.get("/logs/containers", params={"service": "worker-coder"})
+    assert resp.status_code == 503
+
+
+def test_get_message_logs_requires_at_least_one_worker_id(client):
+    resp = client.get("/logs/messages")
+    assert resp.status_code == 422
+
+
+def test_get_message_logs_passes_worker_ids_since_and_limit(client):
+    rows = [{"from": "operator", "to": "coder", "type": "replay_request",
+             "payload": {"episode": "demo"}, "timestamp": "2026-08-01T00:00:01+00:00"}]
+    with patch("api.fetch_messages", return_value=rows) as fake_fetch:
+        resp = client.get(
+            "/logs/messages",
+            params=[("worker_id", "coder"), ("worker_id", "roundtable"), ("limit", "10")],
+        )
+    assert resp.status_code == 200
+    assert resp.json() == {"messages": rows}
+    args, kwargs = fake_fetch.call_args
+    assert list(args[0]) == ["coder", "roundtable"]
+    assert kwargs["limit"] == 10
+    assert kwargs["since"] is None
+
+
+def test_get_message_logs_503_when_postgres_unavailable(client):
+    with patch("api.fetch_messages", side_effect=psycopg2.OperationalError("refused")):
+        resp = client.get("/logs/messages", params={"worker_id": "coder"})
+    assert resp.status_code == 503
+
+
 # ── /replays (Rerun Theater episode library) ────────────────────────────────
 # episode_store and validate_episode/resolve_name are monkeypatched per test
 # (never a real Postgres). _schema_ready is forced True so _ensure_schema()
