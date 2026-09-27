@@ -3,13 +3,13 @@ flow around task_assignment, the tester's real-pytest verdict path, and
 coder_id routing through the bug/fix loop."""
 import pytest
 
-import agent
-from agent import (
+from agent_handlers import tester
+from agent_handlers.coder import handle_task_assignment
+from agent_handlers.manager import handle_bug_report
+from agent_handlers.tester import (
     _resolve_workspace,
     _run_tests_and_report,
     _severity_from_failures,
-    handle_bug_report,
-    handle_task_assignment,
 )
 from coding_backend import TaskResult
 from test_runner import TestRunResult
@@ -152,8 +152,8 @@ COMMIT_MSG = {
 
 
 def test_tester_real_pass_reports_test_passed_with_coder_id(monkeypatch):
-    monkeypatch.setattr(agent, "workspace_testable", lambda ws: True)
-    monkeypatch.setattr(agent, "run_pytest", lambda ws: TestRunResult(
+    monkeypatch.setattr(tester, "workspace_testable", lambda ws: True)
+    monkeypatch.setattr(tester, "run_pytest", lambda ws: TestRunResult(
         ran=True, passed=True, exit_code=0, summary="5 passed"))
     producer = FakeProducer()
 
@@ -167,8 +167,8 @@ def test_tester_real_pass_reports_test_passed_with_coder_id(monkeypatch):
 
 
 def test_tester_real_failure_reports_bug_with_failed_tests(monkeypatch):
-    monkeypatch.setattr(agent, "workspace_testable", lambda ws: True)
-    monkeypatch.setattr(agent, "run_pytest", lambda ws: TestRunResult(
+    monkeypatch.setattr(tester, "workspace_testable", lambda ws: True)
+    monkeypatch.setattr(tester, "run_pytest", lambda ws: TestRunResult(
         ran=True, passed=False, exit_code=1,
         failed_tests=["tests/test_calculator.py::test_divide_by_zero_raises"],
         summary="1 failed"))
@@ -184,8 +184,8 @@ def test_tester_real_failure_reports_bug_with_failed_tests(monkeypatch):
 
 
 def test_tester_unreachable_workspace_falls_back_to_stub(monkeypatch):
-    monkeypatch.setattr(agent, "workspace_testable", lambda ws: False)
-    monkeypatch.setattr(agent, "_decide_test_outcome", lambda: (True, None))
+    monkeypatch.setattr(tester, "workspace_testable", lambda ws: False)
+    monkeypatch.setattr(tester, "_decide_test_outcome", lambda: (True, None))
     producer = FakeProducer()
 
     _run_tests_and_report("tester", TESTER_CONFIG, FakeLLM(), producer, COMMIT_MSG)

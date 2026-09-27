@@ -13,8 +13,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
-import agent  # noqa: E402
-from agent import MESSAGE_HANDLERS, handle_replay_request  # noqa: E402
+from agent_handlers import MESSAGE_HANDLERS  # noqa: E402
+from agent_handlers.replay_relay import handle_replay_request  # noqa: E402
 import replay_pane  # noqa: E402
 from replay_pane import (  # noqa: E402
     list_episodes,
