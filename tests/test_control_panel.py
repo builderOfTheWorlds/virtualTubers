@@ -201,6 +201,116 @@ def test_upload_replay_forwards_raw_body_and_params(client):
     assert args == ("POST", "/replays")
     assert kwargs["content"] == b'{"source": "ep1"}'
     assert kwargs["params"]["overwrite"] == "true"
+    # The panel upload never sends ?status= — operator uploads stay approved.
+    assert "status" not in kwargs["params"]
+
+
+# ── draft review ─────────────────────────────────────────────────────────
+def _library_and_drafts(library, drafts, extra=None):
+    """side_effect answering the two GET /replays listings separately."""
+    async def side_effect(method, path, **kwargs):
+        if extra is not None:
+            hit = extra(method, path, **kwargs)
+            if hit is not None:
+                return hit
+        if method == "GET" and path == "/replays":
+            params = kwargs.get("params") or {}
+            if params.get("status") == "draft":
+                return mapi_result(data={"episodes": drafts})
+            return mapi_result(data={"episodes": library})
+        raise AssertionError(f"unexpected call {method} {path} {kwargs}")
+    return side_effect
+
+
+def test_partial_replays_renders_drafts_separately_with_approve_and_no_play(client):
+    client.mapi.side_effect = _library_and_drafts(
+        [{"name": "aired-ep"}], [{"name": "draft-ep", "uploaded_by": "3layer-generator"}])
+
+    resp = client.get("/partials/replays")
+
+    assert resp.status_code == 200
+    assert 'id="draft-row-draft-ep"' in resp.text
+    assert 'hx-post="/replays/draft-ep/approve"' in resp.text
+    assert 'hx-post="/replays/draft-ep/reject"' in resp.text
+    # A draft must never get a Play button.
+    assert "/replays/draft-ep/play" not in resp.text
+    assert "/replays/aired-ep/play" in resp.text
+    assert "3layer-generator" in resp.text
+
+
+def test_partial_replays_no_drafts_shows_empty_hint(client):
+    client.mapi.side_effect = _library_and_drafts([{"name": "aired-ep"}], [])
+    resp = client.get("/partials/replays")
+    assert "no drafts awaiting review" in resp.text
+
+
+def test_partial_replays_drafts_error_shown_library_still_renders(client):
+    def extra(method, path, **kwargs):
+        if (kwargs.get("params") or {}).get("status") == "draft":
+            return mapi_result(ok=False, status_code=503, error="drafts listing broke")
+        return None
+    client.mapi.side_effect = _library_and_drafts([{"name": "aired-ep"}], [], extra)
+
+    resp = client.get("/partials/replays")
+
+    assert "drafts listing broke" in resp.text
+    assert "aired-ep" in resp.text
+
+
+def test_approve_replay_forwards_and_rerenders_section(client):
+    calls = []
+
+    def extra(method, path, **kwargs):
+        calls.append((method, path))
+        if method == "POST":
+            return mapi_result(data={"name": "draft-ep", "status": "approved",
+                                     "previous_status": "draft"})
+        return None
+    client.mapi.side_effect = _library_and_drafts([{"name": "draft-ep"}], [], extra)
+
+    resp = client.post("/replays/draft-ep/approve")
+
+    assert resp.status_code == 200
+    assert calls[0] == ("POST", "/replays/draft-ep/approve")
+    assert "approved" in resp.text
+    assert 'id="replays-section"' in resp.text
+    # Now in the library table, where Play lives.
+    assert "/replays/draft-ep/play" in resp.text
+
+
+def test_approve_replay_error_shows_banner(client):
+    def extra(method, path, **kwargs):
+        if method == "POST":
+            return mapi_result(ok=False, status_code=404, error="no episode named 'gone'")
+        return None
+    client.mapi.side_effect = _library_and_drafts([], [], extra)
+
+    resp = client.post("/replays/gone/approve")
+
+    assert resp.status_code == 200
+    assert "approve gone failed" in resp.text
+    assert "no episode named" in resp.text
+
+
+def test_reject_replay_success_deletes_and_returns_empty_body(client):
+    client.mapi.return_value = mapi_result(data={"name": "draft-ep", "deleted": True})
+
+    resp = client.post("/replays/draft-ep/reject")
+
+    assert resp.status_code == 200
+    assert resp.text == ""
+    args, _ = client.mapi.await_args_list[0]
+    assert args == ("DELETE", "/replays/draft-ep")
+
+
+def test_reject_replay_error_keeps_draft_row_without_play(client):
+    client.mapi.return_value = mapi_result(ok=False, status_code=503, error="postgres unavailable")
+
+    resp = client.post("/replays/draft-ep/reject")
+
+    assert "postgres unavailable" in resp.text
+    assert 'id="draft-row-draft-ep"' in resp.text
+    assert "/play" not in resp.text
 
 
 # ── _mapi_request itself (run via asyncio.run — no pytest-asyncio in this

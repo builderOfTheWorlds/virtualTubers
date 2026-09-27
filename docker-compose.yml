@@ -914,6 +914,13 @@ services:
       # host, so loopback is correct here — override only if that mapping
       # changes.
       MESSAGE_API_URL: ${MESSAGE_API_URL:-http://127.0.0.1:8090}
+      # Opt-in: when a `publish` job completes, POST its episode.json to
+      # MESSAGE_API_URL/replays?status=draft. A draft NEVER airs until an
+      # operator approves it in the control panel's "Drafts awaiting review"
+      # list. Off by default; a submit failure is recorded on the job
+      # (result.auto_submit) and never fails it. docs/draft_submitter.md.
+      AUTO_SUBMIT_DRAFTS: ${AUTO_SUBMIT_DRAFTS:-false}
+      AUTO_SUBMIT_TIMEOUT_S: ${AUTO_SUBMIT_TIMEOUT_S:-60}
     # host networking already binds 0.0.0.0:8000 for the app's own
     # LLM_BASE_URL default (127.0.0.1:11434 Ollama) — but port 8000 itself
     # collides with Portainer on this host, so run the API on 8001 instead.

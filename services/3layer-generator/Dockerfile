@@ -26,5 +26,9 @@ COPY services/3layer-generator/generator_api.py /app/generator_api.py
 # next to runner.py, matching the rest of this image's layout.
 COPY services/3layer-generator/episode_builder.py /app/episode_builder.py
 COPY services/3layer-generator/campaign_episode_builder.py /app/campaign_episode_builder.py
+# Opt-in auto-submit of a published episode to message-api as a review draft
+# (AUTO_SUBMIT_DRAFTS, docs/draft_submitter.md). runner.build_default_context
+# imports it by bare name, so it must sit flat next to runner.py too.
+COPY services/3layer-generator/draft_submitter.py /app/draft_submitter.py
 
 CMD ["uvicorn", "generator_api:app", "--host", "0.0.0.0", "--port", "8000"]

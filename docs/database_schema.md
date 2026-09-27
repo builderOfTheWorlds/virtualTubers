@@ -100,7 +100,7 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py`
 
 ## `replay_episodes`
 
-**Owner:** `message-api` service via `app/episode_store.py`. `services/message-api/api.py` is the only writer (`POST /replays`, `DELETE /replays/{name}`) and also runs the `CREATE TABLE IF NOT EXISTS` — best-effort at import, retried on every `/replays` request until it succeeds, since unlike `messages`/`container_logs` no long-lived consumer owns this table. Read directly by `app/replay_pane.py` and `app/agent.py` on every worker.
+**Owner:** `message-api` service via `app/episode_store.py`. `services/message-api/api.py` is the only writer (`POST /replays`, `POST /replays/{name}/approve`, `DELETE /replays/{name}`) and also runs the `CREATE TABLE IF NOT EXISTS` — best-effort at import, retried on every `/replays` request until it succeeds, since unlike `messages`/`container_logs` no long-lived consumer owns this table. Read directly by `app/replay_pane.py` and `app/agent.py` on every worker.
 
 **Why it exists:** the Rerun Theater episode library (`docs/episode_store.md`). Episodes used to be JSON files that an operator hand-copied to the deploy host, bind-mounted read-only into every worker at `/data/replays`, with nothing validating them anywhere in the loop — a malformed or unredacted script was discovered only when it failed, or leaked, live on stream. They are now uploaded to `POST /replays`, validated (`docs/episode_validator.md`: shape → name → leak audit → dry-run render) and stored here; the mount is gone.
 
@@ -115,8 +115,11 @@ Defined in: `docs/sql/02_create_tables.sql`, `services/message-logger/logger.py`
 | `byte_size` | INTEGER | NOT NULL | Size of the serialized script in UTF-8 bytes |
 | `uploaded_by` | TEXT | NOT NULL, DEFAULT `'operator'` | Free-text attribution for the upload |
 | `uploaded_at` | TIMESTAMPTZ | NOT NULL, DEFAULT `now()` | When the episode was uploaded; refreshed by an `?overwrite=true` re-upload |
+| `status` | TEXT | NOT NULL, DEFAULT `'approved'`, CHECK `IN ('draft','approved')` | Review gate. `draft` rows are stored but **never air** — `episode_store`'s worker read paths select `status = 'approved'` only. Promoted by `POST /replays/{name}/approve`; a draft is rejected by deleting it |
 
-Indexes: `idx_replay_episodes_uploaded_at (uploaded_at DESC)`.
+Indexes: `idx_replay_episodes_uploaded_at (uploaded_at DESC)`, `idx_replay_episodes_status (status)`.
+
+Migration: `status` was added after the table first shipped. `episode_store.ensure_schema()` runs `ALTER TABLE replay_episodes ADD COLUMN IF NOT EXISTS status ... DEFAULT 'approved'` after the `CREATE TABLE IF NOT EXISTS`, so an existing table gains the column with every pre-existing row backfilled as `approved` (the library keeps airing unchanged); the same statement is in `docs/sql/02_create_tables.sql`. Idempotent on every later run.
 
 Inserts use `ON CONFLICT (name) DO NOTHING` normally — `message-api` turns the resulting "no row written" into a `409` — and `ON CONFLICT (name) DO UPDATE` when the upload passes `?overwrite=true`.
 
