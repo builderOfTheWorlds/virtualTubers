@@ -168,7 +168,7 @@ def run(args):
     session = ThemeSession(args, _initial_theme(args), args.initial_mood)
     sources = ControlSources(args.worker_id, cue_path=args.cue_path,
                              redis_client=_make_redis(args.redis_url))
-    resolver = MoodResolver(min_dwell_s=args.min_dwell_s)
+    resolver = MoodResolver(min_dwell_s=args.min_dwell_s, initial_mood=args.initial_mood)
     writer = PacatWriter(args.sink, session.engine.sr)
     writer.start()
 

@@ -166,10 +166,13 @@ def parse_scene_cue(data):
 class MoodResolver:
     """Pure decision logic, clock injected for tests."""
 
-    def __init__(self, min_dwell_s=20.0, clock=time.monotonic):
+    def __init__(self, min_dwell_s=20.0, clock=time.monotonic, initial_mood="neutral",
+                 initial_intensity=0.5):
         self.min_dwell_s = float(min_dwell_s)
         self.clock = clock
-        self.current = MoodRequest("neutral", 0.5, "hold")
+        # Held until the first scene cue / GM override — the worker config's
+        # music.initial_mood, so the show opens in the chosen colour.
+        self.current = MoodRequest(initial_mood, float(initial_intensity), "hold")
         self._changed_at = -1e9
         self._pending_scene = None
 

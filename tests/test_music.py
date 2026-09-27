@@ -375,3 +375,10 @@ def test_scene_cue_theme_round_trips(tmp_path):
     write_scene_cue("sadness", scene_id="s3", intensity=0.7, path=cue, theme="ashiorid")
     req = ControlSources("roundtable", cue_path=cue).read_scene()
     assert (req.mood, req.scene_id, req.theme) == ("sadness", "s3", "ashiorid")
+
+
+def test_resolver_holds_configured_initial_mood_until_first_cue():
+    from music.control import MoodResolver
+    r = MoodResolver(initial_mood="peacefulness", clock=lambda: 0.0)
+    req = r.resolve(None, None)
+    assert (req.mood, req.source) == ("peacefulness", "hold")
