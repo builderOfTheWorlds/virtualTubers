@@ -1,10 +1,17 @@
 #!/bin/bash
-# Mock `zfs` — datasets live in $MOCK_STATE/datasets, mountpoints under $MOCK_STATE/fs.
+# Mock `zfs` — datasets live in $MOCK_STATE/datasets, mountpoints under $MOCK_STATE/fs,
+# snapshots (full names, dataset@snap) in $MOCK_STATE/snapshots.
 S="$MOCK_STATE"
 echo "zfs $*" >> "$S/calls"
 ds="${*: -1}"
 case "$1" in
     list)
+        # `zfs list ... -t snapshot ... <dataset>`: that dataset's snapshots, one
+        # name per line, in the order they were recorded (NOT sorted).
+        if [[ " $* " == *" -t snapshot "* ]]; then
+            grep "^$ds@" "$S/snapshots" 2>/dev/null
+            exit 0
+        fi
         if [[ "$*" == *"-r -t"* ]]; then
             echo "NAME                                   USED  CREATION"
             grep -x "$ds" "$S/datasets" | sed 's/$/  1.2G  Thu Sep 24 2026/'
@@ -17,7 +24,14 @@ case "$1" in
     create)
         echo "$ds" >> "$S/datasets"
         mkdir -p "$S/fs/$ds" ;;
+    snapshot)
+        echo "$ds" >> "$S/snapshots" ;;
     destroy)
+        if [[ "$ds" == *@* ]]; then
+            grep -vx "$ds" "$S/snapshots" > "$S/snapshots.tmp" || true
+            mv "$S/snapshots.tmp" "$S/snapshots"
+            exit 0
+        fi
         grep -vx "$ds" "$S/datasets" > "$S/datasets.tmp" || true
         mv "$S/datasets.tmp" "$S/datasets"
         rm -rf "${S:?}/fs/$ds" ;;

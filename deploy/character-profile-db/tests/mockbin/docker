@@ -1,0 +1,46 @@
+#!/bin/bash
+# Mock `docker` as run inside CT 101 (`pct exec 101 -- docker ...`; the pct mock
+# hands every `docker exec` it doesn't answer itself over to this script).
+#
+#   docker exec [-i] <container> pg_dump ... <db>   stdout "PGDMP mock dump of <db>";
+#                                                   fails if $MOCK_STATE/pg_dump_fail exists
+#   docker exec -i <container> pg_restore ... -d <db>  stdin saved to $MOCK_STATE/restored
+#   docker exec [-i] <container> psql ... -d <db> ... "<sql>"
+#                                                   "<db>: <sql>" appended to $MOCK_STATE/sql;
+#                                                   SQL containing count( prints
+#                                                   $MOCK_STATE/counts.<db> (table|rows lines)
+# The container must be listed in $MOCK_STATE/containers.
+S="$MOCK_STATE"
+echo "docker $*" >> "$S/calls"
+[[ "$1" == "exec" ]] || exit 0
+shift
+while [[ "$1" == -* ]]; do shift; done          # -i / -t / -it
+container="$1"; shift
+if ! grep -qx "$container" "$S/containers" 2>/dev/null; then
+    echo "Error response from daemon: No such container: $container" >&2
+    exit 1
+fi
+tool="$1"; shift
+db=""
+args=("$@")
+for ((i = 0; i < ${#args[@]}; i++)); do
+    [[ "${args[i]}" == "-d" ]] && db="${args[i+1]}"
+done
+case "$tool" in
+    pg_dump)
+        if [[ -f "$S/pg_dump_fail" ]]; then
+            echo "pg_dump: error: connection to server failed" >&2
+            exit 1
+        fi
+        echo "PGDMP mock dump of ${*: -1}" ;;
+    pg_restore)
+        cat > "$S/restored"
+        [[ -f "$S/pg_restore_fail" ]] && exit 1 ;;
+    psql)
+        sql="${*: -1}"
+        echo "$db: $sql" >> "$S/sql"
+        case "$sql" in
+            *count\(*) cat "$S/counts.$db" 2>/dev/null ;;
+        esac ;;
+esac
+exit 0

@@ -1,0 +1,160 @@
+task_id: character_wp02_backup
+
+goal: |
+  Write `deploy/character-profile-db/scripts/backup.sh`: the nightly backup job
+  for the `character_profile` database (character v4 plan §5.1, decision D-12).
+  THIS TARGET IS A BASH SCRIPT, not Python. Emit it in the same
+  `=== FILE: ... ===` block format, with a ```bash fence.
+
+  It runs as root on mafober, the Proxmox VE host, from root's crontab at 00:30.
+  The database lives in a container (`character-profile-db`) inside CT 101, so
+  every database command goes through `pct exec 101 -- docker exec ...`:
+
+    1. `pct exec 101 -- docker exec character-profile-db pg_dump -U postgres -Fc character_profile`
+       writes to `$BACKUP_ROOT/daily/character_profile_<YYYYmmdd_HHMM>.dump`.
+    2. On a Sunday (`date +%u` is 7) the same dump is also copied to
+       `$BACKUP_ROOT/weekly/` under the same file name.
+    3. `zfs snapshot tank_0/utilities/character-profile-db@auto-<YYYYmmdd>`.
+    4. Retention: keep the newest 14 daily dumps, the newest 8 weekly dumps
+       and the newest 14 `@auto-` snapshots. Prune ONLY names this script
+       creates (the name patterns below); never touch anything else.
+    5. Every run writes a `backup_runs` row via psql (status ok or failed).
+
+  `--restore-drill` restores the newest daily dump into a scratch database
+  `character_profile_drill` in the same container, compares the row count of
+  every table against the live database, drops the drill database, and exits
+  1 on any mismatch. It proves the backups can actually be restored.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: pruning deletes something the script
+  did not create. The dataset and the backup directory are shared with the
+  operator's own files and snapshots (for example a `@manual-before-upgrade`
+  snapshot taken before an upgrade). Memory fragments are LLM output that
+  cannot be regenerated, so a prune that matches too broadly silently destroys
+  the only recovery point. Prune by exact name pattern, sort by the date stamp
+  in the NAME, and keep a file or snapshot whenever you are unsure.
+
+target_files:
+  - deploy/character-profile-db/scripts/backup.sh
+
+test_files:
+  - tests/test_character_profile_db_scripts.py
+
+context_files:
+  - deploy/character-profile-db/tests/run_tests.sh     # THE ACCEPTANCE CHECKS (section 17, B1-B8)
+  - deploy/character-profile-db/scripts/install.sh     # copy its header, logging, run(), root check
+  - deploy/character-profile-db/tests/mockbin/docker   # what the mocked container answers
+
+interface: |
+  Usage (as root on mafober):
+      backup.sh                   dump + weekly copy + snapshot + prune + backup_runs row
+      backup.sh --dry-run         print every command that would change something; change nothing
+      backup.sh --restore-drill   restore the newest daily dump into character_profile_drill and compare
+      backup.sh -h | --help       usage, exit 0
+  Unknown option: log_error + usage, exit 1.
+
+  Configuration block at the top (environment overrides, like install.sh):
+      CT_ID="${CT_ID:-101}"
+      DATASET="${DATASET:-tank_0/utilities/character-profile-db}"
+      BACKUP_ROOT="${BACKUP_ROOT:-/tank_0/utilities/character-profile-db-backups}"
+      DB_CONTAINER="character-profile-db"
+      APP_DB="${CHARACTER_DB_NAME:-character_profile}"
+      DRILL_DB="${APP_DB}_drill"
+      KEEP_DAILY=14   KEEP_WEEKLY=8   KEEP_SNAPSHOTS=14
+
+  Order of checks, before anything else runs:
+      1. `id -u` is not 0  -> log_error "This script must be run as root on the Proxmox host (use sudo)", exit 1.
+         Nothing else may be called first (the test asserts no pct/zfs call happened).
+      2. `pct` and `zfs` must be on PATH (same loop as install.sh), else exit 1.
+
+  Time: read it with `date` ONLY through format flags, never `date -d`:
+      stamp=$(date +%Y%m%d_%H%M)   day=$(date +%Y%m%d)   dow=$(date +%u)
+
+  Names (these regexes are the ONLY things pruning may delete):
+      dump file:  character_profile_<YYYYmmdd>_<HHMM>.dump   regex ^character_profile_[0-9]{8}_[0-9]{4}\.dump$
+      snapshot:   $DATASET@auto-<YYYYmmdd>                  regex ^<DATASET>@auto-[0-9]{8}$
+  So `notes.txt`, `character_profile_manual.dump`, `other_20200101_0000.dump`,
+  `character_profile_20200101_0000.dump.partial`, `@manual-before-upgrade` and
+  `@auto-notadate` are all kept.
+
+  Normal run:
+      mkdir -p "$BACKUP_ROOT/daily" "$BACKUP_ROOT/weekly"       (not in --dry-run)
+      pct exec "$CT_ID" -- docker exec "$DB_CONTAINER" pg_dump -U postgres -Fc "$APP_DB" > "<daily file>.tmp"
+          on failure: remove the .tmp, write a backup_runs row with status 'failed',
+          log_error, exit 1. On success: mv the .tmp to the final name.
+      if dow == 7: cp the daily file to "$BACKUP_ROOT/weekly/<same name>"
+      zfs snapshot "$DATASET@auto-$day"
+      prune daily (keep 14), weekly (keep 8), snapshots (keep 14)
+      write a backup_runs row with status 'ok' (kind 'weekly' on a Sunday, else 'daily'),
+      path and bytes of the dump; exit 0.
+  The newest files survive pruning because the new dump is counted: with 20
+  old dumps plus today's, the 7 oldest are removed.
+
+  Listing snapshots: exactly
+      zfs list -H -o name -t snapshot "$DATASET"
+  (the dataset is the LAST argument). The output order is NOT sorted: filter
+  with the regex above, then `sort`, then remove all but the newest 14 with
+  `zfs destroy <dataset>@auto-<day>` (one snapshot per call, never -r).
+
+  Listing dumps: `ls` or a glob in the directory, filter with the regex, `sort`
+  (the stamp makes lexical order = time order), delete all but the newest N
+  with `rm -f "<dir>/<name>"`.
+
+  psql calls (row counts, backup_runs, drill create/drop) always have this shape,
+  with the SQL as the LAST argument:
+      pct exec "$CT_ID" -- docker exec "$DB_CONTAINER" psql -U postgres -d <db> -v ON_ERROR_STOP=1 -tAc "<sql>"
+  backup_runs row (one INSERT per run, finished_at = now()):
+      INSERT INTO backup_runs (kind, started_at, finished_at, status, path, bytes, detail)
+      VALUES ('<kind>', '<start ts>', now(), '<ok|failed>', '<path>', <bytes|NULL>, '<detail>')
+  Status literals are single-quoted SQL strings: 'ok' or 'failed'. Quote any
+  text you embed (double every single quote) — the detail may hold an error.
+
+  --dry-run:
+      Every changing command is printed through run() exactly like install.sh:
+          echo "  [dry-run] $*"
+      and not executed. The dump cannot go through run() because of the
+      redirect, so print it yourself as:
+          [dry-run] pct exec 101 -- docker exec character-profile-db pg_dump -U postgres -Fc character_profile > <daily file>
+      The prune still lists what it would delete (`[dry-run] rm -f <dir>/<name>`
+      and `[dry-run] zfs destroy <snapshot>`), computed as if today's dump and
+      snapshot existed. No mkdir, no pg_dump, no zfs snapshot/destroy, no
+      backup_runs row. Exit 0.
+
+  --restore-drill:
+      newest = the newest daily dump by name (regex above). None -> log_error, exit 1.
+      psql -d postgres: DROP DATABASE IF EXISTS character_profile_drill
+      psql -d postgres: CREATE DATABASE character_profile_drill
+      pct exec "$CT_ID" -- docker exec -i "$DB_CONTAINER" pg_restore -U postgres -d character_profile_drill < "<newest>"
+      counts: run COUNT_SQL once against $APP_DB and once against $DRILL_DB
+      psql -d postgres: DROP DATABASE IF EXISTS character_profile_drill   (ALWAYS, also after a mismatch or restore error)
+      identical counts -> log_info, exit 0. Otherwise log_error naming every
+      table whose count differs (e.g. "experience_events: live 120, drill 119"), exit 1.
+      A backup_runs row with kind 'restore-drill' may also be written.
+  COUNT_SQL returns one `table|rows` line per base table in schema public,
+  sorted by table name, for example:
+      SELECT table_name || '|' || (xpath('/row/c/text()', query_to_xml(format('SELECT count(*) AS c FROM %I.%I', table_schema, table_name), false, true, '')))[1]::text FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE' ORDER BY table_name
+  (it must contain the text `count(`, which is how the mock recognises it).
+
+notes: |
+  - Bash only. `#!/bin/bash`, a header comment like install.sh (what, why,
+    usage, overrides), then `set -euo pipefail`. Under `set -e`, capture
+    pg_dump's status explicitly with `if ! ...; then` so the failure path runs.
+  - Copy install.sh's color/logging helpers (log_info/log_warn/log_error), its
+    usage() style and its run() helper verbatim.
+  - The tests put mocks on PATH for pct, zfs, docker, date and id (see
+    deploy/character-profile-db/tests/mockbin/). The pct mock forwards every
+    `pct exec 101 -- docker exec ...` it does not answer itself to the docker
+    mock. Do not call docker directly on the host: mafober has no docker, only
+    CT 101 does.
+  - Never print or embed passwords. The script authenticates as `postgres`
+    inside the container (local socket), so it needs none.
+  - Do not create a ZFS dataset for BACKUP_ROOT. `mkdir -p` the two
+    directories (plan §5.1 says install.sh creates that dataset, but it does
+    not — tracker question; do not work around it here).
+  - Do not edit run_tests.sh, the mocks, README.md or any other file. The
+    README "Backups" section is a by-hand docs step after promote.
+  - Pending guard: until this file exists, run_tests.sh section 17 and
+    tests/test_character_profile_db_scripts.py::test_backup_script_passes_mocked_checks
+    skip. The harness sandbox (tools/qwen_worker/sandbox.py) copies deploy/
+    and tests/ and overlays the staged backup.sh, so in the sandbox the file
+    exists and all B1-B8 checks run for real. The existing install/uninstall
+    checks (58) must keep passing: don't rely on anything they don't provide.

@@ -1,0 +1,9 @@
+#!/bin/bash
+# Mock `date`: the real GNU date, pinned to the instant in $MOCK_STATE/now
+# (default Tuesday 2026-10-06 00:30). Every format flag passes through.
+now="$(cat "$MOCK_STATE/now" 2>/dev/null || echo '2026-10-06 00:30:00')"
+for real in /usr/bin/date /bin/date; do
+    [[ -x "$real" ]] && exec "$real" -d "$now" "$@"
+done
+echo "mock date: no real date binary found" >&2
+exit 1

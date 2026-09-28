@@ -38,6 +38,8 @@ case "$1" in
                         case "$sql" in
                             *pg_get_userbyid*) cat "$S/dbowner" 2>/dev/null || echo character_profile ;;
                             *extversion*)      cat "$S/extversion" 2>/dev/null || echo 0.8.6 ;;
+                            # anything else (pg_dump, pg_restore, backup psql): the docker mock
+                            *)                 exec "$(dirname "$0")/docker" "$@" ;;
                         esac ;;
                 esac ;;
         esac ;;
