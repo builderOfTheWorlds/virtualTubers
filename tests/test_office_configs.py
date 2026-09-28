@@ -296,6 +296,8 @@ def test_every_seat_is_mounted_on_exactly_one_service_with_matching_worker_id():
     services = _office_compose()["services"]
     seen = {}
     for name, svc in services.items():
+        if not name.startswith("worker-"):
+            continue  # e.g. control-panel only gets CONTROL_PANEL_SHOW (OB-32)
         mounted = _mounted_config(svc)
         assert mounted, f"{name} does not mount an office config"
         cfg = load_worker_config(str(OFFICE_DIR / mounted))
