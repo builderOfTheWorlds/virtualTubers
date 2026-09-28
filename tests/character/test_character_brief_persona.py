@@ -10,9 +10,11 @@ point with the same arguments and errors:
     BriefError, NO_DIRECTIVE_TEXT, resolve_pack_dir(pack_dir=None), PACK_DIR_ENV
 
 Like the stub it has no length cap unless asked (keyword-only `max_chars=None`;
-the office briefs run 5-8k characters, over brief.max_chars 6000, see the
-tracker question). With no memory source it is the stub's content (cast system_prompt, believed
-backstory, today's directive) in the v4 layout, cleaned of loop words. With a
+the office briefs run 7-8.6k characters, under brief.max_chars 12000 since user
+decision 2026-09-28 (item 2)). With no memory source it is the stub's content
+(cast system_prompt, believed backstory, today's directive) in the v4 layout,
+cleaned of week numbers and loop / repetition wording; the plain word "week"
+in a character's own experience is kept (user decision 2026-09-28 (item 1)). With a
 source registered by `set_memory_source(fn)` (fn(slug) -> BriefParts | None,
 e.g. a BriefCache over load_parts) it adds the week's knowledge and the
 feelings. A failing source never breaks a live office agent: it falls back to
@@ -80,6 +82,17 @@ def test_role_may_be_a_role_a_value_or_a_seat(role):
 def test_unknown_role_raises_value_error():
     with pytest.raises(ValueError):
         brief.build_persona_prompt("intern", pack_dir=OFFICE_PACK)
+
+
+# user decision 2026-09-28 (item 1): the plain word "week" is not stripped
+def test_tester_keeps_his_one_green_week():
+    prompt = brief.build_persona_prompt("tester", pack_dir=OFFICE_PACK)
+    flat = " ".join(prompt.split())
+    assert "What I want is one week." in flat
+    want = prompt.split("## What you want\n", 1)[1].split("\n\n## ", 1)[0]
+    assert "One week in which the full suite stays green" in want
+    assert FORBIDDEN_BRIEF_RE.search(prompt) is None
+    assert "time repeats" not in prompt.lower()
 
 
 def test_party_member_brief_keeps_his_silence():

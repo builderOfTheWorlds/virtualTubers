@@ -66,7 +66,7 @@ character:
     hot_keep_days: 2
     move_batch: 5000
     partitions_ahead_days: 14
-  brief: { max_chars: 6000, cache_ttl_s: 300, week_knowledge_max: 40 }
+  brief: { max_chars: 12000, cache_ttl_s: 300, week_knowledge_max: 40 }  # user decision 2026-09-28 (P3b-Q1): was 6000; the office briefs are 7-8.6k with no memory
   recall:                            # OB-41: re-calibrated on office beats in WP-23
     embeddings: { base_url: http://192.168.1.23:11434/v1, model: nomic-embed-text, dim: 768 }
     lead_up_beats: 8
