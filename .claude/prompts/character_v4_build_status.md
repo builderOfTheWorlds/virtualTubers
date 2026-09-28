@@ -94,28 +94,41 @@ modules live beside it and the WP-03 clock spec keeps the avatar exports.
 | WP-05 stores | tests-written | `character_wp05_stores_{characters,weeks,events,knowledge,fragments,jobs}.yaml` (run in that order) | not run | strict: 5x ModuleNotFoundError character.store, weeks file hits character.clock first; default: 6 files skip | Linux cloud container (tests only) |
 | WP-06 jobs + CLI + container | tests-written | `character_wp06_jobs.yaml`, `character_wp06_main.yaml`, `character_wp06_compose.yaml` (blocked on Q7) | not run | strict: ModuleNotFoundError character.jobs; ImportError main.py not found; default: 2 files skip | Linux cloud container (tests only) |
 | **Phase 1 gate** | | | | | |
-| WP-07 clean | todo | | | | |
-| WP-08 tag | todo | | | | |
-| WP-09 cast | todo | | | | |
-| WP-10 load source | todo | | | | |
-| WP-11 llm / embeddings / node names | todo | | | | |
-| WP-12 timeline | todo | | | | |
-| WP-13 backstory | todo | | | | |
-| WP-14 baseline + export + initialize | todo | | | | |
+| WP-07 clean | n/a (OB-41) | replaced by WP-10o | | | |
+| WP-08 tag | n/a (OB-41) | replaced by WP-10o | | | |
+| WP-09 cast | n/a (OB-41) | replaced by WP-10o | | | |
+| WP-10 load source | n/a (OB-41) | replaced by WP-10o | | | |
+| WP-10o load office profiles (OB-41) | tests-written | `character_wp10o_office_profiles.yaml`, `character_wp10o_load_cli.yaml` | not run | see tracker_phase2 | Linux cloud container (tests only) |
+| WP-11 llm / embeddings / node names | tests-written | `character_wp11_{node_names,llm,embeddings}.yaml` (run first) | not run | see tracker_phase2 | Linux cloud container (tests only) |
+| WP-12 timeline | n/a (OB-41) | office backstories are authored | | | |
+| WP-13 backstory | n/a (OB-41) | office backstories are authored | | | |
+| WP-14 baseline + export + initialize | tests-written | `character_wp14_{export,initialize}.yaml` | not run | see tracker_phase2 | Linux cloud container (tests only) |
 | **Phase 2 gate** | | | | | |
-| WP-15 contracts + attribution | todo | | | | |
-| WP-16 ingest | todo | | | | |
-| WP-17 messages M1/M2 + logger | todo | | | | |
-| WP-18 compaction | todo | | | | |
-| WP-19 summaries + daily job | todo | | | | |
-| WP-20 fragments + weekly reset | todo | | | | |
-| WP-21 testctl | todo | | | | |
-| WP-22 brief | todo | | | | |
-| WP-23 recall + harness | todo | | | | |
-| WP-24 live driver + story jobs | todo | | | | |
-| WP-25 e2e two weeks | todo | | | | |
+| WP-15 contracts + attribution | tests-written | `character_wp15_bus_contracts.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-16 ingest | tests-written | `character_wp16_{ingest,jobs_ingest,compose}.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-17 messages M1/M2 + logger | tests-written | `character_wp17_{logger,schema_copies}.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-18 compaction | tests-written | `character_wp18_compaction.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-19 summaries + daily job | tests-written | `character_wp19_{summaries,jobs_daily}.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-20 fragments + weekly reset | tests-written | `character_wp20_{fragments,jobs_weekly}.yaml` | not run | see tracker_phase3a | Linux cloud container (tests only) |
+| WP-21 testctl | tests-written | `character_wp21_testctl.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
+| WP-22 brief | tests-written | `character_wp22_brief.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
+| WP-23 recall + harness | tests-written | `character_wp23_{recall,recall_harness}.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
+| WP-24 live driver + story jobs | tests-written | `character_wp24_{live,jobs_story,compose}.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
+| WP-25 e2e two weeks | tests-written | `character_(test only).yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
 | **Phase 3 gate** | | | | | |
 | WP-26 docs | todo | | | | |
+
+
+**2026-09-28 (cloud session): tests and specs for every WP are written and committed.** Details
+(item→test mappings, test corrections with OB-41 citations, local choices, questions, spec run
+order) are in the three phase files, which the orchestrator reads alongside this tracker:
+[character_v4_tracker_phase2.md](character_v4_tracker_phase2.md) (WP-10o, 11, 14),
+[character_v4_tracker_phase3a.md](character_v4_tracker_phase3a.md) (WP-15..20),
+[character_v4_tracker_phase3b.md](character_v4_tracker_phase3b.md) (WP-21..25).
+Next step on argyre: run the specs in WP order through `tools/qwen_worker/runner.py` with
+`CHARACTER_TEST_REQUIRE_DB=1` (and `CHARACTER_TEST_DSN` on aarch64). Specs that rewrite
+`services/character-updater/main.py` (WP-06, 14, 16, 19, 20, 21, 24) must run strictly in order;
+check every main.py diff for dropped job registrations.
 
 ## Test list → test name mapping
 
