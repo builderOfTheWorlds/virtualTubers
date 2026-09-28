@@ -1,0 +1,132 @@
+task_id: character_wp18_compaction
+
+goal: |
+  Write `app/character/compaction.py`: the nightly compaction of the
+  virtualtubers `messages` bus log, step 2 of the daily-maintenance job (plan
+  §5, D-03, D-24; reference SQL docs/charcterProfileGenerationNotes/v4_reference_messages.sql
+  section C, validated by .claude/prompts/character_v4_plan_validation.py:257-440).
+
+  D-03 (user: "Do A, B, and C"):
+  - A: delete compaction.noisy_types (status_update) older than noisy_keep_hours.
+  - B: move rows older than hot_keep_days into `messages_archive` (kept, never
+    wiped: the data is shown on screens).
+  - C: with daily partitions (operator migration M2, WP-17) B becomes
+    DETACH/ATTACH of whole messages_pYYYYMMDD partitions. The code handles both
+    table shapes, so A and B work before M2 runs.
+  Pitfall (validated): once DEFAULT holds rows for a day, that day's partition
+  can't be created, so old DEFAULT rows are moved to the archive in a batch.
+  Compaction runs only when ingest keeps up: if the ingest lag exceeds
+  ingest.max_lag_messages it is skipped (the job exits 3).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a row is lost. Every move is
+  DELETE ... RETURNING into an INSERT in the SAME statement (plain shape), or a
+  DETACH + ATTACH of the same partition (partitioned shape); the archive is
+  never truncated; --dry-run changes nothing (it only counts). A partition whose
+  name is not exactly messages_pYYYYMMDD is never touched: partition age comes
+  from the name, and a name we did not create is not ours to move.
+
+target_files:
+  - app/character/compaction.py
+
+test_files:
+  - tests/character/test_character_compaction.py
+
+context_files:
+  - docs/charcterProfileGenerationNotes/v4_reference_messages.sql   # section C (A, B-plain, B-partitioned)
+  - app/character/config.py                                         # CompactionConfig (WP-03)
+
+interface: |
+  PARTITION_RE = re.compile(r"^messages_p(\d{8})$")
+  ARCHIVE = "messages_archive"; ARCHIVE_DEFAULT = "messages_archive_default"
+  DEFAULT = "messages_default"
+  class CompactionError(RuntimeError)
+
+  def partition_name(day: date) -> str          f"messages_p{day:%Y%m%d}"
+  def partition_day(name: str) -> date | None
+      PARTITION_RE full match and a real calendar date (datetime.strptime
+      "%Y%m%d"); anything else (messages_p2026101, messages_p20261301,
+      messages_p20230229, messages_default, xmessages_p..., ..._old) -> None.
+  def detect_shape(conn) -> str
+      relkind of public.messages: 'p' -> "partitioned", another kind -> "plain",
+      no table -> "missing".
+  def cutoff_for(now: datetime, keep_days: int) -> datetime
+      UTC midnight of (now.astimezone(UTC).date() - keep_days).  (D-24: UTC)
+
+  def compact_noisy(conn, noisy_types, keep_hours, *, now, dry_run=False) -> int
+      DELETE FROM messages WHERE type = ANY(%s) AND timestamp < %s
+      with (list(noisy_types), now - timedelta(hours=keep_hours)); return rowcount.
+      dry_run: the same WHERE as SELECT count(*). No commit here.
+
+  def compact_archive(conn, keep_days, *, now, batch=5000, dry_run=False) -> dict
+      Returns {"shape", "rows_moved", "batches", "partitions_moved": [names],
+               "default_rows_moved"}.  cutoff = cutoff_for(now, keep_days).
+      The column list is read from information_schema.columns for public.messages
+      (ordinal order), joined with psycopg2.sql.Identifier — the legacy table
+      also has correlation_id / causation_id, which must be carried along.
+      "missing" -> zeros, no SQL beyond the check.
+      Plain shape:
+        dry_run: SELECT count(*) ... WHERE timestamp < cutoff -> rows_moved; no DDL.
+        CREATE TABLE IF NOT EXISTS messages_archive (LIKE messages INCLUDING DEFAULTS
+            INCLUDING CONSTRAINTS INCLUDING INDEXES); conn.commit()
+        loop: WITH moved AS (DELETE FROM messages WHERE id IN (SELECT id FROM
+              messages WHERE timestamp < %s LIMIT %s) RETURNING <cols>)
+              INSERT INTO messages_archive (<cols>) SELECT <cols> FROM moved
+              ON CONFLICT DO NOTHING
+              rowcount 0 -> stop; else rows_moved += rowcount, batches += 1,
+              conn.commit() (one transaction per batch).
+      Partitioned shape:
+        old = partitions attached to messages (pg_inherits) whose partition_day(name)
+              is not None and whose END (UTC midnight of day + 1) <= cutoff.
+        dry_run: partitions_moved = old; default_rows_moved = count of
+              messages_default rows with timestamp < cutoff; no DDL.
+        messages_archive missing -> CREATE TABLE messages_archive (LIKE messages
+              INCLUDING DEFAULTS) PARTITION BY RANGE (timestamp); ALTER TABLE
+              messages_archive ADD PRIMARY KEY (id, timestamp); CREATE TABLE
+              messages_archive_default PARTITION OF messages_archive DEFAULT;
+              conn.commit().
+        messages_archive exists but is NOT partitioned -> raise CompactionError
+              (it was created before M2; the operator renames it; tracker question P3a-7).
+        each old partition: ALTER TABLE messages DETACH PARTITION <name>;
+              ALTER TABLE messages_archive ATTACH PARTITION <name> FOR VALUES FROM (%s) TO (%s)
+              (the day's UTC bounds as parameters); conn.commit(); append the name.
+        DEFAULT drain: WITH m AS (DELETE FROM messages_default WHERE timestamp < %s
+              RETURNING <cols>) INSERT INTO messages_archive (<cols>) SELECT <cols> FROM m
+              ON CONFLICT DO NOTHING  -> default_rows_moved; conn.commit().
+              (The rows land in messages_archive_default through the parent.)
+
+  def ingest_lag(conn, last_message_ts, types) -> int
+      SELECT count(*) FROM messages WHERE type = ANY(%s)
+          AND (%s::timestamptz IS NULL OR timestamp > %s)
+      with (list(types), last_message_ts, last_message_ts): messages of the ingest
+      types newer than the last one ingest committed (all of them when None).
+
+  def run(conn, ccfg, *, now, ingest_lag=0, max_lag=1000, dry_run=False) -> dict
+      ccfg is config.CompactionConfig (noisy_types, noisy_keep_hours,
+      hot_keep_days, move_batch, ...).
+      Result keys ALWAYS: status ("done" | "precondition"), reason (str), dry_run,
+      shape, noisy_deleted, rows_moved, partitions_moved (list), default_rows_moved.
+      ingest_lag > max_lag -> {"status": "precondition", "reason":
+          f"ingest lag {ingest_lag} > {max_lag} messages", zeros} and NO SQL beyond
+          detect_shape.
+      else: noisy = compact_noisy(...); conn.commit() unless dry_run;
+            archive = compact_archive(conn, ccfg.hot_keep_days, now=now,
+                                      batch=ccfg.move_batch, dry_run=dry_run);
+            dry_run -> conn.rollback() at the end. status "done", reason "".
+
+notes: |
+  - `now` is the job's --at (plan §5): never use SQL now() or datetime.now() for a
+    cutoff.
+  - Identifiers (partition names, table names, column names) only through
+    psycopg2.sql.Identifier; values only as %s parameters.
+  - Imports: stdlib (logging, re, datetime) and psycopg2 (psycopg2.sql). This
+    module takes an open connection to the virtualtubers DB; it never connects
+    itself (the job does: character.ingest.connect_messages).
+  - `log = logging.getLogger(__name__)`: DEBUG per batch / partition, INFO with
+    the totals at the end of run(), WARNING for the precondition skip, ERROR in
+    every except block before re-raising.
+  - A second run right after a first changes nothing and reports zeros (the
+    cutoffs are the same and the rows are already gone).
+  - Tests: tests/character/test_character_compaction.py builds both shapes in a
+    fresh pgserver database (the `pg` fixture) with the frozen legacy DDL and the
+    M2 shape from tests/character/fakes_runtime.py. Run with
+    CHARACTER_TEST_REQUIRE_DB=1. Pending guard: skips while this target is missing.
