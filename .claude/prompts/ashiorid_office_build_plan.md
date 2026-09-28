@@ -599,19 +599,32 @@ All other work packages own disjoint paths.
 | Wave 1 verify | Full suite: 2939 passed, 3 failed (the same baseline relay_io failures), 7 skipped. |
 | OB-10a | done. `profiles/_cast_bible.md`: names, ages, speech styles, relationship matrix, odd details. Names: CEO Graham Ellery, TL Anselm Brody, Analyst Maren Voss, Engineer Theo Palliser, Tester Owen Hask, Marketing Julian Faire, OM Nora Blakeley, Party Member "A. Penhale". |
 | OB-10b | done (30f7417, 9b68f20, 47c3c0a, 62f134b; e74cb8c de-duplicates two signature features). All 8 `cast/<id>.yaml` + `profiles/<id>.yaml`. Believed backstories 804–998 words. |
-| OB-10c | done. Validator: PASS, 0 errors, 0 warnings on all 8. **USER REVIEW GATE is open** — the user has not yet read the characters. |
+| OB-10c | done. Validator: PASS, 0 errors, 0 warnings on all 8. USER REVIEW GATE passed (user approved the characters 2026-09-28). |
 | OB-11 | done (fad4123). `--validate` ok, `--dry-run --no-pace` plays `first-standup`, `build_campaign_episode.py` → 15 events, PASS. Follow-up: the builder drops text-less action beats (coffee, assign_task, observe, open_ticket), so office actions and tuber_7 never reach the episode. |
 | OB-12 | done. `CorpusAdapter` in 3Layers `source_adapter.py` (`.jsonl` → work_session notes). `app/office/role_attribution.py` (session → tuber_N episode, audit-gated). |
-| OB-20 | todo (after the review gate) |
+| OB-20 | done (bc04460). `app/character/avatar.py` map_appearance; params written to cast YAMLs; 8 PNGs in `preview_out/office/` (gitignored). Params came from the offline `--params-file` path (`profiles/_avatar_params.json`) because no LLM is reachable from the cloud container — re-run live on argyre with `--base-url http://192.168.1.23:11434` if wanted. User still to eyeball the PNGs. |
 | OB-21 | done (99e710a). `app/agent_handlers/office.py` + `app/office/brief_stub.py`; fake-bus e2e passes. `day_start`/`day_end` unhandled (OB-30); `set_day_runner()` / `issue_directive()` are the OB-30 hooks. Reused manager/coder/tester narration still uses `agent.system_prompt`, so OB-22 must fill it from the cast files. Config schema: `agent.office` block, see docs/agent_handlers.md. |
-| OB-22 | **NEXT** (can start now; not gated on user review). |
+| OB-22 | done (2ce8bef). `config/workers/office/`, `docker-compose.office.yml` (+ worker-observer, per-seat Fraud-Stop clone volumes), `redeploy.sh --office`, docs/office_deployment.md. Merged compose config validates. |
 | OB-23 | done. `git_client` has real push/fetch/tag/reset (ssh or askpass token, never logged); new `app/gitea_client.py`. NOTE: Gitea returns 422 on self-approval. With one shared token, TL approvals must be COMMENT reviews, or each persona needs its own bot user/token. |
 | OB-24 | done. Seed repo at `C:/Users/matt/PycharmProjects/fraudStop`, tag `loop-seed` (20a1de1), 24 tests green. Canon from product.md: score 0–1000, APPROVE/REVIEW/DECLINE, keyed on account_id. Not yet on Gitea (see Handoff). |
-| OB-30 .. OB-33 | todo |
-| OB-40 .. OB-42 | todo |
+| OB-30 | done (8371d36). Day runner from the CEO idle tick; arc → corpus → Gitea backlog directive sources; restart-safe state. |
+| OB-31 | done (00e3054). Weekly reset with step ledger, `--dry-run`, `--at`. |
+| OB-32 | done (b94a00c). Live transcript: `office_line` → roundtable spool → director → `<slot>.live.json`; observer gaze only; control panel `CONTROL_PANEL_SHOW=office`. |
+| OB-33 | done (4951938). Playlist, draft-only office replay builder, revoice role tones. |
+| Integration | done (adba443 builder action beats, 82f9632 playlist↔day runner + Party Member silence, 6e98d09 wrap_up + week-branch merges + character_refresh + e2e day/reset test). |
+| OB-40 | **NEXT.** Needs the 3-layer generator + a local LLM (argyre); not runnable from the cloud container. |
+| OB-41 | todo (long v4 memory track). |
+| OB-42 | todo — run by the parent on argyre after OP-1 tokens + Gitea repos exist. |
 
 
 ## 7. Handoff: where we are (updated 2026-09-27, session 2)
+
+**Session 2, continued (2026-09-28):** after the user approved the characters, Waves 3 and 4
+landed (OB-20, OB-22, OB-30..OB-33) plus two integration batches. Full suite: **4444 passed, 0
+failed, 61 skipped, 1 xfailed**. Remaining: OB-40 (arc generation — needs argyre's LLM), OB-41
+(v4 memory), OB-42 (end-to-end on argyre, blocked on OP-1 tokens and the `fraud-stop` /
+`sessionCorpus` Gitea repos). Deployment prerequisites are in docs/office_deployment.md
+(Fraud-Stop clone volumes, `OFFICE_TWITCH_CHANNEL_MAP`, optional `OFFICE_CORPUS_DIR`).
 
 **Session 2 (Linux cloud container, branch `claude/feature-development-progress-79sysa`):**
 OB-10b, OB-10c run, OB-11 and OB-21 landed. Linux full suite: **4042 passed, 0 failed, 61
