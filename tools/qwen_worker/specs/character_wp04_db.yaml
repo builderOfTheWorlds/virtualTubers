@@ -1,0 +1,115 @@
+task_id: character_wp04_db
+
+goal: |
+  Write `app/character/db.py`: connections, transactions, advisory locks and
+  schema migrations for the `character_profile` Postgres database (plan §6,
+  decisions D-05 and D-25). Every v4 job, store and the ingest consumer get
+  their connection and their schema through this module.
+
+  Migrations are numbered SQL files in `app/character/sql/` (`001_init.sql`
+  is the validated reference schema, copied by hand). `migrate()` applies the
+  files not yet recorded in `schema_migrations(version, applied_at, sha256)`,
+  in order, one transaction per file.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: an already-applied migration file is
+  edited and nobody notices. The database would then silently differ from
+  what the repo says it is, and every later migration is written against a
+  schema that doesn't exist. D-25: "It refuses to run if an applied file's
+  sha256 has changed. Later changes are new files". So `migrate()` first
+  checks EVERY recorded checksum and raises MigrationError naming the version
+  before it applies anything new.
+
+  Second rule: a job that crashes half-way must leave nothing behind.
+  Connections are autocommit OFF, and `transaction(conn)` commits on success
+  and rolls back on ANY exception, then re-raises it.
+
+target_files:
+  - app/character/db.py
+
+test_files:
+  - tests/character/test_character_db.py
+  - tests/character/test_character_config.py
+
+context_files:
+  - app/character/config.py        # promoted in WP-03: ConfigError, DbConfig, CharacterConfig
+  - app/episode_store.py           # house style for psycopg2 connections
+
+interface: |
+  SQL_DIR = Path(__file__).resolve().parent / "sql"
+
+  class MigrationError(Exception)
+      Raised by migrate(). The message always names the migration version
+      (e.g. "001_init: sha256 changed since it was applied (...)").
+
+  def connect(cfg, role="main")
+      cfg is a character.config.CharacterConfig. role "main" uses cfg.db,
+      role "ingest" uses cfg.ingest_db; any other role -> ValueError.
+      When the chosen DbConfig.password is None, raise
+      character.config.ConfigError("db.password", "CHARACTER_DB_PASSWORD is not set")
+      (key "ingest_db.password" for role "ingest") BEFORE any network call.
+      Otherwise psycopg2.connect(host=..., port=..., dbname=..., user=...,
+      password=..., connect_timeout=5, application_name=f"character-{role}"),
+      then conn.autocommit = False, and return the connection.
+      Never log the password or a DSN string; log host, port, dbname, role.
+
+  @contextmanager
+  def transaction(conn)
+      yield conn; on normal exit conn.commit(); on any exception
+      conn.rollback() and re-raise the SAME exception (bare `raise`).
+
+  def file_sha256(path) -> str
+      hex sha256 of the file's bytes with b"\r\n" replaced by b"\n" first,
+      so a Windows checkout (autocrlf) and a Linux checkout agree.
+
+  def migrate(conn, sql_dir=None) -> list[str]
+      sql_dir: Path | str | None (None -> SQL_DIR).
+      1. CREATE TABLE IF NOT EXISTS schema_migrations (
+             version    TEXT PRIMARY KEY,
+             applied_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+             sha256     TEXT NOT NULL);   then commit.
+      2. files = sorted(sql_dir.glob("[0-9][0-9][0-9]_*.sql")); version = file stem
+         ("001_init").
+      3. For every version already in schema_migrations whose file exists:
+         if the stored sha256 != file_sha256(file) -> raise MigrationError
+         naming the version. Check ALL of them before step 4.
+      4. For each file whose version is not recorded, in order: execute the
+         whole file text in one cursor.execute, INSERT INTO schema_migrations
+         (version, sha256) VALUES (%s, %s), commit. On psycopg2.Error:
+         rollback and raise MigrationError(f"{version}: {exc}") from exc.
+      5. Return the list of versions applied by THIS call ([] when none).
+
+  def advisory_lock(conn, key: str) -> bool
+      `SELECT pg_try_advisory_lock(hashtext(%s))` with (key,); return the
+      boolean. Session-level: held until advisory_unlock or the connection
+      closes. Does not commit.
+
+  def advisory_unlock(conn, key: str) -> bool
+      `SELECT pg_advisory_unlock(hashtext(%s))`; return the boolean.
+
+notes: |
+  - Imports: stdlib (contextlib, hashlib, logging, pathlib), psycopg2, and
+    `from character.config import ConfigError` (D-23: character.* imports).
+    Import psycopg2 at module top level (unlike episode_store, the character
+    package always has the driver).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after connecting
+    and for each migration file considered; INFO for each migration applied
+    and for "schema up to date"; ERROR in every except block, before
+    re-raising. Never log DSNs or passwords.
+  - Parameters only (`%s`); the only SQL built from text is the migration
+    file itself.
+  - Do not create databases, roles or extensions in Python: 001_init.sql
+    creates the `vector` extension and grants to `character_reader` when that
+    role exists (the role is created by the deploy stack, WP-01).
+  - Do not edit app/character/sql/001_init.sql — it is frozen (D-25).
+  - Tests: T04.* run against a fresh empty database per test (the `pg`
+    fixture in tests/character/conftest.py: CHARACTER_TEST_DSN, else pgserver,
+    else skip). tests/character/test_character_config.py is included for
+    T03.6's second half, which calls db.connect(cfg) with no password and
+    expects ConfigError with key "db.password".
+  - Pending guard: the db tests skip while app/character/db.py is missing
+    (tests/character/pending.py). The harness sandbox overlays the staged
+    file, so they run for real there — but only if Postgres is reachable
+    (pgserver on x86_64, or CHARACTER_TEST_DSN on gx10). A run where every
+    test SKIPS is not a pass, and the harness would still report PASS (pytest
+    exits 0): run it with `CHARACTER_TEST_REQUIRE_DB=1` so a missing database
+    fails the fixture instead (the env is passed through to the sandbox).
