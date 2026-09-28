@@ -21,9 +21,10 @@ OB-41): office slugs instead of harry/ron/hermione; the non-character in
 `present` is the office clock "office_clock" (app/office/protocol.py CLOCK_SENDER)
 instead of "gm"; office seats publish from `tuber_N` (app/office/roles.py SEAT),
 so the agents map holds both `char:<slug>` and `tuber_N`, and item 1 is run for
-both sender forms. The Party Member's experience comes only from
-`visibility: present` events (OB-41): the agents map has no id for him
-(tracker question P3a-3), so his worker's thoughts are unmapped.
+both sender forms. The Party Member is a full character who just has no
+lines at the moment (user decision 2026-09-28 (item 8), tracker P3a-3):
+character_agents holds `char:party_member` and `tuber_7` like every other
+seat, so his own agent_thinking routes as `self`; there is no slug exception.
 """
 import logging
 from collections import Counter
@@ -44,9 +45,10 @@ from character.store import events  # noqa: E402  (promoted in WP-05)
 CLOCK = LoopClock(date(2026, 9, 27), "America/New_York")   # office epoch (week 1 = Sep 27)
 TUESDAY = "2026-09-29T14:00:00+00:00"                        # 10:00 NY, week 1
 SLUGS = {slug: f"id-{slug}" for slug in OFFICE_SLUGS}
-#: char:<slug> and the seat id for every office character except the Party Member (P3a-3).
-AGENTS = {**{f"char:{s}": SLUGS[s] for s in OFFICE_SLUGS if s != "party_member"},
-          **{OFFICE_SEATS[s]: SLUGS[s] for s in OFFICE_SLUGS if s != "party_member"}}
+#: char:<slug> and the seat id for every office character, the Party Member included
+#: (Phase 2 T10o.7 / T14.13 seeding; user decision 2026-09-28 (item 8)).
+AGENTS = {**{f"char:{s}": SLUGS[s] for s in OFFICE_SLUGS},
+          **{OFFICE_SEATS[s]: SLUGS[s] for s in OFFICE_SLUGS}}
 EVENT_KEYS = {"message_id", "character_id", "msg_type", "from_agent", "scene_id",
               "visibility", "text", "payload", "ts", "loop_week", "loop_day"}
 
@@ -85,7 +87,7 @@ def test_agent_thinking_from_mapped_sender_gives_one_self_row(sender):
 
 
 # T16.2
-@pytest.mark.parametrize("sender", ["coder", "tuber_7", "char-live:ashiorid_office"])
+@pytest.mark.parametrize("sender", ["coder", "tuber_9", "char-live:ashiorid_office"])
 def test_unmapped_agent_thinking_gives_no_rows_and_bumps_skip_count(sender):
     counts = Counter()
     assert _route(thinking(sender, "a thought", TUESDAY), counts) == []
@@ -298,10 +300,14 @@ def test_consumer_is_built_earliest_no_autocommit_group_character_ingest():
     assert kwargs["value_deserializer"](b"\xff not json") is None
 
 
-# OB-41: the Party Member (tuber_7) never speaks; his experience is only `present` events.
-def test_party_member_experience_is_only_present_events():
-    day = [thinking(OFFICE_SEATS[s], f"{s} thinks", TUESDAY) for s in OFFICE_SLUGS]
-    day += [say("ceo", "Standup. Everyone in.", TUESDAY, from_="tuber_0",
+# OB-41 + user decision 2026-09-28 (item 8): the Party Member is a full character.
+# His own thoughts route as `self` like everyone's; the fixture day has no line
+# of his (he has no lines at the moment), which is a fact of this fixture, not a rule.
+@pytest.mark.parametrize("sender", ["char:party_member", "tuber_7"])
+def test_party_member_is_a_full_character_his_own_thoughts_are_self_rows(sender):
+    day = [thinking(OFFICE_SEATS[s], f"{s} thinks", TUESDAY) for s in OFFICE_SLUGS if s != "party_member"]
+    day += [thinking(sender, "Note the time the Glass Box went quiet.", TUESDAY),
+            say("ceo", "Standup. Everyone in.", TUESDAY, from_="tuber_0",
                 present=list(OFFICE_SLUGS) + ["office_clock"]),
             scene("The Party Member files past the Glass Box.", TUESDAY,
                   present=["party_member", "office_manager", "office_clock"]),
@@ -309,10 +315,23 @@ def test_party_member_experience_is_only_present_events():
     counts = Counter()
     rows = [row for msg in day for row in ingest.route(msg, AGENTS, SLUGS, CLOCK, counts=counts)]
     party = [r for r in rows if r["character_id"] == "id-party_member"]
-    assert len(party) == 2
-    assert {r["visibility"] for r in party} == {"present"}
-    assert {r["msg_type"] for r in party} == {"character_say", "scene_event"}
-    assert counts["unmapped"] == 1           # tuber_7's thought
+    assert sorted((r["visibility"], r["msg_type"]) for r in party) == [
+        ("present", "character_say"), ("present", "scene_event"), ("self", "agent_thinking")]
+    (own,) = [r for r in party if r["visibility"] == "self"]
+    assert own["from_agent"] == sender and own["text"] == "Note the time the Glass Box went quiet."
+    assert counts["unmapped"] == 0
     assert all(r["character_id"] != "id-office_clock" for r in rows)
     selfs = sorted(r["character_id"] for r in rows if r["visibility"] == "self")
-    assert selfs == sorted(SLUGS[s] for s in OFFICE_SLUGS if s != "party_member")
+    assert selfs == sorted(SLUGS[s] for s in OFFICE_SLUGS)
+    # this fixture has no character_say spoken BY him (not a rule: see the next test)
+    assert not any(r["msg_type"] == "character_say" and r["payload"].get("character") == "party_member"
+                   for r in rows)
+
+
+# user decision 2026-09-28 (item 8): no "never speaks" rule in ingest; a line of his routes normally.
+def test_a_line_spoken_by_the_party_member_routes_like_anyone_elses():
+    msg = say("party_member", "Noted.", TUESDAY, from_="tuber_7",
+              present=["party_member", "ceo", "office_clock"])
+    rows = _route(msg)
+    assert sorted(r["character_id"] for r in rows) == ["id-ceo", "id-party_member"]
+    assert {r["visibility"] for r in rows} == {"present"}

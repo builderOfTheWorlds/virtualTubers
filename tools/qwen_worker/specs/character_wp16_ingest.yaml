@@ -161,9 +161,10 @@ notes: |
     mutate msg or payload.
   - OB-41 (.claude/prompts/ashiorid_office_build_plan.md): office seats publish
     from `tuber_N`; they are resolved ONLY through the `agents` map, never by a
-    hardcoded seat table. The Party Member has no agent id in the map
-    (tracker question P3a-3), so his thoughts count as unmapped; his rows come
-    only from `present`.
+    hardcoded seat table. The Party Member is a full character who just has
+    no lines at the moment (user decision 2026-09-28 (item 8), tracker P3a-3):
+    the map holds `char:party_member` and `tuber_7` like every seat, so his
+    thoughts are `self` rows. No slug is special-cased anywhere in route().
   - Tests: unit tests with fakes (tests/character/fakes_runtime.py FakeConsumer,
     FakeConn; FakeClock from fakes.py as `monotonic`), plus one integration test
     on the `pg_conn` fixture. Run the harness with CHARACTER_TEST_REQUIRE_DB=1.
