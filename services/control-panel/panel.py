@@ -155,6 +155,84 @@ ROUNDTABLE_SERVICE = "worker-roundtable"
 # on roundtable-stream-check, which does cast a tuber_7 line.
 TUBER_SLOT_IDENTITY_CAST = {f"tuber_{i}": f"tuber_{i}" for i in range(8)}
 
+# ── Show mode: dev-team (default) vs the ashiorid_office show (OB-32) ─────
+# docker-compose.office.yml re-seats the stream workers: every container's
+# WORKER_ID becomes its office SEAT id (tuber_0..tuber_7) and a new
+# worker-observer container holds tuber_7 (docs/office_deployment.md
+# "Service -> seat mapping"). The lists above are keyed by dev-team worker
+# ids, so in office mode health/Play/logs would address containers that no
+# longer answer. CONTROL_PANEL_SHOW=office (set by docker-compose.office.yml
+# on the control-panel service only) swaps in the office mapping below; any
+# other value, or none, keeps the dev-team lists byte-for-byte.
+CONTROL_PANEL_SHOW_ENV = "CONTROL_PANEL_SHOW"
+SHOW_DEV_TEAM = "dev_team"
+SHOW_OFFICE = "office"
+
+#: office seat (bus worker id == tile slot) -> compose service, mirroring
+#: docker-compose.office.yml's header table.
+OFFICE_SEAT_TO_SERVICE = {
+    "tuber_0": "worker-gm",              # CEO
+    "tuber_1": "worker-manager",         # Tech Lead
+    "tuber_2": "worker-coder-native",    # Analyst
+    "tuber_3": "worker-coder-aider",     # Engineer
+    "tuber_4": "worker-tester",          # Tester
+    "tuber_5": "worker-coder-opencode",  # Marketing
+    "tuber_6": "worker-coder",           # Office Manager
+    "tuber_7": "worker-observer",        # Party Member (never speaks, U6)
+}
+#: The dev-team lists as defined above, captured before any show override.
+DEV_TEAM_WORKER_IDS = list(WORKER_IDS)
+DEV_TEAM_WORKER_TO_TUBER_SLOT = dict(WORKER_TO_TUBER_SLOT)
+DEV_TEAM_WORKER_TO_SERVICE = dict(WORKER_TO_SERVICE)
+#: The Party Member's seat: monitored (health, logs, themes) but never a
+#: Play target — a replay on its channel would give it a voice.
+OFFICE_OBSERVER_ID = "tuber_7"
+
+
+def resolve_show(value: Optional[str] = None) -> str:
+    """SHOW_OFFICE when `value` (default: the CONTROL_PANEL_SHOW env var) is
+    "office" (case/space-insensitive), else SHOW_DEV_TEAM."""
+    raw = os.environ.get(CONTROL_PANEL_SHOW_ENV, "") if value is None else value
+    return SHOW_OFFICE if str(raw).strip().lower() == SHOW_OFFICE else SHOW_DEV_TEAM
+
+
+def show_mapping(show: str) -> dict:
+    """Every worker-id-keyed list/map the panel uses, for one show.
+
+    WORKER_IDS        — health rows, the operator-message dropdown
+    PLAY_WORKER_IDS   — character channels a Play click sends replay_request to
+    WORKER_TO_TUBER_SLOT / WORKER_TO_SERVICE — roundtable cast / log services
+    THEME_WORKER_IDS  — live-retheme targets (every stream container)
+    """
+    if show == SHOW_OFFICE:
+        seats = list(OFFICE_SEAT_TO_SERVICE)
+        return {
+            "WORKER_IDS": seats,
+            "PLAY_WORKER_IDS": [s for s in seats if s != OFFICE_OBSERVER_ID],
+            "WORKER_TO_TUBER_SLOT": {s: s for s in seats},
+            "WORKER_TO_SERVICE": dict(OFFICE_SEAT_TO_SERVICE),
+            "THEME_WORKER_IDS": seats + [ROUNDTABLE_WORKER_ID],
+        }
+    return {
+        "WORKER_IDS": list(DEV_TEAM_WORKER_IDS),
+        "PLAY_WORKER_IDS": list(DEV_TEAM_WORKER_IDS),
+        "WORKER_TO_TUBER_SLOT": dict(DEV_TEAM_WORKER_TO_TUBER_SLOT),
+        "WORKER_TO_SERVICE": dict(DEV_TEAM_WORKER_TO_SERVICE),
+        # tuber_0 (the GM's own channel) and roundtable are not in WORKER_IDS
+        # but run app/theme_watcher.py too — see the theme block below.
+        "THEME_WORKER_IDS": list(DEV_TEAM_WORKER_IDS) + ["tuber_0", ROUNDTABLE_WORKER_ID],
+    }
+
+
+SHOW = resolve_show()
+_SHOW_MAPPING = show_mapping(SHOW)
+WORKER_IDS = _SHOW_MAPPING["WORKER_IDS"]
+PLAY_WORKER_IDS = _SHOW_MAPPING["PLAY_WORKER_IDS"]
+WORKER_TO_TUBER_SLOT = _SHOW_MAPPING["WORKER_TO_TUBER_SLOT"]
+WORKER_TO_SERVICE = _SHOW_MAPPING["WORKER_TO_SERVICE"]
+log.info("control panel show=%s workers=%d play_targets=%d", SHOW, len(WORKER_IDS),
+         len(PLAY_WORKER_IDS))
+
 # ── Console theme control (app/console_theme.py, message-api's
 #    /console-theme(s) endpoints) ────────────────────────────────────────
 # Every worker container runs app/theme_watcher.py unconditionally
@@ -162,7 +240,7 @@ TUBER_SLOT_IDENTITY_CAST = {f"tuber_{i}": f"tuber_{i}" for i in range(8)}
 # roundtable — unlike WORKER_IDS above, which deliberately excludes both
 # for its own purposes (operator_message/replay_request addressing). All 8
 # are valid live-retheme targets.
-THEME_WORKER_IDS = WORKER_IDS + ["tuber_0", ROUNDTABLE_WORKER_ID]
+THEME_WORKER_IDS = _SHOW_MAPPING["THEME_WORKER_IDS"]
 
 # In-memory cache of the theme name list — it's static per deploy
 # (config/themes/gogh_themes.json ships baked into the message-api image),
@@ -656,7 +734,7 @@ def _record_streams(record: str) -> List[str]:
     if record == "roundtable":
         return [ROUNDTABLE_WORKER_ID]
     if record == "all":
-        return [*WORKER_IDS, ROUNDTABLE_WORKER_ID]
+        return [*PLAY_WORKER_IDS, ROUNDTABLE_WORKER_ID]
     return []
 
 
@@ -763,7 +841,7 @@ async def play_replay(request: Request, name: str, record: str = Form("none")):
         return base
 
     results = []
-    for worker_id in WORKER_IDS:
+    for worker_id in PLAY_WORKER_IDS:
         await _mapi_request(
             "POST", "/messages",
             json={"to": worker_id, "type": "replay_stop", "payload": {}},
@@ -793,7 +871,7 @@ async def play_replay(request: Request, name: str, record: str = Form("none")):
     progress_url = f"/replays/{quote(name)}/progress?since={quote(played_at)}"
     if not failed:
         banner = {"ok": True, "name": name, "log_url": log_url, "progress_url": progress_url,
-                  "to": f"all {len(results)} streams (6 channels + roundtable)",
+                  "to": f"all {len(results)} streams ({len(results) - 1} channels + roundtable)",
                   "recording": record_info}
     else:
         errors = "; ".join(f"{w}: {r.error}" for w, r in results if not r.ok)

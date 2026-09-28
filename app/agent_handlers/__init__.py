@@ -32,6 +32,7 @@ from .office import (
     observer_idle_tick,
     office_manager_idle_tick,
 )
+from .live_transcript import handle_observer_pose, handle_office_line
 from .operator import handle_operator_message
 from .viewer import handle_viewer_joined
 from .replay_relay import (
@@ -73,6 +74,10 @@ MESSAGE_HANDLERS = {
     "test_request": handle_test_request,
     "status_report": handle_status_report,
     "phase_change": handle_phase_change,
+    # OB-32 live roundtable transcript (docs/live_pane.md): roundtable-side
+    # relay writers; no-ops on every worker that isn't a live roundtable.
+    "office_line": handle_office_line,
+    "observer_pose": handle_observer_pose,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in

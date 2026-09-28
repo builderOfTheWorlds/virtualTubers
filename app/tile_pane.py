@@ -65,6 +65,7 @@ from collections import deque
 from pathlib import Path
 
 import gaze
+import live_pane
 import narration_store
 import relay_io
 import replay_pane
@@ -927,7 +928,9 @@ def start_tile_avatar(config, slot, retry_s=None, stage_path=None):
     try:
         # stage_path given (the roundtable): the head turns toward whoever
         # is speaking and lip-syncs its own lines (app/gaze.py).
-        gaze_source = gaze.StageGaze(slot, stage_path).sample if stage_path else None
+        # The observer seat of a LIVE roundtable follows the live speaker /
+        # observer_pose instead (live_pane.make_gaze_source, OB-32).
+        gaze_source = live_pane.make_gaze_source(slot, stage_path, config) if stage_path else None
         driver = TileAvatarDriver(_build, gaze_source=gaze_source)
         driver.start()
         return driver
@@ -1307,9 +1310,15 @@ def main(argv=None):
         while True:
             if handle_once(slot, relay_dir, state_path=state_path, config=config):
                 time.sleep(TILE_HOLD_FINAL_FRAME_S)  # hold the final frame briefly
+                live_pane.reset_live(slot)  # the airing replaced the live history
                 last_drawn = 0.0  # force an idle redraw
+            elif live_pane.handle_live_once(slot, relay_dir, state_path=state_path,
+                                            config=config):
+                # Live office line (docs/live_pane.md); a no-op returning
+                # False unless agent.live.enabled on this roundtable.
+                last_drawn = time.monotonic()
             if time.monotonic() - last_drawn > TILE_IDLE_REDRAW_S:
-                draw_idle_screen(slot, state_path)
+                live_pane.draw_idle(slot, state_path, config=config)
                 last_drawn = time.monotonic()
             time.sleep(TILE_POLL_INTERVAL_S)
     finally:

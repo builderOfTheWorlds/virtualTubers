@@ -36,6 +36,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import live_pane
 from agent_state import write_state
 from git_client import GitClient, GitError
 from gitea_client import DEFAULT_TOKEN_ENV, GiteaClient, GiteaError
@@ -465,6 +466,7 @@ def issue_directive(worker_id, agent_config, llm_client, producer, text, *, titl
         sent.append(msg)
     remember_directive(root["correlation_id"], text, title=title, issue=issue, day=day)
     _state(state_path, "speaking", action=f"directive: {title}", bubble=line, emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, root["correlation_id"])
     _event(worker_id, "directive_issued", issue=issue, recipients=len(sent),
            correlation_id=root["correlation_id"])
     return sent
@@ -500,6 +502,7 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
             "in 1-2 sentences, in character.",
             f"Noted: {title}. Waiting on the functional plan.", cid)
         _state(state_path, "speaking", action=f"acknowledged: {title}", bubble=line, emotion=emotion)
+        live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
         _event(worker_id, "directive_acknowledged", role=role.value, correlation_id=cid)
         return
 
@@ -523,6 +526,7 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
                                 "pr": (lane or {}).get("pr"), "branch": (lane or {}).get("branch")})
         producer.send(out)
         _state(state_path, "speaking", action=f"functional plan: {title}", bubble=plan, emotion=emotion)
+        live_pane.publish_office_line(worker_id, agent_config, producer, plan, emotion, cid)
         _event(worker_id, "functional_plan_sent", pr=(lane or {}).get("pr"), correlation_id=cid)
         return
 
@@ -553,6 +557,7 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
                                   "pr": (lane or {}).get("pr")})
     producer.send(report)
     _state(state_path, "speaking", action=f"reported: {title}", bubble=line, emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
     _event(worker_id, "status_report_sent", role=role.value, pr=(lane or {}).get("pr"),
            correlation_id=cid)
 
@@ -617,6 +622,7 @@ def handle_functional_plan(worker_id, agent_config, llm_client, producer, msg,
              "issue": directive.get("issue"), "directive": directive.get("text")},
             **reply_ids(tech)))
     _state(state_path, "speaking", action=f"delegated: {title}", bubble=plan, emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, plan, emotion, cid)
     _event(worker_id, "technical_plan_sent", tasks=len(tasks), requirements_merged=merged,
            correlation_id=cid)
 
@@ -644,6 +650,7 @@ def handle_technical_plan(worker_id, agent_config, llm_client, producer, msg,
                     f"Technical plan acknowledged.\n\n{payload['plan']}")
     _state(state_path, "speaking", action="acknowledged the technical plan", bubble=line,
            emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
     _event(worker_id, "technical_plan_acknowledged", issue=issue, correlation_id=cid)
 
 
@@ -666,6 +673,8 @@ def handle_test_request(worker_id, agent_config, llm_client, producer, msg,
         worker_id, config, llm_client, producer, run_msg, state_path,
         report_to=SEAT[OfficeRole.TECH_LEAD], extra=extra)
     verdict = (sent or {}).get("type")
+    live_pane.publish_office_line(worker_id, agent_config, producer,
+                                  ((sent or {}).get("payload") or {}).get("narration"), None, cid)
     gitea = build_gitea_client(agent_config)
     if gitea is not None and payload.get("pr") and verdict in ("test_passed", "bug_report"):
         body = ("CI: all tests passed." if verdict == "test_passed" else
@@ -704,6 +713,7 @@ def handle_status_report(worker_id, agent_config, llm_client, producer, msg,
             closed = bool(_gitea_call(worker_id, cid, "close_issue", gitea.close_issue, issue))
     _state(state_path, "happy" if payload.get("status") == "done" else "speaking",
            action=f"report from {msg['from']}", bubble=line, emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
     _event(worker_id, "status_report_acknowledged", sender=msg["from"],
            status=payload.get("status"), issue_closed=closed, correlation_id=cid)
 
@@ -732,6 +742,8 @@ def handle_phase_change(worker_id, agent_config, llm_client, producer, msg,
         "in character.", None, cid)
     _state(state_path, expression, action=f"phase: {phase}", bubble=line if ok else None,
            emotion=emotion)
+    if ok:
+        live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
     _event(worker_id, "phase_noted", phase=phase, narrated=ok, correlation_id=cid)
 
 
@@ -816,6 +828,7 @@ def engineer_handoff(worker_id, agent_config, producer, msg, result, narration, 
         "issue": payload.get("issue"), "title": payload.get("title"),
         "directive": payload.get("directive")})
     producer.send(out)
+    live_pane.publish_office_line(worker_id, agent_config, producer, narration, None, cid)
     _event(worker_id, "test_request_sent", branch=branch, pr=pr, correlation_id=cid)
     return out
 
@@ -842,6 +855,7 @@ def tech_lead_after_test_passed(worker_id, agent_config, producer, msg, narratio
                error=f"'{exc}'")
         return None
     producer.send(report)
+    live_pane.publish_office_line(worker_id, agent_config, producer, narration, None, cid)
     _event(worker_id, "status_report_sent", role="tech_lead", merged=merged, correlation_id=cid)
     return report
 
@@ -965,6 +979,8 @@ def office_manager_idle_tick(worker_id, agent_config, llm_client, producer, stat
             "Say one short line about it, in character.", None, None)
         _state(state_path, "focused" if chore == "garbage_collection" else "happy",
                action=f"chore: {chore}", bubble=line if ok else None, emotion=emotion)
+        if ok:
+            live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion)
         _event(worker_id, "chore_done", chore=chore)
         return chore
     except Exception as exc:

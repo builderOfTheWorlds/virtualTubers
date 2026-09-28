@@ -1183,6 +1183,12 @@ def main():
                             config=config)
         return
 
+    # Live office transcript (docs/live_pane.md, OB-32): None unless this is
+    # a live roundtable (TILE_RELAY_DIR + role roundtable + agent.live.enabled),
+    # so every other worker's loop below is exactly what it was.
+    import live_pane
+    live = live_pane.LiveDirector.from_config(config)
+
     last_drawn = 0.0
     while True:
         request = read_request(args.request_file)
@@ -1194,6 +1200,11 @@ def main():
                 print(f"[replay_pane] episode failed: {exc}", file=sys.stderr)
             time.sleep(5)  # hold the final frame briefly
             last_drawn = 0.0  # force idle redraw
+        elif live is not None:
+            # Mutually exclusive with a recorded airing: a request file
+            # appearing mid-drain makes the drain yield, and the loop's
+            # next pass performs it (agent_dnd §7.1 fallback).
+            live.drain_once(should_yield=lambda: os.path.exists(args.request_file))
         if time.time() - last_drawn > IDLE_REDRAW_S:
             draw_idle_screen(args.worker_name)
             last_drawn = time.time()

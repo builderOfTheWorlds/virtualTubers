@@ -62,6 +62,28 @@ Sections on the one dashboard page (`GET /`):
   intensity slider value; "Follow scene" clears the override. Targets
   `roundtable` only — the one container running the music director.
 
+### Office show mode (`CONTROL_PANEL_SHOW=office`, OB-32)
+
+`docker-compose.office.yml` re-seats every stream container: its `WORKER_ID`
+becomes the office seat id and a new `worker-observer` holds `tuber_7`
+(docs/office_deployment.md). The panel's worker lists are keyed by dev-team
+ids, so the override sets `CONTROL_PANEL_SHOW: office` on the
+`control-panel` service, and `panel.show_mapping("office")` replaces them at
+import time:
+
+| Panel list | dev-team (default) | office |
+|---|---|---|
+| `WORKER_IDS` (Workers/health rows, message composer) | the six character workers | `tuber_0`..`tuber_7` |
+| `PLAY_WORKER_IDS` (Play `replay_request` targets, `record: all`) | same six | `tuber_0`..`tuber_6` — never `tuber_7`, the Party Member never speaks |
+| `WORKER_TO_TUBER_SLOT` (roundtable cast) | worker id → slot (`manager` → `tuber_0`) | identity per seat |
+| `WORKER_TO_SERVICE` (log viewer services) | `worker-coder`… | seat → service (`tuber_0` → `worker-gm` … `tuber_7` → `worker-observer`) |
+| `THEME_WORKER_IDS` | six + `tuber_0` + `roundtable` | eight seats + `roundtable` |
+
+Any other value (or none) keeps the dev-team lists byte-for-byte. The
+roundtable id (`roundtable`) is the same in both shows. Twitch presence has
+its own map (`TWITCH_CHANNEL_MAP`, docs/twitch_presence.md): in office mode
+point it at seat ids too — that service is not changed here.
+
 ## Signature
 
 ```python
@@ -119,6 +141,8 @@ async def _mapi_request(method: str, path: str, **kwargs) -> MapiResult
   both optional) — HTTP Basic Auth. The auth middleware no-ops unless
   **both** are set; `GET /healthz` is always exempt so container health
   checks don't need credentials.
+- `CONTROL_PANEL_SHOW` (env, optional, default dev-team) — `office` switches
+  every worker-id-keyed list to the office seats (see "Office show mode").
 - `WORKER_IDS` / `MESSAGE_TYPE_EXAMPLES` — hardcoded lists mirroring
   `services/message-api/api.py`'s own `WORKER_ID_EXAMPLES` /
   `MESSAGE_TYPE_EXAMPLES`, for the same reason stated there: message-api
@@ -219,6 +243,11 @@ docker compose up -d control-panel
 
 ## Changelog
 
+- v1.7.0 (2026-09-28) — Office show mode (OB-32): `CONTROL_PANEL_SHOW=office`
+  (set only by `docker-compose.office.yml`) swaps the worker/health/Play/log/theme
+  lists for the office seats `tuber_0`..`tuber_7` via `resolve_show()` /
+  `show_mapping()`; Play skips the Party Member (`PLAY_WORKER_IDS`). The Play
+  banner's channel count is now computed ("6 channels" unchanged in dev-team mode).
 - v1.6.0 (2026-09-27) — Save to file on Play: a `record` select (off / roundtable /
   all 7 streams) next to each replay's Play. The size is estimated and reserved via
   message-api `POST /recordings` BEFORE any stop/request is sent; over budget → error

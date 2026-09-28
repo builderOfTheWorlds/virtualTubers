@@ -37,6 +37,24 @@ agent:
   tick_rate_ms: 8000
   max_context_tokens: 8000
 
+  # ── OB-32: the LIVE office transcript on the tiles (docs/live_pane.md) ─────
+  # agent.py spools every `office_line` a seat commits (seats opt in with
+  # agent.office.live_transcript: true) to <TILE_RELAY_DIR>/live/; the
+  # headless director (replay_pane.py) voices each through voice.speakers
+  # below and hands it to the speaker's tile (<slot>.live.json), one line at
+  # a time in commit order. A replay_request always wins: the drain yields
+  # and pending lines wait (or expire after max_age_s). The dev-team
+  # roundtable has no `live:` block, so none of this runs there.
+  live:
+    enabled: true
+    # The Party Member (U6): its tile never shows text. Its head follows the
+    # live speaker, else the latest observer_pose gaze_target.
+    observer_slot: tuber_7
+    max_age_s: 120          # drop a queued line older than this, never air it late
+    consume_timeout_s: 20   # withdraw a line its tile has not claimed by then
+    line_gap_s: 0.5         # air between two committed lines
+    spool_max: 200          # oldest queued lines dropped past this
+
 llm:
   # OB-07 plot voice tier (narration for replay airings).
   provider: ollama
