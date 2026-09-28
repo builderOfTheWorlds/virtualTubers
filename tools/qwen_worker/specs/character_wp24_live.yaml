@@ -97,7 +97,7 @@ interface: |
   class LiveDriver:
       def __init__(self, pack, *, campaign, clock, publish, control, briefs, llm_for,
                    recall_for=None, now=None, poll=None, silent=None,
-                   brief_max_chars=6000, max_scenes=1000, renderer_kwargs=None,
+                   brief_max_chars=12000, max_scenes=1000, renderer_kwargs=None,
                    max_recent=8, record=None)
           clock: character.clock.LoopClock; publish(msg): producer.send;
           control: .is_enabled(worker_id) (WorkerControl); briefs: a

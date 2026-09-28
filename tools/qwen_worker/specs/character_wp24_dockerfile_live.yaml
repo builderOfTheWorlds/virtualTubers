@@ -1,0 +1,73 @@
+task_id: character_wp24_dockerfile_live
+
+goal: |
+  Write `services/character-updater/Dockerfile.live`, the image the
+  `character-live` compose service runs (playbook WP-24; plan §8 "It is a
+  separate container, character-live", D-19). User decision 2026-09-28
+  (item 7), tracker P3b-Q4 (a): a SECOND Dockerfile next to the WP-06 one,
+  because the live driver (app/character/live.py + jobs_story.py) imports
+  app/campaign, app/office, replay, emotion, agent_state, audio_envelope,
+  agent_metrics, message_bus, worker_control and llm_client, and reads the pack
+  under campaigns/. The WP-06 image copies only app/character, so this one
+  copies ALL of app/ and campaigns/.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the container starts and dies on an
+  ImportError or a missing pack at the first scene, or it bakes a secret into
+  the image. Every module the driver imports is under app/, the pack is under
+  campaigns/, and no password, token or ARG goes into the file.
+
+  Paths inside the container (they must line up with the Python side):
+    /app/main.py              services/character-updater/main.py (finds /app/character)
+    /app/<everything in app/> so `import campaign`, `import office`, ... work
+    /campaigns                jobs_story.build_driver resolves cfg.pack
+                              ("campaigns/ashiorid_office") against the repo root,
+                              which is Path(jobs_story.py).parents[2] = "/" here
+    /config/character.yaml    config.DEFAULT_PATH = Path(config.py).parents[2] /
+                              "config" / "character.yaml" = /config/character.yaml
+  The compose block mounts config/character.yaml and campaigns/ read-only over
+  the same paths, so a pack edit needs no rebuild.
+
+target_files:
+  - services/character-updater/Dockerfile.live
+
+test_files:
+  - tests/character/test_character_dockerfile_live.py
+
+context_files:
+  - services/message-logger/Dockerfile   # the house style (base image, ENV, WORKDIR)
+  - services/character-updater/Dockerfile # WP-06 image, promoted before this spec
+
+interface: |
+  Exactly these instructions, in this order (comments above instructions are
+  fine; Docker has no trailing comments on an instruction line):
+
+      FROM python:3.12-slim
+      ENV PYTHONUNBUFFERED=1
+      WORKDIR /app
+      COPY services/character-updater/requirements.txt /app/requirements.txt
+      RUN pip install --no-cache-dir -r /app/requirements.txt "redis>=5.0" "anthropic>=0.68"
+      COPY app /app
+      COPY campaigns /campaigns
+      COPY config/character.yaml /config/character.yaml
+      COPY services/character-updater/main.py /app/main.py
+      ENTRYPOINT ["python3", "/app/main.py"]
+      CMD ["story-start", "--foreground"]
+
+  - FROM is the same line as services/message-logger/Dockerfile's first line.
+  - redis (app/worker_control.py) and anthropic (app/llm_client.py) use the
+    root requirements.txt lower bounds; the WP-06 requirements.txt lacks both.
+  - The `COPY app /app` line replaces the WP-06 `COPY app/character ...` and
+    `COPY app/character_schema.py ...` lines (both are inside app/).
+  - main.py is copied AFTER app/ so nothing in app/ can shadow it.
+
+notes: |
+  - Build context is the repo root (compose `build.context: .`), like WP-06.
+  - Never put a secret value, ARG or ENV with a password/token in the file; the
+    DB password comes only from the container environment (compose).
+  - Header comment (2-4 lines): what the image is for, that it is built by the
+    `character-live` compose service, and "started by main.py story-start".
+  - The test is text-only (no docker build). The gate after promote is a real
+    `docker compose --profile live build character-live` on argyre, plus
+    `docker compose run --rm character-live status` (exit 0) against the test DB.
+  - Run order: after character_wp24_jobs_story (main.py must have story-start)
+    and before the by-hand character_wp24_compose block.

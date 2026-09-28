@@ -16,45 +16,36 @@ goal: |
   docker-compose.yml. The harness emits WHOLE files, so every existing line
   must come back byte-for-byte, with the new block added and nothing else.
 
-  !! PLANNER WARNING (tracker questions Q7 and P3b-Q4): this spec has the same
-  problem as character_wp06_compose.yaml. docker-compose.yml is ~50 KB, over
-  the playbook §2.2 prompt budget as context plus a whole-file reply, and the
-  sandbox does not copy the root compose files. Recommendation: add the block
-  below BY HAND (config, like config/character.yaml), after the user answers
-  Q7. Second problem (P3b-Q4): the character-updater image (WP-06 Dockerfile)
-  copies only app/character, but the driver imports app/campaign, app/office,
-  replay, emotion, agent_state, audio_envelope, agent_metrics, message_bus,
-  worker_control and llm_client, plus the pack under campaigns/. The block
-  below therefore assumes a second Dockerfile,
-  services/character-updater/Dockerfile.live (a new file: a file-location
-  decision, so it waits for the user's answer).
+  !! BY-HAND STEP (tracker Q7; user answer 2026-09-28 (item 6)): the
+  compose blocks of WP-06/16/24 are too large for the qwen_worker harness
+  (tools/qwen_worker/runner.py with qwen3.8:27b): playbook §2.2's ~60k-char
+  prompt budget, and the harness emits whole files while docker-compose.yml is
+  ~50 KB. So this block is added BY HAND (config, like config/character.yaml);
+  this spec documents the exact block and its gate.
+
+  The image: user decision 2026-09-28 (item 7), tracker P3b-Q4 (a). The service
+  builds from services/character-updater/Dockerfile.live (all of app/ and
+  campaigns/), which is its own harness target:
+  character_wp24_dockerfile_live.yaml (run it first).
 
 target_files:
   - docker-compose.yml
-  - services/character-updater/Dockerfile.live
 
 test_files:
   - tests/test_office_configs.py          # parses docker-compose.yml; must stay green
+  - tests/character/test_character_dockerfile_live.py   # the image this block builds
 
 context_files:
   - docker-compose.yml
-  - services/character-updater/Dockerfile # WP-06 image, the style to copy
+  - services/character-updater/Dockerfile.live # promoted by character_wp24_dockerfile_live
 
 interface: |
-  ── services/character-updater/Dockerfile.live ── (only if P3b-Q4 = new file)
-      FROM python:3.12-slim
-      ENV PYTHONUNBUFFERED=1
-      WORKDIR /app
-      COPY services/character-updater/requirements.txt /app/requirements.txt
-      RUN pip install --no-cache-dir -r /app/requirements.txt redis
-      COPY app /app                       # the driver needs campaign/, office/ and the shared modules
-      COPY campaigns /campaigns
-      COPY config/character.yaml /config/character.yaml
-      COPY services/character-updater/main.py /app/main.py
-      ENTRYPOINT ["python3", "/app/main.py"]
-      CMD ["story-start", "--foreground"]
-    No secret baked in; config.pack must resolve to /campaigns/ashiorid_office in
-    the container (a volume or CHARACTER_PACK-style override: part of P3b-Q4).
+  ── services/character-updater/Dockerfile.live ── not here: see
+    character_wp24_dockerfile_live.yaml (FROM python:3.12-slim, COPY app /app,
+    COPY campaigns /campaigns, ENTRYPOINT main.py, CMD story-start --foreground).
+    In the container cfg.pack "campaigns/ashiorid_office" resolves to
+    /campaigns/ashiorid_office (the repo root is "/"), which the volume below
+    mounts read-only.
 
   ── docker-compose.yml: add after the character-jobs block ──
     # Character v4 live driver (plan §8, D-19): plays the campaign with memory for
