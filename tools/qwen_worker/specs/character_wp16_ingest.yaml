@@ -1,0 +1,170 @@
+task_id: character_wp16_ingest
+
+goal: |
+  Write `app/character/ingest.py`: the ingest consumer that records what every
+  character says, thinks and witnesses (plan §3.3, D-11, D-20). It reads Kafka
+  `vtuber.messages` and writes one `experience_events` row per (message,
+  character) it reaches, into character_profile. The nightly summaries (WP-19)
+  and the weekly fragments (WP-20) are built only from these rows, so this is
+  the character's whole memory of the week.
+
+  Plan §3.3:
+  - KafkaConsumer group `character-ingest`, auto_offset_reset="earliest",
+    enable_auto_commit=False. Commit offsets AFTER the DB commit, in batches of
+    up to 200 messages or 2 s.
+  - Allowlist agent_thinking, character_say, scene_event. Everything else is
+    skipped before any parsing beyond `type`.
+  - Routing is a pure function `route(msg, agents, slugs, clock) -> list[row]`:
+    agent_thinking: character_agents[from] gives one row, visibility 'self'; an
+    unmapped `from` is counted and skipped. character_say / scene_event: one
+    row per slug in present ∪ {character} ∪ addressees that is a known
+    character, visibility 'present'. loop_week and loop_day come from the body
+    `timestamp` via clock.py; a timestamp before the epoch is counted and skipped.
+  - ON CONFLICT (message_id, character_id) DO NOTHING makes redelivery harmless.
+  - A malformed message is logged at ERROR, counted and skipped. It never stalls
+    the partition. Each batch updates ingest_status. No embeddings at ingest.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: one bad message stalls ingest, or offsets
+  are committed for rows that never reached the database. Kafka keeps the
+  topic for only 7 days (D-11): a consumer stuck on a poison message (a
+  deserializer that raises, a route() error that escapes the loop) silently
+  loses the characters' week, and committing offsets before the DB commit loses
+  the rows of a crash forever. So: the value deserializer never raises (None),
+  route errors are caught per message, and consumer.commit() is called only
+  after conn.commit() succeeded.
+
+  Do NOT copy app/message_bus.py:60-75 (MessageConsumer): it hardcodes
+  auto_offset_reset="latest" and enable_auto_commit=True, exactly what ingest
+  must not do.
+
+target_files:
+  - app/character/ingest.py
+
+test_files:
+  - tests/character/test_character_ingest.py
+
+context_files:
+  - app/character/store/events.py       # insert_many, update_ingest_status, EVENT_COLUMNS (WP-05)
+  - app/character/store/characters.py   # agents_map (WP-05)
+  - app/character/clock.py              # LoopClock.position (WP-03)
+
+interface: |
+  ALLOWED_TYPES = ("agent_thinking", "character_say", "scene_event")
+  class MalformedMessage(ValueError)
+
+  def route(msg, agents, slugs, clock, *, types=ALLOWED_TYPES, counts=None) -> list[dict]
+      agents: {agent_id: character_id} (character_agents: both "char:<slug>" and,
+              for the office, the seat id "tuber_N").
+      slugs:  {slug: character_id} (known characters).
+      clock:  character.clock.LoopClock. counts: a collections.Counter (or None)
+              incremented in place with the keys below.
+      Order of checks:
+      1. msg not a dict -> raise MalformedMessage.
+      2. msg.get("type") not in types -> counts["not_allowed"] += 1; return [].
+         Do NOT read or inspect msg["payload"] before this point.
+      3. id and from must be non-empty str; payload a dict; payload "text" (default
+         "", None -> "") a str; timestamp an ISO str (datetime.fromisoformat,
+         "Z" allowed) or a datetime, tz-aware. Any violation -> MalformedMessage.
+      4. week, day = clock.position(ts); week < 1 -> counts["pre_epoch"] += 1; [].
+      5. agent_thinking: cid = agents.get(from); None -> counts["unmapped"] += 1; [].
+         Else one row, visibility "self".
+      6. character_say / scene_event: payload "present" and "addressees" must be
+         lists of str when present (None/absent = []), else MalformedMessage.
+         names = present + [character if it is a str] + addressees; one row per
+         name found in slugs, deduplicated by character_id, first-seen order,
+         visibility "present". Names not in slugs ("office_clock", "gm") are
+         ignored. No known name -> counts["no_characters"] += 1; [].
+      Row dict keys EXACTLY store.events.EVENT_COLUMNS:
+          message_id=msg["id"], character_id, msg_type=type, from_agent=msg["from"],
+          scene_id=payload.get("scene_id"), visibility, text, payload=payload (the
+          dict), ts=the parsed tz-aware datetime, loop_week=week, loop_day=day.
+
+  def deserialize(raw: bytes):
+      json.loads(raw.decode("utf-8")); ANY exception -> None (never raises).
+
+  def build_consumer(ingest_cfg, bootstrap_servers, *, factory=None)
+      factory defaults to kafka.KafkaConsumer (import it inside the function).
+      return factory(ingest_cfg.kafka_topic, bootstrap_servers=bootstrap_servers,
+                     group_id=ingest_cfg.consumer_group, auto_offset_reset="earliest",
+                     enable_auto_commit=False, value_deserializer=deserialize)
+
+  def load_maps(conn, campaign=None) -> tuple[dict, dict]
+      (store.characters.agents_map(conn), {slug: id} from `SELECT slug, id FROM
+      characters` [WHERE campaign = %s when given]).
+
+  class IngestLoop:
+      def __init__(self, consumer, conn, clock, *, agents, slugs,
+                   consumer_group="character-ingest", types=ALLOWED_TYPES,
+                   batch_max=200, batch_wait_s=2.0, poll_timeout_ms=500,
+                   monotonic=time.monotonic, insert_many=None, update_status=None)
+          insert_many defaults to character.store.events.insert_many(conn, rows) -> int;
+          update_status defaults to character.store.events.update_ingest_status.
+          consumer may be None (backfill: no Kafka offsets to commit).
+          Attributes: .counts (Counter, cumulative), .pending (list of message
+          values in the current batch), .batch_started (monotonic() when the
+          first message entered the empty batch, else None).
+      def add(self, msg) -> None      append; set batch_started if the batch was empty.
+      def due(self) -> bool           pending and (len >= batch_max or
+                                      monotonic() - batch_started >= batch_wait_s)
+      def step(self) -> int | None
+          records = consumer.poll(timeout_ms=poll_timeout_ms,
+                                  max_records=max(1, batch_max - len(pending)))
+          (a {partition: [ConsumerRecord]} dict); add(record.value) for every
+          record of every partition; then return flush() if due() else None.
+      def route_pending(self) -> tuple[list, Counter, datetime | None]
+          route() every pending message with a per-batch Counter; ANY exception
+          from route -> counts "malformed" += 1 and log.error(...) (no payload
+          text in the log), then continue with the next message. Returns
+          (rows, batch_counts, newest ts among routed rows or None).
+      def flush(self) -> int
+          pending empty -> return 0 (no DB call, no commit).
+          rows, delta, last = route_pending()
+          try: n = insert_many(conn, rows)
+               update_status(conn, consumer_group, last_message_ts=last,
+                             messages_seen=len(pending), rows_written=n,
+                             unmapped=delta["unmapped"])     (keyword arguments)
+               conn.commit()
+          except Exception: conn.rollback(); log.error(...); re-raise
+              (pending is KEPT and no offsets are committed).
+          then: consumer.commit() if consumer is not None; counts.update(delta);
+          pending = []; batch_started = None; return n.
+      def run(self, should_stop=lambda: False) -> None
+          while not should_stop(): step(); finally flush() once more.
+
+  BACKFILL_SQL = ('SELECT id::text, "from", "to", type, payload, timestamp FROM {} '
+                  'WHERE timestamp >= %s AND type = ANY(%s) ORDER BY timestamp, id')
+  def backfill_tables(source_conn) -> list[str]
+      For name in ("messages_archive", "messages"): SELECT to_regclass(%s) with
+      f"public.{name}"; keep the names that exist (archive first: older rows).
+  def backfill_messages(source_conn, since, types=ALLOWED_TYPES, *, tables=("messages",),
+                        page_size=500) -> Iterator[dict]
+      For each table: execute psycopg2.sql.SQL(BACKFILL_SQL).format(sql.Identifier(table))
+      with params EXACTLY (since, list(types)); page with fetchmany(page_size);
+      yield {"id", "from", "to", "type", "payload" (json.loads when a str),
+             "timestamp": ts.isoformat() when a datetime}.
+  def connect_messages(cfg, env=None, *, readonly=False)
+      The virtualtubers DB (compaction, backfill): env keys
+      f"{cfg.messages_db_env_prefix}HOST" (default "localhost"), PORT (default
+      "5432"), DB, USER, PASSWORD (KeyError when missing, like
+      services/message-logger/logger.py connect_db). psycopg2.connect(...,
+      connect_timeout=5, application_name="character-messages"), then
+      conn.set_session(readonly=readonly, autocommit=False). Never log the password.
+
+notes: |
+  - Imports: stdlib (json, logging, os, time, collections, datetime), psycopg2
+    (psycopg2.sql), kafka only inside build_consumer, and `character.*`
+    (`from character.store import events, characters`). No numpy.
+  - `log = logging.getLogger(__name__)`. DEBUG per flush (messages, rows,
+    counts); ERROR for a malformed message (its id and type, never text or
+    payload) and for a failed flush; INFO is not needed per batch.
+  - route() is PURE: no DB, no logging of payloads, no clock.now. It must not
+    mutate msg or payload.
+  - OB-41 (.claude/prompts/ashiorid_office_build_plan.md): office seats publish
+    from `tuber_N`; they are resolved ONLY through the `agents` map, never by a
+    hardcoded seat table. The Party Member has no agent id in the map
+    (tracker question P3a-3), so his thoughts count as unmapped; his rows come
+    only from `present`.
+  - Tests: unit tests with fakes (tests/character/fakes_runtime.py FakeConsumer,
+    FakeConn; FakeClock from fakes.py as `monotonic`), plus one integration test
+    on the `pg_conn` fixture. Run the harness with CHARACTER_TEST_REQUIRE_DB=1.
+    Pending guard: the test file skips while app/character/ingest.py is missing.

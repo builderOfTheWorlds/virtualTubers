@@ -1,0 +1,102 @@
+task_id: character_wp16_jobs_ingest
+
+goal: |
+  Write the `ingest` job, `app/character/jobs_ingest.py`, and register it in
+  `services/character-updater/main.py` (plan §3.3, §5 job table, D-11, D-13).
+
+      python services/character-updater/main.py ingest                       (compose: always on)
+      python services/character-updater/main.py ingest --backfill-from-messages --since <ISO>
+
+  Without flags the job runs the long-lived Kafka loop (character.ingest.IngestLoop)
+  until the process is stopped; compose keeps it up with `restart:
+  unless-stopped`. With `--backfill-from-messages --since <ts>` it is the
+  recovery path for a Kafka retention gap (D-11): it reads the virtualtubers
+  `messages` table (and `messages_archive` when it exists) READ-ONLY, and routes
+  every row through exactly the same `route()` as the live loop, so the rows are
+  the same as if the messages had arrived on Kafka. Re-running a backfill is
+  harmless (ON CONFLICT DO NOTHING in store.events.insert_many).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the backfill writes to the virtualtubers
+  database, or writes anything under --dry-run. The source connection is opened
+  read-only; --dry-run routes and counts but inserts nothing (and the framework
+  writes no jobs row).
+
+target_files:
+  - app/character/jobs_ingest.py
+  - services/character-updater/main.py
+
+test_files:
+  - tests/character/test_character_jobs_ingest.py
+  - tests/character/test_character_updater_main.py
+
+context_files:
+  - app/character/ingest.py               # route, IngestLoop, backfill_*, connect_messages, load_maps (WP-16 spec 1)
+  - app/character/jobs.py                 # run_job, JobResult, parse_at, build_parser (WP-06)
+  - services/character-updater/main.py    # the file to extend (WP-06): keep every line, add one JOBS entry
+
+interface: |
+  ── app/character/jobs_ingest.py ──
+
+  class IngestJob:
+      name = "ingest"
+      def __init__(self, source_connect=None, consumer_factory=None, bootstrap_servers=None)
+          source_connect(cfg) -> connection: default
+              lambda cfg: ingest.connect_messages(cfg, readonly=True)
+          consumer_factory: passed to ingest.build_consumer(factory=...) (tests/None).
+          bootstrap_servers: default os.environ.get("KAFKA_BOOTSTRAP_SERVERS").
+      def add_arguments(self, parser) -> None
+          --backfill-from-messages   store_true
+          --since ISO                type=character.jobs.parse_at (tz-aware), default None
+      def run(self, ctx) -> JobResult
+          agents, slugs = ingest.load_maps(ctx.conn)       (all campaigns)
+          A. ctx.args.backfill_from_messages:
+             - since is None -> JobResult("precondition", message="--backfill-from-messages
+               needs --since")  (exit 3), BEFORE opening the source.
+             - src = source_connect(ctx.cfg); try/finally src.close().
+             - loop = ingest.IngestLoop(None, ctx.conn, ctx.clock, agents=agents, slugs=slugs,
+               consumer_group=cfg.ingest.consumer_group, types=cfg.ingest.types,
+               batch_max=cfg.ingest.batch_max)
+             - for msg in ingest.backfill_messages(src, since, cfg.ingest.types,
+               tables=ingest.backfill_tables(src)): loop.add(msg); when
+               len(loop.pending) >= batch_max: flush (see dry-run below).
+               At the end flush once more.
+             - dry run: instead of loop.flush(), count len(loop.route_pending()[0])
+               and clear loop.pending: nothing is inserted, nothing committed.
+             - print exactly one line:
+               f"backfill{' (dry run)' if ctx.dry_run else ''}: {n_messages} messages, {n_rows} rows"
+               (n_rows = rows inserted, or rows that would be written in a dry run)
+             - return JobResult("done", {"messages": n_messages, "rows": n_rows})
+          B. otherwise (the live consumer):
+             - ctx.dry_run -> JobResult("nothing", message="dry run of the live consumer
+               does nothing") (exit 2).
+             - no bootstrap servers -> JobResult("precondition", message=
+               "KAFKA_BOOTSTRAP_SERVERS is not set") (exit 3).
+             - consumer = ingest.build_consumer(cfg.ingest, bootstrap, factory=consumer_factory)
+             - IngestLoop(consumer, ctx.conn, ctx.clock, agents=agents, slugs=slugs,
+               consumer_group=cfg.ingest.consumer_group, types=cfg.ingest.types,
+               batch_max=cfg.ingest.batch_max, batch_wait_s=cfg.ingest.batch_wait_s).run()
+               (runs until the process is stopped; KeyboardInterrupt/SIGTERM end it)
+             - return JobResult("done")
+
+  ── services/character-updater/main.py ──
+  Keep the WP-06 file exactly, and add the job to the registry:
+      from character.jobs_ingest import IngestJob
+      JOBS = {"status": jobs.StatusJob, "ingest": IngestJob}
+  (the import goes after the sys.path insert, next to `from character import jobs`).
+  `main.py ingest --help` then prints the common flags plus --backfill-from-messages
+  and --since (argparse, via jobs.build_parser -> job.add_arguments).
+
+notes: |
+  - Imports in jobs_ingest.py: stdlib (logging, os) and `character.*`
+    (`from character import ingest`, `from character.jobs import JobResult, parse_at`).
+  - The advisory lock (job, campaign) is taken by run_job, so a second live
+    ingest exits 2 (plan §5). The live loop uses ctx.conn (the main DSN); the
+    CHARACTER_INGEST_DB_* role split (D-05 option 2) is not used yet.
+  - `log = logging.getLogger(__name__)`: INFO when the backfill finishes (counts)
+    and when the live loop starts (topic, group); never log DSNs or passwords.
+  - The agents map is loaded once at start: a character added later needs an
+    ingest restart (tracker local choice P3a-L2).
+  - Tests: tests/character/test_character_jobs_ingest.py runs the job through
+    jobs.run_job against a migrated pgserver DB with a fake source connection
+    (fakes_runtime.FakeSourceConn), and `main.py ingest --help` as a subprocess.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1.

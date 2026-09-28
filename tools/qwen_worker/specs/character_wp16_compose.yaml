@@ -1,0 +1,72 @@
+task_id: character_wp16_compose
+
+goal: |
+  Add the `character-ingest` service to the root `docker-compose.yml` (plan §3.3
+  "process character-ingest", §5 job table "`ingest` | always on | Compose
+  `restart: unless-stopped` keeps it up"; playbook WP-16 targets).
+
+  It runs the long-lived ingest job from the same image as `character-jobs`
+  (WP-06): `main.py ingest`, reading Kafka `vtuber.messages` as consumer group
+  `character-ingest` and writing experience rows into character_profile
+  (192.168.1.120:5433).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the edit breaks the other services in
+  docker-compose.yml. The harness emits WHOLE files, so every existing line
+  must come back byte-for-byte, with only the new block added.
+
+  !! PLANNER WARNING (tracker question 7, recommendation (a), applies here too):
+  docker-compose.yml is ~50 KB, over the playbook §2.2 prompt budget as context
+  plus a whole-file reply, and tests/test_office_configs.py also reads
+  docker-compose.office.yml, which the sandbox does not copy. Recommended: add
+  the block below BY HAND at promote time (it is config), exactly as written,
+  after the `character-jobs` block from WP-06. Run this spec only if the user
+  chooses option (b) or (c) of question 7.
+
+target_files:
+  - docker-compose.yml
+
+test_files:
+  - tests/test_office_configs.py          # parses docker-compose.yml; must stay green
+
+context_files:
+  - docker-compose.yml                    # the file to reproduce exactly (+ the new block)
+
+interface: |
+  ── docker-compose.yml: add this service, right after `character-jobs` ──
+    # Character v4 ingest (plan character_generator_updater_v4.md §3.3): Kafka
+    # vtuber.messages -> character_profile experience_events. Always on; offsets
+    # are committed only after the DB commit (group character-ingest).
+    character-ingest:
+      build:
+        context: .
+        dockerfile: services/character-updater/Dockerfile
+      image: virtualtubers-character-updater:latest
+      command: ["ingest"]
+      restart: unless-stopped
+      environment:
+        CHARACTER_DB_HOST: ${CHARACTER_DB_HOST:-192.168.1.120}
+        CHARACTER_DB_PORT: ${CHARACTER_DB_PORT:-5433}
+        CHARACTER_DB_NAME: ${CHARACTER_DB_NAME:-character_profile}
+        CHARACTER_DB_USER: ${CHARACTER_DB_USER:-character_profile}
+        CHARACTER_DB_PASSWORD: ${CHARACTER_DB_PASSWORD:-}
+        KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:?KAFKA_BOOTSTRAP_SERVERS must be set in .env}
+        KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+        # Only for `ingest --backfill-from-messages` (read-only on the virtualtubers DB).
+        POSTGRES_HOST: ${POSTGRES_HOST:-}
+        POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+        POSTGRES_DB: ${POSTGRES_DB:-virtualtubers}
+        POSTGRES_USER: ${POSTGRES_USER:-virtualtubers}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
+      volumes:
+        - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
+
+notes: |
+  - The image's ENTRYPOINT is `python3 /app/main.py` (WP-06 Dockerfile), so
+    `command: ["ingest"]` selects the job.
+  - Change NOTHING else in docker-compose.yml; never put a secret value in it,
+    only `${VAR...}` references. No ports, no healthcheck; no depends_on (Kafka
+    and the DB are external hosts).
+  - Do not add `character-live` (WP-24).
+  - Gate (orchestrator, after promote): `docker compose config --services` lists
+    character-ingest (with the stack's .env present); tests/test_office_configs.py
+    passes in the real tree.
