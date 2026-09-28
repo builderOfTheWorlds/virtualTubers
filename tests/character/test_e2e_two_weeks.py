@@ -9,8 +9,10 @@ OB-41 test corrections (tracker .claude/prompts/character_v4_tracker_phase3b.md)
 - "initialize for the trio, with canned baselines" -> `initialize` for the
   office cast; the canned baselines are campaigns/ashiorid_office/profiles
   (a tmp copy of the pack). The fortnight follows engineer, tester, analyst
-  and the Party Member, who is only ever present (OB-41: "The Party Member's
-  experience comes only from visibility: present events").
+  and the Party Member. He is a full character who just has no lines at the
+  moment (user decision 2026-09-28 (item 8)): the fixture has no line or
+  thought of his, so his rows are all `present` HERE, as a fact of the
+  fixture, not a rule (a think:party_member beat would give him a self row).
 - "one harry fragment" -> one dormant fragment per retaining character (all 8
   retain, OB-41); the worked example is the engineer's.
 - Item 9 "a re-run of any completed job exits 2": initialize and weekly-reset
@@ -23,7 +25,9 @@ in the tracker file too):
 A1 jobs run as jobs.run_job(job, argv, cfg=, connect=) (WP-06).
 A2 character.jobs_initialize.InitializeJob() takes `--pack DIR` (Phase 2
    test_character_initialize.py) and loads all 8 profiles, seeds char:<slug>
-   agents and opens week 1; a second run exits 2; no LLM call.
+   and tuber_N agents for all 8, the Party Member included (Phase 2 T14.13;
+   user decision 2026-09-28 (item 8)) and opens week 1; a second run exits 2;
+   no LLM call.
 A3 character.jobs_daily.DailyMaintenanceJob(complete=, messages_connect=,
    monotonic=, sleep=, poll_s=) with `complete(system, user, shape)`; compaction
    is replaced through jobs_daily.compaction.run / .ingest_lag (Phase 3a
@@ -224,8 +228,12 @@ def test_simulated_fortnight(fortnight):
         {"kestrel", "heron", "osprey", "plover", "curlew"}
     pm = f.id_of("party_member")
     assert count(f.dsn, "SELECT count(*) FROM experience_events WHERE character_id = %s", (pm,)) > 0
+    # his self rows == his thoughts in the fixture (none today): a fixture fact, not a rule (item 8)
+    own_thoughts = sum(beat["s"] == "think:party_member"
+                       for spec in FIX["days"].values() for beat in spec["beats"])
     assert count(f.dsn, "SELECT count(*) FROM experience_events WHERE character_id = %s "
-                        "AND visibility <> 'present'", (pm,)) == 0
+                        "AND visibility = 'self'", (pm,)) == own_thoughts
+    assert count(f.dsn, "SELECT count(*) FROM character_agents WHERE character_id = %s", (pm,)) >= 1
 
     # 3. weekly-reset at Sunday 00:00 NY: dormant fragments, week 1 archived
     assert f.weekly(WEEK2_DAYS[0]) == 0

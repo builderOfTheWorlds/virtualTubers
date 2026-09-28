@@ -187,6 +187,8 @@ which loads `profiles/*.yaml` into `characters` / `character_backstories` /
   that runs outside the jobs-row path (recommended); (b) main.py migrates
   before every job; (c) the loader CLI migrates (non-dry-run). Blocks the
   Phase 2 gate on a real DB (OP-2), not the tests (they migrate first).
+  **Still open (2026-09-28, item 3):** user says a document defines how the
+  DB scripts should be created -- parent is confirming which document.
 - **P2-Q5 where the profile sha256 lives.** `character_baselines.source_id =
   "office_profile:<sha256>"` (a free-text provenance column with no FK), not
   a `source_works` row or a new column. No schema change. Confirm, or pick a
@@ -212,6 +214,10 @@ which loads `profiles/*.yaml` into `characters` / `character_backstories` /
   statement for `wants-one-green-week` too; the brief includes the believed
   layer (plan §8 section 2). WP-22 needs a decision (word only banned in
   generated sections? or reword the profiles?).
+  **Resolved (user, 2026-09-28, item 1):** "the characters are unaware of time
+  passing; to them it's the same week over and over." The plain word "week"
+  is allowed in the brief; week NUMBERS and loop / reset / repetition wording
+  are not. Profiles are not reworded. See the main tracker's merged answers.
 - **P2-Q10 prompt template format.** `## System` / `## User` sections,
   string.Template `${name}` placeholders, listed in each file's header
   comment (summary_day: character_name, character_title, day, events,

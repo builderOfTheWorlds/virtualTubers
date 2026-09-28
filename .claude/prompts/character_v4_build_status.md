@@ -113,7 +113,7 @@ modules live beside it and the WP-03 clock spec keeps the avatar exports.
 | WP-21 testctl | tests-written | `character_wp21_testctl.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
 | WP-22 brief | tests-written | `character_wp22_brief.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
 | WP-23 recall + harness | tests-written | `character_wp23_{recall,recall_harness}.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
-| WP-24 live driver + story jobs | tests-written | `character_wp24_{live,jobs_story,compose}.yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
+| WP-24 live driver + story jobs | tests-written | `character_wp24_{live,jobs_story,dockerfile_live}.yaml`, then `character_wp24_compose.yaml` (by hand, Q7) | not run | see tracker_phase3b | Linux cloud container (tests only) |
 | WP-25 e2e two weeks | tests-written | `character_(test only).yaml` | not run | see tracker_phase3b | Linux cloud container (tests only) |
 | **Phase 3 gate** | | | | | |
 | WP-26 docs | todo | | | | |
@@ -234,6 +234,53 @@ check every main.py diff for dropped job registrations.
   ("defaults come from the env vars QWEN_WORKER_BASE_URL and
   QWEN_WORKER_MODEL when set") is implemented as specified.
 
+### User decisions 2026-09-28 (tests-and-specs session; no implementation code)
+
+Each cites "user decision 2026-09-28 (item N)".
+
+- **WP-22 T22.2 narrowed** (item 1): "never the word week" -> never a week
+  NUMBER ("week 3", "week #3", "3rd week", "week one", "W3") and never loop /
+  reset / repetition wording ("loop", "reset", "time repeats", "time resets",
+  "repeats itself", "again and again", "over and over", "same week", relive,
+  groundhog). The plain word "week" / "weeks" / "weekly" is allowed and must
+  survive: `tests/character/fakes_e2e.py` FORBIDDEN_BRIEF_RE rewritten (+
+  FORBIDDEN_BRIEF_SAMPLES / ALLOWED_BRIEF_SAMPLES);
+  test_character_brief.py T22.2 now also asserts the engineer's "We
+  overlapped for a few weeks", "a week later" and a knowledge node "I know
+  Owen wants one green week." are KEPT and a "same week, again and again"
+  node is dropped; new parametrized
+  `test_scrub_drops_week_numbers_and_loop_or_repetition_wording` (17) and
+  `test_scrub_keeps_the_plain_word_week` (8); test_character_brief_persona.py
+  new `test_tester_keeps_his_one_green_week`. The e2e and persona checks
+  pick up the new pattern through FORBIDDEN_BRIEF_RE. T22.1 heading kept as
+  "What you've learned recently" (docstring citation updated).
+- **WP-22 / WP-24 brief cap** (item 2): docstrings that said "over
+  brief.max_chars 6000" updated to 12000 (test_character_brief.py,
+  test_character_brief_persona.py). No assertion depended on the value.
+- **WP-16 T16.1/T16.2 and the OB-41 Party Member test** (item 8):
+  test_character_ingest.py AGENTS now maps `char:party_member` and `tuber_7`
+  (like Phase 2 T10o.7 / T14.13); T16.2's unmapped seat example `tuber_7` ->
+  `tuber_9` (not a seat); `test_party_member_experience_is_only_present_events`
+  replaced by `test_party_member_is_a_full_character_his_own_thoughts_are_self_rows`
+  (both sender forms; his thought is a `self` row, unmapped == 0; "no
+  character_say by him" kept only as a fact of the fixture) and
+  `test_a_line_spoken_by_the_party_member_routes_like_anyone_elses` (no
+  "never speaks" rule in ingest).
+- **WP-19 OB-41 Party Member test** (item 8):
+  `test_party_member_summary_is_built_from_present_events_only` ->
+  `test_party_member_summary_includes_his_own_thoughts_and_what_he_saw`
+  (a `self` thought + 2 present events -> 3 prompt lines, one `[self]`).
+- **WP-25 e2e** (item 8): step 2 "no non-present rows for the Party Member"
+  -> "his self rows == the fixture's think:party_member beats (0)", plus "he
+  has an agent id"; docstring, A2 and the fixture header comment say it is a
+  fixture fact, not a rule. Cross-checked on combined scratch throwaways
+  (Phase 1 + 2 + 3a + 3b, scratchpad `combo/`): the e2e passes.
+- **WP-24 new test** (item 7): `tests/character/test_character_dockerfile_live.py`
+  (4 text checks on `services/character-updater/Dockerfile.live`; skips while
+  it is missing). New, not a correction of a frozen test.
+- **WP-20** (item 5): no test change (T20.8 already covers push and none;
+  test_character_config.py already asserts refresh_mode push).
+
 ## Questions for the user
 
 1. **vLLM subagent wiring (blocks WP-03, not WP-00).** The
@@ -279,6 +326,12 @@ check every main.py diff for dropped job registrations.
    clock case); (c) make the office clock 1-based (touches OB-30/31 code and
    its ledger). Recommendation: (a). The WP-03 tests are written for the
    plan's 1-based clock.
+   **Resolved (user, 2026-09-28, item 5):** "The v4 weekly reset is the
+   authoritative one; the office campaign aligns with it." The v4 numbering
+   (LoopClock, week 1 starting at the epoch Sunday 2026-09-27 00:00 NY) is
+   canonical and the office side is being changed to use the same numbers
+   (option (c) in effect): no +1 conversion anywhere. The WP-03 clock tests
+   stand as written. See also P3a-4 / P3a-5 below.
 4. **`source:` block for the office campaign (config key).** Plan §11 has a
    book `source:` block; the office cast has none. `config/character.yaml`
    omits it (commented out) and the WP-03 spec makes `source` optional
@@ -313,6 +366,15 @@ check every main.py diff for dropped job registrations.
    (b) retarget the spec at a new small `docker-compose.character.yml`
    override (a file-location change); (c) extend the sandbox to copy root
    compose files (a harness change, WP-00 scope). Recommendation: (a).
+   **Answered (user, 2026-09-28, item 6):** (a). The WP-06, WP-16 and WP-24
+   compose blocks are too large for the qwen_worker harness
+   (`tools/qwen_worker/runner.py` with qwen3.8:27b: playbook §2.2's ~60k-char
+   prompt budget, and the harness emits whole files while docker-compose.yml
+   is ~50 KB). They remain by-hand steps; their specs
+   (`character_wp06_compose.yaml`, `character_wp16_compose.yaml`,
+   `character_wp24_compose.yaml`) document the exact blocks and gates. The
+   WP-24 image itself (`Dockerfile.live`) IS a harness target
+   (`character_wp24_dockerfile_live.yaml`, item 7).
 8. **`character_baselines.baseline_book/baseline_chapter` are NOT NULL**, but
    the office cast has no book position. The WP-05 characters spec and tests
    pass 0/0. Options: (a) 0/0 by convention for office baselines; (b) a
@@ -331,6 +393,50 @@ check every main.py diff for dropped job registrations.
     to LF so the checksum guard doesn't fire across hosts. Adding
     `*.sql text eol=lf` to `.gitattributes` would be cleaner but is not in
     the playbook's file list. Want it added?
+
+### Phase 2 / 3a / 3b questions: answers merged (user decisions, 2026-09-28)
+
+The questions live in the phase files
+([phase2](character_v4_tracker_phase2.md), [phase3a](character_v4_tracker_phase3a.md),
+[phase3b](character_v4_tracker_phase3b.md)); each is marked there too. "item N"
+is the numbering of the user's 2026-09-28 decision list.
+
+- **P2-Q9 / P3b-Q2 the word "week" in office content -- RESOLVED (item 1).**
+  "The characters are unaware of time passing; to them it's the same week over
+  and over." The brief (WP-22) never contains week NUMBERS, loop / reset /
+  repetition wording, `truth` or dormant gists; the ordinary word "week" in a
+  character's own experience ("one green week", "three weeks") is allowed and
+  kept. The list is `FORBIDDEN_RE` in `character_wp22_brief.yaml` (the same pattern as
+  `tests/character/fakes_e2e.py` FORBIDDEN_BRIEF_RE). Profiles are NOT reworded
+  (P3b-Q2 option (c) in effect, not (b)). The heading stays "What you've
+  learned recently".
+- **P3b-Q1 brief.max_chars -- RESOLVED (item 2):** 12000 in
+  config/character.yaml (was 6000); WP-22 render default and WP-24 live
+  `brief_max_chars` default follow.
+- **P2-Q4 who runs `db.migrate()` -- OPEN (item 3).** User says a document
+  defines how the DB scripts should be created -- parent is confirming which
+  document.
+- **P3a-4 / P3a-5 the office and v4 weekly resets -- RESOLVED (item 5).** The
+  v4 WP-20 `weekly-reset` is authoritative. It publishes `character_refresh`
+  (from "character-updater", payload {campaign, week, characters, reason});
+  for the office campaign `reset.refresh_mode` is push, NOT none. The office
+  weekly reset (app/office/weekly_reset.py) runs its repo steps first and then
+  invokes the v4 `weekly-reset` job, which publishes the ONLY
+  character_refresh (office-side change, being made by the office agent). No
+  week conversion (Q3). No `jobs_weekly.office_v4_hook` adapter is needed on
+  the v4 side: the office calls the job with `--campaign ashiorid_office --at
+  <Sunday 00:00 NY of the week that opens>` (or `--force`).
+- **Q7 compose blocks -- ANSWERED (item 6):** by hand, see Q7 above.
+- **P3b-Q4 the character-live image -- RESOLVED (item 7):** (a)
+  `services/character-updater/Dockerfile.live` (copies all of app/ and
+  campaigns/) as a harness target: `character_wp24_dockerfile_live.yaml` +
+  `tests/character/test_character_dockerfile_live.py`. The WP-24 compose block
+  builds from it.
+- **P3a-3 / Phase 2 vs 3a Party Member mismatch -- RESOLVED (item 8), in
+  favour of Phase 2.** The Party Member is a full character who just has no
+  lines at the moment: character_agents seeds `char:party_member` and
+  `tuber_7`; a `tuber_7` sender maps to party_member and his own
+  agent_thinking routes as `self`. No "never self" rule anywhere.
 
 ## Small local choices
 

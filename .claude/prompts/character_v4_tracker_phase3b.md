@@ -43,7 +43,9 @@ the fake embedder, the week-2 replay goes unease at beat 6 and surfaces at beat
 - WP-24: `tests/character/test_character_live.py`, `tests/character/test_character_jobs_story.py`,
   `tests/character/fixtures/app_campaign_sha256.json`,
   `tools/qwen_worker/specs/character_wp24_live.yaml`, `character_wp24_jobs_story.yaml`,
-  `character_wp24_compose.yaml`
+  `character_wp24_compose.yaml`; added 2026-09-28 (item 7):
+  `tests/character/test_character_dockerfile_live.py`,
+  `tools/qwen_worker/specs/character_wp24_dockerfile_live.yaml`
 - WP-25: `tests/character/test_e2e_two_weeks.py`, `tests/character/fixtures/e2e_office_fortnight.yaml`
 - Shared (all of the above): `tests/character/fakes_e2e.py`, this file.
 
@@ -53,7 +55,7 @@ After Phase 3a's WP-15..WP-20 are promoted (WP-21 uses bus_contracts;
 WP-24's specs use brief + recall):
 `character_wp21_testctl` -> `character_wp22_brief` -> `character_wp23_recall` ->
 `character_wp23_recall_harness` -> `character_wp24_live` -> `character_wp24_jobs_story`
--> (`character_wp24_compose` only after Q7 / P3b-Q4). One at a time, with
+-> `character_wp24_dockerfile_live` -> (`character_wp24_compose`: by hand, Q7 / item 6). One at a time, with
 `CHARACTER_TEST_REQUIRE_DB=1` (+ `CHARACTER_TEST_DSN` on aarch64).
 **main.py is re-emitted whole by several specs** (Phase 2 initialize, Phase 3a
 ingest/daily/weekly, WP-21, WP-24): each spec lists the promoted main.py as
@@ -129,7 +131,8 @@ sequence and review each main.py diff for dropped registrations.
 
 - WP-22 T22.1 (2026-09-28): plan §8 heading 4 "What you've learned this week"
   contradicts T22.2 (never the word "week"). The heading is "What you've
-  learned recently". Citation: playbook T22.2; D-08 ("no dates and no mention
+  learned recently". (After user decision 2026-09-28 (item 1) the plain word is
+  allowed, but the heading is kept: D-08, no framing of knowledge by the week.) Citation: playbook T22.2; D-08 ("no dates and no mention
   of weeks"); OB-41 session instruction (brief never contains "week").
 - WP-22 T22.1: an extra "Today's directive" section between the feelings and
   the behaviour contract. Citation: office build plan E6 and OB-41 ("When
@@ -178,6 +181,7 @@ sequence and review each main.py diff for dropped registrations.
   (b) truncate the believed layer before dropping knowledge (changes the plan
   §8 drop order); (c) shorten the profiles. Recommendation: (a). The WP-22
   tests do not depend on the value; the e2e renders with a large cap.
+  **Resolved (user, 2026-09-28, item 2):** (a), `brief.max_chars: 12000`.
 - **P3b-Q2 the word "week" in office content.** The brief drops every sentence
   with loop / week / reset, as instructed. The office profiles use "week"
   naturally: the Tester's central want ("one week in which the full suite
@@ -187,6 +191,11 @@ sequence and review each main.py diff for dropped registrations.
   profile/cast text without the word (e.g. "seven straight days green"), an
   OB-10 content edit; (c) narrow the rule to loop mechanics (week numbers,
   "loop", "reset") and allow the plain word. Recommendation: (b).
+  **Resolved (user, 2026-09-28, item 1):** (c). "The characters are unaware of
+  time passing; to them it's the same week over and over." Week numbers,
+  loop / reset / repetition wording, `truth` and dormant gists never reach
+  the brief; the plain word "week" does, and the profiles are not reworded.
+  The list is FORBIDDEN_RE in character_wp22_brief.yaml.
 - **P3b-Q3 who is silent.** The live driver finds the Party Member through
   `office.roles.HANDLER_ROLE == "observer"` (`live.default_silent`), with an
   explicit `silent=` override. The alternative is a config key
@@ -203,6 +212,11 @@ sequence and review each main.py diff for dropped registrations.
   repo-relative (`campaigns/ashiorid_office`) and must resolve in the container.
   Recommendation: (a), with campaigns mounted read-only; written into
   `character_wp24_compose.yaml`, which is a hand step like WP-06's (Q7).
+  **Resolved (user, 2026-09-28, item 7):** (a). `Dockerfile.live` is a harness
+  target (`character_wp24_dockerfile_live.yaml`, test
+  `tests/character/test_character_dockerfile_live.py`); the compose block
+  (still by hand, item 6) builds from it. In the container cfg.pack resolves to
+  /campaigns/ashiorid_office.
 - **P3b-Q5 daily-maintenance re-run exit code.** Playbook T25.9 says a re-run
   of any completed job exits 2; Phase 3a's frozen T19.5 re-run expects 0
   (compaction ran). Which wins? Recommendation: 0 is right for
@@ -211,6 +225,7 @@ sequence and review each main.py diff for dropped registrations.
   seeds `char:party_member` and `tuber_7` for all 8 characters; Phase 3a
   (test_character_ingest.py, question P3a-3) builds its agents map with no id
   for the Party Member. The WP-25 e2e does not depend on either.
+  **Resolved (user, 2026-09-28, item 8)** in favour of Phase 2 (see P3a-3).
 
 ## Cross-phase assumptions (in the header of test_e2e_two_weeks.py)
 

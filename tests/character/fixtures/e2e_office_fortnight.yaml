@@ -9,8 +9,10 @@
 #   id: <message id>                 optional; default e2e-<day>-<n>
 # `token` is a distinctive word in the day's beats; the canned summary
 # echoes it into that day's knowledge node, so a brief shows which day's
-# knowledge it holds. Nobody ever speaks as the Party Member: he is only ever
-# present (OB-41).
+# knowledge it holds. The Party Member is a full character who just has no
+# lines at the moment (user decision 2026-09-28, item 8): this fixture has no
+# line or thought of his, so he is only present here. That is a fact of the
+# fixture, not a rule; a {s: think:party_member} beat would give him a self row.
 #
 # Wednesday of week 1 is the engineer's moment: the 8 beats of
 # recall_office_engineer.yaml `lead_up`, then the moment itself (id
