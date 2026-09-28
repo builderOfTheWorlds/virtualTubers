@@ -1,0 +1,99 @@
+task_id: character_wp10o_load_cli
+
+goal: |
+  Write `scripts/load_office_profiles.py`: the thin command-line wrapper around
+  character.generator.office_profiles.load_profiles (promoted in the previous
+  spec). OB-41 (.claude/prompts/ashiorid_office_build_plan.md) names this
+  script as the replacement for the book source stages: an operator runs it
+  to put the 8 office characters from campaigns/ashiorid_office/profiles/*.yaml
+  into the character_profile database, and re-runs it after editing a profile.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a half-valid set of profiles is loaded,
+  or --dry-run writes something. So every profile is validated BEFORE the
+  script connects to the database (an invalid profile exits 1 and names the
+  file and the field), the load is one transaction (commit on success,
+  rollback on any error), and --dry-run rolls back and prints what would
+  happen.
+
+target_files:
+  - scripts/load_office_profiles.py
+
+test_files:
+  - tests/character/test_character_load_office_profiles.py
+
+context_files:
+  - app/character/generator/office_profiles.py    # promoted in character_wp10o_office_profiles
+  - app/character/db.py                           # promoted in WP-04: connect(cfg)
+
+interface: |
+  Module docstring: what it does, the usage line, and the exit codes:
+      0  something was loaded (or, with --dry-run, would be)
+      1  failed: invalid profile, config error, database error
+      2  nothing to do: every profile unchanged
+      3  precondition: the database is not migrated (no `characters` table)
+
+  REPO_ROOT = Path(__file__).resolve().parents[1]
+  sys.path.insert(0, str(REPO_ROOT / "app")) at import time, BEFORE importing
+  `from character import config, db` and `from character.generator import
+  office_profiles` (D-23: works from any cwd).
+  DEFAULT_PROFILES_DIR = REPO_ROOT / "campaigns" / "ashiorid_office" / "profiles"
+
+  def build_parser() -> argparse.ArgumentParser     prog="load_office_profiles.py"
+      --profiles-dir DIR   default DEFAULT_PROFILES_DIR
+      --cast-dir DIR       default None -> <profiles-dir>/../cast
+      --campaign SLUG      default None -> cfg.campaign
+      --config PATH        default None -> config.load() default (config/character.yaml)
+      --dry-run            store_true: validate and plan, write nothing
+      --no-activate        store_true: write new baseline versions but do not
+                           move active_baseline_version
+      -v, --verbose        store_true: DEBUG logging
+      (help texts for every flag; `--help` exits 0 without touching a database)
+
+  def main(argv=None) -> int
+      1. args = build_parser().parse_args(argv); logging.basicConfig(level=DEBUG
+         if args.verbose else INFO, stream=sys.stderr).
+      2. cfg = config.load(args.config) (env CHARACTER_DB_* applies);
+         config.ConfigError -> print to stderr, return 1.
+      3. accent = {slug: entry.accent_color for slug, entry in cfg.characters.items()}
+         office_profiles.read_profiles(profiles_dir, cast_dir, accent):
+         ProfileError -> print "invalid profiles:" and one line per error
+         (each error already starts with the file name, e.g. "ceo.yaml:
+         $.backstory_nodes[0].name: ...") to stderr, return 1. No DB connection
+         has been attempted at this point.
+      4. conn = db.connect(cfg); any exception -> print a one-line error
+         (no DSN, no password) to stderr, return 1.
+      5. In try/finally (conn.close()):
+         SELECT to_regclass('public.characters') is NULL -> print "database is
+         not migrated (no characters table)" to stderr, return 3.
+         report = office_profiles.load_profiles(conn, profiles_dir, cast_dir,
+             campaign=args.campaign or cfg.campaign, accent_colors=accent,
+             dry_run=args.dry_run, activate=not args.no_activate)
+         dry-run: conn.rollback(); print "DRY RUN: nothing written".
+         otherwise: conn.commit().
+         Print one stdout line per slug: f"{slug}: {action} v{version}", sorted.
+         Return 0 if report.changed else 2 (the same for --dry-run).
+         Any exception from load_profiles: conn.rollback(), print a one-line
+         error to stderr, log it at ERROR, return 1.
+
+  if __name__ == "__main__": raise SystemExit(main())
+
+notes: |
+  - Imports: stdlib (argparse, logging, sys, pathlib) and, after the sys.path
+    insert, character.config, character.db, character.generator.office_profiles.
+    No SQL here except the to_regclass check (parameterless, constant text).
+  - `log = logging.getLogger("load_office_profiles")`: INFO with the action
+    counts at the end, ERROR in every except block. Never log the DSN or the
+    password; never print backstory text.
+  - Loki, best-effort: after a successful non-dry run, push one INFO line
+    {"app": "character", "operation": "load_office_profiles"} with the action
+    counts, using a copy of `_push_loki` from tools/qwen_worker/runner.py:39-54
+    (it must never raise; skip it when projectManager is not present).
+  - The script never migrates the database (who migrates is tracker
+    question P2-Q4); the tests migrate first and check exit 3 on an empty DB.
+  - The tests run the script as a subprocess from tmp_path and from
+    scripts/, with CHARACTER_DB_HOST/PORT/NAME/USER/PASSWORD pointing at the
+    `pg` fixture's database (tests/character/fakes_generator.py db_env) and
+    PYTHONPATH removed. Run the harness with CHARACTER_TEST_REQUIRE_DB=1.
+  - Pending guard: the test file skips while scripts/load_office_profiles.py
+    is missing. The harness sandbox does not copy scripts/, but it overlays
+    the staged target at the same path, so the tests run for real there.

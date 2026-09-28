@@ -1,0 +1,202 @@
+task_id: character_wp10o_office_profiles
+
+goal: |
+  Write `app/character/generator/office_profiles.py` (and the package marker
+  `app/character/generator/__init__.py`): the loader that puts the 8 office
+  characters into the character_profile database.
+
+  Why it exists (OB-41, .claude/prompts/ashiorid_office_build_plan.md): the v4
+  plan built baselines from a book (stages 1-6 of plan §1: clean, tag, cast,
+  load source, timeline, backstory, baseline). The office cast has no book: its
+  backstories are AUTHORED in campaigns/ashiorid_office/profiles/<slug>.yaml
+  (contract: profiles/_SCHEMA.md). OB-41 replaces the book stages with this
+  loader, called by the thin CLI scripts/load_office_profiles.py (next spec)
+  and by the `initialize` job (WP-14). For each profile it writes:
+    - `characters` (name, campaign, retains_fragments, is_main, aliases,
+      avatar_params from cast/<slug>.yaml `character_params`, the OB-20 output)
+    - `character_baselines` version N (the profile minus its backstory, plus
+      its backstory_nodes; baseline book/chapter 0/0: the office has no book
+      position, tracker question 8 option (a))
+    - `character_backstories` version N: one `believed` row and one `truth`
+      row, never mixed
+    - `character_agents`: `char:<slug>` (D-04) AND the seat worker id
+      `tuber_N` (office workers publish from tuber_N, app/office/roles.py SEAT),
+      so ingest can map both kinds of sender to the character.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: GM-only `truth` text reaches a
+  character-facing row (the believed backstory, the baseline profile or its
+  nodes). The brief (WP-22) is built from exactly those, and a character that
+  can read its own truth layer knows things it must not (plan §4: "truth: GM
+  only ... never in a brief"). Second rule: baselines are versioned and never
+  modified (plan §6): a changed profile adds version N+1 for THAT character
+  only; unchanged profiles write nothing at all, so a re-load is a no-op.
+
+target_files:
+  - app/character/generator/office_profiles.py
+  - app/character/generator/__init__.py
+
+test_files:
+  - tests/character/test_character_office_profiles.py
+  - tests/character/test_character_office_profiles_db.py
+
+context_files:
+  - app/character/store/characters.py            # promoted in WP-05: the only writer you use
+  - app/character/shapes.py                      # promoted in WP-03: the shape DSL
+  - campaigns/ashiorid_office/profiles/_SCHEMA.md
+
+interface: |
+  app/character/generator/__init__.py: a module docstring only ("Generator
+  stages for the character_profile database: the office profile loader
+  (OB-41), cast export (WP-14)"). No imports.
+
+  app/character/generator/office_profiles.py:
+
+  SOURCE_PREFIX = "office_profile:"      # character_baselines.source_id = SOURCE_PREFIX + sha256
+  CREATED_BY = "load_office_profiles"    # character_baselines.created_by
+  BASELINE_BOOK = 0; BASELINE_CHAPTER = 0
+  SEAT_RE = re.compile(r"^tuber_[0-9]+$")
+  PROFILE_SHAPE: a character.shapes shape (type "object") with
+      required: id, retains_fragments, is_main, identity, appearance, personality,
+                objectives, backstory, backstory_nodes, behaviour_contract
+      id str; retains_fragments bool; is_main bool; appearance str;
+      identity object, required full_name str, age int, pronouns str, title str,
+               seat str (optional properties: tenure_months int, home str,
+               commute str, hobbies list of str);
+      personality object, required traits (list of str) (optional speech_tics
+               list of str, work_style str, stress_response str);
+      objectives object, required wants, fears (lists of str) (optional secrets);
+      backstory object, required believed str, truth str;
+      backstory_nodes list of objects, required name str, statement str;
+      behaviour_contract list of str.
+
+  class ProfileError(ValueError):
+      def __init__(self, errors)        # errors: list[str]
+      .errors  the list; str(err) == "\n".join(errors)
+
+  @dataclass(frozen=True)
+  class OfficeProfile:
+      slug: str; path: Path; sha256: str; name: str; retains_fragments: bool
+      is_main: bool; seat: str; aliases: tuple[str, ...]; avatar_params: dict
+      profile: dict; backstory_nodes: tuple[dict, ...]; believed: str; truth: str
+      @property source_id -> SOURCE_PREFIX + sha256
+      @property agent_ids -> (f"char:{slug}", seat)
+
+  @dataclass(frozen=True)
+  class LoadReport:
+      actions: dict[str, str]     # slug -> "created" | "updated" | "activated" | "avatar" | "unchanged"
+      versions: dict[str, int]    # slug -> the character's newest baseline version after the load
+      dry_run: bool
+      @property changed -> tuple[str, ...]   # sorted slugs whose action != "unchanged"
+
+  def profile_files(profiles_dir) -> list[Path]
+      sorted(Path(profiles_dir).glob("*.yaml")), skipping names that start with "_".
+
+  def profile_sha256(path) -> str
+      character.db.file_sha256(path): hex sha256 with CRLF normalised to LF
+      (import `from character import db`; promoted in WP-04).
+
+  def validate_profile(doc, expected_id=None) -> list[str]
+      errors = shapes.validate(doc, PROFILE_SHAPE); if doc is not a dict return them.
+      Then add, each as "<$.path>: <reason>":
+        - expected_id given and doc["id"] (a str) != expected_id ->
+          f"$.id: {doc['id']!r} does not match the file name {expected_id!r}"
+        - identity.seat (a str) not matching SEAT_RE -> "$.identity.seat: ..."
+        - backstory.believed (a str) empty after .strip() -> "$.backstory.believed: must not be empty"
+          (truth MAY be empty: _SCHEMA.md "may be mostly open")
+        - for each backstory_nodes[i] that is a dict with a str name:
+            every reason of character.node_names.check(name) ->
+                f"$.backstory_nodes[{i}].name: {reason}"
+            a name already seen at a lower index ->
+                f"$.backstory_nodes[{i}].name: duplicate node name {name!r}"
+      [] when valid.
+
+  def avatar_params(cast_doc=None, accent_color=None) -> dict
+      cast_doc a dict whose "character_params" is a dict ->
+          character_schema.resolve_params(cast_doc["character_params"])   (the OB-20 params win)
+      otherwise -> dict(resolve_params(None)) with "accent_color" replaced by
+          accent_color when it is given (plan §9 v1 default: resolve_params(None)
+          plus the configured accent colour).
+      `from character_schema import resolve_params` (a top-level module in app/).
+
+  def aliases_for(doc) -> tuple[str, ...]
+      identity.title first, then each word of identity.full_name that does not
+      end with "." ("A. Penhale" -> "Penhale"), without duplicates, in order.
+      ("Graham Ellery", "CEO") -> ("CEO", "Graham", "Ellery").
+
+  def read_profile(path, cast_dir=None, accent_color=None) -> OfficeProfile
+      Parse with yaml.safe_load (an OSError or yaml.YAMLError ->
+      ProfileError([f"{path.name}: {exc}"])). validate_profile(doc,
+      expected_id=path.stem); errors -> ProfileError([f"{path.name}: {e}" for e in errors]).
+      cast_doc = yaml of Path(cast_dir) / path.name when cast_dir is given and
+      that file exists, else None.
+      Build the record: slug = doc["id"]; name = identity.full_name; seat =
+      identity.seat; aliases = aliases_for(doc); avatar_params =
+      avatar_params(cast_doc, accent_color); profile = {k: v for k, v in
+      doc.items() if k not in ("backstory", "backstory_nodes")}; backstory_nodes
+      = tuple(doc["backstory_nodes"]); believed = backstory.believed; truth =
+      backstory.truth; sha256 = profile_sha256(path).
+
+  def read_profiles(profiles_dir, cast_dir=None, accent_colors=None) -> list[OfficeProfile]
+      files = profile_files(profiles_dir); none -> ProfileError([f"no profiles in {profiles_dir}"]).
+      read_profile(path, cast_dir, (accent_colors or {}).get(path.stem)) for
+      EVERY file, collecting the errors of all failing files; any errors ->
+      raise ProfileError(all of them) (so one run reports every bad file).
+      Return the records sorted by slug.
+
+  def load_profiles(conn, profiles_dir, cast_dir=None, *, campaign, accent_colors=None,
+                    dry_run=False, activate=True) -> LoadReport
+      records = read_profiles(...) FIRST: a ProfileError propagates before any SQL.
+      For each record, decide with reads only:
+        row = characters.get_character(conn, slug)
+        latest = (version, source_id) of the character's highest baseline
+                 version (SELECT version, source_id FROM character_baselines
+                 WHERE character_id = %s ORDER BY version DESC LIMIT 1), or None
+        1. row is None                          -> "created",   version 1
+        2. latest is None or latest.source_id != record.source_id
+                                                -> "updated",   version latest+1 (or 1)
+        3. activate and row["active_baseline_version"] != latest.version
+                                                -> "activated", version latest
+        4. row["avatar_params"] != record.avatar_params
+                                                -> "avatar",    version latest
+        5. otherwise                            -> "unchanged", version latest
+      Unless dry_run, write:
+        created / updated:
+          cid = characters.upsert_character(conn, slug=, name=, campaign=campaign,
+                retains_fragments=, is_main=, aliases=, avatar_params=, status="active")
+          v = characters.insert_baseline(conn, cid, profile=record.profile,
+                baseline_book=BASELINE_BOOK, baseline_chapter=BASELINE_CHAPTER,
+                backstory_nodes=list(record.backstory_nodes), source_id=record.source_id,
+                created_by=CREATED_BY)
+          characters.insert_backstory(conn, cid, v, "believed", {"text": record.believed})
+          characters.insert_backstory(conn, cid, v, "truth", {"text": record.truth})
+          characters.add_agent(conn, agent_id, cid) for both record.agent_ids
+          characters.set_active_baseline(conn, slug, v) only when activate
+        activated: characters.set_active_baseline(conn, slug, latest.version)
+        avatar:    characters.upsert_character(...) with the same fields (no new version)
+        unchanged: nothing at all (no UPDATE, so updated_at does not move)
+      dry_run: no INSERT/UPDATE of any kind; the report has the actions and
+      versions that WOULD result. Never commits or rolls back: the caller
+      owns the transaction (the CLI and the initialize job commit).
+      Return LoadReport(actions, versions, dry_run).
+
+notes: |
+  - Imports: stdlib (dataclasses, logging, pathlib, re), yaml,
+    `from character import db, node_names, shapes`, `from character.store
+    import characters`, `from character_schema import resolve_params`.
+    node_names (WP-11): `check(name, age=None) -> list[str]`, [] = valid.
+  - `log = logging.getLogger(__name__)`. DEBUG per profile read (slug, sha256
+    prefix) and per decision (slug, action, version); INFO once at the end of
+    load_profiles with the action counts; ERROR before raising ProfileError
+    (the number of errors, not the profile text). Never log backstory text.
+  - SQL only through character.store.characters, except the one read of the
+    latest (version, source_id) above (parameters only).
+  - The truth text goes into exactly one place: the `truth` backstory row.
+    Never put doc["backstory"] into `profile`, never merge believed and truth.
+  - The tests copy campaigns/ashiorid_office into tmp_path and edit the copy
+    (tests/character/fakes_generator.py); the repo's campaigns/ is read-only
+    for them. The DB tests use `pg_conn` (a fresh database with
+    app/character/sql/*.sql applied). Run the harness with
+    CHARACTER_TEST_REQUIRE_DB=1 so a missing database fails instead of skips.
+  - Pending guard: both test files skip while
+    app/character/generator/office_profiles.py is missing; the harness
+    sandbox overlays the staged files, so the tests run for real there.
