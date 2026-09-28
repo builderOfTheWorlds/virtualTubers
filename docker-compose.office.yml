@@ -65,9 +65,23 @@ services:
     environment:
       <<: [*office-env, *office-token]
       WORKER_ID: tuber_0
+      # The day runner's playlist (app/office/playlist.py day_runner_playlist)
+      # lists APPROVED office replays from message-api on the compose network.
+      MESSAGE_API_URL: http://message-api:8000
     volumes:
       - ${REPO_ROOT:-.}/config/workers/office/ceo.yaml:/config/worker.yaml:ro
       - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      # OB-30 day runner state (agent.office.day_runner.state_path =
+      # /data/office-state/day_runner.json). Its own named volume, not the
+      # shared world-state one, so it survives restarts and redeploys and no
+      # other worker can clobber it. Delete it to restart the loop day.
+      - office-day-runner:/data/office-state
+      # OPTIONAL — directive source 2 (agent.office.day_runner.corpus_export =
+      # /data/corpus/export.jsonl). There is no host path for the
+      # sessionCorpus export by default; uncomment and set
+      # OFFICE_CORPUS_DIR in .env to the directory holding export.jsonl.
+      # Without it the day runner falls through to the Gitea backlog.
+      # - ${OFFICE_CORPUS_DIR}:/data/corpus:ro
     deploy: *office-cpu
 
   # ── tuber_1 — Tech Lead (Anselm Brody) ─────────────────────────────────────
@@ -169,6 +183,14 @@ services:
       - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
     deploy: *office-cpu
 
+  # ── Control panel: office worker ids (OB-32) ───────────────────────────────
+  # Health rows, Play targets, log services and theme targets switch from the
+  # dev-team worker ids to the seats tuber_0..tuber_7 (+ worker-observer).
+  # Play never targets tuber_7 (the Party Member never speaks).
+  control-panel:
+    environment:
+      CONTROL_PANEL_SHOW: office
+
   # ── The office roundtable show (director + 8 seat tiles) ───────────────────
   # WORKER_ID stays "roundtable" (control panel ROUNDTABLE_WORKER_ID).
   worker-roundtable:
@@ -186,3 +208,5 @@ volumes:
   office-repo-engineer:
   office-repo-marketing:
   office-repo-office-manager:
+  # The CEO day runner's restart-safe state file (worker-gm, /data/office-state).
+  office-day-runner:

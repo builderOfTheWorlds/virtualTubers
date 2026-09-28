@@ -3,14 +3,22 @@ agent_handlers/viewer.py
 Any-role `viewer_joined` handler (split out of app/agent.py): queue a
 Rerun Theater episode for a newly arrived Twitch viewer, then greet them.
 Narration-only — nothing is sent back onto the bus.
+
+The ashiorid_office Party Member (agent.office_role: party_member) never
+speaks (decision U6): the rerun is still queued, the greeting is omitted.
 """
+import logging
 import random
 
 import episode_store
 from agent_state import write_state
+from office.roles import OfficeRole
 
 from .common import _complete_with_emotion
+from .office import office_role_of
 from .relay_files import _write_replay_request
+
+log = logging.getLogger(__name__)
 
 
 def _pick_rerun_episode(payload):
@@ -59,6 +67,8 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
     and a burst of joins must never fan out into a burst of bus messages.
     Failures (no episodes, unwritable request file, LLM down) likewise just
     log: a missed hello or rerun is not worth an error message anywhere.
+
+    The office Party Member (U6) does step 1 only: no LLM call, no bubble.
     """
     payload = msg.get("payload", {})
     username = payload.get("username", "someone")
@@ -86,6 +96,13 @@ def handle_viewer_joined(worker_id, agent_config, llm_client, producer, msg,
                 print(f"[agent:{worker_id}] viewer {username!r} arrived — queued rerun {episode!r}")
         except OSError as exc:
             print(f"[agent:{worker_id}] failed to queue viewer-join rerun: {exc}")
+
+    if office_role_of(agent_config) is OfficeRole.PARTY_MEMBER:
+        # U6: the Party Member never speaks. The rerun above still airs.
+        log.debug("viewer_joined greeting omitted worker=%s office_role=party_member queued=%s",
+                  worker_id, queued)
+        print(f"[agent:{worker_id}] Party Member stays silent — no greeting for {username!r}")
+        return
 
     if queued:
         prompt = (

@@ -220,3 +220,141 @@ def test_replay_request_messages_fans_out_and_needs_recipient():
 
 def test_ambient_scene_dataclass_default_phases():
     assert AmbientScene("x", pl.Path("x.yaml")).phases == ()
+
+
+# ── day runner adapter (OB-30 contract) ───────────────────────────────────────
+
+from zoneinfo import ZoneInfo  # noqa: E402
+
+from office import day_runner as dr  # noqa: E402
+from office.playlist import DayRunnerPlaylist, day_runner_playlist  # noqa: E402
+
+NY = ZoneInfo("America/New_York")
+
+
+class ListProducer:
+    def __init__(self):
+        self.sent = []
+
+    def send(self, message):
+        self.sent.append(message)
+        return message
+
+
+def ny(day, hh, mm=0):
+    return datetime.fromisoformat(f"{day}T{hh:02d}:{mm:02d}").replace(tzinfo=NY)
+
+
+def ctx(reason, **extra):
+    return {"worker_id": "tuber_0", "day": "2026-09-28", "reason": reason, "directives": [], **extra}
+
+
+def test_adapter_maps_item_to_day_runner_request():
+    playlist, _ = make(rows=[row("office-a"), row("office-b")])
+    adapter = DayRunnerPlaylist(playlist, clock=lambda: NOW, speed=1.25,
+                                cast={"tuber_0": "roundtable"}, worker_name="Ashiorid")
+    assert adapter.off_hours("2026-09-28", ctx("off_hours")) == {
+        "episode": "office-a", "speed": 1.25, "cast": {"tuber_0": "roundtable"},
+        "worker_name": "Ashiorid"}
+    assert adapter.stall("2026-09-28", ctx("stall", idle_minutes=50))["episode"] == "office-b"
+    assert adapter.playlist.last.reason == REASON_STALL
+
+
+def test_adapter_returns_none_when_nothing_to_air():
+    playlist, _ = make()
+    adapter = DayRunnerPlaylist(playlist, clock=lambda: NOW)
+    assert adapter.off_hours("2026-09-28", ctx("off_hours")) is None
+    assert adapter.stall("2026-09-28", ctx("stall")) is None
+    assert adapter.resume_live("2026-09-28", ctx("day_start")) is None
+
+
+def test_adapter_forces_ambient_approved_only(scenes):
+    # An unbuilt ambient scene has no library episode: it must never be requested.
+    playlist, _ = make(scenes, rows=[row("office-ambient-night-cleaner"), row("office-r")])
+    adapter = DayRunnerPlaylist(playlist, clock=lambda: NOW)
+    assert playlist.ambient_requires_approved is True
+    picks = [adapter.off_hours("d", ctx("off_hours"))["episode"] for _ in range(3)]
+    assert picks == ["office-ambient-night-cleaner", "office-r", "office-ambient-night-cleaner"]
+
+
+def test_adapter_stall_filters_by_office_phase_of_now(scenes):
+    playlist, _ = make(scenes, rows=[row("office-ambient-lunch-queue"),
+                                     row("office-ambient-night-cleaner")])
+    # 13:00 New York is the build phase: lunch-queue [build] airs, night-cleaner [off] doesn't.
+    adapter = DayRunnerPlaylist(playlist, clock=lambda: ny("2026-09-28", 13))
+    assert [adapter.stall("d", ctx("stall"))["episode"] for _ in range(2)] == [
+        "office-ambient-lunch-queue"] * 2
+
+
+def test_adapter_bad_tz_raises():
+    with pytest.raises(ValueError):
+        DayRunnerPlaylist(OfficePlaylist(ambient_pool=[]), tz="Mars/Olympus")
+
+
+@pytest.mark.parametrize("opts, env, expected_url", [
+    ({"message_api_url": "http://cfg:1"}, "http://env:2", "http://cfg:1/replays"),
+    ({}, "http://env:2", "http://env:2/replays"),
+    ({}, None, f"{pl.DEFAULT_MESSAGE_API_URL}/replays"),
+])
+def test_factory_message_api_url_precedence(monkeypatch, tmp_path, opts, env, expected_url):
+    if env is None:
+        monkeypatch.delenv("MESSAGE_API_URL", raising=False)
+    else:
+        monkeypatch.setenv("MESSAGE_API_URL", env)
+    opts = dict(opts, scenes_dir=str(tmp_path))
+    adapter = day_runner_playlist({"office": {"day_runner": {"playlist_options": opts}}})
+    assert isinstance(adapter, DayRunnerPlaylist)
+    assert adapter.playlist.library.url == expected_url
+    assert adapter.playlist.ambient_requires_approved is True
+
+
+def test_factory_scenes_dir_from_office_pack_dir_and_options(monkeypatch, tmp_path, scenes):
+    monkeypatch.setenv("OFFICE_PACK_DIR", str(tmp_path / "pack"))
+    adapter = day_runner_playlist({"office": {"day_runner": {}}})
+    assert pl.Path(adapter.playlist.scenes_dir) == tmp_path / "pack" / "scenes"
+    adapter = day_runner_playlist({"office": {"tz": "UTC", "day_runner": {
+        "playlist_options": {"scenes_dir": str(scenes), "library": False, "speed": 2}}}})
+    assert adapter.playlist.library is None and adapter.speed == 2 and adapter.tz == "UTC"
+    assert len(adapter.playlist.ambient_pool) == 3
+
+
+def test_factory_tolerates_missing_config(monkeypatch, tmp_path):
+    monkeypatch.delenv("OFFICE_PACK_DIR", raising=False)
+    adapter = day_runner_playlist(None)
+    assert adapter.playlist.scenes_dir == pl.DEFAULT_SCENES_DIR
+    adapter = day_runner_playlist({"office": {"day_runner": {"playlist_options": "junk"}}})
+    assert adapter.playlist.library is not None
+
+
+def test_day_runner_with_real_adapter_hands_off_at_midnight(monkeypatch, tmp_path):
+    """Integration: config-built DayRunner + day_runner_playlist + a fake
+    library; the 00:00 s0 hand-off sends a replay_request for an approved
+    office replay (never the draft)."""
+    fetch = FakeLibrary([row("office-claude_code-sess-001"),
+                         row("office-claude_code-draft", status="draft")])
+    monkeypatch.setattr(pl, "_httpx_get_json", fetch)
+    monkeypatch.setenv("MESSAGE_API_URL", "http://message-api:8000")
+    clock = [ny("2026-09-29", 0, 0)]
+    cfg = {"role": "ceo", "office_role": "ceo", "office": {"day_runner": {
+        "state_path": str(tmp_path / "day_runner.json"),
+        "playlist": "office.playlist:day_runner_playlist",
+        "playlist_options": {"scenes_dir": str(tmp_path / "no-scenes")},
+        "backlog": False}}}
+    runner = dr.build_day_runner(cfg, worker_id="tuber_0", clock=lambda: clock[0])
+    assert isinstance(runner.playlist, DayRunnerPlaylist)
+    producer = ListProducer()
+
+    sent = runner.tick("tuber_0", cfg, None, producer)
+    assert [m["type"] for m in sent] == ["phase_change", "replay_request"]
+    req = sent[1]
+    assert req["to"] == "tuber_0" and req["from"] == "tuber_0"
+    assert req["payload"] == {"episode": "office-claude_code-sess-001", "reason": "off_hours",
+                              "day": "2026-09-29"}
+    assert fetch.calls[0] == ("http://message-api:8000/replays", {"status": "approved"})
+    assert producer.sent == sent
+
+    # Later in s0: no second hand-off, also after a restart from the state file.
+    clock[0] = ny("2026-09-29", 3, 0)
+    assert runner.tick("tuber_0", cfg, None, producer) == []
+    again = dr.build_day_runner(cfg, worker_id="tuber_0", clock=lambda: clock[0])
+    assert again.tick("tuber_0", cfg, None, producer) == []

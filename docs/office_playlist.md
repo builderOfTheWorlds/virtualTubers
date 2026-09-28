@@ -63,6 +63,15 @@ class OfficePlaylist:
     def candidates(self, now, reason, phase=None) -> list[PlaylistItem]
     def reload_ambient(self) -> int
 
+class DayRunnerPlaylist:                               # the OB-30 Playlist contract
+    def __init__(self, playlist: OfficePlaylist, *, clock=None, tz=None,
+                 speed=None, cast=None, worker_name=None): ...
+    def off_hours(self, day, context) -> dict | None      # {"episode", "speed"?, "cast"?, "worker_name"?}
+    def stall(self, day, context) -> dict | None
+    def resume_live(self, day, context) -> None
+
+def day_runner_playlist(agent_config) -> DayRunnerPlaylist    # "office.playlist:day_runner_playlist"
+
 def load_ambient_pool(scenes_dir=DEFAULT_SCENES_DIR) -> list[AmbientScene]
 def replay_request_message(item, to, *, from_="office_playlist", cast=None,
                            correlation_id=None, causation_id=None) -> dict
@@ -107,23 +116,59 @@ reads only `episode` and `cast`, so the extra `playlist` block is harmless.
 
 ## Wiring it into the day runner (OB-30)
 
-```python
-from office.playlist import OfficePlaylist, ReplayLibrary, REASON_OFF_HOURS, REASON_STALL, \
-    replay_request_messages
+The day runner loads its playlist from config and calls it with its own
+`Playlist` contract (docs/office_day_runner.md). `day_runner_playlist` is that
+factory:
 
-playlist = OfficePlaylist(library=ReplayLibrary(os.environ.get("MESSAGE_API_URL",
-                                                               "http://127.0.0.1:8090")))
-
-def playlist_callback(now, reason):          # reason: "off_hours" | "stall"
-    item = playlist.next_item(now, reason)
-    if item is None:
-        return []                            # nothing to air: stay on the idle scene
-    return replay_request_messages(item, WORKER_IDS)   # the caller sends them
+```yaml
+agent:
+  office:
+    day_runner:
+      playlist: office.playlist:day_runner_playlist
+      playlist_options:            # all optional
+        message_api_url: http://message-api:8000   # else env MESSAGE_API_URL, else 127.0.0.1:8090
+        scenes_dir: /campaigns/ashiorid_office/scenes   # else $OFFICE_PACK_DIR/scenes, else the repo pack
+        refresh_s: 300             # library cache
+        timeout_s: 10
+        prefix: office-
+        library: true              # false: ambient pool only (empty under the approved-only rule)
+        speed: 1.0                 # copied into every request
+        cast: {tuber_0: roundtable}
+        worker_name: Ashiorid
 ```
 
-A `replay_stop` should go before each request, as the control panel's Play does, so that the
-request takes over from whatever is on air instead of queuing behind it. Sending that stop is the
-caller's job.
+`DayRunnerPlaylist` maps each call onto `next_item`:
+
+| Runner call | `next_item` reason | Phase filter |
+|---|---|---|
+| `off_hours(day, ctx)` (00:00, once per s0) | `off_hours` | `off` |
+| `stall(day, ctx)` (N idle minutes) | `stall` | the office phase of `now` in `tz` (`clock.PHASES[hour // 6]`) |
+| `resume_live(day, ctx)` (day_start) | none | logged only; the pane finishes its episode |
+
+It answers `{"episode": item.episode}` plus `speed` / `cast` / `worker_name`
+when configured, or `None` when the pool is empty. The runner then builds and
+sends the `replay_request` itself (to `replay_target`, default the CEO worker),
+and `agent_handlers.replay_relay.handle_replay_request` writes the replay
+pane's request file. `now` comes from the adapter's `clock` (default UTC
+now), since the runner's context has no timestamp. `tz` is
+`day_runner.tz`, else `agent.office.tz`, else America/New_York.
+
+**Ambient items and the approved-only rule.** The runner can only ask the
+replay pane for a library name; it cannot play a scene YAML
+(`scene_path`) through the campaign runtime. The adapter therefore forces
+`ambient_requires_approved=True` on the playlist it wraps: an ambient scene
+is offered only once its built episode (`office-ambient-<scene_id>`) is
+approved in the library, and the request names that library episode. An
+unbuilt scene, or a draft, is never requested. A library row belonging to an
+ambient scene is never offered a second time as a plain replay, even when
+the scene itself is filtered out by phase.
+
+For a caller that sends its own messages (not the day runner),
+`replay_request_messages(item, WORKER_IDS)` builds one request per worker.
+A `replay_stop` should go before each request, as the control panel's Play
+does, so that the request takes over from whatever is on air instead of
+queuing behind it. Sending that stop is the caller's job; the day runner
+does not send one.
 
 ## Dependencies
 
@@ -147,6 +192,14 @@ pool = [AmbientScene("coffee-machine", Path("a001-coffee-machine.yaml"))]
 OfficePlaylist(ambient_pool=pool).next_item(None, REASON_STALL).ref   # "coffee-machine"
 ```
 
+```python
+# The day runner's adapter, built by hand (tests)
+adapter = DayRunnerPlaylist(OfficePlaylist(ambient_pool=[], library=ReplayLibrary(url)),
+                            clock=lambda: now, speed=1.0)
+adapter.off_hours("2026-09-29", {"worker_id": "tuber_0", "reason": "off_hours"})
+# -> {"episode": "office-claude_code-sess-001", "speed": 1.0}
+```
+
 ## Error Handling
 
 - A bad `reason` raises `ValueError`. So does `replay_request_message` with an empty `to`.
@@ -155,9 +208,18 @@ OfficePlaylist(ambient_pool=pool).next_item(None, REASON_STALL).ref   # "coffee-
 - An unreadable or non-mapping ambient YAML, or a duplicate scene id, logs a WARN and the scene
   is skipped. A missing scenes directory gives an empty pool.
 - YAML 1.1 reads a bare `off` as `False`. `phases: [off]` is mapped back to `"off"`.
+- `DayRunnerPlaylist` with an unknown `tz` raises `ValueError` (the runner's
+  `build_day_runner` then logs `plugin_unavailable` and runs without a playlist).
+  A non-mapping `playlist_options` logs a WARN and is ignored.
 
 ## Changelog
 
 - **v1.0.0** (2026-09-28): Initial version (OB-33). Ambient-first then approved-replay
   rotation, drafts excluded, no back-to-back repeats, library cache with last-good fallback,
   `replay_request` builders. Tests: `tests/test_office_playlist.py`.
+- **v1.1.0** (2026-09-28): `DayRunnerPlaylist` + `day_runner_playlist(agent_config)` factory:
+  the OB-30 `Playlist` contract (`off_hours` / `stall` / `resume_live`), config via
+  `agent.office.day_runner.playlist_options`, message-api URL from config or `MESSAGE_API_URL`.
+  Ambient scenes air through the adapter only once their built episode is approved. Fix: an
+  ambient scene's library episode no longer comes back as a plain replay when the scene is
+  filtered out by phase.

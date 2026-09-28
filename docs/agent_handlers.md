@@ -22,13 +22,14 @@ matter when editing or testing it.
 | `coder.py` | `task_assignment` | tmux demos `demo_editor_note`, `demo_filetree_ls`, `show_commit_in_filetree` |
 | `tester.py` | `commit_notification`, `retest_request` | `_run_tests_and_report`, `_decide_test_outcome` + stub constants, `_resolve_workspace`, `WORKSPACE_MOUNT_PATTERN`, `_severity_from_failures` |
 | `manager.py` | `bug_report`, `test_passed`, `task_complete`, `clarification_request` | `MAX_BUG_RETRIES`; task backlog `BacklogDispatcher`, `manager_idle_tick`, `_backlog_activity` / `_backlog_end`, `_reset_backlog` |
-| `operator.py` | `operator_message` | — |
-| `viewer.py` | `viewer_joined` | `_pick_rerun_episode` |
+| `operator.py` | `operator_message` (office Party Member: silent ack, no LLM — U6) | — |
+| `viewer.py` | `viewer_joined` (office Party Member: rerun only, no greeting — U6) | `_pick_rerun_episode` |
 | `replay_relay.py` | `replay_request`, `replay_stop`, `replay_invite`, `replay_ready`, `replay_cue`, `replay_end` | `_is_valid_cast` |
 | `office.py` | `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change` | idle hooks `ceo_idle_tick` / `office_manager_idle_tick` / `observer_idle_tick`; `issue_directive`, `set_day_runner`; office_role hooks `engineer_prepare` / `engineer_handoff` / `tech_lead_after_test_passed`; `lane_commit`, `collect_garbage` — see "Office handlers" below |
 
 Dependency direction is one-way: handler modules import from `common` /
-`relay_files` (and from sibling app modules such as `message_bus`,
+`relay_files` (`operator` and `viewer` also import `office.office_role_of` for the
+U6 Party Member gate) (and from sibling app modules such as `message_bus`,
 `agent_state`, `tmux_control`, `test_runner`, `episode_store`, `relay_io`,
 `task_backlog`); `common` and `relay_files` import nothing from the package; nothing in the package
 imports `agent`.
@@ -147,6 +148,29 @@ Unchanged from before the split — see docs/agent.md "Error Handling"
 (LLM failures are caught per handler; role mismatches log and no-op; relay
 file write failures log and never raise out of the tick loop).
 
+## Party Member silence (v1.4.0, decision U6)
+
+The ashiorid_office Party Member never speaks. Both any-role handlers check
+`office.office_role_of(agent_config)` (from `agent.office_role`) first:
+
+- **`handle_operator_message`** on a `party_member` worker makes **no LLM
+  call** and writes no bubble (state `idle`, action "listened to the
+  operator"). It still answers the operator, with a non-text acknowledgement
+  that keeps the correlation chain:
+
+  ```json
+  {"type": "operator_reply", "to": "operator",
+   "payload": {"silent": true, "office_role": "party_member"}}
+  ```
+
+- **`handle_viewer_joined`** on a `party_member` worker still queues the
+  rerun (step 1, unchanged), then **omits the greeting**: no LLM call, no
+  bubble, nothing on the bus.
+
+Every other role, a worker without `office_role`, and an unknown
+`office_role` value (logged by `office_role_of`) behave as before. Tests:
+`tests/test_party_member_silence.py`.
+
 ## Office handlers (v1.3.0, OB-21)
 
 `office.py` runs the ashiorid_office chain (build plan E2/E3/E6) on the same
@@ -198,8 +222,15 @@ Each office handler does five steps:
 Idle hooks (`IDLE_TICK_HOOKS`, keyed by `agent.role`):
 
 - `ceo_idle_tick` calls the day runner that `set_day_runner(fn)` installed.
-  It is a no-op by default. OB-30 fills it and calls
-  `issue_directive(worker_id, agent_config, llm, producer, text, title=, day=)`.
+  Since OB-30 it installs one itself: on the first CEO tick, if the worker
+  config has an `agent.office.day_runner` block (and not `enabled: false`),
+  it builds the runner with `office.day_runner.build_day_runner` and installs
+  it with `set_day_runner`, once per process (`_reset_office_state()`
+  re-arms it; a build failure logs `day_runner_install_failed`). A runner
+  installed explicitly with `set_day_runner` always wins. Without the block
+  it stays a no-op. The runner calls
+  `issue_directive(worker_id, agent_config, llm, producer, text, title=, day=)`;
+  see docs/office_day_runner.md.
 - `office_manager_idle_tick` rotates `coffee` → `cleanup` →
   `garbage_collection` every `chores.interval_s` (default 1800 s).
   Garbage collection deletes the head branches of **closed** PRs. It only
@@ -279,6 +310,11 @@ Where to patch in tests: `agent_handlers.office.build_gitea_client`,
 fake-bus e2e runs the whole chain.
 
 ## Changelog
+
+- v1.4.0 (2026-09-28): U6 Party Member silence in `operator_message` (silent
+  `operator_reply` `{"silent": true}`, no LLM) and `viewer_joined` (rerun
+  queued, greeting omitted). `ceo_idle_tick` description updated for the
+  OB-30 day-runner auto-install.
 
 - v1.3.0 (2026-09-27): Office handlers (`office.py`, OB-21). 6 new message
   types and 3 new idle hooks are registered. The coder, tester and manager

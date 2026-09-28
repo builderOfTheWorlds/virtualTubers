@@ -135,6 +135,12 @@ Each call returns one of:
   pane's request file.
 - `None`: the playlist queued something itself, or has nothing to play.
 
+The shipped implementation is `office.playlist:day_runner_playlist`
+(`DayRunnerPlaylist`, docs/office_playlist.md "Wiring it into the day
+runner"). It rotates ambient scenes and approved `office-*` replays, requests
+ambient scenes by their approved library name only, and is tuned by
+`playlist_options` (below).
+
 `off_hours` is called once per s0 (at 00:00, or on the first tick in s0 after
 a restart). The optional `resume_live(day, context)` is called right after
 `day_start`. Exceptions are logged (`playlist_failed`) and do not stop the
@@ -166,7 +172,8 @@ The block's presence (or `day_runner: true`) turns the runner on.
 | `completion_poll_s` | `300` | how often the completion probe polls Gitea |
 | `max_follow_ups` | `2` | can be lowered, never raised above 2 |
 | `replay_target` | the CEO worker id | recipient of `replay_request` |
-| `playlist` | none | `"module:factory"` (OB-33) |
+| `playlist` | none | `"module:factory"` (OB-33: `office.playlist:day_runner_playlist`) |
+| `playlist_options` | `{}` | read by `day_runner_playlist`: `message_api_url` (else env `MESSAGE_API_URL`), `scenes_dir`, `refresh_s`, `timeout_s`, `prefix`, `library`, `speed`, `cast`, `worker_name` |
 | `arc_provider` | none | `"module:factory"` (OB-40) |
 | `corpus_export` | none (source 2 off) | sessionCorpus JSONL export path |
 | `corpus_tag` | `feature` | tag that marks feature sessions |
@@ -208,7 +215,8 @@ emitted, not consumed, by the runner.
 
 ## Usage Examples
 
-Config-driven (the normal path; OB-22 writes this into the CEO worker config):
+Config-driven (the normal path; this is the shape of
+`config/workers/office/ceo.yaml`):
 
 ```yaml
 agent:
@@ -217,11 +225,20 @@ agent:
   office:
     gitea: {token_env: GITEA_TOKEN_OFFICE}
     day_runner:
-      state_path: /data/world-state/office_day_runner.json
-      corpus_export: /data/corpus/export.jsonl
-      playlist: office.playlist:build_playlist
+      enabled: true
+      # docker-compose.office.yml mounts the office-day-runner volume here
+      state_path: /data/office-state/day_runner.json
+      playlist: office.playlist:day_runner_playlist
+      playlist_options: {message_api_url: http://message-api:8000}
+      corpus_export: /data/corpus/export.jsonl   # optional mount; missing file = source skipped
+      backlog: true
       stall_minutes: 45
 ```
+
+The directory of `state_path` must exist (the state file is written
+atomically next to a temp file in the same directory); a volume mount point
+does. A missing `corpus_export` file logs one WARN per pick and falls through
+to the backlog.
 
 Wired by hand (tests, or a custom playlist):
 
@@ -257,3 +274,6 @@ office.ceo_idle_tick("tuber_0", ceo_config, llm, producer)   # -> [day_start, ph
   playlist hand-off), 3 directive sources with fallback, follow-up and retry
   guards, stall fallback, restart-safe state file, auto-install from
   `ceo_idle_tick`.
+- v1.1.0 (2026-09-28): The OB-33 playlist is wired: `office.playlist:day_runner_playlist`
+  with `playlist_options`; the CEO config carries the `day_runner` block (state on the
+  `office-day-runner` volume at `/data/office-state`). Config example corrected.

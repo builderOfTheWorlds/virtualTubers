@@ -23,6 +23,13 @@ and an item removed from the library mid-rotation doesn't restart the cycle.
 `replay_request_message(item, to)` turns an item into the bus message the
 replay pane already understands (`replay_request`, payload.episode).
 
+`day_runner_playlist(agent_config)` is the day runner's factory
+(`agent.office.day_runner.playlist: "office.playlist:day_runner_playlist"`):
+it returns a `DayRunnerPlaylist`, which maps `off_hours` / `stall` onto
+next_item and answers with the `{"episode", ...}` dict the runner sends as a
+replay_request. Through it, ambient scenes air only once their built episode
+is approved in the library.
+
 No Kafka, no LLM. The only I/O is reading scene YAML and one injectable HTTP
 GET. Nothing here raises for a down library: it keeps the last good list.
 See docs/office_playlist.md.
@@ -269,10 +276,14 @@ class OfficePlaylist:
                 log.debug("playlist.ambient_skip_unbuilt id=%s", scene.scene_id)
                 continue
             items.append(PlaylistItem(KIND_AMBIENT, scene.scene_id, episode, reason, now, str(scene.path)))
-        ambient_episodes = {i.episode for i in items}
+        # Every ambient scene's library name, eligible now or not: a scene
+        # filtered out by phase (or not yet approved) must not sneak back in
+        # as a plain replay.
+        ambient_episodes = {self.ambient_episode_template.format(scene_id=s.scene_id)
+                            for s in self.ambient_pool or []}
         for name in replays:
             if name in ambient_episodes:
-                continue   # already queued as its ambient scene
+                continue   # an ambient scene's episode: queued (or filtered) as that scene
             items.append(PlaylistItem(KIND_REPLAY, name, name, reason, now))
         items.sort(key=lambda i: i.key)
         return items
@@ -324,3 +335,124 @@ def replay_request_messages(item: PlaylistItem, targets: Iterable[str], **kwargs
     """One replay_request per worker id in `targets` (the control panel's
     per-worker fan-out; see panel.py play_replay)."""
     return [replay_request_message(item, to, **kwargs) for to in targets]
+
+
+# ── day runner adapter (OB-30 contract) ──────────────────────────────────────
+#: Config block (under agent.office.day_runner) that tunes the adapter.
+PLAYLIST_OPTIONS_KEY = "playlist_options"
+
+
+class DayRunnerPlaylist:
+    """Adapts an OfficePlaylist to the day runner's Playlist contract
+    (app/office/day_runner.py `Playlist`, docs/office_day_runner.md):
+    `off_hours(day, context)` / `stall(day, context)` return
+    `{"episode", "speed"?, "cast"?, "worker_name"?}` or None, and the runner
+    sends the replay_request itself.
+
+    Every item airs through replay_request, i.e. by library name, so the
+    wrapped playlist is forced to `ambient_requires_approved=True`: an
+    ambient scene is offered only once its built episode
+    (`office-ambient-<scene_id>`) is approved in the library. That keeps the
+    approved-only rule for ambient scenes too, and never asks the replay pane
+    for a name it can't resolve.
+
+    `clock()` returns the aware `now` for the pick (default: UTC now). A
+    stall pick is filtered by the office phase of `now` in `tz`
+    (clock.PHASES[hour // 6]); an off-hours pick uses "off"."""
+
+    def __init__(self, playlist: OfficePlaylist, *, clock: Callable[[], datetime] | None = None,
+                 tz: str | None = None, speed: float | None = None, cast: dict | None = None,
+                 worker_name: str | None = None):
+        from datetime import timezone
+        from zoneinfo import ZoneInfo
+
+        from office.clock import DEFAULT_TZ
+
+        self.playlist = playlist
+        if not playlist.ambient_requires_approved:
+            log.debug("playlist.adapter_force_ambient_approved")
+            playlist.ambient_requires_approved = True
+        self.clock = clock or (lambda: datetime.now(timezone.utc))
+        self.tz = tz or DEFAULT_TZ
+        try:
+            self.zone = ZoneInfo(self.tz)
+        except Exception as exc:  # ZoneInfoNotFoundError, ValueError on bad keys
+            log.error("playlist.adapter_bad_tz tz=%r error=%s", self.tz, exc)
+            raise ValueError(f"unknown time zone {self.tz!r}") from exc
+        self.speed = speed
+        self.cast = dict(cast) if cast else None
+        self.worker_name = worker_name
+
+    def _phase(self, now: datetime) -> str:
+        from office.clock import PHASES, SEGMENT_HOURS
+        return PHASES[now.astimezone(self.zone).hour // SEGMENT_HOURS]
+
+    def _request(self, reason: str, day: str, context: dict) -> dict | None:
+        _trace("DayRunnerPlaylist._request enter reason=%s day=%s", reason, day)
+        now = self.clock()
+        phase = OFF_PHASE if reason == REASON_OFF_HOURS else self._phase(now)
+        item = self.playlist.next_item(now, reason, phase)
+        if item is None:
+            log.info("playlist.adapter_nothing reason=%s day=%s", reason, day)
+            return None
+        request: dict = {"episode": item.episode}
+        if self.speed is not None:
+            request["speed"] = self.speed
+        if self.cast:
+            request["cast"] = dict(self.cast)
+        if self.worker_name:
+            request["worker_name"] = self.worker_name
+        log.info("playlist.adapter_request reason=%s day=%s kind=%s episode=%s worker=%s",
+                 reason, day, item.kind, item.episode, (context or {}).get("worker_id"))
+        return request
+
+    def off_hours(self, day: str, context: dict) -> dict | None:
+        return self._request(REASON_OFF_HOURS, day, context)
+
+    def stall(self, day: str, context: dict) -> dict | None:
+        return self._request(REASON_STALL, day, context)
+
+    def resume_live(self, day: str, context: dict) -> None:
+        """day_start: live work owns the air again. Nothing to stop here (the
+        replay pane finishes its current episode); just note it."""
+        log.info("playlist.adapter_resume_live day=%s", day)
+
+
+def day_runner_playlist(agent_config: dict | None) -> DayRunnerPlaylist:
+    """Factory for `agent.office.day_runner.playlist:
+    "office.playlist:day_runner_playlist"` (build_day_runner calls it with
+    the worker's agent config).
+
+    Options come from `agent.office.day_runner.playlist_options` (all
+    optional): `message_api_url` (else env MESSAGE_API_URL, else
+    DEFAULT_MESSAGE_API_URL), `scenes_dir` (else OFFICE_PACK_DIR/scenes when
+    that env var is set, else DEFAULT_SCENES_DIR), `prefix`, `refresh_s`,
+    `timeout_s`, `speed`, `cast`, `worker_name`. `library: false` gives an
+    ambient-only playlist (which, with the approved-only rule, stays empty)."""
+    import os
+
+    from office.day_runner import day_runner_settings
+
+    _trace("day_runner_playlist enter")
+    agent_config = agent_config or {}
+    office_cfg = agent_config.get("office") if isinstance(agent_config.get("office"), dict) else {}
+    settings = day_runner_settings(agent_config)
+    opts = settings.get(PLAYLIST_OPTIONS_KEY) or {}
+    if not isinstance(opts, dict):
+        log.warning("playlist.options_not_mapping type=%s", type(opts).__name__)
+        opts = {}
+    url = opts.get("message_api_url") or os.environ.get("MESSAGE_API_URL") or DEFAULT_MESSAGE_API_URL
+    library = None
+    if opts.get("library", True) is not False:
+        library = ReplayLibrary(str(url), prefix=opts.get("prefix") or OFFICE_REPLAY_PREFIX,
+                                refresh_s=float(opts.get("refresh_s", DEFAULT_REFRESH_S)),
+                                timeout_s=float(opts.get("timeout_s", DEFAULT_TIMEOUT_S)))
+    pack_env = os.environ.get("OFFICE_PACK_DIR")
+    scenes_dir = opts.get("scenes_dir") or (Path(pack_env) / "scenes" if pack_env else DEFAULT_SCENES_DIR)
+    playlist = OfficePlaylist(library=library, scenes_dir=scenes_dir, ambient_requires_approved=True)
+    adapter = DayRunnerPlaylist(playlist, tz=settings.get("tz") or office_cfg.get("tz"),
+                                speed=opts.get("speed"), cast=opts.get("cast"),
+                                worker_name=opts.get("worker_name"))
+    log.info("playlist.day_runner_built library=%s scenes_dir=%s ambient=%d",
+             library.url if library else None, scenes_dir, len(playlist.ambient_pool or []))
+    return adapter

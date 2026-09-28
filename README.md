@@ -140,6 +140,15 @@ Full required-env-var table, the build-and-deploy steps, and how to verify a
 worker is streaming to the right place:
 **[docs/deployment.md](docs/deployment.md)**.
 
+**Office mode (ashiorid_office show).** `./redeploy.sh -y --office` layers
+`docker-compose.office.yml` over `docker-compose.yml`: the stream workers are
+re-seated as the eight office roles (seats `tuber_0`..`tuber_7`, plus the new
+`worker-observer` container for the silent Party Member), and the CEO runs the
+office day. Run `./redeploy.sh -y` without `--office` to go back to the
+dev-team show. One-time setup (Fraud-Stop clones, Gitea tokens), the
+service-to-seat mapping and the office env vars:
+**[docs/office_deployment.md](docs/office_deployment.md)**.
+
 ## Configuration
 
 All runtime behavior is config-driven — no code changes needed to retune an

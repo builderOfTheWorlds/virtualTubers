@@ -331,3 +331,51 @@ def test_observer_follows_stream_worker_conventions_without_collisions():
 def test_dev_team_compose_does_not_reference_office_configs():
     assert "config/workers/office" not in BASE_COMPOSE.read_text(encoding="utf-8")
     assert "worker-observer" not in yaml.safe_load(BASE_COMPOSE.read_text(encoding="utf-8"))["services"]
+
+
+# ── CEO day runner (OB-30 / OB-33) ───────────────────────────────────────────
+def _ceo_day_runner():
+    return _cfg(OfficeRole.CEO)["agent"]["office"]["day_runner"]
+
+
+def test_ceo_day_runner_block_is_enabled_and_wired_to_the_office_playlist():
+    from office.day_runner import day_runner_enabled, load_factory
+
+    cfg = _cfg(OfficeRole.CEO)["agent"]
+    block = _ceo_day_runner()
+    assert day_runner_enabled(cfg) and block["enabled"] is True
+    assert block["playlist"] == "office.playlist:day_runner_playlist"
+    assert callable(load_factory(block["playlist"]))
+    assert block["playlist_options"]["scenes_dir"] == "/campaigns/ashiorid_office/scenes"
+    assert block["corpus_export"].startswith("/data/corpus/")
+    assert block["backlog"] is True
+    # Only the CEO runs the day.
+    for role in ROLES:
+        if role is not OfficeRole.CEO:
+            assert "day_runner" not in (_cfg(role)["agent"].get("office") or {}), role
+
+
+def test_ceo_day_runner_state_lives_on_a_persistent_worker_gm_volume():
+    state_dir = str(Path(_ceo_day_runner()["state_path"]).parent.as_posix())
+    compose = _office_compose()
+    named = set(compose.get("volumes") or {})
+    mounts = [v for v in compose["services"]["worker-gm"]["volumes"] if isinstance(v, str)]
+    matching = [v for v in mounts if v.split(":")[1] == state_dir]
+    assert len(matching) == 1, mounts
+    assert matching[0].split(":")[0] in named       # a named volume, not a tmp bind
+    assert not matching[0].endswith(":ro")
+    env = compose["services"]["worker-gm"]["environment"]
+    assert env["MESSAGE_API_URL"] == "http://message-api:8000"
+
+
+def test_ceo_config_builds_a_day_runner_with_the_real_playlist(monkeypatch):
+    from office.day_runner import build_day_runner
+    from office.playlist import DayRunnerPlaylist
+
+    monkeypatch.setenv("MESSAGE_API_URL", "http://message-api:8000")
+    cfg = _cfg(OfficeRole.CEO)["agent"]
+    runner = build_day_runner(cfg, worker_id="tuber_0")
+    assert isinstance(runner.playlist, DayRunnerPlaylist)
+    assert runner.playlist.playlist.library.url == "http://message-api:8000/replays"
+    assert runner.state_path == _ceo_day_runner()["state_path"]
+    assert runner.sources["feature"] is not None and runner.sources["backlog"] is not None

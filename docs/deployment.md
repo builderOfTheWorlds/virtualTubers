@@ -100,6 +100,13 @@ for the two `build:` services → `docker compose up -d --no-deps
 --force-recreate` on every `worker-*` and support service → verification);
 it drives `docker compose` directly from the checkout.
 
+**Office mode.** `./redeploy.sh -y --office` deploys the ashiorid_office
+show instead (it layers `docker-compose.office.yml` over
+`docker-compose.yml`; omit `--office` to return to the dev-team show). Its
+one-time setup, extra env vars (`GITEA_TOKEN_OFFICE`, `GITEA_TOKEN_OBSERVER`,
+`TUBER7_STREAM_KEY`, `OBSERVER_*`) and volumes are in
+[docs/office_deployment.md](office_deployment.md).
+
 > **Not in the repo:** the exact Portainer-side steps for redeploying the
 > `virtualtubers` stack (which Portainer action to use after a rebuild, and
 > whether the stack's env lives in Portainer or in `.env`) are not

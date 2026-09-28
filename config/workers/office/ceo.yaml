@@ -64,6 +64,31 @@ agent:
       owner: gitea_admin
       repo: fraud-stop
       token_env: GITEA_TOKEN_OFFICE   # env var NAME only; the value lives in .env
+    # OB-30 day runner (docs/office_day_runner.md): the CEO runs the office
+    # day from its idle tick — day_start, the directive, phase edges, the
+    # 23:45 wrap-up, day_end, and the 00:00-06:00 hand-off to the playlist.
+    day_runner:
+      enabled: true
+      # On the office-day-runner named volume docker-compose.office.yml mounts
+      # at /data/office-state on worker-gm, so a restart or redeploy never
+      # issues a second directive the same day.
+      state_path: /data/office-state/day_runner.json
+      stall_minutes: 45
+      # OB-33 filler (docs/office_playlist.md): ambient scenes and APPROVED
+      # office-* replays from message-api. The URL comes from the
+      # MESSAGE_API_URL env the override sets (http://message-api:8000).
+      playlist: office.playlist:day_runner_playlist
+      playlist_options:
+        scenes_dir: /campaigns/ashiorid_office/scenes
+      # Directive source 2: a sessionCorpus JSONL export. OPTIONAL mount (see
+      # docs/office_deployment.md "Day runner"); while the file is absent the
+      # source is skipped and the backlog below supplies the directive.
+      corpus_export: /data/corpus/export.jsonl
+      corpus_tag: feature
+      # Directive source 3: the oldest open Fraud-Stop issue (not a
+      # `directive` issue). No label filter.
+      backlog: true
+      backlog_label: null
 
 llm:
   # OB-07 plot voice tier. base_url is overridden in compose by LLM_BASE_URL

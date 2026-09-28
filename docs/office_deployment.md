@@ -171,6 +171,38 @@ office working trees; this cannot be undone:
 docker volume rm virtualtubers_office-repo-{tech-lead,analyst,engineer,marketing,office-manager}
 ```
 
+### Day runner (CEO, OB-30)
+
+`config/workers/office/ceo.yaml` enables `agent.office.day_runner`
+(docs/office_day_runner.md). `worker-gm` runs the office day from its idle
+tick: `day_start` at 06:00, the directive, the phase edges, the 23:45 wrap-up,
+`day_end` at 00:00, then the 00:00–06:00 hand-off to the playlist
+(`office.playlist:day_runner_playlist`, docs/office_playlist.md). The override
+gives `worker-gm`:
+
+- **`office-day-runner:/data/office-state`**: a named volume for the
+  restart-safe state file (`state_path: /data/office-state/day_runner.json`).
+  It survives restarts and redeploys, so the CEO never issues a second
+  directive on the same day. To restart the loop day from scratch, stop
+  `worker-gm` and run `docker volume rm virtualtubers_office-day-runner`.
+- **`MESSAGE_API_URL=http://message-api:8000`**: the playlist lists
+  **approved** `office-*` replays from message-api. Drafts never air.
+- **Optional: the sessionCorpus export.** Directive source 2 reads
+  `corpus_export: /data/corpus/export.jsonl`. No host path exists for the
+  export by default, so the mount is commented out in
+  `docker-compose.office.yml`. To use it, set `OFFICE_CORPUS_DIR` in `.env`
+  to the directory that holds `export.jsonl`, and uncomment
+  `- ${OFFICE_CORPUS_DIR}:/data/corpus:ro`. Without the mount, the source
+  logs one WARN and the directive comes from the open Fraud-Stop issue
+  backlog.
+
+The playlist's `replay_request` goes to `replay_target`, which defaults to
+the CEO worker itself. Its `tuber_base` layout has no replay pane, so the
+request file is written but nothing renders on the CEO channel. To air the
+off-hours filler on the roundtable, set `replay_target: roundtable` and
+`playlist_options.cast` (seat to worker map) once the office roundtable cast
+mapping (OB-32) is settled.
+
 Check a seat:
 
 ```bash
@@ -286,23 +318,19 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
 | The office voices are wrong on the roundtable | The show header's registry voice overrides `voice.speakers` per show. Check the header before the config. |
 | Twitch arrivals greet the wrong worker | `TWITCH_CHANNEL_MAP` maps channels to worker ids. In office mode the ids are `tuber_N`: update the map for the office show. |
 | Control panel health view shows dev-team ids as down | The panel's worker list is dev-team shaped. The office mapping is OB-32. |
-| Party Member produced text | See Known gaps. |
+| Party Member produced text | Check that `party_member.yaml` still has `agent.office_role: party_member`. The `operator_message` and `viewer_joined` handlers skip the LLM for that role (U6). |
 
 ## Known gaps (not in OB-22's scope)
 
-- **The Party Member can still be made to talk.** The any-role handlers
-  (`operator_message`, `viewer_joined`) still make an LLM call on the Party
-  Member and put the reply in its bubble. That breaks U6 ("never speaks").
-  Its prompt asks for a silent stage action only, and its model is the
-  cheapest. The fix belongs in the handlers (an `office_role` gate).
 - **The observer's gaze can't follow the speaker yet.**
   `agent.office.observer.stage_path` is unset because the roundtable's
   `stage.json` lives in that container's `TILE_RELAY_DIR`, which the
   observer can't see. Gaze rotates over the seats until OB-32 shares a relay
   volume.
-- **`.env.example` lacks the observer variables.** `TUBER7_STREAM_KEY`,
-  `OBSERVER_LAYOUT_PRESET` and `OBSERVER_AVATAR_PROVIDER` aren't listed; the
-  defaults above apply.
+- **Off-hours filler does not render yet.** The day runner's
+  `replay_request` goes to the CEO worker, whose layout has no replay pane
+  (see "Day runner" above). This needs `replay_target: roundtable` plus a
+  cast, after OB-32.
 - **Aider commits use the default email.** The coding backend's git author is
   `agent.name`, whose default email contains a space
   (`theo palliser@virtualtubers.local`). `agent.office.author_email` covers
@@ -313,3 +341,8 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
 - v1.0.0 (2026-09-28): Created (OB-22). 8 office worker configs plus the
   office roundtable, `docker-compose.office.yml` with `worker-observer`, and
   `redeploy.sh --office`.
+- v1.1.0 (2026-09-28): CEO day runner wiring: the `office-day-runner` volume at
+  `/data/office-state` and `MESSAGE_API_URL` on `worker-gm`, the optional corpus mount
+  (`OFFICE_CORPUS_DIR`). Closed known gaps: the Party Member is silent in
+  `operator_message` / `viewer_joined` (U6), and `.env.example` lists `TUBER7_STREAM_KEY`,
+  `OBSERVER_LAYOUT_PRESET` and `OBSERVER_AVATAR_PROVIDER`.
