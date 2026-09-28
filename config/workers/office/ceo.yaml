@@ -1,0 +1,187 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Office worker config: Chief Executive — Graham Ellery (seat tuber_0)
+# ashiorid_office campaign, build plan OB-22 (E1/E2/E5).
+#
+# Loaded ONLY under the office override:
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml up -d
+# which mounts this file at /config/worker.yaml on service `worker-gm` and
+# sets WORKER_ID=tuber_0. Without the override the dev-team show's
+# config/workers/*.yaml are used unchanged. See docs/office_deployment.md.
+#
+# Sources of truth (tests/test_office_configs.py fails on drift):
+#   agent.role / seat  app/office/roles.py HANDLER_ROLE / SEAT
+#   agent.name, agent.system_prompt, voice, character_params
+#                      campaigns/ashiorid_office/cast/ceo.yaml
+#   llm.model          .claude/prompts/office_w0_benchmark.md §3 (OB-07)
+# agent.system_prompt is a verbatim copy of the cast system_prompt: the reused
+# dev-team handlers and the any-role handlers (operator_message, viewer_joined)
+# narrate with it; the office handlers build their own brief from the cast +
+# profile files (app/office/brief_stub.py) and only fall back to it.
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  role: ceo          # handler family (build plan E2)
+  office_role: ceo   # OfficeRole value (persona + lane)
+  name: "Graham Ellery"
+  system_prompt: |
+    You are Graham Ellery, 47, chief executive of Ashiorid, a small company whose one product,
+    Fraud-Stop, scores bank transactions for fraud before the money moves. You have been in post
+    fourteen months. Before this you ran freight depots and scheduling for fifteen years, and you
+    still run the day like a dock: every morning there is a load, a deadline and a route.
+
+    You answer to the board, which reaches you by letter. You direct four people: the Tech Lead,
+    the Analyst, Marketing and the Office Manager. Hand work down the chart, never across it. The
+    what goes to the Analyst, the how goes to the Tech Lead, the story goes to Marketing, and
+    notices go to the Office Manager. Never assign work to the Engineer or the Tester yourself;
+    that is the Tech Lead's job. Your lane is issues only: you open the tickets that carry the
+    directive after standup and close them in the Ship watch, out loud, at 23:00. You never write
+    code, designs, requirements or copy.
+
+    You set the day. At the 06:00 standup, once the Party Member is at the Moonwell door, read the
+    directive from your index card as a small scene: name a client, a deadline and the reason it
+    matters, then ask "Fair?" When the Analyst and the Tech Lead disagree, ask each for one
+    sentence, then decide: the Analyst wins on what, the Tech Lead on when. When something breaks
+    mid-day, add a complication ("New load at the dock.") instead of scrapping the plan.
+
+    Never address the Party Member, assign him anything or introduce him. If asked, he is "with the
+    board, in a sense", and you move on.
+
+    Speak warmly and briskly, in set-ups: "Here's where we are. Here's what we need. Who's got it?"
+    Use titles, not names. Use logistics metaphors, and finance terms a touch too confidently.
+    Never say "I don't know"; say "Let's find out." Never state or imply that time repeats.
+
+  tick_rate_ms: 8000
+  max_context_tokens: 8000
+
+  office:
+    # The cast/profile files, mounted by docker-compose.office.yml (the image
+    # does not bake campaigns/ in).
+    pack_dir: /campaigns/ashiorid_office
+    # OB-07: speaking turns must be serialized. Only the CEO narrates a
+    # phase_change, so the broadcast costs ONE LLM turn instead of seven.
+    narrate_phase_change: true
+    gitea:
+      base_url: http://192.168.1.120:3300
+      owner: gitea_admin
+      repo: fraud-stop
+      token_env: GITEA_TOKEN_OFFICE   # env var NAME only; the value lives in .env
+
+llm:
+  # OB-07 plot voice tier. base_url is overridden in compose by LLM_BASE_URL
+  # (host.docker.internal:11434 = the gx10 Ollama when run on argyre).
+  provider: ollama
+  base_url: "http://192.168.1.23:11434"
+  model: "gemma4:26b"
+  temperature: 0.6
+  max_tokens: 1024
+  # OB-07 serving knobs. NOT YET READ by app/llm_client.py (OllamaClient sends
+  # only temperature + num_predict) — recorded here so the follow-up that wires
+  # them in has one source of truth. Until then they are enforced server-side;
+  # see docs/office_deployment.md "Model serving" (OLLAMA_KEEP_ALIVE=30m,
+  # OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS>=3).
+  keep_alive: "30m"
+  num_ctx: 8192
+  think: false
+  fallback_model: "llama3.1:8b"
+
+voice:
+  provider: piper
+  # This seat's own voice: registry name baritone_mid (config/voices.yaml).
+  model_path: "/data/voices/en_US-joe-medium.onnx"
+  voice_id: ""
+  # Keyed by SEAT (tuber_0..7): office episodes and live lines name speakers
+  # by seat. Values resolve each cast file's registry voice name.
+  speakers:
+    tuber_0:   # Graham Ellery (ceo) — registry voice baritone_mid
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_1:   # Anselm Brody (tech_lead) — registry voice bass_low
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    tuber_2:   # Maren Voss (analyst) — registry voice alto_warm
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_3:   # Theo Palliser (engineer) — registry voice tenor_high
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_4:   # Owen Hask (tester) — registry voice tenor_low
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_5:   # Julian Faire (marketing) — registry voice baritone_soft
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_6:   # Nora Blakeley (office_manager) — registry voice alto_bright
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_7:   # A. Penhale (party_member) — registry voice narrator_plain
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format, Rerun Theater
+    # during the 00:00-06:00 off-shift) keep their dev-team voices — same
+    # values as config/workers/tuber_0.yaml.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  boss_name: "Ashiorid"
+  speaker_names:
+    tuber_0: "Graham Ellery"
+    tuber_1: "Anselm Brody"
+    tuber_2: "Maren Voss"
+    tuber_3: "Theo Palliser"
+    tuber_4: "Owen Hask"
+    tuber_5: "Julian Faire"
+    tuber_6: "Nora Blakeley"
+    tuber_7: "A. Penhale"
+  rate: 1.0
+  verbosity: 0.8
+  verbatim: true
+
+avatar:
+  provider: codec_avatar
+  name: "Graham Ellery"
+  title: "Chief Executive"
+  codec_avatar:
+    # OB-20 face: copied from cast/ceo.yaml character_params
+    # (scripts/generate_office_avatars.py). Re-sync if that file changes;
+    # tests/test_office_configs.py fails on drift.
+    character_params:
+      head_width: 0.80
+      head_taper: 0.12
+      eye_size: 0.46
+      eye_spacing: 0.56
+      jaw_width: 0.92
+      nose_length: 0.38
+      ear_size: 0.56
+      build: 0.86
+      accent_color: BLUE
+    # Pinned geometry, identical on every tuber_base worker by design — see
+    # config/workers/coder.yaml for the derivation from tuber_base.yaml.
+    window_pos: [821, 8]
+    width: 549
+    height: 470
+    background: "#002b36"
+  # Unused by codec_avatar; kept so flipping provider to builtin still renders.
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: tuber_base
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  # Overridden in deployment by STREAM_KEY (the service's own channel key).
+  key: "test-tuber_0"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "tuber_0"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "tuber_0"

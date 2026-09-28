@@ -16,6 +16,11 @@
 #   ./redeploy.sh              # interactive, asks to confirm the live-stream hit
 #   ./redeploy.sh -y           # skip confirmation (e.g. from cron/CI)
 #   ./redeploy.sh --skip-tests # skip the pytest gate (not recommended)
+#   ./redeploy.sh --office     # run the ashiorid_office show instead: layers
+#                              # docker-compose.office.yml over docker-compose.yml
+#                              # (8 office seats + worker-observer, see
+#                              # docs/office_deployment.md). Omit it to go back
+#                              # to the dev-team show.
 #
 # What it does, in order:
 #   1. pytest smoke gate (non-blocking warn-only — see Testing note below)
@@ -42,16 +47,34 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # ── flags ───────────────────────────────────────────────────────────────────
 ASSUME_YES=0
 SKIP_TESTS=0
+OFFICE=0
 for arg in "$@"; do
     case "$arg" in
         -y|--yes) ASSUME_YES=1 ;;
         --skip-tests) SKIP_TESTS=1 ;;
+        --office) OFFICE=1 ;;
         *) echo "unknown flag: $arg" >&2; exit 1 ;;
     esac
 done
 
 log()  { echo "[redeploy] $*"; }
 warn() { echo "[redeploy] WARN: $*" >&2; }
+
+# ── office mode (--office) ────────────────────────────────────────────────────
+# COMPOSE_FILE is read by every `docker compose` call below (it takes
+# precedence over a COMPOSE_FILE line in .env), so the office override applies
+# to infra-up, build, the derived worker list (which then includes
+# worker-observer) and the force-recreate alike. Without --office nothing is
+# exported, so the dev-team show is exactly what docker-compose.yml describes.
+if [[ "$OFFICE" == "1" ]]; then
+    export COMPOSE_FILE="docker-compose.yml:docker-compose.office.yml"
+    log "Office mode: COMPOSE_FILE=${COMPOSE_FILE}"
+else
+    # Leaving office mode does not remove the office-only container.
+    if docker ps -a --format '{{.Names}}' 2>/dev/null | grep -qx 'virtualtubers-worker-observer-1'; then
+        warn "virtualtubers-worker-observer-1 (office tuber_7) still exists; stop it with: docker rm -f virtualtubers-worker-observer-1"
+    fi
+fi
 
 # ── 0. pytest smoke gate (warn-only, see Testing note above) ─────────────────
 if [[ "$SKIP_TESTS" == "1" ]]; then

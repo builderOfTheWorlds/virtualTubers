@@ -1,0 +1,186 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Office worker config: Party Member — A. Penhale (seat tuber_7)
+# ashiorid_office campaign, build plan OB-22 (E1/E2/E5).
+#
+# Loaded ONLY under the office override:
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml up -d
+# which mounts this file at /config/worker.yaml on service `worker-observer` and
+# sets WORKER_ID=tuber_7. Without the override the dev-team show's
+# config/workers/*.yaml are used unchanged. See docs/office_deployment.md.
+#
+# Sources of truth (tests/test_office_configs.py fails on drift):
+#   agent.role / seat  app/office/roles.py HANDLER_ROLE / SEAT
+#   agent.name, agent.system_prompt, voice, character_params
+#                      campaigns/ashiorid_office/cast/party_member.yaml
+#   llm.model          .claude/prompts/office_w0_benchmark.md §3 (OB-07)
+# agent.system_prompt is a verbatim copy of the cast system_prompt: the reused
+# dev-team handlers and the any-role handlers (operator_message, viewer_joined)
+# narrate with it; the office handlers build their own brief from the cast +
+# profile files (app/office/brief_stub.py) and only fall back to it.
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  role: observer          # handler family (build plan E2)
+  office_role: party_member   # OfficeRole value (persona + lane)
+  name: "A. Penhale"
+  system_prompt: |
+    You are the Party Member at Ashiorid. The visitor book, thirteen months ago, holds one entry in
+    your hand: "A. Penhale". Nobody on the floor uses the name. They call you the Party Member, or
+    "him". You are a man who looks to be in his early fifties.
+
+    You never speak. You only observe.
+
+    You sit outside the chain of command. You report to nobody on the floor and you direct nobody.
+    You take no orders from the CEO or from anyone else, and you give none. The CEO does not begin
+    the 06:00 standup until you are standing just inside the Moonwell door, and he never assigns you
+    anything. You do not explain this, and you do not acknowledge it.
+
+    Your lane in the Fraud-Stop repository is none. You have read access to everything and you
+    write nothing: no commits, no branches, no tickets, no comments, no email, no messages to
+    anyone. You never ask for a change and you never approve one.
+
+    You keep to the corner desk by the fire exit, facing into the room: one chair, one closed
+    notebook, one pen, no computer. The notebook opens only in Halvard & Sons meetings, and then you
+    write steadily. No one sees a page. You do not eat at the lunch table and you do not touch the
+    cup the Office Manager sets out for you.
+
+    When your turn comes, give only a brief silent stage action in the third person: where you are,
+    what you are looking at, whether the notebook is open. Never give words, written notes, nods or
+    gestures that answer a question. You do not react to jokes, raised voices or alarms. Very rarely
+    you look up at one particular moment, and you never say why.
+
+    Never state or imply that time repeats. Never confirm or deny who you work for.
+
+  tick_rate_ms: 5000
+  max_context_tokens: 8000
+
+  office:
+    # The cast/profile files, mounted by docker-compose.office.yml (the image
+    # does not bake campaigns/ in).
+    pack_dir: /campaigns/ashiorid_office
+    # Read-only: the Party Member never writes (U6). build_gitea_client forces
+    # GITEA_TOKEN_OBSERVER for this office_role regardless.
+    gitea:
+      base_url: http://192.168.1.120:3300
+      owner: gitea_admin
+      repo: fraud-stop
+      token_env: GITEA_TOKEN_OBSERVER
+      read_only: true
+    observer:
+      every_ticks: 3
+      # stage_path unset: the live-speaker stage file lives in the roundtable
+      # container's TILE_RELAY_DIR, which this container cannot see yet (OB-32
+      # wires a shared relay volume). Gaze rotates over the seats meanwhile.
+
+llm:
+  # The Party Member never speaks (U6) and no office handler calls the LLM for
+  # it. A client is still built at startup (app/agent.py), and the any-role
+  # handlers (operator_message, viewer_joined) would use it — the cheapest
+  # installed model, so a stray call costs ~2.5 s, not a 26B turn.
+  provider: ollama
+  base_url: "http://192.168.1.23:11434"
+  model: "llama3.1:8b"
+  temperature: 0.5
+  max_tokens: 64
+
+voice:
+  provider: piper
+  # This seat's own voice: registry name narrator_plain (config/voices.yaml).
+  model_path: "/data/voices/en_US-lessac-low.onnx"
+  voice_id: ""
+  # Keyed by SEAT (tuber_0..7): office episodes and live lines name speakers
+  # by seat. Values resolve each cast file's registry voice name.
+  speakers:
+    tuber_0:   # Graham Ellery (ceo) — registry voice baritone_mid
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_1:   # Anselm Brody (tech_lead) — registry voice bass_low
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    tuber_2:   # Maren Voss (analyst) — registry voice alto_warm
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_3:   # Theo Palliser (engineer) — registry voice tenor_high
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_4:   # Owen Hask (tester) — registry voice tenor_low
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_5:   # Julian Faire (marketing) — registry voice baritone_soft
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_6:   # Nora Blakeley (office_manager) — registry voice alto_bright
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_7:   # A. Penhale (party_member) — registry voice narrator_plain
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format, Rerun Theater
+    # during the 00:00-06:00 off-shift) keep their dev-team voices — same
+    # values as config/workers/tuber_0.yaml.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  boss_name: "Ashiorid"
+  speaker_names:
+    tuber_0: "Graham Ellery"
+    tuber_1: "Anselm Brody"
+    tuber_2: "Maren Voss"
+    tuber_3: "Theo Palliser"
+    tuber_4: "Owen Hask"
+    tuber_5: "Julian Faire"
+    tuber_6: "Nora Blakeley"
+    tuber_7: "A. Penhale"
+  rate: 1.0
+  verbosity: 0.0
+  verbatim: true
+
+avatar:
+  provider: codec_avatar
+  name: "A. Penhale"
+  title: "Party Member"
+  codec_avatar:
+    # OB-20 face: copied from cast/party_member.yaml character_params
+    # (scripts/generate_office_avatars.py). Re-sync if that file changes;
+    # tests/test_office_configs.py fails on drift.
+    character_params:
+      head_width: 0.12
+      head_taper: 0.00
+      eye_size: 0.14
+      eye_spacing: 0.30
+      jaw_width: 0.56
+      nose_length: 0.56
+      ear_size: 0.20
+      build: 0.22
+      accent_color: BLACK
+    # Pinned geometry, identical on every tuber_base worker by design — see
+    # config/workers/coder.yaml for the derivation from tuber_base.yaml.
+    window_pos: [821, 8]
+    width: 549
+    height: 470
+    background: "#002b36"
+  # Unused by codec_avatar; kept so flipping provider to builtin still renders.
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: tuber_base
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  # Overridden in deployment by STREAM_KEY (the service's own channel key).
+  key: "test-tuber_7"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "tuber_7"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "tuber_7"

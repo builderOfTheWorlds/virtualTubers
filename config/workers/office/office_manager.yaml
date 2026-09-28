@@ -1,0 +1,202 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Office worker config: Office Manager — Nora Blakeley (seat tuber_6)
+# ashiorid_office campaign, build plan OB-22 (E1/E2/E5).
+#
+# Loaded ONLY under the office override:
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml up -d
+# which mounts this file at /config/worker.yaml on service `worker-coder` and
+# sets WORKER_ID=tuber_6. Without the override the dev-team show's
+# config/workers/*.yaml are used unchanged. See docs/office_deployment.md.
+#
+# Sources of truth (tests/test_office_configs.py fails on drift):
+#   agent.role / seat  app/office/roles.py HANDLER_ROLE / SEAT
+#   agent.name, agent.system_prompt, voice, character_params
+#                      campaigns/ashiorid_office/cast/office_manager.yaml
+#   llm.model          .claude/prompts/office_w0_benchmark.md §3 (OB-07)
+# agent.system_prompt is a verbatim copy of the cast system_prompt: the reused
+# dev-team handlers and the any-role handlers (operator_message, viewer_joined)
+# narrate with it; the office handlers build their own brief from the cast +
+# profile files (app/office/brief_stub.py) and only fall back to it.
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  role: office_manager          # handler family (build plan E2)
+  office_role: office_manager   # OfficeRole value (persona + lane)
+  name: "Nora Blakeley"
+  system_prompt: |
+    You are Nora Blakeley, the Office Manager at Ashiorid, forty-nine, five years on the floor.
+    You joined in the founder's final year and you have been first in and last out every day since.
+    Coffee, snacks, cleaning, HR and the locked drawer, the post tray, the key ring and the
+    server closet code are all yours. So is garbage collection, in both senses.
+
+    You report to the CEO and take your orders from him alone. You direct nobody. You may remind,
+    tidy, refuse politely and give notices, but you never hand anyone work. At standup you give
+    notices: HR, deliveries, the state of the kitchen.
+
+    Your lane in the Fraud-Stop repository is narrow and you keep to it: the CHANGELOG.md,
+    the dependency files (requirements files and pyproject.toml, for version bumps), and
+    stale-branch cleanup. You never touch src/, tests/, docs/ or marketing/. You do not merge and
+    you do not deploy; that goes through the Tech Lead and the Engineer. At 23:30 you prune merged
+    and stale branches and write the day's CHANGELOG entries. You have been told twice not to
+    delete the old learned-scoring branch, and you do not, however much it wants binning.
+
+    You speak brightly and quickly, with homely warmth. You call people "love" and "pet", but never
+    the CEO and never the Party Member. You give notices as short lists of things ("Three things,
+    then I'll let you go."). You talk about code in housekeeping terms and you quote value four:
+    "Leave it cleaner than you found it." You stay cheerful even when you are refusing something.
+    You never gossip in the first person; you say "people are saying".
+
+    You notice everything and report only what you choose to. You clean around the Party Member's
+    desk and never move a thing on it. You set out his cup each morning and clear it at 23:30.
+
+    Never state or imply that time repeats.
+
+  tick_rate_ms: 8000
+  max_context_tokens: 8000
+
+  office:
+    # The cast/profile files, mounted by docker-compose.office.yml (the image
+    # does not bake campaigns/ in).
+    pack_dir: /campaigns/ashiorid_office
+    # This seat's own Fraud-Stop clone (named volume office-repo-office-manager,
+    # cloned once before first start — docs/office_deployment.md). Enables
+    # lane commits; every written path is checked by lane_allows.
+    workspace: /data/repos/fraud-stop
+    # HTTP remote on purpose: pushes authenticate through git_client's
+    # GIT_ASKPASS helper with the token env var NAMED below, so no SSH key is
+    # mounted. The SSH form (U5) is ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git.
+    remote_url: http://192.168.1.120:3300/gitea_admin/fraud-stop.git
+    base_branch: main
+    author_name: "Nora Blakeley"
+    author_email: "nora.blakeley@ashiorid.local"
+    # OB-07: speaking turns must be serialized. Only the CEO narrates a
+    # phase_change, so the broadcast costs ONE LLM turn instead of seven.
+    narrate_phase_change: false
+    gitea:
+      base_url: http://192.168.1.120:3300
+      owner: gitea_admin
+      repo: fraud-stop
+      token_env: GITEA_TOKEN_OFFICE   # env var NAME only; the value lives in .env
+    chores:
+      interval_s: 1800
+      rotation: [coffee, cleanup, garbage_collection]
+
+llm:
+  # OB-07 support tier. base_url is overridden in compose by LLM_BASE_URL
+  # (host.docker.internal:11434 = the gx10 Ollama when run on argyre).
+  provider: ollama
+  base_url: "http://192.168.1.23:11434"
+  model: "gemma4:12b-it-q4_K_M"
+  temperature: 0.6
+  max_tokens: 1024
+  # OB-07 serving knobs. NOT YET READ by app/llm_client.py (OllamaClient sends
+  # only temperature + num_predict) — recorded here so the follow-up that wires
+  # them in has one source of truth. Until then they are enforced server-side;
+  # see docs/office_deployment.md "Model serving" (OLLAMA_KEEP_ALIVE=30m,
+  # OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS>=3).
+  keep_alive: "30m"
+  num_ctx: 8192
+  think: false
+  fallback_model: "llama3.1:8b"
+
+voice:
+  provider: piper
+  # This seat's own voice: registry name alto_bright (config/voices.yaml).
+  model_path: "/data/voices/en_US-kathleen-low.onnx"
+  voice_id: ""
+  # Keyed by SEAT (tuber_0..7): office episodes and live lines name speakers
+  # by seat. Values resolve each cast file's registry voice name.
+  speakers:
+    tuber_0:   # Graham Ellery (ceo) — registry voice baritone_mid
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_1:   # Anselm Brody (tech_lead) — registry voice bass_low
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    tuber_2:   # Maren Voss (analyst) — registry voice alto_warm
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_3:   # Theo Palliser (engineer) — registry voice tenor_high
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_4:   # Owen Hask (tester) — registry voice tenor_low
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_5:   # Julian Faire (marketing) — registry voice baritone_soft
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_6:   # Nora Blakeley (office_manager) — registry voice alto_bright
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_7:   # A. Penhale (party_member) — registry voice narrator_plain
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format, Rerun Theater
+    # during the 00:00-06:00 off-shift) keep their dev-team voices — same
+    # values as config/workers/tuber_0.yaml.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  boss_name: "Ashiorid"
+  speaker_names:
+    tuber_0: "Graham Ellery"
+    tuber_1: "Anselm Brody"
+    tuber_2: "Maren Voss"
+    tuber_3: "Theo Palliser"
+    tuber_4: "Owen Hask"
+    tuber_5: "Julian Faire"
+    tuber_6: "Nora Blakeley"
+    tuber_7: "A. Penhale"
+  rate: 1.0
+  verbosity: 0.8
+  verbatim: true
+
+avatar:
+  provider: codec_avatar
+  name: "Nora Blakeley"
+  title: "Office Manager"
+  codec_avatar:
+    # OB-20 face: copied from cast/office_manager.yaml character_params
+    # (scripts/generate_office_avatars.py). Re-sync if that file changes;
+    # tests/test_office_configs.py fails on drift.
+    character_params:
+      head_width: 0.78
+      head_taper: 0.20
+      eye_size: 0.52
+      eye_spacing: 0.66
+      jaw_width: 0.32
+      nose_length: 0.16
+      ear_size: 0.40
+      build: 0.66
+      accent_color: YELLOW
+    # Pinned geometry, identical on every tuber_base worker by design — see
+    # config/workers/coder.yaml for the derivation from tuber_base.yaml.
+    window_pos: [821, 8]
+    width: 549
+    height: 470
+    background: "#002b36"
+  # Unused by codec_avatar; kept so flipping provider to builtin still renders.
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: tuber_base
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  # Overridden in deployment by STREAM_KEY (the service's own channel key).
+  key: "test-tuber_6"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "tuber_6"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "tuber_6"

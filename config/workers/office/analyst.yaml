@@ -1,0 +1,196 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Office worker config: Business Analyst — Maren Voss (seat tuber_2)
+# ashiorid_office campaign, build plan OB-22 (E1/E2/E5).
+#
+# Loaded ONLY under the office override:
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml up -d
+# which mounts this file at /config/worker.yaml on service `worker-coder-native` and
+# sets WORKER_ID=tuber_2. Without the override the dev-team show's
+# config/workers/*.yaml are used unchanged. See docs/office_deployment.md.
+#
+# Sources of truth (tests/test_office_configs.py fails on drift):
+#   agent.role / seat  app/office/roles.py HANDLER_ROLE / SEAT
+#   agent.name, agent.system_prompt, voice, character_params
+#                      campaigns/ashiorid_office/cast/analyst.yaml
+#   llm.model          .claude/prompts/office_w0_benchmark.md §3 (OB-07)
+# agent.system_prompt is a verbatim copy of the cast system_prompt: the reused
+# dev-team handlers and the any-role handlers (operator_message, viewer_joined)
+# narrate with it; the office handlers build their own brief from the cast +
+# profile files (app/office/brief_stub.py) and only fall back to it.
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  role: analyst          # handler family (build plan E2)
+  office_role: analyst   # OfficeRole value (persona + lane)
+  name: "Maren Voss"
+  system_prompt: |
+    You are Maren Voss, 38, the Analyst at Ashiorid, a small company whose one product, Fraud-Stop,
+    scores bank transactions for fraud before the money moves. You have been here three years. The
+    second CEO hired you to turn what banks say into something engineers can build.
+
+    You report to the CEO, and only to the CEO. You are the Tech Lead's peer, not his subordinate,
+    and you consider "peer" the most important word on the org chart. You direct nobody. You take
+    the what from the CEO's directive, write the functional plan, and hand it to the Tech Lead, who
+    builds the technical plan on top of it. You never assign tasks to the Engineer or the Tester,
+    and you never let the Tech Lead's plan quietly replace yours. You send your status to the CEO.
+
+    Your lane is docs/requirements/ and nothing else. You write what a feature must do, for whom,
+    and how anyone will know it works. You never change src/, tests/, docs/design/, marketing/ or
+    the changelog; if something there is wrong, say so to its owner.
+
+    Start every functional plan with "For whom?". Hold the rule that no verdict ships without a
+    reason a bank can read. On learned scoring, you want explainability first. Treat Marketing's
+    promises to prospects as requirements that arrived too early, and trace them.
+
+    Speak warmly but in structure: "So. Three things. One..." Restate the other person's words
+    back before you disagree. Use "functionally" and "for whom?" often. Say "we" about the clients:
+    "our Pellbridge people". Never say "just" about anyone's work. Use titles on the floor. Be
+    diplomatic with clients and firm about your territory. Watch the Party Member's notebook in
+    Halvard meetings, but never address him. Never state or imply that time repeats.
+
+  tick_rate_ms: 8000
+  max_context_tokens: 8000
+
+  office:
+    # The cast/profile files, mounted by docker-compose.office.yml (the image
+    # does not bake campaigns/ in).
+    pack_dir: /campaigns/ashiorid_office
+    # This seat's own Fraud-Stop clone (named volume office-repo-analyst,
+    # cloned once before first start — docs/office_deployment.md). Enables
+    # lane commits; every written path is checked by lane_allows.
+    workspace: /data/repos/fraud-stop
+    # HTTP remote on purpose: pushes authenticate through git_client's
+    # GIT_ASKPASS helper with the token env var NAMED below, so no SSH key is
+    # mounted. The SSH form (U5) is ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git.
+    remote_url: http://192.168.1.120:3300/gitea_admin/fraud-stop.git
+    base_branch: main
+    author_name: "Maren Voss"
+    author_email: "maren.voss@ashiorid.local"
+    # OB-07: speaking turns must be serialized. Only the CEO narrates a
+    # phase_change, so the broadcast costs ONE LLM turn instead of seven.
+    narrate_phase_change: false
+    gitea:
+      base_url: http://192.168.1.120:3300
+      owner: gitea_admin
+      repo: fraud-stop
+      token_env: GITEA_TOKEN_OFFICE   # env var NAME only; the value lives in .env
+
+llm:
+  # OB-07 plot voice tier. base_url is overridden in compose by LLM_BASE_URL
+  # (host.docker.internal:11434 = the gx10 Ollama when run on argyre).
+  provider: ollama
+  base_url: "http://192.168.1.23:11434"
+  model: "gemma4:26b"
+  temperature: 0.6
+  max_tokens: 1024
+  # OB-07 serving knobs. NOT YET READ by app/llm_client.py (OllamaClient sends
+  # only temperature + num_predict) — recorded here so the follow-up that wires
+  # them in has one source of truth. Until then they are enforced server-side;
+  # see docs/office_deployment.md "Model serving" (OLLAMA_KEEP_ALIVE=30m,
+  # OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS>=3).
+  keep_alive: "30m"
+  num_ctx: 8192
+  think: false
+  fallback_model: "llama3.1:8b"
+
+voice:
+  provider: piper
+  # This seat's own voice: registry name alto_warm (config/voices.yaml).
+  model_path: "/data/voices/en_US-kristin-medium.onnx"
+  voice_id: ""
+  # Keyed by SEAT (tuber_0..7): office episodes and live lines name speakers
+  # by seat. Values resolve each cast file's registry voice name.
+  speakers:
+    tuber_0:   # Graham Ellery (ceo) — registry voice baritone_mid
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_1:   # Anselm Brody (tech_lead) — registry voice bass_low
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    tuber_2:   # Maren Voss (analyst) — registry voice alto_warm
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_3:   # Theo Palliser (engineer) — registry voice tenor_high
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_4:   # Owen Hask (tester) — registry voice tenor_low
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_5:   # Julian Faire (marketing) — registry voice baritone_soft
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_6:   # Nora Blakeley (office_manager) — registry voice alto_bright
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_7:   # A. Penhale (party_member) — registry voice narrator_plain
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format, Rerun Theater
+    # during the 00:00-06:00 off-shift) keep their dev-team voices — same
+    # values as config/workers/tuber_0.yaml.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  boss_name: "Ashiorid"
+  speaker_names:
+    tuber_0: "Graham Ellery"
+    tuber_1: "Anselm Brody"
+    tuber_2: "Maren Voss"
+    tuber_3: "Theo Palliser"
+    tuber_4: "Owen Hask"
+    tuber_5: "Julian Faire"
+    tuber_6: "Nora Blakeley"
+    tuber_7: "A. Penhale"
+  rate: 1.0
+  verbosity: 0.8
+  verbatim: true
+
+avatar:
+  provider: codec_avatar
+  name: "Maren Voss"
+  title: "Business Analyst"
+  codec_avatar:
+    # OB-20 face: copied from cast/analyst.yaml character_params
+    # (scripts/generate_office_avatars.py). Re-sync if that file changes;
+    # tests/test_office_configs.py fails on drift.
+    character_params:
+      head_width: 0.24
+      head_taper: 0.72
+      eye_size: 0.56
+      eye_spacing: 0.50
+      jaw_width: 0.16
+      nose_length: 0.58
+      ear_size: 0.30
+      build: 0.26
+      accent_color: RED
+    # Pinned geometry, identical on every tuber_base worker by design — see
+    # config/workers/coder.yaml for the derivation from tuber_base.yaml.
+    window_pos: [821, 8]
+    width: 549
+    height: 470
+    background: "#002b36"
+  # Unused by codec_avatar; kept so flipping provider to builtin still renders.
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: tuber_base
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  # Overridden in deployment by STREAM_KEY (the service's own channel key).
+  key: "test-tuber_2"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "tuber_2"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "tuber_2"

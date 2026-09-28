@@ -1,0 +1,193 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Office worker config: roundtable — the Ashiorid office SHOW HOST container
+# ashiorid_office campaign, build plan OB-22 (OB-32 edits it later).
+#
+# Loaded ONLY under docker-compose.office.yml, on service worker-roundtable
+# (WORKER_ID stays "roundtable" — services/control-panel/panel.py's
+# ROUNDTABLE_WORKER_ID). Same job as config/workers/roundtable.yaml: DIRECT
+# every roundtable show and render the 8 character tiles, here for the 8 office
+# seats instead of the dev-team cast.
+#
+# DIRECTOR GATES (app/replay_pane.py _resolve_local_tiles): TILE_RELAY_DIR env
+# (set only on worker-roundtable) AND layout.preset/agent.role == roundtable.
+# Exactly ONE config in config/workers/office/ may carry role roundtable —
+# tests/test_office_configs.py asserts it, mirroring
+# tests/test_roundtable_layout.py for the dev-team directory.
+# ──────────────────────────────────────────────────────────────────────────────
+agent:
+  role: roundtable
+  name: "Ashiorid"
+  system_prompt: |
+    You are the narrator of a live-streamed show set in the Ashiorid office, a
+    small company whose one product, Fraud-Stop, gives banks a fraud verdict
+    before the money moves. You do not work there and you do not write code.
+    You run the show.
+
+    Your responsibilities:
+    - Keep scenes moving between the eight people on the floor
+    - Narrate connective tissue: the time of day, who walks where, what changed
+    - Keep the audience oriented: who is speaking, where we are in the day
+
+    Rules:
+    - You are a narrator, not a participant; never speak for a character
+    - Keep narration to 1-2 sentences; the cast carries the scene
+    - Never break the fiction to discuss infrastructure
+    - Never state or imply that time repeats
+
+  tick_rate_ms: 8000
+  max_context_tokens: 8000
+
+llm:
+  # OB-07 plot voice tier (narration for replay airings).
+  provider: ollama
+  base_url: "http://192.168.1.23:11434"
+  model: "gemma4:26b"
+  temperature: 0.6
+  max_tokens: 1024
+  # OB-07 serving knobs. NOT YET READ by app/llm_client.py (OllamaClient sends
+  # only temperature + num_predict) — recorded here so the follow-up that wires
+  # them in has one source of truth. Until then they are enforced server-side;
+  # see docs/office_deployment.md "Model serving" (OLLAMA_KEEP_ALIVE=30m,
+  # OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS>=3).
+  keep_alive: "30m"
+  num_ctx: 8192
+  think: false
+  fallback_model: "llama3.1:8b"
+
+# The director synthesizes for EVERY speaker, so every seat needs a voice. A
+# show header's registry voice (§7.2) still overrides per show.
+voice:
+  provider: piper
+  model_path: "/data/voices/en_US-lessac-medium.onnx"   # narrator_warm
+  voice_id: ""
+  speakers:
+    tuber_0:   # Graham Ellery (ceo) — registry voice baritone_mid
+      model_path: "/data/voices/en_US-joe-medium.onnx"
+    tuber_1:   # Anselm Brody (tech_lead) — registry voice bass_low
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    tuber_2:   # Maren Voss (analyst) — registry voice alto_warm
+      model_path: "/data/voices/en_US-kristin-medium.onnx"
+    tuber_3:   # Theo Palliser (engineer) — registry voice tenor_high
+      model_path: "/data/voices/en_US-ryan-high.onnx"
+    tuber_4:   # Owen Hask (tester) — registry voice tenor_low
+      model_path: "/data/voices/en_US-danny-low.onnx"
+    tuber_5:   # Julian Faire (marketing) — registry voice baritone_soft
+      model_path: "/data/voices/en_US-bryce-medium.onnx"
+    tuber_6:   # Nora Blakeley (office_manager) — registry voice alto_bright
+      model_path: "/data/voices/en_US-kathleen-low.onnx"
+    tuber_7:   # A. Penhale (party_member) — registry voice narrator_plain
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+    # Recorded-session replays (boss/coder 2-speaker format, Rerun Theater
+    # during the 00:00-06:00 off-shift) keep their dev-team voices — same
+    # values as config/workers/tuber_0.yaml.
+    boss:
+      model_path: "/data/voices/en_US-ryan-low.onnx"
+    coder:
+      model_path: "/data/voices/en_US-lessac-low.onnx"
+  boss_name: "Ashiorid"
+  # Office seats are fixed per campaign (app/office/roles.py SEAT), so the
+  # header-less fallback names are the real cast names, not slot ids.
+  speaker_names:
+    tuber_0: "Graham Ellery"
+    tuber_1: "Anselm Brody"
+    tuber_2: "Maren Voss"
+    tuber_3: "Theo Palliser"
+    tuber_4: "Owen Hask"
+    tuber_5: "Julian Faire"
+    tuber_6: "Nora Blakeley"
+    tuber_7: "A. Penhale"
+  rate: 1.0
+  verbosity: 0.9
+  verbatim: true
+
+avatar:
+  # builtin on purpose: the roundtable preset has no avatar pane; faces come
+  # from the tiles (app/tile_avatar.py) via roster.<slot>.character_params.
+  provider: builtin
+  name: "Ashiorid"
+  title: "Ashiorid Office"
+  expressions:
+    idle:       { eyes: "◉  ◉", mouth: "╰───╯" }
+    thinking:   { eyes: "⊙  ⊙", mouth: "─────" }
+    typing:     { eyes: "◉  ◉", mouth: "╰───╯" }
+    speaking:   { eyes: "◕  ◕", mouth: "╰▾──╯" }
+    frustrated: { eyes: ">  <", mouth: "╭───╮" }
+    happy:      { eyes: "◉  ◉", mouth: "╰▾▾▾╯" }
+    focused:    { eyes: "◔  ◔", mouth: "─────" }
+  bubble_duration_s: 8
+  bubble_width: 36
+
+layout:
+  preset: roundtable
+
+# ── Roster: seat -> tile name + 3D head ─────────────────────────────────────
+# ── BEGIN OB-20 character_params (generated faces) ──────────────────────────
+# Each seat's character_params is a verbatim copy of
+# campaigns/ashiorid_office/cast/<id>.yaml character_params, written by OB-20
+# (scripts/generate_office_avatars.py). It must match the seat's own channel
+# (config/workers/office/<id>.yaml avatar.codec_avatar.character_params) so a
+# face is the same on both streams. tests/test_office_configs.py fails on drift;
+# re-sync this block whenever OB-20 regenerates a face.
+roster:
+  tuber_0:   # ceo
+    name: "Graham Ellery"
+    character_params: {head_width: 0.80, head_taper: 0.12, eye_size: 0.46, eye_spacing: 0.56, jaw_width: 0.92, nose_length: 0.38, ear_size: 0.56, build: 0.86, accent_color: BLUE}
+  tuber_1:   # tech_lead
+    name: "Anselm Brody"
+    character_params: {head_width: 0.56, head_taper: 0.06, eye_size: 0.22, eye_spacing: 0.44, jaw_width: 0.72, nose_length: 0.68, ear_size: 0.74, build: 0.80, accent_color: WHITE}
+  tuber_2:   # analyst
+    name: "Maren Voss"
+    character_params: {head_width: 0.24, head_taper: 0.72, eye_size: 0.56, eye_spacing: 0.50, jaw_width: 0.16, nose_length: 0.58, ear_size: 0.30, build: 0.26, accent_color: RED}
+  tuber_3:   # engineer
+    name: "Theo Palliser"
+    character_params: {head_width: 0.40, head_taper: 0.32, eye_size: 0.78, eye_spacing: 0.36, jaw_width: 0.08, nose_length: 0.24, ear_size: 0.60, build: 0.16, accent_color: GREEN}
+  tuber_4:   # tester
+    name: "Owen Hask"
+    character_params: {head_width: 0.18, head_taper: 0.24, eye_size: 0.30, eye_spacing: 0.14, jaw_width: 0.06, nose_length: 0.46, ear_size: 0.08, build: 0.30, accent_color: CYAN}
+  tuber_5:   # marketing
+    name: "Julian Faire"
+    character_params: {head_width: 0.56, head_taper: 0.52, eye_size: 0.88, eye_spacing: 0.82, jaw_width: 0.44, nose_length: 0.20, ear_size: 0.44, build: 0.50, accent_color: PURPLE}
+  tuber_6:   # office_manager
+    name: "Nora Blakeley"
+    character_params: {head_width: 0.78, head_taper: 0.20, eye_size: 0.52, eye_spacing: 0.66, jaw_width: 0.32, nose_length: 0.16, ear_size: 0.40, build: 0.66, accent_color: YELLOW}
+  tuber_7:   # party_member
+    name: "A. Penhale"
+    character_params: {head_width: 0.12, head_taper: 0.00, eye_size: 0.14, eye_spacing: 0.30, jaw_width: 0.56, nose_length: 0.56, ear_size: 0.20, build: 0.22, accent_color: BLACK}
+# ── END OB-20 character_params ──────────────────────────────────────────────
+
+stream:
+  rtmp_url: "rtmp://localhost:1935/live"
+  # Overridden in deployment by STREAM_KEY (${ROUNDTABLE_STREAM_KEY}).
+  key: "test-roundtable"
+  resolution: "1920x1080"
+  video_bitrate_kbps: 3000
+  fps: 30
+
+# ── Background music (docs/music_engine.md) ───────────────────────────────────
+music:
+  enabled: true
+  theme_name: ashiorid_office   # campaigns/ashiorid_office/music/theme.yaml
+  themes_dir: /data/campaigns
+  initial_mood: peacefulness
+  volume: 0.8
+  min_dwell_s: 20
+  transition_bars: 2
+  record: true
+  segment_seconds: 60
+  audio_format: opus
+  duck:
+    threshold: 0.02
+    ratio: 8
+    attack_ms: 20
+    release_ms: 600
+
+world_state:
+  backend: file
+  path: "/data/world-state"
+  worker_id: "roundtable"
+
+message_bus:
+  backend: kafka
+  bootstrap_servers: null  # set via KAFKA_BOOTSTRAP_SERVERS env var
+  topic: "vtuber.messages"
+  worker_id: "roundtable"

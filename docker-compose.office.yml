@@ -1,0 +1,188 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# docker-compose.office.yml — the ashiorid_office show (build plan OB-22, E1)
+#
+# An OVERRIDE, never used on its own:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml up -d
+#   ./redeploy.sh --office            # same thing, with rebuild + verify
+#
+# Without this file the dev-team show runs exactly as before: nothing in
+# docker-compose.yml or config/workers/*.yaml changes. With it, the existing
+# stream workers are re-seated as the 8 office roles, plus one new container
+# for the Party Member (tuber_7):
+#
+#   service                 seat     office role      agent.role      config
+#   worker-gm               tuber_0  CEO              ceo             office/ceo.yaml
+#   worker-manager          tuber_1  Tech Lead        manager         office/tech_lead.yaml
+#   worker-coder-native     tuber_2  Analyst          analyst         office/analyst.yaml
+#   worker-coder-aider      tuber_3  Engineer         coder (aider)   office/engineer.yaml
+#   worker-tester           tuber_4  Tester           tester          office/tester.yaml
+#   worker-coder-opencode   tuber_5  Marketing        marketing       office/marketing.yaml
+#   worker-coder            tuber_6  Office Manager   office_manager  office/office_manager.yaml
+#   worker-observer (NEW)   tuber_7  Party Member     observer        office/party_member.yaml
+#   worker-roundtable       -        (show director)  roundtable      office/roundtable.yaml
+#
+# Why this mapping (docs/office_deployment.md "Service -> seat mapping"):
+# worker-gm already IS tuber_0; the manager container keeps the manager
+# handler family for the Tech Lead; the aider coder becomes the Engineer
+# (OB-07 picked aider); the tester keeps the tester family. The rest have no
+# role-specific wiring and were assigned in service order.
+#
+# Every service KEEPS its own STREAM_KEY / DISPLAY_NUM / layout / avatar env,
+# so each Twitch channel stays bound to the same container in both shows; only
+# WORKER_ID (the bus + liveness identity) switches to the seat id.
+#
+# Merge rules this file relies on (compose spec): `environment` merges by key,
+# `volumes` merge by container TARGET path (so /config/worker.yaml is replaced,
+# the base file's other mounts stay), `deploy.resources.limits.cpus` replaces.
+#
+# Secrets: tokens are passed by variable NAME from .env (${GITEA_TOKEN_OFFICE},
+# ${GITEA_TOKEN_OBSERVER}); no value appears in this file or in any config.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Env every office seat gets. OFFICE_PACK_DIR matches agent.office.pack_dir
+# (belt and braces for app/office/brief_stub.py) and the pack mount below.
+x-office-env: &office-env
+  OFFICE_PACK_DIR: /campaigns/ashiorid_office
+
+# Write token for the 7 speaking seats (write:repository + write:issue).
+x-office-token: &office-token
+  GITEA_TOKEN_OFFICE: ${GITEA_TOKEN_OFFICE:-}
+
+# CPU cap per stream worker. docker-compose.yml budgets 2.0 x 8 = 16 cores of
+# a ~20-core gx10, leaving ~4 for sshd/Docker (the 2026-09-22 load-328
+# incident). The office show runs NINE stream workers, so each gets 1.75
+# (9 x 1.75 = 15.75) to stay inside the same 16-core budget.
+x-office-cpu: &office-cpu
+  resources:
+    limits:
+      cpus: "1.75"
+
+services:
+
+  # ── tuber_0 — CEO (Graham Ellery) ──────────────────────────────────────────
+  worker-gm:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_0
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/ceo.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+    deploy: *office-cpu
+
+  # ── tuber_1 — Tech Lead (Anselm Brody) ─────────────────────────────────────
+  worker-manager:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_1
+      # The dev-team backlog token is not needed in office mode (the CEO's
+      # directives drive the day); blank it rather than hand it to a persona.
+      GITEA_TOKEN: ""
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/tech_lead.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      - office-repo-tech-lead:/data/repos/fraud-stop
+    deploy: *office-cpu
+
+  # ── tuber_2 — Analyst (Maren Voss) ─────────────────────────────────────────
+  worker-coder-native:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_2
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/analyst.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      - office-repo-analyst:/data/repos/fraud-stop
+    deploy: *office-cpu
+
+  # ── tuber_3 — Engineer (Theo Palliser) ─────────────────────────────────────
+  worker-coder-aider:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_3
+      # The aider coding backend works in the Fraud-Stop clone, not the
+      # dev-team sandbox volume (app/coding_backend.py: env wins over config).
+      WORKSPACE_PATH: /data/repos/fraud-stop
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/engineer.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      - office-repo-engineer:/data/repos/fraud-stop
+    deploy: *office-cpu
+
+  # ── tuber_4 — Tester (Owen Hask) ───────────────────────────────────────────
+  worker-tester:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_4
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/tester.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      # The Engineer's clone, read-only, at the path tester.yaml's
+      # agent.workspaces maps coder_id tuber_3 to (test_runner copies it to a
+      # tmpdir before running pytest, so :ro is safe).
+      - office-repo-engineer:/data/repos/tuber_3:ro
+    deploy: *office-cpu
+
+  # ── tuber_5 — Marketing (Julian Faire) ─────────────────────────────────────
+  worker-coder-opencode:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_5
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/marketing.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      - office-repo-marketing:/data/repos/fraud-stop
+    deploy: *office-cpu
+
+  # ── tuber_6 — Office Manager (Nora Blakeley) ───────────────────────────────
+  worker-coder:
+    environment:
+      <<: [*office-env, *office-token]
+      WORKER_ID: tuber_6
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/office_manager.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+      - office-repo-office-manager:/data/repos/fraud-stop
+    deploy: *office-cpu
+
+  # ── tuber_7 — Party Member (A. Penhale) — NEW container ────────────────────
+  # Inherits worker-gm's base definition from docker-compose.yml (image, GPU,
+  # ipc/shm, voices + recordings + world-state mounts, Kafka/Redis/Postgres
+  # env) and overrides the identity. Follows the stream-worker conventions:
+  # DISPLAY_NUM 107 (99-104 characters, 105 GM, 106 roundtable), its own
+  # TUBER7_STREAM_KEY, layout/avatar env-overridable like every other worker.
+  # Gets ONLY the read-only observer token, never GITEA_TOKEN_OFFICE.
+  worker-observer:
+    extends:
+      file: docker-compose.yml
+      service: worker-gm
+    environment:
+      <<: *office-env
+      WORKER_ID: tuber_7
+      DISPLAY_NUM: 107
+      STREAM_KEY: ${TUBER7_STREAM_KEY:-tuber7}
+      LAYOUT_PRESET: ${OBSERVER_LAYOUT_PRESET:-tuber_base}
+      AVATAR_PROVIDER: ${OBSERVER_AVATAR_PROVIDER:-}
+      GITEA_TOKEN_OBSERVER: ${GITEA_TOKEN_OBSERVER:-}
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/party_member.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns/ashiorid_office:/campaigns/ashiorid_office:ro
+    deploy: *office-cpu
+
+  # ── The office roundtable show (director + 8 seat tiles) ───────────────────
+  # WORKER_ID stays "roundtable" (control panel ROUNDTABLE_WORKER_ID).
+  worker-roundtable:
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/office/roundtable.yaml:/config/worker.yaml:ro
+    deploy: *office-cpu
+
+volumes:
+  # One Fraud-Stop clone per writing seat, so no two agents share a working
+  # tree. Clone them BEFORE the first office start (docs/office_deployment.md
+  # "One-time setup"); an empty volume would be seeded with the dev-team
+  # sandbox by the Engineer's workspace_setup and never become Fraud-Stop.
+  office-repo-tech-lead:
+  office-repo-analyst:
+  office-repo-engineer:
+  office-repo-marketing:
+  office-repo-office-manager:
