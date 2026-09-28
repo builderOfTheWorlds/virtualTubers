@@ -1,0 +1,121 @@
+task_id: character_wp03_clock
+
+goal: |
+  Write `app/character/clock.py`, the loop clock of the character v4 memory
+  loop (plan §2, decisions D-01 and D-24), and refresh the docstring of
+  `app/character/__init__.py`.
+
+  A campaign runs as a weekly time loop. Week N starts at 00:00
+  America/New_York on `epoch + 7*(N-1)` days, where `loop.epoch` is a Sunday
+  in config (for the office campaign, OB-41: 2026-09-27, the same Sunday the
+  office weekly reset uses). `loop_day` is the New York calendar date.
+  clock.py is THE ONLY code that turns a timestamp into a week or a day:
+  ingest stamps every experience row with it, the nightly job asks it for
+  "yesterday", the weekly reset asks it for the bounds of the next week.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a timestamp is bucketed by its UTC date
+  or by 24-hour arithmetic instead of the New York wall clock. Every bus
+  message carries a UTC timestamp; 02:00Z on a Sunday is still 22:00 Saturday
+  in New York, and a week containing a DST change is 169 or 167 real hours,
+  not 168. Getting either wrong files a character's Saturday-night memories
+  into the wrong week, and the weekly reset then archives them a week early.
+  Always convert with `ts.astimezone(ZoneInfo(tz))` and build bounds with
+  `datetime.combine(day, time(0), tzinfo=zone)` — never add timedelta(hours=...)
+  to an aware datetime to find a boundary.
+
+  A naive datetime has no defined New York time, so it raises ValueError
+  rather than being guessed.
+
+target_files:
+  - app/character/clock.py
+  - app/character/__init__.py
+
+test_files:
+  - tests/character/test_character_clock.py
+
+context_files:
+  - app/character/__init__.py      # the CURRENT file: keep every export exactly
+  - app/office/clock.py            # the office clock on the same epoch; same tz handling
+
+interface: |
+  ── app/character/clock.py ──
+
+  class LoopClock:
+      def __init__(self, epoch: date, tz: str)
+          epoch must be a datetime.date (not a datetime) and a Sunday
+          (weekday() == 6), else ValueError. tz is an IANA name resolved with
+          zoneinfo.ZoneInfo (unknown name -> ValueError). Keep .epoch and .tz
+          (the name) as attributes and the ZoneInfo as .zone.
+
+      def position(self, ts: datetime) -> tuple[int, date]
+          (week, day): day = ts.astimezone(zone).date();
+          week = (day - epoch).days // 7 + 1. A timestamp before the epoch
+          gives week 0 or a negative week (ingest counts and skips those);
+          it does not raise.
+
+      def week_bounds(self, week: int) -> tuple[datetime, datetime]
+          start = datetime.combine(epoch + timedelta(days=7*(week-1)), time(0), tzinfo=zone)
+          end   = datetime.combine(epoch + timedelta(days=7*week),     time(0), tzinfo=zone)
+          Both tz-aware. end of week N == start of week N+1.
+
+      def day_bounds(self, day: date) -> tuple[datetime, datetime]
+          New York midnight of `day` and of the next day (a DST day is 23 or 25 h).
+
+      def previous_day(self, now: datetime) -> date
+          The New York calendar date before now's New York date. At 00:00:30
+          New York on a Sunday it is that Saturday. This is what the nightly
+          job summarises.
+
+      def is_week_start(self, now: datetime) -> bool
+          True when now's New York date is a Sunday (the first day of a loop
+          week), else False.
+
+      Every method taking a datetime raises ValueError when
+      `ts.tzinfo is None or ts.utcoffset() is None` (naive).
+
+  This is the validated reference (.claude/prompts/character_v4_plan_validation.py:73-83)
+  that the class wraps:
+
+      def week_bounds(week, epoch, tz=NY):
+          start_day = epoch + timedelta(days=7 * (week - 1))
+          start = datetime.combine(start_day, time(0), tzinfo=tz)
+          end = datetime.combine(start_day + timedelta(days=7), time(0), tzinfo=tz)
+          return start, end
+
+      def loop_position(ts, epoch, tz=NY):
+          local = ts.astimezone(tz)
+          day = local.date()
+          return (day - epoch).days // 7 + 1, day
+
+  ── app/character/__init__.py ──
+
+  KEEP THE EXISTING AVATAR EXPORTS EXACTLY: the same
+  `from character.avatar import (AvatarResponseError, AvatarResult,
+  ReplayLLMClient, map_appearance, map_appearance_result, parse_response)`
+  and the same `__all__` list (OB-20; tests/test_character_avatar.py and the
+  office avatar tooling import them from `character`). Only change the module
+  docstring so it says the package also holds the v4 memory loop modules
+  (config, clock, shapes, db, store/, jobs), imported as `character.<module>`
+  (D-23). Do NOT import the v4 modules from __init__.py: `import
+  character.avatar` must stay cheap and must not pull in psycopg2.
+
+notes: |
+  - Imports in clock.py: stdlib only (datetime, logging, zoneinfo).
+  - `log = logging.getLogger(__name__)`. DEBUG in __init__ (epoch, tz) and when
+    raising; no logging in position() beyond DEBUG (it is called per ingested
+    message, so keep it cheap).
+  - ZoneInfo needs the IANA database; `tzdata` is already in requirements.txt
+    (OB-06), so no fallback code.
+  - Compare/convert only aware datetimes. Never call datetime.now() in this
+    module: callers pass `now` (jobs take `--at`).
+  - app/character/__init__.py: emit the whole file; it is short. Do not rename,
+    reorder or drop any avatar name.
+  - Pending guard: tests/character/test_character_clock.py skips while
+    app/character/clock.py is missing (tests/character/pending.py). The
+    harness sandbox overlays the staged file, so the tests run for real there.
+  - __init__.py regression: tests/test_character_avatar.py imports the avatar
+    names from `character` but also loads scripts/generate_office_avatars.py,
+    and the sandbox does not copy scripts/ (tools/qwen_worker/sandbox.py
+    SANDBOX_DIRS), so it cannot be a harness test file. After promote the
+    orchestrator runs `pytest tests/test_character_avatar.py` in the real tree
+    (review checklist); it must pass unchanged.

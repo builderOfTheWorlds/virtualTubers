@@ -1,0 +1,83 @@
+# Character v4 memory loop configuration (plan
+# docs/charcterProfileGenerationNotes/character_generator_updater_v4.md §11).
+#
+# Copied from plan §11 with the OB-41 office overrides
+# (.claude/prompts/ashiorid_office_build_plan.md, OB-41). Every deviation from
+# §11 is marked "OB-41:" below and listed in .claude/prompts/character_v4_build_status.md.
+# Loaded and validated by app/character/config.py (frozen dataclass tree).
+# Secrets never live here: the DB password comes only from CHARACTER_DB_PASSWORD.
+character:
+  campaign: ashiorid_office          # OB-41: was "hp"; matches app/office/weekly_reset.py CAMPAIGN
+  timezone: America/New_York
+  loop:
+    epoch: "2026-09-27"              # OB-41: was "2026-10-04". A Sunday; week 1 starts at 00:00 NY on
+                                     # this date (D-01). Same Sunday as the office weekly reset
+                                     # (app/office/weekly_reset.py DEFAULT_EPOCH / OFFICE_EPOCH).
+    fragments_per_week: 1
+  db:                                # every value can be overridden by env CHARACTER_DB_*
+    host: 192.168.1.120
+    port: 5433
+    dbname: character_profile
+    user: character_profile          # password only from env CHARACTER_DB_PASSWORD
+  messages_db_env_prefix: POSTGRES_  # virtualtubers DB (compaction, backfill)
+  # OB-41: the book `source:` block is omitted. The office cast has no book
+  # source; its baselines come from scripts/load_office_profiles.py, which
+  # loads campaigns/ashiorid_office/profiles/*.yaml (a later OB-41 step).
+  # config.py treats `source` as optional. Plan §11 had:
+  # source:
+  #   id: harry_potter
+  #   config: utilities/source_pipeline/sources/harry_potter.yaml
+  #   scope: { books: [1] }          # D-16
+  #   story_start: { book: 1, chapter: 1 }
+  #   story_end:   { book: 1, chapter: 17 }
+  pack: campaigns/ashiorid_office    # OB-41: was campaigns/hptest
+  characters:                        # OB-41: the 8 office characters, not harry/ron/hermione.
+    # retains_fragments and is_main mirror campaigns/ashiorid_office/profiles/<slug>.yaml
+    # (all 8 true, office plan U6); accent_color mirrors character_params in cast/<slug>.yaml.
+    ceo:            { retains_fragments: true, is_main: true, accent_color: BLUE }
+    tech_lead:      { retains_fragments: true, is_main: true, accent_color: WHITE }
+    analyst:        { retains_fragments: true, is_main: true, accent_color: RED }
+    engineer:       { retains_fragments: true, is_main: true, accent_color: GREEN }
+    tester:         { retains_fragments: true, is_main: true, accent_color: CYAN }
+    marketing:      { retains_fragments: true, is_main: true, accent_color: PURPLE }
+    office_manager: { retains_fragments: true, is_main: true, accent_color: YELLOW }
+    party_member:   { retains_fragments: true, is_main: true, accent_color: BLACK }
+    # entry_pos: { book: 1, chapter: 2 }   # optional override of stage 3 (book sources only)
+  llm:
+    base_url: http://192.168.1.23:11434
+    profiles:                        # D-15
+      summary:   { model: "qwen3.8:27b", temperature: 0.3, num_ctx: 16384, timeout_s: 300, think: false }
+      fragment:  { model: "qwen3.8:27b", temperature: 0.5, num_ctx: 16384, timeout_s: 300, think: false }
+      generator: { model: "qwen3.8:27b", temperature: 0.4, num_ctx: 32768, timeout_s: 600, think: false }
+      judge:     { model: "qwen3.8:27b", temperature: 0.0, num_ctx: 8192,  timeout_s: 60,  think: false }
+      clean:     { model: "llama3.1:8b", temperature: 0.0, num_ctx: 4096,  timeout_s: 300, think: false }
+    max_retries: 2
+  ingest:
+    kafka_topic: vtuber.messages
+    consumer_group: character-ingest
+    types: [agent_thinking, character_say, scene_event]
+    batch_max: 200
+    batch_wait_s: 2
+    catchup_wait_s: 600
+    max_lag_messages: 1000
+  compaction:                        # D-03
+    noisy_types: [status_update]
+    noisy_keep_hours: 6
+    hot_keep_days: 2
+    move_batch: 5000
+    partitions_ahead_days: 14
+  brief: { max_chars: 6000, cache_ttl_s: 300, week_knowledge_max: 40 }
+  recall:                            # OB-41: re-calibrated on office beats in WP-23
+    embeddings: { base_url: http://192.168.1.23:11434/v1, model: nomic-embed-text, dim: 768 }
+    lead_up_beats: 8
+    window_beats: 12
+    bias: 0.6
+    ref_cosine: 0.8
+    gap: 0.1
+    weights: { hooks: 0.3, trajectory: 0.5, gist: 0.2 }
+    thresholds: { unease: 0.35, surface: 0.55 }
+    decay: 0.85
+    spread: 0.3
+    cooldown_beats: 40
+  reset: { refresh_mode: push }      # push | none (D-02)
+  testctl: { enabled: true }

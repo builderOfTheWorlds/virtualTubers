@@ -1,0 +1,7 @@
+# Test-only dependencies (never installed in the service images).
+# Install on top of requirements.txt:  pip install -r requirements-dev.txt
+#
+# pgserver: embedded Postgres 16 + pgvector for the character v4 integration
+# tests (tests/character/conftest.py `pg` fixture, decision D-06/D-26). It has
+# no Linux aarch64 wheel, so on gx10 set CHARACTER_TEST_DSN instead.
+pgserver==0.1.4; platform_machine != "aarch64"

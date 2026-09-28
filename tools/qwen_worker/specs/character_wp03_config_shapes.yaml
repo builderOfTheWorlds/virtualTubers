@@ -1,0 +1,161 @@
+task_id: character_wp03_config_shapes
+
+goal: |
+  Write two small stdlib modules of the character v4 memory loop (plan
+  `docs/charcterProfileGenerationNotes/character_generator_updater_v4.md` §11):
+
+  1. `app/character/config.py` loads `config/character.yaml` into a FROZEN
+     dataclass tree and validates it. Every v4 job, the ingest consumer and
+     the live driver start by calling `config.load()`; everything that can be
+     changed later is a key in that file (plan §11: "Every decision in the log
+     that can be changed later is a key here").
+  2. `app/character/shapes.py` is a tiny JSON-shape validator used on LLM JSON
+     output (decision D-26: no jsonschema; it is not installed).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the database password appears in a
+  repr, a str, a log line or an exception message. The config object is
+  logged and printed by every job (`status`, `--dry-run`), so a password in
+  `repr(config)` ends up in docker logs and Loki. The password comes ONLY from
+  the environment (`CHARACTER_DB_PASSWORD`) and its dataclass field is
+  `field(default=None, repr=False)`.
+
+  The second rule: validation fails loudly and early with `ConfigError(key,
+  reason)` naming the dotted key, so an operator with a bad epoch or bad
+  recall weights sees "loop.epoch: ..." at startup instead of a silently
+  mis-numbered week months later. A missing password is NOT a load error: it
+  is only needed when a job actually connects (`db.connect()` raises then,
+  WP-04), so read-only tooling can load config without secrets.
+
+target_files:
+  - app/character/config.py
+  - app/character/shapes.py
+
+test_files:
+  - tests/character/test_character_config.py
+  - tests/character/test_character_shapes.py
+
+context_files:
+  - config/character.yaml          # the real file load() must accept
+  - tests/character/fakes.py       # write_config() the tests use to mutate a copy
+
+interface: |
+  ── app/character/config.py ──────────────────────────────────────────────
+
+  DEFAULT_PATH = Path(__file__).resolve().parents[2] / "config" / "character.yaml"
+
+  class ConfigError(Exception):
+      def __init__(self, key: str, reason: str)
+      .key    dotted path WITHOUT the leading "character." (e.g. "loop.epoch")
+      .reason human-readable text
+      str(err) == f"{key}: {reason}"   (never include a password)
+
+  def load(path=None, env=os.environ) -> CharacterConfig
+      path: str | Path | None (None -> DEFAULT_PATH). env: any Mapping; the
+      tests pass plain dicts. Reads YAML with yaml.safe_load; the document's
+      top key is `character`. Missing file, bad YAML, missing top key ->
+      ConfigError("character", ...). A missing required key -> ConfigError
+      with that key's dotted path and reason "missing".
+
+  Frozen dataclasses (@dataclass(frozen=True)); lists in YAML become tuples:
+      DbConfig(host: str, port: int, dbname: str, user: str,
+               password: str | None = field(default=None, repr=False))
+      LoopConfig(epoch: date, fragments_per_week: int)
+      Position(book: int, chapter: int)
+      SourceConfig(id: str, config: str, books: tuple[int, ...],
+                   story_start: Position, story_end: Position)
+      CharacterEntry(slug: str, retains_fragments: bool = False, is_main: bool = False,
+                     accent_color: str | None = None, entry_pos: Position | None = None)
+      LLMProfile(model: str, temperature: float, num_ctx: int, timeout_s: int, think: bool)
+      LLMConfig(base_url: str, profiles: dict[str, LLMProfile], max_retries: int)
+      IngestConfig(kafka_topic: str, consumer_group: str, types: tuple[str, ...],
+                   batch_max: int, batch_wait_s: float, catchup_wait_s: int,
+                   max_lag_messages: int)
+      CompactionConfig(noisy_types: tuple[str, ...], noisy_keep_hours: int,
+                       hot_keep_days: int, move_batch: int, partitions_ahead_days: int)
+      BriefConfig(max_chars: int, cache_ttl_s: int, week_knowledge_max: int)
+      EmbeddingsConfig(base_url: str, model: str, dim: int)
+      RecallWeights(hooks: float, trajectory: float, gist: float)
+      RecallThresholds(unease: float, surface: float)
+      RecallConfig(embeddings: EmbeddingsConfig, lead_up_beats: int, window_beats: int,
+                   bias: float, ref_cosine: float, gap: float, weights: RecallWeights,
+                   thresholds: RecallThresholds, decay: float, spread: float,
+                   cooldown_beats: int)
+      ResetConfig(refresh_mode: str)
+      TestctlConfig(enabled: bool)
+      CharacterConfig(campaign: str, timezone: str, loop: LoopConfig, db: DbConfig,
+                      ingest_db: DbConfig, messages_db_env_prefix: str,
+                      source: SourceConfig | None, pack: str,
+                      characters: dict[str, CharacterEntry], llm: LLMConfig,
+                      ingest: IngestConfig, compaction: CompactionConfig,
+                      brief: BriefConfig, recall: RecallConfig, reset: ResetConfig,
+                      testctl: TestctlConfig)
+
+  YAML -> dataclass notes:
+      - `source` is OPTIONAL (the office config has none, OB-41). When present:
+        {id, config, scope: {books: [...]}, story_start: {book, chapter},
+        story_end: {book, chapter}}. Absent -> None.
+      - `characters` maps slug -> {retains_fragments?, is_main?, accent_color?,
+        entry_pos?}; CharacterEntry.slug is the key. Must be a non-empty mapping;
+        slugs match ^[a-z][a-z0-9_]*$ (else ConfigError("characters", ...)).
+      - `loop.epoch` may be a quoted string "2026-09-27" or a YAML date;
+        parse with date.fromisoformat for strings.
+      - int fields reject bool; float fields accept int and float but not bool.
+        A wrong type -> ConfigError(<dotted key>, "expected int, got str").
+
+  Environment (an empty-string value counts as unset):
+      CHARACTER_DB_HOST / _PORT / _NAME / _USER / _PASSWORD override db.host,
+      db.port (int; not an int -> ConfigError("db.port", ...)), db.dbname,
+      db.user and set db.password. No password in env -> password None.
+      ingest_db: each of CHARACTER_INGEST_DB_HOST / _PORT / _NAME / _USER /
+      _PASSWORD, when set, overrides that one field; every unset field falls
+      back to the RESOLVED main db value (after the CHARACTER_DB_* overrides).
+
+  Validation (key -> rule):
+      timezone           a valid zoneinfo key (ZoneInfo(name) must not raise)
+      loop.epoch         a Sunday (date.weekday() == 6), reason names the weekday
+      loop.fragments_per_week  int >= 0
+      recall.weights     abs(hooks + trajectory + gist - 1.0) <= 1e-6
+      recall.thresholds  0 < unease < surface <= 1  (unease >= surface fails)
+      reset.refresh_mode one of "push", "none"
+      llm.profiles       each profile has model, temperature, num_ctx, timeout_s, think
+
+  ── app/character/shapes.py ──────────────────────────────────────────────
+
+  def validate(obj, shape) -> list[str]
+      Returns every violation as "<path>: <message>"; [] when valid. Never raises
+      on bad data (a malformed SHAPE may raise ValueError). Paths start at "$":
+      "$", "$.summary", "$.nodes[1].name". Shape DSL:
+          {"type": "object", "required": [names], "properties": {name: shape}}
+              obj must be a dict. A missing required name -> one error at
+              "$.<name>" ("missing required field"). Present properties are
+              checked recursively; keys not in properties are ignored; a
+              property that is absent and not required is fine.
+          {"type": "str"}   isinstance str
+          {"type": "int"}   int but NOT bool
+          {"type": "float"} int or float but NOT bool
+          {"type": "bool"}  bool only (0 and 1 are wrong types)
+          {"type": "list", "items": shape}   a list; each item checked at "<path>[i]"
+          {"type": "enum", "values": [...]}  obj in values ("not one of [...]")
+      Exactly ONE error per violation: a wrong-typed value is not also
+      descended into; a missing field is not also a type error.
+
+notes: |
+  - Imports: stdlib (dataclasses, datetime, logging, math, os, pathlib, re,
+    zoneinfo) and `yaml`. Nothing from `character.*` (these are the base
+    modules). Builtin generics in annotations; `from __future__ import
+    annotations` is fine.
+  - `log = logging.getLogger(__name__)`. DEBUG when loading (the path, the
+    number of characters) and at each override applied (the KEY name only,
+    never a value for anything password-like); ERROR right before raising
+    ConfigError. Never log env values.
+  - Frozen means `cfg.campaign = "x"` raises dataclasses.FrozenInstanceError.
+    Do not add __post_init__ that mutates.
+  - Do not read os.environ directly anywhere except as the default of `env`.
+  - Do not open or look for .env files.
+  - Keep shapes.py tiny (about 60 lines) and pure: no logging of the object
+    being validated (it may be a whole LLM reply).
+  - Pending guard: the tests call tests/character/pending.py `require()`, which
+    skips while the target file is missing. The harness sandbox copies app/,
+    tests/ and config/ and overlays these staged files, so the tests run for
+    real there. T03.6's second half needs app/character/db.py (WP-04) and
+    reports as skipped until then; that is expected, not a failure.
