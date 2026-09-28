@@ -1,0 +1,169 @@
+task_id: character_wp17_logger
+
+goal: |
+  Two files for the virtualtubers `messages` bus log (plan §3.4, D-03, D-04,
+  D-24; reference SQL docs/charcterProfileGenerationNotes/v4_reference_messages.sql):
+
+  1. EXISTING `services/message-logger/logger.py`: add M1 and shape awareness.
+     - M1 (additive, safe while the logger runs), appended to CREATE_TABLE_SQL
+       VERBATIM (a test checks the exact text):
+           ALTER TABLE messages ADD COLUMN IF NOT EXISTS character TEXT;
+           CREATE INDEX IF NOT EXISTS idx_messages_timestamp ON messages (timestamp);
+           CREATE INDEX IF NOT EXISTS idx_messages_character_ts ON messages (character, timestamp);
+     - every insert fills `character` with bus_attribution.character_for_message(msg).
+     - shape detection (pg_class.relkind of `messages`): 'p' -> partitioned: use
+       ON CONFLICT (id, timestamp), and create partitions today..today+14 at
+       startup and hourly. Plan §3.4 pitfall (validated): once the DEFAULT
+       partition holds rows for a day, that day's partition can no longer be
+       created, so partitions are always created AHEAD.
+  2. NEW `services/message-logger/migrate_partitioned.py`: the one-off M2
+     migration the operator runs with the logger STOPPED. It builds
+     `messages_new PARTITION BY RANGE (timestamp)` with PK (id, timestamp),
+     daily UTC partitions `messages_pYYYYMMDD` and a DEFAULT partition, copies
+     every row, swaps names and KEEPS `messages_legacy` until the operator drops
+     it. `--dry-run` changes nothing. A second run refuses.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the logger stops logging, or the migration
+  loses rows. The logger is the ONLY writer of the bus log (logger.py:82-86) and
+  runs in production against 192.168.1.120:5432. Only the M1 DDL, the
+  `character` value, shape detection and partition upkeep may change in
+  logger.py; every other line (the coding_backend_runs and voiced_narration
+  unpacking, the LogFilterControl check, connect_db, the print format) must come
+  back unchanged, and the existing tests/test_message_logger.py must keep
+  passing. The migration runs in ONE transaction and verifies the copied row
+  count before renaming anything; it keeps every column of the legacy table,
+  including the logger's correlation_id and causation_id (the reference M2 DDL
+  omits them; tracker question P3a-6, recommendation (a): keep them).
+
+target_files:
+  - services/message-logger/logger.py
+  - services/message-logger/migrate_partitioned.py
+
+test_files:
+  - tests/test_message_logger_v4.py
+  - tests/test_message_logger.py
+
+context_files:
+  - services/message-logger/logger.py                               # the file to extend: keep every other line
+  - app/bus_attribution.py                                          # character_for_message (WP-15)
+  - docs/charcterProfileGenerationNotes/v4_reference_messages.sql   # M1 / M2, validated
+
+interface: |
+  ── services/message-logger/logger.py (additions only) ──
+
+  from bus_attribution import character_for_message     (bare import, like message_bus;
+      the Dockerfile copies app/bus_attribution.py to /app — a later spec)
+
+  CREATE_TABLE_SQL: append the three M1 statements above, exactly as written,
+  after the correlation_id index line (before coding_backend_runs).
+
+  INSERT_SQL = """
+  INSERT INTO messages (id, "from", "to", type, payload, timestamp, correlation_id, causation_id, character)
+  VALUES (%(id)s, %(from)s, %(to)s, %(type)s, %(payload)s, %(timestamp)s,
+          %(correlation_id)s, %(causation_id)s, %(character)s)
+  ON CONFLICT (id) DO NOTHING;
+  """
+  INSERT_PARTITIONED_SQL: the same statement with ON CONFLICT (id, timestamp) DO NOTHING.
+  PARTITIONS_AHEAD_DAYS = 14
+  UPKEEP_INTERVAL_S = 3600
+
+  message_row(msg): the existing dict plus "character": character_for_message(msg).
+
+  def detect_shape(cur) -> str
+      SELECT c.relkind FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+      WHERE n.nspname = 'public' AND c.relname = 'messages'
+      Return "partitioned" ONLY when a row came back and row[0] == "p"; otherwise
+      "plain" (this includes a mocked cursor in tests/test_message_logger.py).
+
+  def ensure_partitions(cur, today=None, ahead_days=PARTITIONS_AHEAD_DAYS) -> list[str]
+      Plain shape -> [] (no DDL). Partitioned: for each UTC day today..today+ahead_days
+      (today defaults to datetime.now(timezone.utc).date()): name f"messages_p{day:%Y%m%d}";
+      skip when SELECT to_regclass(%s) (f"public.{name}") is not NULL; else
+          CREATE TABLE IF NOT EXISTS messages_pYYYYMMDD PARTITION OF messages
+          FOR VALUES FROM (%s) TO (%s)      -- UTC midnight of day and of day+1
+      and add the name to the result. A psycopg2.Error for one day is printed as
+      "[logger] ERROR event=partition_create_failed name=... error=..." and the
+      loop continues (the connection is autocommit). Return the names CREATED
+      ([] on a second call).
+
+  main(): unchanged except:
+      after cur.execute(CREATE_TABLE_SQL): shape = detect_shape(cur); when
+      partitioned, ensure_partitions(cur). insert_sql = INSERT_PARTITIONED_SQL if
+      partitioned else INSERT_SQL. Print "[logger] messages table ready shape=<shape>".
+      In the loop, before the insert: when partitioned and time.monotonic() -
+      last_upkeep >= UPKEEP_INTERVAL_S, ensure_partitions(cur) and reset the timer.
+      cur.execute(insert_sql, message_row(msg)).
+      The FIRST execute on the cursor is still CREATE_TABLE_SQL (an existing test
+      checks it), and on the plain shape the insert is still the INSERT_SQL
+      object itself (existing tests filter on `c.args[0] == logger.INSERT_SQL`).
+
+  ── services/message-logger/migrate_partitioned.py ── (stdlib + psycopg2 only;
+     never import logger.py: it pulls in kafka and redis)
+
+  M1_STATEMENTS = (the three M1 statements, as above)
+  COLUMNS = ('id', '"from"', '"to"', 'type', 'payload', 'timestamp', 'ingested_at',
+             'correlation_id', 'causation_id', 'character')
+  class MigrationRefused(RuntimeError)
+
+  def connect_db()
+      Same env as logger.connect_db (POSTGRES_HOST default localhost, POSTGRES_PORT
+      default 5432, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD), autocommit OFF.
+
+  def migrate(conn, *, today=None, ahead_days=14, dry_run=False) -> dict
+      today defaults to the UTC date. Refuse (raise MigrationRefused, nothing
+      changed) when: `messages` does not exist; its relkind is 'p'; or
+      `messages_legacy` or `messages_new` already exists.
+      rows, first = SELECT count(*), min(timestamp) FROM messages
+      first_day = first's UTC date, or today when the table is empty;
+      last_day = today + ahead_days; days = first_day..last_day inclusive.
+      result = {"dry_run": dry_run, "rows": rows, "first_day": first_day,
+                "last_day": last_day, "partitions": [f"messages_p{d:%Y%m%d}" for d in days]}
+      dry_run -> conn.rollback(); return result (no DDL at all).
+      Otherwise, in ONE transaction:
+        1. the M1 statements (idempotent; the copy needs `character`)
+        2. CREATE TABLE messages_new (id UUID NOT NULL, "from" TEXT NOT NULL,
+           "to" TEXT NOT NULL, type TEXT NOT NULL, payload JSONB NOT NULL,
+           timestamp TIMESTAMPTZ NOT NULL, ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+           correlation_id UUID, causation_id UUID, character TEXT,
+           PRIMARY KEY (id, timestamp)) PARTITION BY RANGE (timestamp)
+        3. CREATE TABLE messages_new_default PARTITION OF messages_new DEFAULT
+        4. one CREATE TABLE messages_pYYYYMMDD PARTITION OF messages_new FOR VALUES
+           FROM (UTC midnight of d) TO (UTC midnight of d+1) per day (bounds as %s params)
+        5. INSERT INTO messages_new (<COLUMNS>) SELECT <COLUMNS> FROM messages
+        6. SELECT count(*) FROM messages_new; != rows -> conn.rollback(); raise RuntimeError
+        7. ALTER TABLE messages RENAME TO messages_legacy;
+           ALTER TABLE messages_new RENAME TO messages;
+           ALTER TABLE messages_new_default RENAME TO messages_default
+        8. CREATE INDEX IF NOT EXISTS idx_messages_p_to ON messages ("to");
+           ... idx_messages_p_type ON messages (type);
+           ... idx_messages_p_character_ts ON messages (character, timestamp);
+           ... idx_messages_p_correlation ON messages (correlation_id)
+           (new names: the old idx_messages_* names stay with messages_legacy)
+        conn.commit(); return result. Any error -> conn.rollback(), re-raise.
+
+  def main(argv=None) -> int
+      argparse: --dry-run, --ahead-days N (default 14). conn = connect_db();
+      try: result = migrate(conn, ahead_days=..., dry_run=...)
+      except MigrationRefused as exc: print(f"refused: {exc}", file=sys.stderr); return 1
+      finally: conn.close().
+      Print a summary; under --dry-run it starts with "DRY RUN:" and lists the
+      row count, the partition range and the statements it would run. Return 0.
+  if __name__ == "__main__": raise SystemExit(main())
+
+notes: |
+  - logger.py style stays as it is: print() lines "[logger] ...", no logging
+    module, psycopg2 autocommit connection. Keep every existing function.
+  - Partition names are a contract (plan §3.4, D-24): messages_pYYYYMMDD covers
+    exactly that UTC day; compaction (WP-18) derives each partition's age from
+    its name. Build partition DDL with the name from a date (not user input) and
+    the bounds as %s parameters.
+  - The migration never drops anything (messages_legacy stays for the operator,
+    who drops it by hand after checking; docs/message_logger.md gets the operator
+    steps by hand after promote: NEVER run M1 or M2 on production from a test).
+  - Tests: tests/test_message_logger_v4.py (integration on pgserver via the `pg`
+    fixture of tests/character/conftest.py; run with CHARACTER_TEST_REQUIRE_DB=1)
+    and the existing mocked tests/test_message_logger.py. The schema-copy checks
+    on docs/sql/02_create_tables.sql and the Dockerfile skip in this sandbox
+    (no docs/ dir) and are the next spec's job (character_wp17_schema_copies).
+  - Pending guard: tests/test_message_logger_v4.py skips while
+    services/message-logger/migrate_partitioned.py is missing.

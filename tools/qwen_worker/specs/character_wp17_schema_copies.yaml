@@ -1,0 +1,61 @@
+task_id: character_wp17_schema_copies
+
+goal: |
+  Bring the two other copies of the `messages` schema in line with the M1 change
+  made to services/message-logger/logger.py by the previous spec
+  (character_wp17_logger), and make the logger image carry bus_attribution.py
+  (plan §3.4: "Three schema copies stay in sync (logger.py,
+  docs/sql/02_create_tables.sql, docs/message_logger.md). A test asserts the M1
+  statements appear in the first two." and "The logger Dockerfile gains one
+  COPY line").
+
+  1. EXISTING `docs/sql/02_create_tables.sql`: add the three M1 statements,
+     verbatim, right after the `idx_messages_correlation` line, with a short
+     comment (see interface). Nothing else changes.
+  2. EXISTING `services/message-logger/Dockerfile`: add ONE line,
+         COPY app/bus_attribution.py /app/bus_attribution.py
+     next to the other `COPY app/...` lines, before ENTRYPOINT. Nothing else changes.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the promoted logger.py imports
+  `bus_attribution` but the image doesn't contain it, so the logger container
+  crash-loops on `ModuleNotFoundError` after the next build and the bus log goes
+  dark. Second: a schema file that no longer matches what the logger creates,
+  which is how the next person re-creates the table without the column.
+
+  (docs/message_logger.md, the third copy, is prose and is updated by hand after
+  promote, together with the M2 operator steps; playbook §1.4 "docs by hand".)
+
+target_files:
+  - docs/sql/02_create_tables.sql
+  - services/message-logger/Dockerfile
+
+test_files:
+  - tests/test_message_logger_v4.py
+
+context_files:
+  - docs/sql/02_create_tables.sql                                   # reproduce exactly + the M1 block
+  - services/message-logger/Dockerfile                              # reproduce exactly + one COPY line
+  - docs/charcterProfileGenerationNotes/v4_reference_messages.sql   # the M1 source text
+
+interface: |
+  ── docs/sql/02_create_tables.sql: insert after
+     "CREATE INDEX IF NOT EXISTS idx_messages_correlation ON messages (correlation_id);" ──
+  -- Character v4 M1 (docs/charcterProfileGenerationNotes/v4_reference_messages.sql):
+  -- which character a message is about (bus_attribution.character_for_message,
+  -- filled by the logger), plus the indexes compaction and the screens use.
+  ALTER TABLE messages ADD COLUMN IF NOT EXISTS character TEXT;
+  CREATE INDEX IF NOT EXISTS idx_messages_timestamp ON messages (timestamp);
+  CREATE INDEX IF NOT EXISTS idx_messages_character_ts ON messages (character, timestamp);
+
+  ── services/message-logger/Dockerfile: after
+     "COPY app/log_filter_control.py /app/log_filter_control.py" ──
+  COPY app/bus_attribution.py /app/bus_attribution.py
+
+notes: |
+  - Emit both files WHOLE; every existing line byte-for-byte (comments, blank
+    lines, statement order). Only the lines above are added.
+  - This spec runs AFTER character_wp17_logger is promoted (the test file then
+    runs for real: its pending guard keys on migrate_partitioned.py). In this
+    sandbox docs/sql/02_create_tables.sql exists (it is a staged target), so the
+    docs and Dockerfile checks run instead of skipping.
+  - Run with CHARACTER_TEST_REQUIRE_DB=1 (the file's other tests use pgserver).
