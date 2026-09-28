@@ -1,0 +1,124 @@
+task_id: character_wp24_jobs_story
+
+goal: |
+  Write `app/character/jobs_story.py`, the `story-start` and `story-stop`
+  jobs (plan §5 job table, D-02, D-19), and register them in
+  `services/character-updater/main.py`.
+
+    story-start  "Enables char-live:<campaign> in WorkerControl
+                 (app/worker_control.py:27), then `docker compose up -d
+                 character-live` (or runs the driver inline with --foreground)"
+    story-stop   "Disables char-live:<campaign>. The driver finishes the current
+                 scene, publishes scene_event kind=story_end, and exits 0."
+
+  Both are idempotent ("none needed" in the plan's idempotency column) and run
+  through the WP-06 framework (advisory lock on (job, campaign), a
+  character_jobs row, --dry-run writes nothing, --at). The `character-live`
+  container runs `main.py story-start --foreground`; a cron `story-start`
+  while it runs then just re-enables the flag and re-runs `compose up -d`
+  (a no-op for Docker), or exits 2 on the lock if the container holds it.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: story-stop kills a stream mid-line, or
+  story-start silently fails to start anything. story-stop only flips the
+  WorkerControl flag (the driver stops itself between scenes), and a failed
+  `docker compose` call raises, so the job exits 1 with a failed jobs row
+  instead of reporting success.
+
+target_files:
+  - app/character/jobs_story.py
+  - services/character-updater/main.py
+
+test_files:
+  - tests/character/test_character_jobs_story.py
+
+context_files:
+  - app/character/jobs.py                 # run_job, JobResult (WP-06)
+  - app/character/live.py                 # driver_id, LiveDriver (WP-24 spec 1)
+  - services/character-updater/main.py    # reproduce it and add two entries
+
+interface: |
+  ── app/character/jobs_story.py ──
+  Imports: stdlib (logging, os, subprocess, pathlib), `from character import
+  jobs, live`. Lazy imports (inside the default factories only):
+  worker_control.WorkerControl, message_bus, campaign.pack.load_pack,
+  agent_metrics.InstrumentedLLMClient, llm_client, character.{brief, db,
+  recall, recall_harness}, character.store.characters.
+
+  COMPOSE_UP = ["docker", "compose", "up", "-d", "character-live"]
+
+  class StoryStartJob:
+      name = "story-start"
+      def __init__(self, control=None, compose=None, driver_factory=None)
+          control: WorkerControl-like (.set_enabled(worker_id, bool)); default
+              WorkerControl.from_config(None) (REDIS_URL env), built lazily in run().
+          compose(argv): default subprocess.run(argv, check=True, cwd=<repo root>)
+              (repo root = Path(__file__).resolve().parents[2]).
+          driver_factory(ctx) -> an object with run() -> int; default
+              build_driver(ctx).
+      def add_arguments(self, parser): --foreground (store_true)
+      def run(self, ctx):
+          wid = live.driver_id(ctx.args.campaign)
+          ctx.dry_run -> print what would happen ("dry-run: enable <wid>, then
+              <compose argv | run the driver inline>"); touch nothing;
+              return JobResult("done", {"dry_run": True})
+          control.set_enabled(wid, True)
+          --foreground: code = driver_factory(ctx).run(); return
+              JobResult("done", {"worker_id": wid, "driver_exit": code}); compose is
+              NOT called.
+          else: compose(list(COMPOSE_UP)) (any exception propagates -> exit 1);
+              return JobResult("done", {"worker_id": wid, "compose": COMPOSE_UP})
+
+  class StoryStopJob:
+      name = "story-stop"
+      def __init__(self, control=None)
+      def run(self, ctx): wid = live.driver_id(ctx.args.campaign); dry run -> print,
+          JobResult("done", {"dry_run": True}); else control.set_enabled(wid, False),
+          JobResult("done", {"worker_id": wid}). Already disabled is fine (exit 0).
+
+  def build_driver(ctx) -> live.LiveDriver          (production wiring, not unit-tested)
+      pack = load_pack(ctx.cfg.pack) (relative paths resolved against the repo
+      root); producer = message_bus.MessageProducer(KAFKA_BOOTSTRAP_SERVERS env or
+      "localhost:9092", ctx.cfg.ingest.kafka_topic); control =
+      WorkerControl.from_config(None); week = ctx.clock.position(ctx.now)[0];
+      briefs = brief.BriefCache(lambda slug: brief.load_parts(ctx.conn, slug, week,
+      pack_dir=pack.root), ttl_s=ctx.cfg.brief.cache_ttl_s);
+      llm_for(slug) = InstrumentedLLMClient(<the repo's default LLM client>,
+      producer, worker_id=f"char:{slug}") (plan §3.2: thoughts attributed by
+      `from`); recall_for(slug): characters.get_character -> None for a
+      character that does not retain fragments, else recall.RecallEngine(
+      recall_harness.load_candidates(ctx.conn, id), <embeddings.embed>,
+      recall.RecallParams.from_config(ctx.cfg.recall), judge=<judge profile
+      LLM, strict JSON {echoes, reason}>, aliases=recall_harness.load_aliases(...));
+      record(slug, event) = live.record_recall_event(ctx.conn, ...) then
+      ctx.conn.commit(); poll = a message_bus.MessageConsumer on the topic,
+      group f"char-live-{campaign}", returning its poll_new(); now =
+      datetime.now(timezone.utc) unless --at was given (then --at + elapsed).
+      Return live.LiveDriver(pack, campaign=ctx.args.campaign, clock=ctx.clock,
+      publish=producer.send, control=control, briefs=briefs, llm_for=llm_for,
+      recall_for=recall_for, record=record, poll=poll,
+      brief_max_chars=ctx.cfg.brief.max_chars).
+
+  ── services/character-updater/main.py ──
+  Reproduce the promoted file in context EXACTLY and add only:
+      from character import jobs_story
+      JOBS["story-start"] = jobs_story.StoryStartJob
+      JOBS["story-stop"] = jobs_story.StoryStopJob
+  Keep every existing registration (status, revert, testctl via COMMANDS, and
+  whatever other WPs added).
+
+notes: |
+  - Tests inject control (FakeWorkerControl), compose (a list's append) and
+    driver_factory (a fake with run()); nothing touches Redis, Docker or Kafka.
+    They use a migrated pgserver database: run the harness with
+    CHARACTER_TEST_REQUIRE_DB=1.
+  - build_driver is exercised only by the manual gate (playbook WP-24: "a
+    manual run on gx10 with --foreground against the test DB and real Kafka:
+    one scene"). Keep it short and obvious; every dependency is a lazy import
+    so importing jobs_story never needs redis or kafka.
+  - The judge client and the default LLM client come from WP-11 (character.llm
+    judge profile) and app/llm_client.py; if their exact names differ from what
+    you see, leave a clear TODO in build_driver rather than guessing.
+  - `log = logging.getLogger(__name__)`: INFO when the flag is set (worker id,
+    enabled), ERROR (then re-raise) when compose fails.
+  - The compose service `character-live` is NOT part of this spec (see
+    character_wp24_compose.yaml).

@@ -1,0 +1,187 @@
+task_id: character_wp24_live
+
+goal: |
+  Write `app/character/live.py`: the live driver that plays a campaign with
+  memory (plan §8 "Live driver", D-18, D-19). Nothing drives a campaign with
+  an improviser today (app/campaign/cli.py builds a SceneRenderer with no
+  improviser). The driver:
+    - loads the pack and builds CampaignRuntime (app/campaign/runtime.py:62);
+    - keeps one LLMImproviser per cast member (app/campaign/improviser.py:39),
+      whose `system_prompt` is replaced with the character's brief (WP-22) plus
+      "a feeling surfaces: ..." lines for fragments surfaced this week. It never
+      sets `carry` or `loop` (improviser.py:106-112 would print "Loop N");
+    - uses ObservingRenderer, a SceneRenderer subclass that overrides
+      render_beat (renderer.py:60): it calls the parent, then publishes
+      character_say (dialogue) or scene_event (narration/action), feeds the
+      beat to recall and observe()s every improviser;
+    - sets `present` to the pack's players plus the GM;
+    - stops BETWEEN scenes when `char-live:<campaign>` is disabled in
+      WorkerControl or the loop week ends, then publishes story_end.
+  On character_refresh (D-02) it drops the brief cache and the week's state:
+  transcripts, recall activation, the surfaced-this-week list.
+  `app/campaign/` is NOT modified (D-19): subclass and wrap only.
+
+  OB-41: the pack is campaigns/ashiorid_office. Its GM is the CEO, who is also
+  a cast member. The Party Member never speaks: his improviser is never called
+  (a dialogue beat of his falls back to the scripted text), nothing is ever
+  published as him (no character_say with character party_member, nothing
+  from char:party_member), and yet his brief still holds ("You never speak.
+  You only observe.").
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the stream is interrupted mid-scene, or
+  a character learns about the loop. Stop checks happen only between scenes;
+  every prompt a character gets is exactly its brief (never "Loop N", never
+  the carry dict); a surfaced feeling reaches only the character whose
+  fragment surfaced.
+
+target_files:
+  - app/character/live.py
+
+test_files:
+  - tests/character/test_character_live.py
+
+context_files:
+  - app/campaign/renderer.py      # SceneRenderer: render_beat / render_scene (subclass it)
+  - app/campaign/improviser.py    # LLMImproviser: __call__(beat, cast_member), observe, update_context
+
+interface: |
+  Imports: stdlib (dataclasses, logging, datetime), `from campaign.improviser
+  import ImproviserError, LLMImproviser`, `from campaign.renderer import
+  SceneRenderer`, `from campaign.runtime import CampaignRuntime`, `from
+  character import brief, bus_contracts, recall`, `from character.store import
+  fragments`; `from office.roles import HANDLER_ROLE, OfficeRole` inside
+  default_silent only.
+
+  NARRATION_NAME = "Narration"
+  def driver_id(campaign) -> str        f"char-live:{campaign}" (== bus_contracts.live_agent_id)
+  def present_for(pack) -> list[str]    pack.player_ids + [pack.gm_id], de-duplicated, in that order
+  def default_silent(pack) -> frozenset[str]
+      Cast ids that are office roles whose HANDLER_ROLE is "observer" (the Party
+      Member). Non-office ids (ValueError from OfficeRole(id)) are never silent.
+
+  class CastImprovisers:                 # the renderer's `improviser` (one callable)
+      def __init__(self, pack, llm_for, brief_for, *, silent=frozenset(), max_recent=8)
+          improvisers = {cast_id: LLMImproviser(pack, llm=llm_for(cast_id),
+                         max_recent=max_recent) for every cast_id in pack.cast}
+      member_for(slug) -> CastMember: dataclasses.replace(pack.member(slug),
+          system_prompt=brief_for(slug))    (a copy; the pack is never mutated)
+      __call__(beat, cast_member) -> (text, emotion)
+          cast_member.id in silent -> raise ImproviserError (the renderer then
+          keeps the scripted text); else
+          self.improvisers[cast_member.id](beat, self.member_for(cast_member.id))
+      observe(speaker_name, text): every improviser.observe(speaker_name, text)
+      update_context(scene): every improviser.update_context(scene=scene)  (never carry/loop)
+      clear(slugs=None): recent = [] for those improvisers (all when None)
+
+  class ObservingRenderer(SceneRenderer):
+      def __init__(self, pack, *, campaign, publish, present, silent=frozenset(),
+                   on_beat=None, **renderer_kwargs)
+          super().__init__(pack, **renderer_kwargs); self.scene_id = None
+      render_scene(scene, context=None):
+          self.scene_id = scene.id; publish scene_event kind "scene_start" (text
+          scene.title or scene.id); results = super().render_scene(scene, context);
+          publish scene_event kind "scene_end" (same text); return results
+      render_beat(beat) -> RenderedBeat:
+          rb = super().render_beat(beat)   FIRST (the line is on screen before it is on the bus)
+          when rb.text.strip():
+            dialogue, speaker not silent -> bus_contracts.character_say(campaign,
+                self.scene_id, rb.speaker, rb.text, present=present)
+            dialogue by a silent speaker -> publish nothing (DEBUG log)
+            narration -> bus_contracts.scene_event(campaign, self.scene_id,
+                "narration", rb.text, present=present)        (character None)
+            action -> scene_event(..., "action", rb.text, present=present,
+                character=rb.speaker)
+            pane / empty text -> nothing
+          then on_beat(rb) if set; return rb
+
+  class LiveDriver:
+      def __init__(self, pack, *, campaign, clock, publish, control, briefs, llm_for,
+                   recall_for=None, now=None, poll=None, silent=None,
+                   brief_max_chars=6000, max_scenes=1000, renderer_kwargs=None,
+                   max_recent=8, record=None)
+          clock: character.clock.LoopClock; publish(msg): producer.send;
+          control: .is_enabled(worker_id) (WorkerControl); briefs: a
+          brief.BriefCache whose loader returns brief.BriefParts; llm_for(slug) ->
+          an LLM client with complete(system, messages); recall_for(slug) ->
+          recall.RecallEngine-like (observe(text, beat_id=)) or None; now() -> a
+          tz-aware datetime (default datetime.now(timezone.utc)); poll() -> list of
+          bus messages (optional); silent None -> default_silent(pack);
+          record(slug, event) is called for every recall event.
+          Attributes the tests use: improvisers (CastImprovisers), renderer
+          (ObservingRenderer with improviser=self.improvisers,
+          on_beat=self.on_beat, **renderer_kwargs), runtime
+          (CampaignRuntime(pack, renderer=self.renderer)), engines ({slug: engine}
+          built by calling recall_for(slug) for every cast id; None results are
+          left out), surfaced ({cast_id: [lines]}), present (present_for(pack)).
+      brief_for(slug) -> str
+          brief.render(self.briefs.get(slug), max_chars=brief_max_chars,
+          extra_feelings=surfaced[slug] + pending[slug]); pending[slug] (unease
+          lines) is emptied by this call: an unease line reaches ONE brief.
+      on_beat(rb):
+          no text -> return. name = the cast member's name for dialogue, else
+          NARRATION_NAME; improvisers.observe(name, rb.text). For every (slug,
+          engine) in engines: for event in engine.observe(rb.text, beat_id=rb.beat.key
+          or None): record(slug, event) if record; surface ->
+          surfaced[slug].append(recall.surface_text(event.gist)); unease ->
+          pending[slug].append(recall.UNEASE_TEXT).
+      handle_message(msg):
+          only type "character_refresh" whose payload.campaign == campaign
+          (anything else is ignored). characters ["*"] (or missing) -> every cast
+          id and briefs.invalidate_all(); else the listed known ids and
+          briefs.invalidate(each). For those ids: improvisers.clear(ids),
+          surfaced and pending emptied, and engines re-created by calling
+          recall_for(id) again (a fresh engine = activation reset and the new
+          week's dormant fragments).
+      run() -> int
+          week = clock.position(now())[0]; ends_at = clock.week_bounds(week)[1].
+          Loop: handle every message from poll() (if given); then stop when
+          not control.is_enabled(driver_id(campaign)), or now() >= ends_at, or
+          max_scenes scenes were played. Otherwise: if runtime.state.finished:
+          runtime.reset(keep_carry=False) (only right before playing again, so
+          a stopped run keeps its history); improvisers.update_context(runtime.current_scene);
+          runtime.step(). After the loop publish bus_contracts.scene_event(campaign,
+          renderer.scene_id, "story_end", "The story ends for now.",
+          present=present) and return 0.
+
+  def record_recall_event(conn, *, character_id, week, event, ts) -> str
+      recall_id = fragments.record_recall(conn, fragment_id=event.fragment_id,
+      character_id=character_id, loop_week=week, ts=ts, level=event.level,
+      activation=event.activation, signals=event.signals,
+      beat_event_id=event.beat_id, judge_verdict=event.judge_verdict,
+      judge_reason=event.judge_reason); a "surface" event also
+      fragments.unlock(conn, event.fragment_id, week, recall_id). Never commits.
+      Return recall_id. (Plan §7: every unease or surface event writes a
+      fragment_recalls row; D-08: the unlock is permanent.)
+
+notes: |
+  - app/campaign/runtime.py (not in context, to stay under the prompt budget):
+      CampaignRuntime(pack, renderer=None, graph=None, selector=None, state_file=None)
+      .current_scene -> Scene | None; .step() -> (rendered, next_id) plays the current
+      scene through renderer.render_scene(scene, context=...) and advances;
+      .state.finished (True when the graph has no next scene); .state.history (list of
+      played scene ids); .reset(keep_carry=True) restarts at pack.start_scene, clears
+      history and increments state.loop (the driver never passes loop to anyone).
+  - Interfaces used, promoted earlier (not all in context):
+      brief.render(parts, *, max_chars, extra_feelings) -> str; brief.BriefCache
+      recall.RecallEvent(level, fragment_id, gist, activation, signals, beat_index,
+          beat_id=None, judge_verdict=None, judge_reason=None);
+      recall.surface_text(gist); recall.UNEASE_TEXT
+      bus_contracts.character_say(campaign, scene_id, character, text, *, present,
+          addressees=()); bus_contracts.scene_event(campaign, scene_id, kind, text,
+          *, present, character=None) (ContractError on blank text);
+      fragments.record_recall(conn, *, fragment_id, character_id, loop_week, ts,
+          level, activation, signals=None, beat_event_id=None, judge_verdict=None,
+          judge_reason=None) -> str; fragments.unlock(conn, fragment_id, week,
+          recall_id=None) -> bool
+  - Do NOT modify or copy code into app/campaign/ (test T24.9 compares
+    sha256 of every file there). Subclass SceneRenderer; wrap LLMImproviser.
+  - The production wiring (Kafka producer/consumer, Redis WorkerControl,
+    InstrumentedLLMClient(worker_id=f"char:{slug}") per character, DB brief
+    loader) lives in app/character/jobs_story.py (next spec), not here.
+  - `log = logging.getLogger(__name__)`: INFO at run start/stop (week,
+    reason), DEBUG per published message type and per recall event, WARNING
+    when a publish fails (then re-raise), never the line text.
+  - Tests use the real campaigns/ashiorid_office pack with
+    renderer_kwargs={"out": io.StringIO(), "pacer": Pacer(enabled=False)} and
+    fakes from tests/character/fakes_e2e.py. One test uses the `pg_conn`
+    fixture (record_recall_event): run the harness with CHARACTER_TEST_REQUIRE_DB=1.

@@ -1,0 +1,16 @@
+{
+  "_about": "sha256 of every file under app/campaign/ at the start of WP-24 (CRLF normalised to LF). Playbook WP-24 item 9 / D-19: the live driver must not modify app/campaign/. Regenerate ONLY with the user's approval.",
+  "files": {
+    "app/campaign/__init__.py": "586cd4a2623a0b9fd8eaa440eb976585c1a1dad14a0b7e2fe7ecde179505d4c9",
+    "app/campaign/ambient.py": "b2aad0f357145a472893c8811193edeeffd8edda3a010539d4f50b8e7da7c378",
+    "app/campaign/batch_generate.py": "24a4c31ccd1f37f662a848af819f0cda8bf9c3ed39cf774b3edd0c6c61141436",
+    "app/campaign/cli.py": "50e03a9353f18eb1e8417cd29b7241866ddf209d46c661cc0b21fd10ce07e14b",
+    "app/campaign/improviser.py": "2424ce8637b05e58229bf610a462db1bd5d95b20e5db5b7fbb21eaa1ff2ab514",
+    "app/campaign/pack.py": "f6ad123487bea1306171ae676edc45410f3bcaab53fc0463c0f27ebc08d896d6",
+    "app/campaign/primitives.py": "b52ad14a75aaaebba6803c6db50803cf9bc36fd640424f23d5a6d91f0c704fb0",
+    "app/campaign/renderer.py": "bdc97131cfb94faf09b32900b4442b16963d6bacfeae7c9dad929106fd2ce49e",
+    "app/campaign/runtime.py": "907ba19988d62c06ea3280ac71b99b64b1746b2b06534d57d2d454d63ac409e6",
+    "app/campaign/scene_graph.py": "cbe222dfcf1afe9857e02555b19da7e2e194a6b766e8f7e9acc4cbb4eab4bcbd",
+    "app/campaign/validator.py": "7e9cc1d0e93954b6ab6079ae3e66f37d98d6866c2928af4709b7795239f828c0"
+  }
+}
