@@ -1,0 +1,88 @@
+task_id: character_wp11_llm
+
+goal: |
+  Write `app/character/llm.py`: the one place the character v4 code talks to
+  an LLM (D-15, docs/charcterProfileGenerationNotes/character_v4_decisions.md).
+  The nightly summaries (WP-19), the weekly fragments (WP-20) and the recall
+  judge (WP-23) ask Ollama on the gx10 for a JSON object, validate it against
+  a small shape (character.shapes, WP-03) and retry with the errors fed back.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: an empty or invalid reply is accepted,
+  or the request leaves thinking on. tools/qwen_worker/ollama_client.py:46-53
+  records that qwen3 reasoning eats the whole num_predict budget and returns
+  an empty `content`; so every request sends `think` from the profile (false
+  for every profile in config/character.yaml) at the TOP LEVEL of the body,
+  and `format: "json"`. A reply that is not a JSON object, or that fails its
+  shape, is never returned: it is retried `max_retries` times with the errors
+  listed in the user message, then LLMError is raised.
+
+target_files:
+  - app/character/llm.py
+
+test_files:
+  - tests/character/test_character_llm.py
+
+context_files:
+  - app/character/config.py      # promoted in WP-03: LLMProfile, LLMConfig
+  - app/character/shapes.py      # promoted in WP-03: validate(obj, shape) -> list[str]
+  - app/llm_client.py            # the house Ollama client (lines 18-50), for style only
+
+interface: |
+  class LLMError(RuntimeError):
+      def __init__(self, message, attempts=0, errors=())
+      .attempts  int, how many HTTP attempts were made
+      .errors    list[str], the LAST attempt's reasons
+      str(err) includes the last attempt's reasons (e.g. "$.summary: missing required field").
+
+  def complete_json(profile, system, user, shape, *, base_url, max_retries=2,
+                    client=None) -> dict
+      profile: character.config.LLMProfile (model, temperature, num_ctx,
+      timeout_s, think). shape: a character.shapes shape dict.
+      client: an httpx.Client; None -> create one and close it before returning.
+      Makes up to 1 + max_retries attempts. Each attempt:
+          POST f"{base_url.rstrip('/')}/api/chat" with json=
+            {"model": profile.model, "stream": False, "format": "json",
+             "think": profile.think,
+             "messages": [{"role": "system", "content": system},
+                          {"role": "user", "content": <user text>}],
+             "options": {"temperature": profile.temperature, "num_ctx": profile.num_ctx}}
+          and timeout=profile.timeout_s.
+          The first attempt's user text is `user` exactly. A retry's user text is
+              user + "\n\nYour previous reply was not usable:\n" +
+              "\n".join(f"- {e}" for e in errors) +
+              "\nReply again with one JSON object only, matching the requested keys."
+          (so it starts with the original user text and names every error).
+          Only the system and ONE user message are sent (no assistant turns).
+      An attempt fails (and the next one is made) when:
+          - httpx raises (httpx.HTTPError, including ConnectError), or the
+            status is not 2xx (response.raise_for_status()), or the body has no
+            ["message"]["content"]  -> errors = [f"request failed: {exc}"]
+          - json.loads(content) raises -> errors = [f"invalid JSON: {exc}"]
+          - the value is not a dict -> errors = ["$: reply is not a JSON object"]
+          - shapes.validate(value, shape) is non-empty -> errors = that list
+      The first attempt that passes returns the dict. When every attempt has
+      failed: raise LLMError(f"no valid reply after {n} attempts: " +
+      "; ".join(errors), attempts=n, errors=errors).
+
+  class JsonLLM:
+      def __init__(self, llm_cfg, client=None)       # llm_cfg: character.config.LLMConfig
+      def complete_json(self, profile_name, system, user, shape) -> dict
+          profile = llm_cfg.profiles[profile_name]  (an unknown name raises KeyError
+          before any request); then complete_json(profile, system, user, shape,
+          base_url=llm_cfg.base_url, max_retries=llm_cfg.max_retries, client=client).
+
+notes: |
+  - Imports: stdlib (json, logging), httpx, and `from character import shapes`.
+    Nothing else: no anthropic, no config loading, no hardcoded host or model.
+  - `log = logging.getLogger(__name__)`. DEBUG before each request (model,
+    attempt number, prompt sizes in characters, never the prompt text) and
+    after it (elapsed seconds, reply size); WARNING for each failed attempt
+    with its reasons; ERROR when LLMError is raised. Never log the full reply.
+  - Do not strip markdown fences or "repair" JSON: `format: "json"` makes
+    Ollama return JSON, and a reply that isn't valid is retried.
+  - The tests fake the HTTP layer with httpx.MockTransport
+    (tests/character/fakes_generator.py RecordingTransport) and pass
+    `client=httpx.Client(transport=...)`. The live smoke test at the end of
+    the file only runs with CHARACTER_LIVE_LLM=1 (the WP-11 gate, on gx10).
+  - Pending guard: the test file skips while app/character/llm.py is missing;
+    the harness sandbox overlays the staged file, so it runs for real there.

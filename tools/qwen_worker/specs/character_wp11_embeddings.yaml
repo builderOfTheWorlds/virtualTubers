@@ -1,0 +1,69 @@
+task_id: character_wp11_embeddings
+
+goal: |
+  Write `app/character/embeddings.py`: batched text embeddings from the gx10
+  Ollama's OpenAI-compatible endpoint (plan §7 and §11 `recall.embeddings`:
+  base_url http://192.168.1.23:11434/v1, model nomic-embed-text, dim 768).
+  Embeddings are computed when a fragment is created (its lead-up beats and
+  gist, WP-20) and per beat in the live driver for recall (WP-23), never at
+  ingest (D-20).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: vectors come back in the wrong order or
+  the wrong number, and a beat is silently paired with another beat's vector.
+  Recall aligns a replayed lead-up beat by beat (Smith-Waterman over cosine
+  similarities), so one shifted vector corrupts every score after it. So the
+  reply is sorted by its `index`, its count is checked against the batch, and
+  a wrong count or dimension raises EmbeddingError.
+
+target_files:
+  - app/character/embeddings.py
+
+test_files:
+  - tests/character/test_character_embeddings.py
+
+context_files:
+  - app/character/config.py      # promoted in WP-03: EmbeddingsConfig(base_url, model, dim)
+
+interface: |
+  BATCH_SIZE = 32
+
+  class EmbeddingError(RuntimeError)
+
+  def embed(texts, *, base_url, model, client=None, batch_size=BATCH_SIZE,
+            dim=None, timeout_s=60) -> list[list[float]]
+      texts: any iterable of str. Empty -> return [] with NO request.
+      client: an httpx.Client; None -> create one and close it before returning.
+      For each consecutive batch of at most batch_size texts, in order:
+          POST f"{base_url.rstrip('/')}/embeddings" with
+          json={"model": model, "input": batch}, timeout=timeout_s
+          (OpenAI shape; the reply is {"data": [{"index": i, "embedding": [...]}, ...]}).
+          - httpx.HTTPError, a non-2xx status (raise_for_status), a body without
+            "data", or a non-JSON body -> raise EmbeddingError(f"embeddings request
+            failed: {exc}") from exc
+          - len(data) != len(batch) -> raise EmbeddingError(f"expected {len(batch)}
+            vectors, got {len(data)}")
+          - sort data by item["index"] (the server may return any order)
+          - dim is not None and any len(embedding) != dim -> raise
+            EmbeddingError(f"expected dimension {dim}, got {len(embedding)}")
+          - append each embedding as a list of float
+      Return one vector per input text, in input order (70 texts -> 3 calls of
+      32, 32 and 6).
+
+  class Embedder:
+      def __init__(self, emb_cfg, client=None)   # emb_cfg: character.config.EmbeddingsConfig
+      def embed(self, texts) -> list[list[float]]
+          embed(texts, base_url=emb_cfg.base_url, model=emb_cfg.model,
+                client=client, dim=emb_cfg.dim)
+      __call__ = embed      (so an Embedder can be passed where an embed() callable is expected)
+
+notes: |
+  - Imports: stdlib (logging) and httpx only. No numpy (D-26), no config
+    loading, no hardcoded host or model.
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each batch
+    (batch number, size, elapsed); ERROR before raising EmbeddingError. Never
+    log the texts.
+  - The tests fake the HTTP layer with httpx.MockTransport
+    (tests/character/fakes_generator.py RecordingTransport); one fake replies
+    with the data items in REVERSED order but correct indexes, to check the sort.
+  - Pending guard: the test file skips while app/character/embeddings.py is
+    missing; the harness sandbox overlays the staged file.

@@ -1,0 +1,78 @@
+task_id: character_wp11_node_names
+
+goal: |
+  Write `app/character/node_names.py`: the mechanical check for knowledge-node
+  names (plan §10, docs/charcterProfileGenerationNotes/character_generator_updater_v4.md).
+  Node names are the permanent keys of a character's knowledge: the office
+  profile loader (WP-10o) validates every authored `backstory_nodes[].name`
+  with it, and the nightly summaries (WP-19) validate every LLM-proposed node
+  with it before writing week_knowledge_nodes. A bad name is rejected; callers
+  decide whether to retry or drop.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a name that teaches a character about
+  the loop (e.g. `remembers-the-last-loop`) or a malformed name passes the
+  check and becomes permanent knowledge. Characters never know they are in a
+  loop (plan §2), and the node names end up in briefs and in the knowledge
+  graph. So the check is strict and returns a reason for every failure.
+
+  The pilot cast is the 8 office characters (OB-41), so the tests use plan
+  §10's examples plus real node names from campaigns/ashiorid_office/profiles/.
+
+target_files:
+  - app/character/node_names.py
+
+test_files:
+  - tests/character/test_character_node_names.py
+  - tests/character/test_character_prompts.py
+
+context_files:
+  - app/character/prompts/summary_day.md     # by hand (WP-11): its good/bad examples must agree with check()
+
+interface: |
+  NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+){1,7}$")      # plan §10, exactly
+  VERBS = ("knows", "lives", "wants", "fears", "trusts", "likes", "dislikes",
+           "believes", "remembers", "is", "has", "can", "cannot", "owes",
+           "suspects", "hopes")                               # plan §10, in this order
+  BANNED_WORDS = frozenset({"loop", "loops", "looping", "simulation", "simulated",
+                            "ai", "npc", "stream", "streams", "streaming",
+                            "script", "scripted"})
+      (plan §10 names "a banned list" without its contents; these are the
+      office meta words of scripts/validate_office_profiles.py BANNED_WORDS,
+      split into single words, plus their plurals and -ing forms. Do NOT ban
+      "week", "reset" or "time": real office nodes use them, e.g.
+      `wants-one-green-week`.)
+
+  def check(name, age=None) -> list[str]
+      Returns every reason `name` is not a valid node name; [] when it is valid.
+      Never raises.
+      1. Not a str, or the empty string -> ["node name must be a non-empty string"]
+         (return immediately).
+      2. NAME_RE does not match -> ["must be 2-8 lowercase words (a-z, 0-9) joined
+         by single hyphens"] (return immediately; the text must contain the
+         word "lowercase").
+      3. words = name.split("-"). words[0] not in VERBS -> one reason
+         f"must start with an allowed verb ({', '.join(VERBS)}), not {words[0]!r}"
+         (the text must contain the word "verb").
+      4. For each word in BANNED_WORDS (in name order, each distinct word once)
+         -> f"contains banned word {word!r}" (the text must contain "banned").
+      Steps 3 and 4 both apply, so a name can have two reasons.
+      `age` is accepted and unused in v1: age and period sense are a prompt
+      rule, not mechanical (plan §10 last bullet). Say so in the docstring.
+
+  def is_valid(name, age=None) -> bool
+      check(name, age) == [].
+
+notes: |
+  - Imports: stdlib only (logging, re). `log = logging.getLogger(__name__)`;
+    DEBUG with the name and the reasons when a name fails. No other logging
+    (this is called for every node, thousands of times).
+  - Pure module: no I/O, no config, no network.
+  - tests/character/test_character_prompts.py checks that the good examples
+    in app/character/prompts/*.md pass check() and the bad ones fail it; the
+    templates are by-hand files and already written. Do not edit them.
+  - The word-length is not bounded (only the word count, 2..8); digits are
+    allowed anywhere (`is-3rd-ceo` is valid).
+  - Pending guard: tests/character/test_character_node_names.py skips while
+    app/character/node_names.py is missing (tests/character/pending.py); the
+    harness sandbox overlays the staged file, so the tests run for real there.
+    No database is needed.
