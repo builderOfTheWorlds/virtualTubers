@@ -50,6 +50,7 @@ sys.path.insert(0, str(REPO / "app"))
 
 from campaign.pack import load_pack  # noqa: E402
 from campaign.validator import check_seats  # noqa: E402
+from campaign.primitives import PrimitiveError, render as primitive_render  # noqa: E402
 
 # Campaign cast id -> worker id. The replay pane resolves speakers to the
 # worker avatars on screen, so an unmapped name would render as an unknown
@@ -129,6 +130,19 @@ def _text_of(beat):
     return ""
 
 
+def _action_text(pack, beat):
+    """A text-less action beat worded by its primitive, exactly as the dry-run
+    renderer does ("Nora Blakeley brews ..."). Empty when it can't be worded."""
+    member = pack.cast.get(getattr(beat, "speaker", None))
+    if not member or not getattr(beat, "primitive", None):
+        return ""
+    try:
+        return primitive_render(beat.primitive, member.name, beat.params).strip()
+    except PrimitiveError as exc:
+        print(f"  skipped action beat {beat.primitive!r}: {exc}", file=sys.stderr)
+        return ""
+
+
 def walk_scenes(pack, max_scenes):
     """Follow default_next from start_scene, skipping ambient scenes (they
     have no beats — they're runtime improv prompts, not authored content)."""
@@ -170,6 +184,8 @@ def build_episode(pack, source, project, max_scenes):
         for beat in scene.beats:
             kind = getattr(beat, "kind", "")
             text = _text_of(beat)
+            if not text and kind == "action":
+                text = _action_text(pack, beat)
             if not text:
                 continue
             if kind == "dialogue":
