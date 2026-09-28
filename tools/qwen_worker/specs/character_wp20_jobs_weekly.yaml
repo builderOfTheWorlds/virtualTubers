@@ -1,0 +1,123 @@
+task_id: character_wp20_jobs_weekly
+
+goal: |
+  Write the `weekly-reset` job, `app/character/jobs_weekly.py`, and register it
+  in `services/character-updater/main.py` (plan §5 job table, D-02, D-08, D-09).
+
+      python services/character-updater/main.py weekly-reset [--at ISO] [--force] [--dry-run]
+      (cron, Sunday 00:02 NY, after daily-maintenance)
+
+  Plan §5, idempotency key loop_weeks(campaign, week).reset_steps, for the week W
+  that just ended:
+    1. close_saturday   make sure Saturday's summaries exist (runs step 1 of
+                        daily-maintenance if not)
+    2. select_fragments fragments for the retains_fragments characters
+    3. archive          set archived_at_week = W on week-W nodes and edges, for
+                        every character, in one transaction
+    4. open_next        insert week W+1, status open
+    5. refresh          publish character_refresh (reset.refresh_mode: push | none)
+  "Each step runs under SELECT … FOR UPDATE on the week row and records
+  {completed_at}. A re-run skips completed steps (validated)." Characters never
+  know they are in a loop: after the reset the week-W knowledge is unreachable,
+  and the live driver (WP-24) drops its caches on character_refresh.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a half-done reset that a re-run cannot
+  finish, or finishes twice. Every step goes through store.weeks.run_step, which
+  records the step in the same transaction as the step's own writes; a crash in
+  step 3 leaves steps 1-2 recorded, and the next run skips them and finishes.
+  Running before the week has ended must do nothing (exit 2), unless --force;
+  --dry-run writes nothing and publishes nothing.
+
+target_files:
+  - app/character/jobs_weekly.py
+  - services/character-updater/main.py
+
+test_files:
+  - tests/character/test_character_jobs_weekly.py
+  - tests/character/test_character_updater_main.py
+
+context_files:
+  - app/character/fragments.py            # select_fragments, make_embed (spec 1)
+  - app/character/store/weeks.py          # ensure_week, get_week, run_step, set_week_status (WP-05)
+  - services/character-updater/main.py    # the file to extend: keep every line, add one JOBS entry
+
+interface: |
+  ── app/character/jobs_weekly.py ──
+  from character import bus_contracts, fragments, summaries
+  from character.jobs import JobResult
+  from character.store import knowledge, weeks
+  (call weeks.run_step and knowledge.archive_week through the modules: the tests
+   monkeypatch `jobs_weekly.weeks.run_step` and `jobs_weekly.knowledge.archive_week`)
+
+  STEPS = ("close_saturday", "select_fragments", "archive", "open_next", "refresh")
+
+  class WeeklyResetJob:
+      name = "weekly-reset"
+      def __init__(self, complete_summary=None, complete_fragment=None, embed=None,
+                   producer=None, check_name=None)
+          defaults: summaries.make_complete(cfg, "summary") / (cfg, "fragment"),
+          fragments.make_embed(cfg), a message_bus.MessageProducer(
+          os.environ["KAFKA_BOOTSTRAP_SERVERS"], cfg.ingest.kafka_topic) built only
+          when the refresh step publishes; check_name is passed to summarise_day.
+      def add_arguments(self, parser): --force (store_true): reset the CURRENT week now.
+      def run(self, ctx) -> JobResult
+          campaign = ctx.args.campaign; current = ctx.clock.position(ctx.now)[0]
+          W = current if ctx.args.force else current - 1     (tracker local choice P3a-L4)
+          W < 1 -> JobResult("nothing", {"week": W}, message="not due") (exit 2):
+              no row is written (not even loop_weeks).
+          row = weeks.get_week(conn, campaign, W); done = set(row["reset_steps"]) if row else set()
+          dry run: print one line per step, f"{step}: done (week {W})" or
+              f"{step}: would run (week {W})"; return JobResult("done", {"week": W,
+              "dry_run": True}). No writes, no LLM, no publish.
+          all STEPS in done -> JobResult("nothing", {"week": W}, message="already done").
+          weeks.ensure_week(conn, campaign, W, clock); conn.commit()
+          chars = summaries.campaign_characters(conn, campaign)
+          saturday = clock.previous_day(clock.week_bounds(W)[1])
+          for step in STEPS: weeks.run_step(conn, campaign, W, step, <fn>) where fn(conn):
+            close_saturday:   for each character: summaries.summarise_day(conn, clock, c,
+                              saturday, complete=complete_summary, check_name=check_name)
+                              (an existing summary is a no-op; no ingest wait here)
+            select_fragments: for each character: fragments.select_fragments(conn, clock, c, W,
+                              complete=complete_fragment, embed=embed,
+                              n=cfg.loop.fragments_per_week,
+                              lead_up_beats=cfg.recall.lead_up_beats,
+                              embed_model=cfg.recall.embeddings.model)
+                              (it skips characters without retains_fragments and
+                              ones that already have their fragments for W)
+            archive:          knowledge.archive_week(conn, W)
+            open_next:        weeks.ensure_week(conn, campaign, W + 1, clock);
+                              weeks.set_week_status(conn, campaign, W, "closed")
+            refresh:          cfg.reset.refresh_mode == "push" -> producer.send(
+                              bus_contracts.character_refresh(campaign, W + 1,
+                              characters=["*"], reason="weekly_reset")); "none" -> nothing.
+          return JobResult("done", {"week": W, "ran": [steps actually run]}).
+      A step that raises: run_step rolls back and re-raises; the framework (run_job)
+      records the failure and exits 1; the next run resumes at that step.
+
+  Signatures used (promoted): weeks.run_step(conn, campaign, week, step, fn) -> bool
+  (owns its transaction), weeks.ensure_week(conn, campaign, week, clock) -> bool,
+  weeks.get_week(conn, campaign, week) -> dict | None, weeks.set_week_status(conn,
+  campaign, week, status) -> bool, knowledge.archive_week(conn, week) -> dict,
+  summaries.campaign_characters(conn, campaign, slug=None), summaries.summarise_day(
+  conn, clock, character, day, *, complete, check_name=None, partial=False),
+  bus_contracts.character_refresh(campaign, week, *, characters=("*",),
+  reason="weekly_reset") -> dict. JobResult(status, detail={}, message="").
+
+  ── services/character-updater/main.py ──
+  Keep the file exactly, and add:
+      from character.jobs_weekly import WeeklyResetJob
+      JOBS entry "weekly-reset": WeeklyResetJob
+
+notes: |
+  - The character_refresh week is W + 1, the week that just opened (the same
+    convention as app/office/weekly_reset.py's refresh payload; tracker local
+    choice P3a-L5). Its sender is "character-updater" (plan §3.2).
+  - Publishing happens inside the refresh step, before run_step commits: a crash
+    between the two re-publishes on the re-run, which is harmless (the live
+    driver just refreshes twice).
+  - --force exists for tests and the office's forced resets (OB-42 step 3). With
+    --force the "Saturday" may be in the future: its summary is then a quiet day.
+  - `log = logging.getLogger(__name__)`: INFO per step run/skipped and at the
+    end; never log gists or event text.
+  - Tests: jobs.run_job against a migrated pgserver DB, FakeLLM for both
+    profiles, FakeEmbed, FakeProducer. Run with CHARACTER_TEST_REQUIRE_DB=1.

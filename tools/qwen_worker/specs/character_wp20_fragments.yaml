@@ -1,0 +1,122 @@
+task_id: character_wp20_fragments
+
+goal: |
+  Write `app/character/fragments.py`: pick and create a character's memory
+  fragments at the end of a loop week (plan §2, §5 weekly-reset step 2
+  `select_fragments`, D-08, D-09, D-20; v3 §7 for the hooks).
+
+  Plan §2: "For characters with retains_fragments, the weekly reset creates
+  fragments_per_week lossy, emotional, first-person fragments, each stored with
+  the lead-up beats that came before it. A new fragment is dormant." Recall
+  (WP-23) later matches a new week's beats against that lead-up, so the lead-up
+  must be the character's REAL beats before the moment, in order, embedded.
+  The model only picks the moment (the anchor event) and writes the gist and
+  hooks (prompt app/character/prompts/fragment.md, WP-11); the code takes the
+  lead-up from the events before the anchor.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a fragment whose lead-up is not what came
+  before its moment (the model's own list, events after the anchor, another
+  character's rows, another week's rows), or a third-person gist. Either makes
+  recall surface the wrong feeling, and fragments are insert-only (trigger), so
+  a bad one cannot be fixed later except with testctl. So the anchor must be one
+  of this character's week-W event ids, the gist must be first person, a bad
+  reply is retried once and then skipped (no fragment is better than a wrong
+  one), and a character that already has its fragments for the week is skipped:
+  store.fragments.create_fragment commits on its own, so a re-run of the step
+  after a crash must not create a second one.
+
+target_files:
+  - app/character/fragments.py
+
+test_files:
+  - tests/character/test_character_fragments.py
+
+context_files:
+  - app/character/store/fragments.py   # create_fragment (commits itself), lead_up_for, dormant_for (WP-05)
+  - app/character/summaries.py         # render_prompt, day_label, make_complete (WP-19)
+  - app/character/prompts/fragment.md  # the template (${character_name} ${character_title} ${summaries} ${moments})
+
+interface: |
+  FRAGMENT_SHAPE = {"type": "object", "required": ["anchor_event_id", "gist", "hooks"],
+      "properties": {"anchor_event_id": {"type": "str"}, "gist": {"type": "str"},
+                     "name": {"type": "str"}, "rank_rationale": {"type": "str"},
+                     "hooks": {"type": "object", "required": ["entities", "places", "objects", "tone"],
+                               "properties": {"entities": {"type": "list", "items": {"type": "str"}},
+                                              "places": {"type": "list", "items": {"type": "str"}},
+                                              "objects": {"type": "list", "items": {"type": "str"}},
+                                              "tone": {"type": "str"}}}}}
+
+  def is_first_person(text) -> bool
+      re.search(r"\bI\b", text) (case-sensitive) or
+      re.search(r"\b(me|my|mine|myself)\b", text, re.IGNORECASE). "He sat." -> False.
+
+  def week_events(conn, character_id, week) -> list[dict]
+      SELECT message_id, msg_type, from_agent, visibility, text, payload, ts, loop_day
+      FROM experience_events WHERE character_id = %s AND loop_week = %s
+      ORDER BY ts, message_id
+
+  def lead_up_before(events, anchor_event_id, n) -> list[dict]
+      Pure. The (at most) n events immediately BEFORE the anchor in `events`
+      (already in time order), in order; never the anchor or anything after it.
+      Anchor not in events -> ValueError.
+
+  def existing_count(conn, character_id, week) -> int
+      SELECT count(*) FROM memory_fragments WHERE character_id = %s AND source_week = %s
+
+  def make_embed(cfg) -> callable(texts) -> list[list[float]]
+      lazily: from character import embeddings; embeddings.Embedder(cfg).embed(texts)
+
+  def select_fragments(conn, clock, character, week, *, complete, embed, n=1,
+                       lead_up_beats=8, embed_model=None, prompts_dir=None,
+                       llm_model=None) -> list[str]
+      character: summaries.campaign_characters() dict (id, slug, name, title,
+      retains_fragments). Returns the new fragment ids.
+      1. not character["retains_fragments"] -> [] (no LLM, no embed calls).
+      2. have = existing_count(conn, id, week); have >= n -> [] (no LLM call).
+      3. events = week_events(conn, id, week); none -> [].
+      4. system, user = summaries.render_prompt("fragment", {"character_name": name or slug,
+             "character_title": title, "summaries": <this week's daily summaries,
+             one line per day oldest first: f"{summaries.day_label(day)}: {summary['summary']}"
+             from SELECT loop_day, summary FROM daily_summaries WHERE character_id=%s AND
+             loop_week=%s ORDER BY loop_day; "(no notes)" when none>,
+             "moments": "\n".join(f"{message_id}: {text[:300]}" for each event)}, prompts_dir)
+      5. repeat n - have times (a later pick adds "\n\nAlready chosen: <ids>" to user):
+           reply = complete(system, user, FRAGMENT_SHAPE)
+           errors: anchor_event_id not one of the events' message_ids ->
+               "anchor_event_id must be one of the listed event ids";
+               not is_first_person(gist) -> "the gist must be in the first person (I, me, my)"
+           errors -> ONE retry: complete(system, user + "\n\nYour previous reply was
+               rejected: " + "; ".join(errors), FRAGMENT_SHAPE); still errors -> log
+               WARNING and stop (no fragment).
+           anchor = that event; lead = lead_up_before(events, anchor id, lead_up_beats)
+           vectors = embed([b["text"] for b in lead] + [gist])   (one call; last = gist)
+           local = anchor["ts"].astimezone(clock.zone)
+           hooks = {entities, places, objects, tone (from the reply),
+                    "weekday": local.strftime("%A").lower(), "hour": local.hour}
+           fid = store.create_fragment(conn, character_id=id, source_week=week, gist=gist,
+                  hooks=hooks,
+                  lead_up=[{"text", "event_id": message_id, "embedding": vector} per beat, in order],
+                  anchor_event_id=anchor id,
+                  source_event_ids=[lead ids..., anchor id], gist_embedding=vectors[-1],
+                  embed_model=embed_model, embed_dim=len(vectors[-1]),
+                  rank_rationale=reply.get("rank_rationale"), llm_model=llm_model,
+                  raw_response=json.dumps(reply))
+      The reply's optional "name" (a node name for the feeling, fragment.md) has no
+      column; it stays in raw_response only (tracker local choice P3a-L7).
+
+notes: |
+  - store.fragments.create_fragment(conn, *, character_id, source_week, gist,
+    hooks=None, lead_up=(), links=(), anchor_event_id=None, source_event_ids=(),
+    parent_fragment_ids=(), gist_embedding=None, embed_model=None, embed_dim=None,
+    rank_rationale=None, llm_model=None, raw_response=None) -> str owns its
+    transaction (commit on success). Import it as
+    `from character.store import fragments as store` (this module is also named
+    fragments).
+  - Imports: stdlib (json, logging, re) and `character.*`
+    (`from character import summaries`). No numpy.
+  - `log = logging.getLogger(__name__)`: DEBUG with ids/counts, INFO per fragment
+    created, WARNING for a skipped reply; never log gists or event text.
+  - OB-41: all 8 office characters retain fragments; the tests use a synthetic
+    `visitor` row with retains_fragments false for item 3.
+  - Tests: FakeLLM (reply builders that read the moments from the user prompt),
+    FakeEmbed (4-dim), the `pg_conn` fixture; run with CHARACTER_TEST_REQUIRE_DB=1.
