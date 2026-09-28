@@ -1,0 +1,133 @@
+task_id: character_wp19_summaries
+
+goal: |
+  Write `app/character/summaries.py`: turn one character's day of
+  experience_events into that day's memory (plan §5 daily-maintenance step 1,
+  D-21). D-21: "each night the `summary` profile turns a character's day of
+  experience_events into one daily_summaries row (a first-person paragraph) plus
+  up to 10 week_knowledge_nodes (with names checked by node_names.py) and edges
+  between them. The brief's 'What you've learned this week' section reads those
+  nodes." Plan §10: a bad node name "is rejected and retried once, then dropped
+  and logged". A day with no events is a "quiet day" and needs no LLM call.
+
+  Used by the daily-maintenance job (WP-19 spec 2) every night at 00:00 NY for
+  yesterday, and by weekly-reset's close_saturday step (WP-20). The prompt is the
+  hand-written template app/character/prompts/summary_day.md (WP-11).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a character remembers something they
+  never experienced. Only that character's own rows are summarised (their
+  `self` thoughts and what they were `present` for); the node names that fail
+  the check never reach the table; and a re-run never writes a second summary
+  or calls the LLM again (the key is (character_id, loop_day)). Second: the job
+  dies on a quiet day. A day with no events writes the quiet summary and
+  returns, with no LLM call at all.
+
+target_files:
+  - app/character/summaries.py
+
+test_files:
+  - tests/character/test_character_summaries.py
+
+context_files:
+  - app/character/store/knowledge.py      # insert_daily_summary, get_daily_summary, insert_node (WP-05)
+  - app/character/store/events.py         # events_for_day, ingest_status (WP-05)
+  - app/character/prompts/summary_day.md  # the template: "## System" / "## User", ${placeholders}
+
+interface: |
+  PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+  MAX_NODES = 10
+  QUIET_DAY_TEXT = "A quiet day: nothing happened that I took part in or saw."
+  NODE_KINDS = ("fact", "relationship", "plan", "feeling")
+  SUMMARY_SHAPE = {"type": "object", "required": ["summary", "nodes"], "properties": {
+      "summary": {"type": "str"},
+      "nodes": {"type": "list", "items": {"type": "object",
+                "required": ["name", "kind", "statement"], "properties": {
+                    "name": {"type": "str"}, "kind": {"type": "enum", "values": list(NODE_KINDS)},
+                    "statement": {"type": "str"},
+                    "source_event_ids": {"type": "list", "items": {"type": "str"}}}}}}}
+      (the character.shapes DSL, WP-03)
+
+  def load_prompt(name, prompts_dir=None) -> tuple[str, str]
+      Read <prompts_dir or PROMPTS_DIR>/<name>.md; remove every <!-- ... --> comment
+      (re.S); system = the text after the "## System" line up to the "## User" line
+      (it INCLUDES the "## Good node names" / "## Bad node names" sections in
+      between); user = the text after "## User". Both .strip()ped.
+  def render_prompt(name, values, prompts_dir=None) -> tuple[str, str]
+      string.Template(...).substitute(values) on both parts (a missing value raises
+      KeyError: the template and the code must agree).
+  def make_complete(cfg, profile_name) -> callable(system, user, shape) -> dict
+      Binds WP-11's client, imported lazily inside the returned function:
+          from character import llm
+          llm.complete_json(cfg.llm.profiles[profile_name], system, user, shape,
+                            base_url=cfg.llm.base_url, max_retries=cfg.llm.max_retries)
+  def campaign_characters(conn, campaign, slug=None) -> list[dict]
+      SELECT c.id, c.slug, c.name, c.retains_fragments,
+             b.profile->'identity'->>'title'
+      FROM characters c LEFT JOIN character_baselines b
+           ON b.character_id = c.id AND b.version = c.active_baseline_version
+      WHERE c.campaign = %s AND c.status <> 'retired' [AND c.slug = %s] ORDER BY c.slug
+      -> [{"id", "slug", "name", "retains_fragments", "title"}], title falling back
+      to slug.replace("_", " ").title() ("tech_lead" -> "Tech Lead").
+  def day_label(day: date) -> str          "Tuesday 29 September 2026"
+  def render_events(events, tz) -> str
+      One line per event, oldest first, HH:MM in `tz` (a ZoneInfo):
+        self:    f"{HH:MM} [self] (my own thought) {text}"
+        present: f"{HH:MM} [present] {speaker}: {text}"  where speaker =
+                 payload["character"] when it is a str, else from_agent.
+  def summarise_day(conn, clock, character, day, *, complete, check_name=None,
+                    partial=False, prompts_dir=None, llm_model=None) -> dict
+      character: a campaign_characters() dict. check_name(name) -> list[str]
+      (reasons; [] = good) defaults to character.node_names.check (lazy import).
+      1. knowledge.get_daily_summary(conn, id, day) exists -> {"status": "exists"};
+         nothing else (no LLM call).
+      2. week = clock.position(clock.day_bounds(day)[0])[0]
+         events = events_store.events_for_day(conn, id, day), keeping visibility
+         in ("self", "present").
+      3. none -> insert_daily_summary(conn, id, day, week,
+             {"summary": QUIET_DAY_TEXT, "partial": partial, "quiet": True, "nodes": []}, 0)
+         -> {"status": "quiet", "events": 0, "nodes": 0, "partial": partial}. No LLM call.
+      4. system, user = render_prompt("summary_day", {"character_name": name or slug,
+             "character_title": title, "day": day_label(day),
+             "events": render_events(events, clock.zone), "max_nodes": MAX_NODES})
+         result = complete(system, user, SUMMARY_SHAPE)
+         bad = the nodes whose check_name(name) is not []. If any: call complete ONCE
+         more with user + "\n\nThese node names were rejected: <name>: <reasons>; ...
+         Replace them." and use that second result instead.
+         nodes = the result's nodes that pass check_name, first MAX_NODES; the rest
+         are dropped (log WARNING with the names).
+      5. insert_daily_summary(conn, id, day, week, {"summary": result["summary"],
+             "partial": partial, "quiet": False, "nodes": [names]}, len(events),
+             llm_model=llm_model, raw_response=json.dumps(result))
+         for each node: knowledge.insert_node(conn, character_id=id, loop_week=week,
+             name, kind, statement, loop_day=day, source_event_ids=<the node's
+             source_event_ids that are among the day's message_ids, else all of them>)
+      6. return {"status": "written", "events": n, "nodes": k, "partial": partial}
+      Never commits: the caller commits per character.
+  def wait_for_ingest(conn, consumer_group, midnight, *, max_wait_s, poll_s=15.0,
+                      monotonic=time.monotonic, sleep=time.sleep) -> bool
+      Plan §5: wait up to ingest.catchup_wait_s for ingest to pass midnight.
+      start = monotonic(); loop: st = events_store.ingest_status(conn, group);
+      st and st["last_message_ts"] and st["last_message_ts"] >= midnight -> True.
+      left = max_wait_s - (monotonic() - start); left <= 0 -> False;
+      sleep(min(poll_s, left)). (So with poll 15 and 600 s the sleeps sum to 600.)
+
+notes: |
+  - Store call signatures (WP-05, promoted): knowledge.insert_daily_summary(conn,
+    character_id, loop_day, loop_week, summary, event_count, llm_model=None,
+    raw_response=None) -> bool; knowledge.get_daily_summary(conn, character_id,
+    loop_day) -> dict | None; knowledge.insert_node(conn, *, character_id,
+    loop_week, name, kind, statement, loop_day=None, source_event_ids=(),
+    grew_from_fragment_id=None) -> str; events.events_for_day(conn, character_id,
+    day) -> [dict]; events.ingest_status(conn, group) -> dict | None.
+    Import them as `from character.store import events as events_store, knowledge`.
+  - daily_summaries has no "partial" column: it lives in the summary JSON
+    (tracker local choice P3a-L6). No edges are written in v1 (the
+    week_knowledge_edges contract is for the graph builder, D-21).
+  - Imports: stdlib (json, logging, re, string, time, pathlib) and `character.*`.
+  - `log = logging.getLogger(__name__)`: DEBUG with ids and counts; WARNING for
+    dropped node names; never log event text or the LLM reply.
+  - OB-41: office characters; the Party Member only has `present` rows, so his
+    prompt has only "[present]" lines (a test checks it).
+  - Tests: FakeLLM / fake check_name, the `pg_conn` fixture; run the harness
+    with CHARACTER_TEST_REQUIRE_DB=1. Pending guard: skips while this target
+    (or the WP-11 template) is missing.

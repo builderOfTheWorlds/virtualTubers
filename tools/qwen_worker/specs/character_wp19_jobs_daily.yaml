@@ -1,0 +1,105 @@
+task_id: character_wp19_jobs_daily
+
+goal: |
+  Write the `daily-maintenance` job, `app/character/jobs_daily.py`, and register
+  it in `services/character-updater/main.py` (plan §5 job table, D-03, D-21).
+
+      python services/character-updater/main.py daily-maintenance [--character slug] [--at ISO] [--dry-run]
+      (cron, 00:00 America/New_York: `docker compose run --rm character-jobs daily-maintenance`)
+
+  Plan §5, idempotency key daily_summaries (character_id, loop_day); compaction
+  is naturally idempotent:
+    1. Summaries for yesterday (NY date), for every active character. Waits up to
+       ingest.catchup_wait_s (600) for ingest to pass midnight, then proceeds and
+       marks the summary `partial`.
+    2. Compaction of `messages`, only if ingest lag is under
+       ingest.max_lag_messages, else skipped with exit 3 (steps already done stay
+       done).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a compaction problem throws away the
+  night's summaries. Each character's summary is COMMITTED before compaction
+  starts, so a lagging ingest (exit 3) or a failing messages DB leaves the
+  summaries in place, and the re-run skips them (no second LLM call). Second:
+  --dry-run writes nothing, calls no LLM and does not wait.
+
+target_files:
+  - app/character/jobs_daily.py
+  - services/character-updater/main.py
+
+test_files:
+  - tests/character/test_character_jobs_daily.py
+  - tests/character/test_character_updater_main.py
+
+context_files:
+  - app/character/summaries.py            # campaign_characters, summarise_day, wait_for_ingest, make_complete (spec 1)
+  - app/character/compaction.py           # run, ingest_lag (WP-18)
+  - services/character-updater/main.py    # the file to extend: keep every line, add one JOBS entry
+
+interface: |
+  ── app/character/jobs_daily.py ──
+  from character import compaction, ingest, summaries
+  from character.jobs import JobResult
+  from character.store import events
+  (call compaction.run / compaction.ingest_lag through the module: the tests
+   monkeypatch `jobs_daily.compaction.run` and `jobs_daily.compaction.ingest_lag`)
+
+  class DailyMaintenanceJob:
+      name = "daily-maintenance"
+      def __init__(self, complete=None, messages_connect=None, check_name=None,
+                   monotonic=None, sleep=None, poll_s=15.0)
+          complete(system, user, shape) -> dict: default summaries.make_complete(cfg, "summary")
+          messages_connect(cfg) -> connection to the virtualtubers DB: default
+              ingest.connect_messages (read-write: compaction moves rows)
+          check_name: passed to summarise_day (None -> node_names.check)
+          monotonic / sleep: default time.monotonic / time.sleep (the tests pass a FakeClock)
+      def run(self, ctx) -> JobResult
+          cfg, conn, clock = ctx.cfg, ctx.conn, ctx.clock
+          day = clock.previous_day(ctx.now); midnight = clock.day_bounds(day)[1]
+          chars = summaries.campaign_characters(conn, ctx.args.campaign, ctx.args.character)
+          --character given but no such character -> JobResult("precondition",
+              message=f"unknown character {slug}")   (exit 3), nothing else done.
+          Step 1, summaries:
+            dry run: print(f"would summarise {slug} {day}") per character; no wait,
+                no LLM, no writes.
+            else: caught_up = summaries.wait_for_ingest(conn, cfg.ingest.consumer_group,
+                      midnight, max_wait_s=cfg.ingest.catchup_wait_s, poll_s=self.poll_s,
+                      monotonic=..., sleep=...)
+                  for each character (slug order): summaries.summarise_day(conn, clock,
+                      character, day, complete=..., check_name=..., partial=not caught_up);
+                      conn.commit()   <- per character, BEFORE step 2
+          Step 2, compaction (also under --dry-run, with dry_run=True):
+            status = events.ingest_status(conn, cfg.ingest.consumer_group)
+            mconn = messages_connect(cfg); try/finally mconn.close()
+            lag = compaction.ingest_lag(mconn, status["last_message_ts"] if status else None,
+                                        cfg.ingest.types)
+            comp = compaction.run(mconn, cfg.compaction, now=ctx.now, ingest_lag=lag,
+                                  max_lag=cfg.ingest.max_lag_messages, dry_run=ctx.dry_run)
+          detail = {"day": day.isoformat(), "partial": ..., "summaries": {slug: status},
+                    "compaction": {k: comp.get(k) for k in ("status", "reason", "noisy_deleted",
+                                   "rows_moved", "partitions_moved", "default_rows_moved")}}
+          comp["status"] == "precondition" -> JobResult("precondition", detail,
+              message=comp["reason"])   (exit 3; the summaries stay committed)
+          else JobResult("done", detail).
+
+  JobResult(status, detail={}, message="") with status "done" | "nothing" |
+  "precondition" -> exit 0 / 2 / 3 (character.jobs, WP-06). run_job commits
+  after a done result and rolls back everything under --dry-run.
+
+  ── services/character-updater/main.py ──
+  Keep the file exactly, and add:
+      from character.jobs_daily import DailyMaintenanceJob
+      JOBS[...] entry "daily-maintenance": DailyMaintenanceJob
+  (next to the existing entries; `main.py daily-maintenance --help` works).
+
+notes: |
+  - "every active character" = the campaign's characters whose status is not
+    'retired' (nothing in the plan sets status 'active': WP-05's upsert defaults
+    to 'draft'; tracker local choice P3a-L3).
+  - The LLM is only reached through `complete`; the job never imports
+    character.llm itself (summaries.make_complete does, lazily).
+  - `log = logging.getLogger(__name__)`: INFO per character summarised and at
+    the end; WARNING when the wait times out (summaries marked partial) and
+    when compaction is skipped for lag. No secrets, no event text.
+  - Tests: the job runs through jobs.run_job against a migrated pgserver DB;
+    compaction.run/ingest_lag are monkeypatched, the messages connection is a
+    FakeConn, the wait uses a FakeClock. Run with CHARACTER_TEST_REQUIRE_DB=1.
