@@ -77,13 +77,16 @@ distinct dialogue to any of the personas in `speaker_names` — see
 ```python
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
-                 progress=None, speaker_names=None, verbatim=False) -> list[dict]
+                 progress=None, speaker_names=None, verbatim=False,
+                 voice_names=None, role_tones=None) -> list[dict]
 
 def plan_scenes(events: list[dict]) -> list[dict]
 def scene_visual_seconds(scene, max_output_lines, speed=1.0) -> float
 def target_words(seconds: float) -> int
 def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
-                  verbatim=False) -> str
+                  verbatim=False, tone=None) -> str
+def scene_tone(scene, role_tones) -> str | None
+def load_role_tones(cast_dir) -> dict[str, str]
 def fallback_narration(scene, max_words) -> str
 ```
 
@@ -118,6 +121,21 @@ def fallback_narration(scene, max_words) -> str
   pacing ([replay.md](replay.md)) just holds the scene a bit longer for
   the voice to finish once the visual-pacing clamp is hit, same as any
   scene where the spoken line runs long.
+
+- `role_tones` (dict, optional; OB-33 per-role tone hook): speaker id
+  (`tuber_N`) or office role (`marketing`, `tester`, ...) → a short style
+  note. `scene_tone` looks the scene's speaker up first, then the `role`
+  its first event carries (office replays from `office/role_attribution.py`
+  stamp one), and `narrate_scene` appends `Speak in this style: <tone>`
+  to that scene's LLM prompt. `None`/`{}` (the default) leaves every prompt
+  byte-for-byte unchanged. The fallback line and verbatim lines ignore the
+  tone. Build the map from a pack with
+  `load_role_tones("campaigns/ashiorid_office/cast")`: each cast file's
+  `tone:` (else `speech:`, else `OFFICE_ROLE_TONES[office_role]`) is stored
+  under its `seat` and its `office_role`, capped at `MAX_TONE_CHARS` (400).
+  A missing directory or an unreadable file is skipped with a warning.
+  Wiring it into `replay_pane.py` for office airings is a follow-up (that
+  file is not OB-33's).
 
 ## Return Value
 
@@ -173,6 +191,11 @@ The show must always air, so every step degrades instead of raising:
   leak to a broadcast pane.
 
 ## Changelog
+
+- **v1.4.0** (2026-09-28, OB-33): per-role tone hook — `prepare_show(...,
+  role_tones=None)`, `narrate_scene(..., tone=None)`, `scene_tone`,
+  `load_role_tones(cast_dir)`, `OFFICE_ROLE_TONES`. Default behaviour
+  unchanged. Tests: `tests/test_revoice_role_tones.py`.
 
 - **v1.3.0** (2026-07-19): New `voice.verbatim` config flag, threaded through
   `prepare_show`/`narrate_scene` as `verbatim=False`. When `True`,

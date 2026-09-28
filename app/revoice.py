@@ -22,16 +22,38 @@ Timing model (docs/replay.md):
 Every step degrades gracefully: LLM unreachable -> template narration built
 from the (already-redacted) script text; TTS failure -> the scene simply
 plays silent at normal pacing. A show must never fail to air.
+
+Per-role tone (OB-33, ashiorid_office): `role_tones` maps a speaker id
+(`tuber_N`) or an office role (`marketing`, `tester`, ...) to a short style
+note that is appended to that scene's LLM prompt. `load_role_tones(cast_dir)`
+builds the map from a pack's cast files. Omitted or empty, every prompt is
+byte-for-byte what it was before.
 """
+import logging
 from pathlib import Path
 
 from replay import estimate_event_seconds
+
+log = logging.getLogger(__name__)
 
 WORDS_PER_SECOND = 2.5   # ~150 wpm — typical conversational TTS rate
 MIN_WORDS = 8            # even a 1-second scene gets a real sentence
 MAX_WORDS = 130          # cap one scene's monologue (~50s of speech)
 MAX_SCENE_CONTEXT = 1800  # chars of scene material shown to the LLM
 MAX_SCENE_EVENTS = 8     # split marathon tool runs into multiple scenes
+MAX_TONE_CHARS = 400     # one style note, not a second system prompt
+
+#: Fallback style notes per office role, used by load_role_tones() only for a
+#: cast file that has neither `tone:` nor `speech:`. Never applied implicitly.
+OFFICE_ROLE_TONES = {
+    "ceo": "calm, big-picture, frames everything as a client and a deadline",
+    "tech_lead": "dry, exact, short sentences, names the next step",
+    "analyst": "careful and precise, restates what done means",
+    "engineer": "friendly and practical, thinks out loud with an analogy",
+    "tester": "terse, numbers first, no adjectives",
+    "marketing": "upbeat and smooth, turns it into a tagline or a customer picture",
+    "office_manager": "warm but brisk, tidies up as she talks",
+}
 
 SYSTEM_PROMPT = (
     "You write single spoken lines for a VTuber stream where AI personas "
@@ -232,8 +254,57 @@ def _display_name(speaker, speaker_names, worker_name, boss_name):
     return speaker
 
 
+def scene_tone(scene, role_tones):
+    """The style note for a scene: by its speaker id first, then by the
+    office `role` its first event carries (role_attribution episodes stamp
+    one). None when there is no map or no match."""
+    if not role_tones:
+        return None
+    tone = role_tones.get(scene.get("speaker"))
+    if not tone:
+        events = scene.get("events") or [{}]
+        role = events[0].get("role") if isinstance(events[0], dict) else None
+        tone = role_tones.get(role) if role else None
+    return " ".join(str(tone).split())[:MAX_TONE_CHARS] if tone else None
+
+
+def load_role_tones(cast_dir):
+    """Build a `role_tones` map from a pack's `cast/*.yaml`.
+
+    Each cast file contributes its `tone:` (else `speech:`, else the
+    OFFICE_ROLE_TONES entry for its `office_role`) under both its `seat`
+    (tuber_N) and its `office_role`. A missing directory or an unreadable
+    file is skipped with a warning — a show must never fail to air."""
+    log.debug("load_role_tones enter cast_dir=%s", cast_dir)
+    root = Path(cast_dir)
+    if not root.is_dir():
+        log.warning("revoice.tones_dir_missing dir=%s", root)
+        return {}
+    import yaml  # lazy: only callers that opt in need it
+
+    tones = {}
+    for path in sorted(root.glob("*.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except (OSError, yaml.YAMLError) as exc:
+            log.warning("revoice.tones_unreadable file=%s error=%s", path.name, type(exc).__name__)
+            continue
+        if not isinstance(data, dict):
+            continue
+        role = data.get("office_role")
+        tone = data.get("tone") or data.get("speech") or OFFICE_ROLE_TONES.get(role)
+        if not tone:
+            continue
+        tone = " ".join(str(tone).split())[:MAX_TONE_CHARS]
+        for key in (data.get("seat"), role):
+            if key:
+                tones[str(key)] = tone
+    log.debug("load_role_tones exit entries=%d", len(tones))
+    return tones
+
+
 def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
-                   verbatim=False):
+                   verbatim=False, tone=None):
     """One spoken line for the scene: LLM-voiced, falling back to the
     template line if the LLM is unreachable or returns nothing usable.
 
@@ -241,7 +312,10 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
     scenes — the original scripted line is spoken in full, untrimmed,
     with no LLM call at all. `coder_work` scenes have no single original
     line to read (they describe a run of tool calls), so they always go
-    through the normal LLM/fallback path regardless of `verbatim`."""
+    through the normal LLM/fallback path regardless of `verbatim`.
+
+    `tone` (see scene_tone) is appended to the LLM prompt as a style note;
+    None leaves the prompt unchanged. The fallback line ignores it."""
     if verbatim and scene["kind"] in ("boss", "coder_talk"):
         default = "New instructions." if scene["kind"] == "boss" else "Let me think."
         return " ".join(scene["events"][0].get("text", default).split())
@@ -250,6 +324,8 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
         name=name, words=words,
         material=_scene_material(scene),
     )
+    if tone:
+        prompt += f"\n\nSpeak in this style: {tone}"
     if llm is not None:
         try:
             line = (llm.complete(SYSTEM_PROMPT, [{"role": "user", "content": prompt}]) or "").strip()
@@ -267,7 +343,7 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
                  progress=None, speaker_names=None, verbatim=False,
-                 voice_names=None):
+                 voice_names=None, role_tones=None):
     """Build the voiced show for one airing.
 
     Returns plan_scenes()' scenes, each annotated with:
@@ -295,6 +371,9 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
     directly (e.g. a tile that already parsed the header); it wins over the
     header so an explicit argument is never silently ignored. Both are
     optional, and an episode with no header behaves exactly as before (§7.4).
+    `role_tones` (speaker id or office role -> style note, see
+    load_role_tones) adds a per-role tone to each scene's LLM prompt; None
+    keeps every prompt unchanged.
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
@@ -308,8 +387,10 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
         seconds = scene_visual_seconds(scene, max_output_lines, speed)
         words = target_words(seconds)
         notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
+        tone = scene_tone(scene, role_tones)
         scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name,
-                                            speaker_names=speaker_names, verbatim=verbatim)
+                                            speaker_names=speaker_names, verbatim=verbatim,
+                                            tone=tone)
         scene["audio"] = None
         if tts is None:
             continue
