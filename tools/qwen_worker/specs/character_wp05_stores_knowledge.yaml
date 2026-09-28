@@ -1,0 +1,102 @@
+task_id: character_wp05_stores_knowledge
+
+goal: |
+  Write `app/character/store/knowledge.py`: daily summaries, the week
+  knowledge nodes and edges, and the weekly archive (plan §2, §5, D-21).
+
+  Each night a character's day becomes one `daily_summaries` row and up to 10
+  `week_knowledge_nodes` ("knows-the-deploy-is-friday": "I know ..."). The
+  brief's "What you've learned this week" section reads the character's
+  reachable nodes. At Sunday 00:00 New York the weekly reset archives the
+  week: plan §2 "the week's knowledge is archived (kept, never deleted,
+  unreachable by the character)", done by setting `archived_at_week = W`.
+  `testctl reset-undo` reverses exactly that (plan §5.2).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the archive deletes knowledge, or
+  re-stamps rows archived in an earlier week. Deleting destroys the audit
+  trail the screens show (the archive is kept forever). Re-stamping a row
+  archived at week 1 with week 2 means `unarchive_week(2)` would resurrect
+  week-1 knowledge into the character's mind, which reset-undo must never
+  do. So archive only touches rows `WHERE archived_at_week IS NULL`, and
+  unarchive only rows `WHERE archived_at_week = W`.
+
+target_files:
+  - app/character/store/knowledge.py
+
+test_files:
+  - tests/character/test_character_store_knowledge.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  def insert_daily_summary(conn, character_id, loop_day, loop_week, summary, event_count,
+                           llm_model=None, raw_response=None) -> bool
+      INSERT ... ON CONFLICT (character_id, loop_day) DO NOTHING (summary as Json).
+      Return True when inserted, False when the day already had a summary.
+
+  def get_daily_summary(conn, character_id, loop_day) -> dict | None
+
+  def insert_node(conn, *, character_id, loop_week, name, kind, statement, loop_day=None,
+                  source_event_ids=(), grew_from_fragment_id=None) -> str
+      New uuid4 id. INSERT ... ON CONFLICT (character_id, loop_week, name) DO NOTHING
+      RETURNING id; on conflict SELECT and return the existing row's id.
+      source_event_ids as a list (TEXT[]).
+
+  def insert_edge(conn, *, character_id, loop_week, src_node_id, dst_node_id, relation) -> str
+      New uuid4 id, plain INSERT; return the id.
+
+  def archive_week(conn, week) -> dict
+      For EVERY character, in two statements:
+          UPDATE week_knowledge_nodes SET archived_at_week = %s
+          WHERE loop_week <= %s AND archived_at_week IS NULL
+          UPDATE week_knowledge_edges SET archived_at_week = %s
+          WHERE loop_week <= %s AND archived_at_week IS NULL
+      Return {"nodes": <rowcount>, "edges": <rowcount>}. Deletes nothing.
+      A second call for the same week returns {"nodes": 0, "edges": 0}.
+
+  def unarchive_week(conn, week) -> dict
+      UPDATE ... SET archived_at_week = NULL WHERE archived_at_week = %s
+      (nodes, then edges). Return {"nodes": n, "edges": m}.
+
+  def current_nodes(conn, character_id, week) -> list[dict]
+      The character's reachable knowledge as of `week`:
+          WHERE character_id = %s AND loop_week <= %s AND archived_at_week IS NULL
+          ORDER BY created_at DESC, name
+      Each dict: id, loop_week, loop_day, name, kind, statement, source_event_ids,
+      created_at. Archived rows are never returned.
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - There is no delete function in this module, and there must not be one:
+    `week wipe` (testctl, WP-21) owns deletion.
+  - The archive statements do not filter by character: the reset archives
+    every character's week in one transaction (plan §5, step 3).

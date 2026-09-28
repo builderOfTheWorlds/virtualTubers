@@ -1,0 +1,121 @@
+task_id: character_wp05_stores_characters
+
+goal: |
+  Write `app/character/store/characters.py` (and the empty package marker
+  `app/character/store/__init__.py`): persistence for characters, their bus
+  agent ids, their versioned baselines and backstories, and the
+  `active_baseline_version` pointer (plan §4, §6; tables `characters`,
+  `character_agents`, `character_baselines`, `character_backstories` in
+  app/character/sql/001_init.sql).
+
+  Baselines are versioned and never modified by the loop: a new generation
+  writes version N+1, and "revert" only moves the pointer
+  (`characters.active_baseline_version`). For the office campaign (OB-41) the
+  8 characters are loaded from campaigns/ashiorid_office/profiles/*.yaml by a
+  later loader script; that loader and the ingest router are the callers.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the pointer moves to a baseline version
+  that does not exist, or an upsert silently resets it. The brief (the
+  character's whole identity) is built from the active baseline; a dangling
+  pointer gives a character with no identity, and an upsert that rewrites
+  `active_baseline_version` back to NULL undoes an operator's revert. So
+  `set_active_baseline` checks the version exists (LookupError otherwise) and
+  `upsert_character` never touches the pointer column.
+
+target_files:
+  - app/character/store/characters.py
+  - app/character/store/__init__.py
+
+test_files:
+  - tests/character/test_character_store_characters.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  app/character/store/__init__.py: a module docstring only ("Stores for the
+  character_profile database: characters, weeks, events, knowledge,
+  fragments, jobs"). No imports.
+
+  app/character/store/characters.py:
+
+  def upsert_character(conn, *, slug, name, campaign, retains_fragments=False,
+                       is_main=False, aliases=(), avatar_params=None, status="draft") -> str
+      INSERT INTO characters (id, slug, name, campaign, status, retains_fragments,
+      is_main, aliases, avatar_params) VALUES (...) ON CONFLICT (slug) DO UPDATE SET
+      name, campaign, retains_fragments, is_main, aliases, avatar_params = EXCLUDED.*,
+      updated_at = now()  RETURNING id.
+      The id is a new uuid4 string on first insert and the existing id after.
+      Does NOT set or change status on conflict, and NEVER touches
+      active_baseline_version. aliases -> list (TEXT[]); avatar_params -> Json or NULL.
+
+  def get_character(conn, slug) -> dict | None
+      Every column of the characters row as a dict, or None.
+
+  def add_agent(conn, agent_id, character_id) -> None
+      INSERT INTO character_agents (agent_id, character_id) VALUES (%s, %s)
+      ON CONFLICT (agent_id) DO UPDATE SET character_id = EXCLUDED.character_id.
+
+  def agents_map(conn) -> dict[str, str]
+      {agent_id: character_id} for every character_agents row ({} when none).
+
+  def insert_baseline(conn, character_id, *, profile, baseline_book, baseline_chapter,
+                      backstory_nodes=(), source_id=None, change_notes=None,
+                      created_by="generator", llm_model=None, raw_response=None) -> int
+      version = (SELECT coalesce(max(version), 0) + 1 FROM character_baselines
+      WHERE character_id = %s); INSERT the row (profile and backstory_nodes as
+      Json, backstory_nodes as a list); return the version. Does not move the
+      pointer.
+
+  def insert_backstory(conn, character_id, version, layer, content, evidence=(),
+                       llm_model=None) -> None
+      Plain INSERT into character_backstories (content and evidence as Json).
+      layer is 'believed' or 'truth' (the table CHECK enforces it). A duplicate
+      (character_id, version, layer) raises the psycopg2 IntegrityError.
+
+  def set_active_baseline(conn, slug, version) -> None
+      One statement:
+          UPDATE characters c SET active_baseline_version = %s, updated_at = now()
+          WHERE c.slug = %s AND EXISTS (SELECT 1 FROM character_baselines b
+                WHERE b.character_id = c.id AND b.version = %s)
+      rowcount 0 -> raise LookupError(f"no baseline version {version} for {slug!r}")
+      (covers both an unknown slug and an unknown version). The pointer is
+      unchanged on failure.
+
+  def active_baseline(conn, slug) -> dict | None
+      The character_baselines row (as a dict) that the pointer names, or None
+      when the character is unknown or has no pointer.
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - baseline_book / baseline_chapter are NOT NULL integers in the schema. The
+    office cast has no book position; the tests (and the future office loader)
+    pass 0/0. Do not change the schema.

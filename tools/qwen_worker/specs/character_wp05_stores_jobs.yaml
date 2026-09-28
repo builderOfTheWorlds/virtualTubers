@@ -1,0 +1,93 @@
+task_id: character_wp05_stores_jobs
+
+goal: |
+  Write `app/character/store/jobs.py`: the `character_jobs` rows every CLI
+  job run writes, and `character_artifacts` (LLM output kept for audit, not
+  replay) (plan §5, D-13, D-14).
+
+  "Every run writes a character_jobs row" (plan §5). The jobs framework
+  (WP-06) calls start_job before running a job and finish_job / fail_job
+  after; the `status` job lists the last 10 with list_recent.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a terminal row is rewritten. When a job
+  fails, its exception handler writes `failed` with the error text; if a
+  late `finish_job` then overwrites it with `completed`, the operator's only
+  record of the crash is gone and the job looks healthy. So finish_job and
+  fail_job only change a row that is still `running` (a status guard in the
+  WHERE clause, exactly like `finish()` in
+  tools/qwen_worker/specs/3layers_generation_store.yaml), and return False
+  when they lose.
+
+target_files:
+  - app/character/store/jobs.py
+
+test_files:
+  - tests/character/test_character_store_jobs.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  FINISH_STATUSES = frozenset({"completed", "skipped"})
+
+  def start_job(conn, job, *, params=None, character_id=None, dry_run=False) -> str
+      New uuid4 id. INSERT INTO character_jobs (id, job, character_id, status,
+      dry_run, params, started_at, heartbeat_at) VALUES (%s, %s, %s, 'running',
+      %s, %s, now(), now()) with params as Json (default {}). Return the id.
+
+  def finish_job(conn, job_id, *, status="completed", result=None) -> bool
+      status not in FINISH_STATUSES -> ValueError, no SQL.
+      UPDATE character_jobs SET status = %s, result = %s, finished_at = now(),
+      heartbeat_at = now() WHERE id = %s AND status = 'running'
+      result as Json when not None, SQL NULL when None (never Json(None)).
+      Return rowcount == 1.
+
+  def fail_job(conn, job_id, error, result=None) -> bool
+      UPDATE character_jobs SET status = 'failed', error = %s, result = %s,
+      finished_at = now(), heartbeat_at = now() WHERE id = %s AND status = 'running'
+      Return rowcount == 1.
+
+  def list_recent(conn, n=10, job=None) -> list[dict]
+      Newest first: ORDER BY created_at DESC, id DESC LIMIT %s, optionally
+      WHERE job = %s (build the WHERE by accumulating parameterised clauses).
+      Each dict: id, job, character_id, status, dry_run, params, result, error,
+      created_at, started_at, finished_at. n <= 0 -> [] without SQL.
+
+  def add_artifact(conn, *, kind, content, job_id=None, character_id=None) -> int
+      INSERT INTO character_artifacts (job_id, character_id, kind, content)
+      VALUES (%s, %s, %s, %s) RETURNING id (content as Json). A job_id that
+      doesn't exist raises the FK error.
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - Error text is stored as given (the framework formats it as
+    "<ExceptionType>: <message>"). Log the job name and id, never params.
+  - No delete function: job rows are the audit trail.

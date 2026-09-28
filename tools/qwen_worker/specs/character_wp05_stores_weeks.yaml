@@ -1,0 +1,107 @@
+task_id: character_wp05_stores_weeks
+
+goal: |
+  Write `app/character/store/weeks.py`: the `loop_weeks` rows and the
+  exactly-once `reset_steps` ledger that the weekly reset runs on (plan §5,
+  the weekly-reset row: "Each step runs under SELECT … FOR UPDATE on the week
+  row and records {completed_at}. A re-run skips completed steps
+  (validated)").
+
+  The weekly reset is five steps (close_saturday, select_fragments, archive,
+  open_next, refresh). It can crash between any two, and it is re-run by a
+  scheduler or by hand. `run_step` is what makes that safe: it locks the week
+  row, skips a step already recorded, runs the step's work in THE SAME
+  transaction as the record of it, and commits both together.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a step's work commits but its record
+  doesn't (or the reverse). Work without a record runs twice on the re-run
+  (two archives, two fragments for the week); a record without the work
+  skips it forever (a week that never archives). So the step function's
+  writes and the reset_steps update share one transaction, committed once at
+  the end, and a raising step rolls back both and re-raises. And two
+  concurrent resets must serialise on the row lock, never both run a step.
+
+target_files:
+  - app/character/store/weeks.py
+
+test_files:
+  - tests/character/test_character_store_weeks.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  The `clock` argument is a character.clock.LoopClock (WP-03):
+  `clock.week_bounds(week) -> (start, end)`, both tz-aware datetimes.
+
+  def ensure_week(conn, campaign, week, clock) -> bool
+      start, end = clock.week_bounds(week)
+      INSERT INTO loop_weeks (campaign, week, starts_at, ends_at) VALUES (%s,%s,%s,%s)
+      ON CONFLICT (campaign, week) DO NOTHING
+      Return True when a row was inserted (rowcount == 1), False when it existed.
+      Status defaults to 'open' and reset_steps to {} (table defaults).
+
+  def get_week(conn, campaign, week) -> dict | None
+      campaign, week, starts_at, ends_at, status, reset_steps, created_at.
+
+  def latest_week(conn, campaign) -> dict | None
+      The row with the highest week for the campaign (same keys), or None.
+
+  def completed_steps(conn, campaign, week) -> dict
+      The reset_steps JSON object ({} when none; LookupError when no such week).
+
+  def set_week_status(conn, campaign, week, status) -> bool
+      UPDATE loop_weeks SET status = %s WHERE campaign = %s AND week = %s.
+      status must be 'open', 'closing' or 'closed' (ValueError otherwise, no SQL).
+      Return rowcount == 1. ONE column only.
+
+  def run_step(conn, campaign, week, step, fn) -> bool
+      The one function here that owns its transaction (it commits / rolls back):
+          SELECT reset_steps FROM loop_weeks WHERE campaign = %s AND week = %s FOR UPDATE
+          no row  -> conn.rollback(); raise LookupError(...)
+          step already a key -> conn.rollback(); return False   (fn is NOT called)
+          fn(conn)            -> the step's own writes, same connection, same transaction
+          UPDATE loop_weeks SET reset_steps = reset_steps ||
+                 jsonb_build_object(%s, jsonb_build_object('completed_at', now()))
+          WHERE campaign = %s AND week = %s
+          conn.commit(); return True
+      If fn raises: conn.rollback() (undoes fn's writes AND releases the lock),
+      log at ERROR, re-raise the same exception. The row stays locked for the
+      whole of fn (the test checks another session's FOR UPDATE NOWAIT fails).
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - Do not import character.clock: only call `clock.week_bounds` on the
+    object passed in.
+  - The reset_steps update is the jsonb `||` merge, never "read the dict,
+    add a key, write the dict back" (two resets would lose a step).
+  - The validated reference of the step pattern is in
+    .claude/prompts/character_v4_plan_validation.py:189-199 (`run_step`).

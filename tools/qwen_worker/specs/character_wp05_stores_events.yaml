@@ -1,0 +1,102 @@
+task_id: character_wp05_stores_events
+
+goal: |
+  Write `app/character/store/events.py`: the `experience_events` rows (what
+  each character said, thought or witnessed) and the `ingest_status`
+  heartbeat (plan §3.3, §6).
+
+  The ingest consumer (WP-16) reads `vtuber.messages` from Kafka and writes
+  one experience row per (message, character) it reaches. Kafka redelivers
+  after a crash, so the same batch arrives again: plan §3.3 "Insert with
+  ON CONFLICT (message_id, character_id) DO NOTHING, which makes redelivery
+  harmless (validated)". The nightly summary (WP-19) then reads one
+  character's day back in time order.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a redelivered batch raises (a unique
+  violation) or double-counts. A raise stalls the Kafka partition forever —
+  the consumer retries the same batch and never gets past it — and a double
+  row makes the character remember everything twice. `insert_many` must
+  return how many rows were NEW so the consumer's counters stay true, and
+  `update_ingest_status` adds deltas in SQL so two writers never lose each
+  other's counts.
+
+target_files:
+  - app/character/store/events.py
+
+test_files:
+  - tests/character/test_character_store_events.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  EVENT_COLUMNS = ("message_id", "character_id", "msg_type", "from_agent", "scene_id",
+                   "visibility", "text", "payload", "ts", "loop_week", "loop_day")
+
+  def insert_many(conn, rows) -> int
+      rows: iterable of dicts with the EVENT_COLUMNS keys (scene_id may be
+      missing or None; text defaults to ""). payload is a dict -> Json.
+      INSERT INTO experience_events (<EVENT_COLUMNS>) VALUES ...
+      ON CONFLICT (message_id, character_id) DO NOTHING
+      Return the number of rows actually inserted: duplicates of rows already
+      stored AND duplicates inside the same batch count 0. Simplest correct
+      form: one execute per row, summing cur.rowcount. [] -> 0 without SQL.
+      No embedding at ingest (D-20): never write embedding / embed_model.
+
+  def events_for_day(conn, character_id, day) -> list[dict]
+      Every column except embedding, for that character_id and loop_day,
+      ORDER BY ts, message_id. [] when none.
+
+  def update_ingest_status(conn, consumer_group, *, last_message_ts=None,
+                           messages_seen=0, rows_written=0, unmapped=0) -> None
+      One upsert:
+          INSERT INTO ingest_status (consumer_group, last_message_ts, last_committed_at,
+                 messages_seen, rows_written, unmapped, updated_at)
+          VALUES (%s, %s, now(), %s, %s, %s, now())
+          ON CONFLICT (consumer_group) DO UPDATE SET
+              last_message_ts   = GREATEST(ingest_status.last_message_ts, EXCLUDED.last_message_ts),
+              last_committed_at = now(),
+              messages_seen     = ingest_status.messages_seen + EXCLUDED.messages_seen,
+              rows_written      = ingest_status.rows_written + EXCLUDED.rows_written,
+              unmapped          = ingest_status.unmapped + EXCLUDED.unmapped,
+              updated_at        = now()
+      The counts are DELTAS. GREATEST ignores NULLs, so last_message_ts=None
+      keeps the stored timestamp. Only the consumer_group's own row changes.
+
+  def ingest_status(conn, consumer_group) -> dict | None
+      The row as a dict, or None.
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - Never log `text` or `payload` (they are the characters' words). Log
+    counts and the consumer group.
+  - Build the column list from EVENT_COLUMNS; the values still go through
+    `%s` parameters.

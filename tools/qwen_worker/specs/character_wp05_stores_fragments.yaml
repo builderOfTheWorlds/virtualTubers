@@ -1,0 +1,134 @@
+task_id: character_wp05_stores_fragments
+
+goal: |
+  Write `app/character/store/fragments.py`: memory fragments, their lead-up
+  beats and links, unlocks and recall audit rows (plan §2, §6, §7; D-08).
+
+  At each weekly reset a character with `retains_fragments` gets a lossy,
+  emotional, first-person fragment ("my chest tightened when the room went
+  quiet"), stored with the lead-up beats that came before the moment. A new
+  fragment is DORMANT: never in a brief, but a recall candidate. When a later
+  week replays its lead-up, it UNLOCKS for good (a `fragment_unlocks` row)
+  and is carried in every future brief as a feeling.
+
+  The fragment tables are INSERT-ONLY, enforced by triggers in 001_init.sql
+  (UPDATE or DELETE raises "... fragment data is immutable"). The only way
+  past them is `SET LOCAL character.allow_test_mutation = 'on'` inside one
+  transaction, used by test tools (testctl, WP-21).
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a half-written fragment. A fragment
+  row without its lead-up can never be recalled (recall aligns against the
+  lead-up), and because the tables are insert-only it can't be repaired
+  either — it is dead weight forever. So `create_fragment` writes the
+  fragment, every lead-up beat and every link in ONE transaction that it
+  commits itself, and rolls all of it back if any insert fails. Second: the
+  test opt-out must never outlive its transaction (SET LOCAL, never SET).
+
+target_files:
+  - app/character/store/fragments.py
+
+test_files:
+  - tests/character/test_character_store_fragments.py
+
+context_files:
+  - app/character/sql/001_init.sql
+  - app/character/db.py                                # promoted in WP-04: transaction()
+  - tools/qwen_worker/specs/3layers_generation_store.yaml   # the update-own-columns rule
+
+interface: |
+  def vector_literal(values) -> str | None
+      None -> None; otherwise "[" + ",".join(repr(float(v)) for v in values) + "]",
+      the pgvector text form (no pgvector Python package is installed).
+
+  def create_fragment(conn, *, character_id, source_week, gist, hooks=None, lead_up=(),
+                      links=(), anchor_event_id=None, source_event_ids=(),
+                      parent_fragment_ids=(), gist_embedding=None, embed_model=None,
+                      embed_dim=None, rank_rationale=None, llm_model=None,
+                      raw_response=None) -> str
+      Owns its transaction: `with character.db.transaction(conn):` (commit on
+      success, rollback + re-raise on any error).
+        - new uuid4 id; INSERT memory_fragments (hooks as Json, default {};
+          array columns as lists; gist_embedding via vector_literal).
+        - lead_up: a sequence of dicts {"text", "event_id"?, "embedding"?}, in
+          time order; INSERT fragment_lead_up with position 0, 1, 2 ... in
+          that order (embedding via vector_literal, NULL when absent).
+        - links: a sequence of (to_fragment_id, relation) pairs; INSERT
+          fragment_links (from_fragment_id = the new id). A link to a
+          fragment that doesn't exist raises the FK error and rolls back the
+          fragment and its lead-up too.
+      Return the new id.
+
+  def lead_up_for(conn, fragment_id) -> list[dict]
+      [{"position", "event_id", "text"}] ORDER BY position (embedding omitted).
+
+  def dormant_for(conn, character_id) -> list[dict]
+      The character's fragments WITHOUT a fragment_unlocks row:
+          ... WHERE f.character_id = %s AND NOT EXISTS (SELECT 1 FROM fragment_unlocks u
+              WHERE u.fragment_id = f.id) ORDER BY f.created_at, f.id
+      Each dict: id, character_id, source_week, gist, hooks, created_at.
+
+  def unlocked_for(conn, character_id) -> list[dict]
+      The character's fragments WITH an unlock row, same keys plus
+      unlocked_week, ORDER BY unlocked_week, created_at.
+
+  def unlock(conn, fragment_id, week, recall_id=None) -> bool
+      INSERT INTO fragment_unlocks (fragment_id, character_id, unlocked_week, recall_id)
+      SELECT id, character_id, %s, %s FROM memory_fragments WHERE id = %s
+      ON CONFLICT (fragment_id) DO NOTHING
+      Return True when a row was inserted. A second unlock returns False and
+      keeps the first week and recall_id (never an UPDATE: the trigger forbids it).
+
+  def record_recall(conn, *, fragment_id, character_id, loop_week, ts, level, activation,
+                    signals=None, beat_event_id=None, judge_verdict=None,
+                    judge_reason=None) -> str
+      INSERT fragment_recalls (new uuid4 id; signals as Json, default {}); return the id.
+      level is 'unease' or 'surface' (the table CHECK enforces it).
+
+  @contextmanager
+  def allow_test_mutation(conn)
+      Test tools only. On enter: `SET LOCAL character.allow_test_mutation = 'on'`
+      (it applies to the current transaction only). Yield conn. On normal
+      exit: conn.commit(), which also ends the opt-out. On an exception:
+      conn.rollback() and re-raise. Log at WARNING on enter.
+
+  def test_delete(conn, fragment_id) -> bool
+      DELETE FROM memory_fragments WHERE id = %s (lead-up, links, unlocks and
+      recalls cascade). Return rowcount == 1. It does NOT set the opt-out
+      itself: outside `allow_test_mutation` the trigger raises (psycopg2
+      error whose message contains "immutable") and that error propagates.
+
+notes: |
+  STORE CONVENTIONS (identical for every app/character/store/*.py module):
+  - Every function takes an open psycopg2 connection `conn` first. Store
+    functions NEVER commit or roll back, unless this spec says so for that
+    function: the caller owns the transaction (jobs commit per step).
+  - `log = logging.getLogger(__name__)`. DEBUG before and after each
+    statement group (ids, counts; never payload text); ERROR in except blocks
+    before re-raising. Do not catch exceptions to hide them: a failed write
+    must propagate.
+  - SQL uses `%s` parameters only, never f-strings or .format() with values.
+  - Every UPDATE touches only its own columns (the central rule of
+    tools/qwen_worker/specs/3layers_generation_store.yaml, in your context):
+    never SELECT a row, change a dict and write every column back. Counters
+    are incremented in SQL (`col = col + %s`).
+  - JSONB values are passed as `psycopg2.extras.Json(value)`; psycopg2
+    returns JSONB as Python objects already (no json.loads). TEXT[] values
+    are passed as Python LISTS (`list(x)`): psycopg2 adapts a tuple to a
+    record, not an array. Returned rows are plain dicts built from
+    `cursor.description` (column name -> value).
+  - New TEXT ids are `str(uuid.uuid4())`.
+  - Imports: stdlib, psycopg2 (+ psycopg2.extras), and `character.*` only.
+  - The tests use the `pg_conn` fixture (tests/character/conftest.py): a
+    fresh database with app/character/sql/*.sql applied. Pending guard: the
+    test file skips while this target is missing (tests/character/pending.py);
+    the harness sandbox overlays the staged file, so the tests run for real.
+    Run the harness with CHARACTER_TEST_REQUIRE_DB=1 so a missing database
+    fails instead of skipping (an all-skipped run would exit 0 = PASS).
+  Module-specific:
+  - Exceptions to "never commit": create_fragment and allow_test_mutation.
+  - There is NO update function for fragments, lead-up, links or unlocks,
+    and there must not be: they are insert-only by design.
+  - `test_delete` is named for pytest-looking reasons only; it is not a test.
+    Put `test_delete.__test__ = False` after its definition so pytest never
+    collects it if someone imports it into a test module.
+  - Never log gist or lead-up text (they are the character's memories); log ids.
