@@ -1,0 +1,237 @@
+task_id: character_wp21_testctl
+
+goal: |
+  Write `app/character/testctl.py`, the test manipulation controls of the
+  character v4 memory loop (plan §5.2, D-10), plus the `revert` job, and
+  register both in `services/character-updater/main.py`.
+
+      python services/character-updater/main.py testctl <command> [options]
+      python services/character-updater/main.py revert --character X --to-version N
+
+  The user asked for "a full set of manipulation controls" that won't be used
+  regularly: undo a weekly reset, add / delete / unlock / lock one fragment,
+  wipe a week, seed synthetic events, show the clock, publish a refresh.
+  D-10's seam: "Each command is one function, and the CLI only dispatches to
+  them." Every command runs through the WP-06 framework
+  (`character.jobs.run_job`): advisory lock, a `character_jobs` row named
+  `testctl:<command>`, exit codes 0/1/2/3, `--dry-run`, `--at`.
+
+  Plan §5.2, for EVERY command:
+    - supports --dry-run
+    - writes a character_jobs row (job='testctl:<cmd>')
+    - needs --confirm <database name> when it deletes anything
+    - uses SET LOCAL character.allow_test_mutation = 'on' (the only way past
+      the fragment immutability triggers)
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a test tool deletes memory from the
+  wrong database, or leaves the fragment immutability trigger switched off.
+  So every deleting command compares --confirm with `SELECT
+  current_database()` of the connection it is about to change and refuses
+  (exit 1) on a mismatch, and the bypass is only ever `SET LOCAL` (it dies
+  with the transaction) — never `SET` / `set_config(..., false)` and never an
+  ALTER of the trigger. The second failure: `--dry-run` writes something.
+  Commands do their SQL inside the framework's transaction and never commit
+  themselves; the framework rolls a dry run back. The two exceptions are
+  spelled out in `interface` (fragment add, refresh / revert publishing).
+
+target_files:
+  - app/character/testctl.py
+  - services/character-updater/main.py
+
+test_files:
+  - tests/character/test_character_testctl.py
+  - tests/character/test_character_testctl_cli.py
+
+context_files:
+  - app/character/jobs.py                 # WP-06: run_job, JobResult, build_parser, EXIT_* (promoted)
+  - services/character-updater/main.py    # WP-06 (+ any later registrations): reproduce it, add two entries
+  - app/character/bus_contracts.py        # WP-15: character_refresh(campaign, week, *, characters, reason)
+
+interface: |
+  ── app/character/testctl.py ──
+
+  Imports: stdlib (argparse, hashlib, logging, os, sys, datetime), yaml, and
+  `from character import jobs, bus_contracts`,
+  `from character.store import characters, events, fragments, knowledge`.
+  `message_bus` only inside _default_producer (lazy import).
+
+  COMMANDS = ("reset-undo", "fragment-add", "fragment-delete", "fragment-unlock",
+              "fragment-lock", "week-wipe", "seed", "clock", "refresh")
+  DELETING = frozenset({"reset-undo", "fragment-delete", "fragment-lock", "week-wipe"})
+
+  class TestctlError(RuntimeError)          # set TestctlError.__test__ = False (pytest)
+      Raised inside a command's run(); the framework turns it into exit 1 and a
+      `failed` jobs row holding the message.
+
+  def parse_command(argv) -> tuple[str, list[str]]
+      argv[0] in ("reset-undo", "seed", "clock", "refresh") -> (argv[0], argv[1:])
+      argv[0] == "fragment" and argv[1] in ("add", "delete", "unlock", "lock")
+          -> (f"fragment-{argv[1]}", argv[2:])
+      argv[0] == "week" and argv[1] == "wipe" -> ("week-wipe", argv[2:])
+      argv empty -> print usage to stderr, raise SystemExit(2)
+      argv[0] in ("-h", "--help") -> print usage AND the list of every command
+          (reset-undo, fragment add|delete|unlock|lock, week wipe, seed, clock,
+          refresh) to STDOUT, raise SystemExit(0)
+      anything else -> usage + f"unknown testctl command {...!r}" (naming the
+          word) to stderr, raise SystemExit(2)
+
+  class TestctlJob:                          # TestctlJob.__test__ = False
+      def __init__(self, cmd, producer=None): self.cmd = cmd; self.name = f"testctl:{cmd}"
+      def add_arguments(self, parser):       # the framework calls this (WP-06 build_parser)
+          --confirm DBNAME                          (every command)
+          reset-undo, week-wipe:  --week N (int, required)
+          fragment-delete / -unlock / -lock:  --id FRAGMENT_ID (required)
+          fragment-add:  --gist TEXT (required), --lead-up-file PATH (one beat per
+                         non-empty line), --hook TERM (repeatable, -> hooks
+                         {"entities": [...]}), --source-week N (default: the
+                         clock week of ctx.now)
+          seed:  --file PATH (required)
+          clock: --show (store_true)
+          (the framework already has --campaign, --character, --dry-run, --at, -v)
+      def run(self, ctx) -> jobs.JobResult, in this order:
+          1. ctx.cfg.testctl.enabled is False -> raise TestctlError("testctl is
+             disabled (testctl.enabled: false)")   (every command, dry run too)
+          2. cmd in DELETING and not ctx.dry_run: name = SELECT current_database();
+             ctx.args.confirm != name -> raise TestctlError(f"{cmd} deletes data:
+             pass --confirm {name}")   (the text must contain "--confirm")
+          3. week_now = ctx.clock.position(ctx.now)[0]; dispatch to the command
+             function; return JobResult("done", detail) unless noted.
+
+  Command functions (one per command, D-10; `conn` = ctx.conn, never commit):
+
+  def bypass(conn) -> None
+      cur.execute("SET LOCAL character.allow_test_mutation = 'on'")
+
+  def reset_undo(conn, campaign, week) -> dict           plan §5.2, in this order:
+      bypass(conn); no loop_weeks row (campaign, week) -> TestctlError
+      un = knowledge.unarchive_week(conn, week)          # nodes+edges archived_at_week = week
+      ids = SELECT f.id FROM memory_fragments f JOIN characters c ON c.id = f.character_id
+            WHERE c.campaign = %s AND f.source_week = %s
+      if ids: UPDATE week_knowledge_nodes SET grew_from_fragment_id = NULL
+                  WHERE grew_from_fragment_id = ANY(%s)   (the FK has no cascade)
+              DELETE FROM memory_fragments WHERE id = ANY(%s)
+              (lead-up, links, unlocks and recalls cascade)
+      week W+1: if no experience_events of the campaign's characters have
+          loop_week = W+1 -> DELETE that loop_weeks row; else keep it
+      UPDATE loop_weeks SET reset_steps = '{}'::jsonb, status = 'open'
+          WHERE campaign = %s AND week = %s
+      return {"nodes", "edges", "fragments": len(ids), "next_week_deleted": bool}
+
+  def fragment_add(conn, character_id, gist, *, source_week, lead_up=(), hooks=None) -> str
+      fragments.create_fragment(conn, character_id=..., source_week=..., gist=...,
+      hooks=hooks or {}, lead_up=[{"text": t} for t in lead_up]). NOTE: create_fragment
+      commits (it owns its transaction), so run() calls this ONLY when not
+      ctx.dry_run; under --dry-run it prints what it would add. Unknown
+      --character (characters.get_character -> None) -> TestctlError.
+      Prints the new id; detail {"fragment_id": id}.
+
+  For fragment-delete / -unlock / -lock: SELECT the id first; no such
+  memory_fragments row -> TestctlError(f"no fragment {id!r}") (exit 1).
+  def fragment_delete(conn, fragment_id) -> bool
+      bypass(conn); fragments.test_delete(conn, fragment_id)
+  def fragment_unlock(conn, fragment_id, week) -> bool
+      fragments.unlock(conn, fragment_id, week)   (week = week_now). False (already
+      unlocked) -> run() returns JobResult("nothing", ...) = exit 2.
+  def fragment_lock(conn, fragment_id) -> bool
+      bypass(conn); DELETE FROM fragment_unlocks WHERE fragment_id = %s;
+      rowcount 0 (already dormant) -> JobResult("nothing") = exit 2.
+
+  def week_wipe(conn, campaign, week, slug=None) -> dict
+      cids = the campaign's character ids (only `slug`'s when --character is given)
+      nids = SELECT id FROM week_knowledge_nodes WHERE loop_week = %s AND character_id = ANY(%s)
+      DELETE FROM week_knowledge_edges WHERE (loop_week = %s AND character_id = ANY(%s))
+          OR src_node_id = ANY(%s) OR dst_node_id = ANY(%s)       (edges first: FK)
+      DELETE FROM week_knowledge_nodes WHERE id = ANY(%s)
+      DELETE FROM daily_summaries WHERE loop_week = %s AND character_id = ANY(%s)
+      DELETE FROM experience_events WHERE loop_week = %s AND character_id = ANY(%s)
+      Never touches fragments or loop_weeks. Return the four rowcounts
+      {"events", "summaries", "nodes", "edges"}.
+
+  def seed(conn, path, clock) -> int                       (plan §5.2 "seed --file fixture.yaml")
+      File format:  events: [ {character, ts, text, type?, from?, visibility?,
+                               scene_id?, message_id?, payload?} ... ]
+      - character: a known slug (characters.get_character) else TestctlError
+      - ts: ISO string (or a YAML datetime); naive -> TestctlError
+      - loop_week, loop_day = clock.position(ts)
+      - defaults: msg_type "character_say", from_agent "testctl:seed",
+        visibility "present", scene_id None, payload {"text": text, "seeded": True},
+        message_id "seed:" + sha256(f"{character}|{ts.isoformat()}|{text}")[:24]
+        (deterministic, so a re-seed inserts nothing new)
+      events.insert_many(conn, rows); return the inserted count
+      (detail {"inserted": n}). A bad row fails the whole command (the
+      framework rolls back): nothing is inserted.
+
+  clock: print exactly one line
+      f"week {w} day {d.isoformat()} starts {start.isoformat()} ends {end.isoformat()}"
+      from ctx.clock.position(ctx.now) / week_bounds(w); detail {"week", "day"}.
+
+  refresh: msg = bus_contracts.character_refresh(campaign, week_now,
+      characters=[args.character] if args.character else ["*"], reason="testctl");
+      unless ctx.dry_run: producer.send(msg). detail {"message_id": msg["id"]}.
+
+  def _default_producer(cfg)
+      message_bus.MessageProducer(os.environ.get("KAFKA_BOOTSTRAP_SERVERS") or
+      "localhost:9092", cfg.ingest.kafka_topic). Built lazily, only when
+      something is actually sent (tests always inject a producer).
+
+  def main(argv, *, cfg=None, env=None, connect=None, producer=None) -> int
+      cmd, rest = parse_command(argv)
+      return jobs.run_job(TestctlJob(cmd, producer=producer), rest, cfg=cfg, env=env,
+                          connect=connect)
+      Common flags go AFTER the command words: `testctl week wipe --week 1 --confirm db --dry-run`.
+
+  class RevertJob:                            plan §5 job table, a separate job
+      name = "revert"
+      def __init__(self, producer=None)
+      def add_arguments(self, parser): --to-version N (int, required)
+      def run(self, ctx):
+          no ctx.args.character -> raise TestctlError("revert needs --character")
+          characters.set_active_baseline(ctx.conn, slug, N)   (LookupError -> exit 1)
+          msg = bus_contracts.character_refresh(ctx.args.campaign, week_now,
+                characters=[slug], reason="revert")
+          unless dry run: ctx.conn.commit() FIRST (never announce an uncommitted
+          pointer), then producer.send(msg).
+          return JobResult("done", {"character": slug, "version": N})
+
+  ── services/character-updater/main.py ──
+  Reproduce the promoted file in context EXACTLY, and add only:
+      from character import testctl                     (next to `from character import jobs`)
+      JOBS["revert"] = testctl.RevertJob                 (in the JOBS dict literal)
+      COMMANDS = {"testctl": testctl.main}               # name -> fn(argv) -> exit code
+  - build_parser(): the positional's choices are sorted(set(JOBS) | set(COMMANDS)),
+    and its help lists them (so `main.py --help` shows testctl and revert).
+  - main(): an unknown name is one in neither JOBS nor COMMANDS; for a name in
+    COMMANDS, after logging.basicConfig, `return COMMANDS[name](rest)` (the
+    command parses its own argv; `main.py testctl --help` exits 0).
+  Keep every existing registration and behaviour (including any jobs other
+  WPs added before this spec ran).
+
+notes: |
+  - Store signatures used (promoted in WP-05; not in context):
+      characters.get_character(conn, slug) -> dict | None      (keys id, slug, campaign, ...)
+      characters.set_active_baseline(conn, slug, version) -> None, LookupError if missing
+      events.insert_many(conn, rows) -> int   rows: dicts with message_id, character_id,
+          msg_type, from_agent, scene_id, visibility, text, payload (dict), ts,
+          loop_week, loop_day
+      knowledge.unarchive_week(conn, week) -> {"nodes": n, "edges": m}
+      fragments.create_fragment(conn, *, character_id, source_week, gist, hooks=None,
+          lead_up=(), links=(), ...) -> str   (COMMITS)
+      fragments.unlock(conn, fragment_id, week, recall_id=None) -> bool
+      fragments.test_delete(conn, fragment_id) -> bool   (needs the bypass)
+  - SQL: %s parameters only; lists passed as Python lists for ANY(%s). Every
+    UPDATE touches only its own columns (reset_undo: reset_steps + status).
+  - `log = logging.getLogger(__name__)`: WARNING when the bypass is set
+    (name the command and fragment/week), DEBUG before/after each statement
+    group with rowcounts, INFO with the command's detail at the end. Never log
+    a DSN or password.
+  - Do not call sys.exit (except the argparse-style SystemExit in
+    parse_command); do not configure logging; do not catch exceptions to hide
+    them (the framework writes the failed row).
+  - The tests use a migrated pgserver database (the `pg` fixture + db.migrate)
+    and pass cfg / connect / producer. Run the harness with
+    CHARACTER_TEST_REQUIRE_DB=1 (an all-skipped run exits 0 = PASS). Pending
+    guard: the test files skip while app/character/testctl.py is missing; the
+    sandbox overlays the staged files.
+  - WP-06 dependency: the tests need jobs.build_parser to call
+    job.add_arguments(parser) (WP-06 spec). If the promoted jobs.py does not,
+    that is a WP-06 bug: stop and report, do not work around it here.
