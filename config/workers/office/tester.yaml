@@ -72,6 +72,9 @@ agent:
     # OB-07: speaking turns must be serialized. Only the CEO narrates a
     # phase_change, so the broadcast costs ONE LLM turn instead of seven.
     narrate_phase_change: false
+    # OB-32 live roundtable transcript (docs/live_pane.md): every line this
+    # seat speaks is also sent to the roundtable as `office_line`.
+    live_transcript: true
     gitea:
       base_url: http://192.168.1.120:3300
       owner: gitea_admin

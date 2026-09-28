@@ -24,9 +24,11 @@ DAY = "2026-09-28"
 
 
 def test_message_types_registered_except_clock_edges():
-    # OB-21 handles six office types; day_start/day_end are left for OB-30.
+    # Every office type is handled except the day_start/day_end clock edges
+    # (nothing reacts to them); wrap_up is handled by handle_wrap_up.
     assert set(OFFICE_MESSAGE_TYPES) - set(MESSAGE_HANDLERS) == {"day_start", "day_end"}
-    assert len(OFFICE_MESSAGE_TYPES) == 8
+    assert MESSAGE_HANDLERS["wrap_up"].__name__ == "handle_wrap_up"
+    assert len(OFFICE_MESSAGE_TYPES) == 9
 
 
 @pytest.mark.parametrize("recipient,seat", [
@@ -201,3 +203,32 @@ def test_is_office_message(msg, expected):
 def test_protocol_error_is_value_error():
     assert issubclass(ProtocolError, ValueError)
     assert protocol.CLOCK_SENDER in protocol.CLOCK_SENDERS
+
+
+# ── wrap_up (23:45 clock broadcast) ──────────────────────────────────────────
+def test_build_wrap_up_is_clock_broadcast():
+    directives = [{"title": "Velocity rule", "issue": 3, "status": "done"}]
+    msg = protocol.build_wrap_up(DAY, directives=directives, sender="tuber_0")
+    assert msg["type"] == "wrap_up" and msg["to"] == BROADCAST and msg["from"] == "tuber_0"
+    assert msg["payload"] == {"day": DAY, "directives": directives, "request": "status_report"}
+    assert is_office_message(msg)
+
+
+@pytest.mark.parametrize("sender,to,payload", [
+    ("tuber_2", BROADCAST, {"day": DAY}),            # not the clock
+    ("office_clock", "tuber_1", {"day": DAY}),       # not a broadcast
+    ("office_clock", BROADCAST, {}),                 # day missing
+    ("office_clock", BROADCAST, {"day": DAY, "directives": "all"}),
+])
+def test_wrap_up_rejects_bad_sender_addressing_or_payload(sender, to, payload):
+    with pytest.raises(ProtocolError):
+        validate_message(build_message(sender, to, "wrap_up", payload))
+
+
+@pytest.mark.parametrize("sender,superior", [
+    (R.ENGINEER, "tuber_1"), (R.TESTER, "tuber_1"), (R.TECH_LEAD, "tuber_0"),
+    (R.ANALYST, "tuber_0"), (R.MARKETING, "tuber_0"), (R.OFFICE_MANAGER, "tuber_0"),
+])
+def test_wrap_up_report_lines_are_rank_legal(sender, superior):
+    # The wrap_up handler relies on these: every seat with a superior may report to it.
+    assert build_status_report(sender, "end of day", status="on_track", day=DAY)["to"] == superior

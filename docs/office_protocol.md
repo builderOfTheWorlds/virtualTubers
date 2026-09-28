@@ -9,7 +9,7 @@ validates the result before returning it. Rank violations, bad addressing, and m
 payloads raise `ProtocolError`. It is a pure module: `message_bus` is imported only for its
 envelope helpers, and nothing here connects to Kafka, calls an LLM, or touches the filesystem.
 
-None of the 8 type names collides with `agent_handlers.MESSAGE_HANDLERS`; a test checks this.
+Every type except the `day_start` / `day_end` clock edges has a handler in `agent_handlers.MESSAGE_HANDLERS` (docs/agent_handlers.md); a test checks this.
 
 | Type | From → To | Required payload | Optional payload |
 |---|---|---|---|
@@ -21,6 +21,7 @@ None of the 8 type names collides with `agent_handlers.MESSAGE_HANDLERS`; a test
 | `phase_change` | clock → `broadcast` | `phase`, `day` | `previous`, `segment` (int) |
 | `day_start` | clock → `broadcast` | `day` | — |
 | `day_end` | clock → `broadcast` | `day` | `summary` |
+| `wrap_up` | clock → `broadcast` (23:45) | `day` | `directives` (list of `{title, issue, status, source, kind}`), `request` (default `status_report`) |
 
 `day` is always ISO `YYYY-MM-DD`. `phase`/`previous` are in `PHASES = ("off", "morning", "build", "ship")`
 (segments s0–s3 of the 18/6 day). Clock messages may come from `CLOCK_SENDER = "office_clock"` or the
@@ -42,6 +43,7 @@ def build_status_report(sender, summary, *, status=None, day=None, **ids) -> dic
 def build_phase_change(phase, day, *, previous=None, segment=None, sender=CLOCK_SENDER, **ids) -> dict
 def build_day_start(day, *, sender=CLOCK_SENDER, **ids) -> dict
 def build_day_end(day, *, summary=None, sender=CLOCK_SENDER, **ids) -> dict
+def build_wrap_up(day, *, directives=None, request="status_report", sender=CLOCK_SENDER, **ids) -> dict
 def validate_message(msg: dict) -> dict
 def is_office_message(msg) -> bool
 ```
@@ -120,3 +122,6 @@ logged at INFO. Rank decisions are logged at DEBUG, and entry points at TRACE (l
 
 - **v1.0.0** (2026-09-27) — Initial version (OB-05): 8 message types, builders, validator,
   `ProtocolError`.
+- **v1.1.0** (2026-09-28) — `wrap_up` becomes the 9th type: a clock broadcast
+  (`CLOCK_TYPES`) with builder `build_wrap_up`, so the 23:45 request for status reports is
+  rank-checked like `phase_change`.

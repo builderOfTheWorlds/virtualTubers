@@ -8,6 +8,7 @@ Every external edge is faked: LLM (ScriptedLLM), coding backend and pytest
 live in tmp_path — never the real campaigns/ashiorid_office pack.
 """
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -28,6 +29,8 @@ from office.protocol import (
 from office.roles import SEAT, OfficeRole as R
 
 DAY = "2026-09-28"
+NOW = datetime(2026, 9, 28, 16, 0, tzinfo=timezone.utc)   # Mon 12:00 New York, loop week 0
+WEEK_BRANCH = "loop/0"
 DIRECTIVE = "Add a velocity rule that flags more than five transactions a minute."
 CEO, TL, AN, ENG, TST, MKT, OM, PM = (SEAT[r] for r in (
     R.CEO, R.TECH_LEAD, R.ANALYST, R.ENGINEER, R.TESTER, R.MARKETING, R.OFFICE_MANAGER,
@@ -86,8 +89,12 @@ class FakeGitea:
 
     def merge_pr(self, number, style="merge", delete_branch=True, message=None):
         self.prs[number]["state"] = "closed"
+        self.prs[number]["merged"] = True
         self.calls.append(("merge_pr", number))
         return True
+
+    def list_issues(self, state="open", labels=None):
+        return [dict(i) for i in self.issues.values() if state in ("all", i["state"])]
 
     def delete_branch(self, name):
         self.calls.append(("delete_branch", name))
@@ -105,8 +112,8 @@ class FakeGit:
         self.repo_path = str(repo_path)
         self.push_ok = push_ok
         self.calls = []
-        self.branches = {"main"}
-        self.current = "main"
+        self.branches = {"main", WEEK_BRANCH}
+        self.current = WEEK_BRANCH
         self._commits = 0
 
     def checkout_new_branch(self, name, start_point=None):
@@ -134,6 +141,13 @@ class FakeGit:
     def push_branch(self, name, force=False):
         self.calls.append(("push_branch", name))
         return self.push_ok
+
+    def fetch(self, ref=None, tags=True, prune=True):
+        """A fetch makes every `remote_branches` entry checkout-able (git
+        DWIMs a local tracking branch from origin/<name>)."""
+        self.calls.append(("fetch",))
+        self.branches |= set(getattr(self, "remote_branches", ()))
+        return True
 
 
 class RecordingLLM(ScriptedLLM):
@@ -175,8 +189,13 @@ def make_pack(root):
 
 
 @pytest.fixture(autouse=True)
-def _fresh_office_state():
+def _fresh_office_state(monkeypatch):
     office._reset_office_state()
+    # Pin the office week (week 0 -> base branch loop/0) so the auto base
+    # branch is deterministic whatever day the suite runs.
+    monkeypatch.setattr(office, "_clock", lambda: NOW)
+    monkeypatch.delenv("OFFICE_EPOCH", raising=False)
+    monkeypatch.delenv("OFFICE_TZ", raising=False)
     yield
     office._reset_office_state()
 
@@ -228,9 +247,10 @@ def directive_msg(to=R.ANALYST, issue=3, **ids):
 # ── registry ─────────────────────────────────────────────────────────────────
 def test_registry_routes_every_handled_office_type():
     for msg_type in ("directive", "functional_plan", "technical_plan", "test_request",
-                     "status_report", "phase_change"):
+                     "status_report", "phase_change", "wrap_up"):
         assert msg_type in OFFICE_MESSAGE_TYPES
         assert MESSAGE_HANDLERS[msg_type] is getattr(office, f"handle_{msg_type}")
+    assert MESSAGE_HANDLERS["character_refresh"] is office.handle_character_refresh
 
 
 def test_idle_hooks_registered_for_office_handler_roles():
@@ -301,7 +321,7 @@ def test_analyst_writes_requirements_pr_and_sends_functional_plan(pack, wired, g
     doc = next(Path(git.repo_path).glob("docs/requirements/*.md"))
     assert doc.name == f"{DAY}-velocity-rule.md" and "Flag bursts." in doc.read_text()
     assert ("push_branch", fp["payload"]["branch"]) in git.calls
-    assert git.current == "main"
+    assert git.current == WEEK_BRANCH
 
 
 def test_analyst_llm_failure_still_sends_fallback_plan(pack, wired):
@@ -647,6 +667,204 @@ def test_gitea_client_defaults_and_disable(pack):
     assert office.build_gitea_client(cfg(R.ANALYST, pack, gitea={"enabled": False})) is None
 
 
+# ── base branch: the current office week's trunk ───────────────────────────
+@pytest.mark.parametrize("office_extra,now,expected", [
+    ({}, NOW, "loop/0"),
+    ({"base_branch": "auto"}, datetime(2026, 10, 4, 4, 0, tzinfo=timezone.utc), "loop/1"),  # Sun 00:00 NY
+    ({"base_branch": "AUTO"}, datetime(2026, 10, 4, 3, 59, tzinfo=timezone.utc), "loop/0"),
+    ({"base_branch": "release"}, NOW, "release"),                                  # explicit wins
+    ({"epoch": "2026-10-04"}, datetime(2026, 10, 12, 16, 0, tzinfo=timezone.utc), "loop/1"),
+    ({"day_runner": {"epoch": "2026-10-04", "tz": "UTC"}},
+     datetime(2026, 10, 11, 0, 30, tzinfo=timezone.utc), "loop/1"),
+])
+def test_base_branch_is_the_week_trunk_unless_explicit(pack, office_extra, now, expected):
+    assert office._base_branch(cfg(R.ANALYST, pack, **office_extra), now=now) == expected
+
+
+def test_base_branch_env_epoch_and_fallback(pack, monkeypatch, capsys):
+    monkeypatch.setenv("OFFICE_EPOCH", "2026-10-04")
+    assert office._base_branch(cfg(R.ANALYST, pack),
+                               now=datetime(2026, 10, 12, 16, 0, tzinfo=timezone.utc)) == "loop/1"
+    # Before the epoch: no week exists -> the documented fallback, with a WARN.
+    assert office._base_branch(cfg(R.ANALYST, pack), now=NOW) == office.DEFAULT_BASE_BRANCH
+    assert "event=base_branch_fallback" in capsys.readouterr().out
+
+
+def test_lane_pr_targets_the_week_branch(pack, wired, gits):
+    llm = RecordingLLM("analyst", replies=[llm_reply("- Flag bursts.")])
+    office.handle_directive(AN, cfg(R.ANALYST, pack), llm, ListProducer(), directive_msg())
+    [pr] = wired.prs.values()
+    assert pr["base"]["ref"] == WEEK_BRANCH
+    assert ("checkout_new_branch", pr["head"]["ref"], WEEK_BRANCH) in gits(R.ANALYST).calls
+
+
+def test_engineer_prepare_branches_from_the_week_branch(pack, wired, gits):
+    msg = build_message(TL, ENG, "task_assignment", {"task": "Velocity rule\n- do it"})
+    ctx = office.engineer_prepare(ENG, cfg(R.ENGINEER, pack), None, msg)
+    assert ctx["base"] == WEEK_BRANCH
+    assert ("checkout_new_branch", ctx["branch"], WEEK_BRANCH) in gits(R.ENGINEER).calls
+
+
+def test_office_manager_gc_protects_the_week_branch(pack, wired, monkeypatch):
+    seen = {}
+    monkeypatch.setattr(office, "collect_garbage",
+                        lambda gitea, base: seen.setdefault("base", base) and [])
+    config = cfg(R.OFFICE_MANAGER, pack, chores={"interval_s": 0, "rotation": ["garbage_collection"]})
+    assert office.office_manager_idle_tick(OM, config, RecordingLLM("om"), ListProducer()) == \
+        "garbage_collection"
+    assert seen["base"] == WEEK_BRANCH
+
+
+# ── wrap_up ──────────────────────────────────────────────────────────────────
+def wrap_up_msg(statuses=("done",), sender=CEO):
+    from office.protocol import build_wrap_up
+    return build_wrap_up(DAY, directives=[{"title": "Velocity rule", "issue": 3, "status": s}
+                                          for s in statuses], sender=sender)
+
+
+@pytest.mark.parametrize("role,superior", [
+    (R.ANALYST, CEO), (R.MARKETING, CEO), (R.OFFICE_MANAGER, CEO), (R.TECH_LEAD, CEO),
+    (R.ENGINEER, TL), (R.TESTER, TL),
+])
+def test_wrap_up_each_seat_reports_to_its_superior(pack, role, superior):
+    llm = RecordingLLM(role.value, replies=[llm_reply("All quiet at my desk.")])
+    producer = ListProducer()
+    msg = wrap_up_msg()
+    config = cfg(role, pack, live_transcript=True)
+    report = office.handle_wrap_up(SEAT[role], config, llm, producer, msg)
+    assert producer.types() == ["status_report", "office_line"]
+    assert report is producer.sent[0]
+    assert (report["from"], report["to"]) == (SEAT[role], superior)
+    assert report["payload"]["summary"] == "All quiet at my desk."
+    assert report["payload"]["status"] == "done" and report["payload"]["day"] == DAY
+    assert report["payload"]["report"] == "wrap_up"
+    assert report["correlation_id"] == msg["correlation_id"] and report["causation_id"] == msg["id"]
+    line = producer.sent[1]
+    assert line["to"] == "roundtable" and line["payload"]["to"] == superior
+    assert len(llm.systems) == 1 and llm.systems[0].startswith(f"You are the {role.value}.")
+
+
+@pytest.mark.parametrize("role", [R.CEO, R.PARTY_MEMBER])
+def test_wrap_up_ceo_and_party_member_stay_quiet(pack, role):
+    llm = RecordingLLM(role.value)
+    producer = ListProducer()
+    assert office.handle_wrap_up(SEAT[role], cfg(role, pack, live_transcript=True), llm,
+                                 producer, wrap_up_msg()) is None
+    assert producer.sent == [] and llm.systems == []
+
+
+def test_wrap_up_status_on_track_when_a_directive_is_open(pack):
+    producer = ListProducer()
+    office.handle_wrap_up(AN, cfg(R.ANALYST, pack), RecordingLLM("a"), producer,
+                          wrap_up_msg(("done", "active")))
+    assert producer.types() == ["status_report"]          # no live_transcript opt-in
+    assert producer.sent[0]["payload"]["status"] == "on_track"
+
+
+def test_wrap_up_llm_failure_sends_fallback_report(pack):
+    producer = ListProducer()
+    office.handle_wrap_up(ENG, cfg(R.ENGINEER, pack), RecordingLLM("e", down=True), producer,
+                          wrap_up_msg())
+    assert "1 of 1 directive(s) done" in producer.sent[0]["payload"]["summary"]
+
+
+def test_wrap_up_from_a_non_clock_sender_is_a_retake(pack, capsys):
+    producer = ListProducer()
+    msg = build_message(AN, BROADCAST, "wrap_up", {"day": DAY})
+    assert office.handle_wrap_up(TL, cfg(R.TECH_LEAD, pack), RecordingLLM("tl"), producer, msg) is None
+    assert producer.sent == [] and "event=rank_violation" in capsys.readouterr().out
+
+
+def test_wrap_up_ignored_by_non_office_worker(pack):
+    producer = ListProducer()
+    office.handle_wrap_up("coder", {"role": "coder"}, RecordingLLM("c"), producer, wrap_up_msg())
+    assert producer.sent == []
+
+
+def test_ceo_does_not_reclose_issue_on_a_wrap_up_report(pack, wired):
+    report = build_status_report(R.TECH_LEAD, "Shipped.", status="done", day=DAY)
+    report["payload"].update(report="wrap_up", issue=3)
+    office.handle_status_report(CEO, cfg(R.CEO, pack), RecordingLLM("ceo"), ListProducer(), report)
+    assert wired.ops("close_issue") == [] and wired.ops("comment_issue") == []
+
+
+# ── character_refresh ────────────────────────────────────────────────────────
+def refresh_msg(branch="loop/1", sender="office_clock", to=BROADCAST, characters=("*",)):
+    return build_message(sender, to, "character_refresh",
+                         {"campaign": "ashiorid_office", "week": 1, "closing_week": 0,
+                          "characters": list(characters), "reason": "weekly_reset",
+                          "branch": branch})
+
+
+def test_character_refresh_clears_state_and_checks_out_the_new_week(pack, wired, gits):
+    office.remember_directive("chain-1", DIRECTIVE, issue=3)
+    office._phase = "ship"
+    runner = lambda *a, **k: []
+    office.set_day_runner(runner)
+    git = gits(R.ANALYST)
+    git.remote_branches = {"loop/1"}
+    result = office.handle_character_refresh(AN, cfg(R.ANALYST, pack), None, ListProducer(),
+                                             refresh_msg())
+    assert result == {"refreshed": True, "branch": "loop/1", "checked_out": True}
+    assert office.directive_for({"payload": {}}) is None and office.current_phase() is None
+    assert office.get_day_runner() is runner                # the CEO's clock survives
+    assert git.calls[-2:] == [("fetch",), ("checkout", "loop/1")] and git.current == "loop/1"
+
+
+def test_character_refresh_engineer_uses_the_coding_backend_workspace(pack, monkeypatch, tmp_path):
+    seen = {}
+
+    def build(cfg_, repo_path=None):
+        seen["repo_path"] = repo_path
+        git = FakeGit(tmp_path)
+        git.remote_branches = {"loop/1"}
+        return git
+    monkeypatch.setattr(office, "build_git_client", build)
+    backend = type("B", (), {"workspace": "/data/repos/fraud-stop"})()
+    result = office.handle_character_refresh(ENG, cfg(R.ENGINEER, pack), None, ListProducer(),
+                                             refresh_msg(), coding_backend=backend)
+    assert result["checked_out"] is True and seen["repo_path"] == "/data/repos/fraud-stop"
+
+
+@pytest.mark.parametrize("role", [R.TESTER, R.CEO, R.PARTY_MEMBER])
+def test_character_refresh_skips_git_without_a_writable_workspace(pack, monkeypatch, role):
+    office.remember_directive("chain-1", DIRECTIVE)
+    calls = []
+    monkeypatch.setattr(office, "build_git_client",
+                        lambda cfg_, repo_path=None: calls.append(cfg_) or None)
+    result = office.handle_character_refresh(SEAT[role], cfg(role, pack), None, ListProducer(),
+                                             refresh_msg())
+    assert result == {"refreshed": True, "branch": "loop/1", "checked_out": False}
+    assert office.directive_for({"payload": {}}) is None
+    if role is R.TESTER:
+        assert calls == []                   # read-only mount: never even built
+
+
+def test_character_refresh_checkout_failure_is_logged_not_raised(pack, wired, gits, capsys):
+    result = office.handle_character_refresh(AN, cfg(R.ANALYST, pack), None, ListProducer(),
+                                             refresh_msg("loop/9"))
+    assert result["checked_out"] is False
+    assert "event=week_branch_checkout_failed" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("kwargs", [{"sender": AN}, {"to": AN}])
+def test_character_refresh_from_non_clock_or_not_broadcast_is_dropped(pack, wired, kwargs, capsys):
+    office.remember_directive("chain-1", DIRECTIVE)
+    assert office.handle_character_refresh(TL, cfg(R.TECH_LEAD, pack), None, ListProducer(),
+                                           refresh_msg(**kwargs)) is None
+    assert office.directive_for({"payload": {}}) is not None
+    assert "event=rank_violation" in capsys.readouterr().out
+
+
+def test_character_refresh_ignored_by_non_office_worker_and_unaddressed_seat(pack, wired):
+    office.remember_directive("chain-1", DIRECTIVE)
+    assert office.handle_character_refresh("coder", {"role": "coder"}, None, ListProducer(),
+                                           refresh_msg()) is None
+    assert office.handle_character_refresh(AN, cfg(R.ANALYST, pack), None, ListProducer(),
+                                           refresh_msg(characters=[TL])) is None
+    assert office.directive_for({"payload": {}}) is not None
+
+
 # ── fake-bus end to end ──────────────────────────────────────────────────────
 @pytest.fixture
 def office_team(tmp_path, monkeypatch, pack, wired):
@@ -746,3 +964,219 @@ def test_e2e_bug_then_fix_reuses_engineer_pr(office_team, wired):
     assert requests[1]["payload"]["retry_count"] == 1
     assert len([pr for pr in wired.prs.values() if "/engineer/" in pr["head"]["ref"]]) == 1
     assert wired.issues[1]["state"] == "closed"
+
+
+# ── fake-bus end to end: a whole office day + the weekly reset (batch B) ─────
+class ResetGit:
+    """The weekly_reset's view of the Fraud-Stop working copy (git_client
+    surface it uses); pushing a branch publishes it to `remote`."""
+
+    def __init__(self, remote):
+        self.repo_path = None
+        self.remote_url = "http://gitea.invalid/gitea_admin/fraud-stop.git"
+        self.remote = remote
+        self.branches = {"main", WEEK_BRANCH}
+        self.tags = {"loop-seed"}
+        self.current = WEEK_BRANCH
+        self.calls = []
+
+    def fetch(self, ref=None, tags=True, prune=True):
+        self.calls.append(("fetch",))
+        return True
+
+    def is_dirty(self):
+        return False
+
+    def commit_all(self, message):
+        return None
+
+    def checkout(self, ref):
+        from git_client import GitError
+        if ref not in self.branches:
+            raise GitError(f"unknown ref {ref}")
+        self.current = ref
+        return "sha-" + ref
+
+    def checkout_new_branch(self, name, start_point=None):
+        from git_client import GitError
+        if name in self.branches:
+            raise GitError(f"branch {name} exists")
+        self.branches.add(name)
+        self.current = name
+        return "sha-" + name
+
+    def reset_hard_to(self, ref):
+        self.calls.append(("reset_hard_to", ref))
+        return "seedsha"
+
+    def head(self):
+        return "sha-" + self.current
+
+    def push_branch(self, name, force=False):
+        self.calls.append(("push_branch", name))
+        self.remote.add(name)
+        return True
+
+
+class OfficeClock:
+    """One fake 'now' shared by the day runner and agent_handlers.office._clock."""
+
+    def __init__(self):
+        from zoneinfo import ZoneInfo
+        self.zone = ZoneInfo("America/New_York")
+        self.now = None
+
+    def set(self, iso):
+        self.now = datetime.fromisoformat(iso).replace(tzinfo=self.zone)
+        return self.now
+
+    def __call__(self):
+        return self.now
+
+
+class OneEpisodePlaylist:
+    """Day-runner Playlist contract fake: an approved office replay off-hours."""
+
+    def __init__(self, cast):
+        self.cast = cast
+        self.calls = []
+
+    def off_hours(self, day, context):
+        self.calls.append(("off_hours", day))
+        return {"episode": "office-claude_code-sess-001", "cast": dict(self.cast)}
+
+    def stall(self, day, context):
+        self.calls.append(("stall", day))
+        return None
+
+    def resume_live(self, day, context):
+        self.calls.append(("resume_live", day))
+
+
+@pytest.mark.integration
+def test_e2e_office_day_wrap_up_day_end_then_weekly_reset(tmp_path, monkeypatch, pack, wired, gits):
+    """06:00 day_start + directive -> the chain to a `done` status_report with
+    the Engineer's PR merged into loop/0 -> 23:45 wrap_up -> one status_report
+    per reporting seat -> 00:00 day_end + the playlist's replay_request to
+    the roundtable -> a forced Sunday weekly reset (--at) -> character_refresh
+    -> every writing seat on loop/1, and the next day's PRs target it."""
+    from office import weekly_reset as wr
+    from office.day_runner import DayRunner
+
+    clock = OfficeClock()
+    monkeypatch.setattr(office, "_clock", clock)
+    remote = {"main", WEEK_BRANCH}             # branches on the (fake) Gitea remote
+
+    h = E2EHarness(tmp_path, monkeypatch, test_runner=FakeTestRunner(outcomes=[True, True]))
+    team = {}
+    for role in R:
+        seat = SEAT[role]
+        backend = None
+        if role is R.ENGINEER:
+            from e2e_harness import FakeCodingBackend
+            backend = FakeCodingBackend(seat)
+        team[role] = h.add_worker(seat, HANDLER_ROLE[role], llm=RecordingLLM(seat),
+                                  coding_backend=backend, office_role=role.value,
+                                  office={"pack_dir": str(pack),
+                                          "narrate_phase_change": role is R.CEO})
+        gits(role).remote_branches = remote    # a fetch sees whatever the remote holds
+    roundtable = h.add_worker("roundtable", "roundtable")
+
+    cast = {SEAT[r]: SEAT[r] for r in R if r is not R.PARTY_MEMBER}
+    playlist = OneEpisodePlaylist(cast)
+    directives_by_day = {"2026-09-28": ("Add a velocity rule.", "Velocity rule"),
+                         "2026-10-04": ("Add a merchant blocklist.", "Merchant blocklist")}
+    runner = DayRunner(
+        clock=clock, state_path=str(tmp_path / "day_runner.json"),
+        arc_provider=lambda day, ctx: None if ctx["index"] else {
+            "text": directives_by_day[day][0], "title": directives_by_day[day][1],
+            "ref": f"arc:{day}"},
+        playlist=playlist, replay_target="roundtable", stall_minutes=10_000,
+        completion_poll_s=0, retry_backoff_s=0, max_follow_ups=0,
+        completion_probe=lambda d, ctx: wired.issues[d["issue"]]["state"] == "closed")
+    office.set_day_runner(runner)
+    ceo = team[R.CEO]
+
+    def ceo_tick():
+        start = len(h.bus.log)
+        office.ceo_idle_tick(CEO, ceo.agent_config, ceo.llm, h.bus.producer_for(CEO),
+                             ceo.state_path)
+        h.bus.run_until_quiet(max_steps=400)
+        return h.bus.log[start:]
+
+    # ── 06:00 Monday: day_start + directive -> the whole chain ──────────────
+    clock.set("2026-09-28T06:00")
+    morning = ceo_tick()
+    types = [m["type"] for m in morning]
+    assert types[:2] == ["day_start", "phase_change"]
+    root = next(m for m in morning if m["type"] == "directive")
+    done = [m for m in morning if m["type"] == "status_report" and m["from"] == TL]
+    assert len(done) == 1 and done[0]["payload"]["status"] == "done"
+    assert done[0]["payload"]["merged"] is True and done[0]["to"] == CEO
+    assert h.bus.lineage(done[0])[:3] == ["directive", "directive", "functional_plan"]
+    eng_pr = next(pr for pr in wired.prs.values() if "/engineer/" in pr["head"]["ref"])
+    assert eng_pr["base"]["ref"] == WEEK_BRANCH and eng_pr.get("merged") is True
+    assert {pr["base"]["ref"] for pr in wired.prs.values()} == {WEEK_BRANCH}
+    assert wired.issues[root["payload"]["issue"]]["state"] == "closed"
+    closes_before_wrap_up = len(wired.ops("close_issue"))
+
+    # ── 18:00: phase edge; the runner sees the directive done ───────────────
+    clock.set("2026-09-28T18:00")
+    ceo_tick()
+    assert runner.state["directives"][0]["status"] == "done"
+
+    # ── 23:45: wrap_up -> one status_report per reporting seat ──────────────
+    clock.set("2026-09-28T23:45")
+    evening = ceo_tick()
+    [wrap] = [m for m in evening if m["type"] == "wrap_up"]
+    assert wrap["from"] == CEO and wrap["to"] == BROADCAST
+    assert wrap["payload"]["directives"][0]["status"] == "done"
+    reports = [m for m in evening if m["type"] == "status_report"]
+    assert sorted((m["from"], m["to"]) for m in reports) == sorted([
+        (AN, CEO), (MKT, CEO), (OM, CEO), (TL, CEO), (ENG, TL), (TST, TL)])
+    for m in reports:
+        assert m["payload"]["report"] == "wrap_up" and m["payload"]["status"] == "done"
+        assert m["correlation_id"] == wrap["correlation_id"] and m["causation_id"] == wrap["id"]
+    assert not any(m["from"] in (CEO, PM) and m["type"] == "status_report" for m in evening)
+    assert len(wired.ops("close_issue")) == closes_before_wrap_up      # no re-close
+
+    # ── 00:00 Tuesday: day_end, phase off, playlist replay on the roundtable ─
+    clock.set("2026-09-29T00:00")
+    night = ceo_tick()
+    assert [m["type"] for m in night][:3] == ["day_end", "phase_change", "replay_request"]
+    replay = night[2]
+    assert replay["to"] == "roundtable" and replay["payload"]["cast"] == cast
+    assert roundtable.read_relay("request") == {"episode": "office-claude_code-sess-001",
+                                                "cast": cast}
+
+    # ── Sunday 00:00: forced weekly reset (CLI --at) -> character_refresh ───
+    reset_git = ResetGit(remote)
+    code = wr.main(["--at", "2026-10-04T00:00-04:00", "--ledger", str(tmp_path / "ledger.json"),
+                    "--workspace", str(tmp_path / "reset-ws")],
+                   git=reset_git, gitea=wired, emit=h.bus.publish)
+    assert code == 0
+    assert ("reset_hard_to", "loop-seed") in reset_git.calls and "loop/1" in remote
+    assert eng_pr["head"]["ref"] in wired.deleted          # merged office branch pruned
+    [refresh] = h.bus.of_type("character_refresh")
+    assert refresh["payload"]["branch"] == "loop/1" and refresh["payload"]["week"] == 1
+    h.bus.run_until_quiet()
+    for role in LANE_WRITER_ROLES:
+        assert gits(role).current == "loop/1", role
+        assert ("fetch",) in gits(role).calls
+    assert office.directive_for({"payload": {}}) is None    # in-process state cleared
+    assert office.get_day_runner() is runner
+
+    # ── 06:00 Sunday of week 1: the next chain lands on loop/1 ──────────────
+    clock.set("2026-10-04T06:00")
+    prs_before = set(wired.prs)
+    ceo_tick()
+    new_prs = [wired.prs[n] for n in set(wired.prs) - prs_before]
+    assert new_prs and {pr["base"]["ref"] for pr in new_prs} == {"loop/1"}
+    new_eng = next(pr for pr in new_prs if "/engineer/" in pr["head"]["ref"])
+    assert new_eng.get("merged") is True
+    assert h.bus.undelivered == []
+    # The Party Member never spoke all week.
+    assert team[R.PARTY_MEMBER].llm.systems == []
+
+
+LANE_WRITER_ROLES = (R.TECH_LEAD, R.ANALYST, R.ENGINEER, R.MARKETING, R.OFFICE_MANAGER)

@@ -44,10 +44,12 @@ STATUS_REPORT = "status_report"
 PHASE_CHANGE = "phase_change"
 DAY_START = "day_start"
 DAY_END = "day_end"
+#: The CEO's 23:45 broadcast asking every seat for its end-of-day status_report.
+WRAP_UP = "wrap_up"
 
 OFFICE_MESSAGE_TYPES = (DIRECTIVE, FUNCTIONAL_PLAN, TECHNICAL_PLAN, TEST_REQUEST,
-                        STATUS_REPORT, PHASE_CHANGE, DAY_START, DAY_END)
-CLOCK_TYPES = frozenset({PHASE_CHANGE, DAY_START, DAY_END})
+                        STATUS_REPORT, PHASE_CHANGE, DAY_START, DAY_END, WRAP_UP)
+CLOCK_TYPES = frozenset({PHASE_CHANGE, DAY_START, DAY_END, WRAP_UP})
 
 #: Default sender id for clock broadcasts (not a seat; the clock is not a character).
 CLOCK_SENDER = "office_clock"
@@ -69,6 +71,7 @@ _PAYLOAD_SCHEMA = {
     PHASE_CHANGE: (("phase", "day"), {"previous": str, "segment": int}),
     DAY_START: (("day",), {}),
     DAY_END: (("day",), {"summary": str}),
+    WRAP_UP: (("day",), {"directives": list, "request": str}),
 }
 
 
@@ -257,6 +260,14 @@ def build_phase_change(phase, day, *, previous=None, segment=None, sender=CLOCK_
 def build_day_start(day, *, sender=CLOCK_SENDER, **ids):
     """Clock broadcast at 06:00: work day `day` (YYYY-MM-DD) begins."""
     return _build(sender, BROADCAST, DAY_START, {"day": day}, **ids)
+
+
+def build_wrap_up(day, *, directives=None, request=STATUS_REPORT, sender=CLOCK_SENDER, **ids):
+    """Clock broadcast at 23:45: every seat with a superior sends it one
+    end-of-day status_report. `directives` is the day runner's summary list
+    ({title, issue, status, source, kind} dicts)."""
+    return _build(sender, BROADCAST, WRAP_UP,
+                  {"day": day, "directives": list(directives or []), "request": request}, **ids)
 
 
 def build_day_end(day, *, summary=None, sender=CLOCK_SENDER, **ids):

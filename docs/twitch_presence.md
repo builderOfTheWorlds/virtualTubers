@@ -143,6 +143,17 @@ TWITCH_CHANNEL_MAP=mycoderchannel:coder,mymanagerchannel:manager,mytesterchannel
 PRESENCE_COOLDOWN_S=3600
 ```
 
+Office show (`docker-compose.office.yml`): every worker id becomes a seat
+id, so the override replaces `TWITCH_CHANNEL_MAP` with
+`OFFICE_TWITCH_CHANNEL_MAP` — the same channels mapped to seats (coder →
+`tuber_6`, coder-native → `tuber_2`, coder-opencode → `tuber_5`,
+coder-aider → `tuber_3`, manager → `tuber_1`, tester → `tuber_4`, `tuber_0`
+unchanged). See docs/office_deployment.md "Twitch presence".
+
+```bash
+OFFICE_TWITCH_CHANNEL_MAP=mycoderchannel:tuber_6,mymanagerchannel:tuber_1,mytesterchannel:tuber_4
+```
+
 Watch it work (viewer `phil` opens the coder's stream):
 
 ```bash
@@ -183,3 +194,6 @@ curl -X POST http://localhost:8090/messages \
 - v1.0.0 (2026-07-12) — Initial version: anonymous Twitch IRC membership
   watcher, per-user greeting cooldown, bot ignore list, fire-and-forget
   `viewer_joined` POSTs to message-api.
+- v1.1.0 (2026-09-28) — Docs: office-show channel map
+  (`OFFICE_TWITCH_CHANNEL_MAP`, set by `docker-compose.office.yml`). The
+  service itself is unchanged.

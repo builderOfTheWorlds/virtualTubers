@@ -49,6 +49,7 @@ list these yet):
 | `TUBER7_STREAM_KEY` | `tuber7` | worker-observer's channel |
 | `OBSERVER_LAYOUT_PRESET` | `tuber_base` | worker-observer |
 | `OBSERVER_AVATAR_PROVIDER` | (config's own) | worker-observer |
+| `OFFICE_TWITCH_CHANNEL_MAP` | (unset: twitch-presence idles) | twitch-presence, office mode only (see "Twitch presence") |
 
 ## Service → seat mapping
 
@@ -196,12 +197,56 @@ gives `worker-gm`:
   logs one WARN and the directive comes from the open Fraud-Stop issue
   backlog.
 
-The playlist's `replay_request` goes to `replay_target`, which defaults to
-the CEO worker itself. Its `tuber_base` layout has no replay pane, so the
-request file is written but nothing renders on the CEO channel. To air the
-off-hours filler on the roundtable, set `replay_target: roundtable` and
-`playlist_options.cast` (seat to worker map) once the office roundtable cast
-mapping (OB-32) is settled.
+The playlist's `replay_request` goes to `replay_target: roundtable` (the
+office roundtable's bus id), with `playlist_options.cast` set to the
+identity seat map `tuber_0..tuber_6` — the same cast the control panel's
+office-mode Play sends. The roundtable only lights its tiles through the
+duet director path, which needs `payload.cast`; `tuber_7` is left out
+because the Party Member never speaks. Without `replay_target` the request
+would go to the CEO worker, whose `tuber_base` layout has no replay pane.
+
+At 23:45 the day runner broadcasts `wrap_up`; every seat with a superior
+answers with one `status_report` (Analyst, Marketing, OM and the TL to the
+CEO; Engineer and Tester to the TL). The CEO's own wrap-up line and each
+report also go to the roundtable's live transcript.
+
+### Week branches and the Sunday reset
+
+Every office PR targets the current week's trunk `loop/<W>`
+(`agent.office.base_branch: auto` on the lane writers): lane and Engineer
+branches start from it, the TL merges into it, and the OM's branch GC never
+touches it. `W` comes from the office clock (epoch 2026-09-27, America/New_York;
+override with `agent.office.epoch` / `tz` or env `OFFICE_EPOCH` / `OFFICE_TZ`).
+Set `base_branch` to a branch name to pin one instead.
+
+`python -m office.weekly_reset` (docs/office_weekly_reset.md) rebuilds
+`loop/<W>` from `loop-seed` on Sunday 00:00 and broadcasts
+`character_refresh`. Each seat with a clone then clears its in-process office
+state, `git fetch`es and checks out the new `loop/<W>`. The Tester (read-only
+mount of the Engineer's clone) and the CEO / Party Member (no clone) only
+clear state.
+
+### Twitch presence
+
+`twitch-presence` addresses greetings by worker id, and the office show
+changes every worker id to a seat. The override therefore sets
+`TWITCH_CHANNEL_MAP` from **`OFFICE_TWITCH_CHANNEL_MAP`** in `.env`: the same
+channels, mapped to seats.
+
+| Dev-team id | Seat | Service |
+|---|---|---|
+| `tuber_0` | `tuber_0` | worker-gm |
+| `manager` | `tuber_1` | worker-manager |
+| `coder-native` | `tuber_2` | worker-coder-native |
+| `coder-aider` | `tuber_3` | worker-coder-aider |
+| `tester` | `tuber_4` | worker-tester |
+| `coder-opencode` | `tuber_5` | worker-coder-opencode |
+| `coder` | `tuber_6` | worker-coder |
+| (new channel) | `tuber_7` | worker-observer (queues a rerun, never greets — U6) |
+
+Example: `OFFICE_TWITCH_CHANNEL_MAP=mycoderchannel:tuber_6,mymgrchannel:tuber_1`.
+Unset, the service idles (no greetings) instead of greeting with the
+dev-team ids.
 
 Check a seat:
 
@@ -227,7 +272,12 @@ blocks are office-specific:
   backend-failure `clarification_request`) and on the Tester.
 - **`agent.workspaces: {tuber_3: /data/repos/tuber_3}`.** On the Tester only.
 - **`agent.office`.** Per the schema in agent_handlers.md:
-  - `workspace` and `remote_url` on the lane writers.
+  - `workspace`, `remote_url` and `base_branch: auto` (the week trunk
+    `loop/<W>`) on the lane writers.
+  - `live_transcript: true` on the seven speaking seats (not the Party
+    Member).
+  - `day_runner` on the CEO, including `replay_target: roundtable` and the
+    playlist cast.
   - `gitea` on every seat, with `token_env` naming the env var.
   - `merge_prs` on the TL.
   - `chores` on the OM.
@@ -316,21 +366,22 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
 | Engineer commits land in a sandbox tree, and pushes fail | The clone volume was empty on first start. Stop worker-coder-aider, `docker volume rm virtualtubers_office-repo-engineer`, re-clone (One-time setup), start again. |
 | `event=no_token token_env=GITEA_TOKEN_OFFICE` in a seat's log | The token is missing from `.env`, or the container was not recreated after adding it. |
 | The office voices are wrong on the roundtable | The show header's registry voice overrides `voice.speakers` per show. Check the header before the config. |
-| Twitch arrivals greet the wrong worker | `TWITCH_CHANNEL_MAP` maps channels to worker ids. In office mode the ids are `tuber_N`: update the map for the office show. |
+| Twitch arrivals greet the wrong worker, or nobody | In office mode twitch-presence reads `OFFICE_TWITCH_CHANNEL_MAP` (channel → seat id, see "Twitch presence"). Unset, it idles. Recreate `twitch-presence` after editing `.env`. |
+| PRs target `main`, or `event=base_branch_fallback` in a seat's log | The seat's `agent.office.base_branch` is a branch name (explicit wins), or the week could not be derived (bad `OFFICE_EPOCH` / `OFFICE_TZ`, or a clock before the epoch). Use `auto`. |
+| Lane PRs fail to open against `loop/<W>` | The week trunk isn't on Gitea yet: run `python -m office.weekly_reset --at <Sunday 00:00>` (or `--dry-run` first) so `loop/<W>` is pushed. |
+| A seat stays on last week's branch after the reset | Look for `event=week_branch_checkout_failed` / `week_branch_fetch_failed` in its log (dirty tree, missing remote, token). `character_refresh` is logged as `event=character_refreshed ... checked_out=`. |
+| No end-of-day reports at 23:45 | Check the CEO log for `day_runner event=wrap_up`, then each seat for `event=wrap_up_report_sent`. A `rank_violation handler=wrap_up` means the broadcast did not come from the clock / `tuber_0`. |
+| Off-hours filler plays audio but no tile moves | The `replay_request` reached the roundtable without a `cast`: check `ceo.yaml` `playlist_options.cast`. |
 | Control panel health view shows dev-team ids as down | The panel's worker list is dev-team shaped. The office mapping is OB-32. |
 | Party Member produced text | Check that `party_member.yaml` still has `agent.office_role: party_member`. The `operator_message` and `viewer_joined` handlers skip the LLM for that role (U6). |
 
-## Known gaps (not in OB-22's scope)
+## Known gaps
 
 - **The observer's gaze can't follow the speaker yet.**
   `agent.office.observer.stage_path` is unset because the roundtable's
   `stage.json` lives in that container's `TILE_RELAY_DIR`, which the
   observer can't see. Gaze rotates over the seats until OB-32 shares a relay
   volume.
-- **Off-hours filler does not render yet.** The day runner's
-  `replay_request` goes to the CEO worker, whose layout has no replay pane
-  (see "Day runner" above). This needs `replay_target: roundtable` plus a
-  cast, after OB-32.
 - **Aider commits use the default email.** The coding backend's git author is
   `agent.name`, whose default email contains a space
   (`theo palliser@virtualtubers.local`). `agent.office.author_email` covers
@@ -346,3 +397,10 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
   (`OFFICE_CORPUS_DIR`). Closed known gaps: the Party Member is silent in
   `operator_message` / `viewer_joined` (U6), and `.env.example` lists `TUBER7_STREAM_KEY`,
   `OBSERVER_LAYOUT_PRESET` and `OBSERVER_AVATAR_PROVIDER`.
+- v1.2.0 (2026-09-28): Batch B integration. Closed known gaps: off-hours
+  filler airs on the roundtable (`replay_target: roundtable` + seat cast),
+  and the Twitch map has an office variant (`OFFICE_TWITCH_CHANNEL_MAP`,
+  override on `twitch-presence`). New: office PRs land on the week trunk
+  `loop/<W>` (`base_branch: auto`), the 23:45 `wrap_up` status reports,
+  `character_refresh` checkout after the weekly reset, and the seven
+  speaking seats' `live_transcript: true`. Troubleshooting rows added.

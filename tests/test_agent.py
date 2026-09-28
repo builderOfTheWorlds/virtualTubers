@@ -1007,6 +1007,8 @@ def test_message_handlers_covers_all_documented_types():
         "test_request",
         "status_report",
         "phase_change",
+        "wrap_up",
+        "character_refresh",
         # live roundtable transcript (OB-32, docs/live_pane.md)
         "office_line",
         "observer_pose",
@@ -1034,7 +1036,8 @@ def test_agent_entry_point_dispatches_via_agent_handlers_table():
         "replay_request", "replay_stop", "viewer_joined", "replay_invite",
         "replay_ready", "replay_cue", "replay_end",
         "directive", "functional_plan", "technical_plan", "test_request",
-        "status_report", "phase_change", "office_line", "observer_pose",
+        "status_report", "phase_change", "wrap_up", "character_refresh",
+        "office_line", "observer_pose",
     }
 
 

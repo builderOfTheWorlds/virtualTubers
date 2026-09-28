@@ -654,3 +654,29 @@ def test_playlist_satisfies_protocol():
 def test_unknown_time_zone_is_value_error():
     with pytest.raises(ValueError):
         dr.DayRunner(tz="Mars/Olympus", state_path=None)
+
+
+# ── batch B: the wrap-up line on the live transcript ─────────────────────────
+@pytest.mark.parametrize("live", [True, False])
+def test_wrap_up_line_published_to_live_transcript_only_when_opted_in(tmp_path, pack, gitea, live):
+    clock, producer = FakeClock(DAY, 6, 0), ListProducer()
+    runner = make_runner(tmp_path, clock, arc_provider=arc())
+    cfg = ceo_cfg(pack)
+    if live:
+        cfg["office"]["live_transcript"] = True
+    runner(CEO, cfg, ScriptedLLM("ceo"), producer, None)
+    producer.clear()
+    clock.set(DAY, 23, 45)
+    sent = runner(CEO, cfg, ScriptedLLM("ceo"), producer, None)
+    # (phase_change(ship) first: the runner skipped 18:00.) office_line never joins `sent`.
+    assert [m["type"] for m in sent] == ["phase_change", "wrap_up"]
+    wrap = sent[-1]
+    validate_message(wrap)
+    lines = [m for m in producer.sent if m["type"] == "office_line"]
+    if live:
+        [line] = lines
+        assert line["to"] == "roundtable" and line["payload"]["seat"] == CEO
+        assert line["correlation_id"] == wrap["correlation_id"]
+        assert line["payload"]["text"]
+    else:
+        assert lines == []

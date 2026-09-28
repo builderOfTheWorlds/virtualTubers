@@ -82,7 +82,8 @@ import time:
 Any other value (or none) keeps the dev-team lists byte-for-byte. The
 roundtable id (`roundtable`) is the same in both shows. Twitch presence has
 its own map (`TWITCH_CHANNEL_MAP`, docs/twitch_presence.md): in office mode
-point it at seat ids too — that service is not changed here.
+`docker-compose.office.yml` feeds it `OFFICE_TWITCH_CHANNEL_MAP` (channels →
+seat ids) instead.
 
 ## Signature
 

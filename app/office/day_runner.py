@@ -42,16 +42,19 @@ from datetime import date, datetime, time as dtime, timedelta, timezone
 from typing import Any, Callable, Optional, Protocol, runtime_checkable
 from zoneinfo import ZoneInfo
 
+import live_pane
 from agent_handlers.manager import MAX_BUG_RETRIES
 from agent_state import write_state
-from message_bus import BROADCAST, build_message
+from message_bus import build_message
 from office.clock import DEFAULT_TZ, PHASES, office_time
 from office.protocol import (
     CLOCK_SENDER,
     CLOCK_SENDERS,
+    WRAP_UP,
     build_day_end,
     build_day_start,
     build_phase_change,
+    build_wrap_up,
 )
 from relay_io import atomic_write_json, read_json
 
@@ -72,7 +75,6 @@ DEFAULT_RETRY_BACKOFF_S = 300.0
 DEFAULT_COMPLETION_POLL_S = 300.0
 DEFAULT_CORPUS_TAG = "feature"
 DIRECTIVE_LABEL = "directive"              # agent_handlers.office.DIRECTIVE_LABEL
-WRAP_UP = "wrap_up"                        # CEO broadcast asking for end-of-day reports
 REPLAY_REQUEST = "replay_request"          # handled by agent_handlers.replay_relay
 SOURCES = ("arc", "feature", "backlog")
 _MAX_USED_REFS = 500
@@ -514,9 +516,9 @@ class DayRunner:
         self.save()     # before the side effects: a crash never repeats the wrap-up
         office = _office()
         directives = self._directive_summaries()
-        msg = build_message(worker_id, BROADCAST, WRAP_UP,
-                            {"day": st["day"], "directives": directives,
-                             "request": "status_report"},
+        # office.protocol clock broadcast; each seat's agent_handlers.office.
+        # handle_wrap_up answers with one status_report up the chain.
+        msg = build_wrap_up(st["day"], directives=directives, sender=self._sender(worker_id),
                             correlation_id=st["day_chain"])
         self._send(producer, msg, sent)
         done = sum(d["status"] == "done" for d in directives)
@@ -531,6 +533,10 @@ class DayRunner:
         if state_path:
             write_state(state_path, "speaking", action="end-of-day wrap-up", bubble=line,
                         emotion=emotion)
+        # Live roundtable transcript: gated per seat (agent.office.live_transcript),
+        # never raises; not added to `sent` (it is decoration, not the day's script).
+        live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion,
+                                      st["day_chain"])
         gitea = self._gitea(agent_config)
         if gitea is not None:
             for d in st["directives"]:

@@ -59,6 +59,9 @@ agent:
     # OB-07: speaking turns must be serialized. Only the CEO narrates a
     # phase_change, so the broadcast costs ONE LLM turn instead of seven.
     narrate_phase_change: true
+    # OB-32 live roundtable transcript (docs/live_pane.md): every line this
+    # seat speaks is also sent to the roundtable as `office_line`.
+    live_transcript: true
     gitea:
       base_url: http://192.168.1.120:3300
       owner: gitea_admin
@@ -78,8 +81,24 @@ agent:
       # office-* replays from message-api. The URL comes from the
       # MESSAGE_API_URL env the override sets (http://message-api:8000).
       playlist: office.playlist:day_runner_playlist
+      # Off-hours / stall replays air on the roundtable show, not on the CEO's
+      # own tuber_base channel (which has no replay pane). The roundtable only
+      # lights its tiles through the duet director path, which needs
+      # payload.cast (docs/duet_replay.md): office episodes name speakers by
+      # seat id, so the cast is the identity seat -> tile map — the same one
+      # the control panel's office-mode Play sends. tuber_7 is left out on
+      # purpose: the Party Member never speaks (U6).
+      replay_target: roundtable
       playlist_options:
         scenes_dir: /campaigns/ashiorid_office/scenes
+        cast:
+          tuber_0: tuber_0
+          tuber_1: tuber_1
+          tuber_2: tuber_2
+          tuber_3: tuber_3
+          tuber_4: tuber_4
+          tuber_5: tuber_5
+          tuber_6: tuber_6
       # Directive source 2: a sessionCorpus JSONL export. OPTIONAL mount (see
       # docs/office_deployment.md "Day runner"); while the file is absent the
       # source is skipped and the backlog below supplies the directive.

@@ -191,6 +191,30 @@ services:
     environment:
       CONTROL_PANEL_SHOW: office
 
+  # ── Twitch presence: greet viewers on the SEAT that streams the channel ────
+  # twitch-presence addresses each viewer_joined to the worker id mapped to the
+  # channel (TWITCH_CHANNEL_MAP, channel:worker_id). Channels don't move
+  # between shows, but the worker ids do (WORKER_ID -> seat id above), so the
+  # dev-team map would greet containers that no longer answer. Office mode
+  # reads a SEPARATE variable with the same channels mapped to seat ids:
+  #
+  #   dev-team id   ->  seat      service
+  #   tuber_0       ->  tuber_0   worker-gm              (CEO)
+  #   manager       ->  tuber_1   worker-manager         (Tech Lead)
+  #   coder-native  ->  tuber_2   worker-coder-native    (Analyst)
+  #   coder-aider   ->  tuber_3   worker-coder-aider     (Engineer)
+  #   tester        ->  tuber_4   worker-tester          (Tester)
+  #   coder-opencode->  tuber_5   worker-coder-opencode  (Marketing)
+  #   coder         ->  tuber_6   worker-coder           (Office Manager)
+  #   (new channel) ->  tuber_7   worker-observer        (Party Member; greets silently, U6)
+  #
+  # e.g. OFFICE_TWITCH_CHANNEL_MAP=mycoderchannel:tuber_6,mymgrchannel:tuber_1
+  # Unset -> the service idles (no greetings) rather than greet the wrong
+  # worker with the dev-team map.
+  twitch-presence:
+    environment:
+      TWITCH_CHANNEL_MAP: ${OFFICE_TWITCH_CHANNEL_MAP:-}
+
   # ── The office roundtable show (director + 8 seat tiles) ───────────────────
   # WORKER_ID stays "roundtable" (control panel ROUNDTABLE_WORKER_ID).
   worker-roundtable:

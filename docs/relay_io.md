@@ -18,6 +18,14 @@ goes through this module:
 | ready | `REPLAY_READY_FILE` | `/tmp/replay_ready.json` | agent (`replay_ready`, read-modify-write) | director ready-wait |
 | tile request | `TILE_RELAY_DIR` | `/tmp/tiles/<slot>.request.json` | director (`_write_tile_requests`) | `tile_pane.handle_once` (consume) |
 | tile cue | `TILE_RELAY_DIR` | `/tmp/tiles/<slot>.cue.json` | director (`_write_tile_cues`/`_write_tile_end`) | tile `wait_for_scene` |
+| live spool | `TILE_RELAY_DIR` | `/tmp/tiles/live/<20-digit ns>-<8 hex>.json` (one file per line) | roundtable agent (`office_line` → `live_pane.handle_office_line`) | `live_pane.LiveDirector` (consume, oldest first) |
+| tile live line | `TILE_RELAY_DIR` | `/tmp/tiles/<slot>.live.json` | director (`LiveDirector.hand`) | tile `live_pane.handle_live_once` (consume) |
+| live audio | `TILE_RELAY_DIR` | `/tmp/tiles/live_audio/<line_id>.wav` | director (TTS) | tile (plays, then deletes; the director prunes > 10 min) |
+| observer pose | `TILE_RELAY_DIR` | `/tmp/tiles/<observer>.pose.json` (`tuber_7` in the office show) | roundtable agent (`observer_pose` → `live_pane.handle_observer_pose`) | observer tile head (`live_pane.ObserverGaze`) |
+
+The four live-transcript rows (OB-32) are written through `relay_io`'s
+atomic helpers by `app/live_pane.py`; JSON shapes are in
+[live_pane.md](live_pane.md) ("Relay files added").
 
 (`<relay-dir>/stage.json` and `<slot>.state.json` are written by
 `app/gaze.py` and `app/agent_state.py`, which already use per-process unique
@@ -170,6 +178,10 @@ relay_io.delete_if_airing(cue_file, "a1")
   `relay_io` logger as `relay_io.<event> path=... error=...`.
 
 ## Changelog
+
+- **v1.1.0** (2026-09-28): Docs only: the relay file table lists the OB-32
+  live-transcript files (`live/` spool, `<slot>.live.json`, `live_audio/`,
+  `<observer>.pose.json`).
 
 - **v1.0.0** (2026-09-27): Initial version. Consolidates the duplicated
   relay helpers from `agent_handlers/relay_files.py`, `replay_pane.py` and

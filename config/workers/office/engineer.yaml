@@ -69,12 +69,18 @@ agent:
     # GIT_ASKPASS helper with the token env var NAMED below, so no SSH key is
     # mounted. The SSH form (U5) is ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git.
     remote_url: http://192.168.1.120:3300/gitea_admin/fraud-stop.git
-    base_branch: main
+    # "auto": the current office week's trunk loop/<W> (weekly_reset rebuilds it
+    # every Sunday from loop-seed). Branches start there, PRs target it, the
+    # TL merges into it. An explicit branch name here overrides.
+    base_branch: auto
     author_name: "Theo Palliser"
     author_email: "theo.palliser@ashiorid.local"
     # OB-07: speaking turns must be serialized. Only the CEO narrates a
     # phase_change, so the broadcast costs ONE LLM turn instead of seven.
     narrate_phase_change: false
+    # OB-32 live roundtable transcript (docs/live_pane.md): every line this
+    # seat speaks is also sent to the roundtable as `office_line`.
+    live_transcript: true
     gitea:
       base_url: http://192.168.1.120:3300
       owner: gitea_admin

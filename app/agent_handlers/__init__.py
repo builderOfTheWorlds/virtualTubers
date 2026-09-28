@@ -23,12 +23,14 @@ from .manager import (
 )
 from .office import (
     ceo_idle_tick,
+    handle_character_refresh,
     handle_directive,
     handle_functional_plan,
     handle_phase_change,
     handle_status_report,
     handle_technical_plan,
     handle_test_request,
+    handle_wrap_up,
     observer_idle_tick,
     office_manager_idle_tick,
 )
@@ -67,13 +69,17 @@ MESSAGE_HANDLERS = {
     "replay_end": handle_replay_end,
     # ashiorid_office protocol (app/office/protocol.py; docs/agent_handlers.md
     # "Office handlers"). day_start / day_end are clock broadcasts with no
-    # handler yet (OB-30).
+    # handler (the day runner emits them; nothing needs to react).
     "directive": handle_directive,
     "functional_plan": handle_functional_plan,
     "technical_plan": handle_technical_plan,
     "test_request": handle_test_request,
     "status_report": handle_status_report,
     "phase_change": handle_phase_change,
+    # 23:45 day-runner broadcast -> one end-of-day status_report per seat.
+    "wrap_up": handle_wrap_up,
+    # Sunday weekly_reset broadcast -> clear office state, check out loop/<W>.
+    "character_refresh": handle_character_refresh,
     # OB-32 live roundtable transcript (docs/live_pane.md): roundtable-side
     # relay writers; no-ops on every worker that isn't a live roundtable.
     "office_line": handle_office_line,

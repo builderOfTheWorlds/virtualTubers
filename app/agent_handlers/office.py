@@ -22,6 +22,10 @@ The chain (docs/agent_handlers.md "Office handlers"):
   CEO directive -> Analyst functional_plan -> Tech Lead technical_plan (+
   task_assignment to the Engineer) -> Engineer commit + test_request ->
   Tester test_passed -> Tech Lead status_report -> CEO closes the issue.
+  23:45 wrap_up (day runner) -> one status_report per seat to its superior;
+  Sunday character_refresh (weekly_reset) -> clear state, check out loop/<W>.
+  Lane/Engineer branches start from, and PRs target, the week trunk
+  loop/<W> (_base_branch; agent.office.base_branch overrides).
 
 Git and Gitea are opt-in per worker (`agent.office.workspace` /
 `agent.office.gitea`); with neither configured the handlers still speak and
@@ -32,7 +36,8 @@ import logging
 import re
 import subprocess
 import time
-from datetime import datetime
+import os
+from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -44,6 +49,7 @@ from message_bus import BROADCAST, build_message, correlation_of, reply_ids
 from office import brief_stub
 from office.clock import DEFAULT_TZ
 from office.protocol import (
+    CLOCK_SENDERS,
     PHASES,
     ProtocolError,
     build_directive,
@@ -53,7 +59,9 @@ from office.protocol import (
     build_test_request,
     validate_message,
 )
-from office.roles import SEAT, OfficeRole, as_role, can_direct, lane_allows
+from office.roles import REPORTS_TO, SEAT, OfficeRole, as_role, can_direct, lane_allows
+from office.weekly_reset import CHARACTER_REFRESH, current_loop_branch
+from office.weekly_reset import DEFAULT_EPOCH as DEFAULT_LOOP_EPOCH
 
 from . import tester as tester_handlers
 from .common import _complete_with_emotion
@@ -67,7 +75,11 @@ DEFAULT_GITEA_BASE_URL = "http://192.168.1.120:3300"
 DEFAULT_GITEA_OWNER = "gitea_admin"
 DEFAULT_GITEA_REPO = "fraud-stop"
 OBSERVER_TOKEN_ENV = "GITEA_TOKEN_OBSERVER"
+#: Fallback base when the week trunk can't be derived (bad epoch/tz). The
+#: normal office base is the current week's `loop/<W>` (weekly_reset).
 DEFAULT_BASE_BRANCH = "main"
+#: agent.office.base_branch value (or unset) meaning "the current loop/<W>".
+AUTO_BASE_BRANCH = "auto"
 #: Every branch an office persona creates starts with this; the Office
 #: Manager's garbage collection never touches a branch without it.
 BRANCH_PREFIX = "office/"
@@ -163,8 +175,43 @@ def build_git_client(agent_config, repo_path=None):
                      remote_url=settings.get("remote_url"))
 
 
-def _base_branch(agent_config):
-    return office_settings(agent_config).get("base_branch") or DEFAULT_BASE_BRANCH
+def _clock():
+    """Now (tz-aware UTC). Tests monkeypatch this name to move the office week."""
+    return datetime.now(timezone.utc)
+
+
+def loop_epoch_and_tz(agent_config):
+    """(epoch, tz) for the office week: agent.office.day_runner.epoch/tz, then
+    agent.office.epoch/tz, then env OFFICE_EPOCH/OFFICE_TZ (the weekly_reset
+    CLI's), then the defaults — the same precedence build_day_runner uses."""
+    settings = office_settings(agent_config)
+    runner = settings.get("day_runner") if isinstance(settings.get("day_runner"), dict) else {}
+    epoch = (runner.get("epoch") or settings.get("epoch") or os.environ.get("OFFICE_EPOCH")
+             or DEFAULT_LOOP_EPOCH)
+    tz = runner.get("tz") or settings.get("tz") or os.environ.get("OFFICE_TZ") or DEFAULT_TZ
+    return epoch, tz
+
+
+def _base_branch(agent_config, now=None):
+    """The branch office PRs target, Engineer/lane branches start from and the
+    TL merges into: an explicit agent.office.base_branch wins; unset or
+    "auto" -> the current week's trunk loop/<W> (weekly_reset.
+    current_loop_branch, same epoch/tz as the day runner). A week that can't
+    be derived falls back to DEFAULT_BASE_BRANCH (WARN)."""
+    explicit = office_settings(agent_config).get("base_branch")
+    if explicit and str(explicit).strip().lower() != AUTO_BASE_BRANCH:
+        log.debug("office base_branch explicit branch=%s", explicit)
+        return str(explicit)
+    epoch, tz = loop_epoch_and_tz(agent_config)
+    try:
+        branch = current_loop_branch(now or _clock(), epoch, tz)
+    except (ValueError, TypeError) as exc:
+        log.warning("office base_branch auto failed, using fallback fallback=%s error=%s",
+                    DEFAULT_BASE_BRANCH, exc)
+        print(f"[agent] WARN event=base_branch_fallback branch={DEFAULT_BASE_BRANCH} error='{exc}'")
+        return DEFAULT_BASE_BRANCH
+    log.debug("office base_branch auto branch=%s epoch=%s tz=%s", branch, epoch, tz)
+    return branch
 
 
 def _merge_prs(agent_config):
@@ -188,10 +235,20 @@ _day_runner_autoinstall_done = False  # OB-30: agent.office.day_runner built at 
 def _reset_office_state():
     """Forget directives, phase, chore schedule, observer rotation and the
     day runner (tests / config reload)."""
-    global _today, _phase, _chores, _day_runner, _day_runner_autoinstall_done
-    _directives.clear()
-    _today = _phase = _chores = _day_runner = None
+    global _day_runner, _day_runner_autoinstall_done
+    _refresh_office_state()
+    _day_runner = None
     _day_runner_autoinstall_done = False
+
+
+def _refresh_office_state():
+    """character_refresh: forget the week's in-process character state
+    (directives, phase, chore schedule, observer rotation). The installed
+    day runner stays: it is the CEO's clock, not character memory, and its
+    own state file already carries the day across the reset."""
+    global _today, _phase, _chores
+    _directives.clear()
+    _today = _phase = _chores = None
     _observer.update(tick=0, rotation=0)
 
 
@@ -704,7 +761,10 @@ def handle_status_report(worker_id, agent_config, llm_client, producer, msg,
     closed = False
     sender_role = as_role(msg["from"])
     issue = payload.get("issue") or (directive or {}).get("issue")
-    if (role is OfficeRole.CEO and sender_role is OfficeRole.TECH_LEAD
+    # An end-of-day wrap-up report (handle_wrap_up) only summarises: the issue
+    # was already closed (or carried over) by the directive chain itself.
+    wrap_up = payload.get("report") == WRAP_UP_REPORT
+    if (role is OfficeRole.CEO and sender_role is OfficeRole.TECH_LEAD and not wrap_up
             and payload.get("status") == "done" and issue):
         gitea = build_gitea_client(agent_config)
         if gitea is not None:
@@ -715,7 +775,129 @@ def handle_status_report(worker_id, agent_config, llm_client, producer, msg,
            action=f"report from {msg['from']}", bubble=line, emotion=emotion)
     live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
     _event(worker_id, "status_report_acknowledged", sender=msg["from"],
-           status=payload.get("status"), issue_closed=closed, correlation_id=cid)
+           status=payload.get("status"), wrap_up=wrap_up, issue_closed=closed,
+           correlation_id=cid)
+
+
+#: payload.report marker on a status_report sent in answer to wrap_up.
+WRAP_UP_REPORT = "wrap_up"
+
+
+def _wrap_up_status(directives):
+    """status_report.status for the wrap-up: "done" when every directive of
+    the day is done, "on_track" otherwise (and with no directive at all)."""
+    statuses = [(d or {}).get("status") for d in directives or [] if isinstance(d, dict)]
+    return "done" if statuses and all(s == "done" for s in statuses) else "on_track"
+
+
+def handle_wrap_up(worker_id, agent_config, llm_client, producer, msg,
+                   state_path=None, coding_backend=None):
+    """Everyone (23:45 day-runner broadcast): each seat with a superior sends
+    it ONE end-of-day status_report — Analyst / Marketing / Office Manager /
+    Tech Lead to the CEO, Engineer / Tester to the Tech Lead (office.roles
+    REPORTS_TO; build_status_report enforces the rank rule). The CEO and
+    the Party Member stay quiet. One LLM line each, via the persona brief,
+    published to the live transcript. Returns the sent report or None."""
+    role = _accept(worker_id, agent_config, msg, set(OfficeRole), "wrap_up")
+    if role is None:
+        return None
+    payload = msg["payload"]
+    cid = correlation_of(msg)
+    day = payload["day"]
+    superior = REPORTS_TO.get(role)
+    if superior is None:
+        # CEO (the sender) and Party Member (never speaks, U6): nothing to report.
+        _event(worker_id, "wrap_up_noted", role=role.value, reported=False, correlation_id=cid)
+        return None
+    directives = [d for d in payload.get("directives") or [] if isinstance(d, dict)]
+    done = sum(d.get("status") == "done" for d in directives)
+    titles = "; ".join(f"{d.get('title') or 'untitled'} ({d.get('status') or 'unknown'})"
+                       for d in directives) or "no directive today"
+    status = _wrap_up_status(directives)
+    persona = persona_prompt(agent_config, _today)
+    _state(state_path, "thinking", action="end-of-day report")
+    line, emotion, _ = _speak(
+        worker_id, llm_client, persona,
+        f"It's 23:45 on {day}: the CEO wants end-of-day status reports. Today's directives: "
+        f"{titles}. Give {superior.value.replace('_', ' ')} your status report from your own "
+        "desk in 1-2 sentences, in character.",
+        f"End of day {day}: {done} of {len(directives)} directive(s) done on my side.", cid)
+    try:
+        report = build_status_report(worker_id, line, status=status, day=day, reply_to=msg)
+        report = _with_extra(report, {"report": WRAP_UP_REPORT,
+                                      "directives_done": done, "directives": len(directives)})
+    except ProtocolError as exc:
+        _event(worker_id, "status_report_failed", logging.ERROR, handler="wrap_up",
+               correlation_id=cid, error=f"'{exc}'")
+        return None
+    producer.send(report)
+    _state(state_path, "speaking", action="end-of-day report", bubble=line, emotion=emotion)
+    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid,
+                                  to=report["to"])
+    _event(worker_id, "wrap_up_report_sent", role=role.value, to=report["to"], status=status,
+           correlation_id=cid)
+    return report
+
+
+def handle_character_refresh(worker_id, agent_config, llm_client, producer, msg,
+                             state_path=None, coding_backend=None):
+    """Everyone (weekly_reset broadcast {campaign, week, characters, reason,
+    closing_week, branch}): office seats forget the closing week's in-process
+    state and, with their own Fraud-Stop workspace, fetch and check out the
+    new week trunk `payload.branch`. The Tester (read-only mount of the
+    Engineer's clone) and seats without a workspace skip git. Non-office
+    workers ignore it. Returns {"refreshed", "branch", "checked_out"} or None."""
+    role = office_role_of(agent_config)
+    if role is None:
+        print(f"[agent:{worker_id}] ignoring {CHARACTER_REFRESH} (not an office worker)")
+        return None
+    cid = correlation_of(msg)
+    if msg.get("from") not in CLOCK_SENDERS or msg.get("to") != BROADCAST:
+        _event(worker_id, "rank_violation", logging.ERROR, handler=CHARACTER_REFRESH,
+               sender=msg.get("from"), to=msg.get("to"), correlation_id=cid, outcome="dropped")
+        return None
+    payload = msg.get("payload") if isinstance(msg.get("payload"), dict) else {}
+    characters = payload.get("characters") or ["*"]
+    if "*" not in characters and worker_id not in characters and role.value not in characters:
+        _event(worker_id, "character_refresh_skipped", reason="not_addressed", correlation_id=cid)
+        return None
+    _refresh_office_state()
+    branch = str(payload.get("branch") or "").strip() or None
+    checked_out = False
+    if branch is None:
+        _event(worker_id, "character_refresh_no_branch", logging.WARNING, correlation_id=cid)
+    elif role is OfficeRole.TESTER:
+        log.debug("office character_refresh git skipped role=tester reason=read_only_mount")
+    else:
+        git = build_git_client(agent_config, repo_path=getattr(coding_backend, "workspace", None)
+                               if role is OfficeRole.ENGINEER else None)
+        if git is None:
+            log.debug("office character_refresh git skipped role=%s reason=no_workspace", role.value)
+        else:
+            checked_out = _checkout_week_branch(worker_id, git, branch, cid)
+    _state(state_path, "idle", action=f"new week {payload.get('week')}", bubble=None)
+    _event(worker_id, "character_refreshed", role=role.value, week=payload.get("week"),
+           branch=branch, checked_out=checked_out, correlation_id=cid)
+    return {"refreshed": True, "branch": branch, "checked_out": checked_out}
+
+
+def _checkout_week_branch(worker_id, git, branch, correlation_id):
+    """Fetch (the remote now has the fresh loop/<W>) and switch to `branch`
+    (git DWIMs a tracking branch from origin). Returns True on success;
+    failures are logged (never the remote URL / token) and return False."""
+    try:
+        log.debug("office git call op=fetch branch=%s", branch)
+        fetched = git.fetch(tags=True, prune=True)
+        if not fetched:
+            _event(worker_id, "week_branch_fetch_failed", logging.WARNING, branch=branch,
+                   correlation_id=correlation_id)
+        log.debug("office git call op=checkout branch=%s", branch)
+        git.checkout(branch)
+    except (GitError, OSError) as exc:
+        _event(worker_id, "week_branch_checkout_failed", logging.ERROR, branch=branch,
+               correlation_id=correlation_id, error=f"'{exc}'")
+        return False
+    return True
 
 
 def handle_phase_change(worker_id, agent_config, llm_client, producer, msg,
@@ -1032,11 +1214,12 @@ def observer_idle_tick(worker_id, agent_config, llm_client, producer, state_path
 
 
 __all__ = [
-    "BRANCH_PREFIX", "CHORES", "DIRECTIVE_RECIPIENTS", "OBSERVER_POSE", "ChoreScheduler",
+    "AUTO_BASE_BRANCH", "BRANCH_PREFIX", "CHORES", "WRAP_UP_REPORT", "DIRECTIVE_RECIPIENTS", "OBSERVER_POSE", "ChoreScheduler",
     "LaneViolation", "build_git_client", "build_gitea_client", "ceo_idle_tick",
     "collect_garbage", "current_phase", "directive_for", "engineer_handoff",
     "engineer_prepare", "extract_tasks", "get_day_runner", "handle_directive",
-    "handle_functional_plan", "handle_phase_change", "handle_status_report",
+    "handle_character_refresh", "handle_functional_plan", "handle_phase_change",
+    "handle_status_report", "handle_wrap_up", "loop_epoch_and_tz",
     "handle_technical_plan", "handle_test_request", "issue_directive", "lane_commit",
     "observer_idle_tick", "office_manager_idle_tick", "office_role_of", "office_settings",
     "persona_prompt", "remember_directive", "set_day_runner", "tech_lead_after_test_passed",

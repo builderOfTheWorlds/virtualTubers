@@ -25,7 +25,27 @@ matter when editing or testing it.
 | `operator.py` | `operator_message` (office Party Member: silent ack, no LLM — U6) | — |
 | `viewer.py` | `viewer_joined` (office Party Member: rerun only, no greeting — U6) | `_pick_rerun_episode` |
 | `replay_relay.py` | `replay_request`, `replay_stop`, `replay_invite`, `replay_ready`, `replay_cue`, `replay_end` | `_is_valid_cast` |
-| `office.py` | `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change` | idle hooks `ceo_idle_tick` / `office_manager_idle_tick` / `observer_idle_tick`; `issue_directive`, `set_day_runner`; office_role hooks `engineer_prepare` / `engineer_handoff` / `tech_lead_after_test_passed`; `lane_commit`, `collect_garbage` — see "Office handlers" below |
+| `office.py` | `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change`, `wrap_up`, `character_refresh` | idle hooks `ceo_idle_tick` / `office_manager_idle_tick` / `observer_idle_tick`; `issue_directive`, `set_day_runner`; office_role hooks `engineer_prepare` / `engineer_handoff` / `tech_lead_after_test_passed`; `lane_commit`, `collect_garbage`; `_base_branch` (week trunk `loop/<W>`) — see "Office handlers" below |
+| `live_transcript.py` | `office_line`, `observer_pose` | roundtable-side adapters onto `app/live_pane.py` (docs/live_pane.md); no-ops on every worker that is not a live roundtable |
+
+### Dispatch table (`MESSAGE_HANDLERS`)
+
+| Type | Handler | Who acts on it |
+|---|---|---|
+| `task_assignment` | `coder.handle_task_assignment` | coder (office: Engineer) |
+| `commit_notification`, `retest_request` | `tester.*` | tester |
+| `bug_report`, `test_passed`, `task_complete`, `clarification_request` | `manager.*` | manager (office: Tech Lead) |
+| `operator_message` | `operator.handle_operator_message` | any role |
+| `viewer_joined` | `viewer.handle_viewer_joined` | any role |
+| `replay_request`, `replay_stop`, `replay_invite`, `replay_ready`, `replay_cue`, `replay_end` | `replay_relay.*` | any role (replay pane relay files) |
+| `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change` | `office.handle_<type>` | office seats (see "Office handlers") |
+| `wrap_up` | `office.handle_wrap_up` | office seats: one end-of-day `status_report` to the superior |
+| `character_refresh` | `office.handle_character_refresh` | office seats: clear office state, check out the new `loop/<W>` |
+| `office_line` | `live_transcript.handle_office_line` | the live office roundtable only → `<relay>/live/` spool |
+| `observer_pose` | `live_transcript.handle_observer_pose` | the live office roundtable only → `<relay>/<observer>.pose.json` |
+
+`day_start` / `day_end` (clock broadcasts) and `status_update` (heartbeat)
+have no handler: nothing reacts to them.
 
 Dependency direction is one-way: handler modules import from `common` /
 `relay_files` (`operator` and `viewer` also import `office.office_role_of` for the
@@ -218,6 +238,18 @@ Each office handler does five steps:
 | `handle_test_request` | tester | CI result comment on the PR | `test_passed` / `bug_report` → TL (reused `tester._run_tests_and_report`) |
 | `handle_status_report` | ceo, tech_lead | CEO: comment + close the issue on the TL's `done` | nothing |
 | `handle_phase_change` | all | none | nothing. Speaking roles say one line. The Party Member only changes pose and never calls the LLM. |
+| `handle_wrap_up` | all (CEO / Party Member stay quiet) | none | one `status_report` (`report: "wrap_up"`, `status` done when every directive of the day is done, else on_track) to `REPORTS_TO`: Analyst, Marketing, OM, TL → CEO; Engineer, Tester → TL. The CEO never re-closes an issue on a wrap-up report. |
+| `handle_character_refresh` | all | seats with a workspace (not the Tester's read-only mount): `git fetch` + `git checkout <payload.branch>` | nothing. Clears directives / phase / chores / observer rotation (`_refresh_office_state`); the installed day runner is kept. Refused (`rank_violation`) unless from the clock (`office_clock` / `tuber_0`) as a broadcast. |
+
+**Base branch (batch B).** Lane branches start from, PRs target, the TL
+merges into and OM garbage collection protects `_base_branch(agent_config)`:
+an explicit `agent.office.base_branch` wins; unset or `"auto"` is the current
+office week's trunk `loop/<W>` from `office.weekly_reset.current_loop_branch`
+(epoch/tz: `day_runner.epoch/tz`, then `agent.office.epoch/tz`, then env
+`OFFICE_EPOCH` / `OFFICE_TZ`, then 2026-09-27 / America/New_York). If the
+week can't be derived (e.g. before the epoch) it falls back to `main` with
+`event=base_branch_fallback`. Tests move the week by patching
+`agent_handlers.office._clock`.
 
 Idle hooks (`IDLE_TICK_HOOKS`, keyed by `agent.role`):
 
@@ -276,10 +308,11 @@ agent:
     max_backstory_chars: 4000              # optional
     workspace: /data/repos/fraud-stop      # enables lane commits (Engineer: coding backend workspace)
     remote_url: ssh://git@192.168.1.120:2222/gitea_admin/fraud-stop.git
-    base_branch: main
+    base_branch: auto                      # auto/unset = current loop/<W>; a name overrides
     author_name: "Maren Voss"
     merge_prs: true                        # TL merges after its COMMENT review
     narrate_phase_change: true
+    live_transcript: true                  # also send every spoken line to the roundtable (docs/live_pane.md)
     gitea:                                 # absent or enabled: false = no Gitea calls
       base_url: http://192.168.1.120:3300
       owner: gitea_admin
@@ -310,6 +343,13 @@ Where to patch in tests: `agent_handlers.office.build_gitea_client`,
 fake-bus e2e runs the whole chain.
 
 ## Changelog
+
+- v1.5.0 (2026-09-28): `wrap_up` (`handle_wrap_up`) and `character_refresh`
+  (`handle_character_refresh`) registered; dispatch table section added
+  (incl. `office_line` / `observer_pose` from `live_transcript.py`). Office
+  base branch defaults to the current week trunk `loop/<W>`
+  (`agent.office.base_branch: auto`). The CEO skips closing the issue on a
+  wrap-up report.
 
 - v1.4.0 (2026-09-28): U6 Party Member silence in `operator_message` (silent
   `operator_reply` `{"silent": true}`, no LLM) and `viewer_joined` (rerun

@@ -81,6 +81,8 @@ DEFAULT_TOPIC = "vtuber.messages"
 #: Aider writes these into the workspace root; `git clean -fd` keeps them
 #: because aider adds `.aider*` to .gitignore, so the reset removes them here.
 DEFAULT_WORKSPACE_STATE_FILES = (".aider.chat.history.md", ".aider.input.history")
+#: The week trunk every office PR targets (ResetConfig.week_branch_fmt default).
+WEEK_BRANCH_FMT = "loop/{week}"
 
 
 def _trace(msg, *args):
@@ -107,7 +109,7 @@ class ResetConfig:
     campaign: str = CAMPAIGN
     base_branch: str = "main"
     seed_tag: str = "loop-seed"
-    week_branch_fmt: str = "loop/{week}"
+    week_branch_fmt: str = WEEK_BRANCH_FMT
     archive_branch_fmt: str = "archive/week-{week}"
     issue_label_fmt: str = "loop-{week}"
     #: files or directories removed by clear_session_state
@@ -156,6 +158,21 @@ def is_protected_branch(name, config=None):
     if short in (config.base_branch, config.seed_tag):
         return True
     return short.startswith(config.protected_prefixes())
+
+
+def current_loop_branch(now=None, epoch=DEFAULT_EPOCH, tz=DEFAULT_TZ, fmt=WEEK_BRANCH_FMT):
+    """The week trunk (`loop/<W>`) for the office week containing `now`
+    (tz-aware; default the current UTC instant), using the same epoch/tz
+    week arithmetic as WeeklyReset.week_for. `epoch` may be a date or a
+    YYYY-MM-DD string. Raises ValueError for a bad epoch/tz, a naive `now`
+    or an instant before the epoch (office.clock.office_time)."""
+    now = now or datetime.now(timezone.utc)
+    if isinstance(epoch, str):
+        epoch = date.fromisoformat(epoch)
+    week = office_time(now, epoch, tz).loop_week
+    branch = fmt.format(week=week)
+    log.debug("weekly_reset current_loop_branch now=%s week=%s branch=%s", now, week, branch)
+    return branch
 
 
 # ── step ledger ──────────────────────────────────────────────────────────────

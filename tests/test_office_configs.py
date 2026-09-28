@@ -203,7 +203,8 @@ def test_office_block_points_at_the_fraud_stop_repo(role):
     if role in LANE_WRITERS:
         assert office["workspace"] == "/data/repos/fraud-stop"
         assert office["remote_url"] in FRAUD_STOP_REMOTES
-        assert office["base_branch"] == "main"
+        # "auto" -> the current week trunk loop/<W> (agent_handlers.office._base_branch).
+        assert office["base_branch"] == "auto"
     else:
         assert "workspace" not in office
 
@@ -381,3 +382,78 @@ def test_ceo_config_builds_a_day_runner_with_the_real_playlist(monkeypatch):
     assert runner.playlist.playlist.library.url == "http://message-api:8000/replays"
     assert runner.state_path == _ceo_day_runner()["state_path"]
     assert runner.sources["feature"] is not None and runner.sources["backlog"] is not None
+
+
+# ── batch B: live transcript, week-branch base, roundtable replays ───────────
+@pytest.mark.parametrize("role", ROLES, ids=lambda r: r.value)
+def test_speaking_seats_opt_into_the_live_transcript(role):
+    import live_pane
+
+    agent = _cfg(role)["agent"]
+    if role is OfficeRole.PARTY_MEMBER:
+        assert "live_transcript" not in agent["office"]
+        assert not live_pane.live_transcript_enabled(agent)
+    else:
+        assert agent["office"]["live_transcript"] is True
+        assert live_pane.live_transcript_enabled(agent)
+
+
+@pytest.mark.parametrize("role", sorted(LANE_WRITERS, key=lambda r: r.value), ids=lambda r: r.value)
+def test_lane_writers_target_the_current_week_branch(role, monkeypatch):
+    from datetime import datetime, timezone
+
+    from agent_handlers import office
+
+    monkeypatch.delenv("OFFICE_EPOCH", raising=False)
+    monkeypatch.delenv("OFFICE_TZ", raising=False)
+
+    agent = _cfg(role)["agent"]
+    now = datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # Mon of loop week 1
+    assert office._base_branch(agent, now=now) == "loop/1"
+
+
+def test_ceo_replays_air_on_the_roundtable_with_a_seat_cast():
+    block = _ceo_day_runner()
+    assert block["replay_target"] == "roundtable"
+    roundtable = load_worker_config(str(OFFICE_DIR / "roundtable.yaml"))
+    assert block["replay_target"] == roundtable["message_bus"]["worker_id"]
+    cast = block["playlist_options"]["cast"]
+    speaking_seats = [SEAT[r] for r in SPEAKING]
+    assert cast == {seat: seat for seat in speaking_seats}
+    assert set(cast.values()) <= set(roundtable["roster"])
+    assert SEAT[OfficeRole.PARTY_MEMBER] not in cast
+
+
+def test_ceo_day_runner_sends_playlist_replays_to_the_roundtable(monkeypatch):
+    from office.day_runner import build_day_runner
+
+    class OneReplay:
+        def off_hours(self, day, context):
+            return {"episode": "office-claude_code-sess-001", "cast": {"tuber_0": "tuber_0"}}
+
+        def stall(self, day, context):
+            return None
+
+    class Sink(list):
+        def send(self, msg):
+            self.append(msg)
+
+    sent = []
+    runner = build_day_runner(_cfg(OfficeRole.CEO)["agent"], worker_id="tuber_0",
+                              playlist=OneReplay(), state_path=None)
+    runner._playlist_call("off_hours", "tuber_0", Sink(), "2026-09-28", sent)
+    [msg] = sent
+    assert msg["type"] == "replay_request" and msg["to"] == "roundtable"
+    assert msg["payload"]["cast"] == {"tuber_0": "tuber_0"}
+
+
+def test_office_twitch_presence_maps_channels_to_seat_ids():
+    """The dev-team TWITCH_CHANNEL_MAP names dev worker ids; office mode swaps
+    in OFFICE_TWITCH_CHANNEL_MAP (the same channels -> seat ids)."""
+    env = _office_compose()["services"]["twitch-presence"]["environment"]
+    assert env == {"TWITCH_CHANNEL_MAP": "${OFFICE_TWITCH_CHANNEL_MAP:-}"}
+    base = yaml.safe_load(BASE_COMPOSE.read_text(encoding="utf-8"))
+    assert base["services"]["twitch-presence"]["environment"]["TWITCH_CHANNEL_MAP"] == \
+        "${TWITCH_CHANNEL_MAP:-}"
+    example = (ROOT / ".env.example").read_text(encoding="utf-8")
+    assert re.search(r"^OFFICE_TWITCH_CHANNEL_MAP=$", example, re.MULTILINE)

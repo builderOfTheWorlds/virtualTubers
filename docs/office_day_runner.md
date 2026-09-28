@@ -277,3 +277,9 @@ office.ceo_idle_tick("tuber_0", ceo_config, llm, producer)   # -> [day_start, ph
 - v1.1.0 (2026-09-28): The OB-33 playlist is wired: `office.playlist:day_runner_playlist`
   with `playlist_options`; the CEO config carries the `day_runner` block (state on the
   `office-day-runner` volume at `/data/office-state`). Config example corrected.
+- v1.2.0 (2026-09-28): The 23:45 `wrap_up` is built and validated by
+  `office.protocol.build_wrap_up` (a clock broadcast; sender `tuber_0` or `office_clock`), and
+  every seat answers it (`agent_handlers.office.handle_wrap_up`). The CEO's wrap-up line is
+  also published to the live roundtable transcript (`live_pane.publish_office_line`, gated by
+  `agent.office.live_transcript`; not added to the tick's returned list). The office config
+  sets `replay_target: roundtable` with a seat cast.

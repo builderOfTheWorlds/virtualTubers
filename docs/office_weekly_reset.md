@@ -48,8 +48,11 @@ Directories are removed with `rmtree`. The step refuses to remove:
 
 A refusal fails the step.
 
-The workers' in-process memory (for example `agent_handlers.office._reset_office_state`) can only
-be cleared by the worker itself when it receives `character_refresh`.
+The workers' in-process memory can only be cleared by the worker itself when it receives
+`character_refresh`: `agent_handlers.office.handle_character_refresh` clears the office state
+(`_refresh_office_state`: directives, phase, chores, observer rotation; the day runner stays)
+and, on each seat with its own Fraud-Stop clone, runs `git fetch` + `git checkout <branch>`.
+The Tester's read-only mount and seats without a clone skip git. Repeating it is harmless.
 
 ### Step ledger (idempotency)
 
@@ -96,6 +99,20 @@ with `message_bus.build_message`. Its `correlation_id` is the run id:
 This is the v4 shape (`character_generator_updater_v4.md`), with two extra fields: `closing_week`,
 and `branch` (the new trunk the workers should check out).
 
+### The week trunk for everyone else: `current_loop_branch`
+
+`current_loop_branch(now, epoch, tz)` returns `loop/<W>` for the office week containing `now`
+(tz-aware, default now; `epoch` a date or `YYYY-MM-DD`). It uses the same `office_time` week
+arithmetic as `WeeklyReset.week_for`, so the branch the office seats target
+(`agent_handlers.office._base_branch`, `agent.office.base_branch: auto`) is always the one this
+reset created. Raises `ValueError` for a naive `now`, a non-Sunday epoch, an unknown zone or an
+instant before the epoch.
+
+```python
+current_loop_branch(datetime(2026, 10, 5, 12, tzinfo=ZoneInfo("America/New_York")))  # "loop/1"
+current_loop_branch(epoch="2026-10-04")                                               # this week's trunk
+```
+
 ### Dry run
 
 With `--dry-run`, every action is logged at INFO (`weekly_reset would ... action=...`) and
@@ -117,6 +134,11 @@ class ResetConfig:  # frozen dataclass
     week_branch_fmt: str = "loop/{week}"; archive_branch_fmt: str = "archive/week-{week}"
     issue_label_fmt: str = "loop-{week}"; session_state_paths: tuple = ()
     repo_full_name: str | None = None; sender: str = "office_clock"
+
+WEEK_BRANCH_FMT = "loop/{week}"
+
+def current_loop_branch(now=None, epoch=date(2026, 9, 27), tz="America/New_York",
+                        fmt=WEEK_BRANCH_FMT) -> str
 
 class WeeklyReset:
     def __init__(self, git, gitea, ledger, config=None, emit=None, v4_hook=None,
@@ -268,3 +290,6 @@ print(result.ok, result.ran, result.failed_step)
 ## Changelog
 
 - **v1.0.0** (2026-09-28): first version (OB-31).
+- **v1.1.0** (2026-09-28): `current_loop_branch(now, epoch, tz)` and `WEEK_BRANCH_FMT` shared
+  with `agent_handlers.office` (office PRs target `loop/<W>`); `character_refresh` now has a
+  worker-side handler (`handle_character_refresh`).

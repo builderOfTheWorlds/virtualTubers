@@ -82,7 +82,10 @@ Office Manager reports); `handle_functional_plan`; `handle_technical_plan`;
 `handle_status_report`; `handle_phase_change` (when narrated);
 `office_manager_idle_tick` (when narrated); `handle_test_request` (the
 Tester's narration); `engineer_handoff` (the Engineer's narration); and
-`tech_lead_after_test_passed`. The Party Member never publishes.
+`tech_lead_after_test_passed`; `handle_wrap_up` (each seat's end-of-day
+report, with `to` = its superior). The CEO's day runner publishes its 23:45
+wrap-up line from `app/office/day_runner.py` `_wrap_up`. The Party Member
+never publishes.
 
 ## Signature
 
@@ -203,20 +206,21 @@ structured `event=... key=value` line on stderr and degrades:
 
 ## Known gaps
 
-- **The seats are not yet opted in.** `agent.office.live_transcript: true`
-  must be added to the seven speaking seat configs
-  (`config/workers/office/{ceo,tech_lead,analyst,engineer,tester,marketing,office_manager}.yaml`).
-  Those files are outside OB-32's ownership, so this is a follow-up.
-- **The day runner's end-of-day wrap-up line** (`app/office/day_runner.py`,
-  OB-30) is not published yet.
 - **The Party Member's own channel** still rotates its gaze.
   `agent.office.observer.stage_path` can't see the roundtable's
   `stage.json`, because there is no shared volume. The roundtable *tile*
   follows the live speaker directly.
 - **The replay path does not guard the observer.** A recorded episode that
-  casts lines to `tuber_7` still shows them on its tile.
+  casts lines to `tuber_7` still shows them on its tile. The CEO day
+  runner's playlist cast (`ceo.yaml` `playlist_options.cast`) leaves
+  `tuber_7` out, so off-hours replays voice such a line through the director
+  instead; a control-panel Play still casts it.
 
 ## Changelog
+
+- v1.1.0 (2026-09-28) — The seven speaking seat configs opt in
+  (`agent.office.live_transcript: true`); `handle_wrap_up` and the day
+  runner's wrap-up line publish too. Two known gaps closed.
 
 - v1.0.0 (2026-09-28) — Created (OB-32). Live office lines are spooled by
   the roundtable agent, voiced by the director, and performed on the
