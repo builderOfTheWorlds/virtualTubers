@@ -40,7 +40,7 @@ matter when editing or testing it.
 | `replay_request`, `replay_stop`, `replay_invite`, `replay_ready`, `replay_cue`, `replay_end` | `replay_relay.*` | any role (replay pane relay files) |
 | `directive`, `functional_plan`, `technical_plan`, `test_request`, `status_report`, `phase_change` | `office.handle_<type>` | office seats (see "Office handlers") |
 | `wrap_up` | `office.handle_wrap_up` | office seats: one end-of-day `status_report` to the superior |
-| `character_refresh` | `office.handle_character_refresh` | office seats: clear office state, check out the new `loop/<W>` |
+| `character_refresh` | `office.handle_character_refresh` | office seats: the v4 weekly-reset job's broadcast (from `character-updater`) → clear office state, check out `loop/<payload.week>` |
 | `office_line` | `live_transcript.handle_office_line` | the live office roundtable only → `<relay>/live/` spool |
 | `observer_pose` | `live_transcript.handle_observer_pose` | the live office roundtable only → `<relay>/<observer>.pose.json` |
 
@@ -239,7 +239,21 @@ Each office handler does five steps:
 | `handle_status_report` | ceo, tech_lead | CEO: comment + close the issue on the TL's `done` | nothing |
 | `handle_phase_change` | all | none | nothing. Speaking roles say one line. The Party Member only changes pose and never calls the LLM. |
 | `handle_wrap_up` | all (CEO / Party Member stay quiet) | none | one `status_report` (`report: "wrap_up"`, `status` done when every directive of the day is done, else on_track) to `REPORTS_TO`: Analyst, Marketing, OM, TL → CEO; Engineer, Tester → TL. The CEO never re-closes an issue on a wrap-up report. |
-| `handle_character_refresh` | all | seats with a workspace (not the Tester's read-only mount): `git fetch` + `git checkout <payload.branch>` | nothing. Clears directives / phase / chores / observer rotation (`_refresh_office_state`); the installed day runner is kept. Refused (`rank_violation`) unless from the clock (`office_clock` / `tuber_0`) as a broadcast. |
+| `handle_character_refresh` | all | on `reason: weekly_reset`, seats with a workspace (not the Tester's read-only mount): `git fetch` + `git checkout loop_branch(payload.week)` | nothing. Clears directives / phase / chores / observer rotation (`_refresh_office_state`); the installed day runner is kept. Accepts only the v4 message: `from: "character-updater"` as a broadcast (anything else, including the old `office_clock` / `tuber_0` senders, is a `rank_violation`), `payload.campaign == "ashiorid_office"` (other campaigns ignored, `reason=other_campaign`), `payload.characters` `["*"]` or a list containing the seat's slug (or seat id). The branch comes from `payload.week` (`office.weekly_reset.loop_branch`); a legacy `payload.branch` is used only when the week is missing/invalid. `revert` / `testctl` refreshes clear state but leave git alone. |
+
+**Spoken lines → `character_say` (v1.6.0).** Every line a handler speaks
+goes through `_publish_line` → `live_pane.publish_office_line`, which sends
+the live-transcript `office_line` (`agent.office.live_transcript`) and the
+v4 `character_say` broadcast (`agent.office.character_say`,
+`office/character_say.py`) from the same text, so the two never diverge.
+The `addressees` are the recipients of the protocol message the line goes
+with: `issue_directive` → the four directive recipients; TL directive ack →
+CEO; Analyst plan → TL; Marketing / OM report → CEO; TL technical plan →
+CEO + Engineer; CEO plan ack → TL; status-report ack → the reporter; Tester
+verdict → TL; wrap-up report → the superior; Engineer handoff → Tester; TL
+after test_passed → CEO; phase-change reactions, OM chores and the CEO's
+day-runner wrap-up line → `[]` (the room). Rules and payload:
+[office_character_say.md](office_character_say.md).
 
 **Base branch (batch B).** Lane branches start from, PRs target, the TL
 merges into and OM garbage collection protects `_base_branch(agent_config)`:
@@ -313,6 +327,7 @@ agent:
     merge_prs: true                        # TL merges after its COMMENT review
     narrate_phase_change: true
     live_transcript: true                  # also send every spoken line to the roundtable (docs/live_pane.md)
+    character_say: true                    # also send every spoken line as a v4 character_say (docs/office_character_say.md)
     gitea:                                 # absent or enabled: false = no Gitea calls
       base_url: http://192.168.1.120:3300
       owner: gitea_admin
@@ -343,6 +358,15 @@ Where to patch in tests: `agent_handlers.office.build_gitea_client`,
 fake-bus e2e runs the whole chain.
 
 ## Changelog
+
+- v1.6.0 (2026-09-28): `handle_character_refresh` takes the v4 message
+  (`from: character-updater`, payload `{campaign, week, characters, reason}`;
+  branch from `loop_branch(payload.week)`, legacy `branch` only as a
+  fallback; other campaigns ignored; clock senders now rank violations; only
+  `weekly_reset` switches git). Every spoken line is also a v4
+  `character_say` (`_publish_line`, `agent.office.character_say`). Office
+  weeks use the v4 numbering (week 1 = the epoch week, first trunk `loop/1`);
+  `loop_epoch_and_tz` delegates to `office.clock.configured_epoch_and_tz`.
 
 - v1.5.0 (2026-09-28): `wrap_up` (`handle_wrap_up`) and `character_refresh`
   (`handle_character_refresh`) registered; dispatch table section added

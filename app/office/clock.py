@@ -1,17 +1,24 @@
 """Office world clock: maps a real instant onto the ashiorid_office week.
 
 The weekly loop starts at the epoch Sunday 00:00 local wall clock (America/New_York
-by default). Each day has four 6 h segments on local wall-clock boundaries:
+by default). Weeks are numbered like the v4 character LoopClock
+(character_wp03_clock.yaml `position`): week 1 starts at the epoch Sunday
+00:00 and week N+1 starts each following Sunday 00:00, so
+`week = (local_date - epoch).days // 7 + 1`. This module is the single place
+the office computes a loop week (weekly_reset, the auto base branch and the
+day runner all go through office_time). Each day has four 6 h segments on local wall-clock boundaries:
 
     s0 00:00-06:00 off | s1 06:00-12:00 morning | s2 12:00-18:00 build | s3 18:00-24:00 ship
 
 Weeks and days are counted by local *calendar date*, never by dividing elapsed
-seconds, so DST days (23 h / 25 h) do not shift the grid. Pure module: no I/O.
+seconds, so DST days (23 h / 25 h) do not shift the grid. Pure module: no I/O
+(configured_epoch_and_tz only reads config and the environment).
 See docs/office_clock.md.
 """
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -20,6 +27,12 @@ log = logging.getLogger(__name__)
 TRACE = 5
 
 DEFAULT_TZ = "America/New_York"
+#: The ashiorid_office epoch Sunday: week 1 starts at 00:00 NY on this date.
+#: Same Sunday as config/character.yaml loop.epoch (v4). Override with the
+#: OFFICE_EPOCH env var / agent.office(.day_runner).epoch.
+DEFAULT_EPOCH = date(2026, 9, 27)
+#: The first loop week (v4 LoopClock numbering).
+FIRST_WEEK = 1
 SEGMENTS_PER_DAY = 4
 SEGMENT_HOURS = 6
 DAYS_PER_WEEK = 7
@@ -36,12 +49,28 @@ def _trace(msg, *args):
 class OfficeTime:
     """Position of an instant in the office week."""
 
-    loop_week: int
+    loop_week: int  # 1 = the epoch week (v4 LoopClock numbering)
     day_index: int  # 0 = Sunday .. 6 = Saturday
     segment: int  # 0..3
     phase: str  # off | morning | build | ship
     is_work_hours: bool
     next_boundary: datetime  # tz-aware, start of the next segment
+
+
+def configured_epoch_and_tz(agent_config) -> tuple:
+    """(epoch, tz) for an office worker: agent.office.day_runner.epoch/tz, then
+    agent.office.epoch/tz, then env OFFICE_EPOCH / OFFICE_TZ (the weekly_reset
+    CLI's), then DEFAULT_EPOCH / DEFAULT_TZ. `epoch` may come back as a
+    YYYY-MM-DD string (config / env); office_time callers parse it. Only
+    reads config and the environment; never raises."""
+    office = (agent_config or {}).get("office") if isinstance(agent_config, dict) else None
+    office = office if isinstance(office, dict) else {}
+    runner = office.get("day_runner") if isinstance(office.get("day_runner"), dict) else {}
+    epoch = (runner.get("epoch") or office.get("epoch") or os.environ.get("OFFICE_EPOCH")
+             or DEFAULT_EPOCH)
+    tz = runner.get("tz") or office.get("tz") or os.environ.get("OFFICE_TZ") or DEFAULT_TZ
+    _trace("configured_epoch_and_tz epoch=%s tz=%s", epoch, tz)
+    return epoch, tz
 
 
 def _zone(tz: str) -> ZoneInfo:
@@ -103,7 +132,8 @@ def office_time(now: datetime, epoch: date, tz: str = DEFAULT_TZ) -> OfficeTime:
         raise ValueError(f"{local.isoformat()} is before the epoch {epoch} 00:00 {tz}")
     log.debug("office clock: local=%s days_since_epoch=%d", local, days)
 
-    loop_week, day_index = divmod(days, DAYS_PER_WEEK)
+    weeks_done, day_index = divmod(days, DAYS_PER_WEEK)
+    loop_week = weeks_done + FIRST_WEEK
     segment = local.hour // SEGMENT_HOURS
     if segment + 1 < SEGMENTS_PER_DAY:
         next_day, next_hour = local.date(), (segment + 1) * SEGMENT_HOURS
@@ -126,26 +156,27 @@ def office_time(now: datetime, epoch: date, tz: str = DEFAULT_TZ) -> OfficeTime:
 def segment_start(
     loop_week: int, day_index: int, segment: int, epoch: date, tz: str = DEFAULT_TZ
 ) -> datetime:
-    """Inverse of office_time: the tz-aware instant a segment starts (for schedulers)."""
+    """Inverse of office_time: the tz-aware instant a segment starts (for
+    schedulers). `loop_week` counts from 1 (the epoch week)."""
     _trace(
         "segment_start enter week=%s day=%s segment=%s epoch=%s tz=%s",
         loop_week, day_index, segment, epoch, tz,
     )
-    for name, value, hi in (
-        ("loop_week", loop_week, None),
-        ("day_index", day_index, DAYS_PER_WEEK - 1),
-        ("segment", segment, SEGMENTS_PER_DAY - 1),
+    for name, value, hi, lo in (
+        ("loop_week", loop_week, None, FIRST_WEEK),
+        ("day_index", day_index, DAYS_PER_WEEK - 1, 0),
+        ("segment", segment, SEGMENTS_PER_DAY - 1, 0),
     ):
         if isinstance(value, bool) or not isinstance(value, int):
             log.error("segment_start: %s must be int value=%r", name, value)
             raise ValueError(f"{name} must be an int, got {value!r}")
-        if value < 0 or (hi is not None and value > hi):
+        if value < lo or (hi is not None and value > hi):
             log.error("segment_start: %s out of range value=%r", name, value)
             raise ValueError(f"{name} out of range: {value}")
     _check_epoch(epoch)
     zone = _zone(tz)
 
-    day = epoch + timedelta(days=loop_week * DAYS_PER_WEEK + day_index)
+    day = epoch + timedelta(days=(loop_week - FIRST_WEEK) * DAYS_PER_WEEK + day_index)
     result = _wall(day, segment * SEGMENT_HOURS, zone)
     _trace("segment_start exit result=%s", result)
     return result

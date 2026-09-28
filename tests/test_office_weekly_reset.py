@@ -1,6 +1,10 @@
 """Tests for office/weekly_reset.py (OB-31): full reset, ledger idempotency,
-failure then resume, dry-run, branch protection, CLI."""
+failure then resume, dry-run, branch protection, CLI, the v4 weekly-reset
+command hook and the v1 -> v2 ledger migration. Weeks use the v4 LoopClock
+numbering (week 1 = the epoch week)."""
 import json
+import subprocess
+import sys
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
@@ -12,8 +16,9 @@ from office import weekly_reset as wr
 
 NY = ZoneInfo("America/New_York")
 EPOCH = date(2026, 9, 27)
-# Sunday 2026-10-11 00:00 New York opens week 2; week 1 closes.
-RESET_AT = datetime(2026, 10, 11, 0, 0, tzinfo=NY)
+# Sunday 2026-10-04 00:00 New York opens week 2; week 1 (the epoch week) closes.
+RESET_AT = datetime(2026, 10, 4, 0, 0, tzinfo=NY)
+RESET_AT_ISO = "2026-10-04T00:00:00-04:00"
 
 MUTATING_GIT = {"fetch", "commit_all", "checkout", "checkout_new_branch", "reset_hard_to",
                 "push_branch"}
@@ -146,18 +151,18 @@ def env(tmp_path):
     hist = state / ".aider.chat.history.md"
     hist.write_text("old chat", encoding="utf-8")
     git, gitea = FakeGit(), FakeGitea()
-    emitted, v4_calls = [], []
+    v4_calls = []
     config = wr.ResetConfig(session_state_paths=(str(hist), str(state / ".aider.input.history")),
                             repo_full_name="gitea_admin/fraud-stop")
     ledger_path = tmp_path / "ledger.json"
 
     def make(**kw):
         return wr.WeeklyReset(kw.get("git", git), kw.get("gitea", gitea), str(ledger_path),
-                              config=kw.get("config", config), emit=kw.get("emit", emitted.append),
-                              v4_hook=kw.get("v4_hook", lambda w, c, camp: v4_calls.append((w, c)) or {"ok": 1}),
+                              config=kw.get("config", config),
+                              v4_hook=kw.get("v4_hook", lambda w, c, camp, at: v4_calls.append((w, c, camp, at)) or {"ok": 1}),
                               epoch=EPOCH, workspace=str(state))
 
-    return {"git": git, "gitea": gitea, "emitted": emitted, "v4": v4_calls, "make": make,
+    return {"git": git, "gitea": gitea, "v4": v4_calls, "make": make,
             "ledger": ledger_path, "hist": hist, "config": config}
 
 
@@ -179,14 +184,12 @@ def test_full_reset_runs_every_step_in_order(env):
     assert sorted(gitea.deleted) == ["office/analyst/spec", "office/engineer/velocity-rule"]
     assert gitea.closed == [3, 4]
     assert not env["hist"].exists()
-    assert env["v4"] == [(2, 1)]
-    (msg,) = env["emitted"]
-    assert msg["type"] == "character_refresh" and msg["to"] == "broadcast"
-    assert msg["from"] == "office_clock" and msg["correlation_id"] == result.run_id
-    assert msg["payload"] == {"campaign": "ashiorid_office", "week": 2, "closing_week": 1,
-                              "characters": ["*"], "reason": "weekly_reset", "branch": "loop/2"}
+    # The v4 job gets the run instant; the office itself publishes nothing.
+    assert env["v4"] == [(2, 1, "ashiorid_office", RESET_AT)]
+    assert wr.STEP_REFRESH_RETIRED not in wr.STEPS
     record = _ledger(env["ledger"])["weeks"]["2"]
     assert set(record["steps"]) == set(wr.STEPS)
+    assert _ledger(env["ledger"])["version"] == wr.LEDGER_VERSION
     assert record["completed_at"] and record["last_error"] is None
 
 
@@ -217,25 +220,42 @@ def test_archive_commits_dirty_worktree_first(env):
 
 
 @pytest.mark.unit
-def test_week_zero_skips_archive_and_issue_close(env):
+def test_first_week_skips_archive_and_issue_close(env):
     at = datetime(2026, 9, 27, 0, 0, tzinfo=NY)
-    result = env["make"]().run(at=at)
-    assert result.ok and result.week == 0
+    git = FakeGit(branches=("main",))
+    result = env["make"](git=git).run(at=at)
+    assert result.ok and result.week == 1 and result.closing_week == 0
     assert result.details[wr.STEP_ARCHIVE] == {"skipped": "no previous week"}
     assert result.details[wr.STEP_CLOSE_ISSUES] == {"skipped": "no previous week"}
     assert env["gitea"].closed == []
-    assert "loop/0" in env["git"].branches
+    assert result.details[wr.STEP_RESET]["branch"] == "loop/1" and "loop/1" in git.branches
+    assert "loop/0" not in git.branches
 
 
 @pytest.mark.unit
 @pytest.mark.parametrize("at, week", [
-    (datetime(2026, 10, 4, 0, 0, tzinfo=NY), 1),
-    (datetime(2026, 10, 4, 3, 59, tzinfo=timezone.utc), 0),   # Sat 23:59 NY
-    (datetime(2026, 10, 7, 12, 0, tzinfo=NY), 1),             # mid-week catch-up
-    (datetime(2026, 11, 1, 0, 0, tzinfo=NY), 5),               # DST fall-back Sunday
+    (datetime(2026, 9, 27, 0, 0, tzinfo=NY), 1),               # the epoch: week 1 (v4)
+    (datetime(2026, 10, 4, 0, 0, tzinfo=NY), 2),
+    (datetime(2026, 10, 4, 3, 59, tzinfo=timezone.utc), 1),   # Sat 23:59 NY
+    (datetime(2026, 10, 7, 12, 0, tzinfo=NY), 2),             # mid-week catch-up
+    (datetime(2026, 11, 1, 0, 0, tzinfo=NY), 6),               # DST fall-back Sunday
 ])
 def test_week_for_uses_office_clock(env, at, week):
     assert env["make"]().week_for(at) == week
+    assert wr.week_for(at) == week
+    assert wr.current_loop_branch(at) == f"loop/{week}"
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("week", [0, -1, 1.0, True, None, "2"])
+def test_loop_branch_rejects_non_v4_weeks(week):
+    with pytest.raises(ValueError):
+        wr.loop_branch(week)
+
+
+@pytest.mark.unit
+def test_loop_branch_formats_the_week_trunk():
+    assert wr.loop_branch(1) == "loop/1" and wr.loop_branch(12, "trunk-{week}") == "trunk-12"
 
 
 # ── ledger idempotency ───────────────────────────────────────────────────────
@@ -246,7 +266,7 @@ def test_rerun_skips_all_done_steps(env):
     second = env["make"]().run(at=RESET_AT + timedelta(hours=5))
     assert second.ok and second.ran == [] and second.skipped == list(wr.STEPS)
     assert len(env["git"].calls) == git_calls and len(env["gitea"].calls) == gitea_calls
-    assert len(env["emitted"]) == 1 and len(env["v4"]) == 1
+    assert len(env["v4"]) == 1
 
 
 @pytest.mark.unit
@@ -290,7 +310,7 @@ def test_failed_push_stops_run_and_resume_retries_that_step(env):
     first = env["make"]().run(at=RESET_AT)
     assert not first.ok and first.failed_step == wr.STEP_RESET
     assert first.ran == [wr.STEP_ARCHIVE]
-    assert env["gitea"].mutating_calls() == [] and env["emitted"] == []
+    assert env["gitea"].mutating_calls() == [] and env["v4"] == []
     record = _ledger(env["ledger"])["weeks"]["2"]
     assert list(record["steps"]) == [wr.STEP_ARCHIVE]
     assert record["last_error"]["step"] == wr.STEP_RESET and record["completed_at"] is None
@@ -310,7 +330,7 @@ def test_failed_gitea_delete_stops_before_later_steps(env):
     gitea.delete_errors["office/analyst/spec"] = GiteaError(500, "boom", "DELETE", "/x")
     first = env["make"]().run(at=RESET_AT)
     assert first.failed_step == wr.STEP_PRUNE and "boom" in first.error
-    assert gitea.closed == [] and env["emitted"] == [] and env["v4"] == []
+    assert gitea.closed == [] and env["v4"] == []
     del gitea.delete_errors["office/analyst/spec"]
     second = env["make"]().run(at=RESET_AT)
     assert second.ok and second.ran[0] == wr.STEP_PRUNE
@@ -325,29 +345,152 @@ def test_already_deleted_branch_is_not_a_failure(env):
 
 
 @pytest.mark.unit
-def test_missing_bus_fails_refresh_and_retries(env):
-    first = env["make"](emit=None).run(at=RESET_AT)
-    assert first.failed_step == wr.STEP_REFRESH and "bus" in first.error
-    assert env["v4"] == []
-    second = env["make"]().run(at=RESET_AT)
-    assert second.ran == [wr.STEP_REFRESH, wr.STEP_V4] and len(env["emitted"]) == 1
-
-
-@pytest.mark.unit
-def test_v4_hook_error_is_recorded(env):
-    def broken(week, closing, campaign):
+def test_v4_hook_error_is_recorded_and_retried(env):
+    def broken(week, closing, campaign, at):
         raise RuntimeError("v4 down")
     result = env["make"](v4_hook=broken).run(at=RESET_AT)
     assert result.failed_step == wr.STEP_V4
     assert _ledger(env["ledger"])["weeks"]["2"]["last_error"]["error"].endswith("v4 down")
+    assert _ledger(env["ledger"])["weeks"]["2"]["completed_at"] is None
+    second = env["make"]().run(at=RESET_AT)
+    assert second.ok and second.ran == [wr.STEP_V4] and len(env["v4"]) == 1
 
 
 @pytest.mark.unit
-def test_default_v4_hook_is_stub(env, tmp_path):
+def test_default_v4_hook_is_the_command_hook(env, tmp_path):
     runner = wr.WeeklyReset(env["git"], env["gitea"], str(tmp_path / "l.json"),
-                            config=env["config"], emit=env["emitted"].append, epoch=EPOCH)
-    result = runner.run(at=RESET_AT)
-    assert result.ok and result.details[wr.STEP_V4] == {"stub": True}
+                            config=env["config"], epoch=EPOCH)
+    assert isinstance(runner.v4_hook, wr.CommandV4Hook)
+    assert runner.v4_hook.argv(RESET_AT) == [
+        sys.executable, str(wr.DEFAULT_V4_SCRIPT), "weekly-reset", "--at", RESET_AT.isoformat()]
+
+
+# ── the v4 weekly-reset command hook ────────────────────────────────────────
+class FakeRun:
+    """subprocess.run stand-in: records argv/kwargs, returns `code`."""
+
+    def __init__(self, code=0, stderr="", exc=None):
+        self.code, self.stderr, self.exc = code, stderr, exc
+        self.calls = []
+
+    def __call__(self, argv, **kwargs):
+        self.calls.append((argv, kwargs))
+        if self.exc:
+            raise self.exc
+        return subprocess.CompletedProcess(argv, self.code, stdout="", stderr=self.stderr)
+
+
+@pytest.fixture
+def v4_script(tmp_path):
+    script = tmp_path / "services" / "character-updater" / "main.py"
+    script.parent.mkdir(parents=True)
+    script.write_text("# fake v4 entry point\n", encoding="utf-8")
+    return script
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("code, status", [(0, "done"), (2, "nothing_to_do")])
+def test_command_hook_runs_default_command_with_at(v4_script, code, status):
+    run = FakeRun(code=code)
+    hook = wr.CommandV4Hook(script=v4_script, runner=run, timeout_s=5)
+    detail = hook(2, 1, "ashiorid_office", RESET_AT)
+    [(argv, kwargs)] = run.calls
+    assert argv == [sys.executable, str(v4_script), "weekly-reset", "--at", RESET_AT.isoformat()]
+    assert kwargs["timeout"] == 5 and kwargs["capture_output"] is True
+    assert detail["exit_code"] == code and detail["status"] == status
+    assert "weekly-reset --at" in detail["command"]
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("command, expected", [
+    ("docker compose run --rm character-jobs weekly-reset",
+     ["docker", "compose", "run", "--rm", "character-jobs", "weekly-reset", "--at", RESET_AT_ISO]),
+    (["jobs", "weekly-reset", "--at={at}", "--force"],
+     ["jobs", "weekly-reset", f"--at={RESET_AT_ISO}", "--force"]),
+])
+def test_command_hook_override(command, expected, tmp_path):
+    run = FakeRun()
+    hook = wr.CommandV4Hook(command, script=tmp_path / "missing.py", runner=run)
+    hook(2, 1, "ashiorid_office", RESET_AT)
+    assert run.calls[0][0] == expected
+
+
+@pytest.mark.unit
+def test_command_hook_missing_default_script_fails_without_running(tmp_path):
+    run = FakeRun()
+    hook = wr.CommandV4Hook(script=tmp_path / "nope" / "main.py", runner=run)
+    with pytest.raises(wr.ResetStepError, match="not installed"):
+        hook(2, 1, "ashiorid_office", RESET_AT)
+    assert run.calls == []
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("run, match", [
+    (FakeRun(code=1, stderr="Traceback: boom"), "exited 1: Traceback: boom"),
+    (FakeRun(code=3), "exited 3"),
+    (FakeRun(exc=FileNotFoundError("docker")), "command not found: docker"),
+    (FakeRun(exc=subprocess.TimeoutExpired("docker", 5)), "timed out"),
+])
+def test_command_hook_failures_raise_reset_step_error(run, match):
+    hook = wr.CommandV4Hook("docker compose run --rm character-jobs weekly-reset", runner=run)
+    with pytest.raises(wr.ResetStepError, match=match):
+        hook(2, 1, "ashiorid_office", RESET_AT)
+
+
+@pytest.mark.unit
+def test_failing_v4_command_fails_the_step_and_is_retried(env, v4_script):
+    run = FakeRun(code=1, stderr="db down")
+    hook = wr.CommandV4Hook(script=v4_script, runner=run)
+    first = env["make"](v4_hook=hook).run(at=RESET_AT)
+    assert first.failed_step == wr.STEP_V4 and "db down" in first.error
+    run.code = 0
+    second = env["make"](v4_hook=hook).run(at=RESET_AT)
+    assert second.ok and second.ran == [wr.STEP_V4]
+    assert second.details[wr.STEP_V4]["exit_code"] == 0 and len(run.calls) == 2
+
+
+# ── ledger backward compatibility ────────────────────────────────────────────
+@pytest.mark.unit
+def test_v1_ledger_with_retired_refresh_step_is_migrated_and_completes(env):
+    """A v1 ledger (0-based weeks, with the retired office character_refresh
+    step recorded) loads: week 1 (old numbering) is week 2 now, and only the
+    steps still missing run."""
+    done = {"completed_at": "2026-10-04T04:00:00+00:00", "detail": {}}
+    old = {"version": 1, "campaign": "ashiorid_office", "weeks": {"1": {
+        "week": 1, "steps": {s: done for s in (wr.STEP_ARCHIVE, wr.STEP_RESET, wr.STEP_PRUNE,
+                                               wr.STEP_CLOSE_ISSUES, wr.STEP_CLEAR_STATE,
+                                               wr.STEP_REFRESH_RETIRED)},
+        "last_error": {"step": wr.STEP_V4, "error": "stub"}, "completed_at": None}}}
+    env["ledger"].write_text(json.dumps(old), encoding="utf-8")
+    result = env["make"]().run(at=RESET_AT)
+    assert result.ok and result.week == 2 and result.ran == [wr.STEP_V4]
+    data = _ledger(env["ledger"])
+    assert data["version"] == wr.LEDGER_VERSION and set(data["weeks"]) == {"2"}
+    record = data["weeks"]["2"]
+    assert record["week"] == 2 and record["v1_week"] == 1 and record["completed_at"]
+    assert wr.STEP_REFRESH_RETIRED in record["steps"]      # kept, never counted
+    assert env["git"].mutating_calls() == []
+
+
+@pytest.mark.unit
+def test_v2_ledger_with_retired_step_recorded_is_not_rerun(env):
+    ledger = wr.StepLedger(env["ledger"])
+    ledger.mark_done(2, wr.STEP_REFRESH_RETIRED, {"message_id": "old"})
+    for step in wr.STEPS:
+        ledger.mark_done(2, step)
+    result = env["make"]().run(at=RESET_AT)
+    assert result.ok and result.ran == [] and result.skipped == list(wr.STEPS)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("data", [
+    {"version": 7, "weeks": {}},
+    {"version": 1, "weeks": {"week-one": {}}},
+])
+def test_unknown_ledger_version_or_bad_v1_key_raises(env, data):
+    env["ledger"].write_text(json.dumps(data), encoding="utf-8")
+    with pytest.raises(wr.LedgerError):
+        wr.StepLedger(env["ledger"])
 
 
 @pytest.mark.unit
@@ -364,13 +507,13 @@ def test_dry_run_makes_no_mutating_calls_and_writes_nothing(env):
     assert result.ok and result.dry_run and result.ran == list(wr.STEPS)
     assert env["git"].calls == []
     assert env["gitea"].mutating_calls() == []
-    assert env["emitted"] == [] and env["v4"] == []
+    assert env["v4"] == []
     assert env["hist"].exists()
     assert not env["ledger"].exists()
     actions = {(a["step"], a["action"]) for a in result.actions}
     assert (wr.STEP_ARCHIVE, "create_branch") in actions
     assert (wr.STEP_RESET, "reset_hard") in actions
-    assert (wr.STEP_REFRESH, "emit") in actions
+    assert (wr.STEP_V4, "call_v4_weekly_reset") in actions
     deletes = sorted(a["branch"] for a in result.actions if a["action"] == "delete_branch")
     assert deletes == ["office/analyst/spec", "office/engineer/velocity-rule"]
     closes = [a["number"] for a in result.actions if a["action"] == "close_issue"]
@@ -449,9 +592,9 @@ def test_clear_state_removes_directories(env, tmp_path):
 @pytest.mark.unit
 def test_cli_dry_run_with_at(env, capsys, tmp_path):
     ledger = tmp_path / "cli_ledger.json"
-    code = wr.main(["--dry-run", "--at", "2026-10-11T00:00:00-04:00", "--epoch", "2026-09-27",
+    code = wr.main(["--dry-run", "--at", RESET_AT_ISO, "--epoch", "2026-09-27",
                     "--ledger", str(ledger), "--workspace", str(tmp_path)],
-                   git=env["git"], gitea=env["gitea"], emit=env["emitted"].append)
+                   git=env["git"], gitea=env["gitea"])
     out = json.loads(capsys.readouterr().out)
     assert code == 0 and out["week"] == 2 and out["dry_run"] is True
     assert env["git"].calls == [] and not ledger.exists()
@@ -460,10 +603,9 @@ def test_cli_dry_run_with_at(env, capsys, tmp_path):
 @pytest.mark.unit
 def test_cli_real_run_then_status(env, capsys, tmp_path):
     ledger = tmp_path / "cli_ledger.json"
-    argv = ["--at", "2026-10-11T00:00:00-04:00", "--epoch", "2026-09-27",
+    argv = ["--at", RESET_AT_ISO, "--epoch", "2026-09-27",
             "--ledger", str(ledger), "--workspace", str(tmp_path)]
-    assert wr.main(argv, git=env["git"], gitea=env["gitea"], emit=env["emitted"].append,
-                   v4_hook=lambda *a: {}) == 0
+    assert wr.main(argv, git=env["git"], gitea=env["gitea"], v4_hook=lambda *a: {}) == 0
     capsys.readouterr()
     assert wr.main(argv + ["--status"]) == 0
     status = json.loads(capsys.readouterr().out)
@@ -473,10 +615,41 @@ def test_cli_real_run_then_status(env, capsys, tmp_path):
 @pytest.mark.unit
 def test_cli_failure_exit_code(env, tmp_path):
     env["git"].fail_fetch = True
-    code = wr.main(["--at", "2026-10-11T00:00:00-04:00", "--epoch", "2026-09-27",
+    code = wr.main(["--at", RESET_AT_ISO, "--epoch", "2026-09-27",
                     "--ledger", str(tmp_path / "l.json"), "--workspace", str(tmp_path)],
-                   git=env["git"], gitea=env["gitea"], emit=env["emitted"].append)
+                   git=env["git"], gitea=env["gitea"], v4_hook=lambda *a: {})
     assert code == 1
+
+
+@pytest.mark.unit
+def test_cli_builds_the_v4_command_hook_from_env_and_flags(env, tmp_path, monkeypatch):
+    monkeypatch.setenv("OFFICE_V4_RESET_CMD", "docker compose run --rm character-jobs weekly-reset")
+    captured = {}
+    real = wr.CommandV4Hook
+
+    def spy(command=None, **kwargs):
+        hook = real(command, runner=FakeRun(), **kwargs)
+        captured["hook"] = hook
+        return hook
+    monkeypatch.setattr(wr, "CommandV4Hook", spy)
+    code = wr.main(["--at", RESET_AT_ISO, "--ledger", str(tmp_path / "l.json"),
+                    "--workspace", str(tmp_path), "--v4-timeout", "42", "--bootstrap", "kafka:9092"],
+                   git=env["git"], gitea=env["gitea"])
+    hook = captured["hook"]
+    assert code == 0 and hook.timeout_s == 42.0 and hook.env["KAFKA_BOOTSTRAP_SERVERS"] == "kafka:9092"
+    [(argv, _)] = hook.runner.calls
+    assert argv == ["docker", "compose", "run", "--rm", "character-jobs", "weekly-reset",
+                    "--at", RESET_AT_ISO]
+
+
+@pytest.mark.unit
+def test_cli_dry_run_previews_the_v4_command(env, capsys, tmp_path, monkeypatch):
+    monkeypatch.delenv("OFFICE_V4_RESET_CMD", raising=False)
+    code = wr.main(["--dry-run", "--at", RESET_AT_ISO, "--ledger", str(tmp_path / "l.json"),
+                    "--workspace", str(tmp_path)], git=env["git"], gitea=env["gitea"])
+    out = json.loads(capsys.readouterr().out)
+    [action] = [a for a in out["actions"] if a["step"] == wr.STEP_V4]
+    assert code == 0 and action["command"].endswith(f"weekly-reset --at {RESET_AT_ISO}")
 
 
 @pytest.mark.unit
@@ -488,7 +661,7 @@ def test_cli_rejects_naive_at():
 @pytest.mark.unit
 def test_cli_without_workspace_errors(tmp_path, monkeypatch):
     monkeypatch.delenv("WORKSPACE_PATH", raising=False)
-    assert wr.main(["--ledger", str(tmp_path / "l.json"), "--at", "2026-10-11T00:00:00-04:00"]) == 2
+    assert wr.main(["--ledger", str(tmp_path / "l.json"), "--at", RESET_AT_ISO]) == 2
 
 
 @pytest.mark.unit

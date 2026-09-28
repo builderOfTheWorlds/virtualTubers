@@ -75,6 +75,9 @@ agent:
     # OB-32 live roundtable transcript (docs/live_pane.md): every line this
     # seat speaks is also sent to the roundtable as `office_line`.
     live_transcript: true
+    # v4 character memory (docs/office_character_say.md): the same line also goes
+    # out as a `character_say` broadcast for the v4 ingest (WP-15 contract).
+    character_say: true
     gitea:
       base_url: http://192.168.1.120:3300
       owner: gitea_admin

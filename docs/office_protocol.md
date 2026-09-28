@@ -111,6 +111,20 @@ for msg in consumer:
 Failures are logged at ERROR with the message `id` and `correlation_id`. Successful builds are
 logged at INFO. Rank decisions are logged at DEBUG, and entry points at TRACE (level 5).
 
+## Other office bus traffic (not built or validated here)
+
+Two v4 character messages ride the same topic next to the office protocol. They are not office
+protocol types (`validate_message` would reject them); their contract is WP-15
+(`character_generator_updater_v4.md` §3.2):
+
+| Type | From → To | Payload | Who |
+|---|---|---|---|
+| `character_say` | seat `tuber_N` → `broadcast` | `{campaign, scene_id, character, addressees, present, text}` | every speaking seat, for every spoken line (`office/character_say.py`, [office_character_say.md](office_character_say.md)) |
+| `character_refresh` | `character-updater` → `broadcast` | `{campaign, week, characters, reason}` | the v4 `weekly-reset` job (run by `office.weekly_reset`'s `v4_weekly_reset` step); handled by `agent_handlers.office.handle_character_refresh`. The office no longer sends its own. |
+
+`character_refresh` from `office_clock` / `tuber_0` (the pre-v4 office broadcast) is now a rank
+violation at the seats. Office `week` values use the v4 numbering (week 1 = the epoch week).
+
 ## Decisions
 
 - `test_request` may also come from the Tech Lead, who directs the Tester.
@@ -125,3 +139,6 @@ logged at INFO. Rank decisions are logged at DEBUG, and entry points at TRACE (l
 - **v1.1.0** (2026-09-28) — `wrap_up` becomes the 9th type: a clock broadcast
   (`CLOCK_TYPES`) with builder `build_wrap_up`, so the 23:45 request for status reports is
   rank-checked like `phase_change`.
+- **v1.2.0** (2026-09-28) — Documented the v4 `character_say` / `character_refresh` traffic
+  next to the protocol (not protocol types): seats publish `character_say` for every spoken
+  line; `character_refresh` now comes only from the v4 job (`character-updater`).

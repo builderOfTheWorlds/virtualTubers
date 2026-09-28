@@ -19,6 +19,8 @@ agent.py does that and drops files, exactly like replay_request does.
 
     seat handler (office.py)   publish_office_line -> bus `office_line`
                                to "roundtable" (agent.office.live_transcript)
+                               + v4 `character_say` broadcast, same text
+                               (agent.office.character_say, office/character_say.py)
     roundtable agent.py        handle_office_line  -> <relay>/live/<ns>-<id>.json
                                handle_observer_pose -> <relay>/<seat>.pose.json
     replay_pane.py (director)  LiveDirector.drain_once: oldest spool file
@@ -50,6 +52,7 @@ from pathlib import Path
 import gaze
 import relay_io
 from message_bus import build_message, correlation_of
+from office import character_say
 
 log = logging.getLogger("live_pane")
 TRACE = 5
@@ -198,15 +201,22 @@ def live_transcript_enabled(agent_config):
 
 
 def publish_office_line(worker_id, agent_config, producer, line, emotion=None,
-                        correlation_id=None, to=None):
-    """Send the line a seat just spoke to the roundtable as `office_line`
-    {seat, text, emotion, to}. Opt-in per seat (live_transcript_enabled);
-    the Party Member never publishes. Returns the message or None. Never
-    raises — the roundtable is decoration for the office chain."""
+                        correlation_id=None, to=None, addressees=None, now=None):
+    """The one place a seat's spoken line leaves the seat. It sends, from the
+    same stripped text:
+
+      - `office_line` {seat, text, emotion, to} to the roundtable, opt-in per
+        seat (agent.office.live_transcript); the return value;
+      - the v4 `character_say` broadcast (office.character_say), opt-in per
+        seat (agent.office.character_say). `addressees` (seat ids / roles /
+        slugs of the line's recipients; default `to`) and `now` (the scene_id
+        instant; default the current time) only shape the character_say.
+
+    The Party Member and empty lines never publish either. Returns the
+    office_line message or None. Never raises — both are decoration for the
+    office chain."""
     _trace("publish_office_line enter worker=%s", worker_id)
     try:
-        if not live_transcript_enabled(agent_config):
-            return None
         if str((agent_config or {}).get("office_role") or "") == PARTY_MEMBER_ROLE:
             log.debug("live_pane publish skipped worker=%s reason=party_member", worker_id)
             return None
@@ -214,19 +224,40 @@ def publish_office_line(worker_id, agent_config, producer, line, emotion=None,
         if not text:
             log.debug("live_pane publish skipped worker=%s reason=empty", worker_id)
             return None
-        payload = {"seat": worker_id, "text": text[:MAX_TEXT_CHARS], "emotion": emotion}
-        if to:
-            payload["to"] = to
-        msg = build_message(worker_id, ROUNDTABLE_WORKER_ID, OFFICE_LINE, payload,
-                            correlation_id=correlation_id)
-        producer.send(msg)
-        log.debug("live_pane published worker=%s chars=%d correlation_id=%s",
-                  worker_id, len(text), correlation_of(msg))
+        text = text[:MAX_TEXT_CHARS]
+        msg = None
+        if live_transcript_enabled(agent_config):
+            msg = _send_office_line(worker_id, producer, text, emotion, correlation_id, to)
+        # Same text, same call: the transcript and the v4 memory never diverge.
+        character_say.publish_character_say(
+            worker_id, agent_config, producer, text,
+            addressees=to if addressees is None else addressees,
+            correlation_id=correlation_id, now=now)
         return msg
     except Exception as exc:  # noqa: BLE001 — never break the office chain
         print(f"[agent:{worker_id}] ERROR event=office_line_publish_failed error='{exc}'")
         log.error("live_pane publish failed worker=%s error=%s", worker_id, exc)
         return None
+
+
+def _send_office_line(worker_id, producer, text, emotion, correlation_id, to):
+    """Build and send one `office_line` (raises on a bus failure; the caller
+    catches). Returns None when the send failed so the character_say still
+    goes out."""
+    payload = {"seat": worker_id, "text": text, "emotion": emotion}
+    if to:
+        payload["to"] = to
+    msg = build_message(worker_id, ROUNDTABLE_WORKER_ID, OFFICE_LINE, payload,
+                        correlation_id=correlation_id)
+    try:
+        producer.send(msg)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[agent:{worker_id}] ERROR event=office_line_publish_failed error='{exc}'")
+        log.error("live_pane publish failed worker=%s error=%s", worker_id, exc)
+        return None
+    log.debug("live_pane published worker=%s chars=%d correlation_id=%s",
+              worker_id, len(text), correlation_of(msg))
+    return msg
 
 
 # ── roundtable agent side: bus -> relay files ────────────────────────────────

@@ -165,7 +165,7 @@ The block's presence (or `day_runner: true`) turns the runner on.
 |---|---|---|
 | `enabled` | `true` when the block is present | master switch |
 | `state_path` | `/data/world-state/office_day_runner.json` | state file (use a persistent volume); `null` = memory only |
-| `epoch` | `agent.office.epoch`, else `2026-09-27` | loop epoch Sunday (only affects `loop_week` in logs) |
+| `epoch` | `agent.office.epoch`, else `office.clock.DEFAULT_EPOCH` (2026-09-27) | loop epoch Sunday (only affects `loop_week` in logs; week 1 = the epoch week, v4 numbering) |
 | `tz` | `agent.office.tz`, else `America/New_York` | office time zone |
 | `stall_minutes` | `45` | idle minutes before the fallback replay |
 | `retry_backoff_s` | `300` | wait between failed directive attempts |
@@ -283,3 +283,7 @@ office.ceo_idle_tick("tuber_0", ceo_config, llm, producer)   # -> [day_start, ph
   also published to the live roundtable transcript (`live_pane.publish_office_line`, gated by
   `agent.office.live_transcript`; not added to the tick's returned list). The office config
   sets `replay_target: roundtable` with a seat cast.
+- v1.3.0 (2026-09-28): `DEFAULT_EPOCH` comes from `office.clock` (one source; week 1 = the
+  epoch week, v4 numbering). The wrap-up line also goes out as a v4 `character_say` (same
+  `publish_office_line` call, `agent.office.character_say`, `addressees: []`, scene
+  `office-<day>-<phase>` from the runner's clock).

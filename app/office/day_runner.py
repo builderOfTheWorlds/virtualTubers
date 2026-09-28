@@ -46,7 +46,7 @@ import live_pane
 from agent_handlers.manager import MAX_BUG_RETRIES
 from agent_state import write_state
 from message_bus import build_message
-from office.clock import DEFAULT_TZ, PHASES, office_time
+from office.clock import DEFAULT_EPOCH, DEFAULT_TZ, PHASES, office_time
 from office.protocol import (
     CLOCK_SENDER,
     CLOCK_SENDERS,
@@ -65,7 +65,7 @@ logging.addLevelName(TRACE, "TRACE")
 # ── constants ────────────────────────────────────────────────────────────────
 STATE_VERSION = 1
 DEFAULT_STATE_PATH = "/data/world-state/office_day_runner.json"
-DEFAULT_EPOCH = date(2026, 9, 27)          # a Sunday; only loop_week depends on it
+# DEFAULT_EPOCH comes from office.clock (the one source of the loop-week epoch).
 WORK_START_HOUR = 6
 WRAP_UP_AT = dtime(23, 45)
 MAX_FOLLOW_UPS = 2                         # plan guard: 1 directive + at most 2 follow-ups
@@ -535,8 +535,10 @@ class DayRunner:
                         emotion=emotion)
         # Live roundtable transcript: gated per seat (agent.office.live_transcript),
         # never raises; not added to `sent` (it is decoration, not the day's script).
+        # The same call publishes the v4 character_say (agent.office.character_say);
+        # the wrap-up asks the whole team, so it has no addressees.
         live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion,
-                                      st["day_chain"])
+                                      st["day_chain"], addressees=[], now=self.clock())
         gitea = self._gitea(agent_config)
         if gitea is not None:
             for d in st["directives"]:

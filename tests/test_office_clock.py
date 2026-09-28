@@ -38,7 +38,7 @@ def ny(*args, fold=0):
 )
 def test_office_time_segment_edges_map_to_expected_segment(hh, mm, ss, segment, phase, next_hour):
     ot = office_time(ny(2026, 9, 29, hh, mm, ss), EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment, ot.phase) == (0, 2, segment, phase)
+    assert (ot.loop_week, ot.day_index, ot.segment, ot.phase) == (1, 2, segment, phase)
     assert ot.is_work_hours is (segment >= 1)
     expected_next = ny(2026, 9, 29, next_hour) if next_hour is not None else ny(2026, 9, 30, 0)
     assert ot.next_boundary == expected_next
@@ -55,7 +55,7 @@ def test_office_time_returns_frozen_dataclass():
 def test_office_time_accepts_other_timezones_by_instant():
     # 2026-09-27 10:00 UTC == 06:00 EDT -> morning segment starts exactly.
     ot = office_time(datetime(2026, 9, 27, 10, tzinfo=timezone.utc), EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment) == (0, 0, 1)
+    assert (ot.loop_week, ot.day_index, ot.segment) == (1, 0, 1)
     ot = office_time(datetime(2026, 9, 27, 9, 59, 59, tzinfo=timezone.utc), EPOCH)
     assert ot.segment == 0
 
@@ -65,12 +65,12 @@ def test_office_time_accepts_other_timezones_by_instant():
 @pytest.mark.parametrize(
     "now, week, day, segment",
     [
-        (ny(2026, 9, 27, 0), 0, 0, 0),  # epoch itself
-        (ny(2026, 10, 3, 23, 59, 59), 0, 6, 3),  # last second of week 0
-        (ny(2026, 10, 4, 0), 1, 0, 0),  # Sunday 00:00 -> week 1
-        (ny(2026, 10, 10, 23, 59, 59), 1, 6, 3),
-        (ny(2026, 10, 11, 0), 2, 0, 0),
-        (ny(2027, 9, 26, 12), 52, 0, 2),  # a year later
+        (ny(2026, 9, 27, 0), 1, 0, 0),  # epoch itself: week 1 (v4 LoopClock numbering)
+        (ny(2026, 10, 3, 23, 59, 59), 1, 6, 3),  # last second of week 1
+        (ny(2026, 10, 4, 0), 2, 0, 0),  # Sunday 00:00 -> week 2
+        (ny(2026, 10, 10, 23, 59, 59), 2, 6, 3),
+        (ny(2026, 10, 11, 0), 3, 0, 0),
+        (ny(2027, 9, 26, 12), 53, 0, 2),  # a year later
     ],
 )
 def test_office_time_week_rollover_at_sunday_midnight(now, week, day, segment):
@@ -81,7 +81,7 @@ def test_office_time_week_rollover_at_sunday_midnight(now, week, day, segment):
 def test_office_time_saturday_ship_next_boundary_is_next_week_start():
     ot = office_time(ny(2026, 10, 3, 20), EPOCH)
     assert ot.next_boundary == ny(2026, 10, 4, 0)
-    assert office_time(ot.next_boundary, EPOCH).loop_week == 1
+    assert office_time(ot.next_boundary, EPOCH).loop_week == 2
 
 
 # --- DST -------------------------------------------------------------------
@@ -100,13 +100,13 @@ def test_office_time_saturday_ship_next_boundary_is_next_week_start():
 )
 def test_office_time_spring_forward_day_uses_wall_clock(now, segment, next_boundary):
     ot = office_time(now, DST_EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment) == (1, 0, segment)
+    assert (ot.loop_week, ot.day_index, ot.segment) == (2, 0, segment)
     assert ot.next_boundary == next_boundary
 
 
 def test_office_time_spring_forward_segment0_is_five_real_hours():
-    start = segment_start(1, 0, 0, DST_EPOCH)
-    end = segment_start(1, 0, 1, DST_EPOCH)
+    start = segment_start(2, 0, 0, DST_EPOCH)
+    end = segment_start(2, 0, 1, DST_EPOCH)
     assert end.astimezone(timezone.utc) - start.astimezone(timezone.utc) == timedelta(hours=5)
     assert start.utcoffset() == timedelta(hours=-5)
     assert end.utcoffset() == timedelta(hours=-4)
@@ -126,22 +126,29 @@ def test_office_time_spring_forward_segment0_is_five_real_hours():
 )
 def test_office_time_fall_back_day_uses_wall_clock(now, segment, next_boundary):
     ot = office_time(now, FALL_EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment) == (0, 0, segment)
+    assert (ot.loop_week, ot.day_index, ot.segment) == (1, 0, segment)
     assert ot.next_boundary == next_boundary
 
 
 def test_office_time_fall_back_segment0_is_seven_real_hours():
-    start = segment_start(0, 0, 0, FALL_EPOCH)
-    end = segment_start(0, 0, 1, FALL_EPOCH)
+    start = segment_start(1, 0, 0, FALL_EPOCH)
+    end = segment_start(1, 0, 1, FALL_EPOCH)
     assert end.astimezone(timezone.utc) - start.astimezone(timezone.utc) == timedelta(hours=7)
 
 
 def test_office_time_week_count_is_calendar_based_across_dst():
     # From an epoch in EDT, a Sunday 00:00 in EST must still be an exact week start.
     ot = office_time(ny(2026, 11, 8, 0), EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment) == (6, 0, 0)
+    assert (ot.loop_week, ot.day_index, ot.segment) == (7, 0, 0)
     ot = office_time(ny(2026, 11, 7, 23, 59, 59), EPOCH)
-    assert (ot.loop_week, ot.day_index, ot.segment) == (5, 6, 3)
+    assert (ot.loop_week, ot.day_index, ot.segment) == (6, 6, 3)
+
+
+def test_office_time_week_numbering_matches_v4_loop_clock():
+    # character_wp03_clock.yaml LoopClock.position: week = (day - epoch).days // 7 + 1.
+    for offset in range(0, 70, 3):
+        day = EPOCH + timedelta(days=offset)
+        assert office_time(ny(day.year, day.month, day.day, 12), EPOCH).loop_week == offset // 7 + 1
 
 
 # --- validation ------------------------------------------------------------
@@ -175,21 +182,21 @@ def test_office_time_unknown_zone_raises_value_error():
 # --- segment_start inverse -------------------------------------------------
 
 @pytest.mark.parametrize("epoch", [EPOCH, DST_EPOCH, FALL_EPOCH])
-@pytest.mark.parametrize("week", [0, 1, 3])
+@pytest.mark.parametrize("week", [1, 2, 4])
 def test_segment_start_roundtrips_through_office_time(epoch, week):
     for day in range(7):
         for seg in range(4):
             start = segment_start(week, day, seg, epoch)
             ot = office_time(start, epoch)
             assert (ot.loop_week, ot.day_index, ot.segment) == (week, day, seg)
-            before = office_time(start - timedelta(seconds=1), epoch) if (week, day, seg) != (0, 0, 0) else None
+            before = office_time(start - timedelta(seconds=1), epoch) if (week, day, seg) != (1, 0, 0) else None
             if before is not None:
                 assert before.next_boundary == start
 
 
 @pytest.mark.parametrize("epoch", [EPOCH, DST_EPOCH, FALL_EPOCH])
 def test_office_time_next_boundary_roundtrips_to_segment_start(epoch):
-    now = segment_start(0, 0, 0, epoch)
+    now = segment_start(1, 0, 0, epoch)
     for _ in range(4 * 7 * 2):
         ot = office_time(now, epoch)
         assert segment_start(ot.loop_week, ot.day_index, ot.segment, epoch) == now
@@ -197,14 +204,15 @@ def test_office_time_next_boundary_roundtrips_to_segment_start(epoch):
 
 
 def test_segment_start_returns_local_wall_clock_times():
-    assert segment_start(0, 0, 0, EPOCH) == ny(2026, 9, 27, 0)
-    assert segment_start(1, 3, 2, EPOCH) == ny(2026, 10, 7, 12)
-    assert segment_start(1, 0, 3, DST_EPOCH).hour == 18
+    assert segment_start(1, 0, 0, EPOCH) == ny(2026, 9, 27, 0)
+    assert segment_start(2, 3, 2, EPOCH) == ny(2026, 10, 7, 12)
+    assert segment_start(2, 0, 3, DST_EPOCH).hour == 18
 
 
 @pytest.mark.parametrize(
     "args",
-    [(-1, 0, 0), (0, 7, 0), (0, -1, 0), (0, 0, 4), (0, 0, -1), (0, 1.0, 0), (True, 0, 0)],
+    [(0, 0, 0), (-1, 0, 0), (1, 7, 0), (1, -1, 0), (1, 0, 4), (1, 0, -1), (1, 1.0, 0),
+     (True, 0, 0)],
 )
 def test_segment_start_out_of_range_raises_value_error(args):
     with pytest.raises(ValueError):
@@ -213,4 +221,4 @@ def test_segment_start_out_of_range_raises_value_error(args):
 
 def test_segment_start_non_sunday_epoch_raises_value_error():
     with pytest.raises(ValueError, match="Sunday"):
-        segment_start(0, 0, 0, date(2026, 9, 28))
+        segment_start(1, 0, 0, date(2026, 9, 28))
