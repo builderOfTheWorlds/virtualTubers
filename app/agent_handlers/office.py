@@ -181,14 +181,16 @@ _phase = None         # last phase_change phase
 _chores = None        # ChoreScheduler (office manager), lazily built
 _observer = {"tick": 0, "rotation": 0}
 _day_runner = None    # OB-30 fills this via set_day_runner
+_day_runner_autoinstall_done = False  # OB-30: agent.office.day_runner built at most once
 
 
 def _reset_office_state():
     """Forget directives, phase, chore schedule, observer rotation and the
     day runner (tests / config reload)."""
-    global _today, _phase, _chores, _day_runner
+    global _today, _phase, _chores, _day_runner, _day_runner_autoinstall_done
     _directives.clear()
     _today = _phase = _chores = _day_runner = None
+    _day_runner_autoinstall_done = False
     _observer.update(tick=0, rotation=0)
 
 
@@ -861,8 +863,22 @@ def get_day_runner():
 
 def ceo_idle_tick(worker_id, agent_config, llm_client, producer, state_path=None):
     """IDLE_TICK_HOOKS["ceo"]: delegate to the installed day runner (default:
-    none -> no-op). Never raises."""
-    if office_role_of(agent_config) is not OfficeRole.CEO or _day_runner is None:
+    none -> no-op; an `agent.office.day_runner` block auto-installs
+    office.day_runner on the first tick). Never raises."""
+    global _day_runner_autoinstall_done
+    if office_role_of(agent_config) is not OfficeRole.CEO:
+        return None
+    if _day_runner is None and not _day_runner_autoinstall_done:
+        # OB-30: with an agent.office.day_runner block, build and install the
+        # day runner on the first CEO tick (once; set_day_runner still wins).
+        _day_runner_autoinstall_done = True
+        try:
+            from office import day_runner
+            if day_runner.day_runner_enabled(agent_config):
+                set_day_runner(day_runner.build_day_runner(agent_config, worker_id=worker_id))
+        except Exception as exc:
+            _event(worker_id, "day_runner_install_failed", logging.ERROR, error=f"'{exc}'")
+    if _day_runner is None:
         return None
     try:
         return _day_runner(worker_id, agent_config, llm_client, producer, state_path)
