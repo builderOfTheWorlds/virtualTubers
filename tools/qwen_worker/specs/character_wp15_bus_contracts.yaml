@@ -1,0 +1,114 @@
+task_id: character_wp15_bus_contracts
+
+goal: |
+  Write two small pure modules for the character v4 bus contracts (plan §3.2,
+  §3.4 M1, D-04):
+
+  1. `app/character/bus_contracts.py`: builders for the three new message types
+     on the one Kafka topic `vtuber.messages`:
+
+         character_say      from "char:<slug>"        {campaign, scene_id, character, addressees, present, text}
+         scene_event        from "char-live:<campaign>" {campaign, scene_id, kind, character, present, text}
+         character_refresh  from "character-updater"   {campaign, week, characters, reason}
+
+     The live driver (WP-24) publishes character_say / scene_event for every beat,
+     the ingest consumer (WP-16) turns them into experience rows, and the weekly
+     reset (WP-20) publishes character_refresh. Every builder MUST go through
+     `message_bus.build_message` (app/message_bus.py:33), so the messages carry
+     `id`, a UTC ISO `timestamp` and `correlation_id` like every other message:
+     ingest dedupes on `id` and derives the loop week/day from `timestamp`.
+
+  2. `app/bus_attribution.py`: `character_for_message(msg)`, which character a
+     message is about. The message-logger fills the new `messages.character`
+     column with it (WP-17) and ingest can use it too. D-04: "returns
+     payload.character if it is a string, else the slug from a `from` of
+     char:<slug>, else None. It is pure: no DB lookup, so the logger doesn't
+     depend on character_profile."
+
+  THE FAILURE THAT MUST NEVER HAPPEN: `character_for_message` raises. It runs
+  inside the logger's consume loop on EVERY bus message from every producer
+  (foreign producers send anything: a string payload, no `from`, a number). A
+  raise there stops the logger and loses the bus log. It must return None for
+  anything it does not understand. And it must stay stdlib-only: the logger
+  image copies this ONE file (services/message-logger/Dockerfile), so importing
+  message_bus, character.*, psycopg2 or yaml from it breaks the logger container.
+
+target_files:
+  - app/character/bus_contracts.py
+  - app/bus_attribution.py
+
+test_files:
+  - tests/character/test_character_bus_contracts.py
+  - tests/character/test_character_bus_attribution.py
+
+context_files:
+  - app/message_bus.py        # build_message (:33), BROADCAST; do not modify
+
+interface: |
+  ── app/bus_attribution.py ── (stdlib only: `import logging` at most)
+
+  CHAR_PREFIX = "char:"
+
+  def character_for_message(msg) -> str | None
+      - msg not a dict -> None.
+      - payload = msg.get("payload"); if it is a dict and payload.get("character")
+        is a NON-EMPTY str -> return it.
+      - else sender = msg.get("from"); if it is a str that starts with "char:"
+        and has at least one character after the prefix -> return the rest
+        ("char:office_manager" -> "office_manager").
+      - else None. So "char-live:ashiorid_office" -> None (it does not start with
+        "char:"), "tuber_3" -> None, "office_clock" -> None, "char:" -> None,
+        None / 42 -> None. A non-dict payload falls through to the sender rule.
+      Never raises.
+
+  ── app/character/bus_contracts.py ──
+
+  from message_bus import BROADCAST, build_message     (module-level names: the
+      tests monkeypatch `bus_contracts.build_message`, so call it by that name)
+
+  CHARACTER_SAY = "character_say"; SCENE_EVENT = "scene_event"
+  CHARACTER_REFRESH = "character_refresh"
+  SCENE_KINDS = ("narration", "action", "scene_start", "scene_end", "story_end")
+  REFRESH_REASONS = ("weekly_reset", "revert", "testctl")
+  REFRESH_SENDER = "character-updater"
+
+  class ContractError(ValueError)
+
+  def character_agent_id(slug) -> str        f"char:{slug}"
+  def live_agent_id(campaign) -> str         f"char-live:{campaign}"
+
+  def character_say(campaign, scene_id, character, text, *, present, addressees=(),
+                    from_=None, correlation_id=None, causation_id=None) -> dict
+      text must be a str with non-whitespace content, else ContractError.
+      payload = {"campaign", "scene_id", "character", "addressees": list(addressees),
+                 "present": list(present), "text": text}   (exactly these keys)
+      return build_message(from_ or character_agent_id(character), BROADCAST,
+                           CHARACTER_SAY, payload, correlation_id=correlation_id,
+                           causation_id=causation_id)
+
+  def scene_event(campaign, scene_id, kind, text, *, present, character=None,
+                  from_=None, correlation_id=None, causation_id=None) -> dict
+      kind not in SCENE_KINDS -> ContractError; empty/blank text -> ContractError.
+      payload = {"campaign", "scene_id", "kind", "character", "present": list(present), "text"}
+      sender default live_agent_id(campaign).
+
+  def character_refresh(campaign, week, *, characters=("*",), reason="weekly_reset",
+                        from_=REFRESH_SENDER, correlation_id=None, causation_id=None) -> dict
+      reason not in REFRESH_REASONS -> ContractError.
+      payload = {"campaign", "week", "characters": list(characters), "reason"}
+
+  All three: to = BROADCAST ("broadcast"); positional order of build_message is
+  (from_, to, type_, payload).
+
+notes: |
+  - OB-41: the office cast publishes from worker ids `tuber_N`
+    (app/office/roles.py SEAT). Do NOT special-case them in
+    character_for_message: D-04 keeps it to payload.character and the char:
+    prefix (tracker question P3a-1); ingest resolves tuber_N through the
+    character_agents map (WP-16).
+  - No logging needed in bus_attribution (it is on the logger's hot path);
+    bus_contracts may log at DEBUG (type, from; never text).
+  - Tests import `bus_attribution` bare (app/ is on sys.path, tests/conftest.py:5)
+    and `character.bus_contracts`. Pending guard: the tests skip while the
+    target files are missing (tests/character/pending.py); the harness sandbox
+    overlays them, so they run for real.
