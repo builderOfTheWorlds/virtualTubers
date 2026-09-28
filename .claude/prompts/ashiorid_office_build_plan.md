@@ -613,7 +613,7 @@ All other work packages own disjoint paths.
 | OB-33 | done (4951938). Playlist, draft-only office replay builder, revoice role tones. |
 | Integration | done (adba443 builder action beats, 82f9632 playlist↔day runner + Party Member silence, 6e98d09 wrap_up + week-branch merges + character_refresh + e2e day/reset test). |
 | OB-40 | **NEXT.** Needs the 3-layer generator + a local LLM (argyre); not runnable from the cloud container. |
-| OB-41 | todo (long v4 memory track). |
+| OB-41 | tests-written (2026-09-28). Every v4 WP (02–06, 10o replacing 07–10, 11, 14–25) has frozen tests + qwen harness specs; code is generated on argyre per the user's decision. See `.claude/prompts/character_v4_build_status.md`. Open design questions listed there (brief week-word rule, brief max_chars, migrate job, office↔v4 speech and reset integration). |
 | OB-42 | todo — run by the parent on argyre after OP-1 tokens + Gitea repos exist. |
 
 
