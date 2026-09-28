@@ -1,0 +1,88 @@
+# The simulated fortnight for tests/character/test_e2e_two_weeks.py (playbook
+# WP-25, OB-41 office edition). Office epoch Sunday 2026-09-27 (week 1 =
+# Sep 27..Oct 3, week 2 = Oct 4..Oct 10), America/New_York.
+#
+# Each day lists its beats in order, 10 minutes apart from 09:00 NY. A beat is
+#   {s: <slug>, t: <text>}           character_say from char:<slug> (everyone present)
+#   {s: clock, t: <text>}            scene_event narration from office_clock
+#   {s: think:<slug>, t: <text>}     agent_thinking from char:<slug> (visibility self)
+#   id: <message id>                 optional; default e2e-<day>-<n>
+# `token` is a distinctive word in the day's beats; the canned summary
+# echoes it into that day's knowledge node, so a brief shows which day's
+# knowledge it holds. Nobody ever speaks as the Party Member: he is only ever
+# present (OB-41).
+#
+# Wednesday of week 1 is the engineer's moment: the 8 beats of
+# recall_office_engineer.yaml `lead_up`, then the moment itself (id
+# e2e-w1-moment), which the canned fragment reply picks as the anchor.
+# Wednesday of week 2 replays that arc in other words (2 noise beats), rich in
+# the fragment's hooks (tech-lead via "Brody", tester via "Owen", Build watch,
+# latency graph), so the real recall parameters reach `surface`.
+present: [ceo, tech_lead, analyst, engineer, tester, marketing, office_manager, party_member,
+          office_clock]
+gist: "My stomach dropped when the latency graph went red, and the Tech Lead turned and looked straight at me."
+hooks: {entities: [tech-lead, tester], places: [Build watch], objects: [latency graph], tone: dread}
+moment_id: e2e-w1-moment
+
+days:
+  "2026-09-28":
+    token: kestrel
+    beats:
+      - {s: clock, t: "The kestrel mug is back on the kitchen shelf before six."}
+      - {s: ceo, t: "Morning. The kestrel account wants every decline explained."}
+      - {s: analyst, t: "So. Three things about the kestrel account. One, who reads the reasons."}
+      - {s: think:engineer, t: "The kestrel reasons are a one-liner. Probably."}
+  "2026-09-29":
+    token: heron
+    beats:
+      - {s: tech_lead, t: "The heron dashboard needs a design by nine."}
+      - {s: tester, t: "Overnight heron run. Fourteen of fifteen green."}
+      - {s: engineer, t: "Okay okay so the heron fix is stubbed, and then, well."}
+  "2026-09-30":
+    token: osprey
+    beats:
+      - {s: clock, t: "The Build watch started and the latency graph on the big screen was a calm green line."}
+      - {s: clock, t: "Brody asked me to ship the amount-outlier fix before Ostry's noon sale."}
+      - {s: clock, t: "Nora left a cup of black coffee on the Glass Box desk and said nothing."}
+      - {s: engineer, t: "I merged the reason stub and the deploy bar crawled across the screen."}
+      - {s: tester, t: "Owen said the overnight run was fourteen of fifteen green, and the red one was amount outlier."}
+      - {s: clock, t: "The first Ostry transactions hit and the p99 line started climbing past 150 milliseconds."}
+      - {s: clock, t: "Pellbridge's declines came back with empty reasons and the alert channel lit up."}
+      - {s: clock, t: "Brody turned away from the screen and stared at my desk without saying a word."}
+      - {s: clock, id: e2e-w1-moment, t: "The latency graph went red, the osprey alarm sounded, and the Tech Lead looked straight at me."}
+  "2026-10-01":
+    token: plover
+    beats:
+      - {s: office_manager, t: "The plover fridge audit is today, loves. Label your boxes."}
+      - {s: marketing, t: "Picture the plover pitch. A woman at a till, and for once somebody knows why."}
+  "2026-10-02":
+    token: curlew
+    beats:
+      - {s: tester, t: "The curlew suite is green. All fifteen."}
+      - {s: engineer, t: "Right, so, curlew green, and then I went home early."}
+
+  "2026-10-05":
+    token: lapwing
+    beats:
+      - {s: ceo, t: "Morning. The lapwing client signs on Friday."}
+      - {s: analyst, t: "So. The lapwing contract has two clauses about decline reasons."}
+  "2026-10-07":
+    token: dunlin
+    beats:
+      - {s: clock, t: "The Build watch began, and the latency graph on the wall screen sat flat and green."}
+      - {s: marketing, t: "Julian asked whether anyone had seen his good pen, the dunlin one."}
+      - {s: clock, t: "Brody wanted the outlier fix live before the big noon sale at Ostry."}
+      - {s: engineer, t: "I pushed the reason stub and watched the deploy progress bar creep along."}
+      - {s: office_manager, t: "The Office Manager reminded everyone the dunlin fridge audit is on Thursday."}
+      - {s: tester, t: "Owen reported the nightly suite at fourteen green out of fifteen, the outlier test red again."}
+      - {s: clock, t: "Ostry's traffic landed and the latency graph began to climb over the 150 millisecond line."}
+      - {s: clock, t: "Declines for Pellbridge arrived with no reasons while Brody watched the latency graph."}
+  "2026-10-08":
+    token: godwit
+    beats:
+      - {s: tech_lead, t: "The godwit review is at ten. Bring the diffs."}
+      - {s: tester, t: "The godwit tests pass on the spare laptop."}
+
+# replay beat -> lead-up beat it paraphrases (for the fake embedder only)
+paraphrase_of:
+  "2026-10-07": [0, null, 1, 3, null, 4, 5, 6]
