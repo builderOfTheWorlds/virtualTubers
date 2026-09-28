@@ -1,0 +1,119 @@
+task_id: character_wp23_recall_harness
+
+goal: |
+  Write `app/character/recall_harness.py`: the recall harness (plan §7 "harness
+  first", playbook WP-23). It replays beats from a fixture file or from the
+  character_profile DB against fragments and prints the scores, so the
+  operator can re-tune `recall.bias`, `recall.thresholds` and the weights on
+  real embeddings before the pilot (plan §7: "The recall harness (WP-23) must
+  re-tune these on replayed beats before the pilot"). Its gate is a manual
+  run on gx10 with real nomic-embed-text:
+
+      python -m character.recall_harness --file tests/character/fixtures/recall_office_engineer.yaml
+
+  (run from app/, or with app/ on sys.path). It also holds the DB loaders the
+  live driver reuses: `load_candidates` (a character's DORMANT fragments as
+  recall.Candidate objects) and `load_aliases`.
+
+  The fixture mirrors the reference probe .claude/prompts/character_v4_recall_probe.py:
+  an 8-beat lead-up and three windows (replay with 2 noise beats, shuffled with
+  the probe's permutation, unrelated), here on office beats (OB-41: "The
+  recall harness (WP-23) is calibrated on office beats") — the engineer's
+  Fraud-Stop outage.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the harness reports a separation the
+  engine would not produce, so the tuned thresholds are wrong in play. It must
+  score with the same recall.py functions and a real recall.RecallEngine, never
+  a re-implementation, and load_candidates must return exactly what the live
+  driver will see: dormant fragments only (an unlocked fragment is never a
+  candidate, D-08), lead-up in position order.
+
+target_files:
+  - app/character/recall_harness.py
+
+test_files:
+  - tests/character/test_character_recall_harness.py
+
+context_files:
+  - app/character/recall.py              # promoted in WP-23 spec 1
+  - app/character/store/fragments.py     # dormant_for, lead_up_for (WP-05)
+  - tests/character/fixtures/recall_office_engineer.yaml
+
+interface: |
+  Imports: stdlib (argparse, logging, sys), yaml, `from character import
+  recall`, `from character.store import characters, fragments`. The default
+  embedder is imported lazily inside main(): `from character import embeddings`
+  (WP-11; embeddings.embed(texts) -> list[list[float]]).
+
+  WINDOWS = ("replay", "shuffled", "unrelated")
+
+  def load_fixture(path) -> dict
+      yaml.safe_load of the file; it must have lead_up (list of str),
+      fragment {gist, hooks} and windows {replay, shuffled, unrelated} (lists of
+      str), else ValueError naming the missing key. Returns the parsed dict
+      unchanged (extra keys such as paraphrase_of are kept).
+
+  def score_fixture(fixture, embed, params) -> dict
+      lead = embed(fixture["lead_up"]). For each window name in WINDOWS:
+        vecs = embed(texts)
+        sw_raw     = recall.sw_raw(lead, vecs, bias=params.bias, gap=params.gap)
+        trajectory = recall.sw_score(lead, vecs, bias=..., ref_cosine=..., gap=...)
+        peak_activation = the max of engine.activation("fixture") after each
+            engine.observe(text), where engine is a FRESH
+            recall.RecallEngine([recall.Candidate("fixture", gist, tuple(lead_up), hooks)],
+            embed, params) with judge=None (scores only, no events matter)
+      return {window: {"sw_raw", "trajectory", "peak_activation"}}
+
+  def separates(scores) -> bool
+      The probe's criterion: replay.trajectory > shuffled.trajectory and
+      replay.sw_raw > 2 * max(unrelated.sw_raw, 0.01).
+
+  def load_aliases(conn, campaign) -> dict[str, list[str]]
+      SELECT slug, name, aliases FROM characters WHERE campaign = %s. For each:
+      value = [name] + list(aliases); keys: the slug AND the slug with "_" -> "-"
+      (fragment hooks name colleagues by role with hyphens: "tech-lead").
+
+  def load_candidates(conn, character_id) -> list[recall.Candidate]
+      fragments.dormant_for(conn, character_id) in its order; per fragment:
+      lead_up = tuple(beat["text"] for beat in fragments.lead_up_for(conn, id))
+      (position order); hooks = the stored hooks dict ({} when empty);
+      links = every fragment_links neighbour, BOTH directions
+      (SELECT to_fragment_id ... WHERE from_fragment_id = %s UNION
+       SELECT from_fragment_id ... WHERE to_fragment_id = %s);
+      vectors left None (the engine embeds lead-up and gist itself).
+
+  def replay_events(conn, slug, week, embed, params) -> dict[str, float]
+      row = characters.get_character(conn, slug) (None -> LookupError);
+      engine = recall.RecallEngine(load_candidates(conn, row["id"]), embed, params,
+      aliases=load_aliases(conn, row["campaign"])) with no judge; feed the
+      character's experience_events of that loop_week in (ts, message_id)
+      order (SELECT text ...); return {fragment_id: peak activation} for every
+      candidate (0.0 when never active). Read-only.
+
+  def main(argv=None, *, embed=None, connect=None, cfg=None) -> int
+      argparse (prog "recall_harness"): --file PATH | --db with --character SLUG
+      and --week N (mutually exclusive groups; one is required).
+      params = recall.RecallParams.from_config(cfg.recall) with
+      cfg = cfg or character.config.load() ... EXCEPT in --file mode when cfg is
+      None: use recall.RecallParams() defaults (so --file needs no config
+      file and no DB). embed defaults to character.embeddings.embed.
+      --file: print one line per window, in WINDOWS order:
+          f"{name:<10} sw_raw={..:.3f} trajectory={..:.3f} peak={..:.3f}"
+        then "PASS" or "FAIL" (separates()); return 0 on PASS, 1 on FAIL.
+      --db: connect = connect or character.db.connect; conn = connect(cfg, "main");
+        print "<fragment_id> peak=<x.xxx>" per fragment (highest first), close
+        the connection, return 0.
+  if __name__ == "__main__": raise SystemExit(main())
+
+notes: |
+  - characters.get_character(conn, slug) -> dict | None (WP-05; keys id, slug,
+    name, campaign, aliases, ...).
+  - SQL: %s parameters only; read-only, never commit.
+  - `log = logging.getLogger(__name__)`: DEBUG with counts (candidates, beats),
+    INFO with the verdict. Never log beat text.
+  - Tests: T23.11 is file mode with a fake embedder (tests/character/fakes_e2e.py
+    embed_for_probe_fixture); the DB tests use the `pg_conn` fixture. Run the
+    harness with CHARACTER_TEST_REQUIRE_DB=1.
+  - The gx10 gate (after promote): run --file with real embeddings, then record
+    the measured replay / shuffled / unrelated numbers and the tuned
+    thresholds in the tracker and in config/character.yaml (by hand).

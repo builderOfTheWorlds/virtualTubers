@@ -1,0 +1,68 @@
+# Recall harness fixture, office edition (playbook WP-23 item 11; OB-41: "the
+# recall harness (WP-23) is calibrated on office beats").
+#
+# Same structure as the reference probe .claude/prompts/character_v4_recall_probe.py:
+# an 8-beat lead-up recorded in week 1, then three 8-beat windows from a later
+# week:
+#   replay     different words, same arc, with 2 noise beats mixed in (index 1 and 4)
+#   shuffled   the replay beats in the wrong order: replay[i] for i in (7, 3, 0, 6, 2, 5, 1, 4)
+#   unrelated  a different day entirely
+# The moment itself is the engineer's: the Fraud-Stop latency graph going red
+# during Ostry's noon sale, and the Tech Lead turning to look at him.
+#
+# `paraphrase_of` is used ONLY by the fake embedder in the tests
+# (tests/character/fakes_e2e.py embed_for_probe_fixture): replay[j] shares the
+# topic of lead_up[paraphrase_of.replay[j]]. It mirrors the probe's matched
+# pairs (0,0) (1,2) (3,3) (4,5) (5,6) (6,7). Real embeddings (the WP-23 gate on
+# gx10: `python -m character.recall_harness --file <this file>`) ignore it.
+character: engineer
+fragment:
+  gist: "My stomach dropped when the latency graph went red, and the Tech Lead turned and looked straight at me."
+  hooks:
+    entities: [tech-lead, tester]
+    places: [Build watch]
+    objects: [latency graph]
+    tone: dread
+
+lead_up:   # week 1: the 8 beats before the moment
+  - "The Build watch started and the latency graph on the big screen was a calm green line."
+  - "Brody asked me to ship the amount-outlier fix before Ostry's noon sale."
+  - "Nora left a cup of black coffee on the Glass Box desk and said nothing."
+  - "I merged the reason stub and the deploy bar crawled across the screen."
+  - "Owen said the overnight run was fourteen of fifteen green, and the red one was amount outlier."
+  - "The first Ostry transactions hit and the p99 line started climbing past 150 milliseconds."
+  - "Pellbridge's declines came back with empty reasons and the alert channel lit up."
+  - "Brody turned away from the screen and stared at my desk without saying a word."
+
+windows:
+  replay:   # week 3: the same arc in other words, noise at index 1 and 4
+    - "The Build watch began, and the latency line on the wall screen sat flat and green."
+    - "Julian asked whether anyone had seen his good pen."
+    - "The Tech Lead wanted the outlier fix live before the big noon sale at Ostry."
+    - "I pushed the reason stub and watched the deploy progress bar creep along."
+    - "The Office Manager reminded everyone the fridge audit is on Thursday."
+    - "Owen reported the nightly suite at fourteen green out of fifteen, the outlier test red again."
+    - "Ostry's traffic landed and the p99 latency began to climb over the 150 millisecond line."
+    - "Declines for Pellbridge started arriving with no reasons, and the alerts went off."
+  shuffled:  # replay[i] for i in (7, 3, 0, 6, 2, 5, 1, 4)
+    - "Declines for Pellbridge started arriving with no reasons, and the alerts went off."
+    - "I pushed the reason stub and watched the deploy progress bar creep along."
+    - "The Build watch began, and the latency line on the wall screen sat flat and green."
+    - "Ostry's traffic landed and the p99 latency began to climb over the 150 millisecond line."
+    - "The Tech Lead wanted the outlier fix live before the big noon sale at Ostry."
+    - "Owen reported the nightly suite at fourteen green out of fifteen, the outlier test red again."
+    - "Julian asked whether anyone had seen his good pen."
+    - "The Office Manager reminded everyone the fridge audit is on Thursday."
+  unrelated:  # week 3, a different day entirely
+    - "Nora restocked the snack shelf before anyone else came in."
+    - "Maren read the Halvard contract clause aloud twice."
+    - "Julian rehearsed the Malmont pitch to an empty Moonwell room."
+    - "The milk delivery was late, so oat milk was rationed until ten."
+    - "Graham unfolded his index card and waited for the room to settle."
+    - "Someone left a mug in the server closet again."
+    - "I lost two blitz games in a row at lunch."
+    - "The fire exit door by the corner desk squeaked every time it closed."
+
+paraphrase_of:
+  replay: [0, null, 1, 3, null, 4, 5, 6]
+  shuffled: [6, 3, 0, 5, 1, 4, null, null]

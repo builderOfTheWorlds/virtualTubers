@@ -1,0 +1,151 @@
+task_id: character_wp23_recall
+
+goal: |
+  Write `app/character/recall.py`: the pure recall engine of the character v4
+  loop (plan §7, D-18, D-08). It decides, beat by beat, whether something a
+  character is living through now replays the lead-up of one of their DORMANT
+  memory fragments closely enough to surface it as "a feeling surfaces: ...".
+  It runs inside the live driver (WP-24) and the recall harness (WP-23 spec 2);
+  it is pure: embed(texts) and judge(candidate, recent_texts) are injected, it
+  holds its state in an object, and it never touches the DB, the network or
+  the clock (D-18: "so it can move into its own bus consumer later without
+  changes").
+
+  Per beat, for every candidate fragment, three signals in 0..1 (plan §7):
+    hooks       fraction of the fragment's hook terms (entities, places,
+                objects, each with character aliases) found in the beat text,
+                case-insensitive whole words
+    trajectory  Smith-Waterman alignment of the last window_beats beats
+                against the fragment's lead_up; match = cos - bias, gaps cost
+                gap; the best local score / (len(lead_up) * (ref_cosine - bias)),
+                clipped to 1
+    gist        clip((cos(beat, gist) - bias) / (ref_cosine - bias), 0, 1)
+  activation = w_hooks*hooks + w_trajectory*trajectory + w_gist*gist; it decays
+  by `decay` per beat and spreads `spread` x to linked fragments. Crossing
+  `unease` gives one unease event per cooldown; crossing `surface` calls the
+  judge: yes -> a surface event and an unlock (the fragment stops being a
+  candidate for good), no -> nothing, and the cooldown still applies.
+
+  The reference Smith-Waterman is `smith_waterman()` in
+  .claude/prompts/character_v4_recall_probe.py (in context): `sw_raw` below is
+  exactly that function. The probe measured replay / shuffled / unrelated =
+  0.102 / 0.037 / 0.000 raw at bias 0.6, gap 0.1, which ref_cosine 0.8
+  normalises to about 0.5 / 0.2 / 0.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: a fragment surfaces that shouldn't
+  (unrelated talk, or a fragment already unlocked), or surfaces over and over.
+  A surfaced feeling is permanent (D-08) and is carried in every future brief,
+  so a false surface cannot be taken back in play. Hence: noise under the
+  bias scores exactly 0, an unlocked fragment is removed from the candidates
+  immediately, the judge is asked at most once per cooldown per fragment, and
+  a judge error counts as "no".
+
+target_files:
+  - app/character/recall.py
+
+test_files:
+  - tests/character/test_character_recall.py
+
+context_files:
+  - .claude/prompts/character_v4_recall_probe.py   # reference cosine + smith_waterman
+  - tests/character/fakes_e2e.py                   # TopicEmbed, FakeJudge used by the tests
+
+interface: |
+  Imports: stdlib only (logging, math, re, dataclasses). No numpy (D-26).
+
+  UNEASE_TEXT = "something about this feels familiar"
+  def surface_text(gist) -> str        f"a feeling surfaces: {gist}"
+
+  def cosine(a, b) -> float            0.0 when either norm is 0
+  def sw_raw(lead, recent, *, bias, gap) -> float
+      The probe's smith_waterman: H[i][j] = max(0, H[i-1][j-1] + cos(lead[i-1],
+      recent[j-1]) - bias, H[i-1][j] - gap, H[i][j-1] - gap); best / len(lead).
+      0.0 when lead or recent is empty.
+  def sw_score(lead, recent, *, bias, ref_cosine, gap) -> float
+      clip(sw_raw(...) / (ref_cosine - bias), 0, 1)
+  def gist_score(beat_vec, gist_vec, *, bias, ref_cosine) -> float
+      clip((cosine - bias) / (ref_cosine - bias), 0, 1)
+
+  def hook_terms(hooks) -> list[str]
+      entities, then places, then objects (each a list; missing -> []), each
+      str(term).strip().lower(), empties dropped, duplicates dropped (first
+      kept). "tone", "weekday", "hour" are NOT terms.
+  def hook_score(text, hooks, aliases=None) -> float
+      terms = hook_terms(hooks); none -> 0.0. aliases: {term: [alias, ...]}
+      (keys compared lowercased). A term is found when the term or any of its
+      aliases occurs in text as a whole word/phrase, case-insensitive:
+      pattern (?<!\w) + words joined by \s+ (re.escape each word) + (?!\w).
+      So "Malmont" matches "MALMONT again." and "Brody's desk" (apostrophe
+      is not a word char) but not "Malmonts" / "Brodys"; "latency graph"
+      matches "latency  graph". Return found / len(terms).
+
+  @dataclass(frozen=True)
+  class RecallParams:
+      window_beats: int = 12; bias: float = 0.6; ref_cosine: float = 0.8; gap: float = 0.1
+      w_hooks: float = 0.3; w_trajectory: float = 0.5; w_gist: float = 0.2
+      unease: float = 0.35; surface: float = 0.55; decay: float = 0.85; spread: float = 0.3
+      cooldown_beats: int = 40
+      No validation here (tests use weights like 1/0/0 and thresholds > 1).
+      @classmethod from_config(cls, recall_cfg): from CharacterConfig.recall:
+          window_beats, bias, ref_cosine, gap, weights.hooks / .trajectory / .gist,
+          thresholds.unease / .surface, decay, spread, cooldown_beats.
+
+  @dataclass
+  class Candidate:
+      fragment_id: str; gist: str; lead_up: tuple; hooks: dict = None
+      links: tuple = ()                    # linked fragment ids (either direction)
+      lead_up_vectors: list = None; gist_vector: list = None
+
+  @dataclass(frozen=True)
+  class RecallEvent:
+      level: str                           # "unease" | "surface"
+      fragment_id: str; gist: str; activation: float
+      signals: dict                        # {"hooks", "trajectory", "gist"} at that beat
+      beat_index: int                      # 1 for the first observe() after construction/reset
+      beat_id: str = None; judge_verdict: bool = None; judge_reason: str = None
+
+  class RecallEngine:
+      def __init__(self, candidates, embed, params, judge=None, *, aliases=None,
+                   on_unlock=None)
+          For each candidate whose lead_up_vectors or gist_vector is None: ONE call
+          vs = embed(list(lead_up) + [gist]); lead_up_vectors = vs[:-1],
+          gist_vector = vs[-1]. Links are made symmetric and kept only between
+          known candidates. Then reset().
+      candidate_ids -> list[str]   (property) the current candidates, in the given order
+      activation(fragment_id) -> float     0.0 for an unknown or removed id
+      reset()      activation 0 for all, empty beat window (vectors and texts),
+                   beat counter 0, all cooldowns forgotten. (A refresh does this.)
+      observe(text, *, beat_id=None) -> list[RecallEvent]
+          1. v = embed([text])[0]; beat_index += 1; append v and text to the
+             window, keeping the last window_beats.
+          2. per candidate c: signals = {hooks: hook_score(text, c.hooks, aliases),
+             trajectory: sw_score(c.lead_up_vectors, window, ...),
+             gist: gist_score(v, c.gist_vector, ...)}; raw[c] = weighted sum.
+          3. per candidate: spread_in = spread * max(raw[n] for n linked to c,
+             default 0); act[c] = min(1, max(raw[c] + spread_in, decay * act[c])).
+          4. events, per candidate in candidate order:
+             a. judge is not None and act >= surface and (never judged or
+                beat_index - last_judged >= cooldown_beats): last_judged =
+                beat_index; r = judge(c, list(window texts)) -> dict
+                {"echoes": bool, "reason": str}; an exception -> log ERROR,
+                treat as no. Yes: event level "surface" (judge_verdict True,
+                judge_reason), remove c from the candidates and its activation,
+                call on_unlock(c.fragment_id, event) if given. Yes or no, skip
+                (b) for c on this beat.
+             b. elif act >= unease and (never uneasy or beat_index - last_uneasy
+                >= cooldown_beats): last_uneasy = beat_index; event "unease".
+             Unease and judging have separate cooldowns (a rising activation can
+             be uneasy first and still be judged a few beats later).
+          Return the events (usually []).
+
+notes: |
+  - Pure module: no I/O, no time, no randomness, no global state. `log =
+    logging.getLogger(__name__)`: DEBUG per event (fragment id, level,
+    activation, signals), ERROR when the judge raises. Never log beat text.
+  - Numbers in the tests are exact (pytest.approx): e.g. hooks-only weights,
+    one matching beat then 3 unrelated -> activation 1, 0.85, 0.7225, 0.614;
+    8 beats at cosine 0.7 -> sw_score 0.5; identical sequence -> sw_raw 0.4,
+    sw_score 1.0.
+  - `embed` returns plain lists of floats; do not assume numpy arrays.
+  - The engine never writes anything: the caller records events
+    (live.record_recall_event, WP-24) and unlocks (on_unlock).
