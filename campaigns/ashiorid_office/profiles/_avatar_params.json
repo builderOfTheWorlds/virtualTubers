@@ -1,0 +1,43 @@
+{
+  "_comment": "OB-20 offline stand-in for the LLM step of scripts/generate_office_avatars.py --params-file. One raw model-style reply per cast id (a JSON object, or a string holding the reply text); each goes through the same parse/clamp/validate path as a live reply. Written by reading profiles/<id>.yaml appearance + personality.",
+  "ceo": {
+    "head_width": 0.80, "head_taper": 0.12, "eye_size": 0.46, "eye_spacing": 0.56,
+    "jaw_width": 0.92, "nose_length": 0.38, "ear_size": 0.56, "build": 0.86,
+    "accent_color": "BLUE"
+  },
+  "tech_lead": {
+    "head_width": 0.56, "head_taper": 0.06, "eye_size": 0.22, "eye_spacing": 0.44,
+    "jaw_width": 0.72, "nose_length": 0.68, "ear_size": 0.74, "build": 0.80,
+    "accent_color": "WHITE"
+  },
+  "analyst": {
+    "head_width": 0.24, "head_taper": 0.72, "eye_size": 0.56, "eye_spacing": 0.50,
+    "jaw_width": 0.16, "nose_length": 0.58, "ear_size": 0.30, "build": 0.26,
+    "accent_color": "RED"
+  },
+  "engineer": {
+    "head_width": 0.40, "head_taper": 0.32, "eye_size": 0.78, "eye_spacing": 0.36,
+    "jaw_width": 0.08, "nose_length": 0.24, "ear_size": 0.60, "build": 0.16,
+    "accent_color": "GREEN"
+  },
+  "tester": {
+    "head_width": 0.18, "head_taper": 0.24, "eye_size": 0.30, "eye_spacing": 0.14,
+    "jaw_width": 0.06, "nose_length": 0.46, "ear_size": 0.08, "build": 0.30,
+    "accent_color": "CYAN"
+  },
+  "marketing": {
+    "head_width": 0.56, "head_taper": 0.52, "eye_size": 0.88, "eye_spacing": 0.82,
+    "jaw_width": 0.44, "nose_length": 0.20, "ear_size": 0.44, "build": 0.50,
+    "accent_color": "PURPLE"
+  },
+  "office_manager": {
+    "head_width": 0.78, "head_taper": 0.20, "eye_size": 0.52, "eye_spacing": 0.66,
+    "jaw_width": 0.32, "nose_length": 0.16, "ear_size": 0.40, "build": 0.66,
+    "accent_color": "YELLOW"
+  },
+  "party_member": {
+    "head_width": 0.12, "head_taper": 0.00, "eye_size": 0.14, "eye_spacing": 0.30,
+    "jaw_width": 0.56, "nose_length": 0.56, "ear_size": 0.20, "build": 0.22,
+    "accent_color": "BLACK"
+  }
+}
