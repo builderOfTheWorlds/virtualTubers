@@ -1,0 +1,93 @@
+task_id: character_wp14_export
+
+goal: |
+  Write `app/character/generator/export.py`: stage 7 of plan §1, the export
+  of each character's avatar params from the database into its pack cast file
+  (plan §9: "Export writes it inline into the cast YAML as character_params.
+  The pack loader ignores unknown keys (app/campaign/pack.py:29-46). Export
+  also prints a roster snippet for config/workers/roundtable.yaml").
+
+  For the office cast (OB-41) the cast files already carry the OB-20 params
+  (scripts/generate_office_avatars.py wrote them) and the office loader reads
+  them INTO the database, so a load followed by an export must be a no-op.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: export damages a cast file. The cast
+  YAML is hand-written content (system prompts of 150-350 words, the office
+  relationships and knowledge lists, comments); a yaml.safe_dump round trip
+  would reflow every block scalar and drop every comment. So the edit is
+  TEXT-LEVEL: only the top-level `character_params:` block is inserted or
+  replaced, the result is re-parsed and every other key must be unchanged,
+  and a file whose params already equal the database value is not written at
+  all. After an export, app/campaign/pack.py must still load the pack
+  (campaigns/ashiorid_office and campaigns/hptest).
+
+target_files:
+  - app/character/generator/export.py
+
+test_files:
+  - tests/character/test_character_export.py
+
+context_files:
+  - scripts/generate_office_avatars.py          # write_character_params / roster_snippet: the proven text edit to copy
+  - app/character/generator/office_profiles.py  # promoted in WP-10o; the tests load the office pack with it
+
+interface: |
+  KEY_ORDER = tuple(SLIDER_DEFAULTS) + ("accent_color",)     # from character_schema
+  CHARACTER_PARAMS_COMMENT = "# v4 export: app/character/generator/export.py"
+
+  class ExportError(RuntimeError)
+
+  def format_character_params(params) -> str
+      "character_params:  " + CHARACTER_PARAMS_COMMENT + "\n" then one line per
+      key in KEY_ORDER: sliders as f"  {key}: {float(value):.2f}", accent_color
+      as f"  accent_color: {value}"; ends with "\n".
+
+  def write_character_params(cast_path, params, *, dry_run=False) -> bool
+      text = the file; before = yaml.safe_load(text) or {}.
+      before.get("character_params") == params -> return False (no write).
+      Otherwise build new_text exactly like scripts/generate_office_avatars.py
+      write_character_params (_BLOCK_RE / _AVATAR_RE, same regexes):
+          an existing block -> replaced in place (count=1)
+          else a top-level `avatar:` line -> the block goes right after it
+          else -> appended (add "\n" first if the text doesn't end with one)
+      after = yaml.safe_load(new_text); pop "character_params" from both;
+      after != before, or the written params != params ->
+      raise ExportError(f"refusing to write {cast_path}: edit changed other keys").
+      Write new_text (utf-8) unless dry_run. Return True.
+
+  def export_cast(conn, cast_dir, *, campaign=None, dry_run=False) -> list[Path]
+      SELECT slug, name, avatar_params FROM characters [WHERE campaign = %s]
+      ORDER BY slug. For each row with avatar_params not NULL whose
+      Path(cast_dir) / f"{slug}.yaml" exists (never create a cast file):
+      write_character_params(path, avatar_params, dry_run=dry_run); collect the
+      paths it returned True for. Return them (in slug order). Read-only on
+      the database.
+
+  def roster_snippet(conn, cast_dir, *, campaign=None) -> str
+      Same SELECT. One entry per row with avatar_params not NULL:
+      seat = the cast file's "seat" key (fall back to the slug when there is no
+      cast file or no seat), name = the cast file's "name" (fall back to the
+      row's name). Lines, sorted by seat:
+          "roster:"
+          f'  {seat}: {{name: "{name}", character_params: {{{inline}}}}}  # {slug}'
+      where inline = ", ".join(f"{k}: {float(v):.2f}" for sliders,
+      f"accent_color: {v}") in KEY_ORDER. Joined with "\n" (no trailing newline).
+      This is the mapping form config/workers/roundtable.yaml accepts.
+
+notes: |
+  - Imports: stdlib (logging, pathlib, re), yaml, `from character_schema import
+    SLIDER_DEFAULTS` (top-level module in app/). Do NOT import
+    scripts/generate_office_avatars.py (scripts/ is not a package, and it pulls
+    in the renderer); copy the two regexes and the edit logic.
+  - `log = logging.getLogger(__name__)`. DEBUG per file (slug, action:
+    unchanged / replace / insert_after_avatar / append, dry_run); INFO with
+    the count written; ERROR before raising ExportError.
+  - SQL: `%s` parameters only; the only query is the SELECT above.
+  - Never write outside cast_dir; never touch a file for a character that is
+    not in the database (hptest's gm.yaml stays byte-identical).
+  - The tests work on tmp copies of campaigns/ashiorid_office and
+    campaigns/hptest (tests/character/fakes_generator.py) and load them with
+    campaign.pack.load_pack. `pg_conn` = a fresh migrated database; run the
+    harness with CHARACTER_TEST_REQUIRE_DB=1.
+  - Pending guard: the test file skips while app/character/generator/export.py
+    is missing; the harness sandbox overlays the staged file.
