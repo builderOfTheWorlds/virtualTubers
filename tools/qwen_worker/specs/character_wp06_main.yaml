@@ -1,0 +1,113 @@
+task_id: character_wp06_main
+
+goal: |
+  Write the process side of the character v4 jobs (plan §5, D-13, D-23):
+  `services/character-updater/main.py`, the one CLI every job is a subcommand
+  of, and `services/character-updater/Dockerfile`, the image the compose
+  service `character-jobs` runs it in.
+
+      python services/character-updater/main.py <job> [--campaign slug] [--character slug]
+             [--dry-run] [--at <ISO time>] [-v]
+
+  Plan §5: "The logic lives in app/character/*.py. services/character-updater/
+  only holds the process: argparse, config, exit codes, container". So main.py
+  is small: set up sys.path and logging, pick the job from a registry, and
+  hand the rest of argv to `character.jobs.run_job`, whose return value is the
+  process exit code. This WP registers only `status`; later WPs add
+  daily-maintenance, weekly-reset, initialize, testctl, ... to the registry.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the CLI works only from the repo root.
+  It is run by cron (`cd ~/codeProjects/virtualTubers && docker compose run
+  --rm character-jobs daily-maintenance`), by hand from anywhere, and inside
+  the container where the layout is flat (/app/main.py next to
+  /app/character/). If the sys.path insert assumes one layout, the nightly
+  job dies with ModuleNotFoundError at 00:00 and nobody sees it until the
+  week's memories are missing. main.py therefore finds the directory that
+  contains `character/__init__.py` itself, relative to its own file, never
+  the cwd.
+
+target_files:
+  - services/character-updater/main.py
+  - services/character-updater/Dockerfile
+
+test_files:
+  - tests/character/test_character_updater_main.py
+
+context_files:
+  - app/character/jobs.py                # promoted in WP-06 spec 1: run_job, StatusJob
+  - services/message-logger/Dockerfile   # image style to copy
+
+interface: |
+  ── services/character-updater/main.py ──
+
+  Module docstring with the usage line above and the exit codes
+  (0 done, 1 failed, 2 nothing to do / locked / usage error, 3 precondition).
+
+  HERE = Path(__file__).resolve().parent
+  Candidates, in order: HERE, then HERE.parents[1] / "app" ONLY when
+  len(HERE.parents) > 1 (in the container HERE is /app, whose .parents has one
+  entry, so an eager `HERE.parents[1]` raises IndexError). The first candidate
+  containing "character/__init__.py" is inserted at sys.path[0] (repo layout:
+  <repo>/app; container layout: /app). None found -> print a clear error to
+  stderr and exit 1. This runs at import time, BEFORE `from character import jobs`.
+
+  JOBS = {"status": jobs.StatusJob}          # name -> job class (instantiated per run)
+
+  def build_parser() -> argparse.ArgumentParser
+      prog="main.py", description naming the character v4 jobs; one
+      positional `job` with choices=sorted(JOBS) and a help text listing
+      them (so `main.py --help` prints "status"), and an epilog pointing to
+      `main.py <job> --help` for the job's own options.
+
+  def main(argv=None) -> int
+      argv = sys.argv[1:] when None.
+      - When argv is empty or argv[0] starts with "-": call
+        build_parser().parse_args(argv). It prints help and exits 0 for
+        --help, or prints usage and exits 2 when the job is missing; if it
+        ever returns, return 2. (Never parse the job's own flags here.)
+      - name, rest = argv[0], argv[1:]. name not in JOBS ->
+        build_parser().error(f"unknown job {name!r} (choose from ...)"), which
+        prints usage to stderr and exits 2.
+      - logging.basicConfig(level=DEBUG if "-v" in rest or "--verbose" in rest
+        else INFO, stream=sys.stderr, format="%(asctime)s %(levelname)-5s
+        %(name)s | %(message)s").
+      - return jobs.run_job(JOBS[name](), rest)
+        (`main.py status --help` therefore prints the job parser's help, with
+        --dry-run and --at, and exits 0.)
+
+  if __name__ == "__main__": raise SystemExit(main())
+
+  ── services/character-updater/Dockerfile ──
+
+  Same shape as services/message-logger/Dockerfile:
+      FROM python:3.12-slim
+      ENV PYTHONUNBUFFERED=1
+      WORKDIR /app
+      COPY services/character-updater/requirements.txt /app/requirements.txt
+      RUN pip install --no-cache-dir -r /app/requirements.txt
+      COPY app/character /app/character
+      COPY app/character_schema.py /app/character_schema.py
+      COPY config/character.yaml /config/character.yaml
+      COPY services/character-updater/main.py /app/main.py
+      ENTRYPOINT ["python3", "/app/main.py"]
+  Why each COPY: app/character/__init__.py imports character.avatar, which
+  imports the top-level character_schema module; config.load() defaults to
+  <config.py>/../../config/character.yaml, which is /config/character.yaml in
+  this layout. The build context is the REPO ROOT (compose sets it).
+  Comments in the Dockerfile explain the flat layout and that no secret is
+  baked in (the password comes from CHARACTER_DB_PASSWORD at run time).
+
+notes: |
+  - Imports in main.py: stdlib (argparse, logging, sys, pathlib) and, after
+    the sys.path insert, `from character import jobs`. Nothing else.
+  - main.py holds no job logic, no SQL, no config parsing: all of that is in
+    app/character/jobs.py.
+  - Do not use the cwd (os.getcwd, relative paths) anywhere.
+  - The tests run main.py as a subprocess from a tmp dir, from services/ and
+    from services/character-updater/, with PYTHONPATH removed. `--help` and
+    an unknown job need no database and no config file.
+  - `services/character-updater/requirements.txt` and the compose service are
+    another spec (character_wp06_compose.yaml); do not emit them.
+  - Pending guard: tests/character/test_character_updater_main.py skips while
+    services/character-updater/main.py is missing; the harness sandbox copies
+    services/ and app/ and overlays the staged files, so it runs for real there.

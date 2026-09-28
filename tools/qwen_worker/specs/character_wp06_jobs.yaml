@@ -1,0 +1,160 @@
+task_id: character_wp06_jobs
+
+goal: |
+  Write `app/character/jobs.py`: the framework every character v4 job runs
+  under (plan §5, D-13), plus the first job, `status`.
+
+  Every operation of the memory loop (daily-maintenance, weekly-reset,
+  initialize, testctl, status, ...) is a subcommand of one entry point,
+  `services/character-updater/main.py <job>`. main.py only picks the job; this
+  module does the rest: parse the common flags, load config, connect, take
+  the job's advisory lock, write the `character_jobs` row, build the
+  JobContext, run the job, and turn the outcome into an exit code.
+  Plan §5: "Exit codes: 0 done, 2 nothing to do (already done, locked, or not
+  due), 3 precondition not met (e.g. ingest lag), 1 failed. --at replaces
+  'now' everywhere ... --dry-run prints each step and writes nothing, not
+  even the jobs row."
+
+  THE FAILURE THAT MUST NEVER HAPPEN: two copies of the same job run at once,
+  or a crashed run reports success. The weekly reset runs from cron and by
+  hand; two concurrent resets would each create a week's fragments. So the
+  lock is taken BEFORE the job runs, and a lost lock exits 2 without calling
+  the job. A job that raises must roll back its own writes, leave a `failed`
+  row holding the error text, log at ERROR, and exit 1 — never 0.
+
+  Second: `--dry-run` must write NOTHING. The framework rolls back whatever
+  the job did in a dry run and writes no jobs row, so an operator can
+  rehearse `weekly-reset --dry-run --at ...` against the real database.
+
+target_files:
+  - app/character/jobs.py
+
+test_files:
+  - tests/character/test_character_jobs.py
+
+context_files:
+  - app/character/db.py            # connect, advisory_lock, advisory_unlock (WP-04)
+  - app/character/store/jobs.py    # start_job, finish_job, fail_job, list_recent (WP-05)
+  - app/character/config.py        # load, CharacterConfig (WP-03)
+
+interface: |
+  EXIT_OK = 0; EXIT_FAILED = 1; EXIT_NOTHING = 2; EXIT_PRECONDITION = 3
+
+  @dataclass(frozen=True)
+  class JobResult:
+      status: str                 # "done" | "nothing" | "precondition"
+      detail: dict = field(default_factory=dict)   # JSON-serialisable, stored as result
+      message: str = ""
+      Unknown status -> ValueError in __post_init__.
+  RESULT_EXIT = {"done": EXIT_OK, "nothing": EXIT_NOTHING, "precondition": EXIT_PRECONDITION}
+
+  class Job(typing.Protocol):    # documentation only; jobs are plain classes
+      name: str
+      def run(self, ctx: "JobContext") -> JobResult: ...
+      # optional: def add_arguments(self, parser: argparse.ArgumentParser) -> None
+
+  @dataclass
+  class JobContext:
+      cfg: CharacterConfig; conn; clock: LoopClock; now: datetime; dry_run: bool
+      log: logging.Logger; args: argparse.Namespace
+
+  def lock_key(job_name: str, campaign: str) -> str
+      f"{job_name}:{campaign}"  (the advisory lock is keyed on (job, campaign), plan §5)
+
+  def parse_at(text: str) -> datetime
+      datetime.fromisoformat(text) (accepts a trailing "Z"). A naive result
+      raises argparse.ArgumentTypeError("--at needs a timezone offset, e.g.
+      2026-10-05T12:00:00-04:00"). Used as the argparse `type=` of --at, so a
+      naive --at is an argparse usage error: SystemExit(2).
+
+  def build_parser(job) -> argparse.ArgumentParser
+      prog=f"main.py {job.name}". Common options:
+          --campaign SLUG      default None (then cfg.campaign)
+          --character SLUG     default None
+          --dry-run            store_true
+          --at ISO             type=parse_at, default None (then now)
+          -v, --verbose        store_true
+      then job.add_arguments(parser) if the job has it.
+
+  def run_job(job, argv, *, cfg=None, env=None, connect=None) -> int
+      1. args = build_parser(job).parse_args(argv)   (argparse may SystemExit:
+         2 on a bad/naive argument, 0 on --help; let it propagate)
+      2. cfg = cfg or config.load(env=os.environ if env is None else env)
+         connect = connect or db.connect           (signature connect(cfg, role="main"))
+         now = args.at or datetime.now(timezone.utc)
+         args.campaign = args.campaign or cfg.campaign
+         clock = LoopClock(cfg.loop.epoch, cfg.timezone)
+      3. conn = connect(cfg, "main"); everything below is in try/finally that
+         releases the lock (db.advisory_unlock) if held and closes conn.
+      4. key = lock_key(job.name, args.campaign). If not db.advisory_lock(conn, key):
+         log WARNING; unless dry-run, write a row: start_job(...) then
+         finish_job(..., status="skipped", result={"reason": "locked", "exit_code": 2});
+         commit; return EXIT_NOTHING. The job is NOT run.
+      5. Unless dry-run: job_id = store.jobs.start_job(conn, job.name, params={"argv":
+         list(argv), "campaign": args.campaign, "character": args.character, "at":
+         now.isoformat()}, character_id=None, dry_run=False); conn.commit().
+      6. ctx = JobContext(cfg, conn, clock, now, args.dry_run,
+         logging.getLogger(f"character.jobs.{job.name}"), args)
+      7. result = job.run(ctx) inside `try/except Exception as exc`:
+            conn.rollback(); log.exception(...) (ERROR, logger "character.jobs");
+            unless dry-run: store.jobs.fail_job(conn, job_id, f"{type(exc).__name__}: {exc}");
+            conn.commit(); push Loki (level "error"); return EXIT_FAILED.
+      8. code = RESULT_EXIT[result.status].
+         dry-run: conn.rollback() (discard anything the job wrote); no row.
+         otherwise: conn.commit(); store.jobs.finish_job(conn, job_id,
+         status="completed" if code == EXIT_OK else "skipped",
+         result={**result.detail, "exit_code": code, "message": result.message});
+         conn.commit().
+         log INFO "job <name> finished exit=<code>", push Loki (level "info"); return code.
+
+  class StatusJob:
+      name = "status"
+      def run(self, ctx) -> JobResult
+          Read-only report, printed to stdout with print():
+          - loop week: store.weeks.latest_week(conn, campaign) -> None prints
+            exactly "no weeks" on its own line; otherwise
+            "week <n> <status> <starts_at> .. <ends_at>" and one line per
+            completed reset step.
+          - clock: "now <iso> = week <w> day <d>" from ctx.clock.position(ctx.now).
+          - ingest: store.events.ingest_status(conn, cfg.ingest.consumer_group) ->
+            None prints "ingest: no status yet"; otherwise the counters and the
+            lag (ctx.now - last_message_ts).
+          - last 10 jobs: store.jobs.list_recent(conn, 10), one line each
+            (created_at, job, status).
+          - fragments per character, one line each, from:
+                SELECT c.slug, count(f.id) FILTER (WHERE u.fragment_id IS NULL),
+                       count(u.fragment_id)
+                FROM characters c LEFT JOIN memory_fragments f ON f.character_id = c.id
+                LEFT JOIN fragment_unlocks u ON u.fragment_id = f.id
+                GROUP BY c.slug ORDER BY c.slug
+            ("<slug>: <dormant> dormant, <unlocked> unlocked"; "no characters" when none).
+          Return JobResult("done", {"week": <latest week number or None>}).
+
+  Store signatures used (promoted in WP-05):
+      character.store.weeks.latest_week(conn, campaign) -> dict | None   (keys week, status,
+          starts_at, ends_at, reset_steps)
+      character.store.events.ingest_status(conn, consumer_group) -> dict | None
+          (keys messages_seen, rows_written, unmapped, last_message_ts, ...)
+      character.store.jobs.start_job / finish_job / fail_job / list_recent (in context)
+
+notes: |
+  - Imports: stdlib (argparse, dataclasses, datetime, logging, os, sys, typing),
+    and `character.*`: `from character import config, db`, `from character.clock
+    import LoopClock`, `from character.store import events, jobs as jobs_store,
+    weeks` (alias the jobs store so it doesn't shadow this module's name).
+  - `log = logging.getLogger(__name__)`. DEBUG at each step of run_job
+    (parsed flags, lock taken, row id), WARNING for a lost lock, ERROR (with
+    the traceback) for a raising job, INFO when a job finishes. Never log the
+    config's password or a DSN; log the job name, campaign and exit code.
+  - Loki, best-effort: copy `_push_loki` from tools/qwen_worker/runner.py:39-54
+    (REPO_ROOT = Path(__file__).resolve().parents[2]; labels {"app":
+    "character", "operation": <job name>}). It must never raise.
+  - Do not configure logging handlers here (main.py does); do not call
+    sys.exit here (return the code; argparse's own SystemExit may propagate).
+  - The `connect` argument exists so tests (and later jobs) can inject a
+    connection; the tests pass one that opens a pgserver database.
+  - Tests: the `pg` fixture (tests/character/conftest.py) gives a fresh
+    database; the tests migrate it with db.migrate first. Pending guard: the
+    test file skips while app/character/jobs.py is missing; the harness
+    sandbox overlays the staged file, so it runs for real. Run the harness
+    with CHARACTER_TEST_REQUIRE_DB=1 (an all-skipped run exits 0 = PASS).

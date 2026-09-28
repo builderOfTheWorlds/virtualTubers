@@ -1,0 +1,95 @@
+task_id: character_wp06_compose
+
+goal: |
+  Add the `character-jobs` service to the root `docker-compose.yml` and write
+  `services/character-updater/requirements.txt` (plan §5, §13 crontab, D-13;
+  playbook WP-06). The service runs one character v4 job and exits:
+
+      docker compose run --rm character-jobs status
+      docker compose run --rm character-jobs daily-maintenance     (cron, 00:00 NY)
+
+  It is NOT a long-running service: profile `jobs` (so `docker compose up -d`
+  never starts it) and `restart: "no"` (a job that exits 2 "nothing to do"
+  must not be restarted in a loop). The `character-ingest` service is added
+  later (WP-16), not here.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the edit breaks the other ~25 services
+  in docker-compose.yml. This file deploys the whole stack; the harness emits
+  WHOLE files, so every existing line must come back byte-for-byte, with the
+  new service block added and nothing else changed. If you cannot reproduce
+  the file exactly, stop: a partial compose file is far worse than none.
+
+  !! PLANNER WARNING (tracker question WP-06/compose): docker-compose.yml is
+  ~50 KB. As a context file plus a whole-file reply it is over the playbook
+  §2.2 prompt budget (~60k characters) on its own. Before running this spec,
+  get the user's answer to the tracker question: add the block below by hand
+  (it is config, like config/character.yaml), or retarget this spec at a new
+  small override file. The exact block to add is in `interface`.
+
+target_files:
+  - services/character-updater/requirements.txt
+  - docker-compose.yml
+
+test_files:
+  - tests/test_office_configs.py          # parses docker-compose.yml; must stay green
+
+context_files:
+  - docker-compose.yml                    # the file to reproduce exactly (+ the new block)
+  - services/character-updater/Dockerfile # promoted in WP-06 spec 2 (build context = repo root)
+
+interface: |
+  ── services/character-updater/requirements.txt ──
+  The image's runtime deps (house style: the same lines as the root
+  requirements.txt, with the same comments where useful):
+      psycopg2-binary>=2.9
+      pyyaml>=6.0
+      tzdata>=2025.2       # IANA zones for zoneinfo; python:3.12-slim has none
+      kafka-python>=2.0.2  # ingest (WP-16) and character_refresh (WP-20)
+      httpx>=0.27          # Ollama LLM + embeddings clients (WP-11)
+
+  ── docker-compose.yml: add this service, after `message-logger` ──
+    # Character v4 memory-loop jobs (plan character_generator_updater_v4.md §5):
+    # one job per `docker compose run --rm character-jobs <job>`, e.g. status,
+    # daily-maintenance, weekly-reset. Profile "jobs": never started by `up -d`.
+    # Exit codes: 0 done, 1 failed, 2 nothing to do / locked, 3 precondition.
+    character-jobs:
+      build:
+        context: .
+        dockerfile: services/character-updater/Dockerfile
+      image: virtualtubers-character-updater:latest
+      profiles: ["jobs"]
+      restart: "no"
+      environment:
+        CHARACTER_DB_HOST: ${CHARACTER_DB_HOST:-192.168.1.120}
+        CHARACTER_DB_PORT: ${CHARACTER_DB_PORT:-5433}
+        CHARACTER_DB_NAME: ${CHARACTER_DB_NAME:-character_profile}
+        CHARACTER_DB_USER: ${CHARACTER_DB_USER:-character_profile}
+        # Empty is allowed so `docker compose config` works without it; a job
+        # that connects then fails with "db.password: CHARACTER_DB_PASSWORD is not set".
+        CHARACTER_DB_PASSWORD: ${CHARACTER_DB_PASSWORD:-}
+        KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-}
+        KAFKA_TOPIC: ${KAFKA_TOPIC:-vtuber.messages}
+      volumes:
+        # Edit the loop config without rebuilding the image.
+        - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
+
+notes: |
+  - Change NOTHING else in docker-compose.yml: no reordering, no re-indenting,
+    no comment edits, no quoting changes, no new top-level keys.
+  - Never put a secret value in either file; only `${VAR:-}` references.
+  - Do not add a `ports:` mapping, a `depends_on:` or a healthcheck: the
+    service connects out to 192.168.1.120:5433 and exits.
+  - Do not add `character-ingest` (WP-16) or `character-live` (WP-24).
+  - Gate (run by the orchestrator after promote, not by pytest):
+    `docker compose config --services` lists character-jobs (with the stack's
+    .env present), `docker compose config` is valid, and
+    `python services/character-updater/main.py status --at 2026-10-05T12:00:00-04:00`
+    works against a pgserver database (CHARACTER_DB_* pointed at it).
+  - tests/test_office_configs.py is a regression check: it loads
+    docker-compose.yml and must keep passing unchanged. KNOWN HARNESS GAP:
+    it also reads docker-compose.office.yml at the repo root, and the sandbox
+    copies only pytest.ini from the root (tools/qwen_worker/sandbox.py
+    SANDBOX_FILES), so its office-compose tests fail in the sandbox whatever
+    the worker emits. Another reason for the tracker question above; if this
+    spec is run anyway, judge it by the non-office-compose tests and run the
+    full file in the real tree after promote.
