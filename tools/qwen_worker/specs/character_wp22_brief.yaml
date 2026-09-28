@@ -1,0 +1,189 @@
+task_id: character_wp22_brief
+
+goal: |
+  Write `app/character/brief.py`: the brief a character plays from (plan §8,
+  D-08). It is assembled from the character_profile DB, never stored, and it
+  is the ONLY thing that tells a live character who they are and what they
+  remember. Two callers:
+    - the live driver (WP-24), which caches the loaded parts for
+      brief.cache_ttl_s and renders them per improvised line, adding "a feeling
+      surfaces: ..." lines for fragments recall surfaced this week;
+    - the office agents (OB-41): "When brief.py lands, swap it in for
+      app/office/brief_stub.py (E6)". So this module also offers the stub's
+      entry point, `build_persona_prompt(role, directive=None, pack_dir=None,
+      max_backstory_chars=None)`, with the same arguments and errors, so the
+      swap in app/agent_handlers/office.py is a one-import change (a later
+      hand step, not this spec). app/office/brief_stub.py is in context.
+
+  Plan §8 sections, in order: who you are; what you remember of your life so
+  far (the `believed` layer); what you want; what you've learned this week
+  (unarchived knowledge nodes, newest first, capped); feelings you carry
+  (unlocked fragment gists, framed as instincts, no dates, no weeks); the
+  behaviour contract ("stay in character, speak in first person, one line at
+  a time, and treat a surfaced feeling as deja vu. Never state that time
+  repeats."). No dormant fragment list. Capped at brief.max_chars (6000) by
+  dropping the oldest week-knowledge lines first.
+
+  THE FAILURE THAT MUST NEVER HAPPEN: the brief leaks the loop. Characters
+  never know they are in a loop (plan §2). The brief must NEVER contain the
+  `truth` backstory layer, a dormant fragment's gist, archived knowledge, a
+  week number, or the words loop / week / reset (any form: loops, weeks,
+  weekly, resets ...), and never "time repeats" — not even in the contract,
+  and not even where the source text has it: the office cast files carry the
+  literal sentence "Never state or imply that time repeats." and several
+  believed backstories say "three weeks" or "one week". Every piece of text
+  goes through `scrub()`, which drops each SENTENCE (or list item) holding a
+  forbidden word. Headings are fixed constants that are already clean (so
+  plan §8's "What you've learned this week" is "What you've learned recently").
+
+target_files:
+  - app/character/brief.py
+
+test_files:
+  - tests/character/test_character_brief.py
+  - tests/character/test_character_brief_persona.py
+
+context_files:
+  - app/office/brief_stub.py             # the stub this module replaces: keep its contract
+  - app/character/store/knowledge.py     # current_nodes (WP-05)
+  - app/character/store/fragments.py     # unlocked_for (WP-05)
+
+interface: |
+  Imports: stdlib (logging, os, re, time, dataclasses, pathlib), yaml,
+  `from office.roles import as_role` (pure module), and
+  `from character.store import characters, fragments, knowledge`.
+
+  FORBIDDEN_RE = re.compile(
+      r"\b(loops?|looped|looping|weeks?|weekly|resets?|resetting)\b|time\s+repeats?", re.I)
+  SENTENCE_SPLIT_RE = re.compile(r"((?<=[.!?])\s+)")     # keeps the separator (a capture group)
+  HEADINGS = {"who": "## Who you are",
+              "remember": "## What you remember of your life so far",
+              "want": "## What you want",
+              "learned": "## What you've learned recently",
+              "feelings": "## Feelings you carry",
+              "directive": "## Today's directive",
+              "contract": "## How you behave"}
+  SECTION_ORDER = ("who", "remember", "want", "learned", "feelings", "directive", "contract")
+  FEELINGS_INTRO = "These come to you as instincts. You cannot say where they come from."
+  BEHAVIOUR_CONTRACT = (   # clean by construction; keep the meaning of plan §8 item 6
+      "Stay in character at all times.",
+      "Speak in the first person, one line at a time.",
+      "If a feeling surfaces, treat it as deja vu: a hunch you cannot explain, never a fact you can prove.",
+      "Never claim that you have lived through any of this before.")
+  NO_DIRECTIVE_TEXT = "The CEO has not issued a directive yet today."   # == brief_stub's
+  PACK_DIR_ENV = "OFFICE_PACK_DIR"
+  DEFAULT_PACK_DIR = Path(__file__).resolve().parents[2] / "campaigns" / "ashiorid_office"
+
+  class BriefError(RuntimeError)
+
+  @dataclass(frozen=True)
+  class BriefParts:
+      slug: str; name: str; who: str = ""; remember: str = ""
+      wants: tuple = (); fears: tuple = (); learned: tuple = ()     # learned: newest first
+      feelings: tuple = (); contract: tuple = ()                    # feelings: unlock order
+
+  def scrub(text) -> str
+      "" for None/"". tokens = SENTENCE_SPLIT_RE.split(text); keep each sentence
+      (with its following separator) that has no FORBIDDEN_RE match; join; then
+      rstrip every line, collapse 3+ newlines to 2, strip. Sentences spanning a
+      line break are kept or dropped whole, so untouched lines stay byte-identical.
+      scrub("One line. Never state or imply that time repeats. Another line.")
+          == "One line. Another line."
+
+  def directive_text(directive) -> str       exactly brief_stub._directive_text:
+      dict -> "<title> (issue #N)\n<text>" (header parts optional), empty text ->
+      NO_DIRECTIVE_TEXT; non-empty str -> stripped; else NO_DIRECTIVE_TEXT.
+
+  def render(parts, *, max_chars=6000, week_knowledge_max=40, extra_feelings=(),
+             directive=None, max_backstory_chars=None) -> str
+      Items (wants, fears, learned, feelings, extra_feelings, contract) are scrubbed
+      one by one; empty results are dropped. learned = the first
+      week_knowledge_max scrubbed items. remember = scrub(parts.remember), then
+      truncated like the stub when max_backstory_chars: text[:n].rsplit(" ", 1)[0] + " ...".
+      Section bodies:
+        who       scrub(parts.who)
+        remember  as above
+        want      "You want:" + "\n- <w>" lines (if any), then "You fear:" + "- <f>" lines
+        learned   "- <statement>" lines
+        feelings  FEELINGS_INTRO, then "- <gist>" for parts.feelings, then
+                  "- <line>" for extra_feelings (in that order); omitted when both empty
+        directive scrub(directive_text(directive)) ONLY when directive is not None
+        contract  "- <line>" for BEHAVIOUR_CONTRACT then the scrubbed parts.contract
+      Output: "\n\n".join(f"{HEADINGS[k]}\n{body}" for k in SECTION_ORDER if body).
+      So an empty section (no heading either) is left out, and the text starts
+      "## Who you are\n".
+      max_chars None -> no cap. Else, while len > max_chars and learned: drop the
+      LAST (oldest) learned item and re-render. Still over: truncate remember on a
+      word boundary (+ " ...") by the overflow and re-render. Still over: hard cut
+      to max_chars. The result is always <= max_chars.
+      Pure: nothing is remembered between calls.
+
+  def resolve_pack_dir(pack_dir=None) -> Path     argument > env OFFICE_PACK_DIR > DEFAULT_PACK_DIR
+
+  def parts_from_pack(slug, pack_dir=None) -> BriefParts       (no DB; the stub's sources)
+      cast = <pack>/cast/<slug>.yaml (missing / unreadable / not a mapping /
+      empty system_prompt -> BriefError); profile = <pack>/profiles/<slug>.yaml
+      (missing -> {}, no error).
+      who: cast system_prompt.strip(), then "Traits: a, b, c." from
+      profile.personality.traits (if any), then "How you speak: <cast speech>"
+      (if any), joined by "\n". remember: profile.backstory.believed (stripped;
+      "" when missing) -- NEVER backstory.truth. wants / fears: profile
+      objectives.wants / fears (fallback: cast wants / fears). contract:
+      profile.behaviour_contract. name: cast name. learned / feelings: ().
+
+  def load_parts(conn, slug, week, *, pack_dir=None) -> BriefParts   (plan §8: from the DB)
+      row = characters.get_character(conn, slug); None -> BriefError.
+      baseline = characters.active_baseline(conn, slug) (may be None); profile =
+      baseline["profile"] or {}. The office loader (Phase 2) stores the profile
+      YAML minus backstory/backstory_nodes, and the layers as
+      character_backstories rows with content {"text": ...}.
+      remember: SELECT content FROM character_backstories WHERE character_id = %s
+      AND version = <baseline version> AND layer = 'believed' -> content["text"]
+      (or the content itself when it is a str). NEVER read layer 'truth', and
+      never read profile["backstory"].
+      who / wants / fears / contract: as parts_from_pack, but from the stored
+      profile; the cast file (<pack>/cast/<slug>.yaml, optional here) supplies
+      the system_prompt and speech.
+      learned: [n["statement"] for n in knowledge.current_nodes(conn, row["id"], week)]
+      (current_nodes excludes archived nodes and is newest first).
+      feelings: [f["gist"] for f in fragments.unlocked_for(conn, row["id"])] --
+      unlocked ONLY; dormant fragments never appear (D-08).
+      name: row["name"]. Read-only: no writes, no commit.
+
+  class BriefCache:
+      def __init__(self, loader, ttl_s, clock=time.monotonic)   loader(slug) -> anything
+      def get(self, slug): a hit when (clock() - loaded_at) < ttl_s; otherwise
+          call loader(slug), store (clock(), value), return it.
+      def invalidate(self, slug): forget one (unknown slug: no error)
+      def invalidate_all(self): forget everything
+
+  def set_memory_source(source) -> None
+      source(slug) -> BriefParts | None, or None to clear. Module-level.
+
+  def build_persona_prompt(role, directive=None, pack_dir=None, max_backstory_chars=None,
+                           *, max_chars=None) -> str           (the brief_stub drop-in)
+      slug = as_role(role).value (a role, value or seat; ValueError otherwise).
+      parts = source(slug) when a source is set; a source that raises is logged
+      at WARNING and treated as None. None -> parts_from_pack(slug, pack_dir)
+      (BriefError as the stub). return render(parts,
+      directive=directive_text(directive), max_backstory_chars=max_backstory_chars,
+      max_chars=max_chars)   -- so "## Today's directive" is always present here,
+      with NO_DIRECTIVE_TEXT when there is none, and there is no cap unless asked.
+
+notes: |
+  - Store signatures (WP-05): characters.get_character(conn, slug) -> dict | None
+    (id, slug, name, campaign, active_baseline_version, ...);
+    characters.active_baseline(conn, slug) -> dict | None (character_id, version,
+    profile (dict), ...); knowledge.current_nodes / fragments.unlocked_for are in context.
+  - `log = logging.getLogger(__name__)`: DEBUG when a section is empty or
+    items are scrubbed (counts only, never the text), DEBUG when knowledge
+    lines are dropped for the cap, INFO once per build_persona_prompt (slug,
+    chars), WARNING for a failing memory source, ERROR before raising BriefError.
+  - Never log brief text, gists or backstory (they are character content).
+  - The test for T22.2 uses the `pg_conn` fixture (fresh DB with
+    app/character/sql applied) and seeds the office engineer by raw SQL; the
+    rest are unit tests on the real campaigns/ashiorid_office pack. Run the
+    harness with CHARACTER_TEST_REQUIRE_DB=1.
+  - The office briefs are 7-8.6k characters with no memory at all, over
+    brief.max_chars 6000 (tracker question P3b-Q1). Do not change the cap
+    logic to work around that: it is a config decision for the user.
