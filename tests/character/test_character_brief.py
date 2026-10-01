@@ -5,20 +5,30 @@ assembled from the DB, never stored: who you are, what you remember (the
 `believed` layer only), what you want, what you've learned (this week's
 unarchived knowledge nodes, newest first, capped), feelings you carry
 (unlocked fragment gists, framed as instincts), and the behaviour contract.
-It never contains the truth layer, dormant gists, week numbers, or the words
-loop / week / reset, and (OB-41) never "time repeats". It is capped at
-brief.max_chars by dropping the oldest knowledge lines first.
+It never contains the truth layer, dormant gists, week numbers, or loop /
+reset / repetition wording ("time repeats", "again and again", "same week",
+...: fakes_e2e.FORBIDDEN_BRIEF_RE). The ordinary word "week" in a character's
+own experience ("one green week", "three weeks") is allowed and kept (user
+decision 2026-09-28 (item 1): "the characters are unaware of time passing; to
+them it's the same week over and over"). It is capped at brief.max_chars
+(12000, user decision 2026-09-28 (item 2)) by dropping the oldest knowledge
+lines first.
 
 OB-41 test corrections (tracker .claude/prompts/character_v4_tracker_phase3b.md):
-- Plan §8 heading 4 is "What you've learned this week", which itself breaks
-  T22.2 ("never ... the word week"). The heading is "What you've learned
-  recently" (T22.2 and D-08 "no mention of weeks" win over the heading text).
+- Plan §8 heading 4 is "What you've learned this week". The heading is "What
+  you've learned recently" (D-08 "no mention of weeks": a heading that frames
+  knowledge by the week points at the week boundary). Kept after user decision
+  2026-09-28 (item 1), which allows the plain word "week" in the character's
+  own experience but not in the brief's framing.
 - OB-41 E6 adds a "Today's directive" section (from app/office/brief_stub.py)
   between the feelings and the behaviour contract; the six plan sections keep
   their plan order around it.
 - The office cast files carry the literal sentence "Never state or imply that
   time repeats." (profiles/_SCHEMA.md); the brief drops every sentence with a
   forbidden word, so that sentence never reaches the brief.
+- T22.2 narrowed (user decision 2026-09-28 (item 1)): "never the word week" ->
+  never a week NUMBER; sentences with the plain word "week" ("We overlapped for
+  a few weeks", "I know Owen wants one green week.") must be KEPT.
 The drop-in contract for app/office/brief_stub.py is tested in
 test_character_brief_persona.py.
 """
@@ -29,7 +39,7 @@ import pytest
 import yaml
 
 from fakes import FakeClock, seed_character
-from fakes_e2e import FORBIDDEN_BRIEF_RE, OFFICE_PACK
+from fakes_e2e import ALLOWED_BRIEF_SAMPLES, FORBIDDEN_BRIEF_RE, FORBIDDEN_BRIEF_SAMPLES, OFFICE_PACK
 from pending import require
 
 brief = require("character.brief", "app/character/brief.py", wp="WP-22")
@@ -116,7 +126,9 @@ def engineer_db(pg_conn):
         nodes = [(1, "remembers-archived-thing", "I remember ARCHIVED-MARKER-9d1e from before.", 1),
                  (2, "knows-deploy-bar-froze", "I know the deploy bar froze at noon.", None),
                  (2, "knows-retry-loop-bug", "I know there is a retry loop in the scorer.", None),
-                 (2, "knows-rough-stretch", "Week 2 has been rough. I kept my head down.", None)]
+                 (2, "knows-rough-stretch", "Week 2 has been rough. I kept my head down.", None),
+                 (2, "knows-owen-wants-green", "I know Owen wants one green week.", None),
+                 (2, "feels-same-week", "It feels like the same week, again and again.", None)]
         for week, name, statement, archived in nodes:
             cur.execute("INSERT INTO week_knowledge_nodes (id, character_id, loop_week, name, kind, "
                         "statement, archived_at_week) VALUES (%s, %s, %s, %s, 'fact', %s, %s)",
@@ -144,13 +156,34 @@ def test_never_contains_truth_dormant_gists_week_numbers_or_loop_words(pg_conn, 
     # what may be there, is there
     assert "You are Theo Palliser, the Engineer at Ashiorid" in text
     assert "Okay, so. Two years." in _section(text, "## What you remember of your life so far")
-    assert "I know the deploy bar froze at noon." in _section(text, "## What you've learned recently")
+    learned = _section(text, "## What you've learned recently")
+    assert "I know the deploy bar froze at noon." in learned
     assert UNLOCKED_GIST in _section(text, "## Feelings you carry")
+    # the plain word "week" in the character's own experience is kept (user decision 2026-09-28, item 1)
+    assert "I know Owen wants one green week." in learned
+    assert "I kept my head down." in learned and "Week 2" not in learned
+    assert "same week" not in text and "again and again" not in text
+    remember = " ".join(_section(text, "## What you remember of your life so far").split())
+    assert "We overlapped for a few weeks, right at the start" in remember
+    assert "The Office Manager moved their chair a week later." in remember
     for key in ("remember", "learned", "feelings"):
         assert FORBIDDEN_BRIEF_RE.search(brief.scrub(getattr(parts, key) if isinstance(
             getattr(parts, key), str) else " ".join(getattr(parts, key)))) is None
     assert brief.scrub("One line. Never state or imply that time repeats. Another line.") == \
         "One line. Another line."
+
+
+# T22.2 (the forbidden list, user decision 2026-09-28 (item 1))
+@pytest.mark.parametrize("sentence", FORBIDDEN_BRIEF_SAMPLES)
+def test_scrub_drops_week_numbers_and_loop_or_repetition_wording(sentence):
+    assert brief.FORBIDDEN_RE.search(sentence)
+    assert brief.scrub(f"Before. {sentence} After.") == "Before. After."
+
+
+@pytest.mark.parametrize("sentence", ALLOWED_BRIEF_SAMPLES)
+def test_scrub_keeps_the_plain_word_week(sentence):
+    assert brief.FORBIDDEN_RE.search(sentence) is None
+    assert brief.scrub(f"Before. {sentence} After.") == f"Before. {sentence} After."
 
 
 # T22.3

@@ -18,23 +18,37 @@ goal: |
   Plan §8 sections, in order: who you are; what you remember of your life so
   far (the `believed` layer); what you want; what you've learned this week
   (unarchived knowledge nodes, newest first, capped); feelings you carry
-  (unlocked fragment gists, framed as instincts, no dates, no weeks); the
+  (unlocked fragment gists, framed as instincts, no dates, no week numbers); the
   behaviour contract ("stay in character, speak in first person, one line at
   a time, and treat a surfaced feeling as deja vu. Never state that time
-  repeats."). No dormant fragment list. Capped at brief.max_chars (6000) by
-  dropping the oldest week-knowledge lines first.
+  repeats."). No dormant fragment list. Capped at brief.max_chars (12000,
+  user decision 2026-09-28 (item 2), tracker P3b-Q1) by dropping the oldest
+  week-knowledge lines first.
 
   THE FAILURE THAT MUST NEVER HAPPEN: the brief leaks the loop. Characters
-  never know they are in a loop (plan §2). The brief must NEVER contain the
-  `truth` backstory layer, a dormant fragment's gist, archived knowledge, a
-  week number, or the words loop / week / reset (any form: loops, weeks,
-  weekly, resets ...), and never "time repeats" — not even in the contract,
-  and not even where the source text has it: the office cast files carry the
-  literal sentence "Never state or imply that time repeats." and several
-  believed backstories say "three weeks" or "one week". Every piece of text
-  goes through `scrub()`, which drops each SENTENCE (or list item) holding a
-  forbidden word. Headings are fixed constants that are already clean (so
-  plan §8's "What you've learned this week" is "What you've learned recently").
+  never know they are in a loop (plan §2). User decision 2026-09-28 (item 1):
+  "the characters are unaware of time passing; to them it's the same week over
+  and over." The brief must NEVER contain the `truth` backstory layer, a
+  dormant fragment's gist, archived knowledge, a week NUMBER ("week 3",
+  "week #3", "3rd week", "week one", "W3"), or loop / reset / repetition
+  wording (loop, looped, reset, resetting, "time repeats", "time resets",
+  "repeats itself", "again and again", "over and over", "same week", relive,
+  groundhog) — not even in the contract, and not even where the source text
+  has it: the office cast files carry the literal sentence "Never state or
+  imply that time repeats." Every piece of text goes through `scrub()`, which
+  drops each SENTENCE (or list item) that FORBIDDEN_RE matches.
+
+  BUT the ordinary word "week" in a character's own experience is ALLOWED and
+  must NOT be stripped: the believed backstories say "for a few weeks", "three
+  weeks", "a week later", "in my first week", and the Tester's central want is
+  "one week in which the full suite stays green" ("What I want is one week.").
+  Those sentences stay in the brief byte for byte. "weekly" is allowed too. Do
+  NOT add "week", "weeks" or "weekly" as bare words to FORBIDDEN_RE; copy the
+  pattern below exactly. The profiles are not reworded.
+
+  Headings are fixed constants that are already clean; plan §8's "What you've
+  learned this week" is "What you've learned recently" (D-08: the brief never
+  frames knowledge by the week).
 
 target_files:
   - app/character/brief.py
@@ -53,8 +67,23 @@ interface: |
   `from office.roles import as_role` (pure module), and
   `from character.store import characters, fragments, knowledge`.
 
-  FORBIDDEN_RE = re.compile(
-      r"\b(loops?|looped|looping|weeks?|weekly|resets?|resetting)\b|time\s+repeats?", re.I)
+  FORBIDDEN_RE = re.compile(r"""
+      \bweeks?\s*(?:\#|no\.?\s*|number\s+)?\d+\b
+    | \b\d+(?:st|nd|rd|th)\s+weeks?\b
+    | \bweek\s+(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b
+    | \bW\d+\b
+    | \b(?:loop|loops|looped|looping|reset|resets|resetting)\b
+    | \btime\s+(?:repeats?|repeated|repeating|resets?|restarts?)\b
+    | \brepeats?\s+itself\b
+    | \bagain\s+and\s+again\b
+    | \bover\s+and\s+over\b
+    | \bsame\s+weeks?\b
+    | \breliv(?:e|es|ed|ing)\b
+    | \bgroundhog\b
+  """, re.IGNORECASE | re.VERBOSE)
+      # the same pattern as tests/character/fakes_e2e.py FORBIDDEN_BRIEF_RE (the
+      # tests check samples of each alternative both ways). re.VERBOSE: the `#`
+      # in "week #3" is escaped as `\#`.
   SENTENCE_SPLIT_RE = re.compile(r"((?<=[.!?])\s+)")     # keeps the separator (a capture group)
   HEADINGS = {"who": "## Who you are",
               "remember": "## What you remember of your life so far",
@@ -94,7 +123,7 @@ interface: |
       dict -> "<title> (issue #N)\n<text>" (header parts optional), empty text ->
       NO_DIRECTIVE_TEXT; non-empty str -> stripped; else NO_DIRECTIVE_TEXT.
 
-  def render(parts, *, max_chars=6000, week_knowledge_max=40, extra_feelings=(),
+  def render(parts, *, max_chars=12000, week_knowledge_max=40, extra_feelings=(),
              directive=None, max_backstory_chars=None) -> str
       Items (wants, fears, learned, feelings, extra_feelings, contract) are scrubbed
       one by one; empty results are dropped. learned = the first
@@ -184,6 +213,6 @@ notes: |
     app/character/sql applied) and seeds the office engineer by raw SQL; the
     rest are unit tests on the real campaigns/ashiorid_office pack. Run the
     harness with CHARACTER_TEST_REQUIRE_DB=1.
-  - The office briefs are 7-8.6k characters with no memory at all, over
-    brief.max_chars 6000 (tracker question P3b-Q1). Do not change the cap
-    logic to work around that: it is a config decision for the user.
+  - The office briefs are 7-8.6k characters with no memory at all; brief.max_chars
+    is 12000 (user decision 2026-09-28 (item 2), tracker P3b-Q1), which leaves
+    room for the week's knowledge. The render default is 12000 to match.

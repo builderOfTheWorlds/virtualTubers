@@ -37,9 +37,42 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 OFFICE_PACK = REPO_ROOT / "campaigns" / "ashiorid_office"
 
-#: Words a brief must never contain (playbook T22.2, OB-41: plus "time repeats").
-FORBIDDEN_BRIEF_RE = re.compile(
-    r"\b(loops?|looped|looping|weeks?|weekly|resets?|resetting)\b|time\s+repeats?", re.IGNORECASE)
+#: What a brief must never contain (playbook T22.2; user decision 2026-09-28
+#: (item 1): "the characters are unaware of time passing; to them it's the same
+#: week over and over"). Week NUMBERS and loop / reset / repetition wording are
+#: forbidden; the ordinary word "week" in a character's own experience ("one
+#: green week", "three weeks", "in my first week") is allowed and must survive.
+#: Same pattern, byte for byte, as character.brief.FORBIDDEN_RE
+#: (tools/qwen_worker/specs/character_wp22_brief.yaml).
+FORBIDDEN_BRIEF_RE = re.compile(r"""
+    \bweeks?\s*(?:\#|no\.?\s*|number\s+)?\d+\b
+  | \b\d+(?:st|nd|rd|th)\s+weeks?\b
+  | \bweek\s+(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b
+  | \bW\d+\b
+  | \b(?:loop|loops|looped|looping|reset|resets|resetting)\b
+  | \btime\s+(?:repeats?|repeated|repeating|resets?|restarts?)\b
+  | \brepeats?\s+itself\b
+  | \bagain\s+and\s+again\b
+  | \bover\s+and\s+over\b
+  | \bsame\s+weeks?\b
+  | \breliv(?:e|es|ed|ing)\b
+  | \bgroundhog\b
+""", re.IGNORECASE | re.VERBOSE)
+
+#: Samples for the scrub tests: each FORBIDDEN one must be dropped, each
+#: ALLOWED one must be kept verbatim (user decision 2026-09-28, item 1).
+FORBIDDEN_BRIEF_SAMPLES = (
+    "Week 2 has been rough.", "It is week #3 now.", "By the 3rd week I knew.", "It was week one.",
+    "See W4 for details.", "There is a loop in the scorer.", "They looped the demo.",
+    "We reset the board.", "Resetting is easy.", "Time repeats here.", "Time resets at midnight.",
+    "History repeats itself.", "It happens again and again.", "Over and over, the same call.",
+    "It is the same week.", "I relive that call.", "It is Groundhog Day.",
+)
+ALLOWED_BRIEF_SAMPLES = (
+    "What I want is one week.", "I want one green week.", "We overlapped for a few weeks.",
+    "The Office Manager moved their chair a week later.", "I had to ask her in my first week.",
+    "The weekly numbers are in.", "I kept my head down.", "A soup lasts a week.",
+)
 
 #: Tables a reset / undo touches (plan §5.2). character_jobs and
 #: character_artifacts are audit logs and are deliberately left out.

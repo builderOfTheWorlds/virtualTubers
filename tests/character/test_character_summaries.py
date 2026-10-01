@@ -13,9 +13,10 @@ The LLM is a FakeLLM `complete(system, user, shape)` and the name check is
 injected, so these tests don't depend on WP-11's live client or word lists.
 
 OB-41 adaptations (test corrections, cited: .claude/prompts/ashiorid_office_build_plan.md
-OB-41): office characters (engineer, tester, party_member) instead of harry;
-the Party Member's experience is only `visibility: present` events, so his
-summary is built from present events alone (explicit OB-41 test below).
+OB-41): office characters (engineer, tester, party_member) instead of harry.
+The Party Member is a full character who just has no lines at the moment (user
+decision 2026-09-28 (item 8), tracker P3a-3): his summary is built like
+everyone's, from his own `self` thoughts plus the `present` events he saw.
 """
 import re
 from datetime import date, datetime, timedelta, timezone
@@ -163,19 +164,24 @@ def test_only_own_self_events_plus_present_events_are_summarised(pg_conn):
     assert result["events"] == 2
 
 
-# OB-41: the Party Member's summary comes from `present` events only.
-def test_party_member_summary_is_built_from_present_events_only(pg_conn):
+# OB-41 + user decision 2026-09-28 (item 8): the Party Member is a full character;
+# his own thoughts are `self` events and are summarised like anyone's.
+def test_party_member_summary_includes_his_own_thoughts_and_what_he_saw(pg_conn):
     party = _character(pg_conn, "party_member")
     _seed(pg_conn, party, "The CEO calls standup.", 9, from_agent="tuber_0")
+    _seed(pg_conn, party, "PARTY-THOUGHT note who is late", 10, visibility="self",
+          msg_type="agent_thinking", from_agent="tuber_7")
     _seed(pg_conn, party, "The Party Member files past the Glass Box.", 13,
           msg_type="scene_event", from_agent="office_clock")
     pg_conn.commit()
     llm = FakeLLM(_reply([_node(1, "knows-standup-is-at-nine")],
                          text="I watched them gather for standup and said nothing."))
-    assert _summarise(pg_conn, party, llm)["events"] == 2
+    assert _summarise(pg_conn, party, llm)["events"] == 3
     lines = [line for line in llm.calls[0]["user"].splitlines() if re.match(r"^\d\d:\d\d \[", line)]
-    assert len(lines) == 2 and all("[present]" in line for line in lines)
-    assert not any("[self]" in line for line in lines)
+    assert len(lines) == 3
+    assert sum("[present]" in line for line in lines) == 2
+    (own,) = [line for line in lines if "[self]" in line]
+    assert "PARTY-THOUGHT note who is late" in own
 
 
 # T19.1 (pure helpers the job and the fragment step share)

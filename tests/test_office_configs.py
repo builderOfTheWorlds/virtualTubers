@@ -398,6 +398,21 @@ def test_speaking_seats_opt_into_the_live_transcript(role):
         assert live_pane.live_transcript_enabled(agent)
 
 
+@pytest.mark.parametrize("role", ROLES, ids=lambda r: r.value)
+def test_speaking_seats_opt_into_character_say(role):
+    """The 7 speaking seats publish every spoken line as a v4 character_say;
+    the Party Member never speaks, so his config has no flag."""
+    from office import character_say
+
+    agent = _cfg(role)["agent"]
+    if role is OfficeRole.PARTY_MEMBER:
+        assert "character_say" not in agent["office"]
+        assert not character_say.character_say_enabled(agent)
+    else:
+        assert agent["office"]["character_say"] is True
+        assert character_say.character_say_enabled(agent)
+
+
 @pytest.mark.parametrize("role", sorted(LANE_WRITERS, key=lambda r: r.value), ids=lambda r: r.value)
 def test_lane_writers_target_the_current_week_branch(role, monkeypatch):
     from datetime import datetime, timezone
@@ -408,8 +423,8 @@ def test_lane_writers_target_the_current_week_branch(role, monkeypatch):
     monkeypatch.delenv("OFFICE_TZ", raising=False)
 
     agent = _cfg(role)["agent"]
-    now = datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # Mon of loop week 1
-    assert office._base_branch(agent, now=now) == "loop/1"
+    now = datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # Mon of loop week 2 (v4 numbering)
+    assert office._base_branch(agent, now=now) == "loop/2"
 
 
 def test_ceo_replays_air_on_the_roundtable_with_a_seat_cast():

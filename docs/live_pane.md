@@ -75,8 +75,9 @@ not empty.
 
 ### Where lines are published (`app/agent_handlers/office.py`)
 
-There is one `live_pane.publish_office_line(...)` call right after each
-spoken line's `_state(...)` write: `issue_directive`; `handle_directive`
+There is one `live_pane.publish_office_line(...)` call (through
+`office._publish_line`, which adds `addressees` and `now=_clock()`) right
+after each spoken line's `_state(...)` write: `issue_directive`; `handle_directive`
 (the Tech Lead's acknowledgement, the Analyst's plan, the Marketing and
 Office Manager reports); `handle_functional_plan`; `handle_technical_plan`;
 `handle_status_report`; `handle_phase_change` (when narrated);
@@ -87,12 +88,22 @@ report, with `to` = its superior). The CEO's day runner publishes its 23:45
 wrap-up line from `app/office/day_runner.py` `_wrap_up`. The Party Member
 never publishes.
 
+### The same call publishes the v4 `character_say`
+
+`publish_office_line` is the one place a spoken line leaves a seat. From the
+same stripped text it also sends the v4 `character_say` broadcast
+(`office.character_say.publish_character_say`, gated separately by
+`agent.office.character_say`), so the live transcript and the characters'
+v4 memory never diverge. Either gate can be on without the other. The
+payload rules (scene_id, addressees, present) are in
+[office_character_say.md](office_character_say.md).
+
 ## Signature
 
 ```python
 # seat side
 publish_office_line(worker_id, agent_config, producer, line, emotion=None,
-                    correlation_id=None, to=None) -> dict | None
+                    correlation_id=None, to=None, addressees=None, now=None) -> dict | None
 # roundtable agent side (dispatched via agent_handlers/live_transcript.py)
 handle_office_line(worker_id, agent_config, msg, relay_dir=None) -> str | None
 handle_observer_pose(worker_id, agent_config, msg, relay_dir=None) -> dict | None
@@ -132,10 +143,16 @@ Seat config, `agent.office.live_transcript` (bool, default false): the seat
 publishes its spoken lines. It is off by default, so the existing office
 handler tests (which assert on every message sent) are unaffected.
 
+Seat config, `agent.office.character_say` (bool, default false; true in the
+seven speaking seat configs): the same call also sends a `character_say`.
+`addressees` (seat ids / roles / slugs; default `to`) and `now` (the
+scene_id instant; default now) only shape that message.
+
 ## Return Value
 
-- `publish_office_line` returns the sent message, or None (off, Party
-  Member, empty line, or a send failure).
+- `publish_office_line` returns the sent `office_line`, or None (transcript
+  off, Party Member, empty line, or a send failure). The `character_say` it
+  may also send is not returned (see `office.character_say`).
 - `handle_office_line` returns the spool path, or None.
   `handle_observer_pose` returns the written pose dict, or None.
 - `LiveDirector.from_config` returns None when the feed is off.
@@ -217,6 +234,11 @@ structured `event=... key=value` line on stderr and degrades:
   instead; a control-panel Play still casts it.
 
 ## Changelog
+
+- v1.2.0 (2026-09-28) — `publish_office_line` also publishes the v4
+  `character_say` for the same text (`agent.office.character_say`; new
+  `addressees` / `now` keyword arguments). A failed `office_line` send no
+  longer stops the `character_say`.
 
 - v1.1.0 (2026-09-28) — The seven speaking seat configs opt in
   (`agent.office.live_transcript: true`); `handle_wrap_up` and the day

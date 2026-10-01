@@ -104,7 +104,7 @@ WP-16 manual gate (after promote, gx10/argyre, test DB only): publish 3 fake
 - T16.10 -> ::test_batching_flushes_at_200_messages_or_2_seconds
 - T16.11 -> ::test_consumer_is_built_earliest_no_autocommit_group_character_ingest (+ the never-raising deserializer)
 - T16.12 -> test_character_jobs_ingest.py::test_backfill_reads_a_cursor_and_routes_the_same_way (+ ::test_backfill_dry_run_writes_nothing, ::test_backfill_without_since_exits_3)
-- OB-41 -> test_character_ingest.py::test_party_member_experience_is_only_present_events
+- OB-41 + user decision 2026-09-28 (item 8) -> test_character_ingest.py::test_party_member_is_a_full_character_his_own_thoughts_are_self_rows, ::test_a_line_spoken_by_the_party_member_routes_like_anyone_elses
 - registration -> test_character_jobs_ingest.py::test_main_registers_the_ingest_job
 
 ### WP-17 (`tests/test_message_logger_v4.py`, integration)
@@ -140,7 +140,7 @@ WP-16 manual gate (after promote, gx10/argyre, test DB only): publish 3 fake
 - T19.5 -> ::test_summaries_then_compaction_and_precondition_keeps_summaries_exit_3
 - T19.6 -> test_character_summaries.py::test_only_own_self_events_plus_present_events_are_summarised
 - T19.7 -> test_character_jobs_daily.py::test_character_flag_limits_the_run_to_that_character
-- OB-41 -> test_character_summaries.py::test_party_member_summary_is_built_from_present_events_only
+- OB-41 + user decision 2026-09-28 (item 8) -> test_character_summaries.py::test_party_member_summary_includes_his_own_thoughts_and_what_he_saw
 - playbook §2.3 dry-run -> test_character_jobs_daily.py::test_dry_run_writes_nothing_and_calls_no_llm
 - registration -> ::test_main_registers_daily_maintenance
 
@@ -179,6 +179,12 @@ comes only from visibility: present events").
   (test_party_member_experience_is_only_present_events,
   test_party_member_summary_is_built_from_present_events_only). The fixtures
   map no agent id to him (question P3a-3, recommendation (a)).
+  **Superseded 2026-09-28 (user decision item 8):** the Party Member is a full
+  character; the fixtures map `char:party_member` and `tuber_7`, and the two
+  tests are now test_party_member_is_a_full_character_his_own_thoughts_are_self_rows
+  (+ test_a_line_spoken_by_the_party_member_routes_like_anyone_elses) and
+  test_party_member_summary_includes_his_own_thoughts_and_what_he_saw. Logged
+  in the main tracker's test corrections.
 - WP-20 T20.3: every office character retains fragments, so the test uses a
   synthetic `visitor` fixture row with retains_fragments false.
 - WP-20 T20.4: "a harry fragment" -> an engineer fragment.
@@ -231,6 +237,12 @@ P3a-3. **How "the Party Member's experience comes only from present events" is
    exception, which we don't want). **Recommendation: (a).** Tell the Phase 2
    seeding (WP-14 / load_office_profiles) to skip party_member's agent ids. The
    WP-16 fixtures encode (a).
+   **Resolved (user, 2026-09-28, item 8), in favour of Phase 2:** "The Party
+   Member is a full character who just has no lines at the moment."
+   character_agents seeds both `char:party_member` and `tuber_7`; a `tuber_7`
+   sender maps to party_member and his agent_thinking routes as `self`. No
+   "never self" rule, no config flag, no slug filter. The WP-16 / WP-19 / WP-25
+   fixtures and tests were updated (main tracker, test corrections).
 
 P3a-4. **Two `character_refresh` messages per office reset, and the office
    drops the v4 one.** app/office/weekly_reset.py runs its own
@@ -250,6 +262,14 @@ P3a-4. **Two `character_refresh` messages per office reset, and the office
    accepted refresh senders (office code); (c) keep both and accept the ERROR
    lines. **Recommendation: (a).** The WP-20 tests cover both modes (push
    publishes one; none publishes nothing), so either answer needs no test change.
+   **Resolved (user, 2026-09-28, item 5):** "The v4 weekly reset is the
+   authoritative one; the office campaign aligns with it." NOT (a): for the
+   office campaign `reset.refresh_mode` stays push. The v4 WP-20 weekly-reset
+   publishes the only `character_refresh` (from "character-updater", payload
+   {campaign, week, characters, reason}); the office weekly reset
+   (app/office/weekly_reset.py) runs its repo steps first and then invokes the
+   v4 `weekly-reset` job, and drops its own refresh (office-side change, the
+   office agent's). No WP-20 test change; the WP-20 spec notes say so.
 
 P3a-5. **Where the office -> v4 `weekly-reset` hook adapter lives.**
    `WeeklyReset(v4_hook=...)` calls `v4_hook(week, closing_week, campaign)`
@@ -263,6 +283,12 @@ P3a-5. **Where the office -> v4 `weekly-reset` hook adapter lives.**
    own test; (b) put it on the office side (app/office/, OB code).
    **Recommendation: (a).** It sits next to the job whose CLI it wraps. It is
    not part of the frozen WP-20 tests.
+   **Resolved (user, 2026-09-28, item 5):** Q3 has no +1 conversion: the office
+   adopts the v4 LoopClock numbering (week 1 starts at the epoch Sunday
+   2026-09-27). The office side invokes the v4 job itself
+   (`run_job(WeeklyResetJob(), ["--campaign", campaign, "--at", <Sunday 00:00
+   NY of the week that opens>])`), so no `jobs_weekly.office_v4_hook` and no
+   follow-up v4 spec are needed.
 
 P3a-6. **The reference M2 DDL drops two logger columns (a plan claim about
    existing code is false).** v4_reference_messages.sql M2 builds
@@ -289,7 +315,7 @@ P3a-7. **A plain `messages_archive` created before M2 blocks partitioned
 Also: the WP-16 `character-ingest` compose block has the same problem as
 question 7 (the compose file is too big for the harness). Its spec is written
 and flagged, and following question 7's recommendation (a), the block is added
-by hand.
+by hand. **Confirmed (user, 2026-09-28, item 6):** by hand.
 
 ## Small local choices (Phase 3a, per playbook §2.5)
 

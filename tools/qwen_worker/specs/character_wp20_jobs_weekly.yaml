@@ -109,14 +109,27 @@ interface: |
       JOBS entry "weekly-reset": WeeklyResetJob
 
 notes: |
-  - The character_refresh week is W + 1, the week that just opened (the same
-    convention as app/office/weekly_reset.py's refresh payload; tracker local
-    choice P3a-L5). Its sender is "character-updater" (plan §3.2).
+  - The character_refresh week is W + 1, the week that just opened (tracker
+    local choice P3a-L5), in LoopClock numbering (week 1 starts at the epoch
+    Sunday 2026-09-27 00:00 NY). Its sender is "character-updater" and its
+    payload is exactly {campaign, week, characters, reason} (plan §3.2).
+  - THIS is the authoritative weekly reset (user decision 2026-09-28 (item 5),
+    tracker Q3 / P3a-4 / P3a-5). The office campaign aligns with it:
+    app/office/weekly_reset.py runs its repo steps first and then invokes this
+    `weekly-reset` job, which publishes the ONLY character_refresh. For the
+    office campaign reset.refresh_mode is push, NOT none. The office adopts the
+    v4 week numbers, so no conversion (no "+1") happens anywhere: the office
+    passes `--campaign ashiorid_office --at <Sunday 00:00 NY of the week that
+    opens>` (or `--force` for its forced resets), and this job's W / W + 1 are
+    the same numbers the office uses. Nothing office-specific lives in this
+    module (no office adapter, no office imports).
   - Publishing happens inside the refresh step, before run_step commits: a crash
     between the two re-publishes on the re-run, which is harmless (the live
     driver just refreshes twice).
   - --force exists for tests and the office's forced resets (OB-42 step 3). With
     --force the "Saturday" may be in the future: its summary is then a quiet day.
+    refresh_mode "none" stays supported (D-02) for campaigns without a live
+    listener; the tests cover both modes.
   - `log = logging.getLogger(__name__)`: INFO per step run/skipped and at the
     end; never log gists or event text.
   - Tests: jobs.run_job against a migrated pgserver DB, FakeLLM for both

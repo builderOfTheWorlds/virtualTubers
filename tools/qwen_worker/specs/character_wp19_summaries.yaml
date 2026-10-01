@@ -126,8 +126,10 @@ notes: |
   - Imports: stdlib (json, logging, re, string, time, pathlib) and `character.*`.
   - `log = logging.getLogger(__name__)`: DEBUG with ids and counts; WARNING for
     dropped node names; never log event text or the LLM reply.
-  - OB-41: office characters; the Party Member only has `present` rows, so his
-    prompt has only "[present]" lines (a test checks it).
+  - OB-41: office characters. The Party Member is a full character (user
+    decision 2026-09-28 (item 8)): his own thoughts are `self` rows and his
+    prompt mixes "[self]" and "[present]" lines like anyone's (a test checks
+    it). No slug is special-cased.
   - Tests: FakeLLM / fake check_name, the `pg_conn` fixture; run the harness
     with CHARACTER_TEST_REQUIRE_DB=1. Pending guard: skips while this target
     (or the WP-11 template) is missing.

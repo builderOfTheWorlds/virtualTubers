@@ -210,19 +210,33 @@ answers with one `status_report` (Analyst, Marketing, OM and the TL to the
 CEO; Engineer and Tester to the TL). The CEO's own wrap-up line and each
 report also go to the roundtable's live transcript.
 
+Every line a speaking seat says is also broadcast as a v4 `character_say`
+(`agent.office.character_say: true` in the seven speaking seat configs; the
+Party Member never sends one), so the v4 `character-ingest` consumer can
+record it as the characters' experience. See docs/office_character_say.md.
+
 ### Week branches and the Sunday reset
 
 Every office PR targets the current week's trunk `loop/<W>`
 (`agent.office.base_branch: auto` on the lane writers): lane and Engineer
 branches start from it, the TL merges into it, and the OM's branch GC never
 touches it. `W` comes from the office clock (epoch 2026-09-27, America/New_York;
-override with `agent.office.epoch` / `tz` or env `OFFICE_EPOCH` / `OFFICE_TZ`).
-Set `base_branch` to a branch name to pin one instead.
+override with `agent.office.epoch` / `tz` or env `OFFICE_EPOCH` / `OFFICE_TZ`) and
+uses the v4 numbering: the epoch week is week 1, so the first trunk is `loop/1`
+(then `loop/2` from Sunday 2026-10-04). Set `base_branch` to a branch name to pin
+one instead.
 
 `python -m office.weekly_reset` (docs/office_weekly_reset.md) rebuilds
-`loop/<W>` from `loop-seed` on Sunday 00:00 and broadcasts
-`character_refresh`. Each seat with a clone then clears its in-process office
-state, `git fetch`es and checks out the new `loop/<W>`. The Tester (read-only
+`loop/<W>` from `loop-seed` on Sunday 00:00, clears the session state, then
+runs the v4 `weekly-reset` job — by default `python
+services/character-updater/main.py weekly-reset --at <iso>`; point it at the
+container with `--v4-command "docker compose run --rm character-jobs
+weekly-reset"` or env `OFFICE_V4_RESET_CMD`. The v4 job publishes the only
+`character_refresh` (from `character-updater`, payload `{campaign, week,
+characters, reason}`); the office no longer sends one. If the job is missing
+or fails, the office step fails and the next run retries it (the repo steps are
+not redone). Each seat with a clone then clears its in-process office state,
+`git fetch`es and checks out `loop/<payload.week>`. The Tester (read-only
 mount of the Engineer's clone) and the CEO / Party Member (no clone) only
 clear state.
 
@@ -369,7 +383,7 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
 | Twitch arrivals greet the wrong worker, or nobody | In office mode twitch-presence reads `OFFICE_TWITCH_CHANNEL_MAP` (channel → seat id, see "Twitch presence"). Unset, it idles. Recreate `twitch-presence` after editing `.env`. |
 | PRs target `main`, or `event=base_branch_fallback` in a seat's log | The seat's `agent.office.base_branch` is a branch name (explicit wins), or the week could not be derived (bad `OFFICE_EPOCH` / `OFFICE_TZ`, or a clock before the epoch). Use `auto`. |
 | Lane PRs fail to open against `loop/<W>` | The week trunk isn't on Gitea yet: run `python -m office.weekly_reset --at <Sunday 00:00>` (or `--dry-run` first) so `loop/<W>` is pushed. |
-| A seat stays on last week's branch after the reset | Look for `event=week_branch_checkout_failed` / `week_branch_fetch_failed` in its log (dirty tree, missing remote, token). `character_refresh` is logged as `event=character_refreshed ... checked_out=`. |
+| A seat stays on last week's branch after the reset | Look for `event=week_branch_checkout_failed` / `week_branch_fetch_failed` in its log (dirty tree, missing remote, token). `character_refresh` is logged as `event=character_refreshed ... checked_out=`. No `character_refreshed` at all: check the reset's `v4_weekly_reset` step (`--status`; `last_error` holds the v4 job's exit code / stderr tail) — the refresh only comes from the v4 job. A `rank_violation` for `character_refresh` means something other than `character-updater` sent it. |
 | No end-of-day reports at 23:45 | Check the CEO log for `day_runner event=wrap_up`, then each seat for `event=wrap_up_report_sent`. A `rank_violation handler=wrap_up` means the broadcast did not come from the clock / `tuber_0`. |
 | Off-hours filler plays audio but no tile moves | The `replay_request` reached the roundtable without a `cast`: check `ceo.yaml` `playlist_options.cast`. |
 | Control panel health view shows dev-team ids as down | The panel's worker list is dev-team shaped. The office mapping is OB-32. |
@@ -404,3 +418,8 @@ between that client and the Engineer can cost a 30–70 s reload. Decide one of:
   `loop/<W>` (`base_branch: auto`), the 23:45 `wrap_up` status reports,
   `character_refresh` checkout after the weekly reset, and the seven
   speaking seats' `live_transcript: true`. Troubleshooting rows added.
+- v1.3.0 (2026-09-28): v4 alignment. Office weeks use the v4 numbering (first
+  trunk `loop/1`); the weekly reset runs the v4 `weekly-reset` job
+  (`--v4-command` / `OFFICE_V4_RESET_CMD`) which publishes the only
+  `character_refresh`; the seven speaking seats publish every spoken line as
+  a v4 `character_say` (`agent.office.character_say: true`).

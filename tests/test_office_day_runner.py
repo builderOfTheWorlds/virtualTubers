@@ -680,3 +680,29 @@ def test_wrap_up_line_published_to_live_transcript_only_when_opted_in(tmp_path, 
         assert line["payload"]["text"]
     else:
         assert lines == []
+
+
+@pytest.mark.parametrize("say", [True, False])
+def test_wrap_up_line_is_a_character_say_to_the_room(tmp_path, pack, gitea, say):
+    """The CEO's 23:45 wrap-up line goes out through publish_office_line, so
+    with agent.office.character_say it is also ONE v4 character_say: no
+    addressees (it asks the whole team), scene office-<day>-ship."""
+    clock, producer = FakeClock(DAY, 6, 0), ListProducer()
+    runner = make_runner(tmp_path, clock, arc_provider=arc())
+    cfg = ceo_cfg(pack)
+    cfg["office"]["character_say"] = say
+    runner(CEO, cfg, ScriptedLLM("ceo"), producer, None)
+    producer.clear()
+    clock.set(DAY, 23, 45)
+    sent = runner(CEO, cfg, ScriptedLLM("ceo"), producer, None)
+    wrap = sent[-1]
+    says = [m for m in producer.sent if m["type"] == "character_say"]
+    assert all(m not in sent for m in says)                 # never part of the day's script
+    if not say:
+        assert says == []
+        return
+    [line] = says
+    assert line["from"] == CEO and line["correlation_id"] == wrap["correlation_id"]
+    assert line["payload"]["scene_id"] == f"office-{DAY}-ship"
+    assert line["payload"]["character"] == "ceo" and line["payload"]["addressees"] == []
+    assert len(line["payload"]["present"]) == 8 and line["payload"]["text"].strip()

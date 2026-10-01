@@ -23,7 +23,10 @@ The chain (docs/agent_handlers.md "Office handlers"):
   task_assignment to the Engineer) -> Engineer commit + test_request ->
   Tester test_passed -> Tech Lead status_report -> CEO closes the issue.
   23:45 wrap_up (day runner) -> one status_report per seat to its superior;
-  Sunday character_refresh (weekly_reset) -> clear state, check out loop/<W>.
+  Sunday character_refresh (the v4 weekly-reset job, from "character-updater")
+  -> clear state, check out loop/<payload.week>.
+  Every spoken line goes out through _publish_line: the live transcript
+  office_line + the v4 character_say (office/character_say.py).
   Lane/Engineer branches start from, and PRs target, the week trunk
   loop/<W> (_base_branch; agent.office.base_branch overrides).
 
@@ -36,7 +39,6 @@ import logging
 import re
 import subprocess
 import time
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -47,9 +49,9 @@ from git_client import GitClient, GitError
 from gitea_client import DEFAULT_TOKEN_ENV, GiteaClient, GiteaError
 from message_bus import BROADCAST, build_message, correlation_of, reply_ids
 from office import brief_stub
-from office.clock import DEFAULT_TZ
+from office.clock import DEFAULT_EPOCH as DEFAULT_LOOP_EPOCH  # noqa: F401  (public alias)
+from office.clock import DEFAULT_TZ, configured_epoch_and_tz
 from office.protocol import (
-    CLOCK_SENDERS,
     PHASES,
     ProtocolError,
     build_directive,
@@ -60,8 +62,13 @@ from office.protocol import (
     validate_message,
 )
 from office.roles import REPORTS_TO, SEAT, OfficeRole, as_role, can_direct, lane_allows
-from office.weekly_reset import CHARACTER_REFRESH, current_loop_branch
-from office.weekly_reset import DEFAULT_EPOCH as DEFAULT_LOOP_EPOCH
+from office.weekly_reset import CAMPAIGN as OFFICE_CAMPAIGN
+from office.weekly_reset import (
+    CHARACTER_REFRESH,
+    REFRESH_SENDER,
+    current_loop_branch,
+    loop_branch,
+)
 
 from . import tester as tester_handlers
 from .common import _complete_with_emotion
@@ -183,13 +190,9 @@ def _clock():
 def loop_epoch_and_tz(agent_config):
     """(epoch, tz) for the office week: agent.office.day_runner.epoch/tz, then
     agent.office.epoch/tz, then env OFFICE_EPOCH/OFFICE_TZ (the weekly_reset
-    CLI's), then the defaults — the same precedence build_day_runner uses."""
-    settings = office_settings(agent_config)
-    runner = settings.get("day_runner") if isinstance(settings.get("day_runner"), dict) else {}
-    epoch = (runner.get("epoch") or settings.get("epoch") or os.environ.get("OFFICE_EPOCH")
-             or DEFAULT_LOOP_EPOCH)
-    tz = runner.get("tz") or settings.get("tz") or os.environ.get("OFFICE_TZ") or DEFAULT_TZ
-    return epoch, tz
+    CLI's), then the defaults — the same precedence build_day_runner uses.
+    Delegates to office.clock.configured_epoch_and_tz (one source)."""
+    return configured_epoch_and_tz(agent_config)
 
 
 def _base_branch(agent_config, now=None):
@@ -340,6 +343,18 @@ def _speak(worker_id, llm_client, persona, prompt, fallback, correlation_id):
         return fallback, emotion, False
     log.debug("office llm call event=exit worker=%s chars=%d", worker_id, len(line))
     return line.strip(), emotion, True
+
+
+def _publish_line(worker_id, agent_config, producer, line, emotion=None, correlation_id=None,
+                  *, to=None, addressees=None):
+    """Publish a line this seat just spoke: the live transcript `office_line`
+    and the v4 `character_say`, from one call (live_pane.publish_office_line)
+    so the two never diverge. `addressees`: seat ids of the line's
+    recipients (default `to`; [] for a line to the room). The scene_id
+    instant is this module's _clock(). Never raises."""
+    return live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion,
+                                         correlation_id, to=to, addressees=addressees,
+                                         now=_clock())
 
 
 def _with_extra(msg, extra):
@@ -523,7 +538,8 @@ def issue_directive(worker_id, agent_config, llm_client, producer, text, *, titl
         sent.append(msg)
     remember_directive(root["correlation_id"], text, title=title, issue=issue, day=day)
     _state(state_path, "speaking", action=f"directive: {title}", bubble=line, emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, root["correlation_id"])
+    _publish_line(worker_id, agent_config, producer, line, emotion, root["correlation_id"],
+                  addressees=[SEAT[r] for r in recipients])
     _event(worker_id, "directive_issued", issue=issue, recipients=len(sent),
            correlation_id=root["correlation_id"])
     return sent
@@ -559,7 +575,8 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
             "in 1-2 sentences, in character.",
             f"Noted: {title}. Waiting on the functional plan.", cid)
         _state(state_path, "speaking", action=f"acknowledged: {title}", bubble=line, emotion=emotion)
-        live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
+        _publish_line(worker_id, agent_config, producer, line, emotion, cid,
+                      addressees=[msg.get("from")])
         _event(worker_id, "directive_acknowledged", role=role.value, correlation_id=cid)
         return
 
@@ -583,7 +600,7 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
                                 "pr": (lane or {}).get("pr"), "branch": (lane or {}).get("branch")})
         producer.send(out)
         _state(state_path, "speaking", action=f"functional plan: {title}", bubble=plan, emotion=emotion)
-        live_pane.publish_office_line(worker_id, agent_config, producer, plan, emotion, cid)
+        _publish_line(worker_id, agent_config, producer, plan, emotion, cid, addressees=[out["to"]])
         _event(worker_id, "functional_plan_sent", pr=(lane or {}).get("pr"), correlation_id=cid)
         return
 
@@ -614,7 +631,7 @@ def handle_directive(worker_id, agent_config, llm_client, producer, msg,
                                   "pr": (lane or {}).get("pr")})
     producer.send(report)
     _state(state_path, "speaking", action=f"reported: {title}", bubble=line, emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
+    _publish_line(worker_id, agent_config, producer, line, emotion, cid, addressees=[report["to"]])
     _event(worker_id, "status_report_sent", role=role.value, pr=(lane or {}).get("pr"),
            correlation_id=cid)
 
@@ -668,6 +685,7 @@ def handle_functional_plan(worker_id, agent_config, llm_client, producer, msg,
     producer.send(tech)
 
     engineer = SEAT[OfficeRole.ENGINEER]
+    told = [tech["to"]]
     if not can_direct(worker_id, engineer):
         _event(worker_id, "rank_violation", logging.ERROR, type="task_assignment",
                to=engineer, correlation_id=cid, outcome="not_sent")
@@ -678,8 +696,9 @@ def handle_functional_plan(worker_id, agent_config, llm_client, producer, msg,
             {"task": task_text, "retry_count": 0, "directive_id": cid, "title": title,
              "issue": directive.get("issue"), "directive": directive.get("text")},
             **reply_ids(tech)))
+        told.append(engineer)
     _state(state_path, "speaking", action=f"delegated: {title}", bubble=plan, emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, plan, emotion, cid)
+    _publish_line(worker_id, agent_config, producer, plan, emotion, cid, addressees=told)
     _event(worker_id, "technical_plan_sent", tasks=len(tasks), requirements_merged=merged,
            correlation_id=cid)
 
@@ -707,7 +726,7 @@ def handle_technical_plan(worker_id, agent_config, llm_client, producer, msg,
                     f"Technical plan acknowledged.\n\n{payload['plan']}")
     _state(state_path, "speaking", action="acknowledged the technical plan", bubble=line,
            emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
+    _publish_line(worker_id, agent_config, producer, line, emotion, cid, addressees=[msg.get("from")])
     _event(worker_id, "technical_plan_acknowledged", issue=issue, correlation_id=cid)
 
 
@@ -730,8 +749,9 @@ def handle_test_request(worker_id, agent_config, llm_client, producer, msg,
         worker_id, config, llm_client, producer, run_msg, state_path,
         report_to=SEAT[OfficeRole.TECH_LEAD], extra=extra)
     verdict = (sent or {}).get("type")
-    live_pane.publish_office_line(worker_id, agent_config, producer,
-                                  ((sent or {}).get("payload") or {}).get("narration"), None, cid)
+    _publish_line(worker_id, agent_config, producer,
+                  ((sent or {}).get("payload") or {}).get("narration"), None, cid,
+                  addressees=[(sent or {}).get("to")] if (sent or {}).get("to") else [])
     gitea = build_gitea_client(agent_config)
     if gitea is not None and payload.get("pr") and verdict in ("test_passed", "bug_report"):
         body = ("CI: all tests passed." if verdict == "test_passed" else
@@ -773,7 +793,7 @@ def handle_status_report(worker_id, agent_config, llm_client, producer, msg,
             closed = bool(_gitea_call(worker_id, cid, "close_issue", gitea.close_issue, issue))
     _state(state_path, "happy" if payload.get("status") == "done" else "speaking",
            action=f"report from {msg['from']}", bubble=line, emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
+    _publish_line(worker_id, agent_config, producer, line, emotion, cid, addressees=[msg["from"]])
     _event(worker_id, "status_report_acknowledged", sender=msg["from"],
            status=payload.get("status"), wrap_up=wrap_up, issue_closed=closed,
            correlation_id=cid)
@@ -832,40 +852,70 @@ def handle_wrap_up(worker_id, agent_config, llm_client, producer, msg,
         return None
     producer.send(report)
     _state(state_path, "speaking", action="end-of-day report", bubble=line, emotion=emotion)
-    live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid,
-                                  to=report["to"])
+    _publish_line(worker_id, agent_config, producer, line, emotion, cid, to=report["to"])
     _event(worker_id, "wrap_up_report_sent", role=role.value, to=report["to"], status=status,
            correlation_id=cid)
     return report
 
 
+#: character_refresh reasons that open a new week (and so switch the week
+#: trunk). revert / testctl refreshes only clear the in-process state.
+WEEK_RESET_REASONS = frozenset({"weekly_reset"})
+
+
+def _refresh_branch(payload):
+    """The week trunk a character_refresh points at: loop_branch(payload.week)
+    (the v4 payload has no branch); a legacy payload.branch is used only
+    when the week is missing or invalid. None when neither is usable."""
+    week = payload.get("week")
+    try:
+        return loop_branch(week)
+    except ValueError:
+        log.debug("office character_refresh bad week week=%r", week)
+    legacy = str(payload.get("branch") or "").strip()
+    return legacy or None
+
+
 def handle_character_refresh(worker_id, agent_config, llm_client, producer, msg,
                              state_path=None, coding_backend=None):
-    """Everyone (weekly_reset broadcast {campaign, week, characters, reason,
-    closing_week, branch}): office seats forget the closing week's in-process
-    state and, with their own Fraud-Stop workspace, fetch and check out the
-    new week trunk `payload.branch`. The Tester (read-only mount of the
-    Engineer's clone) and seats without a workspace skip git. Non-office
-    workers ignore it. Returns {"refreshed", "branch", "checked_out"} or None."""
+    """Everyone (the v4 weekly-reset job's broadcast, from "character-updater",
+    payload {campaign, week, characters, reason}): office seats forget the
+    closing week's in-process state and, on a weekly_reset with their own
+    Fraud-Stop workspace, fetch and check out the new week trunk
+    loop_branch(payload.week). The Tester (read-only mount of the Engineer's
+    clone) and seats without a workspace skip git. Another sender or a
+    non-broadcast is a rank violation; another campaign, or a `characters`
+    list without this seat's slug (or "*"), is ignored. Non-office workers
+    ignore it. Returns {"refreshed", "branch", "checked_out"} or None."""
     role = office_role_of(agent_config)
     if role is None:
         print(f"[agent:{worker_id}] ignoring {CHARACTER_REFRESH} (not an office worker)")
         return None
     cid = correlation_of(msg)
-    if msg.get("from") not in CLOCK_SENDERS or msg.get("to") != BROADCAST:
+    if msg.get("from") != REFRESH_SENDER or msg.get("to") != BROADCAST:
         _event(worker_id, "rank_violation", logging.ERROR, handler=CHARACTER_REFRESH,
                sender=msg.get("from"), to=msg.get("to"), correlation_id=cid, outcome="dropped")
         return None
     payload = msg.get("payload") if isinstance(msg.get("payload"), dict) else {}
+    if payload.get("campaign") != OFFICE_CAMPAIGN:
+        _event(worker_id, "character_refresh_skipped", reason="other_campaign",
+               campaign=payload.get("campaign"), correlation_id=cid)
+        return None
     characters = payload.get("characters") or ["*"]
-    if "*" not in characters and worker_id not in characters and role.value not in characters:
+    if isinstance(characters, str):
+        characters = [characters]
+    if "*" not in characters and role.value not in characters and worker_id not in characters:
         _event(worker_id, "character_refresh_skipped", reason="not_addressed", correlation_id=cid)
         return None
     _refresh_office_state()
-    branch = str(payload.get("branch") or "").strip() or None
+    reason = payload.get("reason") or "weekly_reset"
+    branch = _refresh_branch(payload) if reason in WEEK_RESET_REASONS else None
     checked_out = False
-    if branch is None:
-        _event(worker_id, "character_refresh_no_branch", logging.WARNING, correlation_id=cid)
+    if reason not in WEEK_RESET_REASONS:
+        log.debug("office character_refresh git skipped reason=%s", reason)
+    elif branch is None:
+        _event(worker_id, "character_refresh_no_branch", logging.WARNING,
+               week=payload.get("week"), correlation_id=cid)
     elif role is OfficeRole.TESTER:
         log.debug("office character_refresh git skipped role=tester reason=read_only_mount")
     else:
@@ -877,7 +927,7 @@ def handle_character_refresh(worker_id, agent_config, llm_client, producer, msg,
             checked_out = _checkout_week_branch(worker_id, git, branch, cid)
     _state(state_path, "idle", action=f"new week {payload.get('week')}", bubble=None)
     _event(worker_id, "character_refreshed", role=role.value, week=payload.get("week"),
-           branch=branch, checked_out=checked_out, correlation_id=cid)
+           reason=reason, branch=branch, checked_out=checked_out, correlation_id=cid)
     return {"refreshed": True, "branch": branch, "checked_out": checked_out}
 
 
@@ -925,7 +975,7 @@ def handle_phase_change(worker_id, agent_config, llm_client, producer, msg,
     _state(state_path, expression, action=f"phase: {phase}", bubble=line if ok else None,
            emotion=emotion)
     if ok:
-        live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion, cid)
+        _publish_line(worker_id, agent_config, producer, line, emotion, cid, addressees=[])
     _event(worker_id, "phase_noted", phase=phase, narrated=ok, correlation_id=cid)
 
 
@@ -1010,7 +1060,7 @@ def engineer_handoff(worker_id, agent_config, producer, msg, result, narration, 
         "issue": payload.get("issue"), "title": payload.get("title"),
         "directive": payload.get("directive")})
     producer.send(out)
-    live_pane.publish_office_line(worker_id, agent_config, producer, narration, None, cid)
+    _publish_line(worker_id, agent_config, producer, narration, None, cid, addressees=[out["to"]])
     _event(worker_id, "test_request_sent", branch=branch, pr=pr, correlation_id=cid)
     return out
 
@@ -1037,7 +1087,8 @@ def tech_lead_after_test_passed(worker_id, agent_config, producer, msg, narratio
                error=f"'{exc}'")
         return None
     producer.send(report)
-    live_pane.publish_office_line(worker_id, agent_config, producer, narration, None, cid)
+    _publish_line(worker_id, agent_config, producer, narration, None, cid,
+                  addressees=[report["to"]])
     _event(worker_id, "status_report_sent", role="tech_lead", merged=merged, correlation_id=cid)
     return report
 
@@ -1162,7 +1213,7 @@ def office_manager_idle_tick(worker_id, agent_config, llm_client, producer, stat
         _state(state_path, "focused" if chore == "garbage_collection" else "happy",
                action=f"chore: {chore}", bubble=line if ok else None, emotion=emotion)
         if ok:
-            live_pane.publish_office_line(worker_id, agent_config, producer, line, emotion)
+            _publish_line(worker_id, agent_config, producer, line, emotion, addressees=[])
         _event(worker_id, "chore_done", chore=chore)
         return chore
     except Exception as exc:
