@@ -504,3 +504,376 @@ def test_complete_streaming_final_flush_logs_text_that_never_hit_the_2s_tick():
     joined = "\n".join(records)
     assert "final_text" in joined
     assert "Leena" in joined
+
+
+# ── OpenAICompatClient: the vLLM / OpenAI-compatible wire path ────────────────
+#
+# vLLM (served via the vllm-qwen3.8-27b container on :8092) speaks the
+# OpenAI /v1/chat/completions protocol, not Ollama's /api/chat. The
+# generator's from_profile must build an OpenAICompatClient for it, and that
+# client must implement the same complete / complete_streaming / close /
+# context-manager surface with the same LLMError semantics as
+# PooledOllamaClient, so the arc/segment/dialogue layers work unchanged.
+
+OPENAI_CHAT_URL = "http://localhost:8092/v1/chat/completions"
+
+
+class FakeOpenAIResponse:
+    """Stands in for the httpx.Response returned by a non-streaming
+    /v1/chat/completions call."""
+
+    def __init__(self, payload=None, status_code=200, text=""):
+        self._payload = payload if payload is not None else {
+            "choices": [{"message": {"role": "assistant", "content": "Leena: The fire is low."}}]}
+        self.status_code = status_code
+        self.text = text
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise httpx.HTTPStatusError(
+                f"{self.status_code}", request=None, response=self)
+
+    def json(self):
+        return self._payload
+
+
+def _openai_client(http=None, **kwargs):
+    defaults = dict(base_url="http://localhost:8092", model="qwen3.8-27b",
+                    temperature=0.9, max_tokens=1024, timeout_s=600,
+                    api_key="test-key")
+    defaults.update(kwargs)
+    # The shared `http` fixture defaults to an Ollama-shaped payload; hand it
+    # an OpenAI-shaped one when the caller didn't provide its own.
+    if http is None:
+        http = FakeHTTPClient(response=FakeOpenAIResponse())
+    return concurrent_llm.OpenAICompatClient(http_client=http, **defaults)
+
+
+def test_from_profile_builds_an_openai_client_for_a_vllm_profile():
+    profile = {"provider": "vllm", "base_url": "http://localhost:8092",
+               "model": "qwen3.8-27b", "temperature": 0.9, "max_tokens": 1024,
+               "timeout_s": 600, "api_key": "k"}
+    client = concurrent_llm.from_profile(profile)
+    try:
+        assert isinstance(client, concurrent_llm.OpenAICompatClient)
+        assert client.model == "qwen3.8-27b"
+        assert client.base_url == "http://localhost:8092"
+        assert client.api_key == "k"
+    finally:
+        client.close()
+
+
+def test_from_profile_reads_the_key_from_api_key_env(monkeypatch):
+    """Committed configs name an env var instead of carrying the secret."""
+    monkeypatch.setenv("TEST_VLLM_KEY", "from-env")
+    client = concurrent_llm.from_profile(
+        {"provider": "vllm", "model": "m", "base_url": "http://x",
+         "api_key_env": "TEST_VLLM_KEY"})
+    try:
+        assert client.api_key == "from-env"
+    finally:
+        client.close()
+
+
+def test_from_profile_inline_api_key_wins_over_api_key_env(monkeypatch):
+    monkeypatch.setenv("TEST_VLLM_KEY", "from-env")
+    client = concurrent_llm.from_profile(
+        {"provider": "vllm", "model": "m", "base_url": "http://x",
+         "api_key": "inline", "api_key_env": "TEST_VLLM_KEY"})
+    try:
+        assert client.api_key == "inline"
+    finally:
+        client.close()
+
+
+def test_from_profile_unset_api_key_env_sends_no_key(monkeypatch):
+    monkeypatch.delenv("TEST_VLLM_KEY", raising=False)
+    client = concurrent_llm.from_profile(
+        {"provider": "vllm", "model": "m", "base_url": "http://x",
+         "api_key_env": "TEST_VLLM_KEY"})
+    try:
+        assert client.api_key is None
+        assert "Authorization" not in client._headers()
+    finally:
+        client.close()
+
+
+def test_from_profile_treats_openai_and_openai_compatible_the_same():
+    for provider in ("openai", "openai-compatible"):
+        client = concurrent_llm.from_profile(
+            {"provider": provider, "model": "m", "base_url": "http://x"})
+        try:
+            assert isinstance(client, concurrent_llm.OpenAICompatClient)
+        finally:
+            client.close()
+
+
+def test_openai_client_posts_the_chat_completions_payload_and_returns_content():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    reply = _openai_client(http=http).complete(
+        "You plan segments.", [{"role": "user", "content": "hi"}])
+    assert reply == "Leena: The fire is low."
+
+    call = http.calls[0]
+    assert call["url"] == OPENAI_CHAT_URL
+    assert call["json"]["model"] == "qwen3.8-27b"
+    assert call["json"]["stream"] is False
+    assert call["json"]["temperature"] == 0.9
+    assert call["json"]["max_tokens"] == 1024
+    assert call["json"]["messages"][0] == {
+        "role": "system", "content": "You plan segments."}
+    assert call["json"]["messages"][1] == {"role": "user", "content": "hi"}
+
+
+def test_openai_client_sends_the_bearer_auth_header():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    _openai_client(http=http).complete("sys", [{"role": "user", "content": "hi"}])
+    headers = http.calls[0]["kwargs"]["headers"]
+    assert headers["Authorization"] == "Bearer test-key"
+    assert headers["Content-Type"] == "application/json"
+
+
+def test_openai_client_omits_the_auth_header_when_there_is_no_key():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    _openai_client(http=http, api_key=None).complete(
+        "sys", [{"role": "user", "content": "hi"}])
+    assert "Authorization" not in http.calls[0]["kwargs"]["headers"]
+
+
+def test_openai_client_merges_extra_body_verbatim():
+    """vLLM + Qwen3 thinking control lives in chat_template_kwargs — it must
+    reach the wire body untouched."""
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    _openai_client(http=http,
+                   extra_body={"chat_template_kwargs": {"enable_thinking": False}}) \
+        .complete("sys", [{"role": "user", "content": "hi"}])
+    body = http.calls[0]["json"]
+    assert body["chat_template_kwargs"] == {"enable_thinking": False}
+    # Extra body must not clobber the fields the client owns.
+    assert body["model"] == "qwen3.8-27b"
+    assert body["stream"] is False
+
+
+def test_openai_client_sends_the_configured_timeout():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    _openai_client(http=http).complete("sys", [{"role": "user", "content": "hi"}])
+    assert http.calls[0]["kwargs"].get("timeout") == 600
+
+
+def test_openai_client_trailing_slash_on_base_url_is_stripped():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    _openai_client(http=http, base_url="http://localhost:8092/") \
+        .complete("sys", [{"role": "user", "content": "hi"}])
+    assert http.calls[0]["url"] == OPENAI_CHAT_URL
+
+
+def test_openai_client_reuses_the_pooled_http_client():
+    http = FakeHTTPClient(response=FakeOpenAIResponse())
+    client = _openai_client(http=http)
+    for _ in range(4):
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+    assert len(http.calls) == 4
+
+
+def test_openai_client_http_error_raises_llmerror_carrying_the_body():
+    http = FakeHTTPClient(response=FakeOpenAIResponse(
+        status_code=401, text="Unauthorized"))
+    client = _openai_client(http=http)
+    with pytest.raises(LLMError) as excinfo:
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+    assert "Unauthorized" in str(excinfo.value)
+
+
+def test_openai_client_timeout_raises_llmerror(caplog):
+    http = FakeHTTPClient(raises=httpx.ReadTimeout("timed out"))
+    client = _openai_client(http=http)
+    caplog.set_level("ERROR")
+    with pytest.raises(LLMError):
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+    assert caplog.records, "a timeout was raised without an ERROR log line"
+
+
+def test_openai_client_connection_error_raises_llmerror():
+    http = FakeHTTPClient(raises=httpx.ConnectError("connection refused"))
+    client = _openai_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_client_malformed_reply_raises_llmerror_not_keyerror():
+    http = FakeHTTPClient(response=FakeOpenAIResponse(payload={"unexpected": "shape"}))
+    client = _openai_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_client_none_content_raises_llmerror():
+    """A reasoning model that spends the whole budget on reasoning returns
+    content=None — that must surface as LLMError, not crash the pool with a
+    TypeError on the None."""
+    http = FakeHTTPClient(response=FakeOpenAIResponse(
+        payload={"choices": [{"message": {"role": "assistant", "content": None,
+                                          "reasoning": "long chain of thought"}}]}))
+    client = _openai_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_client_works_as_a_context_manager():
+    with concurrent_llm.OpenAICompatClient(
+            "http://localhost:8092", "m", 0.7, 512, api_key="k") as client:
+        assert client.http_client.is_closed is False
+    assert client.http_client.is_closed is True
+
+
+def test_openai_client_close_is_idempotent():
+    """No injected client -> it builds a real httpx.Client it must own, and
+    closing twice must be safe."""
+    client = concurrent_llm.OpenAICompatClient(
+        "http://localhost:8092", "m", 0.7, 512, api_key="k")
+    try:
+        client.close()
+        client.close()
+        assert client.http_client.is_closed is True
+    finally:
+        client.close()
+
+
+# ── OpenAICompatClient.complete_streaming: SSE, not Ollama NDJSON ─────────────
+#
+# The SSE wire shape differs from Ollama: each line is "data: <json>" (or
+# "data: [DONE]"), and the content delta lives at
+# choices[0].delta.content, with Qwen3 reasoning in a separate
+# delta.reasoning field that must NOT be accumulated.
+
+_SSE_DEFAULT_LINES = [
+    'data: {"choices": [{"delta": {"role": "assistant", "content": "Leena: "}}]}',
+    'data: {"choices": [{"delta": {"content": "The fire is low."}}]}',
+    "data: [DONE]",
+]
+
+
+def _sse_streaming_client(http=None, **kwargs):
+    defaults = dict(base_url="http://localhost:8092", model="qwen3.8-27b",
+                    temperature=0.9, max_tokens=1024, timeout_s=600,
+                    api_key="test-key")
+    defaults.update(kwargs)
+    return concurrent_llm.OpenAICompatClient(
+        http_client=http if http is not None else FakeStreamingHTTPClient(
+            lines=list(_SSE_DEFAULT_LINES)), **defaults)
+
+
+def test_openai_streaming_concatenates_content_across_sse_lines():
+    client = _sse_streaming_client()
+    reply = client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert reply == "Leena: The fire is low."
+
+
+def test_openai_streaming_posts_to_chat_completions_with_stream_true():
+    http = FakeStreamingHTTPClient(lines=list(_SSE_DEFAULT_LINES))
+    client = _sse_streaming_client(http=http)
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert http.calls[0]["url"] == OPENAI_CHAT_URL
+    assert http.calls[0]["json"]["stream"] is True
+    assert http.calls[0]["kwargs"]["headers"]["Authorization"] == "Bearer test-key"
+
+
+def test_openai_streaming_ignores_comment_and_blank_lines():
+    http = FakeStreamingHTTPClient(lines=[
+        ": OPENAI is the default provider",
+        "",
+        'data: {"choices": [{"delta": {"content": "A"}}]}',
+        "   ",
+    ])
+    client = _sse_streaming_client(http=http)
+    assert client.complete_streaming("sys", [{"role": "user", "content": "hi"}]) == "A"
+
+
+def test_openai_streaming_skips_unparsable_sse_payloads():
+    http = FakeStreamingHTTPClient(lines=[
+        "data: {not valid json",
+        'data: {"choices": [{"delta": {"content": "A"}}]}',
+        'data: {"choices": [{"delta": {"content": "B"}}]}',
+    ])
+    client = _sse_streaming_client(http=http)
+    assert client.complete_streaming("sys", [{"role": "user", "content": "hi"}]) == "AB"
+
+
+def test_openai_streaming_accumulates_only_content_not_reasoning():
+    """Qwen3 with --reasoning-parser puts chain-of-thought in delta.reasoning.
+    It must never leak into the parsed plan."""
+    http = FakeStreamingHTTPClient(lines=[
+        'data: {"choices": [{"delta": {"reasoning": "I should plan this carefully"}}]}',
+        'data: {"choices": [{"delta": {"content": "id: seg-1"}}]}',
+        'data: {"choices": [{"delta": {"reasoning": "now the title"}}]}',
+        'data: {"choices": [{"delta": {"content": "\\ntitle: The Shift"}}]}',
+        "data: [DONE]",
+    ])
+    client = _sse_streaming_client(http=http)
+    reply = client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    assert "reasoning" not in reply.lower()
+    assert "I should plan" not in reply
+    assert reply == "id: seg-1\ntitle: The Shift"
+
+
+def test_openai_streaming_ignores_deltas_with_no_content():
+    http = FakeStreamingHTTPClient(lines=[
+        'data: {"choices": [{"delta": {"role": "assistant"}}]}',
+        'data: {"choices": [{"delta": {"content": "A"}}]}',
+        'data: {"choices": []}',
+    ])
+    client = _sse_streaming_client(http=http)
+    assert client.complete_streaming("sys", [{"role": "user", "content": "hi"}]) == "A"
+
+
+def test_openai_streaming_raises_llmerror_on_empty_content():
+    http = FakeStreamingHTTPClient(lines=[
+        'data: {"choices": [{"delta": {"reasoning": "thoughts only"}}]}',
+        "data: [DONE]",
+    ])
+    client = _sse_streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_streaming_raises_llmerror_on_http_error():
+    http = FakeStreamingHTTPClient(status_code=500, text="internal error",
+                                   lines=list(_SSE_DEFAULT_LINES))
+    client = _sse_streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_streaming_raises_llmerror_on_timeout():
+    http = FakeStreamingHTTPClient(raises=httpx.ReadTimeout("timed out"))
+    client = _sse_streaming_client(http=http)
+    with pytest.raises(LLMError):
+        client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+
+
+def test_openai_streaming_calls_on_progress_when_the_clock_is_forced(monkeypatch):
+    fake_time = [1000.0]
+
+    def fake_monotonic():
+        fake_time[0] += 3.0
+        return fake_time[0]
+
+    monkeypatch.setattr(concurrent_llm.time, "monotonic", fake_monotonic)
+
+    http = FakeStreamingHTTPClient(lines=list(_SSE_DEFAULT_LINES))
+    client = _sse_streaming_client(http=http)
+    seen = []
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}],
+                              on_progress=seen.append)
+    assert len(seen) >= 1
+    assert seen[0]["model"] == "qwen3.8-27b"
+    assert seen[0]["n_decoded"] >= 1
+
+
+def test_openai_streaming_logs_generated_text_even_with_no_on_progress(caplog):
+    client = _sse_streaming_client()
+    caplog.set_level("INFO", logger="concurrent_llm")
+    client.complete_streaming("sys", [{"role": "user", "content": "hi"}])
+    joined = "\n".join(r.message for r in caplog.records)
+    assert "Leena" in joined
+    assert "fire is low" in joined

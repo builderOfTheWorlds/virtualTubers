@@ -10,6 +10,12 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # survive. llm_client.py sits at the top level because concurrent_llm.py
 # imports it bare (`from llm_client import ...`).
 COPY app/llm_client.py /app/llm_client.py
+# campaign/improviser.py does `from emotion import ...` bare, so emotion.py
+# must sit flat at /app next to it, same as llm_client.py above — missing
+# this made runner.build_default_context() raise ModuleNotFoundError at
+# lifespan startup, which the lifespan swallows into a warning log and
+# leaves the dispatch loop never started: jobs queue forever and never run.
+COPY app/emotion.py /app/emotion.py
 COPY app/campaign/ /app/campaign/
 
 # The utility's own modules go flat: its package directory name starts with a

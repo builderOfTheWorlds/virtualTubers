@@ -119,7 +119,7 @@ def test_the_scene_carries_the_slot_prompt_and_lore(config):
     gsd.generate_take(improviser, unit(slot=slot), config)
 
     scene = improviser.scenes_generated[0]
-    assert scene.prompt == "Chadwick needles Leena."
+    assert scene.prompt.startswith("Chadwick needles Leena.")
     assert scene.lore == ["the-loop"]
 
 

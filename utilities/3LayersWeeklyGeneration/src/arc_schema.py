@@ -22,9 +22,9 @@ log = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
     "You are a story architect planning a long-running serialized arc for a live "
-    "virtual-streamer campaign. Your task is to create a detailed arc plan that "
-    "guides the generation of 28 segments, each 6 hours long, for a total of 168 "
-    "hours of content. The arc must be coherent and follow a specific structure "
+    "virtual-streamer campaign. Your task is to create a detailed arc plan made "
+    "of the segments requested in the prompt; each segment's length in hours is "
+    "stated there. The arc must be coherent and follow a specific structure "
     "that allows for seamless continuation across all segments."
 )
 
@@ -32,6 +32,41 @@ class ArcPlanError(ValueError):
     """Raised for a config that cannot produce a segment count, a model reply that cannot be parsed 
     into a segment list, and an existing arc_plan.yaml that will not load."""
     pass
+
+
+def day_phase_map(config) -> Dict[int, Dict]:
+    """Return {order: phase} from the optional `arc.day_phases` config list.
+
+    Each phase is a mapping with `clock` (e.g. "06:00-12:00"), `label`,
+    `focus`, and optional `spine_scenes` (the exact spine ids that block must
+    use; empty means an ambient-only block). Entry i applies to order i, and
+    the list repeats for arcs longer than one day, so a 4-entry list maps a
+    28-segment week onto seven identical days.
+
+    Returns {} when `arc.day_phases` is absent, so configs without it keep
+    their previous behaviour.
+
+    Raises:
+        ArcPlanError: when the list is present but malformed.
+    """
+    phases = config.get("arc", {}).get("day_phases")
+    if not phases:
+        return {}
+    if not isinstance(phases, list):
+        raise ArcPlanError("arc.day_phases must be a list")
+    for index, phase in enumerate(phases):
+        if not isinstance(phase, dict):
+            raise ArcPlanError(f"arc.day_phases[{index}] must be a mapping")
+        for key in ("clock", "label", "focus"):
+            if not isinstance(phase.get(key), str) or not phase[key].strip():
+                raise ArcPlanError(f"arc.day_phases[{index}] needs a non-empty {key!r}")
+        spine = phase.get("spine_scenes", [])
+        if not isinstance(spine, list):
+            raise ArcPlanError(f"arc.day_phases[{index}].spine_scenes must be a list")
+    total = n_segments(config)
+    result = {order: phases[order % len(phases)] for order in range(total)}
+    log.debug("day_phase_map returning %d orders from %d phases", len(result), len(phases))
+    return result
 
 
 def n_segments(config) -> int:
@@ -284,6 +319,23 @@ def validate_batch(segments, expected_orders, known_ids, vocab, config,
         unknown = vocab.unknown_scene_refs(seg["spine_scenes"])
         for scene_id in unknown:
             problems.append(f"segment {seg['id']!r} spine_scenes references unknown scene {scene_id!r}")
+
+    # Day-structure check: when arc.day_phases pins a block's spine scenes,
+    # the segment must use exactly those. Without this the planner drifts
+    # back to the one known spine scene for every block (the 2026-09-29 run
+    # planned four standups for a 24h day).
+    day_phases = day_phase_map(config)
+    for seg in segments:
+        phase = day_phases.get(seg.get("order"))
+        if phase is None:
+            continue
+        expected_spine = sorted(phase.get("spine_scenes") or [])
+        actual_spine = seg["spine_scenes"] if isinstance(seg["spine_scenes"], list) else []
+        if sorted(s for s in actual_spine if isinstance(s, str)) != expected_spine:
+            problems.append(
+                f"segment {seg['id']!r} (order {seg['order']}, {phase['label']} "
+                f"{phase['clock']}) spine_scenes must be exactly {expected_spine}, "
+                f"got {actual_spine!r}")
     
     # Check hours
     segment_hours = config["arc"]["segment_hours"]
@@ -460,6 +512,26 @@ def build_prompt(context, expected_orders, previous_continuity,
 
     prompt_lines.append("")
     prompt_lines.append("Reply with ONLY YAML under a 'segments:' key.")
+
+    day_phases = day_phase_map(config)
+    if day_phases:
+        prompt_lines.append("")
+        prompt_lines.append(
+            "DAY STRUCTURE — each order is a fixed block of the in-fiction day. "
+            "Plan each segment for exactly its block; do not plan a different "
+            "part of the day, and do not repeat another block's events:"
+        )
+        for order in expected_orders:
+            phase = day_phases.get(order)
+            if not phase:
+                continue
+            spine = phase.get("spine_scenes") or []
+            spine_note = (f" Spine scenes: {', '.join(spine)}." if spine
+                          else " No spine scene: spine_scenes must be [].")
+            prompt_lines.append(
+                f"- order {order}: {phase['clock']} ({phase['label']}). "
+                f"{phase['focus']}{spine_note}"
+            )
 
     if ring_roles:
         prompt_lines.append("")

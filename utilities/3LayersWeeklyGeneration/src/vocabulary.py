@@ -72,38 +72,69 @@ class Vocabulary:
         return cls(lore_stems, scene_ids, flags, moods, carry_keys)
 
     def unknown_lore(self, stems: Optional[List[str]]) -> List[str]:
-        """The subset of `stems` not in lore_stems, IN INPUT ORDER."""
+        """The subset of `stems` not in lore_stems, IN INPUT ORDER.
+
+        Non-string entries (a model reply putting a dict/list where a
+        stem name was expected) are always unknown rather than crashing
+        on frozenset membership, which requires hashability.
+        """
         log.debug("unknown_lore called with stems=%s", stems)
         if stems is None:
             return []
-        result = [stem for stem in stems if stem not in self.lore_stems]
+        result = [
+            stem for stem in stems
+            if not isinstance(stem, str) or stem not in self.lore_stems
+        ]
         log.debug("unknown_lore returning %s", result)
         return result
 
     def unknown_state_keys(self, keys: Optional[List[str]]) -> List[str]:
-        """The subset of `keys` that is neither a declared flag nor the literal string 'mood'."""
+        """The subset of `keys` that is neither a declared flag nor the literal string 'mood'.
+
+        A model reply can put an unhashable value (dict, list) into this
+        list instead of a plain string — treat any non-string entry as
+        automatically unknown rather than crashing on ``key not in
+        self.flags`` (frozenset membership requires hashability).
+        """
         log.debug("unknown_state_keys called with keys=%s", keys)
         if keys is None:
             return []
-        result = [key for key in keys if key != "mood" and key not in self.flags]
+        result = [
+            key for key in keys
+            if not isinstance(key, str) or (key != "mood" and key not in self.flags)
+        ]
         log.debug("unknown_state_keys returning %s", result)
         return result
 
     def unknown_carry_keys(self, keys: Optional[List[str]]) -> List[str]:
-        """The subset of `keys` not in carry_keys."""
+        """The subset of `keys` not in carry_keys.
+
+        Non-string entries are always unknown rather than crashing on
+        frozenset membership, which requires hashability.
+        """
         log.debug("unknown_carry_keys called with keys=%s", keys)
         if keys is None:
             return []
-        result = [key for key in keys if key not in self.carry_keys]
+        result = [
+            key for key in keys
+            if not isinstance(key, str) or key not in self.carry_keys
+        ]
         log.debug("unknown_carry_keys returning %s", result)
         return result
 
     def unknown_scene_refs(self, scene_ids: Optional[List[str]]) -> List[str]:
-        """The subset not in scene_ids."""
+        """The subset not in scene_ids.
+
+        Non-string entries are always unknown rather than crashing on
+        frozenset membership, which requires hashability.
+        """
         log.debug("unknown_scene_refs called with scene_ids=%s", scene_ids)
         if scene_ids is None:
             return []
-        result = [scene_id for scene_id in scene_ids if scene_id not in self.scene_ids]
+        result = [
+            scene_id for scene_id in scene_ids
+            if not isinstance(scene_id, str) or scene_id not in self.scene_ids
+        ]
         log.debug("unknown_scene_refs returning %s", result)
         return result
 

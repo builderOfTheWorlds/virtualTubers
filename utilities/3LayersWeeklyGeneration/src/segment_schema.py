@@ -323,7 +323,7 @@ def validate_children(children, node, config) -> list:
     return problems
 
 
-def validate_slots(slots, pack, vocab, config, node=None) -> list:
+def validate_slots(slots, pack, vocab, config, node=None, allowed_spine=None) -> list:
     """Validate a batch of slots. Returns problem strings, [] when clean.
     Never raises.
 
@@ -331,6 +331,10 @@ def validate_slots(slots, pack, vocab, config, node=None) -> list:
     check, append the problem and then SKIP every check that uses it.
     `prompt`, `lore`, `sensitivity` and `depends_on` exist ONLY on ambient
     slots; `participants` and `slot_id` are checked on both kinds.
+
+    `allowed_spine`, when a list, is the arc segment's own `spine_scenes`:
+    a spine slot whose scene_ref is outside it is rejected, so a block the
+    arc planned as ambient-only cannot pull in another block's spine scene.
     """
     log.debug("validate_slots called with %d slots", len(slots))
     problems = []
@@ -383,6 +387,14 @@ def validate_slots(slots, pack, vocab, config, node=None) -> list:
                     if pid not in pack.cast:
                         problems.append(
                             f"slot '{slot_id}' has unknown participant '{pid}'")
+
+        if kind == "spine" and isinstance(allowed_spine, list):
+            scene_ref = slot.get("scene_ref")
+            if scene_ref not in allowed_spine:
+                problems.append(
+                    f"slot '{slot_id}' scene_ref {scene_ref!r} is not a spine "
+                    f"scene of this segment (allowed: {sorted(allowed_spine)}); "
+                    f"use kind: ambient instead")
 
         if kind == "ambient":
             # An ambient slot must NOT have a scene_ref.
@@ -568,11 +580,21 @@ def build_leaf_prompt(pack, arc_segment, ancestors, node, config, problems) -> s
         lines.append(f"- {name}")
     lines.append("")
 
-    # Spine ground truth.
+    # Spine ground truth. When the arc segment names its spine scenes, only
+    # those are legal here — listing every pack spine let an off-hours or
+    # ship block pick the standup (the one authored scene) for every block.
+    allowed_spine = arc_segment.get("spine_scenes")
     lines.append("Spine scenes:")
+    listed = 0
     for scene_id, scene in pack.scenes.items():
-        if not scene.ambient:
-            lines.append(f"- {scene_id}: {scene.title}")
+        if scene.ambient:
+            continue
+        if isinstance(allowed_spine, list) and scene_id not in allowed_spine:
+            continue
+        lines.append(f"- {scene_id}: {scene.title}")
+        listed += 1
+    if listed == 0:
+        lines.append("- (none for this segment — every slot must be kind: ambient)")
     lines.append("")
 
     lines.append("Write for the ear.")
@@ -586,6 +608,29 @@ def build_leaf_prompt(pack, arc_segment, ancestors, node, config, problems) -> s
         "sensitivity must be EXACTLY one of: none, tone, flags — never any "
         "other word (e.g. not 'low', 'high', 'medium')."
     )
+    lines.append("")
+    lines.append(
+        "depends_on is a GATE on story state, NOT a reference to another "
+        "slot in this batch. It must be a list containing ZERO OR MORE "
+        "items copied VERBATIM from the 'Legal state keys' list above — "
+        "nothing else is legal there, not a slot_id, not an invented name. "
+        "Leave it as an empty list [] unless this slot's content genuinely "
+        "changes depending on one of those exact story-state flags being "
+        "true or false. depends_on may only be non-empty when sensitivity "
+        "is 'flags'; for sensitivity 'none' or 'tone', depends_on MUST be []."
+    )
+    lines.append("")
+    lines.append(
+        "Example of a correctly-formed ambient slot (adapt content, keep "
+        "the shape):"
+    )
+    lines.append("- slot_id: \"001\"")
+    lines.append("  kind: ambient")
+    lines.append("  prompt: A short beat description in plain prose.")
+    lines.append("  lore: [office]")
+    lines.append("  participants: [engineer]")
+    lines.append("  sensitivity: none")
+    lines.append("  depends_on: []")
     lines.append("")
     lore_stems = sorted(pack.lore.keys())
     if lore_stems:

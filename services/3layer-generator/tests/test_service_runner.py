@@ -441,6 +441,29 @@ def test_boot_rehydrates_an_artifact_missing_from_disk(store, ctx):
     assert yaml.safe_load(written.read_text(encoding="utf-8"))["segment_id"] == "seg-01"
 
 
+def test_boot_rehydrates_a_dialogue_take_into_its_slots_dir(store, ctx):
+    """Takes are mirrored under "<seg>/<slot>/<take>" keys. They must come
+    back to segments/<seg>/slots/<slot>/<take>.yaml — the path worklist
+    reads — not to segments/<seg>/<slot>/<take>/dialogue.yaml, where boot
+    used to scatter them (39 stray files found 2026-09-30)."""
+    queue(store, "dialogue")
+    store.upsert_artifact("ashiorid", "dialogue", "seg-01/seg-01-n0-001/001",
+                          {"id": "seg-01-n0-001", "take": 1, "beats": []})
+
+    runner.boot(ctx)
+
+    seg = ctx.output_root / "ashiorid" / "segments" / "seg-01"
+    assert (seg / "slots" / "seg-01-n0-001" / "001.yaml").exists()
+    assert not (seg / "seg-01-n0-001").exists()
+
+
+def test_artifact_path_keeps_the_per_segment_dialogue_path():
+    class Ctx:
+        output_root = "/out"
+    assert str(runner.artifact_path(Ctx(), "r", "dialogue", "seg-01")) == \
+        "/out/r/segments/seg-01/dialogue.yaml"
+
+
 def test_boot_does_not_overwrite_an_artifact_already_on_disk(store, ctx):
     queue(store, "segment")
     target = ctx.output_root / "ashiorid" / "segments" / "seg-01" / "brief.yaml"

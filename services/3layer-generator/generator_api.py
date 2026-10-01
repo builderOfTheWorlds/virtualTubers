@@ -107,10 +107,18 @@ def overlay_base_url(config, base_url) -> dict:
     LLM call dies with ECONNREFUSED — while the job still finishes
     `completed`, because `plan_arc`'s contract is to log and skip a batch it
     cannot plan.
+
+    A non-Ollama config (e.g. a vLLM / OpenAI-compatible profile pointing at
+    its own server and port) must be left alone: its `base_url` IS the
+    intended endpoint, and clobbering it with the Ollama host address would
+    silently send every request to the wrong server.
     """
     if base_url is None or base_url == "":
         return config
-    config.setdefault("defaults", {})["base_url"] = base_url
+    defaults = config.setdefault("defaults", {})
+    if defaults.get("provider", "ollama") != "ollama":
+        return config
+    defaults["base_url"] = base_url
     return config
 
 

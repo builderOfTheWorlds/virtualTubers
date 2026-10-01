@@ -118,7 +118,8 @@ def _handle_leaf(node_id, tree, pack, arc_segment, config, llm, vocab, lock):
             prompt = build_leaf_prompt(pack, arc_segment, ancestors, node, config, problems)
             reply = llm.complete(SYSTEM_PROMPT_LEAF, [{"role": "user", "content": prompt}])
             slots = parse_slots(reply)
-            problems = validate_slots(slots, pack, vocab, config, node=node)
+            problems = validate_slots(slots, pack, vocab, config, node=node,
+                                      allowed_spine=arc_segment.get("spine_scenes"))
             if not problems:
                 # Prefix slot ids with node id
                 for slot in slots:

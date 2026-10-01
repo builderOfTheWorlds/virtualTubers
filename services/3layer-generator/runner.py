@@ -179,6 +179,15 @@ def artifact_path(ctx, run, kind, segment_id) -> pathlib.Path:
     base = pathlib.Path(ctx.output_root) / run
     if kind == "arc_plan":
         return base / "arc_plan.yaml"
+    if kind == "dialogue" and segment_id.count("/") == 2:
+        # A per-take key from _mirror_dialogue_takes:
+        # "<segment_id>/<slot_id>/<take>". It lives at
+        # segments/<segment_id>/slots/<slot_id>/<take>.yaml. Without this
+        # branch boot() rehydrated every take to
+        # segments/<seg>/<slot>/<take>/dialogue.yaml — a path nothing reads
+        # (found 2026-09-30: 39 stray files after takes were moved aside).
+        seg_id, slot_id, take = segment_id.split("/")
+        return base / "segments" / seg_id / "slots" / slot_id / f"{take}.yaml"
     seg = base / "segments" / segment_id
     if kind == "brief":
         return seg / "brief.yaml"

@@ -548,6 +548,19 @@ def test_overlaying_a_base_url_of_none_leaves_the_config_alone():
     assert result["defaults"]["base_url"] == "http://localhost:11434"
 
 
+def test_the_ollama_base_url_overlay_is_skipped_for_non_ollama_configs():
+    """A vLLM / OpenAI-compatible config points defaults.base_url at its OWN
+    server (e.g. the vllm container on :8092). Clobbering that with the
+    Ollama host address from OLLAMA_BASE_URL would silently send every
+    planning request to the wrong server — the same silent-skip failure
+    mode the overlay exists to prevent, just aimed at a different port."""
+    loaded = {"defaults": {"base_url": "http://127.0.0.1:8092",
+                           "provider": "vllm", "api_key": "k"}}
+    result = api.overlay_base_url(loaded, "http://127.0.0.1:11434")
+    assert result["defaults"]["base_url"] == "http://127.0.0.1:8092"
+    assert result["defaults"]["provider"] == "vllm"
+
+
 # ---------------------------------------------------------------------------
 # Lifespan — the startup path every other test bypasses
 #

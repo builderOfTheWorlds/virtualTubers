@@ -30,6 +30,7 @@ the live avatar app. It subclasses OllamaClient and overrides complete.
 """
 import json
 import logging
+import os
 import time
 from datetime import datetime, timezone
 
@@ -244,8 +245,228 @@ class PooledOllamaClient(OllamaClient):
         return None
 
 
-def from_profile(profile) -> PooledOllamaClient:
-    """Build a PooledOllamaClient from a resolved model profile."""
+class OpenAICompatClient:
+    """Pooled OpenAI-compatible ``/v1/chat/completions`` client (vLLM and
+    any server speaking the same wire protocol).
+
+    A SEPARATE class from PooledOllamaClient rather than a subclass: the
+    wire protocol differs in every place it matters (JSON body shape,
+    Bearer auth, ``choices[0].message.content`` response, SSE ``data:``
+    streaming instead of Ollama's raw NDJSON). It deliberately implements
+    the same ``complete`` / ``complete_streaming`` / ``close`` /
+    context-manager surface with the same LLMError semantics — the ERROR
+    log before every raise (see module docstring) — so every layer call
+    site works through ``from_profile`` without changes.
+
+    ``extra_body`` carries provider-specific request fields verbatim, e.g.
+    vLLM + Qwen3 thinking control:
+    ``{"chat_template_kwargs": {"enable_thinking": false}}``.
+    """
+
+    def __init__(self, base_url, model, temperature, max_tokens,
+                 timeout_s=600, api_key=None, extra_body=None,
+                 http_client=None):
+        self.base_url = base_url.rstrip("/")
+        self.model = model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.timeout_s = timeout_s
+        self.api_key = api_key
+        self.extra_body = dict(extra_body or {})
+
+        self._owns_http_client = http_client is None
+        if http_client is None:
+            self.http_client = httpx.Client(timeout=timeout_s)
+        else:
+            self.http_client = http_client
+
+    def _headers(self):
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        return headers
+
+    def _json_body(self, system_prompt, messages, stream):
+        body = {
+            "model": self.model,
+            "messages": [{"role": "system", "content": system_prompt}] + list(messages),
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+            "stream": stream,
+        }
+        body.update(self.extra_body)
+        return body
+
+    def complete(self, system_prompt, messages) -> str:
+        log.debug("OpenAICompatClient.complete called for model %s with %d messages",
+                  self.model, len(messages))
+
+        try:
+            response = self.http_client.post(
+                f"{self.base_url}/v1/chat/completions",
+                json=self._json_body(system_prompt, messages, stream=False),
+                headers=self._headers(),
+                timeout=self.timeout_s,
+            )
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            error_msg = (f"OpenAI-compatible request failed: "
+                         f"{exc.response.status_code} {exc.response.text}")
+            log.error("HTTP error for model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg) from exc
+        except (httpx.TimeoutException, httpx.ConnectTimeout) as exc:
+            error_msg = (f"OpenAI-compatible request to model {self.model} "
+                         f"timed out after {self.timeout_s}s")
+            log.error("Timeout error for model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg) from exc
+        except httpx.RequestError as exc:
+            error_msg = f"OpenAI-compatible request to {self.base_url} failed: {str(exc)}"
+            log.error("Request error for base_url %s: %s", self.base_url, error_msg)
+            raise LLMError(error_msg) from exc
+
+        try:
+            content = response.json()["choices"][0]["message"]["content"]
+            if content is None:
+                raise KeyError("content")
+            log.debug("OpenAICompatClient.complete succeeded for model %s with %d characters",
+                      self.model, len(content))
+            return content
+        except (KeyError, TypeError, IndexError) as exc:
+            error_msg = ("OpenAI-compatible response did not contain "
+                         "choices[0].message.content")
+            log.error("Malformed response from model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg) from exc
+
+    def complete_streaming(self, system_prompt, messages, on_progress=None) -> str:
+        """Same request as complete(), but with ``"stream": true`` so deltas
+        arrive as SSE ``data:`` lines. Same contract as
+        PooledOllamaClient.complete_streaming (2s progress cadence, no
+        callback after the stream ends, identical LLMError semantics).
+
+        Qwen3 reasoning models put the chain-of-thought in a SEPARATE
+        ``delta.reasoning`` field (vLLM's ``--reasoning-parser qwen3``);
+        only ``delta.content`` is accumulated, so reasoning tokens never
+        leak into the parsed plan.
+        """
+        log.debug("OpenAICompatClient.complete_streaming called for model %s with %d messages",
+                  self.model, len(messages))
+
+        started = time.monotonic()
+        started_wall = datetime.now(timezone.utc).isoformat()
+        last_reported = started
+        n_decoded = 0
+        chunks = []
+        logged_len = 0  # how much of "".join(chunks) has already hit the log
+
+        try:
+            with self.http_client.stream(
+                "POST", f"{self.base_url}/v1/chat/completions",
+                json=self._json_body(system_prompt, messages, stream=True),
+                headers=self._headers(), timeout=self.timeout_s,
+            ) as response:
+                response.raise_for_status()
+                for line in response.iter_lines():
+                    if not line or not line.startswith("data:"):
+                        # SSE comment lines (": OPENAI..."), blank keep-alives,
+                        # and the "[DONE]" terminator are all skipped here.
+                        continue
+                    payload = line[len("data:"):].strip()
+                    if payload == "[DONE]":
+                        break
+                    try:
+                        event = json.loads(payload)
+                    except (TypeError, ValueError):
+                        # A partial/malformed SSE line mid-stream must not
+                        # abort an otherwise-good response — skip and keep
+                        # reading; the final content is validated below.
+                        log.debug("complete_streaming: skipping unparsable SSE line "
+                                  "for model %s", self.model)
+                        continue
+                    choice = (event.get("choices") or [{}])[0]
+                    delta = choice.get("delta") or {}
+                    piece = delta.get("content") or ""
+                    if piece:
+                        chunks.append(piece)
+                        n_decoded += 1  # delta granularity, not exact BPE
+                                        # count — good enough for a progress
+                                        # indicator, not a metric.
+
+                    now = time.monotonic()
+                    due = now - last_reported >= 2.0
+                    if due:
+                        elapsed = max(now - started, 1e-6)
+                        if on_progress is not None:
+                            on_progress({
+                                "model": self.model,
+                                "n_decoded": n_decoded,
+                                "tokens_per_s": round(n_decoded / elapsed, 2),
+                                "started_at": started_wall,
+                                "updated_at": datetime.now(timezone.utc).isoformat(),
+                            })
+                        full_so_far = "".join(chunks)
+                        delta_text = full_so_far[logged_len:]
+                        if delta_text:
+                            log.info("[complete_streaming] model=%s n_decoded=%d new_text=%r",
+                                     self.model, n_decoded, delta_text)
+                            logged_len = len(full_so_far)
+                        last_reported = now
+        except httpx.HTTPStatusError as exc:
+            error_msg = (f"OpenAI-compatible request failed: "
+                         f"{exc.response.status_code} {exc.response.text}")
+            log.error("HTTP error for model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg) from exc
+        except (httpx.TimeoutException, httpx.ConnectTimeout) as exc:
+            error_msg = (f"OpenAI-compatible request to model {self.model} "
+                         f"timed out after {self.timeout_s}s")
+            log.error("Timeout error for model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg) from exc
+        except httpx.RequestError as exc:
+            error_msg = f"OpenAI-compatible request to {self.base_url} failed: {str(exc)}"
+            log.error("Request error for base_url %s: %s", self.base_url, error_msg)
+            raise LLMError(error_msg) from exc
+
+        content = "".join(chunks)
+        if not content:
+            error_msg = ("OpenAI-compatible response did not contain "
+                         "any streamed content")
+            log.error("Malformed response from model %s: %s", self.model, error_msg)
+            raise LLMError(error_msg)
+
+        tail = content[logged_len:]
+        if tail:
+            log.info("[complete_streaming] model=%s n_decoded=%d final_text=%r",
+                     self.model, n_decoded, tail)
+
+        log.debug("OpenAICompatClient.complete_streaming succeeded for model %s with %d characters",
+                  self.model, len(content))
+        return content
+
+    def close(self) -> None:
+        # Only close the client if we built it (not injected) — same
+        # ownership contract as PooledOllamaClient.
+        if self._owns_http_client:
+            self.http_client.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        return None
+
+
+# Provider spellings the config may use for the OpenAI-compatible path.
+_OPENAI_COMPAT_PROVIDERS = ("openai", "openai-compatible", "vllm")
+
+
+def from_profile(profile):
+    """Build a pooled LLM client from a resolved model profile.
+
+    Returns a PooledOllamaClient for ``provider: ollama``, an
+    OpenAICompatClient for the OpenAI-compatible providers (vllm, ...),
+    and falls back to llm_client.build_llm_client for anything else
+    (claude).
+    """
     provider = profile.get("provider", "ollama")
     if provider == "ollama":
         return PooledOllamaClient(
@@ -256,9 +477,27 @@ def from_profile(profile) -> PooledOllamaClient:
             timeout_s=profile.get("timeout_s", 600),
             num_ctx=profile.get("num_ctx"),
         )
-    else:
-        # For non-ollama providers, delegate to the existing builder
-        from llm_client import build_llm_client
-        # Create a minimal config dict for build_llm_client
-        config = {"llm": profile}
-        return build_llm_client(config)
+    if provider in _OPENAI_COMPAT_PROVIDERS:
+        # `api_key_env` names an environment variable holding the key, so
+        # configs committed to git never carry the secret itself. An inline
+        # `api_key` still wins (saved DB configs created before this use it).
+        api_key = profile.get("api_key")
+        key_env = profile.get("api_key_env")
+        if not api_key and key_env:
+            api_key = os.environ.get(key_env) or None
+            if api_key is None:
+                log.warning("from_profile: api_key_env %s is not set; sending no key", key_env)
+        return OpenAICompatClient(
+            base_url=profile.get("base_url", "http://localhost:8000"),
+            model=profile.get("model", "gpt-4o-mini"),
+            temperature=profile.get("temperature", 0.7),
+            max_tokens=profile.get("max_tokens", 1024),
+            timeout_s=profile.get("timeout_s", 600),
+            api_key=api_key,
+            extra_body=profile.get("extra_body"),
+        )
+    # For other providers, delegate to the existing builder
+    from llm_client import build_llm_client
+    # Create a minimal config dict for build_llm_client
+    config = {"llm": profile}
+    return build_llm_client(config)

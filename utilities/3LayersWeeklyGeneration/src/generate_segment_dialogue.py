@@ -29,9 +29,11 @@ import datetime
 import glob
 import logging
 import pathlib
+import re
 
 import yaml
 
+import arc_schema
 import pool
 import worklist
 from campaign import batch_generate
@@ -48,18 +50,101 @@ class NeutralTakeError(RuntimeError):
     pass
 
 
-def generate_take(improviser, unit, config) -> list:
+_REFUSAL_RE = re.compile(
+    r"\b(I (?:will|can)(?: ?not|'t) (?:generate|write|roleplay|produce|create|help)|"
+    r"as an AI|I'm (?:sorry|unable)|I am (?:sorry|unable)|I hope you understand)\b",
+    re.IGNORECASE)
+
+
+def silent_cast_ids(pack) -> set:
+    """Cast ids whose pack file declares they never speak.
+
+    Read from the raw `cast/<id>.yaml` `speech` field ("None. He never
+    speaks ...") rather than from CastMember, which does not carry it. The
+    2026-09-29 regen gave the Party Member ordinary lines ("You're a saint,
+    Nora.") because nothing below the live app enforced his silence.
+    """
+    root = getattr(pack, "root", None)
+    if root is None:
+        return set()
+    silent = set()
+    for member_id in getattr(pack, "cast", {}) or {}:
+        path = pathlib.Path(root) / "cast" / f"{member_id}.yaml"
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except (OSError, yaml.YAMLError):
+            continue
+        speech = str(data.get("speech") or "").strip().lower()
+        if speech.startswith("none") or "never speaks" in speech:
+            silent.add(member_id)
+    log.debug("silent_cast_ids returning %s", sorted(silent))
+    return silent
+
+
+def build_take_prompt(slot, brief, silent=None) -> str:
+    """The prompt text for one take: the slot's own beat description plus the
+    context the improviser otherwise never sees.
+
+    Without this the model got only the slot prompt, so it defaulted to its
+    most familiar office scene — the 06:00 standup, CEO directive first — in
+    every block, including the 00:00-06:00 off-hours slot whose planned cast
+    was the Party Member and the Office Manager alone (2026-09-29 run).
+    """
+    lines = [str(slot["prompt"]).strip()]
+    participants = slot.get("participants") or []
+    if participants:
+        lines.append(
+            "Only these cast members are present and may speak in this "
+            "scene: " + ", ".join(participants) + ". Nobody else speaks.")
+    mute = sorted(set(silent or ()) & set(participants))
+    if mute:
+        lines.append(
+            "Never write a spoken line for " + ", ".join(mute) + ": they never "
+            "speak. Show them only as brief third-person narration of what "
+            "they do or look at.")
+        if len(mute) == len(participants):
+            lines.append("Nobody in this scene speaks: write it as narration only.")
+    if brief:
+        clock = brief.get("clock")
+        if clock:
+            lines.append(f"Time of day: {clock}.")
+        synopsis = str(brief.get("synopsis") or "").strip()
+        if synopsis:
+            lines.append(f"Where this sits in the day: {synopsis}")
+    return "\n".join(lines)
+
+
+def is_refusal(beats) -> bool:
+    """True when any generated line is a model refusal rather than dialogue.
+
+    A refusal parses as an ordinary line (observed 2026-09-29: "ceo: I will
+    not generate or roleplay that type of content.") and would otherwise be
+    written to disk and voiced on stream.
+    """
+    return any(_REFUSAL_RE.search(str(getattr(b, "text", "") or "")) for b in beats)
+
+
+def generate_take(improviser, unit, config, brief=None, silent=None) -> list:
     """Produce ONE take for ONE WorkUnit.
 
     Returns a list of beat dicts; an empty list is a failed attempt.
     NEVER RAISES — catch every exception, log at ERROR, and return [].
     The pool treats both an empty list and an exception as a failure, but
     returning [] keeps the failure accounting in one place.
+
+    `brief` is the segment's brief (synopsis/clock); when given, its context
+    and the slot's participants are added to the prompt. Beats spoken by a
+    cast member outside the slot's participants are dropped, and a take
+    containing a refusal is rejected so the pool retries it.
+
+    `silent` is the set of cast ids that never speak (silent_cast_ids). A
+    dialogue beat from one of them is converted to GM narration so the line
+    is never voiced in that character's name.
     """
     try:
         scene = Scene(
             id=unit.slot_id,
-            prompt=unit.slot["prompt"],
+            prompt=build_take_prompt(unit.slot, brief, silent=silent),
             lore=unit.slot.get("lore", []),
         )
         improviser.recent = []
@@ -69,7 +154,33 @@ def generate_take(improviser, unit, config) -> list:
             carry=unit.conditions,
         )
         beats = improviser.generate_scene(scene)
-        return [batch_generate._beat_to_dict(b) for b in beats]
+        if is_refusal(beats):
+            log.warning("generate_take: refusal in slot %s take %d; rejecting",
+                        unit.slot_id, unit.take)
+            return []
+        gm_id = getattr(getattr(improviser, "pack", None), "gm_id", None)
+        participants = set(unit.slot.get("participants") or [])
+        if participants:
+            kept = [b for b in beats
+                    if getattr(b, "kind", None) != "dialogue"
+                    or getattr(b, "speaker", None) in participants]
+            dropped = len(beats) - len(kept)
+            if dropped:
+                log.info("generate_take: dropped %d beat(s) from speakers outside "
+                         "%s in slot %s", dropped, sorted(participants), unit.slot_id)
+            beats = kept
+        out = [batch_generate._beat_to_dict(b) for b in beats]
+        if silent:
+            converted = 0
+            for beat in out:
+                if beat.get("kind") == "dialogue" and beat.get("speaker") in silent:
+                    beat["kind"] = "narration"
+                    beat["speaker"] = gm_id
+                    converted += 1
+            if converted:
+                log.info("generate_take: %d line(s) from silent cast turned into "
+                         "narration in slot %s", converted, unit.slot_id)
+        return out
     except Exception as exc:
         log.error("generate_take failed for slot %s take %d: %s",
                   unit.slot_id, unit.take, exc)
@@ -172,6 +283,7 @@ def generate_segment_dialogue(pack, segment_ids, config, llm, out_root,
     total_written = 0
     total_failed = 0
     per_segment_counts = {}
+    silent = silent_cast_ids(pack)
 
     for done, segment_id in enumerate(segment_ids, start=1):
         log.debug("processing segment %s (%d/%d)", segment_id, done, total_segments)
@@ -188,6 +300,13 @@ def generate_segment_dialogue(pack, segment_ids, config, llm, out_root,
 
         # 2. Build the worklist (this is the resume)
         units = worklist.build_worklist(out_root, [segment_id], config)
+
+        # Day block context for the take prompt: arc.day_phases, keyed by the
+        # brief's order. Absent config -> no clock line, previous behaviour.
+        take_context = dict(brief or {})
+        day_phase = arc_schema.day_phase_map(config).get(take_context.get("order"))
+        if day_phase:
+            take_context["clock"] = f"{day_phase['clock']} ({day_phase['label']})"
 
         # 3. Log the estimate
         seconds_per_take = config["dialogue"]["seconds_per_take"]
@@ -223,7 +342,8 @@ def generate_segment_dialogue(pack, segment_ids, config, llm, out_root,
         stats = pool.run_pool(
             units,
             worker_factory=lambda: LLMImproviser(pack, llm),
-            generate=lambda worker, unit: generate_take(worker, unit, config),
+            generate=lambda worker, unit: generate_take(worker, unit, config, brief=take_context,
+                                                        silent=silent),
             writer=writer,
             concurrency=concurrency,
             max_attempts=config["dialogue"]["max_attempts"],
