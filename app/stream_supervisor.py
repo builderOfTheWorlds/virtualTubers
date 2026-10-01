@@ -402,6 +402,15 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
         # SINGLE named input, not across every -i.
         output_args = [
             "-map", "0:v:0", "-map", audio_map,
+            # REQUIRED with tee: the tee muxer does not advertise
+            # AVFMT_GLOBALHEADER, so without this flag the encoder never
+            # fills codec extradata and the FLV slave writes an EMPTY AVC
+            # sequence header (0-byte avcC — verified on h264_nvenc and
+            # libx264). Twitch accepts the RTMP publish and the bytes but
+            # cannot decode the stream, so the channel never goes live while
+            # ffmpeg looks perfectly healthy. Plain `-f flv` sets this
+            # automatically, which is why single-output mode always worked.
+            "-flags", "+global_header",
             "-f", "tee",
             tee_spec,
         ]

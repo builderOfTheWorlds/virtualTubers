@@ -344,6 +344,34 @@ def test_build_ffmpeg_cmd_tees_to_both_destinations_when_local_preview_set():
     assert cmd[map_indices[1] + 1] == "1:a:0"
 
 
+@pytest.mark.parametrize("tee_kwargs", [
+    {"local_preview_url": "rtmp://rtmp-preview:1935/live"},
+    {"record_tap_url": "udp://127.0.0.1:23000"},
+])
+def test_build_ffmpeg_cmd_tee_sets_global_header(tee_kwargs):
+    """tee does not advertise AVFMT_GLOBALHEADER, so without +global_header
+    the encoder leaves extradata empty and the FLV leg sends Twitch a 0-byte
+    AVC sequence header: publish accepted, channel never goes live. The flag
+    must appear before the tee output."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99", use_gpu=False,
+            **tee_kwargs,
+        )
+    assert "+global_header" in cmd
+    assert cmd[cmd.index("+global_header") - 1] == "-flags"
+    assert cmd.index("+global_header") < cmd.index("tee")
+
+
+def test_build_ffmpeg_cmd_plain_flv_has_no_explicit_global_header():
+    """Plain -f flv sets global header itself; the flag is tee-only."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+                               use_gpu=False)
+    assert "tee" not in cmd
+    assert "+global_header" not in cmd
+
+
 def test_build_ffmpeg_cmd_tee_maps_anullsrc_audio_input_correctly():
     """The silent-audio fallback (no Pulse monitor) is still input 1 —
     the -map fix must not be pulse-specific."""
