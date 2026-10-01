@@ -1,0 +1,44 @@
+id: build-arc-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T05:26:36.912078+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Let's get started with the standup. Theo, how's the
+    work on the new rules engine coming along? ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: It's going well, Graham. I've made some good progress on the code changes
+    and I think we're on track to have it ready for testing soon. ||happy
+- kind: dialogue
+  speaker: tester
+  text: That's great to hear, Theo. I've been preparing the test cases and I'm ready
+    to start testing as soon as you're done. ||neutral
+- kind: dialogue
+  speaker: ceo
+  text: Excellent. Any potential issues we should be aware of? ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: There are a few areas that might need some extra attention, but nothing major.
+    I'll make sure to highlight those in the pull request. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: I'll keep an eye out for those when I'm testing. Let me know if you need any
+    help. ||neutral
+- kind: dialogue
+  speaker: ceo
+  text: Perfect. Thank you both for your hard work. Anselm, do you have any updates
+    on the latency graph? ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: The latency has been stable and within our targets for the past week. No concerns
+    there. ||neutral
+- kind: dialogue
+  speaker: ceo
+  text: That's good to hear. Maren, any new insights from our clients? ||neutral
+- kind: dialogue
+  speaker: analyst
+  text: We've had some feedback from a few clients about the new rules we implemented
+    last month. Overall, they're happy with the results, but there are a couple of
+    edge cases we might

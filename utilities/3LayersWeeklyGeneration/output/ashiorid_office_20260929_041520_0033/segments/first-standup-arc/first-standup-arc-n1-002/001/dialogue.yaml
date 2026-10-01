@@ -1,0 +1,41 @@
+id: first-standup-arc-n1-002
+take: 1
+beats:
+- kind: dialogue
+  text: I've called this meeting because I have an important announcement to make.
+  speaker: ceo
+- kind: dialogue
+  text: What is it, Graham?
+  speaker: tech_lead
+- kind: dialogue
+  text: Did something happen with the project?
+  speaker: analyst
+- kind: dialogue
+  text: Is everything okay?
+  speaker: engineer
+- kind: dialogue
+  text: You're worrying us. What's going on?
+  speaker: tester
+- kind: dialogue
+  text: Just tell us already.
+  speaker: marketing
+- kind: dialogue
+  text: Is it about the company?
+  speaker: office_manager
+- kind: dialogue
+  text: I wanted you all to hear it from me first. I've decided to step down as CEO.
+  speaker: ceo
+- kind: dialogue
+  text: What? Why?
+  speaker: tech_lead
+- kind: dialogue
+  text: But you've been doing such a great job.
+  speaker: analyst
+- kind: dialogue
+  text: This is unexpected.
+  speaker: engineer
+- kind: dialogue
+  text: I don't understand. What happened?
+  speaker: tester
+model: light
+generated_at: '2026-09-29T04:48:38.028859+00:00'

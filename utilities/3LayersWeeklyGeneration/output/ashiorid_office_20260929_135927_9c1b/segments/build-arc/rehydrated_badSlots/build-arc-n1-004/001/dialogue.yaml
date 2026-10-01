@@ -1,0 +1,49 @@
+id: build-arc-n1-004
+take: 1
+beats:
+- kind: narration
+  text: 'julian: So, our pitch for Fraud-Stop is simple. It''s the verdict before
+    the money moves.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: We catch fraud before it clears, with a score and a reason for every
+    transaction.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: Our rules are tested and versioned, and clients can configure them
+    without an engineer on the phone.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: We''re also working on explainability - reasons that a bank''s compliance
+    team can hand straight to a regulator.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: And finally, we''re developing a machine-learned model that scores
+    alongside the rules, not instead of them.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: That''s the pitch. Feedback?'
+  speaker: ceo
+- kind: narration
+  text: 'anselm: The learned scoring model is still in progress. We should be careful
+    not to overpromise.'
+  speaker: ceo
+- kind: narration
+  text: 'maren: I agree. We also need to be clear about the current state of our explainability
+    features.'
+  speaker: ceo
+- kind: narration
+  text: 'theo: And we should mention our service promises - a verdict within 150 milliseconds,
+    and a fallback verdict of REVIEW if we can''t decide in time.'
+  speaker: ceo
+- kind: narration
+  text: 'owen: Good point. Those are key differentiators.'
+  speaker: ceo
+- kind: narration
+  text: 'graham: Let''s incorporate those suggestions and run through the pitch again.'
+  speaker: ceo
+- kind: narration
+  text: 'julian: Right. So, our'
+  speaker: ceo
+model: light
+generated_at: '2026-09-30T05:27:05.940696+00:00'

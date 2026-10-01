@@ -1,0 +1,38 @@
+id: ship-arc-n0-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T05:30:16.844827+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Marketing, what's the hold-up on the release notes?
+- kind: dialogue
+  speaker: marketing
+  text: Nearly there, Graham. Just putting the finishing touches on the copy.
+- kind: dialogue
+  speaker: ceo
+  text: Good. We need those notes live by the end of the day. No excuses.
+- kind: dialogue
+  speaker: marketing
+  text: Understood. I'll have them ready in time.
+- kind: dialogue
+  speaker: ceo
+  text: Excellent. Anselm, any issues with the tests?
+- kind: dialogue
+  speaker: tech_lead
+  text: No, Graham. All tests have passed successfully.
+- kind: dialogue
+  speaker: ceo
+  text: Perfect. Let's get this release out the door then.
+- kind: dialogue
+  speaker: office_manager
+  text: Shall I start the release process, Anselm?
+- kind: dialogue
+  speaker: tech_lead
+  text: Yes, go ahead, Nora.
+- kind: dialogue
+  speaker: office_manager
+  text: Alright, I'm kicking off the deployment now.
+- kind: dialogue
+  speaker: ceo
+  text: Great work, everyone. Julian, make sure those release notes are perfect.

@@ -1,0 +1,26 @@
+id: build-arc-n1-001
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning everyone. Let's make today a productive one.
+  speaker: ceo
+- kind: dialogue
+  text: I'll start the coffee, shall I?
+  speaker: tech_lead
+- kind: dialogue
+  text: I've been looking forward to digging into these new client requirements.
+  speaker: analyst
+- kind: dialogue
+  text: Ready to tackle those bugs on my list.
+  speaker: engineer
+- kind: dialogue
+  text: I'll run the full test suite after lunch.
+  speaker: tester
+- kind: dialogue
+  text: Excited to pitch our latest features to potential clients.
+  speaker: marketing
+- kind: dialogue
+  text: Snack shelf is fully stocked, help yourselves!
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:24:24.140509+00:00'

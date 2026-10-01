@@ -1,0 +1,166 @@
+# ashiorid_office — one full 24h day (off-hours + 18h workday), all three
+# layers on vLLM Hermes-3-70B-FP8. Built 2026-09-29 for review of the whole
+# day before any decision on how ambient content is expanded or reused.
+#
+# Day shape (office_campaign_plan.md section 4): four 6h blocks, pinned by
+# arc.day_phases so the planner cannot fall back to the one authored spine
+# scene for every block (the previous run produced four standups).
+#   order 0  00:00-06:00  off-hours  ambient only
+#   order 1  06:00-12:00  morning    spine: first-standup
+#   order 2  12:00-18:00  build      ambient only
+#   order 3  18:00-00:00  ship       ambient only
+#
+# Content size: every block gets target_words 1050 = 10 slots (105 words
+# per take, 1 take per slot). That is a review-sized
+# day (~40 slots, a few hours of vLLM time at ~2.4 tok/s), NOT 18h of unique
+# speech; how ambient fills the remaining airtime is the follow-up decision.
+#
+# The rest of this file's history (why vLLM, the --linear-backend torch fix,
+# the depends_on prompt fix, Ollama must stay off) is in
+# generation.ashiorid_office_vllm_hermes.yaml.
+
+campaign:
+  pack: campaigns/ashiorid_office
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  # Not actually used at runtime — every layer below (arc/segment/dialogue)
+  # sets provider: vllm explicitly. Left as ollama/localhost only as an
+  # inert fallback shape; do not rely on it.
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 600
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 3600
+  target_total_hours: 24
+  target_words_per_hour: 150
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      max_tokens: 2048
+      timeout_s: 900
+    heavy:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      max_tokens: 2048
+      timeout_s: 900
+  active_model: heavy
+  hours_total: 24            # -> n_segments = ceil(24/6) = 4 segments
+  segment_hours: 6
+  batch_size: 4              # == n_segments -> single-shot arc planning
+  max_attempts: 3
+  day_phases:
+    - clock: "00:00-06:00"
+      label: off-hours
+      focus: >-
+        After hours. The office is dark; the Office Manager cleans, the Party
+        Member sits unseen in the empty floor, and the others are glimpsed at
+        home or unable to sleep, thinking about the day ahead.
+      spine_scenes: []
+    - clock: "06:00-12:00"
+      label: morning
+      focus: >-
+        Coffee, the CEO's 06:00 standup directive, the Analyst's functional
+        plan, the Tech Lead's technical plan, and delegation of the day's work.
+      spine_scenes: [first-standup]
+    - clock: "12:00-18:00"
+      label: build
+      focus: >-
+        The Engineer builds, the Tester tests, the bug loop between them,
+        lunch in the kitchen, and Marketing pitching a client.
+      spine_scenes: []
+    - clock: "18:00-00:00"
+      label: ship
+      focus: >-
+        Last fixes, the final test pass, the release, Marketing's launch, the
+        Office Manager's garbage collection, and everyone winding down before
+        lights-out.
+      spine_scenes: []
+
+segment:
+  models:
+    light:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      max_tokens: 2048
+      timeout_s: 900
+    heavy:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      max_tokens: 2048
+      timeout_s: 900
+  active_model: light
+  target_words: 1050          # derive_target_slots: 1050/(105*1) = 10 slots
+  target_slots: 10
+  tree:
+    max_leaf_slots: 5
+    max_children: 3
+    max_depth: 2
+    min_node_words: 150         # must be <= half a leaf (5*105/2 = 262)
+    leaf_density_floor: 0.50
+  concurrency: 2             # vLLM single-model GPU — keep fan-out modest;
+                              # each concurrent request shares the ~70k-token
+                              # KV cache pool (see deployment logs).
+  max_attempts: 3
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 30
+    failure_rate: 0.5
+    min_samples: 10
+  models:
+    light:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      temperature: 0.9
+      max_tokens: 300
+      timeout_s: 300
+    heavy:
+      provider: vllm
+      base_url: "http://127.0.0.1:8092"
+      model: "hermes3-70b"
+      api_key_env: VLLM_HERMES_API_KEY
+      temperature: 0.9
+      max_tokens: 300
+      timeout_s: 300
+  active_model: light
+  max_recent: 6
+  max_words: 45
+  max_beats: 8
+  takes_per_slot: 1
+  neutral_takes: 1
+  concurrency: 2             # same single vLLM instance as arc/segment —
+                              # keep modest so dialogue calls don't starve
+                              # the shared ~70k-token KV cache pool.
+  max_attempts: 2
+  seconds_per_take: 8
+
+state:
+  flags:      [fraud-miss-flagged, regulator-audit-open, launch-imminent, spy-rumour-active]
+  moods:      [tense, weary, hopeful, giddy]
+  carry_keys: [fraud-miss-flagged, regulator-audit-open]

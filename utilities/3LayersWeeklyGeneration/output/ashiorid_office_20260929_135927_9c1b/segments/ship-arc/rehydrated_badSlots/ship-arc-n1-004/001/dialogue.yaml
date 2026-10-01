@@ -1,0 +1,36 @@
+id: ship-arc-n1-004
+take: 1
+beats:
+- kind: narration
+  text: 'graham_ellery: Good evening, everyone. As you wrap up your work for the day,
+    I want to express my gratitude for your dedication and hard work.'
+  speaker: ceo
+- kind: narration
+  text: 'anselm_brody: Theo, Owen, how''s the production release looking? Are we on
+    track for tonight?'
+  speaker: ceo
+- kind: narration
+  text: 'theo_palliser: Yes, we''ve completed all the necessary checks and the system
+    is stable. We''re ready to initiate the release.'
+  speaker: ceo
+- kind: narration
+  text: 'owen_hask: The test suite has passed without any issues. I give the green
+    light for deployment.'
+  speaker: ceo
+- kind: narration
+  text: 'maren_voss: I''ll update the client on our progress and let them know the
+    release is happening tonight. They''ll be pleased with our timely delivery.'
+  speaker: ceo
+- kind: narration
+  text: 'julian_faire: Marketing materials are prepared and ready to go out tomorrow
+    to announce the new features.'
+  speaker: ceo
+- kind: narration
+  text: 'nora_blakeley: While you all focus on the release, I''ll start the end-of-day
+    cleanup.'
+  speaker: ceo
+- kind: narration
+  text: 'a._penhale:'
+  speaker: ceo
+model: light
+generated_at: '2026-09-30T05:33:13.600681+00:00'

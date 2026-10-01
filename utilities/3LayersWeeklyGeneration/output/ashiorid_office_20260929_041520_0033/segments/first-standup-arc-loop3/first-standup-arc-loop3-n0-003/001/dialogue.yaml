@@ -1,0 +1,35 @@
+id: first-standup-arc-loop3-n0-003
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning, everyone. Let's go around the room and hear how each of you
+    is progressing with the directive I set yesterday. Anselm, let's start with you.
+  speaker: ceo
+- kind: dialogue
+  text: I've made good progress on the technical design. I've outlined the key components
+    we need to build and how they'll interact with each other. I'm confident we can
+    have a working prototype by the end of the week.
+  speaker: tech_lead
+- kind: dialogue
+  text: I've been working on the functional requirements. I think I have a good handle
+    on what the client needs, but I have a few questions I'd like to clarify with
+    them.
+  speaker: analyst
+- kind: dialogue
+  text: I've started coding the new features. So far, so good. I haven't run into
+    any major roadblocks yet.
+  speaker: engineer
+- kind: dialogue
+  text: I'm setting up the testing environment. It's taking a bit longer than I expected,
+    but I should have it ready by tomorrow.
+  speaker: tester
+- kind: dialogue
+  text: I've been working on the marketing materials. I think we have a strong value
+    proposition, but I'm not sure how to best position it to our target audience.
+  speaker: marketing
+- kind: dialogue
+  text: Everything is running smoothly on my end. I've ordered new supplies and sorted
+    out the scheduling for the cleaning crew.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-29T04:59:11.380359+00:00'

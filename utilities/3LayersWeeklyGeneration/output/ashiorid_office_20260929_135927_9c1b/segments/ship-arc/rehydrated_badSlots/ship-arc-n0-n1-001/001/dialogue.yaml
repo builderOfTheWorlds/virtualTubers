@@ -1,0 +1,33 @@
+id: ship-arc-n0-n1-001
+take: 1
+beats:
+- kind: dialogue
+  text: The final tests are running. We're minutes away from deploying the new fraud
+    detection system.
+  speaker: ceo
+- kind: dialogue
+  text: Looks good so far. No red flags or critical issues.
+  speaker: tech_lead
+- kind: dialogue
+  text: This will be a game-changer for our clients. I'm excited to see the impact.
+  speaker: analyst
+- kind: dialogue
+  text: Fingers crossed everything goes smoothly. We've put a lot of work into this.
+  speaker: engineer
+- kind: dialogue
+  text: I've run through all the test cases. Confidence is high, but you never know
+    until it's in production.
+  speaker: tester
+- kind: dialogue
+  text: We've got a big announcement ready to go. This is going to generate a lot
+    of buzz.
+  speaker: marketing
+- kind: dialogue
+  text: I've stocked up on snacks and drinks for the team. It's going to be a long
+    night.
+  speaker: office_manager
+- kind: dialogue
+  text: '[silent]'
+  speaker: party_member
+model: light
+generated_at: '2026-09-30T05:29:15.620108+00:00'

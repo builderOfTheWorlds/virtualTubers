@@ -1,0 +1,237 @@
+build-arc:
+  node_id: build-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The Engineer and Tester work on their assigned tasks, passing code back and
+    fort
+  summary: The Engineer and Tester work on their assigned tasks, passing code back
+    and forth for fixes. Marketing works on their pitch. The team takes a break for
+    lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional
+    requirements.
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The team gathers for the final test pass and release.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - build-arc-n0
+  - build-arc-n1
+  slots: null
+build-arc-n0:
+  node_id: build-arc-n0
+  parent_id: build-arc
+  order: 0
+  depth: 1
+  title: Development Sprint
+  summary: The Engineer and Tester collaborate on their assigned tasks, passing code
+    back and forth for fixes and improvements. Marketing works on crafting their pitch
+    for the product.
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The team takes a break for lunch in the kitchen, discussing the
+    day's progress.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - build-arc-n0-n0
+  - build-arc-n0-n1
+  slots: null
+build-arc-n1:
+  node_id: build-arc-n1
+  parent_id: build-arc
+  order: 1
+  depth: 1
+  title: Lunch Break and Analysis
+  summary: The team takes a break for lunch in the kitchen, discussing the day's progress
+    and any challenges they've encountered. The Analyst reviews the functional requirements
+    to ensure the product aligns with the project goals.
+  continuity_in: The team takes a break for lunch in the kitchen, discussing the day's
+    progress.
+  continuity_out: The team gathers for the final test pass and release.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: build-arc-n1-001
+    kind: ambient
+    prompt: The team gathers in the kitchen for lunch, carrying their meals to the
+      table.
+    lore:
+    - office
+    - rituals
+    participants:
+    - analyst
+    - engineer
+    - marketing
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n1-002
+    kind: ambient
+    prompt: The Analyst reviews the functional requirements document, making notes
+      in the margins.
+    lore:
+    - company
+    - product
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n1-003
+    kind: ambient
+    prompt: The Engineer and Tester discuss the code changes they made in the morning,
+      identifying any potential issues.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n1-004
+    kind: ambient
+    prompt: Marketing outlines their pitch for the product, asking for feedback from
+      the rest of the team.
+    lore:
+    - company
+    - product
+    participants:
+    - marketing
+    - analyst
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+build-arc-n0-n0:
+  node_id: build-arc-n0-n0
+  parent_id: build-arc-n0
+  order: 0
+  depth: 2
+  title: Engineer and Tester Collaboration
+  summary: The Engineer and Tester work together on their assigned tasks, passing
+    code back and forth for fixes and improvements.
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The Marketing team begins working on their pitch for the product.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: build-arc-n0-n0-001
+    kind: ambient
+    prompt: The Engineer and Tester collaborate on their assigned tasks, passing code
+      back and forth for fixes and improvements.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n0-n0-002
+    kind: ambient
+    prompt: Marketing works on crafting their pitch for the product.
+    lore:
+    - product
+    - company
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n0-n0-003
+    kind: ambient
+    prompt: The team takes a break for lunch in the kitchen, discussing the day's
+      progress.
+    lore:
+    - office
+    - rituals
+    participants:
+    - engineer
+    - tester
+    - marketing
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: build-arc-n0-n0-004
+    kind: ambient
+    prompt: The Analyst reviews the functional requirements for the product.
+    lore:
+    - product
+    - company
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+build-arc-n0-n1:
+  node_id: build-arc-n0-n1
+  parent_id: build-arc-n0
+  order: 1
+  depth: 2
+  title: Marketing Pitch Development
+  summary: While the Engineer and Tester continue their work, the Marketing team starts
+    crafting their pitch for the product.
+  continuity_in: The Engineer and Tester pass their latest code for review and feedback.
+  continuity_out: The team takes a break for lunch in the kitchen, discussing the
+    day's progress.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: build-arc-n0-n1-001
+    kind: ambient
+    prompt: The Engineer and Tester collaborate on their assigned tasks, passing code
+      back and forth for fixes and improvements.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n0-n1-002
+    kind: ambient
+    prompt: Marketing works on crafting their pitch for the product, brainstorming
+      key selling points and messaging.
+    lore:
+    - product
+    - company
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: build-arc-n0-n1-003
+    kind: ambient
+    prompt: The team takes a break for lunch in the kitchen, discussing the day's
+      progress and any challenges they've encountered.
+    lore:
+    - office
+    - rituals
+    participants:
+    - engineer
+    - tester
+    - marketing
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: build-arc-n0-n1-004
+    kind: ambient
+    prompt: The Analyst reviews the functional requirements, ensuring that the team's
+      work aligns with the project's goals.
+    lore:
+    - product
+    - company
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []

@@ -1,0 +1,35 @@
+id: first-standup-arc-n0-004
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning everyone. Today we're going to be working on improving the velocity
+    rule in Fraud-Stop. ||neutral
+  speaker: ceo
+- kind: dialogue
+  text: Understood. I'll draft a technical plan and split it into tasks for the Engineer
+    and Tester. ||neutral
+  speaker: tech_lead
+- kind: dialogue
+  text: I'll update the functional requirements to reflect the changes we're making
+    to the velocity rule. ||neutral
+  speaker: analyst
+- kind: dialogue
+  text: I'm ready to implement the changes once I receive the tasks from the Tech
+    Lead. ||neutral
+  speaker: engineer
+- kind: dialogue
+  text: I'll prepare the test cases and run them once the code is ready. ||neutral
+  speaker: tester
+- kind: dialogue
+  text: I'll update the marketing materials to highlight the improvements we're making
+    to the velocity rule. ||neutral
+  speaker: marketing
+- kind: dialogue
+  text: I'll make sure the repository stays clean and up-to-date as we work on these
+    changes. ||neutral
+  speaker: office_manager
+- kind: dialogue
+  text: (Silently observes the meeting, not contributing anything.) ||neutral
+  speaker: party_member
+model: light
+generated_at: '2026-09-30T05:17:03.999225+00:00'

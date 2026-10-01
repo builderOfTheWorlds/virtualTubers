@@ -1,0 +1,46 @@
+id: ship-arc-n0-n1-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:12:02.779225+00:00'
+beats:
+- kind: dialogue
+  speaker: tech_lead
+  text: The final tests are running. We're in the home stretch now.
+- kind: dialogue
+  speaker: tester
+  text: I've got my eyes on the test suite. If anything fails, I'll let you know right
+    away.
+- kind: dialogue
+  speaker: engineer
+  text: Fingers crossed that we didn't miss anything. I've got a good feeling about
+    this build though.
+- kind: dialogue
+  speaker: marketing
+  text: I'm putting the finishing touches on the release notes. Anything you want
+    me to highlight?
+- kind: dialogue
+  speaker: tech_lead
+  text: Just the key features and bug fixes. Keep it concise.
+- kind: dialogue
+  speaker: tester
+  text: Test run is looking good so far. No red flags yet.
+- kind: dialogue
+  speaker: engineer
+  text: Great to hear. I'm going to start tidying up the codebase.
+- kind: dialogue
+  speaker: marketing
+  text: Release notes are done. Ready to push to production whenever you give the
+    signal.
+- kind: dialogue
+  speaker: tech_lead
+  text: Let's hold off until the test run completes. We can't afford any last minute
+    surprises.
+- kind: dialogue
+  speaker: tester
+  text: Alright, test run is finished. All green!
+- kind: dialogue
+  speaker: tech_lead
+  text: Excellent work everyone. Let's get this out the door. Julian, you're up.
+- kind: dialogue
+  speaker: marketing
+  text: On it. Pushing to production now.

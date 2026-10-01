@@ -1,0 +1,37 @@
+id: off-hours-arc-n0-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T13:53:54.738070+00:00'
+beats:
+- kind: dialogue
+  speaker: office_manager
+  text: Good morning, everyone. Time to get started.
+- kind: dialogue
+  speaker: party_member
+  text: (nods silently, pen poised over notebook)
+- kind: dialogue
+  speaker: office_manager
+  text: Let's see, we have a full day ahead of us. Standup in a few minutes, then
+    diving into the build.
+- kind: dialogue
+  speaker: party_member
+  text: (jots down a few notes, glances around the office)
+- kind: dialogue
+  speaker: office_manager
+  text: I'll start brewing the first pot of coffee. CEO will be here soon.
+- kind: dialogue
+  speaker: party_member
+  text: (continues writing, seemingly lost in thought)
+- kind: dialogue
+  speaker: office_manager
+  text: (pauses, looks over at Party Member) You're here early today.
+- kind: dialogue
+  speaker: party_member
+  text: Couldn't sleep. Figured I might as well get some work done.
+- kind: dialogue
+  speaker: office_manager
+  text: (smiles) That's dedication. Just don't forget to take care of yourself too,
+    okay?
+- kind: dialogue
+  speaker: party_member
+  text: (nods) Will do. Thanks, Nora.

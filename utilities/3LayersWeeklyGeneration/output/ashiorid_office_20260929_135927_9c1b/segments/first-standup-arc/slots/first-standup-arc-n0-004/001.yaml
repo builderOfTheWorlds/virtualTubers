@@ -1,0 +1,38 @@
+id: first-standup-arc-n0-004
+take: 1
+model: light
+generated_at: '2026-09-30T13:57:35.902573+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Today's directive is to add a new rule to the Fraud-Stop
+    engine. I want this done by end of day.
+- kind: dialogue
+  speaker: tech_lead
+  text: Understood. Analyst, what are the functional requirements for this new rule?
+- kind: dialogue
+  speaker: analyst
+  text: The new rule is called CURRENCY_MISMATCH. It checks if the transaction currency
+    differs from the account's base currency. If so, it adds 500 points to the fraud
+    score.
+- kind: dialogue
+  speaker: tech_lead
+  text: Got it. Engineer, please implement the CURRENCY_MISMATCH rule. Tester, prepare
+    test cases to verify the rule behaves as expected.
+- kind: dialogue
+  speaker: engineer
+  text: On it. I'll have the implementation done in a few hours.
+- kind: dialogue
+  speaker: tester
+  text: I'll start writing the tests now. Should have them ready to run by the time
+    the implementation is done.
+- kind: dialogue
+  speaker: ceo
+  text: Excellent. Marketing, how will you pitch this new feature to clients?
+- kind: dialogue
+  speaker: marketing
+  text: I'll highlight how this rule further strengthens our fraud detection capabilities,
+    providing an additional layer of security for our clients' transactions.
+- kind: dialogue
+  speaker: ceo
+  text: Perfect. Let's make it happen, team!

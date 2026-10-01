@@ -1,0 +1,33 @@
+id: ship-arc-n0-n0-002
+take: 1
+model: light
+generated_at: '2026-09-30T05:28:39.218143+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Let's review the test results and discuss any remaining
+    issues.
+- kind: dialogue
+  speaker: tech_lead
+  text: The test suite passed, but I'm concerned about the latency on some of the
+    new rules.
+- kind: dialogue
+  speaker: analyst
+  text: We need to make sure the rules are properly configured for each client's specific
+    needs.
+- kind: dialogue
+  speaker: engineer
+  text: I agree. I've been working on optimizing the scoring engine, but there's still
+    room for improvement.
+- kind: dialogue
+  speaker: tester
+  text: I've identified a few edge cases where the amount outlier rule is producing
+    unexpected results.
+- kind: dialogue
+  speaker: marketing
+  text: From a marketing perspective, we need to ensure our service promises are being
+    met consistently.
+- kind: dialogue
+  speaker: office_manager
+  text: I'll make sure the test environment is always up to date and the test data
+    is representative of real-world scenarios.

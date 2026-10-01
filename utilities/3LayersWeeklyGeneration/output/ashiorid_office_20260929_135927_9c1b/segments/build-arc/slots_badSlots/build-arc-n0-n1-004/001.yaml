@@ -1,0 +1,30 @@
+id: build-arc-n0-n1-004
+take: 1
+model: light
+generated_at: '2026-09-30T05:24:24.579318+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've reviewed the functional requirements, and I believe our work aligns well
+    with the project's goals.
+- kind: dialogue
+  speaker: ceo
+  text: Excellent work, Maren. Let's discuss the next steps at the standup meeting.
+- kind: dialogue
+  speaker: tech_lead
+  text: I'll review the pull requests and ensure the code meets our quality standards.
+- kind: dialogue
+  speaker: engineer
+  text: I'll focus on optimizing the scoring service to maintain our latency promises.
+- kind: dialogue
+  speaker: tester
+  text: I'll run the test suite and report any issues.
+- kind: dialogue
+  speaker: marketing
+  text: I'll update the release notes and prepare the marketing materials.
+- kind: dialogue
+  speaker: office_manager
+  text: I'll make sure the CHANGELOG is up to date and prune any stale branches.
+- kind: dialogue
+  speaker: party_member
+  text: Can I help with anything?

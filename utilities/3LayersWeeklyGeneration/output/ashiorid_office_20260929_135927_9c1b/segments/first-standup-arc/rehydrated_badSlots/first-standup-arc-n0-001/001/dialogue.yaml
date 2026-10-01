@@ -1,0 +1,26 @@
+id: first-standup-arc-n0-001
+take: 1
+beats:
+- kind: dialogue
+  text: Today we're finding the bug in the new spending model.
+  speaker: ceo
+- kind: dialogue
+  text: I have the technical plan by 07:30.
+  speaker: tech_lead
+- kind: dialogue
+  text: I'm writing the functional questions now.
+  speaker: analyst
+- kind: dialogue
+  text: I'll take the top ticket after standup.
+  speaker: engineer
+- kind: dialogue
+  text: I'm running the test suite again at 08:00.
+  speaker: tester
+- kind: dialogue
+  text: We're pitching the new model to Harrowgate Securities.
+  speaker: marketing
+- kind: dialogue
+  text: The fridge is full and the coffee is warm.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:15:44.293902+00:00'

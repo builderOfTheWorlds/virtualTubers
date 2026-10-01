@@ -1,0 +1,31 @@
+id: off-hours-arc-n0-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T05:13:57.156944+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Let's get started with standup.
+- kind: dialogue
+  speaker: analyst
+  text: I've been looking at the fraud patterns from last quarter. We need to adjust
+    our models.
+- kind: dialogue
+  speaker: tech_lead
+  text: We can do that. I'll have a plan by the end of the morning.
+- kind: dialogue
+  speaker: engineer
+  text: I'll start on the database migration this afternoon.
+- kind: dialogue
+  speaker: tester
+  text: I'm going to run the full test suite against the staging environment.
+- kind: dialogue
+  speaker: marketing
+  text: I have a meeting with potential clients later today.
+- kind: dialogue
+  speaker: office_manager
+  text: There will be a delivery of new monitors this afternoon. Please clear some
+    space in the kitchen.
+- kind: dialogue
+  speaker: ceo
+  text: Thank you all. Let's have a productive day.

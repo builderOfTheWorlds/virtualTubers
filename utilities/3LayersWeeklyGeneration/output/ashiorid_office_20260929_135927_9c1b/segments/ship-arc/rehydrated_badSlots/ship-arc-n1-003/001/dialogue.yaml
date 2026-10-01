@@ -1,0 +1,26 @@
+id: ship-arc-n1-003
+take: 1
+beats:
+- kind: dialogue
+  text: The final tests look good. Any concerns or questions?
+  speaker: ceo
+- kind: dialogue
+  text: No, everything is green. We're ready to deploy.
+  speaker: tech_lead
+- kind: dialogue
+  text: The release notes are clear and cover all the changes.
+  speaker: analyst
+- kind: dialogue
+  text: I've reviewed the deployment plan and it's solid.
+  speaker: engineer
+- kind: dialogue
+  text: My team has signed off on the final test results.
+  speaker: tester
+- kind: dialogue
+  text: We're prepared to communicate the release to customers.
+  speaker: marketing
+- kind: dialogue
+  text: The post-deployment checklist is ready to go.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:32:19.619929+00:00'

@@ -1,0 +1,204 @@
+segment_id: build-arc
+order: 2
+loop: 0
+hours: 6
+synopsis: The Engineer and Tester work on their assigned tasks, passing code back
+  and forth for fixes. Marketing works on their pitch. The team takes a break for
+  lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional
+  requirements.
+continuity_in: The team disperses to their desks to begin work on the day's tasks.
+continuity_out: The team gathers for the final test pass and release.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: build-arc-n0-n0-001
+  kind: ambient
+  prompt: The Engineer and Tester collaborate on their assigned tasks, passing code
+    back and forth for fixes and improvements.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n0
+- slot_id: build-arc-n0-n0-002
+  kind: ambient
+  prompt: Marketing works on crafting their pitch for the product.
+  lore:
+  - product
+  - company
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n0
+- slot_id: build-arc-n0-n0-003
+  kind: ambient
+  prompt: The team takes a break for lunch in the kitchen, discussing the day's progress.
+  lore:
+  - office
+  - rituals
+  participants:
+  - engineer
+  - tester
+  - marketing
+  - analyst
+  sensitivity: tone
+  depends_on: []
+  node_id: build-arc-n0-n0
+- slot_id: build-arc-n0-n0-004
+  kind: ambient
+  prompt: The Analyst reviews the functional requirements for the product.
+  lore:
+  - product
+  - company
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n0
+- slot_id: build-arc-n0-n1-001
+  kind: ambient
+  prompt: The Engineer and Tester collaborate on their assigned tasks, passing code
+    back and forth for fixes and improvements.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n1
+- slot_id: build-arc-n0-n1-002
+  kind: ambient
+  prompt: Marketing works on crafting their pitch for the product, brainstorming key
+    selling points and messaging.
+  lore:
+  - product
+  - company
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n1
+- slot_id: build-arc-n0-n1-003
+  kind: ambient
+  prompt: The team takes a break for lunch in the kitchen, discussing the day's progress
+    and any challenges they've encountered.
+  lore:
+  - office
+  - rituals
+  participants:
+  - engineer
+  - tester
+  - marketing
+  - analyst
+  sensitivity: tone
+  depends_on: []
+  node_id: build-arc-n0-n1
+- slot_id: build-arc-n0-n1-004
+  kind: ambient
+  prompt: The Analyst reviews the functional requirements, ensuring that the team's
+    work aligns with the project's goals.
+  lore:
+  - product
+  - company
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n0-n1
+- slot_id: build-arc-n1-001
+  kind: ambient
+  prompt: The team gathers in the kitchen for lunch, carrying their meals to the table.
+  lore:
+  - office
+  - rituals
+  participants:
+  - analyst
+  - engineer
+  - marketing
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n1
+- slot_id: build-arc-n1-002
+  kind: ambient
+  prompt: The Analyst reviews the functional requirements document, making notes in
+    the margins.
+  lore:
+  - company
+  - product
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n1
+- slot_id: build-arc-n1-003
+  kind: ambient
+  prompt: The Engineer and Tester discuss the code changes they made in the morning,
+    identifying any potential issues.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n1
+- slot_id: build-arc-n1-004
+  kind: ambient
+  prompt: Marketing outlines their pitch for the product, asking for feedback from
+    the rest of the team.
+  lore:
+  - company
+  - product
+  participants:
+  - marketing
+  - analyst
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: build-arc-n1
+nodes:
+- node_id: build-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: build-arc-n0
+  parent_id: build-arc
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: build-arc-n0-n0
+  parent_id: build-arc-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: build-arc-n0-n1
+  parent_id: build-arc-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 4
+- node_id: build-arc-n1
+  parent_id: build-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

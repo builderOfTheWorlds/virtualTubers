@@ -1,0 +1,31 @@
+id: ship-arc-n1-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:13:15.263102+00:00'
+beats:
+- kind: dialogue
+  speaker: tester
+  text: Alright, last test run is kicking off now. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: Fingers crossed this is the last of the bugs. I'm ready to get this release
+    out the door. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: The test environment is green across the board. No unexpected behaviors or
+    errors. ||happy
+- kind: dialogue
+  speaker: engineer
+  text: That's what I like to hear! Let's get this merged and into production. ||happy
+- kind: dialogue
+  speaker: tester
+  text: Just running one final sanity check, then we'll package it up. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: Sounds good. I'll start drafting the release notes with marketing. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: Okay, all tests passed. We're good to go! ||happy
+- kind: dialogue
+  speaker: engineer
+  text: Excellent! I'll go tell the CEO we're ready for the final sign-off. ||happy

@@ -1,0 +1,162 @@
+first-standup-arc-loop3:
+  node_id: first-standup-arc-loop3
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The third loop of the first standup. The team continues to implement the
+    directi
+  summary: The third loop of the first standup. The team continues to implement the
+    directive in their roles.
+  continuity_in: Roles beginning to implement the directive.
+  continuity_out: The third loop of the standup ends, with the directive being implemented.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-loop3-n0
+  - first-standup-arc-loop3-n1
+  slots: null
+first-standup-arc-loop3-n0:
+  node_id: first-standup-arc-loop3-n0
+  parent_id: first-standup-arc-loop3
+  order: 0
+  depth: 1
+  title: The team reflects on progress so far
+  summary: In the first part of the third loop, the team members reflect on the progress
+    they've made so far in implementing the directive in their roles. They discuss
+    challenges faced and share insights and learnings.
+  continuity_in: Roles beginning to implement the directive.
+  continuity_out: Reflection and discussion leads to new insights and ideas for improving
+    implementation.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-loop3-n0-001
+    kind: ambient
+    prompt: The team members take their places for the third loop of the standup.
+      There's a sense of determination in the air.
+    lore:
+    - rituals
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-loop3-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+  - slot_id: first-standup-arc-loop3-n0-003
+    kind: ambient
+    prompt: The CEO asks each team member to share their progress and challenges in
+      implementing the directive so far. The discussion is frank and open.
+    lore:
+    - company
+    - org_chart
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: tone
+    depends_on: []
+first-standup-arc-loop3-n1:
+  node_id: first-standup-arc-loop3-n1
+  parent_id: first-standup-arc-loop3
+  order: 1
+  depth: 1
+  title: Planning next steps and adjustments
+  summary: Building on the reflections and insights from the first part, the team
+    discusses and plans next steps and adjustments to further the implementation of
+    the directive in their roles. They identify key priorities and actions for the
+    next iteration.
+  continuity_in: Reflection and discussion leads to new insights and ideas for improving
+    implementation.
+  continuity_out: The third loop of the standup ends, with the directive being implemented
+    and the team aligned on next steps.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-loop3-n1-001
+    kind: ambient
+    prompt: The team continues discussing how to implement the directive in their
+      roles.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - ceo
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: first-standup-arc-loop3-n1-002
+    kind: ambient
+    prompt: The CEO asks each team member to share their key priorities and next steps
+      for implementing the directive.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: first-standup-arc-loop3-n1-003
+    kind: ambient
+    prompt: The team members share their plans for moving forward with the directive
+      in their respective areas.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: first-standup-arc-loop3-n1-004
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    - marketing
+    - office_manager

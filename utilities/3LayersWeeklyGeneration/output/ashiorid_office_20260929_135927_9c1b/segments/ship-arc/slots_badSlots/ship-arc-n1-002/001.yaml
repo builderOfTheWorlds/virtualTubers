@@ -1,0 +1,26 @@
+id: ship-arc-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T05:31:29.126232+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Today's deployment is a big one.
+- kind: dialogue
+  speaker: tech_lead
+  text: Yes, we've been working hard on these changes.
+- kind: dialogue
+  speaker: analyst
+  text: I'm excited to see the impact on our fraud detection rates.
+- kind: dialogue
+  speaker: engineer
+  text: We've put a lot of effort into refining the rules and scoring.
+- kind: dialogue
+  speaker: tester
+  text: And we've thoroughly tested everything to ensure it's working as expected.
+- kind: dialogue
+  speaker: marketing
+  text: I've drafted the release notes highlighting the key changes.
+- kind: dialogue
+  speaker: office_manager
+  text: I'll make sure the deployment goes smoothly and update the changelog.

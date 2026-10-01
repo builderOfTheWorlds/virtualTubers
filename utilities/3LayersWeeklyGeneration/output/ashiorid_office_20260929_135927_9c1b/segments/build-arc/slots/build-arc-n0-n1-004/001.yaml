@@ -1,0 +1,28 @@
+id: build-arc-n0-n1-004
+take: 1
+model: light
+generated_at: '2026-09-30T14:06:02.038282+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The functional requirements look solid, but I need to double-check the score
+    thresholds for the VELOCITY rule.
+- kind: dialogue
+  speaker: analyst
+  text: AMOUNT_OUTLIER seems to be handling new accounts well, but I'll keep an eye
+    on it.
+- kind: dialogue
+  speaker: analyst
+  text: COUNTRY_MISMATCH rule is working as expected, no changes needed there.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the currency handling for Malmont Savings & Trust, it might need
+    some tweaks.
+- kind: dialogue
+  speaker: analyst
+  text: The learned-scoring work from the second CEO's era is still on that branch,
+    I should bring it up with the Tech Lead.
+- kind: dialogue
+  speaker: analyst
+  text: Overall, the requirements align with the project's goals, but there's always
+    room for improvement.

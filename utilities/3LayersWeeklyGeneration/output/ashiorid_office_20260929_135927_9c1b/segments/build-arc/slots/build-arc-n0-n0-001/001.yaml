@@ -1,0 +1,30 @@
+id: build-arc-n0-n0-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:01:46.906898+00:00'
+beats:
+- kind: dialogue
+  speaker: tester
+  text: I've found an issue with the code you pushed last night.
+- kind: dialogue
+  speaker: engineer
+  text: Oh? What seems to be the problem?
+- kind: dialogue
+  speaker: tester
+  text: The new rule you added is causing false positives on some of our test transactions.
+- kind: dialogue
+  speaker: engineer
+  text: Hmm, that's not supposed to happen. Can you show me which cases are failing?
+- kind: dialogue
+  speaker: tester
+  text: Sure, I'll send you the details. It looks like the issue is with transactions
+    that have a high amount but are from trusted merchants.
+- kind: dialogue
+  speaker: engineer
+  text: Got it, thanks for catching that. I'll take a look and push a fix.
+- kind: dialogue
+  speaker: tester
+  text: No problem, just wanted to let you know as soon as I saw it.
+- kind: dialogue
+  speaker: engineer
+  text: I appreciate it. I'll let you know once I have the fix ready for you to retest.

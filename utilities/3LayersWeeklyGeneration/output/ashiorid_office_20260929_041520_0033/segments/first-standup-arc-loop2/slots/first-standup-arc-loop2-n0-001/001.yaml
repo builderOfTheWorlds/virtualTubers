@@ -1,0 +1,29 @@
+id: first-standup-arc-loop2-n0-001
+take: 1
+model: light
+generated_at: '2026-09-29T04:53:44.353384+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Let's get started with our daily standup.
+- kind: dialogue
+  speaker: tech_lead
+  text: Morning, Graham. The engineering team is ready to tackle today's tasks.
+- kind: dialogue
+  speaker: analyst
+  text: I've finalized the requirements for the new fraud detection feature.
+- kind: dialogue
+  speaker: engineer
+  text: I'll start implementing the backend logic for the feature today.
+- kind: dialogue
+  speaker: tester
+  text: I'm going to write the test cases for the new feature and run regression tests.
+- kind: dialogue
+  speaker: marketing
+  text: We have a meeting with Halvard & Sons later to discuss our latest updates.
+- kind: dialogue
+  speaker: office_manager
+  text: I'll make sure the office is well-stocked and tidy for our guests.
+- kind: dialogue
+  speaker: party_member
+  text: (silently observes the meeting, taking notes)

@@ -1,0 +1,28 @@
+id: first-standup-arc-loop3-n0-001
+take: 1
+model: light
+generated_at: '2026-09-29T04:58:21.502223+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: The directive today is to get the new scoring model live by end of day.
+- kind: dialogue
+  speaker: analyst
+  text: I'll prepare the data for the final tests and document the expected outcomes.
+- kind: dialogue
+  speaker: tech_lead
+  text: We'll finalize the code for the scoring model and have it ready for testing
+    by noon.
+- kind: dialogue
+  speaker: engineer
+  text: I'll take the ticket to integrate the new model into the main codebase.
+- kind: dialogue
+  speaker: tester
+  text: I'll prepare the test suite and run it against the scoring model as soon as
+    it's ready.
+- kind: dialogue
+  speaker: marketing
+  text: We have a client call at 2 PM. We'll pitch the new model and get their feedback.
+- kind: dialogue
+  speaker: office_manager
+  text: The snack shelf is restocked and I've ordered lunch for 1 PM.

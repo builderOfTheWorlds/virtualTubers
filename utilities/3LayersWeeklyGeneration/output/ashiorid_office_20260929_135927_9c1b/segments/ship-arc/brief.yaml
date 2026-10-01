@@ -1,0 +1,178 @@
+segment_id: ship-arc
+order: 3
+loop: 0
+hours: 6
+synopsis: The Engineer and Tester complete final fixes and pass the code for the final
+  test run. Marketing prepares the release notes. The team releases the day's work
+  to production. The Office Manager performs garbage collection and winds down for
+  the day. The Party Member observes from their corner.
+continuity_in: The team gathers for the final test pass and release.
+continuity_out: The Office Manager turns off the lights and locks up for the night.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: ship-arc-n0-n0-001
+  kind: ambient
+  prompt: The Engineer and Tester make final tweaks to the code and run it through
+    automated tests.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n0
+- slot_id: ship-arc-n0-n0-002
+  kind: ambient
+  prompt: The team reviews the test results and discusses any remaining issues.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n0
+- slot_id: ship-arc-n0-n0-003
+  kind: ambient
+  prompt: Marketing drafts the release notes as the final tests are completed.
+  lore:
+  - product
+  - company
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n0
+- slot_id: ship-arc-n0-n1-001
+  kind: ambient
+  prompt: The team gathers around the deployment dashboard, watching as the final
+    tests run.
+  lore:
+  - office
+  - rituals
+  participants:
+  - engineer
+  - tester
+  - marketing
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n1
+- slot_id: ship-arc-n0-n1-002
+  kind: ambient
+  prompt: Marketing puts the finishing touches on the release notes as the tests complete
+    successfully.
+  lore:
+  - product
+  - office
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n1
+- slot_id: ship-arc-n0-n1-003
+  kind: ambient
+  prompt: The Office Manager begins winding down for the day, performing garbage collection
+    and other end-of-day tasks.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n0-n1
+- slot_id: ship-arc-n1-001
+  kind: ambient
+  prompt: The Engineer and Tester make final tweaks to the code and run the last tests
+    before release.
+  lore:
+  - product
+  - office
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n1
+- slot_id: ship-arc-n1-002
+  kind: ambient
+  prompt: Marketing drafts the release notes highlighting the key changes going out
+    in today's deployment.
+  lore:
+  - product
+  - company
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n1
+- slot_id: ship-arc-n1-003
+  kind: ambient
+  prompt: The team gathers to review the final tests, release notes, and deployment
+    plan one last time.
+  lore:
+  - office
+  - rituals
+  participants:
+  - ceo
+  - engineer
+  - tech_lead
+  - tester
+  - marketing
+  - office_manager
+  sensitivity: tone
+  depends_on: []
+  node_id: ship-arc-n1
+- slot_id: ship-arc-n1-004
+  kind: ambient
+  prompt: The Office Manager begins end-of-day cleanup tasks as the team initiates
+    the production release.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: ship-arc-n1
+nodes:
+- node_id: ship-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: ship-arc-n0
+  parent_id: ship-arc
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: ship-arc-n0-n0
+  parent_id: ship-arc-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 3
+  slots: 3
+- node_id: ship-arc-n0-n1
+  parent_id: ship-arc-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 3
+  slots: 3
+- node_id: ship-arc-n1
+  parent_id: ship-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

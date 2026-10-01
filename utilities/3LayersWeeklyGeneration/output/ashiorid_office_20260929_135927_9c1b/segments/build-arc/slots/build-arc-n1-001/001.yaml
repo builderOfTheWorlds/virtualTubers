@@ -1,0 +1,24 @@
+id: build-arc-n1-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:06:21.330597+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: How's the progress on the new fraud detection algorithm?
+- kind: dialogue
+  speaker: engineer
+  text: It's coming along well, I've implemented the core logic and it's passing initial
+    tests.
+- kind: dialogue
+  speaker: tester
+  text: Yeah, I've been running it through various scenarios and the false positive
+    rate is looking good so far.
+- kind: dialogue
+  speaker: marketing
+  text: That's great to hear! I'm putting together some materials to pitch this to
+    potential clients.
+- kind: dialogue
+  speaker: analyst
+  text: Excellent, let's review the functional requirements again just to make sure
+    we're on track.

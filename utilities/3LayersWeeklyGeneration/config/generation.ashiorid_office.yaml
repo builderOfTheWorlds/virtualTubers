@@ -1,0 +1,100 @@
+# Overnight seed run for campaigns/ashiorid_office — the pack is currently a
+# minimal skeleton (one spine scene: 00-first-standup.yaml, plus cast/lore/
+# profiles). This config gives the arc planner a modest amount of room
+# (24h -> ceil(24/6)=4 segments) to build out segments/briefs against the
+# existing office lore rather than attempting the full OB-40 scope (28
+# segments, ring pattern, ~60 ambient prompts) in one unattended pass.
+#
+# Thematically points at OB-40's intended arc: a Fraud-Stop bank-pilot week,
+# keystone a mid-week fraud miss or regulator audit, secondary threads being
+# Marketing's launch, office life, and the spy rumour — the arc planner reads
+# this from campaign lore/scenes context, this config only sets scope/models.
+#
+# Fast local Ollama models throughout (hermes3:70b for arc/segment reasoning,
+# llama3.1:8b for dialogue takes) — same pattern as the "ashiorid_1
+# post-manor continuation" saved config (id 3).
+
+campaign:
+  pack: campaigns/ashiorid_office
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 600
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 3600
+  target_total_hours: 24
+  target_words_per_hour: 150
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "hermes3:70b"
+    heavy:
+      model: "hermes3:70b"
+  active_model: heavy
+  hours_total: 24            # -> n_segments = ceil(24/6) = 4 segments
+  segment_hours: 6
+  batch_size: 4              # == n_segments -> single-shot arc planning
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "hermes3:70b"
+    heavy:
+      model: "hermes3:70b"
+  active_model: light
+  target_words: 700
+  target_slots: 12
+  tree:
+    max_leaf_slots: 5
+    max_children: 3
+    max_depth: 2
+    min_node_words: 50
+    leaf_density_floor: 0.50
+  concurrency: 4
+  max_attempts: 3
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 30
+    failure_rate: 0.5
+    min_samples: 10
+  models:
+    light:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 300
+    heavy:
+      model: "llama3.1:8b"
+      temperature: 0.9
+      max_tokens: 300
+      num_ctx: 4096
+  active_model: light
+  max_recent: 6
+  max_words: 45
+  max_beats: 8
+  takes_per_slot: 1
+  neutral_takes: 1
+  concurrency: 6
+  max_attempts: 2
+  seconds_per_take: 8
+
+state:
+  flags:      [fraud-miss-flagged, regulator-audit-open, launch-imminent, spy-rumour-active]
+  moods:      [tense, weary, hopeful, giddy]
+  carry_keys: [fraud-miss-flagged, regulator-audit-open]

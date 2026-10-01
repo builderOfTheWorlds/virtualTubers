@@ -1,0 +1,44 @@
+id: first-standup-arc-loop2-n0-002
+take: 1
+model: light
+generated_at: '2026-09-29T04:54:39.037420+00:00'
+beats:
+- kind: dialogue
+  speaker: tech_lead
+  text: So the directive is to add a new rule to the engine, yes?
+- kind: dialogue
+  speaker: analyst
+  text: Yes, that's correct. The new rule is a requirement from Halvard & Sons.
+- kind: dialogue
+  speaker: engineer
+  text: What does the new rule entail exactly?
+- kind: dialogue
+  speaker: analyst
+  text: It's an "outlier transaction" rule, similar to AMOUNT_OUTLIER but looking
+    at transaction types instead of just amounts.
+- kind: dialogue
+  speaker: tech_lead
+  text: And what would this rule look at? What defines an "outlier transaction" in
+    this case?
+- kind: dialogue
+  speaker: analyst
+  text: It would look at the types of transactions an account usually makes and flag
+    any that deviate significantly from that pattern.
+- kind: dialogue
+  speaker: engineer
+  text: How would we define what constitutes a "significant deviation"? Would we use
+    statistical modeling or machine learning for this?
+- kind: dialogue
+  speaker: analyst
+  text: For now, Halvard & Sons have provided a basic set of criteria. If a transaction
+    doesn't meet any of the usual patterns for that account, it's flagged.
+- kind: dialogue
+  speaker: tech_lead
+  text: And what would the thresholds be for these criteria?
+- kind: dialogue
+  speaker: analyst
+  text: The specifics are in the requirements document, but in short, if a transaction
+    deviates from the account's usual pattern by more than 30%, it's flagged.
+- kind: dialogue
+  speaker: engineer
+  text: That seems quite arbitrary. How did

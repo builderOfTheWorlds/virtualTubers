@@ -1,0 +1,29 @@
+id: ship-arc-n0-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T05:30:23.109384+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good evening, everyone. Let's wrap up today's work and head home. ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: I'll finish merging the last few pull requests. ||neutral
+- kind: dialogue
+  speaker: analyst
+  text: I'm almost done with these client requirements. Just a few more minutes. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: I'll push my latest changes and call it a day. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: The test suite is still running, but it looks good so far. ||happy
+- kind: dialogue
+  speaker: marketing
+  text: I'll send out the release notes for today's updates. ||neutral
+- kind: dialogue
+  speaker: office_manager
+  text: I'll start the garbage collection and clean up the kitchen. ||neutral
+- kind: dialogue
+  speaker: party_member
+  text: (silently observes the activities, offering no input) ||neutral

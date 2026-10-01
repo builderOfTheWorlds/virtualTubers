@@ -1,0 +1,29 @@
+id: build-arc-n0-n1-001
+take: 1
+beats:
+- kind: dialogue
+  text: Graham, how's the progress on the new features we discussed last week?
+  speaker: ceo
+- kind: dialogue
+  text: Anselm, the team has been making good progress. We've implemented the new
+    rules and are currently running tests.
+  speaker: tech_lead
+- kind: dialogue
+  text: Maren adds that the new rules should improve our accuracy by at least 15%.
+  speaker: analyst
+- kind: dialogue
+  text: Theo mentions that there were some challenges with integrating the new rules,
+    but they were able to overcome them.
+  speaker: engineer
+- kind: dialogue
+  text: Owen reports that the tests are going well, with only a few minor issues that
+    need to be addressed.
+  speaker: tester
+- kind: dialogue
+  text: Julian is excited to share the new features with our clients and prospects.
+  speaker: marketing
+- kind: dialogue
+  text: Nora reminds everyone to clean up after themselves in the kitchen.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:22:09.506920+00:00'

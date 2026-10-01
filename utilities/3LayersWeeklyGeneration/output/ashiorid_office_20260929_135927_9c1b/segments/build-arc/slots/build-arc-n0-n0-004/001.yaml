@@ -1,0 +1,22 @@
+id: build-arc-n0-n0-004
+take: 1
+model: light
+generated_at: '2026-09-30T14:02:45.823437+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Let's see, the functional requirements for Fraud-Stop.
+- kind: dialogue
+  speaker: analyst
+  text: We need to make sure the rules engine is properly tested and versioned.
+- kind: dialogue
+  speaker: analyst
+  text: Explainability is key - the reasons for each verdict need to be clear to the
+    banks' compliance teams.
+- kind: dialogue
+  speaker: analyst
+  text: And the machine learning model needs to be integrated with the rules, not
+    replace them entirely.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review these with the Tech Lead to make sure we're on track.

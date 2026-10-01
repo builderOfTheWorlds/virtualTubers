@@ -1,0 +1,43 @@
+id: first-standup-arc-n0-003
+take: 1
+model: light
+generated_at: '2026-09-30T13:56:20.940356+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: 'Good morning everyone. Let''s get started. Today we need to focus on two
+    things: finalizing the explainability features for Halvard, and addressing the
+    currency handling issues for Malmont.'
+- kind: dialogue
+  speaker: analyst
+  text: On the explainability front, we need to ensure that the reasons provided for
+    each verdict are clear, concise, and regulatory compliant. Each reason should
+    have a plain language explanation that can be easily understood by a non-technical
+    audience.
+- kind: dialogue
+  speaker: ceo
+  text: Exactly. Halvard has made it clear that this is a deal-breaker for them. We
+    need to get this right.
+- kind: dialogue
+  speaker: tech_lead
+  text: Understood. I'll work with the Engineer and Tester to make sure the reasons
+    are properly formatted and attached to each verdict.
+- kind: dialogue
+  speaker: engineer
+  text: I can start by reviewing the current reason codes and making sure they map
+    correctly to the plain language explanations.
+- kind: dialogue
+  speaker: tester
+  text: And I'll update the test suite to check for the presence and accuracy of reasons
+    on all verdicts.
+- kind: dialogue
+  speaker: ceo
+  text: Perfect. Now, what about the currency issues for Malmont?
+- kind: dialogue
+  speaker: analyst
+  text: Malmont has reported intermittent failures when processing transactions involving
+    multiple currencies. We need to take a close look at the currency conversion logic
+    and ensure it's handling edge cases correctly.
+- kind: dialogue
+  speaker: tech_lead
+  text: I remember we had to make

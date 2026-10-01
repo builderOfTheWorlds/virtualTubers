@@ -1,0 +1,207 @@
+off-hours-arc:
+  node_id: off-hours-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The office is dark and quiet. The Party Member sits alone in the corner,
+    writing
+  summary: The office is dark and quiet. The Party Member sits alone in the corner,
+    writing in their notebook by the emergency light's glow. The others are home,
+    some asleep, others thinking about the day ahead.
+  continuity_in: ''
+  continuity_out: The Office Manager arrives to prepare for the day.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - off-hours-arc-n0
+  - off-hours-arc-n1
+  slots: null
+off-hours-arc-n0:
+  node_id: off-hours-arc-n0
+  parent_id: off-hours-arc
+  order: 0
+  depth: 1
+  title: Late night reflections
+  summary: The Party Member sits alone in the dark office, pouring thoughts into their
+    notebook by the glow of the emergency light. The others have gone home to rest
+    or ponder the day ahead.
+  continuity_in: The office is dark and quiet, with only the Party Member present,
+    writing.
+  continuity_out: The Party Member finishes writing and prepares to leave as the Office
+    Manager arrives.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - off-hours-arc-n0-n0
+  - off-hours-arc-n0-n1
+  slots: null
+off-hours-arc-n1:
+  node_id: off-hours-arc-n1
+  parent_id: off-hours-arc
+  order: 1
+  depth: 1
+  title: New day begins
+  summary: The Office Manager enters the dark office early in the morning to prepare
+    for the day. The Party Member is just finishing up some late night writing.
+  continuity_in: The Office Manager arrives at the office before the others to get
+    ready for the day.
+  continuity_out: The Office Manager starts setting up as the Party Member wraps up
+    their writing.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: off-hours-arc-n1-001
+    kind: ambient
+    prompt: The office is dark and quiet. The Party Member sits alone in the corner,
+      writing in their notebook by the emergency light's glow. The others are home,
+      some asleep, others thinking about the day ahead.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: off-hours-arc-n1-002
+    kind: ambient
+    prompt: The Party Member looks up from their writing as the Office Manager arrives,
+      turning on lights and getting ready for the day ahead.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: off-hours-arc-n1-003
+    kind: ambient
+    prompt: The Office Manager starts setting up the office as the Party Member finishes
+      their late night writing, preparing to join the others for the work day.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+off-hours-arc-n0-n0:
+  node_id: off-hours-arc-n0-n0
+  parent_id: off-hours-arc-n0
+  order: 0
+  depth: 2
+  title: Solitude in the Dark Office
+  summary: The Party Member sits alone in the dark office, lost in thought as they
+    write in their notebook by the emergency light's dim glow.
+  continuity_in: The office is dark and quiet, with only the Party Member present,
+    writing.
+  continuity_out: The Party Member finishes writing and prepares to leave as the Office
+    Manager arrives.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: off-hours-arc-n0-n0-001
+    kind: ambient
+    prompt: The Party Member sits alone in the dark office, lost in thought as they
+      write in their notebook by the emergency light's dim glow.
+    lore:
+    - office
+    - rituals
+    participants:
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: off-hours-arc-n0-n0-002
+    kind: ambient
+    prompt: The Party Member's pen scratches against the paper as they pour their
+      thoughts onto the page, the only sound in the quiet office.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: off-hours-arc-n0-n0-003
+    kind: ambient
+    prompt: The Party Member pauses, tapping their pen against the notebook as they
+      contemplate what to write next in the solitude of the dark office.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: off-hours-arc-n0-n0-004
+    kind: ambient
+    prompt: With a sigh, the Party Member finishes writing, closes the notebook, and
+      stands up just as the Office Manager arrives to prepare for the day ahead.
+    lore:
+    - office
+    - company
+    participants:
+    - party_member
+    - office_manager
+    sensitivity: none
+    depends_on: []
+off-hours-arc-n0-n1:
+  node_id: off-hours-arc-n0-n1
+  parent_id: off-hours-arc-n0
+  order: 1
+  depth: 2
+  title: The Office Manager Arrives
+  summary: The Office Manager enters the office early to prepare for the day, finding
+    the Party Member still there from the night before.
+  continuity_in: The Party Member finishes writing and prepares to leave as the Office
+    Manager arrives.
+  continuity_out: The Office Manager and Party Member exchange words before the Party
+    Member departs, leaving the Office Manager to begin their day.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: off-hours-arc-n0-n1-001
+    kind: ambient
+    prompt: The Party Member looks up from their writing as the Office Manager enters,
+      surprised to see someone else there so early.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: off-hours-arc-n0-n1-002
+    kind: ambient
+    prompt: The Office Manager begins preparing for the day, tidying up the office
+      and checking schedules. The Party Member packs up their notebook.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: off-hours-arc-n0-n1-003
+    kind: ambient
+    prompt: The Party Member and Office Manager exchange a few words before the Party
+      Member heads out, leaving the Office Manager to start their day.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: tone
+    depends_on: []

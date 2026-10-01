@@ -1,0 +1,57 @@
+afternoon-build-arc:
+  node_id: afternoon-build-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: In the afternoon, the team continues working on their assigned tasks. The
+    Engine
+  summary: In the afternoon, the team continues working on their assigned tasks. The
+    Engineer and Tester are deep in the build process, running tests and fixing bugs.
+    The Analyst and Tech Lead review designs and requirements. Marketing puts the
+    finishing touches on their pitch materials.
+  continuity_in: The team finishes lunch and returns to their desks to continue working.
+  continuity_out: The afternoon build session concludes as the team prepares for the
+    end-of-day wrap-up.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - afternoon-build-arc-n0
+  - afternoon-build-arc-n1
+  slots: null
+afternoon-build-arc-n0:
+  node_id: afternoon-build-arc-n0
+  parent_id: afternoon-build-arc
+  order: 0
+  depth: 1
+  title: Engineering and Testing
+  summary: The Engineer and Tester are deep in the build process, running tests and
+    fixing bugs as the afternoon session continues.
+  continuity_in: The team finishes lunch and returns to their desks to continue working.
+  continuity_out: The engineering and testing work wraps up as the team prepares for
+    the end-of-day wrap-up.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+afternoon-build-arc-n1:
+  node_id: afternoon-build-arc-n1
+  parent_id: afternoon-build-arc
+  order: 1
+  depth: 1
+  title: Analysis and Planning
+  summary: The Analyst and Tech Lead review designs and requirements while Marketing
+    puts the finishing touches on their pitch materials.
+  continuity_in: The engineering and testing work is ongoing as the Analyst and Tech
+    Lead begin reviewing designs and requirements.
+  continuity_out: The afternoon session concludes with the team prepared for the end-of-day
+    wrap-up.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

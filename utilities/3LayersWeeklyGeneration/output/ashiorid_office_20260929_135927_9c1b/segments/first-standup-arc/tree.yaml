@@ -1,0 +1,225 @@
+first-standup-arc:
+  node_id: first-standup-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The team gathers for the CEO's 06:00 standup. The CEO gives the directive
+    for th
+  summary: The team gathers for the CEO's 06:00 standup. The CEO gives the directive
+    for the day. The Analyst outlines the functional requirements. The Tech Lead translates
+    them into a technical plan and assigns tasks to the Engineer and Tester. Marketing
+    outlines their pitch to a client.
+  continuity_in: The Office Manager arrives to prepare for the day.
+  continuity_out: The team disperses to their desks to begin work on the day's tasks.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-n0
+  - first-standup-arc-n1
+  slots: null
+first-standup-arc-n0:
+  node_id: first-standup-arc-n0
+  parent_id: first-standup-arc
+  order: 0
+  depth: 1
+  title: Morning Standup
+  summary: The team gathers for the daily 06:00 standup meeting. The CEO provides
+    the directive and goals for the day ahead.
+  continuity_in: The Office Manager arrives early to prepare the conference room for
+    the standup.
+  continuity_out: The Analyst takes the floor to outline the key functional requirements.
+  target_words: 450
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-n0-001
+    kind: ambient
+    prompt: The team gathers in the conference room for the daily 06:00 standup.
+    lore:
+    - office
+    - rituals
+    participants:
+    - ceo
+    - analyst
+    - tech_lead
+    - engineer
+    - tester
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - tech_lead
+    - engineer
+    - tester
+    - marketing
+  - slot_id: first-standup-arc-n0-003
+    kind: ambient
+    prompt: The Analyst outlines the key functional requirements for the day's work.
+    lore:
+    - product
+    - clients
+    participants:
+    - analyst
+    - ceo
+    - tech_lead
+    - engineer
+    - tester
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n0-004
+    kind: ambient
+    prompt: The Tech Lead translates the requirements into a technical plan and assigns
+      tasks.
+    lore:
+    - product
+    - org_chart
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    - analyst
+    - ceo
+    - marketing
+    sensitivity: none
+    depends_on: []
+first-standup-arc-n1:
+  node_id: first-standup-arc-n1
+  parent_id: first-standup-arc
+  order: 1
+  depth: 1
+  title: Planning the Work
+  summary: The Analyst presents the functional requirements. The Tech Lead translates
+    them into a technical plan and assigns tasks to the Engineer and Tester. Marketing
+    outlines their client pitch.
+  continuity_in: The Analyst takes the floor to outline the key functional requirements.
+  continuity_out: The team disperses to their desks to begin work on the day's assigned
+    tasks.
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-n1-n0
+  - first-standup-arc-n1-n1
+  slots: null
+first-standup-arc-n1-n0:
+  node_id: first-standup-arc-n1-n0
+  parent_id: first-standup-arc-n1
+  order: 0
+  depth: 2
+  title: Functional Requirements
+  summary: The Analyst presents the key functional requirements for the project.
+  continuity_in: The Analyst takes the floor to outline the key functional requirements.
+  continuity_out: The Tech Lead takes over to translate the requirements into a technical
+    plan.
+  target_words: 225
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: first-standup-arc-n1-n0-001
+    kind: ambient
+    prompt: The team gathers in the conference room for the daily 06:00 standup.
+    lore:
+    - office
+    - rituals
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n1-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+first-standup-arc-n1-n1:
+  node_id: first-standup-arc-n1-n1
+  parent_id: first-standup-arc-n1
+  order: 1
+  depth: 2
+  title: Technical Planning
+  summary: The Tech Lead translates the functional requirements into a technical plan
+    and assigns tasks to the Engineer and Tester. Marketing outlines their pitch to
+    a client.
+  continuity_in: The Tech Lead takes over to translate the requirements into a technical
+    plan.
+  continuity_out: The team disperses to their desks to begin work on the day's assigned
+    tasks.
+  target_words: 375
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: first-standup-arc-n1-n1-001
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - tech_lead
+    - engineer
+    - tester
+    - marketing
+  - slot_id: first-standup-arc-n1-n1-002
+    kind: ambient
+    prompt: The Tech Lead takes over to translate the requirements into a technical
+      plan.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n1-n1-003
+    kind: ambient
+    prompt: The Engineer and Tester ask clarifying questions about the technical plan.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n1-n1-004
+    kind: ambient
+    prompt: Marketing outlines the key selling points for the client pitch.
+    lore:
+    - clients
+    - product
+    participants:
+    - marketing
+    - ceo
+    - analyst
+    sensitivity: tone
+    depends_on: []

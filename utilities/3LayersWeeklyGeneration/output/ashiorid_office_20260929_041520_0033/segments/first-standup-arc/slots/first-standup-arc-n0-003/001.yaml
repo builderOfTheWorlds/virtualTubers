@@ -1,0 +1,32 @@
+id: first-standup-arc-n0-003
+take: 1
+model: light
+generated_at: '2026-09-29T04:46:42.847473+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Let's make this a productive day.
+- kind: dialogue
+  speaker: tech_lead
+  text: Sounds good, Graham. What's the priority for today?
+- kind: dialogue
+  speaker: analyst
+  text: I'm ready to review the new rule changes we discussed yesterday.
+- kind: dialogue
+  speaker: engineer
+  text: I'll start implementing those changes as soon as Maren gives the green light.
+- kind: dialogue
+  speaker: tester
+  text: And I'll be waiting to test everything you push, Theo.
+- kind: dialogue
+  speaker: marketing
+  text: Julian's going to be out today, but I'll make sure our messaging stays consistent.
+- kind: dialogue
+  speaker: office_manager
+  text: If anyone needs anything, just let me know. I'm here to support you all.
+- kind: dialogue
+  speaker: party_member
+  text: Party Member isn't here yet, but I'm sure they'll be in soon.
+- kind: dialogue
+  speaker: ceo
+  text: Great. Let's get to work, everyone. Remember, we're all in this together.

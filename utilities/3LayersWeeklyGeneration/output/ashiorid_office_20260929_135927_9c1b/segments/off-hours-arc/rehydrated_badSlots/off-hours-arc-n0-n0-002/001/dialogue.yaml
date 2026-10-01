@@ -1,0 +1,26 @@
+id: off-hours-arc-n0-n0-002
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning, everyone. Let's make it a productive day.
+  speaker: ceo
+- kind: dialogue
+  text: The latency graph is looking good so far.
+  speaker: tech_lead
+- kind: dialogue
+  text: I've got some ideas on how to streamline the client requirements process.
+  speaker: analyst
+- kind: dialogue
+  text: I'm working on optimizing the codebase for better performance.
+  speaker: engineer
+- kind: dialogue
+  text: The test suite is running smoothly, no critical issues detected.
+  speaker: tester
+- kind: dialogue
+  text: The latest marketing campaign is showing promising results.
+  speaker: marketing
+- kind: dialogue
+  text: Remember to label your food in the fridge, folks.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:11:01.765835+00:00'

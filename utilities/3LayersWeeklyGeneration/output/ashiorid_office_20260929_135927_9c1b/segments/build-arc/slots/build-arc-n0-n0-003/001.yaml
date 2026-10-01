@@ -1,0 +1,21 @@
+id: build-arc-n0-n0-003
+take: 1
+model: light
+generated_at: '2026-09-30T14:02:40.403607+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The functional requirements look good so far. We should be able to implement
+    the new features without too much trouble.
+- kind: dialogue
+  speaker: engineer
+  text: I've got the login page working and the database connection set up. Just need
+    to hook up the user validation now.
+- kind: dialogue
+  speaker: tester
+  text: Found a bug with the search function, but I think I know how to fix it. Should
+    have a patch ready soon.
+- kind: dialogue
+  speaker: marketing
+  text: The new marketing campaign is really coming together. I think we'll be able
+    to launch next week.

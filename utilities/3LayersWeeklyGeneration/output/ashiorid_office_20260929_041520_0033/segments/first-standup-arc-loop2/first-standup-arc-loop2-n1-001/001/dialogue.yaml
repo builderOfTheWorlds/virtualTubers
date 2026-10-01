@@ -1,0 +1,36 @@
+id: first-standup-arc-loop2-n1-001
+take: 1
+beats:
+- kind: dialogue
+  text: Our new directive is to implement a machine learning model to improve our
+    fraud detection system.
+  speaker: ceo
+- kind: dialogue
+  text: We've been working on this for a while, but it's not ready yet. The rules
+    need proper tests first.
+  speaker: tech_lead
+- kind: dialogue
+  text: I've been researching the latest techniques in machine learning for fraud
+    detection. I have some ideas to share.
+  speaker: analyst
+- kind: dialogue
+  text: I'm concerned about the performance impact of adding machine learning to our
+    existing system.
+  speaker: engineer
+- kind: dialogue
+  text: We need to make sure the new model doesn't introduce any regressions in our
+    existing functionality.
+  speaker: tester
+- kind: dialogue
+  text: This will be a great selling point for our product. We can market it as cutting-edge
+    technology.
+  speaker: marketing
+- kind: dialogue
+  text: We need to make sure we have the necessary infrastructure and resources to
+    support this new model.
+  speaker: office_manager
+- kind: dialogue
+  text: I'm excited to see how this new model will improve our fraud detection capabilities.
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T04:56:22.725173+00:00'

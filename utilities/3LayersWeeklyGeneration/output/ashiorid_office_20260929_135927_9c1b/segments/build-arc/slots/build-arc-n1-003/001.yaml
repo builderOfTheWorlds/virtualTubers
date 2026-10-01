@@ -1,0 +1,39 @@
+id: build-arc-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T14:07:56.488203+00:00'
+beats:
+- kind: dialogue
+  speaker: engineer
+  text: Morning, Owen. I made those code changes we discussed yesterday.
+- kind: dialogue
+  speaker: tester
+  text: Thanks, Theo. I'll take a look and run some tests.
+- kind: dialogue
+  speaker: tester
+  text: Hmm, I'm seeing some unexpected behavior with the new rules.
+- kind: dialogue
+  speaker: engineer
+  text: Really? What's happening?
+- kind: dialogue
+  speaker: tester
+  text: The score is being calculated correctly, but the verdict isn't always matching.
+- kind: dialogue
+  speaker: engineer
+  text: That's odd. Let me take a look.
+- kind: dialogue
+  speaker: tester
+  text: I think I see the issue. In the 'country_mismatch' rule, the threshold is
+    set too low.
+- kind: dialogue
+  speaker: engineer
+  text: Ah, good catch. I'll bump that up and push a new build.
+- kind: dialogue
+  speaker: tester
+  text: Thanks. I'll re-run the tests once that's done.
+- kind: dialogue
+  speaker: tester
+  text: Looks good now. No more mismatches.
+- kind: dialogue
+  speaker: engineer
+  text: Great, I'll merge those changes.

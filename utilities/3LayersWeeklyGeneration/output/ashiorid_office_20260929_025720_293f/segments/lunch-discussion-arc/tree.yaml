@@ -1,0 +1,54 @@
+lunch-discussion-arc:
+  node_id: lunch-discussion-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The team takes a break from their work to enjoy lunch together in the kitchen.
+    T
+  summary: The team takes a break from their work to enjoy lunch together in the kitchen.
+    They discuss the morning's progress, share ideas, and enjoy a few moments of camaraderie
+    before diving back into their tasks.
+  continuity_in: The morning work session concludes as the team prepares for lunch.
+  continuity_out: The team finishes lunch and returns to their desks to continue working.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - lunch-discussion-arc-n0
+  - lunch-discussion-arc-n1
+  slots: null
+lunch-discussion-arc-n0:
+  node_id: lunch-discussion-arc-n0
+  parent_id: lunch-discussion-arc
+  order: 0
+  depth: 1
+  title: Discussing the morning's progress
+  summary: The team reflects on what they accomplished during the morning work session
+    and shares any insights or challenges they encountered.
+  continuity_in: The morning work session concludes as the team prepares for lunch.
+  continuity_out: The team transitions from discussing the morning's work to sharing
+    ideas for the afternoon.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+lunch-discussion-arc-n1:
+  node_id: lunch-discussion-arc-n1
+  parent_id: lunch-discussion-arc
+  order: 1
+  depth: 1
+  title: Sharing ideas for the afternoon
+  summary: Team members propose ideas, brainstorm solutions, and discuss strategies
+    for tackling the remaining tasks in the afternoon.
+  continuity_in: The team transitions from discussing the morning's work to sharing
+    ideas for the afternoon.
+  continuity_out: The team finishes lunch and returns to their desks to continue working.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

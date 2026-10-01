@@ -1,0 +1,32 @@
+id: first-standup-arc-n0-001
+take: 1
+model: light
+generated_at: '2026-09-30T13:55:44.615619+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Today we focus on the new outlier detection model.
+    I want a working prototype by end of day.
+- kind: dialogue
+  speaker: analyst
+  text: The model should flag transactions over $10,000 that deviate from the customer's
+    typical spending patterns by more than 20%.
+- kind: dialogue
+  speaker: tech_lead
+  text: We'll use the customer's past 6 months of data to establish their baseline.
+    The model will compare new transactions in real-time.
+- kind: dialogue
+  speaker: engineer
+  text: I'll prep the data pipeline and train the initial model.
+- kind: dialogue
+  speaker: tester
+  text: I'll set up test cases covering various edge scenarios and validate the model's
+    accuracy.
+- kind: dialogue
+  speaker: marketing
+  text: We'll demo the prototype to our top 5 clients by revenue tomorrow. The pitch
+    is all about catching fraud early.
+- kind: dialogue
+  speaker: office_manager
+  text: The coffee machine will be descaled this afternoon, so plan accordingly. Also,
+    the founder's old mail has been moved to the archive room.

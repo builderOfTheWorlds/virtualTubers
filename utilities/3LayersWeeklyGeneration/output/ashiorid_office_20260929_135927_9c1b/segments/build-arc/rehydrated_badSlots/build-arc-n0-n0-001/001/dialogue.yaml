@@ -1,0 +1,29 @@
+id: build-arc-n0-n0-001
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning, everyone! Let's make it a productive day.
+  speaker: ceo
+- kind: dialogue
+  text: The latency graph is looking stable.
+  speaker: tech_lead
+- kind: dialogue
+  text: I've got the latest client requirements ready for review.
+  speaker: analyst
+- kind: dialogue
+  text: I found a bug in the scoring service last night.
+  speaker: engineer
+- kind: dialogue
+  text: I'll add a test case for that bug right away.
+  speaker: tester
+- kind: dialogue
+  text: The new ad campaign is getting great engagement.
+  speaker: marketing
+- kind: dialogue
+  text: Remember to label your food in the fridge.
+  speaker: office_manager
+- kind: dialogue
+  text: Silence
+  speaker: party_member
+model: light
+generated_at: '2026-09-30T05:20:16.144104+00:00'

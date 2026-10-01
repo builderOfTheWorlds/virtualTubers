@@ -1,0 +1,26 @@
+id: off-hours-arc-n0-n0-004
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning, Nora. How are you today?
+  speaker: ceo
+- kind: dialogue
+  text: Morning, Graham. I'm well, thank you. And you?
+  speaker: office_manager
+- kind: dialogue
+  text: Can't complain. Quiet night on the floor?
+  speaker: ceo
+- kind: dialogue
+  text: Yes, usual routine. Nothing out of the ordinary.
+  speaker: office_manager
+- kind: dialogue
+  text: Excellent. Anselm in yet? I want to review the latency graphs.
+  speaker: ceo
+- kind: dialogue
+  text: He's at his desk. Go right ahead.
+  speaker: office_manager
+- kind: dialogue
+  text: Thanks, Nora. I don't know what we'd do without you.
+  speaker: ceo
+model: light
+generated_at: '2026-09-30T05:12:36.538938+00:00'

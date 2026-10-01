@@ -1,0 +1,142 @@
+first-standup-arc-loop2:
+  node_id: first-standup-arc-loop2
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The second loop of the first standup. The team begins to break into roles
+    to imp
+  summary: The second loop of the first standup. The team begins to break into roles
+    to implement the directive.
+  continuity_in: The first loop of the standup ends, with the directive still in place.
+  continuity_out: The second loop of the standup ends, with roles beginning to implement
+    the directive.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-loop2-n0
+  - first-standup-arc-loop2-n1
+  slots: null
+first-standup-arc-loop2-n0:
+  node_id: first-standup-arc-loop2-n0
+  parent_id: first-standup-arc-loop2
+  order: 0
+  depth: 1
+  title: Roles Begin to Emerge
+  summary: As the second loop of the standup progresses, team members start taking
+    on roles to implement the directive. The project manager begins delegating tasks
+    based on each person's strengths and expertise.
+  continuity_in: The first loop of the standup ends, with the directive still in place.
+  continuity_out: Roles within the team are becoming more defined as the standup continues.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-loop2-n0-001
+    kind: ambient
+    prompt: The project manager starts delegating tasks to team members based on their
+      strengths and expertise.
+    lore:
+    - org_chart
+    - office
+    participants:
+    - ceo
+    - tech_lead
+    - engineer
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-loop2-n0-002
+    kind: ambient
+    prompt: The engineer and analyst discuss the technical requirements for implementing
+      the directive.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-loop2-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - tech_lead
+    - engineer
+    - analyst
+    - marketing
+    - office_manager
+  - slot_id: first-standup-arc-loop2-n0-004
+    kind: ambient
+    prompt: The marketing lead starts brainstorming ideas for promoting the new product
+      feature to customers.
+    lore:
+    - product
+    - clients
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+first-standup-arc-loop2-n1:
+  node_id: first-standup-arc-loop2-n1
+  parent_id: first-standup-arc-loop2
+  order: 1
+  depth: 1
+  title: Planning and Next Steps
+  summary: With roles starting to take shape, the team discusses the initial plans
+    for implementing the directive. They brainstorm ideas, identify potential challenges,
+    and create a high-level roadmap for the project.
+  continuity_in: Roles within the team are becoming more defined as the standup continues.
+  continuity_out: The second loop of the standup ends, with the team aligned on the
+    initial plans and ready to start working on the directive.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-loop2-n1-001
+    kind: ambient
+    prompt: The team members discuss their initial thoughts and ideas for implementing
+      the directive.
+    lore:
+    - company
+    - product
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-loop2-n1-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - office_manager
+    - analyst
+    - engineer
+    - tech_lead
+    - tester
+    - marketing
+    - party_member
+  - slot_id: first-standup-arc-loop2-n1-003
+    kind: ambient
+    prompt: The team identifies potential challenges and roadblocks they may face
+      during the implementation.
+    lore:
+    - clients
+    - company
+    - product
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    sensitivity: tone
+    depends_on: []

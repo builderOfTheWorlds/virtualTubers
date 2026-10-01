@@ -1,0 +1,77 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The Office Manager arrives to prepare for the day.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: off-hours-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 0
+  plot_path: []
+  spine_scenes: []
+  synopsis: The office is dark and quiet. The Party Member sits alone in the corner,
+    writing in their notebook by the emergency light's glow. The others are home,
+    some asleep, others thinking about the day ahead.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The Office Manager arrives to prepare for the day.
+  continuity_out: The team disperses to their desks to begin work on the day's tasks.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 1
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The team gathers for the CEO's 06:00 standup. The CEO gives the directive
+    for the day. The Analyst outlines the functional requirements. The Tech Lead translates
+    them into a technical plan and assigns tasks to the Engineer and Tester. Marketing
+    outlines their pitch to a client.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The team gathers for the final test pass and release.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: build-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 2
+  plot_path: []
+  spine_scenes: []
+  synopsis: The Engineer and Tester work on their assigned tasks, passing code back
+    and forth for fixes. Marketing works on their pitch. The team takes a break for
+    lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional
+    requirements.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The team gathers for the final test pass and release.
+  continuity_out: The Office Manager turns off the lights and locks up for the night.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: ship-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 3
+  plot_path: []
+  spine_scenes: []
+  synopsis: The Engineer and Tester complete final fixes and pass the code for the
+    final test run. Marketing prepares the release notes. The team releases the day's
+    work to production. The Office Manager performs garbage collection and winds down
+    for the day. The Party Member observes from their corner.

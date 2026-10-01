@@ -1,0 +1,29 @@
+id: ship-arc-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T14:13:45.573588+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good evening, everyone. Let's review the final tests, release notes, and deployment
+    plan one last time before we ship.
+- kind: dialogue
+  speaker: tech_lead
+  text: The final tests look good. We've resolved all critical bugs and the latency
+    is within acceptable limits.
+- kind: dialogue
+  speaker: tester
+  text: Yes, I've run the full test suite and everything has passed. We're ready to
+    deploy.
+- kind: dialogue
+  speaker: engineer
+  text: I've made the final code changes and they've been merged. Just waiting on
+    the final approval.
+- kind: dialogue
+  speaker: marketing
+  text: The release notes are prepared. We've highlighted the key features and bug
+    fixes.
+- kind: dialogue
+  speaker: office_manager
+  text: I've performed garbage collection and tidied up the office. We're all set
+    for tomorrow.

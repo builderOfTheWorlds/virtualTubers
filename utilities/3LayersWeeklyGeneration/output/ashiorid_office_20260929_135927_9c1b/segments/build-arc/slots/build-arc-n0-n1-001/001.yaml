@@ -1,0 +1,43 @@
+id: build-arc-n0-n1-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:04:40.545174+00:00'
+beats:
+- kind: dialogue
+  speaker: engineer
+  text: I've pushed my latest changes to the scoring service. Let me know if you see
+    any issues.
+- kind: dialogue
+  speaker: tester
+  text: Sure, I'll run the test suite against your branch. Give me a few minutes.
+- kind: dialogue
+  speaker: engineer
+  text: Sounds good. Let me know if anything breaks!
+- kind: dialogue
+  speaker: tester
+  text: Will do.
+- kind: dialogue
+  speaker: tester
+  text: Hmm, the amount outlier rule is failing on new accounts again. Did you make
+    any changes there?
+- kind: dialogue
+  speaker: engineer
+  text: Yeah, I tried to optimize the history lookup. Guess I introduced a bug.
+- kind: dialogue
+  speaker: tester
+  text: No worries, I'll take a look and see if I can spot it.
+- kind: dialogue
+  speaker: engineer
+  text: Thanks, Owen. Let me know if you need any help.
+- kind: dialogue
+  speaker: tester
+  text: Actually, I think I see the issue. You're not handling the empty history case.
+- kind: dialogue
+  speaker: engineer
+  text: Ah, right. I missed that edge case.
+- kind: dialogue
+  speaker: tester
+  text: It's an easy fix. I'll send you a pull request.
+- kind: dialogue
+  speaker: engineer
+  text: Much appreciated!

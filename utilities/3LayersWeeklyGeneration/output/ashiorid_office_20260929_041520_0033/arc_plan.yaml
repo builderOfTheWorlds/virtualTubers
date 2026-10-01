@@ -1,0 +1,75 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The directive has been given and the standup has ended.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 0
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The first 06:00 standup of the arc. The CEO gives the directive that will
+    guide the day's work.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The directive has been given and the standup has ended.
+  continuity_out: The first loop of the standup ends, with the directive still in
+    place.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc-loop1
+  loop: 1
+  mirror_of: []
+  mirror_transform: null
+  order: 1
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The first loop of the first standup. The CEO reiterates the directive
+    and answers questions.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The first loop of the standup ends, with the directive still in place.
+  continuity_out: The second loop of the standup ends, with roles beginning to implement
+    the directive.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc-loop2
+  loop: 2
+  mirror_of: []
+  mirror_transform: null
+  order: 2
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The second loop of the first standup. The team begins to break into roles
+    to implement the directive.
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: Roles beginning to implement the directive.
+  continuity_out: The third loop of the standup ends, with the directive being implemented.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc-loop3
+  loop: 3
+  mirror_of: []
+  mirror_transform: null
+  order: 3
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The third loop of the first standup. The team continues to implement the
+    directive in their roles.

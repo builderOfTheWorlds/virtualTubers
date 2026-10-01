@@ -1,0 +1,143 @@
+first-standup-arc:
+  node_id: first-standup-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The first 06:00 standup of the arc. The CEO gives the directive that will
+    guide '
+  summary: The first 06:00 standup of the arc. The CEO gives the directive that will
+    guide the day's work.
+  continuity_in: ''
+  continuity_out: The directive has been given and the standup has ended.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-n0
+  - first-standup-arc-n1
+  slots: null
+first-standup-arc-n0:
+  node_id: first-standup-arc-n0
+  parent_id: first-standup-arc
+  order: 0
+  depth: 1
+  title: The CEO arrives for the standup
+  summary: The team gathers for the 06:00 standup as the CEO arrives to give the day's
+    directive.
+  continuity_in: The team has assembled for the first standup of the arc.
+  continuity_out: The CEO has arrived and is ready to address the team.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-n0-001
+    kind: ambient
+    prompt: The team gathers for the 06:00 standup as the CEO arrives to give the
+      day's directive.
+    lore:
+    - office
+    - rituals
+    participants:
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: first-standup-arc-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+  - slot_id: first-standup-arc-n0-003
+    kind: ambient
+    prompt: The CEO gives the directive that will guide the day's work, wrapping up
+      the standup.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+first-standup-arc-n1:
+  node_id: first-standup-arc-n1
+  parent_id: first-standup-arc
+  order: 1
+  depth: 1
+  title: The CEO gives the directive
+  summary: The CEO addresses the team, giving the key directive that will guide their
+    work for the day.
+  continuity_in: The CEO has arrived and is ready to address the team.
+  continuity_out: The directive has been given and the standup has ended.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: first-standup-arc-n1-001
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+  - slot_id: first-standup-arc-n1-002
+    kind: ambient
+    prompt: The CEO takes a moment to gather their thoughts before addressing the
+      team.
+    lore:
+    - office
+    - rituals
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []
+  - slot_id: first-standup-arc-n1-003
+    kind: ambient
+    prompt: The team exchanges glances, wondering what the big news will be.
+    lore:
+    - rumours
+    - office
+    participants:
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: first-standup-arc-n1-004
+    kind: ambient
+    prompt: The CEO thanks everyone for their hard work and dedication to the company's
+      mission.
+    lore:
+    - company
+    - office
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []

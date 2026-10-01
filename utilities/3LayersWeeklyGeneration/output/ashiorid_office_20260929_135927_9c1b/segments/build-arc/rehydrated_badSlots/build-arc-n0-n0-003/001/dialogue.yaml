@@ -1,0 +1,29 @@
+id: build-arc-n0-n0-003
+take: 1
+beats:
+- kind: dialogue
+  text: Good work today, everyone. Let's take a well-deserved lunch break.
+  speaker: ceo
+- kind: dialogue
+  text: I'm looking forward to seeing what we can accomplish this afternoon.
+  speaker: tech_lead
+- kind: dialogue
+  text: We've made great progress on the client requirements.
+  speaker: analyst
+- kind: dialogue
+  text: The code is coming along nicely.
+  speaker: engineer
+- kind: dialogue
+  text: I'll keep running tests to ensure everything is working as expected.
+  speaker: tester
+- kind: dialogue
+  text: Our pipeline is looking strong. We're in a good position.
+  speaker: marketing
+- kind: dialogue
+  text: Remember to label your leftovers in the fridge.
+  speaker: office_manager
+- kind: dialogue
+  text: '[silent]'
+  speaker: party_member
+model: light
+generated_at: '2026-09-30T05:21:24.873024+00:00'

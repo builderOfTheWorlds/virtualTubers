@@ -1,0 +1,128 @@
+# vLLM validation run for campaigns/ashiorid_office — the weekly-arc content
+# job (OB-40) driven by the local vLLM server instead of Ollama.
+#
+# Model: Qwen/Qwen3.8-27B, served by the vllm-qwen3.8-27b container
+# (deployment: environments/argyreServer/deployments/vllm-qwen3.8-27b) at
+# http://127.0.0.1:8092, OpenAI-compatible /v1/chat/completions, bearer key
+# VLLM_API_KEY from that deployment's .env. Same served weights the Ollama
+# W0 benchmark (office_w0_benchmark.md) scored as qwen3.8:27b, so the two
+# numbers are comparable.
+#
+# Provider wiring: `provider: vllm` selects the OpenAICompatClient in
+# utilities/3LayersWeeklyGeneration/src/concurrent_llm.py (v1/chat/completions
+# + Bearer auth + SSE streaming). generator_api.overlay_base_url SKIPS the
+# OLLAMA_BASE_URL overlay for non-ollama configs, so defaults.base_url below
+# is authoritative — it must stay the vLLM address.
+#
+# enable_thinking: Qwen3.8 is a reasoning model. Thinking stays ON everywhere
+# (operator decision, 2026-09-28). The consequence is that the completion
+# budget must cover chain-of-thought AND the plan: with thinking on, the arc
+# planner consumed its entire 1024 budget reasoning and emitted ZERO content
+# (finish_reason=length on both attempts — job job_20260928T234430_3174d1).
+# Measured on this server with a plan-style prompt: thinking on uses
+# ~300 reasoning tokens for a small 6-beat prompt and scales with prompt
+# size; the real arc prompt (full pack context + 4 segments of detailed
+# fields) needs far more headroom. So arc/segment use max_tokens 8192 —
+# generous room for the reasoning pass, then the plan. Dialogue lines are
+# short and their reasoning pass is tiny, so they keep the 300 budget.
+#
+# Reference timings (probe_vllm_stream.py, 2026-09-28): small plan prompt,
+# thinking ON, 1024 budget -> 100s wall, 293 reasoning deltas / 82 content.
+# Thinking OFF would be ~20s, but the operator wants the reasoning pass.
+
+campaign:
+  pack: campaigns/ashiorid_office
+
+output:
+  dir: utilities/3LayersWeeklyGeneration/output
+
+defaults:
+  provider: vllm
+  base_url: "http://127.0.0.1:8092"
+  model: "qwen3.8-27b"
+  api_key_env: VLLM_HERMES_API_KEY
+  temperature: 0.7
+  max_tokens: 1024
+  timeout_s: 900
+
+budget:
+  measured_baseline:
+    words_per_take: 105
+    beats_per_take: 7.7
+    generation_words_per_min: 95.4
+  target_total_words: 3600
+  target_total_hours: 24
+  target_words_per_hour: 150
+  takes_per_slot_semantics: choice_pool
+
+arc:
+  models:
+    light:
+      model: "qwen3.8-27b"
+      max_tokens: 8192       # thinking pass + plan must both fit the budget
+    heavy:
+      model: "qwen3.8-27b"
+      max_tokens: 8192
+  active_model: heavy
+  hours_total: 24            # -> n_segments = ceil(24/6) = 4 segments
+  segment_hours: 6
+  batch_size: 4              # == n_segments -> single-shot arc planning
+  max_attempts: 2
+
+segment:
+  models:
+    light:
+      model: "qwen3.8-27b"
+      max_tokens: 8192       # same: thinking pass + brief/slot tree
+    heavy:
+      model: "qwen3.8-27b"
+      max_tokens: 8192
+  active_model: light
+  target_words: 700
+  target_slots: 12
+  tree:
+    max_leaf_slots: 5
+    max_children: 3
+    max_depth: 2
+    min_node_words: 50
+    leaf_density_floor: 0.50
+  concurrency: 3             # vLLM single-model GPU — keep fan-out modest
+  max_attempts: 3
+  sensitivity_budget: 0.40
+  density_floor: 0.50
+
+dialogue:
+  breaker:
+    window: 30
+    failure_rate: 0.5
+    min_samples: 10
+  models:
+    light:
+      model: "qwen3.8-27b"
+      temperature: 0.9
+      max_tokens: 300
+      # Short in-character lines: reasoning is pure latency here.
+      extra_body:
+        chat_template_kwargs:
+          enable_thinking: false
+    heavy:
+      model: "qwen3.8-27b"
+      temperature: 0.9
+      max_tokens: 300
+      extra_body:
+        chat_template_kwargs:
+          enable_thinking: false
+  active_model: light
+  max_recent: 6
+  max_words: 45
+  max_beats: 8
+  takes_per_slot: 1
+  neutral_takes: 1
+  concurrency: 3
+  max_attempts: 2
+  seconds_per_take: 8
+
+state:
+  flags:      [fraud-miss-flagged, regulator-audit-open, launch-imminent, spy-rumour-active]
+  moods:      [tense, weary, hopeful, giddy]
+  carry_keys: [fraud-miss-flagged, regulator-audit-open]

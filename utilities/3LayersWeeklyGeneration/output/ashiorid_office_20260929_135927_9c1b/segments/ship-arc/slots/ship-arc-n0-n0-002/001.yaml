@@ -1,0 +1,28 @@
+id: ship-arc-n0-n0-002
+take: 1
+model: light
+generated_at: '2026-09-30T14:09:49.914818+00:00'
+beats:
+- kind: dialogue
+  speaker: tech_lead
+  text: Let's review the final test results. Anything still outstanding?
+- kind: dialogue
+  speaker: tester
+  text: Just one issue with the amount-outlier rule for new accounts. It's a known
+    problem.
+- kind: dialogue
+  speaker: engineer
+  text: I've pushed a fix for that, but we need to re-run the tests to confirm it's
+    resolved.
+- kind: dialogue
+  speaker: tech_lead
+  text: Alright, let's kick off another test run then. Give me an ETA on results.
+- kind: dialogue
+  speaker: tester
+  text: Should be about 30 minutes. I'll let you know as soon as they're in.
+- kind: dialogue
+  speaker: tech_lead
+  text: Perfect, keep me posted.
+- kind: dialogue
+  speaker: engineer
+  text: Will do. Fingers crossed this fix sticks.

@@ -1,0 +1,20 @@
+id: build-arc-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T14:06:41.357183+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: This rule needs clarification.
+- kind: dialogue
+  speaker: analyst
+  text: The scoring thresholds here are inconsistent.
+- kind: dialogue
+  speaker: analyst
+  text: Why was this edge case not considered?
+- kind: dialogue
+  speaker: analyst
+  text: This requirement contradicts the one on page 5.
+- kind: dialogue
+  speaker: analyst
+  text: I'll need to discuss this with the Tech Lead.

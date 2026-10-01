@@ -1,0 +1,26 @@
+id: build-arc-n0-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T05:23:23.001898+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning everyone, let's make this a productive day.
+- kind: dialogue
+  speaker: tech_lead
+  text: I'll start by reviewing the latency graph and checking for any red flags.
+- kind: dialogue
+  speaker: analyst
+  text: I've been analyzing customer feedback and identifying areas for improvement.
+- kind: dialogue
+  speaker: engineer
+  text: I'm going to dive into that bug fix we discussed yesterday.
+- kind: dialogue
+  speaker: tester
+  text: I'll run another full test suite and report any issues I find.
+- kind: dialogue
+  speaker: marketing
+  text: We have a few promising leads to follow up on today.
+- kind: dialogue
+  speaker: office_manager
+  text: Don't forget to label your food in the fridge!

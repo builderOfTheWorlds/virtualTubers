@@ -1,0 +1,34 @@
+id: first-standup-arc-loop3-n1-002
+take: 1
+model: light
+generated_at: '2026-09-29T05:00:59.024797+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning everyone. Let's go around the room and share our key priorities
+    for the next steps in implementing our new directive. Anselm, would you like to
+    start?
+- kind: dialogue
+  speaker: tech_lead
+  text: Sure. My top priority is to review the new code changes and ensure they meet
+    our quality standards before merging them into the main branch.
+- kind: dialogue
+  speaker: analyst
+  text: For me, it's about analyzing the latest transaction data and identifying any
+    potential fraud patterns or anomalies that we need to address.
+- kind: dialogue
+  speaker: engineer
+  text: I'll be focusing on optimizing the scoring algorithm to improve our response
+    times and accuracy.
+- kind: dialogue
+  speaker: tester
+  text: My main goal is to create comprehensive test cases to thoroughly evaluate
+    the updated system and catch any potential bugs or issues.
+- kind: dialogue
+  speaker: marketing
+  text: I'll be working on updating our marketing materials to reflect the new features
+    and benefits of our enhanced fraud detection capabilities.
+- kind: dialogue
+  speaker: office_manager
+  text: My priority is to ensure that everyone has the resources and support they
+    need to effectively implement the new directive.

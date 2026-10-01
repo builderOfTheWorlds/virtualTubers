@@ -1,0 +1,30 @@
+id: first-standup-arc-loop1-n0-002
+take: 1
+beats:
+- kind: dialogue
+  text: Everyone, this is a reminder about the importance of following the directive.
+    It's crucial that we all adhere to it.
+  speaker: ceo
+- kind: dialogue
+  text: We've been over this before, Graham. The directive is clear.
+  speaker: tech_lead
+- kind: dialogue
+  text: Yes, we understand the significance of the directive and will ensure compliance.
+  speaker: analyst
+- kind: dialogue
+  text: It's not that simple, there are complexities we need to consider.
+  speaker: engineer
+- kind: dialogue
+  text: The directive is there for a reason, we should all follow it.
+  speaker: tester
+- kind: dialogue
+  text: I agree with Owen, the directive is essential for our success.
+  speaker: marketing
+- kind: dialogue
+  text: The directive has been communicated clearly, we should all follow it.
+  speaker: office_manager
+- kind: dialogue
+  text: I'm not sure I understand the directive fully, could you clarify?
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T04:49:58.562958+00:00'

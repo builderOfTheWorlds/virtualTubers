@@ -1,0 +1,26 @@
+id: first-standup-arc-loop1-n1-003
+take: 1
+beats:
+- kind: dialogue
+  text: The directive stands. We focus on what matters most.
+  speaker: ceo
+- kind: dialogue
+  text: We've made good progress on the backend refactor.
+  speaker: tech_lead
+- kind: dialogue
+  text: The new fraud detection models are showing promising results.
+  speaker: analyst
+- kind: dialogue
+  text: I've been working on optimizing the database queries.
+  speaker: engineer
+- kind: dialogue
+  text: The latest build passed all the regression tests.
+  speaker: tester
+- kind: dialogue
+  text: We're getting positive feedback from the beta customers.
+  speaker: marketing
+- kind: dialogue
+  text: The new office chairs should arrive tomorrow.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-29T04:52:27.542918+00:00'

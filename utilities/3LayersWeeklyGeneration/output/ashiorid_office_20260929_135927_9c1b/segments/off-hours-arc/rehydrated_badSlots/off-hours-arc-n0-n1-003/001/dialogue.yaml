@@ -1,0 +1,24 @@
+id: off-hours-arc-n0-n1-003
+take: 1
+beats:
+- kind: dialogue
+  text: Morning, Nora. Anything I need to know before I start my calls?
+  speaker: ceo
+- kind: dialogue
+  text: Good morning, Graham. The usual updates are in your inbox. Quiet night on
+    the floor.
+  speaker: office_manager
+- kind: dialogue
+  text: Perfect, thank you. Let's keep it that way.
+  speaker: ceo
+- kind: dialogue
+  text: Always do. Have a good day, Graham.
+  speaker: office_manager
+- kind: dialogue
+  text: You too, Nora. Keep things running smoothly out here.
+  speaker: ceo
+- kind: dialogue
+  text: Like clockwork, as always.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:13:29.481915+00:00'

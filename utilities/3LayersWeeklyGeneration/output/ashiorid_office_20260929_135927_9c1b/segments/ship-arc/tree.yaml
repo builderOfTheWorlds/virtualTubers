@@ -1,0 +1,209 @@
+ship-arc:
+  node_id: ship-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The Engineer and Tester complete final fixes and pass the code for the final
+    tes
+  summary: The Engineer and Tester complete final fixes and pass the code for the
+    final test run. Marketing prepares the release notes. The team releases the day's
+    work to production. The Office Manager performs garbage collection and winds down
+    for the day. The Party Member observes from their corner.
+  continuity_in: The team gathers for the final test pass and release.
+  continuity_out: The Office Manager turns off the lights and locks up for the night.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - ship-arc-n0
+  - ship-arc-n1
+  slots: null
+ship-arc-n0:
+  node_id: ship-arc-n0
+  parent_id: ship-arc
+  order: 0
+  depth: 1
+  title: Final Fixes and Test Pass
+  summary: The Engineer and Tester complete the remaining bug fixes and pass the code
+    for the final automated and manual test run. Marketing begins drafting the release
+    notes.
+  continuity_in: The team gathers for the final test pass and release.
+  continuity_out: The final tests pass successfully and the team prepares for deployment.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - ship-arc-n0-n0
+  - ship-arc-n0-n1
+  slots: null
+ship-arc-n1:
+  node_id: ship-arc-n1
+  parent_id: ship-arc
+  order: 1
+  depth: 1
+  title: Release to Production
+  summary: The team releases the day's work to the production environment. The Office
+    Manager performs garbage collection and begins winding down for the day. The Party
+    Member observes the release process from their corner.
+  continuity_in: The final tests pass successfully and the team prepares for deployment.
+  continuity_out: The Office Manager turns off the lights and locks up for the night.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: ship-arc-n1-001
+    kind: ambient
+    prompt: The Engineer and Tester make final tweaks to the code and run the last
+      tests before release.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n1-002
+    kind: ambient
+    prompt: Marketing drafts the release notes highlighting the key changes going
+      out in today's deployment.
+    lore:
+    - product
+    - company
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n1-003
+    kind: ambient
+    prompt: The team gathers to review the final tests, release notes, and deployment
+      plan one last time.
+    lore:
+    - office
+    - rituals
+    participants:
+    - ceo
+    - engineer
+    - tech_lead
+    - tester
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: ship-arc-n1-004
+    kind: ambient
+    prompt: The Office Manager begins end-of-day cleanup tasks as the team initiates
+      the production release.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+ship-arc-n0-n0:
+  node_id: ship-arc-n0-n0
+  parent_id: ship-arc-n0
+  order: 0
+  depth: 2
+  title: Final Bug Fixes
+  summary: The Engineer and Tester complete the remaining bug fixes and pass the code
+    for the final automated and manual test run.
+  continuity_in: The team gathers for the final test pass and release.
+  continuity_out: The code passes all automated and manual tests.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: ship-arc-n0-n0-001
+    kind: ambient
+    prompt: The Engineer and Tester make final tweaks to the code and run it through
+      automated tests.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n0-n0-002
+    kind: ambient
+    prompt: The team reviews the test results and discusses any remaining issues.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n0-n0-003
+    kind: ambient
+    prompt: Marketing drafts the release notes as the final tests are completed.
+    lore:
+    - product
+    - company
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+ship-arc-n0-n1:
+  node_id: ship-arc-n0-n1
+  parent_id: ship-arc-n0
+  order: 1
+  depth: 2
+  title: Release Deployment
+  summary: Marketing finalizes the release notes. The team releases the day's work
+    to production. The Office Manager performs garbage collection and winds down for
+    the day. The Party Member observes from their corner.
+  continuity_in: The code passes all tests and is ready for release.
+  continuity_out: The Office Manager turns off the lights and locks up for the night.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: ship-arc-n0-n1-001
+    kind: ambient
+    prompt: The team gathers around the deployment dashboard, watching as the final
+      tests run.
+    lore:
+    - office
+    - rituals
+    participants:
+    - engineer
+    - tester
+    - marketing
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n0-n1-002
+    kind: ambient
+    prompt: Marketing puts the finishing touches on the release notes as the tests
+      complete successfully.
+    lore:
+    - product
+    - office
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: ship-arc-n0-n1-003
+    kind: ambient
+    prompt: The Office Manager begins winding down for the day, performing garbage
+      collection and other end-of-day tasks.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []

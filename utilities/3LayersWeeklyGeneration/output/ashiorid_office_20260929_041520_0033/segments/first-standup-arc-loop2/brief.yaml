@@ -1,0 +1,128 @@
+segment_id: first-standup-arc-loop2
+order: 2
+loop: 2
+hours: 6
+synopsis: The second loop of the first standup. The team begins to break into roles
+  to implement the directive.
+continuity_in: The first loop of the standup ends, with the directive still in place.
+continuity_out: The second loop of the standup ends, with roles beginning to implement
+  the directive.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: first-standup-arc-loop2-n0-001
+  kind: ambient
+  prompt: The project manager starts delegating tasks to team members based on their
+    strengths and expertise.
+  lore:
+  - org_chart
+  - office
+  participants:
+  - ceo
+  - tech_lead
+  - engineer
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: first-standup-arc-loop2-n0
+- slot_id: first-standup-arc-loop2-n0-002
+  kind: ambient
+  prompt: The engineer and analyst discuss the technical requirements for implementing
+    the directive.
+  lore:
+  - product
+  - office
+  participants:
+  - engineer
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: first-standup-arc-loop2-n0
+- slot_id: first-standup-arc-loop2-n0-003
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - ceo
+  - tech_lead
+  - engineer
+  - analyst
+  - marketing
+  - office_manager
+  node_id: first-standup-arc-loop2-n0
+- slot_id: first-standup-arc-loop2-n0-004
+  kind: ambient
+  prompt: The marketing lead starts brainstorming ideas for promoting the new product
+    feature to customers.
+  lore:
+  - product
+  - clients
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: first-standup-arc-loop2-n0
+- slot_id: first-standup-arc-loop2-n1-001
+  kind: ambient
+  prompt: The team members discuss their initial thoughts and ideas for implementing
+    the directive.
+  lore:
+  - company
+  - product
+  participants:
+  - analyst
+  - engineer
+  - tech_lead
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: first-standup-arc-loop2-n1
+- slot_id: first-standup-arc-loop2-n1-002
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - ceo
+  - office_manager
+  - analyst
+  - engineer
+  - tech_lead
+  - tester
+  - marketing
+  - party_member
+  node_id: first-standup-arc-loop2-n1
+- slot_id: first-standup-arc-loop2-n1-003
+  kind: ambient
+  prompt: The team identifies potential challenges and roadblocks they may face during
+    the implementation.
+  lore:
+  - clients
+  - company
+  - product
+  participants:
+  - analyst
+  - engineer
+  - tech_lead
+  sensitivity: tone
+  depends_on: []
+  node_id: first-standup-arc-loop2-n1
+nodes:
+- node_id: first-standup-arc-loop2
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: first-standup-arc-loop2-n0
+  parent_id: first-standup-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: first-standup-arc-loop2-n1
+  parent_id: first-standup-arc-loop2
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

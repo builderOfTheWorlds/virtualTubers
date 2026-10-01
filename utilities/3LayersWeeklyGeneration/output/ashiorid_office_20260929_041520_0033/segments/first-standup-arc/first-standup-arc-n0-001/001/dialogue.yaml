@@ -1,0 +1,38 @@
+id: first-standup-arc-n0-001
+take: 1
+beats:
+- kind: dialogue
+  text: 'Good morning, everyone. Today''s directive is simple: we need to improve
+    our transaction monitoring system to detect potential fraud more effectively.
+    Let''s get to work. ||neutral'
+  speaker: ceo
+- kind: dialogue
+  text: The tech plan is to analyze the current system's performance and identify
+    areas for improvement. We'll focus on optimizing our algorithms and expanding
+    our data sources. ||neutral
+  speaker: tech_lead
+- kind: dialogue
+  text: I'll review the latest fraud patterns and update the functional requirements
+    accordingly. ||neutral
+  speaker: analyst
+- kind: dialogue
+  text: I'll start working on the code changes needed to implement the new requirements.
+    ||neutral
+  speaker: engineer
+- kind: dialogue
+  text: I'll prepare a comprehensive test suite to ensure the changes don't introduce
+    any new issues. ||neutral
+  speaker: tester
+- kind: dialogue
+  text: I'll reach out to our clients to gather feedback on the current system and
+    their expectations for improvements. ||neutral
+  speaker: marketing
+- kind: dialogue
+  text: The kitchen will be stocked with extra snacks today to keep everyone energized.
+    Also, please remember to label your food in the fridge. ||neutral
+  speaker: office_manager
+- kind: dialogue
+  text: '[silence] ||neutral'
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T04:46:38.875708+00:00'

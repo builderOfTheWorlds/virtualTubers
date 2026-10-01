@@ -1,0 +1,34 @@
+segment_id: first-standup-arc
+order: 0
+loop: 0
+hours: 6
+synopsis: The team gathers for their first standup of the arc. The CEO gives the directive
+  for the day. The Analyst, Tech Lead, Engineer, Tester, Marketing, and Office Manager
+  each give updates on their progress and plans.
+continuity_in: ''
+continuity_out: The team disperses to their desks to begin work on the day's tasks.
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: first-standup-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: first-standup-arc-n0
+  parent_id: first-standup-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: first-standup-arc-n1
+  parent_id: first-standup-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0

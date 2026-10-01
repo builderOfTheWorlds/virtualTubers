@@ -1,0 +1,33 @@
+id: first-standup-arc-loop1-n1-002
+take: 1
+beats:
+- kind: dialogue
+  text: Good morning, everyone. I want to reiterate the importance of our directive
+    today.
+  speaker: ceo
+- kind: dialogue
+  text: Of course, Graham. The team is focused and ready to execute.
+  speaker: tech_lead
+- kind: dialogue
+  text: We've been preparing for this all week. Our plans are solid.
+  speaker: analyst
+- kind: dialogue
+  text: Just to clarify, are we prioritizing the new feature set or the bug fixes?
+  speaker: engineer
+- kind: dialogue
+  text: The new feature set is our priority. The bug fixes will be addressed next.
+  speaker: ceo
+- kind: dialogue
+  text: Understood. We'll keep a close eye on the impact of the new features.
+  speaker: tester
+- kind: dialogue
+  text: And I'll be working on the marketing materials to showcase these new features.
+  speaker: marketing
+- kind: dialogue
+  text: I'll make sure the office is well-stocked and everyone has what they need.
+  speaker: office_manager
+- kind: dialogue
+  text: (nods silently)
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T04:51:32.815911+00:00'

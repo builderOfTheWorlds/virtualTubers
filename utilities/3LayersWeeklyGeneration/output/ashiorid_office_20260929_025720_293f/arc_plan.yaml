@@ -1,0 +1,81 @@
+segments:
+- ambient_focus: ''
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The team disperses to their desks to begin work on the day's tasks.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: first-standup-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 0
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The team gathers for their first standup of the arc. The CEO gives the
+    directive for the day. The Analyst, Tech Lead, Engineer, Tester, Marketing, and
+    Office Manager each give updates on their progress and plans.
+- ambient_focus: The team is focused and productive, working on the tasks outlined
+    in the standup. Code is being written, tests are being run, and Marketing is preparing
+    pitches.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The morning work session concludes as the team prepares for lunch.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: morning-work-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 1
+  plot_path: []
+  spine_scenes: []
+  synopsis: The team works diligently on their assigned tasks for the morning. The
+    Engineer and Tester collaborate closely, while the Analyst and Tech Lead work
+    on design documents. Marketing prepares materials for a client pitch.
+- ambient_focus: The team gathers in the kitchen for a relaxed lunch discussion. The
+    atmosphere is casual and convivial.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The morning work session concludes as the team prepares for lunch.
+  continuity_out: The team finishes lunch and returns to their desks to continue working.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: lunch-discussion-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 2
+  plot_path: []
+  spine_scenes: []
+  synopsis: The team takes a break from their work to enjoy lunch together in the
+    kitchen. They discuss the morning's progress, share ideas, and enjoy a few moments
+    of camaraderie before diving back into their tasks.
+- ambient_focus: The team is focused on building and testing new features in the afternoon
+    session. There is a sense of urgency as they work to complete their tasks for
+    the day.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The team finishes lunch and returns to their desks to continue working.
+  continuity_out: The afternoon build session concludes as the team prepares for the
+    end-of-day wrap-up.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: afternoon-build-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 3
+  plot_path: []
+  spine_scenes: []
+  synopsis: In the afternoon, the team continues working on their assigned tasks.
+    The Engineer and Tester are deep in the build process, running tests and fixing
+    bugs. The Analyst and Tech Lead review designs and requirements. Marketing puts
+    the finishing touches on their pitch materials.

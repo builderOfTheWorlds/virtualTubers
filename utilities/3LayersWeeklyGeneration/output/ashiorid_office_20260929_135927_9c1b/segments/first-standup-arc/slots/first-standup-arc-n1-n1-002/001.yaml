@@ -1,0 +1,17 @@
+id: first-standup-arc-n1-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T13:58:23.006086+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The new fraud detection algorithm is ready for implementation. ||happy
+- kind: dialogue
+  speaker: tech_lead
+  text: I'll review the requirements and create a technical plan. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: I'm ready to start coding once I get the tasks from you. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: And I'll be here to test everything thoroughly. ||neutral

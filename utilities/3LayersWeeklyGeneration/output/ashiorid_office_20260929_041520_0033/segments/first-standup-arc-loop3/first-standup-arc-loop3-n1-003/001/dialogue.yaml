@@ -1,0 +1,29 @@
+id: first-standup-arc-loop3-n1-003
+take: 1
+beats:
+- kind: dialogue
+  text: We need to optimize our processes and improve efficiency.
+  speaker: ceo
+- kind: dialogue
+  text: I agree, we can streamline our development pipeline.
+  speaker: tech_lead
+- kind: dialogue
+  text: We should also focus on better understanding our clients' needs.
+  speaker: analyst
+- kind: dialogue
+  text: I can work on automating some of our manual tasks.
+  speaker: engineer
+- kind: dialogue
+  text: And I'll ensure our testing is thorough and catches any issues early.
+  speaker: tester
+- kind: dialogue
+  text: I'll create a marketing plan to showcase our new features.
+  speaker: marketing
+- kind: dialogue
+  text: I'll make sure the office runs smoothly and everyone has what they need.
+  speaker: office_manager
+- kind: dialogue
+  text: (nods in agreement)
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T05:01:13.578072+00:00'

@@ -1,0 +1,26 @@
+id: off-hours-arc-n1-001
+take: 1
+model: light
+generated_at: '2026-09-30T05:14:33.603122+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Goodnight everyone, have a great evening.
+- kind: dialogue
+  speaker: tech_lead
+  text: Night Graham, see you tomorrow.
+- kind: dialogue
+  speaker: analyst
+  text: Bye Graham, thanks for the productive day.
+- kind: dialogue
+  speaker: engineer
+  text: Goodnight Graham, goodnight all.
+- kind: dialogue
+  speaker: tester
+  text: Night everyone, I'm heading out.
+- kind: dialogue
+  speaker: marketing
+  text: Goodnight Graham, have a good one.
+- kind: dialogue
+  speaker: office_manager
+  text: Goodnight Graham, don't work too late.

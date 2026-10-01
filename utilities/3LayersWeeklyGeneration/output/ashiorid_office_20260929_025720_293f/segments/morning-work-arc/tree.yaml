@@ -1,0 +1,57 @@
+morning-work-arc:
+  node_id: morning-work-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The team works diligently on their assigned tasks for the morning. The Engineer '
+  summary: The team works diligently on their assigned tasks for the morning. The
+    Engineer and Tester collaborate closely, while the Analyst and Tech Lead work
+    on design documents. Marketing prepares materials for a client pitch.
+  continuity_in: The team disperses to their desks to begin work on the day's tasks.
+  continuity_out: The morning work session concludes as the team prepares for lunch.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - morning-work-arc-n0
+  - morning-work-arc-n1
+  slots: null
+morning-work-arc-n0:
+  node_id: morning-work-arc-n0
+  parent_id: morning-work-arc
+  order: 0
+  depth: 1
+  title: Engineering Collaboration
+  summary: The Engineer and Tester work closely together to implement new features
+    and fix bugs. They pair program, review each other's code, and troubleshoot issues
+    that arise.
+  continuity_in: The Engineer and Tester sit down at their desks next to each other
+    to begin their collaborative work.
+  continuity_out: The Engineer and Tester complete their main tasks for the morning
+    and get ready for the lunch break.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+morning-work-arc-n1:
+  node_id: morning-work-arc-n1
+  parent_id: morning-work-arc
+  order: 1
+  depth: 1
+  title: Design and Marketing Prep
+  summary: While the Engineer and Tester focus on coding, the Analyst and Tech Lead
+    work on updating design documents. Meanwhile, the Marketing team creates materials
+    for an upcoming client pitch.
+  continuity_in: The Analyst, Tech Lead, and Marketing team start on their respective
+    tasks for the morning.
+  continuity_out: The Analyst and Tech Lead finish their design document updates,
+    and Marketing finalizes the pitch materials.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

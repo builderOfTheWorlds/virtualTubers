@@ -1,0 +1,17 @@
+id: build-arc-n1-002
+take: 1
+beats:
+- kind: narration
+  text: 'maren: I''ve finished reviewing the functional requirements document.'
+  speaker: ceo
+- kind: narration
+  text: 'anselm: Did you find any issues?'
+  speaker: ceo
+- kind: narration
+  text: 'maren: There are a few points that need clarifying.'
+  speaker: ceo
+- kind: narration
+  text: 'anselm: Let''s go through them together.'
+  speaker: ceo
+model: light
+generated_at: '2026-09-30T05:24:59.522628+00:00'

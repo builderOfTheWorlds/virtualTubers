@@ -1,0 +1,30 @@
+id: first-standup-arc-n1-n0-001
+take: 1
+model: light
+generated_at: '2026-09-30T13:57:29.161075+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning everyone. Today we're focusing on the new fraud detection rules
+    for our top client. Let's make it happen. ||neutral
+- kind: dialogue
+  speaker: analyst
+  text: The client needs a rule to flag transactions over $10,000 that have no merchant
+    category code. ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: We'll need to update the transaction scoring model and add a new rule in the
+    fraud engine. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: I can work on updating the scoring model. ||happy
+- kind: dialogue
+  speaker: tester
+  text: I'll write tests for the new rule and make sure it catches the right transactions.
+    ||neutral
+- kind: dialogue
+  speaker: marketing
+  text: We have a call with the client at 2 PM to walk through the new features. ||surprised
+- kind: dialogue
+  speaker: office_manager
+  text: The snack shelf is restocked and I've ordered lunch for 1 PM. ||happy

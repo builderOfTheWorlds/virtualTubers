@@ -1,0 +1,35 @@
+id: first-standup-arc-loop2-n0-004
+take: 1
+beats:
+- kind: dialogue
+  text: I think we need to focus on the explainability aspect for Halvard & Sons.
+  speaker: marketing
+- kind: dialogue
+  text: Explainability is key, but we also need to show progress on the machine-learned
+    scoring.
+  speaker: ceo
+- kind: dialogue
+  text: The rules need to be properly tested before we can think about shipping learned
+    scoring.
+  speaker: tech_lead
+- kind: dialogue
+  text: I agree with the Tech Lead. We need to make sure the rules are solid before
+    adding complexity.
+  speaker: analyst
+- kind: dialogue
+  text: I've been working on improving the velocity rule, it should help with Ostry's
+    false positives.
+  speaker: engineer
+- kind: dialogue
+  text: I'll make sure to include thorough tests for the velocity rule in the next
+    test run.
+  speaker: tester
+- kind: dialogue
+  text: While you all work on that, I'll update the changelog and do some pruning.
+  speaker: office_manager
+- kind: dialogue
+  text: I overheard some interesting things about Corvane, I'll make note of it in
+    my notebook.
+  speaker: party_member
+model: light
+generated_at: '2026-09-29T04:55:22.431524+00:00'

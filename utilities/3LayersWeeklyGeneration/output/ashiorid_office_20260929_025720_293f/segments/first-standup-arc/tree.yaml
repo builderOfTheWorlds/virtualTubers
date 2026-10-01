@@ -1,0 +1,54 @@
+first-standup-arc:
+  node_id: first-standup-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The team gathers for their first standup of the arc. The CEO gives the directive
+  summary: The team gathers for their first standup of the arc. The CEO gives the
+    directive for the day. The Analyst, Tech Lead, Engineer, Tester, Marketing, and
+    Office Manager each give updates on their progress and plans.
+  continuity_in: ''
+  continuity_out: The team disperses to their desks to begin work on the day's tasks.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - first-standup-arc-n0
+  - first-standup-arc-n1
+  slots: null
+first-standup-arc-n0:
+  node_id: first-standup-arc-n0
+  parent_id: first-standup-arc
+  order: 0
+  depth: 1
+  title: Team Standup
+  summary: The team gathers for their first standup of the arc. The CEO arrives and
+    gives the directive for the day.
+  continuity_in: The team arrives at the office and prepares for the daily standup
+    meeting.
+  continuity_out: The CEO finishes giving the directive and the other team members
+    prepare to give their updates.
+  target_words: 300
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+first-standup-arc-n1:
+  node_id: first-standup-arc-n1
+  parent_id: first-standup-arc
+  order: 1
+  depth: 1
+  title: Team Updates
+  summary: The Analyst, Tech Lead, Engineer, Tester, Marketing, and Office Manager
+    each give updates on their progress and plans for the day.
+  continuity_in: The CEO finishes giving the directive and the other team members
+    prepare to give their updates.
+  continuity_out: The team disperses to their desks to begin work on the day's tasks.
+  target_words: 400
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []

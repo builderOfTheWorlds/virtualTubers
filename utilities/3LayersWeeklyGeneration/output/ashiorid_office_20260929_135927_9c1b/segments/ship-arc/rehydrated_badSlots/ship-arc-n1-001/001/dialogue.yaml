@@ -1,0 +1,26 @@
+id: ship-arc-n1-001
+take: 1
+beats:
+- kind: dialogue
+  text: Final tweaks to the code before release day. Let's make it perfect.
+  speaker: ceo
+- kind: dialogue
+  text: We need to focus on testing the rules engine thoroughly.
+  speaker: tech_lead
+- kind: dialogue
+  text: I've reviewed the requirements, everything should align well.
+  speaker: analyst
+- kind: dialogue
+  text: Making adjustments to the scoring service as per the design docs.
+  speaker: engineer
+- kind: dialogue
+  text: Running the last set of tests, checking for any issues.
+  speaker: tester
+- kind: dialogue
+  text: Preparing the release notes and marketing material.
+  speaker: marketing
+- kind: dialogue
+  text: Ensuring the office is well-stocked and ready for release day.
+  speaker: office_manager
+model: light
+generated_at: '2026-09-30T05:31:20.244828+00:00'

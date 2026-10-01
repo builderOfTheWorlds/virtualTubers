@@ -1,0 +1,19 @@
+id: build-arc-n0-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T14:05:25.975649+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The functional requirements look good to me. Anything we need to clarify?
+- kind: dialogue
+  speaker: engineer
+  text: I've got a few questions on the API spec, but nothing major.
+- kind: dialogue
+  speaker: tester
+  text: The latest build passed all the automated tests. Just running some manual
+    exploratory testing now.
+- kind: dialogue
+  speaker: marketing
+  text: I think we're in a good place with the pitch. The key is emphasizing the time
+    savings for the end user.

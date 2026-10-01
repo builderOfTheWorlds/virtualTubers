@@ -1,0 +1,47 @@
+id: first-standup-arc-n1-n1-002
+take: 1
+model: light
+generated_at: '2026-09-30T05:19:15.105703+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: Good morning, everyone. Thank you for coming to this impromptu meeting.
+- kind: dialogue
+  speaker: tech_lead
+  text: Of course, Graham. We're happy to help in any way we can.
+- kind: dialogue
+  speaker: analyst
+  text: What's this about? Has something come up with the project?
+- kind: dialogue
+  speaker: ceo
+  text: Indeed, there has been a new development. Our client, Halvard & Sons, has
+    requested some changes to the Fraud-Stop roadmap.
+- kind: dialogue
+  speaker: tech_lead
+  text: I see. What kind of changes are we talking about?
+- kind: dialogue
+  speaker: ceo
+  text: They want us to prioritize the implementation of new features that will enhance
+    the user experience for their customers.
+- kind: dialogue
+  speaker: analyst
+  text: Specifically, which features are they requesting?
+- kind: dialogue
+  speaker: ceo
+  text: They've asked for a more intuitive interface, real-time alerts, and a comprehensive
+    reporting system.
+- kind: dialogue
+  speaker: tech_lead
+  text: Those are significant changes. It will require a thorough review of our current
+    plan.
+- kind: dialogue
+  speaker: analyst
+  text: And it will certainly impact our timeline. We'll need to re-evaluate our priorities.
+- kind: dialogue
+  speaker: ceo
+  text: Exactly. That's why I've called this meeting. I need everyone to be on the
+    same page.
+- kind: dialogue
+  speaker: tech_lead
+  text: Understood. I'll start by reviewing the requirements with the analyst and
+    see how we can

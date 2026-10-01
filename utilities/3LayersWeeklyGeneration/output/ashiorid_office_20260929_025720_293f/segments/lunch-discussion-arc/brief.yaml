@@ -1,0 +1,34 @@
+segment_id: lunch-discussion-arc
+order: 2
+loop: 0
+hours: 6
+synopsis: The team takes a break from their work to enjoy lunch together in the kitchen.
+  They discuss the morning's progress, share ideas, and enjoy a few moments of camaraderie
+  before diving back into their tasks.
+continuity_in: The morning work session concludes as the team prepares for lunch.
+continuity_out: The team finishes lunch and returns to their desks to continue working.
+carry_in: {}
+carry_out: {}
+slots: []
+nodes:
+- node_id: lunch-discussion-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: lunch-discussion-arc-n0
+  parent_id: lunch-discussion-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+- node_id: lunch-discussion-arc-n1
+  parent_id: lunch-discussion-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0

@@ -1,0 +1,32 @@
+id: ship-arc-n0-n0-001
+take: 1
+model: light
+generated_at: '2026-09-30T14:09:57.115002+00:00'
+beats:
+- kind: dialogue
+  speaker: engineer
+  text: I think we've got it. The new rule passes all the unit tests.
+- kind: dialogue
+  speaker: tester
+  text: Let's run it through the full suite, just to be sure.
+- kind: dialogue
+  speaker: engineer
+  text: Good call. Starting the tests now.
+- kind: dialogue
+  speaker: tester
+  text: While that runs, I'll double check the deployment scripts.
+- kind: dialogue
+  speaker: engineer
+  text: Sounds good. I'll update the changelog.
+- kind: dialogue
+  speaker: tester
+  text: The full test run passed! No regressions.
+- kind: dialogue
+  speaker: engineer
+  text: Excellent. Let's get this merged and out to production.
+- kind: dialogue
+  speaker: tester
+  text: I'll handle the deployment. You start on the release notes?
+- kind: dialogue
+  speaker: engineer
+  text: On it. This should be a smooth release.

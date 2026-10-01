@@ -1,0 +1,31 @@
+id: first-standup-arc-n0-003
+take: 1
+model: light
+generated_at: '2026-09-30T05:16:04.162546+00:00'
+beats:
+- kind: dialogue
+  speaker: ceo
+  text: We're starting work on the velocity rule. The goal today is to review its
+    thresholds and the time window.
+- kind: dialogue
+  speaker: tech_lead
+  text: I'll need to review any changes to the code for that rule.
+- kind: dialogue
+  speaker: analyst
+  text: I'll draft the functional requirements for the new velocity rule thresholds
+    and time window.
+- kind: dialogue
+  speaker: engineer
+  text: I can start updating the code for the velocity rule once the new requirements
+    are ready.
+- kind: dialogue
+  speaker: tester
+  text: I'll prepare test cases to verify the new velocity rule thresholds and window.
+- kind: dialogue
+  speaker: marketing
+  text: I'll update the marketing materials to reflect the changes to the velocity
+    rule.
+- kind: dialogue
+  speaker: office_manager
+  text: I'll make sure the changelog is updated and the branch is properly pruned
+    afterwards.

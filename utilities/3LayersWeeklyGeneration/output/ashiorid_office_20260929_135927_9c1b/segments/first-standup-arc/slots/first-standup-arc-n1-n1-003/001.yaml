@@ -1,0 +1,50 @@
+id: first-standup-arc-n1-n1-003
+take: 1
+model: light
+generated_at: '2026-09-30T13:59:38.399648+00:00'
+beats:
+- kind: dialogue
+  speaker: tech_lead
+  text: Can you walk me through the technical plan for this sprint?
+- kind: dialogue
+  speaker: tester
+  text: Sure, I'll go over the key points. ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: I have a question about the new rule we're adding. How will it interact with
+    the existing rules? ||neutral
+- kind: dialogue
+  speaker: tester
+  text: Good question. The new rule will run in parallel with the existing rules,
+    but it will have a higher priority. If it fires, it will override the verdicts
+    from the other rules. ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: That makes sense. What about the performance impact of adding this new rule?
+    ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: We'll need to benchmark it carefully. The new rule does some heavy computation
+    on the transaction history, which could slow things down. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: Agreed. I'll add a performance test to the suite to track the impact. ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: Perfect. And the reasons - will the new rule generate its own reasons, or
+    will it reuse the existing ones? ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: It will generate its own reasons. We're adding new reason codes specifically
+    for this rule. ||neutral
+- kind: dialogue
+  speaker: tester
+  text: But we'll make sure they fit the same format as the existing reasons, so the
+    client banks don't need to change anything on their end. ||neutral
+- kind: dialogue
+  speaker: tech_lead
+  text: Good thinking. Is there anything else we need to consider? ||neutral
+- kind: dialogue
+  speaker: engineer
+  text: One more thing - the new rule needs the transaction history to be partitioned
+    by account

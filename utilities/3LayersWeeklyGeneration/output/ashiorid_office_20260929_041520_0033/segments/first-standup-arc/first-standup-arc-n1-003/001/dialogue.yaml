@@ -1,0 +1,40 @@
+id: first-standup-arc-n1-003
+take: 1
+beats:
+- kind: dialogue
+  text: What's the big news?
+  speaker: ceo
+- kind: narration
+  text: 'gm: Not yet, Graham. They said it would be a few minutes.'
+  speaker: ceo
+- kind: dialogue
+  text: I've been checking the graphs, and I think we might have a problem with the
+    latency graph.
+  speaker: tech_lead
+- kind: dialogue
+  text: Can we see it, Anselm? I've been looking at the client requirements, and I
+    think I've found something.
+  speaker: analyst
+- kind: dialogue
+  text: We'll discuss it in the meeting. What's the current status on the demo?
+  speaker: ceo
+- kind: dialogue
+  text: It's going great, Graham. We've had a lot of interest from the clients.
+  speaker: marketing
+- kind: dialogue
+  text: I'm having some trouble with the build machine. It keeps crashing on me.
+  speaker: engineer
+- kind: dialogue
+  text: I've been trying to recreate the error, but I haven't been able to yet.
+  speaker: tester
+- kind: narration
+  text: 'gm: Okay, let''s keep working on it. We''ll get it sorted out.'
+  speaker: ceo
+- kind: dialogue
+  text: (whispering to the analyst) I think we should talk about this later.
+  speaker: party_member
+- kind: narration
+  text: 'gm: (overhearing) What''s going on here?'
+  speaker: ceo
+model: light
+generated_at: '2026-09-29T04:43:23.415510+00:00'
