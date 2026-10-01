@@ -19,7 +19,7 @@ import os
 import re
 import secrets
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, List, Optional
 from urllib.parse import quote
@@ -481,6 +481,7 @@ async def dashboard(request: Request):
         "worker_ids": WORKER_IDS,
         "log_types": log_types,
         **episode_lists,
+        "current_airing": await _current_airing(),
         "message_result": None,
         "prune_result": None,
         "themes": themes,
@@ -684,6 +685,50 @@ async def _recordings_view() -> dict:
     return {"recordings": recordings, "recordings_error": None, "recordings_budget": budget}
 
 
+_QUEUED_EPISODE_RE = re.compile(r"queued replay episode '([^']+)'")
+
+
+async def _current_airing() -> Optional[dict]:
+    """The most recent airing the roundtable accepted, so the progress bar
+    survives a page refresh / another browser instead of living only in the
+    response to the Play click that started it.
+
+    Server-side and stateless on purpose: the roundtable's own
+    "queued replay episode '<name>'" line (app/agent_handlers/replay_relay.py)
+    is already shipped to container_logs, so its newest occurrence IS the
+    current airing, whoever pressed Play and from wherever. `since` is backed
+    off one second so the queued line itself falls inside the progress
+    window (the filter is strictly-after); parse_replay_progress resets on
+    it, so a preempted airing's tail just before it can't leak in. A
+    finished/stopped airing still renders (the progress endpoint answers 286
+    and the bar freezes at its final state) — "last airing: finished" is
+    the honest status when nothing is running."""
+    result = await _mapi_request("GET", "/logs/containers", params=[
+        ("service", ROUNDTABLE_SERVICE), ("contains", PROGRESS_MARKERS["queued"]), ("limit", "1")])
+    if not result.ok:
+        log.warning("current_airing lookup failed error=%s", result.error)
+        return None
+    rows = (result.data or {}).get("logs", [])
+    if not rows:
+        log.debug("current_airing none")
+        return None
+    row = rows[-1]
+    m = _QUEUED_EPISODE_RE.search(_ANSI_RE.sub("", row.get("message") or ""))
+    try:
+        queued_at = datetime.fromisoformat(row["log_timestamp"])
+    except (KeyError, TypeError, ValueError):
+        queued_at = None
+    if not m or queued_at is None:
+        log.debug("current_airing unparseable row=%r", row)
+        return None
+    name = m.group(1)
+    since = (queued_at - timedelta(seconds=1)).isoformat()
+    log.debug("current_airing name=%s since=%s", name, since)
+    return {"name": name,
+            "progress_url": f"/replays/{quote(name)}/progress?since={quote(since)}",
+            "log_url": f"/replays/{quote(name)}/log?since={quote(since)}"}
+
+
 async def _replays_section_context(banner: Optional[dict] = None, play_result: Optional[dict] = None,
                                    approve_result: Optional[dict] = None) -> dict:
     return {
@@ -692,6 +737,9 @@ async def _replays_section_context(banner: Optional[dict] = None, play_result: O
         "upload_result": banner,
         "worker_ids": WORKER_IDS,
         "play_result": play_result,
+        # A fresh Play renders its own bar; every other re-render (refresh,
+        # upload, approve, recording delete) re-attaches to the live airing.
+        "current_airing": None if play_result and play_result.get("progress_url") else await _current_airing(),
         "approve_result": approve_result,
     }
 

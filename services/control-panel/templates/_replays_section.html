@@ -34,6 +34,25 @@
     </div>
     {% endif %}
   {% endif %}
+  {% if current_airing %}
+    {# Not from a Play click in this tab: re-attach to whatever the roundtable
+       last accepted, so a refresh / another browser still sees its status. #}
+    <div id="replay-progress" class="replay-progress"
+         hx-get="{{ current_airing.progress_url }}"
+         hx-trigger="load, every 2s" hx-swap="innerHTML">
+      <div class="replay-progress-head"><span class="mono">{{ current_airing.name }}</span>
+        <span class="replay-progress-label">loading status…</span></div>
+      <div class="replay-progress-track"><div id="replay-progress-fill" class="replay-progress-fill" style="width: 0%"></div></div>
+    </div>
+    <details class="replay-log-toggle">
+      <summary class="hint">show airing log</summary>
+      <div id="replay-log-viewer" class="log-viewer"
+           hx-get="{{ current_airing.log_url }}"
+           hx-trigger="toggle from:closest details, every 3s [this.closest('details').open]" hx-swap="innerHTML">
+        <div class="log-lines">loading log…</div>
+      </div>
+    </details>
+  {% endif %}
 
   <form class="inline-form" hx-post="/replays/upload" hx-target="#replays-section" hx-swap="outerHTML"
         hx-encoding="multipart/form-data">

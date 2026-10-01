@@ -38,6 +38,11 @@ Sections on the one dashboard page (`GET /`):
   plus a progress bar tracking the airing from request → voice prep →
   scene N/M → finished (or stopped/failed), driven by the roundtable
   director's own pane milestones since it is the airing's master clock.
+  The bar is not tied to the Play click: every load of the page (refresh,
+  another browser) re-attaches to the roundtable's newest
+  `queued replay episode '<name>'` log line (`_current_airing`), so the
+  current or last airing's status always shows; its log viewer sits in a
+  collapsed "show airing log" toggle.
   Above the library table, **Drafts awaiting review** lists episodes stored
   with `status=draft` (e.g. auto-submitted by the 3layer-generator,
   docs/draft_submitter.md) with **View / Approve / Delete** — and no Play
@@ -249,6 +254,12 @@ docker compose up -d control-panel
   lists for the office seats `tuber_0`..`tuber_7` via `resolve_show()` /
   `show_mapping()`; Play skips the Party Member (`PLAY_WORKER_IDS`). The Play
   banner's channel count is now computed ("6 channels" unchanged in dev-team mode).
+- v1.7.0 (2026-10-01) — Replay progress survives refresh / other browsers:
+  `_current_airing()` looks up the roundtable's newest "queued replay episode"
+  line (message-api `/logs/containers?contains=…&limit=1`) and the dashboard +
+  every replays-section re-render (except a fresh Play, which renders its own)
+  re-attach the progress bar and a collapsible log viewer to it. Lookup
+  failures just hide the bar.
 - v1.6.0 (2026-09-27) — Save to file on Play: a `record` select (off / roundtable /
   all 7 streams) next to each replay's Play. The size is estimated and reserved via
   message-api `POST /recordings` BEFORE any stop/request is sent; over budget → error

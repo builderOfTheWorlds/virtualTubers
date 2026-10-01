@@ -79,6 +79,8 @@ def test_dashboard_renders_worker_and_replay_data(client):
             return mapi_result(data={"moods": ["neutral", "tension", "silence"]})
         if path.startswith("/music/"):
             return mapi_result(data={"override": None, "overridden": False, "running": False, "status": None})
+        if path == "/logs/containers":
+            return mapi_result(data={"logs": []})  # no current airing
         raise AssertionError(f"unexpected call {method} {path}")
 
     client.mapi.side_effect = side_effect
@@ -265,6 +267,46 @@ def test_partial_replays_lists_episodes(client):
     assert "ep1" in resp.text and "ep2" in resp.text
 
 
+def _airing_side_effect(queued_rows):
+    async def side_effect(method, path, **kwargs):
+        if path == "/logs/containers":
+            return mapi_result(data={"logs": queued_rows})
+        return mapi_result(data={"episodes": []})
+    return side_effect
+
+
+def test_partial_replays_reattaches_progress_to_current_airing(client):
+    # A refresh / second browser has no play_result — the bar must still
+    # come back, pointed at the roundtable's newest queued airing.
+    client.mapi.side_effect = _airing_side_effect([{
+        "container_name": "virtualtubers-worker-roundtable-1", "stream": "stdout",
+        "message": "[agent:roundtable] queued replay episode 'cyber_police_day1'",
+        "log_timestamp": "2026-10-01T14:40:40.923579+00:00"}])
+    resp = client.get("/partials/replays")
+    assert 'id="replay-progress"' in resp.text
+    assert "/replays/cyber_police_day1/progress?since=2026-10-01T14%3A40%3A39.923579%2B00%3A00" in resp.text
+    lookup = [c for c in client.mapi.call_args_list if c.args[1] == "/logs/containers"][0]
+    assert ("contains", "queued replay episode") in lookup.kwargs["params"]
+    assert ("service", panel.ROUNDTABLE_SERVICE) in lookup.kwargs["params"]
+
+
+@pytest.mark.parametrize("rows", [[], [{"message": "garbage", "log_timestamp": "2026-10-01T00:00:00+00:00"}]])
+def test_partial_replays_no_airing_no_progress_bar(client, rows):
+    client.mapi.side_effect = _airing_side_effect(rows)
+    resp = client.get("/partials/replays")
+    assert 'id="replay-progress"' not in resp.text
+
+
+def test_partial_replays_airing_lookup_failure_still_renders(client):
+    async def side_effect(method, path, **kwargs):
+        if path == "/logs/containers":
+            return mapi_result(ok=False, status_code=503, error="postgres unavailable")
+        return mapi_result(data={"episodes": [{"name": "ep1"}]})
+    client.mapi.side_effect = side_effect
+    resp = client.get("/partials/replays")
+    assert resp.status_code == 200 and "ep1" in resp.text
+    assert 'id="replay-progress"' not in resp.text
+
 def test_delete_replay_success_returns_empty_body_to_remove_row(client):
     client.mapi.return_value = mapi_result(data={"name": "ep1", "deleted": True})
     resp = client.post("/replays/ep1/delete")
@@ -326,6 +368,8 @@ def _library_and_drafts(library, drafts, extra=None):
             if params.get("status") == "draft":
                 return mapi_result(data={"episodes": drafts})
             return mapi_result(data={"episodes": library})
+        if method == "GET" and path == "/logs/containers":
+            return mapi_result(data={"logs": []})  # no current airing
         raise AssertionError(f"unexpected call {method} {path} {kwargs}")
     return side_effect
 
@@ -354,7 +398,8 @@ def test_partial_replays_no_drafts_shows_empty_hint(client):
 
 def test_partial_replays_drafts_error_shown_library_still_renders(client):
     def extra(method, path, **kwargs):
-        if (kwargs.get("params") or {}).get("status") == "draft":
+        params = kwargs.get("params")
+        if isinstance(params, dict) and params.get("status") == "draft":
             return mapi_result(ok=False, status_code=503, error="drafts listing broke")
         return None
     client.mapi.side_effect = _library_and_drafts([{"name": "aired-ep"}], [], extra)
