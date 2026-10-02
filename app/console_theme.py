@@ -202,6 +202,14 @@ def osc_sequence(theme):
     return "".join(parts)
 
 
+#: OSC 110/111/112/104 reset fg/bg/cursor/palette to the terminal default.
+#: Sent into each tmux PANE: tmux (3.2+) treats OSC 10/11/4 arriving on a
+#: pane as a per-pane colour override that it paints over the outer
+#: terminal's palette — so a theme written into one pane sticks to that
+#: pane only. Resetting the panes makes them all inherit the outer xterm.
+OSC_RESET_SEQUENCE = "\x1b]110\x1b\\\x1b]111\x1b\\\x1b]112\x1b\\\x1b]104\x1b\\"
+
+
 def _main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", help="worker YAML config path (for console.theme)")
