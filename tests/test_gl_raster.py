@@ -242,3 +242,106 @@ def test_repeated_render_does_not_grow_the_mesh_cache():
     assert len(gl_raster._mesh_cache) == size_after_one, (
         "repeated renders of the same mesh grew the GPU object cache — "
         "the per-frame leak regressed")
+
+
+# ── stale-mesh regression: no real GPU needed ────────────────────────────────
+class _FakeBuffer:
+    def __init__(self, data):
+        self.data = bytes(data)
+        self.writes = 0
+
+    def write(self, data):
+        assert len(data) == len(self.data), "buffer must keep its size"
+        self.data = bytes(data)
+        self.writes += 1
+
+
+class _FakeCtx:
+    """Just enough of a moderngl context for _get_mesh_gpu_objects."""
+
+    def __init__(self):
+        self.buffers_created = 0
+        self.fbos_created = 0
+
+    def buffer(self, data):
+        self.buffers_created += 1
+        return _FakeBuffer(data)
+
+    def vertex_array(self, prog, content):
+        return ("vao", tuple(buf for buf, *_ in content))
+
+    def simple_framebuffer(self, size):
+        self.fbos_created += 1
+        return ("fbo", size)
+
+
+@pytest.fixture
+def empty_mesh_cache(monkeypatch):
+    monkeypatch.setattr(gl_raster, "_mesh_cache", {})
+    return gl_raster._mesh_cache
+
+
+def _uploaded_positions(entry):
+    _vao, pos_buf, _normals, _mats, _fbo = entry
+    return pos_buf.data
+
+
+def test_gpu_buffers_always_hold_the_mesh_passed_on_this_call(empty_mesh_cache):
+    """Regression (2026-10-02, every roundtable head's mouth moved while
+    another character spoke): the cache was keyed by id(verts)/id(faces)/
+    id(materials). FrameSource rebuilds the head mesh EVERY frame for the
+    mouth_open morph, and CPython recycles a freed array's address, so a
+    listening tile asking for a closed mouth was handed GPU buffers uploaded
+    from an earlier, open-mouthed frame. Whatever the cache does, the bytes
+    on the GPU must be THIS call's geometry."""
+    ctx = _FakeCtx()
+    for mouth in (0.9, 0.0, 0.6, 0.0, 0.0):
+        verts, faces, mats = build_codec_head("gm0", mouth_open=mouth)
+        entry = gl_raster._get_mesh_gpu_objects(ctx, None, verts, faces, mats, 64, 64)
+        expected, _n, _m = gl_raster._mesh_vertex_data(verts, faces, mats)
+        assert _uploaded_positions(entry) == expected, (
+            f"GPU buffer holds a different frame's mesh (wanted mouth_open={mouth})")
+
+
+def test_recycled_array_identity_cannot_serve_a_stale_mouth(empty_mesh_cache):
+    """The exact failure: same id()s, different contents. Mutating the
+    arrays in place keeps every id() identical while the mouth moves."""
+    ctx = _FakeCtx()
+    open_verts, faces, mats = build_codec_head("gm0", mouth_open=1.0)
+    closed_verts, _f, _m = build_codec_head("gm0", mouth_open=0.0)
+    verts = open_verts.copy()
+    gl_raster._get_mesh_gpu_objects(ctx, None, verts, faces, mats, 64, 64)
+    verts[:] = closed_verts                      # same object, closed mouth
+    entry = gl_raster._get_mesh_gpu_objects(ctx, None, verts, faces, mats, 64, 64)
+    expected, _n, _m = gl_raster._mesh_vertex_data(closed_verts, faces, mats)
+    assert _uploaded_positions(entry) == expected
+
+
+def test_reupload_reuses_the_gl_allocations(empty_mesh_cache):
+    """The fix must not bring back the gx10 per-frame allocation leak:
+    a morphing mesh re-uploads into ONE set of buffers/FBO."""
+    ctx = _FakeCtx()
+    for i in range(30):
+        verts, faces, mats = build_codec_head("gm0", mouth_open=(i % 5) / 4)
+        gl_raster._get_mesh_gpu_objects(ctx, None, verts, faces, mats, 64, 64)
+    assert ctx.buffers_created == 3
+    assert ctx.fbos_created == 1
+    assert len(empty_mesh_cache) == 1
+
+
+@skip_no_gpu
+def test_gpu_render_of_a_closed_mouth_matches_a_fresh_closed_render():
+    """End to end on a real GL context: a mesh whose array identities are
+    unchanged (the recycled-address case, forced deterministically by
+    mutating in place) but whose mouth just closed must RENDER closed."""
+    closed_verts, faces, mats = build_codec_head("gm0", mouth_open=0.0)
+    open_verts, _f, _m = build_codec_head("gm0", mouth_open=1.0)
+    reference = gl_raster.render(closed_verts, faces, mats,
+                                 width=96, height=96, rot_y=0.0)
+    verts = open_verts.copy()
+    faces2, mats2 = faces.copy(), mats.copy()
+    opened = gl_raster.render(verts, faces2, mats2, width=96, height=96, rot_y=0.0)
+    assert not np.allclose(opened, reference), "test needs a visibly open mouth"
+    verts[:] = closed_verts
+    again = gl_raster.render(verts, faces2, mats2, width=96, height=96, rot_y=0.0)
+    np.testing.assert_allclose(again, reference, atol=1e-6)

@@ -118,6 +118,14 @@ Tiles without a 3D head (ASCII faces) ignore gaze entirely.
 
 ## Changelog
 
+- **v1.0.1** (2026-10-02): Mouth invariant made explicit and a renderer bug
+  fixed. Non-speaking heads' mouths were visibly moving on the live
+  roundtable. `mouth_open` was already 0.0 for every non-speaker; the cause
+  was `gl_raster`'s id()-keyed GPU mesh cache serving a stale (open-mouthed)
+  mesh, see docs/gl_raster_benchmark.md. Also, `TileAvatar.tick` now always
+  forwards a concrete mouth value via `tile_avatar.clamp_mouth_open`:
+  None, NaN or negative means 0.0 (closed), and >1 saturates. It no longer
+  omits the argument and leaves the provider to choose.
 - **v1.0.0** (2026-09-26): Initial look-at. Listeners face the speaker, the
   speaker faces or sweeps its addressees, the mouth follows the audio
   envelope, and everything is anchored to the voice line's real start time.

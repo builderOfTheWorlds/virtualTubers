@@ -96,30 +96,39 @@ _ctx = None
 _prog = None
 _available = None
 
-#: Per-mesh GPU object cache, keyed by id(verts)/id(faces)/id(materials) +
-#: (width, height). The head mesh is completely static for a character's
-#: whole process lifetime (codec_avatar.FrameSource builds verts/faces
-#: once at construction; only camera rotation changes per frame) so there
-#: is no reason to allocate a fresh VAO/buffers/FBO on every render() call.
-#: Diagnosed on gx10 (aarch64, llvmpipe software GL, no real GPU attached
-#: to the container, 2026-09-22): per-frame create+release of GL objects
-#: under Mesa's software rasterizer leaked ~4MB/frame (34GB RSS in under
-#: 5 minutes at 30fps) and correlated with the renderer eventually
-#: producing a solid black window with no exception raised anywhere to
-#: catch — consistent with llvmpipe's internal state degrading under that
-#: allocation churn, not a one-off fluke. Caching by array identity is
-#: safe because FrameSource never replaces verts/faces/materials after
-#: __init__; a differently-shaped or brand new mesh (different id()) just
-#: gets its own cache entry, so nothing goes stale across characters.
+#: GPU object cache (VAO + vertex buffers + FBO), keyed by the mesh's
+#: TOPOLOGY SIZE (triangle count) and the output (width, height) — never
+#: by array identity, and never trusted to hold the current geometry.
+#:
+#: Why cache at all: diagnosed on gx10 (aarch64, llvmpipe software GL,
+#: 2026-09-22), per-frame create+release of GL objects leaked ~4MB/frame
+#: (34GB RSS in under 5 minutes at 30fps) and correlated with the renderer
+#: eventually going solid black. So the GL objects are allocated once and
+#: reused.
+#:
+#: Why NOT key by id(verts)/id(faces)/id(materials) (the original design):
+#: codec_avatar.FrameSource REBUILDS the head mesh every frame (the
+#: mouth_open/emotion morph channels move the mouth/brow/eye quads), and
+#: CPython hands a freed array's address straight to the next allocation.
+#: An id()-keyed lookup then matched a cache entry uploaded from an
+#: EARLIER frame's mesh, and the GPU drew that stale geometry — e.g. a
+#: listening roundtable tile asking for mouth_open=0.0 was served a mesh
+#: built while it (or anything with a recycled address) was mid-word, so
+#: every head's mouth kept flapping whether it was speaking or not
+#: (2026-10-02, live on the roundtable). Keying by content instead would be
+#: correct but unbounded (a new entry per distinct mouth/emotion pose).
+#:
+#: So: the cache only owns the ALLOCATIONS, and _get_mesh_gpu_objects
+#: re-uploads the caller's current verts/normals/materials into those
+#: buffers on EVERY call (Buffer.write into a same-sized buffer — no
+#: allocation, so the leak above cannot come back). A few hundred
+#: triangles is a few KB per frame; correctness is not negotiable here.
 _mesh_cache = {}
 
 
-def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
-    key = (id(verts), id(faces), id(materials), width, height)
-    cached = _mesh_cache.get(key)
-    if cached is not None:
-        return cached
-
+def _mesh_vertex_data(verts, faces, materials):
+    """Per-vertex (positions, flat normals, material ids) as float32 bytes
+    — exactly what the three vertex buffers hold for this mesh."""
     tri_verts = verts[faces]                                   # (M,3,3)
     tri_normals = np.cross(tri_verts[:, 1] - tri_verts[:, 0],
                            tri_verts[:, 2] - tri_verts[:, 0])   # (M,3)
@@ -127,10 +136,31 @@ def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
     tri_normals = tri_normals / np.maximum(mag, 1e-9)
     tri_normals = np.repeat(tri_normals, 3, axis=0)             # (M*3,3)
     tri_mats = np.repeat(materials.astype(np.float32), 3)       # (M*3,)
+    return (tri_verts.reshape(-1, 3).astype("f4").tobytes(),
+            tri_normals.astype("f4").tobytes(),
+            tri_mats.astype("f4").tobytes())
 
-    pos_buf = ctx.buffer(tri_verts.reshape(-1, 3).astype("f4").tobytes())
-    normal_buf = ctx.buffer(tri_normals.astype("f4").tobytes())
-    mat_buf = ctx.buffer(tri_mats.astype("f4").tobytes())
+
+def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
+    """GPU objects for this frame, holding THIS call's geometry.
+
+    Allocates once per (triangle count, width, height) and re-uploads the
+    vertex data every call — see _mesh_cache's comment for why reusing
+    previously uploaded geometry (keyed by array identity) drew stale
+    mouths on the roundtable."""
+    pos_bytes, normal_bytes, mat_bytes = _mesh_vertex_data(verts, faces, materials)
+    key = (len(faces), width, height)
+    cached = _mesh_cache.get(key)
+    if cached is not None:
+        vao, pos_buf, normal_buf, mat_buf, fbo = cached
+        pos_buf.write(pos_bytes)
+        normal_buf.write(normal_bytes)
+        mat_buf.write(mat_bytes)
+        return cached
+
+    pos_buf = ctx.buffer(pos_bytes)
+    normal_buf = ctx.buffer(normal_bytes)
+    mat_buf = ctx.buffer(mat_bytes)
     vao = ctx.vertex_array(prog, [
         (pos_buf, "3f", "in_pos"),
         (normal_buf, "3f", "in_normal"),

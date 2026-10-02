@@ -83,6 +83,22 @@ def _as_int(value, default=0):
         return default
 
 
+def clamp_mouth_open(value):
+    """The mouth openness a tile head is actually given: a float in 0..1.
+
+    None, garbage, NaN and anything <= 0 are CLOSED (0.0); > 1 saturates.
+    A tile that is not speaking has no lip-sync value at all, and "no
+    value" must render as a shut mouth, never as whatever the provider or
+    a previous frame would otherwise show."""
+    try:
+        value = float(value)
+    except (TypeError, ValueError):
+        return 0.0
+    if value != value or value <= 0.0:  # NaN, closed, or negative
+        return 0.0
+    return min(1.0, value)
+
+
 def tile_avatar_rect(pane_rect, avatar_fraction=DEFAULT_AVATAR_FRACTION,
                      window_px=DEFAULT_AVATAR_WINDOW_PX):
     """Pixel rect (x, y, w, h) for the 3D head window of the tile whose
@@ -442,9 +458,12 @@ class TileAvatar:
         ASCII face). Never raises.
 
         `gaze` ((yaw, pitch) radians, app/gaze.py) turns the head toward
-        another tile; `mouth_open` (0..1) drives the mouth from the current
-        voice line's audio envelope. Both are only forwarded when given, so
-        a provider predating them keeps working."""
+        another tile; it is only forwarded when given, so a provider
+        predating it keeps working. `mouth_open` (0..1) drives the mouth
+        from the current voice line's audio envelope and is ALWAYS
+        forwarded as a concrete, clamped number: None (no lip-sync source,
+        i.e. this tile is not the one speaking) means CLOSED, 0.0,
+        explicitly, rather than leaving the provider to pick a default."""
         if not self.active or self._provider is None:
             return False
         try:
@@ -452,11 +471,9 @@ class TileAvatar:
             # its TEXT subpanel, drawn by tile_pane as terminal text. Passing
             # captions here would only trip codec_avatar's "not implemented
             # for the pixel-window path" warning once per tile.
-            extra = {}
+            extra: dict = {"mouth_open": clamp_mouth_open(mouth_open)}
             if gaze is not None:
                 extra["gaze"] = gaze
-            if mouth_open is not None:
-                extra["mouth_open"] = mouth_open
             self._provider.render_tick(expression, None, **extra)
             return True
         except Exception as exc:  # noqa: BLE001 — see the class docstring
@@ -514,6 +531,7 @@ __all__ = [
     "DEFAULT_AVATAR_FRACTION",
     "DEFAULT_AVATAR_WINDOW_PX",
     "MIN_AVATAR_ROWS",
+    "clamp_mouth_open",
     "TILE_AVATAR_FPS",
     "TILE_AVATAR_BACKGROUND",
     "TILE_GEOMETRY_RETRY_S",

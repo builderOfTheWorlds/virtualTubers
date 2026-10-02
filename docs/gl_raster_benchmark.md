@@ -64,6 +64,18 @@ render call fast enough to never be the bottleneck. 12-14fps isn't.
   gracefully without a working GL context, but they're installed
   unconditionally (not import-guarded at the requirements level) since
   neither pulls in anything heavy.
+- **GPU object cache (2026-10-02 fix).** `render()` keeps one VAO/buffer/FBO
+  set per `(triangle count, width, height)` and **re-uploads the vertex data
+  on every call** (`Buffer.write`, so nothing is allocated). The original
+  cache was keyed by `id(verts)/id(faces)/id(materials)`, which assumed the
+  mesh never changes. But `FrameSource` rebuilds it every frame for the
+  `mouth_open`/`emotion` morphs, and CPython reuses freed addresses. Recycled
+  ids made the GPU draw an earlier frame's mesh, so on the roundtable
+  **every head's mouth moved while another character was speaking**.
+  Regression tests: `test_gpu_buffers_always_hold_the_mesh_passed_on_this_call`,
+  `test_recycled_array_identity_cannot_serve_a_stale_mouth`,
+  `test_reupload_reuses_the_gl_allocations` (no GPU needed), and
+  `test_gpu_render_of_a_closed_mouth_matches_a_fresh_closed_render` (real GL).
 
 ## Why a separate window instead of drawing into the tmux pane
 

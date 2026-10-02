@@ -228,13 +228,18 @@ class _FakeProvider:
         self.avatar_config = avatar_config
         self.name = name
         self.ticks = []
+        self.mouths = []
         self.fail_on_tick = fail_on_tick
         _FakeProvider.instances.append(self)
 
-    def render_tick(self, expression, bubble_lines):
+    # Same signature as the real CodecAvatarProvider.render_tick — the only
+    # provider TileAvatar ever constructs.
+    def render_tick(self, expression, bubble_lines, mouth_open=0.0,
+                    emotion="neutral", gaze=None):
         if self.fail_on_tick:
             raise RuntimeError("gpu worker died")
         self.ticks.append(expression)
+        self.mouths.append(mouth_open)
 
 
 @pytest.fixture
@@ -321,6 +326,32 @@ def test_close_on_a_never_constructed_head_does_not_raise(monkeypatch):
     monkeypatch.setattr(codec_avatar, "CodecAvatarProvider",
                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("nope")))
     tile_avatar.TileAvatar("tuber_1", "gm0", (0, 0, TILE_W, TILE_H)).close()
+
+
+# ── lip-sync invariant: a non-speaking head's mouth is explicitly closed ─────
+def test_tick_without_mouth_open_sends_an_explicit_closed_mouth(fake_provider):
+    """Regression (2026-10-02, every roundtable head's mouth moved): a tile
+    that is not speaking has no lip-sync value. That must reach the renderer
+    as an explicit 0.0, never be left out for the provider to default."""
+    avatar = tile_avatar.TileAvatar("tuber_1", "gm0", (0, 0, TILE_W, TILE_H))
+    assert avatar.tick("idle") is True
+    assert avatar.tick("idle", gaze=(0.1, 0.0), mouth_open=None) is True
+    assert fake_provider.instances[-1].mouths == [0.0, 0.0]
+
+
+@pytest.mark.parametrize("value, expected", [
+    (None, 0.0), (0.0, 0.0), (-0.3, 0.0), (float("nan"), 0.0), ("junk", 0.0),
+    (0.42, 0.42), (1.0, 1.0), (3.5, 1.0), ("0.5", 0.5),
+])
+def test_clamp_mouth_open_closes_anything_that_is_not_a_real_opening(value, expected):
+    assert tile_avatar.clamp_mouth_open(value) == pytest.approx(expected)
+
+
+def test_tick_forwards_the_speakers_mouth_value_clamped(fake_provider):
+    avatar = tile_avatar.TileAvatar("tuber_1", "gm0", (0, 0, TILE_W, TILE_H))
+    avatar.tick("speaking", mouth_open=0.7)
+    avatar.tick("speaking", mouth_open=1.8)
+    assert fake_provider.instances[-1].mouths == [pytest.approx(0.7), 1.0]
 
 
 # ── the factory: one code path for the caller ────────────────────────────────
