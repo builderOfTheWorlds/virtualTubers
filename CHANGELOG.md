@@ -4,6 +4,19 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**2026-10-02 — faster voice prep (GPU + CPU thread fix) and resumable
+prep.** Local Piper on a worker was ~4 s/line because ONNX Runtime ran 20
+threads (host cores) under the container's 2-CPU quota; `voice.cpu_threads:
+auto` caps it at the quota (0.43-0.55 s/line, no GPU). New opt-in shared
+GPU service `tts-gpu` (`services/tts-gpu`, compose profile `tts-gpu`,
+`TTS_BASE_URL=http://tts-gpu:5000`): 0.13 s/line, ~1.6 GiB, same voices;
+workers fall back to local CPU if it is down. Fresh voiced airings now
+checkpoint each finished scene to Postgres (`voice_prep_checkpoint`) and
+resume after a restart. Needs worker image rebuild + tts-gpu build
+([docs/tts_client.md](docs/tts_client.md),
+[docs/tts_gpu_service.md](docs/tts_gpu_service.md),
+[docs/voice_prep_checkpoint.md](docs/voice_prep_checkpoint.md)).
+
 **2026-09-27 — save replays to file.** Opt-in per Play (control panel
 "Save to file": off / roundtable / all 7 streams). The broadcaster tees its
 already-encoded output to a local UDP MPEG-TS tap (`onfail=ignore`, no

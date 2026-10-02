@@ -95,6 +95,9 @@ def wav_duration(path: str | Path) -> float
 | `provider` | all | `piper` \| `kokoro` (alias of piper) \| `openai` \| `elevenlabs` \| `fake` (testing — see below) \| `null` |
 | `model_path` | piper | Path to the `.onnx` voice model (`/data/voices/...` in-container). In remote mode, only its filename stem is sent (as `voice`) — the file itself doesn't need to exist in this container. |
 | `base_url` | piper | Optional. Set to synthesize against a remote `piper.http_server` instead of locally (see below). Blank/unset: local single-session synthesis. |
+| `remote_fallback` | piper + `base_url` | Default `true`. A failed/unreachable remote synthesizes that line locally on CPU (same `.onnx`) instead of failing the scene; the remote is then skipped for 60 s (`REMOTE_RETRY_AFTER_S`) so a dead server can't add a connect timeout to every line. Needs `model_path` to exist locally; otherwise the remote error propagates. |
+| `use_cuda` | piper (local) | Default `false`. Load the voice with ONNX Runtime's CUDA provider. Falls back to CPU with one `event=cuda_unavailable` line when the installed onnxruntime has no working CUDA (always the case in the stock worker image on GB10 — see "GPU" below). Env `TTS_USE_CUDA` overrides. |
+| `cpu_threads` | piper (local CPU) | Default `auto` = the container's cgroup CPU quota, rounded up (2 under compose's `cpus: "2.0"`). `0`/`default` = ORT's own default (host core count — slow under a quota, see below); `N` = exactly N. Env `TTS_CPU_THREADS` overrides. |
 | `rate` | piper | Speaking rate multiplier (1.0 = normal). Mapped to Piper's `length_scale` (inverse: higher rate = lower length_scale = faster), applied in both local and remote mode. |
 | `voice_id` | openai, elevenlabs | Cloud voice name / dashboard voice ID |
 | `tts_model` | openai | `tts-1` (default) or `tts-1-hd` |
@@ -150,6 +153,38 @@ server can host every worker's voice and pick the right one per request —
 no per-worker server needed. Local mode (blank/unset `base_url`, the
 default) needs no server at all; it's purely in-process.
 
+## GPU and CPU performance (2026-10-02, argyre / GB10)
+
+Measured on ~44-word lines (the typical replay line), 22 kHz Piper voices:
+
+| Path | s / line | Notes |
+|---|---|---|
+| Worker image, `--cpus 2.0`, ORT default threads (pre-v1.4 behavior) | 3.8-5.0 | ORT sizes its pool to the host's 20 cores; 20 threads under a 2-CPU CFS quota spend most of their time throttled. This is the ~4 s/scene seen on the live roundtable prep. |
+| Worker image, `--cpus 2.0`, `cpu_threads: auto` (=2) | 0.43-0.55 | v1.4 default — ~9x faster with no GPU at all. |
+| Shared `tts-gpu` service (CUDA), over HTTP from a worker | 0.13-0.19 | `TTS_BASE_URL=http://tts-gpu:5000` (docs/tts_gpu_service.md). |
+
+**Why the GPU path is a separate service, not `use_cuda` in the worker:**
+onnxruntime-gpu publishes aarch64 wheels only for CPython 3.11+ on
+manylinux_2_34 (glibc ≥ 2.34). The worker image is Ubuntu 22.04 (glibc 2.35
+is fine) but `replay_pane.py` runs on its system python3.10, so there is no
+installable onnxruntime-gpu wheel for it. The `tts-gpu` image is
+`python:3.12-slim-bookworm` + `onnxruntime-gpu[cuda,cudnn]==1.30.0` (CUDA 13
+runtime + cuDNN 9 as pip wheels); verified running CUDAExecutionProvider on
+the GB10 (sm_121, driver 580 / CUDA 13.0). One shared process also means one
+CUDA context (~1.6 GiB unified memory with all 9 voices) instead of one per
+worker. Same `.onnx` files, so the voices do not change.
+
+Pitfall: with pip-installed CUDA libs, ORT reports `CUDAExecutionProvider`
+as available but every Conv then fails with `dlopen failed for
+libcudnn.so` unless `onnxruntime.preload_dlls()` runs first —
+`_cuda_provider_available()` and the service both call it.
+
+Every `build_tts_client()` logs one line naming the active path, e.g.
+`[tts_client] event=tts_client_ready provider=piper mode=remote
+base_url=http://tts-gpu:5000 remote_fallback=True cpu_threads=2`, and each
+model load logs `event=voice_loaded ... provider=CPUExecutionProvider
+cpu_threads=2` (or `CUDAExecutionProvider`).
+
 ## Usage Examples
 
 Replay narration (how `replay.py`/`revoice.py` use it):
@@ -201,6 +236,16 @@ cancels the show.
 
 ## Changelog
 
+- **v1.4.0** (2026-10-02): GPU + CPU speedups and resilience. ORT intra-op
+  threads now default to the cgroup CPU quota (`voice.cpu_threads: auto`,
+  `TTS_CPU_THREADS`) — ~9x faster local CPU synthesis under compose's
+  2-CPU cap. New `voice.use_cuda`/`TTS_USE_CUDA` (in-process CUDA with
+  automatic CPU fallback). Remote mode gained `voice.remote_fallback`
+  (default on: local CPU fallback + 60 s circuit breaker). New shared
+  `tts-gpu` service (`services/tts-gpu`, docs/tts_gpu_service.md) as the
+  GB10 GPU path. Structured `event=tts_client_ready` / `voice_loaded` /
+  `remote_failed` / `cuda_unavailable` log lines. Voice cache key now
+  includes provider + thread count.
 - **v1.3.1** (2026-07-20): Fixed multi-persona duets (e.g.
   `replays/sample.json`'s 6-way mic-check fixture) where every persona
   except `boss` sounded identical — the director's `voice.speakers` map

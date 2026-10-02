@@ -81,6 +81,27 @@ CREATE INDEX IF NOT EXISTS idx_voiced_narration_episode ON voiced_narration (epi
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio BYTEA;
 ALTER TABLE voiced_narration ADD COLUMN IF NOT EXISTS audio_duration_s DOUBLE PRECISION;
 
+-- Resumable replay voice prep (docs/voice_prep_checkpoint.md). One row per
+-- finished scene of an IN-PROGRESS fresh airing prep; deleted once the
+-- airing is saved to voiced_narration, pruned after 14 days. Kept out of
+-- voiced_narration so load_latest_airing never sees a half-done airing.
+-- Created on first use by app/narration_store.py CheckpointStore
+-- (CHECKPOINT_DDL) — keep the two in sync.
+CREATE TABLE IF NOT EXISTS voice_prep_checkpoint (
+    prep_key         TEXT NOT NULL,
+    scene_index      INTEGER NOT NULL,
+    scene_hash       TEXT NOT NULL,
+    episode          TEXT NOT NULL,
+    worker_id        TEXT NOT NULL,
+    text             TEXT NOT NULL,
+    audio            BYTEA,
+    audio_duration_s DOUBLE PRECISION,
+    updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (prep_key, scene_index)
+);
+CREATE INDEX IF NOT EXISTS idx_voice_prep_checkpoint_updated
+    ON voice_prep_checkpoint (updated_at);
+
 -- The "Rerun Theater" episode library (see docs/episode_store.md). One row
 -- per pre-built, pre-redacted episode script. Episodes used to be JSON
 -- files bind-mounted into every worker at /data/replays; they are now

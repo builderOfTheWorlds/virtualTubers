@@ -68,6 +68,11 @@ services:
       # moves onto a separate, more powerful machine. Unset/empty
       # synthesizes locally (single resident model per worker process).
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/coder.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -161,6 +166,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/coder-native.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -236,6 +246,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/coder-opencode.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -311,6 +326,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/coder-aider.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -384,6 +404,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
       # Task backlog, gitea source only (docs/task_backlog.md): issues token
       # (read:issue + write:issue). Deliberately passed to the manager and no
       # other service. Empty = gitea backlog idles with a WARN. A `file`
@@ -461,6 +486,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/tester.yaml:/config/worker.yaml:ro
       - world-state:/data/world-state
@@ -558,6 +588,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/tuber_0.yaml:/config/worker.yaml:ro
       # The GM speaks on its own channel, so it synthesizes its own audio.
@@ -656,6 +691,11 @@ services:
       REPLAY_SKIP_LLM: ${REPLAY_SKIP_LLM:-}
       TTS_PROVIDER: ${TTS_PROVIDER:-}
       TTS_BASE_URL: ${TTS_BASE_URL:-}
+      # GPU/CPU TTS knobs + resumable prep (docs/tts_client.md,
+      # docs/voice_prep_checkpoint.md). Unset = worker config.
+      TTS_USE_CUDA: ${TTS_USE_CUDA:-}
+      TTS_CPU_THREADS: ${TTS_CPU_THREADS:-}
+      VOICE_PREP_CHECKPOINT: ${VOICE_PREP_CHECKPOINT:-}
       # Background music (config/workers/roundtable.yaml `music:`). Set
       # MUSIC_ENABLED=0 in .env to switch it off without editing config.
       MUSIC_ENABLED: ${MUSIC_ENABLED:-}
@@ -690,6 +730,36 @@ services:
     depends_on:
       - rtmp-preview
       - redis
+
+  # ── Shared GPU Piper TTS (docs/tts_gpu_service.md) ──────────────────────
+  # One CUDA process serving every worker's Piper voices over HTTP, same
+  # .onnx files as the workers' CPU path (so the voices sound the same).
+  # Opt-in twice: the `tts-gpu` profile keeps a plain `compose up` from
+  # starting it, and workers only use it once .env sets
+  # TTS_BASE_URL=http://tts-gpu:5000. A worker whose request fails falls
+  # back to local CPU synthesis (voice.remote_fallback, default on).
+  # Measured on gx10 2026-10-02: ~0.13 s per ~44-word line vs 0.43-0.55 s
+  # on capped local CPU and ~4-5 s on the old uncapped-thread CPU path;
+  # ~1.6 GiB of unified memory with all 9 voices loaded.
+  tts-gpu:
+    image: vtube-tts-gpu:latest
+    build:
+      context: ./services/tts-gpu
+    profiles: ["tts-gpu"]
+    command: ["--data-dir", "/data/voices", "--port", "5000", "--preload", "all"]
+    volumes:
+      - ${REPO_ROOT:-.}/voices:/data/voices:ro
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4g
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   message-logger:
     image: virtualtubers-message-logger:latest

@@ -175,3 +175,138 @@ def load_airing(message_id):
     if not rows:
         return None
     return [_row_to_dict(row) for row in rows]
+
+
+# ── Voice-prep checkpoint (docs/narration_store.md "Prep checkpoint") ────────
+# A fresh voiced airing's prep (LLM line + TTS per scene) used to live only
+# in a TemporaryDirectory until EVERY scene was done — a 4600-scene episode
+# at ~4 s/scene is ~5 hours of work that a container restart threw away.
+# Each finished scene is now upserted here as it completes; a restarted prep
+# reads these rows back and skips every scene whose scene_hash still
+# matches. Deliberately NOT voiced_narration: partial rows there would be
+# picked up by load_latest_airing as the "latest" airing and break reuse of
+# earlier complete airings. Rows are deleted once the finished airing has
+# been saved to voiced_narration, and pruned after CHECKPOINT_TTL_DAYS.
+
+CHECKPOINT_TTL_DAYS = 14
+
+CHECKPOINT_DDL = """
+CREATE TABLE IF NOT EXISTS voice_prep_checkpoint (
+    prep_key         TEXT NOT NULL,
+    scene_index      INTEGER NOT NULL,
+    scene_hash       TEXT NOT NULL,
+    episode          TEXT NOT NULL,
+    worker_id        TEXT NOT NULL,
+    text             TEXT NOT NULL,
+    audio            BYTEA,
+    audio_duration_s DOUBLE PRECISION,
+    updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (prep_key, scene_index)
+);
+CREATE INDEX IF NOT EXISTS idx_voice_prep_checkpoint_updated
+    ON voice_prep_checkpoint (updated_at);
+"""
+
+CHECKPOINT_SAVE_SQL = """
+INSERT INTO voice_prep_checkpoint (
+    prep_key, scene_index, scene_hash, episode, worker_id, text, audio,
+    audio_duration_s
+) VALUES (
+    %(prep_key)s, %(scene_index)s, %(scene_hash)s, %(episode)s,
+    %(worker_id)s, %(text)s, %(audio)s, %(audio_duration_s)s
+)
+ON CONFLICT (prep_key, scene_index) DO UPDATE
+    SET scene_hash = EXCLUDED.scene_hash,
+        text = EXCLUDED.text,
+        audio = EXCLUDED.audio,
+        audio_duration_s = EXCLUDED.audio_duration_s,
+        updated_at = now();
+"""
+
+# Metadata only — audio is fetched per scene (CHECKPOINT_AUDIO_SQL) so a
+# resume of a multi-GB episode never pulls every WAV into memory at once.
+CHECKPOINT_INDEX_SQL = """
+SELECT scene_index, scene_hash, text, audio IS NOT NULL, audio_duration_s
+FROM voice_prep_checkpoint
+WHERE prep_key = %(prep_key)s
+ORDER BY scene_index;
+"""
+
+CHECKPOINT_AUDIO_SQL = """
+SELECT audio FROM voice_prep_checkpoint
+WHERE prep_key = %(prep_key)s AND scene_index = %(scene_index)s;
+"""
+
+CHECKPOINT_CLEAR_SQL = "DELETE FROM voice_prep_checkpoint WHERE prep_key = %(prep_key)s;"
+
+CHECKPOINT_PRUNE_SQL = (
+    "DELETE FROM voice_prep_checkpoint "
+    "WHERE updated_at < now() - make_interval(days => %(days)s);"
+)
+
+
+class CheckpointStore:
+    """One open connection for a whole prep pass (a 4600-scene prep must
+    not open 4600 connections). Every method raises on DB failure — the
+    caller (voice_prep_checkpoint.PrepCheckpoint) turns that into "stop
+    checkpointing, keep preparing"."""
+
+    def __init__(self):
+        self._conn = None
+
+    def _cursor(self):
+        if self._conn is None or self._conn.closed:
+            self._conn = _connect()
+        return self._conn.cursor()
+
+    def ensure_schema(self, prune_days=CHECKPOINT_TTL_DAYS):
+        with self._cursor() as cur:
+            cur.execute(CHECKPOINT_DDL)
+            if prune_days:
+                cur.execute(CHECKPOINT_PRUNE_SQL, {"days": int(prune_days)})
+
+    def load_index(self, prep_key):
+        """{scene_index: {"scene_hash", "text", "has_audio",
+        "audio_duration_s"}} for every checkpointed scene of `prep_key`."""
+        with self._cursor() as cur:
+            cur.execute(CHECKPOINT_INDEX_SQL, {"prep_key": prep_key})
+            rows = cur.fetchall()
+        return {
+            row[0]: {"scene_hash": row[1], "text": row[2], "has_audio": bool(row[3]),
+                     "audio_duration_s": row[4]}
+            for row in rows
+        }
+
+    def load_audio(self, prep_key, scene_index):
+        with self._cursor() as cur:
+            cur.execute(CHECKPOINT_AUDIO_SQL,
+                        {"prep_key": prep_key, "scene_index": scene_index})
+            row = cur.fetchone()
+        return bytes(row[0]) if row and row[0] is not None else None
+
+    def save_scene(self, prep_key, scene_index, scene_hash, episode, worker_id,
+                   text, audio_bytes, duration):
+        import psycopg2
+
+        with self._cursor() as cur:
+            cur.execute(CHECKPOINT_SAVE_SQL, {
+                "prep_key": prep_key,
+                "scene_index": scene_index,
+                "scene_hash": scene_hash,
+                "episode": episode,
+                "worker_id": worker_id,
+                "text": text or "",
+                "audio": psycopg2.Binary(audio_bytes) if audio_bytes is not None else None,
+                "audio_duration_s": duration,
+            })
+
+    def clear(self, prep_key):
+        with self._cursor() as cur:
+            cur.execute(CHECKPOINT_CLEAR_SQL, {"prep_key": prep_key})
+
+    def close(self):
+        if self._conn is not None:
+            try:
+                self._conn.close()
+            finally:
+                self._conn = None

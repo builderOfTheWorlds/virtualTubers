@@ -50,6 +50,7 @@ import episode_store
 import narration_store
 import relay_io
 import stream_recorder
+import voice_prep_checkpoint
 from agent_state import resolve_state_path
 from message_bus import MessageProducer, build_message, resolve
 from replay import Pacer, Palette, Performer, prepare_voiced_show
@@ -281,16 +282,47 @@ def draw_idle_screen(worker_name):
     print(' waiting for a replay_request ("perform episode X")…')
 
 
-def prepare_voice(script, config, workdir, worker_name, speed):
+def open_prep_checkpoint(episode, config, worker_name, speed):
+    """Resumable-prep handle for one fresh voiced airing of `episode`
+    (docs/voice_prep_checkpoint.md), or None when checkpointing is off or
+    the narration store is unavailable. Never raises."""
+    if not config or not ((config.get("voice") or {}).get("provider")
+                          or os.environ.get("TTS_PROVIDER")):
+        return None
+    bus_config = (config or {}).get("message_bus") or {}
+    return voice_prep_checkpoint.build_checkpoint(
+        episode, worker_name, config, speed=speed,
+        worker_id=bus_config.get("worker_id", worker_name))
+
+
+def finish_prep_checkpoint(checkpoint, persisted):
+    """Close the pass's checkpoint; drop its rows only once the finished
+    airing is safely in voiced_narration (`persisted` truthy) — if that save
+    failed, the rows still let the next attempt skip straight to airing."""
+    if checkpoint is None:
+        return
+    try:
+        if persisted:
+            checkpoint.clear()
+    finally:
+        checkpoint.close()
+
+
+def prepare_voice(script, config, workdir, worker_name, speed, checkpoint=None):
     """Best-effort per-airing narration pass (docs/revoice.md). Returns a
     voiced show, or None for a silent performance — voice being disabled,
-    unconfigured, or broken must never stop an episode from airing."""
+    unconfigured, or broken must never stop an episode from airing.
+
+    `checkpoint` (see open_prep_checkpoint) makes the pass resume where a
+    crashed/restarted prep left off instead of starting over."""
     if not config:
         return None
+    extra = {"checkpoint": checkpoint} if checkpoint is not None else {}
     try:
         show = prepare_voiced_show(
             script, config, workdir, worker_name=worker_name, speed=speed,
             progress=lambda message: print(f"[replay_pane] preparing: {message}"),
+            **extra,
         )
     except Exception as exc:
         print(f"[replay_pane] voice preparation failed ({exc}) — silent show",
@@ -299,6 +331,9 @@ def prepare_voice(script, config, workdir, worker_name, speed):
     if show is not None:
         voiced = sum(1 for scene in show if scene.get("audio"))
         print(f"[replay_pane] tonight's episode: {len(show)} scenes, {voiced} voiced")
+        if checkpoint is not None and checkpoint.restored:
+            print(f"[replay_pane] resumed prep: {checkpoint.restored} scenes restored "
+                  f"from checkpoint, {checkpoint.saved} newly prepared")
     return show
 
 
@@ -726,11 +761,18 @@ def perform_director_request(request, worker_name, state_path, self_id,
             if reused is not None:
                 show, airing_id = reused, rows[0]["message_id"]
         if show is None:
-            show = prepare_voice(script, config, workdir, name, speed)
-            if show is None:
-                return refuse("voice preparation failed or is disabled for this worker")
-            message_id = publish_narration(show, config, episode_name, name)
-            airing_id = persist_narration(message_id, show, config, episode_name, name)
+            checkpoint = open_prep_checkpoint(episode_name, config, name, speed)
+            persisted = False
+            try:
+                show = prepare_voice(script, config, workdir, name, speed,
+                                     checkpoint=checkpoint)
+                if show is None:
+                    return refuse("voice preparation failed or is disabled for this worker")
+                message_id = publish_narration(show, config, episode_name, name)
+                airing_id = persist_narration(message_id, show, config, episode_name, name)
+                persisted = airing_id is not None
+            finally:
+                finish_prep_checkpoint(checkpoint, persisted)
             if airing_id is None:
                 return refuse("failed to persist duet airing for followers to load")
 
@@ -1128,9 +1170,15 @@ def perform_request(request, worker_name, state_path, default_speed=1.0,
             if request.get("narration") == "reuse":
                 show = load_reused_show(script, episode_name, workdir)
             if show is None:
-                show = prepare_voice(script, config, workdir, name, speed)
-                message_id = publish_narration(show, config, episode_name, name)
-                persist_narration(message_id, show, config, episode_name, name)
+                checkpoint = open_prep_checkpoint(episode_name, config, name, speed)
+                persisted = None
+                try:
+                    show = prepare_voice(script, config, workdir, name, speed,
+                                         checkpoint=checkpoint)
+                    message_id = publish_narration(show, config, episode_name, name)
+                    persisted = persist_narration(message_id, show, config, episode_name, name)
+                finally:
+                    finish_prep_checkpoint(checkpoint, persisted)
         # Recording spans the performance only — not voice prep, which can
         # take minutes of LLM/TTS work on an idle screen and isn't part of
         # the size estimate (app/recording_budget.py).

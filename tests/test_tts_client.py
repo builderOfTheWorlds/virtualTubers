@@ -296,3 +296,203 @@ def test_fake_duration_floored_for_very_short_text(tmp_path):
     client = TTSClient({"provider": "fake"})
     narration = client.synthesize("hi", tmp_path / "out.wav")
     assert narration.duration >= tts_client.FAKE_MIN_DURATION_S
+
+
+# ── CPU thread cap / CUDA opt-in / remote fallback (docs/tts_client.md) ──────
+
+@pytest.mark.parametrize("content,expected", [
+    ("200000 100000\n", 2),
+    ("150000 100000\n", 2),   # 1.5 CPUs rounds UP
+    ("50000 100000\n", 1),
+    ("max 100000\n", None),   # unlimited
+    ("garbage\n", None),
+])
+def test_cgroup_cpu_quota_parsing(tmp_path, content, expected):
+    path = tmp_path / "cpu.max"
+    path.write_text(content)
+    assert tts_client._cgroup_cpu_quota(path) == expected
+
+
+def test_cgroup_cpu_quota_missing_file_is_none(tmp_path):
+    assert tts_client._cgroup_cpu_quota(tmp_path / "nope") is None
+
+
+@pytest.mark.parametrize("value,expected", [
+    (None, 2), ("", 2), ("auto", 2), ("AUTO", 2),
+    (0, None), ("0", None), ("default", None),
+    (3, 3), ("4", 4), (-1, None), ("lots", 2),
+])
+def test_resolve_cpu_threads(value, expected, monkeypatch):
+    monkeypatch.setattr(tts_client, "_cgroup_cpu_quota", lambda *a: 2)
+    assert tts_client.resolve_cpu_threads(value) == expected
+
+
+class _Session:
+    def __init__(self, providers):
+        self._providers = providers
+
+    def get_providers(self):
+        return self._providers
+
+
+def _recording_voice_class(load_kwargs):
+    class _Voice(FakeVoice):
+        @classmethod
+        def load(cls, model_path, **kwargs):
+            load_kwargs.append(kwargs)
+            voice = cls(model_path)
+            voice.session = _Session(["CUDAExecutionProvider" if kwargs.get("use_cuda")
+                                      else "CPUExecutionProvider"])
+            return voice
+    return _Voice
+
+
+def test_use_cuda_falls_back_to_cpu_when_provider_missing(tmp_path, monkeypatch, capsys):
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    load_kwargs = []
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(tts_client, "_cuda_provider_available", lambda: False)
+    monkeypatch.setattr(tts_client, "_with_thread_cap", lambda voice, *a: voice)
+    monkeypatch.setattr(piper.voice, "PiperVoice", _recording_voice_class(load_kwargs))
+    client = TTSClient({"provider": "piper", "model_path": str(model), "use_cuda": True})
+    client.synthesize("one", tmp_path / "a.wav")
+    client.synthesize("two", tmp_path / "b.wav")
+    assert load_kwargs == [{}]  # loaded once, on CPU
+    err = capsys.readouterr().err
+    assert err.count("event=cuda_unavailable") == 1  # warned once, not per line
+    assert "provider=CPUExecutionProvider" in err
+
+
+def test_use_cuda_loads_with_cuda_when_available(tmp_path, monkeypatch, capsys):
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    load_kwargs = []
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(tts_client, "_cuda_provider_available", lambda: True)
+    monkeypatch.setattr(piper.voice, "PiperVoice", _recording_voice_class(load_kwargs))
+    TTSClient({"provider": "piper", "model_path": str(model), "use_cuda": "true"}
+              ).synthesize("hi", tmp_path / "a.wav")
+    assert load_kwargs == [{"use_cuda": True}]
+    assert "provider=CUDAExecutionProvider" in capsys.readouterr().err
+
+
+def test_cpu_voice_gets_thread_cap(tmp_path, monkeypatch):
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    capped = []
+    monkeypatch.setattr(tts_client, "_LOCAL_VOICES", {})
+    monkeypatch.setattr(tts_client, "_with_thread_cap",
+                        lambda voice, path, threads: capped.append(threads) or voice)
+    monkeypatch.setattr(piper.voice, "PiperVoice", _recording_voice_class([]))
+    TTSClient({"provider": "piper", "model_path": str(model), "cpu_threads": 3}
+              ).synthesize("hi", tmp_path / "a.wav")
+    assert capped == [3]
+
+
+def test_with_thread_cap_leaves_fake_voices_alone():
+    voice = FakeVoice("m")
+    assert tts_client._with_thread_cap(voice, "m", 2) is voice
+
+
+def test_with_thread_cap_none_keeps_session(tmp_path):
+    voice = FakeVoice("m")
+    voice.session = _Session(["CPUExecutionProvider"])
+    original = voice.session
+    assert tts_client._with_thread_cap(voice, "m", None).session is original
+
+
+def _remote_setup(tmp_path, monkeypatch, fail):
+    model = tmp_path / "voice.onnx"
+    model.write_bytes(b"onnx")
+    calls = {"remote": 0, "local": 0}
+
+    def fake_remote(text, out_wav, cfg, base_url):
+        calls["remote"] += 1
+        if fail:
+            raise httpx.ConnectError("refused")
+        write_wav(out_wav)
+
+    def fake_local(text, out_wav, cfg):
+        calls["local"] += 1
+        write_wav(out_wav)
+    monkeypatch.setattr(tts_client, "_piper_remote", fake_remote)
+    monkeypatch.setattr(tts_client, "_piper_local", fake_local)
+    monkeypatch.setattr(tts_client, "_REMOTE_DOWN_UNTIL", {})
+    return model, calls
+
+
+def test_remote_failure_falls_back_to_local_and_backs_off(tmp_path, monkeypatch, capsys):
+    model, calls = _remote_setup(tmp_path, monkeypatch, fail=True)
+    client = TTSClient({"provider": "piper", "model_path": str(model),
+                        "base_url": "http://tts-gpu:5000"})
+    for i in range(3):
+        client.synthesize("line", tmp_path / f"{i}.wav")
+    # first line tries remote then falls back; the next two skip the dead
+    # remote entirely (circuit breaker) instead of paying a timeout each
+    assert calls == {"remote": 1, "local": 3}
+    assert capsys.readouterr().err.count("event=remote_failed") == 1
+
+
+def test_remote_retried_after_backoff_expires(tmp_path, monkeypatch):
+    model, calls = _remote_setup(tmp_path, monkeypatch, fail=True)
+    client = TTSClient({"provider": "piper", "model_path": str(model),
+                        "base_url": "http://tts-gpu:5000"})
+    client.synthesize("line", tmp_path / "a.wav")
+    tts_client._REMOTE_DOWN_UNTIL["http://tts-gpu:5000"] = 0.0
+    client.synthesize("line", tmp_path / "b.wav")
+    assert calls["remote"] == 2
+
+
+def test_remote_fallback_disabled_raises(tmp_path, monkeypatch):
+    model, calls = _remote_setup(tmp_path, monkeypatch, fail=True)
+    client = TTSClient({"provider": "piper", "model_path": str(model),
+                        "base_url": "http://x", "remote_fallback": False})
+    with pytest.raises(httpx.ConnectError):
+        client.synthesize("line", tmp_path / "a.wav")
+    assert calls["local"] == 0
+
+
+def test_remote_failure_without_local_model_raises_remote_error(tmp_path, monkeypatch):
+    _model, calls = _remote_setup(tmp_path, monkeypatch, fail=True)
+    client = TTSClient({"provider": "piper", "model_path": str(tmp_path / "missing.onnx"),
+                        "base_url": "http://x"})
+    with pytest.raises(httpx.ConnectError):
+        client.synthesize("line", tmp_path / "a.wav")
+
+
+def test_remote_success_never_touches_local(tmp_path, monkeypatch):
+    model, calls = _remote_setup(tmp_path, monkeypatch, fail=False)
+    TTSClient({"provider": "piper", "model_path": str(model), "base_url": "http://x"}
+              ).synthesize("line", tmp_path / "a.wav")
+    assert calls == {"remote": 1, "local": 0}
+
+
+@pytest.mark.parametrize("env,cfg,mode", [
+    ({"TTS_BASE_URL": "http://tts-gpu:5000"}, {}, "mode=remote"),
+    ({"TTS_USE_CUDA": "1"}, {}, "mode=local-cuda-requested"),
+    ({}, {"use_cuda": True}, "mode=local-cuda-requested"),
+    ({"TTS_USE_CUDA": "0"}, {"use_cuda": True}, "mode=local-cpu"),
+    ({}, {}, "mode=local-cpu"),
+])
+def test_build_logs_active_tts_mode(env, cfg, mode, monkeypatch, capsys):
+    for name in ("TTS_PROVIDER", "TTS_BASE_URL", "TTS_USE_CUDA", "TTS_CPU_THREADS"):
+        monkeypatch.delenv(name, raising=False)
+    for name, value in env.items():
+        monkeypatch.setenv(name, value)
+    client = build_tts_client({"voice": {"provider": "piper", **cfg}})
+    assert "event=tts_client_ready" in capsys.readouterr().err
+    assert client is not None
+    # re-run to capture the line content itself
+    build_tts_client({"voice": {"provider": "piper", **cfg}})
+    assert mode in capsys.readouterr().err
+
+
+def test_build_env_overrides_cuda_and_threads(monkeypatch):
+    monkeypatch.delenv("TTS_PROVIDER", raising=False)
+    monkeypatch.delenv("TTS_BASE_URL", raising=False)
+    monkeypatch.setenv("TTS_USE_CUDA", "yes")
+    monkeypatch.setenv("TTS_CPU_THREADS", "1")
+    client = build_tts_client({"voice": {"provider": "piper", "use_cuda": False}})
+    assert client.config["use_cuda"] is True
+    assert client.config["cpu_threads"] == "1"

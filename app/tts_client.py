@@ -18,6 +18,8 @@ so the boss and the coder can use different Piper models or cloud voice IDs.
 import os
 import shutil
 import subprocess
+import sys
+import time
 import wave
 from dataclasses import dataclass
 from pathlib import Path
@@ -132,9 +134,116 @@ def _pad_leading_silence(out_wav, seconds=LEADING_SILENCE_S):
 _LOCAL_VOICES = {}
 
 
-def _load_local_voice(model_path):
+def _log(event, **fields):
+    """One structured key=value line on stderr — the worker's panes log via
+    print (container_logs picks stderr up), so this stays consistent with
+    them rather than introducing a logging config of its own."""
+    parts = " ".join(f"{key}={value}" for key, value in fields.items())
+    print(f"[tts_client] event={event} {parts}".rstrip(), file=sys.stderr, flush=True)
+
+
+def _truthy(value):
+    return str(value).strip().lower() in ("1", "true", "yes", "on")
+
+
+# ── CPU thread count (docs/tts_client.md "CPU threads") ──────────────────────
+# ONNX Runtime sizes its intra-op pool to the HOST's core count (20 on
+# gx10), not the container's cgroup CPU quota (`cpus: "2.0"` in
+# docker-compose.yml). Twenty spinning threads fighting over a 2-CPU CFS
+# quota get throttled constantly: measured 2026-10-02 in the worker image
+# under `docker run --cpus 2.0`, en_US-lessac-low, ~44-word line —
+# default threads 5.04 s/line, 1 thread 0.68 s, 2 threads 0.43 s,
+# 4 threads 0.54 s. "auto" (the default) therefore caps the pool at the
+# cgroup quota, rounded up.
+CGROUP_CPU_MAX = "/sys/fs/cgroup/cpu.max"
+
+
+def _cgroup_cpu_quota(path=CGROUP_CPU_MAX):
+    """The cgroup v2 CPU quota in whole CPUs (rounded up), or None when
+    unlimited/unreadable (bare host, cgroup v1)."""
+    try:
+        quota, period = Path(path).read_text().split()[:2]
+    except (OSError, ValueError):
+        return None
+    if quota == "max":
+        return None
+    try:
+        return max(1, -(-int(quota) // int(period)))  # ceil division
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def resolve_cpu_threads(value):
+    """voice.cpu_threads / TTS_CPU_THREADS -> an intra-op thread count, or
+    None for ONNX Runtime's own default. "auto"/unset = the cgroup quota;
+    0/"default" = ORT default; a positive int = exactly that."""
+    if value is None or str(value).strip().lower() in ("", "auto"):
+        return _cgroup_cpu_quota()
+    if str(value).strip().lower() in ("0", "default", "none"):
+        return None
+    try:
+        threads = int(value)
+    except (TypeError, ValueError):
+        _log("bad_cpu_threads", value=repr(value), fallback="auto")
+        return _cgroup_cpu_quota()
+    return threads if threads > 0 else None
+
+
+# ── In-process CUDA (docs/tts_client.md "GPU") ───────────────────────────────
+
+def _cuda_provider_available():
+    """True when onnxruntime here is the GPU build AND its CUDA provider can
+    actually load. onnxruntime-gpu's pip-installed CUDA/cuDNN (the [cuda,
+    cudnn] extras) are not found by the loader on their own — without
+    preload_dlls() every Conv fails at RUN time with "dlopen failed for
+    libcudnn.so", long after the session reported CUDA as active."""
+    try:
+        import onnxruntime
+    except ImportError:
+        return False
+    if hasattr(onnxruntime, "preload_dlls"):
+        try:
+            onnxruntime.preload_dlls()
+        except Exception as exc:
+            _log("cuda_preload_failed", error=repr(exc))
+    try:
+        return "CUDAExecutionProvider" in onnxruntime.get_available_providers()
+    except Exception:
+        return False
+
+
+def _with_thread_cap(voice, model_path, threads):
+    """Rebuild a CPU PiperVoice's ORT session with a capped intra-op pool.
+    PiperVoice.load() takes no SessionOptions, so the session is swapped
+    after load (one extra ~0.5 s model load per process, ever). A voice
+    without a real ORT session (test fakes) is returned untouched."""
+    session = getattr(voice, "session", None)
+    if threads is None or session is None or not hasattr(session, "get_providers"):
+        return voice
+    import onnxruntime
+
+    options = onnxruntime.SessionOptions()
+    options.intra_op_num_threads = threads
+    options.inter_op_num_threads = 1
+    voice.session = onnxruntime.InferenceSession(
+        str(model_path), sess_options=options, providers=["CPUExecutionProvider"])
+    return voice
+
+
+def _load_local_voice(model_path, use_cuda=False, cpu_threads=None):
+    """Cached PiperVoice for `model_path`. `use_cuda` asks for ORT's CUDA
+    provider and silently degrades to CPU (with one log line) when this
+    image's onnxruntime can't do CUDA — the stock worker image can't: it is
+    python3.10 on Ubuntu 22.04 and onnxruntime-gpu has no cp310 aarch64
+    wheel (see services/tts-gpu for the GPU path that works on GB10)."""
     key = str(Path(model_path).resolve())
-    voice = _LOCAL_VOICES.get(key)
+    want_cuda = bool(use_cuda) and _cuda_provider_available()
+    if use_cuda and not want_cuda:
+        if not _LOCAL_VOICES.get(("cuda_warned",)):
+            _log("cuda_unavailable", requested=True, fallback="CPUExecutionProvider")
+            _LOCAL_VOICES[("cuda_warned",)] = True
+    cache_key = (key, want_cuda, None if want_cuda else cpu_threads)
+    voice = _LOCAL_VOICES.get(cache_key)
     if voice is None:
         try:
             from piper.voice import PiperVoice
@@ -142,8 +251,16 @@ def _load_local_voice(model_path):
             raise TTSError(
                 "piper-tts package not installed (`pip install piper-tts`)"
             ) from exc
-        voice = PiperVoice.load(key)
-        _LOCAL_VOICES[key] = voice
+        if want_cuda:
+            voice = PiperVoice.load(key, use_cuda=True)
+        else:
+            voice = _with_thread_cap(PiperVoice.load(key), key, cpu_threads)
+        session = getattr(voice, "session", None)
+        getter = getattr(session, "get_providers", None)
+        providers = getter() if callable(getter) else ["?"]
+        _log("voice_loaded", model=Path(key).name, provider=providers[0],
+             cpu_threads=("n/a" if want_cuda else (cpu_threads or "ort-default")))
+        _LOCAL_VOICES[cache_key] = voice
     return voice
 
 
@@ -156,7 +273,8 @@ def _piper_local(text, out_wav, voice_cfg):
             f"Piper voice model not found at {model!r} — set voice.model_path to a "
             ".onnx file (see scripts/download_voices.py)"
         )
-    voice = _load_local_voice(model)
+    voice = _load_local_voice(model, use_cuda=_truthy(voice_cfg.get("use_cuda", False)),
+                              cpu_threads=resolve_cpu_threads(voice_cfg.get("cpu_threads")))
     rate = float(voice_cfg.get("rate") or 1.0)
     # Piper's length_scale is inverse of speaking rate (bigger = slower).
     syn_config = SynthesisConfig(length_scale=(1.0 / rate) if rate else None)
@@ -202,16 +320,43 @@ def _piper_remote(text, out_wav, voice_cfg, base_url):
     Path(out_wav).write_bytes(response.content)
 
 
+# Remote-failure circuit breaker: once the remote server fails, every line
+# for the next REMOTE_RETRY_AFTER_S goes straight to local synthesis instead
+# of paying a connect timeout per line (a 4600-scene prep against a dead
+# server would otherwise stall for hours). Keyed by base_url.
+REMOTE_RETRY_AFTER_S = 60.0
+_REMOTE_DOWN_UNTIL = {}
+
+
 def _piper(text, out_wav, voice_cfg):
     """Piper (local, free). Voices: https://huggingface.co/rhasspy/piper-voices
     Local mode (default) keeps one loaded PiperVoice per model resident in
     this process (see _load_local_voice). Set voice.base_url (or env
-    TTS_BASE_URL) to synthesize against a remote piper.http_server instead —
-    see _piper_remote."""
+    TTS_BASE_URL) to synthesize against a remote piper.http_server — or the
+    shared GPU service, services/tts-gpu — instead; see _piper_remote.
+
+    When the remote fails and voice.remote_fallback (default true) is on,
+    the line is synthesized locally on CPU with the SAME .onnx model, so a
+    down GPU service degrades speed, never the show."""
     base_url = voice_cfg.get("base_url")
-    if base_url:
+    if not base_url:
+        _piper_local(text, out_wav, voice_cfg)
+        return
+    fallback = _truthy(voice_cfg.get("remote_fallback", True))
+    if fallback and time.monotonic() < _REMOTE_DOWN_UNTIL.get(base_url, 0.0):
+        _piper_local(text, out_wav, voice_cfg)
+        return
+    try:
         _piper_remote(text, out_wav, voice_cfg, base_url)
-    else:
+    except Exception as exc:
+        model = voice_cfg.get("model_path")
+        if not fallback or not model or not Path(model).exists():
+            # No local copy of the model to fall back onto: surface the
+            # REMOTE error, not a misleading "model not found".
+            raise
+        _REMOTE_DOWN_UNTIL[base_url] = time.monotonic() + REMOTE_RETRY_AFTER_S
+        _log("remote_failed", base_url=base_url, error=repr(exc)[:200],
+             fallback="local", retry_after_s=REMOTE_RETRY_AFTER_S)
         _piper_local(text, out_wav, voice_cfg)
 
 
@@ -355,11 +500,34 @@ def build_tts_client(config):
     section). Returns None when voice is disabled (`provider: "null"`,
     missing, or empty) — callers treat None as "perform silently". Env var
     TTS_BASE_URL overrides voice.base_url — pointing Piper synthesis at a
-    remote piper.http_server instead of running it in this container (see
-    _piper_remote)."""
+    remote piper.http_server (or the shared GPU service, services/tts-gpu)
+    instead of running it in this container (see _piper_remote). TTS_USE_CUDA
+    and TTS_CPU_THREADS override voice.use_cuda / voice.cpu_threads.
+
+    Logs one `event=tts_client_ready` line naming the active synthesis
+    path, so an airing's logs always say whether TTS ran remote/GPU or on
+    local CPU."""
     voice_config = config.get("voice", config) or {}
     provider = os.environ.get("TTS_PROVIDER") or voice_config.get("provider")
     if not provider or str(provider).lower() in ("null", "none", "off"):
         return None
     base_url = os.environ.get("TTS_BASE_URL") or voice_config.get("base_url")
-    return TTSClient({**voice_config, "provider": provider, "base_url": base_url})
+    merged = {**voice_config, "provider": provider, "base_url": base_url}
+    if os.environ.get("TTS_USE_CUDA"):
+        merged["use_cuda"] = _truthy(os.environ["TTS_USE_CUDA"])
+    if os.environ.get("TTS_CPU_THREADS"):
+        merged["cpu_threads"] = os.environ["TTS_CPU_THREADS"]
+    client = TTSClient(merged)
+    if provider in ("piper", "kokoro"):
+        if base_url:
+            mode = "remote"
+        elif _truthy(merged.get("use_cuda", False)):
+            mode = "local-cuda-requested"
+        else:
+            mode = "local-cpu"
+        _log("tts_client_ready", provider=provider, mode=mode, base_url=base_url or "-",
+             remote_fallback=_truthy(merged.get("remote_fallback", True)),
+             cpu_threads=resolve_cpu_threads(merged.get("cpu_threads")) or "ort-default")
+    else:
+        _log("tts_client_ready", provider=provider)
+    return client

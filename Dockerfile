@@ -3,6 +3,11 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:99
 ENV PULSE_SINK=vout
+# Every worker process logs via print() into a pipe (not a TTY), which Python
+# block-buffers — the log shipper then saw progress lines in ~10-minute,
+# 117-line bursts, so the control panel's replay progress bar lagged the
+# real prep by up to 10 minutes. Unbuffered keeps container_logs live.
+ENV PYTHONUNBUFFERED=1
 
 # ── System packages ────────────────────────────────────────────────────────────
 RUN apt-get update && apt-get install -y \

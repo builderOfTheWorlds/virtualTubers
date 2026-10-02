@@ -219,7 +219,7 @@ Top level:
   - `app/agent_handlers/` — every bus message handler, one module per role/concern, plus the manager's task backlog dispatcher
   - `app/task_backlog.py` — opt-in task sources (file | Gitea) for the manager
   - `app/relay_io.py` — the one race-safe implementation of in-container relay files
-- `services/` — `message-logger`, `message-api`, `control-panel`, `twitch-presence`, `log-shipper`, `campaign-manager`, `3layer-generator`
+- `services/` — `message-logger`, `message-api`, `control-panel`, `twitch-presence`, `log-shipper`, `campaign-manager`, `3layer-generator`, `tts-gpu` (opt-in shared GPU Piper TTS — [docs/tts_gpu_service.md](docs/tts_gpu_service.md))
 - `scripts/` — operator helpers, incl. `emergency_stop.sh|.ps1` / `emergency_resume.sh|.ps1` (kill switch) and `send_test_message.sh|.ps1`
 - `sandbox/` — seeded-bug workspace the coder agents actually code on
 - `repos/` — vendored third-party avatar repos

@@ -223,3 +223,16 @@ When adding or changing a table:
 3. Update this file.
 
 There is no migration framework (no alembic/flyway) — all `CREATE TABLE` statements use `IF NOT EXISTS`. Column changes to an existing table need a manual `ALTER TABLE` run against the live database in addition to updating the schema copies above — with two exceptions: `messages`' `correlation_id`/`causation_id` columns (+ `idx_messages_correlation`) and `voiced_narration`'s `audio`/`audio_duration_s` columns ship as `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` statements inside the logger's `CREATE_TABLE_SQL`, so a logger restart migrates the live table automatically.
+
+## `voice_prep_checkpoint`
+
+Resumable replay voice prep (docs/voice_prep_checkpoint.md). Written and
+read only by worker containers (`app/narration_store.py` `CheckpointStore`,
+which also creates the table on first use); one row per finished scene of an
+in-progress fresh airing prep, keyed `(prep_key, scene_index)`. Columns:
+`prep_key` (sha256 of episode + worker + sound-affecting voice config),
+`scene_index`, `scene_hash` (sha256 of the planned scene; a mismatch means
+regenerate), `episode`, `worker_id`, `text`, `audio` (BYTEA WAV, NULL for a
+silent scene), `audio_duration_s`, `updated_at`. Rows are deleted once the
+airing lands in `voiced_narration`; rows older than 14 days are pruned when
+any new prep opens.

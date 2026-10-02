@@ -50,7 +50,22 @@ def save_airing(message_id, worker_id, episode, aired_at, show) -> int
 def load_latest_airing(episode) -> list[dict] | None
 
 def load_airing(message_id) -> list[dict] | None
+
+class CheckpointStore:          # resumable voice prep, docs/voice_prep_checkpoint.md
+    def ensure_schema(self, prune_days=14) -> None
+    def load_index(self, prep_key) -> dict[int, dict]
+    def load_audio(self, prep_key, scene_index) -> bytes | None
+    def save_scene(self, prep_key, scene_index, scene_hash, episode, worker_id,
+                   text, audio_bytes, duration) -> None
+    def clear(self, prep_key) -> None
+    def close(self) -> None
 ```
+
+`CheckpointStore` holds ONE connection for a whole prep pass and writes only
+the separate `voice_prep_checkpoint` table — never `voiced_narration` — so a
+half-done prep can't become the "latest" cached airing. Its methods raise on
+DB failure; `voice_prep_checkpoint.PrepCheckpoint` turns that into
+"checkpointing off, prep continues".
 
 ## Parameters
 
@@ -189,6 +204,9 @@ if rows:
 
 ## Changelog
 
+- **v1.2.0** (2026-10-02): Added `CheckpointStore` + the
+  `voice_prep_checkpoint` table for resumable voice prep
+  (docs/voice_prep_checkpoint.md). Existing functions unchanged.
 - **v1.1.0** (2026-07-13): Duet replay support — `load_latest_airing()`
   rows gained a `message_id` field so a duet director reusing a cached
   airing can hand its followers a stable `airing_id`. New

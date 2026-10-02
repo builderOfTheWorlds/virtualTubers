@@ -676,7 +676,7 @@ def load_script(source):
 
 def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
                         speed=1.0, max_output_lines=MAX_OUTPUT_LINES,
-                        progress=None):
+                        progress=None, checkpoint=None):
     """Glue for callers holding a worker config: build the LLM + TTS clients
     from its `llm`/`voice` sections and run revoice.prepare_show(). Returns
     None when voice is disabled (voice.provider null/missing) — meaning
@@ -687,7 +687,10 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
     always takes its no-LLM fallback path — the same one it uses when the
     LLM errors mid-show) so a test airing pays no LLM latency at all. Scoped
     to this one call site, not llm_client.build_llm_client, so it can never
-    affect a worker's real coding-task LLM use."""
+    affect a worker's real coding-task LLM use.
+
+    `checkpoint` (voice_prep_checkpoint.PrepCheckpoint or None) is passed
+    straight to prepare_show to make the pass resumable."""
     from llm_client import build_llm_client
     from revoice import prepare_show
     from tts_client import build_tts_client
@@ -705,6 +708,7 @@ def prepare_voiced_show(script, config, workdir, worker_name="KODI-7",
         speaker_names=voice_config.get("speaker_names") or {},
         speed=speed, max_output_lines=max_output_lines, progress=progress,
         verbatim=bool(voice_config.get("verbatim", False)),
+        checkpoint=checkpoint,
     )
 
 

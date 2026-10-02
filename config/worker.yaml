@@ -213,7 +213,39 @@ voice:
   # process for its whole lifetime rather than reloading it per line (see
   # app/tts_client.py's _load_local_voice). Env var TTS_BASE_URL overrides
   # this at runtime.
+  # GPU on argyre/gx10: set TTS_BASE_URL=http://tts-gpu:5000 in .env and
+  # start the shared `tts-gpu` service (docs/tts_gpu_service.md) — ~0.13 s
+  # per line on the GB10 vs 0.4-0.6 s on this container's 2 capped CPUs.
   base_url: ""
+
+  # piper/kokoro + base_url only: when the remote server errors or is
+  # unreachable, synthesize that line locally on CPU with the same .onnx
+  # instead of leaving the scene silent; a failed remote is then skipped
+  # for 60 s so a dead server can't add a timeout to every line.
+  remote_fallback: true
+
+  # piper/kokoro local only: ask ONNX Runtime for its CUDA provider. Falls
+  # back to CPU with one `event=cuda_unavailable` log line when this image's
+  # onnxruntime has no CUDA — the case for the stock worker image on GB10
+  # aarch64 (python3.10; onnxruntime-gpu ships aarch64 wheels for cp311+
+  # only). Use base_url + the tts-gpu service for GPU there. Env var
+  # TTS_USE_CUDA overrides.
+  use_cuda: false
+
+  # piper/kokoro local CPU only: ONNX Runtime intra-op threads. "auto"
+  # (default) = this container's cgroup CPU quota (2 under compose's
+  # cpus: "2.0"). ORT's own default sizes the pool to the HOST's 20 cores,
+  # which under a 2-CPU quota measured ~10x slower (4.7 s vs 0.5 s per
+  # line). 0 = ORT default; N = exactly N. Env var TTS_CPU_THREADS overrides.
+  cpu_threads: auto
+
+  # Resumable voice prep (docs/voice_prep_checkpoint.md): every finished
+  # scene of a fresh voiced airing is checkpointed to Postgres
+  # (voice_prep_checkpoint table) as it completes, so a restarted/crashed
+  # prep resumes instead of starting over. Needs the POSTGRES_* env the
+  # narration cache already uses; silently off without it. Env var
+  # VOICE_PREP_CHECKPOINT=0 disables.
+  checkpoint: true
 
   # openai / elevenlabs: which cloud voice to use (OpenAI voice name, or the
   # ElevenLabs dashboard voice ID). API keys come from the environment only

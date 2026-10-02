@@ -275,3 +275,74 @@ def test_load_airing_raises_on_db_failure(monkeypatch):
         narration_store.load_airing("msg-1")
 
     assert fake_conn.closed is True
+
+
+# ── CheckpointStore (resumable voice prep, docs/voice_prep_checkpoint.md) ────
+
+class FetchOneCursor(FakeCursor):
+    def __init__(self, fetch_rows=None, one=None):
+        super().__init__(fetch_rows)
+        self._one = one
+
+    def fetchone(self):
+        return self._one
+
+
+def test_checkpoint_store_reuses_one_connection_for_many_scenes(monkeypatch, tmp_path):
+    _ensure_psycopg2_importable(monkeypatch)
+    conns = []
+
+    def connect():
+        conns.append(FakeConn())
+        return conns[-1]
+    monkeypatch.setattr(narration_store, "_connect", connect)
+    store = narration_store.CheckpointStore()
+    store.ensure_schema()
+    for index in range(5):
+        store.save_scene("key", index, "h", "ep", "rt", "line", b"RIFF", 1.5)
+    store.close()
+    assert len(conns) == 1 and conns[0].closed
+    sqls = [sql for sql, _ in conns[0].cur.calls]
+    assert "CREATE TABLE IF NOT EXISTS voice_prep_checkpoint" in sqls[0]
+    assert "DELETE FROM voice_prep_checkpoint" in sqls[1]  # TTL prune
+    saves = [params for sql, params in conns[0].cur.calls if "INSERT INTO" in sql]
+    assert [p["scene_index"] for p in saves] == [0, 1, 2, 3, 4]
+    assert saves[0]["prep_key"] == "key" and saves[0]["audio_duration_s"] == 1.5
+
+
+def test_checkpoint_store_never_touches_voiced_narration(monkeypatch):
+    """Partial preps must stay out of voiced_narration — load_latest_airing
+    would otherwise pick an incomplete airing as the 'latest'."""
+    for sql in (narration_store.CHECKPOINT_DDL, narration_store.CHECKPOINT_SAVE_SQL,
+                narration_store.CHECKPOINT_INDEX_SQL, narration_store.CHECKPOINT_AUDIO_SQL,
+                narration_store.CHECKPOINT_CLEAR_SQL, narration_store.CHECKPOINT_PRUNE_SQL):
+        assert "voiced_narration" not in sql
+
+
+def test_checkpoint_store_load_index_and_audio(monkeypatch):
+    conn = FakeConn(fetch_rows=[(0, "h0", "line 0", True, 2.0), (1, "h1", "line 1", False, None)])
+    conn.cur = FetchOneCursor(conn.cur._fetch_rows, one=(memoryview(b"WAVBYTES"),))
+    monkeypatch.setattr(narration_store, "_connect", lambda: conn)
+    store = narration_store.CheckpointStore()
+    index = store.load_index("key")
+    assert index[0] == {"scene_hash": "h0", "text": "line 0", "has_audio": True,
+                        "audio_duration_s": 2.0}
+    assert index[1]["has_audio"] is False
+    assert store.load_audio("key", 0) == b"WAVBYTES"
+
+
+def test_checkpoint_store_save_silent_scene_stores_null_audio(monkeypatch):
+    _ensure_psycopg2_importable(monkeypatch)
+    conn = FakeConn()
+    monkeypatch.setattr(narration_store, "_connect", lambda: conn)
+    narration_store.CheckpointStore().save_scene("k", 3, "h", "ep", "rt", "", None, None)
+    params = conn.cur.calls[-1][1]
+    assert params["audio"] is None and params["audio_duration_s"] is None
+
+
+def test_checkpoint_store_db_error_propagates(monkeypatch):
+    def boom():
+        raise RuntimeError("db down")
+    monkeypatch.setattr(narration_store, "_connect", boom)
+    with pytest.raises(RuntimeError):
+        narration_store.CheckpointStore().load_index("k")

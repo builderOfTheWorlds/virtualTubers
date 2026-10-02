@@ -343,7 +343,7 @@ def narrate_scene(scene, llm, words, worker_name, boss_name, speaker_names=None,
 def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
                  boss_name="the boss", speed=1.0, max_output_lines=24,
                  progress=None, speaker_names=None, verbatim=False,
-                 voice_names=None, role_tones=None):
+                 voice_names=None, role_tones=None, checkpoint=None):
     """Build the voiced show for one airing.
 
     Returns plan_scenes()' scenes, each annotated with:
@@ -374,6 +374,13 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
     `role_tones` (speaker id or office role -> style note, see
     load_role_tones) adds a per-role tone to each scene's LLM prompt; None
     keeps every prompt unchanged.
+
+    `checkpoint` (a voice_prep_checkpoint.PrepCheckpoint, optional) makes
+    the pass resumable: a scene whose content hash is already checkpointed
+    is restored (text + WAV) instead of re-narrated/re-synthesized, and
+    every freshly finished scene is checkpointed as soon as it's done. The
+    progress line format is unchanged ("scene i/N: ...") so the control
+    panel's progress bar keeps parsing it; restored scenes say "restored".
     """
     notify = progress or (lambda message: None)
     workdir = Path(workdir)
@@ -386,27 +393,43 @@ def prepare_show(script, llm, tts, workdir, worker_name="KODI-7",
     for index, scene in enumerate(scenes):
         seconds = scene_visual_seconds(scene, max_output_lines, speed)
         words = target_words(seconds)
-        notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
         tone = scene_tone(scene, role_tones)
+        voice_name = voice_names.get(scene["speaker"])
+        scene_hash = None
+        wav_path = workdir / f"scene_{index:03d}.wav"
+        if checkpoint is not None:
+            from voice_prep_checkpoint import compute_scene_hash
+
+            scene_hash = compute_scene_hash(scene, words=words, tone=tone,
+                                            voice_name=voice_name)
+            restored = checkpoint.lookup(index, scene_hash, wav_path)
+            # A checkpointed silent scene is only trusted when TTS is off
+            # too — otherwise it was a TTS failure worth retrying.
+            if restored is not None and (restored[1] is not None or tts is None):
+                scene["narration"], scene["audio"] = restored
+                notify(f"scene {index + 1}/{len(scenes)}: restored {scene['kind']} line "
+                       f"from checkpoint")
+                continue
+        notify(f"scene {index + 1}/{len(scenes)}: writing {scene['kind']} line (~{words}w)")
         scene["narration"] = narrate_scene(scene, llm, words, worker_name, boss_name,
                                             speaker_names=speaker_names, verbatim=verbatim,
                                             tone=tone)
         scene["audio"] = None
-        if tts is None:
-            continue
-        try:
-            # The kwarg is only passed when this slot is actually cast by a
-            # header. Uncast slots take the exact pre-v1.1 call — which also
-            # keeps every duck-typed `tts` (test fakes, thin wrappers) that
-            # predates `voice_name` working untouched (§7.4).
-            extra = {}
-            voice_name = voice_names.get(scene["speaker"])
-            if voice_name:
-                extra["voice_name"] = voice_name
-            scene["audio"] = tts.synthesize(
-                scene["narration"], workdir / f"scene_{index:03d}.wav",
-                speaker=scene["speaker"], **extra,
-            )
-        except Exception as exc:
-            notify(f"scene {index + 1}: TTS failed ({exc}) — playing silent")
+        if tts is not None:
+            try:
+                # The kwarg is only passed when this slot is actually cast by a
+                # header. Uncast slots take the exact pre-v1.1 call — which also
+                # keeps every duck-typed `tts` (test fakes, thin wrappers) that
+                # predates `voice_name` working untouched (§7.4).
+                extra = {}
+                if voice_name:
+                    extra["voice_name"] = voice_name
+                scene["audio"] = tts.synthesize(
+                    scene["narration"], wav_path,
+                    speaker=scene["speaker"], **extra,
+                )
+            except Exception as exc:
+                notify(f"scene {index + 1}: TTS failed ({exc}) — playing silent")
+        if checkpoint is not None:
+            checkpoint.record(index, scene_hash, scene["narration"], scene["audio"])
     return scenes
