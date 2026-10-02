@@ -387,6 +387,15 @@ class CodecAvatarProvider(AvatarProvider):
         from pixel_raster import parse_background
         self._background = parse_background(cfg.get("background")) \
             if cfg.get("background", _UNSET) is not None else None
+        # `transparent: true` clips the window to the head's silhouette (X
+        # SHAPE — app/window_shape.py) so the console shows through around
+        # it in whatever theme it currently has. The renderer must then
+        # leave the surround at pure black for the silhouette to be found,
+        # so compositing moves out of the frame source and into
+        # render_tick, where it only runs if SHAPE turned out unavailable.
+        self._transparent = bool(cfg.get("transparent", False))
+        self._shape = None
+        self._source_background = None if self._transparent else self._background
 
         # Render in a SEPARATE process from this one (which owns the
         # pygame window below) whenever possible — see
@@ -407,7 +416,7 @@ class CodecAvatarProvider(AvatarProvider):
                     character_params, width=width, height=height,
                     view_dist=cfg.get("view_dist", 3.25),
                     angle_speed=cfg.get("angle_speed", 0.0),
-                    background=self._background,
+                    background=self._source_background,
                 )
                 print(
                     "[avatar] codec_avatar: GPU rendering in a separate "
@@ -425,7 +434,7 @@ class CodecAvatarProvider(AvatarProvider):
                 view_dist=cfg.get("view_dist", 3.25),
                 angle_speed=cfg.get("angle_speed", 0.0),
                 angle_deg=cfg.get("angle_deg", 15.0),
-                background=self._background,
+                background=self._source_background,
             )
 
         import os
@@ -476,6 +485,10 @@ class CodecAvatarProvider(AvatarProvider):
         self._screen = pygame.display.set_mode(
             (width, height), pygame.NOFRAME)
         pygame.display.set_caption(f"{name} avatar")
+        if self._transparent:
+            from window_shape import ShapeMasker
+            self._shape = ShapeMasker.create(
+                pygame.display.get_wm_info().get("window"))
 
         print(
             f"[avatar] codec_avatar: ready ({width}x{height}, "
@@ -554,6 +567,22 @@ class CodecAvatarProvider(AvatarProvider):
 
         return width or WIDTH, height or HEIGHT, tuple(configured_pos)
 
+    def _apply_transparency(self, img):
+        """Clip the window to the head (SHAPE), or — if SHAPE is unavailable
+        or fails — composite onto the flat background exactly as the
+        non-transparent path would have. Never raises."""
+        from pixel_raster import composite_on_background
+        if self._shape is not None:
+            try:
+                from window_shape import silhouette_mask
+                self._shape.apply(silhouette_mask(img))
+                return img
+            except Exception as exc:  # noqa: BLE001 — cosmetic; degrade
+                log.warning("codec_avatar: SHAPE mask failed (%r); falling "
+                            "back to a flat background", exc)
+                self._shape = None
+        return composite_on_background(img, self._background)
+
     def render_tick(self, expression, bubble_lines, mouth_open=0.0, emotion="neutral",
                     gaze=None):
         import numpy as np
@@ -578,7 +607,7 @@ class CodecAvatarProvider(AvatarProvider):
                     self._character_params, width=self.width, height=self.height,
                     view_dist=self._view_dist, angle_speed=self._angle_speed,
                     angle_deg=self._angle_deg,
-                    background=self._background,
+                    background=getattr(self, "_source_background", self._background),
                 )
                 try:
                     if hasattr(old_source, "close"):
@@ -587,6 +616,8 @@ class CodecAvatarProvider(AvatarProvider):
                     pass
             img, _backend = self._source.render_frame(
                 expression, mouth_open=mouth_open, emotion=emotion, gaze=gaze)
+        if getattr(self, "_transparent", False):
+            img = self._apply_transparency(img)
         pixels = (np.clip(img, 0.0, 1.0) * 255).astype("uint8")
         # pygame surfarray is (W,H,3); our frames are (H,W,3).
         surf = self._pygame.surfarray.make_surface(pixels.transpose(1, 0, 2))

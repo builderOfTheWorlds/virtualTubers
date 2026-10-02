@@ -1333,4 +1333,10 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
+    # live_pane/replay_pane call back in via `import tile_pane`. Run as a
+    # script, this module is `__main__`, so that import would load a SECOND
+    # copy whose _ACTIVE_TILE_AVATAR is never set — idle/live redraws then
+    # drew the ASCII face under the 3D head (hidden only while the head's
+    # window was an opaque square). Alias so both names share one module.
+    sys.modules.setdefault("tile_pane", sys.modules[__name__])
     sys.exit(main())

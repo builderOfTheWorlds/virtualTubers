@@ -294,6 +294,12 @@ TILE_AVATAR_FPS = 12
 #: default console composite). Keep in sync with startup.sh's xterm `-bg`.
 TILE_AVATAR_BACKGROUND = "#002b36"
 
+#: Clip each tile head's window to the head's silhouette (X SHAPE — see
+#: app/window_shape.py) so the console shows through around it in whatever
+#: theme is live. TILE_AVATAR_BACKGROUND is then only the fallback used if
+#: SHAPE is unavailable on the display.
+TILE_AVATAR_TRANSPARENT = True
+
 #: How long to keep retrying pane geometry detection before giving up.
 #: startup.sh launches every pane's process BEFORE it creates and resizes
 #: the xterm window, so the FIRST read from a freshly started tile reliably
@@ -343,7 +349,8 @@ def detect_tile_pane_rect(retry_s=TILE_GEOMETRY_RETRY_S,
 
 
 def build_tile_avatar_config(character_params, rect, fps=TILE_AVATAR_FPS,
-                             background=TILE_AVATAR_BACKGROUND):
+                             background=TILE_AVATAR_BACKGROUND,
+                             transparent=TILE_AVATAR_TRANSPARENT):
     """The `avatar_config` dict CodecAvatarProvider expects, for one tile.
 
     Shaped exactly the way the provider reads it: a `provider` key (what
@@ -378,6 +385,7 @@ def build_tile_avatar_config(character_params, rect, fps=TILE_AVATAR_FPS,
             "width": int(width),
             "height": int(height),
             "background": background,
+            "transparent": bool(transparent),
             "gpu_subprocess": True,
             "fps": fps,
         },
@@ -534,6 +542,7 @@ __all__ = [
     "clamp_mouth_open",
     "TILE_AVATAR_FPS",
     "TILE_AVATAR_BACKGROUND",
+    "TILE_AVATAR_TRANSPARENT",
     "TILE_GEOMETRY_RETRY_S",
     "TILE_GEOMETRY_MIN_PX",
     "tile_avatar_rect",
