@@ -1,47 +1,11 @@
-<div id="music-card" hx-get="/partials/music" hx-trigger="every 5s" hx-swap="outerHTML">
-  {% if music.error %}
-    <div class="banner err">{{ music.error }}</div>
-  {% endif %}
-  <table class="panel-table">
-    <tbody>
-      <tr>
-        <th>director</th>
-        <td>
-          {% if music.running %}
-            <span class="badge on">playing</span>
-          {% else %}
-            <span class="badge off" title="no now-playing heartbeat from music_director in the last 30s">not running</span>
-          {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <th>control</th>
-        <td>
-          {% if music.overridden %}
-            <span class="badge on" title="GM override — holds until cleared">GM override</span>
-            <span class="mono">{{ music.override.mood }} @ {{ "%.2f"|format(music.override.intensity) }}</span>
-          {% else %}
-            <span class="mono">following scene moods</span>
-          {% endif %}
-        </td>
-      </tr>
-      {% if music.running %}
-      <tr>
-        <th>now playing</th>
-        <td class="mono">
-          {{ music.status.playing_mood or music.status.mood or "—" }}
-          {% if music.status.tempo_bpm %} · {{ music.status.tempo_bpm }} bpm{% endif %}
-          {% if music.status.mode %} · {{ music.status.mode }}{% endif %}
-          {% if music.status.theme %} · theme {{ music.status.theme }}{% endif %}
-          {% if music.status.source %} · source {{ music.status.source }}{% endif %}
-          {% if music.status.scene_id %} · scene {{ music.status.scene_id }}{% endif %}
-          {% if music.status.bar is not none %} · bar {{ music.status.bar }}{% endif %}
-          {% if music.status.recording_session %} · rec {{ music.status.recording_session }}{% endif %}
-        </td>
-      </tr>
-      {% endif %}
-    </tbody>
-  </table>
+{#- Only #music-status polls. The form is deliberately NOT inside a polling
+    element: a 5s outerHTML swap would reset the dropdown to the server's
+    current mood before the GM could press "Hold mood" (the old bug — the
+    selection snapped back to neutral and neutral was what got posted). The
+    card as a whole is re-rendered only in response to the GM's own
+    set/clear actions. -#}
+<div id="music-card">
+  {% include "_music_status.html" %}
   <form class="inline-form" hx-post="/music/set" hx-target="#music-card" hx-swap="outerHTML">
     <select name="mood" class="theme-select">
       {% for m in music_moods %}
@@ -54,8 +18,4 @@
     </label>
     <button class="btn" type="submit">Hold mood</button>
   </form>
-  {% if music.overridden %}
-    <button class="btn danger" hx-post="/music/clear" hx-target="#music-card" hx-swap="outerHTML"
-            title="drop the GM override and go back to following scene moods">Follow scene</button>
-  {% endif %}
 </div>

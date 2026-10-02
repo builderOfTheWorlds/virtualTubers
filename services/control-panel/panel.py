@@ -562,6 +562,15 @@ async def partial_music(request: Request):
     return await _render_music_card(request)
 
 
+@app.get("/partials/music-status", response_class=HTMLResponse)
+async def partial_music_status(request: Request):
+    """Status-only fragment the Music card polls. Kept separate from the form
+    so polling never resets the GM's in-progress mood/intensity selection."""
+    return templates.TemplateResponse(request, "_music_status.html", {
+        "music": await _music_state(),
+    })
+
+
 @app.post("/music/set", response_class=HTMLResponse)
 async def set_music(request: Request, mood: str = Form(...), intensity: float = Form(0.5)):
     result = await _mapi_request("POST", f"/music/{MUSIC_WORKER_ID}",

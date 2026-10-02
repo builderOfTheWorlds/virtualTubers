@@ -573,6 +573,23 @@ def test_music_partial_not_running_following_scene(client, _reset_music_moods):
     assert "Follow scene" not in resp.text
 
 
+def test_music_polling_targets_status_only_not_the_form(client, _reset_music_moods):
+    # Regression: the whole card used to poll with outerHTML every 5s, which
+    # reset the mood dropdown back to the current mood before "Hold mood".
+    state = {"override": {"mood": "neutral", "intensity": 1.0}, "overridden": True,
+             "running": True, "status": PLAYING_STATUS}
+    client.mapi.side_effect = _music_side_effect([], state)
+    card = client.get("/partials/music").text
+    card_open = card[card.index('<div id="music-card"'):].split(">", 1)[0]
+    assert "hx-trigger" not in card_open
+    assert 'hx-get="/partials/music-status"' in card
+    status = client.get("/partials/music-status")
+    assert status.status_code == 200
+    assert 'id="music-status"' in status.text
+    assert "<form" not in status.text and "<select" not in status.text
+    assert "Follow scene" in status.text
+
+
 def test_music_set_forwards_mood_and_intensity(client, _reset_music_moods):
     calls = []
     state = {"override": {"mood": "silence", "intensity": 0.3}, "overridden": True,
