@@ -720,8 +720,13 @@ services:
       resources:
         # See worker-coder's identical block above for the full rationale
         # (gx10 hit load average 328, sshd unreachable, added 2026-09-22).
+        # 4.0 (not 2.0 like the other workers): this container runs EIGHT
+        # 3D heads + their GPU render processes, Xvfb and ffmpeg. At 2.0 it was
+        # CPU-throttled ~25% of every period on air, holding tile heads to ~7fps
+        # with up to 15-frame freezes; at 4.0 throttling was 0 and every head
+        # held a steady 15fps (2026-10-05, docs/frame_pacer.md).
         limits:
-          cpus: "2.0"
+          cpus: "4.0"
         reservations:
           devices:
             - driver: nvidia

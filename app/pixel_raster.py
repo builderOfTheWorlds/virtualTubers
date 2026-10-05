@@ -184,34 +184,86 @@ def apply_codec_screen(rgb, scanline_strength=0.30, vignette=0.55,
     untextured PS2 models, and they hide facet stair-stepping for free.
     """
     _trace("apply_codec_screen(glow=%.2f)", glow)
-    out = rgb.copy()
+    # float32 throughout: this runs once per LIVE avatar frame (up to 30fps,
+    # eight heads at once on the roundtable), and float64 doubles the memory
+    # traffic for precision an 8-bit frame can't show.
+    out = np.array(rgb, dtype=np.float32, copy=True)
     height, width, _ = out.shape
 
     if glow > 0:
         # Cheap separable box blur as a bloom approximation.
         blurred = out.copy()
         for _ in range(2):
-            pad = np.pad(blurred, ((2, 2), (2, 2), (0, 0)), mode="edge")
-            blurred = (pad[:-4, 2:-2] + pad[4:, 2:-2] +
-                       pad[2:-2, :-4] + pad[2:-2, 4:] + blurred) / 5.0
-        out = np.clip(out + blurred * glow, 0.0, 1.0)
+            blurred = _bloom_pass(blurred)
+        out += blurred * np.float32(glow)
+        np.clip(out, 0.0, 1.0, out=out)
 
+    # Scanlines, vignette and grain depend only on (size, params) — NOT on
+    # the frame — and the grain uses a FIXED seed, so all three are the same
+    # every frame. Rebuilding them per frame was most of this function's
+    # cost on the live avatar path; they are cached instead.
+    mul, grain = _screen_maps(height, width, float(scanline_strength),
+                              float(vignette), float(noise), seed)
+    if mul is not None:
+        out *= mul
+    if grain is not None:
+        out += grain
+
+    return np.clip(out, 0.0, 1.0, out=out)
+
+
+def _bloom_pass(img):
+    """One 5-tap (+) box blur with edge clamping — equivalent to the
+    np.pad(mode="edge") formulation, accumulated into ONE buffer with no
+    padded copy (this runs twice per live avatar frame)."""
+    acc = img.copy()
+    acc[2:] += img[:-2]          # from above (row-2), edge-clamped
+    acc[:2] += img[:1]
+    acc[:-2] += img[2:]          # from below (row+2)
+    acc[-2:] += img[-1:]
+    acc[:, 2:] += img[:, :-2]    # from the left (col-2)
+    acc[:, :2] += img[:, :1]
+    acc[:, :-2] += img[:, 2:]    # from the right (col+2)
+    acc[:, -2:] += img[:, -1:]
+    acc *= np.float32(1.0 / 5.0)
+    return acc
+
+
+_SCREEN_MAP_CACHE = {}
+_SCREEN_MAP_CACHE_MAX = 16
+
+
+def _screen_maps(height, width, scanline_strength, vignette, noise, seed):
+    """(multiplier (H,W,1) or None, grain (H,W,1) or None) for one frame
+    size, cached. The multiplier folds scanlines and vignette together."""
+    key = (height, width, scanline_strength, vignette, noise, seed)
+    cached = _SCREEN_MAP_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    mul = None
     if scanline_strength > 0:
         lines = np.ones(height, dtype=np.float32)
         lines[::2] = 1.0 - scanline_strength
-        out *= lines[:, None, None]
-
+        mul = np.broadcast_to(lines[:, None], (height, width)).copy()
     if vignette > 0:
         yy = np.linspace(-1.0, 1.0, height)[:, None]
         xx = np.linspace(-1.0, 1.0, width)[None, :]
         r = np.sqrt(xx ** 2 + yy ** 2) / np.sqrt(2.0)
-        out *= np.clip(1.0 - vignette * r ** 2.2, 0.0, 1.0)[:, :, None]
+        vig = np.clip(1.0 - vignette * r ** 2.2, 0.0, 1.0).astype(np.float32)
+        mul = vig if mul is None else mul * vig
+    if mul is not None:
+        mul = mul[:, :, None]
 
+    grain = None
     if noise > 0:
         rng = np.random.default_rng(seed)
-        out += rng.normal(0.0, noise, size=(height, width, 1)).astype(np.float32)
+        grain = rng.normal(0.0, noise, size=(height, width, 1)).astype(np.float32)
 
-    return np.clip(out, 0.0, 1.0)
+    if len(_SCREEN_MAP_CACHE) >= _SCREEN_MAP_CACHE_MAX:
+        _SCREEN_MAP_CACHE.clear()
+    _SCREEN_MAP_CACHE[key] = (mul, grain)
+    return mul, grain
 
 
 def composite_on_background(rgb, background=CONSOLE_BG):

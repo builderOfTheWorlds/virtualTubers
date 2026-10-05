@@ -216,7 +216,13 @@ def test_config_carries_the_tile_framerate_not_the_provider_default():
     """Eight simultaneous heads in one container; a tile head is a secondary
     cue, not the frame's focal point."""
     cfg = tile_avatar.build_tile_avatar_config("gm0", (0, 0, 200, 200))
-    assert cfg["codec_avatar"]["fps"] == tile_avatar.TILE_AVATAR_FPS == 12
+    assert cfg["codec_avatar"]["fps"] == tile_avatar.TILE_AVATAR_FPS == 15
+
+
+def test_tile_framerate_divides_the_30fps_capture_evenly():
+    """A head rate that doesn't divide the stream's 30fps capture holds
+    frames for an uneven 3,2,3,2 pattern — visible judder on head turns."""
+    assert 30 % tile_avatar.TILE_AVATAR_FPS == 0
 
 
 # ── TileAvatar: every failure degrades to the ASCII face ─────────────────────
@@ -284,7 +290,7 @@ def test_tile_avatar_construction_failure_logs_to_stderr_only(monkeypatch, capsy
 
 
 def test_a_raising_tick_marks_the_head_inactive_and_logs_once(monkeypatch, capsys):
-    """A provider that failed once keeps failing: retrying at 12fps across
+    """A provider that failed once keeps failing: retrying at 15fps across
     eight tiles would pay the cost of the failure ~100 times a second. One
     stderr line, then ASCII for the rest of this process's life."""
     import avatar_providers.codec_avatar as codec_avatar

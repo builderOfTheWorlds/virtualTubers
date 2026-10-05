@@ -877,6 +877,12 @@ class TileAvatarDriver:
         # so a head that fails to build never blanks the ASCII face.
         self._on_ready(self.avatar)
 
+        # Deadline pacing (frame_pacer.py): waiting a full interval AFTER
+        # each render ran 12fps heads at ~6fps on air. The stop event's
+        # wait() is the sleeper, so close() still interrupts immediately.
+        from frame_pacer import FramePacer
+        pacer = FramePacer(1.0 / self.interval_s, sleep=self._stop_event.wait)
+
         while not self._stop_event.is_set():
             try:
                 if self.gaze_source is not None:
@@ -898,7 +904,7 @@ class TileAvatarDriver:
                       f"{type(exc).__name__}: {exc}", file=sys.stderr)
                 self._on_lost()
                 return
-            self._stop_event.wait(self.interval_s)
+            pacer.wait()
 
     def close(self):
         """Stop ticking and tear the head down. Best-effort and idempotent."""

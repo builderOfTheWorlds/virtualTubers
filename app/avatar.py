@@ -147,7 +147,13 @@ def main():
     print(f"[avatar] watching state file={state_path}", file=sys.stderr)
 
     from avatar_providers import load_provider
+    from frame_pacer import FramePacer
     provider = load_provider(avatar_config, name, title)
+    # Deadline pacing, not `render; sleep(interval)` — the latter adds the
+    # render time to every frame and ran the 30fps head at ~9fps on air
+    # (see frame_pacer.py).
+    interval_s = getattr(provider, "tick_interval_s", DEFAULT_POLL_INTERVAL_S)
+    pacer = FramePacer(1.0 / interval_s)
 
     while True:
         state = read_state(state_path)
@@ -157,7 +163,7 @@ def main():
         mouth_open = resolve_mouth_open(state, now, bool(bubble_lines))
 
         provider.render_tick(expression, bubble_lines, mouth_open=mouth_open, emotion=emotion)
-        time.sleep(getattr(provider, "tick_interval_s", DEFAULT_POLL_INTERVAL_S))
+        pacer.wait()
 
 
 if __name__ == "__main__":

@@ -273,20 +273,25 @@ def resolve_slot_character_params(config, slot):
 # every machine without SDL, taking the pure geometry tests down with it.
 
 #: Render cadence for a TILE's head, in frames per second — deliberately
-#: well below the 30fps CodecAvatarProvider defaults to for a full-pane
+#: below the 30fps CodecAvatarProvider defaults to for a full-pane
 #: avatar. Two reasons, both specific to the roundtable:
 #:
 #:   1. EIGHT heads share ONE container. A tile is not one avatar, it is one
 #:      of eight simultaneous renders on the same CPU/GPU, so the per-head
 #:      cost multiplies by eight before it reaches the budget the stream's
-#:      own ffmpeg encode still has to fit inside. 12fps is 40% of the work
+#:      own ffmpeg encode still has to fit inside. 15fps is half the work
 #:      30fps would be.
 #:   2. A tile head is a secondary visual cue, not the focal point. On the
 #:      roundtable the CONTENT is the dialogue in the TEXT subpanel; the head
-#:      answers "who is this and are they animated/alive", which a 12fps
-#:      rotation conveys just as well as a 30fps one at 200x200 pixels. The
-#:      solo character channels, where the head IS the frame, keep 30.
-TILE_AVATAR_FPS = 12
+#:      answers "who is this and are they animated/alive". The solo
+#:      character channels, where the head IS the frame, keep 30.
+#:
+#: Why 15 and not the previous 12: the stream captures at 30fps, and a rate
+#: that does not divide 30 evenly holds frames for an alternating 3,2,3,2
+#: capture frames — visible judder on every head turn. 15 gives a steady
+#: 2-frame hold. (12 also only ever reached ~6fps on air because the driver
+#: slept a full interval after each render; see frame_pacer.py.)
+TILE_AVATAR_FPS = 15
 
 #: Window background for a tile head. Matches the Solarized Dark base03 the
 #: tile frame is drawn on, so the square window reads as part of the tile
@@ -404,7 +409,7 @@ class TileAvatar:
 
     FAIL ONCE, FAIL FOR GOOD. A tick() that raises marks this object
     permanently inactive rather than retrying on the next frame. At
-    TILE_AVATAR_FPS that retry would be twelve attempts a second, eight
+    TILE_AVATAR_FPS that retry would be fifteen attempts a second, eight
     tiles over, each one paying the full cost of whatever failed — and a
     provider that failed once keeps failing (the same judgement
     CodecAvatarProvider.render_tick already records for its own mid-run GPU

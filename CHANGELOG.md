@@ -4,6 +4,18 @@ Newest entries first. Moved out of `README.md` on 2026-08-16 to keep the
 README itself to a quick orientation/quick-start — see `README.md` for the
 current state of the project and links to detailed docs.
 
+**2026-10-05 — smoother 3D heads.** On air the heads redrew far below
+their target rate, and unevenly: roundtable tiles ran at ~6fps (target
+12) and the GM's solo head at ~9fps (target 30). Both loops slept a full
+frame interval after each render. They now use a deadline pacer
+(`app/frame_pacer.py`). The per-frame CRT pass
+(`pixel_raster.apply_codec_screen`) caches its static maps and runs in
+float32. The output is identical and the pass is 2-2.5x faster. Tile heads
+go from 12 to 15fps, which divides the 30fps capture evenly. The
+roundtable container's CPU limit goes from 2.0 to 4.0: it was being
+throttled ~25% of the time on air, which froze the heads. Needs a worker
+image rebuild ([docs/frame_pacer.md](docs/frame_pacer.md)).
+
 **2026-10-02 — faster voice prep (GPU + CPU thread fix) and resumable
 prep.** Local Piper on a worker was ~4 s/line because ONNX Runtime ran 20
 threads (host cores) under the container's 2-CPU quota; `voice.cpu_threads:
