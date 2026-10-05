@@ -639,6 +639,61 @@ def test_uncast_speaker_routes_to_directors_own_tile_on_the_roundtable(
     assert request["cast"].get("boss") == "tuber_0"
 
 
+def _narration_show(script, config, workdir, **kwargs):
+    return [
+        {"kind": "boss", "speaker": "boss", "narration": "opening narration",
+         "events": [{"type": "user_message", "text": "opening narration"}],
+         "audio": _Audio(1.0)},
+        {"kind": "coder_talk", "speaker": "coder", "narration": "tile line",
+         "events": [{"type": "assistant_text", "text": "tile line"}],
+         "audio": _Audio(2.0)},
+    ]
+
+
+@pytest.mark.parametrize("narrator_slot, expected", [
+    (None, "tuber_0"),          # no config -> default tuber_0
+    ("tuber_2", "tuber_2"),     # explicit roundtable.narrator_slot
+    ("tuber_9", "tuber_0"),     # not a cast tile -> falls back to tuber_0
+])
+def test_uncast_narration_reaches_a_tile_when_director_is_not_a_slot(
+        library, relay_dir, relay_files, duet_timeouts, monkeypatch, fake_performer,
+        narrator_slot, expected):
+    """The live shape since the GM/show split: the director runs as
+    WORKER_ID=roundtable, which is never a tile slot. Narrator ("boss") lines
+    must still land on a tile, not the hidden director pane (heard on air,
+    shown nowhere)."""
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _narration_show)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: AIRING)
+    _become_ready(monkeypatch, relay_files)
+
+    config = _roundtable_config("roundtable")
+    if narrator_slot:
+        config["roundtable"] = {"narrator_slot": narrator_slot}
+    # No "boss" key: the narrator is genuinely uncast, like the live
+    # cyber_police_day1 request.
+    cast = {"captain": "tuber_0", "coder": "tuber_1", "hacker": "tuber_2"}
+    request = {"episode": "round_ep", "cast": cast, "speed": 1000}
+    assert _run_director(config=config, request=request, self_id="roundtable") is True
+    show = FakePerformer.instances[-1].performed_show
+    narration = next(s for s in show if s["speaker"] == "boss")
+    assert narration["owned"] is False and narration["audio"] is None
+    for slot in SLOTS:
+        request = json.loads((relay_dir / f"{slot}.request.json").read_text())
+        assert request["cast"].get("boss") == expected
+    assert "roundtable" not in json.loads(
+        (relay_dir / "tuber_0.request.json").read_text())["cast"].values()
+
+
+def test_resolve_narrator_slot_is_none_without_tiles():
+    assert replay_pane._resolve_narrator_slot({}, "roundtable", []) is None
+    assert replay_pane._resolve_narrator_slot(
+        {"roundtable": {"narrator_slot": "tuber_3"}}, "tuber_1", ["tuber_1", "tuber_3"]) == "tuber_1"
+
+
 # ── voice gate escape hatch: show.audio flows into the gate ──────────────────
 @pytest.mark.skipif(sys.platform == "win32",
                     reason="voice gate needs fcntl.flock (POSIX-only; prod is Linux)")

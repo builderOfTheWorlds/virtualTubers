@@ -185,6 +185,16 @@ avatar:
 layout:
   preset: roundtable
 
+# ── Narrator routing (app/replay_pane.py _resolve_narrator_slot) ────────────
+# Speakers the replay_request cast leaves unmapped — chiefly the "boss"
+# narrator that revoice.plan_scenes assigns to speaker-less user_message
+# events (scene-setting prose) — are displayed and voiced on THIS tile. This
+# director runs as WORKER_ID=roundtable, which is not a tile slot, so without
+# a target those lines were voiced by the hidden director and shown on no
+# tile. Must be one of the cast's slots; defaults to tuber_0 when unset.
+roundtable:
+  narrator_slot: tuber_0
+
 # ── Roster: slot -> on-screen character name (build_layout.py v1.4) ──────────
 # Read by build_layout.py's _resolve_tile_title when it resolves EVERY tile's
 # pane title on this container (this channel hosts all 8 tiles, so this is the

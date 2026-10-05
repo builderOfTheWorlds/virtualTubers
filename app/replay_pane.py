@@ -560,6 +560,37 @@ def _resolve_local_tiles(cast, config):
     return sorted({str(slot) for slot in (cast or {}).values() if slot})
 
 
+DEFAULT_NARRATOR_SLOT = "tuber_0"
+
+
+def _resolve_narrator_slot(config, self_id, local_tile_slots):
+    """The local tile that displays (and voices) speakers the cast leaves
+    unmapped — revoice.plan_scenes' default "boss" narrator for speaker-less
+    user_message events. None when there is no tile to give them to (a plain
+    duet), which keeps them on the director's own visible pane.
+
+    Precedence: the director's own slot when it IS a tile (the original
+    single-container roundtable, self_id == tuber_0), else
+    `roundtable.narrator_slot` from the worker config, else tuber_0. The
+    second/third rungs exist because the show container now runs as
+    WORKER_ID=roundtable, which is never a tile slot — without them every
+    narrator line was voiced by the hidden director and shown on no tile."""
+    tiles = set(local_tile_slots or ())
+    if not tiles:
+        return None
+    if self_id in tiles:
+        return self_id
+    configured = ((config or {}).get("roundtable") or {}).get("narrator_slot")
+    for candidate in (configured, DEFAULT_NARRATOR_SLOT):
+        if candidate and str(candidate) in tiles:
+            return str(candidate)
+    if configured:
+        print(f"[replay_pane] roundtable.narrator_slot={configured!r} is not a cast "
+              f"tile ({sorted(tiles)}); narrator lines stay on the hidden director",
+              file=sys.stderr)
+    return None
+
+
 def _write_tile_relay_file(path, payload, label):
     """Best-effort atomic relay write — one tile failing to be written must
     never stop the show or the other tiles (see _safe_send)."""
@@ -824,12 +855,18 @@ def perform_director_request(request, worker_name, state_path, self_id,
         # in local_tile_set (the director has no tile there — it has a
         # normal visible replay pane), so this is a no-op and behavior is
         # byte-identical to before.
+        #
+        # Since the GM/show split the director runs as WORKER_ID=roundtable,
+        # which is NOT a tile slot, so the target is resolved by
+        # _resolve_narrator_slot (self_id if it is a tile, else
+        # roundtable.narrator_slot, else tuber_0).
         effective_cast = dict(cast)
-        if self_id in local_tile_set:
+        narrator_slot = _resolve_narrator_slot(config, self_id, local_tile_set)
+        if narrator_slot is not None:
             for scene in show:
                 speaker = scene.get("speaker")
                 if speaker not in effective_cast:
-                    effective_cast[speaker] = self_id
+                    effective_cast[speaker] = narrator_slot
         for scene in show:
             speaker = scene.get("speaker")
             old_formula = effective_cast.get(speaker, self_id) == self_id
