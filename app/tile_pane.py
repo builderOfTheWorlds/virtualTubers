@@ -449,6 +449,16 @@ def _wrap_dialogue(lines, width):
     return rows
 
 
+def _current_line_row_count(lines, width):
+    """How many of the LAST wrapped rows belong to the newest non-empty
+    bubble (the line being spoken now). Everything above them is history."""
+    for spoken in reversed(list(lines)):
+        text = " ".join(_ANSI_RE.sub("", str(spoken or "")).split())
+        if text:
+            return len(textwrap.wrap(text, max(1, width)) or [""])
+    return 0
+
+
 def render_tile(slot, expression="idle", line="", status="listening", out=None,
                 clear=True, width=None, height=None, lines=None, brightness=1.0):
     """Draw the tile frame as three bordered SUBPANELS, top to bottom:
@@ -520,6 +530,11 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     # spoken line ever made it to air — see _wrap_dialogue.)
     dialogue = _wrap_dialogue(lines, line_chars)[-dialogue_line_count:]
     dialogue = [""] * (dialogue_line_count - len(dialogue)) + dialogue
+    # Only the NEWEST line (the one being spoken) keeps the bright colour;
+    # rows of earlier lines are dimmed individually in the written frame.
+    current_rows = min(_current_line_row_count(lines, line_chars),
+                       dialogue_line_count)
+    history_rows = dialogue_line_count - current_rows
     rows = ["┌" + "─" * inner + "┐"]
     # ── AVATAR subpanel ──────────────────────────────────────────────────────
     # No name row here — tmux's pane-border-format (build_layout.py's
@@ -542,6 +557,7 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
             rows.append("│" + row.center(inner) + "│")
     # ── TEXT subpanel ────────────────────────────────────────────────────────
     rows.append("├" + "─" * inner + "┤")
+    first_dialogue_row = len(rows)
     for spoken in dialogue:
         rows.append("│ " + spoken.ljust(line_chars) + " │")
     # ── STATUS subpanel ──────────────────────────────────────────────────────
@@ -550,7 +566,16 @@ def render_tile(slot, expression="idle", line="", status="listening", out=None,
     rows.append("└" + "─" * inner + "┘")
     if clear:
         out.write("\x1b[2J\x1b[H")
-    frame = "\n".join(rows) + "\n"
+    # Dim previous lines' text only (not the border). After the dim span,
+    # restore the frame-wide colour (or the pane default at full brightness).
+    restore = _tile_color_code(brightness) if brightness < 1.0 else "\x1b[39m"
+    dim = _tile_color_code(TILE_FADE_FLOOR)
+    shown = list(rows)
+    for i in range(history_rows):
+        idx = first_dialogue_row + i
+        if rows[idx][2:-2].strip():
+            shown[idx] = "│ " + dim + rows[idx][2:-2] + restore + " │"
+    frame = "\n".join(shown) + "\n"
     if brightness < 1.0:
         # \x1b[0m reset at the end so the dim doesn't bleed into whatever
         # tmux/the next pane prints after this frame — the same discipline
@@ -1013,6 +1038,29 @@ def make_wait_for_scene(cue_file, airing_id, show, slot, stop_file=None):
     return wait_for_scene
 
 
+def _tmux_pane_title(title=None):
+    """Read (title=None) or set this pane's tmux border title, best effort.
+    The border title is what the broadcast shows above the tile; it is set
+    statically from the roster at layout time, so a tile has to update it
+    itself to show the character cast in the CURRENT show. No-op outside
+    tmux; never raises."""
+    pane = os.environ.get("TMUX_PANE")
+    if not pane:
+        return None
+    import subprocess
+    try:
+        if title is None:
+            out = subprocess.run(["tmux", "display-message", "-p", "-t", pane,
+                                  "#{pane_title}"], capture_output=True,
+                                 text=True, timeout=3)
+            return out.stdout.strip() or None
+        subprocess.run(["tmux", "select-pane", "-t", pane, "-T", title],
+                       capture_output=True, timeout=3)
+    except Exception:  # noqa: BLE001 — a title is decoration
+        pass
+    return None
+
+
 def clear_stale_relay_files(relay_dir, slot, airing_id=None):
     """Stale-state hygiene, BEFORE performing — mirroring the duet roles'
     rule (docs/duet_replay.md "stale-state hygiene", replay_pane lines
@@ -1130,6 +1178,16 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
     # (§5: the slot is the stable identity, the display name is resolved at
     # scene time); the slot id is the fallback so a tile is never nameless.
     name = str(request.get("worker_name") or slot)
+    # The pane's border title follows the show's cast: the header persona
+    # for this slot wins, then the request's worker_name; the roster title
+    # is restored by handle_once when the show ends.
+    try:
+        from revoice import show_bindings
+        title = show_bindings(script)[0].get(slot) or (name if name != slot else None)
+    except Exception:  # noqa: BLE001
+        title = name if name != slot else None
+    if title:
+        _tmux_pane_title(title)
 
     if not narration_store.available():
         print(f"[tile_pane] {slot}: narration store unavailable — cannot perform airing",
@@ -1245,6 +1303,7 @@ def handle_once(slot, relay_dir, state_path=None, config=None, default_speed=1.0
     request = replay_pane.read_request(tile_request_file(relay_dir, slot))
     if not request:
         return False
+    original_title = _tmux_pane_title()
     try:
         return perform_tile_request(request, slot, relay_dir, state_path=state_path,
                                     config=config, default_speed=default_speed)
@@ -1252,6 +1311,9 @@ def handle_once(slot, relay_dir, state_path=None, config=None, default_speed=1.0
         print(f"[tile_pane] {slot}: show failed: {type(exc).__name__}: {exc}",
               file=sys.stderr)
         return False
+    finally:
+        if original_title:
+            _tmux_pane_title(original_title)
 
 
 def build_parser():
