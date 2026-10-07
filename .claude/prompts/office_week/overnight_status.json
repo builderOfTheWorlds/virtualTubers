@@ -1,0 +1,31 @@
+{
+  "started": "2026-10-01T01:29:57",
+  "config_id": 10,
+  "run": "ashiorid_office_20261001_060858_a5f2",
+  "jobs": [
+    {
+      "id": "job_20261001T052958_590081",
+      "stage": "all",
+      "segments": null,
+      "status": "cancelled",
+      "result": {
+        "segments": 8,
+        "duration_s": 829.797326,
+        "skipped_segments": 20
+      },
+      "error": null
+    },
+    {
+      "id": "job_20261001T060858_30cdf7",
+      "stage": "all",
+      "segments": null,
+      "status": "failed",
+      "result": {},
+      "error": "arc stage produced an empty arc plan: every batch was skipped (see the plan_arc warnings for this job); /data/output/ashiorid_office_20261001_060858_a5f2/arc_plan.yaml"
+    }
+  ],
+  "days": {},
+  "state": "arc_failed",
+  "updated": "2026-10-01T02:09:28",
+  "elapsed_h": 0.66
+}

@@ -1,0 +1,32 @@
+2026-10-01 01:29:58,004 INFO activated config 10
+2026-10-01 01:29:58,022 INFO submitted all job job_20261001T052958_590081 run=ashiorid_office_20261001_052958_9191 segments=None
+2026-10-01 01:43:58,547 INFO job job_20261001T052958_590081 cancelled result={'segments': 8, 'duration_s': 829.797326, 'skipped_segments': 20} error=None
+2026-10-01 01:43:58,547 ERROR all stage attempt 1 failed: None
+2026-10-01 01:43:58,549 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:44:58,551 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:45:58,554 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:46:58,556 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:47:58,562 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:48:58,566 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:49:58,571 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:50:58,578 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:51:58,583 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:52:58,587 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:53:58,591 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:54:58,596 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:55:58,600 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:56:58,605 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:57:58,608 WARNING ollama has models resident next to vLLM: ['qwen3.8:27b', 'llama3.1:8b']; requesting unload
+2026-10-01 01:58:58,613 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 01:59:58,617 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:00:58,621 WARNING ollama has models resident next to vLLM: ['llama3.1:8b', 'qwen3.8:27b']; requesting unload
+2026-10-01 02:01:58,627 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:02:58,630 WARNING ollama has models resident next to vLLM: ['llama3.1:8b', 'qwen3.8:27b']; requesting unload
+2026-10-01 02:03:58,636 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:04:58,639 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:05:58,642 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:06:58,646 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:07:58,650 WARNING ollama has models resident next to vLLM: ['llama3.1:8b']; requesting unload
+2026-10-01 02:08:58,671 INFO submitted all job job_20261001T060858_30cdf7 run=ashiorid_office_20261001_060858_a5f2 segments=None
+2026-10-01 02:09:28,696 INFO job job_20261001T060858_30cdf7 failed result={} error=arc stage produced an empty arc plan: every batch was skipped (see the plan_arc warnings for this job); /data/output/ashiorid_office_20261001_060858_a5f2/arc_plan.yaml
+2026-10-01 02:09:28,696 ERROR all stage attempt 2 failed: arc stage produced an empty arc plan: every batch was skipped (see the plan_arc warnings for this job); /data/output/ashiorid_office_20261001_060858_a5f2/arc_plan.yaml

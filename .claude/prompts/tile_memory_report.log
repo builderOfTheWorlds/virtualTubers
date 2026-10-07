@@ -1,0 +1,74 @@
+[0] list_dir {"path": "app"}
+  -> '__pycache__/\nagent.py\nagent_handlers/\nagent_metrics.py\nagent_state.py\nascii_raster.py\naudio_envelope.py\naudio_player.py\navatar.py\navatar_display.py\navatar_providers/\nbuild_layout.py\ncampaign/\ncharacter/\ncharacter_preview.py\ncharacter_schema.py\nchat_list_pane.py\ncodec_head.py\ncoding_backend.py\ncoding'
+[0] run_python {"code": "import os\nprint(os.listdir('app'))\n"}
+  -> 'Traceback (most recent call last):\n  File "/tmp/tmpnjj9r649/snippet.py", line 2, in <module>\n    print(os.listdir(\'app\'))\n          ^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: \'app\'\n'
+[1] read_file {"path": "app/tile_pane.py", "start": 1, "end": 120}
+  -> '1|#!/usr/bin/env python3\n2|"""\n3|tile_pane.py\n4|Long-lived tmux pane program for ONE roundtable tile (design spec\n5|.claude/prompts/roundtable_stream_design.md §5, WP-3).\n6|\n7|The roundtable channel is hosted by the GM container (slot `tuber_0`) and\n8|shows one tile per character slot. A tile is a s'
+[1] run_python {"code": "import os\nprint(os.getcwd())\nprint(os.listdir('.'))\n"}
+  -> "/home/secus/codeProjects/virtualTubers/app\n['character', 'pane_geometry.py', 'stream_recorder.py', 'tmux_control.py', 'stream_supervisor.py', 'ascii_raster.py', 'recording_budget.py', 'emotion.py', 'campaign', 'agent_handlers', 'avatar_display.py', 'voice_prep_checkpoint.py', '__pycache__', 'tts_cli"
+[2] read_file {"path": "app/tile_pane.py", "start": 120, "end": 400}
+  -> '120|\n121|def ensure_relay_dir(relay_dir):\n122|    """Best-effort — a tile that can\'t create its relay dir still idles\n123|    (and says so) rather than crashing the pane."""\n124|    try:\n125|        Path(relay_dir).mkdir(parents=True, exist_ok=True)\n126|        return True\n127|    except OSError as '
+[3] read_file {"path": "app/tile_pane.py", "start": 400, "end": 780}
+  -> '400|    rows = avatar_rows if avatar_rows is not None else resolve_avatar_row_count(h)\n401|    return max(MIN_DIALOGUE_LINES, h - tile_fixed_overhead(rows))\n402|\n403|\n404|# Kept for callers/tests that want a static default; live rendering uses\n405|# resolve_tile_width() so it tracks the real pane.\n4'
+[4] read_file {"path": "app/tile_pane.py", "start": 780, "end": 1120}
+  -> "780|    blit from there would tie the head's framerate to the typing cadence,\n781|    so a head would freeze for the whole of any silent wait (audio playback,\n782|    the inter-line gap) — exactly the stalls TileRenderer already needed its\n783|    own fade ticker to animate through. A thread renders"
+[5] read_file {"path": "app/tile_pane.py", "start": 1120, "end": 1450}
+  -> '1120|    episode_name, script = replay_pane.resolve_episode(episode)\n1121|    if script is None:\n1122|        print(f"[tile_pane] {slot}: episode not in the library: {episode!r}", file=sys.stderr)\n1123|        return False\n1124|\n1125|    try:\n1126|        speed = float(request.get("speed") or defaul'
+[6] read_file {"path": "app/tile_pane.py", "start": 1450, "end": 1800}
+  -> ''
+[7] run_python {"code": "print(sum(1 for _ in open('tile_pane.py')))\n"}
+  -> '1342\n'
+[8] read_file {"path": "app/tile_pane.py", "start": 1229, "end": 1342}
+  -> "1229|            renderer.close()\n1230|\n1231|    # The cue file is this tile's alone; consume THIS airing's last cue/end\n1232|    # so the NEXT show starts from a clean slate too (the request file was\n1233|    # already consumed by read_request before we got here). Only if it is\n1234|    # still our"
+[9] read_file {"path": "app/tile_pane.py", "start": 400, "end": 780}
+  -> '400|    rows = avatar_rows if avatar_rows is not None else resolve_avatar_row_count(h)\n401|    return max(MIN_DIALOGUE_LINES, h - tile_fixed_overhead(rows))\n402|\n403|\n404|# Kept for callers/tests that want a static default; live rendering uses\n405|# resolve_tile_width() so it tracks the real pane.\n4'
+[10] read_file {"path": "app/tile_pane.py", "start": 510, "end": 780}
+  -> "510|                                                      avatar_rows=avatar_rows)\n511|\n512|    if lines is None:\n513|        lines = [line] if line else []\n514|    # Word-wrap every bubble to the TEXT subpanel's width FIRST, then slice\n515|    # to however many rows the pane actually has — newest c"
+[11] read_file {"path": "app/tile_pane.py", "start": 780, "end": 1120}
+  -> "780|    blit from there would tie the head's framerate to the typing cadence,\n781|    so a head would freeze for the whole of any silent wait (audio playback,\n782|    the inter-line gap) — exactly the stalls TileRenderer already needed its\n783|    own fade ticker to animate through. A thread renders"
+[12] read_file {"path": "app/tile_pane.py", "start": 890, "end": 1120}
+  -> '890|\n891|def start_tile_avatar(config, slot, retry_s=None, stage_path=None):\n892|    """Build this tile\'s 3D head and start driving it, or return None.\n893|\n894|    Returns None — leaving the tile in ASCII mode, exactly as it rendered\n895|    before the head existed — for every reason a head might n'
+[13] read_file {"path": "app/tile_pane.py", "start": 1120, "end": 1240}
+  -> '1120|    episode_name, script = replay_pane.resolve_episode(episode)\n1121|    if script is None:\n1122|        print(f"[tile_pane] {slot}: episode not in the library: {episode!r}", file=sys.stderr)\n1123|        return False\n1124|\n1125|    try:\n1126|        speed = float(request.get("speed") or defaul'
+[14] read_file {"path": "app/tile_pane.py", "start": 1240, "end": 1342}
+  -> '1240|def handle_once(slot, relay_dir, state_path=None, config=None, default_speed=1.0):\n1241|    """Poll once: consume a pending request (if any) and perform it.\n1242|    Returns True when a show aired. Never raises — this is the seam the\n1243|    idle loop wraps, and §5\'s "the roundtable never goes'
+[15] read_file {"path": "app/tile_avatar.py"}
+  -> '1|#!/usr/bin/env python3\n2|"""\n3|tile_avatar.py\n4|Pure geometry + config resolution for a roundtable tile\'s 3D avatar head.\n5|\n6|WHAT THIS IS FOR. A roundtable tile (app/tile_pane.py) draws three stacked\n7|subpanels — AVATAR, TEXT, STATUS — as terminal text inside a tmux pane.\n8|The AVATAR subpanel '
+[16] read_file {"path": "app/avatar_providers/codec_avatar.py"}
+  -> '1|#!/usr/bin/env python3\n2|"""\n3|avatar_providers/codec_avatar.py\n4|Live-rendered 3D avatar provider using the MGS2-codec-style head\n5|(codec_head.py) and the GPU-first rasterizer (gl_raster.py, falling back to\n6|pixel_raster.py). Replaces termgl_avatar.py\'s character-grid ANSI rendering\n7|for chara'
+[17] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 120, "end": 400}
+  -> '120|    "WHITE": np.array([0.92, 0.95, 0.92], dtype=np.float32),\n121|    "BLUE": np.array([0.35, 0.55, 1.00], dtype=np.float32),\n122|    "BLACK": np.array([0.55, 0.58, 0.55], dtype=np.float32),  # too dark to\n123|    # render literal black through a lambert shade — falls back to a dim\n124|    # neut'
+[18] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 220, "end": 520}
+  -> '220|        import gl_raster\n221|\n222|        speed_mul, forced_tint = EXPRESSION_STYLE.get(\n223|            expression, EXPRESSION_STYLE["idle"])\n224|        tint_choice = forced_tint or ACCENT_TINTS.get(self.accent_color)\n225|        if tint_choice is None:\n226|            tint = TINT_CODEC_GREEN\n'
+[19] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 520, "end": 800}
+  -> "520|        pane's process (including this one, via `tmux send-keys` inside\n521|        build_layout.py's emitted script) BEFORE it creates/resizes the\n522|        xterm window and runs `tmux set -g window-size latest;\n523|        refresh-client` (startup.sh steps 5 vs 6) — so a one-shot read at\n524"
+[20] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 800, "end": 1100}
+  -> ''
+[21] run_python {"code": "print(sum(1 for _ in open('avatar_providers/codec_avatar.py')))\n"}
+  -> '635\n'
+[22] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 330, "end": 520}
+  -> '330|        rule there is degrade, never crash.\n331|        """\n332|        if value is None:\n333|            return cls.DEFAULT_FPS\n334|        try:\n335|            fps = float(value)\n336|        except (TypeError, ValueError):\n337|            log.warning("codec_avatar: ignoring unparseable "\n338| '
+[23] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 432, "end": 520}
+  -> '432|            self._source = FrameSource(\n433|                character_params, width=width, height=height,\n434|                view_dist=cfg.get("view_dist", 3.25),\n435|                angle_speed=cfg.get("angle_speed", 0.0),\n436|                angle_deg=cfg.get("angle_deg", 15.0),\n437|         '
+[24] read_file {"path": "app/gpu_render_worker.py"}
+  -> '1|#!/usr/bin/env python3\n2|"""\n3|gpu_render_worker.py\n4|Runs gl_raster\'s GPU rendering in a SEPARATE OS process from the one that\n5|owns the avatar\'s pygame window — see codec_avatar.py\'s module docstring\n6|and gl_raster.is_available()\'s docstring for the full history, but in\n7|short: on gx10 (aarch'
+[25] read_file {"path": "app/gpu_render_worker.py", "start": 120, "end": 320}
+  -> "120|    Duck-types FrameSource's public surface used by codec_avatar.py:\n121|    .faces (read once, for the startup log line) and\n122|    .render_frame(expression) -> (img: (H,W,3) uint8 0..255, backend: str).\n123|    Note the dtype difference from FrameSource (float 0..1) — callers\n124|    that nee"
+[26] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 128, "end": 330}
+  -> '128|class FrameSource:\n129|    """Pure render step: character params in, a fresh RGB frame out.\n130|\n131|    No window, no pygame import — safe to construct and call in a unit\n132|    test or a headless CI box (gl_raster.render_with_fallback already\n133|    degrades to the CPU path when no GPU conte'
+[27] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 228, "end": 330}
+  -> "228|            tint = TINT_AMBER\n229|        else:\n230|            tint = tint_choice\n231|\n232|        # Rebuild the morphed mesh for THIS tick's (mouth_open, emotion).\n233|        # faces/materials are guaranteed identical to the ones built in\n234|        # __init__ (topology is parameter-independ"
+[28] read_file {"path": "app/avatar_providers/codec_avatar.py", "start": 520, "end": 635}
+  -> "520|        pane's process (including this one, via `tmux send-keys` inside\n521|        build_layout.py's emitted script) BEFORE it creates/resizes the\n522|        xterm window and runs `tmux set -g window-size latest;\n523|        refresh-client` (startup.sh steps 5 vs 6) — so a one-shot read at\n524"
+[29] read_file {"path": "app/narration_store.py"}
+  -> '1|"""\n2|narration_store.py\n3|Direct Postgres persistence for Rerun Theater narrations: after a voiced\n4|airing, replay_pane.py saves each scene\'s spoken line AND its synthesized\n5|WAV bytes into the voiced_narration table; a later replay_request with\n6|payload.narration: "reuse" reads the latest cac'
+[30] read_file {"path": "app/narration_store.py", "start": 150, "end": 220}
+  -> '150|            rows = cur.fetchall()\n151|    finally:\n152|        conn.close()\n153|    if not rows:\n154|        return None\n155|    return [_row_to_dict(row) for row in rows]\n156|\n157|\n158|def load_airing(message_id):\n159|    """Scenes of the exact airing identified by `message_id`, ordered by\n160|'
+[31] read_file {"path": "app/tile_pane.py", "start": 1120, "end": 1240}
+  -> '1120|    episode_name, script = replay_pane.resolve_episode(episode)\n1121|    if script is None:\n1122|        print(f"[tile_pane] {slot}: episode not in the library: {episode!r}", file=sys.stderr)\n1123|        return False\n1124|\n1125|    try:\n1126|        speed = float(request.get("speed") or defaul'
+[32] read_file {"path": "app/tile_pane.py", "start": 780, "end": 890}
+  -> "780|    blit from there would tie the head's framerate to the typing cadence,\n781|    so a head would freeze for the whole of any silent wait (audio playback,\n782|    the inter-line gap) — exactly the stalls TileRenderer already needed its\n783|    own fade ticker to animate through. A thread renders"
+[33] read_file {"path": "app/tile_pane.py", "start": 1288, "end": 1342}
+  -> '1288|    config = replay_pane.load_worker_config(args.config)\n1289|\n1290|    print(f"[tile_pane] slot={slot} relay_dir={relay_dir} state_file={state_path} "\n1291|          f"narration_store={\'ok\' if narration_store.available() else \'UNAVAILABLE\'}",\n1292|          file=sys.stderr)\n1293|\n1294|    # Th'
+[34] read_file {"path": "app/tile_pane.py", "start": 890, "end": 1120}
+  -> '890|\n891|def start_tile_avatar(config, slot, retry_s=None, stage_path=None):\n892|    """Build this tile\'s 3D head and start driving it, or return None.\n893|\n894|    Returns None — leaving the tile in ASCII mode, exactly as it rendered\n895|    before the head existed — for every reason a head might n'
