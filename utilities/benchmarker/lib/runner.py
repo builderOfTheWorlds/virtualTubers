@@ -33,6 +33,7 @@ import statistics
 import sys
 import threading
 import time
+import traceback
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -717,7 +718,9 @@ class Runner:
         except Exception as exc:  # noqa: BLE001 - top-level catch: still write partial report
             run.error = repr(exc)
             run.finished_at = time.time()
-            self._log("run_failed", err=repr(exc))
+            # Keep the traceback: the 2026-09 full_round IndexError was
+            # undiagnosable from repr(exc) alone.
+            self._log("run_failed", err=repr(exc), tb=traceback.format_exc()[-2000:])
             self._write_json(run)
             self._write_markdown(run)
         finally:
@@ -1016,7 +1019,11 @@ def main(argv: list[str] | None = None) -> int:
     if cfg.host == "ollama":
         host = OllamaHost(cfg.base_url)
     else:
-        host = vLLMHost(cfg.base_url)
+        # The vLLM server needs a Bearer key; read it from the env var NAMED
+        # by $BENCH_VLLM_API_KEY_ENV (default VLLM_API_KEY), never from config.
+        key = os.environ.get(os.environ.get("BENCH_VLLM_API_KEY_ENV", "VLLM_API_KEY"))
+        host = vLLMHost(cfg.base_url,
+                        headers={"Authorization": f"Bearer {key}"} if key else None)
 
     if not host.health():
         print(f"[bench] host not reachable at {cfg.base_url}. "

@@ -182,7 +182,7 @@ class vLLMHost:
                     delta = choice.get("delta") or {}
                     if delta.get("content"):
                         content_parts.append(delta["content"])
-                    for key in ("reasoning", "thinking"):
+                    for key in ("reasoning_content", "reasoning", "thinking"):
                         if delta.get(key):
                             reasoning_parts.append(delta[key])
                     if choice.get("finish_reason"):
