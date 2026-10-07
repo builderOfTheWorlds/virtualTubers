@@ -672,6 +672,62 @@ def test_generate_scene_includes_scene_lore():
     assert "The sky broke in 1042." in llm.last_user
 
 
+# ── silent cast members (observer/party-member archetype) ──────────────────
+def _pack_with_silent_member():
+    """A pack whose cast includes a silent 'watcher' member, carrying the
+    schema-mandated literal sentence that marks them as never speaking."""
+    cast = {
+        "gm": CastMember(id="gm", name="The Chronicler", role="gm",
+                         archetype="narrator", system_prompt="You narrate coldly."),
+        "Leena": CastMember(id="Leena", name="Leena", role="player",
+                            archetype="wizard", system_prompt="You are precise and tired."),
+        "watcher": CastMember(id="watcher", name="The Watcher", role="player",
+                              archetype="silent observer",
+                              system_prompt="You sit in the corner.\n\n"
+                                            "You never speak. You only observe."),
+    }
+    return CampaignPack(
+        name="testpack", title="Test", genre="fantasy", start_scene="opening",
+        gm_id="gm", player_ids=["Leena", "watcher"], primitives=[],
+        theme={}, cast=cast, scenes={}, root=Path("/nonexistent"),
+        lore_dir=None, lore={},
+    )
+
+
+def test_generate_scene_omits_a_silent_member_from_the_cast_roster():
+    pack = _pack_with_silent_member()
+    llm = FakeLLM("Leena: Rain.")
+
+    build(llm, pack=pack).generate_scene(AMBIENT)
+
+    assert "watcher" not in llm.last_user
+    assert "The Watcher" not in llm.last_user
+    assert "Leena" in llm.last_user
+
+
+def test_generate_scene_never_attributes_dialogue_to_a_silent_member_by_id():
+    # Even if the model ignores the roster omission and names the silent
+    # member's id directly, the line must fall through to GM narration
+    # instead of becoming a dialogue beat for that character.
+    pack = _pack_with_silent_member()
+    llm = FakeLLM("watcher: I have seen everything.")
+
+    beat = build(llm, pack=pack).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "narration"
+    assert beat.speaker == "gm"
+
+
+def test_generate_scene_never_attributes_dialogue_to_a_silent_member_by_name():
+    pack = _pack_with_silent_member()
+    llm = FakeLLM("The Watcher: I have seen everything.")
+
+    beat = build(llm, pack=pack).generate_scene(AMBIENT)[0]
+
+    assert beat.kind == "narration"
+    assert beat.speaker == "gm"
+
+
 # ── logging ──────────────────────────────────────────────────────────────────
 def test_a_generated_line_is_logged_at_debug(Leena, caplog):
     with caplog.at_level("DEBUG", logger="campaign.improviser"):
@@ -695,3 +751,22 @@ def test_nothing_is_logged_above_debug_when_call_raises(Leena, caplog):
             build(ExplodingLLM())(dialogue(), Leena)
 
     assert not [r for r in caplog.records if r.levelno >= 30]
+
+
+def test_generate_scene_matches_a_unique_first_name_as_the_speaker():
+    pack = make_pack()
+    pack.cast["julian"] = CastMember(id="julian", name="Julian Faire", role="player")
+    llm = FakeLLM("julian: Picture a woman at a till.\nfaire: And she never notices.")
+    beats = build(llm, pack=pack).generate_scene(AMBIENT)
+    assert [(b.kind, b.speaker, b.text) for b in beats] == [
+        ("dialogue", "julian", "Picture a woman at a till."),
+        ("dialogue", "julian", "And she never notices."),
+    ]
+
+
+def test_generate_scene_does_not_alias_a_name_token_shared_by_two_cast_members():
+    pack = make_pack()
+    pack.cast["a"] = CastMember(id="a", name="Sam Hask", role="player")
+    pack.cast["b"] = CastMember(id="b", name="Owen Hask", role="player")
+    beats = build(FakeLLM("hask: Red. Again."), pack=pack).generate_scene(AMBIENT)
+    assert beats[0].kind == "narration"

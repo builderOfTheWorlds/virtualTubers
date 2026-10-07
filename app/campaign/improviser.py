@@ -32,6 +32,26 @@ _FILLER_LINE_RE = re.compile(
     re.IGNORECASE,
 )
 
+# A cast member whose system_prompt carries the schema-mandated literal
+# sentence "You never speak. You only observe." (campaigns/*/profiles/
+# _SCHEMA.md's "Party Member only" rule, reused verbatim by every silent
+# observer-archetype character across packs — ashiorid_office's party_member,
+# cyber_police's observer) must never be assigned a dialogue beat. Prompt
+# wording alone does not reliably hold at batch-generation scale against a
+# local model (observed: ~30% of a cyber_police batch gave the Observer
+# lines) — this enforces the invariant in code, per the project's standing
+# rule that per-neighbour/per-character contracts belong in code, not just
+# prompt text.
+_NEVER_SPEAKS_RE = re.compile(r"you never speak", re.IGNORECASE)
+
+
+def _silent_cast_ids(pack: CampaignPack) -> set[str]:
+    """Cast ids whose system_prompt declares them silent (see above)."""
+    return {
+        member_id for member_id, member in pack.cast.items()
+        if member.system_prompt and _NEVER_SPEAKS_RE.search(member.system_prompt)
+    }
+
 
 class ImproviserError(RuntimeError):
     """Raised by __call__ only. Never raised by generate_scene."""
@@ -226,9 +246,13 @@ class LLMImproviser:
         # Build user prompt
         user_parts = [scene.prompt]
 
-        # Add cast roster
+        # Add cast roster — silent cast members (see _silent_cast_ids) are
+        # excluded so the model isn't even offered them as a speaker option.
+        silent_ids = _silent_cast_ids(self.pack)
         cast_roster = []
         for member_id, member in self.pack.cast.items():
+            if member_id in silent_ids:
+                continue
             cast_roster.append(f"{member_id}: {member.name}")
         user_parts.append("Cast:\n" + "\n".join(cast_roster))
 
@@ -285,10 +309,25 @@ class LLMImproviser:
         # sodacan_bob) -- without the name alias, those lines fall through
         # to GM narration with the name baked into the text instead of
         # resolving to the right speaker/voice.
-        cast_lookup = {member_id.lower(): member_id for member_id in self.pack.cast}
+        cast_lookup = {member_id.lower(): member_id for member_id in self.pack.cast
+                       if member_id not in silent_ids}
         for member_id, member in self.pack.cast.items():
+            if member_id in silent_ids:
+                continue
             if member.name:
                 cast_lookup.setdefault(member.name.lower(), member_id)
+        # First/last names too, when unique in the cast: the model writes
+        # "julian: ..." for Julian Faire (2026-09-30 office run), which
+        # otherwise falls through to GM narration with "julian:" spoken.
+        token_owners: dict[str, set] = {}
+        for member_id, member in self.pack.cast.items():
+            if member_id in silent_ids:
+                continue
+            for token in re.findall(r"[a-z][a-z'-]+", (member.name or "").lower()):
+                token_owners.setdefault(token, set()).add(member_id)
+        for token, owners in token_owners.items():
+            if len(owners) == 1:
+                cast_lookup.setdefault(token, next(iter(owners)))
         for line in reply.splitlines():
             if len(beats) >= self.max_beats:
                 break
