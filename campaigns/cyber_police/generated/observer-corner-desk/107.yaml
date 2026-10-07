@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:56.155347+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, team. Today's directive is to review the recent uptick in Scuttle
+    chatter.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the link charts, Captain, and it appears to be centered
+    around a new node in the east sector.
+- kind: dialogue
+  speaker: detective
+  text: I'd like to get eyes on that node, see if we can't pick up some more intel.
+    Agent, can you start tracing the signal?
+- kind: dialogue
+  speaker: agent
+  text: On it, Detective. I'll get the tools set up and try to ping the node.
+- kind: dialogue
+  speaker: forensics
+  text: I'll start setting up the forensics kit and preparing for potential evidence.
+- kind: dialogue
+  speaker: press
+  text: No press conference today, but I've got a request from the Commissioner's
+    office to keep an eye on the Scuttle's online presence.
+- kind: dialogue
+  speaker: quartermaster
+  text: Supply cage is stocked, but the requisition for new hardware is still pending.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (sits at the corner desk, watching the team)'

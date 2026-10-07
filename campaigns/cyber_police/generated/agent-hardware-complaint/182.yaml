@@ -1,0 +1,15 @@
+id: agent-hardware-complaint
+take: 182
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:24.407156+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I've seen this hardware in museums.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool running, but it's being stubborn.
+- kind: dialogue
+  speaker: captain
+  text: Just great, now the whole system is going to crash and we'll have to deal
+    with IT.

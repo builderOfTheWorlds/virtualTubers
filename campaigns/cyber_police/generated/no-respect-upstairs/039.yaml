@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 39
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:41.939178+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: Morning, Cyber Police.'
+- kind: narration
+  speaker: captain
+  text: 'DRV: Alright, alright, let''s get this over with.'
+- kind: narration
+  speaker: captain
+  text: 'ROA: Good morning, Detective. What''s the priority?'
+- kind: narration
+  speaker: captain
+  text: 'MT: Just reviewing the Scuttle''s latest. Another 24-hour cycle, another
+    12 fake IDs sold.'
+- kind: narration
+  speaker: captain
+  text: 'PO: Still can''t believe that guy''s getting column inches for selling knockoff
+    shoes.'
+- kind: narration
+  speaker: captain
+  text: 'HN: Captain, I''m flagging some inconsistencies in the malware pattern.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Yeah, yeah, we can take care of it.'
+- kind: narration
+  speaker: captain
+  text: 'TML: Morning, folks. Your requisition for new forensics software is... pending.'

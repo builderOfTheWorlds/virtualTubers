@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:58.414372+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've been re-running the link charts from the Wilson case
+- kind: dialogue
+  speaker: agent
+  text: Captain Agar asked me to re-examine the encryption on the server
+- kind: dialogue
+  speaker: forensics
+  text: Still can't crack the key, sir
+- kind: dialogue
+  speaker: quartermaster
+  text: Anyone need anything from the supply cage before I lock up?
+- kind: dialogue
+  speaker: press
+  text: I think I found a possible connection between the Wilson case and...
+- kind: dialogue
+  speaker: detective
+  text: (glancing up from his notes) What is it, Davey?
+- kind: dialogue
+  speaker: analyst
+  text: (still staring at the Observer) He's just sitting there, sir
+- kind: dialogue
+  speaker: captain
+  text: (tapping her pen on the table) Alright, let's focus. What's the status on
+    the Wilson case?

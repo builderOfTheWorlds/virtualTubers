@@ -1,0 +1,50 @@
+id: quartermaster-binder-chatter
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:51.928244+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmb: We''re not even getting the right stuff to keep up with The Scuttle''s
+    moves.'
+- kind: narration
+  speaker: captain
+  text: 'Tmb: I''m starting to think we''re being used as a punching bag for the department''s
+    budget.'
+- kind: narration
+  speaker: captain
+  text: 'Tmb: What''s the latest on those laptops?'
+- kind: narration
+  speaker: captain
+  text: 'Tn: The Analyst says they''ve got some interesting chatter patterns coming
+    out of The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Tn: I''m going to start digging into those. Maybe we can get something concrete
+    out of it.'
+- kind: narration
+  speaker: captain
+  text: 'Tn: And can we get some more RAM for the servers? This is ridiculous.'
+- kind: narration
+  speaker: captain
+  text: 'Dv: I''ve got some good news - the forensics team finally finished processing
+    that drive from the Johnson case.'
+- kind: narration
+  speaker: captain
+  text: 'Dv: It''s got some interesting stuff, but I don''t think it''s directly related
+    to The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Tn: That''s a shame. We could use a break.'
+- kind: narration
+  speaker: captain
+  text: 'Hv: Actually, I think it might be related. I found some code similarities
+    between this case and some of The Scuttle''s past hacks.'
+- kind: narration
+  speaker: captain
+  text: 'Hv: I''m going to run some more tests, but it looks like we might be onto
+    something.'
+- kind: narration
+  speaker: captain
+  text: 'Tmb: This is great news. Let''s get the team together and see what we can
+    make of it.'

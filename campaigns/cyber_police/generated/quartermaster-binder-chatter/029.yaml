@@ -1,0 +1,12 @@
+id: quartermaster-binder-chatter
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:56.165719+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think I'll be needing a new storage bin for all the denied
+    requisitions.
+- kind: narration
+  speaker: captain
+  text: '||wait for response to engage the scene further'

@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 152
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:05.882159+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but the hardware is...
+- kind: dialogue
+  speaker: analyst
+  text: I've already told you, Deshawn, we need to update our setup to keep up with
+    The Scuttle's evolution.
+- kind: dialogue
+  speaker: forensics
+  text: (entering the room, already aware of the conversation) Can I help with anything?
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to Hana) It's still running on Windows 7...
+- kind: dialogue
+  speaker: press
+  text: (laughing) You guys and your outdated tech. How do you catch anything?

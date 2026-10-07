@@ -1,0 +1,26 @@
+id: analyst-link-chart-deep-focus
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:28.553919+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Another dead end on the link chart
+- kind: dialogue
+  speaker: captain
+  text: Priya, take a break, we'll re-examine the evidence
+- kind: dialogue
+  speaker: detective
+  text: No, I want her to keep going
+- kind: dialogue
+  speaker: agent
+  text: ma'am, I'm reading some interesting chatter in the Scuttle's back channels
+- kind: dialogue
+  speaker: forensics
+  text: still processing the last raid's spoils, but nothing out of the ordinary yet
+- kind: dialogue
+  speaker: press
+  text: nothing much on the media front, just the usual leaks and speculation
+- kind: dialogue
+  speaker: quartermaster
+  text: quartermaster's office has requisitioned an extra set of reinforced lockers

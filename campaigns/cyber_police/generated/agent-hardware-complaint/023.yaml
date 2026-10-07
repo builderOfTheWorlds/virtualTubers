@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:52.192169+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Why does this thing still exist, by the way?
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) Because we can't afford to replace it, apparently.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) I mean, it's nice to have something to complain about.
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) Nice to complain about our obsolete hardware, you mean.
+- kind: dialogue
+  speaker: agent
+  text: (teasing) Hey, it's a silver lining, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: (smiling) You know, it's almost like the department doesn't want us to do
+    our job.

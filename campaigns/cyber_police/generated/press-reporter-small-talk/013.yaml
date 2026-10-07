@@ -1,0 +1,31 @@
+id: press-reporter-small-talk
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:38.001902+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's go over the day's directive.
+- kind: dialogue
+  speaker: press
+  text: Just a quick note, Captain - I've got a Scuttle leak that might be worth exploring.
+- kind: dialogue
+  speaker: analyst
+  text: Intel suggests a new Scuttle mirror online in the eastern district.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: We''ll focus on tracking the traffic to the mirror and see
+    if we can get a lead on who''s behind it.'
+- kind: dialogue
+  speaker: agent
+  text: I'll see what I can dig up on the tech side.
+- kind: dialogue
+  speaker: forensics
+  text: I'll start going through the seized drives to see if we can find any connections.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in for the new hardware, but I'm not holding my breath on
+    it getting approved.
+- kind: dialogue
+  speaker: press
+  text: Anything I need to keep an eye out for in the press today?

@@ -1,0 +1,9 @@
+id: quartermaster-binder-chatter
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:14.979044+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: We''re still running on the theory that it''s some kind of honeypot
+    operation, but the lack of actual malware or backdoors suggests...'

@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:22.314579+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I swear, it's like they're reading our reports, anticipating our every move.
+- kind: dialogue
+  speaker: detective
+  text: I've told you, Captain, Scuttle luck isn't just about being clever, it's about
+    having inside info.
+- kind: dialogue
+  speaker: analyst
+  text: If we could just pinpoint the Bosun's identity, maybe we'd finally get somewhere.
+- kind: dialogue
+  speaker: agent
+  text: And then what? We take them down, and The Scuttle just morphs into a new operation.
+- kind: dialogue
+  speaker: forensics
+  text: I've analyzed the latest banner, and I think I found a pattern...
+- kind: dialogue
+  speaker: press
+  text: (chuckling) Yeah, because nothing says "intimidating" like a pirate-themed
+    banner.
+- kind: dialogue
+  speaker: quartermaster
+  text: If we're being honest, we're lucky to get anyone to write about our raids
+    at all.

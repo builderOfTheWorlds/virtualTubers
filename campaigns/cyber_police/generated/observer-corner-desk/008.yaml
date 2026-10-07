@@ -1,0 +1,39 @@
+id: observer-corner-desk
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:26.996935+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get a read on the Mirai variant.
+- kind: dialogue
+  speaker: agent
+  text: Just got a hit on a possible connection to the Echo-4 protocol.
+- kind: dialogue
+  speaker: forensics
+  text: My analysis of the packet capture suggests a possible entry point in the Tor
+    network.
+- kind: dialogue
+  speaker: press
+  text: Captain Agar, I think we need to get a statement on the press conference tomorrow.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned a new set of laptops from IT, hopefully they'll be approved
+    by next week.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, let''s get the team moving. Analyst, what''s the latest
+    on the Mirai variant?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Just got word from the Commissioner''s office, we need to
+    expect a high-level visit soon.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I see a pattern emerging...
+- kind: dialogue
+  speaker: agent
+  text: (glancing at the Observer) Do you think he's noticed our little breakthrough?
+- kind: narration
+  speaker: captain
+  text: 'The Observer: (staring at the wall)'

@@ -1,0 +1,27 @@
+id: analyst-link-chart-deep-focus
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:52.621604+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, if we assume the Bosun is responsible for the proxy chain...
+- kind: dialogue
+  speaker: detective
+  text: Priya, can you run me through the proxy chain again? I want to make sure I've
+    got it right.
+- kind: dialogue
+  speaker: analyst
+  text: Of course. So, we've got the initial IP address, which is...
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: I can get on that for you, Marcus. I''ve got access
+    to the server logs.'
+- kind: dialogue
+  speaker: analyst
+  text: '...the IP address is registered to a shell company in the Caymans. From there,
+    it jumps to a mirror server in Eastern Europe...'
+- kind: dialogue
+  speaker: captain
+  text: (over the comms system) Alright, everyone. We've got a lead. Let's gear up.
+    We're going in.

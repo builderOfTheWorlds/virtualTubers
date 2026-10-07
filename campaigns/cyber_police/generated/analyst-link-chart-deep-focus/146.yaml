@@ -1,0 +1,22 @@
+id: analyst-link-chart-deep-focus
+take: 146
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:38.013841+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any connections between the two new accounts that came in overnight.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, but that's because they're using new IP addresses, Priya. They're staying
+    ahead of us.
+- kind: dialogue
+  speaker: forensics
+  text: I'll run the addresses through the proxy scanner. See if I can find any patterns.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll requisition more equipment. We need to get ahead of The Scuttle's infrastructure.
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking... what if we're not just chasing The Scuttle's
+    operators? What if there's something bigger at play here?

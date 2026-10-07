@@ -1,0 +1,20 @@
+id: quartermaster-binder-chatter
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:19.104753+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got another one here.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What is it, Teresa?'
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a denied requisition, another nice day at the office.
+- kind: dialogue
+  speaker: analyst
+  text: I'll have to take a look at the numbers.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, we could've used those in the field yesterday.

@@ -1,0 +1,18 @@
+id: quartermaster-binder-chatter
+take: 28
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:55.095003+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''m not optimistic about today''s requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DM: The usual underfunding, no doubt.'
+- kind: narration
+  speaker: captain
+  text: 'TVL: At least it''s nothing new.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Someone should start a betting pool on how long it takes for the Commissioner
+    to understand what we need.'

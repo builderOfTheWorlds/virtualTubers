@@ -1,0 +1,36 @@
+id: no-respect-upstairs
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:06.154197+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Another day, another Scuttle story about how we're a waste of taxpayer dollars.
+- kind: dialogue
+  speaker: detective
+  text: Can we get a briefing on the Jenkins case, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: Still working on it, Marcus. The logs are a nightmare.
+- kind: dialogue
+  speaker: agent
+  text: (over comms) Deshawn Okafor to dispatch, we need backup at the Jenkins scene.
+- kind: dialogue
+  speaker: captain
+  text: (to Deshawn) You know they'll deny it, Deshawn. Just give them the minimum
+    required.
+- kind: dialogue
+  speaker: forensics
+  text: (in the background) I'm getting nothing on the Jenkins's system. It's like
+    they never existed.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over comms) Quartermaster to Cyber Police, we're low on RAM replacements.
+    Can we get a priority requisition?
+- kind: dialogue
+  speaker: press
+  text: '(on a monitor) "CYBER POLICE: WHERE THE INTERNET GOES TO DIE" - Scuttle headlines.'
+- kind: dialogue
+  speaker: analyst
+  text: (to Marcus) Marcus, the Jenkins's system is a ghost in the machine. We can't
+    even get a fingerprint.

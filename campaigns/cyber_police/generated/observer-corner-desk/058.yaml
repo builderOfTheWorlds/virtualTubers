@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:04.508314+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. We've got a lead on a possible Scuttle node in the
+    downtown area.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the Analyst's work from last night.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the chatter patterns, and I think I found a connection
+    between the node and a local ISP.
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the signals.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the lab ready for a potential raid.
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, Captain, I got a call from the reporter last night. He's
+    asking about the unit's activity level.
+- kind: dialogue
+  speaker: quartermaster
+  text: The Quartermaster's Binder is updated. We're running low on spare hard drives.
+- kind: narration
+  speaker: captain
+  text: 'Observer: sits at the corner desk, eyes fixed on the Analyst''s screen.'

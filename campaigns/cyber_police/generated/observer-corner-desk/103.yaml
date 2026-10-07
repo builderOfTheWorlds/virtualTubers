@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:32.726000+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the night's chatter logs.
+- kind: dialogue
+  speaker: agent
+  text: I've got the day's signals to analyze.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a match on the new node.
+- kind: dialogue
+  speaker: press
+  text: Trying to reach out to our contact at the Starlight.
+- kind: dialogue
+  speaker: quartermaster
+  text: Equipment delivery is scheduled for next week.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I need Priya to walk me through the new chatter patterns.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I'd like to discuss the anomalies in the link charts first.
+- kind: dialogue
+  speaker: agent
+  text: (catches the Observer's eye, quickly looks away)

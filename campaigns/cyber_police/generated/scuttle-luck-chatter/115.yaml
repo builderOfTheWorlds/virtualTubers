@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:51.506858+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, it''s not just the proxies, it''s the way
+    they stay one step ahead, always.'
+- kind: dialogue
+  speaker: analyst
+  text: That's because they're laughing at us, not with us, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Priya, don't be so dramatic, it's just a game.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a new theory, we've been chasing the wrong target all along.
+- kind: dialogue
+  speaker: press
+  text: (overhearing from the pressroom) That's a great soundbite, Hana, you're a
+    natural.
+- kind: dialogue
+  speaker: quartermaster
+  text: We should focus on getting some real leads instead of arguing about Scuttle
+    luck.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (entering the room) Ah, arguing about Scuttle luck again,
+    I see. Anyone have any new ideas?'

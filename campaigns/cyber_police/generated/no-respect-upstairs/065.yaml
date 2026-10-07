@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:03.833594+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CO: Alright, 03:00, let''s get this day started.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Another lovely day in the basement.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Got the latest Scuttle screed on my screen.'
+- kind: narration
+  speaker: captain
+  text: 'AO: Just sent in a backup request.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Running the usual forensic checks.'
+- kind: narration
+  speaker: captain
+  text: 'DO-PP: Scuttle''s at it again, folks.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Someone''s got to mean it.'
+- kind: narration
+  speaker: captain
+  text: 'TM:'
+- kind: narration
+  speaker: captain
+  text: 'TM: (muttering) Nobody else does...'
+- kind: narration
+  speaker: captain
+  text: 'CO: Alright, let''s move on.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to CO) You sure the budget people will come through on the new scanner?'
+- kind: narration
+  speaker: captain
+  text: 'CO: I''ll talk to them.'

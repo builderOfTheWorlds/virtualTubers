@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:30.277308+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright everyone, gather 'round. We've got a new lead on The Scuttle's encrypted
+    traffic.
+- kind: dialogue
+  speaker: detective
+  text: I'll get started on the plan, but I need to warn you all, this one's going
+    to be tough.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the intel on the latest mirror they're using, it's a custom rig,
+    no clear ownership.
+- kind: dialogue
+  speaker: agent
+  text: I'll need access to the unit's updated hardware before I can even try to crack
+    it.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence log up, but I'm not seeing anything conclusive yet.
+- kind: dialogue
+  speaker: press
+  text: Davey, I need to know if there's anything I can spin today.
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, I've got the requisition list for the week, and I'm not happy about
+    it.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to work. Thorn, what's the plan?
+- kind: dialogue
+  speaker: detective
+  text: We'll need to move fast, I'm thinking a 3-person team, including myself, Nandakumar,
+    and Okafor.

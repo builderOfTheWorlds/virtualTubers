@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:11.280276+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not luck. It's a leak.
+- kind: dialogue
+  speaker: analyst
+  text: Come on, Deshawn, it's Scuttle luck.
+- kind: dialogue
+  speaker: forensics
+  text: I've re-ran the proxy chains. It looks like they're using a new protocol.
+- kind: dialogue
+  speaker: press
+  text: (chuckles) "New protocol"? That's rich coming from the woman who got outsmarted
+    by a copy of Pidgin.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) Oh, shut it, Davey.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep the chatter to a minimum. We have a briefing in 15.
+- kind: dialogue
+  speaker: detective
+  text: (muttering) Like that's going to make a difference...
+- kind: dialogue
+  speaker: analyst
+  text: (smirking) Bring snacks next time, indeed.

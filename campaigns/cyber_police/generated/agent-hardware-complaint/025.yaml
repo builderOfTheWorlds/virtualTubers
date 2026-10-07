@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:01.653350+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, I don't know how much longer this ancient hardware is going to hold out.
+- kind: dialogue
+  speaker: analyst
+  text: What's wrong now, Deshawn? The trace tool's still not cooperating?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I've got the packets, but the analyzer's freezing up on me.
+- kind: dialogue
+  speaker: forensics
+  text: Can I take a look? Maybe there's something we can tweak in the config.
+- kind: dialogue
+  speaker: agent
+  text: Sure thing, Hana. Just... please don't tell me we have to call in a favor
+    from upstairs again.

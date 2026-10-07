@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:21.470221+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker, I need to document the current contents and inventory.
+- kind: dialogue
+  speaker: agent
+  text: Requesting access to the evidence locker for a potential chain of custody
+    update.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Approving the request, Hana will grant access after completing
+    the documentation.'
+- kind: dialogue
+  speaker: forensics
+  text: Verifying the contents of shelf 3, bin 2, and ensuring all labels are correct.
+- kind: dialogue
+  speaker: analyst
+  text: Checking the evidence locker's inventory against the case file's requirements.
+- kind: dialogue
+  speaker: quartermaster
+  text: Delivering a new shipment of secure storage drives to the evidence locker.
+- kind: dialogue
+  speaker: forensics
+  text: Processing the new shipment, updating the inventory, and verifying all devices
+    are correctly labelled.
+- kind: dialogue
+  speaker: press
+  text: Taking a photograph of the new shipment and the evidence locker for documentation
+    purposes.

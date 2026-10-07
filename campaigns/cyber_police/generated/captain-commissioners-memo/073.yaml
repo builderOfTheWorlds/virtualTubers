@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:14.757959+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: That memo is going to be a lovely addition to my wall
+- kind: dialogue
+  speaker: detective
+  text: '||emotion:disgusted I swear, "the computer thing" again. Who even writes
+    that stuff?'
+- kind: dialogue
+  speaker: analyst
+  text: '||emotion:sad Can''t they just acknowledge what we do?'
+- kind: dialogue
+  speaker: agent
+  text: '||emotion:neutral Yeah, but they''re not going to change now.'
+- kind: dialogue
+  speaker: forensics
+  text: '||emotion:surprised Did they really call it "the computer thing" again?'
+- kind: dialogue
+  speaker: press
+  text: '||emotion:happy I''m just glad I''m not the one who has to deal with them.'
+- kind: dialogue
+  speaker: quartermaster
+  text: '||emotion:angry I''m going to frame that memo and put it right next to the
+    rejected requisition forms.'

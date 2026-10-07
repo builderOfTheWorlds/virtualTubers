@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:01.197905+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, unit.
+- kind: dialogue
+  speaker: press
+  text: Good morning, Captain. Just calling to see if anything's happening today.
+- kind: dialogue
+  speaker: captain
+  text: Not much. Just a chatter spike that looks like it might be worth looking into.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the chatter spike up on the screen here. It's from a new mirror that
+    just came online.
+- kind: dialogue
+  speaker: agent
+  text: I'm seeing some interesting traffic patterns coming from that mirror.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the mirror's code running in the background, but so far, nothing's
+    jumping out at me.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a heads up, Captain, that requisition for the new surveillance software
+    was denied again.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started then. Who's going to grab the mirror's traffic
+    data?

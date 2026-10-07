@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:51.476336+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on the briefing.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: You know, I still can''t believe they put me on Scuttle
+    duty.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting traffic data on The Scuttle's recent activity.
+- kind: dialogue
+  speaker: agent
+  text: I heard the uniforms are playing a prank war on us.
+- kind: dialogue
+  speaker: forensics
+  text: I've been reviewing the lab results from the last Scuttle bust, and I'm not
+    getting anything conclusive.
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Cops Still Can''t Catch the Ghost: Scuttle''s Latest Prank Leaves City''s
+    Finest Flummoxed.'
+- kind: dialogue
+  speaker: quartermaster
+  text: That's cute, Davey. But have you seen the requisition for new hardware?

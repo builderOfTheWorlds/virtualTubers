@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:35.170400+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've got chatter spike on an unusual protocol used in a recent mirror deployment.
+- kind: dialogue
+  speaker: agent
+  text: I've got a lead on a potential backdoor on the network, but I need Forensics
+    to help me verify.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look at the packet capture, but we may need to get the Observer's
+    help to dig into the code.
+- kind: dialogue
+  speaker: press
+  text: Nothing to report from the outside, just a few more calls from concerned citizens.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in for a new server, but budget says it's on hold.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

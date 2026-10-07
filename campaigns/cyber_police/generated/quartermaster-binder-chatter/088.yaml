@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:31.814645+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m still waiting on those requisitions for the new hardware.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: What''s the holdup this time?'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Apparently the procurement office can''t decide what to do with the
+    forms.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Just great. Another week, another delayed shipment.'
+- kind: narration
+  speaker: captain
+  text: 'HM: Has anyone tried calling them?'
+- kind: narration
+  speaker: captain
+  text: 'DO: I tried. They just sent me to voicemail. Again.'

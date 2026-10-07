@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:12.946778+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 'Captain Rosalind Agar: What''s this "the computer thing" nonsense'
+- kind: dialogue
+  speaker: detective
+  text: 'Detective Marcus Thorn: (silence)'
+- kind: dialogue
+  speaker: analyst
+  text: 'Priya Nandakumar: (muttering to herself) "somebody has to mean it, since
+    nobody else does"'
+- kind: dialogue
+  speaker: agent
+  text: 'Deshawn Okafor: (chuckling) Yeah, that''s a real thing we should be proud
+    of'
+- kind: dialogue
+  speaker: forensics
+  text: 'Hana Vosk: (no comment)'
+- kind: dialogue
+  speaker: press
+  text: 'Davey Okonkwo-Pryce: (silence)'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Teresa Mbeki-Lowndes: (under her breath) "like we''re not even real"'

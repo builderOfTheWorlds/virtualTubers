@@ -1,0 +1,28 @@
+id: quartermaster-binder-chatter
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:19.164970+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I still can't believe the requisition for that new analysis software was denied.
+- kind: dialogue
+  speaker: detective
+  text: I know, right? It's like they don't care if we actually catch The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, and to make matters worse, the one thing we need is always the one thing
+    they find a way to deny.
+- kind: dialogue
+  speaker: agent
+  text: I swear, it's like they want us to fail.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) At least we have the duck video.
+- kind: dialogue
+  speaker: press
+  text: (reading from his notes) Okay, it looks like the Captain's got a meeting with
+    the Commissioner in an hour.
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Let's just get through this day, shall we?

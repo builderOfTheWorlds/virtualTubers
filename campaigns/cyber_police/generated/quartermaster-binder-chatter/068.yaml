@@ -1,0 +1,12 @@
+id: quartermaster-binder-chatter
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:26.581179+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmb: Just the usual rejections'
+- kind: narration
+  speaker: captain
+  text: 'TN: Looks like we got hit with a few ''unavailable for allocation'' and ''requires
+    additional justification'' ones this time'

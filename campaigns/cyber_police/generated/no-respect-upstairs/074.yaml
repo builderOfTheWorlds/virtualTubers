@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:58.496001+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Someone's going to have to resupply our spare ink cartridges again
+- kind: dialogue
+  speaker: press
+  text: '''CYBER POLICE: WHERE DO WE GO WHEN WE NEED HELP?'' - SCUTTLE HEADLINE OF
+    THE DAY'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I did some research and it seems we could've gotten a better deal
+    on the surveillance software from that new vendor
+- kind: dialogue
+  speaker: agent
+  text: We should've gotten a good one, but I knew it was a long shot
+- kind: dialogue
+  speaker: forensics
+  text: Don't even get me started on the lab equipment
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on the morning briefing
+- kind: dialogue
+  speaker: detective
+  text: Somebody has to mean it, since nobody else does

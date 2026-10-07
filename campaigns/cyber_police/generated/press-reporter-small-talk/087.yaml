@@ -1,0 +1,50 @@
+id: press-reporter-small-talk
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:30.099538+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, how's life treating you?
+- kind: dialogue
+  speaker: captain
+  text: Oh, same old same old, Davey. Just the usual dance with the brass upstairs.
+- kind: dialogue
+  speaker: press
+  text: I feel you, Captain. The Scuttle's been quiet lately, but I'm sure they'll
+    find a way to make some noise again.
+- kind: dialogue
+  speaker: captain
+  text: Indeed they will, I'm sure. So, what's the plan for this week? Any new developments
+    on the tip from last week?
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I have some good news. I've managed to dig up some more
+    info on the source of that tip.
+- kind: dialogue
+  speaker: analyst
+  text: Ah, great work, Davey! Can you bring me up to speed on what you found?
+- kind: dialogue
+  speaker: agent
+  text: Hold up, Priya, let's not get too excited. I'm sure it's just another dead
+    end.
+- kind: dialogue
+  speaker: forensics
+  text: Hey, come on, Deshawn, let's give Davey a chance. We've been stuck in a rut
+    lately, maybe this is the break we need.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll bring in some more supplies, just in case. But I have to say, I'm still
+    waiting for the Commissioner's office to take this seriously.
+- kind: dialogue
+  speaker: press
+  text: Yeah, me too, Teresa. I'm starting to think we're just spinning our wheels
+    down here.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Okay, let''s not get discouraged. We''ve got a job to do, and
+    we''ll keep doing it, no matter what.'
+- kind: dialogue
+  speaker: captain
+  text: That's the spirit, Marcus. Alright, let's get to it. Who's got the morning's
+    brief?

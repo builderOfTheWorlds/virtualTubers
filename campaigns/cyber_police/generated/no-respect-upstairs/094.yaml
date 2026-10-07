@@ -1,0 +1,39 @@
+id: no-respect-upstairs
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:08.293222+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, team, morning briefing.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Still waiting on backup for last night''s case, Cap.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's chatter trending down. Maybe our friends are getting
+    bored.
+- kind: dialogue
+  speaker: agent
+  text: 'Cap, I just got a call from Davey Okonkwo-Pryce. He''s doing a "Cyber Police:
+    Still Not a Real Police" exposé.'
+- kind: dialogue
+  speaker: forensics
+  text: I'm not getting anything on the new malware. Could be a false flag.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team! Coffee's brewing.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, Priya, see if you can dig up anything on those trends.
+    Deshawn, try to get a statement from Davey. Hana, keep working on that malware.
+    And Marcus...'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Don''t say it, Cap.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Marcus, I''m just saying...'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (sighs) Okay.'

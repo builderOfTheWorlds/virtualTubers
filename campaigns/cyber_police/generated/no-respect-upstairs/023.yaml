@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:13.384874+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Looks like backup is running late, again.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''ll send the unit''s backup request in, just in case.'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: I''ve got the Scuttle''s latest post up on the screen.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Can we get a timestamp on that? I need to know if this is new
+    or recycled.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: I''ve got the image analysis results from the latest hack.'
+- kind: narration
+  speaker: captain
+  text: 'Press Okonkwo-Pryce: CYBER POLICE: "WE''RE WATCHING YOU... NOT".'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: Requisition for new comms equipment is denied.
+    Again.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Somebody has to mean it, since nobody else does.'

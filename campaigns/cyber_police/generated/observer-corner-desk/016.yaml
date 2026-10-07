@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:09.344657+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing is a go.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a possible lead on the chatlogs.
+- kind: dialogue
+  speaker: detective
+  text: We'll take a closer look.
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a few more hours of analysis to run.
+- kind: dialogue
+  speaker: press
+  text: No press releases today, then?
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing to report, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Observer: Sitting at his corner desk, watching the team.'

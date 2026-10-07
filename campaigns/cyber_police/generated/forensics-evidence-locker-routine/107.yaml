@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:37.288859+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: What's the protocol for tonight's intake?
+- kind: dialogue
+  speaker: forensics
+  text: We follow chain of custody, agent.
+- kind: dialogue
+  speaker: quartermaster
+  text: Hana, I've got the requisition binder. What do you need?
+- kind: dialogue
+  speaker: forensics
+  text: 'Just the usual: evidence bags, gloves, and a few new drives.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting on the latest from the Analyst.
+- kind: dialogue
+  speaker: captain
+  text: Hana, what's the status on the last case?
+- kind: dialogue
+  speaker: forensics
+  text: Chain of custody is maintained, ma'am. Evidence is secure.
+- kind: dialogue
+  speaker: press
+  text: Just a heads-up, I've got a few minutes before the press conference.
+- kind: dialogue
+  speaker: analyst
+  text: Agent, I need the latest link charts to update the intelligence report.

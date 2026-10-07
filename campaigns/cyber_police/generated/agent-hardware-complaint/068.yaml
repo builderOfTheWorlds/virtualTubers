@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:22.782223+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You'd think they'd upgrade the hardware at least once a year, but nope.
+- kind: dialogue
+  speaker: analyst
+  text: (overhearing) What's the holdup?
+- kind: dialogue
+  speaker: agent
+  text: (sighing) Just trying to get this trace tool running. The thing's older than
+    I am.
+- kind: dialogue
+  speaker: forensics
+  text: (walking over) You know, it's not like it's the worst thing out there.
+- kind: dialogue
+  speaker: agent
+  text: (laughing) Tell that to the thing when it crashes for the fifth time today.
+- kind: dialogue
+  speaker: captain
+  text: (interrupting) Alright, let's keep the shop talk to a minimum, people.
+- kind: dialogue
+  speaker: analyst
+  text: (not looking up from her work) Sorry, Captain.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Like anyone ever listens to me...

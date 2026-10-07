@@ -1,0 +1,36 @@
+id: no-respect-upstairs
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:08.254212+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I want backup on the Scuttle case, now.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: We''re not getting anyone, Cap.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got a match on the Scuttle's avatar, but it's going to take some digging.
+- kind: dialogue
+  speaker: agent
+  text: You think that's what it is, Priya?
+- kind: dialogue
+  speaker: forensics
+  text: It's just a logo, Deshawn. Don't get your hopes up.
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, let's get started on those requisitions.
+- kind: dialogue
+  speaker: press
+  text: 'SCUTTLE: THE CYBER POLICE''S BIGGEST CHALLENGE ISN''T THE CRIMINALS, BUT
+    THEIR OWN DEPARTMENT.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: This is ridiculous.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I think I found something.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: What is it, Priya?'

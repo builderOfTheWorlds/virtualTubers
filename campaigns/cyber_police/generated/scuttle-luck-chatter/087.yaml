@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:16.074948+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Scuttle luck is just a myth we tell ourselves when we get
+    our butts kicked.
+- kind: dialogue
+  speaker: analyst
+  text: But what about the Bosun, though? Nobody's managed to catch them, and I'm
+    starting to think it's not just skill.
+- kind: dialogue
+  speaker: captain
+  text: Skill, or inside information, or just a lot of luck. I don't care which, as
+    long as we get them eventually.
+- kind: dialogue
+  speaker: quartermaster
+  text: If we had the budget to match the Scuttle's ad revenue, maybe we'd have a
+    chance. But no, we're stuck playing catch-up with their proxy chains.
+- kind: dialogue
+  speaker: forensics
+  text: I've seen some weird stuff on that site, but that rubber duck video was just...
+    something else.
+- kind: dialogue
+  speaker: press
+  text: You guys realize that if we ever do take down the Scuttle, I'll be the one
+    writing the story that makes it front-page news?
+- kind: dialogue
+  speaker: detective
+  text: Don't count on it, Davey. I'm still waiting for the unit to get a real win.

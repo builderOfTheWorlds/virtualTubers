@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:11.897263+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but I swear, this old hardware
+    is going to be the death of me

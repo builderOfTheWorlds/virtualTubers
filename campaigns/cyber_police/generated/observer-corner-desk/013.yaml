@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:55.496812+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The briefing is about to start, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Just need to confirm the analyst''s findings.'
+- kind: dialogue
+  speaker: analyst
+  text: The chatter spike is coming from a new IP address.
+- kind: dialogue
+  speaker: agent
+  text: Still working on tracing the signal, but it's getting hot.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a match on the DNA from the last raid.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press conference yesterday.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for new hardware are going in today.
+- kind: dialogue
+  speaker: analyst
+  text: The Observer is watching from the corner.

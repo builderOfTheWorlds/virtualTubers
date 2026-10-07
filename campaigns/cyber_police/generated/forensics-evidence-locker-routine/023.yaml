@@ -1,0 +1,40 @@
+id: forensics-evidence-locker-routine
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:09.954675+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm on my way to the evidence locker to check the chain of custody on a new
+    drive.
+- kind: dialogue
+  speaker: agent
+  text: Morning, Hana. I'm already in the bullpen, reviewing the morning's batch of
+    reports.
+- kind: dialogue
+  speaker: analyst
+  text: Morning, all. I've got some fresh link charts to share with the Detective.
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning meeting. What's the priority for today?
+- kind: dialogue
+  speaker: detective
+  text: Captain, we've got a possible new lead on the server room breach.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the techs set up to dig into it. What's the plan?
+- kind: dialogue
+  speaker: analyst
+  text: I'll run some intel on the IP addresses we're seeing. Maybe we can pinpoint
+    the source.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition binder updated, just in case we need to do some rapid
+    procurement.
+- kind: dialogue
+  speaker: forensics
+  text: I'll make sure the evidence locker is ready for anything we might need to
+    process.
+- kind: dialogue
+  speaker: captain
+  text: Let's get to it, people. We've got a long day ahead of us.

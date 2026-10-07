@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:03.630670+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: What's that?
+- kind: dialogue
+  speaker: captain
+  text: '"The computer thing".'
+- kind: dialogue
+  speaker: analyst
+  text: Of course.
+- kind: dialogue
+  speaker: agent
+  text: Nobody takes us seriously.
+- kind: dialogue
+  speaker: forensics
+  text: I heard the Press Liaison is working on a story about us.
+- kind: dialogue
+  speaker: press
+  text: Anything I should know about?
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, your requisitions for the Scuttle case are...

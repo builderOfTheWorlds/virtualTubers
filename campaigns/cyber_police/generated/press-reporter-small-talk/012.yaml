@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:32.729645+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DM-O: Hey Priya, what''s new with you?'
+- kind: narration
+  speaker: captain
+  text: 'PN: Just got in, Davey. Still trying to find a coffee machine that works'
+- kind: narration
+  speaker: captain
+  text: 'DO: (laughs) You know where to find me, Priya. I''ve got the good stuff'
+- kind: narration
+  speaker: captain
+  text: 'RO: Alright, let''s get started. Today''s lead is on the "CyberChatter" forum'
+- kind: narration
+  speaker: captain
+  text: 'MT: Looks like we''ve got a possible IP match on a user who''s been posting
+    suspicious stuff'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''m running some analysis on the chatter spike, but so far it''s all
+    surface-level noise'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll grab some forensics on the user''s account. See if I can dig up
+    any decent evidence'
+- kind: narration
+  speaker: captain
+  text: 'HV: Already on it, Deshawn. I''ve got a task to extract the user''s browser
+    history'
+- kind: narration
+  speaker: captain
+  text: 'DO: Okay, thanks Hana. I''ll start setting up a warrant'
+- kind: narration
+  speaker: captain
+  text: 'PN: (sighs) And I''ll just keep staring at this code all day...'
+- kind: narration
+  speaker: captain
+  text: 'RO: Alright, let''s keep moving. Davey, what''s the press situation?'
+- kind: narration
+  speaker: captain
+  text: 'DO: Nothing new, Captain. Just the usual Scuttle propaganda'

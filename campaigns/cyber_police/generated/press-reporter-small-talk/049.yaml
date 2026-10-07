@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:42.501914+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Priya, how's it going?
+- kind: dialogue
+  speaker: analyst
+  text: Not bad, Davey. Just going over some notes.
+- kind: dialogue
+  speaker: press
+  text: Oh, yeah? Anything new on The Scuttle?
+- kind: dialogue
+  speaker: analyst
+  text: Not really. Just more of the same old nothing.
+- kind: dialogue
+  speaker: press
+  text: (laughs) That's my favorite kind of story.
+- kind: dialogue
+  speaker: agent
+  text: Hey, what's up guys?
+- kind: dialogue
+  speaker: press
+  text: Just chatting with Priya. You?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get some work done before the morning briefing.
+- kind: dialogue
+  speaker: forensics
+  text: (over the phone) Captain, I've got some news from Internal Affairs...
+- kind: dialogue
+  speaker: captain
+  text: (on the phone) What is it, Hana?

@@ -1,0 +1,32 @@
+id: quartermaster-binder-chatter
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:04.317831+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I think I'm going to have to have a word with the supply officer again about
+    these requisitions.
+- kind: dialogue
+  speaker: press
+  text: (to the unit) Alright, let's see what we've got on the Scuttle's latest antics.
+- kind: dialogue
+  speaker: analyst
+  text: (to the group) According to the intelligence, there was a suspicious login
+    attempt to an offshore server.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (to the group) Okay, Priya, what''s the plan?'
+- kind: dialogue
+  speaker: agent
+  text: (to Hana Vosk) I've got some interesting reads on the server logs.
+- kind: dialogue
+  speaker: forensics
+  text: (to Deshawn) What did you find?
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Okay, let's see... Requisition 1234 has been denied... again.
+- kind: dialogue
+  speaker: captain
+  text: (to the unit) Alright, let's focus on the task at hand. We'll get to the paperwork
+    later.

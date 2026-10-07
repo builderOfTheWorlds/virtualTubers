@@ -1,0 +1,11 @@
+id: agent-hardware-complaint
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T05:46:57.675907+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, one of these days I'm going to get this trace tool running
+- kind: dialogue
+  speaker: analyst
+  text: (from across the room) Have you tried updating the kernel?

@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:59.954422+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing will start in five minutes.
+- kind: dialogue
+  speaker: detective
+  text: Just got off the phone with Internal Affairs.
+- kind: dialogue
+  speaker: analyst
+  text: Nothing new on the link charts.
+- kind: dialogue
+  speaker: agent
+  text: Still trying to crack the signal on the new mirror.
+- kind: dialogue
+  speaker: forensics
+  text: Got a batch of samples to process from yesterday's raid. ||emotion:somewhat
+    interested
+- kind: dialogue
+  speaker: press
+  text: Just got a call from Dave at the paper. They want to do a follow-up on the
+    last arrest. ||emotion:somewhat anxious
+- kind: dialogue
+  speaker: quartermaster
+  text: Got a new requisition form from the lab for some upgraded hardware.
+- kind: narration
+  speaker: captain
+  text: 'Observer: Watching.'

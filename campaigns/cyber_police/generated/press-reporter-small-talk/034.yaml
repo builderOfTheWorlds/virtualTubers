@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:20.934632+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Morning, Davey, how''s the day shaping up?'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: It''s quiet, Rosalind. I managed to get a few words with a source.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Nothing concrete, but there''s a rumor about a new Scuttle mirror going
+    up online tonight.'
+- kind: narration
+  speaker: captain
+  text: 'HO: We''ve got the usual noise from our end, but nothing concrete yet.'
+- kind: narration
+  speaker: captain
+  text: 'TP: Just got word that our requisition for a new forensics lab upgrade was
+    denied... again.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''ll talk to the Quartermaster about it, see if we can get anything
+    moved.'
+- kind: narration
+  speaker: captain
+  text: 'QML: Nothing new from the department, but I did get word that Internal Affairs
+    is looking into our overtime claims.'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Sounds like we''re not the only ones with a few ghosts to chase, Rosalind.'

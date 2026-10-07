@@ -1,0 +1,37 @@
+id: scuttle-luck-chatter
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:44.128519+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: It''s always the Bosun who gets away with it.'
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's the Commodore who's the real mastermind.
+- kind: dialogue
+  speaker: analyst
+  text: You're both missing the point - it's not just about who's behind it, it's
+    about how they stay one step ahead of us.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Scuttle luck, indeed. We''ve been chasing this cat and mouse
+    game for years.'
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, it's like they're mocking us.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe we just need to find a way to catch them off guard.
+- kind: dialogue
+  speaker: press
+  text: Yeah, and maybe pigs will fly.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You know, I still think it''s the Bosun.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Whatever the case, it''s not going to solve itself.'
+- kind: dialogue
+  speaker: agent
+  text: Time for us to get back to work.

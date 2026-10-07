@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:54.630766+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, if we rechart the linkages from the IP address that sent that suspicious
+    message...
+- kind: dialogue
+  speaker: agent
+  text: (from off-screen) I'm still trying to track down the source of that signal.
+    It's like it came out of nowhere.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Unless... unless it was a test.
+- kind: dialogue
+  speaker: forensics
+  text: (from another part of the room) Priya, can I take a look at those charts?
+    Maybe I can spot something you're missing.
+- kind: dialogue
+  speaker: analyst
+  text: (irritated) Of course, Hana. I'm right here. (pauses) Though I'm not sure
+    I need any help right now.
+- kind: dialogue
+  speaker: captain
+  text: (over the comms system) Alright, let's take a break and reconvene in an hour.
+    We can discuss what we've got so far.
+- kind: dialogue
+  speaker: analyst
+  text: (to herself) I bet the Bosun's already seen this. I bet they're laughing about
+    it right now...

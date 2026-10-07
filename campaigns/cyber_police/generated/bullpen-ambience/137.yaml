@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 137
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:35.267018+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 7:50, almost time for the evening briefing.
+- kind: dialogue
+  speaker: detective
+  text: Still waiting on results from the mirror scan.
+- kind: dialogue
+  speaker: analyst
+  text: I'm running some anomalies, but nothing's jumping out yet.
+- kind: dialogue
+  speaker: agent
+  text: Just got a call from the network team, they're still trying to isolate the
+    issue with the darknet feed.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence locker's full, we need to make some space for the new drives.
+- kind: dialogue
+  speaker: press
+  text: If we get a source willing to go on camera, we'll need to prep a statement.
+- kind: dialogue
+  speaker: quartermaster
+  text: Almost time to lock up the supply cage.
+- kind: dialogue
+  speaker: quartermaster
+  text: Marcus, you still working on that case from last week?
+- kind: dialogue
+  speaker: detective
+  text: Yeah, I'm still chasing down some leads.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found something, but I need to run it by the Captain first.
+- kind: dialogue
+  speaker: agent
+  text: What's the plan for the mirror scan?
+- kind: dialogue
+  speaker: captain
+  text: Let's keep an eye on it, but don't get your hopes up.

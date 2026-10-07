@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:50.728741+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm processing the new evidence intake from yesterday's raid.
+- kind: dialogue
+  speaker: agent
+  text: What's the priority on the USB drive with the encrypted files?
+- kind: dialogue
+  speaker: forensics
+  text: The Analyst is reviewing the metadata, but it's been flagged as high-priority
+    by the Detective.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a match on one of the IP addresses, but I need the full packet capture
+    to confirm.
+- kind: dialogue
+  speaker: forensics
+  text: I'll retrieve the full capture from the Evidence Locker.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I requisition a new set of gloves for Forensics? The ones she's using
+    are getting worn out.
+- kind: dialogue
+  speaker: forensics
+  text: Request submitted. It'll take about an hour to process.

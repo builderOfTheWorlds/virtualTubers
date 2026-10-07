@@ -1,0 +1,34 @@
+id: observer-corner-desk
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T05:45:21.417999+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Still a bit of a lag in the comms package coming out of node 34.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, let''s get to it.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Today we''re going to focus on investigating the chatter spike
+    on the ''Lone Wolf'' handle.'
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new in the code yet, but I'm still digging.
+- kind: dialogue
+  speaker: agent
+  text: I've got a few more mirrors up, but they're still not cooperating.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got the requisition forms signed off by the Captain.
+- kind: dialogue
+  speaker: press
+  text: What about some real news for once, people?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: ( glance at The Observer, who remains still) Let''s keep our
+    priorities straight, shall we?'
+- kind: narration
+  speaker: captain
+  text: (No response from The Observer)

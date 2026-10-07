@@ -1,0 +1,43 @@
+id: analyst-link-chart-deep-focus
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:51.447721+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't think we've accounted for that additional node on the 13th.
+- kind: dialogue
+  speaker: agent
+  text: What's the relevance of the 13th?
+- kind: dialogue
+  speaker: analyst
+  text: The 13th is when The Scuttle's traffic spike starts to coincide with...
+- kind: dialogue
+  speaker: agent
+  text: (interrupting) Hold on, Priya. You're saying The Scuttle's traffic spike is
+    a coincidence?
+- kind: dialogue
+  speaker: analyst
+  text: I didn't say that. I said we need to consider the possibility that it's not
+    a coincidence.
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Priya, I don't think we can afford to chase every "possibility" we
+    come across.
+- kind: dialogue
+  speaker: forensics
+  text: (walks in) Sorry to interrupt, but I think I've found something that might
+    interest you both.
+- kind: dialogue
+  speaker: analyst
+  text: (excitedly) What is it?
+- kind: dialogue
+  speaker: forensics
+  text: It's a match on one of the proxy chains. Looks like we might have finally
+    found a lead on The Bosun.
+- kind: dialogue
+  speaker: agent
+  text: (impressed) Well done, Hana. Let's take a closer look.
+- kind: dialogue
+  speaker: analyst
+  text: ( typing away) I'll get the link chart updated.

@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:18.801003+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is in an hour, let's make sure we're all caught up on the Scuttle.
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the chatter spike from last night, looks like a new avatar
+    is trying to make contact with the Phantoms.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think it's more likely a phishing attempt, I've been tracing the
+    IP and it looks like it's coming from a proxy server in Eastern Europe.
+- kind: dialogue
+  speaker: agent
+  text: I'll get Forensics to dig deeper on the proxy server, see if we can get a
+    clear IP address.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence log up to date, but I'm still waiting on the quartermaster
+    to sign off on the new storage drives.
+- kind: dialogue
+  speaker: press
+  text: Can I get an update on the new storage drives, we really need those for the
+    upcoming case.
+- kind: dialogue
+  speaker: quartermaster
+  text: Not yet, Davey, still waiting on approval from upstairs.

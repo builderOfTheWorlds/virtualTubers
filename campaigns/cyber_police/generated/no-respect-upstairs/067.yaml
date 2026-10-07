@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:15.581208+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, sir.'
+- kind: dialogue
+  speaker: analyst
+  text: We've got a priority-one alert from the 3rd precinct.
+- kind: dialogue
+  speaker: agent
+  text: What's the situation, Priya?
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, the usual. The Scuttle's been spamming their usual channels.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a possible lead on the latest malware variant.
+- kind: dialogue
+  speaker: press
+  text: 'CYBER POLICE: Where''s the beef?'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar:'
+- kind: dialogue
+  speaker: analyst
+  text: Requesting backup for the 3rd precinct.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, good luck with that.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get started on the analysis.
+- kind: dialogue
+  speaker: press
+  text: 'Scuttle''s ''hackers'' caught again: 2nd time this week, 12th time this month'

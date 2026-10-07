@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 199
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:53.485225+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can't we just get a new computer?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, it's not that bad. The software can make up for it.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Software...
+- kind: dialogue
+  speaker: press
+  text: Hey, what's the plan for the morning?
+- kind: dialogue
+  speaker: quartermaster
+  text: Supplies are still pending, but I did get some new cable labels.
+- kind: dialogue
+  speaker: agent
+  text: Great, because what we really need is more stylish wiring.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. Thorn, what's the status on the lead?
+- kind: dialogue
+  speaker: detective
+  text: Still trying to get a clean IP.

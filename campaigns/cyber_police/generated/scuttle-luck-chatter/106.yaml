@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:00.757924+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, it''s not luck, it''s planning. They have
+    eyes and ears everywhere.'
+- kind: dialogue
+  speaker: analyst
+  text: Maybe, but we can't even pinpoint the Bosun's identity.
+- kind: dialogue
+  speaker: agent
+  text: And we can't get anyone to talk. We've got a whole crew of ex-employees who
+    can't be bothered to help us out.
+- kind: dialogue
+  speaker: forensics
+  text: I've been looking through the old raid data, and I think I found a pattern.
+- kind: dialogue
+  speaker: quartermaster
+  text: What's that supposed to be, a hint at some new strategy?
+- kind: dialogue
+  speaker: press
+  text: Oh, come on, Priya, don't be so gloomy. It's just a game. They're just trying
+    to stay one step ahead.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Shut up, Davey. This is a job, not a game.'

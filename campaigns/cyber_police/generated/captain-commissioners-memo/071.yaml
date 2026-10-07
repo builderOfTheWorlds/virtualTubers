@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:06.523010+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's office doesn't take us seriously.
+- kind: dialogue
+  speaker: detective
+  text: They think it's "the computer thing".
+- kind: dialogue
+  speaker: analyst
+  text: At least they don't mean to hurt us.
+- kind: dialogue
+  speaker: agent
+  text: Still, it's hard to hear.
+- kind: dialogue
+  speaker: forensics
+  text: I've seen worse disrespect from the press.
+- kind: dialogue
+  speaker: press
+  text: Well, actually...
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we just focus on the memo for now?

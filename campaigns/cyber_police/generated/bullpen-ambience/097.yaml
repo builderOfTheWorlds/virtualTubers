@@ -1,0 +1,49 @@
+id: bullpen-ambience
+take: 97
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:43.537648+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, ma'am. I've been going over the data from the previous case.
+- kind: dialogue
+  speaker: analyst
+  text: I've made some progress on the encryption key, but I'm still having trouble
+    cracking it.
+- kind: dialogue
+  speaker: agent
+  text: I've been running some tests on the new hardware, and I think I've found a
+    problem with the firmware.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence log updated, but I still need to analyze the samples
+    from the latest seizure.
+- kind: dialogue
+  speaker: press
+  text: I'll be sending in a request for an interview with the lead suspect.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've submitted the requisition for the new laptops, but I'm not holding my
+    breath.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Thorn, what's the plan for today?
+- kind: dialogue
+  speaker: detective
+  text: We'll be going over the new data from The Scuttle, see if we can pick up any
+    leads.
+- kind: dialogue
+  speaker: agent
+  text: I'll start running some simulations on the encryption key. Maybe I can crack
+    it faster with the new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the samples analyzed ASAP. We might be able to get some DNA or fingerprints
+    out of it.
+- kind: dialogue
+  speaker: press
+  text: Can I get a status update on the investigation? What's the latest from The
+    Scuttle?

@@ -1,0 +1,35 @@
+id: bullpen-ambience
+take: 145
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:45.642152+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Still think we should've taken those extra servers last requisition.
+- kind: dialogue
+  speaker: analyst
+  text: Don't think we can afford them, Agent.
+- kind: dialogue
+  speaker: forensics
+  text: (whispers to herself) Coffee's been sitting out for hours...
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. What've we got on the latest Scuttle chatter?
+- kind: dialogue
+  speaker: press
+  text: Looks like a possible new exploit.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition form for the new drives is on the console.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (sighs) Where''s the coffee?'
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) You know it's in the evidence locker.
+- kind: dialogue
+  speaker: forensics
+  text: (smirks) Only way to get coffee in this unit.
+- kind: dialogue
+  speaker: agent
+  text: (mutters under his breath) Scuttle's got us in a bind...

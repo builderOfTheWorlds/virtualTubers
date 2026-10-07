@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:15.933233+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to understand the Commodore's motivations. Are they just trying to
+    stay afloat, or is there something more to it?

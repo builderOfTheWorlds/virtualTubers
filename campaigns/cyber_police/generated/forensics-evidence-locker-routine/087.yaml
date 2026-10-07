@@ -1,0 +1,25 @@
+id: forensics-evidence-locker-routine
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:50.768160+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing new evidence from the Agent, verifying chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: I'm going to drop off those drives, make sure Forensics gets them processed
+    ASAP.
+- kind: dialogue
+  speaker: analyst
+  text: Already have them logged in the system, Hana. Just need to confirm they're
+    in the locker.
+- kind: dialogue
+  speaker: forensics
+  text: Verified, they're in the evidence locker. Proceed with processing.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving. What's the status on those drives?
+- kind: dialogue
+  speaker: forensics
+  text: Still processing, Captain. Should have the results shortly.

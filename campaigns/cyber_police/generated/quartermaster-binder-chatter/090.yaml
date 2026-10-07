@@ -1,0 +1,21 @@
+id: quartermaster-binder-chatter
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:38.324620+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''m still going over the denied-requisitions from last quarter.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Can''t say I''m surprised.'
+- kind: narration
+  speaker: captain
+  text: 'TMB: (chuckles) Yeah, that''s the "eventual inquiry" all right.'
+- kind: narration
+  speaker: captain
+  text: 'PV: (whispers to TMB) You think we''ll ever get a response on the forensic
+    software upgrades?'
+- kind: narration
+  speaker: captain
+  text: 'TM: (approaching the pair) Not holding my breath, Priya.'

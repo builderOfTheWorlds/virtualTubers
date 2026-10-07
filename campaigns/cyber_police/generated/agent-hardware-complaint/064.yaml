@@ -1,0 +1,39 @@
+id: agent-hardware-complaint
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:00.782240+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Deso: Ugh, this thing still won''t sync with the Scuttle''s own feed'
+- kind: dialogue
+  speaker: analyst
+  text: I've got a discrepancy in the latest mirror upload
+- kind: dialogue
+  speaker: forensics
+  text: The encryption is trying to use an outdated protocol, but it's consistent
+    with The Scuttle's patterns
+- kind: dialogue
+  speaker: press
+  text: I'll need to prep a statement in case it leaks, and can someone tell me what
+    we actually found?
+- kind: dialogue
+  speaker: quartermaster
+  text: 'New supply request: we need three more workstations with actual RAM, not
+    just pretend-to-have-RAM'
+- kind: dialogue
+  speaker: forensics
+  text: If we could just get the Scuttle to use the same level of encryption as us...
+- kind: dialogue
+  speaker: press
+  text: (to Deshawn) You're getting the hang of this
+- kind: narration
+  speaker: captain
+  text: 'Deso: (smiling wryly) Yeah, because nothing says "getting the hang of it"
+    like using 32-bit OS on a 64-bit machine'
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to have to re-run the evidence logs to see if we missed anything
+- kind: dialogue
+  speaker: analyst
+  text: (to Hana) Do you want me to assist with re-running the evidence logs?

@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 147
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:39.022931+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'll be honest, I've been staring at this chart for hours and I still don't
+    see a clear connection between the link and the IP address.

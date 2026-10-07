@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:58.295525+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, all. We''ve got a 3-1-2 in progress downtown, possible
+    Scuttle sighting.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (muttering) Yeah, because nothing says "serious policing"
+    like a 3-1-2.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the feed up. It's a low-res drone cam, but I think it might be our
+    guy.
+- kind: dialogue
+  speaker: agent
+  text: Requesting backup, just in case.
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) You'll probably get a squad car with a bunch of interns who've never
+    even seen a real crime scene.
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, I've got the requisition for the new forensic software... (pauses) Hold
+    on, what's the priority on this one?
+- kind: dialogue
+  speaker: press
+  text: '"Cyber Cops Foiled Again: Scuttle''s Elusive Leader Strikes Downtown" (headline
+    on a monitor).'

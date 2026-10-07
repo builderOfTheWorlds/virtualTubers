@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 134
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:07.725598+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Hmm, 'the computer thing' again
+- kind: dialogue
+  speaker: detective
+  text: I've seen it in print, never thought I'd see it on paper
+- kind: dialogue
+  speaker: analyst
+  text: We should just make them a placemat, save the Commissioner the trouble
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Agent) Did you see that?
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to self) Of course, because "the computer thing" is always more
+    important than "the dead thing"
+- kind: dialogue
+  speaker: press
+  text: (reading over shoulder) "The computer thing" - that's what I'm calling it
+    from now on
+- kind: dialogue
+  speaker: quartermaster
+  text: (skeptical) Well, that's certainly one way to boost morale

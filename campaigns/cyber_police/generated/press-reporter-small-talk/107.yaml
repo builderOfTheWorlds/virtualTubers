@@ -1,0 +1,28 @@
+id: press-reporter-small-talk
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:33.965671+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DOK-P: Alright, Priya, what''s the morning''s story looking like?'
+- kind: narration
+  speaker: captain
+  text: 'PNA: The usual suspects, Davey. Scuttle''s got a new mirror up, trying to
+    get around our last takedown.'
+- kind: narration
+  speaker: captain
+  text: 'DOK-P: And what''s the chatter like? Any whispers of who''s running the show?'
+- kind: narration
+  speaker: captain
+  text: 'PNA: Nothing concrete yet. Just a lot of noise about a "ghost in the machine".'
+- kind: narration
+  speaker: captain
+  text: 'DOK-P: Great, just what we need. More mysticism.'
+- kind: narration
+  speaker: captain
+  text: 'DOK-P: Alright, Teresa, what''s the requisition list looking like?'
+- kind: narration
+  speaker: captain
+  text: 'TML: We''re still waiting on the upgrade for the forensics lab, but other
+    than that, it''s standard fare.'

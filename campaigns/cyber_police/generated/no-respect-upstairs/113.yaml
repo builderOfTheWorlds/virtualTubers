@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:54.730350+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Okay, people, let''s get moving. We''ve got a new lead on
+    The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain. I''ve been going over the traffic patterns
+    from the last hack.'
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a connection between the latest string of robberies and a
+    recent job posting on The Scuttle's darknet forum.
+- kind: dialogue
+  speaker: agent
+  text: You want me to run the facial recognition again? Because I'm telling you,
+    Captain, it's probably just another fake ID.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a problem with the forensics kit we're using. It's not even the right
+    frequency for this kind of chip.
+- kind: dialogue
+  speaker: quartermaster
+  text: Sorry, Captain, but I'm going to have to requisition a new set of servers.
+    These ones are still on Windows XP.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "Cyber Cops Chased by Own Shadows"'

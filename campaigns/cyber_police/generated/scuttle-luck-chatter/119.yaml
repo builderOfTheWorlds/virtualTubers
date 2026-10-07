@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T07:46:13.257987+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Des: I''m telling you, it''s just too much to be coincidence. We need to
+    rethink our strategy, get some real eyes on this Bosun.'
+- kind: narration
+  speaker: captain
+  text: 'Pri: I''m not sure, Des. We''ve been over this, and every time we think we
+    have a lead, it turns out to be nothing.'
+- kind: narration
+  speaker: captain
+  text: 'Ros: Enough. We''ve been chasing Scuttle luck for years, and we''ve got nothing
+    to show for it. It''s time to focus on what we can control.'
+- kind: dialogue
+  speaker: forensics
+  text: But, Captain, have you seen the latest banner? It's like they're toying with
+    us.
+- kind: narration
+  speaker: captain
+  text: 'Teres: I know, I''m getting tired of their little games. Can we just get
+    some real results for once?'
+- kind: narration
+  speaker: captain
+  text: 'Mar: Scuttle luck, Scuttle luck, Scuttle luck. I swear, that''s all anyone
+    ever talks about.'

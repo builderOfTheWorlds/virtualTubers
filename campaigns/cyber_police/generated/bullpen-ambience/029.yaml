@@ -1,0 +1,45 @@
+id: bullpen-ambience
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:04.138456+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, all. We've got a case from the Scuttle overnight.
+- kind: dialogue
+  speaker: detective
+  text: I'm reading a possible tie to the earlier chatter spike.
+- kind: dialogue
+  speaker: analyst
+  text: I'm analyzing the feed now, but so far, nothing's popping.
+- kind: dialogue
+  speaker: agent
+  text: I'm seeing some interesting patterns in the traffic, but it's not giving me
+    anything concrete.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to take a closer look at the evidence we've got so far.
+- kind: dialogue
+  speaker: press
+  text: I need a statement for the morning briefing, can someone give me something
+    to work with?
+- kind: narration
+  speaker: captain
+  text: 'Teresa (Quartermaster): I''ve got the requisition forms ready, but we''re
+    still waiting on those new laptops.'
+- kind: narration
+  speaker: captain
+  text: 'Priya (Analyst): I think I''ve found something, but I need to run some tests
+    to be sure.'
+- kind: narration
+  speaker: captain
+  text: 'Deshawn (Agent): I''m picking up some weird traffic anomalies, but I''m not
+    sure what to make of them yet.'
+- kind: narration
+  speaker: captain
+  text: 'Hana (Forensics): I''ve got some samples to process, but I''m short on time
+    before the day''s over.'
+- kind: narration
+  speaker: captain
+  text: 'Davey (Press): Can someone give me a rough idea of what we''re looking at
+    today? I''ve got a meeting with the editor.'

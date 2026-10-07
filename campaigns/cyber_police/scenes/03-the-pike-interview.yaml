@@ -1,0 +1,80 @@
+# Spine scene 03 — the interview. Pike is not the Bosun and not even
+# particularly frightened; he's just a courier who stopped asking questions
+# about his own boxes a long time ago. A thin, real lead comes out of it.
+id: the-pike-interview
+title: The Pike Interview
+enter_narration: >-
+  Mid-afternoon. The Comms Room, doubling as an interview room, the way it
+  always does when it has to.
+
+lore: [basement, the_scuttle, org_chart]
+mood: [tension]
+continuity_in: >-
+  Soren Pike, a courier whose delivery logs show a pattern of drops near
+  Scuttle-adjacent addresses, has come in for a voluntary interview.
+continuity_out: >-
+  Pike gives up a drop-off protocol — a dead-letter locker system he's
+  never seen anyone collect from — without knowing he's handed the unit
+  its first real lead on the Bosun's supply chain in months.
+
+beats:
+  - type: action
+    speaker: detective
+    primitive: interrogate
+    params: {subject_person: "Soren Pike", about: "the three 'miscellaneous electronics' drops this month"}
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. Three drops. Same wording on the manifest each time. You want to
+      tell me what's actually in the box, or should I guess?
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      For whom does the label even work — nobody checks "miscellaneous
+      electronics," which is exactly why it's useful to somebody. Who gave
+      you that wording, Mr. Pike?
+
+  - type: action
+    speaker: forensics
+    primitive: seize_evidence
+    params: {item: "Pike's delivery tablet", from_location: "the interview"}
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. His tablet's got a scheduling app. Drop requests come
+      in from a number that resets every time. And then — and then there's
+      a code for each drop. Not an address. A locker code.
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      A locker. That's — that's almost a story. Not yet. But almost.
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. Dead-letter lockers. We tried to chase one in year six and lost
+      it. If this one's live, that's the first real thread on the supply
+      chain since. Good work getting him talking.
+
+  - type: action
+    speaker: detective
+    primitive: file_report
+    params: {title: "Pike interview — dead-letter locker protocol identified", result: "new lead, locker location pending"}
+
+  - type: action
+    speaker: analyst
+    primitive: trace_signal
+    params: {target: "the locker code format against known Scuttle infrastructure patterns", result: "a probable match to a self-storage facility on the east side"}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar watches through the Comms Room glass without going in. Pike
+      never sees the Observer, who is by the door the whole time, and who
+      Pike will later swear wasn't there.
+
+default_next: the-locker-complication

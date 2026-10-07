@@ -1,0 +1,47 @@
+id: bullpen-ambience
+take: 154
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:37.238793+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle's been quiet today, let's review what we have on the current case.
+- kind: dialogue
+  speaker: detective
+  text: We've got a possible mirror in a chatroom, looks like our guy might be getting
+    careless.
+- kind: dialogue
+  speaker: analyst
+  text: I've been looking at the traffic, and it's definitely a human behind the mirror,
+    not just a bot.
+- kind: dialogue
+  speaker: agent
+  text: I've got the comms rig set up, but I'm still waiting on the warrant for the
+    ISP logs.
+- kind: dialogue
+  speaker: forensics
+  text: Just got in the new batch of hard drives, going to take a look at them now.
+- kind: dialogue
+  speaker: press
+  text: Nothing's going to break on this case until we get more evidence, let's just
+    keep the lid on it for now.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition request from the Agent for a new comms rig, it's already been
+    denied twice.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Need to update the link charts...
+- kind: dialogue
+  speaker: agent
+  text: (sipping cold coffee) Ugh, I need a refill.
+- kind: dialogue
+  speaker: forensics
+  text: (examining a drive) Hmm, this one looks like it's been tampered with...
+- kind: dialogue
+  speaker: press
+  text: (typing away on her computer) Need to get a statement from the guy who discovered
+    the mirror, when's his interview?
+- kind: dialogue
+  speaker: agent
+  text: (leaning over to Davey) I think the Captain wants to talk to you about it.

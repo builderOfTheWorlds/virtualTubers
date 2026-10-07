@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:34.546726+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, it's just a matter of time before we crack the scuttle protocol.
+- kind: dialogue
+  speaker: agent
+  text: Time, time, always time. They're always one step ahead of us.
+- kind: dialogue
+  speaker: analyst
+  text: It's not about being one step ahead, Deshawn, it's about being smarter.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's not bicker about it. We have a meeting with the Commissioner
+    in an hour.
+- kind: dialogue
+  speaker: quartermaster
+  text: I still say it's inside information. Someone's got a mole in the unit.
+- kind: dialogue
+  speaker: detective
+  text: Ah, come on Teresa, you can't seriously think that. It's just... Scuttle luck.
+- kind: dialogue
+  speaker: forensics
+  text: Scuttle luck? You're just saying that because you're embarrassed we got outsmarted
+    again.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, that's exactly what it is.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, okay, let's just drop it. We'll get it next time, or the time after
+    that.

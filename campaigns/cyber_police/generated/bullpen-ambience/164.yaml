@@ -1,0 +1,36 @@
+id: bullpen-ambience
+take: 164
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:33.921718+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The morning briefing is cancelled, we''re still chasing leads
+    on the Mirrors of Eternity exploit.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Still no word from the vendor on the server upgrade.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the traffic logs, looks like we have a possible IP address
+    for the server.
+- kind: dialogue
+  speaker: agent
+  text: Can you send the logs my way? I want to run them through the intrusion detection
+    software.
+- kind: dialogue
+  speaker: forensics
+  text: Ugh, I need a refill.
+- kind: dialogue
+  speaker: press
+  text: Why do we have to use the vendor's coffee? It's always this bad...
+- kind: dialogue
+  speaker: quartermaster
+  text: Ah, yes! I found the new cable labels.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s review the status of the case. Priya, what
+    have you got on the IP address?'
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I think I can track it to a server in the DMZ.

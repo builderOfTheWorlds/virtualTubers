@@ -1,0 +1,43 @@
+id: quartermaster-binder-chatter
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:55.238378+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I still haven''t heard back from procurement about that new cipher
+    software.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: It''s a miracle we got the new hardware last week, to be honest.'
+- kind: narration
+  speaker: captain
+  text: 'HA-V: I''ve got the drive analysis for the latest Scuttle hack, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'DO-O: Nothing out of the ordinary on the surveillance feed.'
+- kind: narration
+  speaker: captain
+  text: 'DA-A: Quartermaster, what''s the status on the requisition for the new printer?'
+- kind: narration
+  speaker: captain
+  text: 'TM-T: Morning, everyone. Looks like we''ve got a chatter spike on The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'PN-N: Intelligence says it''s a phishing attempt, but I''m not so sure.'
+- kind: narration
+  speaker: captain
+  text: 'DO-O: I''ve got the tech details on the phishing attempt, but I need to review
+    them some more.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ll send over the paperwork for the denied requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Press wants a statement on the latest Scuttle leak.'
+- kind: narration
+  speaker: captain
+  text: 'HA-V: The duck video is still the best thing I''ve seen all week.'
+- kind: narration
+  speaker: captain
+  text: 'DA-A: Morning, Captain. I''ve got the day''s schedule and...'

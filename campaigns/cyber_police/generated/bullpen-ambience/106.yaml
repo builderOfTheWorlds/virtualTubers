@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:28.868086+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 07:00.
+- kind: dialogue
+  speaker: detective
+  text: I'm still going over the chat logs from last night.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting patterns in the network traffic.
+- kind: dialogue
+  speaker: agent
+  text: Still digging into the encryption on that seized drive.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the evidence from the latest raid.
+- kind: dialogue
+  speaker: press
+  text: I've got a request for an interview with a local reporter.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition request for new laptops is in, but it's still pending.
+- kind: dialogue
+  speaker: analyst
+  text: (sipping coffee) I'm so done with this coffee.
+- kind: dialogue
+  speaker: agent
+  text: (yawning) I think I'm going to grab some more coffee from the break room.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) I need to resubmit my request for new hardware.
+- kind: dialogue
+  speaker: press
+  text: (looking at her phone) I've got a message from the local reporter, wants to
+    meet at 09:00.
+- kind: dialogue
+  speaker: quartermaster
+  text: (at the supply cage) Just restocking the cable ties.

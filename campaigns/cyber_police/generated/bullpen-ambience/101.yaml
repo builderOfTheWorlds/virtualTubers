@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:03.635431+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Ah, looks like we've got a quiet one today.
+- kind: dialogue
+  speaker: detective
+  text: I'm still waiting on the updated Scuttle analysis from Forensics.
+- kind: dialogue
+  speaker: analyst
+  text: Coffee's getting cold, Davey.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) I know I packed that new drive in the go-bag...
+- kind: dialogue
+  speaker: forensics
+  text: (tinkering with a piece of equipment) This console's been acting up all morning...
+- kind: dialogue
+  speaker: press
+  text: (sipping coffee) Yeah, and I've still got that story to file.
+- kind: dialogue
+  speaker: quartermaster
+  text: (packing up her desk) Alright, who's left to lock up after me?

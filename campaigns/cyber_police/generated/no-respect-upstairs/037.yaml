@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 37
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:32.469892+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a request for backup on a "suspicious person" at the Downtown Coffee
+    Shop.
+- kind: dialogue
+  speaker: detective
+  text: (whispering to Priya) I think it's just a teenager with a Chromebook.
+- kind: dialogue
+  speaker: analyst
+  text: (smiling) I'll run the profile.
+- kind: dialogue
+  speaker: agent
+  text: (over the comms system) We need that extra unit to respond to the code 3.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Like we're ever going to get it in time.
+- kind: dialogue
+  speaker: press
+  text: '(on the monitor, his headline flashing) "CYBER COPS: WHEN WILL THEY GET IT
+    TOGETHER?"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (in the background) I'm on it, Deshawn. (pauses) Not that it'll make a difference.

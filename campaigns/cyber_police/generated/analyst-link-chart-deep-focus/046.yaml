@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:48.223392+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to see the node connections, not just the IP addresses.
+- kind: dialogue
+  speaker: captain
+  text: Priya, what have you got for me?
+- kind: dialogue
+  speaker: analyst
+  text: If I chart the connections right, we might finally see a pattern.
+- kind: dialogue
+  speaker: detective
+  text: What's the latest from Forensics?
+- kind: dialogue
+  speaker: agent
+  text: Agent's still digging, Captain. Should have an update soon.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) And where's the link to the Scuttle protocol?
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to herself) Scuttle luck again, I swear...
+- kind: dialogue
+  speaker: forensics
+  text: Nothing yet, Captain. Still running the analysis.
+- kind: dialogue
+  speaker: press
+  text: (shouting from outside the room) Hey, Captain! I've got a story on the Scuttle.

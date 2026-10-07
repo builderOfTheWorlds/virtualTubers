@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 189
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:07.456546+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not convinced by the node on the 3rd echo chamber server.
+- kind: dialogue
+  speaker: agent
+  text: I've been trying to get a traceroute on that IP, but it's bouncing off a proxy
+    somewhere.
+- kind: dialogue
+  speaker: forensics
+  text: We need to get a copy of the echo chamber software's source code to see if
+    it's patched.
+- kind: dialogue
+  speaker: press
+  text: I've got a contact who says they can get me the source code, but it's going
+    to cost.
+- kind: dialogue
+  speaker: quartermaster
+  text: Don't even think about it, Davey. We don't have the budget for that.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I just don't see how this all fits together...
+- kind: dialogue
+  speaker: captain
+  text: (entering the room) Alright, people, let's get to it. What have we got for
+    me?
+- kind: dialogue
+  speaker: detective
+  text: Actually, Captain, I think I've found a lead on the Bosun's identity.

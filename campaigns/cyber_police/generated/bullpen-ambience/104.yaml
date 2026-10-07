@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:19.616390+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Morning, ma''am.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Already on it, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Found a possible thread on the DarkWeb.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Link''s in my notes.'
+- kind: narration
+  speaker: captain
+  text: 'AN: I''ll take a closer look.'
+- kind: narration
+  speaker: captain
+  text: 'OK: Just got my coffee. It''s still hot.'
+- kind: narration
+  speaker: captain
+  text: 'HB: Evidence log is clear.'
+- kind: narration
+  speaker: captain
+  text: 'HB: Forensics, we''re good.'
+- kind: narration
+  speaker: captain
+  text: 'OKP: Nothing from the press yet.'
+- kind: narration
+  speaker: captain
+  text: 'TM: You know, I was thinking...'
+- kind: narration
+  speaker: captain
+  text: 'TM: We should really update our protocols for...'

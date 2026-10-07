@@ -1,0 +1,23 @@
+id: forensics-evidence-locker-routine
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:09.023952+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking for chain-of-custody documentation.
+- kind: dialogue
+  speaker: agent
+  text: Running a quick system diagnostic before evidence intake.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the link charts up on the big screen.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Captain to the bullpen. We''ve got an intake to process.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Just signed off on the requisition for new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, we're ready to start the intake process.

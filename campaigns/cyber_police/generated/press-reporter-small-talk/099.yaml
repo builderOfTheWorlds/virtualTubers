@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:40.189046+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, how's it going?
+- kind: dialogue
+  speaker: captain
+  text: Not bad, Davey, just making the rounds. What's new with you?
+- kind: dialogue
+  speaker: press
+  text: Same old, same old. Just trying to get a word in edgewise around here.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) I feel you. So, what do you need today? Any new leads?
+- kind: dialogue
+  speaker: press
+  text: Nah, just wanted to check in and see if anything's cooking. You know, for
+    the Scuttle story.
+- kind: dialogue
+  speaker: agent
+  text: (overhearing) Actually, Captain, we did get a tip last night.
+- kind: dialogue
+  speaker: analyst
+  text: It's not confirmed, but it looks like a possible entry point for our target.
+- kind: dialogue
+  speaker: forensics
+  text: I've started running the numbers, but it's going to take some time to confirm.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms) Okay, team, let's get started. We've got a briefing to prep
+    for.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving. Analyst, what's the intel looking like?
+- kind: dialogue
+  speaker: analyst
+  text: Well, Captain, it looks like our target was online for about an hour last
+    night...
+- kind: dialogue
+  speaker: detective
+  text: (interrupting) Yeah, yeah, we'll get to that. For now, let's focus on the
+    plan.

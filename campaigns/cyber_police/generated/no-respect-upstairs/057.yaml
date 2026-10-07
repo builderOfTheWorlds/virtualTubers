@@ -1,0 +1,44 @@
+id: no-respect-upstairs
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:21.281413+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Today's briefing.
+- kind: dialogue
+  speaker: detective
+  text: I've got a few new leads on The Scuttle's operation.
+- kind: dialogue
+  speaker: agent
+  text: I've been going over the traffic cams and I think I found a possible sighting
+    of our suspect.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the new requisition forms for the team.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to crack the encryption on that data package.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting a read on the fibers found at the last scene, but it's going to
+    take a few more hours.
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: (to herself) "Backup request from the Cyber Police... again."'
+- kind: narration
+  speaker: captain
+  text: 'Reporter: (on screen) "Cyber Police Busted for Being Too Slow: Scuttle Rips
+    Them Apart Again"'
+- kind: dialogue
+  speaker: captain
+  text: (sighs) Alright, let's get to work.
+- kind: dialogue
+  speaker: detective
+  text: (whispers) I'm telling you, if we could just get one major bust...
+- kind: dialogue
+  speaker: agent
+  text: (excitedly) I've got a plan! We can set up a sting operation!
+- kind: dialogue
+  speaker: analyst
+  text: (skeptically) I don't know, guys. We've tried that before.

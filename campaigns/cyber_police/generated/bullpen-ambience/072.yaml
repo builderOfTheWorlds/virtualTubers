@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:25.319208+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s wrap up for the day. We''ll discuss tomorrow''s
+    briefing in the morning.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Just one more minute, Captain. I''m almost done with this
+    analysis.'
+- kind: dialogue
+  speaker: analyst
+  text: I've found some interesting patterns in the data. I think we might be looking
+    at a possible...
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get the encryption cracked on this drive, but it's not yielding.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some good news. The lab results are in, and we should have some DNA
+    matches soon.
+- kind: dialogue
+  speaker: press
+  text: I think I'm going to head out for some coffee. Want to grab a cup, Priya?
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, I've got the requisition forms all done for tomorrow. Let me just...

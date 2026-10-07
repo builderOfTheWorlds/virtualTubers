@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 91
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:11.307636+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing in an hour, folks. Let's get the morning routine started.
+- kind: dialogue
+  speaker: detective
+  text: Still going over the Thompson case, trying to find the connection between
+    the nodes.
+- kind: dialogue
+  speaker: analyst
+  text: Got a hit on the mirror node, looks like a new proxy server has been added.
+- kind: dialogue
+  speaker: agent
+  text: Still trying to crack the encryption on the drive from last night.
+- kind: dialogue
+  speaker: forensics
+  text: Found some interesting anomalies in the packet routing.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the Times, they want an update on the Thompson case.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got a requisition request for new software, still waiting on approval.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

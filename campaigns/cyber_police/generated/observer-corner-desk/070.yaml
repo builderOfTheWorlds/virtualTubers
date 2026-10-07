@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:04.240569+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is about to start, everyone, take your seats.
+- kind: dialogue
+  speaker: detective
+  text: I'll be working with the Analyst to develop a plan based on the overnight
+    chatter.
+- kind: dialogue
+  speaker: analyst
+  text: I've been reviewing the link charts and I think I've found a possible connection
+    between the mirror and the chatter.
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, I'll start tracing the signals and see if I can get anything concrete.
+- kind: dialogue
+  speaker: forensics
+  text: I'll process the evidence from the last raid and see if I can find anything
+    new.
+- kind: dialogue
+  speaker: press
+  text: I need to prep for the press conference tomorrow, can someone give me a quick
+    rundown of what we have so far?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned new hard drives for the lab, hopefully we'll get them soon.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

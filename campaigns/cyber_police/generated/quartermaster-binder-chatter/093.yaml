@@ -1,0 +1,35 @@
+id: quartermaster-binder-chatter
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:52.114533+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We're not getting any new leads on The Scuttle
+- kind: dialogue
+  speaker: detective
+  text: Maybe we're just not looking at it right
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing anything new in the chatter spikes
+- kind: dialogue
+  speaker: agent
+  text: I'm still picking up the encryption code from last night
+- kind: dialogue
+  speaker: forensics
+  text: I'll run the code again, see if I missed anything
+- kind: dialogue
+  speaker: quartermaster
+  text: Yeah, because that's exactly what we're going to do with it
+- kind: dialogue
+  speaker: detective
+  text: Come on, it's not like we've got a lot of other options
+- kind: dialogue
+  speaker: quartermaster
+  text: The eventual inquiry, Captain
+- kind: dialogue
+  speaker: detective
+  text: I'm just saying, we should get on it
+- kind: dialogue
+  speaker: quartermaster
+  text: Because you think it's going to magically get funded

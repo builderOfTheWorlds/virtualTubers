@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:48.457688+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'ROSA: We''ve got a Scuttle tip that their latest scheme is to sell "AI-generated
+    art" as legit.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I'm running the numbers on the latest Scuttle sales data.
+- kind: dialogue
+  speaker: agent
+  text: Captain, I've got the Scuttle's marketing brochure up on the big screen.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) "Art that adapts to your personal style..." Yeah, sure.
+- kind: narration
+  speaker: captain
+  text: 'OKONKWOPRYCE: (on a monitor in the background) "Cyber Police Raid Foiled
+    Again by Cunning Scuttle Operators" - scuttle-bug.com'
+- kind: narration
+  speaker: captain
+  text: 'MBEKL-LOWND: (sighing) Backup request denied.'
+- kind: dialogue
+  speaker: detective
+  text: (smirking) I'll just over-request then.

@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:00.269699+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm here to intake the evidence from the 345th raid.
+- kind: dialogue
+  speaker: agent
+  text: What've we got?
+- kind: dialogue
+  speaker: forensics
+  text: A collection of drives, servers, and some paperwork.
+- kind: dialogue
+  speaker: analyst
+  text: Can I see the drive logs?
+- kind: dialogue
+  speaker: forensics
+  text: Already uploaded them to the server. You can access them through the portal.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've prepared the requisition forms for the new equipment.
+- kind: dialogue
+  speaker: forensics
+  text: We'll need to verify the chain of custody before we can process it.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Captain, I need to review the intake procedures.'
+- kind: dialogue
+  speaker: forensics
+  text: It's all standard protocol, ma'am. Evidence is logged, verified, and stored
+    in the locker.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Can I get the drive logs on my console?'

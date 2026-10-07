@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 153
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:28.420651+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosa: Morning, everyone.'
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Ugh.
+- kind: dialogue
+  speaker: agent
+  text: Stupid coffee machine...
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the logs yet.
+- kind: dialogue
+  speaker: press
+  text: Still nothing from the Mirror?
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing from requisitions yet, either.
+- kind: narration
+  speaker: captain
+  text: 'Rosa: Keep at it. We''ll get lucky.'
+- kind: dialogue
+  speaker: detective
+  text: Okay, let's see what we've got.
+- kind: dialogue
+  speaker: analyst
+  text: It's all just noise.
+- kind: dialogue
+  speaker: agent
+  text: I'm reading something on the 3D prints...
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think I found something.

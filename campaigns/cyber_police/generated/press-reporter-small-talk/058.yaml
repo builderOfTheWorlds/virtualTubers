@@ -1,0 +1,48 @@
+id: press-reporter-small-talk
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:39.202471+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Priya, how's life in the basement? ||emotion:happy
+- kind: dialogue
+  speaker: analyst
+  text: It's the usual, Davey. Still waiting for The Scuttle to slip up. ||emotion:neutral
+- kind: dialogue
+  speaker: press
+  text: Fair enough. Just trying to keep the narrative straight. Don't want to get
+    too far ahead of myself. ||emotion:neutral
+- kind: dialogue
+  speaker: agent
+  text: Morning, Davey. Just got word that another request for new hardware has been
+    denied. ||emotion:angry
+- kind: dialogue
+  speaker: press
+  text: Ah, of course. Because what we really need is something that won't get hacked
+    to pieces in five minutes. ||emotion:amused
+- kind: dialogue
+  speaker: forensics
+  text: I'm just glad I got to reformat the evidence drives yesterday. Small victories,
+    right? ||emotion:neutral
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, Davey, I have some good news. The new shipment of paper for the
+    printers finally arrived. ||emotion:happy
+- kind: dialogue
+  speaker: press
+  text: Now that's what I call a game-changer. Can't imagine investigating without
+    our trusty paper printers. ||emotion:sarcastic
+- kind: dialogue
+  speaker: agent
+  text: Okay, let's focus. Captain wants us to prep for the meeting at 13:00. ||emotion:neutral
+- kind: dialogue
+  speaker: analyst
+  text: I've got the numbers ready. Just need the Detective to confirm the plan. ||emotion:neutral
+- kind: dialogue
+  speaker: forensics
+  text: I'll start digging through the new chatter logs. See if I can find anything
+    useful. ||emotion:engaged
+- kind: dialogue
+  speaker: press
+  text: Good luck with that. We all know how well that usually goes. ||emotion:sarcastic

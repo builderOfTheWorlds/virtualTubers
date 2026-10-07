@@ -1,0 +1,21 @@
+id: quartermaster-binder-chatter
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:58.672101+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm going to have to give them the "eventual inquiry" binder, again.
+- kind: dialogue
+  speaker: detective
+  text: Some days I wonder if anyone in the Commissioner's office even knows what
+    we're doing.
+- kind: dialogue
+  speaker: analyst
+  text: Did you see the requisition denial for the new malware analysis software?
+- kind: dialogue
+  speaker: agent
+  text: What's the point of even sending it in, if they know it'll just get shot down?
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting for the results on that one sample...

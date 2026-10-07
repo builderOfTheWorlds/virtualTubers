@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:14.293593+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The case file is still open on the mirror.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll review the link charts, see if anything''s changed overnight.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting for more chatter data to come in.
+- kind: dialogue
+  speaker: agent
+  text: I'll check the raid tech and see if we can pinpoint any IP addresses.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the evidence front. Still processing the last batch.
+- kind: dialogue
+  speaker: press
+  text: Nothing's leaked to the press yet. Still quiet on The Scuttle.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just finished requisitioning some new hardware for Forensics.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

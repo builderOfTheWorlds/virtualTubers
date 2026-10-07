@@ -1,0 +1,40 @@
+id: observer-corner-desk
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:44.192514+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm just going to review the link charts one more time to make sure I didn't
+    miss anything.
+- kind: dialogue
+  speaker: agent
+  text: (glancing over at the Observer's desk) Just a reminder, Priya, the Detective
+    wants to run the new chatter spike by the Captain first.
+- kind: dialogue
+  speaker: press
+  text: (scribbling notes in a notebook) I think I'm going to need a few more details
+    on that before I can write up the press release.
+- kind: dialogue
+  speaker: forensics
+  text: (absent-mindedly fiddling with her keyboard) If anyone needs me, I'll be over
+    here processing the latest batch of evidence.
+- kind: dialogue
+  speaker: quartermaster
+  text: (yelling over the cubicle walls) Has anyone seen the requisition form for
+    the new laptops?
+- kind: dialogue
+  speaker: captain
+  text: (standing at the whiteboard, addressing the room) Alright, let's review the
+    day's plan...
+- kind: dialogue
+  speaker: detective
+  text: (nodding along, eyes scanning the whiteboard) Yes, Captain, I've got the Analyst's
+    report on the new chatter spike...
+- kind: dialogue
+  speaker: analyst
+  text: (still reviewing her charts, lost in thought) Hmm... I think I might have
+    found something interesting...
+- kind: narration
+  speaker: captain
+  text: (Observer sits quietly at his desk, watching the room with an unblinking gaze)

@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 187
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:00.818802+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't see any clear connections between the Mirari and the Vexar sites,
+    but I do have a thread of conversation between a user named "Nightshade" and the
+    Quartermasters that I think is worth investigating further.
+- kind: dialogue
+  speaker: captain
+  text: (yelling down the hall) Thorn, can you get a hold of Forensics and get them
+    to run some tests on those two servers we seized last night? See if they can dig
+    up anything useful.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) Yeah, because we haven't been able to catch them off
+    guard yet. I'll just go ahead and prepare for another "surprise" raid. (sighs)
+- kind: dialogue
+  speaker: forensics
+  text: (whispering on phone) Okay, I can send you the files. Just be careful, we
+    don't know who might be watching.
+- kind: dialogue
+  speaker: press
+  text: (scribbling in notebook) Alright, so if I've got this right, we're looking
+    at a possible link between The Scuttle and a new piracy site that just popped
+    up...
+- kind: dialogue
+  speaker: quartermaster
+  text: (yelling from the supply cage) Rosalind, we're running low on coffee! Can
+    you please requisition some more ASAP?
+- kind: dialogue
+  speaker: agent
+  text: (over intercom) Thorn, we've got a possible hit on the Mirari server. Looks
+    like it might be connected to the Vexar site.
+- kind: dialogue
+  speaker: captain
+  text: (storming into the room) Alright, let's get to it. We've got a lead. Thorn,
+    you're with me. Deshawn, Hana, you're with me too.

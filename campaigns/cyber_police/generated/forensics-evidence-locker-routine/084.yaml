@@ -1,0 +1,37 @@
+id: forensics-evidence-locker-routine
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:37.913295+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've sealed off the evidence locker and cleared the shelves.
+- kind: dialogue
+  speaker: agent
+  text: I'll be reviewing the case files and updating the chain of custody.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a batch of new prints to process from the latest raid.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requesting additional storage space for the next forensic analysis.
+- kind: dialogue
+  speaker: captain
+  text: The unit's schedule for the day has been posted on the bulletin board.
+- kind: dialogue
+  speaker: press
+  text: Nothing new on the news front yet, but I'll keep an ear out for any updates.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics has confirmed that the evidence locker's power supply is within
+    acceptable levels.
+- kind: dialogue
+  speaker: agent
+  text: Agent, please confirm that all technical leads are being properly logged and
+    tracked.
+- kind: dialogue
+  speaker: analyst
+  text: I'm detecting some inconsistencies in the original case files.
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster, can you confirm that the requisition binder has been updated?

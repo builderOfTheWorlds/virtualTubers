@@ -1,0 +1,44 @@
+id: bullpen-ambience
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:36.490361+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, ma'am.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the morning's dashboard updates, but nothing too out of the ordinary.
+- kind: dialogue
+  speaker: agent
+  text: Just finished running diagnostics on our equipment. Everything looks good.
+- kind: dialogue
+  speaker: forensics
+  text: Got a new batch of evidence in, needs processing.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the Scuttle, looks like we've got a new lead on that
+    hacktivist.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got the requisition list for the week. Looks like we're still waiting
+    on that new hardware.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's take a look at that lead. Thorn, what do we know so far?
+- kind: dialogue
+  speaker: detective
+  text: Well, from what I can tell, it's a possible IP address linked to a group we've
+    been tracking.
+- kind: dialogue
+  speaker: analyst
+  text: I'm running some checks, but so far it looks like it might be a dead end.
+- kind: dialogue
+  speaker: agent
+  text: I'm running some network scans, see if we can dig up anything else.
+- kind: dialogue
+  speaker: forensics
+  text: Got a team meeting at 10 to discuss the new evidence protocol.

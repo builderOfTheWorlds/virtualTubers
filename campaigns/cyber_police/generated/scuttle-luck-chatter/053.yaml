@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 53
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:36.491080+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I swear, sometimes I think the Bosun is the only one who actually knows what
+    they're doing.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Captain, you can't be serious. It's just a bunch of kids with too
+    much free time.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the proxy chains, and I think I found a pattern.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because that's exactly what we're missing – a magic formula to explain
+    why The Scuttle always slips away.
+- kind: dialogue
+  speaker: forensics
+  text: But what if it's not just about the tech? What if they have a mole inside?
+- kind: dialogue
+  speaker: press
+  text: Now you're getting into conspiracy theory territory, Hana.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I think we're overcomplicating things. Maybe it's just that they're
+    better than us.
+- kind: dialogue
+  speaker: captain
+  text: That's not an answer, Teresa. That's just admitting defeat.

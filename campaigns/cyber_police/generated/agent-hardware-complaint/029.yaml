@@ -1,0 +1,17 @@
+id: agent-hardware-complaint
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:25.289383+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, we're still running Windows 7 on this thing.
+- kind: dialogue
+  speaker: analyst
+  text: (over her shoulder) Agent, can I see that log?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) It's not like it's a high-priority target or anything...
+- kind: dialogue
+  speaker: analyst
+  text: (shrugs) Someone's got to mean it, since nobody else does.

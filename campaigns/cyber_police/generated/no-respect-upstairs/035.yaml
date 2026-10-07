@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:22.114011+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I sent the requisition for new forensic tools last week, and I still haven't
+    heard back.
+- kind: dialogue
+  speaker: agent
+  text: Hey, Teresa, did you remember to CC the Commissioner's office?
+- kind: dialogue
+  speaker: forensics
+  text: I don't think it matters. It'll just get stuck in limbo like everything else.
+- kind: dialogue
+  speaker: press
+  text: '"Cyber Cops Struggle to Keep Up: A Scuttle Special Report".'
+- kind: dialogue
+  speaker: analyst
+  text: Oh, this is just great. We're on the front page... again.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s move on. We have a briefing to get through.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Captain, have you seen the patrol requests for backup? We''re
+    getting stuck at the bottom of the queue.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''ll look into it, Marcus. In the meantime, let''s focus
+    on the case at hand.'

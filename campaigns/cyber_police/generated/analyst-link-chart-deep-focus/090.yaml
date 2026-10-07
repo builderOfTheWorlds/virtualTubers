@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:34.902774+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't see the connection between the Scuttle protocol and the recent server
+    drop.

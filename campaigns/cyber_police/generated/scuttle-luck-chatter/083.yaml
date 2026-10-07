@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:51.760017+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I swear, it's like they're mocking us.
+- kind: dialogue
+  speaker: detective
+  text: Ah, come on Priya, it's just the Scuttle's version of trash talk. We've seen
+    it all before.
+- kind: dialogue
+  speaker: quartermaster
+  text: But have we seen it when it's actually on the front page of the Daily Byte?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, because nothing says "professional" like being ridiculed by a bunch
+    of amateur pirates.
+- kind: dialogue
+  speaker: agent
+  text: At least we got the IP address this time, right?
+- kind: dialogue
+  speaker: press
+  text: (whispering) I got a tip that the Scuttle's got a new mirror set up in the
+    14th district...
+- kind: dialogue
+  speaker: captain
+  text: (walking in) Alright, alright, let's not get ahead of ourselves. We've got
+    work to do.

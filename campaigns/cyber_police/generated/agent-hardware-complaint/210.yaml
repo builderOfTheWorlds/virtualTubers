@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 210
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:31.391500+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this rig I'm stuck with?
+- kind: dialogue
+  speaker: detective
+  text: (laughs) Yeah, it's like they're trying to keep us from doing our job.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I swear, if I had a credit card, I'd just buy a new
+    laptop.
+- kind: dialogue
+  speaker: forensics
+  text: (from the evidence locker) You two want to borrow my spare USB drive?
+- kind: dialogue
+  speaker: press
+  text: (munching on a sandwich) What did you guys actually find, anyway?
+- kind: dialogue
+  speaker: quartermaster
+  text: (frowning at her requisition log) Requisition 4277, denied again.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. We've got a lead to chase.

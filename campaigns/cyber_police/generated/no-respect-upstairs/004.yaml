@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:33.624610+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I need someone to take a look at the Scuttle's latest post.
+- kind: dialogue
+  speaker: detective
+  text: '(reading from his console) "Cyber Police: 0, Cyber- Criminals: 1, Us: Still
+    Not Taken Seriously by Anyone"'
+- kind: dialogue
+  speaker: analyst
+  text: (sighing) I've found a pattern in the latest hacking attempts, but I need
+    a team to help me analyze.
+- kind: dialogue
+  speaker: agent
+  text: (shrugging) I'll add it to the queue, but don't hold your breath.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) I swear, if I have to process another low-priority
+    request...
+- kind: dialogue
+  speaker: press
+  text: (Davey's face flashes on a monitor, with the headline "Cyber Police Can't
+    Catch a Cold")

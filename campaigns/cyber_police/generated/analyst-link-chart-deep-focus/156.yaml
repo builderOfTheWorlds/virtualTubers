@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 156
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:31.517525+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to track the metadata on these uploaded files, see if I can find any
+    patterns.
+- kind: dialogue
+  speaker: agent
+  text: I've got a lead on the proxy chain, Priya.
+- kind: dialogue
+  speaker: analyst
+  text: Let me see what I can dig up on the Bosun's IP address.
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the last raid, but it's all just empty drives
+    and looped videos.
+- kind: dialogue
+  speaker: press
+  text: I need a statement from the Captain for the press conference tomorrow.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting for that requisition to come through, Captain.
+- kind: dialogue
+  speaker: captain
+  text: I want a team assembled to review the case files and see if we can find any
+    new leads.

@@ -1,0 +1,41 @@
+id: observer-corner-desk
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:15.964375+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, let's get started
+- kind: dialogue
+  speaker: detective
+  text: I've got the plan laid out
+- kind: dialogue
+  speaker: analyst
+  text: New chatter spike in the darknet
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the signal
+- kind: dialogue
+  speaker: forensics
+  text: Nothing out of the ordinary on the new leads
+- kind: dialogue
+  speaker: press
+  text: Just a normal day, no updates to worry about
+- kind: dialogue
+  speaker: quartermaster
+  text: Request submitted for new hardware
+- kind: narration
+  speaker: captain
+  text: 'Observer:'
+- kind: dialogue
+  speaker: detective
+  text: Thorn, I need you to run the plan by Nandakumar
+- kind: dialogue
+  speaker: analyst
+  text: What's the priority here?
+- kind: dialogue
+  speaker: detective
+  text: Okafor, can you get the tech ready?
+- kind: dialogue
+  speaker: agent
+  text: I'll get started on setting up the tracking

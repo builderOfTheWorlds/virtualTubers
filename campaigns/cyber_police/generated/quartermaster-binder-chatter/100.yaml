@@ -1,0 +1,12 @@
+id: quartermaster-binder-chatter
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:15.710114+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Well, it's not like I didn't see this coming.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (chuckles) Yeah, they always say "eventual inquiry." It''s
+    like our very own version of "may you live in interesting times."'

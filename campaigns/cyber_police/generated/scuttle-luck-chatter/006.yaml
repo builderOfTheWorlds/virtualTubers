@@ -1,0 +1,26 @@
+id: scuttle-luck-chatter
+take: 6
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:14.367543+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think we're the ones who need a good Bosun.
+- kind: dialogue
+  speaker: detective
+  text: You think it's the infrastructure? I think it's just our timing.
+- kind: dialogue
+  speaker: captain
+  text: Or maybe it's just that we're not as good at this as they are.
+- kind: dialogue
+  speaker: agent
+  text: Come on, ma'am, we've got this. We just need to-
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) "Need to"? You think we "need" to catch The Scuttle?
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) You know, I'm starting to think they're just having fun at our expense.
+- kind: dialogue
+  speaker: press
+  text: (skeptical) Fun? You mean like that message they left last time? "Bring snacks"?

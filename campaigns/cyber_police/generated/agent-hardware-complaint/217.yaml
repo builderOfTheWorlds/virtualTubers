@@ -1,0 +1,14 @@
+id: agent-hardware-complaint
+take: 217
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:51.406144+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing still won't run on the new build.
+- kind: dialogue
+  speaker: analyst
+  text: It's not a new build, Deshawn, it's the one we're stuck with.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because that's not a problem, right?

@@ -1,0 +1,43 @@
+id: forensics-evidence-locker-routine
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:18.483798+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking the evidence locker's log, making sure it's up to date.
+- kind: dialogue
+  speaker: agent
+  text: Running a diagnostic on the comms console, making sure it's online.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Checking the case files, making sure we''re still on track.'
+- kind: dialogue
+  speaker: analyst
+  text: Scrolling through the chat logs, looking for anything that might be relevant.
+- kind: dialogue
+  speaker: quartermaster
+  text: Inventorying the supply cage, making sure we're not low on anything.
+- kind: dialogue
+  speaker: press
+  text: Filing a few stories on the latest developments, trying to get a scoop.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Going over the plan with the Agent, making sure we''re all
+    on the same page.'
+- kind: dialogue
+  speaker: forensics
+  text: Removing the old evidence, replacing it with new chain of custody paperwork.
+- kind: dialogue
+  speaker: agent
+  text: Pinging Forensics to see if they need anything from me.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Giving the morning briefing, updating everyone on the latest
+    developments.'
+- kind: dialogue
+  speaker: analyst
+  text: Pulling up the case files, going over them with the Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: Making a few phone calls, trying to get some new equipment ordered.

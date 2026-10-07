@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:22.929825+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get started on those backup requests from
+    the morning.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I don''t think we''re going to get a warm welcome from the
+    patrol cars on this one, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Because nothing says "welcome to the team" like a 20-minute delay on a backup
+    call...
+- kind: dialogue
+  speaker: agent
+  text: Just saying, someone should probably prep a statement for when the press starts
+    calling.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Cyber Police Bungled Again: Scuttle Still on the Loose.'
+- kind: dialogue
+  speaker: forensics
+  text: You'd think a real arrest would get some respect, but no...
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s focus on the task at hand. We need to track
+    down those leads on The Scuttle.'

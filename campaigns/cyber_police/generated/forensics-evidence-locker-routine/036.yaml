@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:23.893422+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the Evidence Locker.
+- kind: dialogue
+  speaker: agent
+  text: Requesting a new batch of evidence bags.
+- kind: dialogue
+  speaker: analyst
+  text: Labeling and dating the evidence intake forms.
+- kind: dialogue
+  speaker: quartermaster
+  text: Counting the supply of gloves in the Evidence Locker.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Approving the chain of custody for the new evidence.'
+- kind: dialogue
+  speaker: press
+  text: Noting the approval in the press log.
+- kind: dialogue
+  speaker: forensics
+  text: Transferring the evidence to a secure drive.

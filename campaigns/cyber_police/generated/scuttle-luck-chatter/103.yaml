@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:44.800168+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: It's not skill, it's just a good enough understanding of how we work.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Come on, it''s Scuttle luck.'
+- kind: dialogue
+  speaker: analyst
+  text: If we can't even manage to stay one step ahead, how are we supposed to catch
+    them?
+- kind: dialogue
+  speaker: agent
+  text: We're getting close, you can feel it. They just need to slip up once more.
+- kind: dialogue
+  speaker: forensics
+  text: And what's to say they won't just move to a new server as soon as we think
+    we have them?
+- kind: dialogue
+  speaker: press
+  text: I'm starting to think it's just a game to them. They're enjoying the chase
+    as much as we are.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: We can''t keep throwing resources at this. It''s eating into
+    our budget, our manpower.'

@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 138
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:40.499859+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Ah, good, I''m glad we''re not in the middle of a case right
+    now.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m just waiting for my coffee to cool down a bit, don''t
+    want it to burn my tongue.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm going to need to re-run those algorithms for the mirror, I don't like
+    the results we got.
+- kind: dialogue
+  speaker: agent
+  text: I just got word from The Scuttle that we might have a new target, let's see
+    what it says.
+- kind: dialogue
+  speaker: forensics
+  text: I'm just trying to get the evidence log updated, been putting it off for too
+    long.
+- kind: dialogue
+  speaker: press
+  text: So, what's the plan for today, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting to hear back on those requisitions, hopefully we get some new
+    gear soon.

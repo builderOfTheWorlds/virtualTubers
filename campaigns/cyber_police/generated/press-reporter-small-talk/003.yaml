@@ -1,0 +1,39 @@
+id: press-reporter-small-talk
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:32.238557+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Okay, what's the story for the day, Captain?
+- kind: dialogue
+  speaker: captain
+  text: We've got a possible lead on a new mirror. Thorn, what's the plan?
+- kind: dialogue
+  speaker: detective
+  text: I want to try to hack into the mirror's admin panel, see if we can get a user
+    ID.
+- kind: dialogue
+  speaker: analyst
+  text: Intel says the mirror's been online for 72 hours, no significant activity
+    before this.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some weird network chatter on the mirror's IP.
+- kind: dialogue
+  speaker: forensics
+  text: We've got some possible evidence on a compromised server, but I need access
+    to review it.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Requisitions for the week: new hard drives for Priya, a new scope for Deshawn.'
+- kind: narration
+  speaker: captain
+  text: 'Observer:'
+- kind: dialogue
+  speaker: press
+  text: Anything I need to worry about today, Captain?
+- kind: dialogue
+  speaker: captain
+  text: Just the usual, Davey. Scuttle's still on the air, and the Commissioner's
+    office is breathing down our necks.

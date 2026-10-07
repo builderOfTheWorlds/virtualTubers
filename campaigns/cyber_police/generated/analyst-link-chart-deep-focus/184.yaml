@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 184
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:49.971531+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Still no clear connection between the new proxy servers and the Bosun's operation.
+- kind: dialogue
+  speaker: agent
+  text: (whispering) I think I found a pattern in the Bosun's upload times.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Yeah, because nothing says 'good forensic practice' like analyzing
+    a data dump from a mirror site.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone explain to me why the press conference was postponed again?
+- kind: dialogue
+  speaker: press
+  text: (on phone) Captain, I need a quote on the latest server seizure.
+- kind: dialogue
+  speaker: captain
+  text: (over phone) 'We're making progress, but The Scuttle's operators are always
+    a step ahead.'
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) That one IP address... it's been used before. I just
+    need to connect it to the other...
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) I've got a few hours' worth of data to review before the weekend.
+    Joy.

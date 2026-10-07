@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:39.486305+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We're getting close this time, I can feel it.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, right. We've said that for five years.
+- kind: dialogue
+  speaker: analyst
+  text: It's just a matter of time before we get the drop on them.
+- kind: dialogue
+  speaker: agent
+  text: You think so? They've got us outmaneuvered at every turn.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe they just have better snacks.
+- kind: dialogue
+  speaker: press
+  text: (whispering to Teresa) Do you think they really have a secret sauce for staying
+    one step ahead?
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering back) I think it's just good old-fashioned Scuttle luck.

@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 127
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:51.476253+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, of course, the USB drive we finally got working yesterday is giving me
+    issues now.
+- kind: dialogue
+  speaker: analyst
+  text: The mirror on The Scuttle has updated overnight, and there's a new chatter
+    spike.
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, the Quartermaster's notes are on the shared drive.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Let''s get the Analyst on it and see what we can dig up.'
+- kind: dialogue
+  speaker: forensics
+  text: I'm running some tests on the new evidence, but so far, nothing's turning
+    up.
+- kind: dialogue
+  speaker: press
+  text: I'll start working on the press release for whatever we do today.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s review the morning''s leads and figure out
+    our plan.'

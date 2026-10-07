@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:15.838601+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: What's this, "the computer thing" again?
+- kind: dialogue
+  speaker: detective
+  text: I told you, Captain, it's just a memo
+- kind: dialogue
+  speaker: analyst
+  text: I've seen this before, from the Commissioner's office
+- kind: dialogue
+  speaker: agent
+  text: It's like they think we're just a novelty
+- kind: dialogue
+  speaker: forensics
+  text: I've got better things to do than deal with this
+- kind: dialogue
+  speaker: press
+  text: I've been trying to get a story out of them, but no luck
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been sending in requisitions for months, but nothing's happening

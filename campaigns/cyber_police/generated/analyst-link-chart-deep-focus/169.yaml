@@ -1,0 +1,28 @@
+id: analyst-link-chart-deep-focus
+take: 169
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:43.908521+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got a minor thread here, a possible connection between two different
+    IP addresses.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) Great, now we're chasing a thread that may or may not
+    matter...
+- kind: dialogue
+  speaker: forensics
+  text: (in the background, focused on her work) What's the chain of custody on that
+    new evidence?
+- kind: dialogue
+  speaker: press
+  text: (to the press officer) Is it true that the Scuttle's operators have been leaving
+    taunting messages in seized servers?
+- kind: dialogue
+  speaker: quartermaster
+  text: (exasperated) Yes, Davey, it's a standing joke around here. The Quartermaster
+    still brings it up.
+- kind: dialogue
+  speaker: analyst
+  text: (thinking aloud) If we assume the Bosun is the key to taking down the Scuttle...

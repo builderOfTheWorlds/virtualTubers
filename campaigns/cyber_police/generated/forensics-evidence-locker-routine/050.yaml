@@ -1,0 +1,30 @@
+id: forensics-evidence-locker-routine
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:49.354438+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'HN: Evidence intake procedures begin.'
+- kind: narration
+  speaker: captain
+  text: 'HN: First, the evidence locker is accessed with the keypad.'
+- kind: narration
+  speaker: captain
+  text: 'HN: I enter the code: 4569-AB-C-D.'
+- kind: narration
+  speaker: captain
+  text: 'HN: The lock disengages, and I enter the locker.'
+- kind: narration
+  speaker: captain
+  text: 'HN: I take out a secure drive labeled ''E-001'' and hand it to Detective
+    Thorn.'
+- kind: narration
+  speaker: captain
+  text: 'HN: The drive is then logged into the chain of custody document by the Detective.'
+- kind: narration
+  speaker: captain
+  text: 'HN: I seal the evidence locker, ensuring the integrity of the chain of custody.'
+- kind: narration
+  speaker: captain
+  text: 'HN: Next, I prepare the drive for processing, following standard protocols.'

@@ -1,0 +1,35 @@
+id: bullpen-ambience
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:26.130639+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: The briefing notes are on the comms console.'
+- kind: narration
+  speaker: captain
+  text: 'HO: I''ll grab them.'
+- kind: narration
+  speaker: captain
+  text: 'PR: Just coffee again?'
+- kind: narration
+  speaker: captain
+  text: 'DA: Yeah, the new pot''s not working out.'
+- kind: narration
+  speaker: captain
+  text: 'HO: Can I try and figure out what''s wrong?'
+- kind: narration
+  speaker: captain
+  text: 'PR: You''re the hardware expert, Deshawn.'
+- kind: narration
+  speaker: captain
+  text: 'HO: Yeah, but maybe...'
+- kind: narration
+  speaker: captain
+  text: 'DA: (muttering) Just great, more paperwork...'
+- kind: narration
+  speaker: captain
+  text: 'PR: (whispering to herself) Another lead, another maybe...'
+- kind: narration
+  speaker: captain
+  text: 'DA: (to the room) Alright, all right. Let''s get started.'

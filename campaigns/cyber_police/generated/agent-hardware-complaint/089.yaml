@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:40.780350+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Oh, come on, Priya, this ancient thing can't even handle a simple trace.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying, Deshawn, but it's just so... clunky.
+- kind: dialogue
+  speaker: agent
+  text: Clunky? This is a dinosaur. I swear, the last time we got new hardware was
+    when I was still in diapers.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Oh, Deshawn, that's not true.
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) Maybe not, but it feels like it.

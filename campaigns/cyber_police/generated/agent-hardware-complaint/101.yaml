@@ -1,0 +1,33 @@
+id: agent-hardware-complaint
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:34.904985+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if we had the budget, we'd be able to catch The Scuttle for once.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to run the new mirror tool, but it's still hanging.
+- kind: dialogue
+  speaker: forensics
+  text: Can you try again? Sometimes it just needs a reboot.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll requisition a new server, but it'll probably take weeks.
+- kind: dialogue
+  speaker: press
+  text: Maybe you can scrounge up something from the old storeroom.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. We have a lead to chase.
+- kind: dialogue
+  speaker: detective
+  text: I'll work on the plan. Who's got something for me?
+- kind: dialogue
+  speaker: agent
+  text: Forensics, can you walk me through what you've got so far?
+- kind: dialogue
+  speaker: forensics
+  text: Okay, I've got some promising chatter. It looks like they're using a custom
+    protocol.

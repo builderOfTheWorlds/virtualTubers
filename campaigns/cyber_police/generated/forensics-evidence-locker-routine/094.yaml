@@ -1,0 +1,46 @@
+id: forensics-evidence-locker-routine
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:32.090357+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing the evidence from the previous case.
+- kind: dialogue
+  speaker: agent
+  text: Okay, let's start the intake procedure. I'll need to see the chain of custody
+    paperwork.
+- kind: dialogue
+  speaker: analyst
+  text: I'll bring up the link charts from the Analyst's desk.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Forensics, can you walk me through the process?
+- kind: dialogue
+  speaker: forensics
+  text: First, we need to document the evidence in the evidence locker. I'll log it
+    in the system and provide a case number.
+- kind: dialogue
+  speaker: analyst
+  text: I'll verify the integrity of the data on the drives.
+- kind: dialogue
+  speaker: agent
+  text: Great, while you're doing that, I'll start reviewing the case files.
+- kind: dialogue
+  speaker: captain
+  text: And I'll check the warrants and arrest records.
+- kind: dialogue
+  speaker: forensics
+  text: Once we've completed the intake, I'll package the evidence and it will be
+    stored in the evidence locker.
+- kind: dialogue
+  speaker: analyst
+  text: I'll also run a quick analysis to ensure there's no additional metadata or
+    hidden files.
+- kind: dialogue
+  speaker: agent
+  text: Okay, that should do it for now. Let's review the paperwork and make sure
+    everything is in order.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's take a look.

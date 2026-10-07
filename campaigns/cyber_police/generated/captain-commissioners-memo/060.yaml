@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:21.850397+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's office thinks we're just a computer thing.
+- kind: dialogue
+  speaker: detective
+  text: I'm starting to think they want us to fail.
+- kind: dialogue
+  speaker: analyst
+  text: At least the badge on the door still works.
+- kind: dialogue
+  speaker: agent
+  text: Maybe that's all we need.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know how much more of this I can take.
+- kind: dialogue
+  speaker: press
+  text: I've got a call from a stringer who wants to do a piece on the unit.
+- kind: dialogue
+  speaker: quartermaster
+  text: Let me know if you need anything, Captain. I've got a few tricks up my sleeve.

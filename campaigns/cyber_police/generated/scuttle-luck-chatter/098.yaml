@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:17.123165+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Des: I''m telling you, it''s the Scuttle luck, plain and simple. They''re
+    just better at this than we are.'
+- kind: dialogue
+  speaker: analyst
+  text: I don't buy it. There's something more going on, something we're not seeing.
+- kind: dialogue
+  speaker: press
+  text: Oh, come on, guys, don't get too worked up about it. The Scuttle's just a
+    big ol' joke.
+- kind: dialogue
+  speaker: agent
+  text: I'm getting worked up, Davey. We've got a case to solve, and this is starting
+    to look like a wild goose chase.
+- kind: dialogue
+  speaker: quartermaster
+  text: We've had this conversation before, Des. The problem is, we don't have the
+    resources to keep up with them.
+- kind: dialogue
+  speaker: forensics
+  text: I'd rather say it's because we're not smart enough to figure out what we're
+    dealing with.
+- kind: dialogue
+  speaker: detective
+  text: Hey, watch it, Hana. This is a team effort.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not turn on each other. We've been over this before.
+    What do we know for certain?

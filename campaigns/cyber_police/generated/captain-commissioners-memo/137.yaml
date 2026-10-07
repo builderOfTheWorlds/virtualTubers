@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 137
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:18.735066+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo is all I needed.
+- kind: dialogue
+  speaker: detective
+  text: Someone's going to have to explain this to us.
+- kind: dialogue
+  speaker: analyst
+  text: I'll start digging into the Commissioner's office.
+- kind: dialogue
+  speaker: agent
+  text: I've got a call with a possible lead on The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the lab results on the latest Scuttle seizure.
+- kind: dialogue
+  speaker: press
+  text: I'll see if I can get a statement from the Commissioner.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been over the requisition forms, and...

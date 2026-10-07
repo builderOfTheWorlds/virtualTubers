@@ -1,0 +1,31 @@
+id: agent-hardware-complaint
+take: 198
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:48.890594+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, the hardware on this thing is older than the Scuttle's first victim.
+- kind: dialogue
+  speaker: analyst
+  text: I've managed to get the debugger running, but I need you to hook up the network
+    analyzer.
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Great, just what I needed. A chance to troubleshoot on a machine from
+    the Mesozoic era.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Just great, now we'll have to re-zero the entire lab.
+- kind: dialogue
+  speaker: press
+  text: (walking by) What's going on? Having trouble with the Scuttle's little game
+    again?
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Oh, just the usual. Just trying to get this ancient beast to do
+    what I want.
+- kind: dialogue
+  speaker: analyst
+  text: (focused) Okay, let me just... (fiddles with the hardware) Yes, that's it.
+    Now we should be able to get the trace.

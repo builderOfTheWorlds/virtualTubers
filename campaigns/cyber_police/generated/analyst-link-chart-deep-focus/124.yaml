@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 124
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:22.800989+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, this thread of chatter suggests a potential link to the old "Bullfinch"
+    mirror.
+- kind: dialogue
+  speaker: agent
+  text: (reading over Priya's shoulder) Where did you get this? I don't recall any
+    mention of Bullfinch in the case file.
+- kind: dialogue
+  speaker: analyst
+  text: I found it in a secondary log file. The timestamps match up with the last
+    known Bullfinch activity.
+- kind: dialogue
+  speaker: forensics
+  text: (calling out from across the room) Priya, can you walk me through how you
+    got this? I need to review the chain of custody.
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) And what about the language patterns? They're definitely
+    in the same vein as the Bullfinch chat logs, but... (trails off)
+- kind: dialogue
+  speaker: captain
+  text: (standing at the back of the room, watching Priya) Okay, Priya, what've you
+    got?

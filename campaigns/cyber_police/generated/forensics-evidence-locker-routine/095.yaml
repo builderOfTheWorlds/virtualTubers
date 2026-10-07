@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:38.497790+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence from the last raid. It's still in the locker.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look at it. Can you bring it over to my desk?
+- kind: dialogue
+  speaker: analyst
+  text: I'm almost done with the analysis. Just need to run one more test.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good, let''s keep moving. We''ve got a case to close.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the status on the Scuttle''s activity?'
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll check the requisition binder. See if we're low on any supplies.
+- kind: dialogue
+  speaker: press
+  text: No press conference today, Captain?
+- kind: dialogue
+  speaker: forensics
+  text: Chain of custody is intact. Evidence is properly tagged.
+- kind: dialogue
+  speaker: agent
+  text: Good, I'll start working on the technical aspects.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the results from the test. It's not what we expected.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What do you mean?'

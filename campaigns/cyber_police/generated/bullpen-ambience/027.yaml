@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:53.665265+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dah: Ah, someone''s coffee''s going cold again.'
+- kind: dialogue
+  speaker: agent
+  text: I'm good for now, thanks.
+- kind: dialogue
+  speaker: forensics
+  text: Anyone need help with this case file?
+- kind: dialogue
+  speaker: detective
+  text: Nah, we've got it, Hana. Thanks.
+- kind: dialogue
+  speaker: captain
+  text: We need a plan, people.
+- kind: dialogue
+  speaker: analyst
+  text: I've been working on a few possible leads...
+- kind: dialogue
+  speaker: quartermaster
+  text: Coffee break, anyone?
+- kind: narration
+  speaker: captain
+  text: 'Pryce: Actually, I think I''ll grab some fresh air.'

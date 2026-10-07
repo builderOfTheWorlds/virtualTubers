@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:16.330179+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker requires a unique access code that's entered
+    in full, no partial sequences.
+- kind: dialogue
+  speaker: agent
+  text: Just confirmed the code's been changed.
+- kind: dialogue
+  speaker: forensics
+  text: Not by me, and it wasn't in my request for a new lock.
+- kind: dialogue
+  speaker: analyst
+  text: Just verified the code's been updated through secure channels.
+- kind: dialogue
+  speaker: forensics
+  text: Can you check who initiated the update?
+- kind: dialogue
+  speaker: analyst
+  text: It was the Captain.

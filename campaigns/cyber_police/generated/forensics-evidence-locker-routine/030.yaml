@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:48.514687+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Evidence bag from the previous raid, still pending analysis.
+- kind: dialogue
+  speaker: analyst
+  text: I need to run some fingerprints, can you get the equipment ready?
+- kind: dialogue
+  speaker: captain
+  text: Forensics, what's the status on the drive from last night?
+- kind: dialogue
+  speaker: forensics
+  text: Almost done, Captain, I just need to confirm the hash.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition form for a new network analyzer, need to sign off on it.
+- kind: dialogue
+  speaker: press
+  text: Anyone seen the latest press briefing notes?
+- kind: dialogue
+  speaker: forensics
+  text: Evidence locker's clean, can start processing.

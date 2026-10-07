@@ -1,0 +1,39 @@
+id: agent-hardware-complaint
+take: 193
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:38.210661+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, I swear this thing is running on smoke and prayers.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the protocol stack up to 4.2, which is better than what we were on
+    last week.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting weird errors on the evidence drive, might be a bad sector.
+- kind: dialogue
+  speaker: press
+  text: Nothing new on the Scuttle front. Still waiting on that leaked message from
+    'Eclipse'.
+- kind: dialogue
+  speaker: quartermaster
+  text: Request for new monitors got denied again. Maybe next quarter.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the task at hand. What've we got so far?
+- kind: dialogue
+  speaker: analyst
+  text: Intel says Scuttle's been using a new chat app, one we don't have a mirror
+    for yet.
+- kind: dialogue
+  speaker: forensics
+  text: I'm trying to get a read on the new hardware, but I'm not getting anywhere.
+- kind: dialogue
+  speaker: detective
+  text: Plan is to try and get in through the back door, see if we can crack the new
+    app.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because that's worked out so well for us in the past.

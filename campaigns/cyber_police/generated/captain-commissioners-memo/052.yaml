@@ -1,0 +1,20 @@
+id: captain-commissioners-memo
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:49.189397+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: '"Computer thing" again.'
+- kind: dialogue
+  speaker: analyst
+  text: You think that's what it's about?
+- kind: dialogue
+  speaker: agent
+  text: What can we do?
+- kind: dialogue
+  speaker: press
+  text: Did you see that Scuttle piece in the Daily?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions, again...

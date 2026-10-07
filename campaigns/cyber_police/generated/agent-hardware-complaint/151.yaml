@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 151
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:02.077743+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this machine is ancient.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Told you we needed a new server last year.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool up and running, and it's like trying to
+    debug a language from the 90s.
+- kind: dialogue
+  speaker: forensics
+  text: (from Forensics) Have you tried re-compiling the kernel?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, I've tried everything short of a hex editor.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from Quartermaster's desk) If it's not working, maybe just ask the Captain
+    if we can requisition something new.

@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:47.468452+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, it''s not a case yet, but we''ve got a chatter spike
+    on the Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Just a bunch of encrypted chatter, probably a troll looking
+    for attention.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I found something. It's a new protocol they're using.
+- kind: dialogue
+  speaker: agent
+  text: Let me take a look.
+- kind: dialogue
+  speaker: forensics
+  text: I've already run it through our decoders, but it's still not making sense.
+- kind: dialogue
+  speaker: press
+  text: How's the public's reaction to the latest Scuttle hack?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just the usual, a few conspiracy theories. Nothing we can use.

@@ -1,0 +1,30 @@
+id: no-respect-upstairs
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:33.953924+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Backup request denied, 3-1-3, Captain wants you to know it's a "low-priority".
+- kind: dialogue
+  speaker: analyst
+  text: Can I get a second screen for the Scuttle's IP trace?
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Priya, I think the press conference coverage is on the other side
+    of the room.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Great, great, "the computer thing" again...
+- kind: dialogue
+  speaker: forensics
+  text: (walking in with a tray) Coffee's here, I brought croissants too.
+- kind: dialogue
+  speaker: press
+  text: '"CYBER POLICE IN NEW SCANDAL: DID THEY ACTUALLY DO ANYTHING?" - Scuttle Banner'
+- kind: dialogue
+  speaker: detective
+  text: (chuckling) Oh, great, now we're a news outlet too.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over comms) Backup's on the way, just a minute or two, I promise.

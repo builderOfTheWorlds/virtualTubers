@@ -1,0 +1,41 @@
+id: agent-hardware-complaint
+take: 146
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:45.413343+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this unit's hardware is a joke
+- kind: dialogue
+  speaker: analyst
+  text: I'm getting nothing on the mirror
+- kind: dialogue
+  speaker: forensics
+  text: I've got a possible thread on the chatter spike
+- kind: dialogue
+  speaker: press
+  text: I need a statement on the new lead
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in, nothing's been approved
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s move forward with the plan'
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool up, but...
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the holdup?'
+- kind: dialogue
+  speaker: analyst
+  text: It's just being stubborn
+- kind: dialogue
+  speaker: forensics
+  text: I've got a possible match on the evidence
+- kind: dialogue
+  speaker: press
+  text: I'm starting to get a headache
+- kind: dialogue
+  speaker: agent
+  text: This thing is outdated, I'm surprised it still works

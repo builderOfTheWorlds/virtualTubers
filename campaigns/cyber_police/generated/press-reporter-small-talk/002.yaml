@@ -1,0 +1,47 @@
+id: press-reporter-small-talk
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:25.597615+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Just checking in on the Scuttle's morning activity levels.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Nothing new, Davey, just the usual chatter. We''re looking
+    at a possible new mirror location.'
+- kind: dialogue
+  speaker: press
+  text: Alright, keep me posted. And, uh, congratulations on that press conference
+    last week?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (in the background) Yeah, thanks for covering it, Davey.'
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) At least our forensics equipment request is moving through the
+    system...
+- kind: dialogue
+  speaker: agent
+  text: (overhearing) Oh, good luck with that, Hana. I'll believe it's approved when
+    I see it.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to someone off-phone) Okay, okay, I'll talk to Internal Affairs about it.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to the team) Alright, let''s review the plan. Who''s got
+    the mirror''s location pinned down?'
+- kind: dialogue
+  speaker: analyst
+  text: (nervously) I've got the IP trail, but it's a dead-end so far...
+- kind: dialogue
+  speaker: forensics
+  text: (excitedly) Wait, I've got something! A possible connection to the Kasper
+    network!
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (impressed) Nice work, Hana! Get it on the board.'
+- kind: dialogue
+  speaker: agent
+  text: (skeptically) Uh-huh. And how long before we realize it's another dead-end?

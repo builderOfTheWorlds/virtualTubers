@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:56.481562+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Just getting in some small talk, Rosalind.
+- kind: dialogue
+  speaker: captain
+  text: Small talk is fine, Davey. How's your morning?
+- kind: dialogue
+  speaker: press
+  text: It's been better. I'm running on fumes after that last Scuttle expose.
+- kind: dialogue
+  speaker: captain
+  text: I don't blame you. Those articles are a headache.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I'm just trying to keep some distance. The department doesn't need me
+    getting too close to you people.
+- kind: dialogue
+  speaker: captain
+  text: Fair enough. We appreciate your... restraint.
+- kind: dialogue
+  speaker: press
+  text: So, what's new with the unit? Any leads I should know about?
+- kind: dialogue
+  speaker: captain
+  text: Nothing too promising yet. We're still looking into that chatter spike.
+- kind: dialogue
+  speaker: press
+  text: Yeah, that one's been tricky. I'm still trying to track down sources for the
+    latest article.
+- kind: dialogue
+  speaker: captain
+  text: Be careful, Davey. We don't want you burning any bridges.
+- kind: dialogue
+  speaker: press
+  text: Don't worry, I'm being careful. I just need to get my foot in the door, you
+    know?
+- kind: dialogue
+  speaker: captain
+  text: I do, actually. We appreciate the help, Davey. Take care.

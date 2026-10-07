@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:37.635063+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is on hold for now, let's just get through the next case.
+- kind: dialogue
+  speaker: detective
+  text: Can I go through the files on the Zhang case one more time, just to make sure
+    I'm not missing anything.
+- kind: dialogue
+  speaker: analyst
+  text: Already done, Thorn. I've run the simulations and we're still coming up with
+    nothing.
+- kind: dialogue
+  speaker: agent
+  text: Just got a ping from HQ, they're sending over a new batch of gear we can use
+    to help crack the Zhang case.
+- kind: dialogue
+  speaker: forensics
+  text: Just got a batch of fresh evidence in from the evidence locker, need to get
+    it processed ASAP.
+- kind: dialogue
+  speaker: press
+  text: Anyone else getting a weird feeling about this case?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned a new batch of go-bags, trying to get them approved.

@@ -1,0 +1,47 @@
+id: no-respect-upstairs
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:54.000605+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I need a backup team for the Scuttle server room infiltration, it's a high-risk
+    op.
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: I''ll get you some uniforms, but they''ll probably be a few hours
+    late.'
+- kind: dialogue
+  speaker: detective
+  text: Thanks, dispatch. I'll just send the team in alone then.
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I'm not sure if the infiltration is a good idea. We still don't know
+    the layout of the server room.
+- kind: dialogue
+  speaker: agent
+  text: I've got a map of the layout, courtesy of our... 'enthusiastic' server admin.
+- kind: dialogue
+  speaker: forensics
+  text: Captain, I'm not seeing any signs of recent tampering on the server room cameras.
+    This might be a wild goose chase.
+- kind: dialogue
+  speaker: press
+  text: Davey Okonkwo-Pryce's article on the "Cyber Police Fiasco" is trending on
+    Scuttle.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting for the new encryption software I requisitioned last week.
+- kind: dialogue
+  speaker: captain
+  text: Somebody's got to mean it, since nobody else does.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep running the Scuttle algorithm for any potential matches.
+- kind: dialogue
+  speaker: agent
+  text: I'm setting up the drone recon feed now.
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Scuttle''s operator count is 42 and counting, and they''re all
+    going to be at the server room in an hour.'

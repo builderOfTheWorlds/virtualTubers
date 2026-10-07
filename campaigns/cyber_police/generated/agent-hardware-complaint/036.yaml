@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:58.777103+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool up and running, but my laptop's graphics
+    card is from the stone age.
+- kind: dialogue
+  speaker: analyst
+  text: I think the Captain just sent the requisition for the new hardware, but it'll
+    probably be delayed again.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (laughs) Yeah, because ''delayed'' is just a euphemism for
+    ''we''re just going to ignore this request and hope it goes away''.'
+- kind: dialogue
+  speaker: forensics
+  text: (chuckles) At least it's consistent.
+- kind: dialogue
+  speaker: press
+  text: '(jokingly) I''ve got a great idea for a story: "Cyber Police struggle to
+    keep up with antiquated tech, but still manage to solve crimes."'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (smiling wryly) That''s one way to put it.'

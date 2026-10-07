@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 144
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:39.847479+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Coffee's gone cold.
+- kind: dialogue
+  speaker: detective
+  text: Need a refill, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I'm on my second cup.
+- kind: dialogue
+  speaker: agent
+  text: I'm good, thanks.
+- kind: dialogue
+  speaker: forensics
+  text: Just had mine at lunch.
+- kind: dialogue
+  speaker: press
+  text: Still working on my story about the recent raids.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for the week are in.
+- kind: narration
+  speaker: captain
+  text: 'Observer: Watching the monitors.'
+- kind: dialogue
+  speaker: captain
+  text: Keep an eye on those dashboards, let me know if anything pops up.

@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:54.874121+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's go over today's directive.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the plan with Priya and see if we can get the lead on the new
+    mirror.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the intelligence on the chatter spike - it looks like a small-time
+    scam operation. ||emotion:somewhat happy
+- kind: dialogue
+  speaker: agent
+  text: I'll see what I can dig up on the mirror, but I'm not holding out much hope.
+- kind: dialogue
+  speaker: press
+  text: Actually, I was thinking of writing a piece on the unit's "low-tech" approach
+    to cybercrime.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a reminder, the requisition for the new forensic software is still pending.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

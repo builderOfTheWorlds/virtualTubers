@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 138
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:26.631178+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, we're still running this on a 2015 laptop
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: It''s a miracle it boots'
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get a trace tool running, but the software is being stubborn
+- kind: dialogue
+  speaker: forensics
+  text: Maybe it's just me, but I swear the new hardware is faster than this old stuff
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Let''s focus, people, we have a lead to chase'
+- kind: dialogue
+  speaker: press
+  text: I've been trying to get the press to take this seriously, but they just don't
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned some new equipment, but it's going to be a miracle if we
+    get it before the end of the month

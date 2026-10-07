@@ -1,0 +1,36 @@
+id: bullpen-ambience
+take: 140
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:52.951675+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, team, let''s review the morning''s events.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''m still waiting on forensics to finish processing the
+    server logs.'
+- kind: dialogue
+  speaker: analyst
+  text: We're making progress on the IP address, but it's not matching any known profiles.
+- kind: dialogue
+  speaker: agent
+  text: I've got the malware signature running through the database, but it's taking
+    a while.
+- kind: dialogue
+  speaker: forensics
+  text: Just finishing up the evidence log, Captain.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press angle yet, but I'm chasing a lead on a possible leak.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting for the requisition paperwork to go through.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s keep pushing forward. Marcus, what''s the plan
+    for the day?'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''m going to review the case files and see if we can find
+    any connections to our current lead.'

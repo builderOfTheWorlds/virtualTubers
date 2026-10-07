@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 173
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:25.134441+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: It's been quiet for three days, people.
+- kind: dialogue
+  speaker: detective
+  text: I know. I've been going over the mirror data.
+- kind: dialogue
+  speaker: analyst
+  text: Nothing jumped out at me. Just a bunch of bot traffic.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to track down the source of the chatter spike.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished analyzing the evidence from the recent raid. Nothing new.
+- kind: dialogue
+  speaker: press
+  text: You guys hear from upstairs about the article?
+- kind: dialogue
+  speaker: quartermaster
+  text: No, but I haven't checked the bulletin board.
+- kind: dialogue
+  speaker: captain
+  text: (from the office) Get an update on the hardware requisition.
+- kind: dialogue
+  speaker: agent
+  text: (into comms console) Uh, okay... I've got a problem with the order...
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Another delay...
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Guess it's time for coffee.
+- kind: dialogue
+  speaker: detective
+  text: (laughs) Yeah, mine's gone cold. Again.

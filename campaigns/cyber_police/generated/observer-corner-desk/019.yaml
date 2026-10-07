@@ -1,0 +1,41 @@
+id: observer-corner-desk
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:21.204490+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Just going to grab a coffee.
+- kind: dialogue
+  speaker: agent
+  text: Captain's been on the phone all morning.
+- kind: dialogue
+  speaker: forensics
+  text: I heard it's about the Johnson case.
+- kind: dialogue
+  speaker: press
+  text: You'd think they'd get a decent signal strength in the building.
+- kind: dialogue
+  speaker: quartermaster
+  text: We should just use our own cell towers.
+- kind: dialogue
+  speaker: captain
+  text: (no response)
+- kind: dialogue
+  speaker: detective
+  text: ( scribbling notes, not looking up)
+- kind: dialogue
+  speaker: analyst
+  text: (glancing at the Observer) Just... sitting there, as always.
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: (whispering to Hana Vosk) Wonder what he''s doing.'
+- kind: dialogue
+  speaker: forensics
+  text: (shrugging) No idea.
+- kind: dialogue
+  speaker: detective
+  text: (standing up, phone to his ear) Captain's coming.
+- kind: dialogue
+  speaker: captain
+  text: (arriving at the corner of the room) Good morning.

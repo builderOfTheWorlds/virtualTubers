@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:31.023209+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing for tomorrow will be at 0800.
+- kind: dialogue
+  speaker: detective
+  text: I've got a possible thread on a phishing campaign that looks like it's connected
+    to the Azure outage.
+- kind: dialogue
+  speaker: analyst
+  text: It's not just the phishing, Marcus, the malware we're seeing is unlike anything
+    I've seen before.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the hardware team to take a look.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished processing the drive from the Smithson case.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the Azure outage?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned a new set of gloves for Forensics.
+- kind: narration
+  speaker: captain
+  text: (Observed silence)

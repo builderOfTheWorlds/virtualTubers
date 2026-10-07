@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:29.970254+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker, keying in the combination.
+- kind: dialogue
+  speaker: agent
+  text: Checking the locker's contents, scanning for any new evidence.
+- kind: dialogue
+  speaker: analyst
+  text: Retrieving a few drives and starting the intake process.
+- kind: dialogue
+  speaker: captain
+  text: Approaching the evidence locker, eyes on Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Handing Captain Agar a clipboard with the chain of custody documents.
+- kind: dialogue
+  speaker: analyst
+  text: Beginning the processing of the new evidence, starting with the drives.
+- kind: dialogue
+  speaker: agent
+  text: Picking up a phone to notify the Analyst of the new evidence intake.

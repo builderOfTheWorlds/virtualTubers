@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:23.540979+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's just a game to them. They're just toying with us.
+- kind: dialogue
+  speaker: captain
+  text: Oh, come on, Marcus. You're not going to get all worked up about this again,
+    are you?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think Deshawn's onto something. The Bosun's got to be someone
+    we know, but we just can't quite...
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and what's with all these 'privateer' messages? It's like they're trying
+    to tell us something.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know, guys. I've been going over the server logs again, and I think
+    I found something.
+- kind: dialogue
+  speaker: press
+  text: Oh boy, another dead end. Just what we need. More fuel for the Scuttle's propaganda
+    machine.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we please just focus on the facts? We're not getting anywhere with all
+    this theorizing.

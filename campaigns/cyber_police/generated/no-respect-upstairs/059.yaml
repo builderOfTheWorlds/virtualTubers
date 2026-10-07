@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:31.625494+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Dispatch, we need backup for the Thompson case
+- kind: dialogue
+  speaker: detective
+  text: 3-1, 3-2, 3-3, this is Thorn, requesting assistance
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Again
+- kind: dialogue
+  speaker: agent
+  text: I've got a 3-D reconstruction up, it's looking like a standard Scuttle op
+- kind: dialogue
+  speaker: forensics
+  text: (voice only, background) Okay, let me take a look at that
+- kind: dialogue
+  speaker: press
+  text: '(on the radio, in the background) "CYBER POLICE STRIKE AGAIN: This Time with
+    More Fails"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Requisition for new hardware, still pending

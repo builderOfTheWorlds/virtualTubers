@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:13.840057+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ah, come on, Priya, can't you see I'm trying to get this trace tool running
+    here?

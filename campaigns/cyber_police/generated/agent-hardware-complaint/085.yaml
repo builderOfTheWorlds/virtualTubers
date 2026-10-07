@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:24.090677+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: What's the holdup, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this trace tool running, Hana. Our hardware's older than
+    some of the cases we're working on.
+- kind: dialogue
+  speaker: analyst
+  text: I think we're due for some upgrades, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: Tell that to Quartermaster Mbeki-Lowndes.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, okay, focus. What's the status on the Scuttle lead?

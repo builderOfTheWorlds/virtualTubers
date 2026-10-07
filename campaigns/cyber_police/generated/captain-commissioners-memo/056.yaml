@@ -1,0 +1,31 @@
+id: captain-commissioners-memo
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:06.189594+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 'Captain Rosalind Agar: Oh, great. Now they''re trying to manage our workload.'
+- kind: dialogue
+  speaker: detective
+  text: 'Detective Marcus Thorn: I told you we needed a dedicated IT person, not just
+    a warm body to log requisitions.'
+- kind: dialogue
+  speaker: analyst
+  text: 'Priya Nandakumar: (muttering to herself) I''ll just keep doing my job, like
+    always.'
+- kind: dialogue
+  speaker: agent
+  text: 'Deshawn Okafor: (sighing) Just another day, another memo from HQ that doesn''t
+    understand what we do.'
+- kind: dialogue
+  speaker: forensics
+  text: 'Hana Vosk: (looking up from her work) Can someone explain to me why we''re
+    still using those outdated machines?'
+- kind: dialogue
+  speaker: press
+  text: 'Davey Okonkwo-Pryce: (rolling his eyes) Great, now we''re "the computer thing".'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Teresa Mbeki-Lowndes: (shaking her head) I swear, I''m just a glorified purchasing
+    agent around here.'

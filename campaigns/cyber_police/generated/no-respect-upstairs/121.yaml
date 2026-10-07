@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:33.100440+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a minute, Thorn, I need to check the storage room for those spare battery
+    packs.
+- kind: dialogue
+  speaker: press
+  text: 'SCUTTLE TAKES ON CYBER POLICE IN NEW SERIES: "POLICE OF NOWHERE" - "The Cyber
+    Police: More Mysterious Than Effective"'
+- kind: dialogue
+  speaker: analyst
+  text: Another 24 hours, another 50 requisitions ignored.
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Hana, we need to get those new processors online ASAP. We're
+    starting to lose the plot.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, Deshawn, I think the real problem is we're just not making the right
+    connections.
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get back to work. Remember, we're the ones who still
+    mean it.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Like it''s going to make a difference...'

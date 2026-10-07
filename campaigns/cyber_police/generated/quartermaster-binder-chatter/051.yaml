@@ -1,0 +1,27 @@
+id: quartermaster-binder-chatter
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:29.268258+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I think I know why we got denied for the new scanners again.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, "The eventual inquiry" is getting a lot of attention.
+- kind: dialogue
+  speaker: analyst
+  text: I've been tracking the chatter spike, and it seems to be related to a new
+    exploit.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll write a plan, but it''s not like we''ve got the resources
+    for it.'
+- kind: dialogue
+  speaker: forensics
+  text: I've got some interesting results from the evidence log, but I need access
+    to the new software to analyze them.
+- kind: dialogue
+  speaker: press
+  text: I've got a call with the Times in an hour, can we give me something for them
+    to run?

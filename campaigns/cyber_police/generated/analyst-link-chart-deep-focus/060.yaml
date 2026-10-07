@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:36.706675+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm thinking if we look at this link chart in a different way, we might see
+    a pattern.

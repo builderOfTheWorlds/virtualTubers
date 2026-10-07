@@ -1,0 +1,50 @@
+id: observer-corner-desk
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:31.720034+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: The briefing notes from this morning still haven''t been
+    uploaded.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I've run the latest chatter spike, but I'm not seeing anything that
+    doesn't match our previous intercepts.
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Forensics, have you received the package from the lab yet?'
+- kind: dialogue
+  speaker: forensics
+  text: Not yet, Agent, but I'm checking on it.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s move on to the case update. Analyst, what do
+    you have for us?'
+- kind: dialogue
+  speaker: analyst
+  text: As I said, Captain, nothing new on the chatter. The Scuttle's being quiet
+    today.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (glancing at the Observer) I suppose that''s... something.
+    Agent, what about you?'
+- kind: dialogue
+  speaker: agent
+  text: Still working on getting access to the latest server updates. It's like they're
+    trying to hide something.
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) I'm not seeing any evidence of that, Agent.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (to the group) Alright, let''s focus on what we do have. Quartermaster,
+    what''s the status on our equipment requests?'
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on approval for the new monitors, Captain. It's been three weeks
+    now.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (to the group) Keep working, people. We''ll get to the bottom
+    of this. (glancing at the Observer) I think we will.'

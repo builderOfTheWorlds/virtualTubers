@@ -1,0 +1,31 @@
+id: agent-hardware-complaint
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:10.578781+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, great, the computer is just happy to tell me that it can't even do its
+    job
+- kind: dialogue
+  speaker: analyst
+  text: What's going on with your computer, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Just the usual, Priya.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Well, let me see if I can help you.
+- kind: dialogue
+  speaker: press
+  text: (from across the room) How's it going, guys?
+- kind: dialogue
+  speaker: forensics
+  text: (to Davey) We've got a bit of a situation here. Deshawn's computer is having
+    issues.
+- kind: dialogue
+  speaker: agent
+  text: (exasperated) I'm trying to run a trace tool, and it's not cooperating.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from her desk) Have you tried rebooting it, Deshawn?

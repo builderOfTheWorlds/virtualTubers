@@ -1,0 +1,28 @@
+id: observer-corner-desk
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:40.165200+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I think I'll grab a coffee from the break room.
+- kind: dialogue
+  speaker: analyst
+  text: (glancing at the Observer, then back at her work) I need to go over these
+    chatter patterns again.
+- kind: dialogue
+  speaker: agent
+  text: ( typing at his computer) Need the forensics report on the latest upload.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Can't believe I have to reprocess this footage...
+- kind: dialogue
+  speaker: press
+  text: (noticing the Observer, hesitates) Uh, Captain, did...did you get that update
+    on the Scuttle mirror?
+- kind: dialogue
+  speaker: quartermaster
+  text: (stirring a cup of coffee) Morning, everyone. Nice day today.
+- kind: dialogue
+  speaker: captain
+  text: (looking at her watch) Alright, let's get started.

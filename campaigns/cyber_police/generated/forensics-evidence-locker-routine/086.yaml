@@ -1,0 +1,23 @@
+id: forensics-evidence-locker-routine
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:47.481207+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Okay, what've you got for me?
+- kind: dialogue
+  speaker: forensics
+  text: Evidence intake package from the morning's raid.
+- kind: dialogue
+  speaker: analyst
+  text: I'll take a look at the server logs.
+- kind: dialogue
+  speaker: agent
+  text: I need you to verify the chain of custody on the drives.
+- kind: dialogue
+  speaker: forensics
+  text: Already done. The package is marked for the Detective's case file.

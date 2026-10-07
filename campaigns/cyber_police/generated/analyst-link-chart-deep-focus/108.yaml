@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:03.650926+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Commodore's message last night was suspiciously bland, considering the
+    usual taunts.
+- kind: dialogue
+  speaker: captain
+  text: I'm not sure what you're getting at, Priya, but we need to focus on the Bosun.
+- kind: dialogue
+  speaker: detective
+  text: Actually, Captain, Priya has a point. The Commodore's tone has been odd for
+    weeks.
+- kind: dialogue
+  speaker: agent
+  text: Can someone explain to me why we're not just taking the whole thing down?
+- kind: dialogue
+  speaker: forensics
+  text: We can't just take it down without a warrant, Deshawn.
+- kind: dialogue
+  speaker: press
+  text: I'm getting a few hits on the recent press conference. The public is still
+    on our side.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned some new hardware, but it's still a month out from delivery.

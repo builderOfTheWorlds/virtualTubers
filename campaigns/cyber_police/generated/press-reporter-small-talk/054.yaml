@@ -1,0 +1,30 @@
+id: press-reporter-small-talk
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:17.035182+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the start of Loop 54:'
+- kind: dialogue
+  speaker: press
+  text: Hey, what's new with the Captain?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Nothing much, just keeping my head down.'
+- kind: dialogue
+  speaker: press
+  text: (laughs) I get it. What about the investigation? Any progress?
+- kind: dialogue
+  speaker: analyst
+  text: (off-screen) Actually, we got a hit on one of the mirror sites. Looks like
+    a possible lead.
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the IP.
+- kind: dialogue
+  speaker: forensics
+  text: I'll prep the forensic kit.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (background) Alright, let''s move. Briefing in five.'

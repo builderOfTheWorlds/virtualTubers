@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:45.060876+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Running some scenarios for the link chart, trying to identify a pattern in
+    the quartermaster chatter.

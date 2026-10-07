@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:22.288746+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning is going to be about paperwork, people.
+- kind: dialogue
+  speaker: detective
+  text: Just the usual stuff, Captain?
+- kind: dialogue
+  speaker: analyst
+  text: There's been some chatter on the mirror from last night, looks like it might
+    be worth digging into.
+- kind: dialogue
+  speaker: agent
+  text: My hardware's still crashing, can someone look at it?
+- kind: dialogue
+  speaker: forensics
+  text: I've got the drive from the 3AM mirror dump, can someone tell me what to do
+    with it?
+- kind: dialogue
+  speaker: press
+  text: Nothing's happening on the Scuttle front, just the usual noise.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've submitted our requisition for the new laptops, let's see if anyone actually
+    signs off on them this time.
+- kind: narration
+  speaker: captain
+  text: 'Observer: ||emotion:neutral (no line spoken, just standing there)'

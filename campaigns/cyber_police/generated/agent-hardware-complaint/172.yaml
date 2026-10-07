@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 172
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:10.315102+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get this trace tool running, and I don't even know what
+    kind of hardware I'm working with.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to have to go dig up the old specs for this stuff.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You''d think they''d give us something modern for once.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm running some diagnostics, but it's not looking good.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll go see what I can requisition for you, Deshawn.
+- kind: dialogue
+  speaker: press
+  text: Can I get a quote on that new press kit I asked for last week?

@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:00.109627+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Good morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still sifting through the latest Scuttle chatter.
+- kind: dialogue
+  speaker: agent
+  text: I've got a hardware check scheduled for this afternoon.
+- kind: dialogue
+  speaker: forensics
+  text: Still nothing on that encrypted drive.
+- kind: dialogue
+  speaker: press
+  text: Got a call from The Scuttle's favorite hack yesterday.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocking the go-bags with the new requisitions.
+- kind: dialogue
+  speaker: captain
+  text: Thorn, what's the latest on the Jenkins case?
+- kind: dialogue
+  speaker: detective
+  text: Jenkins is still missing, ma'am. No signs of foul play.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the Scuttle's mirror logs. Something doesn't add up.
+- kind: dialogue
+  speaker: agent
+  text: I'm running some diagnostics on the comms equipment.
+- kind: dialogue
+  speaker: forensics
+  text: Need the Quartermaster to sign out some extra gear.

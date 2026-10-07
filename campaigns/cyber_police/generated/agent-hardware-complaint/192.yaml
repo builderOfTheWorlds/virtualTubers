@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 192
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:31.820481+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing still can't even give me a decent signal on the test port.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the packet capture working, but the timestamps are off by
+    a second.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's just get this over with. What's the status?
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting some weird chatter on the comms system. Can't quite pinpoint the
+    source.
+- kind: dialogue
+  speaker: press
+  text: I need a quote from Agent Okafor on the unit's efforts to combat Scuttle-related
+    crimes.

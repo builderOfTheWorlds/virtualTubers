@@ -1,0 +1,28 @@
+id: agent-hardware-complaint
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:44.322813+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: My computer's from a good 5 years ago, and it's starting to feel like it's
+    from a different century.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I feel you. I swear, if we get a new machine that's not just a hand-me-down
+    from the accounting department, I'll be the first to celebrate.
+- kind: dialogue
+  speaker: forensics
+  text: Where did I put that last requisition?... Ah, that old beast. It's a wonder
+    it still boots up.
+- kind: dialogue
+  speaker: quartermaster
+  text: Someone needs to get us upgraded. We're barely holding on to the bare minimum
+    here.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Who's got an update on our lead?
+- kind: dialogue
+  speaker: press
+  text: Me, ma'am! I've been going over the latest chatter logs, and I think I found
+    something.

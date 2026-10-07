@@ -1,0 +1,39 @@
+id: scuttle-luck-chatter
+take: 28
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:16.036753+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I swear, if I saw one more server just happen to be empty...
+- kind: dialogue
+  speaker: agent
+  text: I mean, what's the point of even calling it a heist if you just leave the
+    loot behind?
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the Scuttle's logs again, and I think I found a pattern
+    in the way they set up their mirror sites.
+- kind: dialogue
+  speaker: captain
+  text: That's just it, Priya, we've been looking at this the wrong way. We need to
+    think like pirates.
+- kind: dialogue
+  speaker: quartermaster
+  text: Yeah, because that's exactly what we need, Captain - more pirate fantasies
+    in the briefing room.
+- kind: dialogue
+  speaker: press
+  text: Alright, alright, let's keep the humor to a minimum. We need to focus on getting
+    a real scoop out of this unit.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, someone on the inside is giving them a heads
+    up. It''s the only explanation for the way they always seem to slip through our
+    fingers.'
+- kind: dialogue
+  speaker: forensics
+  text: No, no, I think it's just...
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck, baby! It's just the way the wind blows.

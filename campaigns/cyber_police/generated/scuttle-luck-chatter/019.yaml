@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:28.736325+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's just the Bosun being lazy, they're not even trying.
+- kind: dialogue
+  speaker: analyst
+  text: That's just it, we don't know what we're up against.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Priya, it's not like we don't have any leads.
+- kind: dialogue
+  speaker: quartermaster
+  text: Don't be naive, Marcus. We've been over this a million times.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) And the press will just eat it up.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep the discussion focused. We'll get the Scuttle yet.
+- kind: dialogue
+  speaker: press
+  text: (smirking) Yeah, and the Commodore will probably leave us a nice note on the
+    server next time.

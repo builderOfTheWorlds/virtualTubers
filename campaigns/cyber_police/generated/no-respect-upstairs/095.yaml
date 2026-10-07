@@ -1,0 +1,37 @@
+id: no-respect-upstairs
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:12.671841+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, all, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Morning, Detective.
+- kind: dialogue
+  speaker: agent
+  text: Morning.
+- kind: dialogue
+  speaker: forensics
+  text: (muted tone) Good morning.
+- kind: dialogue
+  speaker: press
+  text: '(background noise of a news program) "Cyber Cops: More Bark Than Bite?"'
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: (chuckling) Oh, you want backup? Hold on, let me just check the
+    queue...'
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) Another requisition denied.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Somebody has to mean it, since nobody else does.
+- kind: dialogue
+  speaker: detective
+  text: (deadpan) And I'm sure the Commissioner's office is thrilled with our latest
+    upgrade requests.

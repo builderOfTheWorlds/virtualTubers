@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:13.599538+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the data from last night's Scuttle scrape.
+- kind: dialogue
+  speaker: analyst
+  text: Still no pattern to the data dropouts, Captain.
+- kind: dialogue
+  speaker: agent
+  text: Got a weird reading on the server logs from the Scuttle mirror site.
+- kind: dialogue
+  speaker: forensics
+  text: Found something in the malware analysis.
+- kind: dialogue
+  speaker: press
+  text: I'm going to need some quotes from the Captain for the 7 o'clock news.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the supply requests, Captain.

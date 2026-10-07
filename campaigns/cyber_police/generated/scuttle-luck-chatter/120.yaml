@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T07:46:18.986086+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's not skill, it's just a numbers game. We're never going
+    to catch them off guard again.
+- kind: dialogue
+  speaker: analyst
+  text: But what if it is skill? What if they're just better than us?
+- kind: dialogue
+  speaker: agent
+  text: I don't know, but I do know we're running out of time. The Commissioner is
+    breathing down our necks.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Yeah, because nothing says "serious police work" like
+    being worried about your budget.
+- kind: dialogue
+  speaker: press
+  text: (overhearing) Speaking of which, has anyone seen the latest Scuttle banner?
+    I heard it's a real doozy.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughing) Oh, I saw it. It's a picture of the Captain with a pirate hat on.
+- kind: dialogue
+  speaker: captain
+  text: (walking into the conversation) What's all the laughter about?

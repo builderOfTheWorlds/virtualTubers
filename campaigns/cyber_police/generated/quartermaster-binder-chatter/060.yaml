@@ -1,0 +1,35 @@
+id: quartermaster-binder-chatter
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:04.019419+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmb-L: I''m still looking for a decent coffee machine for the break room.'
+- kind: narration
+  speaker: captain
+  text: 'Th: Underfunding is starting to show, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Pn: Nothing major changed overnight. We''ve got a new mirror and some chatter
+    spikes to review.'
+- kind: narration
+  speaker: captain
+  text: 'Do: I''ll take a look at those spikes.'
+- kind: narration
+  speaker: captain
+  text: 'Hv: My team is already on it, Detective. We''ll have some analysis ready
+    for the briefing.'
+- kind: narration
+  speaker: captain
+  text: 'Dop: What''s the plan for today, Captain?'
+- kind: narration
+  speaker: captain
+  text: 'Tr-ML: Just the usual, Agent. I''ve got the denied requisitions in my binder,
+    "the eventual inquiry".'
+- kind: narration
+  speaker: captain
+  text: 'Tr-ML: We''ll get there eventually.'
+- kind: narration
+  speaker: captain
+  text: 'Tr-ML: Some units get the resources they need... we''re not one of them.'

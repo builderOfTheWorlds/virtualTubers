@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:26.889350+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing still running on 64-bit architecture?

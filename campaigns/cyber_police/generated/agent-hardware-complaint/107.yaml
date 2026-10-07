@@ -1,0 +1,35 @@
+id: agent-hardware-complaint
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:59.075182+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Stuck on trying to get the trace tool running because the hardware is from
+    the last century
+- kind: dialogue
+  speaker: analyst
+  text: I'll take a look at the code, maybe there's something you're missing
+- kind: dialogue
+  speaker: forensics
+  text: Just got in, what's the holdup?
+- kind: dialogue
+  speaker: captain
+  text: Afternoon, Deshawn. How's the tool coming along?
+- kind: dialogue
+  speaker: agent
+  text: (sighing) It's still not cooperating, ma'am. Maybe we should just requisition
+    some new hardware
+- kind: dialogue
+  speaker: press
+  text: Hey, what's the story with the new mirror on The Scuttle?
+- kind: dialogue
+  speaker: analyst
+  text: I'm still digging into the chatter spike, but it looks like it's been there
+    for hours
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look at the evidence log, see if anything's been missed
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Great, just what we need. Another mirror to find

@@ -1,0 +1,42 @@
+id: observer-corner-desk
+take: 79
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:52.936952+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Working on the link chart.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: How''s it looking?'
+- kind: dialogue
+  speaker: analyst
+  text: Still nothing concrete. The chatter's all surface-level.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Let''s see the latest.'
+- kind: dialogue
+  speaker: analyst
+  text: (clicks mouse) Here.
+- kind: dialogue
+  speaker: agent
+  text: (glancing at Priya) Looks like more noise.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to the room) Okay, nothing new. Agent, what''s your status?'
+- kind: dialogue
+  speaker: forensics
+  text: (from the back) I'm running the signal through the analyzer.
+- kind: dialogue
+  speaker: quartermaster
+  text: (as she walks in) Morning, everyone.
+- kind: dialogue
+  speaker: press
+  text: (as he follows Teresa in) Morning, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (still looking at the link chart) I think we need to re-examine
+    the source...'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (not looking up) Yes, get it on the table.'

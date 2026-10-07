@@ -1,0 +1,16 @@
+id: agent-hardware-complaint
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:04.362392+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, can you even get this thing to do a basic traceroute?
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Sorry, sorry, I think the problem is just that it's running an outdated
+    version of the OS.
+- kind: dialogue
+  speaker: agent
+  text: Outdated? It's like, three generations behind. What am I supposed to do with
+    this?

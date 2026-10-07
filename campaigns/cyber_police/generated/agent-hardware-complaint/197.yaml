@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 197
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:42.840203+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I've had this rig since forever, and it still can't run a trace without
+    crashing.

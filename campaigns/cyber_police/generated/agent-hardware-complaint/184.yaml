@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 184
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:59.306234+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this is the oldest trace tool I've ever had to use.
+- kind: dialogue
+  speaker: detective
+  text: I'm surprised you managed to get it up and running.
+- kind: dialogue
+  speaker: forensics
+  text: It's not like it's going to do much good, though.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Because, of course, we can't just get new hardware...
+- kind: dialogue
+  speaker: analyst
+  text: (looking over) Excuse me, Agent, can I take a look at that?
+- kind: dialogue
+  speaker: agent
+  text: Sure, what do you need it for?
+- kind: dialogue
+  speaker: analyst
+  text: Just...I think I might have a way to get it to run faster.
+- kind: dialogue
+  speaker: press
+  text: (whispering) What did you guys actually find?

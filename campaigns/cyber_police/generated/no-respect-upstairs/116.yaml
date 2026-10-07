@@ -1,0 +1,24 @@
+id: no-respect-upstairs
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:08.831207+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing. Who's been digging into The Scuttle's financials?
+- kind: dialogue
+  speaker: analyst
+  text: Not me, Captain, but I've got some interesting correlations between their
+    ad revenue and user engagement patterns.
+- kind: dialogue
+  speaker: agent
+  text: Can we get forensics to dig into the server logs from their last hack?
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I already have. Nothing jumped out at me yet.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I just get some decent coffee down here?
+- kind: dialogue
+  speaker: press
+  text: '"CYBER POLICE STILL NOT CAPTURING ANYONE" - Scuttle headline of the week.'

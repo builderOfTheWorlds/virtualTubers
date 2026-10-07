@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:59.722113+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Forensics walks into the bullpen, passing the frosted glass door with the
+    skull-and-crossbones sticker.
+- kind: dialogue
+  speaker: captain
+  text: (no one is there to greet her, but she nods as Hana takes her seat)
+- kind: dialogue
+  speaker: forensics
+  text: Forensics takes out a small notebook and begins reviewing the previous day's
+    evidence intake.
+- kind: dialogue
+  speaker: analyst
+  text: (gets up from her desk, stretching) Hey Hana, need any help with the chain
+    of custody?
+- kind: dialogue
+  speaker: forensics
+  text: '(nods) Actually, Priya, I need you to sign off on the evidence from case
+    #421.'
+- kind: dialogue
+  speaker: analyst
+  text: (walks over to Hana's desk) Okay, let me take a look. (she scans the notebook)
+    This is all good.
+- kind: dialogue
+  speaker: forensics
+  text: (nods) Great, thank you. I'll update the paperwork. (she starts typing on
+    her computer)
+- kind: dialogue
+  speaker: agent
+  text: (walks into the bullpen, looking around) Morning, everyone.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Good morning, Deshawn. Need anything from me?

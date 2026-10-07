@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 139
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:26.087225+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here are the replies:'
+- kind: dialogue
+  speaker: captain
+  text: What's this nonsense about "the computer thing"?
+- kind: dialogue
+  speaker: detective
+  text: Can you believe it?
+- kind: dialogue
+  speaker: analyst
+  text: It's not like it's the first time.
+- kind: dialogue
+  speaker: agent
+  text: I'm sure it's just a misunderstanding.
+- kind: dialogue
+  speaker: forensics
+  text: (sigh) Someone should update the Commissioner on what "the computer thing"
+    has cost us.
+- kind: dialogue
+  speaker: press
+  text: You'd think they'd have a clue by now.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a drawer full of denied requisition forms that would...

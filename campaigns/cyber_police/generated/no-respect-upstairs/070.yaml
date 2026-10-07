@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:32.498797+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get this briefing over with.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) If they only knew what we were really dealing with...
+- kind: dialogue
+  speaker: agent
+  text: (joking) Oh, come on, Priya, it's not like we're hunting ghosts.
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) Someone needs to update my software, it's still on version 3.5.
+- kind: dialogue
+  speaker: press
+  text: '(on monitor) "CYBER COPS STRIKE OUT AGAIN: Scuttle''s latest prank foils
+    authorities... again."'
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughing) Oh, nice, Davey. The Scuttle's got a PR firm now.
+- kind: dialogue
+  speaker: captain
+  text: (smiling wryly) Yeah, that's just peachy.
+- kind: dialogue
+  speaker: analyst
+  text: (bitterly) Yeah, because nothing says "effective law enforcement" like a bunch
+    of bored cops in a basement.

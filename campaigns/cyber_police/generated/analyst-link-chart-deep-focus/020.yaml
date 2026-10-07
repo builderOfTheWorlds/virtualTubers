@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:10.822689+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The link chart is looking more like a spider's web by the minute, and I think
+    I've found another thread to tug on.

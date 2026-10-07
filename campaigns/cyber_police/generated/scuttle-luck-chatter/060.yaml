@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:19.264870+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's inside information.
+- kind: dialogue
+  speaker: analyst
+  text: That's just it, though - we have no way of proving it.
+- kind: dialogue
+  speaker: detective
+  text: We can't just assume we're being played. We have to consider the possibility
+    that they're just better.
+- kind: dialogue
+  speaker: captain
+  text: I'm not saying that, Marcus, but we can't keep throwing resources at this
+    and expecting to catch a break.
+- kind: dialogue
+  speaker: forensics
+  text: It's not just about the resources, Captain - it's about the intelligence.
+    We need to get inside their head and figure out how they're staying one step ahead.
+- kind: dialogue
+  speaker: quartermaster
+  text: And we need to get the quartermaster to take us seriously.
+- kind: dialogue
+  speaker: press
+  text: 'I''m writing this one up as a profile piece - "The Scuttle''s Secret: How
+    a Small Crew of Pirates Outwitted the Cyber Police."'

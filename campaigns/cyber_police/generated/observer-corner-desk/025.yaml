@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:48.454499+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm still going over yesterday's chatter spikes
+- kind: dialogue
+  speaker: captain
+  text: We have a new mirror up, and I want you to dig in on the IP addresses
+- kind: dialogue
+  speaker: detective
+  text: I'll get on it, Captain. Agent Okafor, can you get me a tracer on those IPs?
+- kind: dialogue
+  speaker: agent
+  text: Already on it, Detective. I'll send you a report by the end of the day
+- kind: dialogue
+  speaker: forensics
+  text: I'm running some forensic checks on the mirror's code
+- kind: dialogue
+  speaker: press
+  text: Nothing new from the press end, Captain. Just the usual Scuttle coverage
+- kind: dialogue
+  speaker: quartermaster
+  text: We've got a requisition for new hardware coming in today
+- kind: narration
+  speaker: captain
+  text: The Observer sits silently at his desk, watching the team

@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:30.727575+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team.
+- kind: dialogue
+  speaker: detective
+  text: Good morning, ma'am.
+- kind: dialogue
+  speaker: analyst
+  text: What's the directive for today?
+- kind: dialogue
+  speaker: agent
+  text: I'm still waiting for my coffee to heat up.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the server logs from last night's mirror update.
+- kind: dialogue
+  speaker: press
+  text: Did we get any good stuff on the chatter spike?
+- kind: dialogue
+  speaker: quartermaster
+  text: You'll have to ask Captain Agar about that.

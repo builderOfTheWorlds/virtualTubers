@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 150
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:15.408880+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning sun's not quite reaching this far down.
+- kind: dialogue
+  speaker: detective
+  text: I'll take another cup. Mine's gone cold.
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Can't keep a coffee warm around here.
+- kind: dialogue
+  speaker: agent
+  text: (to Forensics) New shipment of RAM coming in today.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Just in time. My old stuff's dying.
+- kind: dialogue
+  speaker: press
+  text: (to Quartermaster) You seen my tie? I think I left it on the desk...
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) You're not exactly known for your fashion sense, Davey.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (stands up, walks over to the window) Just making sure the glass
+    is clean.'
+- kind: dialogue
+  speaker: captain
+  text: (looks up from her desk) We need to review the Jenkins case.
+- kind: dialogue
+  speaker: analyst
+  text: (already typing on her computer) I've got the files open.
+- kind: dialogue
+  speaker: detective
+  text: (sips cold coffee) Great. Another late night.
+- kind: dialogue
+  speaker: forensics
+  text: (gets up, walks over to the evidence locker) Time for a recharge, I think.

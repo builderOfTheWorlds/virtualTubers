@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:56.450276+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm taking the evidence from the crime scene, 15 kilograms of digital storage
+    devices, 3 hard drives, and 5 memory sticks.
+- kind: dialogue
+  speaker: agent
+  text: I've reviewed the case file, Hana, and I'll need you to process the evidence
+    for any connections to The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: I'll need to verify the chain of custody for the devices, Agent Okafor. I'll
+    log them into the evidence locker and seal them.
+- kind: dialogue
+  speaker: analyst
+  text: I'm analyzing the link charts for any patterns or connections to known Scuttle
+    members.
+- kind: dialogue
+  speaker: forensics
+  text: Once I've logged the devices, I'll hand them over to Forensics.

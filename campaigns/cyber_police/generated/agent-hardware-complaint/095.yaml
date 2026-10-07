@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:55.403525+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this stupid trace tool up and running but the hardware is
+    a joke.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (laughs) Yeah, I''m starting to think we''re still using the
+    same machines that were here when I first got here.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (smiling) You know, Deshawn, I''m surprised you''re not complaining
+    to the Quartermaster yet.'
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Someone should complain to the Quartermaster. I've been trying
+    to get an update on that requisition for weeks...

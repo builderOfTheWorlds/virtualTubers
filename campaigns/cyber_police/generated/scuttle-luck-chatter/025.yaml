@@ -1,0 +1,17 @@
+id: scuttle-luck-chatter
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:56.441357+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DM: I''m telling you, Scuttle luck is just them having more people on the
+    payroll than we have agents to bust.'
+- kind: narration
+  speaker: captain
+  text: 'PM: That''s not what I''ve seen - it''s like they''ve got a whole network
+    of shell accounts and proxy servers that we can''t touch.'
+- kind: narration
+  speaker: captain
+  text: 'QA: But that''s just it, they''re not really touching anything. We just keep
+    chasing our tails and they keep one step ahead.'

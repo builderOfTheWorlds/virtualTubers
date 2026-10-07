@@ -1,0 +1,28 @@
+id: forensics-evidence-locker-routine
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:06.043207+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking into the bullpen, making sure everything is in order.
+- kind: dialogue
+  speaker: analyst
+  text: Still sipping on my coffee, going over some printouts.
+- kind: dialogue
+  speaker: agent
+  text: Checking the hardware rack for any updates.
+- kind: dialogue
+  speaker: quartermaster
+  text: Receiving a call from the supply company, going to review the requisition
+    list.
+- kind: dialogue
+  speaker: press
+  text: Chatting with a journalist on the phone, trying to get the latest scoop.
+- kind: dialogue
+  speaker: captain
+  text: Standing in the Comms Room, reviewing the unit's schedule for the day.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Staring at my computer screen, going over the day''s tasks
+    with Forensics.'

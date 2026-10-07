@@ -1,0 +1,24 @@
+id: scuttle-luck-chatter
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:32.562640+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''m telling you, it''s not just skill, it''s inside help.'
+- kind: dialogue
+  speaker: analyst
+  text: But that's the thing, Marcus, we can't prove it.
+- kind: dialogue
+  speaker: agent
+  text: You guys are just not used to being the ones who get outsmarted.
+- kind: dialogue
+  speaker: forensics
+  text: Hey, hey, hey, let's not start the "we're incompetent" discussion again.
+- kind: dialogue
+  speaker: press
+  text: Actually, I've been looking at the last raid, and I think I might have found
+    something.
+- kind: dialogue
+  speaker: quartermaster
+  text: What is it, Davey?

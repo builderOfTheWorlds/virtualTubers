@@ -1,0 +1,37 @@
+id: captain-commissioners-memo
+take: 150
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:11.548639+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's office has a memo for me.
+- kind: dialogue
+  speaker: detective
+  text: What's it say?
+- kind: dialogue
+  speaker: captain
+  text: '"The computer thing" again.'
+- kind: dialogue
+  speaker: analyst
+  text: (whispering) Yeah, because we all know that's exactly what we do.
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, yeah, and what's that? We just magically solve all digital
+    crime?
+- kind: dialogue
+  speaker: forensics
+  text: (dryly) No, we just pretend to try.
+- kind: dialogue
+  speaker: press
+  text: (over the comms system) Um, Captain, can I get a statement on the latest Scuttle
+    raids?
+- kind: dialogue
+  speaker: captain
+  text: (irritated) Not now, Davey.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering) That's going to go on the wall with the others, isn't it?
+- kind: dialogue
+  speaker: detective
+  text: (bitterly) I mean, what even is the point?

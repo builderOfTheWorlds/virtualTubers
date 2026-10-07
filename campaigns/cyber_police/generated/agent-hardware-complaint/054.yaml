@@ -1,0 +1,33 @@
+id: agent-hardware-complaint
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:26.140820+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can we get a new router or something?
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to get this trace tool running.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, come on, Priya. It's just a little more patience.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Yeah, like we've got a lot of that.
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) It's not funny, Deshawn. This is The Scuttle we're dealing with.
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) I'm still running some diagnostics on that new server.
+    Maybe we can squeeze a few more cycles out of it.
+- kind: dialogue
+  speaker: agent
+  text: (to himself) Yeah, because that's exactly what we need. More ancient hardware.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Like it's not like I don't know...
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep the complaints for after lunch.

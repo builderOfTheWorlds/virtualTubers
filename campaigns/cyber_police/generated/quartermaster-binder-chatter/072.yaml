@@ -1,0 +1,12 @@
+id: quartermaster-binder-chatter
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:37.578716+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll need to review these again tomorrow, see if anything has changed.
+- kind: dialogue
+  speaker: agent
+  text: You'd think we'd have better luck with requisitions, considering what we're
+    up against.

@@ -1,0 +1,41 @@
+id: forensics-evidence-locker-routine
+take: 69
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:25.248051+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking the evidence locker's chain of custody for the Thompson case.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some fresh data on the Thompson case, can you review it for me?
+- kind: dialogue
+  speaker: captain
+  text: Good, good, let's see what you've got. I want to know what the Analyst is
+    telling me.
+- kind: dialogue
+  speaker: agent
+  text: (checking the evidence locker's logs) Everything's up to date, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: (examining the data on her screen) Priya, this is looking good. I think we've
+    got a solid match.
+- kind: dialogue
+  speaker: analyst
+  text: Excellent work, Forensics! I'll get the Detective on it right away.
+- kind: dialogue
+  speaker: captain
+  text: (reading over Priya's shoulder) This is looking good. We may have finally
+    found our break in the Thompson case.
+- kind: dialogue
+  speaker: quartermaster
+  text: (delivering a stack of paperwork to Hana) Here are the new requisitions for
+    the Thompson case.
+- kind: dialogue
+  speaker: forensics
+  text: (sorting through the paperwork) Okay, looks like we've got some new hardware
+    coming in.
+- kind: dialogue
+  speaker: agent
+  text: (reviewing the paperwork) I'll get these processed and on the requisition
+    list.

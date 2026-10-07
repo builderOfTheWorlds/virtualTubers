@@ -1,0 +1,28 @@
+id: forensics-evidence-locker-routine
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:39.621937+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Taking in the evidence, making sure everything is properly logged and secured.
+- kind: dialogue
+  speaker: agent
+  text: We've got a new intake from the 3rd precinct, some kind of cyber-forensics
+    package.
+- kind: dialogue
+  speaker: analyst
+  text: Let me see... I'll need to review the chain of custody for this evidence.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a minute, I need to update the requisition binder.
+- kind: dialogue
+  speaker: captain
+  text: What's the status on the 3rd precinct's evidence? Has it been processed yet?
+- kind: dialogue
+  speaker: forensics
+  text: Actually, Captain, I'm still reviewing it. But I think it's just a routine
+    data dump.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the new evidence from the Captain?

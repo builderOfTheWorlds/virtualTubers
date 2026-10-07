@@ -1,0 +1,17 @@
+id: agent-hardware-complaint
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:37.424503+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DKO: This unit needs new hardware, not this ancient crap.'
+- kind: narration
+  speaker: captain
+  text: 'PMK: What''s going on, Deshawn? Can''t get the trace tool running?'
+- kind: narration
+  speaker: captain
+  text: 'DKO: Trying to get it to work, Priya, but this hardware...'
+- kind: narration
+  speaker: captain
+  text: 'PMK: Yeah, because that''s not a problem we''ve been dealing with for years.'

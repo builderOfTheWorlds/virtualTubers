@@ -1,0 +1,30 @@
+id: analyst-link-chart-deep-focus
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:24.371521+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't see any significant new connections to the Bosun's identity.
+- kind: dialogue
+  speaker: agent
+  text: Can we get Hana Vosk to re-run the signal tracing? I'm starting to think we're
+    looking at an echo site.
+- kind: dialogue
+  speaker: forensics
+  text: I've already re-run it, Deshawn, and the results are inconclusive.
+- kind: dialogue
+  speaker: quartermaster
+  text: Someone get me a new pack of batteries for the thermal imager. This one's
+    dead again.
+- kind: dialogue
+  speaker: press
+  text: What's the story, Teresa? You finally wore it out?
+- kind: dialogue
+  speaker: captain
+  text: Priya, can you walk me through your link chart? I don't see anything that
+    points to a new lead.
+- kind: dialogue
+  speaker: analyst
+  text: Of course, Captain. Let me... (pauses to study the chart) Ah, yes, here. This
+    minor thread... (trails off)

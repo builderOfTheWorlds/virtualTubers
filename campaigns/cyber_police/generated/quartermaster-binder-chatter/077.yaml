@@ -1,0 +1,32 @@
+id: quartermaster-binder-chatter
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:04.387268+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: It's a good thing I keep track of all these denials, because if we ever get
+    audited...
+- kind: dialogue
+  speaker: detective
+  text: Yeah, and I'm sure the Commissioner's office will be thrilled to know we're
+    still operating on outdated hardware.
+- kind: dialogue
+  speaker: analyst
+  text: Not to mention the 'eventual inquiry' is just a nice way of saying "when we
+    get fired".
+- kind: dialogue
+  speaker: forensics
+  text: Someone should tell the Quartermaster that we can't even get a decent coffee
+    machine in the basement.
+- kind: dialogue
+  speaker: press
+  text: That's a minor complaint, considering we're not even a real police department
+    in anyone's book.
+- kind: dialogue
+  speaker: agent
+  text: And speaking of which, when was the last time we got some actual media attention
+    that wasn't just mocking us?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's not get into that now. We have a briefing to attend.

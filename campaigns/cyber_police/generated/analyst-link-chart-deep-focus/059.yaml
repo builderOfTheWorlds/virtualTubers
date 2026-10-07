@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:35.856699+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Still no direct link to the Bosun, and I'm starting to wonder if we're just
+    chasing our own tails here

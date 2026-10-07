@@ -1,0 +1,46 @@
+id: press-reporter-small-talk
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:19.844267+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DOKP: Hey, Priya, how''s the Scuttle chatter looking today?'
+- kind: narration
+  speaker: captain
+  text: 'PN: It''s still quiet, but I think I found something interesting in the metadata'
+- kind: narration
+  speaker: captain
+  text: 'DO: (laughing) Oh, boy, you and your metadata'
+- kind: narration
+  speaker: captain
+  text: 'HV: (sighing) I''ve got a batch of forensic reports to process'
+- kind: narration
+  speaker: captain
+  text: 'TR: (checking his watch) Okay, let''s get down to business. We''ve got a
+    lead on a new Scuttle mirror'
+- kind: narration
+  speaker: captain
+  text: 'RM: Alright, team, let''s hear what you''ve got'
+- kind: narration
+  speaker: captain
+  text: 'TR: I''m thinking a stakeout at the warehouse on 5th and Main'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ve got some intel on the server architecture, might be worth taking
+    a closer look'
+- kind: narration
+  speaker: captain
+  text: 'HO: (muttering to herself) And I''ll get to analyze the footage we didn''t
+    take'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to DOKP) You know, I think it''s time we started making some progress
+    on this case'
+- kind: narration
+  speaker: captain
+  text: 'RM: Agreed, let''s get moving. (to the Quartermaster) Teresa, what''s the
+    status on our hardware requisition?'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to the team) Alright, let''s get to work'

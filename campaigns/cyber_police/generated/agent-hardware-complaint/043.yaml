@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:27.257373+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Des: We''re running this on a machine from 2018.'
+- kind: narration
+  speaker: captain
+  text: 'Pri: Yeah, and the OS is still running the same outdated kernel.'
+- kind: narration
+  speaker: captain
+  text: 'Des: I swear, it''s like the department thinks we''re not actually investigating
+    The Scuttle, but just playing make-believe with our toys.'
+- kind: narration
+  speaker: captain
+  text: 'Pri: Not all of our requisitions get approved, Des.'
+- kind: narration
+  speaker: captain
+  text: 'Des: Oh, don''t even get me started on that.'
+- kind: dialogue
+  speaker: forensics
+  text: (walking in) What's going on?
+- kind: narration
+  speaker: captain
+  text: 'Des: Trying to get this trace tool running on this ancient hardware.'
+- kind: dialogue
+  speaker: forensics
+  text: Good luck with that.

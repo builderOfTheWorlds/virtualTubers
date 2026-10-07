@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 173
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:57.174806+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm going to need to rework the chain chart to account for the Observer.
+- kind: dialogue
+  speaker: captain
+  text: We need to be careful about who's looking at that.
+- kind: dialogue
+  speaker: detective
+  text: It's a standard issue, ma'am.
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: Actually, I think it''s worth revisiting the protocols
+    for Observer access.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Hana Vosk: Can we get a copy of the revised chart?'
+- kind: narration
+  speaker: captain
+  text: 'Press Davey Okonkwo-Pryce: Don''t worry, I''ll write a nice piece about the
+    unit''s dedication to transparency.'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Teresa Mbeki-Lowndes: I''ve got a requisition for a new printer.
+    Can someone sign off on it?'

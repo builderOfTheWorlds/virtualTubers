@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:35.431879+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, great. The trace tool's not even recognizing the protocol.

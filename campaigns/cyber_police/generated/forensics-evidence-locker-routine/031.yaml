@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:54.877242+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll need to sign in and log the date and time on the evidence intake form.
+- kind: dialogue
+  speaker: agent
+  text: What's the evidence, Forensics?
+- kind: dialogue
+  speaker: forensics
+  text: Just a standard intake, Agent. Nothing out of the ordinary.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting on the lab results from last week.
+- kind: dialogue
+  speaker: captain
+  text: Forensics, can you please confirm the chain of custody for the Johnson case?
+- kind: dialogue
+  speaker: forensics
+  text: Of course, Captain. The evidence was collected by Agent Okafor, and then transported
+    to the locker by me.
+- kind: dialogue
+  speaker: agent
+  text: I've reviewed the footage, Forensics. Everything looks normal.
+- kind: dialogue
+  speaker: forensics
+  text: Good. Now, let's proceed with the intake procedure.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder right here, Forensics. What do you need?
+- kind: dialogue
+  speaker: forensics
+  text: Just the standard paperwork, Quartermaster. I'll take care of it from here.

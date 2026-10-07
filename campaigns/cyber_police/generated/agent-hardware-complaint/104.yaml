@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:41.770963+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I've seen more powerful computers in a high school shop class.

@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:56.566863+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm going to add this one to the binder.
+- kind: dialogue
+  speaker: detective
+  text: You know, eventually someone's going to have to answer for this.

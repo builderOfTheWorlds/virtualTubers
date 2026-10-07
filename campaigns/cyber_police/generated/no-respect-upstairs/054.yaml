@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:04.821725+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Another backup request denied.
+- kind: dialogue
+  speaker: agent
+  text: Guess they're not in a hurry to get us shot, Captain.
+- kind: dialogue
+  speaker: captain
+  text: Someone needs to remind them we're not just a "digital crime unit" when it
+    suits them.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I could requisition a few more desks for the arcade.
+- kind: dialogue
+  speaker: forensics
+  text: We can't even afford new swabs, Captain.
+- kind: dialogue
+  speaker: press
+  text: '"Cyber Cops Caught in Yet Another Bureaucratic Snafu" - Scuttle''s latest.'
+- kind: dialogue
+  speaker: analyst
+  text: I put in a requisition for some new monitors last week. I'm still waiting.
+- kind: dialogue
+  speaker: agent
+  text: Guess we're not a priority, huh?
+- kind: dialogue
+  speaker: captain
+  text: Somebody has to mean it, since nobody else does.

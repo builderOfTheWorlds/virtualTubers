@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:23.925427+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright everyone, good morning.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I've got the briefing ready.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence says The Scuttle's been posting cryptic messages on an unknown
+    platform.
+- kind: dialogue
+  speaker: agent
+  text: I've been trying to hack in, but it's encrypted with something I've never
+    seen before.
+- kind: dialogue
+  speaker: forensics
+  text: I've got nothing yet, but I'm running some tests on the platform's servers.
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain. Just a heads up that there's a Scuttle-themed meme going
+    around the newsroom.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are due today, and I've got a meeting with the supply officer
+    at 10.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (standing by the stairwell door, saying nothing)'

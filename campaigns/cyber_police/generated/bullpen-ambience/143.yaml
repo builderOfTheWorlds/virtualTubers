@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 143
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:36.568888+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving on that server vulnerability.
+- kind: dialogue
+  speaker: detective
+  text: I'll start going over the logs.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to make sense of the traffic patterns.
+- kind: dialogue
+  speaker: agent
+  text: I've got some promising leads on the IP address.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting for the lab results on that drive.
+- kind: dialogue
+  speaker: press
+  text: I'll start drafting the press release.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're still waiting on that equipment requisition.

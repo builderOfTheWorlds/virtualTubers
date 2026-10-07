@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:40.026743+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team. We've got a new mirror up in the east sector.
+- kind: dialogue
+  speaker: detective
+  text: I'll get the Agent to start tracing the IP.
+- kind: dialogue
+  speaker: analyst
+  text: This mirror is interesting. It's not just a reflection – there's something
+    else in the image.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look at the traffic patterns, see if we can pinpoint the owner.
+- kind: dialogue
+  speaker: forensics
+  text: I'll process the images from the mirror, see if we can get any useful metadata.
+- kind: dialogue
+  speaker: press
+  text: Can I ask, is there any word on the Scuttle's activities overnight?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll check the requisition binder, see if there's been any new equipment requests.
+- kind: dialogue
+  speaker: analyst
+  text: (glancing at the Observer) Is he watching us again?
+- kind: narration
+  speaker: captain
+  text: (The team glances at the Observer, who remains expressionless)

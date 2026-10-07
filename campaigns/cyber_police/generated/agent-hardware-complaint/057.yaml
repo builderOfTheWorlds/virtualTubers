@@ -1,0 +1,20 @@
+id: agent-hardware-complaint
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:36.734139+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this computer is older than I am.
+- kind: dialogue
+  speaker: analyst
+  text: I've been trying to get the trace tool running, but it keeps crashing.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Ah, come on, guys, it's not that old. It's just... vintage.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Yeah, because "vintage" is just a nice way of saying "unmaintained".
+- kind: dialogue
+  speaker: press
+  text: (jokingly) I'm sure it's fine, Priya. Just give it a good old-fashioned reboot.

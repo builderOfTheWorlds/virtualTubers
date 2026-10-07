@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:42.793921+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, let''s get started.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Morning, Captain. I''ll get the coffee.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''m not sure if it''s relevant, but I found a new chat room that might
+    be one of Scuttle''s.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Good work, Priya. I''ll take a look.'
+- kind: narration
+  speaker: captain
+  text: 'HO: I''ve got the evidence from the latest raid ready for analysis.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Thanks, Hana. I''ll send it over to you.'
+- kind: narration
+  speaker: captain
+  text: 'TO-PP: Hey, Davey, what''s the haps? Anything big on Scuttle?'
+- kind: narration
+  speaker: captain
+  text: 'DO: Not yet, but it''s a slow day.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''m not convinced this new chat room is real. Can we get some more info
+    before we move on it?'
+- kind: narration
+  speaker: captain
+  text: 'PN: I can dig deeper, but I wanted to bring it to the team first.'
+- kind: narration
+  speaker: captain
+  text: 'TO-PP: Can I ask, guys, what''s the story with Scuttle? Is it just a big
+    hoax?'
+- kind: narration
+  speaker: captain
+  text: 'CA: That''s not for you to worry about, Davey. Just focus on getting us some
+    good coverage.'

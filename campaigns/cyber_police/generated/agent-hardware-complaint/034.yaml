@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:47.581707+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this old machine is going to take forever to get a trace going

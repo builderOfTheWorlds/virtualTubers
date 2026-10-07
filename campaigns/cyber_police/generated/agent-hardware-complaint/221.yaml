@@ -1,0 +1,42 @@
+id: agent-hardware-complaint
+take: 221
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:01.928245+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Morning all, still can't believe we have to deal with this ancient rig today
+- kind: dialogue
+  speaker: analyst
+  text: Good morning Deshawn, just trying to get the intel up
+- kind: dialogue
+  speaker: forensics
+  text: Not having much luck with the mirror image
+- kind: dialogue
+  speaker: press
+  text: Good luck, I'll try to get some traction on the press side
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioned another 32 gigs of RAM, still waiting on approval
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. We have a lead on a possible IP address
+- kind: dialogue
+  speaker: detective
+  text: I'll try to track it down. Deshawn, can you get the technical details up on
+    the screens
+- kind: dialogue
+  speaker: agent
+  text: Yeah, just give me a minute, this thing is being as cooperative as usual
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I'll just take a look at the logs again
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) And I'll keep trying to make sense of this mess
+- kind: dialogue
+  speaker: press
+  text: (smirking) I'll just go call in a few favors with the press
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to Rosalind) I'll try to find out what's holding up that RAM requisition

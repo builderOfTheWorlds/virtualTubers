@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:37.454759+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if we don't get a new hardware suite soon, I'm going to have to learn
+    how to code again.
+- kind: dialogue
+  speaker: analyst
+  text: I'm running a diagnostic on the Agent's rig, but it's not cooperating.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving, people. We've got a lead to chase.
+- kind: dialogue
+  speaker: press
+  text: What did we actually find, Agent?
+- kind: dialogue
+  speaker: agent
+  text: Okay, fine. We're still trying to get the trace tool running.

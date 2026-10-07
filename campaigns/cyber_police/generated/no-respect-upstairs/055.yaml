@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:09.064211+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. We've got a possible Scuttle thread to look at.
+- kind: dialogue
+  speaker: detective
+  text: Sounds like we're running the usual gamut of rumor and speculation.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the thread open, but it's pretty thin.
+- kind: dialogue
+  speaker: agent
+  text: Can we get a team together to start digging?
+- kind: dialogue
+  speaker: forensics
+  text: Not sure if I can get the hardware up to speed, but I'll try.
+- kind: dialogue
+  speaker: press
+  text: 'Scuttle Exposed: "Cyber Cops in Cyber Frenzy Over Nothing"'
+- kind: dialogue
+  speaker: quartermaster
+  text: Good luck getting anyone to show up in time.
+- kind: dialogue
+  speaker: captain
+  text: Somebody has to mean it, since nobody else does.

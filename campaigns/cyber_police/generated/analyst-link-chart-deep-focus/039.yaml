@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 39
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:15.343931+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm thinking that maybe the link between the proxy server and the mainland
+    mirror is not as solid as we thought.

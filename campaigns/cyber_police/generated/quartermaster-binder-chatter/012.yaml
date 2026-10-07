@@ -1,0 +1,43 @@
+id: quartermaster-binder-chatter
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:56.964867+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmbki-Lowndes: Can''t believe they denied our requests for new laptops. Again.'
+- kind: narration
+  speaker: captain
+  text: 'gm: We''ll just have to make do with what we have.'
+- kind: dialogue
+  speaker: detective
+  text: I'll talk to the Captain about it, see if we can get some movement.
+- kind: narration
+  speaker: captain
+  text: 'gm: Just a reminder, everyone: the eventual inquiry is filling up fast.'
+- kind: dialogue
+  speaker: forensics
+  text: I'm surprised they didn't approve the microscopes, at least.
+- kind: narration
+  speaker: captain
+  text: 'Pryce: I''ll make a note to follow up on the Scuttle''s latest antics.'
+- kind: dialogue
+  speaker: analyst
+  text: Let's get moving on that lead from last night. I've got some promising data.
+- kind: dialogue
+  speaker: agent
+  text: Alright, I'll review the footage and see if I can find anything.
+- kind: narration
+  speaker: captain
+  text: 'mbki-Lowndes: You know, I''m starting to think we''re just making it up as
+    we go along.'
+- kind: narration
+  speaker: captain
+  text: 'gm: Some people might think that, but we know the truth. We''re here to serve
+    justice.'
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and we're good at it. Don't forget that.
+- kind: narration
+  speaker: captain
+  text: 'Pryce: Let''s focus on the task at hand. We have a lead to chase.'

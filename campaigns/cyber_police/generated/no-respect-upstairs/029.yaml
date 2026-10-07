@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:47.784746+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, people. Let''s try to keep the Scuttle''s operators
+    from selling our faces to the highest bidder.'
+- kind: dialogue
+  speaker: agent
+  text: (laughing) Yeah, good luck with that, Cap.
+- kind: dialogue
+  speaker: analyst
+  text: I'll get the analysis running.
+- kind: dialogue
+  speaker: forensics
+  text: '(over comms) Forensics to Dispatch: Requesting backup for the Scuttle bust.'
+- kind: dialogue
+  speaker: quartermaster
+  text: (over comms) Backup for a Scuttle bust? That's a low priority.
+- kind: dialogue
+  speaker: press
+  text: (on a monitor in the background) "CYBER COPS CAN'T EVEN CATCH A BREAK" - The
+    Daily Standard.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (sighing) I''ll go review the feeds. Maybe we can catch something
+    that way.'

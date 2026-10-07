@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:18.567522+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: This unit is still running Windows 7, guys.
+- kind: dialogue
+  speaker: forensics
+  text: I know, I've been saying it for years.
+- kind: dialogue
+  speaker: detective
+  text: Alright, let's just get the trace tool running, okay?
+- kind: narration
+  speaker: captain
+  text: 'aggar: What''s the point, anyway? It''s not like we''re ever going to get
+    the budget to upgrade.'
+- kind: dialogue
+  speaker: analyst
+  text: I've managed to get the source code up on my workstation.
+- kind: dialogue
+  speaker: press
+  text: Did you actually find something?

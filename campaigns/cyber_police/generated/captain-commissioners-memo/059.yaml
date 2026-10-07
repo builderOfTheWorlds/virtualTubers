@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:18.278490+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'm not sure why they bother sending us the briefing.
+- kind: dialogue
+  speaker: detective
+  text: I'd rather take on a case we can actually get a conviction on, like last week's
+    gang graffiti.
+- kind: dialogue
+  speaker: analyst
+  text: Can I just get the login credentials for the new server?
+- kind: dialogue
+  speaker: agent
+  text: (muttering) 'The computer thing'... like we're just a bunch of janitors in
+    badges.
+- kind: dialogue
+  speaker: forensics
+  text: (examining the memo) I'll be needing a new coffee machine.
+- kind: dialogue
+  speaker: press
+  text: (on comms) Davey, we need a statement on the alleged 'cyberpolice' unit's
+    lack of activity.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the Captain) Your requisition forms for new hardware are on the way.

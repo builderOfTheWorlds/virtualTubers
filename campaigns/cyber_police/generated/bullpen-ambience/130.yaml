@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 130
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:57.503289+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 08:00.
+- kind: dialogue
+  speaker: detective
+  text: I'll have a look at the Scuttle feeds again.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a fresh dump from the Ashiorid mirror.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the rig set up.
+- kind: dialogue
+  speaker: forensics
+  text: Coffee's still cold.
+- kind: dialogue
+  speaker: press
+  text: I'm going to check the press schedule.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll requisition some new keyboards.
+- kind: narration
+  speaker: captain
+  text: 'Hana Vosk (Forensics): Again, no new case files.'
+- kind: narration
+  speaker: captain
+  text: 'Teresa Mbeki-Lowndes (Quartermaster): The requisition binder is full.'
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor (Agent): Time to start on that backdoor exploit.'
+- kind: narration
+  speaker: captain
+  text: 'Priya Nandakumar (Analyst): I found something interesting in the packet sniffer.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar (Captain): Let''s see it.'

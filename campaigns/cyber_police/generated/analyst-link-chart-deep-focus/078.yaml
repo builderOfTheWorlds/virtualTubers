@@ -1,0 +1,27 @@
+id: analyst-link-chart-deep-focus
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:53.214717+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the link from the new mirror server is just a dead end
+- kind: dialogue
+  speaker: agent
+  text: I've got some ideas on how to dig deeper into that protocol
+- kind: dialogue
+  speaker: forensics
+  text: Just got a call from Forensics - we've got a potential match on one of the
+    seized drives
+- kind: dialogue
+  speaker: press
+  text: What's the story with the drive?
+- kind: dialogue
+  speaker: quartermaster
+  text: It's not just the drive, there's a new requisition request from the Captain
+- kind: dialogue
+  speaker: captain
+  text: I want to know what's going on with the Bosun's identity
+- kind: dialogue
+  speaker: detective
+  text: I've been thinking, maybe we're looking at this from the wrong angle

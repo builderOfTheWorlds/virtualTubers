@@ -1,0 +1,30 @@
+id: quartermaster-binder-chatter
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:21.896529+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think I should just requisition a new computer every week,
+    it'd be easier than trying to keep up with the latest software.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: We''re not getting anywhere with this lead, maybe we should
+    start digging deeper into The Scuttle''s infrastructure.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got something here, a possible match on a chat log from three days ago.
+- kind: dialogue
+  speaker: agent
+  text: I'm not sure what kind of surveillance gear we're using, but it's definitely
+    not up to par.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished analyzing the evidence from the latest Scuttle raid, but it's
+    all useless without the right equipment.
+- kind: dialogue
+  speaker: press
+  text: I've got a press conference to prep for, and I still don't know what to say.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to work. We need to find a way to crack The Scuttle's encryption.

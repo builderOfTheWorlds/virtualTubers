@@ -1,0 +1,36 @@
+id: observer-corner-desk
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:10.214940+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've been over the morning's data, Captain.
+- kind: dialogue
+  speaker: captain
+  text: Very well. What do the link charts say about our target?
+- kind: dialogue
+  speaker: analyst
+  text: They're shifting their mirrors to an IP in Eastern Europe.
+- kind: dialogue
+  speaker: detective
+  text: Not a surprise. What's the local time there?
+- kind: dialogue
+  speaker: analyst
+  text: It's early morning, so we might catch them off guard.
+- kind: dialogue
+  speaker: agent
+  text: I'll set up the tracing equipment, then.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Assuming we have the right hardware...
+- kind: dialogue
+  speaker: press
+  text: (whispering) Scuttle luck... we've been saying that for years.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) Don't start it, Davey.
+- kind: narration
+  speaker: captain
+  text: (Observer sits at the corner desk, eyes fixed on a monitor displaying a log
+    of network traffic)

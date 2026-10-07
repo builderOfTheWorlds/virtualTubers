@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:57.564695+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can we get a new laptop or something? This one's been slow since the upgrades
+    last year.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the evidence log synced, but it's not cooperating.
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, it's not just the hardware. We need a new suite of tools
+    to keep up with The Scuttle.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the task at hand. What do we have on the latest lead?
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I got some decent footage last night. Not sure what it is
+    yet, but...
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing's been requisitioned yet, so nothing's changed on the supply front.

@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:01.657247+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking for chain-of-custody documentation.
+- kind: dialogue
+  speaker: forensics
+  text: Requesting evidence intake protocol.
+- kind: dialogue
+  speaker: agent
+  text: Confirming evidence locker access.
+- kind: dialogue
+  speaker: forensics
+  text: Initiating chain-of-custody procedures.
+- kind: dialogue
+  speaker: analyst
+  text: Monitoring evidence locker activity.
+- kind: dialogue
+  speaker: forensics
+  text: Processing evidence from the previous case.
+- kind: dialogue
+  speaker: quartermaster
+  text: Preparing the requisition binder.
+- kind: dialogue
+  speaker: forensics
+  text: Re-checking the chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: Confirming the integrity of the evidence.
+- kind: dialogue
+  speaker: forensics
+  text: Completing the chain-of-custody documentation.

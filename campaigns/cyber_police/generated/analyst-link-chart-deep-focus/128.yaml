@@ -1,0 +1,8 @@
+id: analyst-link-chart-deep-focus
+take: 128
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:36.408164+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Trying to track the thread of a minor update on a secondary server

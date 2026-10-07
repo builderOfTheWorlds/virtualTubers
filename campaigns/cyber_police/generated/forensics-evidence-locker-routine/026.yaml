@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:27.615461+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker's code is 4371.
+- kind: dialogue
+  speaker: agent
+  text: I'm just updating the chain of custody for the new server drives.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the updated link charts for any anomalies.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good work, Forensics. I expect to see the reports from yesterday''s
+    raid on my desk in the morning.'
+- kind: dialogue
+  speaker: forensics
+  text: I'll make sure to update the evidence log as soon as I finish processing the
+    latest batch.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Any word from the lab on the decryption of the encrypted files
+    we brought back from the raid?'
+- kind: dialogue
+  speaker: quartermaster
+  text: Not yet, Detective. But I'll let you know as soon as I get an update.
+- kind: dialogue
+  speaker: agent
+  text: I've got the new batch of hardware requisitioned and it should be here by
+    the end of the week.

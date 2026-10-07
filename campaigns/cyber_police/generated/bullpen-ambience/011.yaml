@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:30.834967+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, team.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. What've we got on the board?
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence says The Scuttle's activity is trending up in the gaming forums.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get a read on the encryption, but it's like they're using a
+    new protocol every hour.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the data from the compromised server. We got some
+    good stuff.
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain. What's the PR spin today?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned three new laptops for the team.

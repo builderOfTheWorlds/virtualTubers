@@ -1,0 +1,23 @@
+id: forensics-evidence-locker-routine
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:41.698078+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the door to the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Unlocking the keypad and entering the access code.
+- kind: dialogue
+  speaker: analyst
+  text: Scanning the evidence inventory to ensure chain of custody is intact.
+- kind: dialogue
+  speaker: forensics
+  text: Retrieving a evidence bag from the locker and bringing it to the counter.
+- kind: dialogue
+  speaker: captain
+  text: Approaching the evidence counter to verify the contents of the bag.
+- kind: dialogue
+  speaker: forensics
+  text: Beginning to document the evidence and its chain of custody.

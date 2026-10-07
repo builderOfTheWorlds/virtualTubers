@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:52.850163+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The door is now open.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence intake requires proper documentation and verification.
+- kind: dialogue
+  speaker: agent
+  text: Alright, what've we got?
+- kind: dialogue
+  speaker: forensics
+  text: The package is labeled "E-54321".
+- kind: dialogue
+  speaker: analyst
+  text: Let me scan the barcode.
+- kind: dialogue
+  speaker: forensics
+  text: I'll log the evidence into the system.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, it's registered. Now we need to verify the contents.
+- kind: dialogue
+  speaker: forensics
+  text: I'll bring over the checklist.

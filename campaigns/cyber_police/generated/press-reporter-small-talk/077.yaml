@@ -1,0 +1,34 @@
+id: press-reporter-small-talk
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:39.215592+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, just wanted to touch base and see if anything interesting went
+    down overnight.
+- kind: dialogue
+  speaker: captain
+  text: Not much, Davey. Just the usual chatter. We did pick up on some suspicious
+    activity on one of their mirror servers, but it's probably just a test.
+- kind: dialogue
+  speaker: press
+  text: Ah, okay. Anything on the hardware front? We all know those requisitions aren't
+    exactly getting prioritized.
+- kind: dialogue
+  speaker: agent
+  text: (overhearing) Yeah, it's like they think we're just pretending to work.
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) Hey, at least we've got our trusty rubber duck to keep us company.
+- kind: dialogue
+  speaker: press
+  text: (laughing) Oh, don't remind me, Hana. That thing's been stuck in a loop for
+    years.
+- kind: dialogue
+  speaker: analyst
+  text: (interrupting) Actually, Captain, I think I've got something on the analysis
+    front. We might have a lead on their encryption method.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) Finally, something to fill out that requisition form...

@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:10.016436+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: Still no lead on the Jenkins case, we need to think outside the box.
+- kind: dialogue
+  speaker: analyst
+  text: I've been running some models, it looks like the Scuttle's been using some
+    new encryption.
+- kind: dialogue
+  speaker: agent
+  text: I've got the tools ready, let's get cracking.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a team waiting on me, let's move.
+- kind: dialogue
+  speaker: press
+  text: Anything new on the comms?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition list, who needs what?
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

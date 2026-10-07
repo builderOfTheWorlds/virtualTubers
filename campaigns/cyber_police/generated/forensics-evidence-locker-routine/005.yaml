@@ -1,0 +1,30 @@
+id: forensics-evidence-locker-routine
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T06:06:17.266089+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Taking off my jacket, I'm going to start the evidence-intake procedure.
+- kind: dialogue
+  speaker: agent
+  text: Sounds good, Hana. What's the first step?
+- kind: dialogue
+  speaker: forensics
+  text: Reviewing the case file for chain-of-custody documentation.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Hana, can you confirm the evidence locker''s code is up to
+    date?'
+- kind: dialogue
+  speaker: forensics
+  text: Verifying the code now...
+- kind: dialogue
+  speaker: analyst
+  text: Forensics, can I review the evidence requests for today?
+- kind: dialogue
+  speaker: forensics
+  text: Yes, Analyst, I'll bring up the current requests.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a heads up, Hana, I've restocked the supply cage with new cables.

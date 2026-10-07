@@ -1,0 +1,19 @@
+id: agent-hardware-complaint
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:50.067556+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this thing? The hardware on our unit is older than I
+    am.
+- kind: dialogue
+  speaker: analyst
+  text: At least we're not the only ones with outdated equipment.
+- kind: dialogue
+  speaker: agent
+  text: You're not helping, Priya. I'm trying to get this trace tool to run here.
+- kind: dialogue
+  speaker: analyst
+  text: Sorry, sorry. I was just saying we have more important things to worry about.
+    Like the case.

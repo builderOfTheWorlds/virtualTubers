@@ -1,0 +1,37 @@
+id: analyst-link-chart-deep-focus
+take: 192
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:15.585243+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've been trying to identify the pattern of connections between these two
+    shell servers.
+- kind: dialogue
+  speaker: agent
+  text: I've got a possible match on one of the IP addresses. Can you verify?
+- kind: dialogue
+  speaker: analyst
+  text: Let me run a trace... Ah, yes, it's definitely one of their proxy nodes.
+- kind: dialogue
+  speaker: agent
+  text: Proxy nodes? That's how they always manage to stay one step ahead. We need
+    to get on the floor and move.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I see a way to pivot through the shell servers without hitting
+    the proxy nodes. We could use...
+- kind: dialogue
+  speaker: captain
+  text: Wait, Priya, don't make any moves until we confirm this with Forensics.
+- kind: dialogue
+  speaker: forensics
+  text: I've reviewed the logs and I think we can make this work. But we need to move
+    fast and quietly.
+- kind: dialogue
+  speaker: agent
+  text: I'll prep the team. We go in 30.
+- kind: dialogue
+  speaker: analyst
+  text: I'll make the final adjustments to the pivot. If it works, it'll be a major
+    break in the case.

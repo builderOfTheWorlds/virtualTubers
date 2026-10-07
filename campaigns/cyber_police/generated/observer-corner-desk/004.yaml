@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:09.649341+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: I'm chasing a possible new entry point on The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: I've got chatter about a new proxy mirror in the Western hemisphere.
+- kind: dialogue
+  speaker: agent
+  text: I'm setting up the tracing equipment now.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the evidence front, but I'm reviewing the latest batch of seized
+    devices.
+- kind: dialogue
+  speaker: press
+  text: I need to review the morning's briefing with my editor.
+- kind: dialogue
+  speaker: quartermaster
+  text: I requisitioned some new RAM for the servers, but I'm still waiting to hear
+    back from upstairs.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

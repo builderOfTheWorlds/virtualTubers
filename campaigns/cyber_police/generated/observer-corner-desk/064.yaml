@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:39.701678+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few things to go over from last night's chatter.
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: I'll review the link charts.
+- kind: dialogue
+  speaker: press
+  text: Hi, Captain. Just a heads up, I've got a press conference scheduled for 14:00
+    today.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. I've got a few requisitions to go over.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

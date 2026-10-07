@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:07.494601+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the Evidence Locker.
+- kind: dialogue
+  speaker: forensics
+  text: 'Logging the contents: two drives, one server.'
+- kind: dialogue
+  speaker: forensics
+  text: Chain of custody verified, case file 4321-ABCD.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, we need evidence from the latest hack on The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: What's the specific request, Agent?
+- kind: dialogue
+  speaker: agent
+  text: I need the digital forensics report from the compromised server.
+- kind: dialogue
+  speaker: forensics
+  text: Package for you, Agent.
+- kind: dialogue
+  speaker: forensics
+  text: Labelled "DO-NOT-ACCESS" for chain of custody.
+- kind: dialogue
+  speaker: forensics
+  text: And the backup.

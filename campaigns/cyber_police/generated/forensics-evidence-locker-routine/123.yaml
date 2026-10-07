@@ -1,0 +1,28 @@
+id: forensics-evidence-locker-routine
+take: 123
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:45.740020+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence intake procedure starts with a walk-through of the secure area,
+    ensuring that all doors and locks are functioning correctly.
+- kind: dialogue
+  speaker: agent
+  text: Alright, I've got the codes for the evidence locker and the secure comms console.
+    Let's get started.
+- kind: dialogue
+  speaker: analyst
+  text: I'll be processing the new batch of drives and servers. Can you confirm the
+    chain of custody for each item?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll be reviewing the requisition binder to ensure all necessary equipment
+    is on hand.
+- kind: dialogue
+  speaker: captain
+  text: I'll be observing the procedure from the Captain's office. If anyone has any
+    questions or concerns, don't hesitate to ask.
+- kind: dialogue
+  speaker: press
+  text: I'll be taking notes on the process, but I won't be participating directly.

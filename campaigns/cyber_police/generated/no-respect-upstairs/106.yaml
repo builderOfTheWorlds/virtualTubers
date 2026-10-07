@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:13.804904+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor-Pryce: I''m requesting backup for the 5th time today, can
+    you please confirm receipt?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Backup request acknowledged, Deshawn. ETA for responders is...
+    let''s just say we''ll be there as soon as we''re done with the paperwork for
+    last night''s overtime.'
+- kind: dialogue
+  speaker: analyst
+  text: 'Captain, I''ve got a news feed coming in from Davey Okonkwo-Pryce. Scuttle
+    is running a front-page piece on the "Cyber Police: Laughable Law Enforcement
+    or Just Plain Lame?"'
+- kind: dialogue
+  speaker: forensics
+  text: Can I just get some new sampling equipment, please? I'm still using the same
+    old stuff from the last century.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll see what I can do, Hana. But honestly, we're a bit behind the times on
+    hardware upgrades.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, unit, let''s get back to work. Remember, "Somebody
+    has to mean it..."'
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor-Pryce: (to himself) Yeah, yeah, we''re the only ones who take
+    this seriously...'
+- kind: dialogue
+  speaker: analyst
+  text: (reading from a monitor) "'Cyber Police Fail to Catch Anyone'. Nice one, Scuttle."
+- kind: dialogue
+  speaker: forensics
+  text: Ugh, I hate that headline. We're not just a joke, we're a punchline.

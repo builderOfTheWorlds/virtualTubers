@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:03.033690+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing evidence from the previous raid.
+- kind: dialogue
+  speaker: agent
+  text: Evidence request, need Forensics to send over a sample for analysis.
+- kind: dialogue
+  speaker: analyst
+  text: Already on it, Agent. The sample is on its way.
+- kind: dialogue
+  speaker: captain
+  text: Everyone, report in on your status.
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster here. Just restocked the supply cage.
+- kind: dialogue
+  speaker: press
+  text: Press office just called, asking about the latest on The Scuttle.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Update for the press will have to wait. Captain, I need to
+    review the latest intel.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Yes, Detective. What do you make of it?'
+- kind: dialogue
+  speaker: forensics
+  text: I'm running the sample through the lab now, but so far, no red flags.
+- kind: dialogue
+  speaker: agent
+  text: Good, because we need this to hold up in court.

@@ -1,0 +1,78 @@
+# Spine scene 05 — the operation. Another near-miss, but this time the
+# unit gets something The Scuttle didn't expect them to keep: a name that
+# isn't in the costume, a real person behind one layer of the crew.
+id: the-storage-facility
+title: The Storage Facility
+enter_narration: >-
+  Early evening. A self-storage facility on the east side, roll-up doors
+  in two long rows, one of them already half-open.
+
+lore: [the_scuttle, basement]
+mood: [tension]
+continuity_in: >-
+  The unit moved early on the storage facility after The Scuttle publicly
+  named it, expecting the location to already be compromised.
+continuity_out: >-
+  The locker is empty of servers but not of paper — a lease, under a real
+  name, for a unit the Bosun's crew never finished clearing. The unit has
+  its first real identity in the case in years, even as the Scuttle banner
+  mocks the raid in real time.
+
+beats:
+  - type: action
+    speaker: detective
+    primitive: raid
+    params: {location: "storage unit 114, east row", with_backup: "yes"}
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. Door's already up. And then — and then it's empty.
+      No rack this time. No duck video either. Just an empty unit and a
+      filing box somebody forgot.
+
+  - type: action
+    speaker: forensics
+    primitive: seize_evidence
+    params: {item: "a filing box containing a storage lease and a payment receipt", from_location: "storage unit 114"}
+
+  - type: dialogue
+    speaker: forensics
+    text: >-
+      Lease is real. Name's real. Receipt's a bank transfer, not cash.
+      Whoever rented this unit wasn't being careful. That's new.
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. In nine years, nobody's left us a bank transfer. That's not
+      Scuttle luck. That's somebody who isn't as good as the Bosun usually
+      is.
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. One, the name on the lease isn't in my chart yet. Two, I'll cross
+      it against everything by morning. Three, if this holds, it's the
+      first real identity this unit's had in the entire case.
+
+  - type: action
+    speaker: detective
+    primitive: file_report
+    params: {title: "Storage unit raid — lease and receipt recovered, new identity pending", result: "case escalated"}
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      The banner already updated. "Nice empty box, officers." Love that
+      they think that's the whole story. They don't know what was in the
+      filing box.
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar holds the lease up to the light, the way Hana taught her to,
+      looking for nothing in particular. The Observer watches the paper,
+      not her.
+
+default_next: end-of-day-wrap

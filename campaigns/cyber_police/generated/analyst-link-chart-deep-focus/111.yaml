@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:17.234442+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Let me try to pinpoint the link between the latest batch of uploads and the
+    12-14 flagships from Q3.
+- kind: dialogue
+  speaker: agent
+  text: Priya, we've got a discrepancy in the server log timestamps that might indicate
+    someone on the inside.
+- kind: dialogue
+  speaker: forensics
+  text: I'm not seeing any signs of tampering, but I do have a weird packet anomaly
+    that might be worth looking into.
+- kind: dialogue
+  speaker: press
+  text: Just got word from the Commissioner's office that they're sending over a team
+    to audit our procedures and identify any potential leaks.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please explain to me what a "scuttle protocol" is and why I'm
+    suddenly hearing about it?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's not panic. We've dealt with audits before, and I'm sure we
+    can demonstrate the unit's integrity.

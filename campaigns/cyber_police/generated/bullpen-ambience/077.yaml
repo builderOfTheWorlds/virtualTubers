@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:49.107053+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, quiet for now.
+- kind: dialogue
+  speaker: detective
+  text: Still waiting on forensics results from the Winstone case.
+- kind: dialogue
+  speaker: analyst
+  text: Got an email from that AI researcher we interviewed last week. She says she's
+    made a breakthrough.
+- kind: dialogue
+  speaker: agent
+  text: Just got my coffee.
+- kind: dialogue
+  speaker: forensics
+  text: Still reviewing those server logs from the Bellbrook hack. Nothing out of
+    the ordinary so far.
+- kind: dialogue
+  speaker: press
+  text: Still waiting on a statement from Winstone's lawyer.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just updated the requisition log. We're low on RAM modules again.

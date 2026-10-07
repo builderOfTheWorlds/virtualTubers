@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 141
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:01.334589+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing was routine.
+- kind: dialogue
+  speaker: detective
+  text: Just trying to get a coffee, can't anyone keep a pot hot?
+- kind: dialogue
+  speaker: analyst
+  text: Sorry, Marcus, I spilled mine, I'll get another.
+- kind: dialogue
+  speaker: agent
+  text: I just checked, we've got a delivery scheduled from the comms team.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished going over the latest batch of drive images, nothing exciting
+    yet.
+- kind: dialogue
+  speaker: press
+  text: Trying to get some coffee, but the machine's broken again.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new server components, should be in later today.
+- kind: dialogue
+  speaker: analyst
+  text: This is still good, I think.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, it's basically undrinkable at this point.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to go reheat my coffee, anyone else want some?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep moving, people.
+- kind: dialogue
+  speaker: detective
+  text: Marcus, did you get that message from Internal Affairs yet?

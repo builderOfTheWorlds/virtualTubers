@@ -1,0 +1,45 @@
+id: forensics-evidence-locker-routine
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:09.379192+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll be handling the evidence intake from the last raid.
+- kind: dialogue
+  speaker: forensics
+  text: First, I'll need to document the items in the chain-of-custody log.
+- kind: dialogue
+  speaker: forensics
+  text: The chain-of-custody log is a record of every item taken into evidence, from
+    the moment it's collected to the moment it's presented in court.
+- kind: dialogue
+  speaker: agent
+  text: What's the status on the server we recovered?
+- kind: dialogue
+  speaker: forensics
+  text: The server is now in the evidence locker, and I'll be processing it according
+    to standard procedure.
+- kind: dialogue
+  speaker: forensics
+  text: I'll need to power it on, scan for malware, and take a snapshot of the drive
+    before it's analyzed.
+- kind: dialogue
+  speaker: analyst
+  text: Can I review the contents of the server?
+- kind: dialogue
+  speaker: forensics
+  text: Not yet, Analyst Nandakumar. The server is still in the intake process.
+- kind: dialogue
+  speaker: forensics
+  text: Once it's processed, I'll upload the contents to the secure drive and you
+    can access them.
+- kind: dialogue
+  speaker: quartermaster
+  text: Do you need any supplies from the supply cage?
+- kind: dialogue
+  speaker: forensics
+  text: Yes, please bring me a new set of gloves and some evidence bags.
+- kind: dialogue
+  speaker: agent
+  text: Captain wants to know if the server is online yet.

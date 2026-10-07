@@ -1,0 +1,35 @@
+id: quartermaster-binder-chatter
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:40.773231+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Okay, so let''s take a look at these denied requisitions...'
+- kind: narration
+  speaker: captain
+  text: 'DM: Someone''s going to have to explain to me why we can''t get a decent
+    bug sweep device.'
+- kind: narration
+  speaker: captain
+  text: 'PNA: We''ve been asking for that for months, it''s not like it''s a surprise
+    it got denied again.'
+- kind: narration
+  speaker: captain
+  text: 'HO: At this rate, we''ll be lucky if we can get a new forensics kit for a
+    year.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I''m starting to think our friendly Commissioner''s office doesn''t
+    actually care about solving cybercrimes.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve seen more enthusiasm for our budget requests at a kindergarten
+    bake sale.'
+- kind: narration
+  speaker: captain
+  text: 'TK-L: I''m just glad I got to log every denial in the eventual inquiry binder.'
+- kind: narration
+  speaker: captain
+  text: 'HO: You know, I''m starting to think that binder is going to be the only
+    thing we have left to our name when we''re all fired.'

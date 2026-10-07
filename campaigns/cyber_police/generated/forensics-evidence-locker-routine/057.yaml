@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:26.028559+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Beginning evidence intake procedure. Please secure any loose items from your
+    desk and step away from the area.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Already did, Forensics.
+- kind: dialogue
+  speaker: analyst
+  text: (from across the room) Do you need any assistance?
+- kind: dialogue
+  speaker: forensics
+  text: (ignoring the Agent) Next step is to document the chain of custody for each
+    item. This includes photographing and labeling any packaging, as well as noting
+    the item's origin and current location.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Do you need any specialized bags or containers?
+- kind: dialogue
+  speaker: forensics
+  text: No, thank you, Quartermaster. We're using standard issue.
+- kind: dialogue
+  speaker: press
+  text: (from the press desk) Can I get a statement on the evidence intake procedure?
+- kind: dialogue
+  speaker: forensics
+  text: (firmly) Not at this time, Press. The procedure is standard and widely documented.

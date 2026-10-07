@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T06:06:00.088924+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll need the case number for the evidence intake.
+- kind: dialogue
+  speaker: agent
+  text: Already logged it, Hana. What's the first item?
+- kind: dialogue
+  speaker: forensics
+  text: Laptop from the surveillance team. Chain of custody starts here.
+- kind: dialogue
+  speaker: analyst
+  text: Can I see the footage from the camera on the wall by the stairs?
+- kind: dialogue
+  speaker: quartermaster
+  text: No need for that, Priya. We've got all the feeds recorded and timestamped.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, laptop's on the desk. Can you all confirm receipt and verify the chain
+    of custody?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I've got it. Agent's mark on the receipt.
+- kind: dialogue
+  speaker: forensics
+  text: Alright, now we move on to the next item...
+- kind: dialogue
+  speaker: press
+  text: Can I get a copy of the intake report for my story?
+- kind: dialogue
+  speaker: forensics
+  text: Negative, Davey. That's not public information.

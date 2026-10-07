@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:20.563900+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: The Captain will have to sign off on these requisitions first.
+- kind: dialogue
+  speaker: detective
+  text: Let's get this over with, shall we?
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting to hear back on the cyberforensics package we submitted
+    last month.
+- kind: dialogue
+  speaker: agent
+  text: I told you we needed those upgrades, Teresa.
+- kind: dialogue
+  speaker: forensics
+  text: If I had to guess, I'd say the Captain's office is still deliberating.
+- kind: dialogue
+  speaker: press
+  text: I've got a call from the press on my comms.

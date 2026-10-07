@@ -1,0 +1,85 @@
+# Spine scene 01 — the raid on the mirror site, and the first taste of
+# "Scuttle luck" landing on the unit in real time.
+id: the-mirror-raid
+title: The Mirror Raid
+enter_narration: >-
+  Mid-morning. A warehouse district on the edge of town, chosen because the
+  trace put a server rack behind one specific loading door.
+
+lore: [the_scuttle, basement]
+mood: [tension]
+continuity_in: >-
+  The unit traced the overnight mirror to this warehouse inside the
+  six-hour window and got a warrant signed before it closed.
+continuity_out: >-
+  The raid lands on an empty rack with a looping video left behind, and the
+  real mirror is already live somewhere else. The unit has a name off the
+  seized paperwork — a lead for tomorrow, not an arrest today.
+
+beats:
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Window's closing. Warrant's signed. Agar wants eyes on that rack in
+      the next ten minutes, so move.
+
+  - type: action
+    speaker: agent
+    primitive: trace_signal
+    params: {target: "the warehouse's uplink", result: "a live connection, as of two minutes ago"}
+
+  - type: action
+    speaker: detective
+    primitive: raid
+    params: {location: the warehouse loading door, with_backup: "no"}
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. Rack's here. Powered. And then — and then it's not
+      doing anything. No traffic. It's just sitting here, humming.
+
+  - type: action
+    speaker: forensics
+    primitive: seize_evidence
+    params: {item: the server rack and two loose drives, from_location: the warehouse loading bay}
+
+  - type: dialogue
+    speaker: forensics
+    text: >-
+      Drive one's a loop. Same duck video as two years ago. Drive two's got
+      a shipping manifest. A name on it. Not the Bosun. Somebody smaller.
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. We had this in year four. The rack's always already empty by the
+      time we're through the door. The manifest is new, though. That's
+      something.
+
+  - type: action
+    speaker: detective
+    primitive: file_report
+    params: {title: "Warehouse raid — empty rack, one manifest lead", result: "case remains open"}
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. The manifest name isn't in my chart yet. I'll have it cross-
+      referenced by this afternoon. For whom does this actually matter —
+      is it the Bosun's supply chain, or is it noise?
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      Love that we got a door, at least. I'll keep this one quiet till
+      Forensics confirms the name's real. No headline on an empty rack.
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar reads the manifest twice before she says anything. It is a short
+      silence. Teresa, back at the supply cage, already knows the answer
+      before the Captain radios it in.
+
+default_next: the-manifest-name

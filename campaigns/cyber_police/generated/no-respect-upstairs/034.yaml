@@ -1,0 +1,40 @@
+id: no-respect-upstairs
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:16.205770+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'ROA: Morning, Thorn. Nandakumar''s got our morning briefing on the screen.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Thanks, Captain. Okay, looks like Scuttle''s been running a phishing
+    scam on...'
+- kind: narration
+  speaker: captain
+  text: 'PN: Wait, Thorn, I think I found the IP trail on that one and it doesn''t
+    look like Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Can we request backup for this one?'
+- kind: narration
+  speaker: captain
+  text: 'HL: Just send it in, I''m sure they''ll get right on it.'
+- kind: narration
+  speaker: captain
+  text: 'DP-O: "Cyber Police Scramble to Catch Themselves"'
+- kind: narration
+  speaker: captain
+  text: 'TM: Nice work, Priya. You get a gold star.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Captain, can we get a requisition for some new hardware?'
+- kind: narration
+  speaker: captain
+  text: 'ROA: Not now, Thorn. We''ll get around to it.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Okay, just putting it in the queue.'

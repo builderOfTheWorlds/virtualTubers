@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:08.603920+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CAP: Checking the comms feeds for anything interesting overnight.'
+- kind: narration
+  speaker: captain
+  text: 'PRI: Still trying to make sense of the encrypted chatter spike we got last
+    night.'
+- kind: narration
+  speaker: captain
+  text: 'DMO: Got a new mirror up to crawl, should be online within the hour.'
+- kind: narration
+  speaker: captain
+  text: 'HVO: Just finished running the scans on the latest drive dump, nothing''s
+    popped out yet.'
+- kind: narration
+  speaker: captain
+  text: 'DOK: Still waiting for the morning''s media briefing, trying to prep the
+    press kit.'
+- kind: narration
+  speaker: captain
+  text: 'TML: Got a new shipment of hardware coming in today, hopefully some of it
+    will be what we actually need.'

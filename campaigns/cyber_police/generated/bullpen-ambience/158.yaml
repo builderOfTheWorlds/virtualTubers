@@ -1,0 +1,40 @@
+id: bullpen-ambience
+take: 158
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:58.047144+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, Captain. Got a briefing in five.'
+- kind: dialogue
+  speaker: analyst
+  text: Just finishing up some code...
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Another day, another chance to get our hardware out of sync.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Where's my coffee?
+- kind: dialogue
+  speaker: press
+  text: (to the Agent) Did we actually get that new malware definition?
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Nothing new in the requisitions. Just the usual...
+- kind: dialogue
+  speaker: analyst
+  text: (excitedly) Oh, I fixed it! Now the graph updates in real-time!
+- kind: dialogue
+  speaker: agent
+  text: (to the Captain) Ma'am, should we...
+- kind: dialogue
+  speaker: forensics
+  text: (to no one in particular) Ugh, I left my cup on my desk. Now it's just going
+    to sit here...
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (to the room) Alright, briefing in five. Get your stations
+    ready.'

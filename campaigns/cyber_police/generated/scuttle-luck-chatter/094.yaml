@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:55.227526+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck is a myth, it's just us being incompetent.
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's the Bosun, we just can't get past them.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the proxy chains, and I think I see a pattern.
+- kind: dialogue
+  speaker: agent
+  text: It's a myth, Priya, we've got the best team on this case.
+- kind: dialogue
+  speaker: forensics
+  text: You guys want to talk about luck? The Scuttle's always one step ahead.
+- kind: dialogue
+  speaker: press
+  text: I've got a lead on a story about the Scuttle's latest banner.
+- kind: dialogue
+  speaker: quartermaster
+  text: It's not luck, it's just... ||emotion:sighs ||neutral
+- kind: dialogue
+  speaker: captain
+  text: What is it, Teresa?
+- kind: dialogue
+  speaker: quartermaster
+  text: It's just... we need to do something different.

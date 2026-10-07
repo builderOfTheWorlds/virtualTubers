@@ -1,0 +1,26 @@
+id: scuttle-luck-chatter
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:55.451731+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's like they have a mole somewhere.
+- kind: dialogue
+  speaker: analyst
+  text: But we've reviewed the server logs, and there's no indication of any insider.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, and the 'scuttle protocol' always seems to anticipate our moves.
+- kind: dialogue
+  speaker: quartermaster
+  text: Anticipate? Ha! We're just slow, that's all.
+- kind: dialogue
+  speaker: forensics
+  text: I've run the numbers, and we're still way behind in terms of resources...
+- kind: dialogue
+  speaker: captain
+  text: We'll get 'em, team. We just need to stay on their tail.
+- kind: dialogue
+  speaker: press
+  text: Tail? You mean like a pirate ship, with 'The Scuttle' flying a flag?

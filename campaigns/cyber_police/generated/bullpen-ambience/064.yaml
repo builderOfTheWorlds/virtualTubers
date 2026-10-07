@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:33.413574+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get some paperwork done before the day's over.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, because what I really wanted to do with my free time is fill out a 20-page
+    report.
+- kind: dialogue
+  speaker: analyst
+  text: I'll get started on those, but I need a coffee refill first.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to sync the new server, but it's being stubborn.
+- kind: dialogue
+  speaker: forensics
+  text: We're almost out of creamer, again.
+- kind: dialogue
+  speaker: press
+  text: I'll go get some more creamer from upstairs.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the supply cage locked up, anyone need anything?
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

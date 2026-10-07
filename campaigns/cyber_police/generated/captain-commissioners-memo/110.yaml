@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:54.844418+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo is already on my desk when I arrive.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: Good morning, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: We''ve got a meeting at 0900 to go over the latest Scuttle
+    numbers.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: Did you see the memo?'
+- kind: narration
+  speaker: captain
+  text: 'Press Okonkwo-Pryce: Morning, Captain. Can I get a word?'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: I''ve got the requisitions in for the new hardware,
+    but I''m not holding my breath.'

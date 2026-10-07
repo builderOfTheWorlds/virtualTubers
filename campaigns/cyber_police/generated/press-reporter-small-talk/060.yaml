@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:50.500579+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, what's new?
+- kind: dialogue
+  speaker: captain
+  text: Not much, Davey. Just getting ready for the briefing.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I'll try to be in and out today. Traffic's been a nightmare.
+- kind: dialogue
+  speaker: captain
+  text: That's understandable. I'm still waiting for the morning news to post.
+- kind: dialogue
+  speaker: press
+  text: Did you see the editorial on Scuttle's latest stunt?
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, you mean where they're implying we're too incompetent to track
+    them down?
+- kind: dialogue
+  speaker: press
+  text: (laughs) Exactly. I mean, I'm not sure what's more infuriating, the fact that
+    they get away with it or the fact that our department still hasn't found a way
+    to—
+- kind: dialogue
+  speaker: captain
+  text: (interrupts) Ah, don't get too worked up, Davey. It's just the usual noise.
+- kind: dialogue
+  speaker: press
+  text: I'll try to keep it in perspective. See you at the briefing.

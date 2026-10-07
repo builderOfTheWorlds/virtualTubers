@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:45.015016+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: I've got a lead on a story about a cybersecurity firm that's been quietly
+    helping The Scuttle stay one step ahead of the unit.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Scuttle luck is what they call it, but I call it insider help.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, it's just dumb luck. We can't let our personal feelings about
+    the case cloud our judgment.
+- kind: dialogue
+  speaker: agent
+  text: If we can't even get the basics right, how do we expect to catch these guys?
+- kind: dialogue
+  speaker: forensics
+  text: Can we please just focus on the analysis and not get sidetracked by speculation
+    about who's helping who?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a shipment of snacks coming in for the unit. Maybe we can bring some
+    morale-boosting energy bars to the next raid.

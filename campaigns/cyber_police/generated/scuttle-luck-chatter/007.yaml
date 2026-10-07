@@ -1,0 +1,39 @@
+id: scuttle-luck-chatter
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:21.882836+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm telling you, it's just a matter of resources. We need more boots on the
+    ground.
+- kind: dialogue
+  speaker: analyst
+  text: But that's just it - we have all the resources we need, it's just a matter
+    of prioritizing.
+- kind: dialogue
+  speaker: detective
+  text: I'm not sure I agree, Priya. I think we need to rethink our approach entirely.
+- kind: dialogue
+  speaker: captain
+  text: What are you proposing, Marcus? A new strategy?
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck, guys. It's just Scuttle luck.
+- kind: dialogue
+  speaker: forensics
+  text: Easy for you to say, Deshawn. You're not the one who's been getting roasted
+    by the Commodore every time we try to take down the site.
+- kind: dialogue
+  speaker: press
+  text: Roasted? You mean like the time they left that message about bringing snacks?
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Yes, like that.
+- kind: dialogue
+  speaker: analyst
+  text: (calmly) It's just a joke, Teresa. They're not trying to be malicious.
+- kind: dialogue
+  speaker: captain
+  text: (interrupting) Alright, alright, let's not get bogged down in speculation.
+    We have a job to do.

@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 171
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:10.633191+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm never going to get through all this paperwork.
+- kind: dialogue
+  speaker: agent
+  text: I'll help you, Pri. We can do it together.
+- kind: dialogue
+  speaker: quartermaster
+  text: Don't get too comfortable, Agent Okafor. I've still got requisitions to sort.
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I wish we had a better coffee machine down here. This one's gone stale
+    again.
+- kind: dialogue
+  speaker: press
+  text: I'll grab you a cup from upstairs, Forensics. You know I can bribe the vending
+    machine.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (watching the team through the glass wall of her office) Good
+    morning, everyone. Let''s get started.'

@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 53
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:34.230935+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the new server is not what it seems
+- kind: dialogue
+  speaker: detective
+  text: Not that we need to re-question our own motives, but I've been running some
+    checks
+- kind: dialogue
+  speaker: agent
+  text: I'm happy to help with that, but we should probably let Forensics take a look
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I've already started running some tests, and I think we might be
+    looking at a
+- kind: dialogue
+  speaker: press
+  text: I've got some questions for the techs, but let's keep this on the down-low
+    for now
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, who needs what, and how quickly do you need it?
+- kind: narration
+  speaker: captain
+  text: (Deshawn glances over at the Observer, who's sitting at his corner desk, staring
+    at his screen)

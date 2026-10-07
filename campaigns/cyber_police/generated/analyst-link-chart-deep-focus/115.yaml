@@ -1,0 +1,42 @@
+id: analyst-link-chart-deep-focus
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:41.852857+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, what if we're thinking about this all wrong?
+- kind: dialogue
+  speaker: agent
+  text: (pauses) I don't know, Priya. The data seems pretty clear to me.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) Clear? You think you've got it all figured out, Deshawn?
+- kind: dialogue
+  speaker: press
+  text: (interrupting) Excuse me, folks, but I think I might have something.
+- kind: dialogue
+  speaker: quartermaster
+  text: (dryly) Oh boy, what is it this time, Davey?
+- kind: dialogue
+  speaker: captain
+  text: (entering the room) Alright, let's focus. What have we got?
+- kind: dialogue
+  speaker: analyst
+  text: ( gesturing) Well, if we look at the link chart...
+- kind: dialogue
+  speaker: agent
+  text: (frowning) I don't see how that's relevant, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: (measuring out a sample) You're just looking at the surface, Deshawn. There's
+    more to it.
+- kind: dialogue
+  speaker: press
+  text: ( scribbling notes) I think I see where this is going...
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) You're all barking up the wrong tree.
+- kind: dialogue
+  speaker: captain
+  text: (sternly) That's enough. Priya, keep going.

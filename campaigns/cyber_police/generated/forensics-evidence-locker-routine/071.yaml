@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:34.794214+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Approaching the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Unlocking the locker with the code.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the intake log for the day.
+- kind: dialogue
+  speaker: forensics
+  text: Preparing the evidence bag for transfer.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Checking the chain of custody for the case file.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Replenishing the supply cage with requisitioned items.
+- kind: dialogue
+  speaker: forensics
+  text: Retrieving the evidence from the locker.
+- kind: dialogue
+  speaker: press
+  text: Noticing the Forensics team at work.

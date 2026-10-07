@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:59.684546+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, I think we're done for today.
+- kind: dialogue
+  speaker: detective
+  text: Ugh, I need a refill.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I've got a few things still to sort through.
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this server sorted out.
+- kind: dialogue
+  speaker: forensics
+  text: I'm about to go review some new footage.
+- kind: dialogue
+  speaker: press
+  text: Finally. I can finally get out of here.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I still haven't gotten the new printer approved.
+- kind: dialogue
+  speaker: captain
+  text: Oh, stop worrying about it, Teresa.
+- kind: dialogue
+  speaker: detective
+  text: Can we have a break in the next hour?
+- kind: dialogue
+  speaker: analyst
+  text: Sounds good to me, I'm getting a little fuzzy.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a break if it's okay with the Captain.
+- kind: dialogue
+  speaker: forensics
+  text: I'm good. I've got a lot to get through.

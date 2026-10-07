@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:47.959368+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, great, the old reliable.
+- kind: dialogue
+  speaker: agent
+  text: I swear, I've seen better specs on a toaster.
+- kind: dialogue
+  speaker: analyst
+  text: We need to get this trace tool running, Agent.
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's been quiet all morning, I'm starting to think it's a glitch.
+- kind: dialogue
+  speaker: agent
+  text: Quiet's a nice word for it.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this to work, okay?

@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 175
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:04.908339+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a pattern emerging here, a possible link between two different
+    user groups.

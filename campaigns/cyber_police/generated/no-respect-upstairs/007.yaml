@@ -1,0 +1,34 @@
+id: no-respect-upstairs
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:49.895260+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team. Let's get this briefing started. ||emotion:neutral
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I'll just fire up the comms grid. ||emotion:neutral
+- kind: dialogue
+  speaker: analyst
+  text: No changes in Scuttle's chatter overnight. They're still bragging about their
+    new algorithm. ||emotion:sarcastic
+- kind: dialogue
+  speaker: agent
+  text: Sir, I'm getting a request for backup from the 15th. ||emotion:concerned
+- kind: dialogue
+  speaker: forensics
+  text: Backup, coming right up, Deshawn. Or, you know, maybe not. ||emotion:sarcastic
+- kind: dialogue
+  speaker: quartermaster
+  text: Sorry, Deshawn, I've got nothing for you. You're on your own. ||emotion:disinterested
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Police Fails Again: Scuttle Unfazed by Latest Raids" (headline on a
+    monitor) ||emotion:disgusted'
+- kind: dialogue
+  speaker: detective
+  text: I love how they think we're just chasing our tails. ||emotion:angry
+- kind: dialogue
+  speaker: analyst
+  text: It's not like we're asking for much. Just a little respect. ||emotion:sad

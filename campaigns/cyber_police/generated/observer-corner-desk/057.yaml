@@ -1,0 +1,36 @@
+id: observer-corner-desk
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:59.790512+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor-Pryce: The coffee machine in the break room isn''t working
+    again.'
+- kind: dialogue
+  speaker: analyst
+  text: I'll take a look at it.
+- kind: dialogue
+  speaker: captain
+  text: Good, we need it for the morning briefing.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to go grab some coffee from that new place down the street.
+- kind: dialogue
+  speaker: press
+  text: I'll come with you, I need to make a few phone calls.
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor-Pryce: (muttering) Great, now we''ll be late for the briefing...'
+- kind: dialogue
+  speaker: analyst
+  text: (glancing at the Observer's corner desk) He's been sitting there for hours.
+- kind: dialogue
+  speaker: captain
+  text: (not looking up from her notes) Good.
+- kind: dialogue
+  speaker: detective
+  text: (whispering to the Captain) What's the directive for today, ma'am?
+- kind: dialogue
+  speaker: captain
+  text: (hesitating) Ah, the directive. Yes.

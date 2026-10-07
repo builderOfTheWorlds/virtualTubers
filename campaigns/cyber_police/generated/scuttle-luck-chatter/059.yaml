@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:13.810440+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I don't think it's a matter of being outgunned, we just can't seem to get
+    a lead on the Bosun.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, or the Quartermasters for that matter, I swear I had one in my sights
+    last week but they vanished into thin air.
+- kind: dialogue
+  speaker: analyst
+  text: It's not just skill, we're getting close, I can feel it.
+- kind: dialogue
+  speaker: agent
+  text: What's with all the Scuttle luck, do you guys think it's some kind of inside
+    job?
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the seized drives and I found some weird anomalies, it
+    looks like they're using some kind of custom encryption.
+- kind: dialogue
+  speaker: press
+  text: You guys are still going on about the Scuttle? I've got a story to break,
+    can I get a quote from the Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been reviewing the raid footage and I think I found a pattern in their
+    communication, it looks like they're using a VPN to stay under the radar.

@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 174
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:32.115532+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: Just finished the Scuttle scan, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Looks like a new mirror went up overnight, but nothing out of the ordinary.
+- kind: dialogue
+  speaker: agent
+  text: Got a ping on the encrypted chat channel, looks like a possible leak.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing exciting on the forensics front, but I did find some interesting patterns
+    in the malware.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the Scuttle, they're sending someone down to talk to
+    us.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new hardware, fingers crossed it gets approved.
+- kind: dialogue
+  speaker: analyst
+  text: I'll start digging into the new mirror, see if I can find any connections
+    to our previous cases.
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the encrypted chat channel, see where it leads.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a closer look at the malware patterns, see if I can identify any
+    new threats.
+- kind: dialogue
+  speaker: captain
+  text: Good, let's get to work.

@@ -1,0 +1,31 @@
+id: press-reporter-small-talk
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:45.768925+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: So, Captain, I hear the new Commissioner is really cracking down on digital
+    crime now.
+- kind: dialogue
+  speaker: captain
+  text: (sighs) Davey, it's just the usual doublespeak. They mean "the computer thing"
+    and they don't take it seriously.
+- kind: dialogue
+  speaker: press
+  text: (laughs) Ah, come on, Captain. You know me. I'm just trying to get the story.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) Like we're actually going to get any real support...
+- kind: dialogue
+  speaker: forensics
+  text: (chimes in) Oh, come on, Deshawn. We know the drill. They'll deny our requisitions
+    and we'll get stuck with last-gen gear.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the phone) Sorry, Davey. I know you're looking for something juicy,
+    but I really don't have anything on the Commissioner. Yet.
+- kind: dialogue
+  speaker: analyst
+  text: (frowning) I don't think it's going to be that easy to pin anything on The
+    Scuttle's real operators. They're always one step ahead.

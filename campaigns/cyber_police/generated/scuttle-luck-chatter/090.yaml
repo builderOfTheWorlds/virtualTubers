@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:33.973788+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck is just a myth, guys, they're making it up as they go along.
+- kind: dialogue
+  speaker: analyst
+  text: I don't know, I've been through the code, it's too clean to be just a coincidence.
+- kind: dialogue
+  speaker: captain
+  text: Clean code doesn't mean clean money, Priya. I've seen their finances, it's
+    a mess.
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's a ghost crew. They're not even real people.
+- kind: dialogue
+  speaker: forensics
+  text: But that's the thing, Marcus, the data says they're very real. They're just...
+    resourceful.
+- kind: dialogue
+  speaker: quartermaster
+  text: Resourceful? That's just a euphemism for 'we don't have a clue what they're
+    doing'.
+- kind: dialogue
+  speaker: press
+  text: And I've got a quote from the Commodore, who's suddenly very concerned about
+    our 'journalistic standards'.

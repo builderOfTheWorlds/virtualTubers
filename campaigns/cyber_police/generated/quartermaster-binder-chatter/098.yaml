@@ -1,0 +1,16 @@
+id: quartermaster-binder-chatter
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:06.162036+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I have a feeling that 'the eventual inquiry' binder is going to grow some
+    more.
+- kind: dialogue
+  speaker: quartermaster
+  text: Maybe we'll get lucky and the new 3D scanner will make it.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (laughs) "Lucky" with our budget? I think we''re due for a
+    miracle.'

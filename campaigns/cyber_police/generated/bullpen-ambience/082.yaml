@@ -1,0 +1,46 @@
+id: bullpen-ambience
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:17.885022+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, all.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, ma''am.'
+- kind: dialogue
+  speaker: analyst
+  text: Still no word from the ASIO rep about the new encryption backdoor.
+- kind: dialogue
+  speaker: agent
+  text: Got the new servers from the tender online, but they're not recognizing my
+    credentials.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is running some tests on the recent "gift" from an anonymous source.
+- kind: dialogue
+  speaker: press
+  text: Still need some help getting my story across to the paper.
+- kind: dialogue
+  speaker: quartermaster
+  text: The requisition for new laptops just got denied again.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s focus on the briefing for today.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (looks up from her laptop) I''ve got a lead on that compromised
+    system in New South Wales.'
+- kind: dialogue
+  speaker: analyst
+  text: (types rapidly on her keyboard) I've been digging into some chatter from the
+    Dark Web.
+- kind: dialogue
+  speaker: agent
+  text: ( muttering to himself) Great, great, just what we need. Another encrypted
+    mess.
+- kind: dialogue
+  speaker: forensics
+  text: (walks over to the evidence locker, hands on hips) I'm not touching anything
+    new until I see the warrants.

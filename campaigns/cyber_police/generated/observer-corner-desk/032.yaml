@@ -1,0 +1,39 @@
+id: observer-corner-desk
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:22.370863+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Studying the link charts, trying to connect the dots
+- kind: dialogue
+  speaker: agent
+  text: Re-checking the network maps for any anomalies
+- kind: dialogue
+  speaker: forensics
+  text: Scanning the new evidence for any interesting patterns
+- kind: dialogue
+  speaker: press
+  text: Taking notes on the press release draft, still trying to get a quote from
+    the Captain
+- kind: dialogue
+  speaker: quartermaster
+  text: Counting inventory in the supply cage, making sure everything is accounted
+    for
+- kind: dialogue
+  speaker: captain
+  text: Glancing around the room, making sure everyone is on task
+- kind: dialogue
+  speaker: detective
+  text: Frowning at his notes, trying to make sense of the case details
+- kind: dialogue
+  speaker: analyst
+  text: Catching the Observer's eye for a brief moment, then looking away
+- kind: dialogue
+  speaker: agent
+  text: Shrugging at the Observer, acknowledging his presence without acknowledging
+    him
+- kind: narration
+  speaker: captain
+  text: 'Observer: Sitting at his desk, watching the team with an intensity that''s
+    almost palpable'

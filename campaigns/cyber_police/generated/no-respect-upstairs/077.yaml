@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:13.498895+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get started on the briefing.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's latest post on the screen.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Yeah, because we all know the public's safety is in good hands...
+- kind: dialogue
+  speaker: forensics
+  text: I've got the forensics results on the latest hack.
+- kind: dialogue
+  speaker: press
+  text: (reading from a screen) "Cyber Cops Can't Catch the Scuttle" - that's the
+    headline on the Newscorp website.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Just another day, I guess.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (skeptical) Just another day indeed.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (grinning) Well, at least we''ve got each other.'

@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 178
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:52.445696+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning briefing will be at 07:00.
+- kind: dialogue
+  speaker: detective
+  text: Need to review yesterday's case files before we start.
+- kind: dialogue
+  speaker: analyst
+  text: Got a lead on a new mirror on The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: Still waiting on the Quartermaster to requisition that new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: Got the lab results on that drive we seized last week.
+- kind: dialogue
+  speaker: press
+  text: Need to check in with our reporter friend about the upcoming story.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on approval for those spare parts.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a way to track the chatter spike.
+- kind: dialogue
+  speaker: detective
+  text: Let's get the team together and discuss.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Like it matters, we'll just get paged in at 3 AM anyway...
+- kind: dialogue
+  speaker: forensics
+  text: (sipping cold coffee) Ugh, need a refill on this.
+- kind: dialogue
+  speaker: quartermaster
+  text: ( typing) Requisitioned two new laptops, finally.

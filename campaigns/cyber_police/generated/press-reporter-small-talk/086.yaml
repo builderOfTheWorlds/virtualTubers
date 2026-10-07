@@ -1,0 +1,31 @@
+id: press-reporter-small-talk
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:19.695296+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get started. We've got a new lead from the one friendly
+    reporter.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to start reviewing the case files, see if anything stands out.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests the hackers are using a new encryption method, I'll
+    start digging into it.
+- kind: dialogue
+  speaker: agent
+  text: I'll check if our systems have any vulnerabilities that could be exploited.
+- kind: dialogue
+  speaker: forensics
+  text: I'll analyze the evidence we've collected so far, see if we can find any patterns.
+- kind: dialogue
+  speaker: press
+  text: I'll make a few calls, see if any of my contacts have any information.
+- kind: dialogue
+  speaker: quartermaster
+  text: We've got a few equipment requisitions in, nothing critical.
+- kind: narration
+  speaker: captain
+  text: 'THE OBSERVER:'

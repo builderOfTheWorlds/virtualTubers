@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:34.637553+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We're getting a memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: Ah, great. What's the "computer thing" this time?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Like we don't know what we're dealing with
+- kind: dialogue
+  speaker: agent
+  text: (reading) "Further instructions on the Scuttle investigation will be forthcoming."
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) Yeah, because "forthcoming" is a time-stamp
+- kind: dialogue
+  speaker: press
+  text: (over the intercom) Anyone seen Davey? I need a comment for the Scuttle article
+- kind: dialogue
+  speaker: quartermaster
+  text: (under her breath) Like we'd ever get a real budget
+- kind: dialogue
+  speaker: captain
+  text: (smirking) Some things never change.

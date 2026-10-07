@@ -1,0 +1,35 @@
+id: quartermaster-binder-chatter
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:11.721023+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: We need a new printer.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (muttering) And probably not one that can handle the workload
+    we actually have.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm looking at the traffic patterns, and there's been some interesting chatter
+    on the dark web.
+- kind: dialogue
+  speaker: agent
+  text: Nothing new on the login trail, but the encryption on that latest Scuttle
+    package is giving me a headache.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the evidence from the last raid, and I think I found
+    something that might be worth looking at.
+- kind: dialogue
+  speaker: press
+  text: You guys know the press release from yesterday is already getting picked apart
+    on the blogosphere. We need to be ready for the fallout.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Another denied requisition. I'm starting to think "the eventual
+    inquiry" is going to be a book.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving. We've got a lead to chase.

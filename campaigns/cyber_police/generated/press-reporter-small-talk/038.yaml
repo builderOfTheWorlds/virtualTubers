@@ -1,0 +1,26 @@
+id: press-reporter-small-talk
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:47.231582+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, unit. Gather ''round.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: What''s the directive, Captain?'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle chatter spiked again. Talking about a new mirror.
+- kind: dialogue
+  speaker: agent
+  text: Mirror? What kind of mirror?
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the footage. Nothing conclusive, but...
+- kind: dialogue
+  speaker: press
+  text: Need to see it, Davey.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions up. Nothing new, but the coffee machine is still on the fritz.

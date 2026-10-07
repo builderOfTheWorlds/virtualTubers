@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 131
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:04.908186+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. Let's get started.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I've got the new mirror to go over.
+- kind: dialogue
+  speaker: analyst
+  text: Got the chatter spike to analyze.
+- kind: dialogue
+  speaker: agent
+  text: Still working on getting the comms log from the tip.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a server to process from yesterday's raid.
+- kind: dialogue
+  speaker: press
+  text: Nothing new on the press front.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are due in a day, let's keep track of what we need.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Anyone need a cup of coffee? Mine''s going cold.'
+- kind: dialogue
+  speaker: analyst
+  text: No, thanks. I'm good.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering to Deshawn) Did you get that report from Forensics yet?
+- kind: dialogue
+  speaker: agent
+  text: (whispering back) Not yet, I'll call them.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (sitting at her desk, staring at a screen) |I think I see
+    a pattern...'

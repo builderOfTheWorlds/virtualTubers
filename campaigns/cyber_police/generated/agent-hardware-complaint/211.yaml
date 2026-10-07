@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 211
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:36.126314+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can someone check the connectivity to that new server?
+- kind: dialogue
+  speaker: analyst
+  text: Nothing new on The Scuttle's end, still crawling through their usual backdoors.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get to it. What''ve you got for me, people?'
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get a trace tool up, but the hardware is being stubborn.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) This is ridiculous, we're still running on 2018 hardware...
+- kind: dialogue
+  speaker: press
+  text: (to Deshawn) What did you actually find, Agent?
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the room) Requisitions are due today. Anyone need anything?

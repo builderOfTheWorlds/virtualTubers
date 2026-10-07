@@ -1,0 +1,26 @@
+id: observer-corner-desk
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:04.383879+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Checking the security feeds for any anomalies.
+- kind: dialogue
+  speaker: analyst
+  text: Still waiting for the updated link charts from the analyst team.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is processing a new drive from a possible Scuttle mirror.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the Commissioner's office, no details.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on the requisition for new equipment to arrive.
+- kind: dialogue
+  speaker: captain
+  text: The Observer is watching again.
+- kind: dialogue
+  speaker: detective
+  text: Trying to get an update from Forensics on the drive they're processing.

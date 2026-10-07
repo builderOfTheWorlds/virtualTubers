@@ -1,0 +1,34 @@
+id: quartermaster-binder-chatter
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:03.353031+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't know how much more of this I can take, our equipment is a joke.
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, someone's going to get hurt with this outdated gear.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Another day, another requisition denied...
+- kind: dialogue
+  speaker: press
+  text: (whispering to the Quartermaster) You know, I've seen better-maintained equipment
+    at a middle school.
+- kind: dialogue
+  speaker: analyst
+  text: (sarcastically) Oh, I'm sure the Commissioner's office would be devastated
+    if we got some decent gear.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (to the Captain) Ma''am, we need to get serious about our equipment,
+    it''s holding us back.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to Detective Thorn) I know, Marcus, but we can''t just magic
+    new gear out of thin air.'
+- kind: dialogue
+  speaker: quartermaster
+  text: (jokingly) Ah, come on, Captain, don't make us wait for the eventual inquiry
+    to happen...

@@ -1,0 +1,43 @@
+id: bullpen-ambience
+take: 182
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:18.312264+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Ah, good, Priest's got the coffee going again.
+- kind: dialogue
+  speaker: detective
+  text: Anyone seen the briefing notes from this morning?
+- kind: dialogue
+  speaker: analyst
+  text: I think I have them on my printer.
+- kind: dialogue
+  speaker: agent
+  text: Can I have them? We need to get moving on the Jenkins case.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, can we just get the printer working first?
+- kind: dialogue
+  speaker: press
+  text: (sipping coffee) Ah, great, it's cold already.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Anyone need any requisitions processed?
+- kind: dialogue
+  speaker: analyst
+  text: (from the Comms Room) Can someone help me with the console? I think the wires
+    got crossed.
+- kind: dialogue
+  speaker: forensics
+  text: (from Forensics' desk) I think I can take a look.
+- kind: dialogue
+  speaker: press
+  text: (from Press' desk) Okay, okay, I think I've got the story for tomorrow.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Desk 6, you need to sign out the 3D printer before
+    you leave.
+- kind: dialogue
+  speaker: detective
+  text: (from the door) Oh, I'll take care of it.

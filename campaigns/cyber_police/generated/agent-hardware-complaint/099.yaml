@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:22.456171+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, come on. This is a great lead, but we need the trace tool
+    running

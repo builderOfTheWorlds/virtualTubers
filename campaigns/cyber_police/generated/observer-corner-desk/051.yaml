@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:21.472908+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Analyst's charts are looking interesting, but I want to see some concrete
+    leads before we move on that.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure I agree with the Captain's assessment, but I'll dig deeper into
+    the chatter spike.
+- kind: dialogue
+  speaker: agent
+  text: I'm running some tests on the new mirror, see if we can get a footprint on
+    it.
+- kind: dialogue
+  speaker: forensics
+  text: I've got nothing on the raid tech lead, Agent Okafor is going to have to get
+    creative.
+- kind: dialogue
+  speaker: press
+  text: I've got a meeting with the press secretary, maybe we can get some traction
+    on the story.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on those requisitions from HQ, fingers crossed they approve
+    the new hardware.
+- kind: dialogue
+  speaker: agent
+  text: (glancing at the Observer) You'd think he'd be more interested in our progress.

@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 161
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:21.585474+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, if we assume the Bosun is the one leading the mirror strategy, then maybe
+    they're using a new protocol to handle the traffic
+- kind: dialogue
+  speaker: captain
+  text: Not again, Priya, we need to focus on getting a new warrant in place, and
+    I want you to run through the evidence we've collected so far
+- kind: dialogue
+  speaker: analyst
+  text: But Captain, the data suggests a pattern of -
+- kind: dialogue
+  speaker: agent
+  text: Ma'am, we've got a possible hit on the proxy chain, but I need you to sign
+    off on this warrant before we can move forward
+- kind: dialogue
+  speaker: forensics
+  text: I'm seeing some weird activity on the seized drives, might be a sign that
+    they've encrypted their data again
+- kind: dialogue
+  speaker: press
+  text: Uh, Captain, I think we might have a problem, the press is calling, and I
+    have a feeling it's not just about the story
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned more equipment, and I've also got a request from Forensics
+    for some additional resources
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a thread here, Captain, if we follow it, it might lead us to
+    the Bosun
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's run with it, Priya, but I want you to keep me updated, and
+    Deshawn, get that warrant in place

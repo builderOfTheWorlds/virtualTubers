@@ -1,0 +1,27 @@
+id: press-reporter-small-talk
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:10.294370+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Hey Priya, what''s new in the world of Scuttle-adjacent news?'
+- kind: narration
+  speaker: captain
+  text: 'PR: Just the usual, Davey. The paper''s still poking fun at us, but I managed
+    to slip a small article on the side about the city''s cybersecurity efforts.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Nice work. Any rumors about new hardware coming our way?'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Nah, nothing I''ve heard. Still waiting on those requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Anyway, how''s the morning been?'
+- kind: narration
+  speaker: captain
+  text: 'PR: It''s been fine, I guess. Just the usual hum of the newsroom.'
+- kind: narration
+  speaker: captain
+  text: 'DM-P: Alright, keep me posted if anything breaks. I''ll talk to you later.'

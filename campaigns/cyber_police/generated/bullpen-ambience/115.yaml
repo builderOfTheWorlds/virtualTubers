@@ -1,0 +1,33 @@
+id: bullpen-ambience
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:25.144782+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm just gonna go get another cup of coffee, not like it's gonna make a difference.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, just be quick, we''ve got a case briefing in an hour.'
+- kind: dialogue
+  speaker: forensics
+  text: (to herself, quietly) I really need to get this report done, but I just can't
+    focus.
+- kind: dialogue
+  speaker: analyst
+  text: (sighing) What's with the constant hum from the monitor bank? Can't they just
+    replace them already?
+- kind: dialogue
+  speaker: press
+  text: (to the room) You know, I'm starting to think the Scuttle has a way of...
+- kind: dialogue
+  speaker: quartermaster
+  text: (to herself, as she works) I swear, I've signed out more equipment this week
+    than I have all month.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to the room) Alright, people, let''s get back to work. We''ve
+    got a case to crack.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (muttering) Just another day, just another dollar...'

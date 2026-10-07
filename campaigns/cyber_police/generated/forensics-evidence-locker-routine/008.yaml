@@ -1,0 +1,42 @@
+id: forensics-evidence-locker-routine
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:52.704294+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Approaching the evidence locker, I'm checking the seal and the log.
+- kind: dialogue
+  speaker: agent
+  text: Logging in the evidence, it's case file 2023-001, digital storage devices
+    and a network cable.
+- kind: dialogue
+  speaker: analyst
+  text: Starting the chain-of-custody documentation, it's a standard procedure.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Confirming the seal is intact and the evidence is properly
+    logged.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioning a new set of gloves for Forensics, they're going to need them
+    for the next step.
+- kind: dialogue
+  speaker: forensics
+  text: Now, I'm scanning the devices for any identifying marks or serial numbers.
+- kind: dialogue
+  speaker: analyst
+  text: Running a preliminary analysis on the devices, looking for any signs of encryption
+    or hidden compartments.
+- kind: dialogue
+  speaker: agent
+  text: Obtaining a warrant for the devices, we'll need to get a court order to access
+    the contents.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Confirming that the warrant is in order and that the evidence
+    is properly secured.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Notifying the lab that the evidence is ready for processing, we'll need to
+    get it into the queue ASAP.

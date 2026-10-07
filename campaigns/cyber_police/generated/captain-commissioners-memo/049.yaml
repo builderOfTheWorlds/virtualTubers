@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:38.450677+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Frustration mounts every time the Commissioner's office dismisses our work
+    as "the computer thing".
+- kind: dialogue
+  speaker: detective
+  text: Can't say I'm surprised, but it still grates.
+- kind: dialogue
+  speaker: analyst
+  text: At least it's consistent.
+- kind: dialogue
+  speaker: agent
+  text: Consistent and infuriating.
+- kind: dialogue
+  speaker: forensics
+  text: (silence)
+- kind: dialogue
+  speaker: press
+  text: (silence)
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) "the computer thing" indeed...

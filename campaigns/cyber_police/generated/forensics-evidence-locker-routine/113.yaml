@@ -1,0 +1,30 @@
+id: forensics-evidence-locker-routine
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:00.455335+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker, scanning for any discrepancies in the chain
+    of custody
+- kind: dialogue
+  speaker: agent
+  text: Retrieving a data drive from the locker, handing it to Forensics with a nod
+- kind: dialogue
+  speaker: analyst
+  text: Examining the drive's contents, verifying the timestamps and hash values
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Entering the code to access the drive''s encrypted contents,
+    confirming the identity of the device'
+- kind: dialogue
+  speaker: quartermaster
+  text: Reviewing the requisition log, ensuring that all necessary documentation is
+    up to date
+- kind: dialogue
+  speaker: press
+  text: Noting the lack of press requests for the day, a rare occurrence
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Addressing the unit at 07:00, outlining the day''s priorities
+    and objectives'

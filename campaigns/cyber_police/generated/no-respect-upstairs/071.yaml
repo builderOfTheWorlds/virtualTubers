@@ -1,0 +1,43 @@
+id: no-respect-upstairs
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:39.840594+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Ah, Thorn, you need backup for the umpteenth time. Let me see if
+    I can find you some spare uniforms...'
+- kind: dialogue
+  speaker: captain
+  text: Okafor, how's the analysis coming along on the Scuttle's new script?
+- kind: dialogue
+  speaker: analyst
+  text: (Priya) I'm stuck on this one snippet, Captain. It's a joke about a "cyber
+    cop" getting outsmarted by a script kiddie.
+- kind: dialogue
+  speaker: agent
+  text: (Deshawn) I think I found a match on one of the hashes, but it's going to
+    take some time to verify.
+- kind: dialogue
+  speaker: forensics
+  text: (Hana) I'm running the lab in the basement. It's a good thing you're not here
+    on an actual crime scene.
+- kind: dialogue
+  speaker: press
+  text: '(Davey) "Cyber Police in Cyber Crime Chaos: Scuttle Mocks Department Again."
+    - headline on the monitor'
+- kind: dialogue
+  speaker: quartermaster
+  text: (Teresa) I just got word from procurement. That new forensic software you
+    asked for, Captain? Not approved.
+- kind: dialogue
+  speaker: captain
+  text: Some day, people are going to take us seriously. Some day.
+- kind: dialogue
+  speaker: detective
+  text: (Marcus) I'm just saying, it would be nice to have some actual support. Just
+    for once.
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: (voice over comms) Backup en route, Thorn. You can expect to wait
+    at least 20 minutes.'

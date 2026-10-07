@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:37.687639+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, one of these days I'll get something approved.
+- kind: dialogue
+  speaker: detective
+  text: (smirks) I've got a few ideas on how we could "improve" our chances.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, the analysts are saying we should have gotten that requisition approved
+    last week.
+- kind: dialogue
+  speaker: agent
+  text: I don't know about you guys, but I'm already dreading the eventual inquiry.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) The duck video is still stuck on repeat, by the way.
+- kind: dialogue
+  speaker: press
+  text: Morning, all! I've got a few requests to discuss with the Captain.

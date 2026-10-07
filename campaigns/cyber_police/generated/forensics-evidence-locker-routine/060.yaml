@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:38.447529+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Approaching the evidence locker.
+- kind: dialogue
+  speaker: analyst
+  text: What are you here for?
+- kind: dialogue
+  speaker: forensics
+  text: Chain-of-custody logs.
+- kind: dialogue
+  speaker: quartermaster
+  text: Which specific item?
+- kind: dialogue
+  speaker: forensics
+  text: The latest drive from the O'Connor raid.
+- kind: dialogue
+  speaker: agent
+  text: Let me check the locker.
+- kind: dialogue
+  speaker: forensics
+  text: The combination is 4-3-1-9.
+- kind: dialogue
+  speaker: agent
+  text: Affirmative, drive is secure.
+- kind: dialogue
+  speaker: forensics
+  text: Great, now the paperwork.

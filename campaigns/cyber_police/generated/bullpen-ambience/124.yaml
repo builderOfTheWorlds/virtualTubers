@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 124
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:11.593467+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Still no word from Ashiorid on that new mirror.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm re-running the chatter analysis from last night.
+- kind: dialogue
+  speaker: agent
+  text: I'm still having trouble with the new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished reviewing the evidence from the latest raid.
+- kind: dialogue
+  speaker: press
+  text: I need to call the Times about the story.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition form for the new servers is still pending.

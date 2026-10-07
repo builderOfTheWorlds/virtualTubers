@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 126
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:36.471352+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Frustrating that the Commissioner's office can't even be bothered to get our
+    name right.
+- kind: dialogue
+  speaker: detective
+  text: '||neutral'
+- kind: dialogue
+  speaker: analyst
+  text: Maybe we should just start calling ourselves the "IT department with badges"
+    then.
+- kind: dialogue
+  speaker: agent
+  text: Don't be ridiculous, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: Someone finally has the guts to print this memo.
+- kind: dialogue
+  speaker: press
+  text: (muttering to himself) "The computer thing"... really? That's the best they've
+    got?
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling dryly) I'm sure it's not meant to be insulting.

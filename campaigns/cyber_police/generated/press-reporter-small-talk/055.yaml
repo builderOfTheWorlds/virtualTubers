@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:22.577913+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Alright, how's it going, Denny?
+- kind: narration
+  speaker: captain
+  text: 'Denny (friendly reporter contact): Just trying to stay one step ahead of
+    the press secretary, you know how it is. What''s new with the unit?'
+- kind: dialogue
+  speaker: press
+  text: Oh, same old, same old. Just trying to keep the public aware of what's really
+    going on.
+- kind: narration
+  speaker: captain
+  text: 'Denny: Well, you''re doing a good job of that. I have to say, I''m a bit
+    surprised you guys got the last case closed as quickly as you did.'
+- kind: dialogue
+  speaker: press
+  text: (laughs) Yeah, we like to think we're a bit of a anomaly in the department.
+- kind: narration
+  speaker: captain
+  text: 'Denny: I''m sure you are. Well, anyway, I should let you go. I''m sure you''re
+    all busy...'
+- kind: dialogue
+  speaker: press
+  text: Yeah, we're always busy. You know how it is. Take care, Denny!
+- kind: narration
+  speaker: captain
+  text: 'Denny: You too, Press. Talk to you soon.'

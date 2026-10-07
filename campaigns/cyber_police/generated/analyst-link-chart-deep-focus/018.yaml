@@ -1,0 +1,37 @@
+id: analyst-link-chart-deep-focus
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:59.472146+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I still can't quite see how the mirror in Berlin fits into the chain
+- kind: dialogue
+  speaker: captain
+  text: (glancing at the chart) Good, Priya. Keep working on that.
+- kind: dialogue
+  speaker: analyst
+  text: ( muttering to herself ) Assuming it's a mirror, of course...
+- kind: dialogue
+  speaker: agent
+  text: (from the next room) Captain, I've got the comms dump from the Frankfurt raid
+- kind: dialogue
+  speaker: captain
+  text: (to Deshawn) Put it on the board, Deshawn.
+- kind: dialogue
+  speaker: forensics
+  text: (from her workstation) Nothing on the hard drive, Captain. Just a rubber duck
+    video
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) That's... not unexpected.
+- kind: dialogue
+  speaker: agent
+  text: (from the next room) Captain, I'm reading some interesting chatter on the
+    dark web
+- kind: dialogue
+  speaker: captain
+  text: (to Deshawn) Okay, bring it up.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering to herself) Though I did catch something...

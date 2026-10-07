@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:35.653010+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this stupid old NetScan tool running again, but it just
+    won't behave.

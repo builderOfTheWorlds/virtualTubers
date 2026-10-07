@@ -1,0 +1,42 @@
+id: agent-hardware-complaint
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:46.898230+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can you tell me again what the problem is with this trace tool?
+- kind: dialogue
+  speaker: analyst
+  text: It's not even the right hardware, Deshawn. This is the third time this month
+    we've had to deal with a piece of software being incompatible with our gear.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because we can't even get something as simple as a trace tool right.
+    I swear, the only thing we're compatible with is our own incompetence.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Okay, okay, let''s not get into the politics of it, Deshawn.
+    Priya, what''s the status on the analysis?'
+- kind: dialogue
+  speaker: analyst
+  text: We've got a few leads, but nothing concrete yet. I need to run some more tests
+    on the evidence.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Of course we do. Because what we really need is more time to waste
+    on obsolete hardware...
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Hey, Deshawn, can I take a look at that circuit board?
+- kind: dialogue
+  speaker: agent
+  text: (sighing) Yeah, it's over here. Just great, another thing to fix because of
+    our... ( gestures to the outdated equipment) ...our wonderful hardware.
+- kind: dialogue
+  speaker: press
+  text: (entering the room) Ah, I see you're having some fun with the new trace tool.
+- kind: dialogue
+  speaker: agent
+  text: (rolling his eyes) Oh, just peachy. Because what we really need is more of
+    your "expert" opinion on how to do our jobs.

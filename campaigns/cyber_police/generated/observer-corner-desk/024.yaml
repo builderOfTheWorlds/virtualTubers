@@ -1,0 +1,28 @@
+id: observer-corner-desk
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:43.572950+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the latest chatter from last night.
+- kind: dialogue
+  speaker: detective
+  text: I'm still going over the link charts from the morning.
+- kind: dialogue
+  speaker: agent
+  text: Nothing new on the technical side, still trying to get that one router up.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the evidence from yesterday's raid, still no clear
+    IDs.
+- kind: dialogue
+  speaker: press
+  text: Don't think anyone needs managing today, but I did find a weird mention of
+    an old server.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new equipment, but I'm not holding my breath.
+- kind: narration
+  speaker: captain
+  text: ( Observer remains silent, still watching )

@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 91
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:10.969722+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Fingerprinting a seized device, need to document chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: Requesting evidence from Forensics, need the data from the raid last week.
+- kind: dialogue
+  speaker: analyst
+  text: Already on it, Captain. Can't process anything without a proper handoff from
+    Forensics.
+- kind: dialogue
+  speaker: captain
+  text: Confirm the handoff, Forensics, and make sure everything is logged.
+- kind: dialogue
+  speaker: quartermaster
+  text: Got it, Captain. All requests go through me now.
+- kind: dialogue
+  speaker: forensics
+  text: Done. All data from the raid is accounted for.

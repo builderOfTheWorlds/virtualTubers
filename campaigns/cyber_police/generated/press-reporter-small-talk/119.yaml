@@ -1,0 +1,30 @@
+id: press-reporter-small-talk
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:50.606974+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Alright, what's the latest with the Commissioner's office?
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey. Nothing new on that front. They're still trying to understand
+    why we can't just "close the computer thing."
+- kind: dialogue
+  speaker: detective
+  text: (laughs) That's a good one, Captain. I'll make sure to send them a memo on
+    how it's a lot more than just a computer thing.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I have some good news. We finally got that requisition approved
+    for the new forensic software. It's been delayed for months.
+- kind: dialogue
+  speaker: agent
+  text: About time. Now let's see if it'll actually work like it's supposed to.
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I'll believe it when I see it. Meanwhile, I've got a backlog of evidence
+    to get through.
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, people, let's get started. Who's got the morning's lead?

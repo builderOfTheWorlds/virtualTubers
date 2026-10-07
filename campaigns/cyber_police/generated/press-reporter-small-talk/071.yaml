@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:59.930887+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. Today we're chasing a lead on a new Scuttle mirror.
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the chatter spike from last night. We might have a way
+    to pinpoint their location.
+- kind: dialogue
+  speaker: analyst
+  text: According to our sources, The Scuttle's been using a compromised server in
+    an abandoned warehouse downtown.
+- kind: dialogue
+  speaker: agent
+  text: I've got a team setting up surveillance, but I'm worried we're walking into
+    a trap.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on the lab results from the last raid, but I think we might
+    have missed something.
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, I'm expecting a call from a rival outlet about our latest
+    coverage.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are still pending for the new hardware, but I'm told it's "in
+    the pipeline".
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

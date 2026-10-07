@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:49.286018+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The unit's been quiet since the Mirror case.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to take another look at the server logs.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still running some diagnostics on the compromised system.
+- kind: dialogue
+  speaker: agent
+  text: I've got the hardware team coming in to upgrade the Agent's workstation.
+- kind: dialogue
+  speaker: forensics
+  text: Just going over the lab reports from last night's shift.
+- kind: dialogue
+  speaker: press
+  text: Still waiting to hear back from The Scuttle on that anonymous tip.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Quartermaster''s log: two new laptops requisitioned, still pending approval.'

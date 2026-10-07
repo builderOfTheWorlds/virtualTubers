@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 149
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:54.389946+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can't believe I have to deal with this ancient hardware
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, it's a miracle anything still works
+- kind: dialogue
+  speaker: agent
+  text: Great, just what I need. A miracle to keep up with The Scuttle's latest tricks
+- kind: dialogue
+  speaker: forensics
+  text: At least our old friend here can still get the job done
+- kind: dialogue
+  speaker: detective
+  text: What's the holdup, Deshawn? Still can't get the trace tool up and running?
+- kind: dialogue
+  speaker: agent
+  text: Working on it, Marcus. Just trying to get this antiquated machine to cooperate

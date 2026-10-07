@@ -1,0 +1,30 @@
+id: no-respect-upstairs
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:28.044486+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Backup request for 12-47, Thorn's team, denied. ||emotion:neutral
+- kind: dialogue
+  speaker: press
+  text: CYBER POLICE STILL CAN'T CATCH A BREAK! ||emotion:happy
+- kind: dialogue
+  speaker: analyst
+  text: Can someone please tell the press corps that we have an actual real case going
+    on? ||emotion:angry
+- kind: dialogue
+  speaker: agent
+  text: Just great, another 'Scuttle's a-coming' headline. Thanks, Davey. ||emotion:disgusted
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting a weird reading on this new malware sample. ||emotion:surprised
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's move. We've got a job to do. ||emotion:neutral
+- kind: dialogue
+  speaker: detective
+  text: Somebody has to mean it, since nobody else does." ||emotion:sad
+- kind: dialogue
+  speaker: analyst
+  text: I've got the team's schedule for the next week. ||emotion:neutral

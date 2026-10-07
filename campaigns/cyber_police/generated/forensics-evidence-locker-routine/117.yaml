@@ -1,0 +1,43 @@
+id: forensics-evidence-locker-routine
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:18.263943+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking through the door now.
+- kind: dialogue
+  speaker: agent
+  text: Filing away my badge and gun.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence intake procedure starts here, in the bullpen.
+- kind: dialogue
+  speaker: analyst
+  text: I've already reviewed the case files from last night.
+- kind: dialogue
+  speaker: forensics
+  text: First, I check for any new or updated evidence.
+- kind: dialogue
+  speaker: agent
+  text: Then I confirm the chain of custody with Forensics.
+- kind: dialogue
+  speaker: forensics
+  text: This includes reviewing the intake log, the evidence tracker, and the transfer
+    records.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder ready if anyone needs anything.
+- kind: dialogue
+  speaker: forensics
+  text: Next, I check the integrity of the evidence itself, using the secure lockers
+    and the chain of custody protocols.
+- kind: dialogue
+  speaker: analyst
+  text: The Analyst's notes are up to date, as always.
+- kind: dialogue
+  speaker: forensics
+  text: Finally, I document the evidence and update the intake log.
+- kind: dialogue
+  speaker: agent
+  text: I'll review the chain of custody one more time before we wrap up.

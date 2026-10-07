@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 170
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:06.275014+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Analyst is probably getting somewhere with that code.
+- kind: dialogue
+  speaker: detective
+  text: I'm just trying to get this case off the board, Rosalind.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found the backdoor, but I need another week to crack it.
+- kind: dialogue
+  speaker: agent
+  text: I just got a message from The Scuttle's end, but I'm not sure how to trust
+    it.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a few hours of footage to review from that cafe, nothing obvious
+    yet.
+- kind: dialogue
+  speaker: press
+  text: We should get some real coffee in here, this stuff's been sitting out since
+    morning.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) And another one for the binder...
+- kind: narration
+  speaker: captain
+  text: 'Observer: (stands up and walks over to the monitor bank, looking at the screens)'

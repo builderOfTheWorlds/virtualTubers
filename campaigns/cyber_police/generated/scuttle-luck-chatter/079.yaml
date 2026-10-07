@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 79
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:08.772818+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Bosun's always one step ahead.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and they never bother to cover their tracks, it's like they're toying
+    with us.
+- kind: dialogue
+  speaker: forensics
+  text: More like, they're toying with the press. Every time we think we're close,
+    they just release a banner and get free coverage.
+- kind: dialogue
+  speaker: captain
+  text: Enough, let's not speculate. We have a team to lead, a lead to follow.
+- kind: dialogue
+  speaker: detective
+  text: Speculate all you want, I'm convinced we have someone on the inside.
+- kind: dialogue
+  speaker: quartermaster
+  text: Now that's just paranoid, Marcus.
+- kind: dialogue
+  speaker: press
+  text: Actually, I think it's possible. We've all seen how they seem to know our
+    every move.

@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:54.710724+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, it's the Bosun who's always one step ahead.
+- kind: dialogue
+  speaker: quartermaster
+  text: But what's the point of even having a Bosun if they're just going to disappear
+    like a ghost?
+- kind: dialogue
+  speaker: detective
+  text: We're just not doing enough, we're not investing in the right tech, and we're
+    not coordinating with other departments...
+- kind: dialogue
+  speaker: analyst
+  text: Maybe it's not about the tech, maybe it's about the Commodore being a genius
+    and us just being dumb.
+- kind: dialogue
+  speaker: agent
+  text: Can we at least give them some credit for being consistent?
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Consistent in their ability to evade us, yes.
+- kind: dialogue
+  speaker: press
+  text: (leaning in) I've got a source who says they're getting close to catching
+    one of the Quartermasters...

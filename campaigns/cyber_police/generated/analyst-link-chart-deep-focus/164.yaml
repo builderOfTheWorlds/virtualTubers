@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 164
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:26.877473+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: muttering to herself, 'The thread I need is still missing from the VOSK-2020
+    dataset, could be a minor anomaly, could be a major clue... ||emotion:neutral'

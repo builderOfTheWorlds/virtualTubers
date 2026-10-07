@@ -1,0 +1,28 @@
+id: quartermaster-binder-chatter
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:16.175321+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think the eventual inquiry will be a joke.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Someone''s going to have to sign off on the denied requisitions
+    eventually.'
+- kind: dialogue
+  speaker: analyst
+  text: I don't know what's more frustrating, the lack of resources or the lack of
+    understanding from our own department.
+- kind: dialogue
+  speaker: agent
+  text: Hey, at least we're consistent.
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting to think we should just ask The Scuttle to sponsor our operations.
+- kind: dialogue
+  speaker: press
+  text: Well, someone has to mean it, since nobody else does.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get to it. What have we got for today?'

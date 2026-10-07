@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:35.043369+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Alright, so if we're assuming the Bosun's protocol is a zero-knowledge proof,
+    that means they can always find a way to keep one step ahead of us

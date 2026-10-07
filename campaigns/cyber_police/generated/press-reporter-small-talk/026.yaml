@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:35.592691+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain, how's it going?
+- kind: dialogue
+  speaker: captain
+  text: Davey, good to catch you. Just making a few calls, nothing too out of the
+    ordinary.
+- kind: dialogue
+  speaker: press
+  text: Yeah, same here. I've got a piece about the new surveillance bill coming up.
+- kind: dialogue
+  speaker: captain
+  text: Ah, great, keep me posted on that. We might need to send out a statement.
+- kind: dialogue
+  speaker: press
+  text: Will do. Actually, I was wondering if I could get a quote from Deshawn on
+    the whole...
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: (interrupting) Morning, Captain. I''ve got a few updates
+    on the current lead.'
+- kind: dialogue
+  speaker: press
+  text: (laughing) Oh, hi Deshawn! Sorry to interrupt, but I promise I'll be quick.

@@ -1,0 +1,26 @@
+id: no-respect-upstairs
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:34.143343+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Backup request denied, Thorn.
+- kind: dialogue
+  speaker: detective
+  text: What, again?
+- kind: dialogue
+  speaker: analyst
+  text: Can you tell me why we're still getting denied?
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: Because that''s just what they do, Priya.'
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Like we're begging for scraps...
+- kind: dialogue
+  speaker: press
+  text: '(on monitor) "Cyber Cops: Still Chasing, Still Failing" - SCUTTLE.NET'
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) We're going to have to reorder the hardware requisition... again.

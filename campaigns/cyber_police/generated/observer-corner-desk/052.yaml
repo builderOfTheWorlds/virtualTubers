@@ -1,0 +1,44 @@
+id: observer-corner-desk
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:30.003483+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Good morning.
+- kind: dialogue
+  speaker: agent
+  text: Morning.
+- kind: dialogue
+  speaker: forensics
+  text: Morning.
+- kind: dialogue
+  speaker: press
+  text: Good morning, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: analyst
+  text: (leaning back in chair, gazing at the Observer) I wonder what he's looking
+    at.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (without looking up from the case files) Anyone have anything
+    for the briefing?'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (nodding) Yes. We''ve got a new mirror to track.'
+- kind: dialogue
+  speaker: analyst
+  text: (nodding, eyes still on the Observer) And the intelligence suggests it's connected
+    to the chatter spike from yesterday.
+- kind: dialogue
+  speaker: agent
+  text: (sitting up straight) I'm on it, Captain.

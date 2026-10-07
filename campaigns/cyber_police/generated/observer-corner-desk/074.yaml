@@ -1,0 +1,36 @@
+id: observer-corner-desk
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:25.161601+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any new chatter in the usual channels.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the new tracing software installed, but it's having
+    issues with the firewall.
+- kind: dialogue
+  speaker: forensics
+  text: Just processed the latest batch of evidence from the last raid. Nothing out
+    of the ordinary.
+- kind: dialogue
+  speaker: press
+  text: Just got a message from the Captain's office about a possible leak in the
+    media.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on approval for the new forensic scanner. Another week, another
+    rejection.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Just got a report from Forensics that the latest tracing attempt
+    is going nowhere.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (glancing at the Observer) We need to stay focused, people.
+    This is what we''ve been working for.'
+- kind: narration
+  speaker: captain
+  text: (Rosiland Agar looks back at her screen, then at the Observer again, but doesn't
+    speak directly to him.)

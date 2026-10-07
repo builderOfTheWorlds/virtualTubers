@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:08.302849+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: It's not like we're trying to catch a ghost, you know.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Davey, it's just a joke. The Scuttle's got more life than most actual
+    pirate sites.
+- kind: dialogue
+  speaker: analyst
+  text: That's precisely the point, Deshawn. They've got more tech, more resources...
+    it's not just "lucky" anymore.
+- kind: dialogue
+  speaker: forensics
+  text: If I had to guess, I'd say they're either getting inside help or have a mole
+    within the department.
+- kind: dialogue
+  speaker: quartermaster
+  text: Now that's what I call Scuttle luck.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You think we''re just too incompetent to catch them?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: That''s not the point, Thorn. The point is we''ve got a case
+    that''s been open longer than some of us have been with the department.'

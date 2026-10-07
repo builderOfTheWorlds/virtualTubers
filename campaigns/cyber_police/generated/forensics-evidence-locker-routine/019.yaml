@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:46.068052+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker is sealed and waiting for the day's intake.
+- kind: dialogue
+  speaker: agent
+  text: Let me get the paperwork started.
+- kind: dialogue
+  speaker: analyst
+  text: I'll bring over the case files from the bullpen.
+- kind: dialogue
+  speaker: captain
+  text: Good, good. Keep the chain of custody clean.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the drive ready to accept evidence.
+- kind: dialogue
+  speaker: agent
+  text: Okay, I've got the first item listed.
+- kind: dialogue
+  speaker: analyst
+  text: That's a thumb drive from an anonymous tip.
+- kind: dialogue
+  speaker: captain
+  text: Let's get it logged and see if it matches our current lead.
+- kind: dialogue
+  speaker: forensics
+  text: I'm scanning for any signs of tampering.
+- kind: dialogue
+  speaker: agent
+  text: And I'll get the paperwork started on the receipt.

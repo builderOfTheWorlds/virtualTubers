@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 190
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:23.563053+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this ancient laptop is still on the Windows XP service pack that's
+    like...
+- kind: dialogue
+  speaker: forensics
+  text: I'm not saying it's the laptop, Deshawn, but I am saying the whole unit needs
+    an upgrade.
+- kind: dialogue
+  speaker: analyst
+  text: I've been trying to get the requisition approved for months, but it keeps
+    getting delayed.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) I'll send another request, Priya. But honestly, it's like trying
+    to get blood from a stone.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (interrupting) Alright, alright, let''s not get bogged down
+    in bureaucracy. Deshawn, can you get that trace tool running yet?'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (rolling his eyes) Oh joy, another day of trying to get something
+    to work around here.'

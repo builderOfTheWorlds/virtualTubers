@@ -1,0 +1,26 @@
+id: observer-corner-desk
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:10.863925+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: analyst
+  text: The analyst's dashboard is looking a little quiet.
+- kind: dialogue
+  speaker: agent
+  text: Ran a sweep on the usual channels and didn't find anything out of the ordinary.
+- kind: dialogue
+  speaker: forensics
+  text: No new evidence came in overnight.
+- kind: dialogue
+  speaker: press
+  text: I got a tip from a source that might be worth looking into.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're still short a few units of the new antivirus software.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

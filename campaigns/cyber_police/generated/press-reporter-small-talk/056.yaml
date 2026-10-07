@@ -1,0 +1,8 @@
+id: press-reporter-small-talk
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:23.195957+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain, how's it going?

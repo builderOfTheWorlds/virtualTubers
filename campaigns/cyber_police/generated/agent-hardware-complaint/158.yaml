@@ -1,0 +1,39 @@
+id: agent-hardware-complaint
+take: 158
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:25.700477+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this machine is older than I am.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the holdup?'
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the network up, but the firmware is... well, you know.
+- kind: dialogue
+  speaker: forensics
+  text: Can I take a look?
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on why the unit is running outdated equipment?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've already requisitioned new hardware, but it's taking forever to get approved.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s focus on the case at hand.'
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because that'll fix everything.
+- kind: dialogue
+  speaker: analyst
+  text: I'm just trying to get this trace tool running.
+- kind: dialogue
+  speaker: forensics
+  text: I think I found the issue.
+- kind: dialogue
+  speaker: press
+  text: Can I get a quote on the chances of the unit actually getting the hardware
+    we need?

@@ -1,0 +1,27 @@
+id: quartermaster-binder-chatter
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:21.269693+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m starting to think we''ll never get our hands on that new scanner.'
+- kind: narration
+  speaker: captain
+  text: 'MO: The denied-requisition binder is getting a lot of love today.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''ve been through it. Nothing''s changed.'
+- kind: narration
+  speaker: captain
+  text: 'PND: According to the intel, The Scuttle''s been quiet on the usual channels.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''m still waiting on those spare batteries, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: The press is already sniffing around. We need to keep them off our backs.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ll get to work on that requisition. Maybe we''ll get lucky this
+    time.'

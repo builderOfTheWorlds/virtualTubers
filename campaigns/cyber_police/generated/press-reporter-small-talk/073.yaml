@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:13.272191+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain, how's it going?
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey. Not too bad, just getting the briefing together.
+- kind: dialogue
+  speaker: agent
+  text: Just got word from the lab, we've got a possible match on the server IP.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the chatter logs, and I think I've found a pattern.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing much from forensics, just a bunch of dead ends.
+- kind: dialogue
+  speaker: quartermaster
+  text: Your requisition for the new software is still pending, Captain.
+- kind: dialogue
+  speaker: press
+  text: That's a shame, I was really counting on it. What's the plan for today?
+- kind: dialogue
+  speaker: captain
+  text: Okay, let's go through the briefing. Analyst, what do you have for us?
+- kind: dialogue
+  speaker: analyst
+  text: Well, it looks like The Scuttle is getting more and more brazen.
+- kind: dialogue
+  speaker: agent
+  text: I've got a plan to get inside their new mirror site.
+- kind: dialogue
+  speaker: forensics
+  text: But what about security? We can't just waltz in there.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the supply list ready, but...

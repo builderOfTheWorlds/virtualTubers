@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 152
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:21.939738+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'm not getting any sleep tonight.
+- kind: dialogue
+  speaker: detective
+  text: I'll take the night watch.
+- kind: dialogue
+  speaker: analyst
+  text: My coffee's been on the burner for an hour. It's cold.
+- kind: dialogue
+  speaker: agent
+  text: I'll grab a fresh cup from the break room.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a batch of new hardware coming in.
+- kind: dialogue
+  speaker: press
+  text: What's the story with that new mirror on The Scuttle?
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on requisition approval.

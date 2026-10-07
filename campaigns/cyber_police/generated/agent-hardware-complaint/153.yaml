@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 153
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:06.894600+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm not even sure what the right tool for the job is, let alone if I can make
+    it work with this ancient hardware.

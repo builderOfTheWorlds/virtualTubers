@@ -1,0 +1,48 @@
+id: analyst-link-chart-deep-focus
+take: 177
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:22.447788+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, let's see...if the Mirabel's proxy chain was down, but the servers were
+    still active...
+- kind: dialogue
+  speaker: agent
+  text: Captain, I'm reading an anomaly in the server's log, looks like a script was
+    running in the background...
+- kind: dialogue
+  speaker: quartermaster
+  text: What's this I see? Requisition for a new server, approved yesterday, but it's
+    not even listed on the network...
+- kind: dialogue
+  speaker: forensics
+  text: I'm not finding any matches for the IP address on our records...
+- kind: dialogue
+  speaker: press
+  text: Hi, Captain, can I get a word with you about the last press conference?
+- kind: dialogue
+  speaker: analyst
+  text: Wait a minute...if the Bosun was using the fake proxy, that means...
+- kind: dialogue
+  speaker: detective
+  text: (pausing to think) Actually, Priya, that means we might have a way to track
+    the real traffic...
+- kind: dialogue
+  speaker: agent
+  text: (skeptically) Captain, I don't think this is worth chasing, we've been down
+    this road before...
+- kind: dialogue
+  speaker: analyst
+  text: (persistent) But what if it is this time, Deshawn? What if we finally crack
+    the code...
+- kind: dialogue
+  speaker: detective
+  text: (interrupting) Okay, let's not get ahead of ourselves, Priya. We need to review
+    the evidence...
+- kind: dialogue
+  speaker: forensics
+  text: (quietly) Actually, I think I found something...
+- kind: dialogue
+  speaker: quartermaster
+  text: (irritated) What now?

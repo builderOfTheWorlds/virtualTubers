@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:53.810483+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck is a myth, guys. We just can't seem to catch them in the act.
+- kind: dialogue
+  speaker: analyst
+  text: It's not luck, Deshawn. It's a well-oiled machine.
+- kind: dialogue
+  speaker: captain
+  text: We've been over this. It's a combination of both. Sometimes we just can't
+    keep up.
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, I've seen some weird stuff in my forensics reports. Stuff
+    that suggests... maybe it's not just luck.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, come on, Hana. You're not going to suggest they have inside help, are
+    you?
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I have a source who's willing to go on the record about
+    how Scuttle luck works.

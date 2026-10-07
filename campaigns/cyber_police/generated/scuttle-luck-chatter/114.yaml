@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:46.260900+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm telling you, it's not just luck, it's strategy. They have inside help.
+- kind: dialogue
+  speaker: agent
+  text: Nah, I think it's just us being underfunded and overworked. We can't keep
+    chasing our tails like this.
+- kind: dialogue
+  speaker: analyst
+  text: That's not the point. The point is, we're never going to catch them if we
+    don't get a break.
+- kind: dialogue
+  speaker: forensics
+  text: What's the definition of "Scuttle luck" again?
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking... if we were to actually land a real arrest,
+    maybe that would change things.
+- kind: dialogue
+  speaker: captain
+  text: We've been over this, Davey. It's not just about making an arrest. We need
+    a lead, a real one.
+- kind: dialogue
+  speaker: detective
+  text: I'm starting to think it's just a numbers game. We raid, they disappear, we
+    reorganize, they reappear...
+- kind: dialogue
+  speaker: analyst
+  text: I don't know about you guys, but I'm getting tired of being told we're just
+    "meaning it" because nobody else does.

@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:18.584098+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, how's it going?
+- kind: dialogue
+  speaker: captain
+  text: Just getting the briefing set up, Davey.
+- kind: dialogue
+  speaker: press
+  text: Okay, cool. I'm planning on coming by later today.
+- kind: dialogue
+  speaker: detective
+  text: (to the others) Alright, let's get started. Today's lead is...
+- kind: dialogue
+  speaker: analyst
+  text: The Analyst's notes indicate a possible new mirror on The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: (to Priya) I've got some evidence to review. Maybe something's been missed.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some interesting chatter patterns, but they're not quite clear.
+- kind: dialogue
+  speaker: quartermaster
+  text: We need to requisition some new hardware, but I've already got a denial in
+    writing.
+- kind: dialogue
+  speaker: press
+  text: (to the others) Hey, guys, you might want to check your email. Scuttle just
+    released a new statement.
+- kind: dialogue
+  speaker: captain
+  text: Alright, that's it for the briefing. Let's get to work.
+- kind: dialogue
+  speaker: detective
+  text: (to Priya) You and Deshawn get started on that lead. I'll review the plan.
+- kind: dialogue
+  speaker: analyst
+  text: (to herself) Finally, something to work with. Maybe this will be the break
+    we need.

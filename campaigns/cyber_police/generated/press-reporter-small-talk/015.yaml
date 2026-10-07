@@ -1,0 +1,34 @@
+id: press-reporter-small-talk
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:48.764274+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Just checking in, guys. Anything exciting happening in the basement today?
+- kind: dialogue
+  speaker: captain
+  text: Davey, just a quiet day so far. Nothing we can talk about yet.
+- kind: dialogue
+  speaker: press
+  text: Okay, got it. Just making sure you're not planning anything too crazy.
+- kind: dialogue
+  speaker: detective
+  text: Actually, Davey, we do have a lead on a new server mirror that might be worth
+    exploring.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a read on it. Looks like it might be connected to a larger network.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look at the mirror and see if I can dig up anything else.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence log ready for you, Deshawn.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new from the supply office today, guys. Still waiting on that requisition
+    request.
+- kind: dialogue
+  speaker: press
+  text: Okay, sounds good. I'll talk to you guys later.

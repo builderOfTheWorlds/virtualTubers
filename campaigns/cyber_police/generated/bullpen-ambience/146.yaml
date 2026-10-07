@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 146
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:53.524236+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'll just take a look at those server logs.
+- kind: dialogue
+  speaker: detective
+  text: Mind if I join you, Captain?
+- kind: dialogue
+  speaker: analyst
+  text: I think I found the source of that IP address.
+- kind: dialogue
+  speaker: agent
+  text: Can I take a look? I'm not seeing anything on my end.
+- kind: dialogue
+  speaker: forensics
+  text: Just be careful what you touch in there, Deshawn.
+- kind: dialogue
+  speaker: press
+  text: Can someone tell me what's going on? I'm still trying to get my story straight.
+- kind: dialogue
+  speaker: quartermaster
+  text: Coffee's still warm if you want it, Davey.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering) Captain, I think I found something.
+- kind: dialogue
+  speaker: captain
+  text: (muttering) What is it, Priya?
+- kind: dialogue
+  speaker: agent
+  text: (leaning in) You'd think with all the equipment we have, we'd be able to catch
+    a break.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) Yeah, like "Scuttle luck".
+- kind: dialogue
+  speaker: press
+  text: (making a joke) Yeah, or maybe we're just not good enough.

@@ -1,0 +1,29 @@
+id: quartermaster-binder-chatter
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:58.442547+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on that approval for new encryption software, it's been
+    denied three times already.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Yeah, we''re still waiting on that software, but we can''t
+    use the old stuff anymore.'
+- kind: dialogue
+  speaker: forensics
+  text: I'm still going over the evidence from the latest Scuttle raid, but I don't
+    think we got anything useful.
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I have some good news, I managed to get a quote from the
+    mayor on our last press release.
+- kind: dialogue
+  speaker: analyst
+  text: That's nice, but we still need to figure out what the Scuttle is up to, we
+    can't just sit around waiting for another lead.
+- kind: dialogue
+  speaker: agent
+  text: I've been going over the budget for the unit, and we're seriously underfunded,
+    it's a miracle we've made it this far.

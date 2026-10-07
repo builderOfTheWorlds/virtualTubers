@@ -1,0 +1,21 @@
+id: analyst-link-chart-deep-focus
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:32.769682+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the Commodore is one person, and not just a handle,
+    then maybe the Bosun is the one calling the shots on infrastructure,
+- kind: dialogue
+  speaker: agent
+  text: I'm not sure I buy it, Priya. The Bosun's just one person, or at least that's
+    what we think.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think the Bosun's the real key to taking down the site. If we
+    can get the proxy chains and mirrors, we can break the Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: That's assuming we can even get to them, Hana. The Scuttle's got a million
+    tricks up its sleeve.

@@ -1,0 +1,42 @@
+id: forensics-evidence-locker-routine
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:04.775138+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking the evidence locker for any new or outstanding chain-of-custody requests.
+- kind: dialogue
+  speaker: agent
+  text: Good morning, Forensics. What's the morning's first priority?
+- kind: dialogue
+  speaker: forensics
+  text: Just going through the routine evidence intake, Agent. Nothing out of the
+    ordinary.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, everyone. Let''s move. Today''s priority is still
+    the Johnson account compromise.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, Captain. I''ve been going over the Analyst''s latest
+    link charts. I think I see a pattern.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Detective, I was about to discuss that with you. The chatter on
+    the Dark Web suggests...
+- kind: dialogue
+  speaker: forensics
+  text: Just processing the new drive from the previous night's raid. Nothing's been
+    flagged for red flag review yet.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. Just a heads-up that the budget meeting with Internal Affairs
+    is rescheduled for today at 14:00.
+- kind: dialogue
+  speaker: agent
+  text: Good luck with that, Quartermaster.
+- kind: dialogue
+  speaker: forensics
+  text: Continuing with the chain-of-custody paperwork. We've got a batch of drives
+    from the Thompson raid to process.

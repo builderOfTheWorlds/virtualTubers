@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 145
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:39.493227+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm starting to think our old friend the "Network Analyzer" is just a fancy
+    way of saying "slow and outdated hardware".

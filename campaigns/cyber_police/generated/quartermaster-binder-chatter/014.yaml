@@ -1,0 +1,49 @@
+id: quartermaster-binder-chatter
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:10.854115+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''m still trying to figure out where that new mirror came from.'
+- kind: narration
+  speaker: captain
+  text: 'DTM: I''m not going to waste my time chasing rumors about a new mirror. We
+    focus on the chatter spike.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Our analysis suggests the chatter spike is likely a distraction from
+    a new operation.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m picking up some weird anomalies in the chat logs, but I''ll need
+    more time to dig deeper.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve found some encrypted files on the server, but I''m having trouble
+    cracking the code.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Nothing new on the press front, but I''m getting a lot of calls about
+    the latest Scuttle banner.'
+- kind: narration
+  speaker: captain
+  text: 'TML: Still got two requisitions pending, but I''m pretty sure they''ll get
+    denied.'
+- kind: narration
+  speaker: captain
+  text: 'DTM: Alright, let''s get back to work. I need a plan for this investigation
+    by the end of the day.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ll start analyzing the chat logs again, see if I can find any connections
+    to the new operation.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll work on cracking that encryption, see if I can find any leads.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ll keep digging through the server, see if I can find any more clues.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Just a heads up, I''ll be dealing with a lot of media requests today.'

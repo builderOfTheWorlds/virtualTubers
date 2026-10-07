@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:25.091287+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Someone call the Arcade for backup
+- kind: dialogue
+  speaker: analyst
+  text: Not gonna happen.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Oh man, we're in luck.
+- kind: dialogue
+  speaker: forensics
+  text: (reading from a report) 'Cyber Police Embarrassment of the Year'...
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Morning, team.
+- kind: dialogue
+  speaker: press
+  text: '(reading from a screen) ''Cyber Crime Unit: Still Not a Real Police Department'''
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing's in 10.
+- kind: dialogue
+  speaker: analyst
+  text: What's the case of the day?
+- kind: dialogue
+  speaker: agent
+  text: I got a tip on a possible Scuttle front.
+- kind: dialogue
+  speaker: forensics
+  text: Let me see the data.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the gear.
+- kind: dialogue
+  speaker: press
+  text: (muttering) Like anyone cares...

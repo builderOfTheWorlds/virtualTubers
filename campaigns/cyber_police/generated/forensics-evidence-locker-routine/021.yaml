@@ -1,0 +1,37 @@
+id: forensics-evidence-locker-routine
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:57.228438+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The door to the evidence locker requires a biometric scan before opening.
+- kind: dialogue
+  speaker: agent
+  text: I'm going to scan in and check the evidence locker for our morning intake.
+- kind: dialogue
+  speaker: forensics
+  text: Please, Agent Okafor, enter your code.
+- kind: dialogue
+  speaker: agent
+  text: Okay. Okay, I'm in.
+- kind: dialogue
+  speaker: forensics
+  text: There are three new drives to process. Please, bring them to the evidence
+    locker.
+- kind: dialogue
+  speaker: analyst
+  text: I'll grab the drives.
+- kind: dialogue
+  speaker: forensics
+  text: Analyst Nandakumar, I need you to sign for these before I process them.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, I've got the paperwork.
+- kind: dialogue
+  speaker: forensics
+  text: Captain Agar is requesting that all evidence be logged and catalogued immediately.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Forensics, I''ve got a meeting with IA in an hour. Can you
+    make sure everything is up to date?'

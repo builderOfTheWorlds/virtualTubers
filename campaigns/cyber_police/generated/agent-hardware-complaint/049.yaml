@@ -1,0 +1,31 @@
+id: agent-hardware-complaint
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:00.016840+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm surprised I haven't managed to break this ancient laptop yet.
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's chatter patterns are getting more aggressive, I'm looking for
+    a pattern in the encryption.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Des, can you get me the lowdown on what kind of traffic we''re
+    looking at?'
+- kind: dialogue
+  speaker: forensics
+  text: I'm running the evidence through a spectral analysis, might be something in
+    the artifacts.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisition front, I've got a few things on hold pending
+    budget approval.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s review the plan, Thorn, can you walk me through
+    what we''re looking at?'
+- kind: dialogue
+  speaker: press
+  text: Can I ask, Agent, what did we actually find on the last sweep?

@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:49.394286+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: I've got a call from the Press Association, they're looking for a quote on
+    the latest Scuttle banner.
+- kind: dialogue
+  speaker: analyst
+  text: Ugh, what's the banner say this time? "The Cyber Police are so slow, they'd
+    take all day to catch a pirate if the pirate just stood still"?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, something like that. And we're not even getting the right part of the
+    joke, the Scuttle's been making fun of our funding for months now.
+- kind: dialogue
+  speaker: forensics
+  text: It's just funny because it's true, we're always scrambling for resources.
+- kind: dialogue
+  speaker: quartermaster
+  text: Maybe if we actually got the budget we're supposed to have, we'd have a shot
+    at taking down the Scuttle for real.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, come on, Teresa, you know as well as I do that's just a pipe
+    dream. We'll keep chasing our tails till someone actually cares about catching
+    pirates.
+- kind: dialogue
+  speaker: detective
+  text: (skeptical) That's not true, Captain, we've got a real shot at this one. The
+    Scuttle's got a weakness, we just need to find it.

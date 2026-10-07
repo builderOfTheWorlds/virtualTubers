@@ -1,0 +1,15 @@
+id: analyst-link-chart-deep-focus
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:13.084086+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think we're chasing a dead end on this thread
+- kind: dialogue
+  speaker: agent
+  text: You know, Priya, I've been thinking about the Bosun. If we can just get a
+    look at their protocol, I bet we could...
+- kind: dialogue
+  speaker: forensics
+  text: (suddenly) I think I have something.

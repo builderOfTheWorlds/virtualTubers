@@ -1,0 +1,44 @@
+id: scuttle-luck-chatter
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:34.452380+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not luck, it's just they're better than us.
+- kind: dialogue
+  speaker: detective
+  text: Oh come on, Deshawn, don't be salty because you got outsmarted again.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I've been looking at the Scuttle's protocols, and I think we've
+    been focusing on the wrong things.
+- kind: dialogue
+  speaker: quartermaster
+  text: Like what?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, like what, Priya?
+- kind: dialogue
+  speaker: detective
+  text: Oh, let her explain.
+- kind: dialogue
+  speaker: analyst
+  text: Well, for one, their "scuttle protocol" is actually just a really advanced
+    form of caching.
+- kind: dialogue
+  speaker: forensics
+  text: Caching? You mean like, a glorified CDN?
+- kind: dialogue
+  speaker: analyst
+  text: Exactly! And if we can crack that, we might be able to get to the Bosun's
+    identity.
+- kind: dialogue
+  speaker: captain
+  text: (entering the room) What's all the chatter about?
+- kind: dialogue
+  speaker: detective
+  text: Just discussing the finer points of Scuttle luck, ma'am.
+- kind: dialogue
+  speaker: captain
+  text: (smiling) Ah, right. Because that's what we need. More speculation.

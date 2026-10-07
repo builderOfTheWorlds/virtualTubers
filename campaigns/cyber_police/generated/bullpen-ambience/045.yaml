@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:49.774820+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 07:00.
+- kind: dialogue
+  speaker: detective
+  text: I'll prep the team for whatever The Scuttle's got in store for us.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the morning's mirror scan already, Captain.
+- kind: dialogue
+  speaker: agent
+  text: Just need to run some diagnostics on my rig.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence locker's locked, code's been changed.
+- kind: dialogue
+  speaker: press
+  text: Nothing from upstairs yet, but I'm sure that'll change.
+- kind: dialogue
+  speaker: quartermaster
+  text: Coffee's going cold, by the way.

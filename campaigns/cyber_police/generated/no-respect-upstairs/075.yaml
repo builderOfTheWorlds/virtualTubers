@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:02.615212+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, people.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Cap.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the day's schedule up on the screen.
+- kind: dialogue
+  speaker: agent
+  text: Still getting those funny looks from the others in the hall.
+- kind: dialogue
+  speaker: forensics
+  text: Just a heads-up, I'm running a little behind on the scans.
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Cops in Shambles: The Scuttle Exposé Continues'
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get that spare part for the forensics suite, Agent.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. What've we got for me today, Priya?

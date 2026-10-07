@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:38.603381+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning briefing.
+- kind: dialogue
+  speaker: detective
+  text: Scuttle's been quiet lately.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, they've been pretty active on the dark web.
+- kind: dialogue
+  speaker: agent
+  text: I've been tracking some of their channels.
+- kind: dialogue
+  speaker: forensics
+  text: Just got the forensic reports on that last hack.
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Police: Still Chasing Shadows'
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition for new hardware still pending.
+- kind: dialogue
+  speaker: captain
+  text: Somebody has to mean it, since nobody else does.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to go review the Scuttle's latest post.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a backdoor in their encryption.
+- kind: dialogue
+  speaker: agent
+  text: Let me get Hana on it.
+- kind: dialogue
+  speaker: forensics
+  text: Wake me up when it's lunchtime.

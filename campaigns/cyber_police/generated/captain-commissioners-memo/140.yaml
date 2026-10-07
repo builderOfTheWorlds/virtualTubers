@@ -1,0 +1,37 @@
+id: captain-commissioners-memo
+take: 140
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:32.129766+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a memo from the Commissioner's office about our latest... efforts.
+- kind: dialogue
+  speaker: detective
+  text: (reading over Captain's shoulder) "The computer thing"... really, is that
+    all it gets?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) I guess it's progress that they still think we're real police...
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Analyst) Someone should tell them about the warrant we got
+    last week...
+- kind: dialogue
+  speaker: forensics
+  text: '(overhearing) Oh, wait, it gets better: "Please advise on progress with the...
+    ''computer thing''."'
+- kind: dialogue
+  speaker: press
+  text: (entering the room) Scuttle banner on the front page, I see...
+- kind: dialogue
+  speaker: quartermaster
+  text: (approaching the group) And did you see the part about funding?
+- kind: dialogue
+  speaker: captain
+  text: (shaking head) I'm starting to think nobody really means it when they say
+    "we're the Cyber Police"...
+- kind: dialogue
+  speaker: detective
+  text: (skeptical) Do you think it would make a difference if we actually caught
+    someone from The Scuttle?

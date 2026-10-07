@@ -1,0 +1,38 @@
+id: bullpen-ambience
+take: 69
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:04.962783+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You'd think someone would notice when the coffee machine stops working.
+- kind: dialogue
+  speaker: forensics
+  text: I'm trying to make sense of these network logs.
+- kind: dialogue
+  speaker: analyst
+  text: Can someone check the power strip under the Analyst's desk? It's been humming
+    for hours.
+- kind: dialogue
+  speaker: press
+  text: I'll take care of it, Priya.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll bring some fresh water and check the machines while I'm at it.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Still no word on that server we requested.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m starting to think the coffee machine is just playing a
+    long game.'
+- kind: dialogue
+  speaker: forensics
+  text: Maybe it just doesn't like mornings.
+- kind: dialogue
+  speaker: analyst
+  text: I'll try to reboot it.
+- kind: dialogue
+  speaker: agent
+  text: This is ridiculous. We're a Cyber Police unit. We can't even get a decent
+    cup of coffee.

@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:36.856716+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo is not even worth the paper it's printed on.
+- kind: dialogue
+  speaker: detective
+  text: I've seen better-written parking tickets.
+- kind: dialogue
+  speaker: analyst
+  text: '"The computer thing." Like it''s some kind of nuisance.'
+- kind: dialogue
+  speaker: agent
+  text: Can't say I'm surprised.
+- kind: dialogue
+  speaker: forensics
+  text: I'd love to get my hands on the metrics for response times on this one.
+- kind: dialogue
+  speaker: press
+  text: I'll give you a quote on this, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering) I've got the memo on my desk, Captain. Want me to...

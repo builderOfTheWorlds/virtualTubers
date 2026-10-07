@@ -1,0 +1,47 @@
+id: quartermaster-binder-chatter
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:51.619364+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, if I have to fill out one more requisition form for a 3D scanner
+    that doesn't work...
+- kind: narration
+  speaker: captain
+  text: 'Desmond Okafor: You''d think they''d prioritize our needs, Teresa, but nope.
+    We''re still using that ancient software.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the latest scan of The Scuttle's mirror protocol. Looks like it's
+    adapting to our tactics again.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some promising leads on the cybertrail, but we need to get that new
+    network analyzer up and running.
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's get started. We've got a new lead to chase.
+- kind: dialogue
+  speaker: press
+  text: What's the angle on this one, Captain? Any chance it'll make the front page?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just great. Another lead to chase. And I'll have to fill out another requisition
+    form...
+- kind: dialogue
+  speaker: analyst
+  text: I've got some ideas on how to take down The Scuttle's mirror protocol, but
+    I need more data.
+- kind: dialogue
+  speaker: detective
+  text: I'll start running some simulations on the new lead. See if we can crack it.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the lab prepped for a potential break-in.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because we all know how well that usually goes.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) The eventual inquiry...

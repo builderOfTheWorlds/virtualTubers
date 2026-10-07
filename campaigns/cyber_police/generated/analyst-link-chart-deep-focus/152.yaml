@@ -1,0 +1,51 @@
+id: analyst-link-chart-deep-focus
+take: 152
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:13.474976+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't know why they're still trying to hide the Bosun's identity, it's always
+    the same pattern
+- kind: dialogue
+  speaker: agent
+  text: If we can just get a lead on who's handling the scuttle protocol, we might
+    finally be able to take them down
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, the scuttle protocol is just a series of nested VPNs, we
+    should be able to crack it
+- kind: dialogue
+  speaker: press
+  text: Okay, I'm on the phone with a source who claims to have info on the Bosun's
+    identity, but I need to get some more details
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please tell me why we're still using the same outdated laptops?
+    I've been asking for a budget increase for months
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. Priya, can you get the link charts ready for the morning
+    briefing?
+- kind: dialogue
+  speaker: analyst
+  text: Already on it, Captain. I'm trying to tie together some loose ends on the
+    Bosun's activity
+- kind: dialogue
+  speaker: detective
+  text: We need to prioritize the evidence collection from the last raid, Hana can
+    you take a look at the footage and see if we missed anything
+- kind: dialogue
+  speaker: agent
+  text: I've been going over the comms traffic and I think I found a pattern that
+    might indicate the Bosun's involvement
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let me take a closer look. This could be the break we need
+- kind: dialogue
+  speaker: press
+  text: I've got a statement from the Commodore, it's not much, but it's something
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please tell me what's going on? I've been stuck in meetings all
+    day and I have no idea what's happening

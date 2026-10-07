@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:23.617513+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: Backup request denied, no units available'
+- kind: narration
+  speaker: captain
+  text: 'HVS: Finally getting that new data slicer, maybe it''ll be worth it'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I''ll send the numbers over, still no joy on that IP block'
+- kind: narration
+  speaker: captain
+  text: 'TML: Another nice day to waste in the basement'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Okay, I''m just gonna put this on Scuttle''s channel and see what happens'
+- kind: narration
+  speaker: captain
+  text: 'TML: You''re going to get us all fired'
+- kind: narration
+  speaker: captain
+  text: 'CAP: Somebody''s got to mean it, since nobody else does'
+- kind: narration
+  speaker: captain
+  text: 'HVS: Did you see that banner, "Cyber Police: Still Not Getting It"?'
+- kind: narration
+  speaker: captain
+  text: 'TML: Yeah, I saw it, they can make a career out of us not being real'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Just great, now I have to write a paper on "Reputation and Cybercrime"'

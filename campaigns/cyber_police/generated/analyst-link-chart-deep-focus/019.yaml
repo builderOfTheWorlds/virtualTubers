@@ -1,0 +1,25 @@
+id: analyst-link-chart-deep-focus
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:09.835169+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the proxy chain was compromised, that means the Bosun
+    was in on it
+- kind: dialogue
+  speaker: agent
+  text: Captain's going to have our hides if we don't get to the bottom of this
+- kind: dialogue
+  speaker: forensics
+  text: I'm still running some tests on the server, but it looks like it was a custom-built
+    box
+- kind: dialogue
+  speaker: press
+  text: Can someone get me a statement on the raid? I've got a deadline to meet
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll see what I can do, Davey.
+- kind: dialogue
+  speaker: analyst
+  text: This is all just so... familiar

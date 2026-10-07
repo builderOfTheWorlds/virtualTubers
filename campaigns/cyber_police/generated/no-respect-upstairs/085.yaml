@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:15.433562+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing. We've got a possible lead on the Ashcroft case.
+- kind: dialogue
+  speaker: detective
+  text: Still trying to figure out what they did with the servers, huh?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Marcus, I found something on the encrypted drive. It's a Scuttle
+    logo.
+- kind: dialogue
+  speaker: agent
+  text: Scuttle? They've been using the same logo for years. It's just a placeholder.
+- kind: dialogue
+  speaker: forensics
+  text: Still no luck with the digital evidence.
+- kind: dialogue
+  speaker: quartermaster
+  text: We can requisition more hardware, but it'll take a week to get here.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "Cyber Police Still Can''t Catch a Mouse" - Scuttle.net'

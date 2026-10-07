@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:48.582401+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the Scuttle protocol is a distributed system, and the
+    Bosun is the one who sets it up...

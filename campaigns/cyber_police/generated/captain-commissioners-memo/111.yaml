@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:58.061238+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: What is this, a joke?
+- kind: dialogue
+  speaker: detective
+  text: The Scuttle's been making mock of us again.
+- kind: dialogue
+  speaker: analyst
+  text: It's not just The Scuttle, it's the Commissioner's office.
+- kind: dialogue
+  speaker: agent
+  text: The computer thing. That's what they call it.
+- kind: dialogue
+  speaker: forensics
+  text: We should be used to it by now.
+- kind: dialogue
+  speaker: press
+  text: I've got a call from the Commissioner. He wants to talk to you.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just what I needed. Another meeting.

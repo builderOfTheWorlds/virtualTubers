@@ -1,0 +1,47 @@
+id: press-reporter-small-talk
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:42.803510+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Priya, what've you got for me on the Scuttle's chatter?
+- kind: dialogue
+  speaker: analyst
+  text: Morning, Davey, not much change. They're still hyping up the "Rise of the
+    New Era" thing.
+- kind: dialogue
+  speaker: press
+  text: Still playing the troll, huh? Anyone giving any real intel?
+- kind: dialogue
+  speaker: agent
+  text: Actually, I think we have a new lead on the Aurora protocol. Want me to walk
+    you through it?
+- kind: dialogue
+  speaker: forensics
+  text: I've got some interesting findings on the encryption key. It looks like they're
+    using a variant of the...
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. Briefing's at 07:00 sharp. Get what you need to know.
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, Captain, I've requisitioned a new network analyzer, but it's still on
+    hold.
+- kind: dialogue
+  speaker: analyst
+  text: Davey, want to talk about the press strategy for today?
+- kind: dialogue
+  speaker: press
+  text: Yeah, yeah, just give me the CliffsNotes. What do we need to keep on the down
+    low?
+- kind: dialogue
+  speaker: agent
+  text: Actually, Captain, I think we should talk about that Aurora lead. I think
+    it's worth pushing...
+- kind: dialogue
+  speaker: forensics
+  text: Aurora? Sounds like a big case. I've got my eyes on it.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep it focused. We'll discuss the lead at briefing.

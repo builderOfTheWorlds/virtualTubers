@@ -1,0 +1,36 @@
+id: no-respect-upstairs
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:40.308185+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: We got a Scuttle tip on a possible data smuggling operation in the financial
+    district.
+- kind: dialogue
+  speaker: analyst
+  text: I'll start digging into the tip, see if I can find any connections to known
+    Scuttle players.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's gear up. We'll send a team to the financial district to investigate.
+- kind: dialogue
+  speaker: forensics
+  text: I'll prep the team's comms and surveillance gear. We don't know what we're
+    up against.
+- kind: dialogue
+  speaker: press
+  text: Another exciting day in the life of the Cyber Police
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll make sure the team has their backup equipment, just in case.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Can we get a backup team from patrol to cover our six? ||emotion:asked-for-but-not-hopeful'
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Backup request received. Your priority is... (pause) ...23rd in
+    the queue.'
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Of course.

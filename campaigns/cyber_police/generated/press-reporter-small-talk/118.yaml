@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:44.810838+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Rosalind, what's the big story today?
+- kind: dialogue
+  speaker: captain
+  text: Just a chatter spike in the darknet, Davey, nothing too out of the ordinary.
+- kind: dialogue
+  speaker: press
+  text: Okay, got it. We need to get someone on it, but I'm sure the department will...
+- kind: dialogue
+  speaker: detective
+  text: (overhearing) Scuttle's been quiet for a while, let's hope this is something.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the chatter spike on my screen, looks like a new mirror dropped in
+    the past hour.
+- kind: dialogue
+  speaker: agent
+  text: Running some scans, see if I can find any connections.
+- kind: dialogue
+  speaker: forensics
+  text: ( muttering ) Nothing here, just the usual noise.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in for the week, nothing too exciting.
+- kind: dialogue
+  speaker: press
+  text: Thanks, Teresa. I'll make sure to get my story in before the department spins
+    it.
+- kind: dialogue
+  speaker: captain
+  text: Briefing over, let's get to work.

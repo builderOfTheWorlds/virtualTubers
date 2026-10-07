@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 125
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:28.315087+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a discrepancy in the Scuttle's payment routing
+- kind: dialogue
+  speaker: captain
+  text: Good work, Priya. What's the anomaly?
+- kind: dialogue
+  speaker: analyst
+  text: It looks like a small change in the payment processor's IP address
+- kind: dialogue
+  speaker: detective
+  text: Get Hana Vosk to dig into that. See if we can track the money trail
+- kind: dialogue
+  speaker: agent
+  text: What's the big picture, Marcus? What does this mean for the case?
+- kind: dialogue
+  speaker: detective
+  text: It means we might be looking at a more organized crew than we thought
+- kind: dialogue
+  speaker: forensics
+  text: Captain, I think I can help with that. I've been going over the seizure data
+    from the last raid
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Assuming they ever actually took the right server...
+- kind: dialogue
+  speaker: captain
+  text: Hana, what have you found?

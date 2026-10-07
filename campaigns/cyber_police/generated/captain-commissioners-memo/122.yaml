@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:21.563753+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is a real treat.
+- kind: dialogue
+  speaker: detective
+  text: I'm not even going to bother reading it.
+- kind: dialogue
+  speaker: analyst
+  text: Can I at least see the part about our funding request?
+- kind: dialogue
+  speaker: agent
+  text: I'm still waiting for my new ID badge to be printed.
+- kind: dialogue
+  speaker: forensics
+  text: Can we just get the memo on the comms system?
+- kind: dialogue
+  speaker: press
+  text: What's going on, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll go print out the memo.

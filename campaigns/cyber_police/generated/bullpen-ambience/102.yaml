@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:07.079282+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, all.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Still nothing on the mirror code.
+- kind: dialogue
+  speaker: agent
+  text: Just ran the hardware diagnostics, should have those results soon.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence log's up to date.
+- kind: dialogue
+  speaker: press
+  text: Need to prep for the 11 a.m. interview with Scuttle News.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocked the go-bags, let me know if anyone needs anything.

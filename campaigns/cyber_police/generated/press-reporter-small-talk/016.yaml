@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:54.864993+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: I'm telling you, that Scuttle story last week was way too juicy to be a total
+    fabrication.
+- kind: dialogue
+  speaker: captain
+  text: Yeah, I know, I just wanted to see how long it would take for you to call
+    me.
+- kind: dialogue
+  speaker: press
+  text: Ha! Always a pleasure to check in, Captain. What's the story with the new
+    comms system?
+- kind: dialogue
+  speaker: agent
+  text: Honestly, I've heard rumors it's just a cost-saving measure.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I saw the requisition form. It's just a matter of bureaucratic
+    red tape.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, we're probably lucky if we get new laptops by the end of the year.
+- kind: dialogue
+  speaker: press
+  text: Ugh, don't remind me. Okay, anyway, what's the latest on the mirror thing?
+- kind: dialogue
+  speaker: captain
+  text: Still trying to get a handle on it. We're looking at a possible backdoor.

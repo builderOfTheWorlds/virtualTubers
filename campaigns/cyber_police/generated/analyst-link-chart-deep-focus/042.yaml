@@ -1,0 +1,36 @@
+id: analyst-link-chart-deep-focus
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:33.788828+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I've found a potential thread on the link chart, but it's really thin
+- kind: dialogue
+  speaker: agent
+  text: Can you zoom in on that node? I want to see what's connected to it
+- kind: dialogue
+  speaker: analyst
+  text: Already on it. Okay, so this chat log from The Scuttle's forums... it looks
+    like someone's talking about a new upload site
+- kind: dialogue
+  speaker: agent
+  text: (skeptical) "New upload site"? That sounds like a pretty standard thing for
+    The Scuttle
+- kind: dialogue
+  speaker: analyst
+  text: (defensive) Hey, I know it's not a big lead, but it's something. And I want
+    to look at this user's profile
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) You want me to dig up some info on the user's IP?
+- kind: dialogue
+  speaker: analyst
+  text: (thoughtfully) Yeah, that would be great. Thanks, Hana
+- kind: dialogue
+  speaker: press
+  text: (walking over to Priya) What's going on? Did you find something?
+- kind: dialogue
+  speaker: analyst
+  text: (showing him the link chart) I think I might have found a way to track this
+    new upload site

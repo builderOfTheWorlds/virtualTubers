@@ -1,0 +1,45 @@
+id: quartermaster-binder-chatter
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:13.248002+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll have to submit the paperwork for those requisitions eventually, whether
+    they're approved or not.
+- kind: dialogue
+  speaker: agent
+  text: The new mirror on The Scuttle is probably just a red herring.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to take a closer look at the chatter spike from last night.
+- kind: dialogue
+  speaker: analyst
+  text: According to the intelligence, it seems like The Scuttle's been using some
+    new encryption methods.
+- kind: dialogue
+  speaker: press
+  text: I'll make sure to get some quotes from the public on their perceptions of
+    our unit.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's move on to the investigation plan. Thorn, what's the next step?
+- kind: dialogue
+  speaker: detective
+  text: I'm going to run some simulations to see if we can pinpoint the source of
+    the chatter spike.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're still waiting on approval for those new laptops, by the way.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get started on analyzing the chatter spike data.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging into The Scuttle's encryption methods.
+- kind: dialogue
+  speaker: agent
+  text: I'll review the case files from the last Scuttle-related arrest.
+- kind: dialogue
+  speaker: press
+  text: I'll make sure to get some background on the public's perception of The Scuttle.

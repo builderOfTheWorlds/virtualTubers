@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:40.816032+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Checking the door's seal.
+- kind: dialogue
+  speaker: agent
+  text: Running through the daily checklists for the Agent's desk.
+- kind: dialogue
+  speaker: analyst
+  text: Wrapping up some loose ends on the case files.
+- kind: dialogue
+  speaker: quartermaster
+  text: Restocking the supply cage, making sure everything's up to date.
+- kind: dialogue
+  speaker: captain
+  text: Reviewing the morning's briefing with the team.
+- kind: dialogue
+  speaker: press
+  text: Checking her phone for any new messages from The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: Proceeding to the Evidence Locker to check the chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: Notifying Forensics about the updated software on the Agent's desk.

@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 166
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:45.260785+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm having a hard time getting this trace tool to run
+- kind: dialogue
+  speaker: detective
+  text: What's the problem?
+- kind: dialogue
+  speaker: agent
+  text: It's just being stubborn, that's all. I've got the settings right, but it
+    won't connect.
+- kind: dialogue
+  speaker: analyst
+  text: Have you tried clearing the cache?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I've tried that. I'm starting to think it's just our hardware again.
+- kind: dialogue
+  speaker: forensics
+  text: (walking by) You know, Deshawn, I swear, our computers are older than some
+    of the drives we're trying to crack.

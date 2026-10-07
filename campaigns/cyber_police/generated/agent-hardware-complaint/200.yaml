@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 200
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:57.237374+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, can we get this thing up and running already?
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying, Deshawn, but this is ancient hardware.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's take a deep breath. What's the plan here?
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting for that trace tool to fire up, Captain.
+- kind: dialogue
+  speaker: detective
+  text: We need it running so we can see what we're up against.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Like we don't already know...

@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:26.278773+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m going to need to requisition some new software for the scanners.'
+- kind: narration
+  speaker: captain
+  text: 'DMOP: Yeah, we''ve been running on outdated firmware for weeks now.'
+- kind: narration
+  speaker: captain
+  text: 'TN: I''ve got a list of the denied requests. Let me show you.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Ugh, this is going to take forever.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Can I just get a new set of gloves? These ones are falling apart.'
+- kind: narration
+  speaker: captain
+  text: 'DP-P: I''ve got a story about the unit''s equipment issues. You should be
+    getting on that, TMB-L.'

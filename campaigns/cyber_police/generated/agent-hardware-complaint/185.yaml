@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 185
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:03.591745+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe they still haven't upgraded our hardware?
+- kind: dialogue
+  speaker: analyst
+  text: What's the problem now?
+- kind: dialogue
+  speaker: agent
+  text: This trace tool is running on ancient code, and it's taking forever to spit
+    out anything.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) And they wonder why we can't keep up with The Scuttle...
+- kind: dialogue
+  speaker: agent
+  text: (sighs) I swear, it's like they think we're just pretending to be a real police
+    unit.
+- kind: dialogue
+  speaker: analyst
+  text: (trying to stay neutral) Okay, let's just focus on getting this trace to work,
+    shall we?

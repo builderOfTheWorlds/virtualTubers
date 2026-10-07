@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 164
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:40.284705+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: This thing's not even a Mac compatible...

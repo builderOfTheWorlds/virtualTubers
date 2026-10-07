@@ -1,0 +1,34 @@
+id: scuttle-luck-chatter
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:30.363421+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not luck, it's just a matter of resources. We need to
+    get more boots on the ground, more eyes on the server farms.
+- kind: dialogue
+  speaker: analyst
+  text: Resources? We can barely afford the coffee. And even if we had more, I'm not
+    convinced it would make a difference. They're like a ghost ship, always one step
+    ahead.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Unless they're not even trying to be ghosts... maybe
+    they're just having a good laugh at our expense.
+- kind: dialogue
+  speaker: press
+  text: (scribbling in his notebook) Speaking of good laughs, did I get the quote
+    right? "Bring snacks next time"?
+- kind: dialogue
+  speaker: quartermaster
+  text: (exasperated) Oh, for Pete's sake, Davey, that was months ago. Can't you just
+    keep up?
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not get bogged down in the past. What's the current
+    count on server mirrors online?
+- kind: dialogue
+  speaker: detective
+  text: (shrugging) Still scattered, ma'am. We've got three confirmed, but I'm sure
+    there are more out there.

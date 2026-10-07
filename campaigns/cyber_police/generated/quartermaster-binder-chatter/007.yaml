@@ -1,0 +1,31 @@
+id: quartermaster-binder-chatter
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:33.481953+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmbk-l: I''m starting to think we''ll need to go through that binder again
+    soon, all of us, with the Commissioner.'
+- kind: narration
+  speaker: captain
+  text: 'Dthorn: At least we''ve got the mirror from last night to go on.'
+- kind: narration
+  speaker: captain
+  text: 'Pnandakumar: Intelligence says it''s a small-scale operation, but we can''t
+    pinpoint the team yet.'
+- kind: narration
+  speaker: captain
+  text: 'Do: I''m picking up some low-level chatter, but it''s not clear what it''s
+    about.'
+- kind: narration
+  speaker: captain
+  text: 'Hvosk: Nothing on the evidence side, yet. Still working on the drives.'
+- kind: narration
+  speaker: captain
+  text: 'Dokp: Just the usual, trying to get ahead of the Scuttle''s social media
+    angle.'
+- kind: narration
+  speaker: captain
+  text: 'Tmbk-l: Requisitions: we''re out of 4x GPUs, still waiting on the 10-port
+    switch, and the 32 GB RAM kit is still pending.'

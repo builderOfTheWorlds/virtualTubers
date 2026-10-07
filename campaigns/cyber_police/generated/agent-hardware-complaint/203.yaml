@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 203
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:06.095688+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this hardware we're stuck with? It's like they expect
+    us to do magic with what's here.
+- kind: dialogue
+  speaker: analyst
+  text: (chuckling) I think that's the most enthusiastic I've ever seen you, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: (smiling wryly) Hey, someone's gotta keep the office entertained.
+- kind: dialogue
+  speaker: forensics
+  text: '(muttering) You know what they say: you can''t fight the system.'
+- kind: dialogue
+  speaker: agent
+  text: (laughing) Yeah, yeah, "somebody has to mean it, since nobody else does."

@@ -1,0 +1,45 @@
+id: bullpen-ambience
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:01.457276+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, people. Let's get started.
+- kind: dialogue
+  speaker: detective
+  text: Already on it, Captain. I've got the day's directive up.
+- kind: dialogue
+  speaker: analyst
+  text: Intel says The Scuttle's been sniffing around a few popular streamers, looking
+    for new targets.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some interesting chatter in the dark web forums. Could be a
+    phishing operation.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the forensic analysis underway. Nothing yet, but I'll keep you posted.
+- kind: dialogue
+  speaker: press
+  text: Nothing to report from the press side. Just the usual noise.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioning a new server for the evidence locker. It's been lagging for
+    weeks.
+- kind: dialogue
+  speaker: agent
+  text: '||emotion:disgusted (looking at the state of his coffee cup)'
+- kind: dialogue
+  speaker: forensics
+  text: (sighs and takes a sip of her own cold coffee) Ugh.
+- kind: dialogue
+  speaker: analyst
+  text: (shudders at the thought of discussing Scuttle luck) Let's not go there today,
+    shall we?
+- kind: dialogue
+  speaker: detective
+  text: (rolls her eyes) Yeah, let's just focus on the case.
+- kind: dialogue
+  speaker: captain
+  text: (smirks) Agreed. Alright, let's get to work.

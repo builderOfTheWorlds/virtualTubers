@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 135
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:15.363602+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this unit's computers are older than I am.
+- kind: dialogue
+  speaker: detective
+  text: (smiling) Yeah, we're basically running on antique hardware.
+- kind: dialogue
+  speaker: analyst
+  text: (laughing) And it shows. I'm still trying to get that new trace tool up and
+    running.
+- kind: dialogue
+  speaker: forensics
+  text: (chuckling) You think it's just the computers? Have you seen the state of
+    our network cabling?
+- kind: dialogue
+  speaker: press
+  text: (whispering) Okay, can we focus? I've got a lead on a possible Scuttle contact.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) And I've got a requisition form that's been stuck in
+    limbo for weeks...

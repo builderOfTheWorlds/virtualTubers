@@ -1,0 +1,31 @@
+id: forensics-evidence-locker-routine
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:39.901773+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker, I'm logging in with the code.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana) You know, I've been thinking we should get a new locking
+    system. Something with a biometric reader.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Already on the Quartermaster's list, Agent.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the radio) Supply cage is ready for pickup. Request forms are on the
+    Quartermaster's desk.
+- kind: dialogue
+  speaker: analyst
+  text: (to Hana) Need a drive from 2018, case file 3421.
+- kind: dialogue
+  speaker: forensics
+  text: (to Priya) Which case file? 3421 is a high-priority cyber-espionage case.
+- kind: dialogue
+  speaker: analyst
+  text: Just a data dump, I think. Need it for some analysis.
+- kind: dialogue
+  speaker: forensics
+  text: Alright, drive's coming up. Chain of custody, please?

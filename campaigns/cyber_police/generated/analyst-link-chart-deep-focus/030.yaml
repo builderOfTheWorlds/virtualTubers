@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:42.588436+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, if we assume the new IP block is a mirror and not the main host, then
+    the Bosun's pattern of behavior is not inconsistent with...
+- kind: dialogue
+  speaker: agent
+  text: Ma'am, I think I found the server's location. It's a converted storage unit
+    in the warehouse district.
+- kind: dialogue
+  speaker: analyst
+  text: That's a new development. We should alert the team. But first, I need to run
+    some diagnostics on the link chart to see if I can track the connection back to...
+- kind: dialogue
+  speaker: quartermaster
+  text: Desk officer, we have a possible match on the storage unit's security feed.
+    It looks like one of the suspects is using a custom-made keycard.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished processing the evidence from the last raid. I've found some
+    interesting anomalies in the code used by the Scuttle's operators. It looks like
+    they're using a custom-built protocol...
+- kind: dialogue
+  speaker: agent
+  text: Hold up, ma'am. I've been going over the storage unit's layout, and I think
+    I found a hidden room.
+- kind: dialogue
+  speaker: analyst
+  text: That's not possible. The Scuttle's operators don't have the resources to set
+    up a hidden room. Unless... unless they've been playing us all along.

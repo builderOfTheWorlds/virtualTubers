@@ -1,0 +1,34 @@
+id: agent-hardware-complaint
+take: 136
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:21.072148+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but the hardware is just not cooperating
+- kind: dialogue
+  speaker: analyst
+  text: Can I take a look? What's the error message saying?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, we've been having some issues with the old systems, but I'm not sure
+    this is a hardware problem
+- kind: dialogue
+  speaker: agent
+  text: (sighs) It's not the hardware, it's just... ugh. The specs on this machine
+    are from the Stone Age
+- kind: dialogue
+  speaker: detective
+  text: (jokingly) Oh, come on, Deshawn. You're just mad because you can't get your
+    Minecraft to run on it
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Shut up, Marcus. I'm trying to solve a case here
+- kind: dialogue
+  speaker: analyst
+  text: (smiling) I think we can get by with what we have for now, don't you think,
+    Captain?
+- kind: dialogue
+  speaker: captain
+  text: (smiling) I think you'll just have to, Priya. Our budget request for new hardware
+    was denied again

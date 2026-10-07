@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:13.930826+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo is... enlightening.
+- kind: dialogue
+  speaker: detective
+  text: I'd say "insulting".
+- kind: dialogue
+  speaker: analyst
+  text: I've read the press coverage, Captain, but I've never seen the department's
+    opinion so... clearly stated.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) "The computer thing"... like we're some kind of maintenance crew.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Does anyone think this is a surprise?
+- kind: dialogue
+  speaker: press
+  text: (walking in) Ah, memo time! What's the story, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: (skeptical) I'll make sure to put in a requisition for some new hardware...
+    again.

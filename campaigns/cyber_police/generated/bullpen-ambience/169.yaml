@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 169
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:01.586169+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get my coffee to stay warm for once.
+- kind: dialogue
+  speaker: captain
+  text: You know the Quartermaster is going to give you hell about that.
+- kind: dialogue
+  speaker: analyst
+  text: Can we please just focus on the new mirror? We need to get a handle on that.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the image files up, but the quality is...interesting.
+- kind: dialogue
+  speaker: press
+  text: I'll get the team ready to draft the press release.
+- kind: dialogue
+  speaker: quartermaster
+  text: Anyone know where the extra RAM for the Agent's desk went?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Not my problem, Mbeki.'
+- kind: dialogue
+  speaker: analyst
+  text: Can I just get some coffee over here?
+- kind: dialogue
+  speaker: agent
+  text: Sorry, sorry. I'll get a new pot.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's just...
+- kind: dialogue
+  speaker: forensics
+  text: I think I'm getting something from the mirror, Captain.
+- kind: dialogue
+  speaker: press
+  text: Can we get some more info on the mirror before we go public?

@@ -1,0 +1,27 @@
+id: forensics-evidence-locker-routine
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:32.584511+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: 'Gathering evidence from the latest Scuttle tip, let''s go through the intake
+    procedure. First, we confirm the chain of custody: evidence, documentation, and
+    witness statements.'
+- kind: dialogue
+  speaker: agent
+  text: I'll start by labeling the evidence bags and documenting the chain of custody
+    on the drive.
+- kind: dialogue
+  speaker: analyst
+  text: I've already begun processing the raw data, but I need the evidence itself
+    to verify its integrity.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''ll review the intake procedure and verify the evidence''s
+    authenticity.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster's job is to ensure the unit has the necessary equipment and
+    supplies. I'll check the requisition binder to see if we have the required storage
+    devices.

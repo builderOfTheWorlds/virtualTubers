@@ -1,0 +1,28 @@
+id: analyst-link-chart-deep-focus
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:58.993147+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Commodore's taunts are getting more and more cryptic. I'm starting to
+    think it's a code.
+- kind: dialogue
+  speaker: captain
+  text: Bring me a list of all the possible interpretations of those codes. I want
+    to see if we can tease out what they're saying.
+- kind: dialogue
+  speaker: forensics
+  text: Captain, I've been going over the evidence from the last raid, and I think
+    I found something that might be relevant to the codes.
+- kind: dialogue
+  speaker: press
+  text: What is it, Hana? Did you find something that can finally get us inside The
+    Scuttle's infrastructure?
+- kind: dialogue
+  speaker: forensics
+  text: No, it's not that. It's just a weird anomaly in the data that I think might
+    be a hint about what the Commodore's trying to say.
+- kind: dialogue
+  speaker: analyst
+  text: Let me take a look. I'll see if I can make any sense of it.

@@ -1,0 +1,35 @@
+id: analyst-link-chart-deep-focus
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:52.820896+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get a handle on this anomaly, it's got a faint echo of a pattern
+    we saw last quarter
+- kind: dialogue
+  speaker: agent
+  text: (whispering) Captain, I've got something on the comms trail, might be our
+    Bosun
+- kind: dialogue
+  speaker: forensics
+  text: (working quietly in the background) Okay, I can get you a visual on the mirror
+    they just set up
+- kind: dialogue
+  speaker: captain
+  text: (to Davey) Get me a statement on the record, something about the new server
+- kind: dialogue
+  speaker: press
+  text: (into phone) Yes, Captain, I'll get it out ASAP. (hangs up) Okay, they're
+    setting up a press conference for tomorrow
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to the Detective) We've got a problem with the requisition process,
+    can't get the equipment we need
+- kind: dialogue
+  speaker: detective
+  text: (to the Analyst) Priya, how close are you to pinpointing the location of their
+    new mirror?
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Almost there, but I've got a few loose ends...

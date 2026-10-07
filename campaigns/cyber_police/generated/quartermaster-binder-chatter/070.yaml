@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:31.080196+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got to file the denied-requisition log, looks like we're still missing
+    those new fingerprint kits.
+- kind: dialogue
+  speaker: detective
+  text: I'll make a note to look into it, but for now, let's focus on what we actually
+    have.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) Good idea, don't want to get too caught up in what-ifs.
+- kind: dialogue
+  speaker: detective
+  text: I'll talk to the Captain about it, see if we can get anything approved for
+    the next cycle.
+- kind: dialogue
+  speaker: quartermaster
+  text: Sounds like a plan. I'll keep the binder up to date, "the eventual inquiry"
+    as I like to call it. ||emotion:wry-happy

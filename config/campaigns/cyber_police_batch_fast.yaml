@@ -1,0 +1,23 @@
+# Offline batch-generation config for the cyber_police pack — FAST profile.
+#
+# Mirrors config/campaigns/ashiorid_1_batch_fast.yaml: uses llama3.1:8b (the
+# live-path's own fast model) instead of hermes3:70b, so a large batch of
+# ambient takes finishes in practical wall-clock time. batch_generate.py's
+# per-take call is a single flat generate_scene() (no tree expansion), so it
+# does not hit the segment-tree pipeline's scaling collapse documented in
+# references/reaching_target_hours.md.
+
+campaign:
+  pack: campaigns/cyber_police
+
+llm:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  model: "llama3.1:8b"
+  temperature: 0.9
+  max_tokens: 512
+
+improv:
+  max_recent: 8
+  max_words: 45
+  max_beats: 12

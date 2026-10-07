@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:55.990389+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm entering the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: What do you need, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: 'A case file, 2023-02-15, subject: unknown.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the printouts.
+- kind: dialogue
+  speaker: forensics
+  text: Need a chain of custody check.
+- kind: dialogue
+  speaker: quartermaster
+  text: It's all documented, Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Very well. Bring it to me.
+- kind: dialogue
+  speaker: agent
+  text: I've got a requisition for some new hardware.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll review it, Deshawn.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence locker secure, chain of custody intact.

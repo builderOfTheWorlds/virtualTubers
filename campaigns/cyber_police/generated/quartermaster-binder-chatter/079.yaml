@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 79
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:16.476174+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Another day, another batch of denied requisitions.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, it's like they're just waiting for us to get bored and give up.

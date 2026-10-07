@@ -1,0 +1,38 @@
+id: observer-corner-desk
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:31.035595+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm picking up where the Analyst left off on the link chart
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few more nodes to add to the chatter analysis
+- kind: dialogue
+  speaker: agent
+  text: I'll get the tracing tools set up for the new mirror
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is reviewing the latest raid data
+- kind: dialogue
+  speaker: press
+  text: Nothing much to manage from my end
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition requests are due in two days
+- kind: dialogue
+  speaker: captain
+  text: (glares at the Observer) You're sure you're not missing anything, Observer
+- kind: dialogue
+  speaker: analyst
+  text: (nervously) Yes, Captain, I'm sure
+- kind: dialogue
+  speaker: agent
+  text: (tuning in) What's going on?
+- kind: dialogue
+  speaker: captain
+  text: (firmly) Nothing. Carry on.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (remains silent, observing)'

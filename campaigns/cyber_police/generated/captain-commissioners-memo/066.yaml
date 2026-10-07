@@ -1,0 +1,35 @@
+id: captain-commissioners-memo
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:46.188531+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is already on my desk.
+- kind: dialogue
+  speaker: detective
+  text: I'll take a look at it.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering to the Captain) "The computer thing" again.
+- kind: dialogue
+  speaker: agent
+  text: (rolling his eyes) Like we're just a joke.
+- kind: dialogue
+  speaker: forensics
+  text: ( muttering) Like anyone takes us seriously.
+- kind: dialogue
+  speaker: press
+  text: (walking by) Hey, Captain, got a minute?
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) Just another day, Captain.
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Alright, let's go over the memo.
+- kind: dialogue
+  speaker: detective
+  text: (looking up from the memo) Well, at least it's not like we're invisible.
+- kind: dialogue
+  speaker: analyst
+  text: (smirking) "Invisible" is an improvement.

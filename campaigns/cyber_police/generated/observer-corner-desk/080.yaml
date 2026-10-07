@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:57.550719+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s move.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''ve got nothing on the new mirror.'
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests a pattern to the chatter, but I need more data.
+- kind: dialogue
+  speaker: agent
+  text: I'll run a sweep on the mirror's IP.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a closer look at the chatter spike.
+- kind: dialogue
+  speaker: press
+  text: We'll need to get something to the press, even if it's just a statement saying
+    we're working on it.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisition front, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'
+- kind: narration
+  speaker: captain
+  text: (The Observer continues to watch, unblinking)

@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:13.458679+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't see any clear connections between the recent chatter on The Scuttle's
+    forums and the increased traffic on their mirrors
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get a closer look at the mirror that came online this morning,
+    but the proxy chain is hiding behind a VPN
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned a new server for the Analyst to use, but it's still on
+    backorder from the manufacturer
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the last raid, but I don't see anything that
+    would help us find the Bosun
+- kind: dialogue
+  speaker: press
+  text: I'm trying to reach the Commodore for an interview, but my messages are going
+    unanswered
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ve been over the case files, and I think I see a pattern
+    in the Scuttle''s operations that we can exploit'

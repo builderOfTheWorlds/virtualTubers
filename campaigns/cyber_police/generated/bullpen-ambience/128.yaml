@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 128
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:42.735468+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get back to work.
+- kind: dialogue
+  speaker: detective
+  text: I'm still trying to figure out what was compromised in the Ashiorid hack.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a pattern in the new Scuttle activity, Captain.
+- kind: dialogue
+  speaker: agent
+  text: My laptop's still not cooperating, I need to get it rebooted.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to run some tests on the new evidence from the Foreman case.
+- kind: dialogue
+  speaker: press
+  text: I'm going to go grab some fresh air, need to clear my head.
+- kind: dialogue
+  speaker: quartermaster
+  text: I need to requisition some new gear, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Captain, can I show you what I found on the Scuttle?
+- kind: dialogue
+  speaker: captain
+  text: What is it, Priya?
+- kind: dialogue
+  speaker: detective
+  text: I think we might have a breakthrough in the Ashiorid case.
+- kind: dialogue
+  speaker: agent
+  text: Ugh, my coffee's gone cold again.
+- kind: dialogue
+  speaker: forensics
+  text: I found some interesting anomalies in the Foreman data.

@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:47.668453+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Beginning chain of custody on new evidence.
+- kind: dialogue
+  speaker: agent
+  text: Requesting Forensics to review the case file for integrity.
+- kind: dialogue
+  speaker: quartermaster
+  text: Preparing the evidence locker for receipt of the new drive.
+- kind: dialogue
+  speaker: analyst
+  text: Conducting a preliminary examination of the drive's contents.
+- kind: dialogue
+  speaker: captain
+  text: Confirming that all necessary documentation is in order.
+- kind: dialogue
+  speaker: press
+  text: Noting the absence of any external media on the drive.
+- kind: dialogue
+  speaker: forensics
+  text: Proceeding to create a new chain of custody record.
+- kind: dialogue
+  speaker: agent
+  text: Confirming that the drive is properly labeled and accounted for.
+- kind: dialogue
+  speaker: quartermaster
+  text: Updating the inventory in the supply cage.
+- kind: dialogue
+  speaker: analyst
+  text: Requesting access to the drive for further analysis.
+- kind: dialogue
+  speaker: captain
+  text: Approving the request and assigning priority to the analysis.

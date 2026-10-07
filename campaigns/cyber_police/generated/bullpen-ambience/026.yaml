@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:48.606226+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, it''s 14:47. What do we have?'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: The Agent is still running diagnostics on that encrypted
+    drive from this morning.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got a match on the digital fingerprint, but it's going to take a few
+    more hours to crack.
+- kind: dialogue
+  speaker: agent
+  text: I'm getting some weird fluctuations in the comms log, but it's probably just
+    The Scuttle being The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: I'll just stick to the DNA results, thanks.
+- kind: dialogue
+  speaker: press
+  text: I'll get a statement from the press corps for tomorrow's briefing.
+- kind: dialogue
+  speaker: quartermaster
+  text: Has anyone asked for anything unusual today?

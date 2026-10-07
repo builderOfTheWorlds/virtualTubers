@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:26.895961+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, it's like they have eyes and ears everywhere.
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, Deshawn. They'd have to be psychic to stay one step ahead every
+    time.
+- kind: dialogue
+  speaker: captain
+  text: Enough. We have real work to do.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, but have you seen the latest banner? "NO QUARTER, NO ADS" indeed.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we please just agree that they're good? For once?
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the latest seizure data. There's nothing but a fake upload
+    protocol.
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking... what if The Scuttle's just a distraction?

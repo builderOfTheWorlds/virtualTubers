@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 140
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:05.242813+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the link chart isn't just about The Scuttle, but about
+    something else entirely.
+- kind: dialogue
+  speaker: agent
+  text: Can you walk me through the theory behind that, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: Well, for one, the way the nodes are connected doesn't make sense for a simple
+    file-sharing site.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, that's not necessarily a red flag. The Scuttle's people are known
+    for their creativity.
+- kind: dialogue
+  speaker: analyst
+  text: That's true, but there's something about the way the connections keep shifting,
+    like the site's trying to stay one step ahead of us.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Maybe it is trying to stay one step ahead of us. We've been chasing
+    this thing for years.
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Yes, but that's exactly the point. There's something more going on
+    here, and I think it's not just about piracy.

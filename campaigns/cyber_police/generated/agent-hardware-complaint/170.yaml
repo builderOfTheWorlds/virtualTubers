@@ -1,0 +1,18 @@
+id: agent-hardware-complaint
+take: 170
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:00.900996+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can you believe this ancient hardware is still holding together
+- kind: dialogue
+  speaker: analyst
+  text: I swear, if we get one more denial on that requisition for a new server
+- kind: dialogue
+  speaker: forensics
+  text: I think I finally got the trace tool running, but the logs are all over the
+    place
+- kind: dialogue
+  speaker: press
+  text: You know, I've been meaning to ask, what did we actually find last night?

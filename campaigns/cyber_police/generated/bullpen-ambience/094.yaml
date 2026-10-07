@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:27.132799+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The meeting's over, let's get back to work.
+- kind: dialogue
+  speaker: detective
+  text: I'm trying to contact the source on the encrypted channel.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering) I think I found something. A connection between two different
+    profiles.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) This coffee is still warm, I think.
+- kind: dialogue
+  speaker: forensics
+  text: (to the analyst) What is that?
+- kind: dialogue
+  speaker: press
+  text: (to the detective) Can I get a quote for the morning's briefing?
+- kind: dialogue
+  speaker: quartermaster
+  text: (shouting) Oh, not again! I just restocked the coffee.

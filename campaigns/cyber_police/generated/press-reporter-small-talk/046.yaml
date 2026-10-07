@@ -1,0 +1,40 @@
+id: press-reporter-small-talk
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:33.212705+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, how's it going? Haven't seen any drama out of you guys in a
+    while.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, Davey, we've been fine, just the usual Scuttle nonsense. How
+    about you? Any big stories brewing?
+- kind: dialogue
+  speaker: press
+  text: Nah, nothing too exciting. Just trying to keep the paper afloat, you know?
+    So, I did hear some rumors about The Scuttle's new security measures...
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, we're still trying to figure out how they're staying one step
+    ahead of us. (to the others) Anyway, I'm picking up some chatter about a potential
+    new exploit...
+- kind: dialogue
+  speaker: analyst
+  text: (excitedly) That's exactly what we need, Deshawn! Some new intel to work with.
+    (to the others) I've been digging through some of the recent data, and I think
+    I've found a possible connection between...
+- kind: dialogue
+  speaker: forensics
+  text: (calmly) I've got some new evidence from the lab, and it looks like our tech
+    is still a few steps behind The Scuttle's. (to the others) But we'll get there
+    eventually.
+- kind: dialogue
+  speaker: quartermaster
+  text: (practically) Okay, let's get down to business. I've got the requisition list
+    for this week, and it looks like we're still waiting on that new hardware...
+- kind: dialogue
+  speaker: press
+  text: (jokingly) Yeah, good luck with that, Teresa. I'll make sure to send my photographer
+    over to take some nice shots of the empty shelves.

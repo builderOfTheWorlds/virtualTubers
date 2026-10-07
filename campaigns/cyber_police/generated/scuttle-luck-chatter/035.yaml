@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:57.549750+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, we could've nailed them this time if that proxy chain didn't vanish.
+- kind: dialogue
+  speaker: analyst
+  text: Maybe it was just a clever decoy, a fake trail to throw us off their scent.
+- kind: dialogue
+  speaker: captain
+  text: The Bosun's always been slippery, but I've got a feeling this is more than
+    just luck.
+- kind: dialogue
+  speaker: detective
+  text: You think? I'm still trying to figure out how they managed to replace that
+    server in under an hour.
+- kind: dialogue
+  speaker: quartermaster
+  text: We should've seen it coming, with all those proxy switches and IP addresses.
+- kind: dialogue
+  speaker: forensics
+  text: We're still arguing over the last time they pulled this stunt, and I'm starting
+    to think it's just our own incompetence.
+- kind: dialogue
+  speaker: press
+  text: Ah, come on, guys, let's not be too hard on ourselves. We'll get 'em eventually.

@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 205
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:10.025166+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, this thing is older than I am.

@@ -1,0 +1,23 @@
+id: bullpen-ambience
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:29.036471+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Got a coffee going, but it's gonna be cold by the time the morning briefing.
+- kind: dialogue
+  speaker: analyst
+  text: Just need to get the new protocol running on the test servers.
+- kind: dialogue
+  speaker: forensics
+  text: Just got a message from Forensics that the new hardware is coming in tomorrow.
+- kind: dialogue
+  speaker: captain
+  text: Okafor, how's the new tasklist coming? Any updates?
+- kind: dialogue
+  speaker: press
+  text: Nothing from The Scuttle yet, Captain. Just the usual chatter.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting to hear back on those requisitions from last week.

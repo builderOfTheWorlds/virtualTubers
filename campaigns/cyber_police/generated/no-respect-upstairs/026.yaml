@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:32.601300+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Morning, Cyber Police.'
+- kind: dialogue
+  speaker: agent
+  text: Okafor, can we get a status update on the backup?
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Hold, hold, let me see...'
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Yeah, you''re 17th in line, Okafor. Have a nice day.'
+- kind: dialogue
+  speaker: detective
+  text: I swear, they think we're a joke.
+- kind: dialogue
+  speaker: forensics
+  text: Hana, can you run the Scuttle's IP through our system?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I can.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Okay, so, just to confirm: we''re not getting any priority on hardware upgrades?'
+- kind: dialogue
+  speaker: captain
+  text: No, Teresa, we're still using the same old rigs.
+- kind: narration
+  speaker: captain
+  text: 'Reporter: Davey, what''s this I see? "Cyber Police Stumble Again"?'
+- kind: dialogue
+  speaker: detective
+  text: Yeah, that's just great.
+- kind: dialogue
+  speaker: agent
+  text: At least we're still getting the Scuttle's latest rant on the wires.

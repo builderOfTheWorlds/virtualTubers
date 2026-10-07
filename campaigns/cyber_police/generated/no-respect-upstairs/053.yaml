@@ -1,0 +1,45 @@
+id: no-respect-upstairs
+take: 53
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:59.279234+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team, coffee's in the break room.
+- kind: dialogue
+  speaker: agent
+  text: Thanks, Teresa, you're a lifesaver.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. We've got a Scuttle sighting on the corner of
+    5th and Main.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the data packet from the eyewitness, but I'm having trouble pinpointing
+    the IP.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look, Priya, see if I can dig up anything.
+- kind: dialogue
+  speaker: press
+  text: '(on a monitor) "CYBER COPS STRIKE AGAIN: A Unit of Mystery and Confusion"'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (sighs) Great, another Scuttle love letter to the press.'
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) Hey, we can take it, right?
+- kind: dialogue
+  speaker: captain
+  text: (sternly) Okay, let's keep our heads down and focus. Backup is a 20-minute
+    response time, and I don't want to get our hopes up.
+- kind: dialogue
+  speaker: agent
+  text: (to Hana) I'll start running the surveillance feeds, see if we can spot them
+    in real-time.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Still, if we could just get one clean arrest...
+- kind: dialogue
+  speaker: forensics
+  text: (excitedly) Ah, I think I've got something, Priya!

@@ -1,0 +1,14 @@
+id: quartermaster-binder-chatter
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:19.632331+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Checking the binder again. Still not much luck.'
+- kind: narration
+  speaker: captain
+  text: 'DON: What''s the fun in that? Just "the eventual inquiry" every time.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: You''d think they''d get it together eventually.'

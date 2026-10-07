@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:15.822186+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck is just code for "we're doing it wrong."
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, it's not luck. It's a strategy. They're always one step ahead.
+- kind: dialogue
+  speaker: quartermaster
+  text: But how do you know that? We've got the best analysts in the business, and
+    nobody can crack the scuttle protocol.
+- kind: dialogue
+  speaker: detective
+  text: That's because nobody wants to. It's not about being good at their jobs, it's
+    about being good at getting away with it.
+- kind: dialogue
+  speaker: forensics
+  text: I've been studying the seized drives, and I think I found something...
+- kind: dialogue
+  speaker: press
+  text: Oh, this should be good. What did you find, Hana? A rubber duck?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. We need to get back to work.

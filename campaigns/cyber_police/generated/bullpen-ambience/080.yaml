@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:05.250738+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The cold coffee''s going to have to be thrown away.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Can we just get a decent cup of coffee around here?'
+- kind: dialogue
+  speaker: analyst
+  text: Not again, I was just about to refill my water bottle.
+- kind: dialogue
+  speaker: agent
+  text: Sorry, Thorn. I'll get you a cup.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence chain of custody, paperwork, paperwork...
+- kind: dialogue
+  speaker: press
+  text: Captain, we need to prep for the 3 pm press conference.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition forms ready for the new equipment, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What''s the angle this time, Press?'

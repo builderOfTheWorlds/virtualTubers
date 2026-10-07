@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:14.687125+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Captain, I'm looking at the chatter spike from 3am.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a link chart, but I'm not sure what it means.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to isolate the signal, but it's like trying to find a needle in
+    a haystack.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a new drive coming in from the raid last night.
+- kind: dialogue
+  speaker: press
+  text: Is it true that the hacker is getting more aggressive?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for the new monitoring equipment have been denied again.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

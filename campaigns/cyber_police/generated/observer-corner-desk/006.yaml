@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 6
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:16.777173+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I'll be reviewing the morning's chatter reports.
+- kind: dialogue
+  speaker: analyst
+  text: Nothing new from the link charts.
+- kind: dialogue
+  speaker: agent
+  text: Tracing a signal, but it's encrypted.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a batch of new evidence from the raid.
+- kind: dialogue
+  speaker: press
+  text: I'll be working on the press release.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on requisitions, still waiting on the budget committee.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (sits silently, watching the team)'

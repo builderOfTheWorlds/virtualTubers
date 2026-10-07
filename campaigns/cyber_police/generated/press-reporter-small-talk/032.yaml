@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:11.793763+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey. How's the world treating you today?
+- kind: dialogue
+  speaker: press
+  text: Same old, Captain. The city's still not sure if you people are real cops or
+    just a myth.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Well, I suppose that's true. How's the Scuttle's latest antics going
+    over?
+- kind: dialogue
+  speaker: press
+  text: Oh, you know. They're making headlines again. But I'm thinking of running
+    a piece on the...
+- kind: dialogue
+  speaker: press
+  text: '...the Cyber Police''s lack of resources.'
+- kind: dialogue
+  speaker: captain
+  text: (sighs) I think that's a great idea, Davey. We could use some positive press.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I'll get on it. Anything else I should know about?
+- kind: dialogue
+  speaker: captain
+  text: Just the usual. The Scuttle's been quiet for a while, but I'm sure it'll pick
+    up again soon.

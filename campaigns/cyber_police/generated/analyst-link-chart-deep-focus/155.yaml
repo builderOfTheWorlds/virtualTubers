@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 155
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:26.717996+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to re-map the Bosun's network from the raid last week
+- kind: dialogue
+  speaker: agent
+  text: I've got the traceroute still running, I'll have something for you in a few
+- kind: dialogue
+  speaker: forensics
+  text: We need to get the forensic analysis done on the drives we seized
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned the necessary equipment, it's being delivered tomorrow
+- kind: dialogue
+  speaker: analyst
+  text: Okay, good. Now, let's focus on the link chart
+- kind: dialogue
+  speaker: press
+  text: I've got a question about the press conference scheduled for tomorrow
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What is it, Davey?'
+- kind: dialogue
+  speaker: press
+  text: I was wondering if we're sure we should be doing it, considering the...
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The Scuttle''s operators like to stir up controversy, yes.
+    But we need to stay visible'
+- kind: dialogue
+  speaker: press
+  text: Okay, got it
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ve been going over the case files, and I think we''re missing
+    something'

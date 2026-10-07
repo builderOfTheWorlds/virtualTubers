@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:19.122984+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing's still on schedule for 07:00.
+- kind: dialogue
+  speaker: detective
+  text: Just making sure my gear's ready.
+- kind: dialogue
+  speaker: analyst
+  text: Got some new chatter on the feed, need to run it through the AI.
+- kind: dialogue
+  speaker: agent
+  text: My laptop's been playing up again.
+- kind: dialogue
+  speaker: forensics
+  text: Found some interesting anomalies in the latest upload.
+- kind: dialogue
+  speaker: press
+  text: Still trying to get that one source to talk.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just signed out a new batch of drives.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (no response, just sitting at their desk)'

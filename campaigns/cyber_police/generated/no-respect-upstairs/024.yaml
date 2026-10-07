@@ -1,0 +1,23 @@
+id: no-respect-upstairs
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:17.181774+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You want me to request backup for this tiny little thing?
+- kind: dialogue
+  speaker: analyst
+  text: Not like it'll make a difference
+- kind: dialogue
+  speaker: forensics
+  text: What's the status on the Scuttle's IP footprint? Maybe we can track the operator
+- kind: dialogue
+  speaker: captain
+  text: Not much, Hana. Just the usual noise
+- kind: dialogue
+  speaker: press
+  text: 'CYBER COPS STRIKE AGAIN: "Ineffective and Over-Involved" - Scuttle Edition'
+- kind: dialogue
+  speaker: quartermaster
+  text: Someone get me a new keyboard, this one's been on the fritz for weeks

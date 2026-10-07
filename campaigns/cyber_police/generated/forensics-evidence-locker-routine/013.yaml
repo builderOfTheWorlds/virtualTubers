@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:15.774209+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Swabbing the desks for DNA evidence is the first step in securing chain of
+    custody.
+- kind: dialogue
+  speaker: agent
+  text: I've got the laptops fired up, and the Agent's hardware is online.
+- kind: dialogue
+  speaker: analyst
+  text: Starting the chain of custody log for the evidence locker, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good, good. Just a routine intake procedure.'
+- kind: dialogue
+  speaker: press
+  text: Getting the comms equipment checked, making sure we're all on the same frequency.
+- kind: dialogue
+  speaker: quartermaster
+  text: The requisition binder is up to date, Captain. No new requests have come in.
+- kind: dialogue
+  speaker: forensics
+  text: Now, let's get the evidence logbook initialized.
+- kind: dialogue
+  speaker: agent
+  text: I'll start setting up the laptops, get the data streaming in.
+- kind: dialogue
+  speaker: analyst
+  text: Chain of custody log updated, Captain. We're all set for intake.

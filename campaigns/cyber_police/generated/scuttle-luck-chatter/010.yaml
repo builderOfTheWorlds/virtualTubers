@@ -1,0 +1,43 @@
+id: scuttle-luck-chatter
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:40.728553+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's just a matter of time before we catch them.
+- kind: dialogue
+  speaker: analyst
+  text: Oh please, you really think it's just about skill?
+- kind: dialogue
+  speaker: agent
+  text: What do you mean? Of course it's about skill!
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, Deshawn. It's always the same. We get close, and then...poof.
+- kind: dialogue
+  speaker: detective
+  text: I'm with Deshawn on this one. We just need to be smarter about it.
+- kind: dialogue
+  speaker: analyst
+  text: Smarter? Ha! We're the ones who let our guards down, who think we're so clever.
+- kind: dialogue
+  speaker: detective
+  text: That's not fair, Priya. We're doing our best with the resources we have.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's not argue about it. The point is, we have a job to
+    do.
+- kind: dialogue
+  speaker: quartermaster
+  text: And I'm still waiting for the real proof that Scuttle's operators are even
+    in this country.
+- kind: dialogue
+  speaker: captain
+  text: We'll get it, Teresa. We'll get it eventually.
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking...what if Scuttle's just a distraction?
+- kind: dialogue
+  speaker: forensics
+  text: What do you mean?

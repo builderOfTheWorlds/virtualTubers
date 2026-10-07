@@ -1,0 +1,26 @@
+id: observer-corner-desk
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:05.858310+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm running behind on the link chart updates
+- kind: dialogue
+  speaker: captain
+  text: Noted, Priya, can you have it done by end of day
+- kind: dialogue
+  speaker: detective
+  text: I'm looking at the plan, see if I can shave some time off the tracing
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is ready to process the evidence, but we need a go-ahead from the
+    Agent
+- kind: dialogue
+  speaker: agent
+  text: Working on setting up the new comms server, but we might be hitting some hardware
+    issues
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster's office is running low on paper, someone needs to requisition
+    more

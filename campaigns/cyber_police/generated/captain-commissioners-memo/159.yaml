@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 159
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:47.587360+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Can someone please explain what "the computer thing" means to me?
+- kind: dialogue
+  speaker: detective
+  text: (whispers) I think it's a memo from the Commissioner's office.
+- kind: dialogue
+  speaker: analyst
+  text: It's a reference to our work, ma'am.
+- kind: dialogue
+  speaker: agent
+  text: I guess it's not exactly... (trails off)
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Like it's some kind of hobby.
+- kind: dialogue
+  speaker: press
+  text: (overhearing) Ah, "the computer thing"! I've heard that one before.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to the Captain) I've got a requisition request for new hardware,
+    ma'am.

@@ -1,0 +1,71 @@
+# Cyber Police — a digital-crimes procedural, built like the ashiorid_office
+# pack: a small working unit, mundane process beats (case files, leads,
+# evidence, press), and one standing joke running under all of it — nobody
+# takes this unit seriously. Scene text here is SPOKEN ALOUD by TTS on
+# stream, so it is written to be heard: short, declarative, concrete.
+#
+# Concept seed: a Cyber Police unit chasing "The Scuttle", a piracy site run
+# by a loose crew of self-styled privateers, who keep slipping the unit's
+# raids through sheer chaos rather than skill. The unit puts its lives on
+# the line against "the scum of the internet" and is treated, by everyone
+# from the press to their own department, as a punchline.
+name: cyber_police
+title: "Cyber Police — The Scuttle File"
+genre: cyber
+
+start_scene: morning-briefing
+
+# The Captain is the in-fiction game master: she sets each day's case at the
+# 07:00 briefing, the same way ashiorid_office's CEO sets the directive.
+gm: captain
+players:
+  - detective
+  - analyst
+  - agent
+  - forensics
+  - press
+  - quartermaster
+  - observer
+
+# Cast id -> positional tuber slot (mirrors ashiorid_office's seats block;
+# app/office/roles.py SEAT only knows the office roster, so this pack's
+# seats are informational/for episode-building, not a second SEAT enum).
+seats:
+  captain: tuber_0
+  detective: tuber_1
+  analyst: tuber_2
+  agent: tuber_3
+  forensics: tuber_4
+  press: tuber_5
+  quartermaster: tuber_6
+  observer: tuber_7
+
+# The cyber-police verb set: the investigative/procedural primitives
+# (campaign/primitives.py, genre="cyber") plus the two general cyber verbs
+# already shared with any cyberpunk-genre pack. No fantasy or office verbs —
+# an action beat naming one of them fails validation, same discipline as
+# every other pack.
+primitives:
+  - open_case
+  - assign_lead
+  - trace_signal
+  - raid
+  - interrogate
+  - seize_evidence
+  - file_report
+  - request_backup
+  - brief_press
+  - requisition
+  - stand_watch
+  - scan_target
+  - execute_exploit
+
+# Filler scenes between spine scenes. `pool` is omitted, so every scene
+# flagged `ambient: true` is eligible. `every: 0` or --no-ambient runs the
+# spine alone.
+ambient:
+  every: 2
+
+theme:
+  accent: cyan
+  narration: dim

@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T07:10:56.986340+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: It''s not luck, it''s just that the Scuttle''s got inside
+    help.'
+- kind: dialogue
+  speaker: analyst
+  text: But how do you explain the time the drive was just a rubber duck?
+- kind: dialogue
+  speaker: agent
+  text: Maybe it was a decoy, Priya. Maybe the real drive was the one we didn't find.
+- kind: dialogue
+  speaker: forensics
+  text: If I had to put money on it, I'd say it's just the Bosun being clever.
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't know why we bother with the raids. We'll never catch them.
+- kind: dialogue
+  speaker: press
+  text: Ah, come on Teresa, it's not all doom and gloom! A good story makes up for
+    it.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, alright, let''s not get too distracted. The Scuttle''s
+    still out there.'

@@ -1,0 +1,40 @@
+id: observer-corner-desk
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:21.862472+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Focusing on the chatter spike patterns, but something's nagging me about the
+    timestamps.
+- kind: dialogue
+  speaker: agent
+  text: ( typing on his keyboard ) Getting the Agent's report from the overnight raid
+    on the servers at Zylak.
+- kind: dialogue
+  speaker: forensics
+  text: Processing the new evidence from the raid, trying to find a connection to
+    the Scuttle's infrastructure.
+- kind: dialogue
+  speaker: press
+  text: ( scribbling in a notebook ) Okay, so what do we know about the latest victim?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new hardware for the Quartermaster's unit; hoping
+    it'll finally be approved.
+- kind: dialogue
+  speaker: agent
+  text: ( glancing up from his screen ) Where's the Captain with the morning briefing?
+- kind: dialogue
+  speaker: analyst
+  text: ( still focused on her screen ) I'm trying to find a pattern in these IP addresses...
+- kind: dialogue
+  speaker: agent
+  text: ( getting up from his chair ) Think I'll go grab a cup of coffee while I wait
+    for the briefing.
+- kind: dialogue
+  speaker: forensics
+  text: ( looks up from her work ) Did you know the Observer's been here six months?
+- kind: dialogue
+  speaker: captain
+  text: ( entering the room ) Alright, let's get started. Today's directive...

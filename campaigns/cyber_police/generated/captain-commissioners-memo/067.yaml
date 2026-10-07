@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:51.095897+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Ah, great. The Commissioner's office and their flair for understatement.
+- kind: dialogue
+  speaker: detective
+  text: I take it this means we're not getting the priority we need.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) "The computer thing"... they think we're just a fancy
+    IT department.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to the Analyst) Yeah, I'm sure that's exactly what the public
+    thinks we do.
+- kind: dialogue
+  speaker: forensics
+  text: (reading from the memo) "A review of the unit's work suggests that— "
+- kind: dialogue
+  speaker: press
+  text: (jokingly) Oh, nice. They're calling us the "IT department with badges" now.
+- kind: dialogue
+  speaker: quartermaster
+  text: (skeptical) I'll just go ahead and update the budget requests for the fifth
+    time this quarter.

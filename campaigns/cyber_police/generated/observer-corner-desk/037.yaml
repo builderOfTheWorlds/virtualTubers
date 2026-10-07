@@ -1,0 +1,53 @@
+id: observer-corner-desk
+take: 37
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:53.987109+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm running a routine check on the server log, just to see if anything's been
+    uploaded overnight.
+- kind: dialogue
+  speaker: agent
+  text: ( typing on his console ) Yeah, I'm trying to get the Agent's console to sync
+    with the server. It's been a bit wonky today.
+- kind: dialogue
+  speaker: forensics
+  text: ( examining a printout ) Forensics still hasn't received the new batch of
+    samples from the last raid.
+- kind: dialogue
+  speaker: quartermaster
+  text: '( walking into the room ) Just a heads-up, everyone: requisitions for the
+    new forensic software were denied again.'
+- kind: dialogue
+  speaker: press
+  text: ( leaning back in his chair ) At least we got the new coffee machine in, right?
+    ( looks at the Observer )
+- kind: dialogue
+  speaker: captain
+  text: ( standing by the monitor bank ) Alright, everyone. Let's get started on today's
+    briefing.
+- kind: dialogue
+  speaker: detective
+  text: ( glancing at the Analyst's notes ) I'll need the Analyst's input on the latest
+    chatter spike.
+- kind: dialogue
+  speaker: analyst
+  text: ( typing on her console ) The chatter spike seems to be centered around a
+    new node on the Deepweb.
+- kind: dialogue
+  speaker: forensics
+  text: ( frowning ) I don't like the look of this. It's got all the hallmarks of
+    a Scuttle node.
+- kind: dialogue
+  speaker: agent
+  text: ( looking up from his console ) I'll start working on getting us access to
+    the node.
+- kind: dialogue
+  speaker: quartermaster
+  text: ( scribbling in her requisition book ) Requisitions for the new network hardware
+    are still pending.
+- kind: dialogue
+  speaker: press
+  text: ( taking notes ) And I'll make sure to prep the press release for whenever
+    we catch this node.

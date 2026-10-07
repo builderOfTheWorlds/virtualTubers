@@ -1,0 +1,39 @@
+id: no-respect-upstairs
+take: 79
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:25.589529+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's latest blog post up on the screen.
+- kind: dialogue
+  speaker: agent
+  text: Can we get a backup on the Johnson case?
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Sorry, Deshawn, backup is a little delayed.'
+- kind: dialogue
+  speaker: forensics
+  text: I've got the print analysis back on the suspicious package from last week.
+- kind: dialogue
+  speaker: press
+  text: Cyber Police Still Chasing Ghosts
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. Coffee's ready.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: 'Just a reminder, folks: we''ve got a 10am meeting with the Commissioner.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the Scuttle's traffic logs, and I think I've found a
+    possible lead.

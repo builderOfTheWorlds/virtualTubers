@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 91
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:49.771698+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Backup on the way, Detective, ETA 10 minutes.
+- kind: dialogue
+  speaker: detective
+  text: Thanks, Captain, appreciate it.
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle's been pushing out a lot of new propaganda, I'll get the breakdown
+    ready for the briefing.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) Assuming anyone shows up...
+- kind: dialogue
+  speaker: forensics
+  text: (to the team) Alright, we've got a partial on the malware, let's get to work.
+- kind: dialogue
+  speaker: press
+  text: '(on a monitor) "CYBER POLICE: CHASING PHANTOMS" - Scuttle''s got a new one.'
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the team) Anyone need anything before the briefing? We're running low
+    on coffee.
+- kind: dialogue
+  speaker: captain
+  text: 'Alright, let''s get started. Remember, our unofficial motto: "Somebody has
+    to mean it..."'
+- kind: dialogue
+  speaker: detective
+  text: (to himself) Yeah, yeah, we mean it.

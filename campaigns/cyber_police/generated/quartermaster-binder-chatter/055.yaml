@@ -1,0 +1,44 @@
+id: quartermaster-binder-chatter
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:45.700917+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, so we've got a new mirror
+- kind: dialogue
+  speaker: detective
+  text: 'Thorn: I''ve got the team reviewing the new chatter spike.'
+- kind: dialogue
+  speaker: agent
+  text: 'Okafor: I''m picking up a few interesting IP addresses, but I''m still trying
+    to get a lock on them'
+- kind: dialogue
+  speaker: forensics
+  text: 'Vosk: Nothing new on the evidence front, but I''m waiting for the lab results'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Mbeki-Lowndes: Denied-requisition binder''s getting a little thick, if I
+    do say so myself'
+- kind: dialogue
+  speaker: captain
+  text: Alright, so let's go over the plan for the day
+- kind: dialogue
+  speaker: detective
+  text: 'Thorn: I''m still working on the plan, but we''ll get started soon'
+- kind: dialogue
+  speaker: agent
+  text: 'Okafor: I''ve got a few tech tasks lined up, but I''m not sure when I''ll
+    get to them'
+- kind: dialogue
+  speaker: forensics
+  text: 'Vosk: Still waiting on lab results, like I said'
+- kind: dialogue
+  speaker: press
+  text: 'Okonkwo-Pryce: Nothing urgent from me today, but keep an eye on the socials'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Mbeki-Lowndes: I''ll submit the requisition form upstairs'
+- kind: narration
+  speaker: captain
+  text: 'Observer: _ (stands by the stairwell door, saying nothing)'

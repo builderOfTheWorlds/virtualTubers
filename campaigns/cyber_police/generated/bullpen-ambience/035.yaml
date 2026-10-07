@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:56.208740+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Time to start the coffee, someone.
+- kind: dialogue
+  speaker: detective
+  text: I'm making a fresh pot.
+- kind: dialogue
+  speaker: analyst
+  text: Can someone help me reorganize this mess of cables?
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look. What's the issue?
+- kind: dialogue
+  speaker: forensics
+  text: Just need some more free ports for the new drive.
+- kind: dialogue
+  speaker: press
+  text: Still no word from The Scuttle on that tip we submitted?
+- kind: dialogue
+  speaker: quartermaster
+  text: Nope, nothing yet.

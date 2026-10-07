@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:12.590482+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Okay, people. Today''s lead is on a new encrypted app that''s spreading
+    fast.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''ll start tracing the server locations.'
+- kind: narration
+  speaker: captain
+  text: 'AN: I''ve got some chatter on it - looks like it''s connected to a known
+    Scuttle account.'
+- kind: narration
+  speaker: captain
+  text: 'OA: I''ll see if I can crack the encryption.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Already looking at the device images, but we need more to make a match.'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Nothing much on the press front today. Just the usual Scuttle-bashing
+    columns.'
+- kind: narration
+  speaker: captain
+  text: 'TM-L: Yeah, and I''ll start reviewing the case files from last week''s raids.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Can I have a minute, ma''am?'
+- kind: narration
+  speaker: captain
+  text: 'PV: Just that one thing on the schedule for today.'

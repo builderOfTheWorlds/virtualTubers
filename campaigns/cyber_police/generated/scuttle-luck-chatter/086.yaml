@@ -1,0 +1,39 @@
+id: scuttle-luck-chatter
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:09.744941+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not luck. It's just better infrastructure.
+- kind: dialogue
+  speaker: analyst
+  text: Infrastructure they built in a weekend? No way. It's someone on our side.
+- kind: dialogue
+  speaker: captain
+  text: Okay, let's keep this on track. What do we have on the table?
+- kind: dialogue
+  speaker: detective
+  text: Nothing new. Just a few more mirrors came online.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the last raid's data... it looks like our scuttle luck
+    might be a factor.
+- kind: dialogue
+  speaker: quartermaster
+  text: Of course it is! You can't expect to catch a ghost.
+- kind: dialogue
+  speaker: press
+  text: Ghost? This is a piracy site, not a supernatural entity.
+- kind: dialogue
+  speaker: agent
+  text: 'Yeah, or a story to sell. "The Scuttle: a pirate''s delight!"'
+- kind: dialogue
+  speaker: analyst
+  text: That's not funny, Deshawn.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's keep the chatter to a minimum.
+- kind: dialogue
+  speaker: detective
+  text: I'll go over the data with Hana. Maybe we can find something.

@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:01.212319+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Scuttle luck, plain and simple. We''ve got the best team in
+    the department and we still can''t crack the thing.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Agar''s being too hard on herself, Ros. We''ve had some
+    close calls.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the proxy chains, and I think I found something...
+- kind: dialogue
+  speaker: agent
+  text: You think you found something? I've been going over the same data, and I've
+    got nothing but a bunch of mirror sites pointing back to themselves.
+- kind: dialogue
+  speaker: forensics
+  text: Can we please focus? We're not getting anywhere with this back-and-forth.
+- kind: dialogue
+  speaker: press
+  text: You know, I've got a great idea for a story about The Scuttle. "The Pirate
+    Site That Always Gets Away"... has a certain ring to it.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) Oh, please, Davey. You're not going to write a sympathetic profile
+    of the Commodore, are you?

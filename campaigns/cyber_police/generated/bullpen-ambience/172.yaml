@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 172
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:17.563403+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: (yawns) Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Still nothing on the chatter spike, but I'm looking at some interesting patterns.
+- kind: dialogue
+  speaker: agent
+  text: I've got a few things up on the hardware. (muttering to himself) Assuming
+    the new spec isn't a dead-end.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence is still pending on the latest seizure.
+- kind: dialogue
+  speaker: press
+  text: Morning, all.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whistling) Coffee's cold again.
+- kind: dialogue
+  speaker: captain
+  text: (smirking) Someone needs to get a fresh pot.
+- kind: dialogue
+  speaker: analyst
+  text: (distracted) Oh, I'll do it.
+- kind: dialogue
+  speaker: detective
+  text: (yawns) Anyone seen the latest mirror drop?
+- kind: dialogue
+  speaker: agent
+  text: (frowning) I've got something.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Not enough bandwidth to—

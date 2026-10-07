@@ -1,0 +1,37 @@
+id: no-respect-upstairs
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:27.909864+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The backup request is denied.
+- kind: dialogue
+  speaker: agent
+  text: Can't we get a fresh team in?
+- kind: dialogue
+  speaker: captain
+  text: What's the point of even asking?
+- kind: dialogue
+  speaker: press
+  text: CYBER COPS STRUGGLE TO KEEP UP WITH REAL CRIME - SCUTTLE RAIDS REMAIN EASIER
+    TARGET
+- kind: dialogue
+  speaker: forensics
+  text: I've gone over the evidence, and...
+- kind: dialogue
+  speaker: quartermaster
+  text: It's a miracle you get anything done down here.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Somebody has to mean it, since nobody else does.'
+- kind: dialogue
+  speaker: analyst
+  text: Can we just get a new computer? This one's from 2015.
+- kind: dialogue
+  speaker: agent
+  text: I swear, the only time anyone takes us seriously is when we're asking for
+    overtime.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep moving.

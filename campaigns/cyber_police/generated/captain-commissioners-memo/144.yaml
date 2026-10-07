@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 144
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:46.189224+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: Never a good sign when it's called "the computer thing"
+- kind: dialogue
+  speaker: analyst
+  text: At least it's not as bad as when they said we were just IT with badges
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) Yeah, that was a fun week
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I'm just glad I'm not on the phone to explain our budget requisitions
+- kind: dialogue
+  speaker: press
+  text: (over the phone) Yeah, I've got a call from a journalist asking about the
+    latest Scuttle raid
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the back of the room) Just great, another memo

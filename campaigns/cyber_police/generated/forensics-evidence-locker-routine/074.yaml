@@ -1,0 +1,41 @@
+id: forensics-evidence-locker-routine
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:54.419614+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the morning briefing with the Captain.
+- kind: dialogue
+  speaker: agent
+  text: Checking the evidence locker's inventory.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing last night's link charts.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, team. Captain''s office, briefing in five.'
+- kind: dialogue
+  speaker: forensics
+  text: Alright, let's go through the chain of custody for the Wilson case.
+- kind: dialogue
+  speaker: agent
+  text: Evidence was submitted, logged, and stored in the locker at 23:14 last night.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the analysis on the malware signature.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good work, everyone. Keep it up.'
+- kind: dialogue
+  speaker: forensics
+  text: Now, let's review the process for submitting evidence to the lab.
+- kind: dialogue
+  speaker: agent
+  text: You submit it to the locker, I log it in, and then it's processed.
+- kind: dialogue
+  speaker: analyst
+  text: And I'll take a look at it, of course.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Exactly. Chain of custody is key.'

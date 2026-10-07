@@ -1,0 +1,43 @@
+id: forensics-evidence-locker-routine
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:55.779905+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting the evidence intake procedure.
+- kind: dialogue
+  speaker: forensics
+  text: First, I need to verify the chain of custody for each item.
+- kind: dialogue
+  speaker: agent
+  text: I've got the physical evidence here from the last raid.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let me scan these with the barcode reader.
+- kind: dialogue
+  speaker: analyst
+  text: Can I help with anything, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: No, I've got it. I just need to document each item's condition and any notes
+    from the scene.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Hana, do you need any new equipment or supplies?
+- kind: dialogue
+  speaker: forensics
+  text: No, I'm good for now. Thanks, Teresa.
+- kind: dialogue
+  speaker: forensics
+  text: Next, I need to log each item into the evidence locker's database.
+- kind: dialogue
+  speaker: agent
+  text: (checking his watch) I think that's everything, Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let me just double-check the inventory list.
+- kind: dialogue
+  speaker: forensics
+  text: Alright, everything looks good. I'm going to seal the evidence locker and
+    update the chain of custody.

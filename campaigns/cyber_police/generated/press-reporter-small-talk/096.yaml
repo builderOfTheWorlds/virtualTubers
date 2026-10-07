@@ -1,0 +1,50 @@
+id: press-reporter-small-talk
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:21.745960+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get started. We've got a new lead on The Scuttle's
+    operations.
+- kind: dialogue
+  speaker: detective
+  text: Sounds good, Captain. I've been going over the intel and I think I can come
+    up with a plan.
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging into the chatter and I think I found a pattern. It looks
+    like they're using a new encryption method.
+- kind: dialogue
+  speaker: agent
+  text: I've been picking up some traffic on the darknet. Looks like they're trying
+    to communicate with one of their operatives.
+- kind: dialogue
+  speaker: forensics
+  text: I've been analyzing the evidence and I think I found something. It looks like
+    they're using a custom-built server.
+- kind: dialogue
+  speaker: press
+  text: (over the phone) Davey, I need to talk to you about your last press conference.
+    Did you really say that?
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the Captain) Ma'am, I have the requisition forms ready. Most of them are
+    going to be denied, but I did manage to get a few things approved.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's see what we've got. (looks over the forms) Well, it looks like
+    we've got a new server coming in. ||emotion:cautiously-happy
+- kind: dialogue
+  speaker: detective
+  text: And we've got a new plan to take down The Scuttle. (smirks) Let's do this.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some more work to do on the encryption method. I think I can crack
+    it.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the tech team to work on setting up a sting operation.
+- kind: dialogue
+  speaker: forensics
+  text: I'll keep analyzing the evidence and see if I can find any more clues.

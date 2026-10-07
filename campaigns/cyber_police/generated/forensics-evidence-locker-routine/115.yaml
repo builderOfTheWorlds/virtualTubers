@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:06.611433+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Evidence request from the Agent.
+- kind: dialogue
+  speaker: analyst
+  text: Request approved, taking the drive and its chain of custody.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The drive is in the locker now, logged and secure.'
+- kind: dialogue
+  speaker: forensics
+  text: Retrieving the drive, documenting its contents.
+- kind: dialogue
+  speaker: analyst
+  text: Linking the new data to the existing case file.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the status on the new data?'
+- kind: dialogue
+  speaker: forensics
+  text: Still processing, but initial scans suggest nothing anomalous.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Leave the drive with Forensics, they''ll handle the processing.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Requesting a new battery for the Evidence Locker.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Approved, Quartermaster will send it down.'

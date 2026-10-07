@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 175
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:35.421175+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Time to review the case files.
+- kind: dialogue
+  speaker: detective
+  text: I've got nothing new on the Thompson account.
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging into the chat logs, and I think I found something.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the new hardware online.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to go grab a new cup of coffee. This one's cold.
+- kind: dialogue
+  speaker: press
+  text: Anyone see the article I posted on The Scuttle?
+- kind: dialogue
+  speaker: quartermaster
+  text: I just got an email from Procurement, and...

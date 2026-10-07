@@ -1,0 +1,22 @@
+id: analyst-link-chart-deep-focus
+take: 163
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:25.810506+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the signal is indeed routed through that mirror in Berlin...
+- kind: dialogue
+  speaker: agent
+  text: Captain, we've got a possible match on the IP address from the raid last week...
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Can't believe we're still chasing this one...
+- kind: dialogue
+  speaker: press
+  text: (whispering to Priya) You know, I've been going over the transcripts from
+    the previous raids...
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Who's going to requisition new servers for the monitoring station?
+    We can't keep using the same outdated models...

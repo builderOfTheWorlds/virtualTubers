@@ -1,0 +1,16 @@
+id: quartermaster-binder-chatter
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:21.960894+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m starting to think we need a bigger binder for these rejections.'
+- kind: narration
+  speaker: captain
+  text: 'DMOP: (chuckles) I''ve got a good one for the eventual inquiry, though -
+    that "essential" 3D scanner that got delayed... again.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (laughs) Oh, that''s a good one, Deshawn. "The eventual inquiry" is going
+    to be a long list.'

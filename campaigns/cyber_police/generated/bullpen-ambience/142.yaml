@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 142
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:05.822169+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ah, man, my coffee's gone cold again.
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) I'll make some fresh.
+- kind: dialogue
+  speaker: analyst
+  text: (tapping on her keyboard) Still nothing new from The Scuttle's edge.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to herself) Good, I need some quiet time before the press
+    conference.'
+- kind: dialogue
+  speaker: press
+  text: (to nobody in particular) When do we get some actual leads around here?
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Requisition list for the fifth time this month...
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (to Deshawn) You want the cold coffee, I''ll grab a new cup.'

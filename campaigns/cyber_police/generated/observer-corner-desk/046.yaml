@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:59.063055+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The 07:00 briefing is about to start.
+- kind: dialogue
+  speaker: detective
+  text: I'll get the morning report up.
+- kind: dialogue
+  speaker: analyst
+  text: The link charts from last night's Scuttle activity are on the shared drive.
+- kind: dialogue
+  speaker: agent
+  text: I've got the raid tech ready, but we need to know what we're chasing.
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the last raid, but it's not showing up on
+    the system.
+- kind: dialogue
+  speaker: press
+  text: Nothing from The Scuttle overnight.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a reminder, requisitions are due by the end of the week.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

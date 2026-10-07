@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 166
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:33.226706+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a possible connection between the Vortex proxy chain and the
+    recent spike in uploads.

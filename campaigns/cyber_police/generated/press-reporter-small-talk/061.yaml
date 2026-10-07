@@ -1,0 +1,43 @@
+id: press-reporter-small-talk
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:58.428388+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the loop:'
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, just wanted to touch base about the Scuttle raid last night.
+- kind: dialogue
+  speaker: captain
+  text: Ah, Davey, great timing. We were just discussing the press coverage.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I saw the piece. 'Cyber Police Foiled Again'... lovely.
+- kind: dialogue
+  speaker: captain
+  text: (sighs) Look, it's just part of the game. We'll get our chance eventually.
+- kind: dialogue
+  speaker: agent
+  text: Captain, have you seen the new requisition list from Teresa?
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) I've got the weekly request going up the chain. Fingers
+    crossed.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Like we need anything new. Our gear is ancient...
+- kind: dialogue
+  speaker: analyst
+  text: (to the group) I've been going over the intel, and I think I found a lead
+    worth chasing.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (skeptical) Oh boy, what is it this time?'
+- kind: dialogue
+  speaker: analyst
+  text: (defensively) Hey, this one has merit!
+- kind: dialogue
+  speaker: captain
+  text: (calmly) Okay, let's take a look. Priya, tell us what you've found.

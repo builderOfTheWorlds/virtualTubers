@@ -1,0 +1,76 @@
+# Spine scene 04 — the complication. Press gets scooped by a leak before
+# the unit can move on the locker, forcing a public, under-resourced
+# scramble instead of the quiet operation the Captain wanted.
+id: the-locker-complication
+title: The Locker Complication
+enter_narration: >-
+  Late afternoon. Davey's desk, where the one friendly reporter's name is
+  lighting up his phone before anyone meant it to.
+
+lore: [respect, the_scuttle, rituals]
+mood: [tension]
+continuity_in: >-
+  The unit has a probable locker location for the Bosun's dead-letter
+  system and intended to move on it quietly, before end of day.
+continuity_out: >-
+  A Scuttle banner goes up naming the self-storage facility by name hours
+  before the unit can act, forcing a public scramble instead of a clean
+  operation, and confirming to everyone on the floor that The Scuttle knew
+  they were coming before they did.
+
+beats:
+  - type: dialogue
+    speaker: press
+    text: >-
+      Captain — my reporter just sent me a screenshot. The Scuttle's banner
+      updated twenty minutes ago. It names the storage facility. Our
+      storage facility.
+
+  - type: dialogue
+    speaker: captain
+    text: >-
+      Find out how. Find out now. And get ahead of this before every outlet
+      in the city has it before we do.
+
+  - type: action
+    speaker: press
+    primitive: brief_press
+    params: {topic: "an active investigation, no specifics confirmed", outlet: "the one friendly reporter, on background only"}
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. I checked the tablet, I checked the chart, and then —
+      and then I don't see a leak on our side. Which means either they
+      guessed, or somebody's reading something we're not watching.
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. Three things. One, the banner went up before Pike's interview
+      ended. Two, that's too fast for a leak through us. Three, somebody
+      else told them, and that somebody isn't on this floor.
+
+  - type: action
+    speaker: detective
+    primitive: request_backup
+    params: {reason: "an accelerated operation on the storage facility before it empties", unit: "patrol, two units"}
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. We had this in year three, too. Everybody shows up to find the
+      place already swept. Doesn't mean we don't go. Means we go now.
+
+  - type: action
+    speaker: quartermaster
+    primitive: requisition
+    params: {item: "two go-bags and a forced-entry kit", reason: "the facility operation is moving up by three hours"}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar looks at the Observer before she gives the order. He looks back,
+      for once, instead of past her. She gives the order anyway.
+
+default_next: the-storage-facility

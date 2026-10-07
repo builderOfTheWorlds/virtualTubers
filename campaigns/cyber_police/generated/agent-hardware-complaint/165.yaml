@@ -1,0 +1,11 @@
+id: agent-hardware-complaint
+take: 165
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:41.710362+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I don't know how much longer I can get this to work with our hardware.
+- kind: dialogue
+  speaker: analyst
+  text: Did you get a chance to run the updated code on the old processors?

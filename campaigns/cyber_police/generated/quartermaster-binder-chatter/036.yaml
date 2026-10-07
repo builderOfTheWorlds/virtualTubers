@@ -1,0 +1,9 @@
+id: quartermaster-binder-chatter
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:29.127355+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been going over the denied requisition binder, and I don't see how we're
+    supposed to get this one thing done on the current budget.

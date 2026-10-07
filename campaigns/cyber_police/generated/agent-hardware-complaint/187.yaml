@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 187
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:12.954457+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Stupid old machine won't even connect to the proxy server.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting for the mirror to finish processing.
+- kind: dialogue
+  speaker: captain
+  text: (from her office) Thorn, what's the status on that plan you promised us?
+- kind: dialogue
+  speaker: detective
+  text: We're still waiting on Forensics to get us some usable IP addresses.
+- kind: dialogue
+  speaker: forensics
+  text: (from Forensics' desk) Actually, I think I might have found something.
+- kind: dialogue
+  speaker: agent
+  text: (skeptical) Oh, great, just what we need. Another false lead.
+- kind: dialogue
+  speaker: press
+  text: (standing by the door) Okay, guys, let's not get our hopes up yet.

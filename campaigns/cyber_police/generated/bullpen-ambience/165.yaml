@@ -1,0 +1,25 @@
+id: bullpen-ambience
+take: 165
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:37.506381+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'ROSA: It''s about time the coffee pot stopped hissing.'
+- kind: narration
+  speaker: captain
+  text: 'MARCO: I''m gonna go get some actual coffee from the café down the street.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm on the last printout of the day, anyone need anything from the printer?
+- kind: narration
+  speaker: captain
+  text: 'DESH: (sighs) I''ve been staring at these log files for hours, can''t find
+    anything.'
+- kind: dialogue
+  speaker: forensics
+  text: I've got a batch of new evidence coming in, need to prep the locker.
+- kind: dialogue
+  speaker: press
+  text: I'll be out front, getting some daylight. You guys all done with the day's
+    schedule?

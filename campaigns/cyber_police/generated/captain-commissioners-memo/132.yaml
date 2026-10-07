@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 132
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:00.105819+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: At least it's not another "the computer thing"
+- kind: dialogue
+  speaker: analyst
+  text: I'll just update the database with that
+- kind: dialogue
+  speaker: agent
+  text: Maybe it's time we went after the Scuttle's real operators
+- kind: dialogue
+  speaker: forensics
+  text: That would certainly get some attention
+- kind: dialogue
+  speaker: press
+  text: I'll try to get a quote from the Commissioner
+- kind: dialogue
+  speaker: quartermaster
+  text: Just great, now I'll have to fight for a new set of laptops

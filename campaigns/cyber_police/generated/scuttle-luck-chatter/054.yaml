@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:43.012191+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: We got a team of specialists from the mainland coming in to review our Scuttle
+    protocols, see if they can sniff out the Bosun's next move.
+- kind: dialogue
+  speaker: analyst
+  text: I've seen the reports from their last op. They think they can crack our index,
+    but I'm not convinced.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, come on Priya, we've had experts from three continents come and go. The
+    Scuttle's got a life of its own.
+- kind: dialogue
+  speaker: forensics
+  text: It's not just the index, it's the way they... anticipate us. Like they have
+    a mole on the inside.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ve told them, I''ll tell them again: Scuttle luck is just
+    us being underfunded and over-ambitious.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: We''ll get our chance, Thorn. And when we do, I''ll make sure
+    they understand what "scuttle" really means.'
+- kind: dialogue
+  speaker: press
+  text: Can I get a quote from the Captain? Something about the Scuttle being a "pirate
+    ship" with a "Jolly Roger" logo?

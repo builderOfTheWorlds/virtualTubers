@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 154
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:26.836450+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''m not sure what''s worse, the tone or the content.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: This is why we''ll never get the respect we deserve.'
+- kind: dialogue
+  speaker: analyst
+  text: At least they didn't use the ' department's IT department with badges' phrase.
+- kind: dialogue
+  speaker: agent
+  text: It's all just a matter of perspective, I guess.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the memos flagged for our file.
+- kind: dialogue
+  speaker: press
+  text: (muttering) Journalists...
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I get a new printer in there somewhere?

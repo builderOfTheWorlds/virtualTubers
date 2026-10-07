@@ -1,0 +1,30 @@
+id: press-reporter-small-talk
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:07.972020+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CO-P: Alright, guys, let''s get this briefing started.'
+- kind: narration
+  speaker: captain
+  text: 'DA: I''ve been over the Scuttle''s chatter logs from last night.'
+- kind: narration
+  speaker: captain
+  text: 'DS: We''re looking at a new proxy server in a data center in New York.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m getting nothing but dead-end IP addresses and false flags.'
+- kind: narration
+  speaker: captain
+  text: 'HF: No new evidence, but I did find some inconsistencies in the Scuttle''s
+    encryption.'
+- kind: narration
+  speaker: captain
+  text: 'QP: Nothing out of the ordinary in the requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Alright, let''s get to work.'
+- kind: narration
+  speaker: captain
+  text: 'DS: I''ll start drafting a plan.'

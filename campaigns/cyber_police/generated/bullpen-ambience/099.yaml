@@ -1,0 +1,34 @@
+id: bullpen-ambience
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:51.630440+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: The Scuttle''s been quiet today.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''m starting to think we''re due for a dead end.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''m going to go grab a coffee from the break room, see if they''ve restocked
+    the creamer.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Still having issues with my laptop, can someone take a look?'
+- kind: narration
+  speaker: captain
+  text: 'HV: Nothing new on the forensics front, still waiting on the lab results.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll take a look, Deshawn. What''s the problem with your laptop?'
+- kind: narration
+  speaker: captain
+  text: 'PN: Coffee''s been on since morning, so yeah, it''s probably just the same
+    old stuff.'
+- kind: narration
+  speaker: captain
+  text: 'TP: Haven''t heard anything from the press team today.'
+- kind: narration
+  speaker: captain
+  text: 'CM-L: (muttering) Just what I need, another thing to requisition...'

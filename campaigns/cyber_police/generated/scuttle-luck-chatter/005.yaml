@@ -1,0 +1,26 @@
+id: scuttle-luck-chatter
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:09.349306+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'm telling you, it's a network effect. They have inside help.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Rosalind, you're not going to spin this again, are you?
+- kind: dialogue
+  speaker: analyst
+  text: We've analyzed the traffic patterns, there's no indication of—
+- kind: dialogue
+  speaker: agent
+  text: I'm just saying, it's suspicious that every time we get close, something always
+    slips through.
+- kind: dialogue
+  speaker: forensics
+  text: You want to know what's suspicious? It's how easily they just keep getting
+    back up.
+- kind: dialogue
+  speaker: press
+  text: Okay, let's keep this on the down-low, but I heard The Scuttle's got a new
+    banner up.

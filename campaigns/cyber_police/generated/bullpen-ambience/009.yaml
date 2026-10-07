@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:22.600655+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Let's get the morning briefing started.
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the mirror from last night's sweep.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence says it looks like a reseed, possibly from an old account.
+- kind: dialogue
+  speaker: agent
+  text: I'll need to get forensics to review the new IP addresses.
+- kind: dialogue
+  speaker: forensics
+  text: Already on it, Agent. I'll have the analysis ready by lunch.
+- kind: dialogue
+  speaker: press
+  text: We've got a media alert on the mirror, will need to prep for questions.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition for new hardware has been denied.

@@ -1,0 +1,11 @@
+id: analyst-link-chart-deep-focus
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:22.176050+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not convinced by this new thread, but I need to check for one loose end.
+- kind: dialogue
+  speaker: captain
+  text: (from across the room) Keep chasing it, Priya. See where it takes you.

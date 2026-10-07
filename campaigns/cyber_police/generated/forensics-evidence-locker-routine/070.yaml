@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:30.823927+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence intake procedure begins with logging the items received into
+    the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: I'll just check the items against the inventory list.
+- kind: dialogue
+  speaker: analyst
+  text: Can I get a confirmation that the drives were transported in an airtight container?
+- kind: dialogue
+  speaker: forensics
+  text: Negative, they were stored in a standard shipping box.
+- kind: dialogue
+  speaker: agent
+  text: Okay, I'll make a note of that.
+- kind: dialogue
+  speaker: forensics
+  text: Next, I need to verify the chain of custody for each item.
+- kind: dialogue
+  speaker: analyst
+  text: Can you pass the box over to me so I can scan it?
+- kind: dialogue
+  speaker: forensics
+  text: Here you go.
+- kind: dialogue
+  speaker: analyst
+  text: Great, I just need to log the scan data into the system.
+- kind: dialogue
+  speaker: forensics
+  text: Once that's done, we can move on to the physical inspection.

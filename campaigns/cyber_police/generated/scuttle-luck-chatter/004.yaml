@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:05.583313+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think it's not just inside information, it's actually a network
+    of sympathizers.
+- kind: dialogue
+  speaker: analyst
+  text: I've been running the numbers, and I think we've been overestimating the impact
+    of our takedowns.
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's not just about skill or luck, it's about who they've
+    got on the inside.
+- kind: dialogue
+  speaker: agent
+  text: You're still convinced it's someone on the team, Cap?
+- kind: dialogue
+  speaker: forensics
+  text: I'd rather not be right, but I've found another one of their... "treasure
+    chests" hidden on the darknet.
+- kind: dialogue
+  speaker: press
+  text: (sipping coffee) This conversation is like watching paint dry. Can we move
+    on to the press conference?
+- kind: dialogue
+  speaker: captain
+  text: (smirking) You know, Deshawn, I think you're starting to get the hang of this
+    unit's... let's call it "culture".
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) And what exactly is the plan to change that culture, Cap?

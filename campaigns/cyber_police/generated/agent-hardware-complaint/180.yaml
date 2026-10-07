@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 180
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:21.517594+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Stuck on getting this trace tool to run
+- kind: dialogue
+  speaker: analyst
+  text: Still no new leads from The Scuttle
+- kind: dialogue
+  speaker: captain
+  text: Alright, what's our situation report?
+- kind: dialogue
+  speaker: forensics
+  text: We're waiting on more hardware, but it's still a generation behind
+- kind: dialogue
+  speaker: press
+  text: Someone needs to update the unit's website, it still says 'Digital Crimes
+    Task Force'
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on approval for the requisition, same as always

@@ -1,0 +1,28 @@
+id: analyst-link-chart-deep-focus
+take: 138
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:58.477578+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Commodore's latest message didn't mention the Bosun, but it does hint
+    at some change in the scuttle protocol
+- kind: dialogue
+  speaker: captain
+  text: I want the team to review the evidence from the last two raids, see if we
+    can find any connections to this new protocol
+- kind: dialogue
+  speaker: detective
+  text: I'll get Forensics to dig into it, but we need to be careful, we can't let
+    The Scuttle get inside our heads
+- kind: dialogue
+  speaker: agent
+  text: Sir, I've been running some simulations on the protocol, and I think I might
+    have found a weakness
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) Really? I've been looking at the same thing, and I'm not so sure
+- kind: dialogue
+  speaker: analyst
+  text: (to herself) Okay, so the Commodore mentions a "fresh wind" and a "reconfigured
+    sea"... this could be our chance

@@ -1,0 +1,34 @@
+id: forensics-evidence-locker-routine
+take: 39
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:45.271342+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Evidence intake begins when an item is placed in the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Can you scan the item, Hana, and log it in the database?
+- kind: dialogue
+  speaker: forensics
+  text: Already done, Agent. The evidence lock is secure, and the item is now in chain
+    of custody.
+- kind: dialogue
+  speaker: analyst
+  text: (looks up from her work) That's a new tablet. Can I take a look at it?
+- kind: dialogue
+  speaker: forensics
+  text: (stands up) Let me get it for you, Analyst. (walks over to the evidence locker)
+- kind: dialogue
+  speaker: quartermaster
+  text: (calls out from the supply cage) Hana, do you need any special containers
+    for that item?
+- kind: dialogue
+  speaker: forensics
+  text: No, Quartermaster, we're good.
+- kind: dialogue
+  speaker: captain
+  text: (enters the room) How's the intake going, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: Smooth, Captain. All items are accounted for, and the locker is up to date.

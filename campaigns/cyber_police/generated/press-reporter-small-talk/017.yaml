@@ -1,0 +1,8 @@
+id: press-reporter-small-talk
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:55.575066+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Priya, how's the Scuttle chatter looking?

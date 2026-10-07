@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:41.513542+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Checking the contents against the requisition form.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the paperwork for chain of custody.
+- kind: dialogue
+  speaker: captain
+  text: Approving the transfer of evidence to Forensics.
+- kind: dialogue
+  speaker: press
+  text: Noting the procedure for future reference.
+- kind: dialogue
+  speaker: quartermaster
+  text: Logging the evidence in the supply cage.
+- kind: dialogue
+  speaker: forensics
+  text: Processing the evidence according to standard protocols.

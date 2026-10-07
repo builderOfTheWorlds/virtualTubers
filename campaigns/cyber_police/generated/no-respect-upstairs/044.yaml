@@ -1,0 +1,43 @@
+id: no-respect-upstairs
+take: 44
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:01.790213+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Morning, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: I''ve got some interesting data on the Scuttle''s latest
+    op...'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Hold up, Priya, let''s see if backup is even going to be available.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: (reading from a screen) "Cyber Cops: Still Chasing Shadows"
+    - great headline, Davey.'
+- kind: narration
+  speaker: captain
+  text: 'Press Okonkwo-Pryce: (muttering to himself) Yeah, and the Scuttle''s "exclusive"
+    on our internal politics...'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: Okay, looks like we''re down a few units, and
+    the maintenance team is still waiting on parts.'
+- kind: dialogue
+  speaker: captain
+  text: Somebody has to mean it, since nobody else does.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (under his breath) Yeah, because that''s what I am: a joke.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: (sighs) Let''s get to work.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: (exasperated) I don''t know how much longer we can keep doing
+    this...'

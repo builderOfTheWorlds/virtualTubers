@@ -1,0 +1,34 @@
+id: no-respect-upstairs
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:39.204358+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, all, let's get moving. We've got a priority three, possible ransomware
+    situation downtown.
+- kind: dialogue
+  speaker: detective
+  text: (muttering to himself) Like we ever get priority three.
+- kind: dialogue
+  speaker: analyst
+  text: (sipping coffee) I've got the initial analysis up on the board. It looks like
+    a classic Scuttle job.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to VOSK) You think they'll actually send someone this time?
+- kind: dialogue
+  speaker: forensics
+  text: (shrugging) Who knows? Maybe this one'll be different.
+- kind: dialogue
+  speaker: press
+  text: (reading from a monitor in the background) "Cyber Police Still Not Getting
+    the Job Done" - that's what I'd headline if I were you.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the radio) Dispatch, this is Quartermaster Mbeki-Lowndes. We need backup
+    for the Thorn unit, we've got a possible 11 in progress.
+- kind: narration
+  speaker: captain
+  text: (Dispatch crackles in response, a voice calling out "Backup 11... um... let's
+    get that one sorted out, Mbeki-Lowndes...")

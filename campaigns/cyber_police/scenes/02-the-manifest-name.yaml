@@ -1,0 +1,85 @@
+# Spine scene 02 — Forensics turns the manifest name into a face, and the
+# Analyst's cross-reference lands on someone already in the building's
+# orbit: a courier who's made three deliveries to three different Scuttle-
+# adjacent addresses this month.
+id: the-manifest-name
+title: The Manifest Name
+enter_narration: >-
+  Back in the bullpen. Midday. The manifest from the warehouse sits under
+  the evidence lamp on Hana Vosk's desk.
+
+lore: [the_scuttle, org_chart, basement]
+mood: [tension]
+continuity_in: >-
+  The warehouse raid recovered a shipping manifest naming someone smaller
+  than the Bosun, and the unit needs to know who that name belongs to.
+continuity_out: >-
+  The manifest name resolves to a courier, Soren Pike, who has made three
+  deliveries this month to addresses the Analyst's chart already flags as
+  Scuttle-adjacent. The Detective authorizes a pickup for questioning.
+
+beats:
+  - type: action
+    speaker: analyst
+    primitive: trace_signal
+    params: {target: "the manifest name against the courier registry", result: "three matching deliveries this month"}
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. Three things. One, the name's a courier — Soren Pike. Two, three
+      of his drops this month land on addresses already flagged amber on my
+      chart. Three, none of them are the warehouse. He's a step removed.
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. A courier. We had a courier in year five, too. Didn't know what
+      he was carrying either. Worth a conversation before he knows we're
+      looking.
+
+  - type: action
+    speaker: detective
+    primitive: assign_lead
+    params:
+      to: Forensics
+      task: pulling Pike's delivery logs and matching them against the Scuttle-adjacent address list
+      due: within the hour
+
+  - type: dialogue
+    speaker: forensics
+    text: >-
+      Logs pulled. Clean paper trail — too clean. Every drop logged as
+      "electronics, miscellaneous." Nobody declares miscellaneous three
+      times in a month by accident.
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. If he's just a courier he doesn't know what's in the
+      boxes. But if he's smart, and the boxes keep landing near Scuttle
+      infrastructure, and then — and then he's either very unlucky or he's
+      the easiest lead we've had in a year.
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      Love that we might have a name. Nothing to the reporter yet, though —
+      a courier's not a headline. The Bosun's a headline.
+
+  - type: action
+    speaker: detective
+    primitive: assign_lead
+    params:
+      to: the Agent
+      task: coordinating with patrol to bring Pike in for a voluntary interview
+      due: before end of day
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Rosalind Agar reads the delivery log over Hana's shoulder, twice. The
+      Observer has moved, as he does, and is now somewhere near the
+      evidence lamp, close enough to read it too.
+
+default_next: the-pike-interview

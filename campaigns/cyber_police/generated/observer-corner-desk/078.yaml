@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:45.565292+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Running a diagnostic on the forensics server.
+- kind: dialogue
+  speaker: analyst
+  text: Has anyone seen the new link chart on The Scuttle's IP traffic?
+- kind: dialogue
+  speaker: agent
+  text: No, but I've been getting strange queries from the Agent's tools.
+- kind: dialogue
+  speaker: captain
+  text: Let's keep the focus on the day's directive, people.
+- kind: dialogue
+  speaker: forensics
+  text: Roger that, ma'am. Just running a few checks.
+- kind: dialogue
+  speaker: press
+  text: What's the new angle on the tip from Ashiorid's round-the-clock?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been going over the procurement requests, and it seems like the new requisition
+    for the packet sniffers is on hold.
+- kind: dialogue
+  speaker: detective
+  text: We need those sniffers to get to the bottom of The Scuttle's comms.

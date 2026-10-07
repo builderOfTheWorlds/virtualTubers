@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:25.757260+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, come on...
+- kind: dialogue
+  speaker: analyst
+  text: I'm just trying to get the trace tool running, Desh.
+- kind: dialogue
+  speaker: agent
+  text: I know, I know, but this old hardware... it's like trying to get blood from
+    a stone.
+- kind: dialogue
+  speaker: analyst
+  text: Well, we've got the update on the next-gen hardware approved, but it's still
+    got a month or two before it's here.
+- kind: dialogue
+  speaker: agent
+  text: And it'll probably be just as outdated by the time it arrives.

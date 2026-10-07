@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:28.232426+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DPP: Hey Davey, how''s it going?'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Oh, you know, just trying to get through the day.'
+- kind: narration
+  speaker: captain
+  text: 'DPP: I feel you. I''m just trying to get some background on that latest Scuttle
+    thing.'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Yeah, I''m on it. But I have to tell you, I got a call from a source
+    who says The Scuttle is running some kind of mock raid drill.'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: (laughs) Oh, great. Because we didn''t have enough of those to go around.'
+- kind: narration
+  speaker: captain
+  text: 'CA: (over the phone) What''s going on here?'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Just making small talk, Captain. Nothing important.'
+- kind: narration
+  speaker: captain
+  text: 'CA: (sighs) Right. Well, try to keep it that way. We''ve got a briefing to
+    get to.'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: Will do. See you in ten.'

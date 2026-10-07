@@ -1,0 +1,31 @@
+id: press-reporter-small-talk
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:53.687988+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a Scuttle mirror down in the old industrial district
+- kind: dialogue
+  speaker: detective
+  text: I'll take a team to canvass, see if anyone saw anything
+- kind: dialogue
+  speaker: analyst
+  text: Intel says the mirror is a new one, not even in the Scuttle's usual footprint
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some interesting traffic patterns, looks like a possible backdoor
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, I've got a few outlets interested in running a piece on the
+    Scuttle
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are still on the table, but I'm not getting any confirmation
+    on the new hardware
+- kind: narration
+  speaker: captain
+  text: 'Observer: [standing by the stairwell door, silently observing]'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the mirror. Detective, what's the plan?

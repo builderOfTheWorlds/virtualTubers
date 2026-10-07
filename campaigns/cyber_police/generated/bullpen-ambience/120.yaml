@@ -1,0 +1,33 @@
+id: bullpen-ambience
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:52.233864+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Morning, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Still nothing on the Tenebrous thread, but I think I see a pattern.'
+- kind: narration
+  speaker: captain
+  text: 'AG: Got a new mirror online, but it''s not even close to the real thing.'
+- kind: narration
+  speaker: captain
+  text: 'FS: Just finished re-running the encrypted feed from last night. Nothing
+    new.'
+- kind: narration
+  speaker: captain
+  text: 'PR: Got a call from a local outlet asking for a quote. They''re running a
+    story on cybercrime rates.'
+- kind: narration
+  speaker: captain
+  text: 'QM: Requisitioned three new laptops for the Agent. Still waiting to hear
+    back on the server upgrades.'
+- kind: narration
+  speaker: captain
+  text: 'OB: ||emotion:surprised (no line, but the Observer is sitting quietly in
+    the corner, eyes on the monitors)'

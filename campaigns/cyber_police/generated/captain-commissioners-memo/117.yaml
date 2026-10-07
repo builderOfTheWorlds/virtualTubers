@@ -1,0 +1,32 @@
+id: captain-commissioners-memo
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:20.970326+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office has arrived.
+- kind: dialogue
+  speaker: detective
+  text: Just in time for morning coffee.
+- kind: dialogue
+  speaker: analyst
+  text: '"The computer thing" again.'
+- kind: dialogue
+  speaker: agent
+  text: I don't think they understand what we do.
+- kind: dialogue
+  speaker: forensics
+  text: It's like they think we just press buttons.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition forms right here.
+- kind: dialogue
+  speaker: captain
+  text: Not now, Teresa.
+- kind: dialogue
+  speaker: detective
+  text: Some things never change.

@@ -1,0 +1,20 @@
+id: agent-hardware-complaint
+take: 139
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:29.630334+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this thing is running on coal
+- kind: dialogue
+  speaker: analyst
+  text: Did you see the system requirements for that new protocol analyzer? It's a
+    joke.
+- kind: dialogue
+  speaker: agent
+  text: Tell me about it. I've been trying to get the lab to give me some decent gear
+    for months now.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, and it's not like we can just requisition anything we want. That Quartermaster
+    of ours is a real stickler.

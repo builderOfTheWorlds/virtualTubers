@@ -1,0 +1,39 @@
+id: no-respect-upstairs
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:38.127517+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: What's the queue time on backup?
+- kind: dialogue
+  speaker: agent
+  text: Looks like 17 minutes, ma'am.
+- kind: dialogue
+  speaker: captain
+  text: (sighs) That's...not better than last time.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I've been running some numbers...
+- kind: dialogue
+  speaker: captain
+  text: (interrupting) Not now, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: Got a new forensics request from the unit, looks like they're going to need
+    some extra time...
+- kind: dialogue
+  speaker: quartermaster
+  text: (voiceover) "Cyber Police in Embarrassing Social Media Stunt"
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Nice one, Davey.
+- kind: dialogue
+  speaker: press
+  text: (voiceover) "Real Crimes Take Backseat to 'Virtual Cops'"
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get moving. We've got a unit to brief.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering to Deshawn) I think I found a pattern in the Scuttle's traffic...

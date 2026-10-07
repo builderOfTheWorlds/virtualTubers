@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 6
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:43.741312+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: You know we don't really qualify as a real unit, don't you?
+- kind: dialogue
+  speaker: detective
+  text: (sighing) Oh, come on, Captain. We've discussed this. We have a real purpose.
+- kind: dialogue
+  speaker: analyst
+  text: (typing on her computer) Actually, Captain, I've been tracking our request
+    queue, and backup requests consistently get bumped.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana) I'm surprised they even bother calling us, considering
+    we're just a bunch of code cowboys.
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) Oh, they do, Deshawn. They just do it with a smirk.
+- kind: dialogue
+  speaker: quartermaster
+  text: (on the phone) Okay, I'll just... "accidentally" reassign the backup request
+    to Internal Affairs.
+- kind: dialogue
+  speaker: press
+  text: '(headline flashes on a monitor) "Cyber Police: A Force of Fiction"'
+- kind: dialogue
+  speaker: analyst
+  text: (rolling her eyes) Oh great. Another Scuttle banner.

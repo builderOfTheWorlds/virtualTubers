@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:31.566882+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I still can''t believe that server in Rotterdam was empty.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Must''ve been a Scuttle luck, ma''am.'
+- kind: dialogue
+  speaker: analyst
+  text: That's not luck, that's just us being slow on the uptake.
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's a team effort. Those operators are pros.
+- kind: dialogue
+  speaker: forensics
+  text: Pros don't leave us a rubber duck video. That's just laziness.
+- kind: dialogue
+  speaker: press
+  text: I'm working on a piece about the "Scuttle effect" on the public's perception
+    of the Cyber Police.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, good, finally some press coverage that might actually make us look good.

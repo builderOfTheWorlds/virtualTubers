@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:25.472473+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: 'The Evidence Locker''s code is: 18792.'
+- kind: dialogue
+  speaker: agent
+  text: (picking up a phone) Press needs to know we have a shipment arriving at 14:00.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Not again. Another requisition form to fill out.
+- kind: dialogue
+  speaker: captain
+  text: '(looking at the case file) Today''s directive: follow up on the suspicious
+    login from 03:00.'
+- kind: dialogue
+  speaker: analyst
+  text: (tapping on her monitor) I've got a possible IP address to start with.
+- kind: dialogue
+  speaker: press
+  text: (looking at her watch) Almost time for the press conference.
+- kind: dialogue
+  speaker: forensics
+  text: (entering the code into the keypad) Chain of custody is maintained by maintaining
+    the code.
+- kind: dialogue
+  speaker: detective
+  text: (walking towards the evidence locker) Hana, can you get me the server log
+    for the 03:00 login?

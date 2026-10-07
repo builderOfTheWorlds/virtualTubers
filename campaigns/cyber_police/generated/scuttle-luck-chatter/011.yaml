@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:46.125733+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: The Scuttle's operators are a bunch of clowns, but they're not just clowns.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Clowns? They''re not clowns, Davey, they''re pirates. Real
+    pirates.'
+- kind: dialogue
+  speaker: analyst
+  text: Marcus, we've been over this. The Scuttle's a website, not a real pirate ship.
+- kind: dialogue
+  speaker: agent
+  text: I don't care what it is, I just want to catch the Bosun.
+- kind: dialogue
+  speaker: forensics
+  text: That's the problem, Deshawn - we can't catch anyone. We never get any real
+    leads.
+- kind: dialogue
+  speaker: quartermaster
+  text: It's not just the Bosun, it's the whole crew. They're like a ghost ship, always
+    disappearing.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's not get ahead of ourselves. We've got a plan, and
+    we'll execute it.

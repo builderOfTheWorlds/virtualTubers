@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:30.214961+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Someone's always asking for backup, and no one ever shows up.
+- kind: dialogue
+  speaker: agent
+  text: Guess that's why we're the "arcade".
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to work. We've got a 302 on the boards.
+- kind: dialogue
+  speaker: forensics
+  text: Still waiting on that spectroscopy unit...
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I've got some old gaming gear you guys might like.
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Cops: The Unit That Never Gets Called'
+- kind: dialogue
+  speaker: detective
+  text: Nice headline, Dave.
+- kind: dialogue
+  speaker: analyst
+  text: Anyone else get the impression we're the only ones taking this seriously?

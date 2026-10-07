@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 181
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:36.808590+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Bosun is always the one they get away from, and I've been chasing a thread
+    that suggests our guy is trying to shift to an IPFS network.
+- kind: dialogue
+  speaker: captain
+  text: What's the theory behind that?
+- kind: dialogue
+  speaker: analyst
+  text: Well, it's a distributed ledger, but the key point is that the data itself
+    isn't stored anywhere.
+- kind: dialogue
+  speaker: detective
+  text: That sounds like a whole new can of worms.
+- kind: dialogue
+  speaker: analyst
+  text: I know, but I think we're just seeing them adapt to our tactics.
+- kind: dialogue
+  speaker: agent
+  text: What about the Scuttle protocol?
+- kind: dialogue
+  speaker: analyst
+  text: That's the part that's been holding us back.
+- kind: dialogue
+  speaker: forensics
+  text: We should have a team look into it.
+- kind: dialogue
+  speaker: analyst
+  text: Already on it.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we requisition some more storage, please?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Still not found a link between the Bosun and the...

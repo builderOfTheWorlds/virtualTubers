@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 134
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:22.233684+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Time to clean up the dashboard feeds.
+- kind: dialogue
+  speaker: detective
+  text: I'll get to it, ma'am. I just need to review these case files.
+- kind: dialogue
+  speaker: analyst
+  text: Can someone check the feed from the eastside nodes? I'm getting a lot of lag.
+- kind: dialogue
+  speaker: agent
+  text: Already on it, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering to herself) Stupid coffee machine. Can't even get a decent cup.
+- kind: dialogue
+  speaker: press
+  text: ( typing on his computer) Okay, what's the situation with the Ashiorid mirror?
+- kind: dialogue
+  speaker: quartermaster
+  text: (stirring her own cold coffee) Just the usual, Davey.
+- kind: dialogue
+  speaker: analyst
+  text: (sighing) Nothing's happening.
+- kind: dialogue
+  speaker: captain
+  text: (glancing at the monitor bank) Alright, let's get some fresh air.

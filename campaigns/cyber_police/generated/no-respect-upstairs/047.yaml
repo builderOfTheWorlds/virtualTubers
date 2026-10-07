@@ -1,0 +1,31 @@
+id: no-respect-upstairs
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:18.615736+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: We've got a requisition for new encryption keys, but I'm not going to bother
+    upgrading the decryption software.
+- kind: dialogue
+  speaker: press
+  text: Cyber Police get caught in a botched sting, "CYBER POLICE BUST NOTHING" reads
+    the headline on my screen.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still working on the Scuttle's traffic patterns, but I don't have a match
+    yet.
+- kind: dialogue
+  speaker: agent
+  text: Captain, I need a unit escort to get to the new server room.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a hairpin match on the IP from the Redding job, but it's going to
+    take me another hour to verify.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, team, let''s get moving. We''ve got a possible match
+    on a Scuttle IP from last night.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll take the lead on this one, Captain.'

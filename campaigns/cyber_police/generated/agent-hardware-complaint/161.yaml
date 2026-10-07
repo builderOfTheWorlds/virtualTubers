@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 161
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:31.841629+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if I have to get this trace tool running on our ancient hardware,
+    I'm going to lose my mind.

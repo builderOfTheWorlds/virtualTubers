@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:38.562013+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The evening briefing is canceled, we're all clear until morning.
+- kind: dialogue
+  speaker: detective
+  text: Good, I was looking forward to going home.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still going to review the night's scans.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, don't mind me, just going through some routine checks.
+- kind: dialogue
+  speaker: forensics
+  text: I'll be here, wrapping up the evidence log.
+- kind: dialogue
+  speaker: press
+  text: I'm heading out, got a dinner reservation.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll make sure everything's secure, see you all tomorrow.

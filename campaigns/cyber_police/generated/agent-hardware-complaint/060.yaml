@@ -1,0 +1,17 @@
+id: agent-hardware-complaint
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:52.994945+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this unit's still using operating systems from the Bush administration.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool up, but it's complaining about resources.
+- kind: dialogue
+  speaker: forensics
+  text: (from the comms room) Just got a ping from The Scuttle's usual frequency.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioning a new graphics card. (sigh)

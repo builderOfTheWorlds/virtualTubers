@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 151
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:18.855278+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Checking the system logs.
+- kind: dialogue
+  speaker: detective
+  text: You think that was a false flag, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: I'm running the data now.
+- kind: dialogue
+  speaker: agent
+  text: Just got a ping from IT. We're being audited.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Stupid coffee, going cold.
+- kind: dialogue
+  speaker: press
+  text: You know, we should really get a coffee machine down here.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocked the supply cage. Nothing new, just usual requisitions.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (silence)'

@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:32.127449+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this ancient box just won't cooperate
+- kind: dialogue
+  speaker: analyst
+  text: Did you try updating the drivers, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I did. That's not even the problem. It's the hardware, I swear. We're
+    running on parts from the Clinton administration.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Okay, okay, let''s not get too worked up. We''ve got a lead
+    to chase.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''ll make sure to requisition some new gear as soon as possible,
+    Deshawn.'
+- kind: dialogue
+  speaker: forensics
+  text: Excuse me, Captain? I'm having some trouble with the evidence log.

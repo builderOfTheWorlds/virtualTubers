@@ -1,0 +1,36 @@
+id: press-reporter-small-talk
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:00.438855+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain, what's new on the Scuttle front?
+- kind: dialogue
+  speaker: captain
+  text: Good morning, Davey. Not much change overnight. We're focusing on that new
+    mirror.
+- kind: dialogue
+  speaker: press
+  text: Alright, got it. Anything I should know about managing the press today?
+- kind: dialogue
+  speaker: agent
+  text: Still tracking the usual Scuttle chatter, but nothing out of the ordinary
+    yet.
+- kind: dialogue
+  speaker: forensics
+  text: Still no luck getting the new software requisitioned. The delay is killing
+    us.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests the Scuttle may be adapting to our tactics.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: We''ll adjust our plan accordingly. Let''s get the team moving.'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Requisitions for the week: nothing new, but I did manage to get the forensics
+    equipment approved.'
+- kind: dialogue
+  speaker: captain
+  text: Good work, Teresa. Alright, let's get started.

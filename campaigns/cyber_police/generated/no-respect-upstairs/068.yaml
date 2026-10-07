@@ -1,0 +1,43 @@
+id: no-respect-upstairs
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:23.365261+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I've got a look at the Scuttle's latest post.
+- kind: dialogue
+  speaker: analyst
+  text: Oh, boy. "Cyber Cops Still Not Cops"?
+- kind: dialogue
+  speaker: agent
+  text: Can I requisition a new terminal, please? This one's been on the fritz for
+    weeks.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) I'll put it in, Deshawn. (to the team) Okay, let's get started on
+    the morning briefing. ||emotion:sighing (neutral/sad)
+- kind: dialogue
+  speaker: forensics
+  text: Morning, all. Got some interesting forensic data on the latest hack.
+- kind: dialogue
+  speaker: press
+  text: (on the press monitor, shouting) "Cyber Cops Still Not Cops!" Ha! That's gonna
+    be all over the evening news!
+- kind: dialogue
+  speaker: analyst
+  text: (to the team) Okay, let's try to keep that in mind, guys. We don't need to
+    prove anything to them today.
+- kind: dialogue
+  speaker: agent
+  text: Backup request sent.
+- kind: dialogue
+  speaker: captain
+  text: (to Deshawn) Let's see if anyone takes it seriously this time. ||emotion:sarcastic
+    (sad/angry)
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) I'll believe it when I see it...

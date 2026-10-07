@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:56.595107+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's just a matter of time before we catch the Bosun.
+- kind: dialogue
+  speaker: analyst
+  text: You think so, but I've been going over the evidence and I still can't find
+    any sign of a clear chain of command.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Priya, you're just looking for a reason to feel good about ourselves.
+    We all know it's just Scuttle luck.
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck, my eye. I've seen some smart operators in my time, but this
+    lot takes the biscuit. I'd love to get my hands on the Commodore's brain, just
+    for a minute.
+- kind: dialogue
+  speaker: forensics
+  text: Do you think it's possible they're just really, really good at covering their
+    tracks?
+- kind: dialogue
+  speaker: quartermaster
+  text: Please, I've seen the proxy chains they set up. Those are amateur hour. Someone
+    in the know is helping them, no question.
+- kind: dialogue
+  speaker: press
+  text: You know, I just got a message from a source claiming to have info on The
+    Scuttle's latest mirror location. Want to send a team?

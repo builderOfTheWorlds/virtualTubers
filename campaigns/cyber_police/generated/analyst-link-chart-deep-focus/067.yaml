@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:03.349729+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, if we assume the "Scuttle protocol" is a real thing and not just a myth,
+    we might need to re-examine our approach to the infrastructure.

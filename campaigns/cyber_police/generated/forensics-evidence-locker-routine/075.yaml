@@ -1,0 +1,30 @@
+id: forensics-evidence-locker-routine
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:58.576124+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Taking evidence from the locker requires a signed request from the Detective
+    or the Agent.
+- kind: dialogue
+  speaker: agent
+  text: Okay, I've got the paperwork, what's the call on the laptop?
+- kind: dialogue
+  speaker: forensics
+  text: Can you please sign for this USB drive as well?
+- kind: dialogue
+  speaker: captain
+  text: Yes, I'll take it. What's the chain of custody on this one?
+- kind: dialogue
+  speaker: forensics
+  text: I processed it myself, it's in the system, and the chain of custody is recorded.
+- kind: dialogue
+  speaker: analyst
+  text: Can I get the drive number and timestamp, please?
+- kind: dialogue
+  speaker: forensics
+  text: Drive 3456, timestamp 13:47 yesterday.
+- kind: dialogue
+  speaker: quartermaster
+  text: That's correct, I verified it this morning.

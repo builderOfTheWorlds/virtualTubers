@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 173
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:10.953232+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Failing to get the trace tool running is just my specialty.

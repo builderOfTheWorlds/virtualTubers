@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:20.747055+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Backup request from the Cyber Police for a probable Scuttle sighting, priority
+    three.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: Cyber Cops Can''t Even Catch a Cold - Scuttle''s Real Operators
+    Still at Large.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, we've got a possible lead on the Scuttle's servers, but we need to
+    get a team down there ASAP.
+- kind: dialogue
+  speaker: agent
+  text: Already on it, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: The Scuttle's encryption is getting harder to crack. Maybe we should try a
+    more... conventional approach.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Conventional approach? You mean like the time we tried to serve
+    a warrant and ended up getting outsmarted by a 12-year-old?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, alright, let''s not rehash old battles. Priya, get
+    the team ready, we''re going in.'

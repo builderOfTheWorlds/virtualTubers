@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:39.447797+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this ancient thing? The boot screen is still flashing
+- kind: dialogue
+  speaker: analyst
+  text: (chuckling) Yeah, I'm surprised it boots up at all. What's it got, a Pentium
+    IV in there somewhere?
+- kind: dialogue
+  speaker: agent
+  text: (laughing) Yeah, that's about right. The tech guy who set it up must have
+    been going for 'vintage'
+- kind: dialogue
+  speaker: forensics
+  text: (walking over to them) Uh, guys? I think I found the problem.
+- kind: dialogue
+  speaker: agent
+  text: Oh, great. What's the verdict?

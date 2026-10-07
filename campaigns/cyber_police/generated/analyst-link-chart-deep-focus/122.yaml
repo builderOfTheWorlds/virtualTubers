@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:16.547982+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's say the Scuttle's network architecture is not as decentralized
+    as it appears.
+- kind: dialogue
+  speaker: agent
+  text: I've been looking into that, Priya, and I think you're onto something.
+- kind: dialogue
+  speaker: forensics
+  text: But if it's not decentralized, then how do they manage to move so quickly
+    when we shut down a server?
+- kind: dialogue
+  speaker: analyst
+  text: Exactly, Hana. And that's why I think we need to look at the Quartermasters'
+    roles in more detail.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been tracking their equipment requisitions, and I think I've found a
+    pattern.
+- kind: dialogue
+  speaker: agent
+  text: Let me take a look at that, Teresa.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still not convinced it's not just the Scuttle luck.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not saying it's the Scuttle luck, Hana, but we need to be prepared for
+    every possibility.

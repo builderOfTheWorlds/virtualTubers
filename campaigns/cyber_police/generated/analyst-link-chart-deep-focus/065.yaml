@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:57.692525+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got a minor thread to chase here, might be nothing
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's protocol is designed to adapt to new infrastructure, but what
+    if they're anticipating our takedowns?
+- kind: dialogue
+  speaker: agent
+  text: We've seen that before, Priya, it's just their standard playbook
+- kind: dialogue
+  speaker: analyst
+  text: Yes, but what if this time they're using a new variant, one that we haven't
+    seen before?
+- kind: dialogue
+  speaker: forensics
+  text: I've got the raw data from the last seizure, I can dig through it again and
+    see if we missed anything
+- kind: dialogue
+  speaker: analyst
+  text: Okay, good, get that up on my screen. I want to see if I can spot any anomalies
+- kind: dialogue
+  speaker: agent
+  text: I'm running a trace on one of the mirror sites, see where it leads
+- kind: dialogue
+  speaker: analyst
+  text: And I'm going to run a pattern match on the Commodore's latest message, see
+    if we can pick up any hidden clues

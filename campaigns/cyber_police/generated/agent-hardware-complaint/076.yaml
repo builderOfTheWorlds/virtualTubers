@@ -1,0 +1,14 @@
+id: agent-hardware-complaint
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:46.294197+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this old laptop is slower than I am.
+- kind: dialogue
+  speaker: forensics
+  text: It's not the laptop, it's the network.
+- kind: dialogue
+  speaker: agent
+  text: Save it, Hana. I've got a tool to run and it's not playing nice.

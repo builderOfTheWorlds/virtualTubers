@@ -1,0 +1,37 @@
+id: bullpen-ambience
+take: 133
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:16.434346+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'MO: Just got a report from the Scuttle, looks like a new vulnerability in
+    the 8-bit protocol.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Already working on the exploit, Captain. I''ll have a draft analysis
+    in an hour.'
+- kind: narration
+  speaker: captain
+  text: 'HO: Just finishing up the last of the evidence from the 3 AM raid.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Coffee''s been on my desk for an hour, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Just getting to it, sorry.'
+- kind: narration
+  speaker: captain
+  text: 'RO: Teresa, how''s the requisition list looking for this week?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Nothing exciting, Captain. Just the usual denied requests.'
+- kind: narration
+  speaker: captain
+  text: 'PK: Can someone tell me if we''ve found anything on the ''ghost'' node?'
+- kind: narration
+  speaker: captain
+  text: 'HO: Still digging through the traffic data, Davey. Nothing concrete yet.'

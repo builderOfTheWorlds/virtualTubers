@@ -1,0 +1,33 @@
+id: quartermaster-binder-chatter
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:56.113242+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm going to need to requisition some new software for the quartermaster's
+    office.
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, it's like they think we're made of money.
+- kind: dialogue
+  speaker: captain
+  text: Okay, let's focus on the task at hand. What do we have for the day's lead?
+- kind: dialogue
+  speaker: detective
+  text: I've got a plan, but we'll need to discuss it with the analyst first.
+- kind: dialogue
+  speaker: analyst
+  text: What does the intelligence say?
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some strange network activity on the periphery.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing out of the ordinary, just a few minor anomalies.
+- kind: dialogue
+  speaker: press
+  text: We should be careful about what we release to the press.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the usual round of requests in.

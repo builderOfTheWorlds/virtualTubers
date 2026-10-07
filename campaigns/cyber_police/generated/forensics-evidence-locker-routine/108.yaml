@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:41.113151+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence intake procedure begins by checking the lock on the Evidence
+    Locker.
+- kind: dialogue
+  speaker: agent
+  text: I'll need to swipe my card to access the locker.
+- kind: dialogue
+  speaker: forensics
+  text: After entering the code, I'll verify the integrity of the drives and servers.
+- kind: dialogue
+  speaker: analyst
+  text: Can I confirm that the chain of custody has been maintained from the point
+    of collection?
+- kind: dialogue
+  speaker: forensics
+  text: I'll review the paperwork and confirm that the proper procedures were followed.
+- kind: dialogue
+  speaker: quartermaster
+  text: As the Quartermaster, I can confirm that all equipment was properly requisitioned
+    and documented.

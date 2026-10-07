@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:03.641805+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s review the Scuttle''s latest taunts'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, it''s a joke, Cap. They think we''re a laughingstock'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the latest data on their encrypted channels. Looks like they're using
+    a variant of the old "Darknet" protocol
+- kind: dialogue
+  speaker: agent
+  text: Can we get some actual backup for once? This place is a zoo
+- kind: dialogue
+  speaker: forensics
+  text: I've got the forensics report from the latest "raid" on the online market.
+    Still can't believe they think it's a real operation
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I had a nice conversation with the quartermaster from Internal Affairs.
+    They're thinking of reassigning some of our equipment
+- kind: dialogue
+  speaker: press
+  text: 'CYBER COPS FOILED AGAIN: Scuttle Masters Escape Yet Another "Raid"'

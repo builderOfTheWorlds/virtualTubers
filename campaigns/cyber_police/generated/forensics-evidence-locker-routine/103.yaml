@@ -1,0 +1,41 @@
+id: forensics-evidence-locker-routine
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:20.049715+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Evidence is taken in through the evidence locker, and the chain of custody
+    is documented.
+- kind: dialogue
+  speaker: agent
+  text: I'm going to take some evidence, Hana. Can you open it up?
+- kind: dialogue
+  speaker: forensics
+  text: Of course, Agent. The evidence locker is accessed with a keypad code.
+- kind: dialogue
+  speaker: analyst
+  text: I'll verify the chain of custody, Hana. Can I review the evidence log?
+- kind: dialogue
+  speaker: forensics
+  text: The evidence log is maintained digitally and physically, with a paper trail.
+- kind: dialogue
+  speaker: agent
+  text: Can you print me out a copy of the chain of custody? I need it for the case
+    file.
+- kind: dialogue
+  speaker: forensics
+  text: Affirmative, Agent. I'll print a copy of the chain of custody for you.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the digital copy, Hana. This is standard procedure.
+- kind: dialogue
+  speaker: forensics
+  text: Procedure is followed to the letter, Analyst. It's all about the integrity
+    of the evidence.
+- kind: dialogue
+  speaker: agent
+  text: Can you confirm that the evidence is secure and accounted for?
+- kind: dialogue
+  speaker: forensics
+  text: The evidence is secure and accounted for, Agent. The chain of custody is intact.

@@ -1,0 +1,47 @@
+id: press-reporter-small-talk
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:41.165102+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, what's the play today?
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey, just the usual. We've got a chatter spike on the new "Pride
+    and Joy" handle.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some interesting chatter patterns, but it's still too early
+    to say if it's our guy.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests the handle is a decoy, but I'm running some tests to
+    confirm.
+- kind: dialogue
+  speaker: forensics
+  text: Still no hits on the "Pride and Joy" handle, but I've got a few promising
+    leads on the malware.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. Nothing out of the ordinary in the requisitions today.
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I found a good angle on the "Pride and Joy" story. Can we
+    do a morning press briefing?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep it quick. Morning briefing in 10.
+- kind: dialogue
+  speaker: agent
+  text: Morning, everyone. I'll have a team reviewing the "Pride and Joy" handle.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging on the intelligence side. If we're lucky, we might get a
+    break.
+- kind: dialogue
+  speaker: forensics
+  text: I'll keep analyzing the malware. If I find something, I'll let you know.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisitions for the day. If we need anything, let me know.

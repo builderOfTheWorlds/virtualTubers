@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 202
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:02.179467+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can someone check if the cable to the monitor is loose again?
+- kind: dialogue
+  speaker: analyst
+  text: I don't have time for that right now, we need to get the intel up on the board.
+- kind: dialogue
+  speaker: agent
+  text: Ah, come on Priya, it's just the one with the fancy new hardware...
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Like we need fancy hardware to catch the Scuttle...
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, alright, let''s not bicker, can we just get the monitor
+    working?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (entering the room) Good morning, team, let''s get started
+    on today''s briefing.'

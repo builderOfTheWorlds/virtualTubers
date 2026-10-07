@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 159
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:10.300055+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a connection between the Bosun's IP and a proxy server in
+    Reykjavik.

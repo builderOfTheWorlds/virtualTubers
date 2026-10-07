@@ -1,0 +1,29 @@
+id: quartermaster-binder-chatter
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:20.646042+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll never get used to these denial notices.
+- kind: dialogue
+  speaker: detective
+  text: At least we have our eventual inquiry binder to keep us company.
+- kind: dialogue
+  speaker: analyst
+  text: I've been over the numbers, and it looks like the last three rejections were
+    all for the same item.
+- kind: dialogue
+  speaker: agent
+  text: Maybe we should appeal, see if we can get it approved by someone higher up.
+- kind: dialogue
+  speaker: forensics
+  text: I've been trying to get the new scanner for weeks, and I still don't have
+    it.
+- kind: dialogue
+  speaker: press
+  text: I've been writing about this unit for months, and I still can't get a straight
+    answer out of anyone.
+- kind: dialogue
+  speaker: quartermaster
+  text: Eventually, someone will actually listen to our requests.

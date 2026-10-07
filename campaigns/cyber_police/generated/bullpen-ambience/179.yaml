@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 179
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:03.180961+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, unit, let's get started on today's directive.
+- kind: dialogue
+  speaker: detective
+  text: Still waiting on forensics to dig up something on the latest mirror image.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some chatter traffic that might be worth a look.
+- kind: dialogue
+  speaker: agent
+  text: Just getting a crash course on the new hardware the Quartermaster requisitioned.
+- kind: dialogue
+  speaker: forensics
+  text: Still trying to get the evidence locker's temp-controlled section online.
+- kind: dialogue
+  speaker: press
+  text: Nothing new on the wire yet, just the usual 'experts say' nonsense.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got the morning's requisition denied for the second time this week.
+- kind: dialogue
+  speaker: captain
+  text: Desk-by-desk, let's get moving. Thorn, what's the plan?
+- kind: dialogue
+  speaker: detective
+  text: Haven't got a plan yet, Captain, but I'll get something by lunch.
+- kind: dialogue
+  speaker: analyst
+  text: I think I found something on the chatter traffic.
+- kind: dialogue
+  speaker: agent
+  text: I'm getting a reading on a possible backdoor in the latest image.
+- kind: dialogue
+  speaker: forensics
+  text: I think I finally got the locker's climate under control.

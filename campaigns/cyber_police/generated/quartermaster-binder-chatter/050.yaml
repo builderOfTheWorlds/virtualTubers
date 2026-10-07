@@ -1,0 +1,13 @@
+id: quartermaster-binder-chatter
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:24.973043+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't think we're getting anything new on the printer requisition, I've
+    got it flagged for a review.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: At least the underfunding is getting some attention, maybe
+    we''ll get some actual equipment to work with next year.'

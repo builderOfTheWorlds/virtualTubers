@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:31.049368+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I've got a morning to get the weekly requisition done and submitted.
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, Press, we should be focusing on The Scuttle's online presence.
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to see some weird patterns in the chatter traffic.
+- kind: dialogue
+  speaker: agent
+  text: I'm still working on hacking into the new mirror, but it's proving to be a
+    real challenge.
+- kind: dialogue
+  speaker: forensics
+  text: Hana's still running some tests on the evidence from the last bust.
+- kind: dialogue
+  speaker: press
+  text: Actually, I managed to get a quote from Commissioner's office, and they're
+    not pleased about the unit's budget.
+- kind: dialogue
+  speaker: quartermaster
+  text: I just got word that the new hardware I requested is being put on hold again.
+- kind: dialogue
+  speaker: captain
+  text: Some of us have been doing this for years, and we still don't get the respect
+    we deserve.
+- kind: dialogue
+  speaker: press
+  text: I'm just saying, if we could get one clean arrest, it would change everything.
+- kind: dialogue
+  speaker: detective
+  text: I'm not sure I agree with that, Press, but we need to keep pushing forward.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some ideas on how we could use the chatter traffic to our advantage.
+- kind: dialogue
+  speaker: agent
+  text: I'm going to try and get into that new mirror again, see if I can find anything
+    useful.

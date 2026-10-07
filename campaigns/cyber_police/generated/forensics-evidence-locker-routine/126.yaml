@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 126
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:55.700741+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence intake procedure logged.
+- kind: dialogue
+  speaker: agent
+  text: Can I get a walkthrough on the chain of custody for the drive I brought in
+    yesterday?
+- kind: dialogue
+  speaker: forensics
+  text: Sure, I'll show you the steps.
+- kind: dialogue
+  speaker: captain
+  text: (from her office) Just a heads up, we've got a new transfer in the system
+    from the lab.
+- kind: dialogue
+  speaker: forensics
+  text: I'll add it to the evidence locker's manifest.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Need to review the metadata...
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Hana, I'm going to need you to sign off on the new
+    batch of evidence bags.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let me just... (checks the evidence locker's log) ...verify the serial
+    numbers.

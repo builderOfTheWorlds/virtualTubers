@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 127
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:30.893781+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, folks.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Morning, Captain. Still no word from Ashiorid?'
+- kind: narration
+  speaker: captain
+  text: 'AN: The chatter on The Scuttle''s getting interesting. I''ll dig into the
+    logs.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Got the hardware I asked for.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Evidence lockup''s clean, but I''ll review the new stuff.'
+- kind: narration
+  speaker: captain
+  text: 'DP: Nothing from the press yet.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Still waiting to hear back from the new asset.'
+- kind: narration
+  speaker: captain
+  text: 'TM: ( muttering to self ) Scuttle luck...'
+- kind: narration
+  speaker: captain
+  text: 'TM: ( catches self ) Ignore that.'
+- kind: narration
+  speaker: captain
+  text: 'TM: ( looks at Hana ) You got the new drives yet?'
+- kind: narration
+  speaker: captain
+  text: 'HV: Not yet, but they''re coming.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Analyst, how''s the picture looking?'

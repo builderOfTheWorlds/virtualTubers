@@ -1,0 +1,42 @@
+id: forensics-evidence-locker-routine
+take: 37
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:34.111380+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Swabbing the evidence locker's keypad with a sterile wipe.
+- kind: dialogue
+  speaker: agent
+  text: Checking the console for any overnight security updates.
+- kind: dialogue
+  speaker: analyst
+  text: Running a diagnostic on the Evidence Locker's cameras.
+- kind: dialogue
+  speaker: captain
+  text: Entering the day's priority and lead into the case file.
+- kind: dialogue
+  speaker: press
+  text: Setting up for a long day of paperwork, arranging pens and notepads.
+- kind: dialogue
+  speaker: quartermaster
+  text: Reviewing the requisition binder for any overnight requests.
+- kind: dialogue
+  speaker: forensics
+  text: Locking the evidence locker, logging the contents, and updating the chain
+    of custody.
+- kind: dialogue
+  speaker: agent
+  text: Sending an encrypted email to the unit's secure channel.
+- kind: dialogue
+  speaker: analyst
+  text: Filing away printouts of the night's link charts.
+- kind: dialogue
+  speaker: captain
+  text: Calling the morning briefing to order, surveying the room.
+- kind: dialogue
+  speaker: press
+  text: Adjusting his tie in the mirror, practicing a confident smile.
+- kind: dialogue
+  speaker: quartermaster
+  text: Reaching for the phone, expecting a requisition to come through.

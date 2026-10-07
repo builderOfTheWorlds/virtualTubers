@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:13.533530+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Evidence received from the Agent, a memory stick.
+- kind: dialogue
+  speaker: agent
+  text: Evidence request to Forensics.
+- kind: dialogue
+  speaker: forensics
+  text: What's the case number?
+- kind: dialogue
+  speaker: analyst
+  text: Can you repeat that?
+- kind: dialogue
+  speaker: forensics
+  text: 2023-345, Chain of Custody entry 012345.
+- kind: dialogue
+  speaker: quartermaster
+  text: Forensics, please sign off on the requisition.
+- kind: dialogue
+  speaker: forensics
+  text: Signed.
+- kind: dialogue
+  speaker: analyst
+  text: Thank you, Forensics. I'll process it.
+- kind: dialogue
+  speaker: agent
+  text: Evidence log updated.

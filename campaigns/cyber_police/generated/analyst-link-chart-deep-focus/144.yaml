@@ -1,0 +1,42 @@
+id: analyst-link-chart-deep-focus
+take: 144
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:33.504324+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think we're looking at a new shell on the proxy chain, but it's not even
+    a good one.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, that's a bad IP. I can get it blocked in an hour.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a match on the shell's DNS records. It's a VPN in Kazakhstan.
+- kind: dialogue
+  speaker: quartermaster
+  text: Kazakhstan. Again. I'll get the requisition for the warrants.
+- kind: dialogue
+  speaker: captain
+  text: Hold off on the warrants. I want to see if we can dig up more on this shell.
+- kind: dialogue
+  speaker: press
+  text: Um, Captain? I think I can help with that. I've got a contact on the VPN's
+    support team.
+- kind: dialogue
+  speaker: analyst
+  text: Davey, are you sure that's a good idea? We don't need another loose end.
+- kind: dialogue
+  speaker: agent
+  text: Priya, let Davey do his thing. It's not like we have anything to lose at this
+    point.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting a hit on the VPN's internal logs. It looks like they had a server
+    down for a few hours last night.
+- kind: dialogue
+  speaker: quartermaster
+  text: That's not the best timing, if you ask me. We had a team on that server yesterday.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's see what we've got. Davey, get your contact on the line.

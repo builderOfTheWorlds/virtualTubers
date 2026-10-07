@@ -1,0 +1,20 @@
+id: quartermaster-binder-chatter
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:16.757720+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll never get used to seeing so many denied requisitions.
+- kind: dialogue
+  speaker: quartermaster
+  text: Some days I wonder if it's worth even putting in the paperwork.
+- kind: dialogue
+  speaker: detective
+  text: We can't do our job properly without the proper equipment.
+- kind: dialogue
+  speaker: detective
+  text: (laughs) The eventual inquiry, indeed.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just me and my binder of denied requests.

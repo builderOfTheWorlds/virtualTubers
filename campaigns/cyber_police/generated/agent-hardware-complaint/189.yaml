@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 189
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:18.593291+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing won't even recognize the interface protocol
+- kind: dialogue
+  speaker: analyst
+  text: I've seen this problem before. Did you try updating the firmware?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I did, but it's still giving me errors. It's like it's outdated or something
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) I heard they finally approved that new hardware requisition.
+    Maybe it's worth trying again?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, I'll try again. Maybe this time it'll magically work
+- kind: dialogue
+  speaker: press
+  text: (from the other side of the bullpen) Hey, Okafor, can you show me what you're
+    doing? I might be able to help

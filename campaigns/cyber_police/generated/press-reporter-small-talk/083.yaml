@@ -1,0 +1,30 @@
+id: press-reporter-small-talk
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:08.009532+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'm glad we could catch up, Davey, how's the city treating you these days?
+- kind: dialogue
+  speaker: press
+  text: Oh, you know, same old same old, Rosalind. How's the unit doing?
+- kind: dialogue
+  speaker: captain
+  text: You know, just trying to keep our heads above water. I'm sure you've seen
+    the latest on Scuttle's... exploits.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I have. I'm still trying to figure out how they manage to stay one step
+    ahead.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) That's the million-dollar question, isn't it? Anyway, I should let
+    you go, Davey.
+- kind: dialogue
+  speaker: press
+  text: Alright, thanks for chatting, Captain. I'll try to catch up with you again
+    soon.
+- kind: dialogue
+  speaker: captain
+  text: Take care, Davey.

@@ -1,0 +1,27 @@
+id: forensics-evidence-locker-routine
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:00.082889+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Taking evidence from the crime scene.
+- kind: dialogue
+  speaker: agent
+  text: Just got a call from the lab, Hana, looks like our suspect's hard drive has
+    a few surprises.
+- kind: dialogue
+  speaker: forensics
+  text: What kind of surprises?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Not sure, yet, just getting the data off the drive...
+- kind: dialogue
+  speaker: forensics
+  text: Okay, I'll come take a look.
+- kind: dialogue
+  speaker: quartermaster
+  text: You want me to get the requisition binder out?
+- kind: dialogue
+  speaker: forensics
+  text: No, I've got this. Just bring me the drive.

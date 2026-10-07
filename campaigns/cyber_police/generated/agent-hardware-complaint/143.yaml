@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 143
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:37.767217+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe the state of this thing?
+- kind: dialogue
+  speaker: detective
+  text: (laughs) Tell me about it, Okafor. We're lucky it still turns on.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) At least we can run the trace tool... if the hardware doesn't
+    blue screen...
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Maybe if we requisitioned some new equipment...
+- kind: dialogue
+  speaker: forensics
+  text: (noncommittal) Might not be the worst thing to happen to us today.
+- kind: dialogue
+  speaker: quartermaster
+  text: (calmly) Someone will get around to it eventually.
+- kind: dialogue
+  speaker: press
+  text: (smirking) Oh, I'm sure it's just a minor oversight.

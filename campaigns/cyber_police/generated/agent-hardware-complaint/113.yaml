@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:16.785136+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, great. The Scuttle just updated its mirrors again.
+- kind: dialogue
+  speaker: analyst
+  text: Looks like a new vulnerability, Deshawn. We'll need to write a patch ASAP.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the chat logs, but I did find something weird on the network
+    feeds.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a bunch of noise, Hana. I'll take a look.
+- kind: dialogue
+  speaker: press
+  text: You know, I think I can get a good story out of this.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. I want a plan by the end of the day.
+- kind: dialogue
+  speaker: detective
+  text: I'll talk to the Analyst and see what we can get from the intel.
+- kind: dialogue
+  speaker: agent
+  text: Meanwhile, can someone please help me get this ancient hardware running?

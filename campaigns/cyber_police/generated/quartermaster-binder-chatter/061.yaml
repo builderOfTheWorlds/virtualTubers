@@ -1,0 +1,12 @@
+id: quartermaster-binder-chatter
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:05.389194+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ll go through the binder again and make sure I haven''t missed
+    any other requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DMTP: I swear, it''s like they think we''re just asking for the sake of asking.'

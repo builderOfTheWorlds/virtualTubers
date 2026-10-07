@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 165
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:32.387273+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Mmm, okay, so if I apply the weights we established in the link analysis to
+    the chatter on the dark web...
+- kind: dialogue
+  speaker: agent
+  text: I've got a signal on one of the mirrors, but it's a dead end, every time I
+    try to pinpoint the source it drops out.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the drives we seized last time, and I think I found something.
+    It's a small anomaly, but it looks like it might be a backdoor.
+- kind: dialogue
+  speaker: press
+  text: Hi, is this a bad time? I just got a message from the press office, they want
+    to do a follow-up on the Scuttle.
+- kind: dialogue
+  speaker: quartermaster
+  text: I need to requisition some new equipment, the team's been complaining about
+    the old hardware. Can we get a priority order in for some new monitors?
+- kind: dialogue
+  speaker: analyst
+  text: Wait, what if this anomaly is more than just a backdoor? What if it's a trap,
+    set to trigger when we try to investigate?

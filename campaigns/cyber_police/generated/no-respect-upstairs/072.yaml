@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:46.484878+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning briefing.
+- kind: dialogue
+  speaker: detective
+  text: Scuttle's been quiet.
+- kind: dialogue
+  speaker: analyst
+  text: Still running the patterns, but it looks like a dead end.
+- kind: dialogue
+  speaker: agent
+  text: I got a call from a source last night.
+- kind: dialogue
+  speaker: forensics
+  text: (yawns) I'm going to go get some coffee.
+- kind: dialogue
+  speaker: press
+  text: '(headline on a monitor) "Cyber Police: Still Chasing Shadows"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) Like they even bother to read the requisition forms anymore.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. We've got a few hours before the morning rush.
+- kind: dialogue
+  speaker: detective
+  text: Can we get backup for the 10:00 meet?
+- kind: dialogue
+  speaker: analyst
+  text: (whispers) Don't hold your breath.
+- kind: dialogue
+  speaker: agent
+  text: (smirking) Yeah, like we ever get it on time.
+- kind: dialogue
+  speaker: forensics
+  text: (returning with coffee) What's the plan for 10?

@@ -1,0 +1,26 @@
+id: no-respect-upstairs
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:05.307035+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DesO: Morning, Captain,'
+- kind: narration
+  speaker: captain
+  text: 'CapA: Morning, Deshawn. What''s the Scuttle''s latest scam?'
+- kind: narration
+  speaker: captain
+  text: 'DetT: (on comms) I think it''s a phishing campaign this time.'
+- kind: narration
+  speaker: captain
+  text: 'AnaN: (on comms) Actually, it''s a fake cryptocurrency promotion.'
+- kind: narration
+  speaker: captain
+  text: 'QuarM: (on comms) I''ve got the email headers. It''s a classic.'
+- kind: narration
+  speaker: captain
+  text: 'ForeH: (over intercom) I''m still waiting for the data cables.'
+- kind: narration
+  speaker: captain
+  text: 'PressD: (on monitor) "Cyber Cops Foiled Again: The Scuttle''s Latest Antics"'

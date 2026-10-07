@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 179
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:29.305086+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Mmm, okay, so if we assume the 3-2-1 pattern is correct, then that means the
+    Commo...
+- kind: dialogue
+  speaker: agent
+  text: (yawn) Can I get a coffee, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: (from another room) I think I can spare one, Deshawn.
+- kind: dialogue
+  speaker: analyst
+  text: Right, so the Commodore's pattern...
+- kind: dialogue
+  speaker: press
+  text: (from outside the room) I'll let you know if anything comes in on the wires,
+    Priya.
+- kind: dialogue
+  speaker: analyst
+  text: And if we map the nodes...
+- kind: dialogue
+  speaker: forensics
+  text: (from another room) Can I come in when I've finished this DNA report?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) No, no, this doesn't feel right...
+- kind: dialogue
+  speaker: analyst
+  text: Wait, what if we're looking at this from the wrong angle?

@@ -1,0 +1,45 @@
+id: bullpen-ambience
+take: 139
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:47.207957+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, wrap it up for the day, people.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Got the mirror up on the board, Captain. Looks like The Scuttle''s been
+    poking around again.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ve been running some patterns on the chatter, looks like a possible
+    new player.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ve got the new hardware sorted, but we''re still short on some RAM.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Just finished processing the drive from the raid this morning. Nothing
+    too exciting, just more scripts.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ve been running some patterns on the chatter, looks like a possible
+    new player.'
+- kind: narration
+  speaker: captain
+  text: 'OKP: Nobody told me about the interview this morning?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Sorry, Davey, I forgot to loop you in. We''ll get you caught up.'
+- kind: narration
+  speaker: captain
+  text: 'TM: What time did we wrap up, Hana?'
+- kind: narration
+  speaker: captain
+  text: 'HV: Just finishing up the evidence log, about 30 minutes.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, let''s take a break. I''ll make some coffee.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Can I get a refill, please? Mine''s gone cold.'

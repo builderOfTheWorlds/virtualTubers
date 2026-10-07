@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:28.731900+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I don't like it when they say "the computer thing"
+- kind: dialogue
+  speaker: detective
+  text: I know, Captain. It's like they think we're not real
+- kind: dialogue
+  speaker: analyst
+  text: I've seen the memos, Captain. They think we're just some IT department
+- kind: dialogue
+  speaker: agent
+  text: I've got a requisition form for new hardware that's been sitting in a stack
+    for months
+- kind: dialogue
+  speaker: forensics
+  text: At least our evidence drives aren't a generation behind
+- kind: dialogue
+  speaker: press
+  text: I've got a call with the Commissioner's office to confirm the Scuttle raid
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a drawer full of denied requisition forms. Maybe one day we'll actually
+    get the funding we need

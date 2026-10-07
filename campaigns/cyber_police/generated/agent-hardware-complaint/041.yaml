@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:21.823739+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can you guys believe this outdated hardware we're still stuck with?
+- kind: dialogue
+  speaker: analyst
+  text: The latest OS patch for the comms console is still on hold for approval.
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, that's nothing new. I'm just trying to get this trace tool running.
+- kind: dialogue
+  speaker: forensics
+  text: (overhearing) I've had better luck getting results on my end, but I think
+    it's because I'm using the right cables.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Yeah, yeah, it's the cables. Or the OS. Or the universe itself. (mutters)
+    We'll get there.

@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:11.067303+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo's going to be a joy to fill out.
+- kind: dialogue
+  speaker: detective
+  text: I've got a meeting with a source who says The Scuttle's going to be the next
+    big thing.
+- kind: dialogue
+  speaker: analyst
+  text: The Commissioner's office thinks we're just a bunch of code monkeys.
+- kind: dialogue
+  speaker: agent
+  text: What's the source, exactly?
+- kind: dialogue
+  speaker: forensics
+  text: I overheard Teresa talking about a requisition that's been denied for months.
+- kind: dialogue
+  speaker: press
+  text: Hey, what's the haps? Got any good stories for me?
+- kind: dialogue
+  speaker: quartermaster
+  text: We're going to have a meeting in 10 minutes to discuss our latest case.

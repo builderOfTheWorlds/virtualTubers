@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:28.885517+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can someone get me a replacement for my USB drive? The one I have is
+    ancient.
+- kind: dialogue
+  speaker: analyst
+  text: What's the latest on the server logs? Anything interesting?
+- kind: dialogue
+  speaker: agent
+  text: (sighing) Nothing interesting, but I'm trying to get this trace tool running
+    and it's just not cooperating.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) And of course, we're stuck with this outdated hardware...
+- kind: dialogue
+  speaker: quartermaster
+  text: (calmly) Deshawn, did you remember to submit your requisition for the new
+    laptop?
+- kind: dialogue
+  speaker: agent
+  text: (laughing) Oh, good luck with that. It'll be approved by the time I retire.

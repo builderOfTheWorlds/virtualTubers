@@ -1,0 +1,16 @@
+id: quartermaster-binder-chatter
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:34.704779+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ve got to go through this entire binder again and add the latest
+    denied requisitions.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I don''t see why we have to go through this rigamarole every week.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: It''s not like it''s going to change anything, but I suppose it''s
+    better than nothing.'

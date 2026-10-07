@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:02.867985+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, the budget office loves to deny us the simplest things.
+- kind: dialogue
+  speaker: agent
+  text: It's like they want us to fail, don't they?
+- kind: dialogue
+  speaker: forensics
+  text: I've got a request in for a new thermal camera, but I'm not holding my breath.
+- kind: dialogue
+  speaker: analyst
+  text: Can we review the denied-requisitions binder again, see if I missed anything?
+- kind: dialogue
+  speaker: captain
+  text: We'll have to make do with what we have, team. Let's focus on the task at
+    hand.
+- kind: dialogue
+  speaker: press
+  text: Sounds like a plan, Captain. What's the lead for today?

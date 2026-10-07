@@ -1,0 +1,36 @@
+id: scuttle-luck-chatter
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:52.123298+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I swear, if they'd put half the effort into making it harder to track, they'd
+    actually get caught for once.
+- kind: dialogue
+  speaker: press
+  text: Oh, come on, Hana, you're not saying they're that competent, are you?
+- kind: dialogue
+  speaker: analyst
+  text: I'm just saying, every time we think we've got the Bosun, they pull a rabbit
+    out of their hat.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and every time we go after the Commodore, they're all "NO QUARTER, NO
+    ADS" and just laugh.
+- kind: dialogue
+  speaker: captain
+  text: 'Enough, you''re all forgetting the real problem here: budget. We can''t even
+    keep up with their proxy chains.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Speaking of which, has anyone seen the requisition for new servers I sent
+    out last week?
+- kind: dialogue
+  speaker: detective
+  text: Oh, I'm sure it's right where you left it, Teresa. Under the pile of " Maybe
+    If We Just Wish Really Hard We'll Get More Funding".
+- kind: dialogue
+  speaker: forensics
+  text: Hey, at least we know we're not alone in this. We've got the whole department
+    thinking we're some kind of joke.

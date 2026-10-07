@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:02.487815+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: I'm starting to think it's not just skill or inside info, it's a whole other
+    department playing dirty.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Davey, you're not going to start with that conspiracy theory again,
+    are you?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think Davey has a point. We have been noticing some... peculiarities
+    in the Scuttle's online behavior.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, like what? You mean them leaving us little messages in the root directory?
+    That's just taunting, not evidence of anything.
+- kind: dialogue
+  speaker: forensics
+  text: I'm just saying, if we can't even catch a proxy chain, how are we going to
+    catch the Bosun?
+- kind: dialogue
+  speaker: quartermaster
+  text: I think we're getting too hung up on the Bosun. If we can just take down the
+    site's ad revenue streams...
+- kind: dialogue
+  speaker: captain
+  text: Enough, let's not speculate. We have a job to do, and I expect you all to
+    focus on it.

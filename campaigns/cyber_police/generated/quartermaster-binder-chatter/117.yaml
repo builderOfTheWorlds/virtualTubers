@@ -1,0 +1,34 @@
+id: quartermaster-binder-chatter
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:21.989647+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Tmb: Oh, great, another denied requisition.'
+- kind: narration
+  speaker: captain
+  text: 'Tmb: I swear, if they keep dragging their feet on the new comms software,
+    I''ll have to start writing my reports with a quill.'
+- kind: narration
+  speaker: captain
+  text: 'Db: Ha, Tmb, you''re just mad because you''ll have to deal with the paperwork
+    when it finally gets approved.'
+- kind: narration
+  speaker: captain
+  text: 'Tn: Actually, Db, we should be glad it got denied. It''s a miracle they didn''t
+    just cut us off completely.'
+- kind: narration
+  speaker: captain
+  text: 'HO: What''s the eventual inquiry for today?'
+- kind: narration
+  speaker: captain
+  text: 'Tmb: Just the usual: a rejected request for a portable charger. They say
+    it''s a "non-essential expense".'
+- kind: narration
+  speaker: captain
+  text: 'TN: Well, I''ve got some good news. The new AI framework I''ve been working
+    on has some promising results.'
+- kind: narration
+  speaker: captain
+  text: 'Tn: But, Tmb, you know the deal. We''re lucky to get what we need.'

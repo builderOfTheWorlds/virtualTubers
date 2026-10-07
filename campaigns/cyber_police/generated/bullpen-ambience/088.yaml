@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:54.486018+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing's not for an hour yet, let's get the dashboards updated.
+- kind: dialogue
+  speaker: detective
+  text: Just got a reminder from Internal Affairs that they're still looking for that
+    one missing case file.
+- kind: dialogue
+  speaker: analyst
+  text: Got a new mirror up on The Scuttle, looks like a fresh account.
+- kind: dialogue
+  speaker: agent
+  text: Still trying to get this new malware ID sorted out, need more data.
+- kind: dialogue
+  speaker: forensics
+  text: Found a few interesting things in the evidence locker that need reviewing.
+- kind: dialogue
+  speaker: press
+  text: Going to grab a coffee, anyone need anything?
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on that new request for server upgrades.
+- kind: dialogue
+  speaker: analyst
+  text: Just sent off a report to the Captain's inbox, need it reviewed ASAP.
+- kind: dialogue
+  speaker: forensics
+  text: Need more coffee, mine's gone cold.
+- kind: dialogue
+  speaker: quartermaster
+  text: Had to put in a request for extra power cords, again.
+- kind: dialogue
+  speaker: agent
+  text: Going to review that new account on The Scuttle, might be a pattern.
+- kind: dialogue
+  speaker: press
+  text: Think I'll just go get that coffee for everyone, someone owes me a favor.

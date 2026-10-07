@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:45.964693+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Dispatch, I need backup for the Thorn case.
+- kind: dialogue
+  speaker: detective
+  text: We're in a standoff with Scuttle. Requesting extra caution.
+- kind: dialogue
+  speaker: analyst
+  text: Backup is going to be a no-go.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Priya, we can't expect them to take us seriously.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the fingerprints, but they're not going to do us much good.
+- kind: dialogue
+  speaker: press
+  text: '"Cyber Police Raid Foiled: Scuttle Continues to Laugh at Authorities" - just
+    another day on the desk.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I get the requisition form for a new forensic light?

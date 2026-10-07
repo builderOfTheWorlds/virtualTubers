@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:27.044308+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, it's inside information. They have someone on the payroll.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Priya, you can't just assume they're cheating. We've got good people
+    on this.
+- kind: dialogue
+  speaker: forensics
+  text: I've analyzed the server logs, and I'm convinced it's just their infrastructure
+    is better than ours.
+- kind: dialogue
+  speaker: press
+  text: Better? Ha! They make it look like we're trying to catch a will-o'-the-wisp.
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, alright, let's not get too worked up. It's just a game of cat and
+    mouse.
+- kind: dialogue
+  speaker: captain
+  text: And that's why we've got to keep pushing forward. We will catch them eventually.
+- kind: dialogue
+  speaker: detective
+  text: With what? Our outdated hardware and lack of resources?

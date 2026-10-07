@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:44.880114+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Focusing on the chatter patterns, I think I see a potential new connection
+    to the Vipers.
+- kind: dialogue
+  speaker: detective
+  text: We need to get eyes on that new node, see if we can get a better picture of
+    who's behind it.
+- kind: dialogue
+  speaker: agent
+  text: I'll work on setting up a new surveillance point, see if we can get a clear
+    view of the node's activity.
+- kind: dialogue
+  speaker: forensics
+  text: Meanwhile, I'll take a closer look at the node's IP and see if I can find
+    any connections to our previous raids.
+- kind: dialogue
+  speaker: press
+  text: I'll talk to my source and see if they've heard anything about this new development.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Quartermaster''s update: we''ve got a new shipment of equipment coming in
+    tomorrow, but I''m still waiting to hear back on the requested upgrades.'
+- kind: narration
+  speaker: captain
+  text: (Observer sits at his desk, eyes fixed on the Analyst's screen)

@@ -1,0 +1,31 @@
+id: agent-hardware-complaint
+take: 207
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:15.981953+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this ancient computer can't even get the right driver
+    for this new monitor.
+- kind: dialogue
+  speaker: forensics
+  text: (chuckling) Yeah, because we always get the latest and greatest, right, Des?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I swear, I wrote a script to update this thing last
+    week, but...
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) Yeah, I'm not surprised. Our last request for new hardware
+    got denied.
+- kind: dialogue
+  speaker: press
+  text: (typing away on her computer) I'll just go ahead and use the same driver we've
+    been using for years.
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Because that's what we do, isn't it? Make do with what we have?
+- kind: dialogue
+  speaker: detective
+  text: (smirking) You'd think so, but I'm still hoping someone will come along and
+    magically update our entire system.

@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:05.520674+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I think we''re getting close to something on that chatter
+    thread'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I've run the link chart again and I still can't find any clear connections
+- kind: dialogue
+  speaker: agent
+  text: Can we get a warrant for that IP address?
+- kind: dialogue
+  speaker: forensics
+  text: I'll process the evidence from the last raid, but I need the Agent to sign
+    off on the chain of custody
+- kind: dialogue
+  speaker: press
+  text: Can I get a quote from Captain Agar on the significance of this new development?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned new hard drives for the Agent, but they're still stuck
+    in procurement
+- kind: dialogue
+  speaker: captain
+  text: Observer, did you want to say anything about the morning's developments?

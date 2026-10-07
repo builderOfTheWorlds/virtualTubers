@@ -1,0 +1,11 @@
+id: agent-hardware-complaint
+take: 123
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:40.942343+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this old hardware can barely keep up with The Scuttle's antics.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I've been trying to get a replacement for that server for months.

@@ -1,0 +1,35 @@
+id: bullpen-ambience
+take: 126
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:22.543952+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle's been quiet all morning
+- kind: dialogue
+  speaker: detective
+  text: I'm trying to get Marcus' code to work on that new router
+- kind: dialogue
+  speaker: analyst
+  text: I think I finally found the vulnerability in the Ashiorid protocol
+- kind: dialogue
+  speaker: agent
+  text: Does anyone have a spare battery for my comms rig?
+- kind: dialogue
+  speaker: forensics
+  text: I've got some good news, but I think I need to run it by the Captain first
+- kind: dialogue
+  speaker: press
+  text: Anyone seen the new press releases for the Department?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm just going to grab some fresh coffee, anyone want a refill?
+- kind: dialogue
+  speaker: captain
+  text: What's the status on the Miriam case?
+- kind: dialogue
+  speaker: analyst
+  text: I've been running some simulations...
+- kind: dialogue
+  speaker: detective
+  text: I think we've got a match on the encryption

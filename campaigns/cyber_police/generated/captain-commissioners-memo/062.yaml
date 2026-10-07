@@ -1,0 +1,18 @@
+id: captain-commissioners-memo
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:29.941085+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Oh great, "the computer thing"
+- kind: dialogue
+  speaker: analyst
+  text: I'm going to go ahead and assume we'll get our usual "optional" funding for
+    new laptops
+- kind: dialogue
+  speaker: forensics
+  text: Like we need anything new
+- kind: dialogue
+  speaker: press
+  text: Morning, team!

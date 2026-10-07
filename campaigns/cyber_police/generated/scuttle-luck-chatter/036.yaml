@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:02.690801+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle's operators have been in on the joke from day one, and that's
+    what makes them so hard to catch.
+- kind: dialogue
+  speaker: detective
+  text: If they're laughing at us, we should be laughing back.
+- kind: dialogue
+  speaker: analyst
+  text: But it's not just a matter of laughing back, it's about taking them seriously.
+- kind: dialogue
+  speaker: agent
+  text: I'm not sure I agree, Priya. Maybe they're not taking themselves seriously,
+    but that's what's making it so hard to land a hit.
+- kind: dialogue
+  speaker: forensics
+  text: I don't think it's about taking them seriously, I think it's about being more
+    proactive.
+- kind: dialogue
+  speaker: press
+  text: Yeah, and maybe we should be more proactive about bringing snacks next time.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, come on Davey.

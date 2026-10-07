@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:47.924045+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Today's lead is a new Scuttle mirror, located
+    in the eastern district.
+- kind: dialogue
+  speaker: detective
+  text: I'm working on a plan to infiltrate the mirror and gather more intel.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests the mirror is a honeypot, designed to capture our attention.
+- kind: dialogue
+  speaker: agent
+  text: I've got a tech check scheduled with Hana to see if we can crack the mirror's
+    encryption.
+- kind: dialogue
+  speaker: press
+  text: I'm going to keep an eye on the press corps, see if anyone is sniffing around
+    for a story.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're still short on requisitions, specifically for new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get started on the tech check, but I'm warning you, it's going to be
+    a tough nut to crack.
+- kind: dialogue
+  speaker: press
+  text: I'll keep digging for leaks, see if I can find any connections between the
+    Scuttle and the department.
+- kind: dialogue
+  speaker: analyst
+  text: I'm tracking the mirror's IP, but it's already jumping around, making it hard
+    to pinpoint.
+- kind: dialogue
+  speaker: agent
+  text: I'll prep the team for possible raid procedures, just in case we get lucky.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition forms submitted, but I'm not expecting much from
+    HQ.

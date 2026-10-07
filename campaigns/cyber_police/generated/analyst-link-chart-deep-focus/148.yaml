@@ -1,0 +1,50 @@
+id: analyst-link-chart-deep-focus
+take: 148
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:49.942243+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Focusing on the minor thread here, but it's possible it's just a misfire from
+    The Scuttle's crew, or
+- kind: dialogue
+  speaker: agent
+  text: (from offstage) Captain, I've got a possible match on a proxy chain
+- kind: dialogue
+  speaker: captain
+  text: Send me the details, Deshawn. I want to review them before we send the team
+- kind: dialogue
+  speaker: analyst
+  text: If this is the Bosun's work, it means they're trying to move the site to a
+    new location
+- kind: dialogue
+  speaker: forensics
+  text: (from offstage) I'm getting some interesting results from the evidence we
+    took from the last raid
+- kind: dialogue
+  speaker: press
+  text: (from offstage) Anyone need a statement for the press about the recent arrests?
+- kind: dialogue
+  speaker: quartermaster
+  text: (from offstage) We need to restock the evidence lockers, Captain. We're running
+    low on
+- kind: dialogue
+  speaker: analyst
+  text: This thread looks like it's connected to an old upload from a year ago. Maybe
+    it's a red herring
+- kind: dialogue
+  speaker: captain
+  text: Alright, Priya. Let's keep digging. See if we can follow the thread back to
+    its source
+- kind: dialogue
+  speaker: agent
+  text: (from offstage) Captain, I think I've found something. It looks like a hidden
+    backdoor
+- kind: dialogue
+  speaker: analyst
+  text: If this is the Bosun's work, it means they're trying to communicate with someone
+    inside the unit
+- kind: dialogue
+  speaker: forensics
+  text: (from offstage) I've got something here... It looks like a piece of malware
+    that matches the Scuttle protocol

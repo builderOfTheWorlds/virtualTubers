@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 162
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:36.882072+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I'm starting to think our hardware is older than The Scuttle.
+- kind: dialogue
+  speaker: press
+  text: '|| neutral (smiling and typing away on their laptop)'
+- kind: dialogue
+  speaker: analyst
+  text: Analyst says there's a new IP address matching The Scuttle's last known protocol.
+- kind: dialogue
+  speaker: captain
+  text: Let's move, people. We've got a lead to chase.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is still trying to get a clean read on the data from the last bust.
+- kind: dialogue
+  speaker: detective
+  text: I'll work on getting a warrant for that IP address.
+- kind: dialogue
+  speaker: agent
+  text: Can we actually run that trace tool yet?
+- kind: dialogue
+  speaker: press
+  text: Not yet, Deshawn. You know our infrastructure.

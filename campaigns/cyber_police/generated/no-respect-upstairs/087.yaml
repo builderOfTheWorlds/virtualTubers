@@ -1,0 +1,43 @@
+id: no-respect-upstairs
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:26.974305+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. We've got a case from the Financial District.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. What's the situation?
+- kind: dialogue
+  speaker: analyst
+  text: Still reviewing the footage, but it looks like a targeted hack.
+- kind: dialogue
+  speaker: agent
+  text: I'm on my way to review the scene.
+- kind: dialogue
+  speaker: forensics
+  text: Just getting the logs from the affected systems.
+- kind: dialogue
+  speaker: press
+  text: Cyber Police Still Chasing Ghosts
+- kind: dialogue
+  speaker: quartermaster
+  text: Just sent out the equipment manifest, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Sorry, Cyber Police, we can''t send backup for this one. We''ve
+    got a high-priority 10-13 in the North End.'
+- kind: dialogue
+  speaker: detective
+  text: (to the team) Guess we're on our own.
+- kind: dialogue
+  speaker: analyst
+  text: (smirking) Just a matter of time before the Scuttle gets us in the headlines
+    again.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Oh, I'm sure we'll get some love from the press.
+- kind: dialogue
+  speaker: forensics
+  text: (to the team) This is going to be a long day...

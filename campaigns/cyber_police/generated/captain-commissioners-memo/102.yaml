@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:21.160524+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Sounds like we''re still "the computer thing".'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: Yeah, like we''re not even worth a decent title.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Maybe we should just give up and call ourselves "IT with badges".'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: I think I saw that line in a tabloid headline last week.'
+- kind: narration
+  speaker: captain
+  text: 'Press Okonkwo-Pryce: (muttering to herself) "The Cyber Police: a departmental
+    joke..."'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: (sighs) This is why we need that one big arrest
+    to change everything.'

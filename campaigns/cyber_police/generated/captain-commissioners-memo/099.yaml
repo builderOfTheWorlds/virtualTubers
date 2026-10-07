@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:08.433754+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is already on the desk.
+- kind: dialogue
+  speaker: detective
+  text: (reading over Captain's shoulder) "The computer thing"?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Typical. They don't even try to hide it.
+- kind: dialogue
+  speaker: agent
+  text: (whispering) Did you see the line about our hardware?
+- kind: dialogue
+  speaker: forensics
+  text: (sarcastically) Oh, joy, another exciting day in the basement.
+- kind: dialogue
+  speaker: press
+  text: (smirking) Well, well, well. Looks like someone's got their feelings hurt.
+- kind: dialogue
+  speaker: quartermaster
+  text: (dryly) I'll just go ahead and requisition some new computers, then.

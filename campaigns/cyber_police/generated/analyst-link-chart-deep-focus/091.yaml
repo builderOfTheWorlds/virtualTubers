@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 91
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:39.914651+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's re-run the link analysis on the 3:47 AM dump.
+- kind: dialogue
+  speaker: agent
+  text: (whispering) You think we'll ever catch the Bosun?
+- kind: dialogue
+  speaker: forensics
+  text: I'm still missing a correlation between the proxy chain and the seized server's
+    IP.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Nice try, indeed.
+- kind: dialogue
+  speaker: press
+  text: (to himself) Okay, Priya, you're saying there's a 67% chance that "cargo"
+    refers to a software package, but I'm still not convinced it's just about file
+    sharing.
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) Yes, yes, it could be a metaphor for... wait a minute,
+    this one link here...
+- kind: narration
+  speaker: captain
+  text: (Captain Rosalind Agar enters the room)
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get moving.

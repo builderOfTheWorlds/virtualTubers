@@ -1,0 +1,43 @@
+id: no-respect-upstairs
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:46.427146+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Someone's got to do the paperwork on these Scuttle "clips".
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and I'm sure the Commissioner's office has no idea what "Scuttle" is.
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing's about to start. Remember, the unit's motto...
+- kind: dialogue
+  speaker: detective
+  text: Some people have to mean it, since nobody else does.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team. Coffee's still on the counter.
+- kind: dialogue
+  speaker: forensics
+  text: 'Not that it matters, but Scuttle''s got a new "exclusive" up: our unit''s
+    "bounty hunting".'
+- kind: dialogue
+  speaker: press
+  text: 'Scuttle: "Cyber Cops Sued for ''Threatening'' Cyber Terrorists with ''Real''
+    Police Work".'
+- kind: dialogue
+  speaker: analyst
+  text: That's going to get a lot of clicks.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and it's not even like we can prove the Scuttle operators are real people.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the briefing. We've got a new...
+- kind: dialogue
+  speaker: detective
+  text: '...clue, I think.'
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look.

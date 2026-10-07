@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:12.103065+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'ROSA: Morning, unit.'
+- kind: narration
+  speaker: captain
+  text: 'MAR: Morning, Captain. What''s the call?'
+- kind: narration
+  speaker: captain
+  text: 'PRI: Morning. I''m getting some weird traffic from the Scuttle''s IP address.'
+- kind: narration
+  speaker: captain
+  text: 'DESH: Morning. Got a good feeling about today.'
+- kind: dialogue
+  speaker: forensics
+  text: Morning, I'm seeing some oddities in the surveillance feed...
+- kind: narration
+  speaker: captain
+  text: 'TERE: Morning, Captain. Supplies are running low.'
+- kind: narration
+  speaker: captain
+  text: 'DAVE: ''CYBER POLICE IN CHARGE OF CYBER CRIME: WE CAN BELIEVE IT'' - Scuttle
+    headline.'

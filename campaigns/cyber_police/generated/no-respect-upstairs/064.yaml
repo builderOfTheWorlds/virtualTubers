@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:59.166084+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'HRV: Good morning, Teresa.'
+- kind: narration
+  speaker: captain
+  text: 'DOM: Morning, all.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: What''s the Scuttle got for us today?'
+- kind: narration
+  speaker: captain
+  text: 'TML: Nothing but noise, so far.'
+- kind: narration
+  speaker: captain
+  text: 'PAN: I''m trying to find some actual chatter.'
+- kind: narration
+  speaker: captain
+  text: 'TML: Good luck with that.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, briefing in 10.'
+- kind: narration
+  speaker: captain
+  text: 'HRV: Can I get some more coffee first?'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Ha! You''re gonna need it.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Anyone get the press brief from Davey?'
+- kind: narration
+  speaker: captain
+  text: 'PAN: Let me check.'

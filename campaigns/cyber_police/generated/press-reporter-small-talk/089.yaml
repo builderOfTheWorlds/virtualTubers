@@ -1,0 +1,48 @@
+id: press-reporter-small-talk
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:39.067251+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, time to go over the latest on The Scuttle's mirrors.
+- kind: dialogue
+  speaker: press
+  text: (sighs) Still no bite on the sources I've been trying to get, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests they're using a new caching protocol, but I'm still
+    analyzing the data.
+- kind: dialogue
+  speaker: agent
+  text: I've got a potential match on the chatter spike from last night, but it's
+    going to take some digging.
+- kind: dialogue
+  speaker: forensics
+  text: No new evidence on the latest raid, but I did find some interesting anomalies
+    in the Scuttle's usual patterns.
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster's log shows another requisition denial this morning, this time
+    for new encryption hardware.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the lead, people. We need to move on this today.
+- kind: dialogue
+  speaker: press
+  text: (muttering) Yeah, because that's always worked out so well for us in the past...
+- kind: dialogue
+  speaker: analyst
+  text: I've got some new analysis on the Scuttle's protocol, but I need to run some
+    more tests before I can give you anything concrete.
+- kind: dialogue
+  speaker: agent
+  text: I'll get that digging started, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look at the anomalies and see if I can find anything that might
+    crack the Scuttle's encryption.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) I'll go ahead and resubmit the requisition for that encryption hardware.
+    Maybe we'll get lucky.

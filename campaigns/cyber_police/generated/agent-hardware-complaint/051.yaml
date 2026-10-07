@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:14.604622+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can you believe they're still making us use this ancient hardware.
+- kind: dialogue
+  speaker: analyst
+  text: Not that I mind the upgrade to Vista.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) At least we have a decent enough processor to run that forensics
+    tool...
+- kind: dialogue
+  speaker: quartermaster
+  text: You'd think they'd get around to replacing that thing.
+- kind: dialogue
+  speaker: press
+  text: Can we get a shot of the unit's computer setup for the blog?
+- kind: dialogue
+  speaker: captain
+  text: Deshawn, what's the status on getting that tool up and running?
+- kind: dialogue
+  speaker: detective
+  text: (sighing) I'm not sure we should even bother.

@@ -1,0 +1,25 @@
+id: press-reporter-small-talk
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:32.358105+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Cap. Just checking in on the mood around the department. Anything new
+    on the raid front?
+- kind: dialogue
+  speaker: captain
+  text: '"Nope, still stuck in limbo. Just the usual ''we''ll get back to you'' from
+    internal affairs.'
+- kind: dialogue
+  speaker: press
+  text: Yeah, I got the same runaround from procurement on the new hardware. Guess
+    we're stuck with last year's model... again.
+- kind: dialogue
+  speaker: analyst
+  text: You know, if we're lucky, maybe we'll get a break on the Scuttle front. I'm
+    still going over the chatter logs from last night...
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on the lab results from the latest seizure. Fingers crossed
+    it's something we can use.

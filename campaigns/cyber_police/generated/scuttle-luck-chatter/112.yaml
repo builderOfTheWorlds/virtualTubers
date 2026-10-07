@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:35.688939+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, we've been raiding them for five years, and they're still one step
+    ahead.
+- kind: dialogue
+  speaker: analyst
+  text: It's not just skill, Deshawn, it's...
+- kind: dialogue
+  speaker: detective
+  text: inside information.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, come on, Priya, you don't really think they have some mole in the department?
+- kind: dialogue
+  speaker: forensics
+  text: I've gone over the logs, and it looks like they've got a pattern. Maybe we
+    can finally catch them in the act.
+- kind: dialogue
+  speaker: press
+  text: A pattern? What pattern? They're pirates, for crying out loud! They make it
+    up as they go!
+- kind: dialogue
+  speaker: captain
+  text: (laughing) Well, Davey, it's not as if we haven't tried the "make it up as
+    you go" approach ourselves.

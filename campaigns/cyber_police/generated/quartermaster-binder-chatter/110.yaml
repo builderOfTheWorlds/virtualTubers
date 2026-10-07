@@ -1,0 +1,27 @@
+id: quartermaster-binder-chatter
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:57.754176+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, so requisition 473, denied again.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m starting to think the Commissioner''s office has no idea
+    what we actually do.'
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's been using a new encryption method, it looks like.
+- kind: dialogue
+  speaker: agent
+  text: I'll run the scans and see if we can pick up anything.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the lab started on processing the new evidence.
+- kind: dialogue
+  speaker: press
+  text: Maybe I can get something in the press today.
+- kind: dialogue
+  speaker: quartermaster
+  text: Yeah, sure, like that's going to happen.

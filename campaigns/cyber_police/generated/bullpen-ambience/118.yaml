@@ -1,0 +1,36 @@
+id: bullpen-ambience
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:37.991308+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing's over. Time to get some actual work done.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, I've got the intel from last night...
+- kind: dialogue
+  speaker: detective
+  text: And I've been going over the plan for this morning...
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the system online, it's being stubborn.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished processing the drive, but it's just more encrypted nonsense.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press yet, but I did see a tweet from that one influencer
+    who thinks she's a hacker.
+- kind: dialogue
+  speaker: quartermaster
+  text: You guys know I've got a requisition request in for some new hardware, right?
+- kind: dialogue
+  speaker: detective
+  text: I guess it's too much to hope for a fresh pot.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so...
+- kind: dialogue
+  speaker: captain
+  text: Yes?

@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:22.142119+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Morning, team,
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get started, 8 am briefing.'
+- kind: dialogue
+  speaker: analyst
+  text: Still waiting on that Scuttle IP address, Captain.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: It''ll get done, Priya. Just focus on the task.'
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I found a lead on the new malware strain.
+- kind: dialogue
+  speaker: quartermaster
+  text: You guys are going to make me get out of my chair, aren't you?
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Police: The Unsung Heroes of Our Time... or Not.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Can we just get some respect around here?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Okay, okay, let''s take a deep breath.'

@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:43.795342+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey. What's the scuttle on the morning news?
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain. Not much, just the usual. 'Cyber Police Foiled Again' headlines.
+- kind: dialogue
+  speaker: analyst
+  text: Can we get a list of our current requisitions?
+- kind: dialogue
+  speaker: agent
+  text: I'll get on that, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: Captain, I've finished reviewing the Mirai code.
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, I have the day's supply notices.
+- kind: dialogue
+  speaker: press
+  text: Morning, everyone. How's it going?
+- kind: dialogue
+  speaker: captain
+  text: Let's get started. Today's lead is...

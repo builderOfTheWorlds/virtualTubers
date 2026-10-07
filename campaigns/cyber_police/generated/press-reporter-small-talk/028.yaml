@@ -1,0 +1,34 @@
+id: press-reporter-small-talk
+take: 28
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:46.962884+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, what's the story with the new Commissioner?
+- kind: dialogue
+  speaker: captain
+  text: Oh, you know, just the usual, Davey. Trying to make sense of the world, one
+    misnomer at a time.
+- kind: dialogue
+  speaker: detective
+  text: Can we talk about something that doesn't make us want to pull our hair out
+    for once?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I found something interesting in the chatter logs.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, what is it, Priya?
+- kind: dialogue
+  speaker: forensics
+  text: Nothing that'll blow the lid off, but it's a tiny anomaly in the usual noise.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got the requisition list from upstairs.
+- kind: dialogue
+  speaker: press
+  text: Thanks for the heads up, Teresa. I'll make sure to give it a spin.
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's get down to business. Today's lead is...

@@ -1,0 +1,37 @@
+id: forensics-evidence-locker-routine
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:45.684095+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking in from the stairwell, I notice the Analyst is on another marathon
+    session.
+- kind: dialogue
+  speaker: analyst
+  text: I need to get this evidence intake process started, we're already running
+    late.
+- kind: dialogue
+  speaker: agent
+  text: You want me to bring the drive over from the evidence locker?
+- kind: dialogue
+  speaker: forensics
+  text: Negative, I've got it right here. I'll log it in and start processing.
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. I'll be reviewing the day's priorities with the team
+    shortly.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I've been reviewing the case files, and I think we need
+    to adjust our strategy.
+- kind: dialogue
+  speaker: analyst
+  text: What specifically do you have in mind, Detective?
+- kind: dialogue
+  speaker: agent
+  text: I've been looking over the network logs, and I think I found a potential lead.
+- kind: dialogue
+  speaker: forensics
+  text: Let me get the drive out of the evidence locker and I'll bring it over to
+    the analysis station.

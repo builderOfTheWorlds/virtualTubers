@@ -1,0 +1,38 @@
+id: press-reporter-small-talk
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:46.871979+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: What's the latest on that surveillance sweep, Captain?
+- kind: dialogue
+  speaker: captain
+  text: Ah, you know, just the usual. Nothing to write home about.
+- kind: dialogue
+  speaker: press
+  text: I know the feeling. So, what's the play today?
+- kind: dialogue
+  speaker: captain
+  text: We've got a new Scuttle mirror up. The Analyst is working it now.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the mirror's origin and some chatter patterns to look at.
+- kind: dialogue
+  speaker: detective
+  text: I'm thinking we go in quietly, see if we can get a foothold.
+- kind: dialogue
+  speaker: agent
+  text: I've got the tech side of things covered.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some interesting analysis on the chatter patterns.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisitions front. Still waiting on that new server.
+- kind: dialogue
+  speaker: press
+  text: I'll see what I can do to spin this for the press.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to it.

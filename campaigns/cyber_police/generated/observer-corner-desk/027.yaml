@@ -1,0 +1,41 @@
+id: observer-corner-desk
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:58.568166+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is about to start.
+- kind: dialogue
+  speaker: detective
+  text: Where's Priya?
+- kind: dialogue
+  speaker: analyst
+  text: I'll be right there.
+- kind: dialogue
+  speaker: agent
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: press
+  text: (nervously chuckling) Ah, nice to see we're all on time today.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Finally, some decent coffee.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (still sitting at his desk, not looking up)'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. The directive is...
+- kind: dialogue
+  speaker: detective
+  text: I've got a lead on a new server setup in Eastern Europe.
+- kind: dialogue
+  speaker: analyst
+  text: That matches some of the chatter we've been seeing.
+- kind: dialogue
+  speaker: agent
+  text: I'll get to work on tracing the IP.

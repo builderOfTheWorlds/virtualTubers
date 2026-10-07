@@ -1,0 +1,47 @@
+id: press-reporter-small-talk
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:01.521058+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Alright, Ros, what's the big story today?
+- kind: dialogue
+  speaker: captain
+  text: Just the usual, Davey. We're chasing a new Scuttle server setup in the Eastern
+    Suburbs.
+- kind: dialogue
+  speaker: press
+  text: Eastern Suburbs, huh? That's rich. I'll make sure to put it on the front page
+    somewhere.
+- kind: dialogue
+  speaker: agent
+  text: Morning, Captain. I've got some good news on the surveillance footage.
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging into the server specs, and I think I can get us into the
+    Scuttle's internal logs.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on the results from the Forensics lab, but I think we might
+    have a match on the new malware variant.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team. Just a heads-up, the Quartermaster's office just denied our
+    request for new encryption hardware.
+- kind: dialogue
+  speaker: captain
+  text: That's what I'm afraid of, Teresa. Alright, let's get started.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I'll just make sure to spin it as "the Cyber Police chasing shadows
+    again".
+- kind: dialogue
+  speaker: agent
+  text: I don't know why we bother, Captain. It's like nobody takes us seriously.
+- kind: dialogue
+  speaker: analyst
+  text: Some people have to mean it, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, and if we don't show up, who will?

@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T05:44:35.868180+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle doesn't take a day off.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the case files again, see if I missed something.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few more hours of code to finish before I can head out.
+- kind: dialogue
+  speaker: agent
+  text: Anyone need a new coffee from upstairs? Mine's gone cold.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished the forensics report on the recent incident.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press yet, but I'll keep an ear out.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting to hear back on that requisition for the new software.

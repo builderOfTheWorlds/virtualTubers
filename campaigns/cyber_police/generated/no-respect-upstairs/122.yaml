@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:39.547486+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Alright, Thorn, you want backup for a suspected Scuttle tip? I''ll
+    put you at the bottom of the list.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (looking at a monitor) Scuttle''s got another scathing piece
+    out about us. Looks like Davey Okonkwo-Pryce''s on a roll.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, Deshawn, this new malware is not just a prank. It's a game-changer.
+- kind: dialogue
+  speaker: agent
+  text: I've got a feeling about this one, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: (walking by the team) What's the holdup on processing the new evidence?
+- kind: dialogue
+  speaker: press
+  text: '"CYBER POLICE: STILL NOT GETTING IT. Scuttle: 1, Cyber Police: 0".'
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the team) Alright, let's get moving. I've got a requisition for new equipment
+    to fill out.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (to the team) Alright, let''s get this over with. Some of you
+    look like you''ve been up all night.'

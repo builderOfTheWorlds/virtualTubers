@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:12.325934+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's not just luck. They have someone on the inside.
+- kind: dialogue
+  speaker: analyst
+  text: But who? And how? We've been over the data a thousand times.
+- kind: dialogue
+  speaker: captain
+  text: Maybe it's not a person, maybe it's a system. We need to think outside the
+    box.
+- kind: dialogue
+  speaker: agent
+  text: Outside the box? You mean like how we've been doing for the past five years?
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) I've been going over the latest batch of seized servers... I
+    think I found something.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smirking) Oh, great. Because nothing says "outside the box" like rehashing
+    the same old theories.
+- kind: dialogue
+  speaker: press
+  text: (rolling his eyes) Oh boy, this is going to be fun to cover.
+- kind: dialogue
+  speaker: analyst
+  text: (excitedly) Hana, what did you find?
+- kind: dialogue
+  speaker: detective
+  text: (grumbling) Yeah, yeah, let's hear it. Another wild goose chase.

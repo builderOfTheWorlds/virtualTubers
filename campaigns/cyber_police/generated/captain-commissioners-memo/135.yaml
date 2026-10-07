@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 135
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:11.709348+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo says "the computer thing"
+- kind: dialogue
+  speaker: detective
+  text: I'll be writing a response, sir
+- kind: dialogue
+  speaker: analyst
+  text: We've had this conversation before, ma'am
+- kind: dialogue
+  speaker: agent
+  text: I'm starting to think we should just call ourselves "The IT Department with
+    Badges"
+- kind: dialogue
+  speaker: forensics
+  text: I have a new batch of evidence to go through, and I'd rather not have to explain
+    it all over again
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, Captain, my sources tell me the Commissioner is scheduled
+    to make a statement about the Cyber Police's "budgetary efficiency"
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll just go ahead and prepare the requisition for new equipment, then

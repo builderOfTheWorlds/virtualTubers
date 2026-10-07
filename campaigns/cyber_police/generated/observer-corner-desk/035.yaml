@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:38.367879+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: (checks notes) Same as yesterday, I'm afraid.
+- kind: dialogue
+  speaker: analyst
+  text: (nods) Nothing new on The Scuttle's infrastructure.
+- kind: dialogue
+  speaker: agent
+  text: (glances at the briefing notes) Requesting access to the latest mirror's IP
+    logs.
+- kind: dialogue
+  speaker: forensics
+  text: (yawns) Just processed the latest batch of evidence. Nothing notable.
+- kind: dialogue
+  speaker: press
+  text: (looks at the Captain) Can I get a quote on the current status of the investigation?
+- kind: dialogue
+  speaker: quartermaster
+  text: (stands by the supply cage) Requisition notices for the day. Nothing out of
+    the ordinary.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (sits at the corner desk, watching)'

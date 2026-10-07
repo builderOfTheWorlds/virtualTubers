@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:46.458064+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can't believe this ancient hardware is still running.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool running, but it's not cooperating.
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) Yeah, I remember when we first got this unit. The Captain said
+    it would be fine.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Yeah, that was a great idea.
+- kind: dialogue
+  speaker: forensics
+  text: (whispers) You know, Deshawn, sometimes I think it's not just the hardware.
+- kind: dialogue
+  speaker: agent
+  text: (smirks) What do you mean?
+- kind: dialogue
+  speaker: forensics
+  text: (leans in) I think it's the... (trails off)
+- kind: dialogue
+  speaker: analyst
+  text: (interrupts) Okay, let's focus on the task at hand. We have a lead to chase.

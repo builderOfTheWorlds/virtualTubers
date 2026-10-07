@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 216
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:49.412270+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get this stupid trace tool running, the CPU is screaming
+- kind: dialogue
+  speaker: analyst
+  text: Captain, we've got chatter spiking on The Scuttle, looks like a new mirror
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's see if we can tie that to a user. Agent, Forensics, what've
+    you got?
+- kind: dialogue
+  speaker: forensics
+  text: Getting some weird data from the last mirror, might be worth a closer look
+- kind: dialogue
+  speaker: press
+  text: Nothing from The Scuttle for me today, just a press release announcing a new
+    investigation

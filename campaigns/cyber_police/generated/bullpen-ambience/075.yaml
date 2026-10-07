@@ -1,0 +1,35 @@
+id: bullpen-ambience
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:40.427117+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'MO: Just got the last of the coffee from downstairs.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''m stuck on this one thread.'
+- kind: narration
+  speaker: captain
+  text: 'DO: What''s the plan for today, Captain?'
+- kind: narration
+  speaker: captain
+  text: 'HV: Still no response from Data Haven.'
+- kind: narration
+  speaker: captain
+  text: 'DP: Just got a message from a stringer saying there''s a new lead.'
+- kind: narration
+  speaker: captain
+  text: 'TM: And I''ve got a meeting with the department head in an hour.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Do we even have anything to brief on today?'
+- kind: narration
+  speaker: captain
+  text: 'TP: Still waiting on those requisitions from last week...'
+- kind: narration
+  speaker: captain
+  text: 'RO: Alright, let''s get started. What have we got?'

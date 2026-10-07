@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 127
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:41.058741+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo looks like the usual nonsense from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: Yeah, "the computer thing" again. Like it's not like we put our lives on the
+    line every day
+- kind: dialogue
+  speaker: analyst
+  text: I'm surprised it's not just "that cyber stuff" this time
+- kind: dialogue
+  speaker: agent
+  text: I've got a requisition request in for new software. Maybe if we're lucky,
+    it'll get approved before the department decides to abandon us
+- kind: dialogue
+  speaker: forensics
+  text: I heard the IT department is finally upgrading to something better than Vista
+- kind: dialogue
+  speaker: press
+  text: (whispering) You guys hear about the memo going around the department? Apparently,
+    we're not "real police"
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) Someone should remind the Commissioner that we're still investigating
+    The Scuttle

@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:34.050604+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing the chain-of-custody log, verifying evidence labels.
+- kind: dialogue
+  speaker: forensics
+  text: Received evidence package from Agent Okafor, labeling and scanning the contents.
+- kind: dialogue
+  speaker: forensics
+  text: Noted discrepancies in the Analyst's printouts; will need to review the source
+    material.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, can you give me a status on the last batch of data from the Scuttle?
+- kind: dialogue
+  speaker: forensics
+  text: Still running integrity checks, but the results look promising. Will provide
+    an update when I have more information.
+- kind: dialogue
+  speaker: analyst
+  text: Can I get a summary of the chain of custody on the server we recovered last
+    week?
+- kind: dialogue
+  speaker: forensics
+  text: Of course, Analyst. I've got the log right here. ( scrolls through the log
+    ) Okay, so the server was collected by Agent Okafor at 14:47 on Tuesday...
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the intercom) Hana, I've got a requisition for some additional hard
+    drives. Can you confirm the order?
+- kind: dialogue
+  speaker: forensics
+  text: (to the intercom) Confirming the order for hard drives, Quartermaster. I'll
+    have them ready for you by the end of the shift.

@@ -1,0 +1,30 @@
+id: quartermaster-binder-chatter
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:27.565992+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on the results of that printer upgrade request.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You know the drill, Teresa. It''s a miracle we got those new
+    laptops two years ago.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I've been going over the requisition process and I think we might
+    be able to get the captain to sign off on the new software.
+- kind: dialogue
+  speaker: agent
+  text: Good luck with that, Priya. I'm sure it'll take months just to get a decision.
+- kind: dialogue
+  speaker: forensics
+  text: Can we focus on the briefing? We have a lead to chase.
+- kind: dialogue
+  speaker: press
+  text: Oh, I'm sure it'll be a thrilling day of watching the system crash and our
+    precious data get deleted.
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, I do have a bit of good news. The captain approved the new printer.
+    Well, sort of. It's still on backorder, but...

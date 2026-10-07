@@ -1,0 +1,36 @@
+id: agent-hardware-complaint
+take: 168
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:53.755758+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but the hardware is holding me
+    back.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still analyzing the data from the overnight dump.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Deshawn, can you keep an eye on that while we discuss the
+    plan?'
+- kind: dialogue
+  speaker: agent
+  text: Yeah, yeah, I know. This hardware is a joke.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, let''s focus on the task at hand. What did we get
+    from the Scuttle overnight?'
+- kind: dialogue
+  speaker: analyst
+  text: Looks like a new mirror has been set up, and there's some chatter about a
+    potential vulnerability.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some new evidence that might be relevant.
+- kind: dialogue
+  speaker: press
+  text: Can I get an update on the press inquiries?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just one from the Times, looking for a statement on the latest Scuttle banner.

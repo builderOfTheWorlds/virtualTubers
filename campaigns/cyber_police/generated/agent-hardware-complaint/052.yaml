@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:15.702974+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: This unit's been running on obsolete hardware for so long now it's a wonder
+    we haven't been compromised yet.

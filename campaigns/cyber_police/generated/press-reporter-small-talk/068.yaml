@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:50.035597+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get the briefing started. We've got a new mirror on The Scuttle,
+    and it looks like they're trying to cover their tracks.
+- kind: dialogue
+  speaker: detective
+  text: Sounds like we've got a plan to make. I'll work on a strategy to infiltrate
+    their systems.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, based on the intel, it looks like they're trying to create a fake identity.
+    I'll work on tracing the IP.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the hardware ready for the task. We'll need to upgrade the software,
+    but I've got the requisition in.
+- kind: dialogue
+  speaker: press
+  text: Nothing to report from my end, just a Scuttle article saying we're incompetent.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in, but I've already been told they'll be delayed. We'll
+    have to work with what we have.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to work. Thorn, what's the plan?
+- kind: dialogue
+  speaker: detective
+  text: Well, we'll need to—
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I can dig up some more intel on that fake identity.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the equipment ready. We'll need to set up a new server to track the
+    IP.
+- kind: dialogue
+  speaker: press
+  text: Can I ask, Thorn, what's the latest on the Scuttle case? Anything concrete?

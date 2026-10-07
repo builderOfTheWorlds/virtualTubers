@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:20.213390+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 07:00.
+- kind: dialogue
+  speaker: detective
+  text: I'm still going over the chatter spike from The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the mirror up, Captain.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get a handle on the new malware strain.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the evidence from last night's raid.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the reporter yet.
+- kind: dialogue
+  speaker: quartermaster
+  text: Need to requisition more RAM for the Analyst's machine.
+- kind: narration
+  speaker: captain
+  text: 'Observer: Stands by the stairwell door, eyes fixed on the monitors.'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: What I see is a pattern, but we need more intel.
+- kind: dialogue
+  speaker: analyst
+  text: I'm running a deep dive on the chatter spike.
+- kind: dialogue
+  speaker: agent
+  text: Got something on the malware, but I need Forensics to verify.

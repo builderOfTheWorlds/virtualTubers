@@ -1,0 +1,42 @@
+id: press-reporter-small-talk
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:59.346380+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey, how's the day looking?
+- kind: dialogue
+  speaker: press
+  text: Not bad, Captain. Just catching up on the usual morning drivel.
+- kind: dialogue
+  speaker: captain
+  text: I see. Anything interesting?
+- kind: dialogue
+  speaker: press
+  text: Well, there is a Scuttle piece making the rounds that's got some folks upset.
+- kind: dialogue
+  speaker: captain
+  text: I'll look into it. We can't let them get under our skin.
+- kind: dialogue
+  speaker: press
+  text: Of course not, Captain. I'm just passing it along.
+- kind: dialogue
+  speaker: captain
+  text: Good. How's your end of things looking? Any big stories?
+- kind: dialogue
+  speaker: press
+  text: Nothing new, but I did get a quote from a 'cybersecurity expert' who claims
+    we're chasing our tails.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Well, that's not new, is it?
+- kind: dialogue
+  speaker: press
+  text: (laughs) No, I suppose not.
+- kind: dialogue
+  speaker: captain
+  text: Alright, well, keep me posted. I'll talk to you later.
+- kind: dialogue
+  speaker: press
+  text: Will do, Captain. Take care.

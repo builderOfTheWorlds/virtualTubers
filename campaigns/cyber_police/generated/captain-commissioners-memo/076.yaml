@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:25.358734+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: They're at it again, "the computer thing"
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few choice words for that
+- kind: dialogue
+  speaker: agent
+  text: Maybe if we had some decent hardware...
+- kind: dialogue
+  speaker: forensics
+  text: I'm surprised they even bothered to send it
+- kind: dialogue
+  speaker: press
+  text: More fuel for the Scuttle's fire, I'm sure
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll make sure to add it to the "eventual inquiry" file

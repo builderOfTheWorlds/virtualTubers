@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:41.614983+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning report is online.
+- kind: dialogue
+  speaker: detective
+  text: I've got the lead on the encrypted chat.
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging into the network traffic.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the surveillance feed stabilized.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some interesting results from the forensics lab.
+- kind: dialogue
+  speaker: press
+  text: Any press releases going out today?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition day is next week, so start thinking about what you need.

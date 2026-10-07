@@ -1,0 +1,33 @@
+id: agent-hardware-complaint
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:28.909992+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, come on, this is ridiculous
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Okay, let's just take a deep breath.
+- kind: dialogue
+  speaker: forensics
+  text: (chuckles) Yeah, no, it's fine. Just... just a bit outdated.
+- kind: dialogue
+  speaker: press
+  text: (sarcastically) Oh, I know, right? I was thinking we should get a nice new
+    toaster too.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) Can we focus, please? I have requisitions to get through.
+- kind: dialogue
+  speaker: agent
+  text: (to himself) Great. Now I'm stuck with this ancient thing.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep moving. We've got a lead to chase.
+- kind: dialogue
+  speaker: analyst
+  text: (nervously) Yes, ma'am. I'll see what I can do about that.
+- kind: dialogue
+  speaker: forensics
+  text: (to Deshawn) You know, it's not so bad. We make do.

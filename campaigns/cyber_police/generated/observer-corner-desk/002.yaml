@@ -1,0 +1,26 @@
+id: observer-corner-desk
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:01.435190+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DTP: Alright then, what''s on the docket for today?'
+- kind: narration
+  speaker: captain
+  text: 'RO: Good morning, everyone. The case directive for today is...'
+- kind: narration
+  speaker: captain
+  text: 'DM: ...tracking a new instance of the Echelon protocol.'
+- kind: narration
+  speaker: captain
+  text: 'HVP: And I''m expecting a possible mirror site to be located.'
+- kind: narration
+  speaker: captain
+  text: 'TOP: Nothing new on the chatter front.'
+- kind: narration
+  speaker: captain
+  text: 'TML: Requisitions for the team, and a reminder that we need a new printer.'
+- kind: narration
+  speaker: captain
+  text: 'AO: ( glance at the corner desk, where the Observer sits) Nothing to report.'

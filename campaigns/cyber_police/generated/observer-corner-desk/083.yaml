@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:49.118036+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. We have a possible lead on the encrypted channel
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the data from the recent mirror site, and I think we
+    have a pattern
+- kind: dialogue
+  speaker: analyst
+  text: Actually, the chatter suggests they're trying to throw us off the scent
+- kind: dialogue
+  speaker: agent
+  text: I've been tracing the signals, and it looks like they're using a VPN from
+    a server in Eastern Europe
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the last raid, and I'm not seeing anything
+    new
+- kind: dialogue
+  speaker: press
+  text: Can I get a word with the Captain about the press conference schedule?
+- kind: dialogue
+  speaker: quartermaster
+  text: We're low on spare parts for the surveillance equipment, and I'm still waiting
+    on approval for the new shipment
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

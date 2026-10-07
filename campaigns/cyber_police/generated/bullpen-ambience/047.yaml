@@ -1,0 +1,25 @@
+id: bullpen-ambience
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:10.688077+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You'd think the press office would order better coffee, but no such luck
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Keep your eyes on the screens, we don''t know what''s coming
+    out of The Scuttle next'
+- kind: dialogue
+  speaker: analyst
+  text: My charts don't like anything we have on the latest scam, Captain
+- kind: dialogue
+  speaker: forensics
+  text: I'll just be over here...
+- kind: dialogue
+  speaker: press
+  text: Scuttle luck, I'm starting to think it's got a personal vendetta against us
+- kind: dialogue
+  speaker: quartermaster
+  text: The requisition binder is still two pages shy of being empty, and it's only
+    Tuesday

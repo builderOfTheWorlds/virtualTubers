@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:04.271557+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing. What've we got on The Scuttle overnight?
+- kind: narration
+  speaker: captain
+  text: 'DITIEV: Nothing that''s new. Just the usual mirrors and backdoor chatter.'
+- kind: dialogue
+  speaker: analyst
+  text: That's not entirely true, Marcus. I did pick up on some anomalies in the darknet
+    chatter.
+- kind: dialogue
+  speaker: detective
+  text: Good, good. I was just about to get to that. Priya, what do the numbers say?
+- kind: dialogue
+  speaker: agent
+  text: Nothing on the forensic side yet, but I'm still sifting through the seizure
+    data.
+- kind: dialogue
+  speaker: forensics
+  text: Same here, nothing concrete.
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, I got a call from the Herald, asking about the unit's recent...
+    "achievements".

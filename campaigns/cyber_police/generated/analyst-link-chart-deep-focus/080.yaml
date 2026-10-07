@@ -1,0 +1,26 @@
+id: analyst-link-chart-deep-focus
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:58.728721+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I still can't shake the feeling that the last trail was a dead end.
+- kind: dialogue
+  speaker: captain
+  text: I want you to go back over the data, see if you missed anything.
+- kind: dialogue
+  speaker: detective
+  text: I'm getting tired of this, Priya. We need a break.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to track down that new proxy chain, see if we can pinpoint it.
+- kind: dialogue
+  speaker: forensics
+  text: Just got in the new batch of evidence from the last raid.
+- kind: dialogue
+  speaker: press
+  text: Captain, I've been going over the press releases from the last few days.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got a call from procurement, they're finally approving the new hardware.

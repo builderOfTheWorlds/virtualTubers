@@ -1,0 +1,27 @@
+id: analyst-link-chart-deep-focus
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:14.398597+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a small discrepancy in the link chart.
+- kind: dialogue
+  speaker: agent
+  text: What's the difference, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: A minor anomaly in the chatter pattern around the "Flagship Haul" torrent.
+- kind: dialogue
+  speaker: forensics
+  text: Sounds like a false positive to me.
+- kind: dialogue
+  speaker: analyst
+  text: I've been over the data, but I just can't shake the feeling there's something
+    there.
+- kind: dialogue
+  speaker: captain
+  text: Priya, what are you saying? We've been over this a dozen times.
+- kind: dialogue
+  speaker: analyst
+  text: I'm saying there's a possibility we're looking at a very clever decoy, Captain.

@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:42.070457+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 7:00 briefing is about to start.
+- kind: dialogue
+  speaker: detective
+  text: Not looking forward to this.
+- kind: dialogue
+  speaker: analyst
+  text: Still no updates on the mirror they planted.
+- kind: dialogue
+  speaker: agent
+  text: Trying to track the signal, but it's ghosting me.
+- kind: dialogue
+  speaker: forensics
+  text: Got the drive here, still waiting on the lab to process it.
+- kind: dialogue
+  speaker: press
+  text: One friendly reporter on the way, wants to know if we've made any progress.
+- kind: dialogue
+  speaker: quartermaster
+  text: Need to requisition some new gear, the budget is being stingy again.
+- kind: narration
+  speaker: captain
+  text: 'Observer: Watching.'

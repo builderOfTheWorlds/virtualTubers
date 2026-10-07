@@ -1,0 +1,35 @@
+id: analyst-link-chart-deep-focus
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:34.610014+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a thread here, but I'm not sure if it's significant.
+- kind: dialogue
+  speaker: agent
+  text: Can I take a look at that? Maybe I can help you chase it down.
+- kind: dialogue
+  speaker: analyst
+  text: Sure, Deshawn, but be warned, it's just a hunch so far.
+- kind: dialogue
+  speaker: forensics
+  text: I'm not seeing anything out of the ordinary on the network traffic.
+- kind: dialogue
+  speaker: analyst
+  text: That's what I thought. I'll keep digging and see if I can come up with anything
+    else.
+- kind: dialogue
+  speaker: press
+  text: (walking into the room) Hey, Priya, what's going on?
+- kind: dialogue
+  speaker: analyst
+  text: Just chasing down a lead, Davey. Nothing to worry about.
+- kind: dialogue
+  speaker: quartermaster
+  text: (off to the side) I'm going to go requisition some new equipment. We're running
+    low on storage space.
+- kind: dialogue
+  speaker: captain
+  text: (entering the room) Alright, people, let's take a break and regroup. We've
+    got a long day ahead of us.

@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:17.530836+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's memo is addressed to me, as if I'm personally responsible
+    for "the computer thing".
+- kind: dialogue
+  speaker: detective
+  text: Can I see it? I'd like to know what they're really thinking.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the memo on my screen. They're requesting a status update on the
+    Scuttle case.
+- kind: dialogue
+  speaker: agent
+  text: This is a joke, right? They can't be serious about calling it "the computer
+    thing".
+- kind: dialogue
+  speaker: forensics
+  text: I'm not seeing any new evidence that's going to blow this case wide open.
+- kind: dialogue
+  speaker: press
+  text: I'm just here for the coffee, but I couldn't help but notice the memo on the
+    captain's desk.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm going to print out a few copies. We'll need to respond to this somehow.

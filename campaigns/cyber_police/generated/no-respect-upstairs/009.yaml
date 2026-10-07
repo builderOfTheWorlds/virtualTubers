@@ -1,0 +1,42 @@
+id: no-respect-upstairs
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:01.347937+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving, people.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Just got the Scuttle's latest "exposé" on the monitor here.
+- kind: dialogue
+  speaker: agent
+  text: What's it say this time?
+- kind: dialogue
+  speaker: analyst
+  text: 'Some variant of "Cyber Police: a joke" with a screenshot of our "abandoned"
+    basement.'
+- kind: dialogue
+  speaker: captain
+  text: Just what we need. More mockery.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, Captain! Just ran a diagnostic on the comms equipment.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, good luck with that, Teresa.
+- kind: dialogue
+  speaker: quartermaster
+  text: Hey, watch it. I'm just trying to keep the gear running.
+- kind: dialogue
+  speaker: forensics
+  text: Sorry, sorry. Just means I get to fix it again.
+- kind: dialogue
+  speaker: press
+  text: 'Breaking news: "Cyber Police Raid Foiled by Their Own Obsolescence".'
+- kind: dialogue
+  speaker: analyst
+  text: Great, just what we needed. Another fine headline.

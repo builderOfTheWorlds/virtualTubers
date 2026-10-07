@@ -1,0 +1,11 @@
+id: observer-corner-desk
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:41.438685+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: The Observer's been sitting there for an hour, just watching us
+- kind: dialogue
+  speaker: analyst
+  text: (scribbling on her notepad, not looking up)

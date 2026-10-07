@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T05:46:39.020507+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, this trace tool is being stubborn
+- kind: dialogue
+  speaker: captain
+  text: What's the problem, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Just the usual, ma'am. Old hardware, slow as a glacier
+- kind: dialogue
+  speaker: detective
+  text: Maybe if you stopped playing with it, it'd work
+- kind: dialogue
+  speaker: agent
+  text: Oh, so now you're a computer expert?
+- kind: dialogue
+  speaker: forensics
+  text: I'm just saying, have you tried updating the kernel?
+- kind: dialogue
+  speaker: agent
+  text: Ugh, no, I've been too busy fighting with this ancient IDE interface
+- kind: dialogue
+  speaker: press
+  text: (walking by) You guys still stuck on that Scuttle lead, I take it?

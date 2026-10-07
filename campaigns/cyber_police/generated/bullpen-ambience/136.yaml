@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 136
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:28.238009+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing is at 0800.
+- kind: dialogue
+  speaker: detective
+  text: I'm going over the new logs.
+- kind: dialogue
+  speaker: analyst
+  text: No significant changes overnight.
+- kind: dialogue
+  speaker: agent
+  text: My comms are still down, need to get it looked at. ||emotion:slightly-angry
+- kind: dialogue
+  speaker: forensics
+  text: I've finished the analysis on the last case.
+- kind: dialogue
+  speaker: press
+  text: Just getting the coffee started.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition forms ready for review.

@@ -1,0 +1,37 @@
+id: analyst-link-chart-deep-focus
+take: 131
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:49.205160+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the recent spike in chatter is a coordinated effort,
+    not just a bunch of users reacting to the same thing...
+- kind: dialogue
+  speaker: captain
+  text: (looking up from her notes) Noted, Priya. But let's not get ahead of ourselves.
+    What's the chatter looking like?
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Fine. Let me break it down.
+- kind: dialogue
+  speaker: agent
+  text: (from another room) Can I get an update on the link chart, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Great, now he wants an update...
+- kind: dialogue
+  speaker: forensics
+  text: (from the lab) I've got something on the recent upload patterns. (pauses)
+    It looks like they're shifting their content distribution network again.
+- kind: dialogue
+  speaker: press
+  text: (over the intercom) Has anyone seen the latest release of "Codenight"? I've
+    got a source claiming it's on The Scuttle...
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply room) I just restocked the USB drives. Maybe we can use them
+    for something...
+- kind: dialogue
+  speaker: analyst
+  text: (to herself) This is all just noise...

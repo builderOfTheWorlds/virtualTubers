@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:04.364099+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the Quartermasters are more important than we give them
+    credit for
+- kind: dialogue
+  speaker: agent
+  text: We can't just focus on the Bosun, Priya, we need to know who's actually running
+    the show
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) And how do we even begin to track the Scuttle protocol?
+- kind: dialogue
+  speaker: press
+  text: (overhearing Hana) You know, I've been going over the seized servers, and
+    I think I found a pattern in the encryption
+- kind: dialogue
+  speaker: quartermaster
+  text: (irritated) Finally, someone's doing some actual work around here
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (interrupting) Alright, alright, let''s not get ahead of ourselves.
+    What do we have so far?'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (sighing) Not much, Captain. Just a bunch of fragmented data
+    and a whole lot of red herrings'

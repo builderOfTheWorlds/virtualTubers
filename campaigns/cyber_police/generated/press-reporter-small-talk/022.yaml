@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:16.066894+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Morning, Priya.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Morning, Davey. Just getting the morning rundown.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Anything interesting overnight?'
+- kind: narration
+  speaker: captain
+  text: 'HP: Nothing major, but they did move some of their mirrors. Might be worth
+    digging into.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Alright, let''s take a look. Marcus, what''s the plan?'
+- kind: narration
+  speaker: captain
+  text: 'MT: Still working on it, but we''ve got a lead on a possible new login point.
+    Want to review the intel with Priya.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m already on it, but nothing yet.'
+- kind: narration
+  speaker: captain
+  text: 'HP: Same here, but I did find something odd on the chatter spike.'
+- kind: narration
+  speaker: captain
+  text: 'DO: What is it?'
+- kind: narration
+  speaker: captain
+  text: 'PN: Sounds like it''s worth taking a closer look.'
+- kind: narration
+  speaker: captain
+  text: 'DM-L: Requisitions are in, and I''ve got some bad news. The new hardware
+    we asked for? Denied. Again.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Anything else?'

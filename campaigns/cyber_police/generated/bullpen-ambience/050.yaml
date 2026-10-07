@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:22.240441+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is done for the day.
+- kind: dialogue
+  speaker: detective
+  text: Just me, still going over the Johnson case.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to make sense of this encrypted chat log.
+- kind: dialogue
+  speaker: agent
+  text: Still waiting on that server login we were trying to get.
+- kind: dialogue
+  speaker: forensics
+  text: Just got the new batch of forensic tools in.
+- kind: dialogue
+  speaker: press
+  text: Any chance we're going to make the evening news with this?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocking the supply cage.

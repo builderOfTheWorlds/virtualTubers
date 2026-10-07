@@ -1,0 +1,34 @@
+id: bullpen-ambience
+take: 177
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:44.585551+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''ll just take a look at the case files real quick before we start.'
+- kind: narration
+  speaker: captain
+  text: 'DM: Coffee''s been sitting there for an hour.'
+- kind: narration
+  speaker: captain
+  text: 'PRN: I''m trying to get this chart sorted out, but we''re missing a few key
+    nodes.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Think we should look into that weird traffic spike on the 405.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Still waiting on those fiber samples from the other lab.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Not sure how we''re supposed to do this without a decent cup of coffee.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Yeah, and I''m still trying to get the dashboards to sync up with the
+    comms feed.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (sighs) Alright, let''s just start the briefing already.'
+- kind: narration
+  speaker: captain
+  text: 'CAP: Alright, let''s get started. Today''s lead is...'

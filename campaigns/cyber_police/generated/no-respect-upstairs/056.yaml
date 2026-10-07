@@ -1,0 +1,30 @@
+id: no-respect-upstairs
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:13.732016+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Just the usual, guys. Backup's probably still going to be a no-go
+- kind: dialogue
+  speaker: agent
+  text: You know it, Captain
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I see what they're saying about the Scuttle's latest...
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Oh, great, Davey's got his fingers on the keyboard
+- kind: dialogue
+  speaker: quartermaster
+  text: Not again, not today...
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "CYBER POLICE SPOTTED: NO LONGER SPOTTED"'
+- kind: dialogue
+  speaker: agent
+  text: (to Hana) That's just going to end up on the front page of the Ashiorid Chronicle
+- kind: dialogue
+  speaker: captain
+  text: (to her team) Alright, people, let's get to work. Maybe we can actually do
+    some real policing for once

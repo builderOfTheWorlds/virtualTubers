@@ -1,0 +1,8 @@
+id: press-reporter-small-talk
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:53.169851+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, what's new with The Scuttle?

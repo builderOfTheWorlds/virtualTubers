@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 149
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:08.622097+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: captain
+  text: Morning, Deshawn. Get the coffee for us.
+- kind: dialogue
+  speaker: analyst
+  text: Not for me, thank you.
+- kind: dialogue
+  speaker: forensics
+  text: Is it cold already?
+- kind: dialogue
+  speaker: press
+  text: I'll go get a fresh pot.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're still waiting on that router upgrade.
+- kind: dialogue
+  speaker: detective
+  text: Can we just get to the briefing already?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence says we've got a possible hack into the Grid's finance API.
+- kind: dialogue
+  speaker: detective
+  text: And I've got a lead on a suspicious transaction from yesterday's Scuttle activity.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the comms set up for the interview.
+- kind: dialogue
+  speaker: forensics
+  text: I'll start running some tests on the evidence.

@@ -1,0 +1,31 @@
+id: captain-commissioners-memo
+take: 130
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:53.017319+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'm surprised the Commissioner's office would go with "the computer thing".
+- kind: dialogue
+  speaker: detective
+  text: I've seen that memo a thousand times, but it never gets any less infuriating.
+- kind: dialogue
+  speaker: analyst
+  text: Can we even assume this is an accident, or is it just another way to chip
+    away at our legitimacy?
+- kind: dialogue
+  speaker: agent
+  text: I'm just glad we have our own network, so we don't have to use the department's
+    ancient systems.
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) We should just call ourselves the "Digital Crimes Task Force" and
+    be done with it.
+- kind: dialogue
+  speaker: press
+  text: (shaking head) I've got the Scuttle's latest scoop on my desk, and I'm supposed
+    to write a piece on how they're a harmless pranksters' site.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) I swear, I've been denied enough requisitions to stock a small
+    data center...

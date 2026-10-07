@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:10.637623+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning briefing is still at 07:00.
+- kind: dialogue
+  speaker: detective
+  text: Got a hunch on that new Scuttle mirror, want to take a look.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to crack the encryption on the latest data dump.
+- kind: dialogue
+  speaker: agent
+  text: Just got the new hardware in, want to start running some tests.
+- kind: dialogue
+  speaker: forensics
+  text: Found a discrepancy in the evidence logs from the Wilson case.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the editor, wants a press statement on the new Scuttle
+    sightings.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on the requisition for the new forensics kit.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (stands up and walks to the monitor bank, eyes on the screens)'

@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:25.421592+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, it''s all Scuttle luck, some of these operators
+    must have insider connections, or they''re just that good.'
+- kind: dialogue
+  speaker: analyst
+  text: Come on, Marcus, you're not still blaming the victims, are you?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because nothing says "stealthy" like a banner that says "NO QUARTER,
+    NO ADS".
+- kind: dialogue
+  speaker: forensics
+  text: You'd think they'd at least try to be more subtle. But then, maybe that's
+    the point – they're not trying to hide, they're just... entertained.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) Oh, I don't know, I think it's kind of charming, in a weird way.
+- kind: dialogue
+  speaker: press
+  text: (scribbling on his notepad) Charming? You think the fact that they're basically
+    laughing at us is charming?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (sighing) Alright, let''s not argue about this. We have a
+    job to do, and we''ll do it.'

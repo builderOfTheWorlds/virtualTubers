@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:49.328284+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, it's not just luck. The Bosun's got some kind of inside information,
+    and that's what's keeping us from taking down The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Priya, you're saying we're just missing a couple of puzzle pieces?
+    Meanwhile, The Scuttle's been making money off our incompetence for years.
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, okay, let's not get too worked up. I think we're just seeing the results
+    of underfunding. If we had better resources, we'd be able to stay ahead of them.
+- kind: dialogue
+  speaker: forensics
+  text: I don't think it's a matter of resources, Teresa. I think it's a matter of
+    priorities. If the department didn't think this was a "computer thing," we'd be
+    better equipped to handle it.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You know, I''m starting to think we''re all just in this for
+    the wrong reasons. We''re not making a difference, we''re just delaying the inevitable.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Marcus, we''re making a difference. Every arrest, every seizure,
+    it''s a small victory. And as for the Scuttle, we''ll get them eventually. I''m
+    sure of it.'

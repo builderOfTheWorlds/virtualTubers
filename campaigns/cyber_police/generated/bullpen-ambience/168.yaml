@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 168
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:53.765725+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s not leave the unit vulnerable while we''re
+    on break.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Agreed, I''ll stay behind to cover.'
+- kind: dialogue
+  speaker: analyst
+  text: My machines will keep running, nothing to worry about...
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I'll just grab a refill on my coffee, don't mind me.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Should've grabbed a snack on the way back...
+- kind: dialogue
+  speaker: press
+  text: (checking her phone) Still no word from the editor.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Need a minute to sort these requisitions.
+- kind: narration
+  speaker: captain
+  text: (The Observer remains silent, watching the room.)

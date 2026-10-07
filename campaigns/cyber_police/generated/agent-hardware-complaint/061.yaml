@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:53.677788+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, the old hardware is starting to hold us back

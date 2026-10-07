@@ -1,0 +1,22 @@
+id: forensics-evidence-locker-routine
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:52.325317+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker, checking the inventory.
+- kind: dialogue
+  speaker: agent
+  text: Confirming the chain of custody, verifying the evidence is correctly labeled.
+- kind: dialogue
+  speaker: analyst
+  text: Starting the logbook, recording the time and date of access.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Approving the logbook entry, verifying that the evidence is
+    properly secured.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Checking the requisition binder, ensuring that all necessary documentation
+    is up to date.

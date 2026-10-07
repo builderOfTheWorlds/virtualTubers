@@ -1,0 +1,37 @@
+id: no-respect-upstairs
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:01.643588+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got a new request from Deshawn, backup for a possible Scuttle front-end
+    server in the old warehouse district.
+- kind: dialogue
+  speaker: captain
+  text: (sigh) Alright, send a single unit, and make sure they're on their own.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over comms) Can I get a confirmation on the request, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Affirmative, Teresa, this one's a real lead.
+- kind: dialogue
+  speaker: analyst
+  text: '(reading from a screen) The Scuttle''s got a piece on the unit in the local
+    tabloids today: "Cyber Cops vs. Their Own Incompetence."'
+- kind: dialogue
+  speaker: forensics
+  text: (in the background) I'm still waiting for those extra samples of fiber-optic
+    cable, Teresa.
+- kind: dialogue
+  speaker: press
+  text: (reporting from the field, on a screen in the back of the room) "Cyber Cops
+    Embarrass City Again".
+- kind: dialogue
+  speaker: captain
+  text: (to the room) Alright, let's get to work.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (leaning against a console) Somebody has to mean it, since
+    nobody else does.'

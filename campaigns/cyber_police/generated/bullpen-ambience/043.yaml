@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:42.121131+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. What's the directive for today?
+- kind: dialogue
+  speaker: analyst
+  text: I've got some chatter from The Scuttle, but it's not clear if it's related
+    to the latest mirror.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get a lock on the new hardware, but it's not playing nice.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new in the forensics log, but I've got some more data from the previous
+    case.
+- kind: dialogue
+  speaker: press
+  text: Press conference at 10, and I need to review the talking points.
+- kind: dialogue
+  speaker: quartermaster
+  text: Equipment request submitted for the new comms setup, but I've already got
+    my doubts it'll get approved.

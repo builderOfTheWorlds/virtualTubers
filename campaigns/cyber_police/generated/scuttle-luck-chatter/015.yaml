@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:05.945901+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's not luck. They've got eyes and ears on us.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe not just the ones on the site. Maybe there's someone on the inside.
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't know, Hana. I've been on this unit for five years and we've never
+    once—
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck, Teresa. That's all it is.
+- kind: dialogue
+  speaker: agent
+  text: With the resources we have? I'm surprised we catch anything at all.
+- kind: narration
+  speaker: captain
+  text: 'Pryce: Come on, folks, don''t be so glum. We''ve got a story brewing. Maybe
+    The Scuttle''s got some—'
+- kind: dialogue
+  speaker: analyst
+  text: Davey, the last time you said that, the server just magically recovered from
+    the raid.

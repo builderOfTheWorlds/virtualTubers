@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:57.994927+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll need the chain-of-custody paperwork for the evidence locker to update
+    the records.
+- kind: dialogue
+  speaker: agent
+  text: Requesting a fresh set of gloves for Forensics.
+- kind: dialogue
+  speaker: quartermaster
+  text: Gloves have been requisitioned and are on their way.
+- kind: dialogue
+  speaker: analyst
+  text: Analyst here, can I have a confirmation on the evidence requests from the
+    Agent?
+- kind: dialogue
+  speaker: agent
+  text: Evidence requests are in the system, pending review by Forensics.
+- kind: dialogue
+  speaker: analyst
+  text: I'm reviewing them now. The hardware log is incomplete; the Agent needs to
+    resubmit the request.
+- kind: dialogue
+  speaker: agent
+  text: I'll notify the Agent to resubmit the request with the complete hardware log.
+- kind: dialogue
+  speaker: forensics
+  text: When the request is resubmitted, I'll update the chain-of-custody paperwork
+    accordingly.

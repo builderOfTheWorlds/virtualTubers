@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:45.274339+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, people, we''re closing out the day.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''ll finish writing up the Thompson case.'
+- kind: narration
+  speaker: captain
+  text: 'PA: I''ll log the new software patches.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll review the surveillance footage from last night.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ll run the evidence check on the laptops.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Press, what''s your story going to be for tomorrow?'
+- kind: narration
+  speaker: captain
+  text: 'DP: Still waiting on a statement from the witness...'
+- kind: narration
+  speaker: captain
+  text: 'TM: We need to get that witness on the record ASAP.'
+- kind: narration
+  speaker: captain
+  text: 'PA: I''ll dig up the witness''s online history. Maybe something there.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Good, let''s keep moving on this.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''ll make the call.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll prep the equipment.'

@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:42.657974+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here''s the start of Loop 14:'
+- kind: narration
+  speaker: captain
+  text: 'DA: Morning Davey, how''s the day going so far?'
+- kind: narration
+  speaker: captain
+  text: 'DO: Nothing new from you, Captain?'
+- kind: narration
+  speaker: captain
+  text: 'HO: Good morning, Captain. We''re looking at some potential leads on the
+    "Dance Dance Revolution" thread.'
+- kind: narration
+  speaker: captain
+  text: 'TO: (over phone) Davey, what''s the word from the department on our latest
+    requisition?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Just going over the case files from yesterday''s raid. We''re still trying
+    to ID the suspects.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ve been running some analysis on the seized hardware. Nothing out
+    of the ordinary so far.'
+- kind: narration
+  speaker: captain
+  text: 'DM: Just getting the supply cage ready for tomorrow. Nothing new to report.'
+- kind: narration
+  speaker: captain
+  text: 'AO: (over phone) Yeah, the department''s being tightfisted as usual. Nothing''s
+    been approved yet.'

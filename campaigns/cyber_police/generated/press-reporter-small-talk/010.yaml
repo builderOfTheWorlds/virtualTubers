@@ -1,0 +1,32 @@
+id: press-reporter-small-talk
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:15.044566+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Rosalind, how's it going?
+- kind: dialogue
+  speaker: captain
+  text: Not bad, Davey, not bad. Just trying to stay on top of the latest Scuttle
+    chatter.
+- kind: dialogue
+  speaker: press
+  text: Scuttle chatter, huh? Anything juicy?
+- kind: dialogue
+  speaker: captain
+  text: Not exactly. Just the usual rumor mill. You know how it is.
+- kind: dialogue
+  speaker: press
+  text: Yeah, yeah, I do. So, how's the team doing?
+- kind: dialogue
+  speaker: captain
+  text: You know, same old. Marcus is still muttering to himself about the lack of
+    backup, and Hana's got a new forensic toy she's playing with.
+- kind: dialogue
+  speaker: press
+  text: (laughs) Sounds about right. I'll try to get some more face time with the
+    team this week.
+- kind: dialogue
+  speaker: captain
+  text: That'd be great, Davey. We could use a friendly face around here.

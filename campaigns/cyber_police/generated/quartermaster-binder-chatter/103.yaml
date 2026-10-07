@@ -1,0 +1,26 @@
+id: quartermaster-binder-chatter
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:30.374290+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ve been going over the denied requisition binder, and I think we''ll
+    be having a "pleasant" discussion with procurement soon.'
+- kind: narration
+  speaker: captain
+  text: 'DMO: (chuckles) Oh, the eventual inquiry. You''re just looking forward to
+    it, aren''t you?'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: (laughs) Someone''s got to keep them honest.'
+- kind: narration
+  speaker: captain
+  text: 'HV: (walking by) You two are enjoying the daily dose of bureaucratic frustration,
+    I see.'
+- kind: narration
+  speaker: captain
+  text: 'DMO: (grinning) Just keeping things interesting, Hana.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I swear, if they can''t even get us a new forensic suite...'

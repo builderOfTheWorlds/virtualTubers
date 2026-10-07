@@ -1,0 +1,32 @@
+id: agent-hardware-complaint
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:01.780551+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this unit is held together with duct tape and prayers.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I'm pretty sure it's held together with expired bandwidth and broken
+    promises.
+- kind: dialogue
+  speaker: press
+  text: Someone get the press release ready for when we inevitably get paged back
+    in at 2 am.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in, and I'm glad to see we can finally get some new hard
+    drives... in 6 months.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Detective, what's our lead?
+- kind: dialogue
+  speaker: detective
+  text: I'm still waiting on Priya to get the trace tool up and running.
+- kind: dialogue
+  speaker: analyst
+  text: It's not my fault the unit can't afford to keep up with the times.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Priya, just get it to work. We can't keep relying on guesswork.

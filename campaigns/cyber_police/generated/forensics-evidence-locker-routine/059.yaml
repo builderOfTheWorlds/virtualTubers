@@ -1,0 +1,28 @@
+id: forensics-evidence-locker-routine
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:34.494076+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence intake procedure on the screens.
+- kind: dialogue
+  speaker: agent
+  text: Confirm that, Forensics. I'll be right behind you.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Analyst's notes ready to go through.
+- kind: dialogue
+  speaker: captain
+  text: Good, let's keep it moving. We've got a lot to cover.
+- kind: dialogue
+  speaker: forensics
+  text: First, we need to document the chain of custody. That's me, the Quartermaster,
+    and...
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) And, of course, the Observer, who doesn't even have
+    a role...
+- kind: dialogue
+  speaker: forensics
+  text: '...then we move on to the packaging and labeling.'

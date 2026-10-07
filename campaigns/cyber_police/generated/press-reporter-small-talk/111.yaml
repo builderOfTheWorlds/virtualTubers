@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:04.213475+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Alright, I just got a quick update on the Scuttle's latest post.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good work, Davey. What''s the chatter like?'
+- kind: dialogue
+  speaker: press
+  text: Same as always. A bunch of noise about nothing.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Well, it''s something. Keep an eye on it.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I've got some analysis on the Scuttle's new mirror.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Go ahead.'
+- kind: dialogue
+  speaker: analyst
+  text: It's a new encryption method. We can't crack it yet.
+- kind: dialogue
+  speaker: agent
+  text: I've been trying to get a look at it, but their firewalls are stronger than
+    ever.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Keep working on it, Deshawn. We need something to take to
+    the Commissioner.'
+- kind: dialogue
+  speaker: forensics
+  text: I've finished reviewing the evidence from the latest raid. Nothing matches
+    our known Scuttle ops.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Keep that in mind, team. We may have to get creative.'
+- kind: dialogue
+  speaker: press
+  text: I've got a call to make to my source. Maybe I can dig up something.

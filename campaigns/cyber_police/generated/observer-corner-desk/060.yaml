@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:13.015790+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the first loop:'
+- kind: dialogue
+  speaker: captain
+  text: The directive is a new chatter spike on a previously quiet node.
+- kind: dialogue
+  speaker: detective
+  text: I'll get the plan going, see if we can track down the source.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the node's link chart, but it's going to take some digging to make
+    sense of it.
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, Captain, I'll get the tracing started.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a closer look at the chatter, see if I can find any patterns.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press side, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition day is coming up next week, let me know what you need.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

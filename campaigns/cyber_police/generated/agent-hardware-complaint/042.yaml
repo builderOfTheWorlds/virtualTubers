@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:22.953135+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if I had a credit chip for every time I've rebooted this unit's comms
+    console today...

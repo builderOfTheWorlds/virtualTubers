@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:02.975197+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I''m telling you, Scuttle luck is just a myth we''ve been fed
+    to make us feel better about our incompetence.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: No way, Ros, I''ve seen some weird stuff go down on this
+    case. You can''t explain away the rubber duck drives.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been analyzing the proxy chains, and I think I've found a pattern. But
+    we need to get back to work before the Bosun's team makes any more changes.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, yeah, like we haven't been over that same code a thousand times before.
+    But hey, it's not like it's going to get us anywhere.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think Priya's onto something. We just need to...
+- kind: dialogue
+  speaker: press
+  text: Wait, what's going on here? I thought we were discussing Scuttle luck?
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, sorry Davey. We were just speculating about the new ad networks. But I
+    think we can agree that Scuttle luck is just an excuse for our lack of progress.

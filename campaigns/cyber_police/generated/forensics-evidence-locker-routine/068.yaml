@@ -1,0 +1,22 @@
+id: forensics-evidence-locker-routine
+take: 68
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:17.914870+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Arriving at the evidence locker, ensuring the keypad lock is functioning properly.
+- kind: dialogue
+  speaker: agent
+  text: Checking the inventory of stored drives and servers for any anomalies.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the chain of custody paperwork, verifying the correct procedures
+    have been followed.
+- kind: dialogue
+  speaker: captain
+  text: Approaching the evidence locker, ensuring Hana has everything she needs.
+- kind: dialogue
+  speaker: quartermaster
+  text: Monitoring the supply cage's inventory, ensuring all equipment is accounted
+    for.

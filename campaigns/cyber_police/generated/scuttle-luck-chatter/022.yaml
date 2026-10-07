@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:42.492048+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the latest proxy chain, but it's a dead end.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, that's just Scuttle luck. They must have seen us coming.
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck? Please. It's just us being underfunded and outgunned.
+- kind: dialogue
+  speaker: forensics
+  text: At least we're consistent, right?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm just saying, if we had a little more resources...
+- kind: dialogue
+  speaker: captain
+  text: (laughs) We'd still manage to blow it.
+- kind: dialogue
+  speaker: detective
+  text: (smirks) You know, I still think it's the Commodore's personal touch.
+- kind: dialogue
+  speaker: analyst
+  text: (rolls her eyes) Oh please, it's just a script generator.

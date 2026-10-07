@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:58.263952+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Papers to sort out from yesterday's case.
+- kind: dialogue
+  speaker: detective
+  text: I'm still trying to understand what went down with the Miramar hack.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the code and... well, I think I found a possible lead.
+- kind: dialogue
+  speaker: agent
+  text: I've got my coffee, thank god.
+- kind: dialogue
+  speaker: forensics
+  text: The new drives we got in are nice, but I'm still not a fan of these new enclosures.
+- kind: dialogue
+  speaker: press
+  text: Anyone else notice how quiet the Scuttle's been lately?
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. I've got the supply request form for this week.

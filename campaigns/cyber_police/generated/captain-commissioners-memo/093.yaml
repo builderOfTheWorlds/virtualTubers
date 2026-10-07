@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:46.028194+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: What's this "the computer thing" nonsense now?
+- kind: dialogue
+  speaker: detective
+  text: I told you this would happen.
+- kind: dialogue
+  speaker: analyst
+  text: It's not like we didn't see this coming.
+- kind: dialogue
+  speaker: agent
+  text: I've been saying we need to get more visibility with the department.
+- kind: dialogue
+  speaker: forensics
+  text: At least it's consistent.
+- kind: dialogue
+  speaker: press
+  text: (muttering to himself) "The computer thing"... I've got a story about this.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering) I've got a whole file full of these memos.

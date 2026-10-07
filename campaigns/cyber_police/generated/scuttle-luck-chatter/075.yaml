@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T07:10:46.395164+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's just good old-fashioned piracy.
+- kind: dialogue
+  speaker: analyst
+  text: We've got the best hackers on it, and still they slip away.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe it's not skill, maybe it's just a really good understanding of how we
+    work.
+- kind: dialogue
+  speaker: press
+  text: You think I care about your "Scuttle luck" theory, Deshawn? I care about a
+    real story.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, I think you should care. It's what makes the difference between a "raid"
+    and a "media spectacle".
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Enough, let''s just get to the debrief.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Indeed, let''s not waste any more time on speculation.'

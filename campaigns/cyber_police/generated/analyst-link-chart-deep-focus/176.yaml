@@ -1,0 +1,42 @@
+id: analyst-link-chart-deep-focus
+take: 176
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:12.020828+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm wondering if this new proxy chain is connected to the one we took down
+    last week
+- kind: dialogue
+  speaker: agent
+  text: Not unless they've got a magic teleport button
+- kind: dialogue
+  speaker: forensics
+  text: We can try to track the traffic and see where it leads
+- kind: dialogue
+  speaker: press
+  text: I'll start making some calls to see if any of our... associates have any information
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll requisition some more hardware for the team
+- kind: dialogue
+  speaker: captain
+  text: Let's focus on the evidence we do have, not speculation about what might be
+- kind: dialogue
+  speaker: detective
+  text: Agreed, Captain. Deshawn, can you take a closer look at the IP addresses
+- kind: dialogue
+  speaker: analyst
+  text: I'll run some more analysis on the link chart
+- kind: dialogue
+  speaker: agent
+  text: Okay, I'm tracing the signal...
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting some interesting readings on the DNS cache
+- kind: dialogue
+  speaker: press
+  text: I think I might have a lead on a potential source
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we get a requisition in for some more coffee?

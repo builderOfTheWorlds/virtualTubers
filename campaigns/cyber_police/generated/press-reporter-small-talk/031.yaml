@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:06.852952+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Rosalind, how's the unit doing?
+- kind: dialogue
+  speaker: captain
+  text: Just the usual, Davey. Nothing too exciting to report.
+- kind: dialogue
+  speaker: press
+  text: Sorry to hear that. I've got a piece on the Scuttle's latest antics going
+    up in the morning.
+- kind: dialogue
+  speaker: detective
+  text: Just make sure to get the facts straight, Davey. We don't want any more misinformation
+    spreading.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think we're making some headway on the new mirror lead. I'll send
+    you a summary later.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some good news, too - the new forensics software is coming in this
+    week.
+- kind: dialogue
+  speaker: agent
+  text: Finally! We're going to be able to keep up with those Scuttle types.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are still coming in slow, though. Maybe we'll get lucky this
+    week.
+- kind: dialogue
+  speaker: captain
+  text: Let's not get our hopes up, Teresa. We know how it usually goes.
+- kind: dialogue
+  speaker: press
+  text: Alright, I'll make sure to put in a good word for you guys. Maybe the Commissioner
+    will actually listen this time.

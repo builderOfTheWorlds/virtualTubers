@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:39.170422+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to reconcile the chatter patterns.
+- kind: dialogue
+  speaker: agent
+  text: I've got a potential lead on a new node.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing on the evidence front yet.
+- kind: dialogue
+  speaker: press
+  text: I've got a press conference scheduled for tomorrow.
+- kind: dialogue
+  speaker: quartermaster
+  text: Supplies are low on the cyberdeck kit.
+- kind: dialogue
+  speaker: captain
+  text: Observer, are you aware of the changes to the Scuttle's infrastructure?
+- kind: dialogue
+  speaker: detective
+  text: Priya, I need those patterns on the board by the end of the day.
+- kind: dialogue
+  speaker: analyst
+  text: I'm doing the best I can, Marcus.
+- kind: dialogue
+  speaker: agent
+  text: (glances at the Observer, then back at his screen)

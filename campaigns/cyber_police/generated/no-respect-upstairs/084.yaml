@@ -1,0 +1,32 @@
+id: no-respect-upstairs
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:10.745127+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Someone call for a backup, let's see how long it takes them to respond.
+- kind: dialogue
+  speaker: detective
+  text: I swear, it's like they think we're not even real cops.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's latest newsletter up on the monitors, and...
+- kind: dialogue
+  speaker: quartermaster
+  text: '(reading from a printout) "Cyber Cops Embarrass Themselves Again: 3rd Raid
+    in a Row Ends in Nothing"'
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) I'm starting to think we're the ones being mocked.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Hey, at least we get more screen time than the actual police.
+- kind: dialogue
+  speaker: captain
+  text: Someone get me a requisition form for a new workstation, this one's on its
+    last legs.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to analyze the Scuttle's algorithms, but it's like they're deliberately
+    making it hard.

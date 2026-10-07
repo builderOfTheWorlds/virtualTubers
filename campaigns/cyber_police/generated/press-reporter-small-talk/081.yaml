@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:57.637577+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey.
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain. What's new in the basement?
+- kind: dialogue
+  speaker: captain
+  text: We're chasing a lead on a new Scuttle mirror site.
+- kind: dialogue
+  speaker: press
+  text: Any chance it's the real deal this time?
+- kind: dialogue
+  speaker: captain
+  text: We'll know soon enough. The Analyst's got the overnight data.
+- kind: dialogue
+  speaker: press
+  text: Right. And what about the unit's little project? Any updates on that?
+- kind: dialogue
+  speaker: captain
+  text: It's ongoing, Davey. We'll talk to you soon.
+- kind: dialogue
+  speaker: press
+  text: Sounds good. Thanks, Captain. Bye for now.

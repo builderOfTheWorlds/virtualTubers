@@ -1,0 +1,48 @@
+id: observer-corner-desk
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T06:58:53.592275+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to understand the Analyst's latest link chart.
+- kind: dialogue
+  speaker: agent
+  text: Looks like we got a new tip from the one friendly reporter, but it's still
+    in the vetting process.
+- kind: dialogue
+  speaker: forensics
+  text: I'll go over the evidence requests from the Agent, see if we can move anything
+    forward.
+- kind: dialogue
+  speaker: press
+  text: And I'll make sure to reach out to the press office, see if we can get some
+    more coverage on the unit's efforts.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are still pending on the new hardware, will let you know if we
+    hear back from upstairs.
+- kind: dialogue
+  speaker: captain
+  text: Let's keep moving, people, we've got a lead to chase.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll get the Analyst''s latest to go over it with the team.'
+- kind: dialogue
+  speaker: analyst
+  text: The Observer is watching, again.
+- kind: dialogue
+  speaker: agent
+  text: (glancing at the Observer) I'll just... get back to work.
+- kind: dialogue
+  speaker: forensics
+  text: (ignoring the Observer) Okay, what's the status on the evidence from last
+    night's raid?
+- kind: dialogue
+  speaker: press
+  text: (not looking at the Observer) I'll send over the press update, see if we can
+    get some more coverage.
+- kind: dialogue
+  speaker: quartermaster
+  text: (filing away a stack of papers) Equipment requisitions are still pending,
+    need to follow up with the unit.

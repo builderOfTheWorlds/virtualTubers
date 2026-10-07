@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:05.761260+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I've got something from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: What is it?
+- kind: dialogue
+  speaker: analyst
+  text: '"The computer thing"? That''s the whole memo?'
+- kind: dialogue
+  speaker: agent
+  text: Can we use it as evidence that they still don't take us seriously?
+- kind: dialogue
+  speaker: forensics
+  text: I'd like to see them try to investigate a crime without us.
+- kind: dialogue
+  speaker: press
+  text: (whispering to Captain) "The computer thing" has already made the rounds.
+    I'll try to get a quote out of you.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll make sure to update the requisition forms... for the eventual inquiry.

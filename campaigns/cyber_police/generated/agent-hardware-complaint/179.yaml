@@ -1,0 +1,17 @@
+id: agent-hardware-complaint
+take: 179
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:17.958693+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running but it's just not cooperating.
+- kind: dialogue
+  speaker: forensics
+  text: I think it's just the hardware.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) Outdated, of course.
+- kind: dialogue
+  speaker: press
+  text: (whispering) What's going on, Deshawn?

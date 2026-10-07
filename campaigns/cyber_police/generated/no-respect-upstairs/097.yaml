@@ -1,0 +1,36 @@
+id: no-respect-upstairs
+take: 97
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:23.907105+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Okafor-Pryce: ''I''m starting to think they''re not even real, the whole
+    Cyber Police thing. ||emotion:sad'''
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, we know our place in the pecking order. ||emotion:neutral
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, Deshawn. We still have those 3000 login attempts from this morning.
+    ||emotion:angry
+- kind: dialogue
+  speaker: forensics
+  text: Need some help organizing this mess? ||emotion:neutral
+- kind: dialogue
+  speaker: captain
+  text: This is Agar. Dispatch, we need backup for 34-B. Possible Scuttle activity.
+    ||emotion:neutral
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: ''You mean the "possible Scuttle activity" we''ve been hearing
+    for the past week? ||emotion:happy'''
+- kind: dialogue
+  speaker: detective
+  text: All we're asking for is a fair shot at it. ||emotion:angry
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, I'll put in the requisition. Again. ||emotion:sad
+- kind: narration
+  speaker: captain
+  text: 'Okafor-Pryce: ''SCUTTLE WANTS YOU TO KNOW: CYBER POLICE ARE A JOKE. ||emotion:disgusted'''

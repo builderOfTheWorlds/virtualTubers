@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T05:50:09.731502+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get this trace tool running, but our hardware is from
+    the Stone Age.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the holdup, Agent?'
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the server to recognize the new firmware, but it's being
+    stubborn.
+- kind: dialogue
+  speaker: forensics
+  text: I think I found the issue - it's a compatibility problem with the new OS.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s troubleshoot this together. We can''t afford
+    to be held up by outdated hardware.'

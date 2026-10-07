@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:18.691596+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a connection between the recent proxy chain and a server we
+    took down last quarter.
+- kind: dialogue
+  speaker: agent
+  text: Let's run it by Hana, see if she can verify the protocol matches what we found
+    on the other side.
+- kind: dialogue
+  speaker: forensics
+  text: I think you're onto something, Priya. But we'd need more data to be sure.
+- kind: dialogue
+  speaker: agent
+  text: Fine. Get the numbers, I'll talk to Teresa about requisitioning some more
+    hardware.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement from Captain Agar on the current status of the Scuttle
+    operation?
+- kind: dialogue
+  speaker: captain
+  text: (muttering to herself) Must remember to ask the Commissioner about more resources...
+- kind: dialogue
+  speaker: analyst
+  text: (scribbling on her link chart) This looks like it might be a good time to
+    review the Scuttle's operational structure...
+- kind: dialogue
+  speaker: captain
+  text: (whispering to herself) If only we could get a look at the Bosun's protocols...

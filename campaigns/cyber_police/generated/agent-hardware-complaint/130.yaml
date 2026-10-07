@@ -1,0 +1,14 @@
+id: agent-hardware-complaint
+take: 130
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:01.474834+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Can you believe we're still running on this ancient hardware?
+- kind: dialogue
+  speaker: analyst
+  text: (offscreen) What's going on, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Nothing, Priya, just trying to get this trace tool to work.

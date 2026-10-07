@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:34.467749+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the start of the loop:'
+- kind: dialogue
+  speaker: captain
+  text: Alright, unit. Backup request for the latest Scuttle tip.
+- kind: dialogue
+  speaker: detective
+  text: Another day, another request that's gonna get stuck in the queue.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the surveillance feed on the monitor.
+- kind: dialogue
+  speaker: agent
+  text: Like we'd get backup even if we really needed it...
+- kind: dialogue
+  speaker: forensics
+  text: Do you think we'll actually get to process the evidence before it's overwritten?
+- kind: dialogue
+  speaker: press
+  text: 'CYBER COPS STRIKE AGAIN: THIS TIME WITH A SPOON'
+- kind: dialogue
+  speaker: quartermaster
+  text: Well, at least the coffee machine is working today.

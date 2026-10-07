@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:36.664554+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: The Captain's still not happy about the denied-requisitions.
+- kind: dialogue
+  speaker: agent
+  text: And neither am I. We're still short that new server we need.

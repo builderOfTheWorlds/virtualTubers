@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 148
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:01.537017+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle's chatter patterns are still spiking around the same hour every
+    night.
+- kind: dialogue
+  speaker: detective
+  text: I'll start going over the feeds again, see if we can pinpoint the source.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a lead on some new code I want to run past Forensics.
+- kind: dialogue
+  speaker: forensics
+  text: What makes you think it's related?
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get that buggered server up and running.
+- kind: dialogue
+  speaker: press
+  text: You'd think the department would have better coffee by now.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) It's in the vending machine. Don't make a scene.

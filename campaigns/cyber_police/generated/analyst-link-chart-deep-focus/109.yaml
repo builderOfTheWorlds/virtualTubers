@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:10.611002+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Ah, that link here to the suspected proxy server in Tokyo should have been
+    followed up on last week, and I'm not sure why it's not yet on the Analyst's desk.
+- kind: dialogue
+  speaker: agent
+  text: I don't know what the delay is, ma'am. I've got a hold on the Tokyo server,
+    and I can bring it up for you right away.
+- kind: dialogue
+  speaker: analyst
+  text: No, no, I can handle it myself. I just need to re-run the link chart and...
+    Wait, what's this? A new node has popped up?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, it looks like it might be a mirror site. I'm analyzing the code right
+    now, but it's going to take me a few hours to get a solid ID.
+- kind: dialogue
+  speaker: analyst
+  text: I need it sooner than that. This is a new opportunity, and I want to be the
+    one to take it.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the team to help me dig into it, ma'am. We can see if we can find
+    any connections to the original Scuttle servers.
+- kind: dialogue
+  speaker: analyst
+  text: Good. And... Ah, what's this notation here? It looks like a new cipher.

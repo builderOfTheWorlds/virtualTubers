@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:02.641786+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, we've got the best crew in the department and we can't even crack
+    this one scuttle.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Yeah, and it''s not like we''re getting any help from the brass.
+    They still think it''s just a bunch of kids messing around.'
+- kind: dialogue
+  speaker: analyst
+  text: That's because they think we're wasting resources. "The computer thing" indeed.
+- kind: dialogue
+  speaker: agent
+  text: I mean, come on, we've had like five leads in the past year and none of them
+    panned out. It's starting to feel like we're chasing our tails.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe we are. Maybe we're just not good enough.
+- kind: dialogue
+  speaker: press
+  text: Oh, don't be so hard on yourselves. It's not like you're going to give up
+    on the biggest case of your career.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Ha! Good one, Davey. But seriously, guys, we need to get our
+    act together if we''re going to take down The Scuttle.'

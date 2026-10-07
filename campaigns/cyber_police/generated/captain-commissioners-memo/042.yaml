@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:11.818296+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: (reading over Captain's shoulder) "The computer thing"?
+- kind: dialogue
+  speaker: analyst
+  text: (sarcastically) Oh, because that's not dehumanizing at all. ||emotion:sarcastic-happy
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Analyst) I think they mean it, too.
+- kind: dialogue
+  speaker: forensics
+  text: (from a console in the back) Can someone tell me why I have to wait six weeks
+    for new software?
+- kind: dialogue
+  speaker: press
+  text: (on the phone, eavesdropping) "Just another day at the Cyber Police...
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the group) We need to send in a requisition for better equipment. Now.

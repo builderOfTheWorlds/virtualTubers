@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 158
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:09.456933+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Tying off that minor thread, but it's still loose enough to drive me crazy.
+- kind: dialogue
+  speaker: captain
+  text: (stands up from her desk, stretches) Alright, let's get moving on the next
+    thing. What's the status on the link charts?
+- kind: dialogue
+  speaker: detective
+  text: (yawns, rubs his eyes) Priya, you've got the link charts, can you walk me
+    through the last 24 hours?
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: (mumbles to himself) Coffee... need coffee...'
+- kind: dialogue
+  speaker: forensics
+  text: (from the forensics lab) Analyst, can you bring me the latest batch of requests?
+    We're backed up on processing.
+- kind: dialogue
+  speaker: press
+  text: (rings in from the press room) Can someone give me an update on the unit's
+    activities for the day? I've got a press conference in an hour.
+- kind: dialogue
+  speaker: quartermaster
+  text: (pokes her head out of the quartermaster's office) Anyone need anything from
+    supplies? We're low on spare parts.

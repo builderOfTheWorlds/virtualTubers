@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:47.777540+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, our hardware is older than most of you.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool to work, but it's not even recognizing the
+    new mirror.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Yeah, because nothing says "cutting-edge" like a Commodore 64.
+- kind: dialogue
+  speaker: forensics
+  text: (amused) Oh, Deshawn, you're such a nostalgia junkie.
+- kind: dialogue
+  speaker: agent
+  text: (smiling) Hey, when it works, it works. Until then, we're stuck with this
+    ancient stuff.

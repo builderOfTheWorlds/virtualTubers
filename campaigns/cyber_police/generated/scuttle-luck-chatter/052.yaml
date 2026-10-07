@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:30.089791+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I swear, it''s like they have eyes on us, waiting for us
+    to slip up.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the proxy chains, and I think I see a pattern.
+- kind: dialogue
+  speaker: agent
+  text: That's just it, though - we can't prove it's a pattern. It's just Scuttle
+    luck.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Like we don't have enough to do without debating the finer points
+    of piracy...
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) Bring it up, Hana, and let's get into it. We can use a laugh.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s keep this light. But I want to remind everyone,
+    we''re still waiting for that one big break.'
+- kind: dialogue
+  speaker: press
+  text: (skeptical) One big break? You mean like the one that'll never come?

@@ -1,0 +1,42 @@
+id: press-reporter-small-talk
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:57.330495+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Priya, how's life treating you?
+- kind: dialogue
+  speaker: analyst
+  text: It's treating me like it's Monday, Davey.
+- kind: dialogue
+  speaker: agent
+  text: I see what you did there, Priya.
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's keep the chit-chat to a minimum. I've got a briefing
+    to give.
+- kind: dialogue
+  speaker: press
+  text: Sorry, Captain. I just had to get in a good one.
+- kind: dialogue
+  speaker: quartermaster
+  text: What's the status on the requisitions?
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new, Teresa. Same old drill.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting chatter patterns coming in.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll take a look. When do I need to start building a plan?'
+- kind: dialogue
+  speaker: agent
+  text: I've got some new IP addresses to start tracking.
+- kind: dialogue
+  speaker: press
+  text: Nothing on the press front. Just the usual drivel.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the supplies ready for whenever we need them.

@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:49.151873+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking through the basement, noting the equipment and storage areas.
+- kind: dialogue
+  speaker: analyst
+  text: Filing away some printouts and checking my link charts for any new connections.
+- kind: dialogue
+  speaker: agent
+  text: Checking the rack of hardware and the two laptops, making sure everything
+    is online.
+- kind: dialogue
+  speaker: forensics
+  text: Approaching the evidence locker, checking the keypad and the security tape
+    on the floor.
+- kind: dialogue
+  speaker: quartermaster
+  text: Picking up a phone and dialing a number, speaking quietly to someone off-screen.
+- kind: dialogue
+  speaker: forensics
+  text: Entering the code to unlock the evidence locker, beginning the chain of custody
+    process.

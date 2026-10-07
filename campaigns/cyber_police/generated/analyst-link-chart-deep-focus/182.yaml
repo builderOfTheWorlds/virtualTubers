@@ -1,0 +1,20 @@
+id: analyst-link-chart-deep-focus
+take: 182
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:40.189959+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm going to need to re-calculate the probability of a proxy chain originating
+    from that IP address.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I've been trying to get Forensics to run a full scan on the seized hardware,
+    but Hana says she's too backed up.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Like I don't have anything better to do...
+- kind: dialogue
+  speaker: press
+  text: Can someone explain to me why the unit's website still says "under construction"
+    from 2018?

@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 97
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:11.215207+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Scuttle luck is just a myth. We just need to dig deeper.
+- kind: dialogue
+  speaker: analyst
+  text: You think the Bosun is just that good, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: I don't think it's luck, Priya. I think it's just a bunch of amateurs who
+    happen to be very, very good at their jobs.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Amateurs? Deshawn, we''ve been at this for five years. We''re
+    starting to sound like The Scuttle.'
+- kind: dialogue
+  speaker: agent
+  text: I'm saying, if we just got a little creative, a little... outside the box...
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: And if we got caught, which we probably would?'
+- kind: dialogue
+  speaker: analyst
+  text: Can we please just focus on the facts for one second?

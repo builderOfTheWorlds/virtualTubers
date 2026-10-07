@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 132
+model: llama3.1:8b
+generated_at: '2026-10-01T06:47:11.606623+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''m glad I can get some actual work done without The Scuttle''s
+    updates screaming at us'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain. Nothing new on the Gantry mirror'
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting correlations in the chatter patterns from last night's
+    log
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the new server up and running, but it's being stubborn
+- kind: dialogue
+  speaker: forensics
+  text: I just re-ran the encryption analysis on the latest drive capture, and...
+- kind: dialogue
+  speaker: press
+  text: Morning, all! Just checking in to see if anything's happened that I should
+    know about
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, I've got a request for a new batch of data storage units coming up this
+    week. I'll send it up for approval
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, Davey. We''re still waiting on The Scuttle to give
+    us something worth chasing'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m just going to go grab a cup of coffee. Anyone else need
+    a refill?'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, yes, I could do with a top-up

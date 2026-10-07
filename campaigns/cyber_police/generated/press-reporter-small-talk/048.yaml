@@ -1,0 +1,22 @@
+id: press-reporter-small-talk
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:36.566153+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Just the usual morning, Davey.'
+- kind: narration
+  speaker: captain
+  text: 'DO: You know, I still can''t believe the last Scuttle banner we got.'
+- kind: narration
+  speaker: captain
+  text: 'TP: I know, I was going to write a response, but...'
+- kind: narration
+  speaker: captain
+  text: 'HP: (in the background, muffled, making small talk about the department''s
+    gossip)'
+- kind: narration
+  speaker: captain
+  text: 'TO-P: (sarcastically) Oh, great, now you''re giving me a play-by-play of
+    the latest water cooler drama.'

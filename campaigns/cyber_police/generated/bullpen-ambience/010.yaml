@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:26.769400+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing is on the schedule for 08:00.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to go over the Thompson case again, see if I can find anything we
+    missed.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few more connections to run on the IP addresses from last night.
+- kind: dialogue
+  speaker: agent
+  text: I need a new drive for the 3-SSD setup in the back.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on the results from the lab.
+- kind: dialogue
+  speaker: press
+  text: Anyone know why the Okinawa article is still up? Shouldn't it be scrubbed
+    by now?
+- kind: dialogue
+  speaker: quartermaster
+  text: Anyone want coffee? It's gone cold.

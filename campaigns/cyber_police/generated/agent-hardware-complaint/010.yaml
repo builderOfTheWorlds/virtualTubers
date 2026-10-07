@@ -1,0 +1,15 @@
+id: agent-hardware-complaint
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:10.336045+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You know, this hardware is starting to feel like it's from the last century.
+- kind: dialogue
+  speaker: forensics
+  text: I'm just trying to get this trace tool up and running, but...
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Yeah, good luck with that. I swear, it's like we're trying to
+    solve a crime from the 90s.

@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:50.170510+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Scuttle luck is just code for "we''re just really bad at this."'
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think it's just the Bosun playing whack-a-mole with us.
+- kind: dialogue
+  speaker: agent
+  text: Whack-a-mole? It's like they have a map of our operations.
+- kind: dialogue
+  speaker: forensics
+  text: I found a new proxy chain, but it's probably already been replaced.
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, the Commodore has a Ph.D. in trolling us.
+- kind: dialogue
+  speaker: press
+  text: 'I''ve got a story idea - how about "Cyber Police Unit: The Never-Catching
+    Crew"?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I don''t want to hear it, Davey. This isn''t funny.'

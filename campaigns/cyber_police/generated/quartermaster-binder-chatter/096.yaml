@@ -1,0 +1,14 @@
+id: quartermaster-binder-chatter
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:58.359355+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ve got "the eventual inquiry" up to 87 rejections.'
+- kind: narration
+  speaker: captain
+  text: 'DMOP: That''s not bad, Terri, you''re keeping them on their toes.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Some day it''ll be a question, not just a courtesy, I''m sure.'

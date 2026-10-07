@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 58
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:27.691000+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher (Vera): Alright, Cyber Police, we''ve got a 5-0 in the warehouse
+    district.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, Deshawn, can you get a team on the scene?'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Request denied, Captain. They''re still working on the Johnson
+    burglary.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Can we at least get a witness statement taken, then?'
+- kind: narration
+  speaker: captain
+  text: 'Forensics (Vosk): Still waiting on the lab results from the Zhang hack. It''s
+    taking longer than usual.'
+- kind: dialogue
+  speaker: analyst
+  text: ( typing on a computer ) I think I found something, but it's not showing up
+    on the feeds.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Teresa, did we get a new shipment of coffee yet?'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: Negative, Captain. We''re still on the old stock.'
+- kind: narration
+  speaker: captain
+  text: 'Davey Okonkwo-Pryce (on monitor): "Cyber Police Foiled Again: The Unit''s
+    Repeated Failures Raise Questions About Effectiveness"'
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher (Vera): You know, I heard they''re thinking of replacing us with
+    a bot.'

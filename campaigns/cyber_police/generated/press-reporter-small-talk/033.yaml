@@ -1,0 +1,28 @@
+id: press-reporter-small-talk
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:16.199883+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey, how's the Scuttle gossip trending?
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain. Not much to report. The usual "Cyber Police are a joke" comments.
+- kind: dialogue
+  speaker: captain
+  text: Yeah, I'm used to it. How's the Commissioner doing?
+- kind: dialogue
+  speaker: press
+  text: Still referring to digital crime as "the computer thing". I swear, it's like
+    they're trying to make us invisible.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Well, at least they're consistent. Anything new on the Scuttle operators?
+- kind: dialogue
+  speaker: press
+  text: Nope, still tight-lipped. But I did get a tip that there's a new mirror coming
+    online today.
+- kind: dialogue
+  speaker: captain
+  text: Good, good. That's what we need. Okay, that's all from me. You know the drill.

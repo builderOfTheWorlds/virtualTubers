@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:43.098391+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The 07:00 briefing is about to start.
+- kind: dialogue
+  speaker: detective
+  text: I've got a possible lead from the Analyst's morning dump.
+- kind: dialogue
+  speaker: analyst
+  text: It looks like the chatter spike we've been tracking is connected to a new
+    mirror on The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: I've already started setting up the tools to get a read on the mirror's infrastructure.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a task from the Detective to start processing the evidence from our
+    last raid.
+- kind: dialogue
+  speaker: press
+  text: We've got a press conference scheduled for this afternoon, so let's keep the
+    noise down.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a reminder, we're running low on good coffee in the basement.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

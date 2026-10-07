@@ -1,0 +1,53 @@
+id: press-reporter-small-talk
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:26.022626+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Rosalind. I was wondering if you've heard anything about the latest
+    round of funding for the department.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, Davey. I haven''t seen anything concrete yet, but
+    I''ll keep you posted if I do.'
+- kind: dialogue
+  speaker: press
+  text: Alright, just checking. I've got a few angles to chase on the new Scuttle
+    leak and I want to make sure I've got the department's perspective.
+- kind: dialogue
+  speaker: agent
+  text: Just getting the briefing room set up, Captain. What's the day's lead?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good morning, Deshawn. I''ll give you the briefing in just
+    a minute. First, let''s go around the room. Priya, what''s the picture looking
+    like on the Scuttle side?'
+- kind: dialogue
+  speaker: analyst
+  text: We've got a few chatter spikes that are worth exploring, Captain. Nothing
+    concrete yet, but it's looking like our usual suspects.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I think we should focus on the new mirror they set up. We can
+    try to track the traffic and see if it leads us anywhere.'
+- kind: dialogue
+  speaker: forensics
+  text: I've been analyzing the traffic, and it looks like it's coming from a few
+    different sources. I'll need some time to dig deeper, but I think we might have
+    a way in.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get to work. Deshawn, can you get us set up
+    with some new equipment? We need to be able to track the Scuttle''s activity in
+    real-time.'
+- kind: dialogue
+  speaker: agent
+  text: On it, Captain. I'll get the Quartermaster to requisition what we need.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the paperwork started, but we all know how that goes.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s focus on the task at hand. We''ve got a lead,
+    and we''re going to run with it.'

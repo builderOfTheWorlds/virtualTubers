@@ -1,0 +1,35 @@
+id: scuttle-luck-chatter
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:37.509511+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's like they have a mole in our unit. Someone's feeding
+    them the intel.
+- kind: dialogue
+  speaker: analyst
+  text: I've run the numbers, Deshawn. We've got a solid case against The Scuttle
+    every time we raid, but it's always something. A server's empty, a proxy chain's
+    been ripped out, or a key witness is suddenly unavailable.
+- kind: dialogue
+  speaker: captain
+  text: I don't care what it is, as long as we catch them eventually. Someone's been
+    feeding them too much information, I'm sure of it.
+- kind: dialogue
+  speaker: detective
+  text: I think it's just Scuttle luck, ma'am. They've got a system down pat, and
+    we're just not smart enough to catch up.
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't know what's more frustrating, being outsmarted or being out-resourced.
+    We've got outdated gear and barely enough personnel to man the raids.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a feeling we're missing something, something big. I'm running some
+    extra tests on the latest seized drives, see if I can turn up anything.
+- kind: dialogue
+  speaker: press
+  text: This is just going to be a great story for the next day's headlines, isn't
+    it? 'Cyber Police Foiled Again by Pirate Site'... yeah, that's going to look great
+    on my resume.

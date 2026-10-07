@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 141
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:35.463521+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is on my desk.
+- kind: dialogue
+  speaker: detective
+  text: What's the memo about?
+- kind: dialogue
+  speaker: analyst
+  text: The computer thing
+- kind: dialogue
+  speaker: agent
+  text: (whispers) I told you it wouldn't make a difference.
+- kind: dialogue
+  speaker: forensics
+  text: (reading over shoulder) "the Cyber Police are not a real police force"?
+- kind: dialogue
+  speaker: press
+  text: (in a corner, on a phone) "department's IT department with badges"
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) Some things never change.

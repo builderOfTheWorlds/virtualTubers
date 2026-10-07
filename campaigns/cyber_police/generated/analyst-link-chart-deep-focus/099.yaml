@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:11.894650+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think our link chart is telling us something, but I just can't
+    quite put my finger on it...

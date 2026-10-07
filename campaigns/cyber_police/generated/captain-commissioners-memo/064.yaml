@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:37.680084+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'll take this memo, thanks.
+- kind: dialogue
+  speaker: detective
+  text: It's a memo from the Commissioner's office, not the first time we've been
+    referred to as "the computer thing".
+- kind: dialogue
+  speaker: analyst
+  text: And it's not the first time we've heard it either.
+- kind: dialogue
+  speaker: agent
+  text: I just wish they'd say it to our faces instead of behind our backs.
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) "The computer thing". It's like we're not even real police.
+- kind: dialogue
+  speaker: press
+  text: (entering the room) Hey, what's going on?
+- kind: dialogue
+  speaker: quartermaster
+  text: (smirking) Just the usual.

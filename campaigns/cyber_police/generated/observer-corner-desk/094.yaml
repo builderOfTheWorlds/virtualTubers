@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:43.778701+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'll need to re-run the chatter analysis for the new server node the Agent
+    is tracing.
+- kind: dialogue
+  speaker: captain
+  text: ( glancing at the Observer's empty chair ) Anyone know where the Observer
+    is?
+- kind: dialogue
+  speaker: detective
+  text: ( shrugs ) Haven't seen him. Probably just early.
+- kind: dialogue
+  speaker: agent
+  text: ( typing on his computer ) Yeah, I think he's probably just on a call.
+- kind: dialogue
+  speaker: forensics
+  text: ( examining a printout ) I'll be ready to review the day's finds when you
+    get back, Captain.
+- kind: dialogue
+  speaker: press
+  text: ( scribbling in a notebook ) I'll try to keep it to the facts today.
+- kind: dialogue
+  speaker: quartermaster
+  text: ( re-potting a potted plant ) Don't worry about the Observer, Davey. We've
+    all got our own jobs to do.

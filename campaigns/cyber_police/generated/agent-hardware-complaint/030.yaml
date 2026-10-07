@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:29.895324+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not the software, it's the hardware. We're running on
+    2018 specs here.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Oh, come on, Deshawn, it's not that bad. We've managed with worse.
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) That's just it, Priya. We shouldn't be managing. We should be leading.
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) Uh, guys, can I get your attention? I'm trying to run
+    this trace tool.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) What's going on? Can I help with the hardware?

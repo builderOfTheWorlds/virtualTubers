@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:43.083874+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I still need to log that denied requisition for the portable spectrometer
+- kind: dialogue
+  speaker: agent
+  text: You know, eventually we'll have to answer for these.

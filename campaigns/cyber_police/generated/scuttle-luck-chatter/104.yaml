@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:50.706837+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I swear, it's like they have a sixth sense for knowing where we're going to
+    hit.
+- kind: dialogue
+  speaker: analyst
+  text: Maybe it's just good old-fashioned cunning, Mags.
+- kind: dialogue
+  speaker: agent
+  text: Cunning, schmunning. I'm starting to think it's just us being too predictable.
+- kind: dialogue
+  speaker: forensics
+  text: Predictable? You think the Scuttle crew doesn't have a whole team of AI-powered
+    scouts sniffing out our every move?
+- kind: dialogue
+  speaker: press
+  text: (chuckling) Oh, come on, Hana, you can't be serious about that. It's just
+    Scuttle luck.
+- kind: dialogue
+  speaker: quartermaster
+  text: Scuttle luck my eye! I've been trying to get the Quartermaster's comms records
+    for months, and I still can't crack that password.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not get bogged down in conspiracy theories. We'll
+    just have to keep doing what we've been doing.

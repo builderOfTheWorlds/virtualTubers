@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 196
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:41.938665+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool up and running, but our hardware is from
+    the Stone Age.

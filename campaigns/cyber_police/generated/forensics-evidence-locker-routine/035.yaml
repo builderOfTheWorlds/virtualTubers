@@ -1,0 +1,37 @@
+id: forensics-evidence-locker-routine
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T06:21:20.399325+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm processing evidence from the recent Scuttle breach, starting with the
+    drives from Agent Okafor's raid.
+- kind: dialogue
+  speaker: analyst
+  text: I need to review the link charts from Forensics before I can provide any intel
+    to the Detective.
+- kind: dialogue
+  speaker: agent
+  text: I'm setting up the equipment for the new investigation, trying to track the
+    source of the latest Scuttle exploit.
+- kind: dialogue
+  speaker: quartermaster
+  text: I need to requisition some new hardware for the unit's servers, and maybe
+    some upgraded laptops for the Analyst.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get to it. We need to review the evidence from the last raid
+    and see if we can pinpoint the source of the Scuttle exploit.
+- kind: dialogue
+  speaker: press
+  text: I'm just here to observe and take notes, I don't want to be in the way of
+    the actual investigation.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the drives from the last raid in the evidence locker, just waiting
+    for Forensics to process them.
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to see some patterns in the link charts, but I need to dig deeper
+    to make any conclusions.

@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 126
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:35.052064+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's look at the pattern of anomalies in the mirror sites...
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Priya) I've been trying to get a read on the proxy chains,
+    but they keep re-routing
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) No, no, this doesn't add up... I've run the same analysis
+    on the other mirrors, and they all show the same signature
+- kind: dialogue
+  speaker: forensics
+  text: (calling out from the lab) Forensics, I've got something here!
+- kind: dialogue
+  speaker: analyst
+  text: (sighing) What have you got?
+- kind: dialogue
+  speaker: forensics
+  text: (proudly) I've managed to recover a partial fingerprint from the seized drive...
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Attention, everyone. The Quartermaster here. I've
+    received word that the Commissioner's office wants to discuss our budget allocation...
+- kind: dialogue
+  speaker: press
+  text: (to the team) Can I get a word with you all for a sec? I think I've got a
+    break on the story...

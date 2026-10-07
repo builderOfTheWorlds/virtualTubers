@@ -1,0 +1,39 @@
+id: no-respect-upstairs
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:30.649477+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, unit, what've we got for backup requests today?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Send the message, Teresa. I''ll talk to them.'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, we're still looking at the new algorithm...
+- kind: dialogue
+  speaker: agent
+  text: Scuttle's been using a new proxy server, Priya. What's the hold up?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to Deshawn) We''ll get to it, Okafor.'
+- kind: dialogue
+  speaker: forensics
+  text: (whispering to Deshawn) I'm telling you, it's an IPFS gateway.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) Backup request denied. Again.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (to Hana) You think they''re adapting to our patterns again?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (into comms device) Dispatch, Agar. Requesting backup for
+    the 14th and Main...'
+- kind: dialogue
+  speaker: press
+  text: (headline on the screen) "Cyber Police Still Not Getting the Job Done"
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I think I've got something...

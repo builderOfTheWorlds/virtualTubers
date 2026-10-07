@@ -1,0 +1,24 @@
+id: scuttle-luck-chatter
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:58.969782+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's not just skill, it's inside info.
+- kind: dialogue
+  speaker: analyst
+  text: We've reviewed the same logs a dozen times, Marcus, there's no indication
+    of a leak.
+- kind: dialogue
+  speaker: agent
+  text: I've seen the Bosun's code, it's like they're reading our minds.
+- kind: dialogue
+  speaker: forensics
+  text: Code can be cracked, Deshawn, it's not magic.
+- kind: dialogue
+  speaker: press
+  text: You'd think the Commodore would be more careful, dropping those little zingers.
+- kind: dialogue
+  speaker: quartermaster
+  text: Next time we should bring some popcorn.

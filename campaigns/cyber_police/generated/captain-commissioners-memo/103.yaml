@@ -1,0 +1,23 @@
+id: captain-commissioners-memo
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:26.061567+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo says "the computer thing" again.
+- kind: dialogue
+  speaker: detective
+  text: What's the joke, now?
+- kind: dialogue
+  speaker: analyst
+  text: It's like we're invisible.
+- kind: dialogue
+  speaker: agent
+  text: Or irrelevant.
+- kind: dialogue
+  speaker: forensics
+  text: Can we get some respect?
+- kind: dialogue
+  speaker: press
+  text: just a bunch of basement dwellers...

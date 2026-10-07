@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:11.874264+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: You know, Thorn, the Scuttle''s been making some... interesting
+    claims about your little unit.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''m sure they have.'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: Actually, I''ve been running some numbers... I think
+    we can safely say the Scuttle''s circulation is tanking.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Oh, don''t get too cocky, Priya. They''ll still spin a story
+    out of nothing.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: Speaking of which, I''ve got some interesting news from the
+    lab...'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (watching a monitor) And... here we go. "Cyber Police ''Waste
+    of Taxpayer Dollars'' - Scuttle Exclusive".'

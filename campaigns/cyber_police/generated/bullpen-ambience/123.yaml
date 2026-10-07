@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 123
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:08.025784+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing is usually more lively than this.
+- kind: dialogue
+  speaker: detective
+  text: Can we get some fresh coffee in here?
+- kind: dialogue
+  speaker: analyst
+  text: I'm still running some simulations, but I think I've found a connection between
+    the recent chatter spike and a server on The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still working on that new evidence from yesterday, but I think I might
+    have something.
+- kind: dialogue
+  speaker: press
+  text: Anyone need anything before I go?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just the usual, Davey.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (silence)'

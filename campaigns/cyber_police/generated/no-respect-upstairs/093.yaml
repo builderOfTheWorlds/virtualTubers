@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:02.253360+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: We're low on 32-avant supplies again.
+- kind: dialogue
+  speaker: agent
+  text: Can I get the requisition expedited?
+- kind: dialogue
+  speaker: captain
+  text: Desk, can you put in a request for some extra 32-avant?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I think we can make do with what we have.
+- kind: dialogue
+  speaker: forensics
+  text: (sigh) Okay, what's the latest on the Scuttle's IP address?
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "Cyber Police: The Arcade" - Headline from the Evening Gaze.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: ( muttering ) That''s just great.'
+- kind: dialogue
+  speaker: quartermaster
+  text: It's always something, isn't it?

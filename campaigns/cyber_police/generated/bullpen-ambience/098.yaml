@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:46.834222+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, folks. We're clear for the day.
+- kind: dialogue
+  speaker: detective
+  text: Sounds good to me. How's the coffee?
+- kind: dialogue
+  speaker: analyst
+  text: Still cold.
+- kind: dialogue
+  speaker: agent
+  text: Don't worry, I'll get it for you.
+- kind: dialogue
+  speaker: forensics
+  text: I'll try to catch the morning report on the Scuttle.
+- kind: dialogue
+  speaker: press
+  text: Yeah, good luck with that.
+- kind: dialogue
+  speaker: quartermaster
+  text: Don't forget, we're requisitioning three new laptops.
+- kind: dialogue
+  speaker: captain
+  text: Anyone seen the Observer?

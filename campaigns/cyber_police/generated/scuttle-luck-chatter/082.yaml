@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:46.545126+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's a inside job, someone's feeding them intel.
+- kind: dialogue
+  speaker: analyst
+  text: That's not how it works, Deshawn, they have too many cooks in the kitchen
+    for any one person to have that kind of control.
+- kind: dialogue
+  speaker: detective
+  text: You think you're so smart, Priya, but I've seen the logs, there are patterns,
+    and someone's making them.
+- kind: dialogue
+  speaker: forensics
+  text: I've analyzed the proxy chains, and I can tell you with certainty it's not
+    just one person.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, I don't know, I've been thinking maybe we're just too slow, too clumsy,
+    and they're just outsmarting us.
+- kind: dialogue
+  speaker: press
+  text: Come on, guys, let's not get too worked up about this, we'll get 'em next
+    time.
+- kind: dialogue
+  speaker: captain
+  text: Enough, this is what we get for being so predictable.

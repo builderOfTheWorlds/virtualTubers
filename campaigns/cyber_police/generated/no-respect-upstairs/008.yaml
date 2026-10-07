@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:53.865561+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get the briefing started.
+- kind: dialogue
+  speaker: detective
+  text: We got a lead on a possible Scuttle server location.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure it's a server, Marcus. The IP doesn't match any known Scuttle
+    traffic.
+- kind: dialogue
+  speaker: agent
+  text: Can we get backup on this one?
+- kind: dialogue
+  speaker: forensics
+  text: I'll review the footage, but it's probably a dead end.
+- kind: dialogue
+  speaker: press
+  text: '(on the monitor) "Cyber Cops Foil Another Nothing: Unit Still Doesn''t Seem
+    to Understand How the Internet Works"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to the captain) Sir, we're still waiting on the refurbished servers
+    from last quarter.

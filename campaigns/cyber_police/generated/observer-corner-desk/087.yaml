@@ -1,0 +1,37 @@
+id: observer-corner-desk
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:06.445060+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Working on the Heisenberg theory, trying to pinpoint the source of the chatter
+    spike.
+- kind: dialogue
+  speaker: agent
+  text: Just going to grab another coffee, anyone need anything?
+- kind: dialogue
+  speaker: captain
+  text: Attention, everyone. Today's directive is...
+- kind: dialogue
+  speaker: press
+  text: You know, I had an idea about Scuttle luck...
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on that warrant to come through, Detective.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for the week are up. Nothing exciting.
+- kind: dialogue
+  speaker: agent
+  text: (glancing at the Observer) You'd think they'd give us some kind of lead...
+- kind: dialogue
+  speaker: analyst
+  text: (focusing on her work) If I can just get this model to...
+- kind: narration
+  speaker: captain
+  text: ( silence, as everyone returns to their work )
+- kind: narration
+  speaker: captain
+  text: ( The Observer sits at the corner desk, watching, as the room settles into
+    the morning's routine )

@@ -1,0 +1,30 @@
+id: quartermaster-binder-chatter
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:33.625304+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Still no luck with those extra filters I requested last week.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Oh, come on, Teresa, you know the Commissioner''s office is still waiting
+    on that requisition.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m sure it''s just a coincidence that every other unit gets their
+    gear on time.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Anyway, speaking of which, I''m still waiting to hear back about those
+    new server upgrades.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I swear, we''re the only ones around here who actually do the work.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Well, someone''s gotta keep the unit''s equipment from turning into last-gen
+    junk.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: (muttering) Eventually inquiry...'

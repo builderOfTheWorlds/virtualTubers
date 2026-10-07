@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:52.970056+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Evidence bags are labeled and sealed.
+- kind: dialogue
+  speaker: analyst
+  text: What's the chain-of-custody number for this case?
+- kind: dialogue
+  speaker: agent
+  text: Still waiting on confirmation from the lab.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence is then transferred to me.
+- kind: dialogue
+  speaker: captain
+  text: (over comms) Forensics, we have a priority-one case coming in.
+- kind: dialogue
+  speaker: forensics
+  text: The evidence is then logged in the Evidence Locker, recorded, and sealed in
+    a secure container.
+- kind: dialogue
+  speaker: analyst
+  text: I'll start running the preliminary analysis.
+- kind: dialogue
+  speaker: agent
+  text: (to Hana Vosk) You're the only one with access to the Evidence Locker.
+- kind: dialogue
+  speaker: forensics
+  text: Chain of custody is maintained through this entire process.

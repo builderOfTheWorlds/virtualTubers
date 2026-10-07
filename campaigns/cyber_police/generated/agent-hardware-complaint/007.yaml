@@ -1,0 +1,28 @@
+id: agent-hardware-complaint
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T05:46:56.293778+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, what's the holdup on getting this trace tool running?
+- kind: dialogue
+  speaker: analyst
+  text: Sorry, Des, I'm still trying to get the hardware to cooperate.
+- kind: dialogue
+  speaker: agent
+  text: Co-operate? This is a miracle machine if it manages to run for five minutes
+    without crashing.
+- kind: dialogue
+  speaker: forensics
+  text: (from Forensics' desk) Actually, I think I see the problem.
+- kind: dialogue
+  speaker: agent
+  text: (excited) Oh, tell me it's something I can fix.
+- kind: dialogue
+  speaker: forensics
+  text: It's just that the software is outdated. We need to requisition a new copy.
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, no problem. We'll just requisition the latest and greatest
+    software. That's always approved on the first try.

@@ -1,0 +1,40 @@
+id: no-respect-upstairs
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:41.689354+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We're not getting any backup, and I don't want to send the wrong message to
+    the public, so let's just...
+- kind: dialogue
+  speaker: detective
+  text: (whispering to Priya) They're not even taking it seriously.
+- kind: dialogue
+  speaker: analyst
+  text: (to Marcus) Don't say that. We don't want to start a morale issue.
+- kind: dialogue
+  speaker: agent
+  text: Can someone check the Scuttle's social media? I want to see if they're talking
+    about us again.
+- kind: dialogue
+  speaker: forensics
+  text: '(displaying the Scuttle''s latest tweet on a monitor) "Cyber Police: Where
+    are the arrests, guys?"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (shrugging) They don't care. No one does.
+- kind: dialogue
+  speaker: press
+  text: (reporter on the Scuttle's website, typing away) "Cyber Police Can't Catch
+    a Break"
+- kind: dialogue
+  speaker: analyst
+  text: (to the team) Okay, let's keep our heads up. We have a job to do.
+- kind: dialogue
+  speaker: captain
+  text: (to the team) Some of us are going to go talk to the press, try to humanize
+    the unit a bit.
+- kind: dialogue
+  speaker: detective
+  text: (to the team) Good luck with that. They'll just spin it.

@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:59.417603+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: It's just a matter of time before we crack the Scuttle's infrastructure.
+- kind: dialogue
+  speaker: detective
+  text: Easy for you to say, Captain, but I'm starting to think it's just Scuttle
+    luck.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I've been running some simulations and it looks like our last raid
+    was a textbook example of how not to do it.
+- kind: dialogue
+  speaker: agent
+  text: You're telling me we got outsmarted by a bunch of pirates? Again?
+- kind: dialogue
+  speaker: forensics
+  text: Someone's been poking around in the seized servers. Again.
+- kind: dialogue
+  speaker: press
+  text: Hey, have you guys seen the latest Scuttle banner? It's a cartoon of the Captain
+    with a clown nose.
+- kind: dialogue
+  speaker: quartermaster
+  text: That's it, I'm bringing in donuts next time we raid. Maybe some of that Scuttle
+    luck will rub off on us.

@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:03.391857+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Rosalind. Still got that thing with the crypto key?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, Davey. Yeah, still working on it. No word from IT
+    yet.'
+- kind: dialogue
+  speaker: press
+  text: Yeah, no worries. I'll put out a gentle reminder. You know how it is.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (laughs) Too right. Anything new from the Scuttle side?'
+- kind: dialogue
+  speaker: press
+  text: Just the usual rumor mill. Nothing concrete. But I did get a tip on a potential
+    leak...
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (skeptical) What kind of leak?'
+- kind: dialogue
+  speaker: press
+  text: (teasingly) Oh, I'm not saying. You'll have to come visit and I'll spill the
+    beans.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (laughs) Alright, I''ll swing by. But don''t think you''re
+    getting off that easy.'

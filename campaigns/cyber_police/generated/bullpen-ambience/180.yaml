@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 180
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:07.178371+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, day's almost over.
+- kind: dialogue
+  speaker: detective
+  text: I'm gonna finish this report, then call it a day.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep working on this vulnerability exploit.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to crack this encrypted server...
+- kind: dialogue
+  speaker: forensics
+  text: Can we get some new coffee machines down here? This one's been brewing the
+    same weak stuff for months.
+- kind: dialogue
+  speaker: press
+  text: Just finished a call with the press office, they're still waiting for a statement
+    from us.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll start prepping the requisition list for next week.
+- kind: dialogue
+  speaker: captain
+  text: Anyone got anything they want to bring up before we head out?

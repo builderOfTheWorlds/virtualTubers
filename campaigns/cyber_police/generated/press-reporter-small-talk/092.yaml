@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:52.880581+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, how's the day treating you so far?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Oh, just getting into the usual routine.'
+- kind: dialogue
+  speaker: agent
+  text: Got a call from a source, sounds like there's some chatter about a new Scuttle
+    hack.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some interesting traffic patterns coming in, might be worth a look.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just got word that the Commissioner is requesting another requisition denial
+    for that upgraded forensics software.
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging through the Scuttle's online activity, trying to find a
+    connection.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I think we might have a potential lead on the Scuttle''s real
+    operators.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get to work.'

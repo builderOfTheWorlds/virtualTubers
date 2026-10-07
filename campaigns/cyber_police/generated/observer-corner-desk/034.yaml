@@ -1,0 +1,45 @@
+id: observer-corner-desk
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:34.210268+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I see the Captain's case file is still open from yesterday.
+- kind: dialogue
+  speaker: captain
+  text: (glancing up from her computer, not looking directly at Priya) Ah, good.
+- kind: dialogue
+  speaker: analyst
+  text: (glancing at her own notes) Yes, I took a look at the updated link chart this
+    morning.
+- kind: dialogue
+  speaker: detective
+  text: (standing up from his own computer, walking over to the shared monitor bank)
+    Alright, let's get started.
+- kind: dialogue
+  speaker: forensics
+  text: (looking up from her work, watching the Detective with mild interest) Okay.
+- kind: dialogue
+  speaker: analyst
+  text: (focusing on her computer screen, starting to run through the day's briefing
+    notes) If I recall correctly, we're still tracking the IP address from the 14th.
+- kind: dialogue
+  speaker: agent
+  text: (stretching, yawning, and standing up from his chair) I've got the updated
+    toolset ready.
+- kind: dialogue
+  speaker: quartermaster
+  text: (popping out of the supply cage with a box of papers) Requisitions for the
+    day.
+- kind: dialogue
+  speaker: press
+  text: (nodding at Deshawn) Alright, let's see what we've got.
+- kind: dialogue
+  speaker: analyst
+  text: (continuing to work, lost in thought) I wonder if there's any connection between
+    this IP and the chatter spike last night.
+- kind: narration
+  speaker: captain
+  text: 'The Observer: (sitting silently at his corner desk, watching the team with
+    an unreadable expression)'

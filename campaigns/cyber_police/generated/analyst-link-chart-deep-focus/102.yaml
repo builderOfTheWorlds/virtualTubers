@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:44.348547+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got something on the link chart, but it's a dead end, Captain.
+- kind: dialogue
+  speaker: captain
+  text: What've you got, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: It's a small cluster of chatter on the dark web, but it's not directly connected
+    to The Scuttle's main channel. I'm wondering if it's a throwaway account, or...
+- kind: dialogue
+  speaker: agent
+  text: (walking by) You know, Priya, I've been looking at some of the new proxy protocols
+    used by The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: (looking up) Oh, yeah? What've you found?
+- kind: dialogue
+  speaker: agent
+  text: (smiling) Just a few interesting things.
+- kind: dialogue
+  speaker: forensics
+  text: (entering the room) Hey, guys, what's going on?
+- kind: dialogue
+  speaker: analyst
+  text: ( gesturing to her screen) Deshawn's found some potential leads on The Scuttle's
+    proxy protocols.

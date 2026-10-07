@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 37
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:09.317825+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's all about the Bosun. They're the ones who make it happen.
+- kind: dialogue
+  speaker: analyst
+  text: But we've had Bosun sightings, and they always turn out to be nothing.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, and every time we think we're closing in, the site just... sails away.
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck, indeed. We're just not good enough.
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, come on, Captain, it's not about being good enough. It's about being smart.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know, guys, I've been going over the data, and I think I found a pattern.
+- kind: dialogue
+  speaker: press
+  text: What pattern? "The Scuttle" is just a silly name, and the people behind it
+    are a bunch of amateurs.
+- kind: dialogue
+  speaker: detective
+  text: Amateurs? You really think they're that careless?
+- kind: dialogue
+  speaker: captain
+  text: Actually, Davey might be onto something. If we can crack the pattern...

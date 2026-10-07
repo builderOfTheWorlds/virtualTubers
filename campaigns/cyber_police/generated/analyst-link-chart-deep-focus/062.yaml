@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:44.505591+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think we might be missing a key thread here, a potential link between the
+    two quartermasters.
+- kind: dialogue
+  speaker: agent
+  text: I'll go dig into the link chart, see if I can find anything.
+- kind: dialogue
+  speaker: forensics
+  text: Meanwhile, I'll get the analysis on the seized drives from the last raid.
+- kind: dialogue
+  speaker: press
+  text: I'll call the press conference for this afternoon, make sure everyone knows
+    what's going on.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll go over the requisition binder, see if we can get any more resources
+    on the next raid.
+- kind: dialogue
+  speaker: analyst
+  text: If this thread pans out, it could be the break we need to finally take down
+    The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: I'll set up the tracing protocols, see if we can get a lock on the quartermaster's
+    communication channels.
+- kind: dialogue
+  speaker: forensics
+  text: I've got something on the drives from the last raid.
+- kind: dialogue
+  speaker: press
+  text: Who's going to brief the press? I don't want to get stuck with that one again.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll take it. I'm the new face, I can be the one to break the news.

@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:03.811007+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I''m telling you, it''s not just luck. We''ve had three separate
+    teams tracing that proxy chain before it gets taken down.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: With all due respect, Captain, we''ve had teams tracing
+    it, and we''ve had teams tracing it, and it''s always the same: Scuttle luck.'
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, schmuttle luck. I've seen it in the data, the Bosun is anticipating
+    our moves. It's not just a matter of being lucky.
+- kind: dialogue
+  speaker: agent
+  text: Anticipating our moves? How is that possible? We're not even sure who we're
+    up against.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the seized drives, and I think I found a pattern in the
+    way they're structuring their data. It's like they're...
+- kind: dialogue
+  speaker: press
+  text: '...communicating with each other in plain sight. I mean, come on, guys, it''s
+    not that hard to see. They''re having a laugh at our expense.'
+- kind: dialogue
+  speaker: quartermaster
+  text: And that's why they'll never get caught. Because we're too busy getting bogged
+    down in our own incompetence.

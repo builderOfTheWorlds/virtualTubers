@@ -1,0 +1,41 @@
+id: quartermaster-binder-chatter
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:12.238539+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m not expecting anything but a denial, but I''ll log it anyway.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I don''t see anything new from the last batch of uploads.'
+- kind: narration
+  speaker: captain
+  text: 'PV: Same here, but I did notice some suspicious chatter around the new mirror.'
+- kind: narration
+  speaker: captain
+  text: 'MT: We''ll need to get forensics on it ASAP. Get the team on a plan.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll get started on the technical side.'
+- kind: narration
+  speaker: captain
+  text: 'HVL: I''ll start digging through the evidence.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: And I''ll just update the supply log.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Requisition 3456 denied, again.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Ha, I told you so.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: The eventual inquiry.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Someone''s going to have to explain this to Internal Affairs.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Not anytime soon, I hope.'

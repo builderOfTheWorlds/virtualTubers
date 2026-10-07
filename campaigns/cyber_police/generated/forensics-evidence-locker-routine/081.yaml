@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:25.170256+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker key is now in my hand.
+- kind: dialogue
+  speaker: captain
+  text: Forensics, I need you to process the drive from the previous raid.
+- kind: dialogue
+  speaker: forensics
+  text: Which drive? There were multiple.
+- kind: dialogue
+  speaker: agent
+  text: The one I handed you just now. It's marked for high-priority analysis.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get right to it.
+- kind: dialogue
+  speaker: detective
+  text: (walks up to Forensics' desk) Marcus, how's the drive analysis coming along?
+- kind: dialogue
+  speaker: forensics
+  text: (looks up) Still running the checksums, Detective.
+- kind: dialogue
+  speaker: analyst
+  text: (walks over to Forensics' desk) I've got a possible match on the IP address.
+- kind: dialogue
+  speaker: forensics
+  text: (takes the laptop from the Analyst) Let me take a look.

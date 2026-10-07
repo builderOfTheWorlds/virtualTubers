@@ -1,0 +1,28 @@
+id: agent-hardware-complaint
+take: 208
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:20.857442+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, we're still running Windows 7
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m trying to get this trace tool up, Deshawn. What''s the
+    holdup?'
+- kind: dialogue
+  speaker: forensics
+  text: I'm trying to get the NIST hash to sync, but the new server's not cooperating.
+- kind: dialogue
+  speaker: analyst
+  text: Can we just... can we just get the specs right for once?
+- kind: dialogue
+  speaker: agent
+  text: Ugh, you want specs? You want to see the specs on this thing?
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, let's not fight about the hardware, guys. Someone get the press on the
+    line.
+- kind: dialogue
+  speaker: press
+  text: Yeah, hi, Davey here. Any word on what we're chasing today?

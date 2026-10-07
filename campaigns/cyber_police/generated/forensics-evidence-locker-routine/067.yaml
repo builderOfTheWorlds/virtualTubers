@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:14.810181+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've reviewed the evidence locker's security protocols for the 3rd time this
+    week.
+- kind: dialogue
+  speaker: agent
+  text: I've sent the latest batch of link charts to the Analyst for review.
+- kind: dialogue
+  speaker: analyst
+  text: Still waiting on confirmation from the Agent on the latest request for server
+    access.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocked the Supply Cage with a new shipment of USB drives.
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get moving. Today's priority is tracing the source
+    of the Scuttle's latest DDOS attack.
+- kind: dialogue
+  speaker: detective
+  text: I'll work with the Agent to identify potential entry points.
+- kind: dialogue
+  speaker: agent
+  text: I'll get started on setting up the monitoring stations.
+- kind: dialogue
+  speaker: press
+  text: Anything I should know about the case before I head out to meet the press?
+- kind: dialogue
+  speaker: analyst
+  text: No changes, just keeping an eye on The Scuttle's usual suspects.

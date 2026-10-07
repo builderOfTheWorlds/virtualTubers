@@ -1,0 +1,43 @@
+id: bullpen-ambience
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:18.926757+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. Just reviewing the chatter logs.
+- kind: dialogue
+  speaker: analyst
+  text: Still no pattern to the Scuttle traffic.
+- kind: dialogue
+  speaker: agent
+  text: Running some latency tests on the hardware.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the latest mirror dump.
+- kind: dialogue
+  speaker: press
+  text: Anyone seen my coffee?
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Need to re-order the printer toners.
+- kind: narration
+  speaker: captain
+  text: Loop 93
+- kind: narration
+  speaker: captain
+  text: (The Analyst and Agent are engrossed in their work, the Detective is typing
+    on her laptop, and Forensics is examining a sample under a microscope. Press is
+    looking at her phone, frowning, and Quartermaster is sorting papers at her desk.)
+- kind: dialogue
+  speaker: analyst
+  text: (to Agent) This looks like a potential backdoor...
+- kind: dialogue
+  speaker: agent
+  text: (excitedly) Yeah, I'm getting some weird anomalies too.
+- kind: dialogue
+  speaker: detective
+  text: (sighs) Just great, another rabbit hole.

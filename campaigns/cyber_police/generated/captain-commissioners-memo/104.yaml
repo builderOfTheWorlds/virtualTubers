@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:30.657503+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I hate it when they call it "the computer thing."
+- kind: dialogue
+  speaker: detective
+  text: I know, sir. It's like they don't even consider it real law enforcement.
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) Real law enforcement?
+- kind: dialogue
+  speaker: agent
+  text: (joking) Yeah, because nothing says "real law enforcement" like a 25-year-old
+    in a basement.
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) I've seen our budget requests get prioritized below the coffee machine
+    in the break room.
+- kind: dialogue
+  speaker: press
+  text: (overhearing, whispering to someone) Oh, great, the Cyber Police are at it
+    again...
+- kind: dialogue
+  speaker: quartermaster
+  text: (under her breath, shaking her head) They don't even bother to change the
+    batteries in the badge.

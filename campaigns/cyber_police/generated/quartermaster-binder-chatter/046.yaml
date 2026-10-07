@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:18.151101+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m still working on getting those new binoculars approved.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''m not holding my breath.'
+- kind: narration
+  speaker: captain
+  text: 'PMN: We can try reaching out to the Commissioner''s office again. Maybe they
+    can override the denial.'
+- kind: narration
+  speaker: captain
+  text: 'DHV: I''ve seen the requisition forms get lost in the system for weeks.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I''ll try to get the press to cover something else for a change.'
+- kind: narration
+  speaker: captain
+  text: 'TM-L: At least we''ve got the rubber duck video going on the extra monitor.'

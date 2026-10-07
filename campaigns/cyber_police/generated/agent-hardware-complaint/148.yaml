@@ -1,0 +1,16 @@
+id: agent-hardware-complaint
+take: 148
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:50.881459+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if I have to restart this trace tool one more time...
+- kind: dialogue
+  speaker: forensics
+  text: (from the next desk over) Yeah, it's just a pain to deal with, Des. We really
+    need an upgrade.
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, I've got a requisition in for one right now. I'm sure
+    it'll get approved.

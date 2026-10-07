@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:38.581815+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, settle down, everyone. We've got a few hours before The Scuttle starts
+    trending.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to take another pass at that login script. Maybe we can get something
+    out of the hash.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few threads on some new malware variants. Not sure if they're related
+    yet.
+- kind: dialogue
+  speaker: agent
+  text: Just waiting on a call back from the vendor on that new software we ordered.
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I've got a pile of paperwork to sort through from the last raid.
+- kind: dialogue
+  speaker: press
+  text: Anyone seen the new camera crew? I've got a script to review.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) Requisition day next week. Better get the forms in on time...
+- kind: dialogue
+  speaker: analyst
+  text: (fiddling with her monitor) I'm trying to get this graph to plot correctly...

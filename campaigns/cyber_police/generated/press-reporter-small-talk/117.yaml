@@ -1,0 +1,11 @@
+id: press-reporter-small-talk
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:38.053449+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright everyone, let''s get started.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Just a heads up, Captain, I''ve got a call from my reporter friend.'

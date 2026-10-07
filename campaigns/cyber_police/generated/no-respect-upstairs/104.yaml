@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:01.941581+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Time to fill out the paperwork for the Scuttle''s 4th ''raid
+    this week that didn''t stick.'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on the paperwork. We can't have The Scuttle undermining
+    our authority in print again.
+- kind: dialogue
+  speaker: detective
+  text: I'll make sure to fill out the " Operation Undermining Authority" form.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I've been analyzing the Scuttle's last article and I think
+    I've found some inconsistencies.
+- kind: dialogue
+  speaker: agent
+  text: If it's not too much trouble, can we get some backup for the Scuttle op? It's
+    always more effective when we have a team.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the forensics from the last Scuttle operation and I think
+    we might have missed something.
+- kind: dialogue
+  speaker: quartermaster
+  text: Uh, Captain? I just got a call from the Commissioner's office. They're denying
+    our request for upgraded hardware.
+- kind: dialogue
+  speaker: press
+  text: 'CYBER POLICE: CAN''T CATCH A VIRUS'

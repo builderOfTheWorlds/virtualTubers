@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 136
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:15.491709+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo from the Commissioner's office is... illuminating.
+- kind: dialogue
+  speaker: detective
+  text: It's the computer thing, again.
+- kind: dialogue
+  speaker: analyst
+  text: I've read it three times, and I still can't understand why they think it's
+    a compliment.
+- kind: dialogue
+  speaker: agent
+  text: I'm sure it's just a lack of understanding.
+- kind: dialogue
+  speaker: forensics
+  text: I'll just go ahead and put this in the "ignore" pile.
+- kind: dialogue
+  speaker: press
+  text: Oh great, another memo to ignore. Can I go now?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll just make sure to add it to the file marked "Evidence of Systemic Disrespect".

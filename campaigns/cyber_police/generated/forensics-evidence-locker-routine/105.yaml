@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:28.387749+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Needing the 4-2-1 integrity of the drives.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the chain of custody paperwork.
+- kind: dialogue
+  speaker: quartermaster
+  text: The Quartermaster's requisition binder needs updating.
+- kind: dialogue
+  speaker: captain
+  text: Evidence intake procedure.
+- kind: dialogue
+  speaker: detective
+  text: Starting the paperwork for this new intake.
+- kind: dialogue
+  speaker: forensics
+  text: The serial numbers on these drives match the paperwork.
+- kind: dialogue
+  speaker: agent
+  text: I'm not finding any signs of tampering.
+- kind: dialogue
+  speaker: analyst
+  text: These results are normal.
+- kind: dialogue
+  speaker: quartermaster
+  text: Good, that means I can restock the locker without issues.

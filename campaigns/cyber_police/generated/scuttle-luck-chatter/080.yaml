@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:14.403331+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I swear, it's not just dumb luck we can't catch those privateers.
+- kind: dialogue
+  speaker: detective
+  text: Maybe they're just smarter than us, Cap.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the last raid's data, and I think I found a pattern in
+    their routing.
+- kind: dialogue
+  speaker: agent
+  text: I don't think it's about being smart, it's about having more resources than
+    us.
+- kind: dialogue
+  speaker: forensics
+  text: But what if it's something more? What if they have some kind of inside help?
+- kind: dialogue
+  speaker: press
+  text: You think the Commissioner would be in their pocket?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been saying it for months, we need to bring in some more firepower.
+- kind: dialogue
+  speaker: captain
+  text: I don't know what's worse, the Scuttle's luck or the fact that the public
+    thinks we're just a joke.

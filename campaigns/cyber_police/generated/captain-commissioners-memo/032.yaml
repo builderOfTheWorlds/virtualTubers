@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:03:30.824229+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's office is already questioning our priorities.
+- kind: dialogue
+  speaker: detective
+  text: Sounds like a familiar tune.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a memo from the department's IT saying they're still waiting for
+    the Scuttle case files.
+- kind: dialogue
+  speaker: agent
+  text: I just got a call from the press liaison saying Davey wants to do a follow-up
+    story on our "mysterious" work.
+- kind: dialogue
+  speaker: forensics
+  text: I've been trying to get a new spectrometer for weeks and they still haven't
+    approved it.
+- kind: dialogue
+  speaker: press
+  text: Speaking of which, I've got a draft of the article and it's... enlightening.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, I used to work in procurement, and this is how you treat people
+    who actually do the work.

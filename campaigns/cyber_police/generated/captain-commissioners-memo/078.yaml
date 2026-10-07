@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:33.074645+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Oh great, "the computer thing" again.
+- kind: dialogue
+  speaker: detective
+  text: (whispers) Did you see that?
+- kind: dialogue
+  speaker: analyst
+  text: (rolls her eyes) Of course we did.
+- kind: dialogue
+  speaker: agent
+  text: I'm just glad we're not called "the department's IT department with badges"
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) Yet.
+- kind: dialogue
+  speaker: press
+  text: (whispers) Don't worry, I've got a story to run tomorrow that'll set the record
+    straight
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispers back) If you get it past the editor.

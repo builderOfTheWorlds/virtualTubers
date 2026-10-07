@@ -1,0 +1,44 @@
+id: forensics-evidence-locker-routine
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:08.008929+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker has a new drive in it, just arrived from the manufacturer.
+- kind: dialogue
+  speaker: agent
+  text: I've got the shipment manifest for the new hardware on my desk.
+- kind: dialogue
+  speaker: analyst
+  text: I need the serial numbers for the drives to update the inventory.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let me get that for you.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please confirm that the drive in evidence locker B-12 was properly
+    logged in?
+- kind: dialogue
+  speaker: forensics
+  text: B-12's drive was logged in with the proper paperwork and chain of custody
+    maintained.
+- kind: dialogue
+  speaker: agent
+  text: Good, I'll make sure to update the manifests.
+- kind: dialogue
+  speaker: forensics
+  text: I'll give you the serial numbers, and we can get the inventory updated.
+- kind: dialogue
+  speaker: analyst
+  text: What's the status on the new server we're getting?
+- kind: dialogue
+  speaker: forensics
+  text: Still pending delivery, but I've got the tracking info if you want to check.
+- kind: dialogue
+  speaker: quartermaster
+  text: Is it still scheduled for today?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, it's still on track for delivery today, but we should get confirmation
+    from the carrier soon.

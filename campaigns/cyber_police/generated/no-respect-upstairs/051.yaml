@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:43.191984+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing in five. Let's get the setup.
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Just a sec, can we get an update on those backup requests?'
+- kind: dialogue
+  speaker: detective
+  text: Still at the bottom of the list, thanks for asking.
+- kind: dialogue
+  speaker: analyst
+  text: We're looking at another hour on that timestamp analysis.
+- kind: dialogue
+  speaker: agent
+  text: You know, if we got some real equipment around here, I could finish this work
+    in half the time.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, so the fiber analysis shows...
+- kind: dialogue
+  speaker: press
+  text: Cyber Cops Caught Sleeping on the Job Again
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on that requisition for a new server.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's move on. We've got a possible lead on the Scuttle's new operation.

@@ -1,0 +1,25 @@
+id: analyst-link-chart-deep-focus
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:16.849797+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to re-run the link chart from the beginning to see if I missed something.
+- kind: dialogue
+  speaker: agent
+  text: Captain, I've got a problem with the proxy chain from yesterday's raid.
+- kind: dialogue
+  speaker: captain
+  text: What's the issue, Agent?
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think I found the problem. The code was just using a slightly
+    different protocol than we expected.
+- kind: dialogue
+  speaker: press
+  text: You guys have fun figuring that out, I'm going to go work on my piece.
+- kind: dialogue
+  speaker: captain
+  text: Quartermaster, how's the equipment status? Are we good to go for the next
+    raid?

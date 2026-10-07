@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:00:20.725799+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 08:00.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the case files one more time.
+- kind: dialogue
+  speaker: analyst
+  text: I've made some progress on the encrypted traffic.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get that firmware patch to work.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a few hours of video to review from last night's raid.
+- kind: dialogue
+  speaker: press
+  text: I need to get in touch with the journalist who tipped us off.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition form ready for the hardware we need.

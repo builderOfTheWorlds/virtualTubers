@@ -1,0 +1,23 @@
+id: bullpen-ambience
+take: 30
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:13.088999+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Time for a break, people.
+- kind: dialogue
+  speaker: detective
+  text: I'll grab some more coffee.
+- kind: dialogue
+  speaker: analyst
+  text: I was right in the middle of something.
+- kind: dialogue
+  speaker: agent
+  text: Can I just get a new laptop? This one's still on the fritz.
+- kind: dialogue
+  speaker: forensics
+  text: Not again...
+- kind: dialogue
+  speaker: press
+  text: Just a minute, folks. I've got a deadline.

@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T07:46:02.893204+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: I've got a great angle on the latest Scuttle banner, just need someone to
+    translate the Commodore's accent
+- kind: dialogue
+  speaker: analyst
+  text: You can just use the auto-translate, Davey
+- kind: dialogue
+  speaker: agent
+  text: Nah, trust me, the Commodore's got a bit of a West Country twang
+- kind: dialogue
+  speaker: forensics
+  text: Either way, it's just more clickbait from the Scuttle
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's keep the speculation to a minimum, we need to focus on the
+    infrastructure
+- kind: dialogue
+  speaker: detective
+  text: Focusing on the infrastructure is what's gotten us nowhere so far, Captain
+- kind: dialogue
+  speaker: quartermaster
+  text: Ooh, I've got an idea, what if the Bosun is using a virtual machine on a VM
+    host
+- kind: dialogue
+  speaker: analyst
+  text: Teresa, that's been tried five times, it's not going to work

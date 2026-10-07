@@ -1,0 +1,45 @@
+id: analyst-link-chart-deep-focus
+take: 151
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:04.073677+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Making some headway on the link chart, I think I see a pattern
+- kind: dialogue
+  speaker: agent
+  text: Captain, I've got a possible lead on the proxy chain
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions just came through, new hardware for Forensics
+- kind: dialogue
+  speaker: forensics
+  text: Processing the evidence from the last raid, still no hits on the Scuttle's
+    IP
+- kind: dialogue
+  speaker: press
+  text: Got a press conference scheduled for tomorrow, what's the plan on what to
+    say
+- kind: dialogue
+  speaker: agent
+  text: I'll get the technical analysis ready, Captain
+- kind: dialogue
+  speaker: analyst
+  text: I think I need to revisit the chatter from the last week, see if there's anything
+    I missed
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's review the case files. What's new, Detective?
+- kind: dialogue
+  speaker: detective
+  text: Not much, Captain. Still chasing the Bosun's trail, but it's a dead end
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster's office is restocking the supply cage, should be a few hours
+- kind: dialogue
+  speaker: forensics
+  text: Evidence locker's getting a bit full, need to clear out some of the older
+    cases
+- kind: dialogue
+  speaker: press
+  text: Okay, I think I have a good angle on what to ask the press tomorrow

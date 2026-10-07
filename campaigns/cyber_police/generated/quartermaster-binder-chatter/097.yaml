@@ -1,0 +1,31 @@
+id: quartermaster-binder-chatter
+take: 97
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:04.016683+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm going to need to requisition more thermal cameras if we're going to get
+    serious about tracking The Scuttle's mirror.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the new 3D modeling software approved, but "budget
+    constraints" keep popping up.
+- kind: dialogue
+  speaker: analyst
+  text: I think we can make do with the current equipment for now, but it would be
+    nice to have something more up-to-date.
+- kind: dialogue
+  speaker: forensics
+  text: I just sent in the request for a new evidence analysis workstation, but I'm
+    not holding my breath.
+- kind: dialogue
+  speaker: press
+  text: You know, it's not like we're asking for a new jet or something...
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's move on to the briefing. Who's got an update on The Scuttle's
+    latest activity?
+- kind: dialogue
+  speaker: detective
+  text: I've been digging into the chatter spike, but so far, it's just noise.

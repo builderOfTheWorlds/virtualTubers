@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:09.379312+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This is not the memo I asked for.
+- kind: dialogue
+  speaker: detective
+  text: I told you to request the actual briefing.
+- kind: dialogue
+  speaker: analyst
+  text: Maybe if we called it "Cyber Security Task Force" it would make a difference.
+- kind: dialogue
+  speaker: agent
+  text: It's not like they meant to disrespect us.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, right.
+- kind: dialogue
+  speaker: press
+  text: '"The Computer Thing" is trending on Scuttle News.'
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition for a new printer approved by the end of the week.

@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:47.623901+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any connections between the IP address of that upload and the
+    ones we've seen on the Scuttle before.

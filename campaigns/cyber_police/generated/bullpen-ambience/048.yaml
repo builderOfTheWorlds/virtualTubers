@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:14.763880+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The coffee machine is still broken.
+- kind: dialogue
+  speaker: detective
+  text: Not my problem, it's not like we get a budget for coffee.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to focus here, can you keep the noise down?
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to work on this malware signature, can someone pass me a new cup
+    of coffee?
+- kind: dialogue
+  speaker: forensics
+  text: Finally, someone's acknowledging the crisis.
+- kind: dialogue
+  speaker: press
+  text: I asked Davey if he could make me a decent cup, but he just shrugged.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll make you a new cup, but you owe me, Davey.

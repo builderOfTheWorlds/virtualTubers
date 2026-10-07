@@ -1,0 +1,30 @@
+id: no-respect-upstairs
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:49.978478+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing in five. Don't bother sharpening your pencils, we'll be
+    writing reports at 0600 again.
+- kind: dialogue
+  speaker: detective
+  text: I'll just make sure my pen's not dry.
+- kind: dialogue
+  speaker: analyst
+  text: I'll be running some extra queries overnight.
+- kind: dialogue
+  speaker: agent
+  text: Morning, Cap. I'll prep the briefing room.
+- kind: dialogue
+  speaker: forensics
+  text: Finished the Scuttle's latest dump. Nothing concrete.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. Coffee's in the break room.
+- kind: dialogue
+  speaker: press
+  text: 'CYBER COPS: STILL CHASING PHANTOM CRIMINALS'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.

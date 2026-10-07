@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:48.494831+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning everyone, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I've got the plan for the day, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: New chatter patterns from last night, looks like a possible mirror site.
+- kind: dialogue
+  speaker: agent
+  text: Agent, I've got your tasks for the day.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics, I've got a new evidence request from the Agent.
+- kind: dialogue
+  speaker: press
+  text: Press, we've got a possible leak to the public, I need you to manage it.
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster, I've requisitioned some new equipment, we'll see if it gets
+    approved.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

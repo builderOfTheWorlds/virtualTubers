@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:29.394641+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: What's this "the computer thing" business again?
+- kind: dialogue
+  speaker: detective
+  text: (whispering) Just the Commissioner's office being its usual... diplomatic.
+- kind: dialogue
+  speaker: analyst
+  text: (rolling her eyes) We get the memo, we get the memo.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Sounds like they're still trying to justify the unit's existence.
+    ||emotion:happily amused
+- kind: dialogue
+  speaker: forensics
+  text: (shrugging) Can't say I blame them, really. We're not exactly the department's
+    top priority.
+- kind: dialogue
+  speaker: press
+  text: (sympathetically) Sorry, guys. Just another day in the trenches.
+- kind: dialogue
+  speaker: quartermaster
+  text: ( muttering under her breath) "Optional funding" indeed...

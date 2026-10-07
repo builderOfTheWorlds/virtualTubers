@@ -1,0 +1,11 @@
+id: agent-hardware-complaint
+take: 220
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:54.365896+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe they're still making us use these outdated laptops?
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool running, but it's being stubborn.

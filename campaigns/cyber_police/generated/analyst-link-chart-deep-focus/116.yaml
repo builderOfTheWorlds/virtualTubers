@@ -1,0 +1,38 @@
+id: analyst-link-chart-deep-focus
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:47.521262+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Mmm, okay, let's assume that 24.2.3 is an outlier and recalculate the mean
+- kind: dialogue
+  speaker: agent
+  text: You know we should get a warrant for that IP address, too
+- kind: dialogue
+  speaker: forensics
+  text: Actually, Captain, I can run a quick check on it
+- kind: dialogue
+  speaker: press
+  text: Hi, Priya, what's the story with this lead?
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, can I get a budget for that new software the Analyst wants?
+- kind: dialogue
+  speaker: captain
+  text: Okay, let's table the software request for now, Teresa
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Captain, this is the Bosun's doing
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Deshawn, I think it's a red herring
+- kind: dialogue
+  speaker: forensics
+  text: I've got something on the Bosun's signature proxy chain
+- kind: dialogue
+  speaker: press
+  text: Great, Hana, can I quote you on that?
+- kind: dialogue
+  speaker: captain
+  text: Hold, hold, let's not get ahead of ourselves

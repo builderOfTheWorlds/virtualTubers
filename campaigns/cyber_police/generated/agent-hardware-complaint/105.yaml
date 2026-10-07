@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:46.399750+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You know the hardware is like my grandmother's old kitchen.
+- kind: dialogue
+  speaker: analyst
+  text: The last time we got a requisition approved, I think I got the same laptop
+    they were using in the exhibit hall at the 2018 conference.
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) Yeah, I swear it's still running XP.
+- kind: dialogue
+  speaker: forensics
+  text: (laughs) At least it's not the 98 we had for a while.
+- kind: dialogue
+  speaker: press
+  text: I'm starting to think the press thinks we're just a... I don't know, a hobby
+    group.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) It's the paperwork. They don't have to deal with the paperwork.

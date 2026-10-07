@@ -1,0 +1,35 @@
+id: agent-hardware-complaint
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:42.532118+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this old machine is running at half capacity.
+- kind: dialogue
+  speaker: analyst
+  text: (chuckling) You're not even close, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: (smiling) Yeah, I know, right? I mean, it's not like we're trying to catch
+    cat burglars or anything.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. What have we got from The Scuttle overnight?
+- kind: dialogue
+  speaker: agent
+  text: (shrugging) Nothing new, Captain. Just the usual noise.
+- kind: dialogue
+  speaker: analyst
+  text: (tapping on her keyboard) I'm picking up some interesting chatter patterns,
+    though.
+- kind: dialogue
+  speaker: forensics
+  text: (from the corner) I've got some new evidence from the latest raid.
+- kind: dialogue
+  speaker: press
+  text: (looking up from his phone) Anything we need to manage today, guys?
+- kind: dialogue
+  speaker: quartermaster
+  text: '(calling out from the supply cage) Requisition update: we''re still waiting
+    on those new laptops.'

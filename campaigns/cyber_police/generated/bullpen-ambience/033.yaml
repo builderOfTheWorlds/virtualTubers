@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:27.645230+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Nothing on The Scuttle so far, but the feeds are quiet too.
+- kind: dialogue
+  speaker: detective
+  text: I'll go over the logs again, see if anything slipped past us.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few hours' worth of digging to do on that new mirror.
+- kind: dialogue
+  speaker: agent
+  text: I'll check on the drone feed, see if we've got anything new.
+- kind: dialogue
+  speaker: forensics
+  text: Still waiting for the new kit to arrive, but in the meantime I'll go over
+    the evidence from the last case.
+- kind: dialogue
+  speaker: press
+  text: I've got a press call in an hour, need to make sure I'm up to speed.
+- kind: dialogue
+  speaker: quartermaster
+  text: Need to go over the requisition forms for this week.

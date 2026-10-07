@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 161
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:54.457991+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is finally out.
+- kind: dialogue
+  speaker: detective
+  text: The "computer thing"? You've got to be kidding me.
+- kind: dialogue
+  speaker: analyst
+  text: I've seen it before, Detective. It's not personal, just... dismissive.
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, because we're not real cops, apparently.
+- kind: dialogue
+  speaker: forensics
+  text: (whispers) It's not just the press, is it?
+- kind: dialogue
+  speaker: press
+  text: (arriving) Ah, the memo's out! "The computer thing" is all the rage on Twitter!
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) If they only knew...

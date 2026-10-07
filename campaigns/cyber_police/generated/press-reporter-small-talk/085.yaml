@@ -1,0 +1,20 @@
+id: press-reporter-small-talk
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:15.053276+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Just getting some background chatter with you, okay?'
+- kind: narration
+  speaker: captain
+  text: 'DO: Sounds good, I''ll make it quick. Anything else happen on the weekend?'
+- kind: narration
+  speaker: captain
+  text: 'DA: No, just the usual Sunday night drama. Nothing much on the Scuttle, yet.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Good, good. I''ll talk to you after the briefing.'
+- kind: narration
+  speaker: captain
+  text: 'HO: (over phone) Alright, thanks, Davey. Later.'

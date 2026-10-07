@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:33.825317+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: That's all.
+- kind: dialogue
+  speaker: detective
+  text: '"I''m still reading about the ''computer thing''?'
+- kind: dialogue
+  speaker: analyst
+  text: (whispering) This is why we're still getting 486 laptops.
+- kind: dialogue
+  speaker: agent
+  text: (deadpan) I'm surprised it's not called 'the hobby'.
+- kind: dialogue
+  speaker: forensics
+  text: (shrugging) We should just change our name to 'Computer Support'.
+- kind: dialogue
+  speaker: press
+  text: '(over the phone) Scuttle scandal: department''s ''digital crimes'' team exposed
+    for being a joke...'
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) The inquiry will be a great place to get those requisitions
+    approved...

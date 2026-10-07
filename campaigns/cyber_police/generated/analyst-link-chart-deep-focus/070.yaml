@@ -1,0 +1,37 @@
+id: analyst-link-chart-deep-focus
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:38.529346+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's talk about the timing of this particular upload.
+- kind: dialogue
+  speaker: captain
+  text: (looking up from a report) What have you got, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: (scribbling on her link chart) If we assume the upload was simultaneous with
+    the mirror in Berlin...
+- kind: dialogue
+  speaker: agent
+  text: (leaning over Priya's shoulder) You're thinking they might have a second node
+    online, just in case?
+- kind: dialogue
+  speaker: analyst
+  text: (frowning) That's right. It would explain the weird lag time between the upload
+    and the discovery of the mirror.
+- kind: dialogue
+  speaker: forensics
+  text: (entering the room with a stack of files) Excuse me, Priya, but I think I've
+    got something on the scuttle protocol.
+- kind: dialogue
+  speaker: agent
+  text: (perking up) Oh, is it a break?
+- kind: dialogue
+  speaker: forensics
+  text: (apologetic) I'm afraid it's just some interesting telemetry from a recent
+    takedown.
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) Telemetry? That's not what I'm getting from this.

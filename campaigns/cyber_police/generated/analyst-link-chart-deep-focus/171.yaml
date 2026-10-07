@@ -1,0 +1,44 @@
+id: analyst-link-chart-deep-focus
+take: 171
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:51.715310+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The lead on the Koven network looks like a dead end, but...
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Priya, I've seen that IP before, it's a burner
+- kind: dialogue
+  speaker: analyst
+  text: That's exactly my point, Deshawn, someone's been using it to cover their tracks
+- kind: dialogue
+  speaker: agent
+  text: Okay, okay, I'll take another look
+- kind: dialogue
+  speaker: forensics
+  text: I'm processing the forensics from the latest takedown, but so far nothing's
+    popped
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on the budget meeting to approve the new hardware
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) And the Koven network is a honeypot, I'm sure of it...
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's take a break and reconvene in 15
+- kind: dialogue
+  speaker: press
+  text: I've got a press conference scheduled for tomorrow, what's the latest on the
+    case?
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) I just need to find that one thread, the one that connects
+    them all...
+- kind: dialogue
+  speaker: agent
+  text: Priya, did you find anything?
+- kind: dialogue
+  speaker: analyst
+  text: (to Deshawn) Not yet, but I will

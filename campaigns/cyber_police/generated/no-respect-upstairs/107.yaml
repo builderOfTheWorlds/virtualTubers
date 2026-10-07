@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:20.127672+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Deshawn Okafor-Pryce: Looks like a slow morning so far, Priya.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got a list of 47 possible Scuttle operators, but no new intel on their
+    locations.
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, people, we've got a requisition for new comms gear. Anyone know what
+    that's going to cost?
+- kind: dialogue
+  speaker: captain
+  text: Let's just say it's not a priority, Teresa.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the Scuttle's latest hack. It's a pretty amateurish job.
+- kind: dialogue
+  speaker: press
+  text: '"Cyber Cops Still Chasing Windmills: Another Day, Another Disappointment"
+    - Scuttle''s got it on their front page.'
+- kind: dialogue
+  speaker: detective
+  text: Can't say I'm surprised.
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, let's get moving on that requisition. I'll make some calls.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a feeling this is going to be one of those days...

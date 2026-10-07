@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:06:54.117769+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm just trying to get this trace tool to cooperate here.
+- kind: dialogue
+  speaker: analyst
+  text: We're still missing a few key pieces of data from last night's upload.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting on the lab results from the latest drives.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a reminder, I sent in the requisition for new hardware last week.
+- kind: dialogue
+  speaker: press
+  text: Anyone have any idea when we'll be getting some decent coverage on this case?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on what we do have. Priya, what can you tell us about
+    the data so far?
+- kind: dialogue
+  speaker: detective
+  text: I'll start reviewing the plan, see if I can find any holes in the investigation.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I swear, this hardware is from the Stone Age...

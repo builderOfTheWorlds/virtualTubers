@@ -1,0 +1,25 @@
+id: forensics-evidence-locker-routine
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:13.097159+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm heading down to the Evidence Locker to check the last intake from this
+    morning.
+- kind: dialogue
+  speaker: agent
+  text: I'll join you, Forensics. I've got a few packages to drop off.
+- kind: dialogue
+  speaker: analyst
+  text: Forensics, can you tell me what kind of evidence was submitted today?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, we got a few laptops, a hard drive, and some paperwork. Standard chain-of-custody
+    protocol's in place.
+- kind: dialogue
+  speaker: quartermaster
+  text: Forensics, did the Quartermaster sign off on those packages?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, she's got the clipboard right here.

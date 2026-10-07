@@ -1,0 +1,41 @@
+id: forensics-evidence-locker-routine
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:05.829297+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing evidence from the latest batch of devices seized from a raid.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, can you send me the updated list of devices and their corresponding
+    chain of custody?
+- kind: dialogue
+  speaker: forensics
+  text: The list is already on your desk, Agent. The devices are being logged in as
+    per protocol.
+- kind: dialogue
+  speaker: analyst
+  text: Excuse me, Forensics, I need to review the chain of custody on one of the
+    devices. Can I take a look?
+- kind: dialogue
+  speaker: forensics
+  text: Of course, Analyst. I'll bring it over to your desk.
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's review the case files and make sure we're all on
+    the same page.
+- kind: dialogue
+  speaker: press
+  text: (to himself) Finally, a chance to get some actual reporting done on this case...
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Still no word from budget about those new hardware
+    upgrades...
+- kind: dialogue
+  speaker: forensics
+  text: (to herself) Why do I always get stuck with the dirty evidence?
+- kind: dialogue
+  speaker: agent
+  text: (to himself) Time to get the team back on track. This case isn't going to
+    solve itself.

@@ -1,0 +1,16 @@
+id: agent-hardware-complaint
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:20.417457+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, of course, the trace tool won't boot on my laptop, it's a miracle it
+    still runs.
+- kind: dialogue
+  speaker: forensics
+  text: (chuckling) You know, Des, you're not the first person to have trouble getting
+    it to work.
+- kind: dialogue
+  speaker: agent
+  text: (laughing) That's reassuring, I guess.

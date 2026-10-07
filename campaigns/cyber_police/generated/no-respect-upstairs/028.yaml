@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 28
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:42.968997+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, team, let''s get started. We''ve got a possible lead
+    on a new Scuttle operation.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Scuttle, again. When do we get some real backup?'
+- kind: dialogue
+  speaker: analyst
+  text: Captain, if I can just get a minute...
+- kind: dialogue
+  speaker: agent
+  text: Actually, I think I can find some traffic cam footage that might help.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing in the forensic report, yet. But I've got a hunch about the encryption.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: Cyber Cops Fail to Catch Another Phony Hacker.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Sir, I just got word from quartermaster. We're not getting the usual allocation
+    of resources for this op.

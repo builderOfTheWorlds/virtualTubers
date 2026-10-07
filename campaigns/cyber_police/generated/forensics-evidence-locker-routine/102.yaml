@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:12.865852+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm taking possession of the new drive for the case.
+- kind: dialogue
+  speaker: agent
+  text: I've already reviewed the chain of custody for the original drive.
+- kind: dialogue
+  speaker: forensics
+  text: Can you confirm that the original drive was locked in the evidence locker
+    at all times?
+- kind: dialogue
+  speaker: quartermaster
+  text: I have the requisition form right here, Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Good. I'll log it in the system.
+- kind: dialogue
+  speaker: analyst
+  text: I've already started processing the new drive.
+- kind: dialogue
+  speaker: forensics
+  text: Great, Priya. Please keep me updated on your progress.
+- kind: dialogue
+  speaker: agent
+  text: I'll start reviewing the drive's contents.
+- kind: dialogue
+  speaker: forensics
+  text: Keep me posted, Deshawn.

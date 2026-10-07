@@ -1,0 +1,34 @@
+id: quartermaster-binder-chatter
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:05.683517+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Alright, let''s review the denied-requisitions from last week.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Oh, you know, "the eventual inquiry" is going to be a real blast to wade
+    through.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Yeah, because underfunding is just a myth perpetuated by our enemies.'
+- kind: narration
+  speaker: captain
+  text: 'TN: I''ve got some interesting numbers on the mirror we''re chasing.'
+- kind: narration
+  speaker: captain
+  text: 'DM-O: Can you believe it''s been three weeks and we still can''t get the
+    proper software?'
+- kind: narration
+  speaker: captain
+  text: 'HV: No joy from the lab yet.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: Nothing new on the chatter front, just the usual noise.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Press is breathing down our necks, let''s make sure to keep them informed.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: That''s all for now. The Analyst will provide the intel update.'

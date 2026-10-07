@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:15.857476+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is about to start.
+- kind: dialogue
+  speaker: detective
+  text: I've got a few leads to discuss.
+- kind: dialogue
+  speaker: analyst
+  text: Nothing new on the chatter front.
+- kind: dialogue
+  speaker: agent
+  text: I'll need to re-secure the servers in 3A.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing yet from the new mirror, but I've got a few ideas.
+- kind: dialogue
+  speaker: press
+  text: I've got a follow-up call with Johnson at 10.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a list of requisitions for review.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

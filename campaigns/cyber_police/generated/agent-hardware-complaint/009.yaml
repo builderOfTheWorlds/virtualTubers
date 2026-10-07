@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:01.659005+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe the hardware they're making us use this year?
+- kind: dialogue
+  speaker: analyst
+  text: It's not like we're trying to compete with the black market.
+- kind: dialogue
+  speaker: forensics
+  text: I mean, at least the Agent's laptop still has some life left in it.
+- kind: dialogue
+  speaker: press
+  text: Okay, let's focus on the task at hand. What's the plan, Detective?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition forms for the new drives. Let me just sign these
+    out...

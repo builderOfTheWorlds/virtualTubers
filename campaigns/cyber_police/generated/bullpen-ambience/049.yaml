@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:18.798744+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's wrap up for the day, team.
+- kind: dialogue
+  speaker: detective
+  text: I'll get the reports started.
+- kind: dialogue
+  speaker: analyst
+  text: I'll finish up this anomaly on the server.
+- kind: dialogue
+  speaker: agent
+  text: I'm good for the day, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: I need to run these samples through the lab again.
+- kind: dialogue
+  speaker: press
+  text: Just one more question on the press release, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: Time for me to lock down the supply cage.

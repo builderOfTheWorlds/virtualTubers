@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 204
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:09.309318+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, of all the outdated hardware...
+- kind: dialogue
+  speaker: analyst
+  text: What's wrong now?
+- kind: dialogue
+  speaker: agent
+  text: This console is still running the 2018 patch
+- kind: dialogue
+  speaker: analyst
+  text: And we're still stuck on 2020's version of WireTap
+- kind: dialogue
+  speaker: agent
+  text: It's like we're just pretending to investigate
+- kind: dialogue
+  speaker: analyst
+  text: Deshawn, focus. Let's get this trace tool running

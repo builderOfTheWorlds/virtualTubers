@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:28.215119+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck, that's what I'm telling you, folks.
+- kind: dialogue
+  speaker: detective
+  text: Come on, Captain, don't give me that. You know as well as I do it's just a
+    myth.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think it's a bit of both. Maybe our raids are just a little too
+    predictable.
+- kind: dialogue
+  speaker: agent
+  text: Predictable? You think we're predictable?
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) I just wish we could get some decent forensics on those servers...
+- kind: dialogue
+  speaker: press
+  text: (scribbling notes) Scuttle luck, indeed. I'll write that up as a lead.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughing) You think we're going to catch them in the act, Davey?
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Alright, alright. Let's just focus on the task at hand. We'll catch
+    them eventually.

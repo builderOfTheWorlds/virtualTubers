@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:45.068496+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is on my desk, and I don't have to
+    read it to know what it says.
+- kind: dialogue
+  speaker: detective
+  text: I've got my tablet on, see if I can pull up the file.
+- kind: dialogue
+  speaker: analyst
+  text: I'd rather be doing a systems update, honestly.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to the Detective) Did you see that Scuttle headline this morning?
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Like we even need a memo to tell us we're not important...
+- kind: dialogue
+  speaker: press
+  text: (walking by the Captain's desk) Uh, Captain? You might want to see this.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the Agent) I'll get the requisitions sorted, just you wait.

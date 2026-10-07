@@ -1,0 +1,40 @@
+id: quartermaster-binder-chatter
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:50.042195+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh boy, not another week with 300 requisitions denied.
+- kind: dialogue
+  speaker: detective
+  text: Well, at least the eventual inquiry is getting fat.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll add it to the binder. "Denied. Denied. Denied. Delayed. Approved.
+- kind: dialogue
+  speaker: analyst
+  text: (walking in) Hey, what's going on?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just going over the supply requests.
+- kind: dialogue
+  speaker: analyst
+  text: Oh, I see. Well, I hope I don't have to requisition any more stuff that gets
+    rejected.
+- kind: dialogue
+  speaker: agent
+  text: (walking in) What's the plan for today?
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. Today's lead is... (checks notes) ...a new mirror
+    on The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: (walking in) Morning, Captain. I'm on it.
+- kind: dialogue
+  speaker: press
+  text: (walking in) Morning, all. Nothing on the Scuttle's schedule yet.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) I'll get the supply list started.

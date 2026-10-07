@@ -1,0 +1,51 @@
+id: bullpen-ambience
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:05.582251+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get started on that lead from the new mirror
+    on The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''ve been going over the chat logs, and I think we have
+    a potential angle on the Darkweb forum.'
+- kind: dialogue
+  speaker: analyst
+  text: I've identified some suspicious IP addresses, but we'll need to dig deeper
+    to be sure.
+- kind: dialogue
+  speaker: agent
+  text: I'm running a scan on the new mirror, but so far, I haven't found anything
+    out of the ordinary.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still going over the physical evidence from the last raid, but I think
+    I found a connection to our current case.
+- kind: dialogue
+  speaker: press
+  text: I need to know what we're releasing to the press today, so I can prep my notes.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a heads-up, Captain, we're running low on coffee filters in the supply
+    cage.
+- kind: narration
+  speaker: captain
+  text: (Teresa gets up and walks over to the supply cage, where she starts to organize
+    the remaining coffee filters.)
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (gets up and walks over to the supply cage, starts talking
+    to Teresa in a low voice)'
+- kind: narration
+  speaker: captain
+  text: (While they're talking, the others start to settle in at their desks, some
+    of them sipping their cold coffee.)
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (whispers to Priya) How''s the analysis going?'
+- kind: dialogue
+  speaker: analyst
+  text: (whispers back) Slowly, I think I found a pattern... but I need to run some
+    more tests.

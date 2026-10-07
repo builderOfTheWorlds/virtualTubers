@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:22.542257+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Scuttle's been quiet today.
+- kind: dialogue
+  speaker: detective
+  text: I've got a report from the finance sector.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still chasing that anomaly in the server logs.
+- kind: dialogue
+  speaker: agent
+  text: Just ran some tests on the new hardware.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a new batch of forensics reports from the lab.
+- kind: dialogue
+  speaker: press
+  text: Nothing from the press today.
+- kind: dialogue
+  speaker: quartermaster
+  text: New requisitions are in.

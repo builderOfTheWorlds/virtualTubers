@@ -1,0 +1,16 @@
+id: agent-hardware-complaint
+take: 195
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:41.178861+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if this ancient thing can't even run the new trace tool, I don't
+    know what we're doing.
+- kind: dialogue
+  speaker: press
+  text: (laughs) Well, at least it's consistent, right?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Yeah, because that's exactly what I want to see - consistency in our
+    failure to keep up with the times.

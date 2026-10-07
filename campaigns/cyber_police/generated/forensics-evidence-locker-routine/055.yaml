@@ -1,0 +1,38 @@
+id: forensics-evidence-locker-routine
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:10.506660+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker is keypad-locked, and I have the only key.
+- kind: dialogue
+  speaker: agent
+  text: I'll be the one taking evidence today.
+- kind: dialogue
+  speaker: forensics
+  text: I've already logged the protocol.
+- kind: dialogue
+  speaker: captain
+  text: Good, let's move. What do we have for the Thompson case?
+- kind: dialogue
+  speaker: forensics
+  text: The package is in storage unit 3, waiting for me to upload.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the upload request in the system.
+- kind: dialogue
+  speaker: forensics
+  text: And the chain of custody is on the next drive.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the paperwork ready for the upload.
+- kind: dialogue
+  speaker: forensics
+  text: I'll do the upload now.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the evidence as soon as it's uploaded.
+- kind: dialogue
+  speaker: agent
+  text: I'll start processing the requests for the next phase.

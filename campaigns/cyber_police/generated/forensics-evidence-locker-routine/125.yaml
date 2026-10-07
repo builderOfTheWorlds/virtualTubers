@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 125
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:50.509775+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm taking the new evidence in.
+- kind: dialogue
+  speaker: agent
+  text: Evidence box 3456, courtesy of the Metro PD.
+- kind: dialogue
+  speaker: forensics
+  text: Code 3-4-5-6, correct. Chain of custody is clear.
+- kind: dialogue
+  speaker: forensics
+  text: Who handled it at the scene?
+- kind: dialogue
+  speaker: agent
+  text: Officer Maria Rodriguez, badge number 1432.
+- kind: dialogue
+  speaker: forensics
+  text: I'll need her ID and contact information.
+- kind: dialogue
+  speaker: analyst
+  text: Officer Rodriguez is on her way up, Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Good. I'll have the contents cataloged and logged.

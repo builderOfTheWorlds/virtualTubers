@@ -1,0 +1,43 @@
+id: press-reporter-small-talk
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:14.811042+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Davey.
+- kind: dialogue
+  speaker: press
+  text: (chuckles) Morning, Captain. How's the day looking?
+- kind: dialogue
+  speaker: captain
+  text: Same as every day. The Scuttle's still out there, and we're still trying to
+    catch it.
+- kind: dialogue
+  speaker: press
+  text: Yeah, yeah. I'm sure the Scuttle's enjoying the free publicity.
+- kind: dialogue
+  speaker: press
+  text: Did you get the numbers on the latest mirror they popped up on?
+- kind: dialogue
+  speaker: captain
+  text: (sighs) No. Still waiting for Forensics to get back to me.
+- kind: dialogue
+  speaker: analyst
+  text: (joining the conversation) Actually, Captain, I was just going over the data...
+- kind: dialogue
+  speaker: captain
+  text: Ah, Priya. Good timing. What've you got?
+- kind: dialogue
+  speaker: analyst
+  text: Well, it looks like The Scuttle's been using a new routing system...
+- kind: dialogue
+  speaker: captain
+  text: (making a note) Okay, keep digging. See if you can find the entrance point.
+- kind: dialogue
+  speaker: agent
+  text: (to the group) I'm picking up some strange network chatter from last night's
+    raid...
+- kind: dialogue
+  speaker: forensics
+  text: (concurring) Yeah, I'm seeing some weird artifacts on the seized drives...

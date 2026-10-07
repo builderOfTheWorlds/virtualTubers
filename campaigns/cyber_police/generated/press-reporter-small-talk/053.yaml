@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 53
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:12.821595+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: What's the latest on that attempted infiltration of the Ashiorid tower?
+- kind: dialogue
+  speaker: captain
+  text: Still working on it, Davey, we're running a few different lines.
+- kind: dialogue
+  speaker: press
+  text: I'm sure you are. And how's life in the basement?
+- kind: dialogue
+  speaker: detective
+  text: (laughs) You know, same old same old. We get to chase ghosts.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) If only we had some real leads for once...
+- kind: dialogue
+  speaker: agent
+  text: (smiling) Hey, we're making progress, Priya. You know that.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) Progress? We're just making excuses for why we can't catch them.
+- kind: dialogue
+  speaker: quartermaster
+  text: (jokingly) Hey, hey, let's not be too hard on ourselves, guys. We're doing
+    the best we can.
+- kind: dialogue
+  speaker: press
+  text: (laughing) Indeed we are, Teresa. Well, I should probably let you get back
+    to it.
+- kind: dialogue
+  speaker: captain
+  text: Actually, Davey, hold on for just a minute.

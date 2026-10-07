@@ -1,0 +1,26 @@
+id: no-respect-upstairs
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:37.634026+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning briefing. Let's get this over with.
+- kind: dialogue
+  speaker: detective
+  text: (muttering) And let's get some actual backup, for once.
+- kind: dialogue
+  speaker: analyst
+  text: (checking the comms console) Nothing from dispatch, yet.
+- kind: dialogue
+  speaker: agent
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: forensics
+  text: (smiling slightly) Good morning, Deshawn.
+- kind: dialogue
+  speaker: press
+  text: (headline on his monitor) "Cyber Cops Still Chasing Their Tails"
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughing) Oh, that's a new one.

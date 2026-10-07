@@ -1,0 +1,44 @@
+id: bullpen-ambience
+take: 129
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:49.844799+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: 07:00 hours already. Guess I won''t be getting that extra hour of sleep.'
+- kind: narration
+  speaker: captain
+  text: 'RGA: Alright, everyone. Let''s get started. Today''s lead is a possible phishing
+    scam targeting small business owners.'
+- kind: narration
+  speaker: captain
+  text: 'PND: Intel suggests it''s coming from a new group we haven''t seen before.
+    They''re using a custom-written trojan.'
+- kind: narration
+  speaker: captain
+  text: 'DOK: I''ve got a plan to track down the IP addresses. We can use the agent''s
+    hardware to set up a sting.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ll start analyzing the malware. See if I can find any patterns or
+    weaknesses.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I''ll review the security feeds from the affected businesses. See if
+    I can spot anything suspicious.'
+- kind: narration
+  speaker: captain
+  text: 'TML: I''ll write the press release. Try to reassure the public that we''re
+    on top of it.'
+- kind: narration
+  speaker: captain
+  text: 'TML: And I''ll talk to the owner of "Byte-Sized Delights" to see if they
+    have any footage of the phishing call.'
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''ll update the Scuttle''s watchlist with the IP addresses. See if
+    we can catch any other related activity.'
+- kind: narration
+  speaker: captain
+  text: 'RGA: Alright, let''s get to work. Remember, we have a 10-hour window before
+    the Scuttle''s next mirror sync.'

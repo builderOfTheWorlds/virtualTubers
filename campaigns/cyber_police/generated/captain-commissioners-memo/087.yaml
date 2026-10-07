@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:25.849637+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Someone's got to mean it.
+- kind: dialogue
+  speaker: detective
+  text: If it's not in the memo, it's not real.
+- kind: dialogue
+  speaker: analyst
+  text: I swear, "the computer thing" is a euphemism for "we don't care".
+- kind: dialogue
+  speaker: agent
+  text: I've got a requisition for a new scanner, but I won't hold my breath.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting for that new spectrometer.
+- kind: dialogue
+  speaker: press
+  text: Just great, another memo from the Commissioner's office.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a whole drawer full of denied requisition forms.

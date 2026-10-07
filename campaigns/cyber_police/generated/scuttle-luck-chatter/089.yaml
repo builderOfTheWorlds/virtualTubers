@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:28.184642+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m starting to think it''s not skill, not inside info, just
+    a very good scam.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''ve seen that Bosun guy at a conference once, I''m almost
+    certain it was him.'
+- kind: dialogue
+  speaker: analyst
+  text: We're chasing our tails with these proxy chains, it's a never-ending game
+    of whack-a-mole.
+- kind: dialogue
+  speaker: agent
+  text: Maybe we're just not clever enough, maybe they really are a step ahead.
+- kind: dialogue
+  speaker: forensics
+  text: I've re-examined the last four server seizures, and there's nothing to suggest...
+    well, nothing.
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking, maybe we should try to get a few of their people
+    on record.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a few ideas on that, but I think we should table it for now.

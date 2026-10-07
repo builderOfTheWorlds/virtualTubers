@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:33.585222+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Briefing in five minutes.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the case files one more time.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the latest chatter on the link charts.
+- kind: dialogue
+  speaker: agent
+  text: Nothing new on the technical front.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence log is up to date.
+- kind: dialogue
+  speaker: press
+  text: Nothing to report from the outside.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in for review.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

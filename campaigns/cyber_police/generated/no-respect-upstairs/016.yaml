@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:38.902507+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone. Today's briefing.
+- kind: dialogue
+  speaker: analyst
+  text: Already running behind schedule.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana) I still don't get why they don't take us seriously.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering back) It's like, what, we're not solving the same crimes as everyone
+    else?
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, okay, let's get started. I've got the requisition list.
+- kind: dialogue
+  speaker: press
+  text: '(on the monitor) "Cyber Cops: The Joke That Won''t Die."'
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Great. Just what we needed. More press fluff.
+- kind: dialogue
+  speaker: detective
+  text: (to Priya) Hey, let it go. It's not like we're not used to it.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's move on. Today's case is...

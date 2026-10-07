@@ -1,0 +1,23 @@
+id: observer-corner-desk
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:24.146091+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Focusing on the chatter patterns
+- kind: dialogue
+  speaker: agent
+  text: Just trying to keep up with the Analyst's feed
+- kind: dialogue
+  speaker: captain
+  text: Not much to report from our end
+- kind: dialogue
+  speaker: forensics
+  text: Finished processing the latest batch of evidence
+- kind: dialogue
+  speaker: press
+  text: Just getting a cup of coffee before the briefing
+- kind: dialogue
+  speaker: quartermaster
+  text: Noting the Observer's presence as always

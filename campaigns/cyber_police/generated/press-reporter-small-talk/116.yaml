@@ -1,0 +1,48 @@
+id: press-reporter-small-talk
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:36.901911+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I'll start by saying our lead from last night's chatter spike looks promising.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests The Scuttle is using a new proxy server in the Eastern
+    European region.
+- kind: dialogue
+  speaker: agent
+  text: I'll start digging into the proxy's source code, see if I can find any vulnerabilities.
+- kind: dialogue
+  speaker: forensics
+  text: I'll run some scans on the seized drives from last week's raid, see if we
+    missed anything.
+- kind: dialogue
+  speaker: press
+  text: Just a heads up, Davey, I've got a call with one of our contacts from the
+    local news, let's keep an eye out for any...
+- kind: dialogue
+  speaker: quartermaster
+  text: '...requisitions, we''re still waiting to hear back on those new laptops.'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the task at hand.
+- kind: dialogue
+  speaker: detective
+  text: I'll start working on the plan, see if we can get a team together for a raid
+    tonight.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging into the proxy's code, see if I can find any connections
+    to the rest of The Scuttle's network.
+- kind: dialogue
+  speaker: agent
+  text: I'll start setting up the equipment for the raid, make sure we're ready to
+    go.
+- kind: dialogue
+  speaker: forensics
+  text: I'll run some tests on the evidence we've collected so far, see if we can
+    find any new leads.

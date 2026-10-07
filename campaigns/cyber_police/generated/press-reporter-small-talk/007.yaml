@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:57.216787+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Ros, how's it going?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Not too bad, Dave. Just the usual Monday morning routine.'
+- kind: dialogue
+  speaker: agent
+  text: Hey, Captain, what's the word on the Scuttle's latest?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Still a lot of noise, but nothing concrete yet.'
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think I found something interesting.
+- kind: dialogue
+  speaker: analyst
+  text: What is it?
+- kind: dialogue
+  speaker: forensics
+  text: It looks like a possible new IP address associated with their chatter network.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Great work, Hana. Let''s get Marcus on it.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Alright, I''ll get on it. What''s the plan?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: We''ll need to verify the IP and see where it takes us.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, I just got an email from Internal Affairs.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What''s it about?'

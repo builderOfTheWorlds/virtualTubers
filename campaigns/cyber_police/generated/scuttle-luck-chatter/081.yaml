@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:40.799975+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not just skill. They've had more warning signs than
+    a fire alarm on the 30th floor.
+- kind: dialogue
+  speaker: analyst
+  text: I've gone over the numbers, Deshawn. They're either incredibly good or we're
+    just not looking.
+- kind: dialogue
+  speaker: quartermaster
+  text: That's the beauty of it. We'll never know which one. The Commodore's a genius
+    or we're just a bunch of incompetent fools.
+- kind: dialogue
+  speaker: captain
+  text: Let's not get too caught up in speculation, team. We've got a raid to plan.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the latest Scuttle banner? Something about "nice
+    try" and "snacks"?
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, I saw that. It's on the wire feed. "Quartermaster's getting desperate,
+    guys."
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: We should send them a care package. You know, with some good
+    ol'' fashioned Cyber Police snacks.'

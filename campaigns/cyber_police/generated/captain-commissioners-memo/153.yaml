@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 153
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:22.811995+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This is all I need to make my day.
+- kind: dialogue
+  speaker: detective
+  text: (muttering) 'The computer thing'...
+- kind: dialogue
+  speaker: analyst
+  text: (reading) "The Cyber Police's work is ongoing and does not appear to have
+    made a significant impact on the department's overall crime rate."
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Yeah, that's a surprise.
+- kind: dialogue
+  speaker: forensics
+  text: (silent)
+- kind: dialogue
+  speaker: press
+  text: (silent)
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Another memo, another reminder...

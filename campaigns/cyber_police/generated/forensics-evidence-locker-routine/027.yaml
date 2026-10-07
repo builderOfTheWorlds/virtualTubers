@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:33.208035+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence intake form ready for the case files.
+- kind: dialogue
+  speaker: analyst
+  text: Can I get the chain of custody notes for the server that came in last night?
+- kind: dialogue
+  speaker: agent
+  text: It's already on the system, Priya. You can access it from the Quartermaster's
+    terminal.
+- kind: dialogue
+  speaker: forensics
+  text: I'm running the integrity checks now. The hardware looks good, but we need
+    to verify the chain of custody.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition form ready for the new drives. Who's going to be
+    signing off on this?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: I''ll take care of it, Teresa.'
+- kind: dialogue
+  speaker: forensics
+  text: The drives are in the Evidence Locker. I need to get the signature from either
+    you, Captain, or Detective.
+- kind: dialogue
+  speaker: press
+  text: Can I get a comment on the latest Scuttle traffic?

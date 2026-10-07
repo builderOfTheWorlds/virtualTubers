@@ -1,0 +1,35 @@
+id: forensics-evidence-locker-routine
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:42.351001+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the door to the evidence locker.
+- kind: dialogue
+  speaker: analyst
+  text: Checking the chain of custody log on the wall.
+- kind: dialogue
+  speaker: agent
+  text: Taking out the keycard to access the evidence locker.
+- kind: dialogue
+  speaker: forensics
+  text: Scanning the shelves for any new evidence.
+- kind: dialogue
+  speaker: quartermaster
+  text: Reviewing the requisition binder for any outstanding requests.
+- kind: dialogue
+  speaker: forensics
+  text: Pulling out a package labeled "EVIDENCE-2023-01".
+- kind: dialogue
+  speaker: analyst
+  text: Initiating the chain of custody protocol for the package.
+- kind: dialogue
+  speaker: forensics
+  text: Labeling the package with a new barcode and timestamp.
+- kind: dialogue
+  speaker: agent
+  text: Verifying the contents of the package against the requisition request.
+- kind: dialogue
+  speaker: quartermaster
+  text: Recording the updated log entry in the requisition binder.

@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 44
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:08.993465+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm the last one to handle the evidence intake.
+- kind: dialogue
+  speaker: analyst
+  text: Can I take it from here, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: Please do. It's already been logged.
+- kind: dialogue
+  speaker: agent
+  text: I'll walk through the chain of custody with you.
+- kind: dialogue
+  speaker: analyst
+  text: Alright. First, the evidence is collected by Forensics.
+- kind: dialogue
+  speaker: agent
+  text: Right. Then, it's logged in the Evidence Locker, and I take possession of
+    it.
+- kind: dialogue
+  speaker: analyst
+  text: Correct. And then, I document the chain of custody, and it's stored in the
+    locker.
+- kind: dialogue
+  speaker: forensics
+  text: I make sure it's properly stored and accounted for, and then it's released
+    to the court.

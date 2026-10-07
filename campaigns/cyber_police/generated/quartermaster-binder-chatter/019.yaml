@@ -1,0 +1,48 @@
+id: quartermaster-binder-chatter
+take: 19
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:30.134514+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Good morning, folks. I've got the denied requisitions from last week. ||emotion:sad
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: "Somebody''s got to mean it, since nobody else does." ||emotion:neutral"'
+- kind: dialogue
+  speaker: analyst
+  text: This morning's lead comes from a new mirror on The Scuttle. ||emotion:neutral
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some chatter spike activity, but nothing concrete yet. ||emotion:neutral
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is still running some diagnostics on that new drive, but nothing
+    out of the ordinary so far. ||emotion:neutral
+- kind: dialogue
+  speaker: press
+  text: I've got a press request for an update on our progress. ||emotion:neutral
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: "Alright, let''s get started. What do we have for this morning?
+    ||emotion:neutral"'
+- kind: dialogue
+  speaker: quartermaster
+  text: My supply requisitions from last week... 12 requests denied, 5 delayed, 1
+    approved but not the latest model. ||emotion:angry
+- kind: dialogue
+  speaker: analyst
+  text: Intel suggests The Scuttle's trying to cover its tracks with this new mirror.
+    ||emotion:neutral
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: "I''ll work on a plan to track it down, but we''ll need to
+    move fast. ||emotion:surprised"'
+- kind: dialogue
+  speaker: agent
+  text: I'll start digging into the tech specs, see if I can find any vulnerabilities.
+    ||emotion:neutral
+- kind: dialogue
+  speaker: forensics
+  text: Forensics will run some tests on the drive, see if we can find any clues.
+    ||emotion:neutral

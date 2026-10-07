@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:18.330268+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: My eyes are still on the link charts.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Think we''re getting somewhere.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Let''s not jump the gun.'
+- kind: dialogue
+  speaker: agent
+  text: I'm still tracing the signal.
+- kind: dialogue
+  speaker: forensics
+  text: Found something in the disk imaging.
+- kind: dialogue
+  speaker: press
+  text: You know how this works.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still no update from Procurement.
+- kind: narration
+  speaker: captain
+  text: (Rosalind Agar glances at the Observer, who sits quietly at his corner desk.)

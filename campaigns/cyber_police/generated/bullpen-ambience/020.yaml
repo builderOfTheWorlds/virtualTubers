@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:20.852740+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The unit needs a break, we've been chasing this lead for hours.
+- kind: dialogue
+  speaker: detective
+  text: I'll grab a coffee, I think I left mine on the counter.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging, maybe we missed something.
+- kind: dialogue
+  speaker: agent
+  text: Can someone check the comms console for me, I think it's beeping.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look.
+- kind: dialogue
+  speaker: press
+  text: Coffee's going cold again, someone get a refill.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get right on it, don't worry.

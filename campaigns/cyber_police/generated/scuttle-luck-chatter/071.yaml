@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T07:10:24.786998+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I mean, it's not like they're using magic or something.
+- kind: dialogue
+  speaker: analyst
+  text: Someone's just good at covering their tracks, is all.
+- kind: dialogue
+  speaker: detective
+  text: I still don't buy it.
+- kind: dialogue
+  speaker: captain
+  text: We've got the right team, we just need a break.
+- kind: dialogue
+  speaker: quartermaster
+  text: Scuttle luck doesn't happen because of 'skill' – it's because we're not paying
+    attention.
+- kind: dialogue
+  speaker: press
+  text: You guys ever think you're just chasing shadows?
+- kind: dialogue
+  speaker: forensics
+  text: I've got the numbers, we've had a 67% success rate on shutdowns...
+- kind: dialogue
+  speaker: agent
+  text: Yeah, but the site always comes back.

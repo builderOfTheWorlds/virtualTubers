@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:48.860296+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on those requisitions.
+- kind: dialogue
+  speaker: detective
+  text: I'm trying to get the new hardware sorted, but it's taking ages.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Intel update, Captain. Nothing major.
+- kind: dialogue
+  speaker: agent
+  text: Morning, all.
+- kind: dialogue
+  speaker: forensics
+  text: Ugh.
+- kind: dialogue
+  speaker: press
+  text: Morning, everyone. What's the plan for today?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a few things to go over.

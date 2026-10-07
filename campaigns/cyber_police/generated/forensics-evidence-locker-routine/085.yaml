@@ -1,0 +1,42 @@
+id: forensics-evidence-locker-routine
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:44.427316+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Approaching the evidence locker.
+- kind: dialogue
+  speaker: forensics
+  text: Fingerprint scan, please enter the clearance code.
+- kind: dialogue
+  speaker: agent
+  text: 'Clearance code: 4218.'
+- kind: dialogue
+  speaker: forensics
+  text: Confirming clearance...
+- kind: dialogue
+  speaker: forensics
+  text: Access granted. Please remove items from the locker and log them in.
+- kind: dialogue
+  speaker: analyst
+  text: What's the procedure for processing new evidence?
+- kind: dialogue
+  speaker: forensics
+  text: You'll need to document each item, verify chain of custody, and store them
+    in the evidence locker.
+- kind: dialogue
+  speaker: analyst
+  text: Sounds straightforward. What's the first item?
+- kind: dialogue
+  speaker: forensics
+  text: 'Case file 1234-001: encrypted hard drive.'
+- kind: dialogue
+  speaker: analyst
+  text: Let me get the necessary equipment.
+- kind: dialogue
+  speaker: analyst
+  text: Where do I store the drive?
+- kind: dialogue
+  speaker: forensics
+  text: Log it in and store it in the designated bay in the locker.

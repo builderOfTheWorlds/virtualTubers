@@ -1,0 +1,15 @@
+id: agent-hardware-complaint
+take: 11
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:12.834056+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, this thing is older than I am.
+- kind: dialogue
+  speaker: analyst
+  text: (from across the bullpen) Yeah, we've been asking for a replacement for years...
+- kind: dialogue
+  speaker: agent
+  text: (sighing) I know, I know. Just great. I'm going to go try and fix this...
+    again.

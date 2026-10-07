@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:09.936591+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Ah, great, another memo from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: (sarcastically) Oh, boy, this should be good.
+- kind: dialogue
+  speaker: analyst
+  text: I'll go ahead and read it, just in case.
+- kind: dialogue
+  speaker: agent
+  text: (whispering) I heard they're still calling it "the computer thing."
+- kind: dialogue
+  speaker: forensics
+  text: '(exasperated) Yeah, because that''s exactly what we are: a computer thing.'
+- kind: dialogue
+  speaker: press
+  text: (entering the room) What's the memo about?
+- kind: dialogue
+  speaker: quartermaster
+  text: (quietly) Just another reminder that we're not a real police unit.

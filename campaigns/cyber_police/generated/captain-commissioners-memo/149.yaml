@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 149
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:06.098053+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is already on my desk
+- kind: dialogue
+  speaker: detective
+  text: Looks like "the computer thing" is still a thing
+- kind: dialogue
+  speaker: analyst
+  text: Not sure why we even bother with official channels
+- kind: dialogue
+  speaker: agent
+  text: We get the message, no need to spell it out
+- kind: dialogue
+  speaker: forensics
+  text: Just another day, another slight
+- kind: dialogue
+  speaker: press
+  text: Can I quote the Captain on this?
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) "the computer thing" indeed

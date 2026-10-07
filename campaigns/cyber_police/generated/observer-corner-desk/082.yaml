@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:44.704247+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Studying my link charts
+- kind: dialogue
+  speaker: agent
+  text: Running some cross-references on an old chatter thread
+- kind: dialogue
+  speaker: captain
+  text: (looks up, catches sight of the Observer)
+- kind: dialogue
+  speaker: forensics
+  text: (sips coffee, oblivious to the Captain's gaze)
+- kind: dialogue
+  speaker: press
+  text: (taps away at his keyboard, eyes fixed on his screen)
+- kind: dialogue
+  speaker: quartermaster
+  text: (busies herself with paperwork)
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (glances up from his notes, following the Captain''s gaze)'
+- kind: dialogue
+  speaker: analyst
+  text: (raises an eyebrow, her expression a mix of intrigue and wariness)
+- kind: dialogue
+  speaker: captain
+  text: (nods, returns to her work, as if dismissing the Observer's presence)

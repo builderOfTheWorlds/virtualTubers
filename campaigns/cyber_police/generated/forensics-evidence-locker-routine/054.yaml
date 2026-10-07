@@ -1,0 +1,33 @@
+id: forensics-evidence-locker-routine
+take: 54
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:04.658628+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've reviewed the evidence from the last two raids. We're missing some critical
+    chain-of-custody documentation.
+- kind: dialogue
+  speaker: agent
+  text: Can you send those over to me? I need to re-compile the evidence packages
+    for the upcoming trial.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the same files, and I think I've found a discrepancy
+    in the metadata from one of the drives.
+- kind: dialogue
+  speaker: captain
+  text: What kind of discrepancy? And who's responsible for reviewing the chain of
+    custody on this particular drive?
+- kind: dialogue
+  speaker: forensics
+  text: I think it might have been me, ma'am. I was reviewing the evidence during
+    the investigation, and I may have made an error.
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, ma'am, I think I can help with that. I've been going over the requisition
+    records, and I think I see where the issue might be.
+- kind: dialogue
+  speaker: agent
+  text: Can someone come over and take a look at the console in the Comms Room? I
+    think it might be malfunctioning.

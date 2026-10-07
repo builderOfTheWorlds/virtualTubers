@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T06:52:09.761355+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've got the first batch of evidence from the latest raid.
+- kind: dialogue
+  speaker: agent
+  text: Can you run it through the chain of custody?
+- kind: dialogue
+  speaker: forensics
+  text: Already on it. I'll get the paperwork started.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (over comms) We need to review the protocol for securing the
+    evidence locker.'
+- kind: dialogue
+  speaker: analyst
+  text: Can you bring me the link charts for the past 48 hours?
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Where did I put that drive...
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Need a replacement for the faulty hard drive in the
+    comms room.
+- kind: dialogue
+  speaker: agent
+  text: (to Hana) You know, I think we should re-run the encryption on our communications
+    channel.

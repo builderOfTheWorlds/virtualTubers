@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 166
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:42.157478+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's got a new mirror, looks like a legit one too.
+- kind: dialogue
+  speaker: agent
+  text: Already working on the feed.
+- kind: dialogue
+  speaker: forensics
+  text: Found something interesting on the previous mirror's metadata.
+- kind: dialogue
+  speaker: press
+  text: Need a statement from the unit for the 6 o'clock news.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Requisition notice: two more laptops, one more secure phone.'
+- kind: dialogue
+  speaker: detective
+  text: Anyone else noticing my coffee's going cold?
+- kind: dialogue
+  speaker: analyst
+  text: I made a fresh pot at my desk, just ask.

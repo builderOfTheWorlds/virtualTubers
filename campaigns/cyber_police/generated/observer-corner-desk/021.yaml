@@ -1,0 +1,44 @@
+id: observer-corner-desk
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:30.783912+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the loop:'
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to figure out why they're not using the compromised network
+    nodes.
+- kind: dialogue
+  speaker: forensics
+  text: Still going through the surveillance footage from the raid last night.
+- kind: dialogue
+  speaker: press
+  text: Did I hear something about a new leak on The Scuttle?
+- kind: dialogue
+  speaker: quartermaster
+  text: Not on my radar, Davey.
+- kind: dialogue
+  speaker: agent
+  text: Captain's been keeping the details close to her chest, but I've heard whispers
+    of a possible new exit.
+- kind: dialogue
+  speaker: captain
+  text: (to herself) The Observer is sitting in his corner desk, watching everyone.
+- kind: dialogue
+  speaker: forensics
+  text: (looking up from her screen) Oh, the Observer's here.
+- kind: dialogue
+  speaker: analyst
+  text: (not looking up from her screen) Yes.
+- kind: dialogue
+  speaker: press
+  text: (not noticing the Observer) So, Priya, have you seen anything interesting
+    in the data?
+- kind: dialogue
+  speaker: agent
+  text: (glancing at the Observer) Yeah, he's been here for a few minutes now.
+- kind: dialogue
+  speaker: captain
+  text: (to herself) Still doesn't move, still doesn't make eye contact...

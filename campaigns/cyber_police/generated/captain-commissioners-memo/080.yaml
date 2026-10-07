@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:40.684863+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I don't suppose it's a great surprise.
+- kind: dialogue
+  speaker: detective
+  text: You'd think they'd have the decency to spell it out.
+- kind: dialogue
+  speaker: analyst
+  text: '"The computer thing." I''ve heard worse.'
+- kind: dialogue
+  speaker: agent
+  text: I've seen worse names on the side of a bus.
+- kind: dialogue
+  speaker: forensics
+  text: You'd think they'd at least try to get it right.
+- kind: dialogue
+  speaker: press
+  text: I'm surprised they bother with us at all.
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering) At least it's not "the IT department with badges."

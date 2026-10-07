@@ -1,0 +1,42 @@
+id: quartermaster-binder-chatter
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:13.517872+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll never understand why they think we can't get a new mirror system.
+- kind: dialogue
+  speaker: detective
+  text: (laughs) Ah, come on, Teresa, don't even get me started on the paperwork.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smirks) Oh, I'll get started all right. I'll have a whole page of complaints
+    ready for the next time someone asks me to sign something out.
+- kind: dialogue
+  speaker: analyst
+  text: So, what changed on The Scuttle overnight?
+- kind: dialogue
+  speaker: detective
+  text: Let me check... Ah, yes, a new mirror went up on the 13th level.
+- kind: dialogue
+  speaker: forensics
+  text: That's not unusual. Mirrors go up and down all the time.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) I know. It's just... (looks at her binder) ...another thing that didn't
+    get approved.
+- kind: dialogue
+  speaker: press
+  text: (leaning against the wall, looking uninterested) Yeah, what's the plan for
+    today?
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get moving.
+- kind: dialogue
+  speaker: analyst
+  text: (starts typing away on her computer) I'll get the intelligence picture up
+    on the screens.
+- kind: dialogue
+  speaker: detective
+  text: (stands up, stretches) I'll get started on the plan.

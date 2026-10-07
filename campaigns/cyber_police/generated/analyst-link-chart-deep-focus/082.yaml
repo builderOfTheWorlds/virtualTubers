@@ -1,0 +1,30 @@
+id: analyst-link-chart-deep-focus
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:09.655195+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, maybe if I map out the relationships between the Scuttle's operators,
+    I can find a pattern.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana) Did you guys get a look at the new server we're going
+    in on?
+- kind: dialogue
+  speaker: forensics
+  text: (whispering back) Yeah, I ran the diagnostics. It's clean, but I'm not sure
+    what to make of the setup.
+- kind: dialogue
+  speaker: press
+  text: (to Priya) You know, I've been thinking... maybe we're looking at this all
+    wrong. Maybe The Scuttle isn't just a site, maybe it's a symptom of something
+    bigger.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Alright, team, let's gear up. We're moving in on the
+    server in five.
+- kind: dialogue
+  speaker: captain
+  text: (to herself) Okay, Priya's working on the relationships, Deshawn's got the
+    server prepped... it's going to be a good day.

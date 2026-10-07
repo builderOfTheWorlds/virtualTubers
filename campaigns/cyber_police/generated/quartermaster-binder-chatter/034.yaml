@@ -1,0 +1,13 @@
+id: quartermaster-binder-chatter
+take: 34
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:22.709676+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I think we can safely say "the eventual inquiry" is going to be a
+    regular visitor to my desk'
+- kind: narration
+  speaker: captain
+  text: 'DMOP: Maybe if we got some better hardware, we''d have a chance at making
+    it past the first level'

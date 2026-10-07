@@ -1,0 +1,48 @@
+id: press-reporter-small-talk
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:07.325172+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: So, Captain, how's the day shaping up?
+- kind: dialogue
+  speaker: captain
+  text: Not bad, Davey. We're looking at a possible lead on a new mirror site.
+- kind: dialogue
+  speaker: press
+  text: Sounds good. I'll make sure to keep it on my radar. Anything else I should
+    know about?
+- kind: dialogue
+  speaker: agent
+  text: I've got some bad news about the hardware upgrade, Captain. We're still waiting
+    on approval.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still trying to get the new spectrometer calibrated. This one's been giving
+    me headaches.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisitions, I'm afraid. Still waiting on approval for
+    the new software.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting data on the chatter spike, but I need to run some
+    more tests.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll take a look at it, Priya. We can discuss it further at
+    lunch.'
+- kind: dialogue
+  speaker: agent
+  text: Captain, can I talk to you about the Scuttle luck theory?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (sigh) Not now, Deshawn. We''ll discuss it at lunch.'
+- kind: dialogue
+  speaker: quartermaster
+  text: (to Davey) You know, it's not just the hardware upgrade that's the problem.
+    It's the whole department's attitude towards us.
+- kind: dialogue
+  speaker: press
+  text: I know what you mean, Teresa. It's like we're invisible sometimes.

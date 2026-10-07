@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:15.743033+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's just too easy.
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, maybe, but we've had some close calls, too.
+- kind: dialogue
+  speaker: agent
+  text: Close calls, yeah, but what do we really know about the site's operators?
+- kind: dialogue
+  speaker: forensics
+  text: Not much, and that's what makes it so frustrating. We've got the tech, we've
+    got the skills...
+- kind: dialogue
+  speaker: quartermaster
+  text: Maybe they're just better at playing cat and mouse.
+- kind: dialogue
+  speaker: press
+  text: I've got a story for you, guys. I was at the press conference yesterday...
+- kind: dialogue
+  speaker: captain
+  text: What is it, Davey?

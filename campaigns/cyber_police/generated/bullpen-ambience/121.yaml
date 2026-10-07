@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:59.049694+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, it''s 17:45, we can call it a day'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: You''re not going anywhere, Thorn'
+- kind: dialogue
+  speaker: analyst
+  text: I think I found something on that old server
+- kind: dialogue
+  speaker: agent
+  text: Server? We don't even know what we're looking for
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, but Priya's got a good track record
+- kind: dialogue
+  speaker: press
+  text: Can I just get a summary of what we're dealing with?
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, someone should really dust these monitors
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Not on my watch, Mbeki-Lowndes'
+- kind: dialogue
+  speaker: analyst
+  text: Um, Captain? Can I ask... do you think it's related?
+- kind: dialogue
+  speaker: agent
+  text: Related to what?
+- kind: dialogue
+  speaker: forensics
+  text: Hey, can we just focus?
+- kind: dialogue
+  speaker: press
+  text: Yeah, can we get some actual coffee around here?

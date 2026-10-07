@@ -1,0 +1,38 @@
+id: observer-corner-desk
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:50.777622+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Working on the link chart for the latest chatter spike, trying to find a pattern
+- kind: dialogue
+  speaker: detective
+  text: (glancing at the Observer) What's the point of even having him here if he's
+    not going to contribute anything
+- kind: dialogue
+  speaker: captain
+  text: (not reacting to the Detective's comment, instead addressing the Analyst)
+    Priya, how's the intelligence picture looking today?
+- kind: dialogue
+  speaker: analyst
+  text: Still a lot of noise, but I think I've found a thread we can follow
+- kind: dialogue
+  speaker: agent
+  text: (tuning out the conversation, focused on his screen) Got it, I can set up
+    the tracking software
+- kind: dialogue
+  speaker: forensics
+  text: (processing evidence, not looking up) Just need to finish this batch before
+    I can take a break
+- kind: dialogue
+  speaker: press
+  text: (to the Agent) You think this new mirror is going to be the breakthrough we
+    need?
+- kind: dialogue
+  speaker: quartermaster
+  text: (checking her requisition binder) No, we still don't have the budget for the
+    new hardware
+- kind: narration
+  speaker: captain
+  text: 'The Observer: (watching the scene, expression unreadable)'

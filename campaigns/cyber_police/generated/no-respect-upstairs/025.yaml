@@ -1,0 +1,44 @@
+id: no-respect-upstairs
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:25.511156+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: Dispatch, we''ve got a 10-15 at 345 Maple. Possible cybercrime in progress.'
+- kind: narration
+  speaker: captain
+  text: 'DAO: Already on it, dispatch.'
+- kind: narration
+  speaker: captain
+  text: 'HRV: ( muttering to herself ) Great, just what we need. Another "possible"
+    cybercrime...'
+- kind: narration
+  speaker: captain
+  text: 'DP: (over the radio) Alright, Thorn, get over there and see what the fuss
+    is about.'
+- kind: narration
+  speaker: captain
+  text: 'MA: On my way. (to the team) Alright, who''s with me?'
+- kind: narration
+  speaker: captain
+  text: 'PV: (muttering to herself) Backup request... always a waste of time...'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to himself) Someone''s going to have to come get us someday...'
+- kind: narration
+  speaker: captain
+  text: 'TM: (into comms device) We''re on scene. Requesting backup.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to himself) Of course they don''t respond.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Alright, Hana, what''ve we got?'
+- kind: narration
+  speaker: captain
+  text: 'HRV: (sighing) Not much, Marcus. Just a bunch of useless chatter on the darknet.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to himself) Because, of course, it''s not like we have anything better
+    to do...'

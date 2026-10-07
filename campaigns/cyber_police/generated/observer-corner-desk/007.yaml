@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:20.483108+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 07:00 briefing time already.
+- kind: dialogue
+  speaker: detective
+  text: Already at my desk, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Still going over the morning's chatter, Captain.
+- kind: dialogue
+  speaker: agent
+  text: Ready to get started on tracing that mirror.
+- kind: dialogue
+  speaker: forensics
+  text: Got a new batch of evidence to process, Detective.
+- kind: dialogue
+  speaker: press
+  text: Not much to report on the press front, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new in the requisition binder, Captain.
+- kind: narration
+  speaker: captain
+  text: (The Observer sits at his desk, typing on his computer)

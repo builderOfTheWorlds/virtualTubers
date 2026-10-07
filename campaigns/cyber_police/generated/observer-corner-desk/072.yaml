@@ -1,0 +1,41 @@
+id: observer-corner-desk
+take: 72
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:16.060785+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good morning, everyone. Today''s directive is to analyze the
+    chatter spike from last night''s Scuttle mirror.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the link charts, and I think I see a pattern.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I agree, the chatter spike is likely connected to the new mirror.
+    I''ll start drafting a plan.'
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, Captain. I'll get the tracing set up.
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the raid, and I think I found something.
+- kind: dialogue
+  speaker: press
+  text: What did we find?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned a new server for the evidence locker.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure I see the relevance of that, Analyst.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Captain, may I speak with you for a moment?'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What is it, Detective?'
+- kind: narration
+  speaker: captain
+  text: (Deshawn Okafor glances over at the Observer's corner desk, where he's sitting
+    and watching, but not doing anything. ||emotion:curious)

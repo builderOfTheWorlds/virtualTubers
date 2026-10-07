@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:54.698448+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I swear, if I ever get my hands on a live mirror, it'll be the Bosun.
+- kind: dialogue
+  speaker: analyst
+  text: Not to mention the "scuttle protocol" itself. How do they even...
+- kind: dialogue
+  speaker: agent
+  text: They're either geniuses or they have a mole. Or both.
+- kind: dialogue
+  speaker: quartermaster
+  text: A mole would be nice. At least that would be something to go on.
+- kind: dialogue
+  speaker: press
+  text: '(smirking) I''ve got a quote from the Commodore''s latest message: "NO QUARTER,
+    NO ADS". Classic.'
+- kind: dialogue
+  speaker: detective
+  text: (deadpan) Yeah, because nothing says "fearless pirate" like a bad ad network.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's not get too caught up in speculation. We have work
+    to do.

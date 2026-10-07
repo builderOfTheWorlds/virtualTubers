@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:12.428059+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a memo from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: About the unit's work.
+- kind: dialogue
+  speaker: analyst
+  text: It's titled "The Computer Thing."
+- kind: dialogue
+  speaker: agent
+  text: I'm not sure what's more annoying, the tone or the language.
+- kind: dialogue
+  speaker: forensics
+  text: I'm surprised it's taking them this long to realize we're not just IT.
+- kind: dialogue
+  speaker: press
+  text: I'll get a statement ready.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll update the requisition forms.

@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:09.212923+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get this over with.
+- kind: dialogue
+  speaker: press
+  text: (over the phone) Hey, Captain, just checking in, see how things are going.
+- kind: dialogue
+  speaker: press
+  text: I heard the latest on the Scuttle's supposed new mirror.
+- kind: dialogue
+  speaker: press
+  text: Apparently, it's got everyone in a tizzy.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Yeah, we're trying to pin down some leads.
+- kind: dialogue
+  speaker: press
+  text: Good luck with that.
+- kind: dialogue
+  speaker: press
+  text: (teasingly) I'll have to write it up in a glowing review...
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, spare us all the press.
+- kind: dialogue
+  speaker: press
+  text: (chuckles) Alright, alright. I'll keep my claws in.
+- kind: dialogue
+  speaker: captain
+  text: (serious) Look, I appreciate the call, but we've got our hands full.

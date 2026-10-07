@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:43.113933+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is scheduled for 07:00.
+- kind: dialogue
+  speaker: detective
+  text: I'm still going over the mirror's IP logs.
+- kind: dialogue
+  speaker: analyst
+  text: We have a possible pattern in the chatter spikes.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the hardware online.
+- kind: dialogue
+  speaker: forensics
+  text: I'm waiting for the evidence from the latest raid to clear.
+- kind: dialogue
+  speaker: press
+  text: I need to prep for the morning's press conference.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a requisition request in for a new server.

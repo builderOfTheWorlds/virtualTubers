@@ -1,0 +1,38 @@
+id: bullpen-ambience
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:50.591357+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, everyone.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Just got a ping from the Scuttle''s sensors. Looks like another potential
+    mirror.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Already on it, Captain. I''ll see what I can dig up.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Still trying to get the new gear requisitioned. Anything''s better than
+    these ancient laptops.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Evidence lock''s full, need to clear some space. Anyone know where we
+    stashed those drives from last week?'
+- kind: narration
+  speaker: captain
+  text: 'DP: Nothing from the press today, just the usual inquiries. Can we get the
+    Captain to give a statement on the...'
+- kind: narration
+  speaker: captain
+  text: 'TM: ... "ongoing efforts to secure the virtual borders". Yeah, sure.'
+- kind: narration
+  speaker: captain
+  text: 'TM: ( muttering ) Still can''t believe the department thinks a tie is necessary
+    for press briefings.'
+- kind: narration
+  speaker: captain
+  text: 'TB-L: ( to herself ) Who needs coffee this bad? Really need to get the coffee
+    machine replaced.'

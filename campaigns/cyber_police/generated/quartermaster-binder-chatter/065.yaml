@@ -1,0 +1,30 @@
+id: quartermaster-binder-chatter
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T07:06:23.740332+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''m still trying to figure out where we''re going to get that new
+    hard drive we need.'
+- kind: narration
+  speaker: captain
+  text: 'MTO: It''s not like we''re asking for a new lab. Just one piece of equipment.'
+- kind: narration
+  speaker: captain
+  text: 'PKN: The Analyst has been working on it, but there''s still no sign of the
+    requisition being approved.'
+- kind: narration
+  speaker: captain
+  text: 'DOP-P: I''m starting to think we should just try to scrounge one up ourselves.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve been over the budget, and it looks like we''re still short.'
+- kind: narration
+  speaker: captain
+  text: 'DM-L: Maybe we can use the one that was approved last week? It''s better
+    than nothing.'
+- kind: narration
+  speaker: captain
+  text: 'MTO: I don''t know, it''s not even the right model. We''ll just have to keep
+    waiting.'

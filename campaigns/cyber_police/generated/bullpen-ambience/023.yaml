@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:34.664934+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, everyone. I see we''ve had a quiet night on The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Quiet''s a good thing, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I found some interesting chatter patterns from last night.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the new hardware up and running, but I should have
+    it done by the end of the day.
+- kind: dialogue
+  speaker: forensics
+  text: Ugh, I swear, this coffee has been here since the Clinton administration.
+- kind: dialogue
+  speaker: press
+  text: You know, I'm starting to think we should just get a coffee machine down here.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll see what I can do, Davey.

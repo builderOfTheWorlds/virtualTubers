@@ -1,0 +1,33 @@
+id: bullpen-ambience
+take: 155
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:42.093926+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Still a cold cup here.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, I'll get it.
+- kind: dialogue
+  speaker: analyst
+  text: So, did anyone look at the new malware signature from the labs?
+- kind: dialogue
+  speaker: agent
+  text: No, I was too busy digging through that new code dump from The Scuttle.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing too out of the ordinary in here, just more of the same old exploits.
+- kind: dialogue
+  speaker: press
+  text: Great, can someone tell me why we're not getting any traction with the media
+    on this latest arrest?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a requisition in for a new server, finally, after weeks of waiting.
+- kind: dialogue
+  speaker: analyst
+  text: Oh, nice. What's the plan for the new gear?
+- kind: dialogue
+  speaker: captain
+  text: (from her office) I'll let you know when I have more information.

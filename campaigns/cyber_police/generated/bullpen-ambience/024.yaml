@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T05:56:39.377940+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is at 07:00 sharp, don't be late.
+- kind: dialogue
+  speaker: detective
+  text: I'll be here. Just finished my case file from yesterday.
+- kind: dialogue
+  speaker: analyst
+  text: Just a few more hours and I can go home.
+- kind: dialogue
+  speaker: agent
+  text: Coffee's going cold... again.
+- kind: dialogue
+  speaker: forensics
+  text: I'm just going to run this one more test...
+- kind: dialogue
+  speaker: press
+  text: I've got a meeting with the editor at 14:00. Gotta get this story online.
+- kind: dialogue
+  speaker: quartermaster
+  text: Anyone need any paperwork or equipment signed out?

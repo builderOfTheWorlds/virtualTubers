@@ -1,0 +1,44 @@
+id: observer-corner-desk
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:48.485219+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dh: The briefing is about to start, I''m checking the room for any latecomers.'
+- kind: narration
+  speaker: captain
+  text: 'Po: Still sipping my coffee, I''m not even at my desk yet.'
+- kind: narration
+  speaker: captain
+  text: 'Ro: Alright, let''s get started. The directive for today is...'
+- kind: narration
+  speaker: captain
+  text: 'Ta: I''ve got the link charts up on the board, let me walk you through what
+    we''ve got so far.'
+- kind: narration
+  speaker: captain
+  text: 'Po: Just a moment, I need to check my comms.'
+- kind: narration
+  speaker: captain
+  text: 'Dh: The Observer is here, I''ll let you know if he says anything.'
+- kind: narration
+  speaker: captain
+  text: 'Ro: Okay, moving on. Agent Okafor, what''s the status on those network logs?'
+- kind: narration
+  speaker: captain
+  text: 'Ma: I''ve got some interesting chatter patterns coming in, but I need more
+    context to pinpoint the origin.'
+- kind: narration
+  speaker: captain
+  text: 'Ro: Alright, get it to Forensics. Forensics, what do you need from Okafor?'
+- kind: narration
+  speaker: captain
+  text: 'Ha: I''ll take the files and run them through our analysis suite.'
+- kind: narration
+  speaker: captain
+  text: 'Ro: Okay, let''s keep moving. Press, any updates on the media front?'
+- kind: narration
+  speaker: captain
+  text: 'Do: Actually, I''ve been talking to that one reporter, and she''s getting
+    restless. We might want to prep for a press conference soon.'

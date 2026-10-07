@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 150
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:55.679844+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not convinced this new lead is worth chasing, but I need to run some numbers
+    to be sure.
+- kind: dialogue
+  speaker: captain
+  text: Nandakumar, I don't pay you to be convinced, I pay you to follow the data.
+- kind: dialogue
+  speaker: analyst
+  text: Right, Captain. I'll run the numbers.
+- kind: dialogue
+  speaker: detective
+  text: Okay, let's table this for now. I want to talk to the Agent about this morning's
+    tracer.
+- kind: dialogue
+  speaker: agent
+  text: What did you find?
+- kind: dialogue
+  speaker: detective
+  text: Not yet. I want to discuss it with you in person.
+- kind: dialogue
+  speaker: forensics
+  text: What's going on? Is this about the Scuttle luck again?
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck? I don't know what that is.

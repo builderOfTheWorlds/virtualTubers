@@ -1,0 +1,23 @@
+id: scuttle-luck-chatter
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:50.149920+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, it's not just dumb luck.
+- kind: dialogue
+  speaker: agent
+  text: I'm saying it's the Bosun's play. He's always one step ahead.
+- kind: dialogue
+  speaker: forensics
+  text: You can't just credit one person with the whole operation.
+- kind: dialogue
+  speaker: quartermaster
+  text: Scuttle luck, Scuttle luck, Scuttle luck... you're just making excuses.
+- kind: dialogue
+  speaker: press
+  text: Okay, okay, let's get the PR spin on this one.
+- kind: dialogue
+  speaker: captain
+  text: Shut it down, people. We're not here to debate the merits of Scuttle's...

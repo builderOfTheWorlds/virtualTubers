@@ -1,0 +1,27 @@
+id: press-reporter-small-talk
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:12.521869+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hi, what's new with you today?
+- kind: dialogue
+  speaker: captain
+  text: Not much, just getting ready for the briefing. How about you?
+- kind: dialogue
+  speaker: press
+  text: Same here. Just wondering if you guys have any idea who's behind the latest
+    string of hacks.
+- kind: dialogue
+  speaker: captain
+  text: No, nothing concrete yet. But we'll get to it. We always do.
+- kind: dialogue
+  speaker: press
+  text: That's what I like to hear. Anything new from my end?
+- kind: dialogue
+  speaker: agent
+  text: Not much, just waiting for the briefing to start.
+- kind: dialogue
+  speaker: press
+  text: Alright, well, I'll catch you guys in a bit. Bye.

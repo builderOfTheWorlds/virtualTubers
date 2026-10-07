@@ -1,0 +1,22 @@
+id: analyst-link-chart-deep-focus
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:54.596052+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, this link here seems to be a false positive, the metadata doesn't match
+    the protocol
+- kind: dialogue
+  speaker: analyst
+  text: I wonder if it's related to that suspicious packet stream we saw last night
+- kind: dialogue
+  speaker: analyst
+  text: The Scuttle's operators are clever, they always manage to stay one step ahead
+- kind: dialogue
+  speaker: analyst
+  text: But this link... it's been here for weeks, and I just noticed it
+- kind: dialogue
+  speaker: analyst
+  text: I think I see a pattern emerging, the Bosun's been using this particular proxy
+    chain

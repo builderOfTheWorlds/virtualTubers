@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 101
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:16.845595+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office just arrived.
+- kind: dialogue
+  speaker: detective
+  text: This isn't exactly what I'd call a vote of confidence.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) The computer thing, of course.
+- kind: dialogue
+  speaker: agent
+  text: (skeptical) Do you think this is why our last request for backup was ignored?
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) Just another day in the department.
+- kind: dialogue
+  speaker: press
+  text: '(voiceover, off to the side) "Cyber Police: The IT department with badges..."'
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to Captain) I've got the latest requisition forms right here...

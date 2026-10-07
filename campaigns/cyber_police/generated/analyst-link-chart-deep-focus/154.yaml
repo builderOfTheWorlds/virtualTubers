@@ -1,0 +1,32 @@
+id: analyst-link-chart-deep-focus
+take: 154
+model: llama3.1:8b
+generated_at: '2026-10-01T07:14:19.981346+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm convinced the Comms node on the outer rim is our best lead, yet
+- kind: dialogue
+  speaker: captain
+  text: (muttering to herself) Rim nodes, always a dead end...
+- kind: dialogue
+  speaker: detective
+  text: (standing up) Okay, let's take a closer look at the link chart.
+- kind: dialogue
+  speaker: forensics
+  text: (fiddling with a piece of equipment) I'm still having trouble with the decrypt
+    code.
+- kind: dialogue
+  speaker: agent
+  text: (leaning back in his chair) I'm telling you, it's a setup. They want us chasing
+    our tails.
+- kind: dialogue
+  speaker: quartermaster
+  text: (picking up the phone) I'll see if I can get an update from Logistics.
+- kind: dialogue
+  speaker: press
+  text: (scribbling in a notebook) "Privateers" at play...
+- kind: dialogue
+  speaker: analyst
+  text: (marking up the link chart) Okay, so if we follow this thread, it should lead
+    us to...

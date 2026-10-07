@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 69
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:23.610725+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if we had the right hardware, this trace tool wouldn't be such a
+    pain to get going.

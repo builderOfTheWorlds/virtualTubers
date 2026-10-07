@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T06:04:17.211463+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo's right there on my desk.
+- kind: dialogue
+  speaker: detective
+  text: That's all it says?
+- kind: dialogue
+  speaker: analyst
+  text: Guess we're not "real" police.
+- kind: dialogue
+  speaker: agent
+  text: They just don't get it.
+- kind: dialogue
+  speaker: forensics
+  text: Can't say I'm surprised.
+- kind: dialogue
+  speaker: press
+  text: You'd think they'd have some respect.
+- kind: dialogue
+  speaker: quartermaster
+  text: Somebody should send them a strongly-worded letter.

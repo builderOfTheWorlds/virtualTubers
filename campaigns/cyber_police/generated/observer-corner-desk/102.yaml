@@ -1,0 +1,45 @@
+id: observer-corner-desk
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:27.837021+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I still can't believe I got assigned to the 10:00 briefing slot.
+- kind: dialogue
+  speaker: captain
+  text: Good morning, team. Today's priority is the encrypted server we found in last
+    night's sweep.
+- kind: dialogue
+  speaker: agent
+  text: What's the server's IP address?
+- kind: dialogue
+  speaker: forensics
+  text: I'm still analyzing the logs, but it looks like it was only active for a few
+    hours.
+- kind: dialogue
+  speaker: press
+  text: Do we have any leads on the mirror we found in the abandoned server farm?
+- kind: dialogue
+  speaker: quartermaster
+  text: I requisitioned a new set of tools last week, but I haven't heard back on
+    the status.
+- kind: dialogue
+  speaker: analyst
+  text: I'll check on the requisition for you, Teresa.
+- kind: dialogue
+  speaker: captain
+  text: Forensics, can you give us an update on the evidence from the server farm?
+- kind: dialogue
+  speaker: forensics
+  text: We've got a few promising leads, but I want to run some more tests before
+    we make any conclusions.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the team started on tracing the server's connections.
+- kind: dialogue
+  speaker: press
+  text: I'll work on getting a statement from the press about the new lead.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please tell me what's going on with the requisition process?

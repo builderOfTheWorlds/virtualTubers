@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:53.764763+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the link we found was a dead end, but I want to verify
+    the pattern in the traffic ||emotion:neutral.

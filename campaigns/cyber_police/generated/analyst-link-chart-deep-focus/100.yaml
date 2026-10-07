@@ -1,0 +1,12 @@
+id: analyst-link-chart-deep-focus
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:13.089163+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Mmm, what if we're overthinking the mirror locations?
+- kind: dialogue
+  speaker: analyst
+  text: Maybe we're so close to the Scuttle that our own protocols are bleeding into
+    our analysis.

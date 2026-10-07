@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:22.111022+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not just skill. They have inside help somewhere.
+- kind: dialogue
+  speaker: analyst
+  text: Oh please, Deshawn, we've seen the logs. They're just really, really good
+    at anticipating our moves.
+- kind: dialogue
+  speaker: captain
+  text: Whatever it is, it's not just our fault. We've got the Commissioner breathing
+    down our necks, telling us to get results.
+- kind: dialogue
+  speaker: detective
+  text: Results, right. Like that last tip that sent us chasing after a dead-end server
+    in Sector 4.
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) Oh man, that was a good one. I'm starting to think we're just being
+    led on a merry chase.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) You don't think they're just toying with us, Teresa?
+- kind: dialogue
+  speaker: press
+  text: (chiming in from off-camera) Ah, come on, Hana. They're pirates, not monsters.
+    They're just having a bit of fun at our expense.

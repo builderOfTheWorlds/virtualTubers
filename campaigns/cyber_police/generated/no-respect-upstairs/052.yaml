@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:48.919438+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, briefing. We''ve got a lead on a Scuttle account.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m reading some funny stuff coming in from Hana on the cyber
+    side.'
+- kind: dialogue
+  speaker: analyst
+  text: Can someone look into why I'm still getting "account not found" errors from
+    the new server?
+- kind: dialogue
+  speaker: agent
+  text: Captain, do we need to send out a backup request for this one?
+- kind: dialogue
+  speaker: forensics
+  text: Guys, I think I found a pattern in the Scuttle data...
+- kind: dialogue
+  speaker: quartermaster
+  text: Hold up, Deshawn. I don't think we're going to get anyone coming.
+- kind: dialogue
+  speaker: press
+  text: (reading from a screen in the background) "Cyber Cops Caught Sleeping on the
+    Job Again!"
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Just... just send the report to Davey. See if he''ll give
+    us a mention this time.'

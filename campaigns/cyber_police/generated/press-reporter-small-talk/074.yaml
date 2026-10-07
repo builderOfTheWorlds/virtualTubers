@@ -1,0 +1,44 @@
+id: press-reporter-small-talk
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:23.734296+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: So, how's life in the basement, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: It's a miracle we make it out before the coffee machine breaks down.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Alright, alright, Davey, I think you've done your part for the week.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I've been going over the chatter patterns and...
+- kind: dialogue
+  speaker: press
+  text: (interrupting) Oh, oh, Priya, please tell me it's something juicy this time.
+- kind: dialogue
+  speaker: agent
+  text: (drolly) Juicy? We're lucky if we get a scoop on the cafeteria's new menu.
+- kind: dialogue
+  speaker: captain
+  text: (sternly) Alright, let's focus. Priya, what have you found?
+- kind: dialogue
+  speaker: analyst
+  text: Well, it looks like The Scuttle is trying to spin a new story about the latest
+    raid...
+- kind: dialogue
+  speaker: forensics
+  text: (excitedly) Ooh, did they actually get caught?
+- kind: dialogue
+  speaker: press
+  text: '(smiling) Ah, the eternal question: did they finally get their due?'
+- kind: dialogue
+  speaker: captain
+  text: (dryly) I'm sure it's all very interesting, but let's keep it on the down-low
+    for now.
+- kind: dialogue
+  speaker: quartermaster
+  text: (matter-of-factly) Requisitions have been approved for the new monitoring
+    software.

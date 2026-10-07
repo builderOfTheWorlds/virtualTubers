@@ -1,0 +1,30 @@
+id: no-respect-upstairs
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T06:56:08.672418+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. We've got a new case involving a possible Scuttle
+    hack.
+- kind: dialogue
+  speaker: detective
+  text: I'm reading reports of a compromised database in the financial sector.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, it's not just a hack, it's a full-on identity theft scheme.
+- kind: dialogue
+  speaker: agent
+  text: I've got the forensics report ready, but I'm having trouble getting the unit's
+    equipment to sync.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look, Deshawn. (muttering to herself) Ancient computers...
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team. Coffee's in the break room, and I've got some... interesting
+    requisition requests for you to review.
+- kind: dialogue
+  speaker: press
+  text: (on the comms system) "Cyber Cops Can't Even Catch a Scuttle Scam" - lead
+    story on the 8 o'clock news.

@@ -1,0 +1,42 @@
+id: analyst-link-chart-deep-focus
+take: 194
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:30.175040+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I think I found a thread, but it's not clear if it's significant
+- kind: dialogue
+  speaker: agent
+  text: (whistling softly) You got a hit on one of the Quartermaster's handles?
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, but it's worth chasing. And I have another anomaly in the link chart
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Need to get the server logs... see if it's a match
+- kind: dialogue
+  speaker: press
+  text: (listening in) What's going on?
+- kind: dialogue
+  speaker: analyst
+  text: Just a minor thread. It's not clear if it's related to the investigation
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to herself) Requisitions are coming in slow today... not sure
+    what's going on
+- kind: dialogue
+  speaker: agent
+  text: (grinning) You think the Bosun's finally made a move?
+- kind: dialogue
+  speaker: analyst
+  text: I don't know yet, but it's worth investigating
+- kind: dialogue
+  speaker: captain
+  text: (calling out) Everyone, let's keep moving on our assigned tasks. No distractions.
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Yeah, yeah... (muttering to herself) Like that's ever going to happen
+- kind: dialogue
+  speaker: forensics
+  text: (chuckling) Come on, Priya, you can't give up on a thread just yet

@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 44
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:46.314515+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CAP: The briefing is over, everyone. Back to work.'
+- kind: narration
+  speaker: captain
+  text: 'DET: I need a coffee, is there any hot left?'
+- kind: narration
+  speaker: captain
+  text: 'ANA: Negative, Detective, it''s been cold since lunch.'
+- kind: narration
+  speaker: captain
+  text: 'AGT: I''ll just microwave some of that leftover from this morning.'
+- kind: narration
+  speaker: captain
+  text: 'FOR: I need to redo the hash rates...'
+- kind: narration
+  speaker: captain
+  text: 'PRS: You know, for the sake of all things good, can someone please get a
+    coffee machine that works?'
+- kind: narration
+  speaker: captain
+  text: 'QTM: Requisitioning a coffee machine is a higher priority than reordering
+    ink for the 3D printer, apparently.'
+- kind: narration
+  speaker: captain
+  text: 'OBS:'

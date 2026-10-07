@@ -1,0 +1,36 @@
+id: press-reporter-small-talk
+take: 39
+model: llama3.1:8b
+generated_at: '2026-10-01T06:32:54.549699+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Captain, just checking in, see if there's any good news
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Oh, Davey, you know we never have good news, but thanks for calling
+- kind: dialogue
+  speaker: press
+  text: (laughs) Right, right, just making sure I'm on the list for a decent story
+- kind: dialogue
+  speaker: captain
+  text: (chuckles) Well, I don't have anything earth-shattering for you today, but
+    the team's been working on a few leads
+- kind: dialogue
+  speaker: press
+  text: Okay, okay, I'll take what I can get. How's the new analyst doing?
+- kind: dialogue
+  speaker: detective
+  text: (background murmur) Priya's doing fine, trying to get a handle on Scuttle's
+    comms
+- kind: dialogue
+  speaker: analyst
+  text: (background murmur) Yeah, we're still digging through the data, but it's a
+    tough needle to find
+- kind: dialogue
+  speaker: press
+  text: (sighs) Yeah, I feel you. That's all I got for now. I'll try to get some more
+    time with Commissioner
+- kind: dialogue
+  speaker: captain
+  text: Alright, sounds good, Davey. We'll catch up later

@@ -1,0 +1,29 @@
+id: quartermaster-binder-chatter
+take: 6
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:28.776207+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I still think I should have gotten the new software.'
+- kind: narration
+  speaker: captain
+  text: 'DM-O: Just put in the request again, it''ll get approved eventually.'
+- kind: narration
+  speaker: captain
+  text: 'TM-T: I''m going to make sure to document every single denial in this binder.'
+- kind: narration
+  speaker: captain
+  text: 'PV: The eventual inquiry is going to be a real doozy.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Ha! Just you wait.'
+- kind: narration
+  speaker: captain
+  text: 'DM-O: Yeah, we''ll get the software eventually.'
+- kind: narration
+  speaker: captain
+  text: 'TM-T:'
+- kind: narration
+  speaker: captain
+  text: 'PV: I''m just glad I don''t have to deal with the paperwork.'

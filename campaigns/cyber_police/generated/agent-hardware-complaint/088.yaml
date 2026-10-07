@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:37.093838+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, the old box is just...
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) And still no answer from Tech Support...
+- kind: dialogue
+  speaker: agent
+  text: I swear, someone must have picked the wrong model when they ordered this stuff.
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) Yeah, or they just wanted to waste money.
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, I've run the diagnostic three times, it's just...
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not waste more time, Deshawn. What's the latest on
+    the trace tool?

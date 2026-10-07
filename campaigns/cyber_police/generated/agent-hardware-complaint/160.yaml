@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 160
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:30.956582+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but it's being a pain
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Ancient hardware, of course...
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Yeah, I know, right? It's like they expect us to do magic with this
+    stuff
+- kind: dialogue
+  speaker: analyst
+  text: (skeptical) You think it's that funny, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) No, no, I'm just saying...
+- kind: dialogue
+  speaker: forensics
+  text: (overhearing) What's going on?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this tool running, Hana. Nothing to it.

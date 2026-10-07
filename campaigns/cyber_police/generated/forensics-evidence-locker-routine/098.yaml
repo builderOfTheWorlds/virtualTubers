@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:51.092286+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Swiping the evidence locker's keypad.
+- kind: dialogue
+  speaker: agent
+  text: Running a diagnostic on the equipment rack.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the day's schedule, making sure all lanes are covered.
+- kind: dialogue
+  speaker: captain
+  text: Approaching the evidence locker, eyes on Hana.
+- kind: dialogue
+  speaker: forensics
+  text: Handing Captain Agar a sealed box.
+- kind: dialogue
+  speaker: quartermaster
+  text: Checking the requisition binder for any outstanding requests.
+- kind: dialogue
+  speaker: forensics
+  text: Logging the handoff and updating the chain of custody in the database.

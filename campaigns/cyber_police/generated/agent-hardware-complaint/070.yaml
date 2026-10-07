@@ -1,0 +1,13 @@
+id: agent-hardware-complaint
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:25.678988+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Oh, come on, Priya, it's not like we're asking for a supercomputer. Just something
+    that can keep up with the Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: I'm just saying, Deshawn, we've been asking for an upgrade for years. It's
+    not like it's a priority.

@@ -1,0 +1,44 @@
+id: scuttle-luck-chatter
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:23.816096+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: We just don't have the bandwidth for a real stakeout, we need a lucky break
+- kind: dialogue
+  speaker: analyst
+  text: If we had a good proxy chain map, we might finally nail down the Bosun's IP
+- kind: dialogue
+  speaker: captain
+  text: Don't get ahead of yourself, Priya, we're not even sure that's who we're chasing
+- kind: dialogue
+  speaker: detective
+  text: I don't know about you all, but I'm starting to think this is more than just
+    good hunting
+- kind: dialogue
+  speaker: forensics
+  text: What do you mean, "more than just good hunting"?
+- kind: dialogue
+  speaker: press
+  text: I mean, think about it, someone who's that good at covering their tracks...
+- kind: dialogue
+  speaker: quartermaster
+  text: Or just really, really smart
+- kind: dialogue
+  speaker: captain
+  text: I don't know, it just feels like every time we get close, they slip through
+    our fingers
+- kind: dialogue
+  speaker: analyst
+  text: And every time we get close, they leave us a little joke, like they know more
+    about us than we do
+- kind: dialogue
+  speaker: detective
+  text: Like the time they left the rubber duck on the server
+- kind: dialogue
+  speaker: agent
+  text: Yeah, or the last banner, "Nice try. Bring snacks next time"
+- kind: dialogue
+  speaker: forensics
+  text: I swear, those people are enjoying this

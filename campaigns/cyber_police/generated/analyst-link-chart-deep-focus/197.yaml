@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 197
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:32.660925+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Trying to track down this new thread, see if it's just a red herring or if
+    it actually means something

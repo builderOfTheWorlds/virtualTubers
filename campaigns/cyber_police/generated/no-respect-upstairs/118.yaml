@@ -1,0 +1,38 @@
+id: no-respect-upstairs
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:17.268167+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team, let's get moving.
+- kind: dialogue
+  speaker: detective
+  text: You want us to review the Scuttle's latest output.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any indication of a new exploit.
+- kind: dialogue
+  speaker: agent
+  text: That's not what I'm getting. I think they've finally gotten a real operator.
+- kind: dialogue
+  speaker: forensics
+  text: I've got some anomalies in the upload patterns.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "CYBER CRIMES UNIT SEES ZERO PROGRESS AGAIN"'
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll go ahead and requisition some new hardware for you.
+- kind: dialogue
+  speaker: captain
+  text: What's the status on the backup request?
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: Sorry, Captain, it''s still sitting at 4th in line.'
+- kind: dialogue
+  speaker: detective
+  text: You know it's just a formality, right?
+- kind: dialogue
+  speaker: agent
+  text: I don't know, guys. This one feels different.

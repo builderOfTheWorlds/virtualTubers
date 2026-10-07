@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:02.230881+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The Commodore's latest taunt was a bit too on the nose, don't you think?
+- kind: dialogue
+  speaker: agent
+  text: If I had to guess, I'd say it's a trap. We're getting close to something.
+- kind: dialogue
+  speaker: forensics
+  text: I've been over the new server's logs. There's nothing out of the ordinary.
+- kind: dialogue
+  speaker: press
+  text: Can I get a quote from Captain Agar on the latest development?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for a new batch of surveillance gear have been approved.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Assuming we have a lead worth pursuing...
+- kind: dialogue
+  speaker: detective
+  text: (overhearing Priya) Analyst, what's on your mind?
+- kind: dialogue
+  speaker: analyst
+  text: (aloud) Just thinking aloud, Detective.

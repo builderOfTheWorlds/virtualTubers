@@ -1,0 +1,37 @@
+id: analyst-link-chart-deep-focus
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:46.766080+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure I understand why the link from the new node is so tenuous...
+- kind: dialogue
+  speaker: agent
+  text: Can you try tracing the proxy chain again? Maybe we're just misreading the
+    traffic.
+- kind: dialogue
+  speaker: analyst
+  text: If it is a proxy, it's a new one. I've never seen this encryption before.
+- kind: dialogue
+  speaker: forensics
+  text: Can I see the raw data? Sometimes it's easier to spot patterns when you're
+    not stuck on the charts.
+- kind: dialogue
+  speaker: analyst
+  text: Of course, Hana. Let me pull up the raw data...
+- kind: dialogue
+  speaker: agent
+  text: Captain, we've got a new match on the traffic logs. It looks like one of their
+    nodes went dark for a few minutes last night.
+- kind: dialogue
+  speaker: captain
+  text: (pausing, looking up from her notes) Ah, good work, Deshawn. How long ago
+    did this happen?
+- kind: dialogue
+  speaker: agent
+  text: About 4 hours ago, ma'am. We've got a team on it now, but... (pauses) well,
+    it's just another day on The Scuttle.
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Yes. Carry on.

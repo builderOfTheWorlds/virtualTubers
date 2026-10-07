@@ -1,0 +1,14 @@
+id: agent-hardware-complaint
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:27.899254+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, can't you see I'm trying to get this trace tool running?
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the code, and I think I found the problem.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, but you're using an outdated hardware. We need to requisition new equipment.

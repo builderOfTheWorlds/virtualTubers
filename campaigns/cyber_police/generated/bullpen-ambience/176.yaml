@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 176
+model: llama3.1:8b
+generated_at: '2026-10-01T07:22:39.832025+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The 09:45 briefing is cancelled, we're on a watch-and-wait with the new mirror.
+- kind: dialogue
+  speaker: detective
+  text: Just getting some paperwork done, then I'm going to review the new mirror's
+    access logs.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get a sense of what kind of traffic we're looking at, but the
+    Scuttle's always one step ahead.
+- kind: dialogue
+  speaker: agent
+  text: Just got the updated comms package from HQ, we can start analyzing the new
+    chatter spike.
+- kind: dialogue
+  speaker: forensics
+  text: I'm going through the evidence from last night's seizure, nothing yet.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the new mirror? We need to get the public informed.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocking the supply cage, making sure everything's accounted for.

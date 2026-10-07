@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 169
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:57.931773+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this ancient lab is still running on XP.
+- kind: dialogue
+  speaker: analyst
+  text: I'm getting a weird artifact on the login, I think it's a firmware issue.
+- kind: dialogue
+  speaker: forensics
+  text: I've tried restarting it three times, Deshawn, but it just won't boot.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) I'll go requisition a new workstation.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Great, just what we need, another week's delay on the new hardware.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the task at hand, shall we?

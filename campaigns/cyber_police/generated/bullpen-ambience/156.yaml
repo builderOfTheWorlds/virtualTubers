@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 156
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:47.063920+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Morning, boss.
+- kind: dialogue
+  speaker: forensics
+  text: Morning.
+- kind: dialogue
+  speaker: analyst
+  text: Did you get the coffee.
+- kind: dialogue
+  speaker: captain
+  text: Ah, good morning, people.
+- kind: dialogue
+  speaker: press
+  text: I think it's still warm, Priya.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I was hoping that.
+- kind: dialogue
+  speaker: agent
+  text: So, what's the directive for today?
+- kind: dialogue
+  speaker: captain
+  text: Briefing's at 07:30. Meet at the monitor bank.
+- kind: dialogue
+  speaker: detective
+  text: Got a new mirror to chase?
+- kind: dialogue
+  speaker: analyst
+  text: No, I think it's a chatter spike.
+- kind: dialogue
+  speaker: forensics
+  text: Need a list of what we're looking for, though.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition list ready.

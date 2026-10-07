@@ -1,0 +1,28 @@
+id: analyst-link-chart-deep-focus
+take: 130
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:41.874889+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the Bosun is still at large and not using The Scuttle's
+    typical protocol, that means they're trying to stay ahead of our usual methods.
+- kind: dialogue
+  speaker: agent
+  text: Agreed. But what if this isn't just a case of "Scuttle luck"? What if we're
+    missing something on our end?
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the evidence, and I think I found a pattern. It looks
+    like The Scuttle's trying to... distract us.
+- kind: dialogue
+  speaker: press
+  text: Distraction? What are you talking about?
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, I think I can help with that. I've been reviewing the requisition
+    requests, and I think I found a discrepancy in the budget.
+- kind: dialogue
+  speaker: agent
+  text: Okay, Priya, let's assume this Bosun is a step ahead of us. What's the next
+    move?

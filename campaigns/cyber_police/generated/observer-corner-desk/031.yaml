@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 31
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:16.599325+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Briefing starts in 10.
+- kind: dialogue
+  speaker: detective
+  text: Already on it.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests a new mirror is up, but the link isn't stable yet.
+- kind: dialogue
+  speaker: agent
+  text: Working on tracing the signal.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is ready for any evidence the Agent brings back.
+- kind: dialogue
+  speaker: press
+  text: We need to get a statement from the reporter who tipped us off.
+- kind: dialogue
+  speaker: quartermaster
+  text: The requisition binder is ready for the week.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

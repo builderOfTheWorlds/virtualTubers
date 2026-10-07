@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:40.571589+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get the briefing started.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Already on it, Captain. I''ve got a plan to crack the encrypted
+    mirror.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm still going over the chatter spike, but it looks like a possible new lead.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the hardware ready, but we're still waiting on the update from the
+    Scuttle's devs.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new in the evidence locker, but I'll review it again.
+- kind: dialogue
+  speaker: press
+  text: Still waiting on a press kit from HQ, but I'll prep some talking points.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new in the requisition log, but I'll keep an eye on it.

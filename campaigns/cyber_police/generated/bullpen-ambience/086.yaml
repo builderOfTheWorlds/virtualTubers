@@ -1,0 +1,42 @@
+id: bullpen-ambience
+take: 86
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:43.148666+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get a move on. We've got a window on that suspicious account
+    before it shuts down.
+- kind: dialogue
+  speaker: detective
+  text: I've got the plan, let me walk you through it.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the chatter spike isolated, but it's encrypted.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get in, but it's a brick wall so far.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence log ready, but we need to get it processed ASAP.
+- kind: dialogue
+  speaker: press
+  text: We need to be ready for questions about this.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition requests are due in an hour, make sure to sign out what you need.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Finally, some decent coffee...
+- kind: dialogue
+  speaker: analyst
+  text: (chuckling) I'm just glad it's not yesterday's leftovers.
+- kind: dialogue
+  speaker: agent
+  text: (sighing) Let's just get it over with.
+- kind: dialogue
+  speaker: press
+  text: (smirking) I'm just here for the free coffee.
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) You kids and your coffee...

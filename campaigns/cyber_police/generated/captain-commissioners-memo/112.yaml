@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:01.959632+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I've got the memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: Can I see it?
+- kind: dialogue
+  speaker: captain
+  text: It's on the comms pad, I just got it
+- kind: dialogue
+  speaker: analyst
+  text: (reading over shoulder) "The computer thing"...
+- kind: dialogue
+  speaker: agent
+  text: (skeptical) Yeah, we've heard that one before
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) Like we're not real police
+- kind: dialogue
+  speaker: press
+  text: (whispering to someone) Did you see that memo?
+- kind: dialogue
+  speaker: quartermaster
+  text: (exasperated) I swear, if they don't believe we exist...

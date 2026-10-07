@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 147
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:57.619865+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing for the 17th is rescheduled for 08:30
+- kind: dialogue
+  speaker: detective
+  text: Got the list of warrants, looks like it's going to be a long day
+- kind: dialogue
+  speaker: analyst
+  text: I've got the new Scuttle map up, but the mirror is giving me some issues
+- kind: dialogue
+  speaker: agent
+  text: Just got a ping on a suspicious login, let me see what I can dig up
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new in the lab, but I'm reviewing the evidence from the 14th
+- kind: dialogue
+  speaker: press
+  text: Just sent a query to the Scuttle about the recent chatter spike, no response
+    yet
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new drives, let's see if they get approved this time

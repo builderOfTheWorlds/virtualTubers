@@ -1,0 +1,45 @@
+id: forensics-evidence-locker-routine
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:18.776023+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting the intake procedure for the evidence collected today.
+- kind: dialogue
+  speaker: agent
+  text: I'll review the chain of custody and ensure everything is in order.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've logged the new shipments of hardware and cables in the supply cage.
+- kind: dialogue
+  speaker: analyst
+  text: I've updated the evidence tracker and notified the Captain of the new evidence.
+- kind: dialogue
+  speaker: captain
+  text: I'll review the evidence and sign off on the chain of custody.
+- kind: dialogue
+  speaker: press
+  text: I'll make a note of the new evidence and update the press release draft.
+- kind: dialogue
+  speaker: forensics
+  text: Next step is to verify the identity of the evidence and check for any contaminants.
+- kind: dialogue
+  speaker: agent
+  text: I'll review the video footage from the surveillance cameras to confirm the
+    evidence's origin.
+- kind: dialogue
+  speaker: analyst
+  text: I'll run the necessary tests to ensure the evidence is properly stored and
+    handled.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll log the equipment used to process the evidence and ensure it's properly
+    sanitized.
+- kind: dialogue
+  speaker: captain
+  text: I'll review the results of the tests and confirm the evidence's integrity.
+- kind: dialogue
+  speaker: press
+  text: I'll update the press release draft with the new information and schedule
+    a press conference.

@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:57.661895+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting the evidence intake procedure.
+- kind: dialogue
+  speaker: agent
+  text: What case file are you working on, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: 19235-Alpha, the same one as yesterday.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some data to add to the chain of custody.
+- kind: dialogue
+  speaker: forensics
+  text: Great, just put it in the intake log.
+- kind: dialogue
+  speaker: agent
+  text: Did you get the security footage from last night?
+- kind: dialogue
+  speaker: forensics
+  text: No, still waiting on the department's IT to send it over.
+- kind: dialogue
+  speaker: captain
+  text: Hana, can you review the chain of custody for that evidence from the 19235-Alpha
+    case?
+- kind: dialogue
+  speaker: forensics
+  text: Already on it, Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll go get some fresh coffee, anyone want some?

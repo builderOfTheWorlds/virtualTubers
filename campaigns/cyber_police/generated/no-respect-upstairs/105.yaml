@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:05.936262+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing's at 07:00, let's get the Scuttle's latest out of the way
+- kind: dialogue
+  speaker: detective
+  text: I've got a list of 27 potential targets, but it's all just noise without a
+    real hit
+- kind: dialogue
+  speaker: analyst
+  text: I'm still waiting on confirmation from Forensics on the encrypted packet
+- kind: dialogue
+  speaker: agent
+  text: Someone left their coffee cup in the break room, again
+- kind: dialogue
+  speaker: forensics
+  text: Preliminary on the VTX-01 chip is incomplete, might be corrupted
+- kind: dialogue
+  speaker: press
+  text: ( headline on monitor ) "Cyber Cops Still Chasing Windmills"
+- kind: dialogue
+  speaker: quartermaster
+  text: Request for new equipment will have to go to the bottom of the list, Captain

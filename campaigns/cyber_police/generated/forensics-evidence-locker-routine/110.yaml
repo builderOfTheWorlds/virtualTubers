@@ -1,0 +1,18 @@
+id: forensics-evidence-locker-routine
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:44.546615+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm Forensics, processing the intake. Everything's accounted for, all chain-of-custody
+    documentation is in order.
+- kind: dialogue
+  speaker: agent
+  text: Alright, I'll send the Agent down to help with the evidence intake.
+- kind: dialogue
+  speaker: analyst
+  text: I'll review the chain-of-custody documentation. Make sure everything's correct.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (watching from her office) Carry on, everyone.'

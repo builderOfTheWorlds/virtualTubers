@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:43.639684+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's start with the morning briefing.
+- kind: dialogue
+  speaker: detective
+  text: I'll be reviewing the overnight intel.
+- kind: narration
+  speaker: captain
+  text: 'Analyst Priya Nandakumar: I''ve got a lead on the chatter spike from the
+    West Coast servers.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: I''m still trying to track down the IP address on that
+    encrypted mirror.'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Hana Vosk: I''ve got some promising results from the recent raid.'
+- kind: narration
+  speaker: captain
+  text: 'Press Davey Okonkwo-Pryce: I''ve got a question about the recent media attention.'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Teresa Mbeki-Lowndes: Nothing new on the equipment front, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Observer: (silent)'

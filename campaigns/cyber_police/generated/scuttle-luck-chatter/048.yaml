@@ -1,0 +1,26 @@
+id: scuttle-luck-chatter
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T07:08:04.385839+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You think the Bosun is a single person, but I've been saying it's a team.
+- kind: dialogue
+  speaker: analyst
+  text: We don't even have a lead, Deshawn, we're just grasping at straws.
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck is just what we call it when we get outsmarted.
+- kind: dialogue
+  speaker: forensics
+  text: You'd think with all the resources we have, we could finally take them down.
+- kind: dialogue
+  speaker: quartermaster
+  text: Resources? Ha! We can barely keep the coffee machine working.
+- kind: dialogue
+  speaker: press
+  text: You know, I've been thinking, what if The Scuttle is just a sideshow?
+- kind: dialogue
+  speaker: detective
+  text: What are you talking about, Davey? The Scuttle is the whole show.

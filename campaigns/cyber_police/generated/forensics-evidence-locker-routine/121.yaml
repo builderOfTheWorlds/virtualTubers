@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:38.096876+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll start processing the evidence from the last raid.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, can you send me the evidence list for review?
+- kind: dialogue
+  speaker: forensics
+  text: Already on it, Agent. I'll have it ready for you by the end of the hour.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some new link charts to share with the team.
+- kind: dialogue
+  speaker: forensics
+  text: Send them over to me, Analyst. I'll make sure they're secure.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's review the day's priorities.
+- kind: dialogue
+  speaker: forensics
+  text: Beginning chain of custody on the seized devices.

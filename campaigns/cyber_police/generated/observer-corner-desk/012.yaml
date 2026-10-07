@@ -1,0 +1,42 @@
+id: observer-corner-desk
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:51.367681+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got a connection in the chatter logs I think might be worth a look.
+- kind: dialogue
+  speaker: detective
+  text: What kind of connection?
+- kind: dialogue
+  speaker: analyst
+  text: A user on the deep web, using language from the last three raids we did.
+- kind: dialogue
+  speaker: agent
+  text: I'll dig into it, but I want to know who else is on this.
+- kind: dialogue
+  speaker: captain
+  text: For now, it's just the Analyst and the Agent.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting a lot of false positives on the network traffic.
+- kind: dialogue
+  speaker: analyst
+  text: Can you run a filter for the user I mentioned?
+- kind: dialogue
+  speaker: agent
+  text: Negative, negative, it's just noise.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I get a new requisition form for that new hardware we discussed last week?
+- kind: dialogue
+  speaker: captain
+  text: ( glancing at the Observer) I'll look into it.
+- kind: dialogue
+  speaker: press
+  text: (tapping pen on notepad) Do we know if this user is linked to anyone on our
+    watchlist?
+- kind: dialogue
+  speaker: detective
+  text: Let's keep an open mind, but no speculation.

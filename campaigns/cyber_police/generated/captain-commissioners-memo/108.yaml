@@ -1,0 +1,24 @@
+id: captain-commissioners-memo
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:46.885428+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: (whispering) "The computer thing" again.
+- kind: dialogue
+  speaker: analyst
+  text: (rolling her eyes) "The computer thing". ||emotion:sarcastic ||neutral
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Yeah, that's one way to put it.
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) We're not really "the computer thing". We're digital crime investigators.
+- kind: dialogue
+  speaker: press
+  text: (skeptically) I'm surprised they didn't just call you "the IT department with
+    badges" again.

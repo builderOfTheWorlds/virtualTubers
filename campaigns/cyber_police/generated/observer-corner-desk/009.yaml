@@ -1,0 +1,34 @@
+id: observer-corner-desk
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:31.457874+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Director's directive is up on the shared drive.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence picture looks like the usual suspects, but I'm flagging some
+    unusual chatter on the encrypted channels.
+- kind: dialogue
+  speaker: agent
+  text: I've got a lead on a possible IP hop, but I need Forensics to get me the latest
+    on the seized hardware.
+- kind: dialogue
+  speaker: forensics
+  text: Still processing the latest batch, but I can tell you we've got some interesting
+    anomalies in the data.
+- kind: dialogue
+  speaker: press
+  text: Nothing out of the ordinary, just keeping an ear to the ground for any press
+    conferences.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just the usual requests for new hardware, but the Commissioner's office is
+    being tightfisted about approving anything.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

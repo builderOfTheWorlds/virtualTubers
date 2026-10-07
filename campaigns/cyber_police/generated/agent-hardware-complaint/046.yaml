@@ -1,0 +1,22 @@
+id: agent-hardware-complaint
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:44.209764+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can someone tell me what version of Win32 this ancient laptop is running?
+- kind: dialogue
+  speaker: analyst
+  text: I can try to dig up the specs, but I'm not holding out hope.
+- kind: dialogue
+  speaker: forensics
+  text: (whistling) Ah, yes, this one's a 2008 model. You're lucky if it doesn't crash
+    on you.
+- kind: dialogue
+  speaker: press
+  text: (from across the room) Can I help with the trace tool?
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Requisitioned a replacement three months ago... still
+    waiting on approval.

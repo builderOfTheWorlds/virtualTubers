@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:01.941439+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Ros, how's the day going so far?
+- kind: dialogue
+  speaker: captain
+  text: Not bad, Davey. Just getting set up for the briefing.
+- kind: dialogue
+  speaker: agent
+  text: Captain, we've got a new mirror on The Scuttle, looks like it's a big one.
+- kind: dialogue
+  speaker: analyst
+  text: I'm analyzing now, but it looks like it might be some kind of proxy.
+- kind: dialogue
+  speaker: forensics
+  text: I'm running some tests, but I'm not getting any hits on the usual channels.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition day is tomorrow, we're still waiting on those new laptops.
+- kind: dialogue
+  speaker: press
+  text: That's great, Priya, but how does it play into our overall strategy?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's break it down. Priya, what do you have so far?
+- kind: dialogue
+  speaker: analyst
+  text: Well, Captain, it looks like this mirror might be connected to...
+- kind: dialogue
+  speaker: agent
+  text: Hold up, Priya, I think I've got something.
+- kind: dialogue
+  speaker: forensics
+  text: I'm not seeing anything new, guys. This looks like more of the same old stuff.
+- kind: dialogue
+  speaker: quartermaster
+  text: We need to talk about budget, Captain. This equipment is holding us back.

@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T07:04:27.757844+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a new lead on The Scuttle's latest mirror server.
+- kind: dialogue
+  speaker: detective
+  text: I'll get a team together to work on taking it down.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting chatter patterns to share.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some suspicious activity on the dark web.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still working on decoding the encryption.
+- kind: dialogue
+  speaker: press
+  text: I'm sure the Scuttle will have a field day with this.
+- kind: dialogue
+  speaker: quartermaster
+  text: We've got a requisition for a new server, but it's still pending.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

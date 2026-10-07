@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 128
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:44.117595+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I don't think I've seen that tone before.
+- kind: dialogue
+  speaker: detective
+  text: Sounds like the usual, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Can't say I'm surprised.
+- kind: dialogue
+  speaker: agent
+  text: Someone's going to have to ask Commissioner what she means.
+- kind: dialogue
+  speaker: forensics
+  text: I'm surprised we even get that.
+- kind: dialogue
+  speaker: press
+  text: This one's going straight to the top.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think we're just a novelty.

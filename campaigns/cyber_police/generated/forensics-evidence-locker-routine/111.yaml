@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 111
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:48.677846+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting the evidence intake procedure.
+- kind: dialogue
+  speaker: agent
+  text: Just sign the chain of custody form when you're done.
+- kind: dialogue
+  speaker: forensics
+  text: I'll do that when I'm finished scanning the drives.
+- kind: dialogue
+  speaker: analyst
+  text: What's the case number for these?
+- kind: dialogue
+  speaker: forensics
+  text: It's 2023-0011. I'll log them in.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I get a manifest?
+- kind: dialogue
+  speaker: forensics
+  text: Already on it. I'll have it for you in a minute.
+- kind: dialogue
+  speaker: captain
+  text: What's taking so long?

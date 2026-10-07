@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:23.131048+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll be starting the intake procedure now.
+- kind: dialogue
+  speaker: agent
+  text: Affirm, I'll assist.
+- kind: dialogue
+  speaker: analyst
+  text: I've printed out the chain of custody form.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Let''s move. We have a case to process.'
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder ready.
+- kind: dialogue
+  speaker: press
+  text: (whispering to himself) Finally, something to write about...
+- kind: dialogue
+  speaker: forensics
+  text: First, I need to verify the case number and the lead investigator.
+- kind: dialogue
+  speaker: agent
+  text: That's Captain Agar. I'll confirm the details.

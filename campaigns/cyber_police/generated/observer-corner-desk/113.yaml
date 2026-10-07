@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:20.087370+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm a little ahead of myself, just re-examining some chatter
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Anything there?'
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, just trying to get a better picture
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder with me if you need it
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I'm good for now
+- kind: dialogue
+  speaker: press
+  text: Can I ask, is it a good time to take some notes?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Just get them down, we can tidy up later'
+- kind: dialogue
+  speaker: analyst
+  text: (Glancing at the Observer) He's... still watching

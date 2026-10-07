@@ -1,0 +1,48 @@
+id: forensics-evidence-locker-routine
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T06:51:20.221243+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm at the evidence locker, logging in the new drives that came in yesterday.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, I need you to review the evidence from last night's raid.
+- kind: dialogue
+  speaker: analyst
+  text: I've finished processing the link charts for the new malware signature.
+- kind: dialogue
+  speaker: forensics
+  text: The drives are clean, but I need the Agent to sign off on them before I can
+    log them in the system.
+- kind: dialogue
+  speaker: agent
+  text: Agent, you're up next in the rotation to do the daily review of the Scuttle's
+    activity logs.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder here, and I see we're still waiting on those
+    new hard drives the lab requested.
+- kind: dialogue
+  speaker: forensics
+  text: Captain Agar wants to see the chain of custody for the Jones case.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Forensics, can you walk me through the chain of custody for
+    the Jones case?'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the link charts up on my monitors, but I need to go through them
+    again to make sure I haven't missed anything.
+- kind: dialogue
+  speaker: forensics
+  text: The drives are all logged in the system, and I've run the tests to confirm
+    they're clean.
+- kind: dialogue
+  speaker: agent
+  text: Good, let's get these drives imaged and see if we can turn up anything useful.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the request in for the new hard drives, but I'm not sure when they'll
+    arrive.

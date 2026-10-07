@@ -1,0 +1,17 @@
+id: agent-hardware-complaint
+take: 154
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:09.482757+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: This old thing is still running, somehow.
+- kind: dialogue
+  speaker: analyst
+  text: We've got a possible login from an IP in Timbuktu, possible Scuttle traffic.
+- kind: dialogue
+  speaker: forensics
+  text: No, we don't have the bandwidth to run that tool.
+- kind: dialogue
+  speaker: agent
+  text: I know it's slow, Hana, but I really need to get this tool running.

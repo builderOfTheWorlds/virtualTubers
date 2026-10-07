@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:22.280438+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Running a check on the locker's contents.
+- kind: dialogue
+  speaker: analyst
+  text: Pulling out the chain-of-custody log.
+- kind: dialogue
+  speaker: quartermaster
+  text: Signing off on the previous day's requisitions.
+- kind: dialogue
+  speaker: press
+  text: Checking for any new press releases on The Scuttle.
+- kind: dialogue
+  speaker: captain
+  text: Reviewing the day's briefing notes.
+- kind: dialogue
+  speaker: forensics
+  text: Starting the evidence intake procedure.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Checking the evidence locker''s contents.'

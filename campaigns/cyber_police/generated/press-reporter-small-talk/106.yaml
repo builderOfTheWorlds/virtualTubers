@@ -1,0 +1,33 @@
+id: press-reporter-small-talk
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:29.718068+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I want to go over the briefing for tomorrow morning.
+- kind: dialogue
+  speaker: detective
+  text: Nothing's changed on Scuttle overnight, just the usual noise.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests they're setting up a new mirroring operation, but the
+    IP is still unknown.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up some chatter about a potential new exploit in the works.
+- kind: dialogue
+  speaker: forensics
+  text: Still no luck finding the source of that dodgy script that's been making the
+    rounds.
+- kind: dialogue
+  speaker: press
+  text: Need to manage the narrative around the latest raid – let's spin it as a "success"
+    but not too successful.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for new hardware are still pending, but I managed to scrounge
+    up some spare parts for the Agent.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

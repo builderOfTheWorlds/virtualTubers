@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:05.669895+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: It''s like they have a team of scouts watching us every
+    step of the way.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I swear, if I had to guess, I''d say they have someone inside
+    the department.'
+- kind: dialogue
+  speaker: analyst
+  text: That's impossible, we vet everyone who comes in here.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, but can we really trust the vetting process?
+- kind: dialogue
+  speaker: forensics
+  text: I've gone over the protocols a thousand times, I don't see any vulnerabilities.
+- kind: dialogue
+  speaker: press
+  text: Scuttle luck, my friends, it's just what we call it.
+- kind: dialogue
+  speaker: quartermaster
+  text: We'll get them next time, we just need to...
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: You know, I had a weird conversation with a "source" last
+    week.'

@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 121
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:10.602762+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I still can't get a clear connection between the Bosun and the recent proxy
+    chain updates.
+- kind: dialogue
+  speaker: captain
+  text: (over her shoulder) What's the analysis say, Priya? Any leads?
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, ma'am. I'm going to dig deeper. (scribbles notes on her chart)
+- kind: dialogue
+  speaker: detective
+  text: (leaning over Priya's shoulder) How's the link chart looking? Any breakthroughs?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Not yet. Not yet.
+- kind: dialogue
+  speaker: forensics
+  text: (walking by) You know, Priya, I've been going over the evidence from the last
+    raid...
+- kind: dialogue
+  speaker: analyst
+  text: (distracted) What about it, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: (pausing) I think I might have found a discrepancy in the Bosun's protocol.

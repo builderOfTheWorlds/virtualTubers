@@ -1,0 +1,40 @@
+id: no-respect-upstairs
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:49.107079+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on today's briefing. We've got a string of minor
+    phishing scams to tackle.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, because that's exactly what we need, more paperwork.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I think we can get some useful data out of these phishing
+    attempts. Maybe a pattern to track down our Scuttle operators.
+- kind: dialogue
+  speaker: agent
+  text: I'm just trying to get my hands on some decent coffee around here. You'd think
+    a high-tech unit like ours would have a functioning break room.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished processing the evidence from last night's raid. We should have
+    some DNA matches soon.
+- kind: dialogue
+  speaker: quartermaster
+  text: Speaking of which, has anyone seen the requisition forms I submitted last
+    week? I still haven't heard back on those.
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: "Cyber Cops Chased Yet Another Phantom Hacker" - Scuttle banner
+    on the right, below the fold.'
+- kind: dialogue
+  speaker: analyst
+  text: I'll send you the latest Scuttle chatter analysis, Captain. Maybe we can use
+    it to our advantage.
+- kind: dialogue
+  speaker: agent
+  text: At least someone around here takes this stuff seriously. I'm still waiting
+    on that coffee machine repair.

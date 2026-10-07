@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 61
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:42.944387+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Another day, another Scuttle banner
+- kind: dialogue
+  speaker: analyst
+  text: 'Did you see this morning''s headline? "Scuttle''s Latest Scam: Who Cares?"'
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Oh, we're a priority now. Prior to the department's priorities, anyway.
+- kind: dialogue
+  speaker: forensics
+  text: Backup request submitted for the 3-1 AM server breach. Holding out for a miracle.
+- kind: dialogue
+  speaker: quartermaster
+  text: (yelling) Why do we always get the old printers, anyway?
+- kind: dialogue
+  speaker: detective
+  text: Because it's not like we're asking for a new jetpack or something.
+- kind: dialogue
+  speaker: press
+  text: 'Cyber Police: Chasing Shadows in Cyberspace'
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing in 15. Let's get the usual.

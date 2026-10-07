@@ -1,0 +1,18 @@
+id: agent-hardware-complaint
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:51.053234+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this rig is older than some of the suspects we catch.
+- kind: dialogue
+  speaker: analyst
+  text: I've tried to explain to you why you need to use the new debugger, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I know, I know... but have you seen the code on that new debugger? It's
+    like they want us to fail.
+- kind: dialogue
+  speaker: forensics
+  text: Someone needs to get their hardware upgraded.

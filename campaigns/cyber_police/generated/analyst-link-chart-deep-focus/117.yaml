@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:53.294361+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure what I'm looking at here.
+- kind: dialogue
+  speaker: analyst
+  text: There are four links, each leading to a different person...
+- kind: dialogue
+  speaker: analyst
+  text: Let me see if I can map them out.
+- kind: dialogue
+  speaker: analyst
+  text: (tapping on her computer) This one seems to be a low-level moderator, probably
+    just a throwaway account...
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Unless... unless it's more than that.
+- kind: dialogue
+  speaker: analyst
+  text: I need to dig deeper.
+- kind: dialogue
+  speaker: agent
+  text: Captain's got a meeting with the Commissioner's office in an hour.
+- kind: dialogue
+  speaker: agent
+  text: We need to have an update on the case ready by then.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence from the last raid, but I'm still going through it.
+- kind: dialogue
+  speaker: forensics
+  text: (looking up) Do you want me to prioritize anything?
+- kind: dialogue
+  speaker: analyst
+  text: (still studying her computer screen) I think I need to see more of the network
+    traffic.

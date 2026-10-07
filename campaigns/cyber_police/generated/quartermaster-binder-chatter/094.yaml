@@ -1,0 +1,28 @@
+id: quartermaster-binder-chatter
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:55.245505+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''m logging every denial in "the eventual inquiry" binder.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Still nothing on the new mirror.'
+- kind: narration
+  speaker: captain
+  text: 'PV: The chatter spike is from a new identity, but I couldn''t find any other
+    connections.'
+- kind: narration
+  speaker: captain
+  text: 'DT: We''ll review the security footage.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Just a bunch of noise and static.'
+- kind: narration
+  speaker: captain
+  text: 'TP: Nothing from the friendly reporter.'
+- kind: narration
+  speaker: captain
+  text: 'RA: Alright, let''s move on. The Agent and Forensics, what have you got for
+    me?'

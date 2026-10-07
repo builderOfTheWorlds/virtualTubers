@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:45.516275+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: The Scuttle's been quiet for a while now, might be a good day to get some
+    actual work done.
+- kind: dialogue
+  speaker: analyst
+  text: I'll get started on the link charts, see if I can find anything new.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get moving. Morning briefing at 07:00 sharp.'
+- kind: dialogue
+  speaker: forensics
+  text: I'll just... uh... reheat this in the break room.
+- kind: dialogue
+  speaker: quartermaster
+  text: Who ate the last of the granola bars?!
+- kind: dialogue
+  speaker: press
+  text: Anything juicy on the dashboards this morning?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m good, just getting some research done.'

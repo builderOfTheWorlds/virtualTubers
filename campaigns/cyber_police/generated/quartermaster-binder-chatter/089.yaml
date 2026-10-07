@@ -1,0 +1,24 @@
+id: quartermaster-binder-chatter
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:35.693753+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Ah, finally, some time to review this binder.
+- kind: dialogue
+  speaker: agent
+  text: You're really looking forward to that eventual inquiry?
+- kind: dialogue
+  speaker: quartermaster
+  text: Not looking forward to it, exactly. Just trying to keep track.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Yeah, that's just a fun little ritual we have.
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling slightly) I suppose. So, who knows what tomorrow will bring?
+- kind: dialogue
+  speaker: agent
+  text: (smirks) Probably just another day of getting paged back in at an ungodly
+    hour.

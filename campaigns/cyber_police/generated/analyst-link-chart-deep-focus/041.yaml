@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:27.383858+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Another dead end, but I need to find the thread that connects this user to
+    the rest of the group.
+- kind: dialogue
+  speaker: captain
+  text: (standing up from her desk) Priya, what's your theory on the new Scuttle protocol?
+- kind: dialogue
+  speaker: analyst
+  text: I don't have one yet, Captain. I'm still digging. (scribbles on a notepad)
+    But this user's activity pattern looks familiar...
+- kind: dialogue
+  speaker: detective
+  text: (looking over Priya's shoulder) What's this? (points to a notation on the
+    notepad)
+- kind: dialogue
+  speaker: analyst
+  text: Just a thought. I was thinking maybe the Bosun's involved directly in the
+    protocol.
+- kind: dialogue
+  speaker: forensics
+  text: (walking into the room) Actually, I think I can help with that. I've been
+    analyzing some of the code from the seized servers...
+- kind: dialogue
+  speaker: analyst
+  text: (looks up) Oh? What did you find?

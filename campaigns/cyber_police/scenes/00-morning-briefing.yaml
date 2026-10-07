@@ -1,0 +1,159 @@
+# Spine scene 00 — the 07:00 briefing in the bullpen.
+#
+# The Captain frames the day (org_chart.md + rituals.md): a lead, a window,
+# a reason it matters. She hands intelligence to the Analyst, the plan to
+# the Detective, the story to Press and the supply notices to the
+# Quartermaster. The Detective hands tasks to the Agent and Forensics. The
+# Observer never speaks; he only appears in `stand_watch` beats.
+#
+# Every line is read aloud by TTS. Keep it short enough to breathe.
+id: morning-briefing
+title: The Seven O'Clock Briefing
+enter_narration: >-
+  A basement corridor under the department's main building. Five to seven in
+  the morning. The monitor bank is already lit.
+
+lore: [rituals, basement, org_chart, the_scuttle]
+mood: [joyful_activation]
+continuity_out: >-
+  Today's lead is set: the overnight chatter spike traces to a new Scuttle
+  mirror, and the unit has a six-hour window before it moves again. The
+  Analyst owns the intelligence picture, the Detective owns the plan, and
+  the Captain has opened the case file.
+
+beats:
+  - type: narration
+    speaker: captain
+    text: >-
+      Teresa Mbeki-Lowndes is already at the supply cage, the binder open on
+      the counter, before anyone else is down the stairs. Nobody saw her
+      come in. Nobody ever does.
+
+  - type: action
+    speaker: quartermaster
+    primitive: requisition
+    params: {item: two replacement trace servers, reason: the overnight hardware fell behind again}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      By seven, the bullpen is full. Six desks, nobody sitting. Rosalind
+      Agar stands by the monitor bank with a folded case file, and she
+      waits.
+
+  - type: action
+    speaker: observer
+    primitive: stand_watch
+    params: {target: the room from just inside the stairwell door}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      The man by the door is in the room now. The Captain opens the file.
+
+  - type: dialogue
+    speaker: captain
+    text: >-
+      Morning, all. Here's where we are. Overnight chatter spiked on three
+      channels, all pointing at a new Scuttle mirror, and we think we have a
+      six-hour window before it moves again. So here's what we need. Find
+      the mirror, and find it clean. Who's got it?
+
+  - type: dialogue
+    speaker: analyst
+    text: >-
+      So. Three things. One, the chatter traces to a hosting block we've
+      seen before, in year six. Two, I'll have the link chart updated by
+      eight. Three, it comes to you and the Detective first, together, this
+      time.
+
+  - type: dialogue
+    speaker: captain
+    text: >-
+      Good. Marcus. Can we move before the window closes?
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. We've had this hosting block before. The gap is the proxy chain —
+      it rotates faster than our last warrant template accounted for.
+      We'll have a plan by nine.
+
+  - type: action
+    speaker: detective
+    primitive: assign_lead
+    params:
+      to: the Agent
+      task: tracing the new mirror's proxy chain before the window closes
+      due: before nine
+
+  - type: dialogue
+    speaker: agent
+    text: >-
+      Okay, okay, so. That's a fast trace, probably. I'll pull the chatter
+      logs, and then I'll run it against the old hosting block fingerprint,
+      and then, well. Easy. I'm writing easy on the sticky note right now.
+
+  - type: dialogue
+    speaker: forensics
+    text: >-
+      Overnight intake. Two drives processed, chain intact. One flagged:
+      metadata doesn't match the seizure log. I'll have the discrepancy
+      written up before the trace is done.
+
+  - type: action
+    speaker: detective
+    primitive: assign_lead
+    params:
+      to: Forensics
+      task: resolving the metadata discrepancy on last night's intake
+      due: by noon
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      Love that. Here's the story, if it holds. Picture the headline — not
+      "hackers," not "the internet." A mirror, a window, a door we actually
+      got through. I'm keeping the reporter warm in case it's real this
+      time.
+
+  - type: dialogue
+    speaker: quartermaster
+    text: >-
+      Three things, then I'll let you go. The trace servers are requisitioned,
+      not approved, so don't count on them before Thursday. The go-bags need
+      restocking, so sign them out properly this time. And whoever left a
+      mug in the evidence locker, it's in the sink, pet. Leave it cleaner
+      than you found it.
+
+  - type: action
+    speaker: observer
+    primitive: stand_watch
+    params: {target: the case file in the Captain's hand}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar glances toward the stairwell before she answers anyone. It is a
+      short glance. Marcus Thorn notices it. So does Teresa.
+
+  - type: dialogue
+    speaker: captain
+    text: >-
+      Right. Six-hour window, a proxy chain that moves fast, and a mirror
+      we actually might catch standing still. Priya has the picture. Marcus
+      has the plan. Clear?
+
+  - type: action
+    speaker: captain
+    primitive: open_case
+    params: {title: Trace and confirm the new Scuttle mirror, priority: high}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      The bullpen empties toward the desks. When anyone looks back, the
+      stairwell door is clear. The man is already at the corner desk, his
+      folder closed, facing into the room.
+
+default_next: the-mirror-raid

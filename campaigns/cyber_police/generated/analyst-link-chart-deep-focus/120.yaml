@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T06:43:05.025896+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Muttering to herself about the link chart.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if I assume that the proxy chain is being run by the Bosun, then
+    I should be able to find the next hop by looking for the IP address that's most
+    similar to the previous one.
+- kind: dialogue
+  speaker: agent
+  text: (knocking on Priya's wall) Hey, we've got a new lead on one of the torrent
+    streams. Want to take a look?
+- kind: dialogue
+  speaker: analyst
+  text: (absent-mindedly) Oh, sure. Let me just finish this thought.
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) Priya, I think I found something. One of the seized
+    drives has a hidden folder that wasn't listed in the inventory.
+- kind: dialogue
+  speaker: analyst
+  text: (suddenly alert) What? Let me take a look.
+- kind: dialogue
+  speaker: press
+  text: (from outside the room) Update on the press conference tomorrow. We're going
+    to be talking about the latest stats on online piracy.
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself) Great, just what I needed. More hardware to requisition.

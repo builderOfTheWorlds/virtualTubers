@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:26.692589+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get a move on with this day.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''ve got a hunch about the server breach.'
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I've been digging through the logs. It looks like a smart copycat.
+- kind: dialogue
+  speaker: agent
+  text: Still nothing on the malware's origin.
+- kind: dialogue
+  speaker: forensics
+  text: Coffee's gone cold again. Anyone want a refill?
+- kind: dialogue
+  speaker: press
+  text: Can we get some actual leads instead of just speculation?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll see what I can do about getting more gear requisitioned.

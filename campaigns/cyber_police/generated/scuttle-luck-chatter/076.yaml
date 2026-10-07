@@ -1,0 +1,30 @@
+id: scuttle-luck-chatter
+take: 76
+model: llama3.1:8b
+generated_at: '2026-10-01T07:10:51.948443+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: We were close last time, but somehow the Scuttle managed to slip us
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the logs, and I think I see a pattern in their proxy
+    chains
+- kind: dialogue
+  speaker: forensics
+  text: You think you see a pattern? I'm the one who's been tracking the upload timestamps
+- kind: dialogue
+  speaker: press
+  text: Can we please just focus on the story for once? "The Scuttle outsmarts Cyber
+    Police" is going to be my Pulitzer
+- kind: dialogue
+  speaker: quartermaster
+  text: Not if I have anything to say about it, Davey. We'll get that Bosun yet
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright. Let's not get ahead of ourselves. We've got a lot of work
+    to do before we can even think about making arrests
+- kind: dialogue
+  speaker: detective
+  text: I'm telling you, it's just Scuttle luck. They're just rolling the dice and
+    waiting for us to get lucky

@@ -1,0 +1,23 @@
+id: agent-hardware-complaint
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:55.708295+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Des: Stupid old machine...'
+- kind: narration
+  speaker: captain
+  text: 'Pri: I''m still waiting for a response from IT on the new hardware.'
+- kind: dialogue
+  speaker: forensics
+  text: Wonder how long it'll take for them to approve those new hard drives...
+- kind: dialogue
+  speaker: press
+  text: Morning, team! What's the plan for today?
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. We've got a lead on a new mirror on The Scuttle.
+- kind: narration
+  speaker: captain
+  text: 'Des: Finally got the tracer running... I think.'

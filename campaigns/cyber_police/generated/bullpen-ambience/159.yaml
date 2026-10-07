@@ -1,0 +1,44 @@
+id: bullpen-ambience
+take: 159
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:04.830430+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning briefing is on schedule, people.
+- kind: dialogue
+  speaker: detective
+  text: Already started digging into that new mirror on The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests it's a phishing site, but the link graph is still a
+    mess.
+- kind: dialogue
+  speaker: agent
+  text: I'm on it, but my laptop is still crashing.
+- kind: dialogue
+  speaker: forensics
+  text: Found a dropped keyword on the server, might be our ticket in.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from the Herald, they're sniffing around for a story.
+- kind: dialogue
+  speaker: quartermaster
+  text: We're out of printer paper, again.
+- kind: narration
+  speaker: captain
+  text: 'Hana (Forensics): Don''t worry, I''ve got a few spares from the last requisition.'
+- kind: narration
+  speaker: captain
+  text: 'Deshawn (Agent): Still nothing on the hardware end, I''m stuck in the dark.'
+- kind: narration
+  speaker: captain
+  text: 'Davey (Press): Anyone seen the Herald''s social media manager? I need to
+    plant a seed.'
+- kind: narration
+  speaker: captain
+  text: 'Priya (Analyst): Still digging into the link graph, trying to find the common
+    thread.'
+- kind: dialogue
+  speaker: captain
+  text: Good, good. Keep at it, people.

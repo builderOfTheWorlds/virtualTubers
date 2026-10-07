@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 5
+model: llama3.1:8b
+generated_at: '2026-10-01T06:26:13.403000+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing's in thirty minutes.
+- kind: dialogue
+  speaker: detective
+  text: I've reviewed the overnight chatter spike, nothing stands out.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests a possible IP address linked to The Scuttle's infrastructure.
+- kind: dialogue
+  speaker: agent
+  text: I'm working on getting a warrant for the IP, but it's a tough sell.
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the last raid's evidence, nothing concrete yet.
+- kind: dialogue
+  speaker: press
+  text: I'll make sure to keep the press corps quiet today.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for the new equipment are still pending, we're running low on
+    decent laptops.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

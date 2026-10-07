@@ -1,0 +1,37 @@
+id: quartermaster-binder-chatter
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:26.687570+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting on that new storage unit, but it's been denied again.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, we're still waiting on that.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure what's taking so long, but I'll add it to my request for the
+    next week.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m more concerned about what we''re actually going to get,
+    not what we''re not getting.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Oh, you know, the usual. "Not a priority".
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll just add it to "the eventual inquiry" binder.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Teresa, we can''t keep relying on scraps.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Maybe we can talk to Internal Affairs again.'
+- kind: dialogue
+  speaker: agent
+  text: You think that'll do any good?
+- kind: dialogue
+  speaker: analyst
+  text: Let's focus on what we have, not what we don't.

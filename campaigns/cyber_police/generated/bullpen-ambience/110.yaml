@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:55.673833+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: It's still quiet outside.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, but that's what they want us to think.
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I'm still digging through the last batch of Scuttle chatter.
+- kind: dialogue
+  speaker: agent
+  text: I'm getting some weird traffic coming in from an unattributed node.
+- kind: dialogue
+  speaker: forensics
+  text: I'll take a look, see if I can match the signature.
+- kind: dialogue
+  speaker: press
+  text: Still no calls from the press, thank God.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just restocked the supply cage, nothing new.
+- kind: dialogue
+  speaker: captain
+  text: You're all clear to take your breaks, we're in a lull.
+- kind: dialogue
+  speaker: analyst
+  text: I'm good, still got work to do.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, same here. I'll just grab some coffee...
+- kind: dialogue
+  speaker: agent
+  text: You know that's just going to go cold.
+- kind: dialogue
+  speaker: forensics
+  text: (laughs) Yeah, it's like the coffee machine's trying to make a statement.

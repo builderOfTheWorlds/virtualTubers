@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T05:49:17.350529+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get the trace tool running, but it's still not cooperating.
+- kind: dialogue
+  speaker: analyst
+  text: '|| Priya sips her coffee and watches Deshawn with a sympathetic expression.'
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, come on...
+- kind: dialogue
+  speaker: forensics
+  text: You might want to check the hardware, Deshawn. It's a generation behind, after
+    all.
+- kind: dialogue
+  speaker: agent
+  text: I know, I know. But it's not like we have the budget to upgrade anytime soon.
+- kind: dialogue
+  speaker: analyst
+  text: '|| Priya leans in, examining the screen behind Deshawn.'

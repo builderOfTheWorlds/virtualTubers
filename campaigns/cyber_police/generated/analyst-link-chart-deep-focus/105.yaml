@@ -1,0 +1,30 @@
+id: analyst-link-chart-deep-focus
+take: 105
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:51.570427+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if I'm looking at this link chart, and I see these two nodes connected,
+    but the timestamps are inconsistent...
+- kind: dialogue
+  speaker: agent
+  text: I don't know, Priya, maybe it's just me, but this one link looks pretty flaky
+    to me.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I've been looking at the packet captures, and I think I see the
+    issue. It's a classic case of spoofed IP addresses.
+- kind: dialogue
+  speaker: press
+  text: Wait, so you're telling me that The Scuttle's entire operation is just a house
+    of cards?
+- kind: dialogue
+  speaker: quartermaster
+  text: I don't know what's going on with the budget, but we can't keep requisitioning
+    new hardware every six months. It's getting ridiculous.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's take a break. We'll reconvene at 14:00. In the meantime, I
+    want each of you to review your section of the investigation and come back with
+    any new leads.

@@ -1,0 +1,30 @@
+id: captain-commissioners-memo
+take: 145
+model: llama3.1:8b
+generated_at: '2026-10-01T07:24:50.544506+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I'll have to sign off on this, but I'm not making any promises
+- kind: dialogue
+  speaker: detective
+  text: You can't even get the Commissioner's office to take us seriously, Captain
+- kind: dialogue
+  speaker: analyst
+  text: I've been trying to get a meeting with them for months, but they just keep
+    brushing me off
+- kind: dialogue
+  speaker: agent
+  text: I've got a good feeling about the Scuttle case, we just need to find the right
+    angle
+- kind: dialogue
+  speaker: forensics
+  text: The new software I requisitioned still hasn't arrived, and I've been hearing
+    it's on backorder
+- kind: dialogue
+  speaker: press
+  text: I got a call from the editor, they want a piece on the unit, but I'm going
+    to have to walk the fine line between honesty and...
+- kind: dialogue
+  speaker: quartermaster
+  text: '...sensitivity'

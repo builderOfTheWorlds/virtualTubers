@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:08.921224+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I mean, what's the point of even calling ourselves the Cyber Police if we
+    can't catch a bunch of script kiddies?
+- kind: dialogue
+  speaker: analyst
+  text: Someone on the team needs to start looking at the data, see if we can identify
+    any patterns in their evasive maneuvers.
+- kind: dialogue
+  speaker: forensics
+  text: We're not just talking about evasive maneuvers, Priya. We're talking about
+    Scuttle luck on a whole different level. That site can just... vanish.
+- kind: dialogue
+  speaker: press
+  text: Oh, come on, it's not like it's magic. They just have better resources than
+    us, that's all.
+- kind: dialogue
+  speaker: quartermaster
+  text: Resources? We can barely keep our servers online. They must be laughing at
+    us from the other side of the mirror.
+- kind: dialogue
+  speaker: captain
+  text: That's enough. We all know what we're up against. What I want to know is...
+- kind: dialogue
+  speaker: detective
+  text: (interrupting) Captain, I think we should be looking at the possibility that
+    it's not just resources, but actual inside help. Someone on our end might be feeding
+    them information.

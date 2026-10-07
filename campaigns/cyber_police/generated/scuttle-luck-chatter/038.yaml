@@ -1,0 +1,23 @@
+id: scuttle-luck-chatter
+take: 38
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:13.060912+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I swear, the Scuttle is starting to get cocky.
+- kind: dialogue
+  speaker: agent
+  text: You think that's Scuttle luck, or they actually have a mole on the inside?
+- kind: dialogue
+  speaker: analyst
+  text: Either way, it's a design flaw, not a skill. We need to get our own quartermasters
+    on the same page.
+- kind: dialogue
+  speaker: captain
+  text: I'm not sure that's the problem. The real question is, are we even making
+    a dent?
+- kind: dialogue
+  speaker: detective
+  text: That's the problem, not making a dent. The problem is they're always one step
+    ahead of us.

@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 36
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:04.024229+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Okay, let's get the briefing over with.
+- kind: dialogue
+  speaker: detective
+  text: I've got nothing new on the Chen case, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Intel suggests a possible data dump from a compromised mirror in the 34th
+    district.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to crack the encryption, but I think it's a variation of
+    the Scorpion protocol.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the forensics side, but I did find some interesting anomalies
+    in the data from last night's raid.
+- kind: dialogue
+  speaker: press
+  text: We should prep for a possible press conference tomorrow morning.
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a reminder that we're short on spare parts for the surveillance gear.

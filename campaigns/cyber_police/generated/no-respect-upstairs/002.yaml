@@ -1,0 +1,27 @@
+id: no-respect-upstairs
+take: 2
+model: llama3.1:8b
+generated_at: '2026-10-01T05:45:15.094872+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Looks like it''s going to be a slow day, folks.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m just glad to be out of the paperwork.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's latest dump analyzed, but there's nothing new.
+- kind: dialogue
+  speaker: agent
+  text: Just a bunch of script kiddies trying to get attention.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a new batch of evidence from the previous case, but it's all over-crowded
+    with artifacts.
+- kind: dialogue
+  speaker: press
+  text: '"CYBER POLICE FOIL MYSTERIOUS PLOT (Not Really)".'
+- kind: dialogue
+  speaker: quartermaster
+  text: Just a bunch of requisition forms for some new hardware. I'll get to it eventually.

@@ -1,0 +1,12 @@
+id: agent-hardware-complaint
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:33.579336+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I'm the only one who still remembers what a reliable server looks
+    like.
+- kind: dialogue
+  speaker: analyst
+  text: I'm still trying to get the trace tool running, Deshawn.

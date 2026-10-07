@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 99
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:32.522529+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Okafor-Pryce: Another day, another chance to write the same joke about Cyber
+    Police'
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing in five. Don't bother requesting backup unless you really
+    mean it.
+- kind: dialogue
+  speaker: analyst
+  text: Sir, I'm just trying to get the analysis done...
+- kind: dialogue
+  speaker: forensics
+  text: Sir, the new hardware I ordered is on backorder, it's going to be another
+    week
+- kind: dialogue
+  speaker: quartermaster
+  text: Sorry, Captain, but I've got the requisition form right here...
+- kind: dialogue
+  speaker: detective
+  text: ( muttering ) "Somebody has to mean it..."
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Thorn, what've you got?

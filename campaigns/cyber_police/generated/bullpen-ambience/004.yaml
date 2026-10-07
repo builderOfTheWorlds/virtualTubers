@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:55.386214+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Let''s get the monitor bank going for the morning.'
+- kind: narration
+  speaker: captain
+  text: 'MT: Morning, Captain. I''ll get the analysis up.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Did anyone grab a fresh pot?'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''ll get it, Priya.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''m still running the image analysis, but it''s going to be a long morning.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Here''s the coffee.'
+- kind: narration
+  speaker: captain
+  text: 'DO:'
+- kind: narration
+  speaker: captain
+  text: 'OKP: I''ve got the morning news summaries up on the board.'
+- kind: narration
+  speaker: captain
+  text: 'TM: What''ve you got so far?'
+- kind: narration
+  speaker: captain
+  text: 'PN: Not much. The chatter spike from last night is still unidentified.'
+- kind: narration
+  speaker: captain
+  text: 'OKP: Good morning, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, Davey. Any news from upstairs?'

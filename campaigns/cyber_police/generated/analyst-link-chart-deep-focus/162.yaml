@@ -1,0 +1,8 @@
+id: analyst-link-chart-deep-focus
+take: 162
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:22.365758+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Making connections between IP addresses 192.168.1.50 and 192.168.1.75.

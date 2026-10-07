@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 125
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:17.715230+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Stupid coffee machine's broken again.
+- kind: dialogue
+  speaker: forensics
+  text: You'd think they'd replace it by now.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition forms need signing off.
+- kind: dialogue
+  speaker: analyst
+  text: What's the point of even having a form if nobody follows it?
+- kind: dialogue
+  speaker: press
+  text: Just trying to get through the day, folks.
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. What's the day's plan?
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting data from The Scuttle.
+- kind: dialogue
+  speaker: agent
+  text: Great, just what I need. More theories about Scuttle luck.
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) Can we just focus on the case for now?
+- kind: dialogue
+  speaker: quartermaster
+  text: Forms, anyone?
+- kind: dialogue
+  speaker: press
+  text: '(to himself) Note to self: Ask Hana about her data.'

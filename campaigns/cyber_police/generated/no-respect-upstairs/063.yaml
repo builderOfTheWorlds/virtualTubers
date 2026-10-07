@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:53.486521+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, morning briefing.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Looks like we''ve got a possible Scuttle sighting in the Bellvue
+    Towers complex.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been digging into the patterns, and I think I've found a connection to
+    the Viren incident.
+- kind: dialogue
+  speaker: agent
+  text: If we're lucky, we might get some actual backup this time.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is still analyzing the evidence from the last raid.
+- kind: dialogue
+  speaker: press
+  text: '(headline on a monitor) "Cyber Cops Strike Again: This Time, They Managed
+    to Catch Themselves a Cat in a Tree"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the team) Just a reminder, backup requests are always a 50-50 shot.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (to the team) Alright, let''s focus on the Bellvue case. We
+    need to move quickly.'

@@ -1,0 +1,19 @@
+id: agent-hardware-complaint
+take: 133
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:10.548587+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, I'm trying to get this trace tool running.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Sorry, sorry. Just got held up on the analysis side.
+- kind: dialogue
+  speaker: agent
+  text: (chuckles) No worries, no worries. Just me being grumpy because I'm stuck
+    with this ancient hardware.
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) I know, right? I'm still waiting for that new server
+    we requisitioned months ago.

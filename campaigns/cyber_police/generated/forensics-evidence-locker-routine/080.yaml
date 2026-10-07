@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 80
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:20.453660+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Swabbing the door handle with a disposable wipe.
+- kind: dialogue
+  speaker: forensics
+  text: Labeling the wipe with the date and time.
+- kind: dialogue
+  speaker: agent
+  text: Rummaging through his drawer for the evidence log.
+- kind: dialogue
+  speaker: forensics
+  text: Taking the wipe and labeling it as "door handle, entry, 14:47".
+- kind: dialogue
+  speaker: analyst
+  text: Looking up from her screen to glance at the evidence log.
+- kind: dialogue
+  speaker: forensics
+  text: Placing the labeled wipe in the logbook.
+- kind: dialogue
+  speaker: quartermaster
+  text: Checking the requisition binder for any new requests.
+- kind: dialogue
+  speaker: forensics
+  text: Stowing the wipe in a evidence bag.

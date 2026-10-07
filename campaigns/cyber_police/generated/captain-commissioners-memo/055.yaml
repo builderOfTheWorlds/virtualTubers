@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 55
+model: llama3.1:8b
+generated_at: '2026-10-01T06:17:00.401479+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Ah, "the computer thing"
+- kind: dialogue
+  speaker: detective
+  text: I'm surprised nobody's sued us yet
+- kind: dialogue
+  speaker: analyst
+  text: We should probably requisition some new hardware
+- kind: dialogue
+  speaker: agent
+  text: Someone should tell the Commissioner it's not just computers
+- kind: dialogue
+  speaker: forensics
+  text: It's not like we're asking for much
+- kind: dialogue
+  speaker: press
+  text: Another day, another "department's IT department with badges" headline
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the denied requisition forms right here

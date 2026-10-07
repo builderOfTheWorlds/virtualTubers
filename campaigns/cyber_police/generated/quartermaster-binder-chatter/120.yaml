@@ -1,0 +1,27 @@
+id: quartermaster-binder-chatter
+take: 120
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:34.776012+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: It looks like another lovely day of being underfunded.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Someone''s going to have to explain this to the Commissioner.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm seeing a lot of chatter on the dark web about a new encryption method.
+- kind: dialogue
+  speaker: agent
+  text: I'm running diagnostics on the latest batch of seized equipment. Nothing's
+    coming up.
+- kind: dialogue
+  speaker: forensics
+  text: I'm still trying to crack that code from last week. It's a dead end.
+- kind: dialogue
+  speaker: press
+  text: We need a press briefing to explain why we're not making any progress.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get back to work. We have a lead to chase.'

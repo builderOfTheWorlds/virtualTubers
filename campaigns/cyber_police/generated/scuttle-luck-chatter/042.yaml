@@ -1,0 +1,32 @@
+id: scuttle-luck-chatter
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:29.488427+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: We should have gotten a lead on the new mirror servers by now.
+- kind: dialogue
+  speaker: agent
+  text: Come on, it's just Scuttle luck, it'll turn up again.
+- kind: dialogue
+  speaker: analyst
+  text: I'm telling you, I saw something suspicious on the proxy chain, it was a dead
+    giveaway.
+- kind: dialogue
+  speaker: forensics
+  text: Yeah, but we've been saying that for years and the Bosun always slips through.
+- kind: dialogue
+  speaker: press
+  text: Guys, can we not talk about this on camera?
+- kind: dialogue
+  speaker: detective
+  text: I'm serious, we need to take a closer look at the Commodore's messages, there's
+    always something hidden in them.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not get ahead of ourselves.
+- kind: dialogue
+  speaker: quartermaster
+  text: I just wish we could get one good break, one that doesn't get swept under
+    the rug.

@@ -1,0 +1,31 @@
+id: bullpen-ambience
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:45.589596+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team. Today's lead is on a compromised system in the city's east
+    sector.
+- kind: dialogue
+  speaker: detective
+  text: Already on it, Captain. Thorn here will be reviewing the footage and I'll
+    be interviewing the user.
+- kind: dialogue
+  speaker: analyst
+  text: Just got a hit on the system's IP address. It looks like we're dealing with
+    an old-school botnet.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I can see that. I'll start digging into the botnet's architecture.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the evidence from the scene. We've got some interesting
+    logs on the system's activity.
+- kind: dialogue
+  speaker: press
+  text: And I've got a press inquiry coming in. Want me to field it?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just requisitioned some new hardware for the lab. Fingers crossed it'll make
+    it through procurement.

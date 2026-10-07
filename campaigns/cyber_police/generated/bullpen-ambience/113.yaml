@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:15.686907+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few charts ready for us to go over.
+- kind: dialogue
+  speaker: agent
+  text: Just waiting on that hardware to show up from requisition.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the evidence log started, but I need that server to be swapped out.
+- kind: dialogue
+  speaker: press
+  text: Morning, team. Anything exciting happen while I was out?
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, Agent, that server was due for a swap a week ago.
+- kind: dialogue
+  speaker: analyst
+  text: I know, I tried to log it in, but it got lost in the queue.
+- kind: dialogue
+  speaker: captain
+  text: Just prioritize what we need and I'll see what I can do.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to go over those charts, see what we can do today.
+- kind: dialogue
+  speaker: agent
+  text: Coffee's getting cold, by the way.
+- kind: dialogue
+  speaker: forensics
+  text: I'll grab another cup for the Agent.

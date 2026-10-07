@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 201
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:57.954804+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if I have to debug this trace tool one more time...

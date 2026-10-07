@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 44
+model: llama3.1:8b
+generated_at: '2026-10-01T07:07:42.504371+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's just a matter of time before we nail the Bosun.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, right. Like the time we got close to the Bosun and it turned out to
+    be a decoy server with a rubber duck video.
+- kind: dialogue
+  speaker: detective
+  text: I'm not saying it's impossible, but what's the real explanation? Just Scuttle
+    luck?
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the data from the last raid, and I'm starting to think
+    we're just missing something obvious.
+- kind: dialogue
+  speaker: quartermaster
+  text: Obvious? We've been missing obvious for three years.
+- kind: dialogue
+  speaker: press
+  text: I've got a story brewing on the Scuttle's latest banner. "NO QUARTER, NO ADS"
+    - what a joke.

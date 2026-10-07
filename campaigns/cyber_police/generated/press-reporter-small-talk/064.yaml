@@ -1,0 +1,29 @@
+id: press-reporter-small-talk
+take: 64
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:19.783013+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Priya! How's life in the pit of despair?
+- kind: dialogue
+  speaker: analyst
+  text: Morning, Davey. Just another day of wading through The Scuttle's nonsense.
+- kind: dialogue
+  speaker: agent
+  text: (overheard) Just got an email from Internal Affairs about the requisition
+    list.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the team) Alright, let's get started. What do we have today?
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. Our lead for today is a chatter spike in the East
+    sector.
+- kind: dialogue
+  speaker: forensics
+  text: (to herself) Finally, something to work with.
+- kind: dialogue
+  speaker: press
+  text: (to the team) I've got a press briefing at 10. I'll need some updates on the
+    case.

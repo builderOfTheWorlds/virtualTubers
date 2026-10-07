@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:44.096964+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CO: Morning, Cyber Police.'
+- kind: narration
+  speaker: captain
+  text: 'DA: What''s the day''s priorities, Captain?'
+- kind: narration
+  speaker: captain
+  text: 'PO: Nothing''s been updated since last night''s watch.'
+- kind: narration
+  speaker: captain
+  text: 'CA: We''ve got a possible ID on The Scuttle''s source code.'
+- kind: narration
+  speaker: captain
+  text: 'DN: How''s the hardware looking, Hana?'
+- kind: narration
+  speaker: captain
+  text: 'HV: Still running the same 2018 specs.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''m sure it''ll hold up.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Yeah, no reason to get any newer versions.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Okay, let''s get started then.'
+- kind: narration
+  speaker: captain
+  text: 'TB: Just a second, I need to get the press update.'
+- kind: narration
+  speaker: captain
+  text: 'DA: Scuttle''s got a new article out.'
+- kind: narration
+  speaker: captain
+  text: 'TB: I''ll take a look.'

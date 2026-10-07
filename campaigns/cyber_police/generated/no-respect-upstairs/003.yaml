@@ -1,0 +1,42 @@
+id: no-respect-upstairs
+take: 3
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:29.285961+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, team. Let''s get started.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Morning, all. I've got the Scuttle's latest blog post up on the screens.
+- kind: dialogue
+  speaker: agent
+  text: Ugh, already?
+- kind: dialogue
+  speaker: forensics
+  text: Morning. I've finished processing the latest data dump from the net-ops.
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone. Coffee's brewing.
+- kind: dialogue
+  speaker: press
+  text: '''Cyber Cops: Still Not Real Police'' - this is a real headline.'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (sighs) Let''s move on.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ve got a call with net-ops to review the latest takedown
+    attempts.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm still running some numbers on the Scuttle's recent IP traffic.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Like we're really going to get backup from the uniforms...
+- kind: dialogue
+  speaker: forensics
+  text: Morning, Agent Okafor.

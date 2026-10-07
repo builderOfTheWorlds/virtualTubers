@@ -1,0 +1,33 @@
+id: scuttle-luck-chatter
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T07:43:22.791707+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the proxy chain logs, and I'm still not seeing any evidence
+    of a mirror popping up ahead of the last raid.
+- kind: dialogue
+  speaker: agent
+  text: That's just Scuttle luck, Hana. They've got a Bosun who's a ninja.
+- kind: dialogue
+  speaker: captain
+  text: Scuttle luck or not, we're still coming up empty-handed. I want you all to
+    think about what we're doing wrong.
+- kind: dialogue
+  speaker: analyst
+  text: I think it's because we're always chasing our tails. We're reacting to their
+    moves instead of anticipating them.
+- kind: dialogue
+  speaker: press
+  text: (muttering to himself) And it doesn't help that the press is having more fun
+    with this than we are...
+- kind: dialogue
+  speaker: quartermaster
+  text: (smiling) Oh, come on, Davey. It's all in good fun. The Scuttle's got a sense
+    of humor about it, after all.
+- kind: dialogue
+  speaker: detective
+  text: (to Captain Agar) Ma'am, with all due respect, maybe we're not looking at
+    this the right way. What if they're not just trying to evade us, but also trying
+    to make a point?

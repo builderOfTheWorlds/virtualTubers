@@ -1,0 +1,26 @@
+id: analyst-link-chart-deep-focus
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:17.991723+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, if we assume the Bosun's operation is indeed hierarchical...
+- kind: dialogue
+  speaker: agent
+  text: I've got a hit on a possible mirror site in the Eastern Europe cluster.
+- kind: dialogue
+  speaker: forensics
+  text: I'm not getting any signs of unusual activity on the network traffic... yet.
+- kind: dialogue
+  speaker: press
+  text: Uh, can we talk about the press conference in 30? I want to make sure I'm
+    prepared.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned some new hardware for the evidence lockers, but the supplier
+    says it's on backorder.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's review the plan for the morning. Thorn, what's the status on
+    the warrants?

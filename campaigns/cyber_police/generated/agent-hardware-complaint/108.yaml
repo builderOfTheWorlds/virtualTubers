@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:01.961482+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe the hardware we're stuck with?
+- kind: dialogue
+  speaker: forensics
+  text: I'm just trying to get this trace tool up and running, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, yeah, I know. Just...
+- kind: dialogue
+  speaker: forensics
+  text: (chuckles) Okay, okay. What's the plan, then?
+- kind: dialogue
+  speaker: agent
+  text: I don't know, I was just trying to get the tool to work, but... (mutters to
+    himself)

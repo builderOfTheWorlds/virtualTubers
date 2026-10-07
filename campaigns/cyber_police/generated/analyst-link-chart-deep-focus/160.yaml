@@ -1,0 +1,20 @@
+id: analyst-link-chart-deep-focus
+take: 160
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:13.544132+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: This link could be a dead end, but it's worth chasing
+- kind: dialogue
+  speaker: captain
+  text: Alright, what's the potential damage here?
+- kind: dialogue
+  speaker: analyst
+  text: If it pans out, it could be a lead on the Bosun
+- kind: dialogue
+  speaker: agent
+  text: Let's get a team together to dig into this
+- kind: dialogue
+  speaker: analyst
+  text: I'll start running some tests, see if we can get a read on the Scuttle protocol

@@ -1,0 +1,19 @@
+id: agent-hardware-complaint
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:29.926683+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'ok: The Agent complains good-naturedly to a colleague about the unit''s outdated
+    hardware while trying to get a trace tool running.'
+- kind: narration
+  speaker: captain
+  text: 'dm: What''s it going to take to get us a decent system around here?'
+- kind: narration
+  speaker: captain
+  text: 'do: I don''t know, but I''m starting to think it''s going to take a miracle.'
+- kind: narration
+  speaker: captain
+  text: 'hp: (laughing) Oh, come on, Deshawn, it''s not like we''re asking for a new
+    headquarters.'

@@ -1,0 +1,32 @@
+id: bullpen-ambience
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:23.373151+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Ah, morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Still a lot of chatter on The Scuttle, but nothing concrete yet.
+- kind: dialogue
+  speaker: agent
+  text: Coffee's on.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Still can't get this lab to run right...
+- kind: dialogue
+  speaker: press
+  text: Any word on the latest from The Scuttle?
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Nothing yet, Press.
+- kind: narration
+  speaker: captain
+  text: (whispers from the Comms Room) "This is not a drill..."
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What is it, Comms?'

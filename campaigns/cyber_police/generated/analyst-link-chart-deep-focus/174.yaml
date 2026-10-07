@@ -1,0 +1,42 @@
+id: analyst-link-chart-deep-focus
+take: 174
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:04.006084+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the link chart again, and I think I found a pattern.
+- kind: dialogue
+  speaker: agent
+  text: (from off-screen) What's the Captain doing?
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) If I can just isolate the variable...
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to herself) I've got the requisition for new hardware on Captain's
+    desk...
+- kind: dialogue
+  speaker: forensics
+  text: (in the background, working on a report) Evidence locker is full up again.
+- kind: dialogue
+  speaker: press
+  text: (on the phone) No, no, I'm not interested in a statement about "Cyber Police
+    incompetence" yet.
+- kind: dialogue
+  speaker: analyst
+  text: (tracing a line on the chart) If they're trying to cover their tracks, they're
+    doing a terrible job of it...
+- kind: dialogue
+  speaker: captain
+  text: (over the comms system) Alright, let's take a break. We've got a lot of work
+    to do still.
+- kind: dialogue
+  speaker: agent
+  text: (off-screen) Can I get a word with the Captain?
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) I know I'm missing something...
+- kind: dialogue
+  speaker: captain
+  text: (over the comms system) Yes, what is it?

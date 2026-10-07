@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 62
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:48.046542+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, team. Let's get moving.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. I'll start reviewing the backlog.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the Scuttle's latest post flagged.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to track down the lead on the Viren-7 hack.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the new batch of forensic samples waiting.
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, I've requisitioned the new 3D printer.
+- kind: dialogue
+  speaker: press
+  text: '(on a monitor) "Cyber Police Fail: The Unit That Can''t Catch a Break"'
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Let's not worry about what Davey's writing.
+- kind: dialogue
+  speaker: detective
+  text: (whispering to Priya) I swear, one big case and we'll get some respect.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering back) I know, but...

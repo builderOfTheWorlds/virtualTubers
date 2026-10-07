@@ -1,0 +1,33 @@
+id: observer-corner-desk
+take: 85
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:00.236747+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I've reviewed the overnight chatter and there's been a spike in encrypted
+    traffic on a new node.
+- kind: dialogue
+  speaker: analyst
+  text: I've been analyzing the link charts and I think I've found a possible entry
+    point.
+- kind: dialogue
+  speaker: agent
+  text: I've been tracing the signals and I think I've found a possible exit point.
+- kind: dialogue
+  speaker: forensics
+  text: I've processed the evidence from the last raid and I think I've found something
+    interesting.
+- kind: dialogue
+  speaker: press
+  text: I've been reviewing the press briefings and I think we need to be more proactive
+    about managing the narrative.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned some new equipment and I'm waiting on approval.
+- kind: narration
+  speaker: captain
+  text: 'Observer: |'

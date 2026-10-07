@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 97
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:47.399840+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm collecting evidence from the latest raid.
+- kind: dialogue
+  speaker: analyst
+  text: What do we have on the suspects?
+- kind: dialogue
+  speaker: forensics
+  text: Server drives and some networking gear. I'll catalog and store it in the evidence
+    locker.
+- kind: dialogue
+  speaker: agent
+  text: Can I get the drives analyzed for backdoors?
+- kind: dialogue
+  speaker: forensics
+  text: Already running the tests. I'll send the results to the Agent.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Update on the case status, please.'

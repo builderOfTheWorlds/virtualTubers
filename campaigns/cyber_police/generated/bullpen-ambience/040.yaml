@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:28.346881+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving on that new mirror lead.
+- kind: dialogue
+  speaker: detective
+  text: I'm looking at the feeds from the cafe.
+- kind: dialogue
+  speaker: analyst
+  text: The analyst is flagging some odd network traffic patterns.
+- kind: dialogue
+  speaker: agent
+  text: My end's still running the latency tests.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics just got a request from HQ to review the cafe's security footage.
+- kind: dialogue
+  speaker: press
+  text: Time to prep for the afternoon briefing, I guess.
+- kind: dialogue
+  speaker: quartermaster
+  text: The quartermaster's binder is getting too thick.

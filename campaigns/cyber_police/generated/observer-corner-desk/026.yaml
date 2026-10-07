@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:51.895464+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We have a quiet morning ahead of us.
+- kind: dialogue
+  speaker: detective
+  text: I've reviewed the overnight chatter and we have a new mirror to focus on.
+- kind: dialogue
+  speaker: analyst
+  text: The link charts suggest a possible connection to the recent spike in activity.
+- kind: dialogue
+  speaker: agent
+  text: I'm setting up the tools to track the new mirror.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the evidence locker ready.
+- kind: dialogue
+  speaker: press
+  text: I've got a few questions about the morning's press conference.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing out of the ordinary on the requisition side.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

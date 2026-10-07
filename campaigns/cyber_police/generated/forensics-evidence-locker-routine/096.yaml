@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:44.219212+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking through the bullpen, I check the equipment and tools at each station,
+    verifying they're in working order.
+- kind: dialogue
+  speaker: agent
+  text: Checking the inventory, I make sure we have all the necessary equipment for
+    the next raid.
+- kind: dialogue
+  speaker: quartermaster
+  text: Reviewing the requisition binder, I see we need to order more replacement
+    hard drives for the lab.
+- kind: dialogue
+  speaker: analyst
+  text: Checking the link charts, I see we have a new lead on a possible IP address.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Beginning the daily briefing, I outline the day''s priority
+    and lead.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Reviewing the case file, I see we have a new warrant request
+    for a possible server location.'
+- kind: dialogue
+  speaker: press
+  text: Checking the press kit, I see we have a media conference scheduled for later
+    today.
+- kind: dialogue
+  speaker: forensics
+  text: Processing the new evidence request from the Agent, I log it into the chain
+    of custody.

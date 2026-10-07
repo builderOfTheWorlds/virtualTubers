@@ -1,0 +1,43 @@
+id: bullpen-ambience
+take: 167
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:49.387528+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started on the next case.
+- kind: dialogue
+  speaker: detective
+  text: I've got the morning's updates on the Smithson mirror, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I'm seeing some interesting chatter patterns on the dark web, but I need the
+    Agent to look at it.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is still waiting on that server from the Wilson raid. We need to
+    get it online ASAP.
+- kind: dialogue
+  speaker: press
+  text: Anything I need to know, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: The Quartermaster is requesting a new printer for the bullpen.
+- kind: dialogue
+  speaker: captain
+  text: Get it in writing.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Still no luck with the encrypted message...
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) I'll just go grab a new cup of coffee.
+- kind: dialogue
+  speaker: detective
+  text: (to the Captain) Do we have a plan for the Smithson investigation, Captain?
+- kind: dialogue
+  speaker: captain
+  text: Not yet. Let's get a plan together.

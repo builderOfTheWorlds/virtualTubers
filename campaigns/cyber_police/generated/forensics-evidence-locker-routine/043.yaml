@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T06:22:04.170740+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker is cleared and sanitized for new evidence intake.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, we've got a fresh batch of drives from the lab.
+- kind: dialogue
+  speaker: forensics
+  text: Affirmative, Agent. I'll log them in and assign chain of custody.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What''s the package status?'
+- kind: dialogue
+  speaker: forensics
+  text: Still pending. We're waiting on the lab for the DNA results.
+- kind: dialogue
+  speaker: analyst
+  text: I'm running some anomalous patterns on the recent data dump.
+- kind: dialogue
+  speaker: forensics
+  text: Have you compared them to the known threat vectors?
+- kind: dialogue
+  speaker: analyst
+  text: Already done. This one's a new signature.

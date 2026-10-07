@@ -1,0 +1,13 @@
+id: agent-hardware-complaint
+take: 125
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:43.332508+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running but our hardware is from the Stone
+    Age.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Again. This is the fourth time this month I've had to recompile
+    something because our compilers are three years old.

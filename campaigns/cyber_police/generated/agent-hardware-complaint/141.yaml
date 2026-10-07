@@ -1,0 +1,16 @@
+id: agent-hardware-complaint
+take: 141
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:37.551796+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: You know, if this rig was even three years old, we'd have a chance at keeping
+    up with The Scuttle
+- kind: dialogue
+  speaker: analyst
+  text: According to the last mirror, it's still using the outdated protocol we patched
+    in '18
+- kind: dialogue
+  speaker: press
+  text: How's the plan coming along, Detective?

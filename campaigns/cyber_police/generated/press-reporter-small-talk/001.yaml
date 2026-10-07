@@ -1,0 +1,34 @@
+id: press-reporter-small-talk
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:16.757688+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get the briefing started.
+- kind: dialogue
+  speaker: detective
+  text: We've got a new mirror on The Scuttle, mirror 4-12 is up.
+- kind: dialogue
+  speaker: analyst
+  text: Intel says it's a phishing campaign targeting local businesses.
+- kind: dialogue
+  speaker: agent
+  text: I'm picking up a few interesting IPs on the network.
+- kind: dialogue
+  speaker: forensics
+  text: We've got a new drive in for analysis, it's encrypted.
+- kind: dialogue
+  speaker: press
+  text: Nothing much to report, just a few outlets picked up our last Scuttle luck
+    story.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Supply notice: we''ve got a new shipment of spare parts coming in.'
+- kind: narration
+  speaker: captain
+  text: 'Observer: (stands by the stairwell door)'
+- kind: narration
+  speaker: captain
+  text: 'Note: The Observer''s line is typically a silent beat, but I''ve included
+    it here as per your request.'

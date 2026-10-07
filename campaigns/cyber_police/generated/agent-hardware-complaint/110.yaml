@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 110
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:05.161389+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, T, we're never going to get this trace tool running on this ancient
+    hardware.

@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:05.695417+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Priya, what's the latest from forensics on that new Scuttle mirror?
+- kind: dialogue
+  speaker: analyst
+  text: Still working on it, Davey, but Hana's got some interesting findings on the
+    login history.
+- kind: dialogue
+  speaker: agent
+  text: What's the plan for today's op, Captain?
+- kind: dialogue
+  speaker: captain
+  text: We've got a new lead on one of the Scuttle's shell accounts. Marcus, what's
+    the play?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I was thinking we could try to track the account''s activity
+    to a physical location.'
+- kind: dialogue
+  speaker: forensics
+  text: I've got some possible matches on the IP address, but I need more data to
+    confirm.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Requisitions for today are: one new workstation, one updated server, and
+    a replacement for that broken 3D printer.'
+- kind: dialogue
+  speaker: agent
+  text: Can we get the server today, Teresa? We really need it to keep up with The
+    Scuttle.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll see what I can do, Deshawn, but like always, it's not looking good.
+- kind: dialogue
+  speaker: press
+  text: Anything I need to manage in terms of media today, Captain?
+- kind: dialogue
+  speaker: captain
+  text: Just keep an eye on the usual suspects, Davey. I don't want to see any of
+    the usual Scuttle-fueled conspiracy theories popping up.

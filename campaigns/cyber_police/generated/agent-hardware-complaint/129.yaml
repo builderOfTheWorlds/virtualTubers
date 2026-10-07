@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 129
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:59.475365+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: You know, we really need to get some new hardware in here.
+    This thing is older than some of the leads we''re chasing.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got the latest patches installed, but it's still running on 32-bit.
+- kind: dialogue
+  speaker: forensics
+  text: You think this is about the hardware, Thorn?
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Enough bickering, let''s focus on the task at hand. We''ve
+    got a lead to chase.'
+- kind: dialogue
+  speaker: press
+  text: You think the Captain's going to let us get any new gear?
+- kind: dialogue
+  speaker: quartermaster
+  text: Actually, I've got the requisition forms right here. Maybe we can get some
+    upgrades after all.

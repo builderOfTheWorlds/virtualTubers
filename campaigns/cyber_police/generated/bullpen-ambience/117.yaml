@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 117
+model: llama3.1:8b
+generated_at: '2026-10-01T06:45:32.599272+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Someone bring me the morning's log reports
+- kind: dialogue
+  speaker: detective
+  text: Just getting here, Captain, sorry I'm late
+- kind: dialogue
+  speaker: analyst
+  text: No coffee? I swear I filled the machine.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Great, the Agent's laptops won't turn on... again
+- kind: dialogue
+  speaker: forensics
+  text: (whispering to herself) 42% match on this sample... not enough
+- kind: dialogue
+  speaker: press
+  text: Any word from upstairs? We've got a press conference in an hour
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, everyone! (yelling down the hall) Quartermaster in 5!
+- kind: dialogue
+  speaker: detective
+  text: (to Priya) You okay? You look like you've lost your last hope

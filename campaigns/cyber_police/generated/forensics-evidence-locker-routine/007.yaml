@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T06:06:27.021874+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: 'Collecting and processing evidence is a two-step procedure: first, the evidence
+    is gathered and properly documented, then it''s stored securely in the evidence
+    locker.'
+- kind: dialogue
+  speaker: agent
+  text: Forensics needs to be notified as soon as evidence is collected, so they can
+    begin processing it and maintaining the chain of custody.
+- kind: dialogue
+  speaker: analyst
+  text: I'm currently working on a few cases, but I can take a look at the evidence
+    and start processing it.
+- kind: dialogue
+  speaker: captain
+  text: Excellent, Forensics. Get started on it right away. And Agent, make sure to
+    update the case file and document the chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the equipment ready, Captain. And Analyst, can you provide me with
+    the relevant intelligence on the case?
+- kind: dialogue
+  speaker: analyst
+  text: Of course, Agent. Let me just check the case file real quick.

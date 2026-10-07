@@ -1,0 +1,72 @@
+# Spine scene 06 — the wrap. The case stays open, as it always does, but
+# tonight is the first time in a long while the floor leaves with
+# something that didn't come from a mirror or a rubber duck: a name.
+id: end-of-day-wrap
+title: End of Day
+enter_narration: >-
+  19:00. The bullpen, lights still up, nobody quite ready to call it yet.
+
+lore: [rituals, respect, org_chart]
+mood: [tenderness]
+continuity_in: >-
+  The storage unit raid recovered a real lease and a bank transfer, giving
+  the unit its first concrete identity lead on the Scuttle crew in years.
+continuity_out: >-
+  The case file stays open under a new identity lead instead of closing;
+  the unit logs the day as a win it can't yet prove, and the Captain closes
+  the case file with that lead attached for tomorrow's briefing.
+
+beats:
+  - type: dialogue
+    speaker: captain
+    text: >-
+      Here's where we ended up. A courier, a locker, an empty unit, and a
+      name that isn't the Bosun but might lead there. That's further than
+      this case has moved in longer than any of us want to admit. Good
+      work.
+
+  - type: dialogue
+    speaker: quartermaster
+    text: >-
+      Three things, then I'll let you go, loves. The go-bags go back in the
+      cage tonight, not tomorrow. The forced-entry kit needs a parts
+      replacement, which I'm requisitioning and which will be denied, and
+      I'm putting that in the binder. And somebody left evidence tape on
+      my counter. Again.
+
+  - type: dialogue
+    speaker: forensics
+    text: >-
+      Lease and receipt logged. Chain intact. Cross-reference goes to
+      Priya overnight. If the name holds up, it's the cleanest thread
+      we've had.
+
+  - type: dialogue
+    speaker: press
+    text: >-
+      I'm not touching this with the reporter until the name's confirmed.
+      Love that we've got something real to sit on, for once, instead of
+      explaining why we don't.
+
+  - type: action
+    speaker: captain
+    primitive: file_report
+    params: {title: "Daily case summary — Scuttle mirror traced, courier identified, new identity lead recovered", result: "case remains open, escalated priority for tomorrow"}
+
+  - type: dialogue
+    speaker: detective
+    text: >-
+      Hm. We've ended a day with less than this before. Go home. It'll
+      still be open tomorrow. It always is.
+
+  - type: action
+    speaker: observer
+    primitive: stand_watch
+    params: {target: "the case file as the Captain closes it"}
+
+  - type: narration
+    speaker: captain
+    text: >-
+      Agar closes the file. The bullpen empties toward the stairwell. When
+      anyone looks back, the corner desk is the one part of the basement
+      that is never fully dark.

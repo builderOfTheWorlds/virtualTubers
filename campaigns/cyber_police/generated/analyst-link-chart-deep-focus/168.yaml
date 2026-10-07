@@ -1,0 +1,28 @@
+id: analyst-link-chart-deep-focus
+take: 168
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:38.953072+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to identify a pattern in these login attempts from IP 192.168.1.50.
+- kind: dialogue
+  speaker: agent
+  text: That's a weird one. I've been tracking the traffic on that IP, and it keeps
+    popping up on different servers.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, I've been seeing that too. It's like they're trying to cover their tracks,
+    but not quite doing it right.
+- kind: dialogue
+  speaker: forensics
+  text: I've been looking at the traffic patterns, and I think I've found something.
+    There's a small packet leak on the 50th floor server that might be related to
+    this IP.
+- kind: dialogue
+  speaker: agent
+  text: That's a good catch, Hana. I'll go take a look at the server.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging into these login attempts. Maybe we can find a trail leading
+    back to the Bosun.

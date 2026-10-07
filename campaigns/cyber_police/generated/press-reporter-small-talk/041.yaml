@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:09.493808+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'RO: Alright, morning, folks.'
+- kind: narration
+  speaker: captain
+  text: 'DKP: Morning, Captain. Did I get the report on the latest Scuttle chatter?'
+- kind: narration
+  speaker: captain
+  text: 'RO: Not yet, Davey. Let''s get the briefing started.'
+- kind: narration
+  speaker: captain
+  text: 'HA: Intelligence says the Scuttle''s been sniffing around the Ashiorid servers
+    again.'
+- kind: narration
+  speaker: captain
+  text: 'MT: Plan is to get a team in, quiet and quick. We don''t know what we''ll
+    find.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m picking up some interesting network chatter, Captain. Looks like
+    they might be trying to cover their tracks.'
+- kind: narration
+  speaker: captain
+  text: 'HM: I''ve got a new drive coming in from the lab, looks like it might be
+    connected to the Ashiorid breach.'
+- kind: narration
+  speaker: captain
+  text: 'DKP: Anything I should worry about today, Captain?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Just the usual, Davey. Get a statement from the Ashiorid rep and try
+    to keep the press from getting too excited.'

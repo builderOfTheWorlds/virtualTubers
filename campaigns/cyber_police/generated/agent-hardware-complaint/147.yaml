@@ -1,0 +1,20 @@
+id: agent-hardware-complaint
+take: 147
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:48.395584+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm getting nowhere with this trace tool.
+- kind: dialogue
+  speaker: analyst
+  text: Have you tried running it on a newer machine?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I've been trying to get the unit's IT to upgrade our hardware for months.
+- kind: dialogue
+  speaker: forensics
+  text: You know we can't afford the latest and greatest.
+- kind: dialogue
+  speaker: agent
+  text: I know, but can't we at least get something from this century?

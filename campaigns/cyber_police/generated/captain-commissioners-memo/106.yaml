@@ -1,0 +1,28 @@
+id: captain-commissioners-memo
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:38.627098+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's memo is a real piece of work
+- kind: dialogue
+  speaker: detective
+  text: I take it "the computer thing" is a compliment now
+- kind: dialogue
+  speaker: analyst
+  text: Of course, because we're not actually police
+- kind: dialogue
+  speaker: agent
+  text: It's not like we're just making it up as we go along, Commissioner
+- kind: dialogue
+  speaker: forensics
+  text: Can we just get some new laptops already?
+- kind: dialogue
+  speaker: press
+  text: I've got a few choice words for the Commissioner's office, but I'll keep them
+    to myself for now
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a whole folder full of denied requisitions, just waiting for the
+    inevitable inquiry

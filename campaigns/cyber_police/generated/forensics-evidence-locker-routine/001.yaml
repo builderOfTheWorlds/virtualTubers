@@ -1,0 +1,42 @@
+id: forensics-evidence-locker-routine
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T05:44:54.808790+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker door is secured, keypad locked, awaiting the Captain's
+    code.
+- kind: dialogue
+  speaker: agent
+  text: Just got a page from The Scuttle's schedule, we're on 15 minutes' notice for
+    a raid.
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, time to process the new evidence from the 4 AM raid.
+- kind: dialogue
+  speaker: analyst
+  text: Analyst's already working on the link charts, but I need the raw data from
+    Forensics first.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I get a signature for this new shipment of cables?
+- kind: dialogue
+  speaker: agent
+  text: Evidence requests already in queue, Forensics is reviewing them now.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's see... we've got a possible IP trail from the compromised server.
+- kind: dialogue
+  speaker: forensics
+  text: Everything's been properly logged and bagged, ready for transfer to Evidence.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the current status of the investigation?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are all up-to-date, let me know if you need anything else.
+- kind: dialogue
+  speaker: captain
+  text: (to Davey) "We can't comment on ongoing investigations, but I can say we're
+    making progress."

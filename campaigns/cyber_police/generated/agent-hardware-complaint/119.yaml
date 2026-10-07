@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:33.881368+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this old thing can't even run a decent trace tool.
+- kind: dialogue
+  speaker: analyst
+  text: Can you try updating the drivers?
+- kind: dialogue
+  speaker: agent
+  text: Already tried that, Priya. It's the hardware, plain and simple.
+- kind: dialogue
+  speaker: analyst
+  text: Okay, okay, but we need to run the trace. Can I grab the Captain?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, go ahead. Just great, now the Captain's going to tell me we need to
+    requisition more funds for new gear...
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: What''s going on, Deshawn?'

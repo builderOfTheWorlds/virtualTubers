@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T06:39:22.778288+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I swear, we're never going to catch them. Their entire operation is a joke.
+- kind: dialogue
+  speaker: agent
+  text: Come on, Hana, it's not like we've got nothing. We just need a good lead...
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, that's all it is. They've got inside help or something.
+- kind: dialogue
+  speaker: quartermaster
+  text: You think so? Or maybe it's just us being incompetent.
+- kind: dialogue
+  speaker: press
+  text: (chuckling) I'm pretty sure it's the former, not the latter. I mean, who tries
+    this hard to be bad?
+- kind: dialogue
+  speaker: captain
+  text: (sighing) Alright, alright, let's not get too carried away. We'll get them
+    eventually.
+- kind: dialogue
+  speaker: detective
+  text: Yeah, because we always do.

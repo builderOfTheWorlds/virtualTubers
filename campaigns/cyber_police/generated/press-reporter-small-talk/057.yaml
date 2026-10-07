@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T07:02:29.268760+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Roz, what's new with the Scuttle?
+- kind: dialogue
+  speaker: captain
+  text: Nothing new, Davey, just the usual noise
+- kind: dialogue
+  speaker: press
+  text: I take that as code for 'they're still one step ahead of us'
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Something like that
+- kind: dialogue
+  speaker: press
+  text: I had a few calls from my contacts, heard the department's still not taking
+    this unit seriously
+- kind: dialogue
+  speaker: captain
+  text: I wouldn't worry about that, Davey, we're not in this for the department's
+    validation
+- kind: dialogue
+  speaker: press
+  text: You know as well as I do, Roz, that's not how it works. You need someone to
+    believe in you
+- kind: dialogue
+  speaker: captain
+  text: I'm afraid that's not going to be the department anytime soon
+- kind: dialogue
+  speaker: press
+  text: I'll talk to you soon, Roz. Good luck with the briefing

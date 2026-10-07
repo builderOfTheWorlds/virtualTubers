@@ -1,0 +1,34 @@
+id: bullpen-ambience
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:07.133716+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We're not getting much out of the mirror yet, just some noise.
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the chatter spike, might be a phishing campaign.
+- kind: dialogue
+  speaker: analyst
+  text: Looking at the link charts, I think we might have a false positive on our
+    hands.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to get the 3D scan to stabilize on the evidence.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a possible match on one of the drives, but it's not giving me much
+    to work with.
+- kind: dialogue
+  speaker: press
+  text: I need to know what to tell the press, can someone give me an update on the
+    case?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a requisition for new hard drives coming in, but it's not looking
+    good.
+- kind: narration
+  speaker: captain
+  text: (Teresa leans back in her chair, running a hand through her hair, as the others
+    continue to work)

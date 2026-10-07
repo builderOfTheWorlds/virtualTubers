@@ -1,0 +1,8 @@
+id: analyst-link-chart-deep-focus
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:41.409374+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I don't understand why this thread is so thin...

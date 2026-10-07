@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:40.810279+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the denied-requisitions list from last week
+- kind: dialogue
+  speaker: detective
+  text: Tell me again, Teresa, why we can't get the software we need ||emotion:angry

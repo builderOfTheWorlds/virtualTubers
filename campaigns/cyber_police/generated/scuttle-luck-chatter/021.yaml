@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 21
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:37.454159+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I mean, you have to admit, those privateers have game.
+- kind: dialogue
+  speaker: detective
+  text: Game? They're just lucky.
+- kind: dialogue
+  speaker: analyst
+  text: That's what I keep saying. There's no way they're that good at it all the
+    time.
+- kind: dialogue
+  speaker: agent
+  text: I think it's because we're not taking the whole "no quarter" thing seriously.
+- kind: dialogue
+  speaker: forensics
+  text: I've been going over the mirror traffic, and I think I found a pattern...
+- kind: dialogue
+  speaker: press
+  text: (yelling from the press area) "NO QUARTER, NO ADS" is trending on the Net!
+- kind: dialogue
+  speaker: captain
+  text: (shouting back) I'm glad someone's taking it seriously! Now can someone get
+    me a cup of coffee?

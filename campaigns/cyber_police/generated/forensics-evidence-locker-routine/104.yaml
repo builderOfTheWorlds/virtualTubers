@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T07:27:23.524183+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm clearing the evidence locker now.
+- kind: dialogue
+  speaker: analyst
+  text: Need me to sign off on that?
+- kind: dialogue
+  speaker: forensics
+  text: Negative, Analyst. Evidence intake is chain-of-custody.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, can you give me the chain of custody for the recent The Scuttle
+    cases?
+- kind: dialogue
+  speaker: forensics
+  text: The Scuttle evidence is stored separately, Agent. You need to make a request.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can I requisition a new drive for the supply cage?

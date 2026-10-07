@@ -1,0 +1,32 @@
+id: agent-hardware-complaint
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T05:46:45.101907+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, come on, come on...
+- kind: dialogue
+  speaker: analyst
+  text: What's wrong, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this trace tool running. Our hardware's an embarrassment.
+- kind: dialogue
+  speaker: forensics
+  text: Tell me about it. I had to run the same debugger on that ancient server three
+    times already.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and don't even get me started on the processor speeds. We're still using
+    2015 tech.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not get into that right now. We have a job to do.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, Captain, I think Deshawn's point is relevant. If we can't even keep
+    our hardware up to date...
+- kind: dialogue
+  speaker: agent
+  text: '...then how are we supposed to catch The Scuttle?'

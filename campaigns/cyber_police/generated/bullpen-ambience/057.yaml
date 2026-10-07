@@ -1,0 +1,29 @@
+id: bullpen-ambience
+take: 57
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:54.077873+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain. What've we got on the docket for today?
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the Scuttle chatter, but nothing stands out as a priority.
+- kind: dialogue
+  speaker: agent
+  text: Trying to get the hardware upgrade for the monitoring suite, but Procurement
+    says it's on backorder.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics lab is still short-staffed, Captain.
+- kind: dialogue
+  speaker: press
+  text: Don't see anything on the Scuttle overnight. No big changes, no big spikes.
+    Just the usual.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioned a new thermal camera for the evidence locker, but I'm still
+    waiting on the sign-off.

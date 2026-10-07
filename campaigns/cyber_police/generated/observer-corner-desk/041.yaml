@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 41
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:11.533327+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm still going over the link charts.
+- kind: dialogue
+  speaker: detective
+  text: Can you pull out the anomalies? I want to know what we missed.
+- kind: dialogue
+  speaker: analyst
+  text: Already on it, but it's going to take some time.
+- kind: dialogue
+  speaker: forensics
+  text: (working in silence, occasionally glancing up at the Observer)
+- kind: dialogue
+  speaker: agent
+  text: (adjusting his chair, watching the Observer)
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering to herself, checking the requisition binder)
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: (standing by the briefing table, looking at the Observer)'
+- kind: dialogue
+  speaker: press
+  text: (sitting at his desk, typing away, occasionally glancing at the Observer)

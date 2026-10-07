@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 215
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:45.764496+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, come on, why won't this tool just run?
+- kind: dialogue
+  speaker: analyst
+  text: Not my problem, Deshawn, you're the one trying to get the trace.
+- kind: dialogue
+  speaker: agent
+  text: Hey, I'm trying, okay?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn:'
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, alright, let''s not have a meeting about the hardware
+    just yet.'

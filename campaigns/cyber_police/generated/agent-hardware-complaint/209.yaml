@@ -1,0 +1,33 @@
+id: agent-hardware-complaint
+take: 209
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:26.718998+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, it's like trying to get blood out of a stone
+- kind: dialogue
+  speaker: analyst
+  text: The new hardware from last week's requisition has the same specs as what we've
+    been using for years
+- kind: dialogue
+  speaker: forensics
+  text: I'm still waiting for the new forensic kit to get approved
+- kind: dialogue
+  speaker: press
+  text: Good morning, team, I've got some... um... 'press' coverage to discuss
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing's moved on the requisition for new laptops yet
+- kind: dialogue
+  speaker: forensics
+  text: outdated hardware, outdated techniques...
+- kind: dialogue
+  speaker: agent
+  text: Alright, let's try to get this trace tool running.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not even sure if it's worth the effort
+- kind: dialogue
+  speaker: press
+  text: I'll just take a seat and try to get something out of this

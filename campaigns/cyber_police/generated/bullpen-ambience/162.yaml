@@ -1,0 +1,30 @@
+id: bullpen-ambience
+take: 162
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:17.946017+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, day''s almost over, let''s wrap up the case files.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Already on it, Captain. Just need to finish the report on
+    the encrypted server.'
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) And I'm still trying to track down the source of that
+    anomaly in the Scuttle's code...
+- kind: dialogue
+  speaker: agent
+  text: You know, Captain, I think I found a lead on the new malware variant.
+- kind: dialogue
+  speaker: forensics
+  text: (from the corner) Actually, I've been analyzing the samples and I think we
+    have a match with an old botnet.
+- kind: dialogue
+  speaker: press
+  text: (yawns) And I'm just trying to get out of here before the overtime paperwork
+    kicks in.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Just signing off the requisition forms, Captain.

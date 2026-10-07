@@ -1,0 +1,44 @@
+id: scuttle-luck-chatter
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T06:35:49.399145+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Scuttle luck is just a euphemism for "we can't catch a break"
+- kind: dialogue
+  speaker: analyst
+  text: Oh, come on, Deshawn, you can't just blame it on bad luck
+- kind: dialogue
+  speaker: agent
+  text: What, you think the Bosun is just one guy with a sweet hacking setup?
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I've been going over the data, and I think we might be looking at...
+- kind: dialogue
+  speaker: analyst
+  text: Scuttle luck, Hana, that's just Scuttle luck ||emotion:rolling her eyes
+- kind: dialogue
+  speaker: agent
+  text: Yeah, like that one time we had a mirror located, and then it just... disappeared
+- kind: dialogue
+  speaker: quartermaster
+  text: You boys think you're so funny, but I'm the one who's always bringing the
+    snacks
+- kind: dialogue
+  speaker: press
+  text: Okay, okay, let's not get too sidetracked. Can we get back to the task at
+    hand?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Task at hand? You mean trying to track down the Quartermasters
+    for the hundredth time?'
+- kind: dialogue
+  speaker: analyst
+  text: Hey, we've got to be optimistic, guys. We'll get them eventually
+- kind: dialogue
+  speaker: captain
+  text: Actually, I think Priya's right. We just need to regroup and...
+- kind: narration
+  speaker: captain
+  text: ( argument continues in the background, growing more heated )

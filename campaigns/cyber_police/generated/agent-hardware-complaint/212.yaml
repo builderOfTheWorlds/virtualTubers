@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 212
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:41.095054+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if this thing doesn't boot up, I'm blaming the whole IT department
+- kind: dialogue
+  speaker: analyst
+  text: I'm running the diagnostics, but it's going to take a while
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Okay, let''s not panic, we''ve got a backup in the comms room'
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I've got a better idea, let's just try to get the USB drive going
+- kind: dialogue
+  speaker: press
+  text: You know, I've seen this thing running on an old tablet, it's not that hard
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) I've got the requisition forms, but I'm not holding my breath
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s get to work, people, we''ve got a lead to
+    chase'

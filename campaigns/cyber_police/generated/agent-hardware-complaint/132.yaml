@@ -1,0 +1,37 @@
+id: agent-hardware-complaint
+take: 132
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:07.392250+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Des: That thing is still running on a 2015 build.'
+- kind: narration
+  speaker: captain
+  text: 'Pri: I''m not sure if it''s the driver or the OS, but I think we can try
+    updating the kernel.'
+- kind: dialogue
+  speaker: forensics
+  text: Can someone explain why we don't have the latest malware definitions?
+- kind: dialogue
+  speaker: quartermaster
+  text: You know why, Hana. It's because everything we need is on the requisition
+    list for next quarter.
+- kind: narration
+  speaker: captain
+  text: 'Des: Because that list is a joke, Teresa.'
+- kind: dialogue
+  speaker: detective
+  text: What's going on here?
+- kind: dialogue
+  speaker: captain
+  text: Just discussing the joys of outdated hardware, Marcus.
+- kind: narration
+  speaker: captain
+  text: 'Pri: (laughs) Yeah, because that''s not something we do every day.'
+- kind: dialogue
+  speaker: forensics
+  text: Can we just focus on getting the trace tool up and running?
+- kind: dialogue
+  speaker: quartermaster
+  text: (muttering) Not that it matters...

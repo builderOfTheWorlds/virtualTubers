@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:22.290799+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The door to the evidence locker is locked, but I've got the code.
+- kind: dialogue
+  speaker: agent
+  text: I'm bringing in the 3D printer from the supply cage.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the new drives in the evidence locker.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, everyone, let''s move. We''ve got a unit to process.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Analyst, what''s the latest from the link charts?'
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got the requisition binder ready.
+- kind: dialogue
+  speaker: agent
+  text: Just a minute, Agent. I need to check the console.

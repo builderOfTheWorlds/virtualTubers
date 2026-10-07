@@ -1,0 +1,38 @@
+id: observer-corner-desk
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T07:32:55.654981+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've been reviewing the link charts and I think I see a pattern.
+- kind: dialogue
+  speaker: captain
+  text: Priya, what's the pattern you're seeing?
+- kind: dialogue
+  speaker: analyst
+  text: Just that The Scuttle's infrastructure seems to be shifting rapidly, but with
+    a clear thread of communication.
+- kind: dialogue
+  speaker: detective
+  text: Okay, let's get the Analyst to tie that to our current lead.
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: Meanwhile, I''ve got the Agent''s requests to Forensics
+    coming in hot, let''s get moving on the tech side.'
+- kind: dialogue
+  speaker: forensics
+  text: Forensics has confirmed the warrant, let's get it signed off.
+- kind: dialogue
+  speaker: press
+  text: Just a question, what's the plan for handling the press on this one?
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting on the requisition response, but I think we're good to go on
+    the tech side.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure how to...
+- kind: narration
+  speaker: captain
+  text: '[The Observer sits at his desk, watching, without a change in expression]'

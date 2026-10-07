@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 126
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:46.811102+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing is still running on ancient RAM.
+- kind: dialogue
+  speaker: analyst
+  text: I think we're trying to run a 32-bit OS on 64-bit hardware.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm surprised it's still working at all, but that's just going to make it
+    crash harder when it does.
+- kind: dialogue
+  speaker: captain
+  text: Just get it working, people. We've got a lead to chase.
+- kind: dialogue
+  speaker: press
+  text: Anything new on the Scuttle front?

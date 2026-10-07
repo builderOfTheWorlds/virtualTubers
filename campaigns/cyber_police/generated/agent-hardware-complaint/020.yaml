@@ -1,0 +1,24 @@
+id: agent-hardware-complaint
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:39.887901+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm not even getting a solid connection to the server, just a lot of static.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get a read on the current state of the Scuttle, but it's going
+    dark on me.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Someone get Hana on the comms room, see if we can patch through
+    to the main server.'
+- kind: dialogue
+  speaker: forensics
+  text: I'm trying to troubleshoot the connection, but it's like the system is actively
+    avoiding me.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Alright, let''s take a deep breath and try to isolate the
+    problem.'

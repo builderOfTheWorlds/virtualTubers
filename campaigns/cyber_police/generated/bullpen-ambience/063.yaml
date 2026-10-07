@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 63
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:28.624223+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: I''m still waiting for the reports from that raid in sector 4.'
+- kind: narration
+  speaker: captain
+  text: 'MN: Captain, I think I found a possible backdoor on the latest drop.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Yeah, I was going to mention that, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Can I take a look at the code?'
+- kind: narration
+  speaker: captain
+  text: 'DP: You know, I still have to call the press officer about that story.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Captain, what''s the latest on the case files?'
+- kind: narration
+  speaker: captain
+  text: 'TR: Just the usual paperwork, Detective.'
+- kind: narration
+  speaker: captain
+  text: 'DA: (looking up from her console) Let''s get started on those reports, people.'
+- kind: narration
+  speaker: captain
+  text: 'MN: (muttering to herself) Backdoor... that''s a nice one...'
+- kind: narration
+  speaker: captain
+  text: 'DO: (sipping his coffee) This coffee''s getting cold again.'
+- kind: narration
+  speaker: captain
+  text: 'HV: (focusing on her work) Okay, let''s see...'
+- kind: narration
+  speaker: captain
+  text: 'DP: (distracted) Ooh, is that the duck video?'

@@ -1,0 +1,38 @@
+id: press-reporter-small-talk
+take: 66
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:33.948495+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Priya, how's the family?
+- kind: dialogue
+  speaker: analyst
+  text: Davey, they're all good, thanks. The baby's still learning to sleep through
+    the night.
+- kind: dialogue
+  speaker: press
+  text: (laughs) Oh, yeah, I remember those days. How about the team? Anything new
+    on The Scuttle?
+- kind: dialogue
+  speaker: agent
+  text: Nothing yet, but the Commissioner's office is breathing down the Captain's
+    neck.
+- kind: dialogue
+  speaker: press
+  text: Ugh, that's all we need. Did they finally approve the new surveillance software?
+- kind: dialogue
+  speaker: forensics
+  text: No, it's still in limbo. But I did get a call from the lab, they think they
+    found something on the last mirror drop.
+- kind: dialogue
+  speaker: press
+  text: (smirks) Finally, some good news. I'll try to get a statement from the lab,
+    see if I can spin it into something.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Good morning, everyone. Just a heads up, I've got
+    a requisition for some upgraded malware detection software.
+- kind: dialogue
+  speaker: press
+  text: (sighs) Good luck with that, Teresa. We all know how that'll go.

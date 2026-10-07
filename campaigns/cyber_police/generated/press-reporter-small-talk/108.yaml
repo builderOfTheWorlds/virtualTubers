@@ -1,0 +1,41 @@
+id: press-reporter-small-talk
+take: 108
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:42.019189+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the loop:'
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, people, let''s review the case files.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Nothing new to add, ma''am.'
+- kind: narration
+  speaker: captain
+  text: 'AN: We''ve got a possible lead on a new mirror server.'
+- kind: narration
+  speaker: captain
+  text: 'AO: I''ll get to work on tracking it down.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve found some promising tracks in the chat logs.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Looks like our friend Scuttle might be getting sloppy.'
+- kind: narration
+  speaker: captain
+  text: 'TM: (to DO) You think this is the break we need?'
+- kind: narration
+  speaker: captain
+  text: 'TP-OP: (to TM) I''ll make sure to keep an ear out for anything juicy.'
+- kind: narration
+  speaker: captain
+  text: 'AN: Analyst''s corner: our lead has a 30% success rate on new mirrors.'
+- kind: narration
+  speaker: captain
+  text: 'HV: And I''ve isolated a potential pattern in the data.'
+- kind: narration
+  speaker: captain
+  text: 'TP-LO: (to AN and HV) Great work, both of you. Keep digging.'

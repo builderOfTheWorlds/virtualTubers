@@ -1,0 +1,23 @@
+id: bullpen-ambience
+take: 37
+model: llama3.1:8b
+generated_at: '2026-10-01T05:58:13.759166+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The monitors are a good enough display for now.
+- kind: dialogue
+  speaker: analyst
+  text: I'll just finish this analysis and then I can help with the evening shift.
+- kind: dialogue
+  speaker: agent
+  text: Can someone check if there's still coffee in the break room?
+- kind: dialogue
+  speaker: forensics
+  text: Already did, Deshawn. There's one cold cup left.
+- kind: dialogue
+  speaker: press
+  text: Did anyone remember to call me about that interview for the newscast?
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a call in to the comms room to get the schedule.

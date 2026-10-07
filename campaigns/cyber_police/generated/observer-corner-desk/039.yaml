@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 39
+model: llama3.1:8b
+generated_at: '2026-10-01T06:29:02.147853+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Briefing's at 07:00. Everyone's expected to be here.
+- kind: dialogue
+  speaker: analyst
+  text: No change in the link chart overnight, but some chatter is getting louder.
+- kind: dialogue
+  speaker: detective
+  text: I want the Agent to focus on tracing the signal to that new mirror server.
+- kind: dialogue
+  speaker: agent
+  text: Already on it, sir. I've got a few ideas on where to look.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new from the evidence locker, but I've got a few things to review
+    from the latest raid.
+- kind: dialogue
+  speaker: press
+  text: Press conference is still scheduled for 14:00, but I'll need to know if anything
+    changes.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are in for the new monitoring software, but budget says it's
+    still pending.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

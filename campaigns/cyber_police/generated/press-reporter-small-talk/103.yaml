@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:08.827076+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, morning, everyone. Let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I've got the lead on the phishing scam, Captain. We think it's connected to
+    the Vector-9 group.
+- kind: dialogue
+  speaker: analyst
+  text: According to the intel, Vector-9 is using a new encryption method. I've flagged
+    the code for further analysis.
+- kind: dialogue
+  speaker: agent
+  text: I've got access to the server, but I'm not seeing anything out of the ordinary
+    yet.
+- kind: dialogue
+  speaker: press
+  text: Morning, Captain. I see you've got a press conference scheduled for this afternoon.
+    Anything new to talk about?
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, all. I've got the requisition forms ready.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get moving. Detective, what's the plan for today?
+- kind: dialogue
+  speaker: detective
+  text: We'll start by tracing the Vector-9 IP address. I'll brief you all once we
+    have more info.

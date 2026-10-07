@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:05.313368+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: The briefing notes are ready, Captain.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started. Our lead today is...
+- kind: dialogue
+  speaker: detective
+  text: I've been going over the link charts, and I think we have a possible match
+    for the IP address on the mirror that went up last night.
+- kind: dialogue
+  speaker: agent
+  text: I'll start digging into the infrastructure, see if we can pinpoint the source.
+- kind: dialogue
+  speaker: forensics
+  text: Forensics is ready to process the evidence, just waiting on a green light
+    from the Detective.
+- kind: dialogue
+  speaker: press
+  text: I've been going over the chatter spikes, and I think I see a pattern.
+- kind: dialogue
+  speaker: quartermaster
+  text: The requisition list for the week is due, and I still haven't heard back from
+    Procurement.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

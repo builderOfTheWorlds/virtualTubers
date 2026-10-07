@@ -1,0 +1,29 @@
+id: no-respect-upstairs
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:17.464863+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, team, let's get to it. Cyber-Scuttle's been making the rounds again.
+    ||emotion:neutral
+- kind: dialogue
+  speaker: detective
+  text: Yeah, and they're calling themselves 'Free Thought Activists' this time. Real
+    original. ||emotion:angry
+- kind: dialogue
+  speaker: analyst
+  text: I've got a few leads on a possible Scuttle server, but it's going to be a
+    long shot. ||emotion:sad
+- kind: dialogue
+  speaker: agent
+  text: Hey, Teresa, can we get a new batch of burner phones? The ones we have are
+    from 2018. ||emotion:neutral
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to take a look at the traffic data, see if I can find any patterns.
+    ||emotion:neutral
+- kind: dialogue
+  speaker: quartermaster
+  text: Sorry, Deshawn, we're not getting any new hardware until the next budget cycle.
+    Maybe think about a grant proposal. ||emotion:disappointed

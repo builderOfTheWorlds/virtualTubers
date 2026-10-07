@@ -1,0 +1,15 @@
+id: agent-hardware-complaint
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:32.829709+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to get this trace tool running, but the old hardware is giving
+    me grief.
+- kind: dialogue
+  speaker: analyst
+  text: I'm getting some weird network anomalies.
+- kind: dialogue
+  speaker: captain
+  text: Anyone have a spare USB drive we can use?

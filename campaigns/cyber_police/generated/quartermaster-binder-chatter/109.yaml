@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:53.552003+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''ll have to make a note in "the eventual inquiry"'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I still can''t believe those requests are denied'

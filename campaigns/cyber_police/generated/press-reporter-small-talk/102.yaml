@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 102
+model: llama3.1:8b
+generated_at: '2026-10-01T07:38:03.413914+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Still haven't gotten that piece on the new social network app
+- kind: dialogue
+  speaker: captain
+  text: What's new, Davey? Anything interesting to share?
+- kind: dialogue
+  speaker: press
+  text: Not much, Captain. Just wondering when the Scuttle's going to make a move
+- kind: dialogue
+  speaker: detective
+  text: We need something to make it a story, not just a headline
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the Scuttle's latest drop, and I think I've found something
+- kind: dialogue
+  speaker: forensics
+  text: Can we talk about the requisition list, Quartermaster? I think there's been
+    a mistake
+- kind: dialogue
+  speaker: quartermaster
+  text: Sorry, Hana, but I'm afraid the Commissioner's office has denied our request
+- kind: dialogue
+  speaker: agent
+  text: When was the last time we got a decent lead, anyway?
+- kind: dialogue
+  speaker: captain
+  text: Let's not get too discouraged, team. We've had successes in the past
+- kind: dialogue
+  speaker: press
+  text: Speaking of which, has anyone seen that old Scuttle luck theory I was working
+    on?

@@ -1,0 +1,37 @@
+id: forensics-evidence-locker-routine
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:44.846382+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Reaching for the badge on my ID, I punch in the access code to the evidence
+    locker.
+- kind: dialogue
+  speaker: agent
+  text: Checking the monitors for any new alerts before heading out for our daily
+    routine.
+- kind: dialogue
+  speaker: analyst
+  text: Reviewing the printouts and link charts on my desk, making sure I'm up to
+    speed on the current case.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Picking up the phone to review the morning briefing with the
+    Commissioner''s office.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Reconciling the unit's inventory with the requisition binder, making sure
+    we're not short on any critical supplies.
+- kind: dialogue
+  speaker: press
+  text: Checking my notes from the previous day, looking for any new leads to pursue
+    for my next story.
+- kind: dialogue
+  speaker: forensics
+  text: Taking a moment to review the chain-of-custody procedures, making sure I'm
+    following protocol correctly.
+- kind: dialogue
+  speaker: agent
+  text: Confirming with the Agent that the technical lead is still good, and we're
+    on the right track.

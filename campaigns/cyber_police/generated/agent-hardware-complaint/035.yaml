@@ -1,0 +1,28 @@
+id: agent-hardware-complaint
+take: 35
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:53.146113+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can't believe we're still stuck with this ancient hardware.
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool running, but it's giving me a headache.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Someone explain to me why our system is still using Windows
+    7.'
+- kind: dialogue
+  speaker: forensics
+  text: I don't think it's a hardware issue, Deshawn, maybe it's just a configuration
+    problem.
+- kind: dialogue
+  speaker: quartermaster
+  text: If I recall correctly, we were supposed to upgrade to Windows 10 last year.
+- kind: dialogue
+  speaker: press
+  text: Can someone tell me what's going on? I just got a call from the editor.
+- kind: dialogue
+  speaker: agent
+  text: I'm trying to troubleshoot here, Davey, give me a minute.

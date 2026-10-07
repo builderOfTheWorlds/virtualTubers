@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:11.082522+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Processing the evidence locker's contents.
+- kind: dialogue
+  speaker: agent
+  text: Forensics, I need you to send over the hard drive from the latest raid.
+- kind: dialogue
+  speaker: analyst
+  text: Already on it, Agent. It's being prepared for transport to the lab.
+- kind: dialogue
+  speaker: forensics
+  text: Confirming receipt of the drive. Chain of custody will be maintained.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitioning gloves and evidence bags for the transfer.
+- kind: dialogue
+  speaker: forensics
+  text: Preparing the locker for the incoming evidence.
+- kind: dialogue
+  speaker: press
+  text: Not a peep from the press today.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good. Less noise for me to deal with.'

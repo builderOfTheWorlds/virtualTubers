@@ -1,0 +1,32 @@
+id: quartermaster-binder-chatter
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T07:40:47.324073+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll just go ahead and add this one to the binder.
+- kind: dialogue
+  speaker: quartermaster
+  text: It's going to be a long time before we get those new scanners.
+- kind: dialogue
+  speaker: quartermaster
+  text: The Captain's already promised us that one... maybe this time.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm starting to think that "eventual inquiry" is just going to be a nice way
+    of saying "annual audit."
+- kind: dialogue
+  speaker: quartermaster
+  text: Okay, which one of you is going to go get the requisition form?
+- kind: dialogue
+  speaker: agent
+  text: Looks like we're going to have to wait a bit longer for those new hard drives.
+- kind: dialogue
+  speaker: agent
+  text: You know, I swear the only thing that's ever been approved is the latest coffee
+    machine.
+- kind: dialogue
+  speaker: forensics
+  text: I'm starting to think we should just start requisitioning all the coffee machines
+    we want.

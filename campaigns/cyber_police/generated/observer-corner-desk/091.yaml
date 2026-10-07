@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 91
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:25.783151+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. Today's directive is...
+- kind: dialogue
+  speaker: detective
+  text: Marcus, what do we know so far?
+- kind: dialogue
+  speaker: analyst
+  text: Priya has been digging into the mirror server, Captain.
+- kind: dialogue
+  speaker: agent
+  text: Deshawn, I've got a new tool set up to track the signals.
+- kind: dialogue
+  speaker: forensics
+  text: Hana, what are you expecting to get from the latest raid?
+- kind: dialogue
+  speaker: press
+  text: Davey, I've got a line on a possible leak from the department.
+- kind: dialogue
+  speaker: quartermaster
+  text: Teresa, what's the status on the new hardware request?
+- kind: narration
+  speaker: captain
+  text: 'Observer: (watching the group, expressionless)'

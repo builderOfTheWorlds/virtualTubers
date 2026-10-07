@@ -1,0 +1,29 @@
+id: forensics-evidence-locker-routine
+take: 83
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:31.473293+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm going to process the evidence.
+- kind: dialogue
+  speaker: forensics
+  text: The package has been sealed and initialed by Forensics.
+- kind: dialogue
+  speaker: agent
+  text: I've got the technicals on the package.
+- kind: dialogue
+  speaker: forensics
+  text: Can you confirm the chain of custody?
+- kind: dialogue
+  speaker: agent
+  text: Yes, the Analyst verified it.
+- kind: dialogue
+  speaker: forensics
+  text: I'll document the evidence in the locker.
+- kind: dialogue
+  speaker: analyst
+  text: I've reviewed the package's contents.
+- kind: dialogue
+  speaker: agent
+  text: What did you find?

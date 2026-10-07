@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 178
+model: llama3.1:8b
+generated_at: '2026-10-01T07:18:23.441617+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Making very little headway here, Captain. There's no clear trail on this latest
+    lead, and I'm starting to wonder if it's even worth pursuing.

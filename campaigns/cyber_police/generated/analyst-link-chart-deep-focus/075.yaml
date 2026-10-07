@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 75
+model: llama3.1:8b
+generated_at: '2026-10-01T06:10:46.653421+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we connect these two nodes, we might be able to backtrack the
+    signal
+- kind: dialogue
+  speaker: captain
+  text: (over the comms system) Alright, Analyst, we've got a possible lead on a proxy
+    server
+- kind: dialogue
+  speaker: detective
+  text: (to himself) Assuming it's real, and not just another Scuttle luck
+- kind: dialogue
+  speaker: agent
+  text: (into phone) Yeah, I need Forensics to get a warrant for that server in Paris
+- kind: dialogue
+  speaker: forensics
+  text: (typing on computer) Okay, I'm processing the footage from the previous raid.
+    Nothing conclusive
+- kind: dialogue
+  speaker: press
+  text: (into phone) No, I don't have any comment on the latest rumors about The Scuttle
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to herself) I hope they're bringing snacks next time

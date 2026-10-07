@@ -1,0 +1,10 @@
+id: analyst-link-chart-deep-focus
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:00.354761+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Ah, if we assume the Bosun's lead was indeed the key to taking down the Scuttle,
+    and not just a dead end, then wouldn't it follow that the Bosun was not acting
+    alone?

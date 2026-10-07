@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:25.667495+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, people, let's get started.
+- kind: dialogue
+  speaker: detective
+  text: I'll brief on the case.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some interesting chatter patterns emerging.
+- kind: dialogue
+  speaker: agent
+  text: Nothing new on the technical front, just more of the same.
+- kind: dialogue
+  speaker: forensics
+  text: Evidence from the raid is looking promising.
+- kind: dialogue
+  speaker: press
+  text: Nothing to report on the press front.
+- kind: dialogue
+  speaker: quartermaster
+  text: We need to requisition some new hardware ASAP.
+- kind: narration
+  speaker: captain
+  text: 'Observer: (watches the team without reacting)'

@@ -1,0 +1,36 @@
+id: no-respect-upstairs
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:38.297764+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatch: "Backup to the Cyber unit, request denied. They can''t get their
+    wires crossed on their own. ||emotion:neutral"'
+- kind: dialogue
+  speaker: captain
+  text: Let's keep the Scuttle in the loop, they're our most enthusiastic detractor.
+    ||emotion:sarcastic
+- kind: dialogue
+  speaker: detective
+  text: I don't think we're going to get much love from the press on this one, Captain.
+    ||emotion:disappointed
+- kind: dialogue
+  speaker: analyst
+  text: 'Look at this, Deshawn. Another ''Cyber Cops: Clueless'' piece by Davey Okonkwo-Pryce.
+    ||emotion:sad'
+- kind: dialogue
+  speaker: agent
+  text: What do you want to do about the requisition for new servers, Hana? ||emotion:resigned
+- kind: dialogue
+  speaker: forensics
+  text: Don't even get me started on the state of our lab equipment. It's like they
+    want us to fail. ||emotion:angry
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: Cyber Cops Bungle Another Operation. Scuttle Exposes yet another
+    ''investigation'' gone wrong. ||emotion:disgusted'
+- kind: dialogue
+  speaker: quartermaster
+  text: Teresa, can you tell me why the espresso machine in the break room is still
+    broken? ||emotion:surprised

@@ -1,0 +1,36 @@
+id: forensics-evidence-locker-routine
+take: 119
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:27.612317+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I've finished processing the drive, Captain.
+- kind: dialogue
+  speaker: agent
+  text: Can you run the hash check again?
+- kind: dialogue
+  speaker: forensics
+  text: Already done. The results are the same.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Good. Send it to the Analyst''s desk.'
+- kind: dialogue
+  speaker: analyst
+  text: I'm still reviewing the link charts, but I have a few connections that seem
+    suspicious.
+- kind: dialogue
+  speaker: forensics
+  text: Can you give me a list of the IP addresses?
+- kind: dialogue
+  speaker: analyst
+  text: Of course. Let me just...
+- kind: dialogue
+  speaker: forensics
+  text: I've got them here.
+- kind: dialogue
+  speaker: press
+  text: Hi, everyone. I'm here for a statement on the recent...
+- kind: dialogue
+  speaker: quartermaster
+  text: Ah, good morning, Davey! I'll get the paperwork going.

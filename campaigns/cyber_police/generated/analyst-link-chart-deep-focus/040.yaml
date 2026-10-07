@@ -1,0 +1,33 @@
+id: analyst-link-chart-deep-focus
+take: 40
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:21.548065+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got a thread here that suggests a new proxy chain, but it's not enough
+    to justify a raid.
+- kind: dialogue
+  speaker: agent
+  text: Can you dig deeper? I want to see if we can pin down the Bosun.
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure, Deshawn. This chain is complex, and I don't want to get ahead
+    of ourselves.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a report from the lab that the last server we took down had some...
+    unusual artifacts on it.
+- kind: dialogue
+  speaker: analyst
+  text: Unusual artifacts? What kind of unusual artifacts?
+- kind: dialogue
+  speaker: forensics
+  text: I'm not sure yet. I need more time to analyze the data.
+- kind: dialogue
+  speaker: agent
+  text: Priya, can you get back to me on that proxy chain? I want to know what we're
+    up against.
+- kind: dialogue
+  speaker: analyst
+  text: Yes, of course, Deshawn. I'll get right on it.

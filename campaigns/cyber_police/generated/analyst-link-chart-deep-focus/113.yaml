@@ -1,0 +1,29 @@
+id: analyst-link-chart-deep-focus
+take: 113
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:27.944310+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any clear connections between the two new nodes.
+- kind: dialogue
+  speaker: captain
+  text: What about the one I flagged for you earlier, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: Ah, that one's still running some tests, but I'm getting some interesting
+    overlap with the 34-Node cluster.
+- kind: dialogue
+  speaker: agent
+  text: You guys know that the 34-Node cluster is still on probation, right?
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Not to mention it's not even properly labeled...
+- kind: dialogue
+  speaker: quartermaster
+  text: (calmly) Okay, let's keep the discussion about the Scuttle. We've got a meeting
+    with the Commissioner in an hour to review the case.
+- kind: dialogue
+  speaker: analyst
+  text: Just a minute, Teresa. (to herself) I'm going to try a different algorithm
+    to see if I can find any...

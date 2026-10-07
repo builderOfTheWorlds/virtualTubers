@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T06:18:19.586840+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office looks like it was written by someone
+    who's never set foot in our basement.
+- kind: dialogue
+  speaker: detective
+  text: What's "the computer thing"?
+- kind: dialogue
+  speaker: analyst
+  text: I think it's one of those...pet names they use when they don't want to admit
+    they're actually dealing with digital crime.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, and they always mean it as a compliment, right?
+- kind: dialogue
+  speaker: forensics
+  text: Can we just focus on getting the evidence out of the latest dump?
+- kind: dialogue
+  speaker: press
+  text: Oh, nice. "The computer thing". I'm sure they mean no offense.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the requisition forms ready. Maybe if we just ask nicely, they'll
+    actually give us what we need.

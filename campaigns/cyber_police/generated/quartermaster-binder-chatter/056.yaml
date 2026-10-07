@@ -1,0 +1,27 @@
+id: quartermaster-binder-chatter
+take: 56
+model: llama3.1:8b
+generated_at: '2026-10-01T07:05:50.495818+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: You'd think they'd finally understand the value of proper hardware.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because a year-old drone isn't going to cut it for chasing cyber-terrorists.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) The eventual inquiry. It's going to be a doozy.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to Deshawn) Don't mind me, I'm just cataloging all these denied requisitions.
+- kind: dialogue
+  speaker: agent
+  text: (to Hana) Don't even joke about that.
+- kind: dialogue
+  speaker: forensics
+  text: (to Teresa) I'm sure it's just a matter of time before they come crawling
+    back.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighs) Eventually.

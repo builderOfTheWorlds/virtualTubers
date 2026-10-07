@@ -1,0 +1,27 @@
+id: forensics-evidence-locker-routine
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:36.281467+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'll need you to step away while I process the evidence.
+- kind: dialogue
+  speaker: agent
+  text: Got it, Forensics. I'll prep the Agent for the next lead.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a match on the chat logs. Can I get a minute with the Detective?
+- kind: dialogue
+  speaker: captain
+  text: Afternoon, everyone. Hana, get those samples logged in. Priya, keep working
+    on the chat logs.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement on the case from the Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm running low on 3D printing supplies. Can someone requisition some more?
+- kind: dialogue
+  speaker: forensics
+  text: I'm updating the chain of custody on the evidence lockers.

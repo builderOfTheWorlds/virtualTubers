@@ -1,0 +1,44 @@
+id: bullpen-ambience
+take: 163
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:27.156417+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, wrap up whatever you're doing, we've got a few minutes.
+- kind: dialogue
+  speaker: detective
+  text: (yawns) Yeah, I was just going over the case files from yesterday.
+- kind: dialogue
+  speaker: analyst
+  text: (mumbles) Just getting this coffee to reheat...
+- kind: dialogue
+  speaker: agent
+  text: ( typing on a laptop) Got a ping from The Scuttle, might be a lead.
+- kind: dialogue
+  speaker: forensics
+  text: (examining a piece of equipment) Not sure what's wrong with this, but it's
+    not working.
+- kind: dialogue
+  speaker: press
+  text: (reading a book) Yeah, I'm good. What's the plan for today?
+- kind: dialogue
+  speaker: quartermaster
+  text: (filing paperwork) Just updating the requisition list...
+- kind: dialogue
+  speaker: captain
+  text: (staring at a monitor) Let's see what The Scuttle's been doing overnight.
+- kind: dialogue
+  speaker: detective
+  text: (leaning back in chair) I've been looking over the dashboard, and it looks
+    like there's been some... interesting activity.
+- kind: dialogue
+  speaker: analyst
+  text: (scribbling notes) I think I see what you mean. It looks like there might
+    be a new mirror online.
+- kind: dialogue
+  speaker: agent
+  text: (excitedly) Yeah, and I think I can get us a look.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptically) How sure are you about this? We don't want to waste resources.

@@ -1,0 +1,44 @@
+id: bullpen-ambience
+take: 52
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:34.649056+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, Thorn. Still on the same lead?
+- kind: dialogue
+  speaker: detective
+  text: Yeah, Rosalind. Just trying to figure out what's going on with the crypto
+    wallet.
+- kind: dialogue
+  speaker: analyst
+  text: I've got some new data on the wallet's trail, but it's going to take some
+    digging.
+- kind: dialogue
+  speaker: agent
+  text: Forensics is still going over the server logs, but I'm not seeing anything
+    suspicious.
+- kind: dialogue
+  speaker: forensics
+  text: I'm looking for a pattern, but so far, it's just a lot of noise.
+- kind: dialogue
+  speaker: press
+  text: Can someone remind me what we're actually looking for here?
+- kind: dialogue
+  speaker: quartermaster
+  text: Morning, team. I've got the requisition log for the week.
+- kind: dialogue
+  speaker: detective
+  text: Priya, can you walk me through the data you've got so far?
+- kind: dialogue
+  speaker: analyst
+  text: Let me pull it up on the main screen...
+- kind: dialogue
+  speaker: captain
+  text: (watching the Observer from her office) Good morning, all.
+- kind: dialogue
+  speaker: forensics
+  text: ( muttering to herself ) I'm going to have to re-run these tests...
+- kind: dialogue
+  speaker: agent
+  text: (sipping cold coffee) Yeah, I think I'm going to have to get a fresh cup.

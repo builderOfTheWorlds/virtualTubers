@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 67
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:17.194588+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can't believe we still can't get this trace tool running.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) Ah, come on Deshawn, it's just an old server, it'll get by.
+- kind: dialogue
+  speaker: forensics
+  text: (from Forensics' desk) Yeah, I've been trying to get it up and running for
+    hours, but...
+- kind: dialogue
+  speaker: press
+  text: (from Press' desk) You know, I think the problem is just that our hardware
+    is a few generations behind.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from Quartermaster's desk) That's not an excuse, Davey. We're just not a
+    priority.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (from Detective''s desk) Alright, alright, let''s not argue
+    about it. Deshawn, can you just try running it on the virtual machine?'

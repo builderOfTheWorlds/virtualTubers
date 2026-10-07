@@ -1,0 +1,21 @@
+id: agent-hardware-complaint
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:21.935051+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing is still on outdated OS.
+- kind: dialogue
+  speaker: analyst
+  text: I think we can get by with this long enough.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I don''t know, Deshawn. I''ve been trying to get that other
+    thing going for hours.'
+- kind: dialogue
+  speaker: agent
+  text: It's not that. I just wish for once we had hardware that didn't make me cry.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering) At least we have coffee.

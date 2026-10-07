@@ -1,0 +1,33 @@
+id: no-respect-upstairs
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:32.964970+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get started. I want a rundown on the Scuttle''s
+    latest antics.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Already on it, ma''am. They''re spoofing our comms again.'
+- kind: dialogue
+  speaker: analyst
+  text: I've got some bad news. Our request for a wiretap was denied. Again.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana Vosk) I swear, they think we're just a joke.
+- kind: dialogue
+  speaker: forensics
+  text: (shrugging) Maybe they're right. (to Deshawn) At least our lab equipment isn't
+    completely obsolete... yet.
+- kind: dialogue
+  speaker: quartermaster
+  text: '(over the comms system) Unit, be advised: we''ve got a reporter from the
+    New Chronicle trying to get a statement.'
+- kind: dialogue
+  speaker: press
+  text: '(on the monitor) "CYBER POLICE IN HOT PURSUIT OF... NOTHING: Scuttle Strikes
+    Again, Leaves Department Looking Like a Joke".'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (sighing) Great. Just great.'

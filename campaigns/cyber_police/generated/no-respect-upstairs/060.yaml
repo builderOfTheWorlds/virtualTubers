@@ -1,0 +1,39 @@
+id: no-respect-upstairs
+take: 60
+model: llama3.1:8b
+generated_at: '2026-10-01T06:55:38.317505+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Morning, team. Let''s get moving.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Already on it, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Just finished analyzing the last Scuttle hack. Nothing conclusive yet.
+- kind: dialogue
+  speaker: agent
+  text: Can we get some actual support on this one? Maybe a forensics team?
+- kind: dialogue
+  speaker: forensics
+  text: (over comms) Negative on backup, Agent Okafor. Still tied up on the Jenkins
+    case.
+- kind: dialogue
+  speaker: quartermaster
+  text: '(whispering to herself) Scuttle''s latest op: "Digital Anarchy: Cyber Police
+    Can''t Even Catch a Hacker".'
+- kind: dialogue
+  speaker: press
+  text: '(reading from his tablet) "Cyber Cops Can''t Hack It: Scuttle''s Latest Prank
+    Leaks Again".'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: (sighing) Alright, let''s focus on what we do have. Thorn,
+    can you run through the latest on the Scuttle operators?'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: (sighing) Already on it, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Why do I even bother...

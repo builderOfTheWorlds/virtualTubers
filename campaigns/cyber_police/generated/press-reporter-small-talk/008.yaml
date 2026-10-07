@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 8
+model: llama3.1:8b
+generated_at: '2026-10-01T06:30:04.117199+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Just catching up on some morning briefs, Davey.
+- kind: dialogue
+  speaker: press
+  text: Yeah, just trying to get a sense of what the day's priorities are.
+- kind: dialogue
+  speaker: captain
+  text: Nothing too out of the ordinary, I think. The Analyst is working on a new
+    lead from last night's chatter.
+- kind: dialogue
+  speaker: press
+  text: Okay, and what's the word on the Scuttle's latest posts?
+- kind: dialogue
+  speaker: captain
+  text: Honestly, it looks like just more of the same old noise. They're trying to
+    stir up some controversy about the department's handling of a recent case.
+- kind: dialogue
+  speaker: press
+  text: Yeah, I've seen that. It's amazing how they can spin even the most mundane
+    thing into a headline.
+- kind: dialogue
+  speaker: captain
+  text: I know, right? But we'll just have to keep doing what we're doing.
+- kind: dialogue
+  speaker: press
+  text: And I'll just have to keep writing about it.
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Well, I'm sure you'll find a way to make it interesting, Davey.
+- kind: dialogue
+  speaker: press
+  text: (laughs) Yeah, I'll try.
+- kind: dialogue
+  speaker: captain
+  text: Alright, well, I should let you get back to work. Nice chatting with you,
+    Davey.
+- kind: dialogue
+  speaker: press
+  text: Same to you, Captain. Later.

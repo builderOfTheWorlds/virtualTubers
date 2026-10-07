@@ -1,0 +1,42 @@
+id: observer-corner-desk
+take: 93
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:38.482532+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I've got nothing new from the chatter
+- kind: dialogue
+  speaker: agent
+  text: Just ran a trace on a new mirror, but it's not showing up anywhere
+- kind: dialogue
+  speaker: forensics
+  text: Processing the evidence from the last raid, nothing's popped up yet
+- kind: dialogue
+  speaker: press
+  text: Trying to get a statement from the family, but they're being tight-lipped
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions are being held up again, not sure what's causing the delay
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started
+- kind: dialogue
+  speaker: detective
+  text: We've got a lead on a possible new player in the Scuttle
+- kind: dialogue
+  speaker: analyst
+  text: Still looking for any connections to the Analyst's previous work
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: Getting the tools ready to dig deeper into the Scuttle''s
+    infrastructure'
+- kind: dialogue
+  speaker: forensics
+  text: Preparing the lab for potential evidence from the next raid
+- kind: dialogue
+  speaker: press
+  text: Setting up interviews with the family and their neighbors
+- kind: dialogue
+  speaker: quartermaster
+  text: Trying to get the Quartermaster's office to expedite the requisitions

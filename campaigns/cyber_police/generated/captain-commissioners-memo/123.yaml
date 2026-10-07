@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 123
+model: llama3.1:8b
+generated_at: '2026-10-01T07:23:25.318585+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the requested sequence:'
+- kind: dialogue
+  speaker: captain
+  text: Looks like the memo from the Commissioner's office
+- kind: dialogue
+  speaker: detective
+  text: I take it "the computer thing" is code for "we don't care"
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, because what we do is just a "thing" now
+- kind: dialogue
+  speaker: agent
+  text: It's just semantics, but it's not like they're trying to be constructive
+- kind: dialogue
+  speaker: forensics
+  text: I don't know why we even bother
+- kind: dialogue
+  speaker: press
+  text: (muttering) Just great, another way to dismiss what we do
+- kind: dialogue
+  speaker: quartermaster
+  text: (to the Captain) Sir, would you like me to requisition new hardware?

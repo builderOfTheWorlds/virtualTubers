@@ -1,0 +1,40 @@
+id: analyst-link-chart-deep-focus
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T06:12:10.919613+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think that the signal disruption in sector 4 might be more
+    than just a glitch
+- kind: dialogue
+  speaker: agent
+  text: I agree, Priya. I've seen some weird patterns in the server logs
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think I know what might be causing it
+- kind: dialogue
+  speaker: quartermaster
+  text: What is it, Hana?
+- kind: dialogue
+  speaker: forensics
+  text: It looks like someone's been messing with the configuration files
+- kind: dialogue
+  speaker: analyst
+  text: Which means we have a new lead
+- kind: dialogue
+  speaker: agent
+  text: Let's get the data and see if we can track it down
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll start digging into the requisition process, see if anyone's been requesting
+    unusual software
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the analysis going, see if I can pinpoint the source of the disruption
+- kind: dialogue
+  speaker: analyst
+  text: And I'll... uh...
+- kind: dialogue
+  speaker: captain
+  text: Priya, where are you?

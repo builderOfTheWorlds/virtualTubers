@@ -1,0 +1,15 @@
+id: quartermaster-binder-chatter
+take: 106
+model: llama3.1:8b
+generated_at: '2026-10-01T07:41:42.672075+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: The Quartermaster reviews her denied-requisition binder with one other
+    unit member nearby, half-joking about "the eventual inquiry."'
+- kind: narration
+  speaker: captain
+  text: 'DA: Light banter about underfunding, no new plot facts, no resolution.'
+- kind: narration
+  speaker: captain
+  text: 'DN: (watching the Quartermaster from a distance)'

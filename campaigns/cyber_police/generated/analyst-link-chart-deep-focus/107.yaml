@@ -1,0 +1,24 @@
+id: analyst-link-chart-deep-focus
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:58.515830+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think we're chasing a dead end with this thread.
+- kind: dialogue
+  speaker: agent
+  text: Can you tell me more about what you're seeing?
+- kind: dialogue
+  speaker: analyst
+  text: If I zoom in on this node, I can see a pattern...
+- kind: dialogue
+  speaker: forensics
+  text: Sounds like you're onto something. Want me to take a look?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I'd like to run some more tests before I bring it to the
+    team.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know you can always count on me to provide the tech for whatever you need.

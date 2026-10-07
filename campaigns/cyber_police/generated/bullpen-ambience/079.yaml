@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 79
+model: llama3.1:8b
+generated_at: '2026-10-01T06:14:00.260389+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, all.
+- kind: dialogue
+  speaker: detective
+  text: Morning, ma'am.
+- kind: dialogue
+  speaker: analyst
+  text: Got the Scuttle feed from last night, Captain.
+- kind: dialogue
+  speaker: agent
+  text: I'll take a look.
+- kind: dialogue
+  speaker: forensics
+  text: Just finished processing the last batch of drives.
+- kind: dialogue
+  speaker: press
+  text: Nothing from The Scuttle so far.
+- kind: dialogue
+  speaker: quartermaster
+  text: Coffee's still cold, by the way.
+- kind: dialogue
+  speaker: analyst
+  text: Stupid coffee machine...
+- kind: dialogue
+  speaker: agent
+  text: Can I get a new cup, ma'am?
+- kind: dialogue
+  speaker: forensics
+  text: Not my area of expertise.
+- kind: dialogue
+  speaker: press
+  text: Any leads from the briefing, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition day next week.

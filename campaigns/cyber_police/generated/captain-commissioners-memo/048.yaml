@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 48
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:35.624596+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the loop:'
+- kind: dialogue
+  speaker: captain
+  text: Something about the Scuttle's IP address keeps popping up in the reports.
+- kind: dialogue
+  speaker: detective
+  text: I've seen that IP address before, too.
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I think I found the connection.
+- kind: dialogue
+  speaker: agent
+  text: What is it?
+- kind: dialogue
+  speaker: forensics
+  text: It looks like the Scuttle's been using a VPN.
+- kind: dialogue
+  speaker: press
+  text: This is exactly what I said would happen.
+- kind: dialogue
+  speaker: quartermaster
+  text: Sir, I think you might want to see this.

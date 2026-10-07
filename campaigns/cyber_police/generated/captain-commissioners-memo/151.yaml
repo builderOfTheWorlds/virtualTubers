@@ -1,0 +1,36 @@
+id: captain-commissioners-memo
+take: 151
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:16.237331+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Captain is frowning at the memo.
+- kind: dialogue
+  speaker: detective
+  text: What's this "computer thing" now?
+- kind: dialogue
+  speaker: analyst
+  text: (whispers) Not again.
+- kind: dialogue
+  speaker: agent
+  text: (rolls eyes) Because that's exactly what we do.
+- kind: dialogue
+  speaker: forensics
+  text: (skeptical) Who actually wrote this?
+- kind: dialogue
+  speaker: press
+  text: (leaning in) You know what I'm going to write about this?
+- kind: dialogue
+  speaker: quartermaster
+  text: (mutters) Requisitions...
+- kind: dialogue
+  speaker: captain
+  text: (sarcastically) Oh, it's "the computer thing." Because that's what we've been
+    doing all along.
+- kind: dialogue
+  speaker: detective
+  text: (exasperated) Great. Just great.
+- kind: dialogue
+  speaker: analyst
+  text: (defeated) This is why we're not taken seriously.

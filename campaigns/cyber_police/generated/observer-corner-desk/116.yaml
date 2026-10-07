@@ -1,0 +1,27 @@
+id: observer-corner-desk
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T07:35:33.700874+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The day''s priority is a chatter spike on channel Kilo-4.'
+- kind: dialogue
+  speaker: analyst
+  text: My analysis indicates it's a known group, possible connection to the Mirror-9
+    incident.
+- kind: dialogue
+  speaker: agent
+  text: I'll get on tracing the signals.
+- kind: dialogue
+  speaker: forensics
+  text: I'll process the evidence we already have.
+- kind: dialogue
+  speaker: press
+  text: I'll need to prep the press release for this afternoon.
+- kind: dialogue
+  speaker: quartermaster
+  text: I requisitioned four new workstations, still waiting on approval.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

@@ -1,0 +1,12 @@
+id: agent-hardware-complaint
+take: 213
+model: llama3.1:8b
+generated_at: '2026-10-01T07:16:42.206708+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'ok: We''re going to have to run this trace tool in the simulator'
+- kind: narration
+  speaker: captain
+  text: 'DO: And hopefully it''ll spit out something that''s more up to date than
+    our actual hardware'

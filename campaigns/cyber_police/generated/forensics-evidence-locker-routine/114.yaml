@@ -1,0 +1,8 @@
+id: forensics-evidence-locker-routine
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:01.118782+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Walking in through the evidence locker's keypad.

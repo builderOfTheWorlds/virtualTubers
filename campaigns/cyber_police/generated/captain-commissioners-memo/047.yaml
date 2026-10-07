@@ -1,0 +1,33 @@
+id: captain-commissioners-memo
+take: 47
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:32.404730+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the reply:'
+- kind: dialogue
+  speaker: captain
+  text: Can't believe they're still calling it "the computer thing."
+- kind: dialogue
+  speaker: detective
+  text: Sarcasm, ma'am. They mean no harm.
+- kind: dialogue
+  speaker: analyst
+  text: Still, someone should tell them the Scuttle doesn't exist without a computer.
+- kind: dialogue
+  speaker: agent
+  text: I'll get on that. Someone will probably remind me it's not a real crime until
+    it's a real door.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Do you think that's why our last three backup requests never
+    showed up?
+- kind: dialogue
+  speaker: press
+  text: '(off-screen, over the comms system) "Cyber Police: The Department''s IT Department
+    with Badges"'
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) I'll send another requisition form, and we'll wait six weeks to
+    see if it's approved.

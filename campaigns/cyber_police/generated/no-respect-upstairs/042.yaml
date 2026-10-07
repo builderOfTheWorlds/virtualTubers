@@ -1,0 +1,42 @@
+id: no-respect-upstairs
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:57.225294+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Backup is still on delay, Thorn.
+- kind: dialogue
+  speaker: detective
+  text: Can't say I'm surprised.
+- kind: dialogue
+  speaker: analyst
+  text: I'll try to speed it up, but it's going to be at least another 20 minutes.
+- kind: dialogue
+  speaker: agent
+  text: I swear, it's like they think we're just a game.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I can have the forensics report done in half that time.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll get the coffee in the break room.
+- kind: dialogue
+  speaker: press
+  text: 'CYBER POLICE IN CHAOS: ''We''re Not a Real Police Force'' – Unit Suffers
+    Another Embarrassing Defeat'
+- kind: dialogue
+  speaker: captain
+  text: Great, Davey. Just what we needed.
+- kind: dialogue
+  speaker: analyst
+  text: Can I just focus on the evidence, please?
+- kind: dialogue
+  speaker: detective
+  text: You know, I've seen more enthusiasm for a particularly tricky jigsaw puzzle.
+- kind: dialogue
+  speaker: agent
+  text: It's like, do you guys even care that we're trying to do real work here?
+- kind: dialogue
+  speaker: forensics
+  text: Maybe if we got a decent arrest, things would change around here.

@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T05:53:34.761096+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm thinking the new server might be using a variant of the scuttle protocol,
+    but I can't quite pinpoint the modification.

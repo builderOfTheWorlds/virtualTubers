@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T05:55:53.496458+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get the briefing done, everyone's had their coffee.
+- kind: dialogue
+  speaker: detective
+  text: I'll run the numbers on the new mirror protocol.
+- kind: dialogue
+  speaker: analyst
+  text: Looks like The Scuttle's still not letting us in.
+- kind: dialogue
+  speaker: agent
+  text: I've got the hardware up and running, but we're still a patch behind.
+- kind: dialogue
+  speaker: forensics
+  text: Found some interesting packets on the last dump, need to dig deeper.
+- kind: dialogue
+  speaker: press
+  text: Nothing new to manage from the outside world, just the usual.
+- kind: dialogue
+  speaker: quartermaster
+  text: Still waiting to hear back on the requisitions for the new comms suite.

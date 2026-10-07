@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 115
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:22.346495+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm going to try and get this trace tool running, but I'm not optimistic.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) If only they'd update the hardware...
+- kind: dialogue
+  speaker: forensics
+  text: (from the corner) You'd think they'd at least give us decent laptops.
+- kind: dialogue
+  speaker: press
+  text: (teasingly) Oh, come on, Priya, you can't expect them to go all cutting-edge
+    on us.
+- kind: dialogue
+  speaker: captain
+  text: (from the Captain's office) Deshawn, I'm sure it'll work out. Just... just
+    try not to break it.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) Yeah, because we've never had to MacGyver anything
+    before.
+- kind: dialogue
+  speaker: forensics
+  text: (exasperated) This is why we need new hardware.

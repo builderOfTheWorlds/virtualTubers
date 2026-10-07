@@ -1,0 +1,35 @@
+id: press-reporter-small-talk
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:53.308397+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Just getting a feel for the morning, Rosalind.
+- kind: dialogue
+  speaker: captain
+  text: We've got a few chatter spikes on The Scuttle.
+- kind: dialogue
+  speaker: press
+  text: Nothing that's going to break the story, but I'll keep an ear out.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the overnight chatter and see if we can get a hook.
+- kind: dialogue
+  speaker: analyst
+  text: My analysis is that the spikes are centered around a new chat channel.
+- kind: dialogue
+  speaker: agent
+  text: I'll start running the IP addresses, see if we can get a lead.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the hardware front, Rosalind. We're still waiting on that upgrade.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisition front either, Deshawn.
+- kind: dialogue
+  speaker: analyst
+  text: I'll keep digging into the chat channel.
+- kind: dialogue
+  speaker: press
+  text: I'll make some calls, see if I can get anything else out of my sources.

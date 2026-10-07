@@ -1,0 +1,38 @@
+id: agent-hardware-complaint
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:15.152834+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, Marcus, can you give me a hand with this trace tool?
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: What''s the problem?'
+- kind: dialogue
+  speaker: agent
+  text: Nothing, nothing...just that it won't even boot. I swear, we're still running
+    XP.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Great, now he's complaining about the hardware...
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Hey, come on, Priya. I'm just saying, we could use an upgrade.
+- kind: dialogue
+  speaker: forensics
+  text: (from across the room) Actually, I think we've talked about this. We're stuck
+    with what we've got.
+- kind: dialogue
+  speaker: press
+  text: (standing by the stairs) Uh, guys, can I get a word with you?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Fine. What is it, Davey?
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the phone) Agent Okafor, I've got a request from Procurement. They're
+    asking for the requisition form...
+- kind: dialogue
+  speaker: agent
+  text: (rolls his eyes) Okay, okay. I'll get right on it.

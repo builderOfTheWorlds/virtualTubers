@@ -1,0 +1,34 @@
+id: no-respect-upstairs
+take: 22
+model: llama3.1:8b
+generated_at: '2026-10-01T06:24:08.852508+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: "Unit-11, you want backup for a probable cat-vid upload? ||emotion:angry"'
+- kind: dialogue
+  speaker: captain
+  text: No, we need it for a potential breach of the Valtor-Finances platform. ||emotion:sad
+- kind: dialogue
+  speaker: detective
+  text: Tell me you're kidding. ||emotion:disgusted
+- kind: dialogue
+  speaker: analyst
+  text: I've got a hit on the upload IP, but it's not like it's the first time we've
+    seen this. ||emotion:neutral
+- kind: dialogue
+  speaker: agent
+  text: I'll send a report, but can we at least get some decent coffee out of this?
+    ||emotion:sarcastic
+- kind: dialogue
+  speaker: forensics
+  text: Coffee? You want to talk about coffee? We still don't have a good espresso
+    machine. ||emotion:disgusted
+- kind: dialogue
+  speaker: press
+  text: 'BREAKING: ''Cyber Cops Stumble Again'' - Scuttle editorial on the screen.
+    ||emotion:amused'
+- kind: dialogue
+  speaker: quartermaster
+  text: Can we get a new printer, by the way? This one's been jamming all morning.
+    ||emotion:neutral

@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 161
+model: llama3.1:8b
+generated_at: '2026-10-01T07:21:12.779618+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The morning briefing is in five.
+- kind: dialogue
+  speaker: detective
+  text: Just getting my coffee in me.
+- kind: dialogue
+  speaker: analyst
+  text: Still waiting for that packet of fiber they promised last week.
+- kind: dialogue
+  speaker: agent
+  text: Someone grab the coffee from upstairs, would you? Mine's going cold.
+- kind: dialogue
+  speaker: forensics
+  text: I'm trying to analyze this one weird anomaly in the Scuttle's traffic patterns...
+- kind: dialogue
+  speaker: press
+  text: Actually, I think I have a decent angle on that story I was working on...
+- kind: dialogue
+  speaker: quartermaster
+  text: Still gotta get the requisition forms done for the week. Not looking good
+    for any new hardware.

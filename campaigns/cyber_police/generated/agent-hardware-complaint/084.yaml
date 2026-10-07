@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:20.298501+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Trying to get this trace tool running with the ancient hardware we have is
+    like trying to get blood from a stone.

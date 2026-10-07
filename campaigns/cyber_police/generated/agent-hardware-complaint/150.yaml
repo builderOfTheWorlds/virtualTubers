@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 150
+model: llama3.1:8b
+generated_at: '2026-10-01T07:11:57.656138+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing is older than I am.
+- kind: dialogue
+  speaker: analyst
+  text: Did you try restarting it?
+- kind: dialogue
+  speaker: agent
+  text: I've tried everything, it's just a miracle it still runs at all.
+- kind: dialogue
+  speaker: analyst
+  text: Well, let me take a look.
+- kind: dialogue
+  speaker: forensics
+  text: What's going on?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this trace tool up and running.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Great, because what we really need is a miracle.

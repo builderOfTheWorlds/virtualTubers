@@ -1,0 +1,42 @@
+id: press-reporter-small-talk
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:50.229581+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey Priya, what's new in the department?
+- kind: dialogue
+  speaker: analyst
+  text: Not much, Davey, just the usual. How about you?
+- kind: dialogue
+  speaker: press
+  text: You know, same old. I heard the new commissioner is still trying to cut the
+    Cyber Police budget.
+- kind: dialogue
+  speaker: analyst
+  text: Ugh, don't even get me started. I'm just glad we've got our usual lead to
+    chase today.
+- kind: dialogue
+  speaker: agent
+  text: Hey, Priya, I've got the mirror set up, should have the analysis done by lunchtime.
+- kind: dialogue
+  speaker: forensics
+  text: Sounds good, Deshawn. I've got the forensics report ready to go.
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, briefing at 07:00. Get ready to roll.
+- kind: dialogue
+  speaker: quartermaster
+  text: Captain, I've got the requisition list ready. We're a bit short on storage
+    this time.
+- kind: dialogue
+  speaker: press
+  text: Hi, Captain, can I get a quick word before the briefing?
+- kind: dialogue
+  speaker: captain
+  text: What is it, Davey?
+- kind: dialogue
+  speaker: press
+  text: Just a little rumor I heard about the new commissioner's plans for the Cyber
+    Police.

@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 116
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:26.442508+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, can you believe this old thing?
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the data synced.
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on! This ancient server's been giving us grief all morning.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting some weird latency issues.
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Just great.
+- kind: dialogue
+  speaker: press
+  text: (from the doorway) Uh, guys, I think I found the problem.
+- kind: dialogue
+  speaker: agent
+  text: (laughs) Oh, you're a regular MacGyver.

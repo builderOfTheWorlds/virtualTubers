@@ -1,0 +1,21 @@
+id: quartermaster-binder-chatter
+take: 4
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:17.273127+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I swear, I''ve got to start keeping a spreadsheet on what gets approved
+    and what doesn''t.'
+- kind: narration
+  speaker: captain
+  text: 'DMA: I think we should just add a column for ''eventual inquiry'' and be
+    done with it.'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: Oh, good idea. I''ll add a column for "how many times we''re told
+    to try again".'
+- kind: narration
+  speaker: captain
+  text: 'TMB-L: I''ve got a feeling we''re going to be having that discussion at the
+    next meeting.'

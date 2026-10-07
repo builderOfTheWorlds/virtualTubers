@@ -1,0 +1,43 @@
+id: press-reporter-small-talk
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:08.461011+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Good morning, Davey. How''s life treating you?'
+- kind: narration
+  speaker: captain
+  text: 'DO-P: (laughs) Oh, you know. Just the usual. Got a tip on a potential leak
+    at the Mayor''s office, but it''s probably nothing.'
+- kind: narration
+  speaker: captain
+  text: 'HN: Actually, I have some good news. I managed to crack the encryption on
+    that new Scuttle mirror we''ve been looking at.'
+- kind: narration
+  speaker: captain
+  text: 'PM: (over the phone) Hold up, hold up. You''re telling me you finally cracked
+    the code, but you''re not even telling me what it says?'
+- kind: narration
+  speaker: captain
+  text: 'TM: (laughs) Hey, hey, let''s not get ahead of ourselves here. We''ve got
+    a plan, and it starts with...'
+- kind: narration
+  speaker: captain
+  text: 'TM: ...reviewing the intel and making sure we''ve got our ducks in a row.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ve got a few leads on some potential cybercafes that might be used
+    by our... associates.'
+- kind: narration
+  speaker: captain
+  text: 'DO: (to himself) I swear, I requisitioned that new software package three
+    weeks ago and still haven''t heard back.'
+- kind: narration
+  speaker: captain
+  text: 'HM: (to herself) Another day, another failed raid. I''m starting to think
+    we''re just spinning our wheels here.'
+- kind: narration
+  speaker: captain
+  text: 'TP-O: (over the phone) Yeah, I know, I know. We''re not exactly the poster
+    children for success around here.'

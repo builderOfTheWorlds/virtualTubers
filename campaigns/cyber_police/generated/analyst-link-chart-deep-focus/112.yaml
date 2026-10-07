@@ -1,0 +1,36 @@
+id: analyst-link-chart-deep-focus
+take: 112
+model: llama3.1:8b
+generated_at: '2026-10-01T06:42:23.249863+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to see if there's any correlation between the recent uptick in proxy
+    server usage and the changes in their protocol.
+- kind: dialogue
+  speaker: agent
+  text: Can you run that by me again? I'm not seeing anything that suggests our usual
+    methods will be effective.
+- kind: dialogue
+  speaker: analyst
+  text: The changes to their protocol are subtle, but I think I've found a pattern.
+    I'm going to run some more simulations.
+- kind: dialogue
+  speaker: forensics
+  text: We need to get in there and take a look at their hardware. I'll prep the team
+    for a possible raid.
+- kind: dialogue
+  speaker: press
+  text: Hold up, hold up. I think I can get a statement from the Commodore. I'll send
+    it over to the Captain.
+- kind: dialogue
+  speaker: quartermaster
+  text: I'll start requisitioning the necessary gear. We'll need more than just a
+    few dozen cameras and microphones.
+- kind: dialogue
+  speaker: captain
+  text: Davey, what's the situation on the statement? Can we use it as leverage?
+- kind: dialogue
+  speaker: agent
+  text: We can't rely on that. It's a distraction. We need to focus on the technical
+    side.

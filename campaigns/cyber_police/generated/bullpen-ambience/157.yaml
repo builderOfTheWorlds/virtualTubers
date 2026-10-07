@@ -1,0 +1,34 @@
+id: bullpen-ambience
+take: 157
+model: llama3.1:8b
+generated_at: '2026-10-01T07:20:51.467939+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'DM: I''m going to need another coffee. This one''s gone cold.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''m not seeing any new chatter spikes. Just background noise.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m still trying to crack the cipher on that mirror. It''s giving me
+    nothing.'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve got the server logs for the past 24 hours. Nothing out of the ordinary.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m saying we''re not looking for anything. We''re looking for the absence
+    of something.'
+- kind: narration
+  speaker: captain
+  text: 'DM: I think I''ve got a lead on that. Let me call the Captain.'
+- kind: narration
+  speaker: captain
+  text: 'CA: What''ve you got, Thorn?'
+- kind: narration
+  speaker: captain
+  text: 'DM: I think I can track a possible source for the mirror.'

@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:52.761345+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The Commissioner's office is getting cute with their terminology now.
+- kind: dialogue
+  speaker: detective
+  text: '||neutral'
+- kind: dialogue
+  speaker: analyst
+  text: I've been saying that for months.
+- kind: dialogue
+  speaker: agent
+  text: At least they're not using "the IT guys" anymore.
+- kind: dialogue
+  speaker: forensics
+  text: '||neutral'
+- kind: dialogue
+  speaker: press
+  text: (whispering to the Captain) Sir, what's going on?
+- kind: dialogue
+  speaker: quartermaster
+  text: (smirking) I've got a requisition for some new hardware.

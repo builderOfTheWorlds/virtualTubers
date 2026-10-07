@@ -1,0 +1,30 @@
+id: observer-corner-desk
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:55.213207+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: I''m getting a bad feeling about this one.'
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: ( scribbling on a notepad ) Details, Detective.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: The signal''s still dark, ma''am.'
+- kind: dialogue
+  speaker: analyst
+  text: ( typing away on her computer ) I've got a few new IPs to run.
+- kind: dialogue
+  speaker: forensics
+  text: ( looking up from her own computer ) I've got a partial match on one of the
+    seized drives.
+- kind: dialogue
+  speaker: press
+  text: ( scribbling on his notepad ) Anything I can use, ma'am?
+- kind: dialogue
+  speaker: quartermaster
+  text: ( sighing ) Just another requisition denial.
+- kind: narration
+  speaker: captain
+  text: 'The Observer: ( sitting silently at his desk )'

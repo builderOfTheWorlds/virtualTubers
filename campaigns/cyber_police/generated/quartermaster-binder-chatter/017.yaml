@@ -1,0 +1,11 @@
+id: quartermaster-binder-chatter
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:16.870111+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Can't believe it's a denial, again.
+- kind: narration
+  speaker: captain
+  text: 'Des: "Somebody''s got to mean it, since nobody else does."'

@@ -1,0 +1,12 @@
+id: agent-hardware-complaint
+take: 18
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:34.627208+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, this old rig is held together with twine and prayers.
+- kind: dialogue
+  speaker: analyst
+  text: (laughs) I feel you, Deshawn. I've had to MacGyver my own workstation more
+    times than I can count.

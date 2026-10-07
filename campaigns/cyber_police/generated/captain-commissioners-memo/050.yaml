@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 50
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:42.044068+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo is a joke.
+- kind: dialogue
+  speaker: detective
+  text: Looks like the Commissioner's office thinks we're just a "computer thing".
+- kind: dialogue
+  speaker: analyst
+  text: (muttering) Great, because we're not embarrassing enough already.
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Detective) I'll take the next call.
+- kind: dialogue
+  speaker: forensics
+  text: (texting) Just got a 404 on that last request.
+- kind: dialogue
+  speaker: press
+  text: (walking in) Captain Agar, I've got some good news.
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) Not again.

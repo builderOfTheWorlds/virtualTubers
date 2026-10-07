@@ -1,0 +1,26 @@
+id: agent-hardware-complaint
+take: 16
+model: llama3.1:8b
+generated_at: '2026-10-01T05:47:30.885013+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if this old thing breaks down on me now...
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get this trace tool up, but it's being stubborn.
+- kind: dialogue
+  speaker: captain
+  text: (from the Captain's office) Deshawn, what's the holdup?
+- kind: dialogue
+  speaker: agent
+  text: (muttering) Just the usual, Captain. This ancient hardware...
+- kind: dialogue
+  speaker: forensics
+  text: (from the Forensics desk) Actually, I think I see the problem.
+- kind: dialogue
+  speaker: agent
+  text: (excitedly) Oh, really? What is it?
+- kind: dialogue
+  speaker: analyst
+  text: (overhearing) It's probably just a driver issue. I'll go look up the patch.

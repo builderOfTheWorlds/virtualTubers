@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 59
+model: llama3.1:8b
+generated_at: '2026-10-01T06:59:08.808112+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Just reviewing the chatter logs from last night
+- kind: dialogue
+  speaker: agent
+  text: Checking for any anomalies
+- kind: dialogue
+  speaker: captain
+  text: (no response to Priya's question) Now, let's move on to the day's directive
+- kind: dialogue
+  speaker: press
+  text: Still waiting on confirmation from my contact
+- kind: dialogue
+  speaker: forensics
+  text: Reviewing the evidence from the last raid, looking for any connections
+- kind: dialogue
+  speaker: quartermaster
+  text: Just sent out the requisition for new hardware
+- kind: dialogue
+  speaker: detective
+  text: (glancing at the Observer) Let's keep moving
+- kind: dialogue
+  speaker: analyst
+  text: (noticing the Observer's gaze) Just focusing on the data

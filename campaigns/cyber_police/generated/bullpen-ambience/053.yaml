@@ -1,0 +1,26 @@
+id: bullpen-ambience
+take: 53
+model: llama3.1:8b
+generated_at: '2026-10-01T05:59:38.022404+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Morning, team.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Morning, Captain.'
+- kind: dialogue
+  speaker: analyst
+  text: Just getting the morning dashboards up.
+- kind: dialogue
+  speaker: agent
+  text: You see that new mirror on The Scuttle?
+- kind: dialogue
+  speaker: forensics
+  text: Already analyzing it.
+- kind: dialogue
+  speaker: press
+  text: Anything newsworthy?
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition forms are on your desks.

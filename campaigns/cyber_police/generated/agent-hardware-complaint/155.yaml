@@ -1,0 +1,27 @@
+id: agent-hardware-complaint
+take: 155
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:13.825867+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm just trying to get this trace tool running, but the CPU is being stubborn.
+- kind: dialogue
+  speaker: analyst
+  text: (sighing) Yeah, I'm getting the same issue. I think it's just the hardware.
+    We're due for an upgrade, again.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) If I had to guess, it's probably just the outdated
+    BIOS.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from across the room) Anyone need a new keyboard? I'm requisitioning a replacement
+    for mine.
+- kind: dialogue
+  speaker: press
+  text: (leaning back in his chair) What's the holdup, guys? Can't we just use the
+    Cloud?
+- kind: dialogue
+  speaker: captain
+  text: (entering the room) Alright, let's take a look.

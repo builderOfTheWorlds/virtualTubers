@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 103
+model: llama3.1:8b
+generated_at: '2026-10-01T07:30:55.609197+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: We've got a possible hack in progress downtown, let's send Thorn and Nandakumar
+    to take a look.
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: You mean the one that''s been going on for hours?'
+- kind: narration
+  speaker: captain
+  text: 'Analyst Nandakumar: I''m on it, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'Agent Okafor: Can I get a statement from the Captain for my article?'
+- kind: narration
+  speaker: captain
+  text: 'Forensics Vosk: Just a heads up, Captain, the Scuttle''s been tracking us.'
+- kind: narration
+  speaker: captain
+  text: 'Press Okonkwo-Pryce: "Cyber Cops Foiled Again by Elusive Hackers"'
+- kind: narration
+  speaker: captain
+  text: 'Quartermaster Mbeki-Lowndes: Backup request denied, Thorn and Nandakumar
+    are on their own.'

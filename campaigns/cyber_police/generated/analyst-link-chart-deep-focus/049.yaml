@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T05:54:07.188911+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, so if we assume the Bosun's signature move is to reseed the mirror network
+    the instant we shut down one of their nodes...

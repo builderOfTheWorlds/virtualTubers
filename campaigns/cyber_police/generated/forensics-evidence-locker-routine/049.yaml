@@ -1,0 +1,25 @@
+id: forensics-evidence-locker-routine
+take: 49
+model: llama3.1:8b
+generated_at: '2026-10-01T06:50:45.650160+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the first loop:'
+- kind: dialogue
+  speaker: forensics
+  text: Okay, let's start with the evidence intake procedure. We'll begin with the
+    chain of custody.
+- kind: dialogue
+  speaker: agent
+  text: I've got the request from the Detective. What do you need from me?
+- kind: dialogue
+  speaker: forensics
+  text: I need you to hand over the drive with the evidence, and I'll log it into
+    the system.
+- kind: dialogue
+  speaker: agent
+  text: Alright, here you go.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, now I'll scan the paperwork and get it into the evidence locker.

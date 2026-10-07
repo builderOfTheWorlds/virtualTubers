@@ -1,0 +1,23 @@
+id: forensics-evidence-locker-routine
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T07:26:03.038919+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: The evidence locker's keypad is still in need of a software update.
+- kind: dialogue
+  speaker: agent
+  text: Checking the evidence locker's chain of custody records, Hana. Can you confirm
+    that the latest update didn't affect any active cases?
+- kind: dialogue
+  speaker: forensics
+  text: The update didn't affect any active cases, but it's still a problem waiting
+    to happen. I'll schedule the update for next quarter.
+- kind: dialogue
+  speaker: quartermaster
+  text: Excuse me, Hana, I need to requisition some new drives for the locker. Can
+    you update the inventory accordingly?
+- kind: dialogue
+  speaker: forensics
+  text: Updating the inventory now, Teresa. What's the specification on the new drives?

@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 43
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:45.820231+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Pouring coffee for the morning briefing.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's get started.
+- kind: dialogue
+  speaker: analyst
+  text: No updates on the mirror link.
+- kind: dialogue
+  speaker: detective
+  text: I'll get to the bottom of this.
+- kind: dialogue
+  speaker: agent
+  text: (looking up from his monitor) Can I ask a question?
+- kind: dialogue
+  speaker: press
+  text: (glancing at Deshawn, then back at the Captain) About the press conference.
+- kind: dialogue
+  speaker: forensics
+  text: (tapping on her keyboard) I've got nothing on the chatter spike.
+- kind: narration
+  speaker: captain
+  text: 'The Observer: (standing by the stairwell door, watching)'

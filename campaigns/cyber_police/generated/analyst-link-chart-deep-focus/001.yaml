@@ -1,0 +1,34 @@
+id: analyst-link-chart-deep-focus
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T05:44:26.543902+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not seeing any new connections between the three users we flagged yesterday.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's take a closer look at those accounts. See if we can dig up
+    anything new.
+- kind: dialogue
+  speaker: detective
+  text: I'll review the footage from the raid. See if we missed anything.
+- kind: narration
+  speaker: captain
+  text: 'Agent Deshawn Okafor: I''ll run some extra tests on the server we took down.
+    See if we can get a better ID on the users.'
+- kind: dialogue
+  speaker: analyst
+  text: Hmm, this link chart is starting to get a little complicated. Let me see if
+    I can untangle it.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) I swear, the only thing I'm good for around here is
+    taking evidence requests.
+- kind: dialogue
+  speaker: press
+  text: (to himself) Great, just what I need. Another story about The Scuttle.
+- kind: dialogue
+  speaker: quartermaster
+  text: (to herself) I'm starting to think the only way we'll ever catch these privateers
+    is to just cut the legs out from under them entirely.

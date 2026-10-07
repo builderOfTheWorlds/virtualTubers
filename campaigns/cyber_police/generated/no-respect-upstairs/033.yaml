@@ -1,0 +1,26 @@
+id: no-respect-upstairs
+take: 33
+model: llama3.1:8b
+generated_at: '2026-10-01T06:25:11.011151+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Requesting backup for a possible Scuttle-related hack on 3rd and Main, ETA
+    5 minutes
+- kind: dialogue
+  speaker: analyst
+  text: Negative, we're already understaffed in forensics, can't spare anyone
+- kind: dialogue
+  speaker: captain
+  text: Alright, just send some uniforms to stand outside, make it look good
+- kind: dialogue
+  speaker: forensics
+  text: I've got some good news, Captain, the DNA analysis on the latest Scuttle package
+    is... well, it's not great
+- kind: dialogue
+  speaker: press
+  text: '''CYBER POLICE: STILL THE LEAST OF OUR WORRIES'' - Scuttle''s new motto,
+    anyone else see this on the feeds?'
+- kind: dialogue
+  speaker: quartermaster
+  text: We're all out of replacement coffee pods, can we get some more?

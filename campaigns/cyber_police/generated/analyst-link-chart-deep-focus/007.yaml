@@ -1,0 +1,8 @@
+id: analyst-link-chart-deep-focus
+take: 7
+model: llama3.1:8b
+generated_at: '2026-10-01T05:51:20.641776+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Okay, let's say the Commodore is operating from this proxy network...

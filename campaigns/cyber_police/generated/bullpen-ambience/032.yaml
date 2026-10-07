@@ -1,0 +1,28 @@
+id: bullpen-ambience
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T05:57:23.102392+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning briefing's at 07:00, same as every day.
+- kind: dialogue
+  speaker: detective
+  text: Just got a ping from Ashiorid, they're tracking a new malware variant.
+- kind: dialogue
+  speaker: analyst
+  text: I've got the analysis running, should have some results by 08:30.
+- kind: dialogue
+  speaker: agent
+  text: Need to update the Agent's toolkit, still using that outdated version of Nmap.
+- kind: dialogue
+  speaker: forensics
+  text: Just started processing the evidence from the Smithson case.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from The Scuttle, they're looking for a comment on the latest
+    raids.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition forms are due tomorrow, make sure you all submit your requests
+    on time.

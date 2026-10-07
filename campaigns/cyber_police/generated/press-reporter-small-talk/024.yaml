@@ -1,0 +1,37 @@
+id: press-reporter-small-talk
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:23.772192+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Hey, Priya, how's it going?
+- kind: dialogue
+  speaker: analyst
+  text: Not bad, Davey. Just going over the latest Scuttle chatter.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, I heard it's been a real snooze-fest.
+- kind: dialogue
+  speaker: press
+  text: Well, we're not going to get anything from The Scuttle unless we get a good
+    source.
+- kind: dialogue
+  speaker: forensics
+  text: I'm telling you, Davey, I saw something in the code that looked like a potential
+    backdoor.
+- kind: dialogue
+  speaker: press
+  text: That's great, Hana. I'll make sure to mention it to Marcus.
+- kind: dialogue
+  speaker: quartermaster
+  text: And I'll make sure to requisition some new hardware.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, because we all know how long that takes.
+- kind: dialogue
+  speaker: analyst
+  text: Let's not get ahead of ourselves. We'll just focus on the case at hand.
+- kind: dialogue
+  speaker: press
+  text: Sounds good to me. So, who's got the briefing notes?

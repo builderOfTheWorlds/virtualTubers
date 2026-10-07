@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 13
+model: llama3.1:8b
+generated_at: '2026-10-01T06:36:55.271134+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not just skill. They've got a mole.
+- kind: dialogue
+  speaker: analyst
+  text: We've run the numbers, Deshawn. There's no pattern to suggest they have inside
+    help.
+- kind: dialogue
+  speaker: captain
+  text: I don't know what I'd do without a bit of Scuttle luck. We'd be out of a job,
+    for starters.
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) It's just a matter of time before we get the drop on them. We just
+    need to stay one step ahead...
+- kind: dialogue
+  speaker: press
+  text: (excitedly) Oh, come on, Hana! You're not buying into this "Scuttle luck"
+    nonsense, are you?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm just saying, we've been playing catch-up for years. Maybe it's time to
+    change our strategy.

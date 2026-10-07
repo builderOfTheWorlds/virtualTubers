@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 17
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:13.891538+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone. Today's priority is closing in on the Darkweb node
+    in Sector 4.
+- kind: dialogue
+  speaker: detective
+  text: Still no word from Forensics on the encrypted package we found.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the chatter logs, and I think I see a pattern emerging.
+- kind: dialogue
+  speaker: agent
+  text: I've got a lead on a possible backdoor into the node.
+- kind: dialogue
+  speaker: forensics
+  text: We're still waiting on the DNA results from the raid last night.
+- kind: dialogue
+  speaker: press
+  text: Just got a call from my contact at the Times. They're interested in running
+    a piece on the unit's efforts.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a requisition for a new server, but it's still pending approval.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

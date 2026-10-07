@@ -1,0 +1,36 @@
+id: observer-corner-desk
+take: 23
+model: llama3.1:8b
+generated_at: '2026-10-01T06:27:39.415358+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: The directive for the day is to investigate a new chatter
+    spike on The Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll review the logs and see if I can pinpoint the source
+    of the chatter.'
+- kind: dialogue
+  speaker: analyst
+  text: I've run some preliminary analysis on the chatter spike, and it looks like
+    it's coming from a new mirror we haven't seen before.
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the signal and see if I can get a lock on the mirror's
+    location.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the evidence locker ready for any potential evidence we might find.
+- kind: dialogue
+  speaker: press
+  text: We should get a statement from the press on this, maybe something to calm
+    down the public.
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Requisitions for the day: new forensics software, replacement for the broken
+    scanner, and a request for additional funding for the unit.'
+- kind: narration
+  speaker: captain
+  text: (The Observer sits at the corner desk, watching the team with an unreadable
+    expression.)

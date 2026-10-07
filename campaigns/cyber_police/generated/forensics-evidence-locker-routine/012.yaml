@@ -1,0 +1,26 @@
+id: forensics-evidence-locker-routine
+take: 12
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:10.136515+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the keypad on the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Rummaging through the supply cage, searching for a specific cable.
+- kind: dialogue
+  speaker: analyst
+  text: Organizing printouts on her desk, muttering to herself about data integrity.
+- kind: dialogue
+  speaker: press
+  text: Checking her phone for notifications, tapping her pen on the desk.
+- kind: dialogue
+  speaker: quartermaster
+  text: Counting inventory in the supply cage, humming to herself.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Entering the bullpen, glancing at the monitors as she passes.'
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Reaching for a cup of coffee, eyes scanning the room.'

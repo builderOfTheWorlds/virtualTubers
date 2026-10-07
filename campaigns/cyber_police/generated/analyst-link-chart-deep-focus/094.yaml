@@ -1,0 +1,48 @@
+id: analyst-link-chart-deep-focus
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:50.699487+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm not sure I'm seeing the significance of that single IP address.
+- kind: dialogue
+  speaker: captain
+  text: I want a closer look at the network traffic around the time that upload went
+    up.
+- kind: dialogue
+  speaker: forensics
+  text: I've got a match on the encryption key. It's not the same one used for the
+    last five big hauls.
+- kind: dialogue
+  speaker: agent
+  text: That's not a great sign. The Bosun's changed up the protocol again.
+- kind: dialogue
+  speaker: analyst
+  text: But that's not a new technique. It's just a variation on something we've seen
+    before.
+- kind: dialogue
+  speaker: captain
+  text: Keep going, Priya. I want to know what that variation does.
+- kind: dialogue
+  speaker: quartermaster
+  text: Can someone please get me a coffee? This requisition binder is starting to
+    get thick.
+- kind: dialogue
+  speaker: press
+  text: Ah, Captain, I think I've got a good story brewing. Can I get a minute of
+    your time?
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, Davey. We don't even have a lead yet.
+- kind: dialogue
+  speaker: agent
+  text: I've got a potential entry point into the proxy chain. But we'll need Forensics
+    to help us get in.
+- kind: dialogue
+  speaker: forensics
+  text: Okay, I think I see where the Bosun is hiding the key. But we'll need Agent
+    Okafor to get us the hardware to track it.
+- kind: dialogue
+  speaker: captain
+  text: This is what we've been waiting for. Let's get to work, people.

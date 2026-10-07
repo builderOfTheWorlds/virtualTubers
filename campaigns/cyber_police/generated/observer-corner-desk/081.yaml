@@ -1,0 +1,39 @@
+id: observer-corner-desk
+take: 81
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:03.949456+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to review the morning's intel one more time.
+- kind: dialogue
+  speaker: agent
+  text: Already on it, Priya. I've got some interesting chatter spikes to show you.
+- kind: dialogue
+  speaker: forensics
+  text: Can I get a word, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: (whispering to Hana) What's going on? You're not getting in trouble again,
+    are you?
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) No, nothing like that, Teresa. Just a question about the raid last
+    night.
+- kind: dialogue
+  speaker: press
+  text: (fidgeting with his phone) Can someone tell me what's going on? I've got a
+    deadline to meet.
+- kind: dialogue
+  speaker: detective
+  text: (staring at Davey) You know we can't give out details, Davey. That's not how
+    it works.
+- kind: dialogue
+  speaker: captain
+  text: (walking into the room) Let's focus, people. We have a briefing to give.
+- kind: dialogue
+  speaker: analyst
+  text: (nervously) Right, of course. Sorry about that, Captain.
+- kind: dialogue
+  speaker: detective
+  text: (glancing at the Observer) Where is... (pauses)

@@ -1,0 +1,46 @@
+id: analyst-link-chart-deep-focus
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:59.003737+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to rechart the link between the Scuttle protocol and the encrypted
+    server in Moscow.
+- kind: dialogue
+  speaker: agent
+  text: Can you give me an update on the Bosun's latest moves, Priya?
+- kind: dialogue
+  speaker: analyst
+  text: Actually, I've been trying to connect the Bosun to a specific IP address in
+    the UK.
+- kind: dialogue
+  speaker: forensics
+  text: Priya, I'm not getting any hits on that IP. You should try rechecking the
+    packet capture.
+- kind: dialogue
+  speaker: analyst
+  text: I've already tried rechecking it. Maybe I just need a fresh look.
+- kind: dialogue
+  speaker: captain
+  text: Priya, take a break. You've been staring at those charts for hours.
+- kind: dialogue
+  speaker: analyst
+  text: But Captain, I think I'm close to something...
+- kind: dialogue
+  speaker: agent
+  text: Actually, Captain, I think Priya might be onto something. Let her keep working.
+- kind: dialogue
+  speaker: analyst
+  text: If I can just reconnect the thread between the Scuttle protocol and the encrypted
+    server...
+- kind: dialogue
+  speaker: forensics
+  text: I think I see a problem, Priya. Your link chart is inconsistent with the packet
+    capture.
+- kind: dialogue
+  speaker: analyst
+  text: Oh no, you're right. I must have made a mistake.
+- kind: dialogue
+  speaker: captain
+  text: Priya, take a break. We'll get to this in the morning.

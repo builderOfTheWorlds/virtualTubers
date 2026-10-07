@@ -1,0 +1,24 @@
+id: forensics-evidence-locker-routine
+take: 127
+model: llama3.1:8b
+generated_at: '2026-10-01T07:28:58.901191+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Confirming the code with the Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Beginning the chain of custody procedure for the seized devices.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Reviewing the evidence lockers contents to ensure chain of
+    custody is maintained.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Retrieving a new storage drive for the seized devices.
+- kind: dialogue
+  speaker: press
+  text: Noting the time and date for the evidence intake procedure.

@@ -1,0 +1,27 @@
+id: captain-commissioners-memo
+take: 15
+model: llama3.1:8b
+generated_at: '2026-10-01T06:01:51.731602+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: I don't know what's more infuriating, the fact that they can't be bothered
+    to use our real name or that they think "the computer thing" is some sort of endearment.
+- kind: dialogue
+  speaker: detective
+  text: I'm sure it's not personal, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've seen it before. It's just a symptom of the bigger problem.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, but at some point, you'd think they'd learn to take us seriously.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know how much more of this I can take.
+- kind: dialogue
+  speaker: press
+  text: 'The Cyber Police: A team of... enthusiasts.'
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a requisition form for a new server that's been pending for six months.

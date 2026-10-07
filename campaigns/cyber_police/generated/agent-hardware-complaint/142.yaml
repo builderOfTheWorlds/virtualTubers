@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 142
+model: llama3.1:8b
+generated_at: '2026-10-01T06:41:38.323733+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if this trace tool had a decent processor we'd be done by now

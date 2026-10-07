@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 26
+model: llama3.1:8b
+generated_at: '2026-10-01T05:52:22.730612+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Making this connection to the proxy chain might not be as big of a deal as
+    I thought, but I still want to check for any patterns in the past.

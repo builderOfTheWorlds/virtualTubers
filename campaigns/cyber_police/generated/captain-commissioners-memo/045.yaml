@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:24.181400+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The memo from the Commissioner's office is in.
+- kind: dialogue
+  speaker: detective
+  text: '"Computer thing"? Really? That''s a new one.'
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Not surprising.
+- kind: dialogue
+  speaker: agent
+  text: (whispers) Like they think we're just a bunch of IT nerds.
+- kind: dialogue
+  speaker: forensics
+  text: ( mutters under breath) Like we're not doing real police work...
+- kind: dialogue
+  speaker: press
+  text: (chuckles) Oh boy, this is gonna be good.
+- kind: dialogue
+  speaker: quartermaster
+  text: (rolls her eyes) Just great, another chance to explain ourselves...

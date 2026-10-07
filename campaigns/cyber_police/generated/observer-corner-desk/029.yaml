@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 29
+model: llama3.1:8b
+generated_at: '2026-10-01T06:28:07.926846+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'll be going over the day's plan with Agent Okafor.
+- kind: dialogue
+  speaker: analyst
+  text: Just trying to piece together a narrative thread from the chatter logs.
+- kind: dialogue
+  speaker: press
+  text: Looks like the Mirror site went up overnight, I'll send a brief to the press.
+- kind: dialogue
+  speaker: forensics
+  text: Just got a batch of evidence in from the morning raid, need to log it and
+    prep it for analysis.
+- kind: dialogue
+  speaker: agent
+  text: Still trying to get a foothold on The Scuttle's infrastructure, Captain's
+    directive was a bit vague on that.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisitions for the team are coming in, need to get them signed out before
+    the end of the day.
+- kind: dialogue
+  speaker: captain
+  text: Observer, you're watching as usual.

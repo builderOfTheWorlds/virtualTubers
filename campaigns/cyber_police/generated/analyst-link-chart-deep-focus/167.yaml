@@ -1,0 +1,9 @@
+id: analyst-link-chart-deep-focus
+take: 167
+model: llama3.1:8b
+generated_at: '2026-10-01T07:17:34.145831+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think the Bosun is running their own separate operation, using
+    the Scuttle as a front.

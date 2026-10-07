@@ -1,0 +1,35 @@
+id: observer-corner-desk
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T07:33:30.870003+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The directive for today is to review the new mirror on The Scuttle.
+- kind: dialogue
+  speaker: detective
+  text: I'm still going over the link charts from the Analyst, but it looks like our
+    target may be hiding in plain sight.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the chatter patterns, and I think I see a possible connection
+    to the last raid.
+- kind: dialogue
+  speaker: agent
+  text: I've set up the tracing tools, but so far, nothing's pinging. I'll keep working
+    on it.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the evidence from the last raid, but it's all encrypted. I'm working
+    on cracking the code.
+- kind: dialogue
+  speaker: press
+  text: We need to be careful with the media today, they're sniffing around for a
+    story.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've requisitioned a new set of monitoring software, but it's still pending
+    approval.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

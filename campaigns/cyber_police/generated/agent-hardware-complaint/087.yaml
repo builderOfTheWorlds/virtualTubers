@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 87
+model: llama3.1:8b
+generated_at: '2026-10-01T06:08:32.856002+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Stuck on this ancient code
+- kind: dialogue
+  speaker: analyst
+  text: I'm looking at the same error message
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Can't even get a decent debug tool to work
+- kind: dialogue
+  speaker: forensics
+  text: I'm running the code on the newer machine
+- kind: dialogue
+  speaker: agent
+  text: And still nothing
+- kind: dialogue
+  speaker: analyst
+  text: Maybe we should try a different approach
+- kind: dialogue
+  speaker: agent
+  text: Like what, more code?
+- kind: dialogue
+  speaker: forensics
+  text: (chuckles) Well, someone's got to try

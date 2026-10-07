@@ -1,0 +1,31 @@
+id: scuttle-luck-chatter
+take: 32
+model: llama3.1:8b
+generated_at: '2026-10-01T06:38:40.045231+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: I still can''t believe that tip about the warehouse turned
+    out to be nothing.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Come on, Cap, we can''t blame the informants all the time.
+    It''s just Scuttle luck.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been analyzing the proxy chains, and I think I've found a pattern. We
+    might be able to—
+- kind: dialogue
+  speaker: agent
+  text: Hold up, Priya, what's the point? We'll just get another fake tip and—
+- kind: dialogue
+  speaker: forensics
+  text: Hey, guys, I think I found a lead on the seized drive. Maybe it's not just
+    a rubber duck.
+- kind: dialogue
+  speaker: press
+  text: (yawns) Oh, great, another one of these discussions. Can't we just get some
+    real news for once?
+- kind: dialogue
+  speaker: quartermaster
+  text: (smirks) Oh, come on, Davey, you know you love the Scuttle drama.

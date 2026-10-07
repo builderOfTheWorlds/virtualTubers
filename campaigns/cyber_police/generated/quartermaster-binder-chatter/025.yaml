@@ -1,0 +1,9 @@
+id: quartermaster-binder-chatter
+take: 25
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:44.624915+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, let's get through this requisition report, it's not like it's going
+    to be the first time we get denied

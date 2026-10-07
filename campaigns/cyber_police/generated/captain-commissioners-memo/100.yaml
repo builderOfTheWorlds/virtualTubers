@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 100
+model: llama3.1:8b
+generated_at: '2026-10-01T06:49:12.806464+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: 'Captain Rosalind Agar: This memo is from the Commissioner''s office again'
+- kind: dialogue
+  speaker: detective
+  text: 'Detective Marcus Thorn: I''ll bet it''s "the computer thing" again'
+- kind: dialogue
+  speaker: analyst
+  text: 'Priya Nandakumar: Yeah, like we haven''t heard that one before'
+- kind: dialogue
+  speaker: agent
+  text: 'Deshawn Okafor: Someone should write a response memo. "The human thing"'
+- kind: dialogue
+  speaker: forensics
+  text: 'Hana Vosk: We''ll just get ignored'
+- kind: dialogue
+  speaker: press
+  text: 'Davey Okonkwo-Pryce: "the department''s IT department with badges"'
+- kind: dialogue
+  speaker: quartermaster
+  text: 'Teresa Mbeki-Lowndes: Just wait until they need us'

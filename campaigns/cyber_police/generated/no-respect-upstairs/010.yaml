@@ -1,0 +1,35 @@
+id: no-respect-upstairs
+take: 10
+model: llama3.1:8b
+generated_at: '2026-10-01T06:23:07.782496+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Morning, Cyber Police, you''re 17th in the backup queue, hope
+    you''re ready for a long day.'
+- kind: dialogue
+  speaker: captain
+  text: (sighs) Just great.
+- kind: dialogue
+  speaker: detective
+  text: (laughs) At least we're used to it.
+- kind: dialogue
+  speaker: analyst
+  text: (scans the screen) Okay, so we've got a possible match on the Scuttle's IP.
+- kind: dialogue
+  speaker: agent
+  text: (looks up from his console) Uh, Priya, don't get too excited. It's probably
+    just a bot.
+- kind: dialogue
+  speaker: forensics
+  text: (examines the evidence) Actually, this looks like it might be the real deal.
+- kind: dialogue
+  speaker: quartermaster
+  text: (frowns) What's the point of even trying? Nobody takes us seriously anyway.
+- kind: dialogue
+  speaker: press
+  text: '(on a screen behind them) SCUTTLE EXPOSES CYBER POLICE CORRUPTION: WE''RE
+    WATCHING YOU.'
+- kind: dialogue
+  speaker: captain
+  text: (resigned) Alright, let's get to work.

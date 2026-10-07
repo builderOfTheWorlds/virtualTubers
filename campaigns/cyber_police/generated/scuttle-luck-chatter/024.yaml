@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 24
+model: llama3.1:8b
+generated_at: '2026-10-01T06:37:53.801533+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''m telling you, it''s just too many mirrors.'
+- kind: dialogue
+  speaker: analyst
+  text: Mirrors, proxies, it's all just a facade.
+- kind: dialogue
+  speaker: agent
+  text: You're saying it's just luck?
+- kind: dialogue
+  speaker: forensics
+  text: I'm saying it's not just luck. There's a design here.
+- kind: dialogue
+  speaker: press
+  text: (chuckles) Design? You mean, like, the Commodore's got a PhD in evasion?
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughs) That's not exactly what I meant, but...
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (smirks) Ah, come on, Teresa. You know as well as I do that
+    this is just what they want us to think.'

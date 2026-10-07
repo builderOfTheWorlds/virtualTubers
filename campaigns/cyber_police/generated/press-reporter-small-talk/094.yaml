@@ -1,0 +1,34 @@
+id: press-reporter-small-talk
+take: 94
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:06.268624+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Davey, how's the mood at the Herald today?
+- kind: narration
+  speaker: captain
+  text: 'Capt: Alright, everyone, let''s get started. We''ve got a new mirror on The
+    Scuttle.'
+- kind: narration
+  speaker: captain
+  text: 'Det: I''ll take it. I''ll get a team put together to look at it.'
+- kind: narration
+  speaker: captain
+  text: 'Anal: Intel suggests it''s a new IP address, possibly a proxy server.'
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the server, see if we can get a hit.
+- kind: narration
+  speaker: captain
+  text: 'Foren: Same here, I''ll run the mirror through the scanner.'
+- kind: dialogue
+  speaker: press
+  text: Anything I need to worry about, Captain?
+- kind: narration
+  speaker: captain
+  text: 'Quar: Nothing new on the requisition front. We''re still waiting on that
+    upgrade.'
+- kind: narration
+  speaker: captain
+  text: 'Obs: ||emotion:blank (no spoken words)'

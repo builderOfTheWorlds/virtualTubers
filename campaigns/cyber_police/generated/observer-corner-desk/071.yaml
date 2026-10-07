@@ -1,0 +1,31 @@
+id: observer-corner-desk
+take: 71
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:09.210725+00:00'
+beats:
+- kind: dialogue
+  speaker: detective
+  text: I'll review the night's chatter on The Scuttle.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the IP addresses, Captain, and I think I've found a possible
+    pattern.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the tracing tools ready, Detective.
+- kind: dialogue
+  speaker: forensics
+  text: I've got the lab up and running, Captain. What's the first priority?
+- kind: dialogue
+  speaker: press
+  text: I'll need to know what to tell the press if this goes public.
+- kind: dialogue
+  speaker: quartermaster
+  text: The quartermaster's log shows that we're still missing the high-gain antennas
+    for the surveillance array.
+- kind: dialogue
+  speaker: captain
+  text: (glances at the Observer) Let's see if we can move forward on this lead.
+- kind: narration
+  speaker: captain
+  text: (The Observer continues to watch, expressionless.)

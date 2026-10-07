@@ -1,0 +1,35 @@
+id: agent-hardware-complaint
+take: 77
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:51.768218+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm surprised we even got the login credentials for this ancient system.
+- kind: dialogue
+  speaker: forensics
+  text: '||looking over Deshawn''s shoulder, trying to help'
+- kind: dialogue
+  speaker: agent
+  text: It's like they wanted us to fail.
+- kind: dialogue
+  speaker: analyst
+  text: Can we just get the trace tool up?
+- kind: dialogue
+  speaker: agent
+  text: I'm trying, Priya, but this thing is a dinosaur.
+- kind: dialogue
+  speaker: captain
+  text: Deshawn, how's it going?
+- kind: dialogue
+  speaker: agent
+  text: Captain, it's like...
+- kind: dialogue
+  speaker: forensics
+  text: Maybe we should just get Forensics on it?
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, that's probably a better idea.
+- kind: dialogue
+  speaker: agent
+  text: Fine, but this is not how I envisioned my day going.

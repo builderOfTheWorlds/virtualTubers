@@ -1,0 +1,36 @@
+id: press-reporter-small-talk
+take: 98
+model: llama3.1:8b
+generated_at: '2026-10-01T07:37:28.443019+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: What's the play for today?
+- kind: dialogue
+  speaker: captain
+  text: We've got a tip from our friend at the Daily Pulse.
+- kind: dialogue
+  speaker: agent
+  text: Anything new on The Scuttle's chatter?
+- kind: dialogue
+  speaker: analyst
+  text: My algorithms are picking up some interesting patterns in the data, but it's
+    still unclear what it means.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I''ll get the team working on a plan, but we need to keep it
+    low-key until we know more.'
+- kind: dialogue
+  speaker: forensics
+  text: I'll review the evidence from the recent raids and see if we can find any
+    connections.
+- kind: dialogue
+  speaker: quartermaster
+  text: Nothing new on the requisition front, I'm afraid.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I'm starting to think our algorithms are as good as
+    it gets...
+- kind: dialogue
+  speaker: press
+  text: (whispering to himself) I'll get the story on the tip...

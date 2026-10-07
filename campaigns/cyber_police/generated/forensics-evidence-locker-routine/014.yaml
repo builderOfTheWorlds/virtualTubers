@@ -1,0 +1,32 @@
+id: forensics-evidence-locker-routine
+take: 14
+model: llama3.1:8b
+generated_at: '2026-10-01T06:19:20.444734+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Unlocking the evidence locker.
+- kind: dialogue
+  speaker: agent
+  text: Evidence request from the Agent, case file 3456.
+- kind: dialogue
+  speaker: analyst
+  text: Checking the integrity of the hard drives...
+- kind: dialogue
+  speaker: captain
+  text: Where is the chain of custody for the latest batch of evidence?
+- kind: dialogue
+  speaker: forensics
+  text: Forensics log 3456-01, uploaded to the system yesterday afternoon.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition for new equipment, needs to be processed.
+- kind: dialogue
+  speaker: analyst
+  text: Everything looks in order...
+- kind: dialogue
+  speaker: agent
+  text: Can I review the evidence from case file 2345?
+- kind: dialogue
+  speaker: forensics
+  text: Already processed, stored in the secure drive.

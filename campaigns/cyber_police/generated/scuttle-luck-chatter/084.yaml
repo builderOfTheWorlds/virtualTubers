@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 84
+model: llama3.1:8b
+generated_at: '2026-10-01T07:42:56.581325+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm telling you, some of it's just skill, they have eyes and ears everywhere.
+    ||emotion:neutral
+- kind: dialogue
+  speaker: agent
+  text: And some of it's just dumb luck. Like that one time we raided the wrong warehouse,
+    again. ||emotion:angry
+- kind: dialogue
+  speaker: forensics
+  text: Or that time the forensics team found a rubber duck on the seized drive. ||emotion:surprised
+- kind: dialogue
+  speaker: press
+  text: Come on, guys, let's not forget the time The Scuttle left us a message in
+    the root directory. 'Bring snacks next time.' ||emotion:happy
+- kind: dialogue
+  speaker: analyst
+  text: I'm starting to think it's just because we're underfunded and outgunned. ||emotion:sad
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: "I still say it''s a mix of both. They''ve got people inside,
+    and we just can''t catch them. ||emotion:neutral"'

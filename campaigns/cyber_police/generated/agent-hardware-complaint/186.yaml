@@ -1,0 +1,29 @@
+id: agent-hardware-complaint
+take: 186
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:08.055825+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Man, can you believe they denied my request for a new network analyzer?
+- kind: dialogue
+  speaker: detective
+  text: What's the hold up on the Scuttle lead? Still nothing on the financials?
+- kind: dialogue
+  speaker: analyst
+  text: Financials are still in the dark, but I think I found something on the new
+    mirror.
+- kind: dialogue
+  speaker: forensics
+  text: I'm getting some weird hits on the server traffic. Might be worth looking
+    into.
+- kind: dialogue
+  speaker: quartermaster
+  text: I requisitioned a new set of gloves for Forensics. Still waiting to hear back
+    on it.
+- kind: dialogue
+  speaker: press
+  text: You think they'll ever give us the resources we need to catch The Scuttle?
+- kind: dialogue
+  speaker: forensics
+  text: (sighs) I don't know, but I'm trying to get that new RAM upgrade through requisition.

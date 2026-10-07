@@ -1,0 +1,42 @@
+id: press-reporter-small-talk
+take: 90
+model: llama3.1:8b
+generated_at: '2026-10-01T07:36:46.986403+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright everyone, what do we have for today?'
+- kind: narration
+  speaker: captain
+  text: 'DO: Not much, looks like another Scuttle mirror somewhere.'
+- kind: narration
+  speaker: captain
+  text: 'PV: The mirror''s been online for two hours, no chatter yet.'
+- kind: narration
+  speaker: captain
+  text: 'MT: Alright, let''s get a plan going.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m still trying to pinpoint the location, but...'
+- kind: narration
+  speaker: captain
+  text: 'HV: I''ve got a lead on the server architecture. It''s an interesting setup.'
+- kind: narration
+  speaker: captain
+  text: 'DO: We need to get a team in there, ASAP.'
+- kind: narration
+  speaker: captain
+  text: 'DP: I''ve already talked to the one friendly reporter. They''re willing to
+    do a piece on us, but...'
+- kind: narration
+  speaker: captain
+  text: 'TM: What are we talking about, Davey?'
+- kind: narration
+  speaker: captain
+  text: 'DP: Nothing, never mind. Just...just the usual.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Alright, let''s get back on track. What do we have on the server?'
+- kind: narration
+  speaker: captain
+  text: 'HV: It''s a...it''s a custom setup. I''ve never seen anything like it.'

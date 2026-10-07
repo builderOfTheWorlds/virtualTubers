@@ -1,0 +1,23 @@
+id: quartermaster-binder-chatter
+take: 20
+model: llama3.1:8b
+generated_at: '2026-10-01T06:34:32.784597+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'TMB: I''m going to have to fill out the denial log again.'
+- kind: narration
+  speaker: captain
+  text: 'DBO: Eventually someone''s going to ask us to do it right.'
+- kind: narration
+  speaker: captain
+  text: 'PMN: What about that new monitoring software?'
+- kind: narration
+  speaker: captain
+  text: 'HVV: Not that it matters, but the latest test results are in.'
+- kind: narration
+  speaker: captain
+  text: 'DOP: I''m sure someone will get around to looking at it eventually.'
+- kind: narration
+  speaker: captain
+  text: 'TML: The eventual inquiry.'

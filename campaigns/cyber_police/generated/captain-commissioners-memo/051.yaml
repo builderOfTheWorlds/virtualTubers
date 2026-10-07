@@ -1,0 +1,26 @@
+id: captain-commissioners-memo
+take: 51
+model: llama3.1:8b
+generated_at: '2026-10-01T06:16:45.924736+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: This memo is from the Commissioner's office.
+- kind: dialogue
+  speaker: detective
+  text: (muttering) "The computer thing"
+- kind: dialogue
+  speaker: analyst
+  text: (quietly) It's not like it's the first time we've heard it.
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, no, we're just a myth, a legend in our own time.
+- kind: dialogue
+  speaker: forensics
+  text: (deadpan) At least it's not the IT department with badges.
+- kind: dialogue
+  speaker: press
+  text: (walking by, overhearing) What's going on?
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) Just another day in the life.

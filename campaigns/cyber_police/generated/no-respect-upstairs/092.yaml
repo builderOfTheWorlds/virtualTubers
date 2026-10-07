@@ -1,0 +1,41 @@
+id: no-respect-upstairs
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T07:29:57.496232+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Dispatcher: Alright, unit''s requested backup for a "high-priority" arrest.
+    You know it''s gonna be an hour, at least.'
+- kind: dialogue
+  speaker: agent
+  text: (sighs) Just put in the request, then. We'll get what we get.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over comms) Actually, I've got a few spare units you can borrow. They're
+    on a coffee break.
+- kind: dialogue
+  speaker: analyst
+  text: (at her desk) You know the real news will be when we finally get an arrest
+    we can use to get a decent headline.
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus on the task at hand. We need to catch The Scuttle.
+- kind: dialogue
+  speaker: press
+  text: '(on monitor) "Cyber Police in Wild Goose Chase: Again" - Scuttle''s got a
+    new headline up.'
+- kind: dialogue
+  speaker: forensics
+  text: (from the lab) Actually, I think I've found some usable evidence on that last
+    Scuttle case.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (to the team) That''s great, Hana. Maybe this is the break
+    we need.'
+- kind: dialogue
+  speaker: agent
+  text: (to himself) Yeah, right. Like it's going to make a difference.
+- kind: dialogue
+  speaker: analyst
+  text: (to the team) I think we can use this. Let's run some simulations.

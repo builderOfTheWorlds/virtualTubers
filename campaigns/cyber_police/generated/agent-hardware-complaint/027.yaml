@@ -1,0 +1,28 @@
+id: agent-hardware-complaint
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T05:48:21.736351+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing is taking forever to load.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) I swear, we're still running Windows 7...
+- kind: dialogue
+  speaker: captain
+  text: (sighing) What's the holdup, Deshawn?
+- kind: dialogue
+  speaker: agent
+  text: Just trying to get this trace tool running, Captain.
+- kind: dialogue
+  speaker: forensics
+  text: (laughing) Yeah, good luck with that. I've seen newer hardware on a garage
+    sale.
+- kind: dialogue
+  speaker: detective
+  text: (smiling wryly) I think we're all just waiting for the inevitable, Hana.
+- kind: dialogue
+  speaker: analyst
+  text: (shaking her head) This is why we can't solve anything. We're stuck in the
+    dark ages.

@@ -1,0 +1,31 @@
+id: analyst-link-chart-deep-focus
+take: 89
+model: llama3.1:8b
+generated_at: '2026-10-01T06:11:34.247321+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: I need to go back to the 0.35 anomaly, see if I can find any connections to
+    the new traffic on 3.15.
+- kind: dialogue
+  speaker: agent
+  text: (from the next room) Priya, have you run the updated node counts yet?
+- kind: dialogue
+  speaker: analyst
+  text: Not yet, still digging into this one thread...
+- kind: dialogue
+  speaker: forensics
+  text: (from the lab) Priya, can you send me the 3.15 traffic files? I need to see
+    if I can find any patterns.
+- kind: dialogue
+  speaker: analyst
+  text: ( muttering to herself ) Unless I'm just chasing a ghost...
+- kind: dialogue
+  speaker: agent
+  text: (from the next room) Priya, did you find anything?
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) No, nothing yet. Just a bunch of noise.
+- kind: dialogue
+  speaker: captain
+  text: (from the doorway) Priya, how's the analysis coming?

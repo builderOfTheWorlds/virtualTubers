@@ -1,0 +1,29 @@
+id: observer-corner-desk
+take: 73
+model: llama3.1:8b
+generated_at: '2026-10-01T07:00:19.580063+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Good morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: Intelligence suggests a potential new player in the Scuttle's network.
+- kind: dialogue
+  speaker: agent
+  text: I'm still trying to track down the source of the chatter.
+- kind: dialogue
+  speaker: forensics
+  text: Nothing new on the evidence front, still processing the last raid's haul.
+- kind: dialogue
+  speaker: press
+  text: Anything I need to manage today, Captain?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just the usual requisition requests, nothing out of the ordinary.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

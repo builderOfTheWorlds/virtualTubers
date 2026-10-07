@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 191
+model: llama3.1:8b
+generated_at: '2026-10-01T07:15:28.586713+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, if I have to reboot this thing one more time...
+- kind: dialogue
+  speaker: analyst
+  text: What's the holdup, Agent?
+- kind: dialogue
+  speaker: agent
+  text: (sighs) It's just this ancient hardware...
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to get the trace tool up, but it's taking forever.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Can I help with the reboot?
+- kind: dialogue
+  speaker: analyst
+  text: (to Hana) No, no, I've got it.
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Agent Okafor, your requisition for new hardware has
+    been approved.
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, great. Finally.

@@ -1,0 +1,39 @@
+id: press-reporter-small-talk
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T07:03:26.392693+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Morning, Priya!
+- kind: dialogue
+  speaker: analyst
+  text: Morning, Davey. Just getting the briefing set up.
+- kind: dialogue
+  speaker: press
+  text: Captain in yet?
+- kind: dialogue
+  speaker: agent
+  text: Yeah, she's just getting the comms updated.
+- kind: dialogue
+  speaker: captain
+  text: Alright, everyone, let's get started. Today's lead is a chatter spike on the
+    eastern nodes.
+- kind: dialogue
+  speaker: forensics
+  text: I'll get the node logs pulled, see if we can pinpoint the chatter.
+- kind: dialogue
+  speaker: agent
+  text: I'll get the comms team to patch in the surveillance feeds.
+- kind: dialogue
+  speaker: analyst
+  text: I'll run the chatter pattern through the linguistics module.
+- kind: dialogue
+  speaker: press
+  text: Anything I need to worry about comms-wise today?
+- kind: dialogue
+  speaker: quartermaster
+  text: Just the usual. The new requisition for a decent server's still pending.
+- kind: dialogue
+  speaker: captain
+  text: Alright, that's all for now. Let's get to work.

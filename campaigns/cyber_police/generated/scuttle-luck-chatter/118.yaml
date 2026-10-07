@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 118
+model: llama3.1:8b
+generated_at: '2026-10-01T07:46:08.407821+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, Scuttle luck is just a myth perpetuated by a crew of supergeniuses
+    who are just toying with us.
+- kind: dialogue
+  speaker: analyst
+  text: Oh, come on, Deshawn, you can't seriously think the Bosun isn't involved in
+    some kind of genius-level evasion strategy.
+- kind: dialogue
+  speaker: forensics
+  text: Actually, I think it's more like they're just really good at finding the weak
+    points in our plans.
+- kind: dialogue
+  speaker: quartermaster
+  text: Which is not to say I don't love a good challenge, but it would be nice to
+    catch them once in our lives.
+- kind: dialogue
+  speaker: press
+  text: Scuttle luck, Scuttle luck, Scuttle luck... I'm starting to think it's not
+    luck at all.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: (chuckling) Ah, now that''s the spirit, Davey. But I still
+    say it''s a combination of skill, inside info, and sheer dumb luck.'

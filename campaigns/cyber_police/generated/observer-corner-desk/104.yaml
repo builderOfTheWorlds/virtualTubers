@@ -1,0 +1,32 @@
+id: observer-corner-desk
+take: 104
+model: llama3.1:8b
+generated_at: '2026-10-01T07:34:36.694506+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Morning, everyone.
+- kind: dialogue
+  speaker: detective
+  text: Good morning, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the link charts, and I think I've found a connection
+    between the three recent incidents.
+- kind: dialogue
+  speaker: agent
+  text: I'll start tracing the signal, but I need Forensics to process the latest
+    evidence.
+- kind: dialogue
+  speaker: forensics
+  text: Already on it. I'll bring the results to the briefing.
+- kind: dialogue
+  speaker: press
+  text: Nothing new with the press, Captain. Just the usual queries from the public.
+- kind: dialogue
+  speaker: quartermaster
+  text: Requisition day is next week. I've already submitted the requests, but I'm
+    expecting a lot of denials.
+- kind: narration
+  speaker: captain
+  text: 'Observer:'

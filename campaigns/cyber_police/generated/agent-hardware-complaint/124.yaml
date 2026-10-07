@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 124
+model: llama3.1:8b
+generated_at: '2026-10-01T06:40:41.593431+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Trying to get this trace tool running on this ancient machine.

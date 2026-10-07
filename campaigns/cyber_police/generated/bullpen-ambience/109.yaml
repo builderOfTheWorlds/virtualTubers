@@ -1,0 +1,50 @@
+id: bullpen-ambience
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:48.096446+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, let''s wrap this up for the day.'
+- kind: narration
+  speaker: captain
+  text: 'DT: Think we''ve got a good lead on that scammer, Captain.'
+- kind: narration
+  speaker: captain
+  text: 'PN: I''ve been running the numbers, and it looks like they''ve been transferring
+    funds in a pretty regular pattern.'
+- kind: narration
+  speaker: captain
+  text: 'DO: I can try to get us a warrant, but we''ll need a stronger case to take
+    it to court.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Just got a report from the forensics lab - we''ve got a match on the
+    IP address.'
+- kind: narration
+  speaker: captain
+  text: 'DO: And I''ve been trying to get the system to give us a better ping on their
+    encryption, but...'
+- kind: narration
+  speaker: captain
+  text: 'DV: Captain, I''ve got a call from the Herald - they want to do a follow-up
+    on our recent cases.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Ah, good. Finally someone who doesn''t think we''re just a bunch of basement-dwelling
+    nerds.'
+- kind: narration
+  speaker: captain
+  text: 'TM: Just, you know, be professional. We don''t want any more " Cyber Police:
+    Our Heroes?" headlines.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''ll talk to them, but I''m not making any promises about getting Davey
+    to smile for a photo op.'
+- kind: narration
+  speaker: captain
+  text: 'TM: And can we please get some coffee around here? Mine''s been cold since
+    this morning.'
+- kind: narration
+  speaker: captain
+  text: 'CA: Alright, that''s all for now. Let''s review in the morning.'

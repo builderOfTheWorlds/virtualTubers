@@ -1,0 +1,29 @@
+id: captain-commissioners-memo
+take: 92
+model: llama3.1:8b
+generated_at: '2026-10-01T06:48:42.522445+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Here is the first loop:'
+- kind: dialogue
+  speaker: captain
+  text: This memo is a joke.
+- kind: dialogue
+  speaker: detective
+  text: I'll give it to Priya to go over.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Computer thing...
+- kind: dialogue
+  speaker: agent
+  text: (whispering to Hana) Did you see that part about backup requests?
+- kind: dialogue
+  speaker: forensics
+  text: (sighing) Because we're not real police.
+- kind: dialogue
+  speaker: press
+  text: (walking into the room) Scuttle's going to love this.
+- kind: dialogue
+  speaker: quartermaster
+  text: (shaking her head) Someone should have a word with the Commissioner.

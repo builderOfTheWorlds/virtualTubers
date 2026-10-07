@@ -1,0 +1,37 @@
+id: no-respect-upstairs
+take: 78
+model: llama3.1:8b
+generated_at: '2026-10-01T06:57:20.570930+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, briefing time, folks. We've got a new case on The Scuttle's latest
+    scheme.
+- kind: dialogue
+  speaker: detective
+  text: I'm still waiting on the forensics report, Captain.
+- kind: dialogue
+  speaker: analyst
+  text: I've got something on the login sequence. It looks like they're using a modified
+    version of the 345 protocol.
+- kind: dialogue
+  speaker: agent
+  text: I'll get on it, Priya. We can't afford to be behind the curve.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) If I had the right equipment, I could get to the root
+    of this in minutes...
+- kind: dialogue
+  speaker: quartermaster
+  text: (over the comms system) Okay, unit, I've got your backup request at... (pauses)
+    ...number 347.
+- kind: dialogue
+  speaker: press
+  text: '(voiceover on a TV monitor in the background) "Cyber Cops Still Chasing Windmills:
+    Scuttle''s Latest Heist Exposes Police Unit''s Ineffectiveness."'
+- kind: dialogue
+  speaker: captain
+  text: Alright, let's focus. Thorn, what do you make of the protocol?
+- kind: dialogue
+  speaker: detective
+  text: It looks like they're trying to throw us off. I say we dig deeper.

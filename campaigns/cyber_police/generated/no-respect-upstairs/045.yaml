@@ -1,0 +1,26 @@
+id: no-respect-upstairs
+take: 45
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:05.758067+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Can we get backup for the Thorn case, it's getting hot.
+- kind: dialogue
+  speaker: detective
+  text: Actually, Captain, I think I've got it under control.
+- kind: dialogue
+  speaker: analyst
+  text: Yeah, but can you get us more CPU power? We're running on fumes down here.
+- kind: dialogue
+  speaker: agent
+  text: (muttering to himself) Like that's gonna happen.
+- kind: dialogue
+  speaker: forensics
+  text: (whispering) Davey's here, and he's already talking to the Scuttle's hack.
+- kind: dialogue
+  speaker: press
+  text: 'CYBER POLICE: CRIME FIGHTERS OR JOKE POLICE?'
+- kind: dialogue
+  speaker: quartermaster
+  text: (laughing) Oh, this is gonna be fun.

@@ -1,0 +1,25 @@
+id: agent-hardware-complaint
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T06:07:11.158724+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this machine is still running on 2018 hardware.
+- kind: dialogue
+  speaker: analyst
+  text: I think the problem is with the trace tool, not the hardware.
+- kind: dialogue
+  speaker: agent
+  text: Oh, great, so now you're an expert on outdated hardware?
+- kind: dialogue
+  speaker: forensics
+  text: (from the corner) I've been trying to get it to run on the new simulator,
+    but it's not cooperating.
+- kind: dialogue
+  speaker: agent
+  text: (chuckling) Of course it's not cooperating.
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) I can bring you a replacement part, but it'll be from
+    the 2015 inventory.

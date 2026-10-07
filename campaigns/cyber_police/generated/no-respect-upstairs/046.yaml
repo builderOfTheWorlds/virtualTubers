@@ -1,0 +1,47 @@
+id: no-respect-upstairs
+take: 46
+model: llama3.1:8b
+generated_at: '2026-10-01T06:54:13.367713+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Backup on the way to 134-B, should be there in 17 minutes.
+- kind: dialogue
+  speaker: agent
+  text: I requested extra officers 10 minutes ago, still no answer.
+- kind: dialogue
+  speaker: analyst
+  text: (muttering to herself) Because "digital crime" is just a nice way of saying
+    "kids on a couch".
+- kind: dialogue
+  speaker: forensics
+  text: I'm still running some tests, but I think I found some discrepancies in the
+    new batch of malware samples.
+- kind: dialogue
+  speaker: quartermaster
+  text: (sighing) You're going to want to look at the requisition for new laptops,
+    Captain.
+- kind: dialogue
+  speaker: captain
+  text: (laughing) Oh boy, another chance to beg for scraps.
+- kind: dialogue
+  speaker: press
+  text: '(on the comms screen) "CYBER POLICE: STILL FUTILELY CHASING SHADOWS"'
+- kind: dialogue
+  speaker: agent
+  text: (sarcastically) Oh, great, because we didn't have enough credibility problems
+    already.
+- kind: dialogue
+  speaker: analyst
+  text: (whispering to Deshawn) Somebody has to mean it, since nobody else does.
+- kind: dialogue
+  speaker: forensics
+  text: (excitedly) Captain, I think I found something! A possible lead on The Scuttle's
+    operators...
+- kind: dialogue
+  speaker: quartermaster
+  text: (jokingly) Oh no, Priya's got the magic touch. The department will finally
+    take us seriously.
+- kind: dialogue
+  speaker: captain
+  text: (serious) Alright, let's take a look.

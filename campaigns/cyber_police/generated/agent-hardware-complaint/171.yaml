@@ -1,0 +1,30 @@
+id: agent-hardware-complaint
+take: 171
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:06.192880+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Come on, come on, come on...
+- kind: dialogue
+  speaker: analyst
+  text: (whispering) I think it's the RAM, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: (sighing) Of course it's the RAM. (pausing) How much did they approve this
+    time?
+- kind: dialogue
+  speaker: forensics
+  text: (from the corner) Still 16 gigs, Agent.
+- kind: dialogue
+  speaker: agent
+  text: (muttering) 16 gigs... (tapping on the keyboard) Ugh, I swear...
+- kind: dialogue
+  speaker: analyst
+  text: (laughing) You're going to wear out the keys, Deshawn.
+- kind: dialogue
+  speaker: agent
+  text: (not looking up) Just trying to get this trace tool to run, Priya.
+- kind: dialogue
+  speaker: forensics
+  text: (staying quiet, observing)

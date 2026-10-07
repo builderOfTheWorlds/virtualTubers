@@ -1,0 +1,18 @@
+id: forensics-evidence-locker-routine
+take: 82
+model: llama3.1:8b
+generated_at: '2026-10-01T06:53:27.702040+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Opening the evidence locker, logging in, scanning for chain-of-custody paperwork.
+- kind: dialogue
+  speaker: analyst
+  text: We received a batch of drive shipments from the Evidence Processing Facility,
+    Hana. I need you to sign for them.
+- kind: dialogue
+  speaker: agent
+  text: Requesting a drive, Priya. Can you tell me who it's for?
+- kind: dialogue
+  speaker: forensics
+  text: It's from the Detective. Labelling the drives, checking for tampering...

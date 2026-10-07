@@ -1,0 +1,28 @@
+id: forensics-evidence-locker-routine
+take: 88
+model: llama3.1:8b
+generated_at: '2026-10-01T07:25:59.069464+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: Forensics walks in, boots scuffing on the cold floor, and approaches the evidence
+    locker.
+- kind: dialogue
+  speaker: agent
+  text: Agent looks up from his work, eyes squinting slightly as he acknowledges Forensics'
+    presence.
+- kind: dialogue
+  speaker: analyst
+  text: Analyst looks over from her screens, her brow furrowed in mild curiosity.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Captain''s voice comes from her office, though not loud enough
+    to be heard by the others.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster's hands move with practiced efficiency as she sorts through
+    the requisition binder.
+- kind: dialogue
+  speaker: press
+  text: Press looks up from his work, a hint of a smile on his face as he catches
+    Forensics' eye.

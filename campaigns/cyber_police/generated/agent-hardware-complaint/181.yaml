@@ -1,0 +1,9 @@
+id: agent-hardware-complaint
+take: 181
+model: llama3.1:8b
+generated_at: '2026-10-01T07:13:22.384319+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I swear, I'm starting to think we'd be more effective if we actually had a
+    functioning network.

@@ -1,0 +1,29 @@
+id: scuttle-luck-chatter
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T07:45:17.621237+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, it's like they have a mole on the inside.
+- kind: dialogue
+  speaker: detective
+  text: No way, it's just Scuttle luck. They're good, we're just not good enough.
+- kind: dialogue
+  speaker: analyst
+  text: But what if it's not just skill? What if someone's feeding them intel?
+- kind: dialogue
+  speaker: agent
+  text: That's conspiracy theory talk, Priya. Let's focus on the actual evidence.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know, guys, I've been going over the server logs, and I'm starting
+    to think it's not just luck...
+- kind: dialogue
+  speaker: press
+  text: 'Breaking news, Scuttle''s got a new banner up. "The Cyber Police: always
+    on the dock."'
+- kind: dialogue
+  speaker: captain
+  text: (laughs) Okay, okay, let's not get too distracted. What's the real plan for
+    today?

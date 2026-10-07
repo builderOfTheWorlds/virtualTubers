@@ -1,0 +1,32 @@
+id: press-reporter-small-talk
+take: 27
+model: llama3.1:8b
+generated_at: '2026-10-01T06:31:40.917461+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: What's new on the Scuttle front, Captain?
+- kind: dialogue
+  speaker: captain
+  text: Not much, Davey, just the usual.
+- kind: dialogue
+  speaker: press
+  text: Any rumors?
+- kind: dialogue
+  speaker: captain
+  text: Nothing we can confirm, but there's talk of a new op.
+- kind: dialogue
+  speaker: press
+  text: Sounds good. Can I get a statement on the latest raid?
+- kind: dialogue
+  speaker: captain
+  text: I'll send something over. We're still processing the evidence.
+- kind: dialogue
+  speaker: press
+  text: Okay, sounds good. Take care, Captain.
+- kind: dialogue
+  speaker: captain
+  text: You too, Davey.
+- kind: dialogue
+  speaker: press
+  text: '(to himself) Note to self: follow up on that new op.'

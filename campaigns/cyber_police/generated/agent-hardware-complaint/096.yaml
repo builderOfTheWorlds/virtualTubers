@@ -1,0 +1,8 @@
+id: agent-hardware-complaint
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T06:09:13.617934+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ugh, this thing still won't connect.

@@ -1,0 +1,26 @@
+id: analyst-link-chart-deep-focus
+take: 193
+model: llama3.1:8b
+generated_at: '2026-10-01T07:19:19.725363+00:00'
+beats:
+- kind: dialogue
+  speaker: analyst
+  text: Still no clear connection between the Mirabel and Lumen accounts.
+- kind: dialogue
+  speaker: agent
+  text: What are you doing with that new dataset? Can't you see we're busy with the
+    raid plans?
+- kind: dialogue
+  speaker: forensics
+  text: I've got a problem with the lab equipment. We're going to have to shut down
+    the forensics suite for a few hours.
+- kind: dialogue
+  speaker: press
+  text: Can I get a statement from the Captain on the latest Scuttle take-down?
+- kind: dialogue
+  speaker: quartermaster
+  text: I'm still waiting for the requisition for the new software update. Budget
+    says it's been approved, but I haven't seen anything in writing.
+- kind: dialogue
+  speaker: analyst
+  text: (talking to herself) Now, if this node is linked to the Redding node...

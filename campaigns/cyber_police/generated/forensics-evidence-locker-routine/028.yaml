@@ -1,0 +1,34 @@
+id: forensics-evidence-locker-routine
+take: 28
+model: llama3.1:8b
+generated_at: '2026-10-01T06:20:38.798881+00:00'
+beats:
+- kind: dialogue
+  speaker: forensics
+  text: I'm Forensics, I'm responsible for the evidence locker and maintaining chain
+    of custody.
+- kind: dialogue
+  speaker: agent
+  text: Agent, I need you to review the latest evidence request from the Detective.
+- kind: dialogue
+  speaker: analyst
+  text: I'm Analyst, I've been working on some new link charts that might be relevant
+    to the case.
+- kind: narration
+  speaker: captain
+  text: 'Rosalind Agar: Everyone, let''s review the procedure for chain-of-custody.
+    We need to make sure we''re following the correct protocol.'
+- kind: dialogue
+  speaker: quartermaster
+  text: Quartermaster, have you ordered any new equipment for the unit?
+- kind: dialogue
+  speaker: press
+  text: Just here to observe and take some notes.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: I need Forensics to process this new evidence, it''s a critical
+    part of the investigation.'
+- kind: dialogue
+  speaker: forensics
+  text: Agent, what's the status on the new hardware order? We need to get it set
+    up ASAP.

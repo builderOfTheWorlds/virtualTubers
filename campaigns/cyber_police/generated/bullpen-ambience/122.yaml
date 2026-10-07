@@ -1,0 +1,41 @@
+id: bullpen-ambience
+take: 122
+model: llama3.1:8b
+generated_at: '2026-10-01T06:46:04.445062+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: Someone''s coffee just went cold.'
+- kind: narration
+  speaker: captain
+  text: 'DT: I''m going to have to re-reroute the dashboards on my monitors.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Any chance we''re getting the new intel on the encrypted servers today?'
+- kind: narration
+  speaker: captain
+  text: 'DO: I''m trying to get the Agent''s setup working, but it''s being stubborn.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Just had to throw out a bad hard drive.'
+- kind: narration
+  speaker: captain
+  text: 'DP: Has anyone seen the latest Scuttle Mirror drop?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Can someone tell me why Forensics is laughing?'
+- kind: narration
+  speaker: captain
+  text: 'TM: Is that a new sticker on the evidence locker?'
+- kind: narration
+  speaker: captain
+  text: 'TN-L: Actually, it''s an old one. Never got removed.'
+- kind: narration
+  speaker: captain
+  text: 'DO: (muttering) Stupid hardware...'
+- kind: narration
+  speaker: captain
+  text: 'HV: (still chuckling) It''s just a joke.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Anyone up for a walk outside when the break comes?'

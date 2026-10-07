@@ -1,0 +1,9 @@
+id: press-reporter-small-talk
+take: 42
+model: llama3.1:8b
+generated_at: '2026-10-01T07:01:10.422859+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Alright, everybody, let's take a look at the Scuttle's mirror traffic from
+    last night.

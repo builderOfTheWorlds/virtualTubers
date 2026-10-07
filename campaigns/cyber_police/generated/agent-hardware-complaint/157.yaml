@@ -1,0 +1,12 @@
+id: agent-hardware-complaint
+take: 157
+model: llama3.1:8b
+generated_at: '2026-10-01T07:12:19.222490+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: Ah, you'd think a team that catches catfishers and identity thieves would
+    have better hardware.
+- kind: dialogue
+  speaker: press
+  text: I'm trying to get a story on how underfunded you guys are.

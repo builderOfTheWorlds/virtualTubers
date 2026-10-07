@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 95
+model: llama3.1:8b
+generated_at: '2026-10-01T07:44:00.491938+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I swear, it's like they have a sixth sense for getting away with it.
+- kind: dialogue
+  speaker: detective
+  text: Tell me about it, Teresa. I've been saying it's inside help for years.
+- kind: dialogue
+  speaker: analyst
+  text: If we had half the resources they do, I'm sure we could take them down.
+- kind: dialogue
+  speaker: agent
+  text: We've got the resources, though. It's just that nobody cares enough to give
+    us what we need.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe it's not just about resources. Maybe we're just not smart enough.
+- kind: dialogue
+  speaker: press
+  text: Oh, come on, Hana, don't be like that. We'll get them eventually.
+- kind: dialogue
+  speaker: captain
+  text: I don't know about eventually, Davey. I've been saying it for years, but somehow
+    they always manage to stay one step ahead.

@@ -1,0 +1,22 @@
+id: quartermaster-binder-chatter
+take: 9
+model: llama3.1:8b
+generated_at: '2026-10-01T06:33:41.810368+00:00'
+beats:
+- kind: dialogue
+  speaker: quartermaster
+  text: I think I'm going to need to have a word with Procurement about the new requisition.
+- kind: dialogue
+  speaker: quartermaster
+  text: '||emotion:sad I swear, it''s like they enjoy denying us the things we need.'
+- kind: dialogue
+  speaker: detective
+  text: Not that it matters, but our current lead is a dead end.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've got a whole binder full of denials. I'm going to have to start looking
+    for patterns.
+- kind: dialogue
+  speaker: quartermaster
+  text: You know, one of these days I'll have to dig up the "eventual inquiry" binder
+    and see just how many times they've told us no for nothing.

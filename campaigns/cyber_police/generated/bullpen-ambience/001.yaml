@@ -1,0 +1,25 @@
+id: bullpen-ambience
+take: 1
+model: llama3.1:8b
+generated_at: '2026-10-01T05:44:31.776515+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: The briefing is still at 07:00 tomorrow.
+- kind: dialogue
+  speaker: detective
+  text: I'm going to grab a cup of coffee, I think it's still warm.
+- kind: dialogue
+  speaker: analyst
+  text: I've got a stack of printouts here from last night's Scuttle crawl, we need
+    to go over them.
+- kind: dialogue
+  speaker: agent
+  text: I'll just power down these laptops, they're burning up.
+- kind: dialogue
+  speaker: forensics
+  text: I've finished running the tests on that drive we got from the warehouse raid,
+    nothing's coming up.
+- kind: dialogue
+  speaker: press
+  text: Does anyone have a spare paperclip?

@@ -1,0 +1,45 @@
+id: press-reporter-small-talk
+take: 114
+model: llama3.1:8b
+generated_at: '2026-10-01T07:39:23.030386+00:00'
+beats:
+- kind: dialogue
+  speaker: press
+  text: Just getting some background on the upcoming IT security conference, see if
+    anyone from The Scuttle is on the speaker list.
+- kind: dialogue
+  speaker: captain
+  text: Not that I think it's a priority, but do keep an ear to the ground for any
+    leads that might come out of it.
+- kind: dialogue
+  speaker: press
+  text: Got it, will do. Anything else?
+- kind: dialogue
+  speaker: detective
+  text: Actually, Davey, I was wondering if you could...
+- kind: dialogue
+  speaker: press
+  text: (interrupting) Oh, sorry, what was it? I got a bit ahead of myself.
+- kind: dialogue
+  speaker: detective
+  text: (sighs) Just check in with the usual people, see if anything's come up on
+    our end.
+- kind: dialogue
+  speaker: press
+  text: Yeah, got it.
+- kind: dialogue
+  speaker: analyst
+  text: (sitting in the background, not participating in the conversation)
+- kind: narration
+  speaker: captain
+  text: ( no one reacts to Priya's presence )
+- kind: dialogue
+  speaker: agent
+  text: (overhearing the conversation) You know, I've been thinking...
+- kind: dialogue
+  speaker: forensics
+  text: ( rolling her eyes) Oh boy, here we go.
+- kind: dialogue
+  speaker: agent
+  text: (ignoring Hana's tone) Maybe we should just focus on what we have, instead
+    of trying to get The Scuttle's attention.

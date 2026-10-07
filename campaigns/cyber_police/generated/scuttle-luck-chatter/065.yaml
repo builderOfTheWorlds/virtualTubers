@@ -1,0 +1,28 @@
+id: scuttle-luck-chatter
+take: 65
+model: llama3.1:8b
+generated_at: '2026-10-01T07:09:48.888490+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: It's just Scuttle luck, guys. We'd think they'd slip up eventually.
+- kind: dialogue
+  speaker: analyst
+  text: That Bosun's a ghost. Nobody's ever gotten close to figuring out who they
+    are.
+- kind: dialogue
+  speaker: captain
+  text: That's not the point. The point is they keep evading us, no matter how hard
+    we try.
+- kind: dialogue
+  speaker: forensics
+  text: Maybe it's not just skill. Maybe they have someone inside...
+- kind: dialogue
+  speaker: press
+  text: Oh, come on. You don't really think that, Hana.
+- kind: dialogue
+  speaker: quartermaster
+  text: We'll get them eventually. We just need to keep pushing.
+- kind: narration
+  speaker: captain
+  text: 'Marcus Thorn: Scuttle luck''s just a nice way of saying we''re incompetent.'

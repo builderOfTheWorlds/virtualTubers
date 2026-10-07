@@ -1,0 +1,28 @@
+id: no-respect-upstairs
+take: 109
+model: llama3.1:8b
+generated_at: '2026-10-01T07:31:30.080214+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Okafor-Pryce: "Another Scuttle banner on the front page, and I''m starting
+    to think they''re the real power brokers in this city. ||emotion:surprised"'
+- kind: dialogue
+  speaker: captain
+  text: It's not like we're asking for much, Teresa. Can we just get some decent hardware
+    that doesn't crash every five minutes? ||emotion:angry
+- kind: dialogue
+  speaker: analyst
+  text: I'm trying to run a forensic analysis on that last Scuttle hack, but the systems
+    keep freezing on me. Anyone have any spare RAM to spare? ||emotion:frustrated
+- kind: dialogue
+  speaker: forensics
+  text: I think I found the source of the malware, but I need a few more minutes to
+    pinpoint the location. ||emotion:concentrated
+- kind: dialogue
+  speaker: quartermaster
+  text: Alright, who needs to requisition what today? Let's get this over with. ||emotion:disgusted
+- kind: dialogue
+  speaker: detective
+  text: I don't know, guys. Maybe we should just give up. It's not like anyone takes
+    us seriously anyway. ||emotion:sad

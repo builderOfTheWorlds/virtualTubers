@@ -1,0 +1,33 @@
+id: bullpen-ambience
+take: 107
+model: llama3.1:8b
+generated_at: '2026-10-01T06:44:34.655593+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get a move on, people. I want to see some progress
+    on that Scuttle tip.'
+- kind: narration
+  speaker: captain
+  text: 'Detective Thorn: Got it, Captain. I''ll get the team back on the case.'
+- kind: dialogue
+  speaker: analyst
+  text: I've been going over the data from last night, and I think I found something.
+- kind: dialogue
+  speaker: agent
+  text: Yeah, what is it, Priya?
+- kind: dialogue
+  speaker: forensics
+  text: I'm just getting started on the forensics report.
+- kind: dialogue
+  speaker: press
+  text: Any news on the Scuttle's end?
+- kind: dialogue
+  speaker: quartermaster
+  text: Still nothing from the IT department.
+- kind: dialogue
+  speaker: analyst
+  text: Captain, I think we need to take a closer look at the Scuttle's traffic patterns.
+- kind: narration
+  speaker: captain
+  text: 'Captain Agar: Alright, let''s get to it. And...'

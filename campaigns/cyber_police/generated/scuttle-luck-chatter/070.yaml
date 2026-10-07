@@ -1,0 +1,27 @@
+id: scuttle-luck-chatter
+take: 70
+model: llama3.1:8b
+generated_at: '2026-10-01T07:10:19.868342+00:00'
+beats:
+- kind: dialogue
+  speaker: agent
+  text: I'm telling you, it's not just skill, it's inside information. I've got a
+    source that says they have a mole deep in the department.
+- kind: dialogue
+  speaker: analyst
+  text: That's just a myth, Deshawn. We've had this conversation before.
+- kind: dialogue
+  speaker: captain
+  text: Alright, alright, let's not rehash this. We'll get 'em one of these days.
+- kind: dialogue
+  speaker: forensics
+  text: I don't know... sometimes I think it's just us being incompetent. We're just
+    too slow, too clumsy.
+- kind: dialogue
+  speaker: detective
+  text: Ah, come on Hana, we're not that bad. We just need to focus on the Bosun,
+    get to the root of their ops.
+- kind: dialogue
+  speaker: quartermaster
+  text: I've been thinking... what if we're not just looking for a mole, but also
+    for someone on our own side who's... sympathetic to their cause?

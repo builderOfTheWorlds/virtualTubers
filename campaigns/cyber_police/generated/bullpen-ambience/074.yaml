@@ -1,0 +1,35 @@
+id: bullpen-ambience
+take: 74
+model: llama3.1:8b
+generated_at: '2026-10-01T06:13:35.969481+00:00'
+beats:
+- kind: narration
+  speaker: captain
+  text: 'DA: The briefing''s going to be at 08:00 today, we''ve got a new mirror on
+    The Scuttle to look into.'
+- kind: narration
+  speaker: captain
+  text: 'MO: Already on it, Captain. I''ve been running some numbers.'
+- kind: narration
+  speaker: captain
+  text: 'PN: Nothing new on the chatter spike, but I think we might have a pattern
+    to the new account names.'
+- kind: narration
+  speaker: captain
+  text: 'HV: Got a weird one, Captain. Someone''s been running some old code on a
+    new kernel – doesn''t match anything I''ve seen before.'
+- kind: narration
+  speaker: captain
+  text: 'DO: Nothing on the new drive yet, but it''s still warm.'
+- kind: narration
+  speaker: captain
+  text: 'DP: No requests from the press yet, but the evening papers will be calling
+    soon.'
+- kind: narration
+  speaker: captain
+  text: 'TM: I''ll get the plan going once we have a better idea what we''re looking
+    at.'
+- kind: narration
+  speaker: captain
+  text: 'RO: Alright, let''s take it one step at a time. Analyst, what do you have
+    for me?'

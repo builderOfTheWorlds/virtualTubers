@@ -1,0 +1,27 @@
+id: bullpen-ambience
+take: 96
+model: llama3.1:8b
+generated_at: '2026-10-01T06:15:34.545733+00:00'
+beats:
+- kind: dialogue
+  speaker: captain
+  text: Still 4:45 PM, we can call it a wrap early
+- kind: dialogue
+  speaker: detective
+  text: Good, I'm starving
+- kind: dialogue
+  speaker: analyst
+  text: (sighs) Time to clean up the link charts
+- kind: dialogue
+  speaker: agent
+  text: You know, I think I finally figured out that one script.
+- kind: dialogue
+  speaker: forensics
+  text: (muttering to herself) Stupid coffee machine, I knew I shouldn't have left
+    it here
+- kind: dialogue
+  speaker: press
+  text: Just 15 minutes to get out of here before traffic
+- kind: dialogue
+  speaker: quartermaster
+  text: (from the supply cage) I'll lock up when I'm done with these reports
