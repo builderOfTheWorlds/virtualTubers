@@ -1,0 +1,71 @@
+task_id: table_p33_commit_check
+
+goal: |
+  Write `app/table/commit_check.py`: the arbiter's cheap, local, deterministic
+  commit validator (build plan P3.3; agent_dnd_architecture.md §5.3). It runs
+  on every character reply BEFORE the reply is committed to the transcript.
+  It is NOT an LLM gate. A failure becomes a `retake` whose reason is
+  CheckResult.reason.
+
+  The invariants live in code, not in prompt wording: a silent seat never
+  speaks, no seat writes or narrates another seat's lines, and forbidden lore
+  never reaches the table verbatim.
+
+target_files:
+  - app/table/commit_check.py
+
+test_files:
+  - tests/table/test_table_commit_check.py
+
+context_files:
+  - app/campaign/improviser.py     # _NEVER_SPEAKS_RE / _silent_cast_ids: the silent-cast rule to reuse
+
+interface: |
+  RULES = ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
+           "too_long", "forbidden_leak")         # check order; the first failure wins
+
+  @dataclass(frozen=True)
+  class CommitContext:
+      seat: str                                  # the replying seat id, e.g. "tuber_1"
+      cast_names: Mapping[str, str]              # seat id -> display name (all seats, incl. this one)
+      silent_seats: frozenset = frozenset()
+      forbidden_phrases: tuple = ()
+      max_words: int = 60
+      max_lines: int = 2
+
+  @dataclass(frozen=True)
+  class CheckResult:
+      ok: bool
+      code: str | None                           # one of RULES, None when ok
+      reason: str                                # "" when ok, else f"{code}: {detail}"
+
+  def check_reply(text, ctx) -> CheckResult
+
+  def is_silent_prompt(system_prompt) -> bool    # None -> False; same regex as improviser._NEVER_SPEAKS_RE
+  def silent_seats(seat_prompts: Mapping[str, str | None]) -> frozenset
+
+notes: |
+  Rule details (case-insensitive unless stated):
+  - silent_seat: seat in silent_seats and the stripped text is non-empty. For
+    a silent seat, an empty text is the correct output (ok=True) and no other
+    rule runs.
+  - empty: after stripping whitespace and surrounding quote characters
+    (" ' “ ” ‘ ’) nothing is left.
+  - meta: any of: "as an ai", "language model", "<think", "</think", the word
+    "ooc", or a line starting with "[gm". Use word boundaries for "ooc".
+  - name_label: any line starting with optional "**", the seat's OWN display
+    name, optional "**", then ":" or a spaced dash (" -", " –", " —").
+  - speaks_for_other: for every OTHER display name, either (a) a line starts
+    with that name as a label (same label pattern as name_label), or (b) the
+    name is followed by whitespace and a third-person verb: a lowercase word
+    matching [a-z]+(s|ed) (says, said is special-cased, replied, nods, draws).
+    Include "said" explicitly. A name followed by punctuation ("Leena, tell
+    me") is ADDRESSING, not speaking for: ok. The reason names the other
+    character.
+  - too_long: words (whitespace split) > max_words, or non-empty lines > max_lines.
+  - forbidden_leak: normalise both sides (lowercase, collapse all whitespace to
+    one space); a phrase that occurs as a substring fails. The reason quotes the
+    phrase as configured (original case).
+  - Stdlib only (re, dataclasses). Import the regex from campaign.improviser if
+    importable, else define the identical pattern. Never log the reply text at
+    INFO; DEBUG may log the code and seat.
