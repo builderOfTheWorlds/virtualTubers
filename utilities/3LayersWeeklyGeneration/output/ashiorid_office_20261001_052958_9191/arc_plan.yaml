@@ -1,0 +1,173 @@
+segments:
+- ambient_focus: The office is dark and quiet, with only the server closet's hum breaking
+    the silence. The Party Member sits motionless in their corner, the notebook open
+    but unwritten in.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The floor is quiet, the week's work complete. The Party Member's
+    notebook is closed, the pen laid neatly beside it.
+  continuity_out: The floor is still dark, the server closet humming. The Office Manager
+    begins her morning routine, turning on lights and starting the coffee machine.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: sunday-off-hours
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 0
+  plot_path: []
+  spine_scenes: []
+  synopsis: The week resets in the small hours of Sunday morning. The office is still,
+    the floor lights off, as the Office Manager performs her last tasks of the week
+    in the darkened kitchen. The others are at home, some resting, some anxiously
+    awaiting the start of a new week and the final push to close the Halvard deal.
+- ambient_focus: The buzz of morning standup, the clink of coffee cups, the anticipation
+    of a big week ahead.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The floor is quiet, the Office Manager having just turned on the
+    lights and started the coffee.
+  continuity_out: The team disperses to their desks, the morning's tasks clear. The
+    whiteboard now holds a countdown to the Halvard launch.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: sunday-morning
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 1
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: The team gathers for the first standup of the week, the CEO announcing
+    that the Halvard pilot will go live on Saturday. The Analyst and Tech Lead break
+    down the tasks for the week, assigning work to the Engineer and Tester. The room
+    is filled with nervous energy and determination to close the deal.
+- ambient_focus: The clack of keys, the hum of conversation, the occasional burst
+    of laughter from the kitchen as the team builds and tests the Halvard integration.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The team has dispersed to their desks, the whiteboard countdown a
+    reminder of the week's goal.
+  continuity_out: The first build of the Halvard integration is complete, the Tester
+    running initial tests. Marketing's draft announcement is ready for review.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: sunday-build
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 2
+  plot_path: []
+  spine_scenes: []
+  synopsis: The Engineer begins integrating the Halvard pilot, the Tester building
+    out the test set for Halvard's specific needs. Marketing drafts the announcement
+    for the launch, while the team takes a breather at lunch to gossip about Halvard's
+    suspiciously well-informed questions. The mood is focused but optimistic.
+- ambient_focus: The satisfaction of a clean ship, the anticipation of the week ahead,
+    the quiet hustle as everyone prepares to head home.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The first build of the Halvard integration is complete, initial tests
+    underway. Marketing's draft announcement is ready for review.
+  continuity_out: The floor is quiet, the week's first ship complete. The Office Manager
+    turns off the lights, leaving the Party Member alone in their corner, the notebook
+    open and waiting for the week ahead.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: sunday-ship
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 3
+  plot_path: []
+  spine_scenes: []
+  synopsis: The first ship of the week goes out smoothly, a small release that passes
+    all tests. Marketing previews the launch copy for the Halvard integration, getting
+    ready for the final push. The Office Manager performs her end-of-day tasks, including
+    garbage collection at 23:30. The team heads home feeling optimistic about the
+    week to come.
+- ambient_focus: The Party Member's notebook, closed and unattended.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The Office Manager turns off the floor lights from the panel at her
+    station.
+  continuity_out: The Office Manager turns on the floor lights from the panel at her
+    station.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: monday-off-hours
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 4
+  plot_path: []
+  spine_scenes: []
+  synopsis: The floor is quiet, the week's first ship complete. The Office Manager
+    turns off the lights, leaving the Party Member alone in their corner, the notebook
+    open and waiting for the week ahead.
+- ambient_focus: The Moonwell room, where standup is held.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The Office Manager arrives first, before 06:00, and has the coffee
+    machine warm and the snack shelf stocked by the time anyone else comes up the
+    stairs.
+  continuity_out: The Analyst writes the functional plan and the Tech Lead writes
+    the technical plan on top of it.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: monday-morning
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 5
+  plot_path: []
+  spine_scenes:
+  - first-standup
+  synopsis: 'Standup: Halvard''s due-diligence list lands overnight, asking about
+    learned scoring and explainability. The CEO wants answers by Friday. The spy rumour
+    about the Party Member resurfaces.'
+- ambient_focus: The Analyst's desk, covered in printouts of client requirements.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: By the end of the Morning watch the Engineer and the Tester should
+    each have tickets with their names on them.
+  continuity_out: The Tester runs the full suite, and the Tech Lead merges what has
+    passed.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: monday-build
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 6
+  plot_path: []
+  spine_scenes: []
+  synopsis: The Analyst maps Halvard's questions to Fraud-Stop features; the Tech
+    Lead quietly refuses to promise learned scoring. Lunch is an argument about whether
+    to fake it.
+- ambient_focus: The Tester's desk, where the full test suite runs.
+  carry_in: {}
+  carry_out: {}
+  continuity_in: From 18:00 the floor works toward a clean end of day.
+  continuity_out: At midnight the Office Manager turns off the floor lights from the
+    panel at her station.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: monday-ship
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 7
+  plot_path: []
+  spine_scenes: []
+  synopsis: A reasons-text change for explainability goes out. Marketing rehearses
+    the Halvard pitch on the Office Manager. Lights out.

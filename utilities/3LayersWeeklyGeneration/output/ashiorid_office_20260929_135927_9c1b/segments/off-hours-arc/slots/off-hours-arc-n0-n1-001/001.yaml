@@ -1,0 +1,15 @@
+id: off-hours-arc-n0-n1-001
+take: 1
+model: light
+generated_at: '2026-10-01T05:19:15.329710+00:00'
+beats:
+- kind: dialogue
+  speaker: office_manager
+  text: Good morning, I didn't expect to see anyone else here this early.
+- kind: narration
+  speaker: ceo
+  text: The Party Member looks up from their writing, meets the Office Manager's gaze
+    for a moment, then looks back down at their notebook.
+- kind: dialogue
+  speaker: office_manager
+  text: Well, I'll let you get back to it. Just give a shout if you need anything.

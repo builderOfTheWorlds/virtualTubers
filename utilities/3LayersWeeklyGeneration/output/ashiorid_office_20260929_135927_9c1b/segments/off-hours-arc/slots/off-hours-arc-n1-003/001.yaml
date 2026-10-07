@@ -1,0 +1,19 @@
+id: off-hours-arc-n1-003
+take: 1
+model: light
+generated_at: '2026-10-01T05:20:58.779153+00:00'
+beats:
+- kind: dialogue
+  speaker: office_manager
+  text: Good evening, Penhale. Another late night? ||neutral
+- kind: dialogue
+  speaker: office_manager
+  text: I'm just setting up for tomorrow. You know how it is - the desk is always
+    open. ||happy
+- kind: dialogue
+  speaker: office_manager
+  text: Let me know if you need anything. I'll be in the kitchen. ||neutral
+- kind: narration
+  speaker: ceo
+  text: The Party Member looks up from their writing and nods briefly in acknowledgment
+    before returning to their notebook. ||neutral
