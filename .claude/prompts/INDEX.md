@@ -323,3 +323,10 @@ Then monitor progress, adjust if needed, scale to all 174 chapters.
 ---
 
 **Status: Ready to proceed. All phases implemented. Ollama integration active. Awaiting Phase 2 execution.**
+
+---
+
+## External-LLM pack authoring (Grok etc.)
+
+- `external_llm_pack_authoring_prompt.md` — self-contained prompt for an outside model to write a full campaign pack (format, closed vocabularies, primitive registry, generator context). Fill section 13 brief, paste BEGIN..END.
+- `unpack_llm_pack.py` — unpacks the reply into `campaigns/<name>/` and runs load_pack + validate_pack + extra checks (primitive params, voices, silent speakers, word counts). Dry run by default; `--write` installs.

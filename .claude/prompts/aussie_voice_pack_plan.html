@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Aussie Voice Pack — Collaboration Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#020617;color:#e2e8f0;font-family:'JetBrains Mono',monospace;padding:24px}
+h1{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#34d399;animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.sub{color:#94a3b8;font-size:12px;margin-bottom:16px}
+.cardwrap{border:1px solid #1e293b;border-radius:10px;overflow:hidden}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:12px;font-size:11px}
+.card h3{font-size:12px;margin:0 0 8px;display:flex;gap:8px;align-items:center}
+.cd{width:8px;height:8px;border-radius:50%}
+ul{margin:0;padding:0;list-style:none;line-height:1.7;color:#cbd5e1}
+footer{color:#475569;font-size:10px;margin-top:14px}
+</style></head><body>
+<h1><span class="dot"></span>Aussie Voice Pack — Collaboration Flow</h1>
+<div class="sub">Mate records locally → shared folder → QC + fine-tune on argyre GB10 → review → virtualTubers voice registry</div>
+<div class="cardwrap">
+<svg viewBox="0 0 1100 600" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+<marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#64748b"/></marker>
+<marker id="r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#fb7185"/></marker>
+</defs>
+<rect width="1100" height="600" fill="url(#grid)"/>
+
+<!-- arrows (behind) -->
+<g stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#a)">
+<path d="M 235 150 L 235 205"/>
+<path d="M 330 240 L 455 240"/>
+<path d="M 655 240 L 735 160"/>
+<path d="M 655 240 L 735 250"/>
+<path d="M 840 280 L 840 335"/>
+<path d="M 840 410 L 840 465"/>
+<path d="M 735 135 L 655 215"/>
+</g>
+<!-- feedback loops (dashed) -->
+<g stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="5,4" fill="none" marker-end="url(#a)">
+<path d="M 455 265 Q 380 330 300 275"/>
+<path d="M 735 370 Q 560 440 330 290"/>
+</g>
+<text x="352" y="330" fill="#fbbf24" font-size="8">QC report / retakes</text>
+<text x="470" y="420" fill="#fbbf24" font-size="8">samples → mate approves or vetoes</text>
+
+<!-- Region: Mate's machine -->
+<rect x="60" y="40" width="300" height="300" rx="12" fill="none" stroke="#22d3ee" stroke-dasharray="8,4"/>
+<text x="75" y="60" fill="#22d3ee" font-size="11">MATE'S MACHINE (Australia)</text>
+
+<rect x="110" y="80" width="250" height="70" rx="6" fill="#0f172a"/>
+<rect x="110" y="80" width="250" height="70" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="125" y="105" fill="#e2e8f0" font-size="12">piper-recording-studio</text>
+<text x="125" y="122" fill="#94a3b8" font-size="9">localhost:8000, prompts_en_au.txt</text>
+<text x="125" y="137" fill="#94a3b8" font-size="9">~1200 lines, batches of 150-200</text>
+
+<rect x="140" y="205" width="190" height="70" rx="6" fill="#0f172a"/>
+<rect x="140" y="205" width="190" height="70" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="155" y="230" fill="#e2e8f0" font-size="12">package_batch.py</text>
+<text x="155" y="247" fill="#94a3b8" font-size="9">WAV + metadata.csv</text>
+<text x="155" y="262" fill="#94a3b8" font-size="9">+ local qc_report.md</text>
+
+<!-- Shared -->
+<rect x="455" y="200" width="200" height="80" rx="6" fill="#0f172a"/>
+<rect x="455" y="200" width="200" height="80" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="470" y="225" fill="#e2e8f0" font-size="12">Shared folder</text>
+<text x="470" y="242" fill="#94a3b8" font-size="9">audio batches, samples</text>
+<text x="470" y="257" fill="#94a3b8" font-size="9">+ GitHub aussieVoicePack</text>
+<text x="470" y="271" fill="#94a3b8" font-size="9">(kit code, issues, consent)</text>
+
+<!-- Region: argyre -->
+<rect x="700" y="40" width="360" height="510" rx="12" fill="none" stroke="#fbbf24" stroke-dasharray="8,4"/>
+<text x="715" y="60" fill="#fbbf24" font-size="11">ARGYRE GB10 (LAN only, nothing exposed)</text>
+
+<rect x="735" y="100" width="290" height="60" rx="6" fill="#0f172a"/>
+<rect x="735" y="100" width="290" height="60" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="750" y="124" fill="#e2e8f0" font-size="12">qc_batch.py</text>
+<text x="750" y="142" fill="#94a3b8" font-size="9">levels, noise, clipping, whisper WER</text>
+
+<rect x="735" y="210" width="290" height="70" rx="6" fill="#0f172a"/>
+<rect x="735" y="210" width="290" height="70" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="750" y="234" fill="#e2e8f0" font-size="12">train/ (Docker, NGC PyTorch)</text>
+<text x="750" y="251" fill="#94a3b8" font-size="9">piper.train fine-tune from en_GB/lessac</text>
+<text x="750" y="266" fill="#fb7185" font-size="9">refuses to run if Ollama/vLLM up</text>
+
+<rect x="735" y="335" width="290" height="75" rx="6" fill="#0f172a"/>
+<rect x="735" y="335" width="290" height="75" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="750" y="360" fill="#e2e8f0" font-size="12">en_AU-&lt;name&gt;-medium.onnx</text>
+<text x="750" y="377" fill="#94a3b8" font-size="9">+ .onnx.json, eval samples/step_n</text>
+<text x="750" y="392" fill="#94a3b8" font-size="9">→ voices/ (gitignored)</text>
+
+<rect x="735" y="465" width="290" height="70" rx="6" fill="#0f172a"/>
+<rect x="735" y="465" width="290" height="70" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="750" y="489" fill="#e2e8f0" font-size="12">virtualTubers</text>
+<text x="750" y="506" fill="#94a3b8" font-size="9">voices.yaml: aussie_male → tts-gpu</text>
+<text x="750" y="521" fill="#94a3b8" font-size="9">voice_registry --verify → Twitch</text>
+
+<!-- rejected path -->
+<path d="M 360 95 L 700 95" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4,4" fill="none" marker-end="url(#r)"/>
+<text x="400" y="88" fill="#fb7185" font-size="8">REJECTED: hosting the recorder publicly on argyre</text>
+
+<!-- legend -->
+<g font-size="9" fill="#94a3b8">
+<rect x="60" y="560" width="12" height="12" fill="rgba(8,51,68,0.4)" stroke="#22d3ee"/><text x="78" y="570">mate side</text>
+<rect x="170" y="560" width="12" height="12" fill="rgba(6,78,59,0.4)" stroke="#34d399"/><text x="188" y="570">argyre processing</text>
+<rect x="320" y="560" width="12" height="12" fill="rgba(76,29,149,0.4)" stroke="#a78bfa"/><text x="338" y="570">artifact</text>
+<line x1="420" y1="566" x2="450" y2="566" stroke="#fbbf24" stroke-dasharray="5,4"/><text x="456" y="570">feedback loop</text>
+<line x1="560" y1="566" x2="590" y2="566" stroke="#fb7185" stroke-dasharray="4,4"/><text x="596" y="570">trust-boundary violation (not done)</text>
+</g>
+</svg></div>
+<div class="cards">
+<div class="card"><h3><span class="cd" style="background:#22d3ee"></span>Mate</h3><ul>
+<li>• Sign VOICE_CONSENT.md</li><li>• Pilot: 50 lines, ≥90% QC pass</li><li>• ~1200 lines over 4-8 sessions</li><li>• Approve / veto final voice</li></ul></div>
+<div class="card"><h3><span class="cd" style="background:#34d399"></span>argyre</h3><ul>
+<li>• Ship kit + QC each batch</li><li>• Smoke-test fine-tune on pilot (de-risk GB10)</li><li>• Full fine-tune overnight, Ollama stopped</li><li>• Register + air test show</li></ul></div>
+<div class="card"><h3><span class="cd" style="background:#fbbf24"></span>Timeline</h3><ul>
+<li>• Wk 1: kit, pilot, smoke test</li><li>• Wk 2-3: recording + rolling QC</li><li>• Wk 3-4: train + review</li><li>• Wk 4: airing</li></ul></div>
+</div>
+<footer>virtualTubers · .claude/prompts/aussie_voice_pack_plan.md · 2026-10-02</footer>
+</body></html>
