@@ -1,0 +1,84 @@
+task_id: table_p31_protocol
+
+goal: |
+  Write `app/table/protocol.py`: message builders and validation for the live
+  agent table (build plan .claude/prompts/agent_dnd_vllm_build_plan.md P3.1;
+  message shapes from .claude/prompts/agent_dnd_architecture.md §4.2, plus the
+  two THINK types of the two-pass round: think_request and think_done).
+
+  The arbiter (one process, worker-gm) and every seat build and parse table
+  messages ONLY through this module. Kafka is transport and audit, never the
+  source of order, so validation is strict: unknown type, missing field, wrong
+  type, out-of-range number or unknown enum value -> ProtocolError naming the
+  field.
+
+  THE FAILURE THAT MUST NEVER HAPPEN (plan U6): a seat's private intent or
+  reasoning ends up on the bus, where the roundtable or another seat could read
+  it. think_done says only THAT a seat finished thinking, never WHAT it
+  thought. Any payload key in PRIVATE_KEYS on any table message, including
+  inside committed_transcript entries, raises ProtocolError(field=<that key>).
+  Reasoning reaches the seat's own Thinking pane through agent_thinking (a
+  different, non-table message type), never through this module.
+
+target_files:
+  - app/table/__init__.py
+  - app/table/protocol.py
+
+test_files:
+  - tests/table/test_table_protocol.py
+
+context_files:
+  - app/message_bus.py             # build_message(from_, to, type_, payload, correlation_id, causation_id)
+
+interface: |
+  MESSAGE_TYPES: tuple of the 12 type names:
+      scene_start, scene_direction, think_request, think_done, turn_assignment,
+      character_reply, retake, gm_overrule, adjudication, scene_resolve,
+      scene_stuck, operator_override
+  VERDICTS = ("pass", "reject")
+  OPERATOR_ACTIONS = ("accept_all", "skip_scene", "abort_session")
+  TRANSCRIPT_KINDS = ("direction", "reply", "overrule")
+  PRIVATE_KEYS = ("intent", "private_intent", "reasoning", "reasoning_content", "thinking")
+
+  REQUIRED: dict type -> tuple of required payload field names:
+      scene_start:      scene_id, contract(dict), round(int>=1), max_rounds(int>=1), seats(non-empty list[str])
+      scene_direction:  scene_id, round(int>=0), speaker(str), text(str), expects(list[str]), must_resolve(str)
+      think_request:    scene_id, round(int>=0), seats(non-empty list[str]), committed_transcript(transcript), deadline_s(number>0)
+      think_done:       scene_id, round(int>=0), seat(str), ok(bool)
+      turn_assignment:  scene_id, round(int>=0), seat(str), order_pos(int>=0), committed_transcript(transcript),
+                        instruction(str), deadline_s(number>0), max_retries(int>=0)
+      character_reply:  scene_id, round(int>=0), seat(str), text(str), took(bool), reason(str)
+      retake:           scene_id, round(int>=0), seat(str), reason(str), retry(int>=1), max(int>=1); retry <= max else field "retry"
+      gm_overrule:      scene_id, round(int>=0), seat(str), committed_text(str), note(str)
+      adjudication:     scene_id, round(int>=0), verdict(in VERDICTS), notes(str)
+      scene_resolve:    scene_id, resolved(bool), state_delta(dict), record_id(str or None)
+      scene_stuck:      scene_id, reason(str), state(dict)
+      operator_override: scene_id, action(in OPERATOR_ACTIONS), note(str)
+  scene_id, seat and speaker are non-empty str. bool is NOT accepted where an
+  int is required (True is not a round number). Extra non-private keys are allowed.
+
+  transcript = list of dicts {speaker: non-empty str, text: str, kind: in TRANSCRIPT_KINDS};
+  any other shape -> ProtocolError(field="committed_transcript").
+
+  class ProtocolError(ValueError):
+      __init__(self, type_, field, message); attributes .type_ and .field;
+      str() contains type_, field and message.
+
+  def build(type_, from_, to, payload, *, turn=None, correlation_id=None, causation_id=None) -> dict
+      Validate a DEEP COPY of payload, then return
+      message_bus.build_message(from_, to, type_, copy, correlation_id, causation_id)
+      plus two top-level audit keys: "scene" = payload["scene_id"], "turn" = turn.
+      Never mutates the caller's payload.
+
+  def validate(type_, payload) -> None      raises ProtocolError (field=None for unknown type)
+  def parse(msg) -> dict                    validate msg["type"] / msg["payload"]; return a deep copy of the payload
+  def is_table_message(msg) -> bool         dict whose "type" is in MESSAGE_TYPES
+
+notes: |
+  - Plain stdlib + app/message_bus.py. No Kafka, no Redis, no I/O.
+  - app/table/__init__.py is a one-line docstring package marker.
+  - Check order inside validate(): unknown type, then private keys (payload
+    top level, then each transcript entry), then required fields in REQUIRED
+    order, then per-field type/range, then cross-field (retake retry <= max).
+  - Log at DEBUG the type and field names only, never payload text (it can
+    hold character lines).
