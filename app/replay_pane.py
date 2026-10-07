@@ -431,7 +431,12 @@ def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
     dir. `target_duration` is always set from audio_duration_s regardless of
     `owns`, so pacing stays correct on scenes this worker doesn't voice too.
     May raise (I/O, tts_client import) — callers wrap in their own try/except
-    per their existing error-reporting conventions."""
+    per their existing error-reporting conventions.
+
+    Rows from narration_store.load_*_meta carry audio=None + has_audio=True:
+    their bytes are streamed from the store AFTER the loop, only for owned
+    scenes and one row at a time, so a 4600-scene airing never sits in
+    memory whole (docs/narration_store.md "Memory")."""
     from revoice import plan_scenes
     from tts_client import Narration, wav_duration
 
@@ -440,15 +445,29 @@ def _rebuild_scenes_from_rows(script, rows, workdir, owns=None):
         scene["kind"] != row["scene_kind"] for scene, row in zip(scenes, rows)
     ):
         return None
+
+    def attach(scene, row, audio):
+        path = Path(workdir) / f"scene_{row['scene_index']:03d}.wav"
+        path.write_bytes(audio)
+        duration = row["audio_duration_s"] or wav_duration(path)
+        scene["audio"] = Narration(audio_path=path, duration=duration)
+
+    to_stream = {}
     for scene, row in zip(scenes, rows):
         scene["narration"] = row["text"]
         scene["audio"] = None
         scene["target_duration"] = row.get("audio_duration_s")
-        if row["audio"] and (owns is None or owns(scene, row)):
-            path = Path(workdir) / f"scene_{row['scene_index']:03d}.wav"
-            path.write_bytes(row["audio"])
-            duration = row["audio_duration_s"] or wav_duration(path)
-            scene["audio"] = Narration(audio_path=path, duration=duration)
+        if owns is not None and not owns(scene, row):
+            continue
+        if row["audio"]:
+            attach(scene, row, row["audio"])
+        elif row.get("has_audio"):
+            to_stream[row["scene_index"]] = (scene, row)
+    if to_stream:
+        message_id = rows[0]["message_id"]
+        for scene_index, audio in narration_store.stream_scene_audio(message_id, to_stream):
+            scene, row = to_stream[scene_index]
+            attach(scene, row, audio)
     return scenes
 
 
@@ -462,7 +481,7 @@ def _load_cached_show(script, episode, workdir):
         print("[replay_pane] narration store unavailable — generating fresh narration")
         return None, None
     try:
-        cached = narration_store.load_latest_airing(episode)
+        cached = narration_store.load_latest_airing_meta(episode)
     except Exception as exc:
         print(f"[replay_pane] narration cache load failed: {exc}", file=sys.stderr)
         return None, None
@@ -1060,7 +1079,7 @@ def perform_follower_request(request, worker_name, state_path, self_id,
               file=sys.stderr)
         return False
     try:
-        rows = narration_store.load_airing(airing_id)
+        rows = narration_store.load_airing_meta(airing_id)
     except Exception as exc:
         print(f"[replay_pane] follower airing load failed: {exc}", file=sys.stderr)
         return False

@@ -412,7 +412,7 @@ def test_load_reused_show_none_when_store_unavailable(monkeypatch, capsys, tmp_p
 
 def test_load_reused_show_none_when_nothing_cached(monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: None)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: None)
 
     result = load_reused_show(_reuse_script(), "ep1", tmp_path)
 
@@ -424,7 +424,7 @@ def test_load_reused_show_returns_scenes_with_cached_text_and_no_audio(monkeypat
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
              "text": "cached line", "audio": None, "audio_duration_s": None}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: rows)
 
     result = load_reused_show(_reuse_script(), "ep1", tmp_path)
 
@@ -440,7 +440,7 @@ def test_load_reused_show_writes_audio_file_and_sets_duration(monkeypatch, tmp_p
     audio_bytes = b"fake-wav-bytes-for-scene-zero"
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder",
              "text": "cached line", "audio": audio_bytes, "audio_duration_s": 3.25}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: rows)
     workdir = tmp_path / "work"
     workdir.mkdir()
 
@@ -461,7 +461,7 @@ def test_load_reused_show_none_when_scene_count_mismatch(monkeypatch, capsys, tm
         {"scene_index": 1, "scene_kind": "boss", "speaker": "boss",
          "text": "b", "audio": None, "audio_duration_s": None},
     ]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: rows)
 
     result = load_reused_show(_reuse_script(), "ep1", tmp_path)
 
@@ -473,7 +473,7 @@ def test_load_reused_show_none_when_scene_kind_mismatch(monkeypatch, capsys, tmp
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
     rows = [{"scene_index": 0, "scene_kind": "boss", "speaker": "coder",
              "text": "a", "audio": None, "audio_duration_s": None}]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: rows)
 
     result = load_reused_show(_reuse_script(), "ep1", tmp_path)
 
@@ -487,7 +487,7 @@ def test_load_reused_show_none_when_load_raises(monkeypatch, capsys, tmp_path):
     def explode(episode):
         raise RuntimeError("db down")
 
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", explode)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", explode)
 
     result = load_reused_show(_reuse_script(), "ep1", tmp_path)
 
@@ -524,7 +524,7 @@ def test_load_reused_show_speaker_comes_from_fresh_plan_scenes_not_row(monkeypat
         {"scene_index": 1, "scene_kind": "coder_talk",
          "text": "cached line two", "audio": None, "audio_duration_s": None},
     ]
-    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing", lambda episode: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_latest_airing_meta", lambda episode: rows)
 
     result = load_reused_show(script, "multi_ep", tmp_path)
 
@@ -1303,7 +1303,7 @@ def test_follower_happy_path_loads_owned_audio_and_notifies_director(
     rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
                       boss_duration=1.5, coder_duration=2.5)
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
     holder = {}
     monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
 
@@ -1344,7 +1344,7 @@ def test_follower_with_no_owned_scenes_still_sends_ready(
     rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
                       boss_duration=1.5, coder_duration=2.5)
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
     holder = {}
     monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
 
@@ -1381,7 +1381,7 @@ def test_follower_speaker_not_in_script_never_sends_ready(
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder", "text": "x",
              "audio": None, "audio_duration_s": None}]  # duet_ep's script has TWO scenes
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
     holder = {}
     monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
 
@@ -1404,7 +1404,7 @@ def test_follower_speaker_not_in_script_never_sends_ready(
 def test_follower_missing_airing_returns_to_idle_without_performing(
         duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files, capsys):
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: None)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: None)
 
     request = {"mode": "follow", "airing_id": "missing-id", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
@@ -1420,7 +1420,7 @@ def test_follower_scene_mismatch_returns_to_idle_without_performing(
     rows = [{"scene_index": 0, "scene_kind": "coder_talk", "speaker": "coder", "text": "x",
              "audio": None, "audio_duration_s": None}]  # duet_ep's script has TWO scenes
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
 
     request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
               "cast": {"boss": "director-1", "coder": "follower-1"}, "director": "director-1"}
@@ -1435,7 +1435,7 @@ def test_follower_wait_for_scene_ratchet(duet_library, monkeypatch, capturing_pe
                                          duet_timeouts, relay_files):
     rows = _duet_rows(boss_duration=1.0, coder_duration=1.0)
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
     monkeypatch.setattr(replay_pane, "MessageProducer", RecordingProducer)
 
     request = {"mode": "follow", "airing_id": "airing-1", "episode": "duet_ep",
@@ -1473,7 +1473,7 @@ def test_follower_wait_for_scene_stops_immediately_on_stop_file(
     docs/duet_replay.md."""
     rows = _duet_rows(boss_duration=1.0, coder_duration=1.0)
     monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: rows)
     monkeypatch.setattr(replay_pane, "MessageProducer", RecordingProducer)
 
     stop_file = tmp_path / "stop.json"
@@ -1685,3 +1685,59 @@ def test_perform_request_without_record_passes_none(library, monkeypatch):
     _spy_recording(monkeypatch, events)
     perform_request({"episode": "ep1", "speed": 0, "voice": False}, "KODI-7", None)
     assert events[0][1] is None
+
+
+# ── metadata-first loading: stream only OWNED audio (tile_pane RSS fix) ──────
+
+def _two_speaker_meta_rows():
+    """Rows shaped like narration_store.load_airing_meta(): no bytes, just
+    has_audio — the audio must be streamed per owned scene."""
+    return [
+        {"message_id": "air-1", "scene_index": 0, "scene_kind": "coder_talk",
+         "text": "line one", "audio": None, "has_audio": True, "audio_duration_s": 1.0},
+        {"message_id": "air-1", "scene_index": 1, "scene_kind": "coder_talk",
+         "text": "line two", "audio": None, "has_audio": True, "audio_duration_s": 2.0},
+    ]
+
+
+_TWO_SPEAKER_SCRIPT = {
+    "source": "ep",
+    "events": [
+        {"type": "assistant_text", "text": "hi", "speaker": "tester"},
+        {"type": "assistant_text", "text": "yo", "speaker": "coder-native"},
+    ],
+}
+
+
+def test_rebuild_from_meta_rows_streams_only_owned_scene_audio(monkeypatch, tmp_path):
+    requested = []
+
+    def fake_stream(message_id, indexes):
+        requested.append((message_id, sorted(indexes)))
+        for i in sorted(indexes):
+            yield i, b"RIFFwav-%d" % i
+
+    monkeypatch.setattr(replay_pane.narration_store, "stream_scene_audio", fake_stream)
+    owns = lambda scene, row=None: scene["speaker"] == "coder-native"  # noqa: E731
+
+    show = replay_pane._rebuild_scenes_from_rows(
+        _TWO_SPEAKER_SCRIPT, _two_speaker_meta_rows(), tmp_path, owns=owns)
+
+    assert requested == [("air-1", [1])]
+    assert show[0]["audio"] is None
+    assert show[1]["audio"].audio_path.read_bytes() == b"RIFFwav-1"
+    assert [s["target_duration"] for s in show] == [1.0, 2.0]
+
+
+def test_rebuild_from_meta_rows_skips_store_when_nothing_owned(monkeypatch, tmp_path):
+    def boom(*a, **k):
+        raise AssertionError("must not hit the store when no scene is owned")
+
+    monkeypatch.setattr(replay_pane.narration_store, "stream_scene_audio", boom)
+
+    show = replay_pane._rebuild_scenes_from_rows(
+        _TWO_SPEAKER_SCRIPT, _two_speaker_meta_rows(), tmp_path,
+        owns=lambda scene, row=None: False)
+
+    assert [s["audio"] for s in show] == [None, None]
+    assert [s["narration"] for s in show] == ["line one", "line two"]

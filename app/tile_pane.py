@@ -1200,7 +1200,7 @@ def perform_tile_request(request, slot, relay_dir, state_path=None, config=None,
               file=sys.stderr)
         return False
     try:
-        rows = narration_store.load_airing(airing_id)
+        rows = narration_store.load_airing_meta(airing_id)
     except Exception as exc:
         print(f"[tile_pane] {slot}: airing load failed: {type(exc).__name__}: {exc}",
               file=sys.stderr)

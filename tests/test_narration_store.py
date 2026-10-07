@@ -346,3 +346,72 @@ def test_checkpoint_store_db_error_propagates(monkeypatch):
     monkeypatch.setattr(narration_store, "_connect", boom)
     with pytest.raises(RuntimeError):
         narration_store.CheckpointStore().load_index("k")
+
+
+# ── metadata-first loading (tile_pane RSS fix) ───────────────────────────────
+
+def test_load_airing_meta_selects_no_audio_bytes(monkeypatch):
+    rows = [("msg-1", 0, "coder_talk", "coder", "line one", True, 1.5),
+            ("msg-1", 1, "boss", "boss", "line two", False, None)]
+    fake_conn = FakeConn(fetch_rows=rows)
+    monkeypatch.setattr(narration_store, "_connect", lambda: fake_conn)
+
+    result = narration_store.load_airing_meta("msg-1")
+
+    assert fake_conn.closed is True
+    sql, params = fake_conn.cur.calls[0]
+    assert "audio IS NOT NULL" in sql and ", audio," not in sql
+    assert params == {"message_id": "msg-1"}
+    assert [r["audio"] for r in result] == [None, None]
+    assert [r["has_audio"] for r in result] == [True, False]
+
+
+def test_load_airing_meta_returns_none_when_unknown(monkeypatch):
+    monkeypatch.setattr(narration_store, "_connect", lambda: FakeConn(fetch_rows=[]))
+    assert narration_store.load_airing_meta("nope") is None
+
+
+class _NamedCursor(FakeCursor):
+    def __init__(self, rows, name):
+        super().__init__(rows)
+        self.name = name
+        self.itersize = None
+
+    def __iter__(self):
+        return iter(self._fetch_rows)
+
+
+class _StreamConn(FakeConn):
+    def __init__(self, rows):
+        super().__init__()
+        self.rows = rows
+        self.autocommit = True
+        self.rolled_back = False
+        self.named = None
+
+    def cursor(self, name=None):
+        self.named = _NamedCursor(self.rows, name)
+        return self.named
+
+    def rollback(self):
+        self.rolled_back = True
+
+
+def test_stream_scene_audio_uses_server_side_cursor_and_closes(monkeypatch):
+    conn = _StreamConn([(2, memoryview(b"two")), (5, memoryview(b"five"))])
+    monkeypatch.setattr(narration_store, "_connect", lambda: conn)
+
+    out = list(narration_store.stream_scene_audio("air-1", {5, 2}))
+
+    assert out == [(2, b"two"), (5, b"five")]
+    assert conn.named.name and conn.named.itersize == narration_store.STREAM_BATCH_ROWS
+    sql, params = conn.named.calls[0]
+    assert params == {"message_id": "air-1", "indexes": [2, 5]}
+    assert conn.autocommit is False and conn.rolled_back and conn.closed
+
+
+def test_stream_scene_audio_no_indexes_never_connects(monkeypatch):
+    def boom():
+        raise AssertionError("must not connect")
+    monkeypatch.setattr(narration_store, "_connect", boom)
+    assert list(narration_store.stream_scene_audio("air-1", [])) == []

@@ -51,6 +51,10 @@ def load_latest_airing(episode) -> list[dict] | None
 
 def load_airing(message_id) -> list[dict] | None
 
+def load_latest_airing_meta(episode) -> list[dict] | None   # no audio bytes
+def load_airing_meta(message_id) -> list[dict] | None       # no audio bytes
+def stream_scene_audio(message_id, scene_indexes) -> Iterator[tuple[int, bytes]]
+
 class CheckpointStore:          # resumable voice prep, docs/voice_prep_checkpoint.md
     def ensure_schema(self, prune_days=14) -> None
     def load_index(self, prep_key) -> dict[int, dict]
@@ -66,6 +70,25 @@ the separate `voice_prep_checkpoint` table — never `voiced_narration` — so a
 half-done prep can't become the "latest" cached airing. Its methods raise on
 DB failure; `voice_prep_checkpoint.PrepCheckpoint` turns that into
 "checkpointing off, prep continues".
+
+## Memory: load metadata, stream owned audio
+
+`load_airing`/`load_latest_airing` return EVERY scene's WAV bytes from one
+`fetchall()`. A full roundtable airing is ~4600 scenes / ~1.3 GB of audio, and
+that single call peaks at ~4 GB RSS (psycopg2 result buffer + memoryviews +
+`bytes()` copies). Before v1.3.0 all 8 roundtable tiles did this once per
+airing just to keep their own ~1/8th; glibc never returned the freed heap, so
+each `tile_pane.py` sat at ~4-5 GB (~40 GB per roundtable container).
+
+Performers now call `load_airing_meta`/`load_latest_airing_meta` (rows carry
+`audio=None` plus `has_audio`), and `replay_pane._rebuild_scenes_from_rows`
+streams bytes only for the scenes the caller owns via `stream_scene_audio` —
+a named server-side cursor fetching `STREAM_BATCH_ROWS` (16) rows per round
+trip. Measured against the live airing: meta load 29 MB RSS; streaming one
+tile's 575 scenes (166 MB of WAV) peaked at 45 MB.
+
+The full-bytes loaders are kept for any caller that genuinely wants every
+scene in memory; none of the playback paths do.
 
 ## Parameters
 
@@ -204,6 +227,10 @@ if rows:
 
 ## Changelog
 
+- **v1.3.0** (2026-10-04): `load_airing_meta`, `load_latest_airing_meta`,
+  `stream_scene_audio` — metadata-first loading so performers never hold a
+  whole airing's audio (fixes ~5 GB RSS per roundtable tile; see "Memory").
+  `replay_pane`/`tile_pane` playback paths switched over.
 - **v1.2.0** (2026-10-02): Added `CheckpointStore` + the
   `voice_prep_checkpoint` table for resumable voice prep
   (docs/voice_prep_checkpoint.md). Existing functions unchanged.

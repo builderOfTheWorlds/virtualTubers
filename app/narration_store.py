@@ -177,6 +177,113 @@ def load_airing(message_id):
     return [_row_to_dict(row) for row in rows]
 
 
+# ── Metadata-first loading (docs/narration_store.md "Memory") ───────────────
+# load_airing/load_latest_airing pull EVERY scene's WAV bytes in one
+# fetchall(). A full roundtable airing is ~4600 scenes / ~1.3 GB of audio, so
+# that single call peaks around 4 GB (psycopg2's result buffer + memoryviews +
+# the bytes() copies) — and every one of the 8 roundtable tiles did it per
+# airing, only to keep its own ~1/8th. glibc never gave the freed heap back,
+# which is what grew each tile_pane to ~5 GB RSS. Performers now load the
+# text/duration metadata only, then stream just the audio they own, one row
+# at a time, through a server-side cursor (stream_scene_audio).
+
+LOAD_META_BY_ID_SQL = """
+SELECT message_id, scene_index, scene_kind, speaker, text,
+       audio IS NOT NULL, audio_duration_s
+FROM voiced_narration
+WHERE message_id = %(message_id)s
+ORDER BY scene_index;
+"""
+
+LOAD_META_LATEST_SQL = """
+SELECT message_id, scene_index, scene_kind, speaker, text,
+       audio IS NOT NULL, audio_duration_s
+FROM voiced_narration
+WHERE message_id = (
+    SELECT message_id FROM voiced_narration
+    WHERE episode = %(episode)s AND audio IS NOT NULL
+    ORDER BY aired_at DESC, ingested_at DESC
+    LIMIT 1
+)
+ORDER BY scene_index;
+"""
+
+STREAM_AUDIO_SQL = """
+SELECT scene_index, audio
+FROM voiced_narration
+WHERE message_id = %(message_id)s AND audio IS NOT NULL
+  AND scene_index = ANY(%(indexes)s)
+ORDER BY scene_index;
+"""
+
+#: Rows per server-side cursor round trip in stream_scene_audio. Each row is
+#: one scene WAV (well under 1 MB), so this bounds the transient buffer.
+STREAM_BATCH_ROWS = 16
+
+
+def _meta_row_to_dict(row):
+    """Same keys as _row_to_dict, but `audio` is always None and
+    `has_audio` says whether the stored row has bytes to stream."""
+    return {
+        "message_id": row[0],
+        "scene_index": row[1],
+        "scene_kind": row[2],
+        "speaker": row[3],
+        "text": row[4],
+        "audio": None,
+        "has_audio": bool(row[5]),
+        "audio_duration_s": row[6],
+    }
+
+
+def _load_meta(sql, params):
+    conn = _connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(sql, params)
+            rows = cur.fetchall()
+    finally:
+        conn.close()
+    if not rows:
+        return None
+    return [_meta_row_to_dict(row) for row in rows]
+
+
+def load_airing_meta(message_id):
+    """load_airing without the audio bytes: each row has audio=None plus
+    has_audio. Pair with stream_scene_audio for the scenes you voice.
+    None when the id is unknown; raises on DB failure."""
+    return _load_meta(LOAD_META_BY_ID_SQL, {"message_id": message_id})
+
+
+def load_latest_airing_meta(episode):
+    """load_latest_airing without the audio bytes (see load_airing_meta)."""
+    return _load_meta(LOAD_META_LATEST_SQL, {"episode": episode})
+
+
+def stream_scene_audio(message_id, scene_indexes):
+    """Yield (scene_index, wav_bytes) for the given scenes of one airing, in
+    scene_index order, holding at most STREAM_BATCH_ROWS rows in memory at a
+    time (a named, server-side cursor). Scenes with no stored audio are
+    skipped. Raises on DB failure; the connection is always closed."""
+    indexes = sorted({int(i) for i in scene_indexes})
+    if not indexes:
+        return
+    conn = _connect()
+    try:
+        # A named cursor needs a transaction (autocommit off) to stay open
+        # between fetches; it is read-only, so just roll it back after.
+        conn.autocommit = False
+        with conn.cursor(name="stream_scene_audio") as cur:
+            cur.itersize = STREAM_BATCH_ROWS
+            cur.execute(STREAM_AUDIO_SQL, {"message_id": message_id, "indexes": indexes})
+            for scene_index, audio in cur:
+                yield scene_index, bytes(audio)
+        conn.rollback()
+    finally:
+        conn.close()
+
+
 # ── Voice-prep checkpoint (docs/narration_store.md "Prep checkpoint") ────────
 # A fresh voiced airing's prep (LLM line + TTS per scene) used to live only
 # in a TemporaryDirectory until EVERY scene was done — a 4600-scene episode

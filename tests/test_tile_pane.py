@@ -115,7 +115,7 @@ def store(monkeypatch):
         return holder["rows"]
 
     monkeypatch.setattr(tile_pane.narration_store, "available", lambda: True)
-    monkeypatch.setattr(tile_pane.narration_store, "load_airing", load_airing)
+    monkeypatch.setattr(tile_pane.narration_store, "load_airing_meta", load_airing)
     return holder
 
 
@@ -427,7 +427,7 @@ def test_unavailable_narration_store_degrades(tile_library, relay, monkeypatch,
     def boom(airing_id):
         raise AssertionError("must not touch the store when it is unavailable")
 
-    monkeypatch.setattr(tile_pane.narration_store, "load_airing", boom)
+    monkeypatch.setattr(tile_pane.narration_store, "load_airing_meta", boom)
 
     assert perform_tile_request(_request(), "tuber_2", str(relay)) is False
     assert FakePerformer.instances == []

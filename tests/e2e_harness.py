@@ -491,7 +491,7 @@ class DuetStage:
         mp.setattr(replay_pane.episode_store, "load_episode", lambda name: episodes.get(name))
         mp.setattr(replay_pane.episode_store, "list_episodes", lambda: sorted(episodes))
         mp.setattr(replay_pane.narration_store, "available", lambda: True)
-        mp.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: self.airings.get(airing_id))
+        mp.setattr(replay_pane.narration_store, "load_airing_meta", lambda airing_id: self.airings.get(airing_id))
 
         def fake_prepare_voiced_show(script, config, workdir, **kwargs):
             scenes = plan_scenes(script.get("events", []))
