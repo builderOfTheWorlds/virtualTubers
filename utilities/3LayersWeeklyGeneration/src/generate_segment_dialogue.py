@@ -65,17 +65,26 @@ def silent_cast_ids(pack) -> set:
     Nora.") because nothing below the live app enforced his silence.
     """
     root = getattr(pack, "root", None)
-    if root is None:
-        return set()
     silent = set()
-    for member_id in getattr(pack, "cast", {}) or {}:
-        path = pathlib.Path(root) / "cast" / f"{member_id}.yaml"
-        try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        except (OSError, yaml.YAMLError):
-            continue
-        speech = str(data.get("speech") or "").strip().lower()
+    for member_id, member in (getattr(pack, "cast", {}) or {}).items():
+        # The generator service materializes the pack from Postgres into a
+        # temp dir that is deleted as soon as load_pack returns, so the cast
+        # files are usually gone by now (2026-10-01: off-hours regen gave
+        # the Party Member 10 slots of dialogue). Fall back to the loaded
+        # CastMember's system_prompt, which survives ("You never speak.").
+        speech = ""
+        if root is not None:
+            path = pathlib.Path(root) / "cast" / f"{member_id}.yaml"
+            try:
+                data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+                speech = str(data.get("speech") or "").strip().lower()
+            except (OSError, yaml.YAMLError):
+                log.debug("silent_cast_ids: no cast file for %s", member_id)
         if speech.startswith("none") or "never speaks" in speech:
+            silent.add(member_id)
+            continue
+        prompt = str(getattr(member, "system_prompt", "") or "").lower()
+        if re.search(r"\byou never speak\b|\bnever speaks\b", prompt):
             silent.add(member_id)
     log.debug("silent_cast_ids returning %s", sorted(silent))
     return silent

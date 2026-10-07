@@ -92,3 +92,19 @@ def test_silent_cast_ids_reads_the_pack_speech_field(tmp_path):
         cast = {"pm": None, "ceo": None, "missing": None}
 
     assert gsd.silent_cast_ids(Pack()) == {"pm"}
+
+
+def test_silent_cast_ids_falls_back_to_system_prompt_when_cast_files_are_gone(tmp_path):
+    # The service loads packs from a Postgres temp dir that is deleted
+    # before layer 3 runs, so only the loaded CastMember is left.
+    class Member:
+        def __init__(self, prompt):
+            self.system_prompt = prompt
+
+    class Pack:
+        root = tmp_path / "deleted"
+        cast = {"pm": Member("You never speak. You only observe."),
+                "ceo": Member("You speak in short, clipped sentences."),
+                "none": Member(None)}
+
+    assert gsd.silent_cast_ids(Pack()) == {"pm"}
