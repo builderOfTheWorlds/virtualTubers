@@ -1,0 +1,55 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# docker-compose.table.yml: the live agent table on vLLM (build plan P0.5)
+#
+# An OVERRIDE, never used on its own. It points every LLM-calling stream
+# worker at the ONE shared vLLM server (deployments/vllm-agents, host :8092)
+# instead of Ollama :11434:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.table.yml up -d
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml \
+#                  -f docker-compose.table.yml up -d        # office table
+#
+# D&D seats (plan U1; seat configs arrive with P3.7):
+#   worker-gm=tuber_0 (GM)  worker-manager=tuber_1  worker-coder-native=tuber_2
+#   worker-coder-aider=tuber_3  worker-tester=tuber_4
+# The other two workers get the same LLM env so the office table (7 seats,
+# docker-compose.office.yml) runs on the same model with no extra file.
+# worker-observer (office tuber_7) is silent and makes no LLM calls.
+#
+# Only LLM env changes here; `environment` merges by key, so every other
+# setting from the base/office files is untouched.
+#
+# Secret: VLLM_API_KEY is passed by NAME from .env; no value lives in this
+# file. app/llm_client.build_llm_client reads it via llm.api_key_env
+# (default VLLM_API_KEY). LLM_MODEL must equal the server's
+# --served-model-name (vllm-agents .env VLLM_SERVED_NAME, default table-agents).
+# ──────────────────────────────────────────────────────────────────────────────
+
+x-table-llm-env: &table-llm-env
+  LLM_PROVIDER: vllm
+  LLM_BASE_URL: ${TABLE_LLM_BASE_URL:-http://host.docker.internal:8092}
+  LLM_MODEL: ${TABLE_LLM_MODEL:-table-agents}
+  VLLM_API_KEY: ${VLLM_API_KEY:?VLLM_API_KEY must be set in .env for the table overlay}
+
+services:
+  worker-gm:
+    environment:
+      <<: *table-llm-env
+  worker-manager:
+    environment:
+      <<: *table-llm-env
+  worker-coder-native:
+    environment:
+      <<: *table-llm-env
+  worker-coder-aider:
+    environment:
+      <<: *table-llm-env
+  worker-tester:
+    environment:
+      <<: *table-llm-env
+  worker-coder-opencode:
+    environment:
+      <<: *table-llm-env
+  worker-coder:
+    environment:
+      <<: *table-llm-env
