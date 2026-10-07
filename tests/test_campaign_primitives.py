@@ -252,7 +252,22 @@ def test_cyberpunk_primitive_is_registered(name):
 
 
 def test_fantasy_cyber_and_office_are_the_only_genres():
-    assert sorted({get(name).genre for name in names()}) == ["cyber", "fantasy", "office"]
+    assert sorted({get(name).genre for name in names()}) == [
+        "cyber", "cyber_police", "fantasy", "office"]
+
+
+CYBER_POLICE = ["assign_lead", "brief_press", "file_report", "interrogate",
+                "open_case", "raid", "request_backup", "requisition",
+                "seize_evidence", "stand_watch", "trace_signal"]
+
+
+def test_cyber_police_genre_lists_exactly_the_cyber_police_verbs():
+    assert names(genre="cyber_police") == CYBER_POLICE
+
+
+@pytest.mark.parametrize("name", CYBER_POLICE)
+def test_cyber_police_primitive_is_registered(name):
+    assert get(name).genre == "cyber_police"
 
 
 def test_roll_check_does_not_invent_an_outcome():

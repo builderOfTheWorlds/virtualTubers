@@ -264,6 +264,149 @@ DEFAULT_REGISTRY.register(Primitive(
 ))
 
 
+# ── cyber-police verbs (cyber_police) ────────────────────────────────────────
+# A digital-crimes procedural vocabulary, alongside the existing cyber verbs
+# above. Like every other primitive these only narrate: "raid" never breaches
+# a door and "seize_evidence" never touches a real file. The script (or a
+# live agent's already-completed action) supplies every result; the verb just
+# words it for the stream.
+
+CASE_PRIORITIES = ("low", "medium", "high", "critical")
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="open_case",
+    genre="cyber_police",
+    summary="Open an investigation case file, optionally with a priority.",
+    params=(
+        ParamSpec("title", required=True),
+        ParamSpec("priority", required=False, choices=CASE_PRIORITIES),
+    ),
+    template="{actor} opens a case file titled {title}",
+    suffixes=(("priority", ", marked {priority} priority"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="assign_lead",
+    genre="cyber_police",
+    summary="Hand an investigative lead to a colleague, optionally with a due time.",
+    params=(
+        ParamSpec("to", required=True),
+        ParamSpec("task", required=True),
+        ParamSpec("due", required=False),
+    ),
+    template="{actor} assigns {task} to {to}",
+    suffixes=(("due", ", due {due}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="trace_signal",
+    genre="cyber_police",
+    summary="Trace a signal or connection back toward its source.",
+    params=(
+        ParamSpec("target", required=True),
+        ParamSpec("result", required=False),
+    ),
+    template="{actor} traces {target}",
+    suffixes=(("result", " — the trail leads to {result}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="raid",
+    genre="cyber_police",
+    summary="Move in on a physical or digital location, optionally with backup.",
+    params=(
+        ParamSpec("location", required=True),
+        ParamSpec("with_backup", required=False, choices=("yes", "no")),
+    ),
+    template="{actor} raids {location}",
+    suffixes=(("with_backup", ", backup {with_backup}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="interrogate",
+    genre="cyber_police",
+    summary="Question a suspect, optionally about a specific subject.",
+    params=(
+        ParamSpec("subject_person", required=True),
+        ParamSpec("about", required=False),
+    ),
+    template="{actor} interrogates {subject_person}",
+    suffixes=(("about", " about {about}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="seize_evidence",
+    genre="cyber_police",
+    summary="Log a piece of evidence into custody, optionally from a location.",
+    params=(
+        ParamSpec("item", required=True),
+        ParamSpec("from_location", required=False),
+    ),
+    template="{actor} seizes {item}",
+    suffixes=(("from_location", " from {from_location}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="file_report",
+    genre="cyber_police",
+    summary="File a case report, optionally with a result.",
+    params=(
+        ParamSpec("title", required=True),
+        ParamSpec("result", required=False),
+    ),
+    template="{actor} files a report: {title}",
+    suffixes=(("result", " — {result}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="request_backup",
+    genre="cyber_police",
+    summary="Call for backup, optionally from a specific unit.",
+    params=(
+        ParamSpec("reason", required=True),
+        ParamSpec("unit", required=False),
+    ),
+    template="{actor} calls for backup over {reason}",
+    suffixes=(("unit", ", requesting {unit}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="brief_press",
+    genre="cyber_police",
+    summary="Brief the press or public on the unit's work, optionally to a named outlet.",
+    params=(
+        ParamSpec("topic", required=True),
+        ParamSpec("outlet", required=False),
+    ),
+    template="{actor} briefs the press on {topic}",
+    suffixes=(("outlet", " for {outlet}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="requisition",
+    genre="cyber_police",
+    summary="Requisition equipment or supplies, optionally with a justification.",
+    params=(
+        ParamSpec("item", required=True),
+        ParamSpec("reason", required=False),
+    ),
+    template="{actor} requisitions {item}",
+    suffixes=(("reason", ", for {reason}"),),
+))
+
+DEFAULT_REGISTRY.register(Primitive(
+    name="stand_watch",
+    genre="cyber_police",
+    summary="Watch silently, optionally watching something specific.",
+    params=(
+        ParamSpec("target", required=False),
+    ),
+    # The Observer's verb: it never speaks, so the line carries no speech.
+    template="{actor} watches",
+    suffixes=(("target", " {target}"),),
+))
+
+
 # ── office verbs (ashiorid_office) ───────────────────────────────────────────
 # The Fraud-Stop workplace vocabulary. Like every other primitive these only
 # narrate: "run_tests" never runs anything and "deploy" never ships anything.
