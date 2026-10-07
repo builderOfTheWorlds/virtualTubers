@@ -275,3 +275,138 @@ def test_metrics_producer_wrapper_forwards_unknown_attributes(tmp_path):
     wrapper = MetricsProducerWrapper(real_producer, metrics)
 
     assert wrapper.topic == "vtuber-events"
+
+
+# --- P0.4: native reasoning (vLLM --reasoning-parser) ------------------------
+from agent_metrics import THINKING_INSTRUCTION
+
+
+class FakeClock:
+    def __init__(self):
+        self.t = 0.0
+
+    def __call__(self):
+        return self.t
+
+
+class FakeNativeLLM:
+    """Mimics VLLMClient.complete_stream: emits reasoning chunks, advancing
+    a fake clock between them, then returns (reasoning, content)."""
+
+    supports_native_reasoning = True
+
+    def __init__(self, chunks, content="Spoken line.", clock=None, error=None):
+        self.chunks = chunks          # [(t, text), ...]
+        self.content = content
+        self.clock = clock
+        self.error = error
+        self.calls = []
+
+    def complete(self, system_prompt, messages):
+        raise AssertionError("native path must use complete_stream")
+
+    def complete_stream(self, system_prompt, messages, on_reasoning=None,
+                        on_content=None, max_tokens=None):
+        self.calls.append({"system": system_prompt, "messages": messages,
+                           "max_tokens": max_tokens})
+        for t, text in self.chunks:
+            if self.clock is not None:
+                self.clock.t = t
+            if on_reasoning:
+                on_reasoning(text)
+        if self.error:
+            raise self.error
+        if on_content:
+            on_content(self.content)
+        return "".join(text for _, text in self.chunks), self.content
+
+
+def _thinking(producer):
+    return [m for m in producer.sent if m["type"] == "agent_thinking"]
+
+
+def test_native_reasoning_skips_prompt_injection_and_returns_content(tmp_path):
+    producer = FakeProducer()
+    wrapped = FakeNativeLLM([(0.0, "I want the amulet.")])
+    client = InstrumentedLLMClient(wrapped, producer, "tuber_1", runtime_dir=str(tmp_path))
+
+    reply = client.complete("You are Chadwick.", [{"role": "user", "content": "go"}])
+
+    assert reply == "Spoken line."
+    assert wrapped.calls[0]["system"] == "You are Chadwick."
+    assert THINKING_INSTRUCTION not in wrapped.calls[0]["system"]
+    msgs = _thinking(producer)
+    assert "".join(m["payload"]["text"] for m in msgs) == "I want the amulet."
+    assert all(m["from"] == "tuber_1" for m in msgs)
+
+
+def test_native_reasoning_is_throttled_to_one_message_per_500ms(tmp_path):
+    producer = FakeProducer()
+    clock = FakeClock()
+    chunks = [(0.0, "a"), (0.1, "b"), (0.2, "c"), (0.6, "d"), (0.7, "e"),
+              (0.8, "f"), (1.2, "g"), (1.25, "h")]
+    wrapped = FakeNativeLLM(chunks, clock=clock)
+    client = InstrumentedLLMClient(wrapped, producer, "tuber_1",
+                                   runtime_dir=str(tmp_path), clock=clock)
+
+    client.complete("s", [])
+
+    msgs = _thinking(producer)
+    # Nothing is lost: the deltas concatenate to the full reasoning.
+    assert "".join(m["payload"]["text"] for m in msgs) == "abcdefgh"
+    # Every publish except the final flush is >= 500 ms after the previous one.
+    times = [m["payload"]["t"] for m in msgs[:-1]]
+    assert all(b - a >= 0.5 for a, b in zip(times, times[1:]))
+    assert len(msgs) < len(chunks)
+    assert msgs[-1]["payload"]["final"] is True
+    assert all(m["payload"]["final"] is False for m in msgs[:-1])
+
+
+def test_native_no_reasoning_publishes_nothing(tmp_path):
+    producer = FakeProducer()
+    client = InstrumentedLLMClient(FakeNativeLLM([]), producer, "tuber_1",
+                                   runtime_dir=str(tmp_path))
+    assert client.complete("s", []) == "Spoken line."
+    assert _thinking(producer) == []
+
+
+def test_native_complete_stream_passthrough(tmp_path):
+    producer = FakeProducer()
+    wrapped = FakeNativeLLM([(0.0, "intent")], content="line")
+    client = InstrumentedLLMClient(wrapped, producer, "tuber_1", runtime_dir=str(tmp_path))
+    content_seen, reasoning_seen = [], []
+
+    reasoning, content = client.complete_stream(
+        "s", [], on_reasoning=reasoning_seen.append,
+        on_content=content_seen.append, max_tokens=99)
+
+    assert (reasoning, content) == ("intent", "line")
+    assert reasoning_seen == ["intent"] and content_seen == ["line"]
+    assert wrapped.calls[0]["max_tokens"] == 99
+    assert client.metrics.total_calls == 1
+
+
+def test_non_native_complete_stream_emulates_with_prompted_block(tmp_path):
+    producer = FakeProducer()
+    wrapped = FakeLLM(response="<thinking>plan</thinking>Line.")
+    client = InstrumentedLLMClient(wrapped, producer, "coder", runtime_dir=str(tmp_path))
+
+    assert client.complete_stream("sys", []) == ("plan", "Line.")
+    assert THINKING_INSTRUCTION in wrapped.calls[0][0]
+    assert _thinking(producer)[0]["payload"] == {"text": "plan"}
+
+
+def test_native_error_flushes_buffered_reasoning_and_records_failure(tmp_path):
+    producer = FakeProducer()
+    clock = FakeClock()
+    wrapped = FakeNativeLLM([(0.0, "a"), (0.1, "b")], clock=clock,
+                            error=RuntimeError("stream died"))
+    client = InstrumentedLLMClient(wrapped, producer, "tuber_1",
+                                   runtime_dir=str(tmp_path), clock=clock)
+
+    with pytest.raises(RuntimeError, match="stream died"):
+        client.complete("s", [])
+
+    assert "".join(m["payload"]["text"] for m in _thinking(producer)) == "ab"
+    assert client.metrics.failed_calls == 1
+    assert (tmp_path / "metrics_tuber_1.json").exists()

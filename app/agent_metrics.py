@@ -48,6 +48,9 @@ THINKING_INSTRUCTION = (
     "audience."
 )
 
+# Native reasoning is streamed to the Thinking pane at most once per interval.
+THINKING_STREAM_INTERVAL_S = 0.5
+
 THINKING_BLOCK_RE = re.compile(r"<thinking>(.*?)</thinking>", re.DOTALL | re.IGNORECASE)
 
 DEFAULT_RUNTIME_DIR = "/tmp/panes"
@@ -231,13 +234,89 @@ class InstrumentedLLMClient:
     exactly as today.
     """
 
-    def __init__(self, wrapped_client, producer, worker_id, metrics=None, runtime_dir=None):
+    def __init__(self, wrapped_client, producer, worker_id, metrics=None, runtime_dir=None,
+                 clock=time.monotonic, thinking_interval_s=THINKING_STREAM_INTERVAL_S):
         self._wrapped = wrapped_client
         self._producer = producer
         self.worker_id = worker_id
         self.metrics = metrics or AgentMetrics(worker_id, runtime_dir=runtime_dir)
+        self._clock = clock
+        self._thinking_interval_s = thinking_interval_s
+
+    @property
+    def native_reasoning(self):
+        """True when the wrapped client returns reasoning separately
+        (VLLMClient with --reasoning-parser); then no <thinking> prompt is
+        injected and the reasoning is streamed to the Thinking pane."""
+        return bool(getattr(self._wrapped, "supports_native_reasoning", False))
 
     def complete(self, system_prompt, messages):
+        if self.native_reasoning:
+            return self.complete_stream(system_prompt, messages)[1]
+        return self._complete_prompted(system_prompt, messages)[1]
+
+    def complete_stream(self, system_prompt, messages, on_reasoning=None,
+                        on_content=None, max_tokens=None):
+        """Returns `(reasoning, content)`. Native clients stream reasoning
+        to `agent_thinking` (throttled deltas); other clients fall back to
+        the prompted <thinking> block, so table handlers can always call this."""
+        if not self.native_reasoning:
+            reasoning, content = self._complete_prompted(system_prompt, messages)
+            if on_reasoning and reasoning:
+                on_reasoning(reasoning)
+            if on_content:
+                on_content(content)
+            return reasoning, content
+        return self._complete_native(system_prompt, messages, on_reasoning,
+                                     on_content, max_tokens)
+
+    def _publish_thinking(self, payload):
+        self._producer.send(build_message(
+            self.worker_id, "broadcast", "agent_thinking", payload,
+        ))
+
+    def _complete_native(self, system_prompt, messages, on_reasoning, on_content, max_tokens):
+        prompt_word_count = _prompt_word_count(system_prompt, messages)
+        pending = []
+        last_publish = [None]
+
+        def flush(final):
+            if not pending:
+                return
+            text = "".join(pending)
+            pending.clear()
+            now = self._clock()
+            last_publish[0] = now
+            self._publish_thinking({"text": text, "t": now, "final": final})
+
+        def on_reasoning_chunk(chunk):
+            pending.append(chunk)
+            now = self._clock()
+            if last_publish[0] is None or now - last_publish[0] >= self._thinking_interval_s:
+                flush(final=False)
+            if on_reasoning:
+                on_reasoning(chunk)
+
+        start = time.monotonic()
+        try:
+            reasoning, content = self._wrapped.complete_stream(
+                system_prompt, messages, on_reasoning=on_reasoning_chunk,
+                on_content=on_content, max_tokens=max_tokens,
+            )
+        except Exception:
+            flush(final=True)
+            self.metrics.record_call(time.monotonic() - start, prompt_word_count, 0, success=False)
+            self.metrics.write_snapshot()
+            raise
+        flush(final=True)
+        self.metrics.record_call(
+            time.monotonic() - start, prompt_word_count,
+            _word_count(reasoning) + _word_count(content), success=True,
+        )
+        self.metrics.write_snapshot()
+        return reasoning, content
+
+    def _complete_prompted(self, system_prompt, messages):
         prompt_word_count = _prompt_word_count(system_prompt, messages)
         instrumented_system_prompt = (system_prompt or "") + THINKING_INSTRUCTION
 
@@ -256,9 +335,7 @@ class InstrumentedLLMClient:
         self.metrics.record_call(latency_s, prompt_word_count, response_word_count, success=True)
 
         if thinking_text:
-            self._producer.send(build_message(
-                self.worker_id, "broadcast", "agent_thinking", {"text": thinking_text},
-            ))
+            self._publish_thinking({"text": thinking_text})
         else:
             print(
                 f"[agent_metrics:{self.worker_id}] DEBUG no <thinking> block found in "
@@ -266,4 +343,4 @@ class InstrumentedLLMClient:
             )
 
         self.metrics.write_snapshot()
-        return reply_text
+        return thinking_text or "", reply_text
