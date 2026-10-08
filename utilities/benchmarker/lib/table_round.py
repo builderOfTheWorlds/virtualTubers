@@ -53,6 +53,13 @@ class Budgets:
     adjudication: int = 256       # reasoning OFF, JSON verdict
     gm_think: bool = True
     adjudication_think: bool = False
+    # vLLM thinking_token_budget per stage (None = unbounded; needs the
+    # server started with --reasoning-config). max_tokens still caps the total.
+    reasoning_gm: int | None = None
+    reasoning_think: int | None = None
+    reasoning_seat: int | None = None
+    reasoning_speak: int | None = None     # always-thinking models (Qwen3-Thinking-2507)
+    reasoning_adjudication: int | None = None
 
 
 @dataclass
@@ -200,12 +207,13 @@ class TableRoundProbe:
         self.pack = pack
         self.clock = clock
 
-    def _call(self, stage, seat, system, user, num_predict, think, t_round):
+    def _call(self, stage, seat, system, user, num_predict, think, t_round, budget=None):
         start = self.clock()
+        extra = {} if budget is None else {"thinking_token_budget": budget}
         try:
             r = self.host.complete(model=self.model, system=system, user=user,
                                    num_predict=num_predict, think=think,
-                                   temperature=self.temperature)
+                                   temperature=self.temperature, **extra)
         except Exception as exc:  # noqa: BLE001 - recorded, round continues
             return Stage(stage, seat, start - t_round, self.clock() - start, 0.0,
                          0, 0, 0, None, False, False, error=repr(exc))
@@ -228,7 +236,7 @@ class TableRoundProbe:
 
         gs, gu = gm_direction_prompt(self.pack, [s[1] for s in seats])
         d = self._call("gm_direction", "gm", gs, gu + "\n\nWrite the GM direction now (<=120 words).",
-                       self.b.gm_direction, self.b.gm_think, t0)
+                       self.b.gm_direction, self.b.gm_think, t0, self.b.reasoning_gm)
         res.stages.append(d)
         direction = d.content or "(the GM gestures at the broken sigil)"
 
@@ -242,7 +250,8 @@ class TableRoundProbe:
             def think(seat):
                 label, name, brief = seat
                 s, u = think_prompt(name, brief, direction, snapshot)
-                return self._call("think", label, s, u, self.b.think, True, t0)
+                return self._call("think", label, s, u, self.b.think, True, t0,
+                                  self.b.reasoning_think)
 
             with ThreadPoolExecutor(max_workers=n_seats) as pool:
                 for st in pool.map(think, seats):
@@ -252,17 +261,20 @@ class TableRoundProbe:
         for label, name, brief in seats:              # strictly in turn order
             if shape == "two_pass":
                 s, u = speak_prompt(name, brief, direction, committed, intents[label])
-                st = self._call("speak", label, s, u, self.b.speak, False, t0)
+                st = self._call("speak", label, s, u, self.b.speak, False, t0,
+                                self.b.reasoning_speak)
             else:
                 s, u = speak_prompt(name, brief, direction, committed, None)
-                st = self._call("seat_one_pass", label, s, u, self.b.one_pass, True, t0)
+                st = self._call("seat_one_pass", label, s, u, self.b.one_pass, True, t0,
+                                self.b.reasoning_seat)
             res.stages.append(st)
             if st.content:
                 committed.append(f"{name}: {st.content}")
 
         s, u = adjudication_prompt(committed, [x[1] for x in seats])
         res.stages.append(self._call("adjudication", "gm", s, u, self.b.adjudication,
-                                     self.b.adjudication_think, t0))
+                                     self.b.adjudication_think, t0,
+                                     self.b.reasoning_adjudication))
         res.wall_s = self.clock() - t0
         return res
 
@@ -296,7 +308,7 @@ def main(argv=None) -> int:
         if isinstance(default, bool):
             continue
         p.add_argument(f"--budget-{name.replace('_', '-')}", type=int, default=default,
-                       dest=f"budget_{name}")
+                       dest=f"budget_{name}")   # reasoning_* default None = unbounded
     args = p.parse_args(argv)
 
     from vllm_host import vLLMHost

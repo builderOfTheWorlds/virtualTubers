@@ -142,3 +142,30 @@ def test_summary_fields():
     for key in ("wall_s", "gm_direction_s", "think_pass_wall_s", "think_p95_s",
                 "speak_p50_s", "adjudication_s", "reasoning_tokens"):
         assert s[key] is not None
+
+
+def test_reasoning_budgets_passed_per_stage_when_set():
+    class RecordingHost(FakeHost):
+        def complete(self, *, model, system, user, num_predict, think=False,
+                     temperature=0.7, thinking_token_budget=None):
+            self.calls.append({"tb": thinking_token_budget, "system": system})
+            return super().complete(model=model, system=system, user=user,
+                                    num_predict=num_predict, think=think,
+                                    temperature=temperature)
+
+    host = RecordingHost()
+    b = tr.Budgets(reasoning_gm=400, reasoning_think=200, reasoning_seat=250,
+                   reasoning_speak=64, reasoning_adjudication=96)
+    tr.TableRoundProbe(host, "m", b).run("two_pass", 4)
+    tbs = [c["tb"] for c in host.calls if "tb" in c]
+    assert tbs[0] == 400                                   # GM direction
+    assert tbs.count(200) == 4                             # THINK
+    assert tbs.count(64) == 4                              # SPEAK
+    assert tbs[-1] == 96                                   # adjudication
+    tr.TableRoundProbe(host, "m", b).run("one_pass", 4)
+    assert [c["tb"] for c in host.calls if "tb" in c].count(250) == 4
+
+
+def test_no_budget_means_no_kwarg():
+    host = FakeHost()          # its complete() has no thinking_token_budget kwarg
+    tr.TableRoundProbe(host, "m").run("two_pass", 4)  # must not raise TypeError

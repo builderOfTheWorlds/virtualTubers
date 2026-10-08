@@ -256,7 +256,7 @@ class InstrumentedLLMClient:
         return self._complete_prompted(system_prompt, messages)[1]
 
     def complete_stream(self, system_prompt, messages, on_reasoning=None,
-                        on_content=None, max_tokens=None):
+                        on_content=None, max_tokens=None, reasoning_budget=None):
         """Returns `(reasoning, content)`. Native clients stream reasoning
         to `agent_thinking` (throttled deltas); other clients fall back to
         the prompted <thinking> block, so table handlers can always call this."""
@@ -268,14 +268,15 @@ class InstrumentedLLMClient:
                 on_content(content)
             return reasoning, content
         return self._complete_native(system_prompt, messages, on_reasoning,
-                                     on_content, max_tokens)
+                                     on_content, max_tokens, reasoning_budget)
 
     def _publish_thinking(self, payload):
         self._producer.send(build_message(
             self.worker_id, "broadcast", "agent_thinking", payload,
         ))
 
-    def _complete_native(self, system_prompt, messages, on_reasoning, on_content, max_tokens):
+    def _complete_native(self, system_prompt, messages, on_reasoning, on_content, max_tokens,
+                         reasoning_budget=None):
         prompt_word_count = _prompt_word_count(system_prompt, messages)
         pending = []
         last_publish = [None]
@@ -299,9 +300,10 @@ class InstrumentedLLMClient:
 
         start = time.monotonic()
         try:
+            extra = {} if reasoning_budget is None else {"reasoning_budget": reasoning_budget}
             reasoning, content = self._wrapped.complete_stream(
                 system_prompt, messages, on_reasoning=on_reasoning_chunk,
-                on_content=on_content, max_tokens=max_tokens,
+                on_content=on_content, max_tokens=max_tokens, **extra,
             )
         except Exception:
             flush(final=True)

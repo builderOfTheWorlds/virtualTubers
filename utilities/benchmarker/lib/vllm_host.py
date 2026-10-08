@@ -131,6 +131,7 @@ class vLLMHost:
     def complete(self, *, model: str, system: str, user: str,
                  num_predict: int, think: bool = False,
                  temperature: float = 0.7, top_p: float | None = 1.0,
+                 thinking_token_budget: int | None = None,
                  ) -> CompletionResult:
         body: dict[str, Any] = {
             "model": model,
@@ -146,6 +147,8 @@ class vLLMHost:
         }
         if top_p is not None:
             body["top_p"] = top_p
+        if thinking_token_budget is not None:
+            body["thinking_token_budget"] = int(thinking_token_budget)
 
         t0 = time.perf_counter()
         first_byte_t: float | None = None

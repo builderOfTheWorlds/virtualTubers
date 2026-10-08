@@ -289,3 +289,25 @@ def test_build_llm_client_vllm_missing_key_env_is_allowed(monkeypatch):
     client = build_llm_client({"llm": {"provider": "vllm"}})
     assert not client.has_api_key
     assert client.base_url == "http://localhost:8092"
+
+
+def test_vllm_stream_reasoning_budget_sent_as_thinking_token_budget():
+    seen = {}
+
+    def handler(request):
+        seen["body"] = _json.loads(request.content)
+        return httpx.Response(200, content=_sse([_delta(content="x", finish="stop")]))
+
+    _client(handler).complete_stream("s", [], reasoning_budget=200)
+    assert seen["body"]["thinking_token_budget"] == 200
+
+
+def test_vllm_stream_no_reasoning_budget_omits_the_field():
+    seen = {}
+
+    def handler(request):
+        seen["body"] = _json.loads(request.content)
+        return httpx.Response(200, content=_sse([_delta(content="x", finish="stop")]))
+
+    _client(handler).complete_stream("s", [])
+    assert "thinking_token_budget" not in seen["body"]

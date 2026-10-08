@@ -127,7 +127,7 @@ class VLLMClient:
             headers["Authorization"] = f"Bearer {self._api_key.reveal()}"
         return headers
 
-    def _body(self, system_prompt, messages, stream, max_tokens):
+    def _body(self, system_prompt, messages, stream, max_tokens, reasoning_budget=None):
         body = {
             "model": self.model,
             "messages": [{"role": "system", "content": system_prompt}] + list(messages or []),
@@ -136,6 +136,10 @@ class VLLMClient:
             "stream": stream,
         }
         body.update(self.extra_body)
+        if reasoning_budget is not None:
+            # vLLM >= 0.30 with --reasoning-config: reasoning is force-closed
+            # after this many tokens and the model goes on to the answer.
+            body["thinking_token_budget"] = int(reasoning_budget)
         return body
 
     def _reasoning_of(self, obj):
@@ -157,11 +161,11 @@ class VLLMClient:
             return LLMError(f"vLLM request to model {self.model} timed out after {self.timeout_s}s")
         return LLMError(f"vLLM request to {self.base_url} failed: {exc}")
 
-    def complete(self, system_prompt, messages, max_tokens=None):
+    def complete(self, system_prompt, messages, max_tokens=None, reasoning_budget=None):
         try:
             response = self._http.post(
                 f"{self.base_url}/v1/chat/completions",
-                json=self._body(system_prompt, messages, False, max_tokens),
+                json=self._body(system_prompt, messages, False, max_tokens, reasoning_budget),
                 headers=self._headers(), timeout=self.timeout_s,
             )
             response.raise_for_status()
@@ -178,7 +182,7 @@ class VLLMClient:
         return content
 
     def complete_stream(self, system_prompt, messages, on_reasoning=None,
-                        on_content=None, max_tokens=None):
+                        on_content=None, max_tokens=None, reasoning_budget=None):
         """Stream one completion. Calls `on_reasoning(chunk)` / `on_content(chunk)`
         per delta and returns `(reasoning, content)`. Raises LLMError when the
         stream ends with no content (e.g. the whole budget went to reasoning)."""
@@ -187,7 +191,7 @@ class VLLMClient:
         try:
             with self._http.stream(
                 "POST", f"{self.base_url}/v1/chat/completions",
-                json=self._body(system_prompt, messages, True, max_tokens),
+                json=self._body(system_prompt, messages, True, max_tokens, reasoning_budget),
                 headers=self._headers(), timeout=self.timeout_s,
             ) as response:
                 response.raise_for_status()
