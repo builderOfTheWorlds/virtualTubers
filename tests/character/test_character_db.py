@@ -47,30 +47,34 @@ def _tables(connection):
 def test_migrate_empty_db_applies_001_and_creates_all_tables(conn):
     assert _tables(conn) == set()
     applied = db.migrate(conn)
-    assert applied == ["001_init"]
+    # relaxed 2026-10-07 (user-approved): later numbered migrations are expected (P2.7 002_gm_blocks)
+    assert applied[0] == "001_init"
+    assert applied == sorted(p.stem for p in db.SQL_DIR.glob("[0-9][0-9][0-9]_*.sql"))
     assert _tables(conn) == V4_TABLES | {"schema_migrations"}
     assert len(V4_TABLES) == 23
     with conn.cursor() as cur:
         cur.execute("SELECT version, sha256, applied_at FROM schema_migrations")
         rows = cur.fetchall()
-    assert [row[0] for row in rows] == ["001_init"]
+    assert [row[0] for row in rows] == applied
     assert len(rows[0][1]) == 64 and rows[0][2] is not None
 
 
 # T04.2
 def test_second_migrate_applies_nothing(conn):
-    assert db.migrate(conn) == ["001_init"]
+    # relaxed 2026-10-07 (user-approved): later numbered migrations are expected (P2.7 002_gm_blocks)
+    first = db.migrate(conn)
+    assert first[0] == "001_init"
     assert db.migrate(conn) == []
     with conn.cursor() as cur:
         cur.execute("SELECT count(*) FROM schema_migrations")
-        assert cur.fetchone()[0] == 1
+        assert cur.fetchone()[0] == len(first)
 
 
 # T04.3
 def test_changed_checksum_raises_migration_error(conn, tmp_path):
     sql_dir = tmp_path / "sql"
     shutil.copytree(db.SQL_DIR, sql_dir)
-    assert db.migrate(conn, sql_dir=sql_dir) == ["001_init"]
+    assert db.migrate(conn, sql_dir=sql_dir)[0] == "001_init"  # relaxed 2026-10-07 (P2.7)
     migration = sql_dir / "001_init.sql"
     migration.write_text(migration.read_text(encoding="utf-8") + "\n-- edited after apply\n",
                          encoding="utf-8")

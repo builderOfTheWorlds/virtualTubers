@@ -226,11 +226,17 @@ def _read_yaml(path: Path):
         raise ProfileError([f"{path.name}: {exc}"]) from exc
 
 
-def read_profile(path, cast_dir=None, accent_color=None) -> OfficeProfile:
-    """Parse and validate one profile file; ProfileError lists every problem."""
+def read_profile(path, cast_dir=None, accent_color=None, validator=None,
+                 transform=None) -> OfficeProfile:
+    """Parse and validate one profile file; ProfileError lists every problem.
+
+    `validator(doc, expected_id) -> list[str]` defaults to validate_profile
+    (office). `transform(doc) -> doc` may reshape the stored profile after
+    validation (the table packs strip GM-only blocks; see pack_profiles).
+    """
     path = Path(path)
     doc = _read_yaml(path)
-    errors = validate_profile(doc, expected_id=path.stem)
+    errors = (validator or validate_profile)(doc, expected_id=path.stem)
     if errors:
         log.error("office profile invalid file=%s errors=%d", path.name, len(errors))
         raise ProfileError([f"{path.name}: {error}" for error in errors])
@@ -239,6 +245,8 @@ def read_profile(path, cast_dir=None, accent_color=None) -> OfficeProfile:
         cast_path = Path(cast_dir) / path.name
         if cast_path.is_file():
             cast_doc = _read_yaml(cast_path)
+    if transform is not None:
+        doc = transform(doc)
     identity, backstory = doc["identity"], doc["backstory"]
     record = OfficeProfile(
         slug=doc["id"],
@@ -259,7 +267,8 @@ def read_profile(path, cast_dir=None, accent_color=None) -> OfficeProfile:
     return record
 
 
-def read_profiles(profiles_dir, cast_dir=None, accent_colors=None) -> list[OfficeProfile]:
+def read_profiles(profiles_dir, cast_dir=None, accent_colors=None, validator=None,
+                  transform=None) -> list[OfficeProfile]:
     """Read every profile; collect the errors of ALL bad files, then raise."""
     files = profile_files(profiles_dir)
     if not files:
@@ -268,7 +277,8 @@ def read_profiles(profiles_dir, cast_dir=None, accent_colors=None) -> list[Offic
     records, errors = [], []
     for path in files:
         try:
-            records.append(read_profile(path, cast_dir, (accent_colors or {}).get(path.stem)))
+            records.append(read_profile(path, cast_dir, (accent_colors or {}).get(path.stem),
+                                        validator=validator, transform=transform))
         except ProfileError as exc:
             errors.extend(exc.errors)
     if errors:
@@ -306,9 +316,14 @@ def _decide(conn, record: OfficeProfile, activate: bool):
 
 
 def load_profiles(conn, profiles_dir, cast_dir=None, *, campaign, accent_colors=None,
-                  dry_run=False, activate=True) -> LoadReport:
-    """Load the office profiles into the database (never commits)."""
-    records = read_profiles(profiles_dir, cast_dir, accent_colors)
+                  dry_run=False, activate=True, records=None) -> LoadReport:
+    """Load the office profiles into the database (never commits).
+
+    `records` (already read and validated, e.g. by pack_profiles) skips the
+    office reader; the write path is identical for every pack.
+    """
+    if records is None:
+        records = read_profiles(profiles_dir, cast_dir, accent_colors)
     actions: dict[str, str] = {}
     versions: dict[str, int] = {}
     for record in records:

@@ -134,3 +134,35 @@ def active_baseline(conn, slug) -> dict | None:
         row = _row(cur)
     log.debug("active_baseline slug=%s found=%s", slug, row is not None)
     return row
+
+
+def set_gm_blocks(conn, character_id, version, blocks) -> None:
+    """Store the GM-only profile blocks on one baseline (002_gm_blocks, U7).
+
+    `blocks` is a mapping {block name: content}; any block name is allowed
+    (adding a block is data, not code). LookupError if the baseline does not
+    exist. Player baselines keep NULL. Never logs the content.
+    """
+    if not isinstance(blocks, dict):
+        raise TypeError("gm_blocks must be a mapping of block name -> content")
+    with conn.cursor() as cur:
+        cur.execute("UPDATE character_baselines SET gm_blocks = %s "
+                    "WHERE character_id = %s AND version = %s",
+                    (Json(blocks), character_id, version))
+        updated = cur.rowcount
+    if updated != 1:
+        log.error("set_gm_blocks: no baseline version=%s for character_id=%s", version, character_id)
+        raise LookupError(f"no baseline version {version} for character {character_id!r}")
+    log.debug("set_gm_blocks character_id=%s version=%s blocks=%s",
+              character_id, version, sorted(blocks))
+
+
+def gm_blocks(conn, slug) -> dict | None:
+    """The active baseline's gm_blocks for `slug`, or None (players, unknown slug)."""
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT b.gm_blocks FROM characters c JOIN character_baselines b "
+            "ON b.character_id = c.id AND b.version = c.active_baseline_version "
+            "WHERE c.slug = %s", (slug,))
+        row = cur.fetchone()
+    return row[0] if row else None
