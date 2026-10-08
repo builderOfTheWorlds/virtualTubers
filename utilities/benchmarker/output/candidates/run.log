@@ -445,3 +445,10 @@
 13:23:58 [del gemma-4-26b-a4b-fp8] DELETED 1 free=224GB
 13:23:58 === bench_candidates done (vllm-agents left DOWN)
 13:25:14 === bench_candidates start: ['gpt-oss-20b'] free=224GB
+13:27:10 [dl gpt-oss-20b] ok in 116s free=211GB
+13:30:11 [up gpt-oss-20b] backend=auto ready=True (180s)
+(EngineCore pid=244) INFO 10-08 17:29:00 [model_runner.py:428] Model loading took 13.8 GiB memory and 82.502764 seconds
+(EngineCore pid=244) INFO 10-08 17:29:45 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5309 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5691. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=244) INFO 10-08 17:29:45 [kv_cache_utils.py:2395] GPU KV cache size: 1,862,109 tokens, Maximum concurrency for 32,768 tokens per request: 56.83x
+
+13:30:13 [smoke gpt-oss-20b] {'wall_s': 2.4, 'ttft_s': 1.18, 'approx_tok_s': 16.0, 'reasoning_chars': 81, 'content': '"Whoa, I can almost hear the music of that door—hope it doesn’t sing us into trouble, o‑oh!"', 'split_ok': True}
