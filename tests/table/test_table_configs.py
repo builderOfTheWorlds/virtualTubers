@@ -87,3 +87,10 @@ def test_roundtable_has_live_feed_from_the_arbiter_and_cast_voices(tmp_path):
     assert rt["agent"]["live"]["enabled"] is True and rt["agent"]["live"]["table_arbiter"] == "tuber_0"
     assert rt["voice"]["speakers"]["tuber_1"]["model_path"].endswith("ryan-high.onnx")
     assert rt["voice"]["speaker_names"]["tuber_1"] == "Chadwick"
+
+
+
+def test_gm_does_not_publish_its_reasoning(tmp_path):
+    _, cfgs = _built(tmp_path)
+    assert cfgs["gm"]["agent"]["publish_thinking"] is False      # truth lives in the GM context
+    assert cfgs["chadwick"]["agent"].get("publish_thinking", True) is True   # U4: seats stream theirs

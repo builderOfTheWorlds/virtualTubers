@@ -269,3 +269,25 @@ def test_check_rejects_a_repeat_of_a_committed_line():
     check = gm.build_check(gm_cfg()["table"])
     assert check("tuber_1", "Stand back now, all of you.",
                  prior=["Stand back now, all of you."]).code == "repeats"
+
+
+
+# --- 2026-10-08: GM-output leak check (GLM pasted its truth block into the narration) ---
+
+@pytest.mark.parametrize("text", [
+    "GM block: truth Ten thousand years ago the Age of War burned the world's magic.",
+    "# GM block: secrets\n- Vigil remembers four cribs.",
+    "The steward smiles. Leto fathered all four of you.",
+])
+def test_direct_rejects_gm_only_text(text):
+    cfg = gm_cfg(gm_forbidden_phrases=["Leto fathered", "four cribs"])["table"]
+    port = gm.LLMGM(FakeLLM([text]), lambda c: "CTX", seat_names=NAMES, budgets=cfg)
+    with pytest.raises(ValueError):
+        port.direct(dict(CONTRACT), [], 1)
+
+
+def test_direct_allows_ordinary_narration_with_configured_phrases():
+    cfg = gm_cfg(gm_forbidden_phrases=["Leto fathered"])["table"]
+    port = gm.LLMGM(FakeLLM(["The steward bows. The Duke awaits."]), lambda c: "CTX",
+                    seat_names=NAMES, budgets=cfg)
+    assert port.direct(dict(CONTRACT), [], 1).text == "The steward bows. The Duke awaits."

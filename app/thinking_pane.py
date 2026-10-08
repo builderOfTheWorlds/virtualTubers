@@ -32,7 +32,9 @@ from tail_bus import connect_with_retry
 
 logging.basicConfig(
     stream=sys.stderr,
-    level=os.environ.get("THINKING_PANE_LOG_LEVEL", "INFO"),
+    # WARNING by default: at INFO the Kafka client's metadata chatter filled the
+    # on-air pane (the GM channel showed only log lines, 2026-10-08).
+    level=os.environ.get("THINKING_PANE_LOG_LEVEL", "WARNING"),
     format="%(asctime)s %(levelname)s thinking_pane %(message)s",
 )
 log = logging.getLogger("thinking_pane")

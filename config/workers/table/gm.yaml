@@ -21,6 +21,13 @@ agent:
     pack_dir: /data/campaigns/ashiorid
     run_id: ashiorid_1_20260913_180158_ce8d
     contracts_fixture: /data/table/fixtures/ashiorid_1_20260913_180158_ce8d.json
+    gm_forbidden_phrases:
+    - Begene
+    - four cribs
+    - half-sibling
+    - half-brother
+    - half-sister
+    - fathered all
     only_with_active_players: true
     start_index: 0
     max_scenes: 3
@@ -68,6 +75,7 @@ agent:
     overrule:
       max_tokens: 160
       reasoning_budget: 48
+  publish_thinking: false
 llm:
   provider: vllm
   model: table-agents

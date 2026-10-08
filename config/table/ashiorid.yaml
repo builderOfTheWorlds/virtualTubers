@@ -32,6 +32,9 @@ max_scenes: 3
 think_s: 60
 speak_s: 45
 gm_blocks_order: [truth, secrets, unlocks, table_rules, style]
+# GM-only twist phrases the GM's public narration may never contain (LLMGM.direct rejects
+# and the arbiter retries). Arc-introduced names (Grovley, Malmont) are NOT listed.
+gm_forbidden_phrases: [Begene, four cribs, half-sibling, half-brother, half-sister, fathered all]
 
 # Per-call budgets (W0, .claude/prompts/benchmark_methodology_dnd_agents.md "W0 on vLLM")
 think:      {max_tokens: 1024, reasoning_budget: 256}

@@ -410,3 +410,22 @@ def test_native_error_flushes_buffered_reasoning_and_records_failure(tmp_path):
     assert "".join(m["payload"]["text"] for m in _thinking(producer)) == "ab"
     assert client.metrics.failed_calls == 1
     assert (tmp_path / "metrics_tuber_1.json").exists()
+
+
+
+# --- 2026-10-08: publish_thinking=False (the GM's reasoning holds GM-only truth) ---
+
+def test_native_publish_thinking_false_streams_nothing(tmp_path):
+    producer = FakeProducer()
+    client = InstrumentedLLMClient(FakeNativeLLM([(0.0, "the truth is Leto")]), producer, "tuber_0",
+                                   runtime_dir=str(tmp_path), publish_thinking=False)
+    assert client.complete("s", []) == "Spoken line."
+    assert _thinking(producer) == []
+
+
+def test_prompted_publish_thinking_false_streams_nothing(tmp_path):
+    producer = FakeProducer()
+    client = InstrumentedLLMClient(FakeLLM(response="<thinking>secret</thinking>Line."), producer,
+                                   "tuber_0", runtime_dir=str(tmp_path), publish_thinking=False)
+    assert client.complete("s", []) == "Line."
+    assert producer.sent == []

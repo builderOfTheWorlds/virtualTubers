@@ -235,13 +235,18 @@ class InstrumentedLLMClient:
     """
 
     def __init__(self, wrapped_client, producer, worker_id, metrics=None, runtime_dir=None,
-                 clock=time.monotonic, thinking_interval_s=THINKING_STREAM_INTERVAL_S):
+                 clock=time.monotonic, thinking_interval_s=THINKING_STREAM_INTERVAL_S,
+                 publish_thinking=True):
         self._wrapped = wrapped_client
         self._producer = producer
         self.worker_id = worker_id
         self.metrics = metrics or AgentMetrics(worker_id, runtime_dir=runtime_dir)
         self._clock = clock
         self._thinking_interval_s = thinking_interval_s
+        # agent.publish_thinking: false keeps this worker's reasoning off the bus
+        # (and so off its public Thinking pane). The table GM sets it: its reasoning
+        # works from GM-only truth (2026-10-08 live test).
+        self.publish_thinking = publish_thinking
 
     @property
     def native_reasoning(self):
@@ -271,6 +276,8 @@ class InstrumentedLLMClient:
                                      on_content, max_tokens, reasoning_budget)
 
     def _publish_thinking(self, payload):
+        if not self.publish_thinking:
+            return
         self._producer.send(build_message(
             self.worker_id, "broadcast", "agent_thinking", payload,
         ))

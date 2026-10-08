@@ -163,6 +163,12 @@ class LLMGM:
             max_tokens=max_tokens, reasoning_budget=reasoning)
         text = (content or "").strip()
         text = _GM_LABEL_RE.sub("", text, count=1).strip()
+        lowered = text.casefold()
+        leaked = [p for p in self._budgets.get("gm_forbidden_phrases", ()) if str(p).casefold() in lowered]
+        if re.search(r"gm block", lowered) or re.search(r"^\s*#", text, re.MULTILINE) or leaked:
+            # 2026-10-08: GLM-4.7-Flash pasted its "GM block: truth" context into the
+            # public narration. GM-only text never reaches the table; the arbiter retries.
+            raise ValueError("direction contains GM-only context")
         copied = commit_check.repeats_prior(text, [e.get("text") for e in transcript or []])
         if copied is not None:
             # 2026-10-08: the MoE GM copied a player's line as its direction. Raising

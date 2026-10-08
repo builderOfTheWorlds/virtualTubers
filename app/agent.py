@@ -188,7 +188,8 @@ def main():
     metrics_runtime_dir = resolve_runtime_dir()
     shared_metrics = AgentMetrics(worker_id, runtime_dir=metrics_runtime_dir)
     producer = MetricsProducerWrapper(producer, shared_metrics)
-    llm_client = InstrumentedLLMClient(llm_client, producer, worker_id, metrics=shared_metrics)
+    llm_client = InstrumentedLLMClient(llm_client, producer, worker_id, metrics=shared_metrics,
+                                       publish_thinking=agent_config.get("publish_thinking", True))
 
     i = 0
     while True:
