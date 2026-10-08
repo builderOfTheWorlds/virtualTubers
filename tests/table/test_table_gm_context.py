@@ -100,3 +100,9 @@ def test_pure_no_mutation():
     blocks = copy.deepcopy(BLOCKS)
     build(gm_blocks=blocks)
     assert blocks == BLOCKS
+
+
+def test_max_chars_without_sheets_raises_value_error_not_zero_division():
+    # added by the orchestrator in review of the generated module
+    with pytest.raises(ValueError):
+        build(player_sheets={}, max_chars=60)
