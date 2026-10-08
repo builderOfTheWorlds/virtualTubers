@@ -1,0 +1,134 @@
+{
+ "name": "gpt-oss-20b",
+ "repo": "openai/gpt-oss-20b",
+ "status": "slice did not resolve",
+ "started": "12:13:10",
+ "backend": "auto",
+ "startup_log": "(EngineCore pid=249) INFO 10-08 16:15:01 [model_runner.py:428] Model loading took 13.8 GiB memory and 77.028006 seconds\n(EngineCore pid=249) INFO 10-08 16:15:46 [kv_cache_utils.py:2395] GPU KV cache size: 1,968,672 tokens, Maximum concurrency for 32,768 tokens per request: 60.08x\n",
+ "load": "13.8 GiB",
+ "smoke": {
+  "wall_s": 10.2,
+  "ttft_s": 1.13,
+  "approx_tok_s": 25.8,
+  "reasoning_chars": 1147,
+  "content": "Shh! Listen\u2014this vault door groans like a sleepy dragon\u2019s sigh. I hope the treasure is worth the tremors!",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 47.7,
+   "gm_direction_s": 9.1,
+   "think_pass_wall_s": 17.9,
+   "think_p95_s": 17.9,
+   "speak_p50_s": 3.6,
+   "speak_max_s": 3.6,
+   "adjudication_s": null,
+   "reasoning_tokens": 2475,
+   "content_tokens": 238,
+   "n_failed": 4,
+   "n_budget_capped": 4,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 59.9,
+   "gm_direction_s": 16.3,
+   "think_pass_wall_s": 12.5,
+   "think_p95_s": 12.5,
+   "speak_p50_s": null,
+   "speak_max_s": null,
+   "adjudication_s": 5.0,
+   "reasoning_tokens": 3637,
+   "content_tokens": 373,
+   "n_failed": 7,
+   "n_budget_capped": 7,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 48.2,
+   "gm_direction_s": 10.4,
+   "think_pass_wall_s": 17.3,
+   "think_p95_s": 17.3,
+   "speak_p50_s": null,
+   "speak_max_s": null,
+   "adjudication_s": null,
+   "reasoning_tokens": 2631,
+   "content_tokens": 210,
+   "n_failed": 5,
+   "n_budget_capped": 5,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 78.8,
+   "gm_direction_s": 19.8,
+   "think_pass_wall_s": 28.3,
+   "think_p95_s": 28.3,
+   "speak_p50_s": 2.9,
+   "speak_max_s": 2.9,
+   "adjudication_s": null,
+   "reasoning_tokens": 5993,
+   "content_tokens": 388,
+   "n_failed": 7,
+   "n_budget_capped": 7,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 48.0,
+  "speak_p50_s": 3.6,
+  "think_pass_s": 17.6,
+  "gm_direction_s": 9.8,
+  "failed": 9,
+  "capped": 9
+ },
+ "round_n7": {
+  "wall_s": 69.3,
+  "speak_p50_s": 2.9,
+  "think_pass_s": 20.4,
+  "gm_direction_s": 18.1,
+  "failed": 14,
+  "capped": 14
+ },
+ "slice": {
+  "rc": 1,
+  "warnings": 5,
+  "wall_s": 1500.0,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_124516.json",
+  "scenes_resolved": 0,
+  "rounds": 0,
+  "retakes": {
+   "no_take": 2
+  },
+  "overrules": 0,
+  "stuck": 1,
+  "gm_failures": 2,
+  "lines": [
+   [
+    "scene_direction",
+    "The heavy oak doors groan open on Leto's manor. A corridor of polished stone stretches ahead, lined with tapestries of fading banners. The air smells of pine resin and old paper. Chadwick steps forward, his boots making measured thuds. Leena follows, her eyes wide as she takes in the marble arches. Vigil strides beside him, shoulders squared. Sodacan Bob keeps pace, humming softly. They pause at a round table set with crystal goblets. A faint hum vibrates through the floorboards, almost imperceptible. Each feels a sudden, shared pulse beneath their feet, as if the manor is breathing with them. The room waits, light flickering across the walls. The party begins."
+   ],
+   [
+    "character_reply",
+    ""
+   ],
+   [
+    "character_reply",
+    ""
+   ],
+   [
+    "character_reply",
+    ""
+   ]
+  ],
+  "verdicts": []
+ },
+ "mem_min_gib": 36.3,
+ "elapsed_min": 32.1
+}

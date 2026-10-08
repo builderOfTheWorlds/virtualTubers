@@ -1,0 +1,14 @@
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 34.8, "gm_direction_s": 13.5, "think_pass_wall_s": 15.5, "think_p95_s": 15.5, "speak_p50_s": 1.1, "speak_max_s": 1.6, "adjudication_s": 1.3, "reasoning_tokens": 1446, "content_tokens": 796, "n_failed": 0, "n_budget_capped": 0, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 37.0, "gm_direction_s": 13.1, "think_pass_wall_s": 16.8, "think_p95_s": 16.8, "speak_p50_s": 0.8, "speak_max_s": 1.0, "adjudication_s": 1.4, "reasoning_tokens": 2264, "content_tokens": 819, "n_failed": 0, "n_budget_capped": 0, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 29.1, "gm_direction_s": 12.2, "think_pass_wall_s": 12.2, "think_p95_s": 12.2, "speak_p50_s": 0.8, "speak_max_s": 1.0, "adjudication_s": 1.4, "reasoning_tokens": 1451, "content_tokens": 591, "n_failed": 0, "n_budget_capped": 0, "repeat": 1}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 31.6, "gm_direction_s": 10.5, "think_pass_wall_s": 15.3, "think_p95_s": 15.3, "speak_p50_s": 0.7, "speak_max_s": 1.0, "adjudication_s": 0.9, "reasoning_tokens": 2264, "content_tokens": 584, "n_failed": 0, "n_budget_capped": 0, "repeat": 1}
+# table_round: table-agents
+
+| shape | n_seats | wall_s | gm_direction_s | think_pass_wall_s | think_p95_s | speak_p50_s | speak_max_s | adjudication_s | reasoning_tokens | n_failed | n_budget_capped |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| two_pass | 4 | 34.8 | 13.5 | 15.5 | 15.5 | 1.1 | 1.6 | 1.3 | 1446 | 0 | 0 |
+| two_pass | 7 | 37.0 | 13.1 | 16.8 | 16.8 | 0.8 | 1.0 | 1.4 | 2264 | 0 | 0 |
+| two_pass | 4 | 29.1 | 12.2 | 12.2 | 12.2 | 0.8 | 1.0 | 1.4 | 1451 | 0 | 0 |
+| two_pass | 7 | 31.6 | 10.5 | 15.3 | 15.3 | 0.7 | 1.0 | 0.9 | 2264 | 0 | 0 |
+
+[table_round] wrote /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_round_cand_nemotron-3.5-lightning-30b-a3b-nvfp4_20261008_103135.json

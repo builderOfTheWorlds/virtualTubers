@@ -1,0 +1,208 @@
+{
+ "name": "qwen3-30b-a3b-thinking-2507-fp8",
+ "repo": "Qwen/Qwen3-30B-A3B-Thinking-2507-FP8",
+ "status": "ok",
+ "started": "11:59:33",
+ "backend": "triton",
+ "startup_log": "(EngineCore pid=234) INFO 10-08 16:00:01 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod\n(EngineCore pid=234) INFO 10-08 16:03:17 [model_runner.py:428] Model loading took 29.1 GiB memory and 196.194290 seconds\n(EngineCore pid=234) INFO 10-08 16:04:46 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5410 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5590. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.\n(EngineCore pid=234) INFO 10-08 16:04:46 [kv_cache_utils.py:2395] GPU KV cache size: 394,016 tokens, Maximum concurrency for 32,768 tokens per request: 12.02x\n",
+ "load": "29.1 GiB",
+ "smoke": {
+  "wall_s": 6.1,
+  "ttft_s": 0.42,
+  "approx_tok_s": 42.8,
+  "reasoning_chars": 953,
+  "content": "*gulp* \"Uh... maybe we should sing 'Hush Little Halfling' before we step in? Just in case?\"",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 38.6,
+   "gm_direction_s": 14.5,
+   "think_pass_wall_s": 14.0,
+   "think_p95_s": 14.0,
+   "speak_p50_s": 1.8,
+   "speak_max_s": 2.2,
+   "adjudication_s": 2.4,
+   "reasoning_tokens": 1799,
+   "content_tokens": 379,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 43.7,
+   "gm_direction_s": 14.4,
+   "think_pass_wall_s": 13.7,
+   "think_p95_s": 13.7,
+   "speak_p50_s": 1.8,
+   "speak_max_s": 2.0,
+   "adjudication_s": 2.4,
+   "reasoning_tokens": 2775,
+   "content_tokens": 545,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 35.6,
+   "gm_direction_s": 13.4,
+   "think_pass_wall_s": 12.7,
+   "think_p95_s": 12.7,
+   "speak_p50_s": 1.8,
+   "speak_max_s": 2.0,
+   "adjudication_s": 2.2,
+   "reasoning_tokens": 1802,
+   "content_tokens": 419,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 40.6,
+   "gm_direction_s": 11.6,
+   "think_pass_wall_s": 13.8,
+   "think_p95_s": 13.8,
+   "speak_p50_s": 1.8,
+   "speak_max_s": 2.0,
+   "adjudication_s": 2.2,
+   "reasoning_tokens": 2808,
+   "content_tokens": 512,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 37.1,
+  "speak_p50_s": 1.8,
+  "think_pass_s": 13.3,
+  "gm_direction_s": 13.9,
+  "failed": 0,
+  "capped": 0
+ },
+ "round_n7": {
+  "wall_s": 42.2,
+  "speak_p50_s": 1.8,
+  "think_pass_s": 13.8,
+  "gm_direction_s": 13.0,
+  "failed": 0,
+  "capped": 0
+ },
+ "slice": {
+  "rc": 0,
+  "warnings": 0,
+  "wall_s": 175.8,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_121047.json",
+  "scenes_resolved": 2,
+  "rounds": 8,
+  "retakes": {
+   "repeats": 3,
+   "stage_direction": 1
+  },
+  "overrules": 0,
+  "stuck": 0,
+  "gm_failures": 0,
+  "lines": [
+   [
+    "scene_direction",
+    "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows."
+   ],
+   [
+    "character_reply",
+    "*draws his sword* \n\nThis is the way."
+   ],
+   [
+    "character_reply",
+    "This is the way."
+   ],
+   [
+    "scene_direction",
+    "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud."
+   ],
+   [
+    "character_reply",
+    "This is the way.  \nAsk them plainly, or I will."
+   ],
+   [
+    "scene_direction",
+    "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again."
+   ],
+   [
+    "character_reply",
+    "This is the way.  \nAsk them plainly, or I will."
+   ],
+   [
+    "character_reply",
+    "This way is clear. Draw your blades."
+   ],
+   [
+    "scene_direction",
+    "The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows\u2014too many. A blade slices the air near Chadwick's ear. Leena gasps. Vigil curses. Bob's hat lies forgotten on the marble. The clock chimes once. Then silence."
+   ],
+   [
+    "character_reply",
+    "This is the way."
+   ],
+   [
+    "character_reply",
+    "This is the way. They're here."
+   ],
+   [
+    "scene_direction",
+    "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air."
+   ],
+   [
+    "character_reply",
+    "This is the way. Ask them plainly, or I will."
+   ],
+   [
+    "scene_direction",
+    "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs."
+   ],
+   [
+    "character_reply",
+    "This is the way. Ask them plainly, or I will."
+   ],
+   [
+    "character_reply",
+    "This is the way. The duke sent you. Say it plainly."
+   ]
+  ],
+  "verdicts": [
+   [
+    "pass",
+    "Chadwick's line matches his character: blunt, authoritative, and in line with his 'this is the way' tic. Scene setting is concrete (marble f"
+   ],
+   [
+    "pass",
+    "Chadwick's line follows his established style: short, blunt, authoritative. He addresses the shadow without hesitation, fulfilling his role "
+   ],
+   [
+    "pass",
+    "Chadwick's line follows character voice (short, directive) and advances scene contract (confrontation). No ruling needed as he states action"
+   ],
+   [
+    "pass",
+    "Chadwick's line 'This is the way. They're here.' matches his established voice and character traits (blunt, oath-focused, leading in crisis)"
+   ],
+   [
+    "pass",
+    "Chadwick states his stance clearly per character traits. No action taken, only dialogue."
+   ],
+   [
+    "pass",
+    "Chadwick's line matches his established speech pattern (short, blunt, oath-driven). He correctly identifies the host's messenger without hes"
+   ]
+  ]
+ },
+ "mem_min_gib": 37.7,
+ "elapsed_min": 11.2
+}

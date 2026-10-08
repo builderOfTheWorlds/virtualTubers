@@ -1,0 +1,30 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=1500.0s messages=12 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_124516.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+      9.8s scene_direction  tuber_0->broadcast r1.directing.gm  The heavy oak doors groan open on Leto's manor. A corridor of polished stone stretches ahead, lined with tapestries of fading banners. The air smells 
+      9.8s table_line       tuber_0->roundtable   The heavy oak doors groan open on Leto's manor. A corridor of polished stone stretches ahead, lined with tapestries of fading banners. The air smells 
+      9.8s think_request    tuber_0->broadcast r1.think.gm  
+     16.8s think_done       tuber_1->tuber_0   r1.think.gm  
+     16.8s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     20.6s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  llm_error: LLMError
+     20.6s retake           tuber_0->tuber_1   r1.speak.tuber_1  no_take: llm_error: LLMError
+     24.3s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  llm_error: LLMError
+     24.3s retake           tuber_0->tuber_1   r1.speak.tuber_1  no_take: llm_error: LLMError
+     28.0s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  llm_error: LLMError
+     35.8s scene_stuck      tuber_0->operator  r1.speak.gm  gm overrule failed 2x: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=705)
+2026-10-08 12:20:16,550 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 12:20:16,572 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 12:20:16,626 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 12:20:16,645 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:26,488 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:33,459 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:37,278 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1 round=1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=666)
+2026-10-08 12:20:37,283 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:40,951 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1 round=1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=681)
+2026-10-08 12:20:40,958 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:44,590 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1 round=1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=667)
+2026-10-08 12:20:44,597 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:48,681 WARNING turns arbiter GM overrule failed (1) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=723)
+2026-10-08 12:20:48,739 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:20:52,401 WARNING turns arbiter GM overrule failed (2) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=705)

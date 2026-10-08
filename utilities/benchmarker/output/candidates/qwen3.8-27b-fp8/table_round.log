@@ -1,0 +1,14 @@
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 149.8, "gm_direction_s": 77.6, "think_pass_wall_s": 48.2, "think_p95_s": 48.2, "speak_p50_s": 3.2, "speak_max_s": 5.7, "adjudication_s": 9.0, "reasoning_tokens": 1475, "content_tokens": 426, "n_failed": 0, "n_budget_capped": 0, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 169.5, "gm_direction_s": 78.0, "think_pass_wall_s": 50.3, "think_p95_s": 50.3, "speak_p50_s": 4.8, "speak_max_s": 7.7, "adjudication_s": 5.0, "reasoning_tokens": 2284, "content_tokens": 670, "n_failed": 0, "n_budget_capped": 0, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 135.2, "gm_direction_s": 64.5, "think_pass_wall_s": 46.3, "think_p95_s": 46.3, "speak_p50_s": 4.8, "speak_max_s": 5.4, "adjudication_s": 5.4, "reasoning_tokens": 1482, "content_tokens": 398, "n_failed": 0, "n_budget_capped": 0, "repeat": 1}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 158.4, "gm_direction_s": 71.2, "think_pass_wall_s": 47.5, "think_p95_s": 47.5, "speak_p50_s": 5.6, "speak_max_s": 7.1, "adjudication_s": 6.1, "reasoning_tokens": 2281, "content_tokens": 658, "n_failed": 0, "n_budget_capped": 0, "repeat": 1}
+# table_round: table-agents
+
+| shape | n_seats | wall_s | gm_direction_s | think_pass_wall_s | think_p95_s | speak_p50_s | speak_max_s | adjudication_s | reasoning_tokens | n_failed | n_budget_capped |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| two_pass | 4 | 149.8 | 77.6 | 48.2 | 48.2 | 3.2 | 5.7 | 9.0 | 1475 | 0 | 0 |
+| two_pass | 7 | 169.5 | 78.0 | 50.3 | 50.3 | 4.8 | 7.7 | 5.0 | 2284 | 0 | 0 |
+| two_pass | 4 | 135.2 | 64.5 | 46.3 | 46.3 | 4.8 | 5.4 | 5.4 | 1482 | 0 | 0 |
+| two_pass | 7 | 158.4 | 71.2 | 47.5 | 47.5 | 5.6 | 7.1 | 6.1 | 2281 | 0 | 0 |
+
+[table_round] wrote /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_round_cand_qwen3.8-27b-fp8_20261008_112419.json

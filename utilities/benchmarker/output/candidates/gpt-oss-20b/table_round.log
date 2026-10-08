@@ -1,0 +1,14 @@
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 47.7, "gm_direction_s": 9.1, "think_pass_wall_s": 17.9, "think_p95_s": 17.9, "speak_p50_s": 3.6, "speak_max_s": 3.6, "adjudication_s": null, "reasoning_tokens": 2475, "content_tokens": 238, "n_failed": 4, "n_budget_capped": 4, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 59.9, "gm_direction_s": 16.3, "think_pass_wall_s": 12.5, "think_p95_s": 12.5, "speak_p50_s": null, "speak_max_s": null, "adjudication_s": 5.0, "reasoning_tokens": 3637, "content_tokens": 373, "n_failed": 7, "n_budget_capped": 7, "repeat": 0}
+[table_round] {"shape": "two_pass", "n_seats": 4, "wall_s": 48.2, "gm_direction_s": 10.4, "think_pass_wall_s": 17.3, "think_p95_s": 17.3, "speak_p50_s": null, "speak_max_s": null, "adjudication_s": null, "reasoning_tokens": 2631, "content_tokens": 210, "n_failed": 5, "n_budget_capped": 5, "repeat": 1}
+[table_round] {"shape": "two_pass", "n_seats": 7, "wall_s": 78.8, "gm_direction_s": 19.8, "think_pass_wall_s": 28.3, "think_p95_s": 28.3, "speak_p50_s": 2.9, "speak_max_s": 2.9, "adjudication_s": null, "reasoning_tokens": 5993, "content_tokens": 388, "n_failed": 7, "n_budget_capped": 7, "repeat": 1}
+# table_round: table-agents
+
+| shape | n_seats | wall_s | gm_direction_s | think_pass_wall_s | think_p95_s | speak_p50_s | speak_max_s | adjudication_s | reasoning_tokens | n_failed | n_budget_capped |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| two_pass | 4 | 47.7 | 9.1 | 17.9 | 17.9 | 3.6 | 3.6 | None | 2475 | 4 | 4 |
+| two_pass | 7 | 59.9 | 16.3 | 12.5 | 12.5 | None | None | 5.0 | 3637 | 7 | 7 |
+| two_pass | 4 | 48.2 | 10.4 | 17.3 | 17.3 | None | None | None | 2631 | 5 | 5 |
+| two_pass | 7 | 78.8 | 19.8 | 28.3 | 28.3 | 2.9 | 2.9 | None | 5993 | 7 | 7 |
+
+[table_round] wrote /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_round_cand_gpt-oss-20b_20261008_121621.json

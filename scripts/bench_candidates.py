@@ -41,8 +41,10 @@ BASE = "http://localhost:8092"
 CANDIDATES = [
     dict(name="qwen3.6-35b-a3b-fp8", repo="Qwen/Qwen3.6-35B-A3B-FP8", gb=37.5, parser="qwen3",
          backends=["triton", "auto"], delete=True),
+    # harmony reasoning ignores thinking_token_budget / enable_thinking: use reasoning_effort
     dict(name="gpt-oss-20b", repo="openai/gpt-oss-20b", gb=13.8, parser="openai_gptoss",
-         backends=["auto", "triton", "marlin"], exclude=["original/*", "metal/*"], delete=True),
+         backends=["auto", "triton", "marlin"], exclude=["original/*", "metal/*"], delete=True,
+         extra_body={"reasoning_effort": "low"}),
     # deepseek_r1 filed the whole answer as reasoning (no </think> -> empty content); qwen3
     # treats a missing tag as content (2026-10-08 first run).
     dict(name="hermes-4-14b-fp8", repo="NousResearch/Hermes-4-14B-FP8", gb=16.3, parser="qwen3",
@@ -164,12 +166,13 @@ def start_model(c, fh):
 
 # ── measurements ─────────────────────────────────────────────────────────────
 
-def smoke():
+def smoke(extra=None):
     key = api_key()
     body = {"model": "table-agents", "max_tokens": 512, "stream": True, "temperature": 0.6,
             "thinking_token_budget": 256,
             "messages": [{"role": "system", "content": "You are Chadwick, a nervous halfling bard."},
                          {"role": "user", "content": "GM: The vault door groans open. One spoken line, max 25 words."}]}
+    body.update(extra or {})
     req = urllib.request.Request(f"{BASE}/v1/chat/completions", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
     t0 = time.time()
@@ -206,7 +209,8 @@ def run_table_round(c, d, fh):
     cmd = (f"{PY} utilities/benchmarker/lib/table_round.py --base-url {BASE} --model table-agents "
            f"--env-file {DEPLOY}/.env --seats 4,7 --shapes two_pass --repeats 2 "
            "--budget-reasoning-gm 384 --budget-reasoning-think 256 --budget-reasoning-speak 48 "
-           f"--budget-reasoning-seat 256 --budget-reasoning-adjudication 64 --tag cand_{c['name']}")
+           f"--budget-reasoning-seat 256 --budget-reasoning-adjudication 64 --tag cand_{c['name']}"
+           + (f" --extra-body '{json.dumps(c['extra_body'])}'" if c.get("extra_body") else ""))
     rc, out = sh(cmd, timeout=3600, cwd=REPO)
     (d / "table_round.log").write_text(out)
     rows = [json.loads(m) for m in re.findall(r"\[table_round\] (\{.*\})", out)]
@@ -215,7 +219,8 @@ def run_table_round(c, d, fh):
 
 
 def run_slice(c, d, fh):
-    rc, out = sh(f"{PY} scripts/table_slice_local.py --scenes 2 --retake-once --timeout 1500",
+    extra = f" --extra-body '{json.dumps(c['extra_body'])}'" if c.get("extra_body") else ""
+    rc, out = sh(f"{PY} scripts/table_slice_local.py --scenes 2 --retake-once --timeout 1500{extra}",
                  timeout=1800, cwd=REPO)
     (d / "slice.log").write_text(out)
     m = re.search(r"-> (\S+table_slice_\S+\.json)", out)
@@ -342,7 +347,7 @@ def main():
             else:
                 rec["load"] = re.search(r"Model loading took ([\d.]+) GiB", startup or "") and \
                     re.search(r"Model loading took ([\d.]+) GiB", startup).group(1) + " GiB"
-                rec["smoke"] = smoke()
+                rec["smoke"] = smoke(c.get("extra_body"))
                 log(f"[smoke {c['name']}] {rec['smoke']}", fh)
                 rows = run_table_round(c, d, fh)
                 rec["round_rows"] = rows

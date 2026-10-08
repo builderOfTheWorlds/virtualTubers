@@ -1,0 +1,111 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=193.9s messages=70 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_091933.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     11.6s scene_direction  tuber_0->broadcast r1.directing.gm  The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks yo
+     11.6s table_line       tuber_0->roundtable   The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks yo
+     11.6s think_request    tuber_0->broadcast r1.think.gm  
+     18.1s think_done       tuber_1->tuber_0   r1.think.gm  
+     18.1s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     19.9s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  *draws his sword* 
+
+This is the way. Stand behind me and speak only when I ask.
+     19.9s retake           tuber_0->tuber_1   r1.speak.tuber_1  stage_direction: *asterisk action*; spoken lines only
+     21.7s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  This is the way. Stand fast, I'll handle it.
+     21.7s table_line       tuber_0->roundtable   This is the way. Stand fast, I'll handle it.
+     25.1s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Scene established. All four players present at threshold. Doors close behind them.
+     36.2s scene_direction  tuber_0->broadcast r2.directing.gm  The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a sil
+     36.2s table_line       tuber_0->roundtable   The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a sil
+     36.2s think_request    tuber_0->broadcast r2.think.gm  
+     42.5s think_done       tuber_1->tuber_0   r2.think.gm  
+     42.5s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+     44.4s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Keep your cups. This wine smells like iron and bad faith. Stand ready.
+     44.4s table_line       tuber_0->roundtable   Keep your cups. This wine smells like iron and bad faith. Stand ready.
+     47.5s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick's line fits his blunt, oath-driven persona and rejects the wine naturally. The scene continues smoothly into the next beat.
+     59.6s scene_direction  tuber_0->broadcast r3.directing.gm  The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels sudde
+     59.6s table_line       tuber_0->roundtable   The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels sudde
+     59.6s think_request    tuber_0->broadcast r3.think.gm  
+     65.7s think_done       tuber_1->tuber_0   r3.think.gm  
+     65.7s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+     67.6s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  This is the way. Draw steel and hold the line.
+     67.6s table_line       tuber_0->roundtable   This is the way. Draw steel and hold the line.
+     72.0s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Chadwick's line fits his character and advances the scene. The GM has set up the next beat: an ominous attack/shift in the room. The scene contract re
+     83.1s scene_direction  tuber_0->broadcast r4.directing.gm  The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades
+     83.1s table_line       tuber_0->roundtable   The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades
+     83.1s think_request    tuber_0->broadcast r4.think.gm  
+     89.6s think_done       tuber_1->tuber_0   r4.think.gm  
+     89.6s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+     91.7s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  This is the way. I step forward and break his wrist before he finishes that swing. Hold your ground.
+     91.7s table_line       tuber_0->roundtable   This is the way. I step forward and break his wrist before he finishes that swing. Hold your ground.
+     96.1s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  Chadwick moves first. He steps in, intercepts the curved blade, and drives his shoulder into the attacker's arm. Bone cracks. The wrist snaps. The bla
+     96.1s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+     96.2s scene_start      tuber_0->broadcast r1.loaded.gm  
+    107.9s scene_direction  tuber_0->broadcast r1.directing.gm  The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They
+    107.9s table_line       tuber_0->roundtable   The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They
+    107.9s think_request    tuber_0->broadcast r1.think.gm  
+    114.3s think_done       tuber_1->tuber_0   r1.think.gm  
+    114.3s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+    116.2s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  I do not drink from strangers. Ask them plainly, or I will.
+    116.2s table_line       tuber_0->roundtable   I do not drink from strangers. Ask them plainly, or I will.
+    121.9s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick rejects the drink. The velvet-coated man does not flinch. He sets the glass down on the fountain's stone rim. The water flows over it, but ne
+    133.6s scene_direction  tuber_0->broadcast r2.directing.gm  The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on he
+    133.6s table_line       tuber_0->roundtable   The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on he
+    133.6s think_request    tuber_0->broadcast r2.think.gm  
+    139.7s think_done       tuber_1->tuber_0   r2.think.gm  
+    139.7s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+    141.4s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  This is the way. Move back. Now.
+    141.4s table_line       tuber_0->roundtable   This is the way. Move back. Now.
+    145.9s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick's line fits his blunt, oath-bound nature and matches the scene's escalating tension. The GM has advanced the scene correctly with atmospheric
+    157.4s scene_direction  tuber_0->broadcast r3.directing.gm  A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face
+    157.4s table_line       tuber_0->roundtable   A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face
+    157.4s think_request    tuber_0->broadcast r3.think.gm  
+    163.7s think_done       tuber_1->tuber_0   r3.think.gm  
+    163.7s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+    165.5s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  Hold the line. Shield wall. Let them break on us.
+    165.5s table_line       tuber_0->roundtable   Hold the line. Shield wall. Let them break on us.
+    168.7s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Scene advances correctly. Chadwick's line fits character and contract. GM narration maintains concrete style, ends on attack beat. No lore violations 
+    180.8s scene_direction  tuber_0->broadcast r4.directing.gm  The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pr
+    180.8s table_line       tuber_0->roundtable   The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pr
+    180.8s think_request    tuber_0->broadcast r4.think.gm  
+    187.5s think_done       tuber_1->tuber_0   r4.think.gm  
+    187.5s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+    189.7s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  This is the way. Break it or die standing.
+    189.7s table_line       tuber_0->roundtable   This is the way. Break it or die standing.
+    193.9s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  Chadwick accepts the hold spell as a physical force and commits to breaking it. The party is pinned but holds for one more beat.
+    193.9s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+2026-10-08 09:16:19,147 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 09:16:19,171 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 09:16:19,225 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 09:16:19,246 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:30,817 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:37,348 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:39,188 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:40,970 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:44,382 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:16:55,456 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:01,724 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:03,597 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:06,765 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:18,872 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:24,968 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:26,791 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:31,251 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:42,330 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:48,810 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:50,962 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:17:55,407 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:07,170 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:13,545 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:15,479 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:21,141 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:32,824 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:38,938 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:40,669 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:45,103 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:18:56,683 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:02,883 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:04,701 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:07,961 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:20,089 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:26,700 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 09:19:28,904 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"

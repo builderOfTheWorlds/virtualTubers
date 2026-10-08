@@ -1,0 +1,124 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=175.8s messages=76 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_121047.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     11.1s scene_direction  tuber_0->broadcast r1.directing.gm  The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. 
+     11.1s table_line       tuber_0->roundtable   The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. 
+     11.1s think_request    tuber_0->broadcast r1.think.gm  
+     16.9s think_done       tuber_1->tuber_0   r1.think.gm  
+     16.9s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     18.4s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  *draws his sword* 
+
+This is the way.
+     18.4s retake           tuber_0->tuber_1   r1.speak.tuber_1  stage_direction: *asterisk action*; spoken lines only
+     20.2s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  This is the way.
+     20.2s table_line       tuber_0->roundtable   This is the way.
+     24.0s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick's line matches his character: blunt, authoritative, and in line with his 'this is the way' tic. Scene setting is concrete (marble floors, gas
+     34.1s scene_direction  tuber_0->broadcast r2.directing.gm  Leena’s smile fades as she touches her invitation. The metal scent sharpens. Vigil’s hand drifts to his dagger hilt. Bob’s grin tightens. A shadow det
+     34.1s table_line       tuber_0->roundtable   Leena’s smile fades as she touches her invitation. The metal scent sharpens. Vigil’s hand drifts to his dagger hilt. Bob’s grin tightens. A shadow det
+     34.1s think_request    tuber_0->broadcast r2.think.gm  
+     40.0s think_done       tuber_1->tuber_0   r2.think.gm  
+     40.0s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+     41.6s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  This is the way.  
+Ask them plainly, or I will.
+     41.6s table_line       tuber_0->roundtable   This is the way.  
+Ask them plainly, or I will.
+     45.1s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick's line follows his established style: short, blunt, authoritative. He addresses the shadow without hesitation, fulfilling his role as the one
+     55.6s scene_direction  tuber_0->broadcast r3.directing.gm  The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, "The Duke expects you." It raises a hand. The gas lamps flic
+     55.6s table_line       tuber_0->roundtable   The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, "The Duke expects you." It raises a hand. The gas lamps flic
+     55.6s think_request    tuber_0->broadcast r3.think.gm  
+     61.5s think_done       tuber_1->tuber_0   r3.think.gm  
+     61.5s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+     63.2s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  This is the way.  
+Ask them plainly, or I will.
+     63.2s retake           tuber_0->tuber_1   r3.speak.tuber_1  repeats: repeats an earlier line ('This is the way.  
+Ask them plainly, or I will.'); say something new
+     64.7s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  This way is clear. Draw your blades.
+     64.7s table_line       tuber_0->roundtable   This way is clear. Draw your blades.
+     67.9s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Chadwick's line follows character voice (short, directive) and advances scene contract (confrontation). No ruling needed as he states action (drawing 
+     78.0s scene_direction  tuber_0->broadcast r4.directing.gm  The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows—too many. A blade slices the air near 
+     78.0s table_line       tuber_0->roundtable   The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows—too many. A blade slices the air near 
+     78.0s think_request    tuber_0->broadcast r4.think.gm  
+     83.7s think_done       tuber_1->tuber_0   r4.think.gm  
+     83.7s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+     85.2s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  This is the way.
+     85.2s retake           tuber_0->tuber_1   r4.speak.tuber_1  repeats: repeats an earlier line ('This is the way.'); say something new
+     86.7s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  This is the way. They're here.
+     86.7s table_line       tuber_0->roundtable   This is the way. They're here.
+     90.6s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  Chadwick's line 'This is the way. They're here.' matches his established voice and character traits (blunt, oath-focused, leading in crisis). It accep
+     90.6s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+     90.7s scene_start      tuber_0->broadcast r1.loaded.gm  
+    101.0s scene_direction  tuber_0->broadcast r1.directing.gm  The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrati
+    101.0s table_line       tuber_0->roundtable   The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrati
+    101.0s think_request    tuber_0->broadcast r1.think.gm  
+    106.9s think_done       tuber_1->tuber_0   r1.think.gm  
+    106.9s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+    108.5s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  This is the way. Ask them plainly, or I will.
+    108.5s table_line       tuber_0->roundtable   This is the way. Ask them plainly, or I will.
+    111.3s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick states his stance clearly per character traits. No action taken, only dialogue.
+    121.4s scene_direction  tuber_0->broadcast r2.directing.gm  A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter
+    121.4s table_line       tuber_0->roundtable   A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter
+    121.4s think_request    tuber_0->broadcast r2.think.gm  
+    127.2s think_done       tuber_1->tuber_0   r2.think.gm  
+    127.2s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+    128.9s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  This is the way. Ask them plainly, or I will.
+    128.9s retake           tuber_0->tuber_1   r2.speak.tuber_1  repeats: repeats an earlier line ('This is the way. Ask them plainly, or I will.'); say something new
+    130.5s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  This is the way. The duke sent you. Say it plainly.
+    130.5s table_line       tuber_0->roundtable   This is the way. The duke sent you. Say it plainly.
+    133.7s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick's line matches his established speech pattern (short, blunt, oath-driven). He correctly identifies the host's messenger without hesitation. T
+    144.3s scene_direction  tuber_0->broadcast r3.directing.gm  A tall figure steps into the candlelight—Grovley, the butler, his face pale under the chandelier. He holds a silver bell. "Duke Leto requests your pre
+    144.3s table_line       tuber_0->roundtable   A tall figure steps into the candlelight—Grovley, the butler, his face pale under the chandelier. He holds a silver bell. "Duke Leto requests your pre
+    144.3s think_request    tuber_0->broadcast r3.think.gm  
+    150.2s think_done       tuber_1->tuber_0   r3.think.gm  
+    150.2s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+    151.7s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  This is the way. Move.
+    151.7s table_line       tuber_0->roundtable   This is the way. Move.
+    155.1s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Chadwick's line follows character voice: short, blunt, oath-focused. He accepts GM's setup (Grovley's appearance, the scream) without overruling. No d
+    165.4s scene_direction  tuber_0->broadcast r4.directing.gm  The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, "They're in the gardens—burning the rose beds!" Gr
+    165.4s table_line       tuber_0->roundtable   The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, "They're in the gardens—burning the rose beds!" Gr
+    165.4s think_request    tuber_0->broadcast r4.think.gm  
+    171.2s think_done       tuber_1->tuber_0   r4.think.gm  
+    171.2s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+    172.8s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  This is the way. Gardens. Now.
+    172.8s table_line       tuber_0->roundtable   This is the way. Gardens. Now.
+    175.8s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  Chadwick's line follows scene contract: he states the destination plainly and moves toward action. No out-of-character or unresolved elements.
+    175.8s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+2026-10-08 12:07:51,543 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 12:07:51,572 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 12:07:51,627 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 12:07:51,654 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:02,715 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:08,529 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:09,993 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:11,878 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:15,663 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:25,766 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:31,639 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:33,280 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:36,764 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:47,252 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:53,152 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:54,800 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:56,344 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:08:59,536 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:09,621 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:15,344 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:16,820 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:18,350 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:22,320 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:32,640 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:38,509 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:40,135 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:42,924 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:53,008 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:09:58,885 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:00,524 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:02,165 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:05,287 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:15,941 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:21,818 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:23,342 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:26,697 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:37,071 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:42,882 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 12:10:44,445 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"

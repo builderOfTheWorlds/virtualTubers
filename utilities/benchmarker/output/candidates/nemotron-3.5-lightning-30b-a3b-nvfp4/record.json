@@ -1,0 +1,169 @@
+{
+ "name": "nemotron-3.5-lightning-30b-a3b-nvfp4",
+ "repo": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+ "status": "ok",
+ "started": "10:27:41",
+ "backend": "auto",
+ "startup_log": "(EngineCore pid=239) INFO 10-08 14:28:10 [__init__.py:758] Selected FlashInferFP8ScaledMMLinearKernel for MergedColumnParallelLinear\n(EngineCore pid=239) INFO 10-08 14:28:10 [__init__.py:758] Selected FlashInferFP8ScaledMMLinearKernel for RowParallelLinear\n(EngineCore pid=239) INFO 10-08 14:29:53 [model_runner.py:428] Model loading took 17.82 GiB memory and 102.832656 seconds\n(EngineCore pid=239) INFO 10-08 14:31:03 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5440 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5560. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.\n(EngineCore pid=239) INFO 10-08 14:31:03 [kv_cache_utils.py:2395] GPU KV cache size: 7,778,304 tokens, Maximum concurrency for 32,768 tokens per request: 237.38x\n",
+ "load": "17.82 GiB",
+ "smoke": {
+  "wall_s": 7.4,
+  "ttft_s": 0.6,
+  "approx_tok_s": 32.5,
+  "reasoning_chars": 986,
+  "content": "The hinges scream! Is it a dragon, or just... treasure? I\u2014I should probably check what's in there, but my feet seem to have a mind of their own.",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 34.8,
+   "gm_direction_s": 13.5,
+   "think_pass_wall_s": 15.5,
+   "think_p95_s": 15.5,
+   "speak_p50_s": 1.1,
+   "speak_max_s": 1.6,
+   "adjudication_s": 1.3,
+   "reasoning_tokens": 1446,
+   "content_tokens": 796,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 37.0,
+   "gm_direction_s": 13.1,
+   "think_pass_wall_s": 16.8,
+   "think_p95_s": 16.8,
+   "speak_p50_s": 0.8,
+   "speak_max_s": 1.0,
+   "adjudication_s": 1.4,
+   "reasoning_tokens": 2264,
+   "content_tokens": 819,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 29.1,
+   "gm_direction_s": 12.2,
+   "think_pass_wall_s": 12.2,
+   "think_p95_s": 12.2,
+   "speak_p50_s": 0.8,
+   "speak_max_s": 1.0,
+   "adjudication_s": 1.4,
+   "reasoning_tokens": 1451,
+   "content_tokens": 591,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 31.6,
+   "gm_direction_s": 10.5,
+   "think_pass_wall_s": 15.3,
+   "think_p95_s": 15.3,
+   "speak_p50_s": 0.7,
+   "speak_max_s": 1.0,
+   "adjudication_s": 0.9,
+   "reasoning_tokens": 2264,
+   "content_tokens": 584,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 31.9,
+  "speak_p50_s": 1.0,
+  "think_pass_s": 13.8,
+  "gm_direction_s": 12.8,
+  "failed": 0,
+  "capped": 0
+ },
+ "round_n7": {
+  "wall_s": 34.3,
+  "speak_p50_s": 0.8,
+  "think_pass_s": 16.1,
+  "gm_direction_s": 11.8,
+  "failed": 0,
+  "capped": 0
+ },
+ "slice": {
+  "rc": 0,
+  "warnings": 0,
+  "wall_s": 82.0,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_103510.json",
+  "scenes_resolved": 2,
+  "rounds": 3,
+  "retakes": {
+   "name_label": 1,
+   "repeats": 1,
+   "stage_direction": 1
+  },
+  "overrules": 1,
+  "stuck": 0,
+  "gm_failures": 0,
+  "lines": [
+   [
+    "scene_direction",
+    "The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air. A servant in livery of deep green opens the doors without a word, gesturing you inside toward a grand foyer where three other figures already pause, waiting. You each feel it then\u2014a faint, shared pull in your chests, as if the house itself remembers you. Chadwick, you notice the half-orc beside you gripping his sword hilt; Leena is already smiling, eyes bright; Vigil counts the doorways; sodacan_bob leans back, amused. The manor's heart beats somewhere deeper, and the invitation in your hands grows warm. What do you do as you take your first steps into the estate?"
+   ],
+   [
+    "character_reply",
+    "*draws his sword* this is the way."
+   ],
+   [
+    "character_reply",
+    "this is the way."
+   ],
+   [
+    "scene_direction",
+    "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?"
+   ],
+   [
+    "character_reply",
+    "Ask them plainly, or I will."
+   ],
+   [
+    "scene_direction",
+    "The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy card into his belt, his hand resting on the hilt of his sword. Leena's eyes flicker between the sealed wax and the dark manor windows; she smiles, already stepping forward. Vigil counts the oaks, noting the uneven spacing, while sodacan_bob chuckles, already imagining the feast inside. A distant door creaks somewhere above, though no one moves to answer it.\n\nThe four of you begin up the avenue. What do you notice as you walk?"
+   ],
+   [
+    "character_reply",
+    "Ask them plainly, or I will."
+   ],
+   [
+    "character_reply",
+    "Chadwick: This is the way."
+   ],
+   [
+    "character_reply",
+    "Ask them plainly, or I will."
+   ]
+  ],
+  "verdicts": [
+   [
+    "pass",
+    "Chadwick's line 'this is the way' fits his character and the scene's contract. The party has arrived at Leto's Manor and the first beat is r"
+   ],
+   [
+    "pass",
+    "Chadwick's line establishes his character bluntly and opens the interaction. The party is at the manor gate as contracted. Ready for Round 1"
+   ],
+   [
+    "pass",
+    "Chadwick asserts direction; the party continues up the avenue. No mechanical conflict, just narration of movement."
+   ]
+  ]
+ },
+ "mem_min_gib": 33.1,
+ "elapsed_min": 7.5
+}

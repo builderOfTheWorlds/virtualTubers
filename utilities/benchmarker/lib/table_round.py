@@ -304,6 +304,8 @@ def main(argv=None) -> int:
     p.add_argument("--repeats", type=int, default=1)
     p.add_argument("--pack", default=prompts.DEFAULT_PACK)
     p.add_argument("--tag", default="")
+    p.add_argument("--extra-body", default="", help="JSON merged into every request body "
+                   "(model-specific controls, e.g. {\"reasoning_effort\": \"low\"} for gpt-oss)")
     for name, default in asdict(Budgets()).items():
         if isinstance(default, bool):
             continue
@@ -318,7 +320,8 @@ def main(argv=None) -> int:
             if line.startswith(args.api_key_env + "="):
                 key = line.split("=", 1)[1].strip() or None
     headers = {"Authorization": f"Bearer {key}"} if key else {}
-    host = vLLMHost(args.base_url, headers=headers)
+    host = vLLMHost(args.base_url, headers=headers,
+                    extra_body=json.loads(args.extra_body) if args.extra_body else None)
     budgets = Budgets(**{k: getattr(args, f"budget_{k}") for k, v in asdict(Budgets()).items()
                          if not isinstance(v, bool)})
     probe = TableRoundProbe(host, args.model, budgets, pack=args.pack)

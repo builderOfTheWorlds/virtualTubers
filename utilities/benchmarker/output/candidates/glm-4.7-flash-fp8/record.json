@@ -1,0 +1,205 @@
+{
+ "name": "glm-4.7-flash-fp8",
+ "repo": "unsloth/GLM-4.7-Flash-FP8-Dynamic",
+ "status": "ok",
+ "started": "10:35:13",
+ "backend": "torch",
+ "startup_log": "(EngineCore pid=241) INFO 10-08 14:43:43 [__init__.py:758] Selected ChannelWiseTorchFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8\n(EngineCore pid=241) INFO 10-08 14:47:08 [model_runner.py:428] Model loading took 30.8 GiB memory and 205.253710 seconds\n(EngineCore pid=241) INFO 10-08 14:47:52 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5456 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5544. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.\n(EngineCore pid=241) INFO 10-08 14:47:52 [kv_cache_utils.py:2395] GPU KV cache size: 661,808 tokens, Maximum concurrency for 32,768 tokens per request: 20.20x\n",
+ "load": "30.8 GiB",
+ "smoke": {
+  "wall_s": 8.4,
+  "ttft_s": 1.1,
+  "approx_tok_s": 26.8,
+  "reasoning_chars": 969,
+  "content": "\"Oh stars above, it\u2019s open! Now, please don\u2019t let a dragon eat us while I\u2019m trying to play a happy tune!\"",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 76.8,
+   "gm_direction_s": 33.0,
+   "think_pass_wall_s": null,
+   "think_p95_s": null,
+   "speak_p50_s": 1.1,
+   "speak_max_s": 1.4,
+   "adjudication_s": 1.1,
+   "reasoning_tokens": 4493,
+   "content_tokens": 296,
+   "n_failed": 4,
+   "n_budget_capped": 4,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 72.8,
+   "gm_direction_s": 20.2,
+   "think_pass_wall_s": null,
+   "think_p95_s": null,
+   "speak_p50_s": 1.0,
+   "speak_max_s": 4.8,
+   "adjudication_s": 1.5,
+   "reasoning_tokens": 7564,
+   "content_tokens": 521,
+   "n_failed": 7,
+   "n_budget_capped": 9,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 57.6,
+   "gm_direction_s": 16.5,
+   "think_pass_wall_s": null,
+   "think_p95_s": null,
+   "speak_p50_s": 0.8,
+   "speak_max_s": 0.9,
+   "adjudication_s": 1.5,
+   "reasoning_tokens": 4489,
+   "content_tokens": 253,
+   "n_failed": 4,
+   "n_budget_capped": 4,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 66.9,
+   "gm_direction_s": 15.3,
+   "think_pass_wall_s": null,
+   "think_p95_s": null,
+   "speak_p50_s": 0.9,
+   "speak_max_s": 4.2,
+   "adjudication_s": 1.7,
+   "reasoning_tokens": 7568,
+   "content_tokens": 585,
+   "n_failed": 7,
+   "n_budget_capped": 9,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 67.2,
+  "speak_p50_s": 1.0,
+  "think_pass_s": null,
+  "gm_direction_s": 24.8,
+  "failed": 8,
+  "capped": 8
+ },
+ "round_n7": {
+  "wall_s": 69.8,
+  "speak_p50_s": 0.9,
+  "think_pass_s": null,
+  "gm_direction_s": 17.8,
+  "failed": 14,
+  "capped": 18
+ },
+ "slice": {
+  "rc": 0,
+  "warnings": 5,
+  "wall_s": 1500.0,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_111800.json",
+  "scenes_resolved": 1,
+  "rounds": 5,
+  "retakes": {
+   "name_label": 1,
+   "no_take": 2,
+   "stage_direction": 1
+  },
+  "overrules": 1,
+  "stuck": 1,
+  "gm_failures": 2,
+  "lines": [
+   [
+    "scene_direction",
+    "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down."
+   ],
+   [
+    "character_reply",
+    "*draws his sword* This is the way."
+   ],
+   [
+    "character_reply",
+    ""
+   ],
+   [
+    "character_reply",
+    "This is the way."
+   ],
+   [
+    "scene_direction",
+    "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,"
+   ],
+   [
+    "character_reply",
+    "I see what you are."
+   ],
+   [
+    "scene_direction",
+    "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)"
+   ],
+   [
+    "character_reply",
+    "I keep my word. You are not it."
+   ],
+   [
+    "scene_direction",
+    "The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords from beneath their cloaks. Themultitude of guests screams and scatters into the hall. Chadwick, the pale man at your feet twitches. His eyes snap open. They are entirely white. He stands up, his body jerking as if pulled by strings."
+   ],
+   [
+    "character_reply",
+    "The strings are cut; it is time."
+   ],
+   [
+    "scene_direction",
+    "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?"
+   ],
+   [
+    "character_reply",
+    "I am taking the middle door. This is the way."
+   ],
+   [
+    "scene_direction",
+    "The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand dining hall opens up. Dust motes drift in shafts of light from high windows. The air tastes of stale wine and aging wood. The other doors open simultaneously. You step out into the hall, and the four of you face one another across the empty expanse."
+   ],
+   [
+    "character_reply",
+    "Chadwick: The Duke does not usually play games. Someone is watching. Ask them plainly, or I will."
+   ],
+   [
+    "character_reply",
+    ""
+   ],
+   [
+    "character_reply",
+    ""
+   ]
+  ],
+  "verdicts": [
+   [
+    "pass",
+    "Chadwick asserts direction with his characteristic bluntness. The scene contract mandates a sudden attack interrupting the arrival. Chadwick"
+   ],
+   [
+    "pass",
+    "Chadwick declares the direction. The attack has begun."
+   ],
+   [
+    "pass",
+    "Chadwick's line 'I see what you are' is a good opening threat, aligning with his Vengeance oath and blunt nature. It sets the stage for comb"
+   ],
+   [
+    "pass",
+    "The scene has reached a critical juncture with the attack on the manor and the reveal of the 'pale men' as corrupted guests. The party is en"
+   ],
+   [
+    "pass",
+    "Chadwick takes the middle door. The others follow suit."
+   ]
+  ]
+ },
+ "mem_min_gib": 28.7,
+ "elapsed_min": 42.8
+}

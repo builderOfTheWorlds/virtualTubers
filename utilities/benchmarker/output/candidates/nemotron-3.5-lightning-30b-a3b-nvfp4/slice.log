@@ -1,0 +1,57 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=82.0s messages=35 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_103510.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     13.1s scene_direction  tuber_0->broadcast r1.directing.gm  The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air
+     13.1s table_line       tuber_0->roundtable   The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air
+     13.1s think_request    tuber_0->broadcast r1.think.gm  
+     19.4s think_done       tuber_1->tuber_0   r1.think.gm  
+     19.4s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     21.2s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  *draws his sword* this is the way.
+     21.2s retake           tuber_0->tuber_1   r1.speak.tuber_1  stage_direction: *asterisk action*; spoken lines only
+     23.0s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  this is the way.
+     23.0s table_line       tuber_0->roundtable   this is the way.
+     26.9s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick's line 'this is the way' fits his character and the scene's contract. The party has arrived at Leto's Manor and the first beat is resolved. M
+     26.9s scene_resolve    tuber_0->broadcast r1.resolved.gm  
+     27.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     39.5s scene_direction  tuber_0->broadcast r1.directing.gm  The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sea
+     39.5s table_line       tuber_0->roundtable   The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sea
+     39.5s think_request    tuber_0->broadcast r1.think.gm  
+     45.8s think_done       tuber_1->tuber_0   r1.think.gm  
+     45.8s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     47.6s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  Ask them plainly, or I will.
+     47.6s table_line       tuber_0->roundtable   Ask them plainly, or I will.
+     51.3s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick's line establishes his character bluntly and opens the interaction. The party is at the manor gate as contracted. Ready for Round 1 responses
+     63.6s scene_direction  tuber_0->broadcast r2.directing.gm  The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy ca
+     63.6s table_line       tuber_0->roundtable   The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy ca
+     63.6s think_request    tuber_0->broadcast r2.think.gm  
+     70.8s think_done       tuber_1->tuber_0   r2.think.gm  
+     70.8s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+     72.6s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Ask them plainly, or I will.
+     72.6s retake           tuber_0->tuber_1   r2.speak.tuber_1  repeats: repeats an earlier line ('Ask them plainly, or I will.'); say something new
+     74.5s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Chadwick: This is the way.
+     74.5s retake           tuber_0->tuber_1   r2.speak.tuber_1  name_label: line starts with own name label 'Chadwick'
+     76.4s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Ask them plainly, or I will.
+     78.5s table_line       tuber_0->roundtable   this is the way.
+     78.5s gm_overrule      tuber_0->tuber_1   r2.speak.tuber_1  this is the way.
+     82.0s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick asserts direction; the party continues up the avenue. No mechanical conflict, just narration of movement.
+     82.0s scene_resolve    tuber_0->broadcast r2.resolved.gm  
+2026-10-08 10:33:48,352 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 10:33:48,375 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 10:33:48,431 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 10:33:48,456 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:01,519 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:07,901 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:09,668 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:11,429 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:15,415 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:27,903 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:34,200 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:36,039 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:39,772 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:52,093 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:34:59,211 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:35:01,084 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:35:02,947 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:35:04,833 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:35:06,929 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"

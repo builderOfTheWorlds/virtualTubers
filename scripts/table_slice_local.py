@@ -71,6 +71,7 @@ def main():
     ap.add_argument("--retake-once", action="store_true",
                     help="corrupt the seat's first reply with an *action* to force one retake")
     ap.add_argument("--base-url", default="http://localhost:8092")
+    ap.add_argument("--extra-body", default="", help="JSON merged into llm.extra_body (model-specific)")
     args = ap.parse_args()
 
     os.environ["VLLM_API_KEY"] = _env_line(VLLM_ENV, "VLLM_API_KEY")
@@ -103,6 +104,9 @@ def main():
     print(f"[slice] migrations applied={applied} profiles={dict(report.actions)}")
 
     llm_cfg = {"llm": dict(gm_doc["llm"], base_url=args.base_url)}   # llm is top-level in worker yaml
+    if args.extra_body:
+        llm_cfg["llm"]["extra_body"] = {**(llm_cfg["llm"].get("extra_body") or {}),
+                                        **json.loads(args.extra_body)}
     gm_llm = build_llm_client(llm_cfg)
     seat_llm = build_llm_client(llm_cfg)
     print(f"[slice] gm llm={gm_llm!r}")

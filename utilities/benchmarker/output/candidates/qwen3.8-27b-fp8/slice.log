@@ -1,0 +1,127 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=1500.1s messages=61 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_115933.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     72.4s scene_direction  tuber_0->broadcast r1.directing.gm  Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.
+
+Chadwick, Le
+     72.4s table_line       tuber_0->roundtable   Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.
+
+Chadwick, Le
+     72.4s think_request    tuber_0->broadcast r1.think.gm  
+    114.9s think_done       tuber_1->tuber_0   r1.think.gm  
+    114.9s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+    126.5s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  *draws his sword* 
+
+This is the way. Sorensen Leto. Now.
+    126.6s retake           tuber_0->tuber_1   r1.speak.tuber_1  stage_direction: *asterisk action*; spoken lines only
+    137.8s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  Where is Sorensen Leto? Speak plainly, or I will make you.
+    137.8s table_line       tuber_0->roundtable   Where is Sorensen Leto? Speak plainly, or I will make you.
+    160.0s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick's line is in character, first person, and does not decide outcomes. The steward can answer plainly.
+    230.9s scene_direction  tuber_0->broadcast r2.directing.gm  The steward’s bow does not break.
+
+“His Grace is in the east hall. He has been expecting you.” His thumb rests on the tray’s edge. “The doors will clo
+    230.9s table_line       tuber_0->roundtable   The steward’s bow does not break.
+
+“His Grace is in the east hall. He has been expecting you.” His thumb rests on the tray’s edge. “The doors will clo
+    230.9s think_request    tuber_0->broadcast r2.think.gm  
+    272.5s think_done       tuber_1->tuber_0   r2.think.gm  
+    272.5s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+    284.4s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  East hall. You lead. If the manor decides anything else, I decide first.
+    284.4s table_line       tuber_0->roundtable   East hall. You lead. If the manor decides anything else, I decide first.
+    348.5s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick stays in character and advances the arrival beat without deciding outcomes for other players.
+    425.4s scene_direction  tuber_0->broadcast r3.directing.gm  The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand’s width as 
+    425.4s table_line       tuber_0->roundtable   The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand’s width as 
+    425.4s think_request    tuber_0->broadcast r3.think.gm  
+    467.4s think_done       tuber_1->tuber_0   r3.think.gm  
+    467.4s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+    480.2s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  East hall, then. Let it come through that door, or not. But it will not make me kneel.
+    480.2s table_line       tuber_0->roundtable   East hall, then. Let it come through that door, or not. But it will not make me kneel.
+    501.8s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Chadwick's line is in character and does not decide outcomes for other characters. The scene can continue toward the attack interruption.
+    579.1s scene_direction  tuber_0->broadcast r4.directing.gm  The double doors open.
+
+The east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then sto
+    579.1s table_line       tuber_0->roundtable   The double doors open.
+
+The east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then sto
+    579.1s think_request    tuber_0->broadcast r4.think.gm  
+    620.4s think_done       tuber_1->tuber_0   r4.think.gm  
+    620.4s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+    631.9s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  Who sent you? Say it plain, or I will make you.
+    631.9s table_line       tuber_0->roundtable   Who sent you? Say it plain, or I will make you.
+    659.2s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  Round 4 advances the spine: the four arrive, meet under the pull, the party begins, and an attack interrupts them. Chadwick is in character and speaks
+    659.2s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+    659.2s scene_start      tuber_0->broadcast r1.loaded.gm  
+    738.3s scene_direction  tuber_0->broadcast r1.directing.gm  The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.
+
+Chadwick, Leena, Vigil, and Bob stand near the entrance. Each hol
+    738.3s table_line       tuber_0->roundtable   The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.
+
+Chadwick, Leena, Vigil, and Bob stand near the entrance. Each hol
+    738.3s think_request    tuber_0->broadcast r1.think.gm  
+    779.1s think_done       tuber_1->tuber_0   r1.think.gm  
+    779.1s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+    789.8s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  Guests behind me. You’ll burn nothing.
+    789.8s table_line       tuber_0->roundtable   Guests behind me. You’ll burn nothing.
+    821.5s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick’s line is in-character and does not decide the outcome. The attack has begun; the scene can continue.
+    893.6s scene_direction  tuber_0->broadcast r2.directing.gm  The blade stops an inch from the Duke’s throat.
+
+The Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The 
+    893.6s table_line       tuber_0->roundtable   The blade stops an inch from the Duke’s throat.
+
+The Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The 
+    893.6s think_request    tuber_0->broadcast r2.think.gm  
+    933.5s think_done       tuber_1->tuber_0   r2.think.gm  
+    933.5s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+    945.0s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Stair, door, east wing. Three jobs. No one dies until they try me.
+    945.0s table_line       tuber_0->roundtable   Stair, door, east wing. Three jobs. No one dies until they try me.
+    977.5s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  The attack is underway. The Duke has ordered the party to protect the east wing. Chadwick has taken a defensive position and issued a warning.
+   1049.6s scene_direction  tuber_0->broadcast r3.directing.gm  Black light holds the grey men still. Their boots stop. Their blades stay up.
+
+A hairline crack opens in the east wing wall. Dust drops. An old hum ri
+   1049.6s table_line       tuber_0->roundtable   Black light holds the grey men still. Their boots stop. Their blades stay up.
+
+A hairline crack opens in the east wing wall. Dust drops. An old hum ri
+   1049.6s think_request    tuber_0->broadcast r3.think.gm  
+   1092.2s think_done       tuber_1->tuber_0   r3.think.gm  
+   1092.2s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+   1104.9s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  Vigil, the stair. Bob, the door. I take the east wing. This is the way.
+   1104.9s table_line       tuber_0->roundtable   Vigil, the stair. Bob, the door. I take the east wing. This is the way.
+   1179.1s scene_stuck      tuber_0->operator  r3.adjudicating.gm  gm adjudicate failed 2x: adjudicate: invalid verdict None
+2026-10-08 11:34:33,129 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 11:34:33,152 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 11:34:33,204 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 11:34:33,226 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:35:45,615 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:36:28,148 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:36:39,771 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:36:51,032 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:37:13,240 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:38:24,162 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:39:05,684 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:39:17,582 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:39:54,685 WARNING turns arbiter GM adjudicate failed (1) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1: adjudicate: no parsable JSON object in GM reply
+2026-10-08 11:39:54,744 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:40:21,684 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:41:38,668 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:42:20,599 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:42:33,423 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:42:54,962 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:44:12,311 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:44:53,587 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:45:05,083 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:45:32,470 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:46:51,517 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:47:32,300 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:47:42,993 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:48:14,720 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:49:26,844 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:50:06,708 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:50:18,169 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:50:50,688 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:52:02,775 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:52:45,396 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:52:58,122 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:53:35,492 WARNING turns arbiter GM adjudicate failed (1) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2: adjudicate: no parsable JSON object in GM reply
+2026-10-08 11:53:35,551 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 11:54:12,336 WARNING turns arbiter GM adjudicate failed (2) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2: adjudicate: invalid verdict None

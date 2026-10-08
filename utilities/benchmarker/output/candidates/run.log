@@ -1,0 +1,447 @@
+09:02:24 === bench_candidates start: ['qwen3.6-35b-a3b-fp8', 'gpt-oss-20b', 'hermes-4-14b-fp8', 'gemma-4-26b-a4b-fp8', 'nemotron-3.5-lightning-30b-a3b-nvfp4', 'glm-4.7-flash-fp8', 'qwen3.8-27b-fp8', 'qwen3-30b-a3b-thinking-2507-fp8'] free=96GB
+09:07:46 [dl qwen3.6-35b-a3b-fp8] ok in 322s free=59GB
+09:09:46 [dl gpt-oss-20b] ok in 120s free=174GB
+09:13:51 [up qwen3.6-35b-a3b-fp8] backend=triton ready=True (361s)
+(EngineCore pid=295) INFO 10-08 13:08:20 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod
+(EngineCore pid=295) INFO 10-08 13:11:58 [model_runner.py:428] Model loading took 33.38 GiB memory and 217.621817 seconds
+(EngineCore pid=295) INFO 10-08 13:13:23 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5413 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5587. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=295) INFO 10-08 13:13:23 [kv_cache_utils.py:2395] GPU KV cache size: 1,468,523 tokens, Maximum concurrency for 32,768 tokens per request: 44.82x
+
+09:13:58 [smoke qwen3.6-35b-a3b-fp8] {'wall_s': 7.3, 'ttft_s': 0.97, 'approx_tok_s': 29.2, 'reasoning_chars': 949, 'content': 'Oh dear, oh dear… please tell me it’s just gold and not a dragon’s breakfast buffet!', 'split_ok': True}
+09:16:18 [round qwen3.6-35b-a3b-fp8] rc=0 rows=4
+09:19:33 [slice qwen3.6-35b-a3b-fp8] rc=0 resolved=2 retakes={'stage_direction': 1}
+09:19:33 === qwen3.6-35b-a3b-fp8: ok in 11.8 min
+09:19:37 [del qwen3.6-35b-a3b-fp8] DELETED 1 free=211GB
+09:22:01 [dl hermes-4-14b-fp8] ok in 144s free=194GB
+09:22:38 [up gpt-oss-20b] backend=auto ready=True (180s)
+(EngineCore pid=250) INFO 10-08 13:21:30 [model_runner.py:428] Model loading took 13.8 GiB memory and 81.900801 seconds
+(EngineCore pid=250) INFO 10-08 13:22:14 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5267 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5733. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=250) INFO 10-08 13:22:14 [kv_cache_utils.py:2395] GPU KV cache size: 1,848,409 tokens, Maximum concurrency for 32,768 tokens per request: 56.41x
+
+09:22:38 [smoke gpt-oss-20b] {'error': 'HTTPError: HTTP Error 500: Internal Server Error'}
+09:22:42 [round gpt-oss-20b] rc=0 rows=4
+09:47:43 [slice gpt-oss-20b] rc=1 resolved=0 retakes={}
+09:47:43 === gpt-oss-20b: slice did not resolve in 28.1 min
+09:47:46 [del gpt-oss-20b] DELETED 1 free=209GB
+09:50:01 [up hermes-4-14b-fp8] backend=auto ready=False (container exited)
+(EngineCore pid=240) INFO 10-08 13:48:13 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=240) INFO 10-08 13:49:31 [model_runner.py:428] Model loading took 15.34 GiB memory and 78.331250 seconds
+(EngineCore pid=240) ERROR 10-08 13:49:54 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=240) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+09:51:52 [dl gemma-4-26b-a4b-fp8] ok in 247s free=180GB
+09:52:17 [up hermes-4-14b-fp8] backend=triton ready=False (container exited)
+(EngineCore pid=235) INFO 10-08 13:50:28 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=235) INFO 10-08 13:51:46 [model_runner.py:428] Model loading took 15.34 GiB memory and 78.434010 seconds
+(EngineCore pid=235) ERROR 10-08 13:52:08 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=235) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+09:55:49 [up hermes-4-14b-fp8] backend=torch ready=True (210s)
+(EngineCore pid=243) INFO 10-08 13:52:47 [__init__.py:758] Selected ChannelWiseTorchFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=243) INFO 10-08 13:54:09 [model_runner.py:428] Model loading took 15.34 GiB memory and 82.005206 seconds
+(EngineCore pid=243) INFO 10-08 13:55:39 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5410 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5590. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=243) INFO 10-08 13:55:39 [kv_cache_utils.py:2395] GPU KV cache size: 318,912 tokens, Maximum concurrency for 32,768 tokens per request: 9.73x
+
+09:55:53 [smoke hermes-4-14b-fp8] {'wall_s': 4.1, 'ttft_s': 0.6, 'approx_tok_s': 10.1, 'reasoning_chars': 186, 'content': '', 'split_ok': False}
+09:59:31 [round hermes-4-14b-fp8] rc=0 rows=4
+10:24:31 [slice hermes-4-14b-fp8] rc=1 resolved=0 retakes={}
+10:24:31 === hermes-4-14b-fp8: slice did not resolve in 36.8 min
+10:24:34 [del hermes-4-14b-fp8] DELETED 1 free=196GB
+10:25:05 [up gemma-4-26b-a4b-fp8] backend=triton ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 14:24:51 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+10:25:35 [up gemma-4-26b-a4b-fp8] backend=auto ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 14:25:21 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+10:26:07 [up gemma-4-26b-a4b-fp8] backend=torch ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 14:25:54 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+10:26:07 === gemma-4-26b-a4b-fp8: engine failed to start in 1.5 min
+10:26:08 [del gemma-4-26b-a4b-fp8] DELETED 1 free=216GB
+10:27:41 [dl nemotron-3.5-lightning-30b-a3b-nvfp4] ok in 187s free=203GB
+10:31:27 [up nemotron-3.5-lightning-30b-a3b-nvfp4] backend=auto ready=True (225s)
+(EngineCore pid=239) INFO 10-08 14:28:10 [__init__.py:758] Selected FlashInferFP8ScaledMMLinearKernel for MergedColumnParallelLinear
+(EngineCore pid=239) INFO 10-08 14:28:10 [__init__.py:758] Selected FlashInferFP8ScaledMMLinearKernel for RowParallelLinear
+(EngineCore pid=239) INFO 10-08 14:29:53 [model_runner.py:428] Model loading took 17.82 GiB memory and 102.832656 seconds
+(EngineCore pid=239) INFO 10-08 14:31:03 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5440 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5560. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=239) INFO 10-08 14:31:03 [kv_cache_utils.py:2395] GPU KV cache size: 7,778,304 tokens, Maximum concurrency for 32,768 tokens per request: 237.38x
+
+10:31:35 [smoke nemotron-3.5-lightning-30b-a3b-nvfp4] {'wall_s': 7.4, 'ttft_s': 0.6, 'approx_tok_s': 32.5, 'reasoning_chars': 986, 'content': "The hinges scream! Is it a dragon, or just... treasure? I—I should probably check what's in there, but my feet seem to have a mind of their own.", 'split_ok': True}
+10:32:38 [dl glm-4.7-flash-fp8] ok in 297s free=170GB
+10:33:48 [round nemotron-3.5-lightning-30b-a3b-nvfp4] rc=0 rows=4
+10:35:10 [slice nemotron-3.5-lightning-30b-a3b-nvfp4] rc=0 resolved=2 retakes={'name_label': 1, 'repeats': 1, 'stage_direction': 1}
+10:35:10 === nemotron-3.5-lightning-30b-a3b-nvfp4: ok in 7.5 min
+10:35:13 [del nemotron-3.5-lightning-30b-a3b-nvfp4] DELETED 1 free=192GB
+10:39:14 [up glm-4.7-flash-fp8] backend=triton ready=False (engine init failed)
+(EngineCore pid=240) INFO 10-08 14:35:44 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=240) ERROR 10-08 14:39:11 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=240) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+10:43:16 [up glm-4.7-flash-fp8] backend=auto ready=False (container exited)
+(EngineCore pid=237) INFO 10-08 14:39:45 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=237) ERROR 10-08 14:43:11 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=237) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+10:48:17 [up glm-4.7-flash-fp8] backend=torch ready=True (301s)
+(EngineCore pid=241) INFO 10-08 14:43:43 [__init__.py:758] Selected ChannelWiseTorchFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=241) INFO 10-08 14:47:08 [model_runner.py:428] Model loading took 30.8 GiB memory and 205.253710 seconds
+(EngineCore pid=241) INFO 10-08 14:47:52 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5456 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5544. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=241) INFO 10-08 14:47:52 [kv_cache_utils.py:2395] GPU KV cache size: 661,808 tokens, Maximum concurrency for 32,768 tokens per request: 20.20x
+
+10:48:25 [smoke glm-4.7-flash-fp8] {'wall_s': 8.4, 'ttft_s': 1.1, 'approx_tok_s': 26.8, 'reasoning_chars': 969, 'content': '"Oh stars above, it’s open! Now, please don’t let a dragon eat us while I’m trying to play a happy tune!"', 'split_ok': True}
+10:53:00 [round glm-4.7-flash-fp8] rc=0 rows=4
+11:18:00 [slice glm-4.7-flash-fp8] rc=0 resolved=1 retakes={'name_label': 1, 'no_take': 2, 'stage_direction': 1}
+11:18:00 === glm-4.7-flash-fp8: ok in 42.8 min
+11:18:04 [del glm-4.7-flash-fp8] DELETED 1 free=224GB
+11:23:50 [up qwen3.8-27b-fp8] backend=triton ready=True (346s)
+(EngineCore pid=294) INFO 10-08 15:18:33 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod
+(EngineCore pid=294) INFO 10-08 15:21:42 [model_runner.py:428] Model loading took 27.64 GiB memory and 189.264403 seconds
+(EngineCore pid=294) INFO 10-08 15:23:28 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5381 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5619. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=294) INFO 10-08 15:23:28 [kv_cache_utils.py:2395] GPU KV cache size: 445,781 tokens, Maximum concurrency for 32,768 tokens per request: 13.60x
+
+11:24:19 [smoke qwen3.8-27b-fp8] {'wall_s': 29.6, 'ttft_s': 0.51, 'approx_tok_s': 5.4, 'reasoning_chars': 584, 'content': 'Oh dear, oh dear, oh dear—does it always groan so dramatically? I do hope we’re not supposed to be sneaking in.', 'split_ok': True}
+11:34:32 [round qwen3.8-27b-fp8] rc=0 rows=4
+11:59:33 [slice qwen3.8-27b-fp8] rc=0 resolved=1 retakes={'stage_direction': 1}
+11:59:33 === qwen3.8-27b-fp8: ok in 41.5 min
+12:05:06 [up qwen3-30b-a3b-thinking-2507-fp8] backend=triton ready=True (331s)
+(EngineCore pid=234) INFO 10-08 16:00:01 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod
+(EngineCore pid=234) INFO 10-08 16:03:17 [model_runner.py:428] Model loading took 29.1 GiB memory and 196.194290 seconds
+(EngineCore pid=234) INFO 10-08 16:04:46 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5410 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5590. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=234) INFO 10-08 16:04:46 [kv_cache_utils.py:2395] GPU KV cache size: 394,016 tokens, Maximum concurrency for 32,768 tokens per request: 12.02x
+
+12:05:12 [smoke qwen3-30b-a3b-thinking-2507-fp8] {'wall_s': 6.1, 'ttft_s': 0.42, 'approx_tok_s': 42.8, 'reasoning_chars': 953, 'content': '*gulp* "Uh... maybe we should sing \'Hush Little Halfling\' before we step in? Just in case?"', 'split_ok': True}
+12:07:51 [round qwen3-30b-a3b-thinking-2507-fp8] rc=0 rows=4
+12:10:47 [slice qwen3-30b-a3b-thinking-2507-fp8] rc=0 resolved=2 retakes={'repeats': 3, 'stage_direction': 1}
+12:10:47 === qwen3-30b-a3b-thinking-2507-fp8: ok in 11.2 min
+12:10:51 === bench_candidates done (vllm-agents left DOWN)
+12:11:12 === bench_candidates start: ['gpt-oss-20b', 'hermes-4-14b-fp8', 'gemma-4-26b-a4b-fp8'] free=224GB
+12:13:10 [dl gpt-oss-20b] ok in 118s free=211GB
+12:15:31 [dl hermes-4-14b-fp8] ok in 141s free=194GB
+12:16:11 [up gpt-oss-20b] backend=auto ready=True (180s)
+(EngineCore pid=249) INFO 10-08 16:15:01 [model_runner.py:428] Model loading took 13.8 GiB memory and 77.028006 seconds
+(EngineCore pid=249) INFO 10-08 16:15:46 [kv_cache_utils.py:2395] GPU KV cache size: 1,968,672 tokens, Maximum concurrency for 32,768 tokens per request: 60.08x
+
+12:16:21 [smoke gpt-oss-20b] {'wall_s': 10.2, 'ttft_s': 1.13, 'approx_tok_s': 25.8, 'reasoning_chars': 1147, 'content': 'Shh! Listen—this vault door groans like a sleepy dragon’s sigh. I hope the treasure is worth the tremors!', 'split_ok': True}
+12:20:16 [round gpt-oss-20b] rc=0 rows=4
+12:45:16 [slice gpt-oss-20b] rc=1 resolved=0 retakes={'no_take': 2}
+12:45:16 === gpt-oss-20b: slice did not resolve in 32.1 min
+12:45:20 [del gpt-oss-20b] DELETED 1 free=208GB
+12:47:35 [up hermes-4-14b-fp8] backend=auto ready=False (container exited)
+(EngineCore pid=240) INFO 10-08 16:45:47 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=240) INFO 10-08 16:47:08 [model_runner.py:428] Model loading took 15.34 GiB memory and 81.078731 seconds
+(EngineCore pid=240) ERROR 10-08 16:47:30 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=240) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+--- failure tail ---
+(APIServer pid=1)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=1)     async with build_async_engine_client(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=1)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 94, in build_async_engine_client_from_engine_args
+(APIServer pid=1)     async_llm = AsyncLLM.from_vllm_config(
+(APIServer pid=1)                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 235, in from_vllm_config
+(APIServer pid=1)     return cls(
+(APIServer pid=1)            ^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 169, in __init__
+(APIServer pid=1)     self.engine_core = EngineCoreClient.make_async_mp_client(
+(APIServer pid=1)                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=1)     return func(*args, **kwargs)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 163, in make_async_mp_client
+(APIServer pid=1)     return AsyncMPClient(
+(APIServer pid=1)            ^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=1)     return func(*args, **kwargs)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 1060, in __init__
+(APIServer pid=1)     super().__init__(
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 656, in __init__
+(APIServer pid=1)     with launch_core_engines(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 144, in __exit__
+(APIServer pid=1)     next(self.gen)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1240, in launch_core_engines
+(APIServer pid=1)     wait_for_engine_startup(
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1320, in wait_for_engine_startup
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+12:49:32 [dl gemma-4-26b-a4b-fp8] ok in 252s free=179GB
+12:49:51 [up hermes-4-14b-fp8] backend=triton ready=False (container exited)
+(EngineCore pid=240) INFO 10-08 16:48:04 [__init__.py:758] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=240) INFO 10-08 16:49:22 [model_runner.py:428] Model loading took 15.34 GiB memory and 78.400731 seconds
+(EngineCore pid=240) ERROR 10-08 16:49:45 [core.py:1366] RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(EngineCore pid=240) RuntimeError: cutlass_gemm_caller, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/cutlass_gemm_caller.cuh:62, Error Internal
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+--- failure tail ---
+(APIServer pid=1)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=1)     async with build_async_engine_client(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=1)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 94, in build_async_engine_client_from_engine_args
+(APIServer pid=1)     async_llm = AsyncLLM.from_vllm_config(
+(APIServer pid=1)                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 235, in from_vllm_config
+(APIServer pid=1)     return cls(
+(APIServer pid=1)            ^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 169, in __init__
+(APIServer pid=1)     self.engine_core = EngineCoreClient.make_async_mp_client(
+(APIServer pid=1)                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=1)     return func(*args, **kwargs)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 163, in make_async_mp_client
+(APIServer pid=1)     return AsyncMPClient(
+(APIServer pid=1)            ^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=1)     return func(*args, **kwargs)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 1060, in __init__
+(APIServer pid=1)     super().__init__(
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 656, in __init__
+(APIServer pid=1)     with launch_core_engines(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 144, in __exit__
+(APIServer pid=1)     next(self.gen)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1240, in launch_core_engines
+(APIServer pid=1)     wait_for_engine_startup(
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1320, in wait_for_engine_startup
+(APIServer pid=1)     raise RuntimeError(
+(APIServer pid=1) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+
+12:53:22 [up hermes-4-14b-fp8] backend=torch ready=True (210s)
+(EngineCore pid=241) INFO 10-08 16:50:18 [__init__.py:758] Selected ChannelWiseTorchFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=241) INFO 10-08 16:51:39 [model_runner.py:428] Model loading took 15.34 GiB memory and 81.388257 seconds
+(EngineCore pid=241) INFO 10-08 16:53:12 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5400 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5600. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=241) INFO 10-08 16:53:12 [kv_cache_utils.py:2395] GPU KV cache size: 319,328 tokens, Maximum concurrency for 32,768 tokens per request: 9.75x
+
+12:53:26 [smoke hermes-4-14b-fp8] {'wall_s': 4.1, 'ttft_s': 0.57, 'approx_tok_s': 10.1, 'reasoning_chars': 186, 'content': '', 'split_ok': False}
+12:57:22 [round hermes-4-14b-fp8] rc=0 rows=4
+13:22:22 [slice hermes-4-14b-fp8] rc=1 resolved=0 retakes={}
+13:22:22 === hermes-4-14b-fp8: slice did not resolve in 37.0 min
+13:22:25 [del hermes-4-14b-fp8] DELETED 1 free=196GB
+13:22:56 [up gemma-4-26b-a4b-fp8] backend=triton ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 17:22:41 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+--- failure tail ---
+(APIServer pid=1)     uvloop.run(run_server(args))
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/uvloop/__init__.py", line 96, in run
+(APIServer pid=1)     return __asyncio.run(
+(APIServer pid=1)            ^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+(APIServer pid=1)     return runner.run(main)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+(APIServer pid=1)     return self._loop.run_until_complete(task)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/uvloop/__init__.py", line 48, in wrapper
+(APIServer pid=1)     return await main
+(APIServer pid=1)            ^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 176, in run_server
+(APIServer pid=1)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=1)     async with build_async_engine_client(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=1)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 82, in build_async_engine_client_from_engine_args
+(APIServer pid=1)     vllm_config = engine_args.create_engine_config(usage_context=usage_context)
+(APIServer pid=1)                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 2073, in create_engine_config
+(APIServer pid=1)     model_config = self.create_model_config()
+(APIServer pid=1)                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 1820, in create_model_config
+(APIServer pid=1)     return ModelConfig(
+(APIServer pid=1)            ^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+(APIServer pid=1)     s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+13:23:26 [up gemma-4-26b-a4b-fp8] backend=auto ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 17:23:12 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+--- failure tail ---
+(APIServer pid=1)     uvloop.run(run_server(args))
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/uvloop/__init__.py", line 96, in run
+(APIServer pid=1)     return __asyncio.run(
+(APIServer pid=1)            ^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+(APIServer pid=1)     return runner.run(main)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+(APIServer pid=1)     return self._loop.run_until_complete(task)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/uvloop/__init__.py", line 48, in wrapper
+(APIServer pid=1)     return await main
+(APIServer pid=1)            ^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 176, in run_server
+(APIServer pid=1)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=1)     async with build_async_engine_client(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=1)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 82, in build_async_engine_client_from_engine_args
+(APIServer pid=1)     vllm_config = engine_args.create_engine_config(usage_context=usage_context)
+(APIServer pid=1)                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 2073, in create_engine_config
+(APIServer pid=1)     model_config = self.create_model_config()
+(APIServer pid=1)                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 1820, in create_model_config
+(APIServer pid=1)     return ModelConfig(
+(APIServer pid=1)            ^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+(APIServer pid=1)     s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+13:23:57 [up gemma-4-26b-a4b-fp8] backend=torch ready=False (container exited)
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] Error in inspecting model architecture 'Gemma4ForConditionalGeneration'
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     raise CalledProcessError(self.returncode, self.args, self.stdout,
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'vllm.model_executor.models.registry']' returned non-zero exit status 1.
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     raise RuntimeError(
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] RuntimeError: Error raised in subprocess:
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] AttributeError: type object 'functional' has no attribute 'InterpolationMode'
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+--- failure tail ---
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 176, in run_server
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     return _bootstrap._gcd_import(name[level:], package, level)
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/gemma4_mm.py", line 26, in <module>
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     from transformers.models.gemma4 import (
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]   File "/usr/local/lib/python3.12/dist-packages/transformers/utils/import_utils.py", line 2648, in __getattr__
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114]     raise ModuleNotFoundError(
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] ModuleNotFoundError: Could not import module 'Gemma4Processor'. Are this object's requirements defined correctly?
+(APIServer pid=1) ERROR 10-08 17:23:42 [registry.py:1114] 
+(APIServer pid=1)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=1)     async with build_async_engine_client(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=1)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=1)   File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=1)     return await anext(self.gen)
+(APIServer pid=1)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/launchers/api_server/entry.py", line 82, in build_async_engine_client_from_engine_args
+(APIServer pid=1)     vllm_config = engine_args.create_engine_config(usage_context=usage_context)
+(APIServer pid=1)                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 2073, in create_engine_config
+(APIServer pid=1)     model_config = self.create_model_config()
+(APIServer pid=1)                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/vllm/engine/arg_utils.py", line 1820, in create_model_config
+(APIServer pid=1)     return ModelConfig(
+(APIServer pid=1)            ^^^^^^^^^^^^
+(APIServer pid=1)   File "/usr/local/lib/python3.12/dist-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+(APIServer pid=1)     s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+(APIServer pid=1) pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+(APIServer pid=1)   Value error, Model architectures ['Gemma4ForConditionalGeneration'] failed to be inspected. Please check the logs for more details. [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+(APIServer pid=1)     For further information visit https://errors.pydantic.dev/2.13/v/value_error
+
+13:23:57 === gemma-4-26b-a4b-fp8: engine failed to start in 1.5 min
+13:23:58 [del gemma-4-26b-a4b-fp8] DELETED 1 free=224GB
+13:23:58 === bench_candidates done (vllm-agents left DOWN)
+13:25:14 === bench_candidates start: ['gpt-oss-20b'] free=224GB

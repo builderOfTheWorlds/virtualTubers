@@ -1,0 +1,207 @@
+{
+ "name": "qwen3.6-35b-a3b-fp8",
+ "repo": "Qwen/Qwen3.6-35B-A3B-FP8",
+ "status": "ok",
+ "started": "09:07:46",
+ "backend": "triton",
+ "startup_log": "(EngineCore pid=295) INFO 10-08 13:08:20 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod\n(EngineCore pid=295) INFO 10-08 13:11:58 [model_runner.py:428] Model loading took 33.38 GiB memory and 217.621817 seconds\n(EngineCore pid=295) INFO 10-08 13:13:23 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5413 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5587. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.\n(EngineCore pid=295) INFO 10-08 13:13:23 [kv_cache_utils.py:2395] GPU KV cache size: 1,468,523 tokens, Maximum concurrency for 32,768 tokens per request: 44.82x\n",
+ "load": "33.38 GiB",
+ "smoke": {
+  "wall_s": 7.3,
+  "ttft_s": 0.97,
+  "approx_tok_s": 29.2,
+  "reasoning_chars": 949,
+  "content": "Oh dear, oh dear\u2026 please tell me it\u2019s just gold and not a dragon\u2019s breakfast buffet!",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 36.2,
+   "gm_direction_s": 17.4,
+   "think_pass_wall_s": 13.4,
+   "think_p95_s": 13.4,
+   "speak_p50_s": 1.1,
+   "speak_max_s": 1.1,
+   "adjudication_s": 1.2,
+   "reasoning_tokens": 1448,
+   "content_tokens": 657,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 39.8,
+   "gm_direction_s": 14.8,
+   "think_pass_wall_s": 16.5,
+   "think_p95_s": 16.5,
+   "speak_p50_s": 0.9,
+   "speak_max_s": 1.6,
+   "adjudication_s": 1.0,
+   "reasoning_tokens": 2240,
+   "content_tokens": 971,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 28.3,
+   "gm_direction_s": 11.8,
+   "think_pass_wall_s": 11.3,
+   "think_p95_s": 11.3,
+   "speak_p50_s": 0.9,
+   "speak_max_s": 1.5,
+   "adjudication_s": 1.0,
+   "reasoning_tokens": 1456,
+   "content_tokens": 576,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 36.0,
+   "gm_direction_s": 12.1,
+   "think_pass_wall_s": 15.9,
+   "think_p95_s": 15.9,
+   "speak_p50_s": 1.0,
+   "speak_max_s": 1.3,
+   "adjudication_s": 1.2,
+   "reasoning_tokens": 2277,
+   "content_tokens": 847,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 32.2,
+  "speak_p50_s": 1.0,
+  "think_pass_s": 12.4,
+  "gm_direction_s": 14.6,
+  "failed": 0,
+  "capped": 0
+ },
+ "round_n7": {
+  "wall_s": 37.9,
+  "speak_p50_s": 0.9,
+  "think_pass_s": 16.2,
+  "gm_direction_s": 13.4,
+  "failed": 0,
+  "capped": 0
+ },
+ "slice": {
+  "rc": 0,
+  "warnings": 0,
+  "wall_s": 193.9,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_091933.json",
+  "scenes_resolved": 2,
+  "rounds": 8,
+  "retakes": {
+   "stage_direction": 1
+  },
+  "overrules": 0,
+  "stuck": 0,
+  "gm_failures": 0,
+  "lines": [
+   [
+    "scene_direction",
+    "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you."
+   ],
+   [
+    "character_reply",
+    "*draws his sword* \n\nThis is the way. Stand behind me and speak only when I ask."
+   ],
+   [
+    "character_reply",
+    "This is the way. Stand fast, I'll handle it."
+   ],
+   [
+    "scene_direction",
+    "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup."
+   ],
+   [
+    "character_reply",
+    "Keep your cups. This wine smells like iron and bad faith. Stand ready."
+   ],
+   [
+    "scene_direction",
+    "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters."
+   ],
+   [
+    "character_reply",
+    "This is the way. Draw steel and hold the line."
+   ],
+   [
+    "scene_direction",
+    "The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades. The first slash takes the nearest guest. Blood sprays the marble. The crowd screams. The four of you stand between the attackers and the dais. Steel waits in your hands. The second attacker lunges at Vigil. The third swings toward Chadwick. Sodacan Bob and Leena face the last two. What do you do?"
+   ],
+   [
+    "character_reply",
+    "This is the way. I step forward and break his wrist before he finishes that swing. Hold your ground."
+   ],
+   [
+    "scene_direction",
+    "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink."
+   ],
+   [
+    "character_reply",
+    "I do not drink from strangers. Ask them plainly, or I will."
+   ],
+   [
+    "scene_direction",
+    "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops."
+   ],
+   [
+    "character_reply",
+    "This is the way. Move back. Now."
+   ],
+   [
+    "scene_direction",
+    "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne."
+   ],
+   [
+    "character_reply",
+    "Hold the line. Shield wall. Let them break on us."
+   ],
+   [
+    "scene_direction",
+    "The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pressure builds. Dust rises from the floor. A wave of force washes over you. It is not wind. It is magic. The air thickens. You feel a hand pressing against your chest from the other side. Not a person. A spell. It holds you there. The front line stops dead. The guests behind them push forward. You are pinned. Chadwick, Leena, Vigil, Sodacan Bob, the spell locks your joints. The ash-masked figures close the distance. Their cold-fire blades raise high. The thrumming grows loud. The vault door beneath the manor begins to vibrate."
+   ]
+  ],
+  "verdicts": [
+   [
+    "pass",
+    "Scene established. All four players present at threshold. Doors close behind them."
+   ],
+   [
+    "pass",
+    "Chadwick's line fits his blunt, oath-driven persona and rejects the wine naturally. The scene continues smoothly into the next beat."
+   ],
+   [
+    "pass",
+    "Chadwick's line fits his character and advances the scene. The GM has set up the next beat: an ominous attack/shift in the room. The scene c"
+   ],
+   [
+    "pass",
+    "Chadwick moves first. He steps in, intercepts the curved blade, and drives his shoulder into the attacker's arm. Bone cracks. The wrist snap"
+   ],
+   [
+    "pass",
+    "Chadwick rejects the drink. The velvet-coated man does not flinch. He sets the glass down on the fountain's stone rim. The water flows over "
+   ],
+   [
+    "pass",
+    "Chadwick's line fits his blunt, oath-bound nature and matches the scene's escalating tension. The GM has advanced the scene correctly with a"
+   ]
+  ]
+ },
+ "mem_min_gib": 29.4,
+ "elapsed_min": 11.8
+}

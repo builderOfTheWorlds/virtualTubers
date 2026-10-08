@@ -60,8 +60,10 @@ class vLLMHost:
     protocol = "vllm_openai_v1"
 
     def __init__(self, base_url: str, timeout_s: float = 1200.0,
-                 headers: dict[str, str] | None = None):
+                 headers: dict[str, str] | None = None,
+                 extra_body: dict[str, Any] | None = None):
         self.base_url = base_url.rstrip("/")
+        self.extra_body = dict(extra_body or {})
         self.timeout_s = timeout_s
         self.headers = headers or {}
         self._c = httpx.Client(base_url=self.base_url, timeout=timeout_s,
@@ -149,6 +151,7 @@ class vLLMHost:
             body["top_p"] = top_p
         if thinking_token_budget is not None:
             body["thinking_token_budget"] = int(thinking_token_budget)
+        body.update(self.extra_body)
 
         t0 = time.perf_counter()
         first_byte_t: float | None = None

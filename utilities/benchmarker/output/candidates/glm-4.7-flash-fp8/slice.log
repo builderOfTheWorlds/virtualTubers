@@ -1,0 +1,105 @@
+[slice] migrations applied=[] profiles={'Leena': 'unchanged', 'Vigil': 'unchanged', 'chadwick': 'unchanged', 'gm': 'unchanged', 'sodacan_bob': 'unchanged'}
+[slice] gm llm=VLLMClient(base_url='http://localhost:8092', model='table-agents', api_key=set)
+[slice] wall=1500.0s messages=60 -> /home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_111800.json
+      0.0s scene_start      tuber_0->broadcast r1.loaded.gm  
+     13.9s scene_direction  tuber_0->broadcast r1.directing.gm  The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls 
+     13.9s table_line       tuber_0->roundtable   The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls 
+     13.9s think_request    tuber_0->broadcast r1.think.gm  
+     21.4s think_done       tuber_1->tuber_0   r1.think.gm  
+     21.4s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+     23.3s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  *draws his sword* This is the way.
+     23.3s retake           tuber_0->tuber_1   r1.speak.tuber_1  stage_direction: *asterisk action*; spoken lines only
+     28.0s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  llm_error: LLMError
+     28.0s retake           tuber_0->tuber_1   r1.speak.tuber_1  no_take: llm_error: LLMError
+     29.8s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  This is the way.
+     29.8s table_line       tuber_0->roundtable   This is the way.
+     34.2s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick asserts direction with his characteristic bluntness. The scene contract mandates a sudden attack interrupting the arrival. Chadwick's line al
+     54.7s scene_direction  tuber_0->broadcast r2.directing.gm  GM block: truth
+Ten thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained
+and went grey one by one. A small group 
+     54.7s table_line       tuber_0->roundtable   GM block: truth
+Ten thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained
+and went grey one by one. A small group 
+     54.7s think_request    tuber_0->broadcast r2.think.gm  
+     62.4s think_done       tuber_1->tuber_0   r2.think.gm  
+     62.4s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+     64.5s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  I see what you are.
+     64.5s table_line       tuber_0->roundtable   I see what you are.
+     68.0s adjudication     tuber_0->broadcast r2.adjudicating.gm verdict=pass  Chadwick declares the direction. The attack has begun.
+     81.1s scene_direction  tuber_0->broadcast r3.directing.gm  A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does n
+     81.1s table_line       tuber_0->roundtable   A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does n
+     81.1s think_request    tuber_0->broadcast r3.think.gm  
+     88.6s think_done       tuber_1->tuber_0   r3.think.gm  
+     88.6s turn_assignment  tuber_0->tuber_1   r3.speak.tuber_1  
+     90.7s character_reply  tuber_1->tuber_0   r3.speak.tuber_1  I keep my word. You are not it.
+     90.7s table_line       tuber_0->roundtable   I keep my word. You are not it.
+     97.2s adjudication     tuber_0->broadcast r3.adjudicating.gm verdict=pass  Chadwick's line 'I see what you are' is a good opening threat, aligning with his Vengeance oath and blunt nature. It sets the stage for combat immedia
+    110.4s scene_direction  tuber_0->broadcast r4.directing.gm  The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords
+    110.4s table_line       tuber_0->roundtable   The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords
+    110.4s think_request    tuber_0->broadcast r4.think.gm  
+    117.9s think_done       tuber_1->tuber_0   r4.think.gm  
+    117.9s turn_assignment  tuber_0->tuber_1   r4.speak.tuber_1  
+    120.0s character_reply  tuber_1->tuber_0   r4.speak.tuber_1  The strings are cut; it is time.
+    120.0s table_line       tuber_0->roundtable   The strings are cut; it is time.
+    125.1s adjudication     tuber_0->broadcast r4.adjudicating.gm verdict=pass  The scene has reached a critical juncture with the attack on the manor and the reveal of the 'pale men' as corrupted guests. The party is engaged in c
+    125.1s scene_resolve    tuber_0->broadcast r4.resolved.gm  
+    125.2s scene_start      tuber_0->broadcast r1.loaded.gm  
+    139.1s scene_direction  tuber_0->broadcast r1.directing.gm  The gates of Leto’s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind
+    139.1s table_line       tuber_0->roundtable   The gates of Leto’s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind
+    139.1s think_request    tuber_0->broadcast r1.think.gm  
+    146.7s think_done       tuber_1->tuber_0   r1.think.gm  
+    146.7s turn_assignment  tuber_0->tuber_1   r1.speak.tuber_1  
+    148.8s character_reply  tuber_1->tuber_0   r1.speak.tuber_1  I am taking the middle door. This is the way.
+    148.8s table_line       tuber_0->roundtable   I am taking the middle door. This is the way.
+    152.3s adjudication     tuber_0->broadcast r1.adjudicating.gm verdict=pass  Chadwick takes the middle door. The others follow suit.
+    165.4s scene_direction  tuber_0->broadcast r2.directing.gm  The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand d
+    165.4s table_line       tuber_0->roundtable   The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand d
+    165.4s think_request    tuber_0->broadcast r2.think.gm  
+    175.8s think_done       tuber_1->tuber_0   r2.think.gm  
+    175.8s turn_assignment  tuber_0->tuber_1   r2.speak.tuber_1  
+    178.3s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  Chadwick: The Duke does not usually play games. Someone is watching. Ask them plainly, or I will.
+    178.3s retake           tuber_0->tuber_1   r2.speak.tuber_1  name_label: line starts with own name label 'Chadwick'
+    182.5s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  llm_error: LLMError
+    182.5s retake           tuber_0->tuber_1   r2.speak.tuber_1  no_take: llm_error: LLMError
+    186.8s character_reply  tuber_1->tuber_0   r2.speak.tuber_1  llm_error: LLMError
+    189.5s table_line       tuber_0->roundtable   I am Chadwick. I do not know any of you. I keep my word, and I do not talk unless I have to.
+    189.5s gm_overrule      tuber_0->tuber_1   r2.speak.tuber_1  I am Chadwick. I do not know any of you. I keep my word, and I do not talk unless I have to.
+    203.5s scene_stuck      tuber_0->operator  r2.adjudicating.gm  gm adjudicate failed 2x: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=256)
+2026-10-08 10:53:00,388 INFO character.db character db schema up to date (2 migrations)
+2026-10-08 10:53:00,414 INFO character.generator.office_profiles office profiles loaded campaign=ashiorid dry_run=False actions={'unchanged': 5}
+2026-10-08 10:53:00,468 INFO agent_handlers.table_gm table contracts loaded=2 (start=0 limit=2)
+2026-10-08 10:53:00,488 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:14,440 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:21,843 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:23,802 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:28,420 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1 round=1: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=160)
+2026-10-08 10:53:28,428 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:30,321 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:34,695 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:53:55,209 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:02,938 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:04,985 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:08,531 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:21,597 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:29,099 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:31,219 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:37,713 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:50,920 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:54:58,383 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:00,500 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:05,669 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:19,585 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:27,143 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:29,275 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:32,796 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:45,859 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:56,303 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:55:58,764 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:56:03,009 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2 round=2: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=160)
+2026-10-08 10:56:03,018 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:56:07,243 ERROR agent_handlers.table seat speak failed worker=tuber_1 scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2 round=2: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=160)
+2026-10-08 10:56:07,251 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:56:09,995 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:56:16,971 WARNING turns arbiter GM adjudicate failed (1) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=256)
+2026-10-08 10:56:17,030 INFO httpx HTTP Request: POST http://localhost:8092/v1/chat/completions "HTTP/1.1 200 OK"
+2026-10-08 10:56:23,956 WARNING turns arbiter GM adjudicate failed (2) scene=invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=256)

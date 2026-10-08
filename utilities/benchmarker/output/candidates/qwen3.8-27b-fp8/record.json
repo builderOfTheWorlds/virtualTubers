@@ -1,0 +1,203 @@
+{
+ "name": "qwen3.8-27b-fp8",
+ "repo": "Qwen/Qwen3.8-27B-FP8",
+ "status": "ok",
+ "started": "11:18:04",
+ "backend": "triton",
+ "startup_log": "(EngineCore pid=294) INFO 10-08 15:18:33 [__init__.py:726] Selected TritonFp8BlockScaledMMKernel for Fp8LinearMethod\n(EngineCore pid=294) INFO 10-08 15:21:42 [model_runner.py:428] Model loading took 27.64 GiB memory and 189.264403 seconds\n(EngineCore pid=294) INFO 10-08 15:23:28 [gpu_worker.py:655] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.5500 is equivalent to --gpu-memory-utilization=0.5381 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.5619. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.\n(EngineCore pid=294) INFO 10-08 15:23:28 [kv_cache_utils.py:2395] GPU KV cache size: 445,781 tokens, Maximum concurrency for 32,768 tokens per request: 13.60x\n",
+ "load": "27.64 GiB",
+ "smoke": {
+  "wall_s": 29.6,
+  "ttft_s": 0.51,
+  "approx_tok_s": 5.4,
+  "reasoning_chars": 584,
+  "content": "Oh dear, oh dear, oh dear\u2014does it always groan so dramatically? I do hope we\u2019re not supposed to be sneaking in.",
+  "split_ok": true
+ },
+ "round_rows": [
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 149.8,
+   "gm_direction_s": 77.6,
+   "think_pass_wall_s": 48.2,
+   "think_p95_s": 48.2,
+   "speak_p50_s": 3.2,
+   "speak_max_s": 5.7,
+   "adjudication_s": 9.0,
+   "reasoning_tokens": 1475,
+   "content_tokens": 426,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 169.5,
+   "gm_direction_s": 78.0,
+   "think_pass_wall_s": 50.3,
+   "think_p95_s": 50.3,
+   "speak_p50_s": 4.8,
+   "speak_max_s": 7.7,
+   "adjudication_s": 5.0,
+   "reasoning_tokens": 2284,
+   "content_tokens": 670,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 0
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 4,
+   "wall_s": 135.2,
+   "gm_direction_s": 64.5,
+   "think_pass_wall_s": 46.3,
+   "think_p95_s": 46.3,
+   "speak_p50_s": 4.8,
+   "speak_max_s": 5.4,
+   "adjudication_s": 5.4,
+   "reasoning_tokens": 1482,
+   "content_tokens": 398,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  },
+  {
+   "shape": "two_pass",
+   "n_seats": 7,
+   "wall_s": 158.4,
+   "gm_direction_s": 71.2,
+   "think_pass_wall_s": 47.5,
+   "think_p95_s": 47.5,
+   "speak_p50_s": 5.6,
+   "speak_max_s": 7.1,
+   "adjudication_s": 6.1,
+   "reasoning_tokens": 2281,
+   "content_tokens": 658,
+   "n_failed": 0,
+   "n_budget_capped": 0,
+   "repeat": 1
+  }
+ ],
+ "round_n4": {
+  "wall_s": 142.5,
+  "speak_p50_s": 4.0,
+  "think_pass_s": 47.2,
+  "gm_direction_s": 71.0,
+  "failed": 0,
+  "capped": 0
+ },
+ "round_n7": {
+  "wall_s": 163.9,
+  "speak_p50_s": 5.2,
+  "think_pass_s": 48.9,
+  "gm_direction_s": 74.6,
+  "failed": 0,
+  "capped": 0
+ },
+ "slice": {
+  "rc": 0,
+  "warnings": 3,
+  "wall_s": 1500.1,
+  "file": "/home/secus/codeProjects/virtualTubers/utilities/benchmarker/output/table_slice_20261008_115933.json",
+  "scenes_resolved": 1,
+  "rounds": 6,
+  "retakes": {
+   "stage_direction": 1
+  },
+  "overrules": 0,
+  "stuck": 1,
+  "gm_failures": 3,
+  "lines": [
+   [
+    "scene_direction",
+    "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\""
+   ],
+   [
+    "character_reply",
+    "*draws his sword* \n\nThis is the way. Sorensen Leto. Now."
+   ],
+   [
+    "character_reply",
+    "Where is Sorensen Leto? Speak plainly, or I will make you."
+   ],
+   [
+    "scene_direction",
+    "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d"
+   ],
+   [
+    "character_reply",
+    "East hall. You lead. If the manor decides anything else, I decide first."
+   ],
+   [
+    "scene_direction",
+    "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d"
+   ],
+   [
+    "character_reply",
+    "East hall, then. Let it come through that door, or not. But it will not make me kneel."
+   ],
+   [
+    "scene_direction",
+    "The double doors open.\n\nThe east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then stops.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs turns sharp.\n\nA crack runs up the nearest wall. Dust falls from the beams. Three black-cloaked figures step through the side arches. Iron pikes catch candlelight. Their faces are hidden.\n\nThe steward falls back. His silver tray tips.\n\n\u201cHis Grace is not ready,\u201d he says. \u201cThey came early.\u201d\n\nThe nearest pike points at the four of you."
+   ],
+   [
+    "character_reply",
+    "Who sent you? Say it plain, or I will make you."
+   ],
+   [
+    "scene_direction",
+    "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d"
+   ],
+   [
+    "character_reply",
+    "Guests behind me. You\u2019ll burn nothing."
+   ],
+   [
+    "scene_direction",
+    "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says."
+   ],
+   [
+    "character_reply",
+    "Stair, door, east wing. Three jobs. No one dies until they try me."
+   ],
+   [
+    "scene_direction",
+    "Black light holds the grey men still. Their boots stop. Their blades stay up.\n\nA hairline crack opens in the east wing wall. Dust drops. An old hum rises under the floor, low as a struck bell. The candles lean toward it.\n\nThe Duke\u2019s hand trembles once. \u201cThat room must not open,\u201d he says.\n\nAt the stair, the two grey men snap free. At the hall door, the third turns and swings. Chadwick, Leena, Vigil, Bob: three doors, one crash, one humming wall. Which of you moves first?"
+   ],
+   [
+    "character_reply",
+    "Vigil, the stair. Bob, the door. I take the east wing. This is the way."
+   ]
+  ],
+  "verdicts": [
+   [
+    "pass",
+    "Chadwick's line is in character, first person, and does not decide outcomes. The steward can answer plainly."
+   ],
+   [
+    "pass",
+    "Chadwick stays in character and advances the arrival beat without deciding outcomes for other players."
+   ],
+   [
+    "pass",
+    "Chadwick's line is in character and does not decide outcomes for other characters. The scene can continue toward the attack interruption."
+   ],
+   [
+    "pass",
+    "Round 4 advances the spine: the four arrive, meet under the pull, the party begins, and an attack interrupts them. Chadwick is in character "
+   ],
+   [
+    "pass",
+    "Chadwick\u2019s line is in-character and does not decide the outcome. The attack has begun; the scene can continue."
+   ],
+   [
+    "pass",
+    "The attack is underway. The Duke has ordered the party to protect the east wing. Chadwick has taken a defensive position and issued a warnin"
+   ]
+  ]
+ },
+ "mem_min_gib": 39.1,
+ "elapsed_min": 41.5
+}
