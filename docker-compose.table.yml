@@ -25,6 +25,15 @@
 # --served-model-name (vllm-agents .env VLLM_SERVED_NAME, default table-agents).
 # ──────────────────────────────────────────────────────────────────────────────
 
+# P3.7: the D&D table. Each seat's container gets its generated worker config
+# (config/workers/table/<slug>.yaml, scripts/build_table_configs.py), its seat
+# WORKER_ID, the pack (lore for the brief) and the character DB settings. The GM
+# container also gets the scene-contract fixture. Secrets by NAME only.
+x-character-db-env: &character-db-env
+  CHARACTER_DB_HOST: ${TABLE_CHARACTER_DB_HOST:-host.docker.internal}
+  CHARACTER_DB_PORT: ${TABLE_CHARACTER_DB_PORT:-5433}
+  CHARACTER_DB_PASSWORD: ${CHARACTER_DB_PASSWORD:?CHARACTER_DB_PASSWORD must be set in .env for the table overlay}
+
 x-table-llm-env: &table-llm-env
   LLM_PROVIDER: vllm
   LLM_BASE_URL: ${TABLE_LLM_BASE_URL:-http://host.docker.internal:8092}
@@ -34,19 +43,45 @@ x-table-llm-env: &table-llm-env
 services:
   worker-gm:
     environment:
-      <<: *table-llm-env
+      <<: [*table-llm-env, *character-db-env]
+      WORKER_ID: tuber_0
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/gm.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
+      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
+      - ${REPO_ROOT:-.}/tests/table/fixtures:/data/table/fixtures:ro
   worker-manager:
     environment:
-      <<: *table-llm-env
+      <<: [*table-llm-env, *character-db-env]
+      WORKER_ID: tuber_1
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/chadwick.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
+      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
   worker-coder-native:
     environment:
-      <<: *table-llm-env
+      <<: [*table-llm-env, *character-db-env]
+      WORKER_ID: tuber_2
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/Leena.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
+      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
   worker-coder-aider:
     environment:
-      <<: *table-llm-env
+      <<: [*table-llm-env, *character-db-env]
+      WORKER_ID: tuber_3
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/Vigil.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
+      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
   worker-tester:
     environment:
-      <<: *table-llm-env
+      <<: [*table-llm-env, *character-db-env]
+      WORKER_ID: tuber_4
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/sodacan_bob.yaml:/config/worker.yaml:ro
+      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro
+      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro
   worker-coder-opencode:
     environment:
       <<: *table-llm-env
