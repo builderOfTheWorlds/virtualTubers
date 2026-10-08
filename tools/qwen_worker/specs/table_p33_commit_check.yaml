@@ -22,7 +22,7 @@ context_files:
 
 interface: |
   RULES = ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-           "too_long", "forbidden_leak")         # check order; the first failure wins
+           "stage_direction", "too_long", "forbidden_leak")         # check order; the first failure wins
 
   @dataclass(frozen=True)
   class CommitContext:
@@ -62,6 +62,9 @@ notes: |
     Include "said" explicitly. A name followed by punctuation ("Leena, tell
     me") is ADDRESSING, not speaking for: ok. The reason names the other
     character.
+  - stage_direction: an *action* span (asterisk, 1+ non-asterisk chars,
+    asterisk; also **double**) or a parenthetical "(" ... ")" containing at
+    least one letter. A lone "*" ("3 * 4") or an emoticon ":)" is not one.
   - too_long: words (whitespace split) > max_words, or non-empty lines > max_lines.
   - forbidden_leak: normalise both sides (lowercase, collapse all whitespace to
     one space); a phrase that occurs as a substring fails. The reason quotes the

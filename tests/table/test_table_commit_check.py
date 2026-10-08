@@ -11,6 +11,8 @@ Rules (checked in this order; the first failure wins):
   meta              out-of-character / model-meta text (AI disclaimers, <think> tags, OOC)
   name_label        the line starts with the seat's OWN name label ("Chadwick: ...")
   speaks_for_other  the line voices or narrates ANOTHER cast member
+  stage_direction   *asterisk actions* or (parenthetical asides): spoken lines only
+                    (agent_dnd §5.3; seen in the W0 MoE run: "*Stomps*", "(Why do I know that name?)")
   too_long          more than max_words words or max_lines lines
   forbidden_leak    contains a forbidden phrase (case/whitespace-insensitive)
 """
@@ -101,6 +103,25 @@ def test_speaks_for_other_fails(text):
     assert any(name in r.reason for name in CAST.values())
 
 
+@pytest.mark.parametrize("text", [
+    "*adjusts lute nervously* I've got a song for this!",
+    "This sigil... it's the same as the one in my village. (Why do I know that name?)",
+    "Hmph. *Stomps near the fracture.* Crude work.",
+    "(whispering) Stay back.",
+])
+def test_stage_direction_fails(text):
+    assert check(text).code == "stage_direction"
+
+
+@pytest.mark.parametrize("text", [
+    "Two exits, one barred. Smiles don't open doors.",
+    "It's 3 * 4 paces to the wall.",          # a lone asterisk is not an action
+    "Stay back:) I mean it.",                  # emoticon, not a parenthetical
+])
+def test_stage_direction_not_over_caught(text):
+    assert check(text).ok, check(text)
+
+
 def test_too_long_by_words():
     assert check(" ".join(["la"] * 61)).code == "too_long"
     assert check(" ".join(["la"] * 60)).ok
@@ -134,7 +155,7 @@ def test_reason_is_retake_ready():
 
 def test_rule_codes_constant():
     assert cc.RULES == ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-                        "too_long", "forbidden_leak")
+                        "stage_direction", "too_long", "forbidden_leak")
 
 
 # ── silent-seat derivation reuses the improviser rule ──────────────────────
