@@ -48,7 +48,8 @@ _DEFAULT_BUDGETS = {
 }
 
 _DIRECTION_INSTRUCTION = (
-    "Narrate what happens next, moving the scene toward the contract's canon_goal. "
+    "Narrate what happens NEXT, moving the scene toward the contract's canon_goal. "
+    "Never repeat or paraphrase a line already in the transcript. "
     "Keep it to at most 120 words. Address the seated players by their names and "
     "never speak for them. Begin your reply with the narration only (no 'GM:' label)."
 )
@@ -162,6 +163,11 @@ class LLMGM:
             max_tokens=max_tokens, reasoning_budget=reasoning)
         text = (content or "").strip()
         text = _GM_LABEL_RE.sub("", text, count=1).strip()
+        copied = commit_check.repeats_prior(text, [e.get("text") for e in transcript or []])
+        if copied is not None:
+            # 2026-10-08: the MoE GM copied a player's line as its direction. Raising
+            # makes the arbiter retry on its next tick (and alarm after two).
+            raise ValueError("direction repeats a transcript line")
         expects = [s for s in contract.get("participants", []) if s != self._gm_seat]
         must = contract.get("must_resolve") or []
         must_resolve = "; ".join(must) if must else (contract.get("canon_goal") or "")
@@ -230,11 +236,12 @@ def build_check(table_cfg):
     max_words = table_cfg.get("max_words", 60)
     max_lines = table_cfg.get("max_lines", 2)
 
-    def check(seat, text):
+    def check(seat, text, prior=()):
         phrases = tuple(forbidden.get(seat, ()))
         ctx = commit_check.CommitContext(
             seat=seat, cast_names=cast_names, silent_seats=silent_seats,
-            forbidden_phrases=phrases, max_words=max_words, max_lines=max_lines)
+            forbidden_phrases=phrases, max_words=max_words, max_lines=max_lines,
+            prior_lines=tuple(prior))
         return commit_check.check_reply(text, ctx)
 
     return check
@@ -369,6 +376,10 @@ class TableRuntime:
         self._feed = (live_feed.CommitPublisher(worker_id, producer.send)
                       if self.table_cfg.get("live_feed", True) else None)
 
+    def _on_commit(self, entry, scene_id):
+        if self._feed is not None:
+            self._feed.publish_entry(entry, scene_id)
+
     def _publish(self):
         if self._feed is not None and self.arbiter is not None:
             self._feed.publish_new(self.arbiter.state)
@@ -405,7 +416,8 @@ class TableRuntime:
                 clock=self.clock, gm_seat=gm_seat,
                 think_s=self.table_cfg.get("think_s", 60),
                 speak_s=self.table_cfg.get("speak_s", 45),
-                store=self.store, arbiter_id=self.worker_id)
+                store=self.store, arbiter_id=self.worker_id,
+                on_commit=self._on_commit)
         except Exception as exc:  # noqa: BLE001 - a bad contract must not kill the hook
             log.warning("table_gm cannot build arbiter scene=%s: %s", contract.get("scene_id"), exc)
             self.index += 1          # skip the bad contract instead of retrying it forever

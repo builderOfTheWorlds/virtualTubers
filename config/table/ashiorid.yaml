@@ -47,3 +47,7 @@ llm:
   api_key_env: VLLM_API_KEY
   temperature: 0.7
   max_tokens: 1024
+  # Qwen's documented remedy for Thinking-model repetition (0..2); added after the
+  # 2026-10-08 MoE slice collapsed into verbatim repeats. Passed to vLLM verbatim.
+  extra_body:
+    presence_penalty: 1.0

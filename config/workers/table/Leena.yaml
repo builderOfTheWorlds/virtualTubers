@@ -41,6 +41,8 @@ llm:
   api_key_env: VLLM_API_KEY
   temperature: 0.7
   max_tokens: 1024
+  extra_body:
+    presence_penalty: 1.0
 coding_backend:
   provider: native
   workspace: /data/repo

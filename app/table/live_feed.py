@@ -48,6 +48,17 @@ class CommitPublisher:
         self.send = send
         self._published = {}           # scene_id -> number of entries already published
 
+    def publish_entry(self, entry, scene_id):
+        """Publish one entry at commit time (Arbiter on_commit); counted so a later
+        publish_new(state) does not send it again."""
+        if str(entry.get("text") or "").strip():
+            try:
+                self.send(build_table_line(self.arbiter_id, entry, scene_id))
+            except Exception as exc:  # noqa: BLE001
+                log.error("table_line publish failed scene=%s: %s", scene_id, exc)
+                return
+        self._published[scene_id] = self._published.get(scene_id, 0) + 1
+
     def publish_new(self, state):
         scene_id = state.get("scene_id")
         transcript = state.get("transcript") or []

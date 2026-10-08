@@ -1,0 +1,1647 @@
+{
+ "wall_s": 174.6,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 12.29,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 12.29,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 12.29,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 18.22,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 18.22,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 19.84,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nThis is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 19.84,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 21.42,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 24.79,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his blunt, oath-focused voice. He acknowledges the unspoken connection without naming it, staying true to his character. The scene's 'silent meeting' beat is set.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 35.15,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 35.15,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 35.15,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 35.15,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 40.81,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 40.81,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 42.41,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 45.63,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick repeats his line exactly as before. The scene's tension is escalating with the servant's warning and the shadow detaching. No new action taken by player.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 55.76,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 55.76,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 55.76,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 55.76,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 61.57,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 61.57,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 63.2,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 66.64,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his established speech pattern (blunt, oath-focused, no hesitation). The GM's setup (binding spell, blade glinting) creates immediate stakes. Line adheres to character and scene contract without overstepping.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 75.54,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 75.54,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 75.54,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 75.54,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 81.35,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 81.35,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The heavy oak door slams shut behind you. Torchlight glares off marble floors and a vaulted ceiling. You stand in a grand hall filled with velvet chairs and silent servants. The air hums with the scent of beeswax and old wood. As you turn, you see the others\u2014Leena in a red dress, Vigil with a sword at his hip, Bob adjusting his apprentice's apron. All four of you pause. No one speaks. The silence feels too thick. You know each other's names before the first word is said.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A servant in black livery steps forward. \"The Duke expects you in the ballroom.\" Her voice cracks. \"He said... to tell you the invitation was a warning.\"  \nLeena gasps. Vigil's hand tightens on his sword hilt. Bob's smile vanishes.  \nThe torches flicker. A shadow detaches from the wall.  \nThe door slams shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow coalesces into a figure in a hooded cloak. It steps forward.  \nTorch flames gutter.  \nA voice whispers, \"The seal holds.\"  \nThen the air shimmers.  \nA binding spell snaps tight around all four of you.  \nYour limbs lock.  \nThe cloak lifts its hand.  \nA blade glints.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 82.96,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 86.49,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his established speech pattern and character voice. The repetition is consistent with his stress response (getting louder/shorter under pressure). The scene continues with the binding spell active and the blade glinting, so the line is appropriate to the moment.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 86.49,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": false,
+    "state_delta": {},
+    "record_id": null
+   }
+  },
+  {
+   "t": 86.49,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 86.54,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 96.93,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 96.93,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 96.93,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 102.93,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 102.93,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 104.55,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 107.54,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line fits character: blunt, oath-focused, no extra words. Scene sets atmosphere without revealing secrets. No rules broken.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 118.14,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 118.14,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 118.14,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 118.14,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 124.21,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 124.21,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 125.86,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk him plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 129.81,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's lines are consistent with his character: blunt, oath-focused, demanding clarity. He repeats his core phrases without adding new info. The GM's scene description sets up the tension (clock stops, shadow, door slam) and the other players' reactions. Chadwick's lines fit the 'plain answers' want and avoid admitting confusion. No rules broken.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 143.1,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 143.1,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 143.1,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk him plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 143.1,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 149.06,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 149.06,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 150.72,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk him plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 153.66,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick repeats his lines verbatim. No new action taken. The scene is set for the attack to begin.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 163.61,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The door slams shut. Black smoke pours through the keyhole. A hand grips the doorknob from outside. The chandelier shatters. Glass rains down. Shadows leap from the walls. A voice shouts: \"Burn it down. We will search through the ashes.\"",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 163.61,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The door slams shut. Black smoke pours through the keyhole. A hand grips the doorknob from outside. The chandelier shatters. Glass rains down. Shadows leap from the walls. A voice shouts: \"Burn it down. We will search through the ashes.\"",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 163.61,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk him plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 163.61,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The door slams shut. Black smoke pours through the keyhole. A hand grips the doorknob from outside. The chandelier shatters. Glass rains down. Shadows leap from the walls. A voice shouts: \"Burn it down. We will search through the ashes.\"",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 169.43,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 169.43,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Stone floors gleam under dim chandeliers. Heavy invitations rest on your laps. The paper is thick, ink pressed deep. Wind rattles the single window. A clock ticks loudly in the hall. You each look up as the others arrive. The room holds its breath. A chill runs through the air, sharp as a blade. The four of you sense it. Something old stirs in the walls.  \nChadwick: This is the way.  \nAsk them plainly, or I will.  \nLeena's fingers trace the invitation's seal. She smiles too bright. \"It's cold in here. Like the well's shadow.\"  \nVigil's knuckles whiten on the chair arms. \"The clock stopped.\"  \nSodacan Bob leans forward. \"You think it's the Duke's fault?\"  \nA shadow blots the window. The chandelier flares.  \nThe room holds its breath.  \nThen the door slams shut.  \nChadwick: This is the way.  \nAsk him plainly, or I will.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk him plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The door slams shut. Black smoke pours through the keyhole. A hand grips the doorknob from outside. The chandelier shatters. Glass rains down. Shadows leap from the walls. A voice shouts: \"Burn it down. We will search through the ashes.\"",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 170.99,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nBurn them first.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 174.58,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's lines are consistent with his character: blunt, oath-focused, and refusing to tolerate ambiguity. He repeats his established phrases exactly as written in his sheet. The scene escalates to the attack as required by the contract. No other character speaks in this turn.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 174.58,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  },
+  {
+   "t": 174.58,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nBurn them first.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 12.29
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.93
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.62
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.58
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.73
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.66
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.6
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.34
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.63
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 12.34
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.61
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.53
+  },
+  {
+   "what": "gm_tick",
+   "s": 10.39
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.0
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.62
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.59
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.08
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.64
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 17.24
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.96
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.66
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 12.89
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.56
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.59
+  }
+ ]
+}

@@ -17,6 +17,7 @@ State is a plain JSON dict persisted to a StateStore after every step, so
 `Arbiter.resume(store, scene_id, ...)` continues a scene after a restart.
 """
 import copy
+import inspect
 import logging
 from dataclasses import dataclass, field
 from typing import Callable, Optional, Protocol
@@ -76,12 +77,21 @@ class GMUnavailable(Exception):
 class Arbiter:
     def __init__(self, contract, seats, gm, check, send, clock, *, gm_seat="tuber_0",
                  think_s=60, speak_s=45, store=None, arbiter_id="arbiter",
-                 broadcast_to="broadcast", operator_to="operator", _state=None):
+                 broadcast_to="broadcast", operator_to="operator", on_commit=None, _state=None):
         # broadcast_to MUST be message_bus.BROADCAST ("broadcast"): MessageConsumer.poll_new
         # drops any message whose `to` is neither the worker id nor "broadcast", so a
         # custom audience like "table" would never reach a seat (found in review).
         self.gm = gm
         self.check = check
+        # 2026-10-08: check(seat, text, prior=[committed texts]) when it accepts `prior`
+        # (repeats rule); plain check(seat, text) still works.
+        try:
+            self._check_takes_prior = "prior" in inspect.signature(check).parameters
+        except (TypeError, ValueError):
+            self._check_takes_prior = False
+        # on_commit(entry, scene_id): called the moment a line is committed (the
+        # roundtable feed must not wait for the GM's next synchronous calls).
+        self.on_commit = on_commit
         self.send = send
         self.clock = clock
         self.think_s = think_s
@@ -226,6 +236,14 @@ class Arbiter:
         self.send(msg)
         return msg
 
+    def _commit(self, entry):
+        self._s["transcript"].append(entry)
+        if self.on_commit is not None:
+            try:
+                self.on_commit(dict(entry), self._s["scene_id"])
+            except Exception as exc:  # noqa: BLE001 - presentation never breaks the table
+                log.error("arbiter on_commit failed scene=%s: %s", self._s["scene_id"], exc)
+
     def _gm_call(self, name, *args):
         s = self._s
         try:
@@ -269,7 +287,7 @@ class Arbiter:
             "scene_id": s["scene_id"], "round": s["round"], "speaker": s["gm_seat"],
             "text": d.text, "expects": expects, "must_resolve": d.must_resolve or "",
         })
-        s["transcript"].append({"speaker": "gm", "text": d.text, "kind": "direction"})
+        self._commit({"speaker": "gm", "text": d.text, "kind": "direction"})
         s["phase"] = THINK
         s["deadline"] = self.clock() + self.think_s
         self._emit("think_request", self.broadcast_to, {
@@ -319,11 +337,15 @@ class Arbiter:
         if not payload["took"]:
             self._fail_turn(seat, f"no_take: {payload['reason'] or 'declined'}")
             return
-        result = self.check(seat, payload["text"])
+        if self._check_takes_prior:
+            result = self.check(seat, payload["text"],
+                                prior=[e["text"] for e in s["transcript"]])
+        else:
+            result = self.check(seat, payload["text"])
         if not result.ok:
             self._fail_turn(seat, result.reason or (result.code or "check_failed"))
             return
-        s["transcript"].append({"speaker": seat, "text": payload["text"], "kind": "reply"})
+        self._commit({"speaker": seat, "text": payload["text"], "kind": "reply"})
         self._next_speaker()
 
     def _fail_turn(self, seat, reason):
@@ -347,7 +369,7 @@ class Arbiter:
         except GMUnavailable:
             return
         s["pending_overrule"] = None
-        s["transcript"].append({"speaker": seat, "text": text, "kind": "overrule"})
+        self._commit({"speaker": seat, "text": text, "kind": "overrule"})
         self._emit("gm_overrule", seat, {
             "scene_id": s["scene_id"], "round": s["round"], "seat": seat,
             "committed_text": text, "note": reason,

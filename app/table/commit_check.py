@@ -21,7 +21,15 @@ log = logging.getLogger(__name__)
 
 #: Rule codes, in check order. The first failure wins.
 RULES = ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-         "stage_direction", "narration", "too_long", "forbidden_leak")
+         "stage_direction", "narration", "too_long", "repeats", "forbidden_leak")
+
+# repeats (2026-10-08): the W0 MoE slice collapsed into verbatim repetition, the
+# GM even copying a player's line. A reply fails when, against any prior committed
+# line: same normalised words; or word-set Jaccard >= REPEAT_JACCARD (both >= 4
+# words); or it contains a whole prior line of >= 6 words. A recurring tic plus
+# new content passes.
+REPEAT_JACCARD = 0.8
+_WORD_RE = re.compile(r"[a-z0-9']+")
 
 # narration: a double-quoted span that looks like SPEECH (>= 3 words, or ending
 # in . , ! ?) plus >= 2 words of prose outside the quotes. A quoted single word
@@ -60,6 +68,7 @@ class CommitContext:
     forbidden_phrases: tuple = ()
     max_words: int = 60
     max_lines: int = 2
+    prior_lines: tuple = ()                    # committed transcript texts (repeats rule)
 
 
 @dataclass(frozen=True)
@@ -113,6 +122,28 @@ def _normalise(text):
     return " ".join(text.lower().split())
 
 
+def _words(text):
+    return _WORD_RE.findall(str(text or "").lower().replace("’", "'"))
+
+
+def repeats_prior(text, prior_lines):
+    """The prior line `text` repeats, or None (see REPEAT_JACCARD above)."""
+    words = _words(text)
+    joined = " ".join(words)
+    for prior in prior_lines or ():
+        pw = _words(prior)
+        if not pw:
+            continue
+        if words == pw:
+            return prior
+        a, b = set(words), set(pw)
+        if len(a) >= 4 and len(b) >= 4 and len(a & b) / len(a | b) >= REPEAT_JACCARD:
+            return prior
+        if len(pw) >= 6 and f" {' '.join(pw)} " in f" {joined} ":
+            return prior
+    return None
+
+
 def check_reply(text, ctx):
     """Validate one character reply against `ctx`; first failing rule wins."""
     text = "" if text is None else str(text)
@@ -162,6 +193,10 @@ def check_reply(text, ctx):
     lines = sum(1 for line in text.splitlines() if line.strip())
     if lines > ctx.max_lines:
         return _fail("too_long", f"{lines} lines > {ctx.max_lines}", seat)
+
+    prior = repeats_prior(text, ctx.prior_lines)
+    if prior is not None:
+        return _fail("repeats", f"repeats an earlier line ('{str(prior)[:60]}'); say something new", seat)
 
     norm = _normalise(text)
     for phrase in ctx.forbidden_phrases:

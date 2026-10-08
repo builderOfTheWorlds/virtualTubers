@@ -49,7 +49,8 @@ THINK_INSTRUCTION = (
 )
 SPEAK_INSTRUCTION = (
     "\n\nSpeak exactly one spoken line, at most 45 words. Spoken words only: "
-    "no name label, no *actions*, no (asides), no narration."
+    "no name label, no *actions*, no (asides), no narration. Say something NEW: "
+    "never repeat a line already in the transcript, including your own."
 )
 
 

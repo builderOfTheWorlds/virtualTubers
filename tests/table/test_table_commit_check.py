@@ -176,9 +176,9 @@ def test_reason_is_retake_ready():
 
 
 def test_rule_codes_constant():
-    # extended 2026-10-07 by the orchestrator (test author): + narration
+    # extended 2026-10-07 by the orchestrator (test author): + narration, + repeats
     assert cc.RULES == ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-                        "stage_direction", "narration", "too_long", "forbidden_leak")
+                        "stage_direction", "narration", "too_long", "repeats", "forbidden_leak")
 
 
 # ── silent-seat derivation reuses the improviser rule ──────────────────────
@@ -199,3 +199,34 @@ def test_context_is_immutable():
     c = ctx()
     with pytest.raises(Exception):
         c.seat = "tuber_2"
+
+
+
+# ── repeats (added 2026-10-08: the W0 MoE slice collapsed into verbatim repetition) ──
+
+PRIOR = ("This is the way. Ask them plainly, or I will.",
+         "The heavy oak door slams shut behind you. Torchlight glares off marble floors.")
+
+
+@pytest.mark.parametrize("text", [
+    "This is the way. Ask them plainly, or I will.",            # verbatim
+    "this is the way -- ask them plainly or i will!",            # same words, other punctuation
+    "This is the way. Ask them plainly, or I will. Now.",        # near-duplicate
+    "The heavy oak door slams shut behind you. Torchlight glares off marble floors. Move.",
+])
+def test_repeats_fails(text):
+    r = cc.check_reply(text, ctx(prior_lines=PRIOR))
+    assert r.code == "repeats", r
+
+
+@pytest.mark.parametrize("text", [
+    "This is the way. Burn them first.",                         # the tic is fine, the line is new
+    "Ask him who sent the card.",
+    "Plainly.",                                                  # too short to judge
+])
+def test_repeats_not_over_caught(text):
+    assert cc.check_reply(text, ctx(prior_lines=PRIOR)).ok
+
+
+def test_repeats_needs_prior_lines():
+    assert cc.check_reply(PRIOR[0], ctx()).ok

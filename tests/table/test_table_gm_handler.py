@@ -167,7 +167,7 @@ def test_full_scene_runs_and_advances_to_next_contract():
     rt = gm.runtime_for("tuber_0")
     _seat_replies(prod, rt, {"tuber_1": ["Stand back."], "tuber_2": ["It hums."]})
     gm.table_gm_idle_tick("tuber_0", cfg, llm, prod, None, clock=clock)   # resolved -> start s2
-    types = [m["type"] for m in prod.sent]
+    types = [m["type"] for m in prod.sent if m["type"] != "table_line"]   # P4.1 feed aside
     assert types[:3] == ["scene_start", "scene_direction", "think_request"]
     assert "scene_resolve" in types
     resolve = next(m for m in prod.sent if m["type"] == "scene_resolve")
@@ -252,3 +252,20 @@ def test_contracts_provider_fixture_filters_to_active_players(monkeypatch):
     for p in payloads:
         protocol.validate("scene_start", {"scene_id": p["scene_id"], "contract": p, "round": 1,
                                           "max_rounds": p["max_rounds"], "seats": ["tuber_1"]})
+
+
+
+def test_direct_that_repeats_a_transcript_line_raises():
+    # 2026-10-08 MoE slice: the GM's direction copied the player's line verbatim
+    llm = FakeLLM(["This is the way. Ask them plainly, or I will."])
+    port = gm.LLMGM(llm, lambda c: "CTX", seat_names=NAMES, budgets=gm_cfg()["table"])
+    transcript = [{"speaker": "tuber_1", "text": "This is the way. Ask them plainly, or I will.",
+                   "kind": "reply"}]
+    with pytest.raises(ValueError):
+        port.direct(dict(CONTRACT), transcript, 2)
+
+
+def test_check_rejects_a_repeat_of_a_committed_line():
+    check = gm.build_check(gm_cfg()["table"])
+    assert check("tuber_1", "Stand back now, all of you.",
+                 prior=["Stand back now, all of you."]).code == "repeats"

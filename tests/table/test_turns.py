@@ -438,3 +438,74 @@ def test_table_broadcasts_use_the_bus_broadcast_address():
     import inspect
     import turns
     assert inspect.signature(turns.Arbiter.__init__).parameters["broadcast_to"].default == BROADCAST
+
+
+
+# ── added 2026-10-08 (orchestrator): on_commit + prior lines to check ──
+
+def test_on_commit_fires_at_commit_time_and_check_gets_prior_lines():
+    import turns as T
+    from table.commit_check import CheckResult
+    commits, seen_prior = [], []
+
+    class GM:
+        def direct(self, contract, transcript, round):
+            return T.Direction(text=f"Direction {round}.", expects=[], must_resolve="x")
+
+        def adjudicate(self, contract, transcript, round):
+            # at adjudication time the reply was ALREADY published (not after this call)
+            assert any(c["kind"] == "reply" for c, _ in commits)
+            return T.Verdict(verdict="pass", resolved=True)
+
+        def overrule(self, contract, transcript, seat, reason):
+            return "x"
+
+    def check(seat, text, prior=()):
+        seen_prior.append(tuple(prior))
+        return CheckResult(True, None, "")
+
+    sent = []
+    clock = [0.0]
+    contract = {"scene_id": "s", "max_rounds": 1, "max_retries_per_turn": 1}
+    arb = T.Arbiter(contract, ["tuber_1"], GM(), check, sent.append, lambda: clock[0],
+                    on_commit=lambda entry, scene_id: commits.append((entry, scene_id)))
+    arb.start()
+    from table import protocol
+    arb.on_message(protocol.build("think_done", "tuber_1", "arbiter",
+                                  {"scene_id": "s", "round": 1, "seat": "tuber_1", "ok": True}))
+    arb.on_message(protocol.build("character_reply", "tuber_1", "arbiter",
+                                  {"scene_id": "s", "round": 1, "seat": "tuber_1", "text": "Hi.",
+                                   "took": True, "reason": ""}))
+    assert [c["kind"] for c, _ in commits] == ["direction", "reply"]
+    assert seen_prior == [("Direction 1.",)]
+
+
+def test_two_arg_check_still_works():
+    import turns as T
+    from table.commit_check import CheckResult
+    arb_check_calls = []
+
+    def check(seat, text):
+        arb_check_calls.append(text)
+        return CheckResult(True, None, "")
+
+    class GM:
+        def direct(self, c, t, r):
+            return T.Direction(text="D.", expects=[], must_resolve="")
+
+        def adjudicate(self, c, t, r):
+            return T.Verdict(verdict="pass", resolved=True)
+
+        def overrule(self, c, t, s, reason):
+            return "x"
+
+    from table import protocol
+    arb = T.Arbiter({"scene_id": "s", "max_rounds": 1}, ["tuber_1"], GM(), check, lambda m: None,
+                    lambda: 0.0)
+    arb.start()
+    arb.on_message(protocol.build("think_done", "tuber_1", "arbiter",
+                                  {"scene_id": "s", "round": 1, "seat": "tuber_1", "ok": True}))
+    arb.on_message(protocol.build("character_reply", "tuber_1", "arbiter",
+                                  {"scene_id": "s", "round": 1, "seat": "tuber_1", "text": "Hi.",
+                                   "took": True, "reason": ""}))
+    assert arb_check_calls == ["Hi."]
