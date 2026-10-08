@@ -240,6 +240,61 @@ numbers for §8.
    and the 70b at rest). This closes W0 items 1, 2, 3, and 4 together.
 3. Update §8's allocation to the measured choice and close W0 in §10.
 
+## W0 on vLLM: table_round results (2026-10-07, build plan P1.1/P1.2)
+
+Supersedes the Ollama per-seat plans above for the live table (one shared vLLM
+model; build plan `.claude/prompts/agent_dnd_vllm_build_plan.md` §1).
+Probe: `utilities/benchmarker/lib/table_round.py` (GM direction → [parallel THINK] →
+sequential SPEAK → GM adjudication; real ashiorid sheets + lore, GM ctx ≈16k tokens,
+player brief ≤6000 chars). Server: `deployments/vllm-agents`, vLLM 0.30, GB10,
+gpu-mem-util 0.55, prefix caching. N=7 cycles the 4 D&D sheets (prompt-size proxy).
+Raw: `utilities/benchmarker/output/table_round_*.json`.
+
+Caps (tokens): max_tokens GM 1536 / THINK 1024 / SPEAK 160 / one-pass seat 1280 /
+adjudication 256. "Capped" adds vLLM `thinking_token_budget` (server
+`--reasoning-config`): GM 384, THINK 256, SPEAK 48, one-pass seat 256, adjudication 64.
+
+| model | reasoning | shape | N=4 round | N=7 round | SPEAK p50 | THINK pass | GM dir | failed calls |
+|---|---|---|---|---|---|---|---|---|
+| Qwen3.8-27B BF16 | uncapped | two_pass | 800 s | 885 s | 12.5–13.7 s | 227–339 s | 276–544 s | 1 + 1 (budget burnt) |
+| Qwen3.8-27B BF16 | uncapped | one_pass | 1197 s | 1850 s | 174–240 s | – | | 1 |
+| Qwen3-30B-A3B-Thinking-2507 FP8 | uncapped | two_pass | 114 s | 144 s | – (all empty) | 43–52 s | 42 s | 5 / 11 |
+| Qwen3-30B-A3B-Thinking-2507 FP8 | **capped** | two_pass | **45–48 s** | **55–58 s** | **2.2–2.5 s** | 17–19 s | 15–19 s | **0** |
+| Qwen3-30B-A3B-Thinking-2507 FP8 | capped | one_pass | 46–55 s | 70–73 s | 7.3–8.2 s | – | 14–17 s | 0 |
+| Qwen3.8-27B FP8 | **capped** | two_pass | 187–241 s | 203–234 s | 5.8–9.8 s | 58–73 s | 91–116 s | 0 |
+| Qwen3.8-27B FP8 | capped | one_pass | 300–333 s | 405–485 s | 51–58 s | – | 89–93 s | 0 |
+
+Decode, single stream (smoke test): BF16 27B ≈3 tok/s, MoE A3B FP8 ≈30 tok/s; FP8
+27B ≈2× BF16 (inferred from the round times). Memory: weights 50.2 / 29.1 / 27.6 GiB; KV
+200k / 375k / 416k tokens; MemAvailable with the show stack up 16–31 GiB (never
+below the 12 GiB watchdog floor).
+
+Findings:
+1. **Uncapped reasoning is the failure mode, not model speed.** Every failure in
+   all runs was `finish_reason=length` with empty content. With `thinking_token_budget`
+   both FP8 models had 0 failures in 16 rounds. Table handlers must always send a
+   per-call reasoning budget (VLLMClient `reasoning_budget`).
+2. **Two-pass beats one-pass on every model** (N=7 MoE 55 vs 72 s; FP8 27B 203–234 vs
+   405–485 s; BF16 885 vs 1850 s). The parallel THINK pass batches almost for free,
+   and SPEAK becomes a short call that turns the intent into a line.
+3. **Gate (P1.4 proposal: SPEAK p50 ≤15 s, THINK p95 ≤60 s, D&D round ≤3 min,
+   office round ≤5 min):** MoE capped passes everything with ~3× margin.
+   FP8 27B capped passes SPEAK, THINK (borderline) and the office round, but the
+   D&D round is 187–241 s: just over the gate. Its GM direction (≈400 reasoning +
+   ≈100 content tokens at ~5 tok/s ≈ 95 s) dominates. A GM budget of ~192 would
+   likely bring it under. BF16 fails the gate by ~4.5×.
+4. **Quality (first read, not yet scored; P1.3 pending):** both produce in-character,
+   distinct voices. The intent→line carry-over works. GM JSON verdicts parse; the MoE
+   GM caught the duplicated-cast artifact and issued a retake on its own. Defects:
+   MoE lines contain `*asterisk actions*` and `(asides)`, now a commit-check rule
+   (`stage_direction`, P3.3). FP8 27B lines often narrate in first-person
+   prose ("I lean in… I whisper") instead of only speaking: needs a prompt fix plus
+   possibly a commit rule. Its GM direction starts with a "GM:" label.
+5. Qwen3-Thinking-2507 ignores `enable_thinking=false`: every call reasons, so every
+   call needs a budget (SPEAK 48 tokens was enough).
+6. GB10 + vLLM 0.30: FP8 needs `--linear-backend triton` (CUTLASS block-FP8 GEMM fails
+   at engine init on sm_121). Qwen3-Thinking-2507 needs `--reasoning-parser deepseek_r1`.
+
 ## Files
 
 - `utilities/benchmarker/bin/runBenchmark.sh` — the launcher; resolves

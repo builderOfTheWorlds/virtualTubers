@@ -157,6 +157,23 @@ handler or live roundtable feed.
 
 ## 5. Next actions (in order)
 
+### Progress 2026-10-07 (session 2)
+- DONE P0.1–P0.5: `vllm-agents` deployment (argyreServer `e1b2ec6`, `802e148`), VLLMClient +
+  native reasoning + `reasoning_budget` (`d0e7d91`, `42138dd`), table overlay, runbook with a
+  cold-run record (`docs/vllm_agents.md`). `scripts/vllm_mem_watch.py` = 12 GiB watchdog.
+- DONE P1.1/P1.2: results table + findings in `.claude/prompts/benchmark_methodology_dnd_agents.md`
+  ("W0 on vLLM"). Winner on speed: Qwen3-30B-A3B-Thinking-2507-FP8 with reasoning budgets
+  (D&D round 45–58 s). FP8 27B: 187–241 s. BF16: fails. **Always send reasoning budgets.**
+- character_profile DB runs LOCALLY (docker compose project `character-profile-db`, :5433,
+  data `~/data/character-profile-db`, creds in gitignored `deploy/character-profile-db/.env`).
+  Mafober deploy is later (user).
+- Frozen tests + harness specs written: P3.1 protocol, P3.3 commit_check (`tests/table/`).
+- OPEN for the user: confirm two-pass (data says yes); P1.3 quality scoring; P1.4 freeze;
+  frozen T04.1/T04.2 assert migrate()==["001_init"], which conflicts with P2.7's 002 migration.
+- Can't stop Ollama without sudo (it idles with no models loaded). P2 code generation via
+  the qwen harness (Ollama-only) needs vLLM DOWN first (memory).
+
+### Original order
 1. Commit the 4 session files (§3.1) on the current branch; push to `github` and `origin`.
 2. Ask the user to (a) deploy `character_profile` on mafober (P2.1) and (b) confirm no
    Hermes/Ollama background jobs will run during vLLM work. Then continue without waiting.
