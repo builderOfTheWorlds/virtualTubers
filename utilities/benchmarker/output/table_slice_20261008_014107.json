@@ -1,0 +1,1813 @@
+{
+ "wall_s": 176.2,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 11.46,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 11.46,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 11.46,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 17.27,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 17.27,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 18.91,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nThis is the way.  \nAsk them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 18.91,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 20.92,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 20.92,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 23.85,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line establishes his character voice and commitment to leading. It directly addresses the group's hesitation without overstepping.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 34.17,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 34.17,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 34.17,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 39.98,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 39.98,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 41.43,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 41.43,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 45.5,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his established voice and character traits (blunt, oath-focused, no hedging). The scene is progressing as described: the invitation card pulses, the group feels a pull, and the silence breaks with a wax drop. His line 'This is the way.' is exactly his signature phrase, used correctly to assert direction without overcomplicating. No rules broken.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 54.17,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 54.17,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 54.17,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 59.83,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 59.83,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 61.28,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 61.28,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 62.88,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way, and you're dead wrong to hesitate.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 62.88,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way, and you're dead wrong to hesitate.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 66.3,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line follows his established speech pattern (short, blunt, oath-focused). It directly addresses the hesitation he perceives in the party without speaking for others. The scene continues with the shadow moving toward them. No rule violations.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 76.3,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The shadow's fingers tighten on the doorframe. Gaslight flares. Vigil's knife is out. Leena's hand closes on a small stone. Bob's breath hitches. The air crackles with heat. Chadwick steps forward, shoulder brushing Leena's arm. \"This is the way.\"",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 76.3,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shadow's fingers tighten on the doorframe. Gaslight flares. Vigil's knife is out. Leena's hand closes on a small stone. Bob's breath hitches. The air crackles with heat. Chadwick steps forward, shoulder brushing Leena's arm. \"This is the way.\"",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 76.3,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way, and you're dead wrong to hesitate.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow's fingers tighten on the doorframe. Gaslight flares. Vigil's knife is out. Leena's hand closes on a small stone. Bob's breath hitches. The air crackles with heat. Chadwick steps forward, shoulder brushing Leena's arm. \"This is the way.\"",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 81.99,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 81.99,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The wrought-iron gates of Leto Manor swing open without a sound. A stone path leads to a grand entrance hall. Marble floors gleam under gaslight. You see three strangers already waiting inside: a woman with bright eyes, a tall elf with sharp ears, and a man grinning too wide. The air smells of beeswax and old paper. The heavy invitation card in your hand pulses faintly warm. Leena nods at you, then turns to Vigil. Bob taps his foot against the marble. All four of you feel it\u2014a pull toward the same empty space between you. The silence stretches too long. What are you waiting for?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena smiles at Chadwick\u2019s words. She takes half a step toward him, then stops. Vigil\u2019s hand drifts toward his belt knife. Bob\u2019s grin fades. The invitation card in Chadwick\u2019s palm grows warm. The air between the four of you hums. A single drop of wax falls from the nearest candle. You all hear it hit the marble. The silence breaks.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A heavy oak door slams shut behind you. Three candles gutter. Dust motes dance in the gaslight. Leena\u2019s hand twitches toward her pocket. Vigil\u2019s knife is half-drawn. Bob\u2019s grin vanishes. A shadow detaches from the hallway wall\u2014long fingers curling around the doorframe. The air smells of burnt sugar. What was that?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way, and you're dead wrong to hesitate.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow's fingers tighten on the doorframe. Gaslight flares. Vigil's knife is out. Leena's hand closes on a small stone. Bob's breath hitches. The air crackles with heat. Chadwick steps forward, shoulder brushing Leena's arm. \"This is the way.\"",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 83.5,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Move.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 83.5,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 85.1,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way, and you're dead wrong to hesitate.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 85.1,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way, and you're dead wrong to hesitate.'); say something new",
+    "retry": 2,
+    "max": 2
+   }
+  },
+  {
+   "t": 86.59,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Move.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 88.22,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Move.",
+    "kind": "overrule",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 88.22,
+   "type": "gm_overrule",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "committed_text": "This is the way. Move.",
+    "note": "repeats: repeats an earlier line ('This is the way.'); say something new"
+   }
+  },
+  {
+   "t": 91.58,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's lines maintain oath-driven urgency per character sheet. 'This is the way' repeated as established tic. No out-of-character decisions made. Scene contracts met: strangers arrive, feel connection, interrupted by attack.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 91.58,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  },
+  {
+   "t": 91.63,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 102.44,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 102.44,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 102.44,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 108.24,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 108.24,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 109.85,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 109.85,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 112.71,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick speaks in his blunt style as described. His line fits character and scene. No rules broken.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 122.85,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 122.85,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 122.85,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 128.67,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 128.67,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 130.12,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 130.12,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 132.94,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his character voice and scene context. No overstepping or decision-making.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 143.17,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 143.17,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 143.17,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 148.84,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 148.84,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 150.3,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 150.3,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 151.84,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This way leads to the fight. Stand ready.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 151.84,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This way leads to the fight. Stand ready.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 155.17,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his established voice (short, blunt, 'this is the way' as tic). He takes initiative by stepping forward and directing others to stand ready. No overreach or narration of actions.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 165.8,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The shadow strikes. A clawed hand slams into Vigil's shoulder. He staggers back, eyes wide. Sodacan Bob ducks low, knocking over a marble bust. Leena stumbles toward Chadwick, her invitation burning in her palm. The candle flame dies completely. Wet earth smells like blood now. The shadow looms, silent and dark between you.  \nChadwick: This is the way. Stand your ground.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 165.8,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shadow strikes. A clawed hand slams into Vigil's shoulder. He staggers back, eyes wide. Sodacan Bob ducks low, knocking over a marble bust. Leena stumbles toward Chadwick, her invitation burning in her palm. The candle flame dies completely. Wet earth smells like blood now. The shadow looms, silent and dark between you.  \nChadwick: This is the way. Stand your ground.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 165.8,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This way leads to the fight. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow strikes. A clawed hand slams into Vigil's shoulder. He staggers back, eyes wide. Sodacan Bob ducks low, knocking over a marble bust. Leena stumbles toward Chadwick, her invitation burning in her palm. The candle flame dies completely. Wet earth smells like blood now. The shadow looms, silent and dark between you.  \nChadwick: This is the way. Stand your ground.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 171.49,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 171.49,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The door slams shut behind you. Beeswax, cold stone, and damp wool fill the air. You stand in a marble hall. High ceilings, tapestries showing forgotten wars. Four others stand across the room. Leena\u2019s eyes dart between you all. Vigil counts exits on his fingers. Sodacan Bob grins too loud. Chadwick watches the door. Every one of you feels it\u2014the same pulse in your chest. Like a drumbeat from ten thousand years ago.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena fumbles her invitation. The heavy card slips from her fingers. Vigil\u2019s thumb taps the wall twice. Sodacan Bob\u2019s grin fades. The drumbeat in your chests quickens. A single candle flickers out in the far tapestry. The air smells suddenly of wet earth. Someone coughs. Not one of you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The candle goes dark. The wet-earth smell sharpens. A shadow detaches from the tapestry wall. It moves too fast, too silent. Leena gasps. Vigil\u2019s hand twitches toward his belt. Sodacan Bob\u2019s grin vanishes. The shadow lunges. The floor shakes. Chadwick steps forward. This is the way.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This way leads to the fight. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow strikes. A clawed hand slams into Vigil's shoulder. He staggers back, eyes wide. Sodacan Bob ducks low, knocking over a marble bust. Leena stumbles toward Chadwick, her invitation burning in her palm. The candle flame dies completely. Wet earth smells like blood now. The shadow looms, silent and dark between you.  \nChadwick: This is the way. Stand your ground.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 173.05,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Stand your ground.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 173.05,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Stand your ground.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 176.19,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's repeated 'This is the way' aligns with his character and the scene's tension. He's maintaining leadership during the attack without overstepping.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 176.19,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "resolved": false,
+    "state_delta": {},
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 11.47
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.64
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 2.01
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.25
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.46
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 12.74
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.66
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.45
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.59
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.42
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.7
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.51
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.59
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.49
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 4.99
+  },
+  {
+   "what": "gm_tick",
+   "s": 10.81
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.8
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.61
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.01
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.82
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.45
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.06
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.67
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.46
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.53
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.96
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.7
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.56
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.13
+  }
+ ]
+}
