@@ -1012,6 +1012,8 @@ def test_message_handlers_covers_all_documented_types():
         # live roundtable transcript (OB-32, docs/live_pane.md)
         "office_line",
         "observer_pose",
+        # live agent table (P3.5/P3.6)
+        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override",
     }
 
 
@@ -1038,6 +1040,8 @@ def test_agent_entry_point_dispatches_via_agent_handlers_table():
         "directive", "functional_plan", "technical_plan", "test_request",
         "status_report", "phase_change", "wrap_up", "character_refresh",
         "office_line", "observer_pose",
+        # live agent table (P3.5/P3.6)
+        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override",
     }
 
 

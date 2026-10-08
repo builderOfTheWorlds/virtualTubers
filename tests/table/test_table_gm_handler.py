@@ -232,9 +232,10 @@ def test_failed_start_sends_scene_start_once_and_retries_on_tick():
     assert "scene_direction" in types
 
 
-def test_contracts_provider_fixture_filters_to_active_players():
-    import pathlib, importlib
-    real = importlib.reload(gm)        # undo the autouse monkeypatch on this module object
+def test_contracts_provider_fixture_filters_to_active_players(monkeypatch):
+    import pathlib
+    monkeypatch.undo()                 # drop the autouse provider stubs: test the real one
+    real = gm
     fixture = pathlib.Path(__file__).parent / "fixtures" / "ashiorid_1_20260913_180158_ce8d.json"
     seat_slugs = {"tuber_0": "gm", "tuber_1": "chadwick", "tuber_2": "Leena",
                   "tuber_3": "Vigil", "tuber_4": "sodacan_bob"}

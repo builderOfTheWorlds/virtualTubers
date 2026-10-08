@@ -37,6 +37,8 @@ from .office import (
 from .live_transcript import handle_observer_pose, handle_office_line
 from .operator import handle_operator_message
 from .viewer import handle_viewer_joined
+from .table import handle_retake, handle_think_request, handle_turn_assignment
+from .table_gm import handle_table_message, table_gm_idle_tick
 from .replay_relay import (
     handle_replay_cue,
     handle_replay_end,
@@ -84,6 +86,16 @@ MESSAGE_HANDLERS = {
     # relay writers; no-ops on every worker that isn't a live roundtable.
     "office_line": handle_office_line,
     "observer_pose": handle_observer_pose,
+    # Live agent table (build plan P3.5/P3.6). Keyed by type like everything
+    # here, so each handler checks agent.role itself: table_seat answers the
+    # arbiter's think_request / turn_assignment / retake; table_gm feeds the
+    # seats' think_done / character_reply and operator_override to its arbiter.
+    "think_request": handle_think_request,
+    "turn_assignment": handle_turn_assignment,
+    "retake": handle_retake,
+    "think_done": handle_table_message,
+    "character_reply": handle_table_message,
+    "operator_override": handle_table_message,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in
@@ -96,6 +108,8 @@ IDLE_TICK_HOOKS = {
     "ceo": ceo_idle_tick,
     "office_manager": office_manager_idle_tick,
     "observer": observer_idle_tick,
+    # Live agent table: the GM worker drives the turn arbiter (P3.6).
+    "table_gm": table_gm_idle_tick,
 }
 
 __all__ = ["MESSAGE_HANDLERS", "IDLE_TICK_HOOKS",

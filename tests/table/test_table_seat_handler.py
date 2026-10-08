@@ -222,3 +222,14 @@ def test_every_sent_message_is_a_valid_table_message(tmp_path):
     for m in prod.sent:
         protocol.parse(m)
         assert m["correlation_id"] == SCENE
+
+
+
+# ── review additions (orchestrator) ──────────────────────────────────────────
+
+def test_memory_order_never_reuses_a_live_order_after_pruning(tmp_path):
+    cfg = config(tmp_path)["table"]
+    mem = seat.SeatMemory.for_worker(cfg, "tuber_1")
+    for i in range(seat.MEMORY_MAX_SCENES + 5):
+        mem.set_intent(f"s{i}", 1, "x")
+        assert mem.intent(f"s{i}", 1) == "x", f"newest scene s{i} was pruned"
