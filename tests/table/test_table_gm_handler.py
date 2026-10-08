@@ -216,3 +216,36 @@ def test_no_contracts_means_idle(monkeypatch):
     monkeypatch.setattr(gm, "contracts_provider", lambda agent_config: [])
     gm.table_gm_idle_tick("tuber_0", gm_cfg(), FakeLLM([]), prod, None, clock=Clock())
     assert prod.sent == []
+
+
+
+# ── review additions (orchestrator) ──────────────────────────────────────────
+
+def test_failed_start_sends_scene_start_once_and_retries_on_tick():
+    prod, clock = FakeProducer(), Clock()
+    llm = FakeLLM([RuntimeError("vllm busy"), "The door groans."])
+    cfg = gm_cfg()
+    gm.table_gm_idle_tick("tuber_0", cfg, llm, prod, None, clock=clock)   # direct fails
+    gm.table_gm_idle_tick("tuber_0", cfg, llm, prod, None, clock=clock)   # tick retries direct
+    types = [m["type"] for m in prod.sent]
+    assert types.count("scene_start") == 1
+    assert "scene_direction" in types
+
+
+def test_contracts_provider_fixture_filters_to_active_players():
+    import pathlib, importlib
+    real = importlib.reload(gm)        # undo the autouse monkeypatch on this module object
+    fixture = pathlib.Path(__file__).parent / "fixtures" / "ashiorid_1_20260913_180158_ce8d.json"
+    seat_slugs = {"tuber_0": "gm", "tuber_1": "chadwick", "tuber_2": "Leena",
+                  "tuber_3": "Vigil", "tuber_4": "sodacan_bob"}
+    seat_of = {}
+    for seat_id, slug in seat_slugs.items():
+        seat_of[slug] = seat_of[slug.lower()] = seat_id
+    table = {"contracts_fixture": str(fixture), "seat_slugs": seat_slugs, "seat_of": seat_of,
+             "seats": ["tuber_1"], "only_with_active_players": True, "max_scenes": 3}
+    payloads = real.contracts_provider({"table": table})
+    assert len(payloads) == 3
+    assert all("tuber_1" in p["participants"] for p in payloads)
+    for p in payloads:
+        protocol.validate("scene_start", {"scene_id": p["scene_id"], "contract": p, "round": 1,
+                                          "max_rounds": p["max_rounds"], "seats": ["tuber_1"]})
