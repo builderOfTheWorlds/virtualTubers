@@ -43,8 +43,8 @@ agent:
     - simulation
     - simulated
     only_with_active_players: true
-    start_index: 1
-    max_scenes: 3
+    start_index: 6
+    max_scenes: 2
     think_s: 60
     speak_s: 45
     gm_blocks_order:
