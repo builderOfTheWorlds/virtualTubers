@@ -1,0 +1,49 @@
+# Live agent table: ashiorid (D&D) — build plan P3.7.
+#
+# Source for scripts/build_table_configs.py, which writes config/workers/table/<slug>.yaml
+# (one per seat) from the existing SLOT configs (voice/avatar/stream stay the slot's).
+# Pack-agnostic: the office table is a second file like this one (P5.3).
+pack: ashiorid
+pack_dir: /data/campaigns/ashiorid          # mounted read-only in docker-compose.table.yml
+gm_slug: gm
+gm_seat: tuber_0
+
+# seat -> cast id, slot config it is built on, compose service (seat order == turn order)
+seats:
+  - {seat: tuber_0, slug: gm,          base: config/workers/tuber_0.yaml,      service: worker-gm}
+  - {seat: tuber_1, slug: chadwick,    base: config/workers/manager.yaml,      service: worker-manager}
+  - {seat: tuber_2, slug: Leena,       base: config/workers/coder-native.yaml, service: worker-coder-native}
+  - {seat: tuber_3, slug: Vigil,       base: config/workers/coder-aider.yaml,  service: worker-coder-aider}
+  - {seat: tuber_4, slug: sodacan_bob, base: config/workers/tester.yaml,       service: worker-tester}
+
+# P3.7 vertical slice: GM + Chadwick only. P5.1 lists every player seat.
+active_players: [tuber_1]
+
+tick_rate_ms: 500            # every GM<->seat hop waits up to one tick on each side
+
+# Scene source (U8): the 3-layer generator run. The fixture is used until a fresh
+# plan_arc run is accepted (see the P3.2 report: ce8d is incomplete).
+run_id: ashiorid_1_20260913_180158_ce8d
+contracts_fixture: /data/table/fixtures/ashiorid_1_20260913_180158_ce8d.json
+only_with_active_players: true
+start_index: 0
+max_scenes: 3
+
+think_s: 60
+speak_s: 45
+gm_blocks_order: [truth, secrets, unlocks, table_rules, style]
+
+# Per-call budgets (W0, .claude/prompts/benchmark_methodology_dnd_agents.md "W0 on vLLM")
+think:      {max_tokens: 1024, reasoning_budget: 256}
+speak:      {max_tokens: 160,  reasoning_budget: 48}
+direct:     {max_tokens: 768,  reasoning_budget: 384}
+adjudicate: {max_tokens: 256,  reasoning_budget: 64}
+overrule:   {max_tokens: 160,  reasoning_budget: 48}
+
+llm:
+  provider: vllm
+  model: table-agents          # vllm-agents --served-model-name
+  base_url: http://host.docker.internal:8092
+  api_key_env: VLLM_API_KEY
+  temperature: 0.7
+  max_tokens: 1024
