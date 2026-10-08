@@ -13,6 +13,8 @@ Rules (checked in this order; the first failure wins):
   speaks_for_other  the line voices or narrates ANOTHER cast member
   stage_direction   *asterisk actions* or (parenthetical asides): spoken lines only
                     (agent_dnd §5.3; seen in the W0 MoE run: "*Stomps*", "(Why do I know that name?)")
+  narration         quoted speech wrapped in prose ("I lean in. \"...\" I whisper"): the
+                    reply narrates instead of only speaking (seen in the W0 Qwen3.8-27B-FP8 run)
   too_long          more than max_words words or max_lines lines
   forbidden_leak    contains a forbidden phrase (case/whitespace-insensitive)
 """
@@ -122,6 +124,26 @@ def test_stage_direction_not_over_caught(text):
     assert check(text).ok, check(text)
 
 
+@pytest.mark.parametrize("text", [
+    'I lean in, letting the silence press. "That should not feel familiar," I whisper.',
+    '"Clean break, but wrong metal." I kneel and press my thumb to the fracture.',
+    '“It’s dead,” I mutter.',
+])
+def test_narration_fails(text):
+    r = check(text)
+    assert r.code == "narration", r
+
+
+@pytest.mark.parametrize("text", [
+    '"Clean break, but wrong metal."',                       # only speech, quoted
+    "Clean break. Not accident. Someone knew what they were doing.",
+    'They call it the "moonwell", and it is dry.',           # quoting a word inside speech
+    '"Run!"',
+])
+def test_narration_not_over_caught(text):
+    assert check(text).ok, check(text)
+
+
 def test_too_long_by_words():
     assert check(" ".join(["la"] * 61)).code == "too_long"
     assert check(" ".join(["la"] * 60)).ok
@@ -154,8 +176,9 @@ def test_reason_is_retake_ready():
 
 
 def test_rule_codes_constant():
+    # extended 2026-10-07 by the orchestrator (test author): + narration
     assert cc.RULES == ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-                        "stage_direction", "too_long", "forbidden_leak")
+                        "stage_direction", "narration", "too_long", "forbidden_leak")
 
 
 # ── silent-seat derivation reuses the improviser rule ──────────────────────

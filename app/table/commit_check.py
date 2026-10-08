@@ -21,7 +21,14 @@ log = logging.getLogger(__name__)
 
 #: Rule codes, in check order. The first failure wins.
 RULES = ("silent_seat", "empty", "meta", "name_label", "speaks_for_other",
-         "stage_direction", "too_long", "forbidden_leak")
+         "stage_direction", "narration", "too_long", "forbidden_leak")
+
+# narration: a double-quoted span that looks like SPEECH (>= 3 words, or ending
+# in . , ! ?) plus >= 2 words of prose outside the quotes. A quoted single word
+# inside speech ('the "moonwell"') is not speech. Purely lexical narration
+# without quotes ("I step back from the latch") is left to the SPEAK prompt:
+# no word-list rule tells it apart from speech reliably.
+_QUOTED_RE = re.compile(r'["“”]([^"“”]+)["“”]')
 
 _QUOTES = "\"'\u201c\u201d\u2018\u2019"
 
@@ -140,6 +147,14 @@ def check_reply(text, ctx):
         return _fail("stage_direction", "*asterisk action*; spoken lines only", seat)
     if _PAREN_RE.search(text):
         return _fail("stage_direction", "(parenthetical aside); spoken lines only", seat)
+
+    speech_spans = [m.group(1) for m in _QUOTED_RE.finditer(text)
+                    if len(m.group(1).split()) >= 3 or m.group(1).rstrip()[-1:] in ".,!?"]
+    if speech_spans:
+        outside = _QUOTED_RE.sub(" ", text)
+        prose_words = [w for w in outside.split() if any(ch.isalnum() for ch in w)]
+        if len(prose_words) >= 2:
+            return _fail("narration", "quoted speech wrapped in narration; speak the line only", seat)
 
     words = len(text.split())
     if words > ctx.max_words:
