@@ -194,6 +194,8 @@ class VLLMClient:
                 json=self._body(system_prompt, messages, True, max_tokens, reasoning_budget),
                 headers=self._headers(), timeout=self.timeout_s,
             ) as response:
+                if response.status_code >= 400:
+                    response.read()      # read the error body while the stream is open
                 response.raise_for_status()
                 for line in response.iter_lines():
                     if not line.startswith("data:"):

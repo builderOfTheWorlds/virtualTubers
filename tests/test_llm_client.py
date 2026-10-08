@@ -311,3 +311,15 @@ def test_vllm_stream_no_reasoning_budget_omits_the_field():
 
     _client(handler).complete_stream("s", [])
     assert "thinking_token_budget" not in seen["body"]
+
+
+
+def test_vllm_stream_http_error_surfaces_the_server_body():
+    # 2026-10-08: on a 500 the stream was closed before the body was read, which
+    # hid the real error ("stream has been closed") behind a second exception.
+    def handler(request):
+        # an iterator body is a real stream (bytes content would be pre-read and hide the bug)
+        return httpx.Response(500, content=iter([b'{"error":{"message":"error loading vocab file"}}']))
+
+    with pytest.raises(LLMError, match="vocab file"):
+        _client(handler).complete_stream("s", [])

@@ -43,7 +43,9 @@ CANDIDATES = [
          backends=["triton", "auto"], delete=True),
     dict(name="gpt-oss-20b", repo="openai/gpt-oss-20b", gb=13.8, parser="openai_gptoss",
          backends=["auto", "triton", "marlin"], exclude=["original/*", "metal/*"], delete=True),
-    dict(name="hermes-4-14b-fp8", repo="NousResearch/Hermes-4-14B-FP8", gb=16.3, parser="deepseek_r1",
+    # deepseek_r1 filed the whole answer as reasoning (no </think> -> empty content); qwen3
+    # treats a missing tag as content (2026-10-08 first run).
+    dict(name="hermes-4-14b-fp8", repo="NousResearch/Hermes-4-14B-FP8", gb=16.3, parser="qwen3",
          backends=["auto", "triton", "torch"], delete=True),
     dict(name="gemma-4-26b-a4b-fp8", repo="RedHatAI/gemma-4-26B-A4B-it-FP8-dynamic", gb=28.6,
          parser="gemma4", backends=["triton", "auto", "torch"], delete=True),
@@ -149,11 +151,15 @@ def start_model(c, fh):
         ok, why = wait_ready()
         _, tail = sh("docker logs vllm-agents 2>&1 | grep -E 'Selected|KV cache size|Model loading took|"
                      "Maximum concurrency|Error|error' | grep -v WARNING | tail -12")
+        if not ok:   # keep the root cause before `compose down` removes the container
+            _, err = sh("docker logs vllm-agents 2>&1 | grep -v WARNING | tail -40")
+            tail = (tail or "") + "\n--- failure tail ---\n" + err
         log(f"[up {c['name']}] backend={backend} ready={ok} ({why})\n{tail}", fh)
         if ok:
             return backend, tail
+        last_tail = tail
         sh("docker compose down", cwd=DEPLOY, timeout=300)
-    return None, ""
+    return None, locals().get("last_tail", "")
 
 
 # ── measurements ─────────────────────────────────────────────────────────────
@@ -332,8 +338,7 @@ def main():
             backend, startup = start_model(c, fh)
             rec["backend"], rec["startup_log"] = backend, startup
             if not backend:
-                rec["status"] = "engine failed to start"
-                _, rec["startup_log"] = sh("docker logs vllm-agents 2>&1 | grep -E 'Error|error' | tail -15")
+                rec["status"] = "engine failed to start"          # startup_log has the failure tail
             else:
                 rec["load"] = re.search(r"Model loading took ([\d.]+) GiB", startup or "") and \
                     re.search(r"Model loading took ([\d.]+) GiB", startup).group(1) + " GiB"
