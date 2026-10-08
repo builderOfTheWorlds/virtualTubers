@@ -23,6 +23,12 @@ log = logging.getLogger("qwen_worker.ollama")
 # sandboxed pytest are separate processes, so each picks up the live values.
 DEFAULT_BASE_URL = os.environ.get("QWEN_WORKER_BASE_URL", "http://localhost:11434")
 DEFAULT_MODEL = os.environ.get("QWEN_WORKER_MODEL", "qwen3-coder:30b")
+# Backend: "ollama" (/api/chat, default) or "openai" (/v1/chat/completions, e.g. the
+# local vLLM server). For openai the Bearer key comes from $VLLM_API_KEY, or from a
+# `VLLM_API_KEY=...` line in the file named by $QWEN_WORKER_API_KEY_FILE (so the key
+# never passes through a shell). The key is never logged.
+API = os.environ.get("QWEN_WORKER_API", "ollama")
+API_KEY_FILE = os.environ.get("QWEN_WORKER_API_KEY_FILE")
 
 # A 30B model writing a whole module needs room; qwen3-coder:30b advertises a
 # 262144-token context. num_ctx is what actually gets allocated per request, so
@@ -32,6 +38,63 @@ DEFAULT_NUM_PREDICT = 12288
 
 # Local generation of a full module is slow — minutes, not seconds.
 DEFAULT_TIMEOUT_S = 1800
+
+
+def _api_key():
+    key = os.environ.get("VLLM_API_KEY")
+    if not key and API_KEY_FILE:
+        try:
+            with open(API_KEY_FILE, encoding="utf-8") as handle:
+                for line in handle:
+                    if line.startswith("VLLM_API_KEY="):
+                        key = line.split("=", 1)[1].strip()
+                        break
+        except OSError as exc:
+            log.error("cannot read QWEN_WORKER_API_KEY_FILE: %s", type(exc).__name__)
+    return key or None
+
+
+def _openai_headers():
+    headers = {"Content-Type": "application/json"}
+    key = _api_key()
+    if key:
+        headers["Authorization"] = f"Bearer {key}"
+    return headers
+
+
+def _chat_openai(system_prompt, user_prompt, model, base_url, temperature, num_predict,
+                 timeout, think):
+    payload = {
+        "model": model, "stream": False, "temperature": temperature, "max_tokens": num_predict,
+        "messages": [{"role": "system", "content": system_prompt},
+                     {"role": "user", "content": user_prompt}],
+        "chat_template_kwargs": {"enable_thinking": bool(think)},
+    }
+    request = urllib.request.Request(f"{base_url.rstrip('/')}/v1/chat/completions",
+                                     data=json.dumps(payload).encode("utf-8"),
+                                     headers=_openai_headers(), method="POST")
+    started = time.monotonic()
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            body = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:500]
+        log.error("openai-compatible HTTP %s: %s", exc.code, detail)
+        raise OllamaError(f"openai-compatible server returned HTTP {exc.code}: {detail}") from exc
+    except (urllib.error.URLError, OSError, TimeoutError) as exc:
+        log.error("openai-compatible server unreachable at %s: %s", base_url, exc)
+        raise OllamaError(f"openai-compatible server unreachable at {base_url}: {exc}") from exc
+    try:
+        data = json.loads(body)
+        choice = data["choices"][0]
+    except (json.JSONDecodeError, KeyError, IndexError, TypeError) as exc:
+        raise OllamaError(f"openai-compatible server returned a malformed body: {exc}") from exc
+    content = (choice.get("message") or {}).get("content") or ""
+    if not content.strip():
+        raise OllamaError(f"empty completion (finish_reason={choice.get('finish_reason')!r})")
+    log.info("chat complete in %.1fs chars_out=%d completion_tokens=%s",
+             time.monotonic() - started, len(content), (data.get("usage") or {}).get("completion_tokens"))
+    return content
 
 
 class OllamaError(RuntimeError):
@@ -60,8 +123,11 @@ def chat(system_prompt, user_prompt, model=DEFAULT_MODEL,
     Raises OllamaError on transport failure, a non-200, malformed JSON, or an
     empty completion, so the caller's retry loop sees one exception type.
     """
-    log.debug("chat request model=%s num_ctx=%d num_predict=%d chars_in=%d",
-              model, num_ctx, num_predict, len(system_prompt) + len(user_prompt))
+    log.debug("chat request api=%s model=%s num_ctx=%d num_predict=%d chars_in=%d",
+              API, model, num_ctx, num_predict, len(system_prompt) + len(user_prompt))
+    if API == "openai":
+        return _chat_openai(system_prompt, user_prompt, model, base_url, temperature,
+                            num_predict, timeout, think)
 
     payload = {
         "model": model,
@@ -136,6 +202,17 @@ def is_available(base_url=DEFAULT_BASE_URL, model=DEFAULT_MODEL, timeout=5):
     Returns (ok, detail). Never raises — the caller turns this into a clean
     error message instead of a stack trace mid-run.
     """
+    if API == "openai":
+        try:
+            request = urllib.request.Request(f"{base_url.rstrip('/')}/v1/models",
+                                             headers=_openai_headers())
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                ids = [m.get("id") for m in json.loads(response.read().decode("utf-8")).get("data", [])]
+        except Exception as exc:  # noqa: BLE001 - preflight never propagates
+            return False, f"openai-compatible server unreachable at {base_url}: {type(exc).__name__}"
+        if model not in ids:
+            return False, f"model {model!r} not served at {base_url} (serving: {ids})"
+        return True, f"openai-compatible server at {base_url} serves {model}"
     try:
         with urllib.request.urlopen(f"{base_url.rstrip('/')}/api/tags",
                                     timeout=timeout) as response:

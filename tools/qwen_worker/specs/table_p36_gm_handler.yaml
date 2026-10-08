@@ -1,0 +1,115 @@
+task_id: table_p36_gm_handler
+
+goal: |
+  Write `app/agent_handlers/table_gm.py`: the GM agent and the table runtime for
+  the live agent table (build plan .claude/prompts/agent_dnd_vllm_build_plan.md
+  P3.6). The GM worker container (role "table_gm", worker id tuber_0) owns the
+  turn arbiter (app/turns.py Arbiter, already built and tested: do NOT modify
+  it). This module provides:
+  1. LLMGM: the arbiter's GMPort over the shared vLLM model (direction,
+     adjudication as JSON, overrule line), each call with its own token and
+     reasoning budgets (InstrumentedLLMClient streams the GM's reasoning to the
+     GM's Thinking pane by itself).
+  2. build_check: the per-seat commit validator the arbiter calls before
+     committing a reply (table.commit_check).
+  3. TableRuntime: loads the scene contracts, runs one Arbiter per scene, feeds
+     it table replies, ticks it, advances to the next contract on resolve.
+  4. The worker hooks: table_gm_idle_tick (IDLE_TICK_HOOKS["table_gm"]) and
+     handle_table_message (MESSAGE_HANDLERS for think_done / character_reply /
+     operator_override).
+
+  The worker loop (app/agent.py) is single-threaded and blocks while a hook
+  runs, so nothing here may sleep or wait: the Arbiter is step-driven.
+  A hook must NEVER raise (log and return).
+
+target_files:
+  - app/agent_handlers/table_gm.py
+
+test_files:
+  - tests/table/test_table_gm_handler.py
+
+context_files:
+  - app/turns.py                   # Arbiter(contract, seats, gm, check, send, clock, *, gm_seat, think_s, speak_s, store, arbiter_id, ...), start(), on_message(msg), tick(), state, Direction, Verdict, GMUnavailable, TERMINAL / RESOLVED / ABORTED
+  - app/table/commit_check.py      # CommitContext, check_reply
+  - app/table/protocol.py
+  - app/table/contract.py          # SceneContract.to_payload(); contracts_for_run
+  - app/table/arc_source.py        # RunArtifacts.from_json, connect_generator, load_run
+  - app/table/gm_context.py        # build_gm_context (may be staged; import lazily inside context_provider)
+
+interface: |
+  ROLE = "table_gm"
+
+  class LLMGM:
+      __init__(self, llm_client, context_fn, *, seat_names, budgets)
+          context_fn(contract) -> str is the GM context (system prompt prefix).
+          budgets = the table config dict; uses budgets["direct"|"adjudicate"|"overrule"]
+          ["max_tokens"/"reasoning_budget"] (defaults direct 768/384, adjudicate 256/64,
+          overrule 160/48). seat_names maps seat id (and "gm") -> display name.
+      direct(contract, transcript, round) -> turns.Direction
+          system = context_fn(contract) + direction instruction (narrate what happens
+          next toward contract canon_goal in <= 120 words, address the seats by name,
+          never speak for them). user = rendered transcript + f"Round {round}.".
+          text = content stripped, with a leading "GM:" / "GM -" / "**GM:**" label removed.
+          expects = [s for s in contract["participants"] if s != gm_seat] (gm_seat from
+          budgets.get("gm_seat", "tuber_0")); must_resolve = "; ".join(contract["must_resolve"])
+          or contract["canon_goal"].
+      adjudicate(contract, transcript, round) -> turns.Verdict
+          Ask for ONLY a JSON object {"verdict": "pass"|"reject", "retake_seat": null|name,
+          "notes": str, "resolved": bool, "state_delta": object}. Parse the FIRST {...}
+          object in the content (tolerate prose and ``` fences around it). "retake" is
+          treated as "reject". retake_seat: accept a seat id, or a display name
+          (case-insensitive) mapped back to its seat via seat_names; unknown -> None.
+          resolved defaults to False; state_delta defaults to {} (non-dict -> {}).
+          No parsable object or no valid verdict -> raise ValueError (the arbiter counts
+          a GM failure and retries on the next tick).
+      overrule(contract, transcript, seat, reason) -> str
+          The GM writes the one line that seat says (in that character's voice) so the
+          scene moves on. Strip whitespace, a leading "<Name>:" label and one surrounding
+          pair of quotes.
+
+  def build_check(table_cfg) -> callable(seat, text) -> commit_check.CheckResult
+      cast_names = {seat: name for seat, name in seat_names.items() if seat in table_cfg["seats"]};
+      silent_seats = frozenset(table_cfg.get("silent_seats", ())); forbidden phrases per seat
+      from table_cfg.get("forbidden_phrases", {}).get(seat, ()); max_words/max_lines from
+      table_cfg (defaults 60 / 2).
+
+  contracts_provider(agent_config) -> list[dict]       (module attribute; tests monkeypatch)
+      Production default: table_cfg["contracts_fixture"] (path to a RunArtifacts JSON) or
+      table_cfg["run_id"] via arc_source.connect_generator()+load_run; then
+      contract.contracts_for_run(artifacts, seat_of=table_cfg["seat_of"], pack_cast=...)
+      -> [c.to_payload() for c in ...], sliced from table_cfg.get("start_index", 0) and
+      limited to table_cfg.get("max_scenes").
+  context_provider(agent_config, contract) -> str       (module attribute; tests monkeypatch)
+      Production default: gm_blocks from the character DB (character.store.characters.gm_blocks
+      for table_cfg["gm_slug"]), player sheets via table.seat_brief.build_table_brief for each
+      seat's character slug (table_cfg["seat_slugs"]), gm_context.build_gm_context(...,
+      blocks_order=table_cfg.get("gm_blocks_order", [])). Cache per scene_id.
+      Both providers MUST be looked up on the module at call time.
+
+  class TableRuntime:
+      __init__(self, worker_id, agent_config, llm_client, producer, *, clock=time.monotonic, store=None)
+      contracts (loaded once, lazily), index, arbiter (or None)
+      ensure_started(): if no arbiter and a contract remains -> build Arbiter(contract, seats,
+          LLMGM(...), build_check(cfg), send=producer.send, clock=clock, gm_seat, think_s, speak_s,
+          store=store, arbiter_id=worker_id) and start(). A GMUnavailable / exception from
+          start() is logged; the next tick retries via arbiter.tick().
+      on_message(msg): forward to arbiter.on_message if there is an arbiter.
+      tick(): ensure_started(); arbiter.tick(); if arbiter.state["phase"] in turns.TERMINAL and
+          table_cfg.get("auto_advance", True): index += 1, arbiter = None, ensure_started().
+
+  _RUNTIMES: dict worker_id -> TableRuntime
+  def runtime_for(worker_id) -> TableRuntime | None
+  def reset_runtimes() -> None
+  def table_gm_idle_tick(worker_id, agent_config, llm_client, producer, state_path=None, *, clock=time.monotonic)
+      Only for role ROLE: create the runtime on first call (with this llm_client/producer/clock),
+      then runtime.tick(). Never raises. Other roles: return immediately.
+  def handle_table_message(worker_id, agent_config, llm_client, producer, msg, state_path=None,
+                           coding_backend=None)
+      Only for role ROLE: route msg to runtime_for(worker_id).on_message (create the runtime if
+      missing, like the idle tick). Other roles: return. Never raises.
+
+notes: |
+  - Never log contract text, transcript text or GM context above DEBUG.
+  - Transcript rendering for prompts: "<name>: <text>" per entry, name via seat_names.
+  - Registration in app/agent_handlers/__init__.py is done by the orchestrator, not here.
+  - Stdlib + app modules only.

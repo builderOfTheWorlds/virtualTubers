@@ -1,0 +1,57 @@
+task_id: table_p27_gm_context
+
+goal: |
+  Write `app/table/gm_context.py`: the GM agent's context builder for the live
+  agent table (build plan .claude/prompts/agent_dnd_vllm_build_plan.md P2.7,
+  decision U7). The GM is one more agent on the shared model; it differs from
+  the players by its CONTEXT: the GM-only profile blocks (truth, secrets,
+  unlocks, table_rules, style, ... stored as character_baselines.gm_blocks),
+  every player sheet, the current arc segment and the scene contract.
+
+  THE RULE THAT MUST HOLD: adding a GM block is data, not code. The builder
+  renders whatever blocks exist: first the ones named in blocks_order (in that
+  order, skipping absent ones), then every other block alphabetically. Nothing
+  in the code may name a specific block except through blocks_order.
+
+target_files:
+  - app/table/gm_context.py
+
+test_files:
+  - tests/table/test_table_gm_context.py
+
+context_files:
+  - app/table/seat_brief.py        # house style; the player-side brief
+
+interface: |
+  PLAYERS_HEADING = "# The players (every sheet; only you see all of them)"
+  SEGMENT_HEADING = "# The current arc segment"
+  CONTRACT_HEADING = "# This scene's contract"
+
+  def block_heading(name) -> str
+      f"# GM block: {name}"
+
+  def render_value(value, indent=0) -> str
+      Human/LLM-readable text for a block value: str as-is (stripped); a dict
+      as "key: value" lines (nested values indented by 2 spaces per level); a
+      list as "- item" lines (dict items render their key: value lines under
+      the dash). Never Python repr (no "{'", no "[{").
+
+  def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract,
+                       blocks_order, max_chars=None) -> str
+      Sections joined by a blank line, in this order:
+        1. gm_identity (stripped)
+        2. for name in blocks_order if name in gm_blocks: block_heading(name) + "\n" + render_value
+        3. for name in sorted(set(gm_blocks) - set(blocks_order)): same
+        4. PLAYERS_HEADING, then per seat in sorted(player_sheets) (natural sort is
+           not needed; seats are tuber_N with N < 10): f"## {seat}\n{sheet}"
+        5. if segment: SEGMENT_HEADING + render_value(segment)
+        6. if contract: CONTRACT_HEADING + render_value(contract)
+      max_chars: when the result is longer, shorten the player sheet bodies
+      (each to an equal share, cut on a word boundary with "…") until it fits;
+      blocks, segment and contract are never cut. If it still does not fit,
+      raise ValueError. Never mutates its inputs.
+
+notes: |
+  - Stdlib only. Pure function: no DB, no I/O, no logging of block content
+    (DEBUG may log block names and lengths).
+  - The DB read is NOT here: callers use character.store.characters.gm_blocks(conn, slug).

@@ -27,6 +27,8 @@ import os
 import pathlib
 import shutil
 
+import json
+
 import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -120,3 +122,72 @@ def test_env_vars_override_ollama_defaults(monkeypatch):
     base1 = _fresh_ollama()
     assert base1.DEFAULT_BASE_URL == "http://gx10:11434"
     assert base1.DEFAULT_MODEL == "qwen3.8:27b"
+
+
+# ── OpenAI-compatible (vLLM) backend, added 2026-10-07 ───────────────────────
+class _FakeResp:
+    def __init__(self, body):
+        self._body = body.encode()
+
+    def read(self):
+        return self._body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def _openai_env(monkeypatch, tmp_path):
+    env_file = tmp_path / "vllm.env"
+    env_file.write_text("OTHER=1\nVLLM_API_KEY=sk-file-secret\n")
+    monkeypatch.setenv("QWEN_WORKER_API", "openai")
+    monkeypatch.setenv("QWEN_WORKER_API_KEY_FILE", str(env_file))
+    monkeypatch.delenv("VLLM_API_KEY", raising=False)
+    return _fresh_ollama()
+
+
+def test_openai_chat_posts_v1_with_bearer_from_key_file(monkeypatch, tmp_path):
+    client = _openai_env(monkeypatch, tmp_path)
+    seen = {}
+
+    def fake_urlopen(request, timeout=None):
+        seen["url"] = request.full_url
+        seen["auth"] = request.get_header("Authorization")
+        seen["body"] = json.loads(request.data)
+        return _FakeResp(json.dumps({"choices": [{"message": {"content": "=== FILE: x ==="},
+                                                  "finish_reason": "stop"}],
+                                     "usage": {"completion_tokens": 7}}))
+
+    monkeypatch.setattr(client.urllib.request, "urlopen", fake_urlopen)
+    out = client.chat("sys", "user", model="m", base_url="http://h:8092", num_predict=99)
+    assert out == "=== FILE: x ==="
+    assert seen["url"] == "http://h:8092/v1/chat/completions"
+    assert seen["auth"] == "Bearer sk-file-secret"
+    assert seen["body"]["max_tokens"] == 99
+    assert seen["body"]["chat_template_kwargs"] == {"enable_thinking": False}
+    assert seen["body"]["messages"][0] == {"role": "system", "content": "sys"}
+
+
+def test_openai_empty_content_raises(monkeypatch, tmp_path):
+    client = _openai_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(client.urllib.request, "urlopen", lambda r, timeout=None: _FakeResp(
+        json.dumps({"choices": [{"message": {"content": ""}, "finish_reason": "length"}]})))
+    with pytest.raises(client.OllamaError, match="length"):
+        client.chat("s", "u", base_url="http://h:8092")
+
+
+def test_openai_is_available_checks_v1_models(monkeypatch, tmp_path):
+    client = _openai_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(client.urllib.request, "urlopen", lambda r, timeout=None: _FakeResp(
+        json.dumps({"data": [{"id": "table-agents"}]})))
+    assert client.is_available(base_url="http://h:8092", model="table-agents")[0] is True
+    ok, detail = client.is_available(base_url="http://h:8092", model="other")
+    assert ok is False and "other" in detail
+    assert "sk-file-secret" not in detail
+
+
+def test_default_api_is_still_ollama(monkeypatch):
+    monkeypatch.delenv("QWEN_WORKER_API", raising=False)
+    assert _fresh_ollama().API == "ollama"

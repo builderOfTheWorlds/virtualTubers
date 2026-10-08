@@ -1,0 +1,101 @@
+task_id: table_p35_seat_handler
+
+goal: |
+  Write `app/agent_handlers/table.py`: the character-agent ("seat") handler of
+  the live agent table (build plan .claude/prompts/agent_dnd_vllm_build_plan.md
+  P3.5). Each D&D character runs in its own worker container; this module is
+  what that container does when the turn arbiter (app/turns.py, in the GM's
+  container) addresses it. All seats share ONE model on vLLM; the seat's
+  identity is its context (its brief), nothing else.
+
+  Two-pass round: (1) on `think_request` the seat reasons privately about what
+  it wants to do (one LLM call, reasoning ON with a budget; the
+  InstrumentedLLMClient wrapper streams the reasoning to this seat's own
+  Thinking pane by itself) and answers `think_done`; (2) on `turn_assignment`
+  it speaks one line, using ITS OWN private intent plus the committed
+  transcript passed BY VALUE in the message; (3) on `retake` it speaks again
+  for the same assignment, told why the last line was rejected.
+
+  THE FAILURES THAT MUST NEVER HAPPEN:
+  - U6: the private intent leaves the seat. It is stored only in this seat's
+    local memory file; think_done carries {scene_id, round, seat, ok} and
+    nothing else; character_reply carries only the spoken line.
+  - The committed-transcript rule: the seat never learns other seats' lines
+    from anywhere except turn_assignment.committed_transcript (no bus reads,
+    no shared files).
+
+target_files:
+  - app/agent_handlers/table.py
+
+test_files:
+  - tests/table/test_table_seat_handler.py
+
+context_files:
+  - app/table/protocol.py          # build(type_, from_, to, payload, *, turn, correlation_id, causation_id), parse(msg), ProtocolError
+  - app/agent_handlers/live_transcript.py   # handler signature house style
+  - app/agent_metrics.py           # InstrumentedLLMClient.complete_stream(..., max_tokens, reasoning_budget) -> (reasoning, content)
+  - app/table/seat_brief.py        # build_table_brief(conn, slug, *, lore, unlocked, max_chars)
+
+interface: |
+  ROLE = "table_seat"
+  MEMORY_MAX_SCENES = 20
+
+  def brief_for(agent_config, worker_id, unlocked=()) -> str
+      Production default: the seat's brief from the character DB. Read
+      agent_config["table"]: "character_slug" (the cast id of this seat) and
+      "pack_dir" (lore = {stem: text} of <pack_dir>/lore/*.md, cached per
+      process); connect with character.config.load() + character.db.connect(cfg)
+      (connection cached per process; on any DB error log ERROR and re-raise),
+      then table.seat_brief.build_table_brief(conn, slug, lore=lore, unlocked=unlocked).
+      Tests monkeypatch this module attribute, so the handlers MUST call it as
+      `brief_for(...)` looked up on the module at call time (not bound at import).
+
+  class SeatMemory:
+      Local JSON file <memory_dir>/table_seat_<worker_id>.json, written atomically
+      (relay_io.atomic_write_json). Shape {"scenes": {scene_id: {"order": n,
+      "intents": {str(round): text}, "assignment": {str(round): payload}}}}.
+      Keep at most MEMORY_MAX_SCENES scenes (drop the lowest "order" first).
+      @classmethod for_worker(table_cfg, worker_id) -> SeatMemory   (memory_dir defaults
+          to $TABLE_SEAT_MEMORY_DIR or /tmp/table_seat)
+      intent(scene_id, round) -> str | None;  set_intent(scene_id, round, text)
+      assignment(scene_id, round) -> dict | None;  set_assignment(scene_id, round, payload)
+
+  def handle_think_request(worker_id, agent_config, llm_client, producer, msg,
+                           state_path=None, coding_backend=None) -> None
+  def handle_turn_assignment(...same signature...) -> None
+  def handle_retake(...same signature...) -> None
+
+  Common rules for the three handlers:
+    - Return without doing anything unless agent_config.get("role") == ROLE.
+    - protocol.parse(msg); on ProtocolError log WARNING and return.
+    - think_request: act only if worker_id in payload["seats"].
+      turn_assignment / retake: act only if payload["seat"] == worker_id.
+    - Reply to msg["from"] (the arbiter) with protocol.build(..., turn=msg.get("turn"),
+      correlation_id=payload["scene_id"], causation_id=msg.get("id")); send via producer.send.
+    - Transcript rendering: one line per entry "<name>: <text>" where name =
+      table_cfg["seat_names"].get(entry["speaker"], entry["speaker"]).
+    - LLM call: llm_client.complete_stream(system, [{"role": "user", "content": user}],
+      max_tokens=table_cfg[pass]["max_tokens"], reasoning_budget=table_cfg[pass]["reasoning_budget"])
+      where pass is "think" or "speak" (defaults: think 1024/256, speak 160/48). If the
+      client has no complete_stream, fall back to llm_client.complete(system, messages).
+  think_request: system = brief_for(...) + THINK instruction (decide privately what you
+    want and what you will say or do; at most 40 words; nobody else sees it). user =
+    the rendered committed transcript. On success: memory.set_intent(...) then
+    think_done ok=True. On any exception: log ERROR, think_done ok=False.
+  turn_assignment: memory.set_assignment(scene, round, payload) FIRST, then speak: system =
+    brief_for(...) + SPEAK instruction (exactly one spoken line, at most 45 words, spoken
+    words only: no name label, no *actions*, no (asides), no narration); user = rendered
+    transcript + payload["instruction"] + (if memory.intent(...) exists) a block
+    "Your private intent (only you know this):\n<intent>". Reply character_reply
+    {scene_id, round, seat, text, took: True, reason: ""} with text = content stripped and
+    ONE surrounding pair of quotes ("" or “”) removed. On any exception: log ERROR and
+    reply took=False, text="", reason=f"llm_error: {type(exc).__name__}".
+  retake: look up memory.assignment(scene, round); if None: log WARNING and return. Else
+    speak exactly as for that assignment, with an extra user block "Your last line was
+    rejected: <payload['reason']>. Say it again, differently, following the rules."
+
+notes: |
+  - Never log the intent, the reasoning or the brief above DEBUG; DEBUG may log lengths.
+  - Do not import kafka, redis or the arbiter. Do not read any file except the seat's
+    own memory file and (in brief_for) the pack lore.
+  - Registration in app/agent_handlers/__init__.py is done by the orchestrator, not here.
