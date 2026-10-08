@@ -35,6 +35,9 @@ logging.basicConfig(
     # WARNING by default: at INFO the Kafka client's metadata chatter filled the
     # on-air pane (the GM channel showed only log lines, 2026-10-08).
     level=os.environ.get("THINKING_PANE_LOG_LEVEL", "WARNING"),
+    # force: importing tail_bus above already ran ITS basicConfig(level=INFO), which
+    # made this call a no-op; the INFO chatter kept filling the pane (live 2026-10-08).
+    force=True,
     format="%(asctime)s %(levelname)s thinking_pane %(message)s",
 )
 log = logging.getLogger("thinking_pane")
