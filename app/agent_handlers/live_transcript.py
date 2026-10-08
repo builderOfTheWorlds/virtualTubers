@@ -19,6 +19,13 @@ def handle_office_line(worker_id, agent_config, llm_client, producer, msg,
     return live_pane.handle_office_line(worker_id, agent_config, msg)
 
 
+def handle_table_line(worker_id, agent_config, llm_client, producer, msg,
+                      state_path=None, coding_backend=None):
+    """`table_line` (the table arbiter's committed lines, P4.1) -> the same live spool."""
+    from table import live_feed
+    return live_feed.handle_table_line(worker_id, agent_config, msg)
+
+
 def handle_observer_pose(worker_id, agent_config, llm_client, producer, msg,
                          state_path=None, coding_backend=None):
     """`observer_pose` -> <relay>/<observer>.pose.json for the observer tile's head."""

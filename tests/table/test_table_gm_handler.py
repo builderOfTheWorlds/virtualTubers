@@ -175,8 +175,10 @@ def test_full_scene_runs_and_advances_to_next_contract():
     starts = [protocol.parse(m)["scene_id"] for m in prod.sent if m["type"] == "scene_start"]
     assert starts == ["s1", "s2"]
     for m in prod.sent:
-        protocol.parse(m)
         assert m["from"] == "tuber_0"          # the arbiter speaks as the GM worker
+        if m["type"] == "table_line":          # P4.1 roundtable presentation, not protocol
+            continue
+        protocol.parse(m)
 
 
 def test_commit_check_failure_triggers_retake_through_runtime():

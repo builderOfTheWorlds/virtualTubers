@@ -1013,7 +1013,7 @@ def test_message_handlers_covers_all_documented_types():
         "office_line",
         "observer_pose",
         # live agent table (P3.5/P3.6)
-        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override",
+        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override", "table_line",
     }
 
 
@@ -1041,7 +1041,7 @@ def test_agent_entry_point_dispatches_via_agent_handlers_table():
         "status_report", "phase_change", "wrap_up", "character_refresh",
         "office_line", "observer_pose",
         # live agent table (P3.5/P3.6)
-        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override",
+        "think_request", "turn_assignment", "retake", "think_done", "character_reply", "operator_override", "table_line",
     }
 
 

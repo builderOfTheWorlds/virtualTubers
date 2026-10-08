@@ -34,7 +34,7 @@ from .office import (
     observer_idle_tick,
     office_manager_idle_tick,
 )
-from .live_transcript import handle_observer_pose, handle_office_line
+from .live_transcript import handle_observer_pose, handle_office_line, handle_table_line
 from .operator import handle_operator_message
 from .viewer import handle_viewer_joined
 from .table import handle_retake, handle_think_request, handle_turn_assignment
@@ -96,6 +96,8 @@ MESSAGE_HANDLERS = {
     "think_done": handle_table_message,
     "character_reply": handle_table_message,
     "operator_override": handle_table_message,
+    # P4.1: the arbiter's committed lines -> the roundtable live spool.
+    "table_line": handle_table_line,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in

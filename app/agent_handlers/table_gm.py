@@ -364,6 +364,14 @@ class TableRuntime:
         self.index = 0
         self.arbiter = None
         self._context_cache = {}
+        # P4.1: committed lines -> roundtable live transcript (table.live_feed)
+        from table import live_feed
+        self._feed = (live_feed.CommitPublisher(worker_id, producer.send)
+                      if self.table_cfg.get("live_feed", True) else None)
+
+    def _publish(self):
+        if self._feed is not None and self.arbiter is not None:
+            self._feed.publish_new(self.arbiter.state)
 
     # ------------------------------------------------------------------ lazy
     @property
@@ -412,16 +420,19 @@ class TableRuntime:
             log.warning("table_gm start: GM unavailable scene=%s: %s", contract.get("scene_id"), exc)
         except Exception as exc:  # noqa: BLE001
             log.warning("table_gm start failed scene=%s: %s", contract.get("scene_id"), exc)
+        self._publish()
 
     def on_message(self, msg):
         if self.arbiter is not None:
             self.arbiter.on_message(msg)
+            self._publish()
 
     def tick(self):
         self.ensure_started()
         if self.arbiter is None:
             return
         self.arbiter.tick()
+        self._publish()
         if self.arbiter.state["phase"] in TERMINAL and self.table_cfg.get("auto_advance", True):
             self.index += 1
             self.arbiter = None
