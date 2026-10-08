@@ -1,0 +1,410 @@
+{
+ "wall_s": 311.8,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 77.81,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The four of you stand on the manor steps. Your cards are still in your pockets, heavy as iron.\n\nThe great doors open. Warm light spills out. Music rises, bright and too full. The hall is packed. Three hundred guests move through silk and candlelight.\n\nAs you cross the threshold, a pull tightens behind each of your ribs. It is not pain. It is recognition. You all look toward the others before you know you have looked.\n\nA lord in a grey coat bows to Chadwick. A maid presses a silver tray to Leena\u2019s hand. A guard\u2019s hand rests on his sword near Vigil. Bob\u2019s smile falters at the sight of the Duke on the dais.\n\nThen the music stops. A scream cuts through the hall.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 77.81,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand on the manor steps. Your cards are still in your pockets, heavy as iron.\n\nThe great doors open. Warm light spills out. Music rises, bright and too full. The hall is packed. Three hundred guests move through silk and candlelight.\n\nAs you cross the threshold, a pull tightens behind each of your ribs. It is not pain. It is recognition. You all look toward the others before you know you have looked.\n\nA lord in a grey coat bows to Chadwick. A maid presses a silver tray to Leena\u2019s hand. A guard\u2019s hand rests on his sword near Vigil. Bob\u2019s smile falters at the sight of the Duke on the dais.\n\nThen the music stops. A scream cuts through the hall.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 109.74,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 109.74,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand on the manor steps. Your cards are still in your pockets, heavy as iron.\n\nThe great doors open. Warm light spills out. Music rises, bright and too full. The hall is packed. Three hundred guests move through silk and candlelight.\n\nAs you cross the threshold, a pull tightens behind each of your ribs. It is not pain. It is recognition. You all look toward the others before you know you have looked.\n\nA lord in a grey coat bows to Chadwick. A maid presses a silver tray to Leena\u2019s hand. A guard\u2019s hand rests on his sword near Vigil. Bob\u2019s smile falters at the sight of the Duke on the dais.\n\nThen the music stops. A scream cuts through the hall.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 120.92,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nWho screamed? Say it plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 120.92,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 131.16,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "Who screamed? Say it plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 155.49,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick speaks in character, only for himself, and asks plainly. The round advances the attack interruption.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_progress": "attack_interruption",
+     "party_status": "arrived",
+     "pending_question": "Who screamed?"
+    }
+   }
+  },
+  {
+   "t": 224.98,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "A woman in livery falls from the dais. Blood threads her mouth. Three guests rise from her, wearing grey cloaks and no faces.\n\nThe Duke\u2019s cup shatters.\n\nCandlelight snaps sideways. A ward hums under the floor, thin and old.\n\nChadwick, Leena, Vigil, Bob: the hall is turning toward you. The grey-cloaked figures do not run. They point.\n\nThe nearest one opens its mouth, and a black line of sound crosses the marble.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 224.98,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand on the manor steps. Your cards are still in your pockets, heavy as iron.\n\nThe great doors open. Warm light spills out. Music rises, bright and too full. The hall is packed. Three hundred guests move through silk and candlelight.\n\nAs you cross the threshold, a pull tightens behind each of your ribs. It is not pain. It is recognition. You all look toward the others before you know you have looked.\n\nA lord in a grey coat bows to Chadwick. A maid presses a silver tray to Leena\u2019s hand. A guard\u2019s hand rests on his sword near Vigil. Bob\u2019s smile falters at the sight of the Duke on the dais.\n\nThen the music stops. A scream cuts through the hall.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Who screamed? Say it plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A woman in livery falls from the dais. Blood threads her mouth. Three guests rise from her, wearing grey cloaks and no faces.\n\nThe Duke\u2019s cup shatters.\n\nCandlelight snaps sideways. A ward hums under the floor, thin and old.\n\nChadwick, Leena, Vigil, Bob: the hall is turning toward you. The grey-cloaked figures do not run. They point.\n\nThe nearest one opens its mouth, and a black line of sound crosses the marble.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 265.06,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 265.06,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand on the manor steps. Your cards are still in your pockets, heavy as iron.\n\nThe great doors open. Warm light spills out. Music rises, bright and too full. The hall is packed. Three hundred guests move through silk and candlelight.\n\nAs you cross the threshold, a pull tightens behind each of your ribs. It is not pain. It is recognition. You all look toward the others before you know you have looked.\n\nA lord in a grey coat bows to Chadwick. A maid presses a silver tray to Leena\u2019s hand. A guard\u2019s hand rests on his sword near Vigil. Bob\u2019s smile falters at the sight of the Duke on the dais.\n\nThen the music stops. A scream cuts through the hall.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Who screamed? Say it plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A woman in livery falls from the dais. Blood threads her mouth. Three guests rise from her, wearing grey cloaks and no faces.\n\nThe Duke\u2019s cup shatters.\n\nCandlelight snaps sideways. A ward hums under the floor, thin and old.\n\nChadwick, Leena, Vigil, Bob: the hall is turning toward you. The grey-cloaked figures do not run. They point.\n\nThe nearest one opens its mouth, and a black line of sound crosses the marble.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 277.57,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "You three on the dais. Faceless, no names. Say who sent you, or I will pull it out of you.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 311.78,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line is in character and does not decide outcomes. The scene now has the required interruption: the attack has begun, the grey-cloaked figures are present, and the Duke is under threat. The beat resolves the scene's must_resolve condition.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "round": 2,
+     "attack_started": true,
+     "party_meeting": "completed",
+     "connection_felt": true,
+     "dais_attack": true,
+     "grey_cloaked_threats": 3,
+     "duke_status": "endangered",
+     "hall_status": "chaos",
+     "ward_status": "active",
+     "next_beat": "grovley_revelation_or_attack_escalation"
+    }
+   }
+  },
+  {
+   "t": 311.78,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": true,
+    "state_delta": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "round": 2,
+     "attack_started": true,
+     "party_meeting": "completed",
+     "connection_felt": true,
+     "dais_attack": true,
+     "grey_cloaked_threats": 3,
+     "duke_status": "endangered",
+     "hall_status": "chaos",
+     "ward_status": "active",
+     "next_beat": "grovley_revelation_or_attack_escalation"
+    },
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 77.81
+  },
+  {
+   "what": "seat:think_request",
+   "s": 31.94
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 11.17
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 10.24
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 93.82
+  },
+  {
+   "what": "seat:think_request",
+   "s": 40.08
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 12.51
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 34.21
+  }
+ ]
+}
