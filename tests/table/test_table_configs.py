@@ -31,7 +31,7 @@ def _built(tmp_path):
 
 def test_one_config_per_seat(tmp_path):
     _, cfgs = _built(tmp_path)
-    assert set(cfgs) == {"gm", "chadwick", "Leena", "Vigil", "sodacan_bob"}
+    assert set(cfgs) == {"gm", "chadwick", "Leena", "Vigil", "sodacan_bob", "roundtable"}
 
 
 def test_gm_config_owns_the_table(tmp_path):
@@ -77,3 +77,13 @@ def test_committed_configs_match_a_fresh_build(tmp_path):
         committed = OUT / fresh.name
         assert committed.is_file(), f"run scripts/build_table_configs.py ({fresh.name} missing)"
         assert committed.read_text() == fresh.read_text(), f"{fresh.name} drifted; rebuild"
+
+
+
+def test_roundtable_has_live_feed_from_the_arbiter_and_cast_voices(tmp_path):
+    _, cfgs = _built(tmp_path)
+    rt = cfgs["roundtable"]
+    assert rt["agent"]["role"] == "roundtable"
+    assert rt["agent"]["live"]["enabled"] is True and rt["agent"]["live"]["table_arbiter"] == "tuber_0"
+    assert rt["voice"]["speakers"]["tuber_1"]["model_path"].endswith("ryan-high.onnx")
+    assert rt["voice"]["speaker_names"]["tuber_1"] == "Chadwick"

@@ -103,7 +103,28 @@ def build(table_cfg_path, out_dir):
         path = out_dir / f"{seat['slug']}.yaml"
         path.write_text(text, encoding="utf-8")
         written.append(path)
+    if cfg.get("roundtable"):
+        written.append(_build_roundtable(cfg, table_cfg_path, out_dir, names))
     return written
+
+
+def _build_roundtable(cfg, table_cfg_path, out_dir, names):
+    """The roundtable channel: its slot config + agent.live + per-seat voices/names."""
+    rt = cfg["roundtable"]
+    doc = copy.deepcopy(yaml.safe_load((REPO / rt["base"]).read_text(encoding="utf-8")) or {})
+    agent = doc.setdefault("agent", {})
+    agent["live"] = copy.deepcopy(rt["live"])
+    voice = doc.setdefault("voice", {})
+    speakers = voice.setdefault("speakers", {})
+    for seat, model_path in (rt.get("voices") or {}).items():
+        speakers[seat] = dict(speakers.get(seat) or {}, model_path=model_path)
+    voice["speaker_names"] = {s["seat"]: names[s["seat"]] for s in cfg["seats"]}
+    rel = table_cfg_path.resolve().relative_to(REPO) if table_cfg_path.resolve().is_relative_to(REPO) \
+        else table_cfg_path.name
+    path = out_dir / "roundtable.yaml"
+    path.write_text(HEADER.format(src=rel, base=rt["base"]) + yaml.dump(
+        doc, Dumper=_Dumper, sort_keys=False, allow_unicode=True, width=100), encoding="utf-8")
+    return path
 
 
 def main(argv=None):

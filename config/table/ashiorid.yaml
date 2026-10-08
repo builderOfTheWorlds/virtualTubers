@@ -40,6 +40,26 @@ direct:     {max_tokens: 768,  reasoning_budget: 384}
 adjudicate: {max_tokens: 256,  reasoning_budget: 64}
 overrule:   {max_tokens: 160,  reasoning_budget: 48}
 
+# The roundtable channel (P4): its slot config + the live feed (table_line from the
+# arbiter, app/table/live_feed.py) + per-seat voices that fit the cast.
+roundtable:
+  base: config/workers/roundtable.yaml
+  service: worker-roundtable
+  live:
+    enabled: true
+    table_arbiter: tuber_0
+    observer_slot: tuber_7        # no D&D seat; the office keeps its silent observer here
+    max_age_s: 120
+    consume_timeout_s: 20
+    line_gap_s: 0.5
+    spool_max: 200
+  voices:                         # seat -> piper voice (cast voice hints: GM narrator, Chadwick gruff ...)
+    tuber_0: /data/voices/en_US-lessac-medium.onnx
+    tuber_1: /data/voices/en_US-ryan-high.onnx
+    tuber_2: /data/voices/en_US-kristin-medium.onnx
+    tuber_3: /data/voices/en_US-joe-medium.onnx
+    tuber_4: /data/voices/en_US-bryce-medium.onnx
+
 llm:
   provider: vllm
   model: table-agents          # vllm-agents --served-model-name

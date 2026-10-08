@@ -88,3 +88,7 @@ services:
   worker-coder:
     environment:
       <<: *table-llm-env
+  # P4: the roundtable channel airs the table's committed lines (agent.live + table_arbiter).
+  worker-roundtable:
+    volumes:
+      - ${REPO_ROOT:-.}/config/workers/table/roundtable.yaml:/config/worker.yaml:ro
